@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Compiled source #
 ###################
 *.com
@@ -49,3 +50,17 @@ web/uploads/images/brand/*
 web/uploads/images/department/*
 web/uploads/images/product/*
 web/uploads/temporary/*
+=======
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+vendor/*
+*/logs/*
+*/cache/*
+web/uploads/*
+web/bundles/*
+
+# Configuration files
+app/config/parameters.ini
+>>>>>>> 0bb5c1b12eb9164ddacdbfd16acdcef0bb894554
