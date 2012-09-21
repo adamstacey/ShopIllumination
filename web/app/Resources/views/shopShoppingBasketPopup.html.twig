@@ -1,0 +1,12 @@
+<div id="shopping-basket-popup" title="The product was added to your Basket" class="ui-helper-hidden no-padding no-margin">
+	<div class="dialog-content">
+		<img id="shopping-basket-popup-image" src="" class="fl shopping-basket-thumbnail" border="0" alt="" width="100" height="100">
+		<a id="shopping-basket-popup-title" href=""></a>
+		<p id="shopping-basket-popup-description"></p>
+		<div class="clear"></div>
+	</div>
+	<div class="dialog-button-container">
+		<a title="Go to checkout" href="{{ path('checkout_secure_checkout') }}" class="fr button ui-button-green">Pay Now</a>
+		<a title="View your basket" href="Javascript:void(0);" class="button action-close-shopping-basket-popup ui-button-blue" data-icon-primary="ui-icon-arrowthick-1-w">Continue Shopping</a>
+	</div>
+</div>

@@ -1,0 +1,85 @@
+{% extends '::shop.html.twig' %}
+{% block title %}Ride Direct Gift Vouchers | {{ parent() }}{% endblock %}
+{% block slider %}
+	<div class="container_8 clearfix">
+		<header>
+			<div class="slider-gallery-container">
+				<div class="slider-gallery">
+					<div class="slider-element">
+						<img src="{{ asset('/bundles/webilluminationshop/images/headers/gift-vouchers.jpg') }}" alt="Ride Direct Gift Vouchers" />
+			
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+{% endblock %}
+{% block body %}
+	<header>
+		<h2>Ride Direct Gift Vouchers Now Available</h2>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_4"> 
+			<div class="portlet">
+				<header>
+	                <h2>About Our Gift Vouchers</h2>
+	            </header>
+				<section>
+					<div class="clearfix">
+					<p>Looking for the perfect gift? Look no further, the Ride Direct gift vouchers are the perfect gift for birthdays, Christmas, or any occasion.</p>
+						<ul>
+							<li>Available in &pound;25, &pound;50 &amp; &pound;100</li>
+							<li>Redeemable on any product(s) online at ridedirect.co.uk or in store</li>
+						</ul>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	    <div class="grid_2"> 
+			<div class="portlet">
+				<header>
+	                <h2 class="ac">Buy Now</h2>
+	            </header>
+				<section>
+					<div class="clearfix">
+						
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</section>
+	        </div>
+	    </div>
+	   	<div class="clear"></div>
+	    </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script defer="defer" type="text/javascript">
+		$(document).ready(function() {
+			{# Add the privilege card to the basket #}
+			$(".action-add-privilege-card-to-basket").live('click', function() {
+				$("#ajax-loading").show();
+				$.ajax({
+	   				type: "POST",
+	   				url: "{{ path('basket_ajax_add_membership_card_to_basket') }}",
+	   				error: function(data) {
+			      		$("#ajax-loading").hide();
+			      	},
+	   				success: function(data) {
+	   					getBasketSummary();
+	   					$("html, body").animate({scrollTop: 0}, 'slow');
+						$("#basket-summary").expose({
+							color: "#000000",
+							opacity: 0.4
+						});
+						setTimeout("$.mask.close()", 4000);
+						$("#ajax-loading").hide();
+	   				}
+	 			});
+			});
+		});
+	</script>
+{% endblock %}

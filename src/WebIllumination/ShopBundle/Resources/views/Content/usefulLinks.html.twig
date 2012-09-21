@@ -1,0 +1,58 @@
+{% extends '::shop.html.twig' %}
+{% block title %}Useful Links | {{ parent() }}{% endblock %}
+{% block metatags %}
+	<meta name="description" content="We have found a number of links and partners that we think you might find useful.">
+	<meta name="keywords" content="useful, links, partners, sites, weblinks">
+{% endblock %}
+{% block slider %}
+	<div class="container_8 clearfix">
+		<header>
+			<div class="slider-gallery-container">
+				<div class="slider-gallery">
+					<div class="slider-element">
+						<img src="{{ asset('/bundles/webilluminationshop/images/headers/renthal-chain-and-sprocket.jpg') }}" alt="A Renthal chain and sprocket" />
+						<h3 class="right">Useful links and Partners</h3>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+{% endblock %}
+{% block body %}
+	<header>
+		<h1>Useful Links and Partners</h1>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_6"> 
+			<div class="portlet">
+				<section>
+					<div class="clearfix">
+						<p class="no-margin-top"><strong>We have put together a page of useful links and partners we think you might find useful.</strong></p>
+						<p class="no-margin-bottom">If you would like to add you rlink to this page please visit our <a href="{{ path('content_link_to_us') }}">Link to Us</a> page.</p>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	    <div class="clear"></div>
+	    <div class="grid_6 leading"> 
+			<div class="portlet">
+				<header>
+	                <h2>Links</h2>
+	            </header>
+				<section>
+					<div class="clearfix">
+						<p class="no-margin">There are currently no links. Be the first to add your link! Find out more on our <a href="{{ path('content_link_to_us') }}">Link to Us</a> page.</p>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script defer="defer" type="text/javascript">
+		$(document).ready(function() {
+		});
+	</script>
+{% endblock %}

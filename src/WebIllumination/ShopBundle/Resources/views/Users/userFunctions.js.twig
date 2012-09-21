@@ -1,0 +1,97 @@
+function copyBillingAddressToDeliveryAddress()
+{
+	resetDeliveryAddress();
+	$("#form-delivery-country-code option:selected").removeAttr("selected");
+	$("#form-delivery-country-code option[value='"+$("#form-billing-country-code").val()+"']").attr("selected", "selected");
+	$("#uniform-form-delivery-country-code > span").html($("#form-delivery-country-code option[value='"+$("#form-billing-country-code").val()+"']").text());
+	$("#form-delivery-first-name").val($("#form-billing-first-name").val());
+	$("#form-delivery-last-name").val($("#form-billing-last-name").val());
+	$("#form-delivery-organisation-name").val($("#form-billing-organisation-name").val());
+	$("#form-delivery-address-line-1").val($("#form-billing-address-line-1").val());
+	$("#form-delivery-address-line-2").val($("#form-billing-address-line-2").val());
+	$("#form-delivery-town-city").val($("#form-billing-town-city").val());
+	$("#form-delivery-county-state").val($("#form-billing-county-state").val());
+	if ($("#form-billing-country-code").val() == 'IE')
+	{
+		$("#delivery-post-zip-code-container").hide();
+		$("#form-delivery-post-zip-code").val('000');
+		$("#republic-of-ireland-delivery-address-message").show();
+		$("#same-address-delivery").hide();
+	} else if ($("#form-billing-country-code").val() == 'GB') {
+		$("#form-delivery-post-zip-code").val($("#form-billing-post-zip-code").val());
+		$("#republic-of-ireland-delivery-address-message").hide();
+		$("#delivery-post-zip-code-container").show();
+		$("#same-address-delivery").show();
+	}
+	$("#form-same-delivery-address").attr("checked", "checked");
+	$("#uniform-form-same-delivery-address > span").addClass("checked");
+}
+
+function copyDeliveryAddressToBillingAddress()
+{
+	resetBillingAddress();
+	$("#form-billing-country-code option:selected").removeAttr("selected");
+	$("#form-billing-country-code option[value='"+$("#form-delivery-country-code").val()+"']").attr("selected", "selected");
+	$("#uniform-form-billing-country-code > span").html($("#form-billing-country-code option[value='"+$("#form-delivery-country-code").val()+"']").text());
+	$("#form-billing-first-name").val($("#form-delivery-first-name").val());
+	$("#form-billing-last-name").val($("#form-delivery-last-name").val());
+	$("#form-billing-organisation-name").val($("#form-delivery-organisation-name").val());
+	$("#form-billing-address-line-1").val($("#form-delivery-address-line-1").val());
+	$("#form-billing-address-line-2").val($("#form-delivery-address-line-2").val());
+	$("#form-billing-town-city").val($("#form-delivery-town-city").val());
+	$("#form-billing-county-state").val($("#form-delivery-county-state").val());
+	if ($("#form-delivery-country-code").val() == 'IE')
+	{
+		$("#billing-post-zip-code-container").hide();
+		$("#form-billing-post-zip-code").val('000');
+		$("#republic-of-ireland-billing-address-message").show();
+		$("#same-address-billing").hide();
+	} else if ($("#form-delivery-country-code").val() == 'GB') {
+		$("#form-billing-post-zip-code").val($("#form-delivery-post-zip-code").val());
+		$("#republic-of-ireland-billing-address-message").hide();
+		$("#billing-post-zip-code-container").show();
+		$("#same-address-billing").show();
+	}
+	$("#form-same-billing-address").attr("checked", "checked");
+	$("#uniform-form-same-billing-address > span").addClass("checked");
+}
+
+function resetBillingAddress()
+{
+	$("#form-billing-country-code option:selected").removeAttr("selected");
+	$("#form-billing-country-code option:eq(0)").attr("selected", "selected");
+	$("#uniform-form-billing-country-code > span").html($("#form-billing-country-code option:eq(0)").text());
+	$("#form-billing-first-name").val($("#form-first-name").val());
+	$("#form-billing-last-name").val($("#form-last-name").val());
+	$("#form-billing-organisation-name").val("");
+	$("#form-billing-address-line-1").val("");
+	$("#form-billing-address-line-2").val("");
+	$("#form-billing-town-city").val("");
+	$("#form-billing-county-state").val("");
+	$("#form-billing-post-zip-code").val("");
+	$("#billing-post-zip-code-container").show();
+	$("#form-same-billing-address").attr("checked", false);
+	$("#uniform-form-same-billing-address > span").removeClass("checked");
+	$("#republic-of-ireland-billing-address-message").hide();
+	$("#same-address-billing").show();
+}
+	
+function resetDeliveryAddress()
+{
+	$("#form-delivery-country-code option:selected").removeAttr("selected");
+	$("#form-delivery-country-code option:eq(0)").attr("selected", "selected");
+	$("#uniform-form-delivery-country-code > span").html($("#form-delivery-country-code option:eq(0)").text());
+	$("#form-delivery-first-name").val($("#form-first-name").val());
+	$("#form-delivery-last-name").val($("#form-last-name").val());
+	$("#form-delivery-organisation-name").val("");
+	$("#form-delivery-address-line-1").val("");
+	$("#form-delivery-address-line-2").val("");
+	$("#form-delivery-town-city").val("");
+	$("#form-delivery-county-state").val("");
+	$("#form-delivery-post-zip-code").val("");
+	$("#delivery-post-zip-code-container").show();
+	$("#form-same-delivery-address").attr("checked", false);
+	$("#uniform-form-same-delivery-address > span").removeClass("checked");
+	$("#republic-of-ireland-delivery-address-message").hide();
+	$("#same-address-delivery").show();
+}

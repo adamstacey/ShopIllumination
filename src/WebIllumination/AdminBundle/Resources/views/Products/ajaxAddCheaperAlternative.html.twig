@@ -1,0 +1,54 @@
+<li class="cheaper-alternative-container" data-index="{{ id }}" id="cheaper-alternative-{{ id }}">
+	<table width="100%">
+		<tbody>
+			<tr>
+				<td width="9" rowspan="2">
+					<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+				</td>
+				<td width="1" rowspan="2" class="select delete">
+					<input data-index="{{ id }}" type="checkbox" class="cheaper-alternative-select" id="form-cheaper-alternative-select-{{ id }}" value="1" />
+				</td>
+				<td class="no-padding-bottom">
+					<select id="form-product-link-id-{{ id }}" class="product-link-id full">
+						<option value="">- Please Select -</option>
+						{% for product in products %}
+							<option value="{{ product.productId }}">{{ product.header }}</option>				
+						{% endfor %}
+					</select>
+				</td>
+				<td width="1" rowspan="2">
+					<script type="text/javascript" defer="defer">
+						$(document).ready(function() {
+							$("#search-product-{{ id }}").autocomplete({
+								source: products,
+								focus: function(event, ui) {
+									$("#search-product-{{ id }}").val(ui.item.label);
+									$("#uniform-form-product-link-id-1 span").html($("#form-product-link-id-{{ id }} option[value='"+ui.item.value+"']").text());
+									$("#form-product-link-id-{{ id }} option").removeAttr("selected");
+									$("#form-product-link-id-{{ id }} option[value='"+ui.item.value+"']").attr("selected", "selected");
+									return false;
+								},
+								select: function(event, ui) {
+									$("#search-product-{{ id }}").val("");
+									return false;
+								}
+							});
+						});
+					</script>
+					<input type="hidden" class="cheaper-alternative-display-order" id="form-cheaper-alternative-display-order-{{ id }}" value="1" />
+					<input type="hidden" data-index="{{ id }}" class="cheaper-alternative-requires-update" id="form-cheaper-alternative-requires-update-{{ id }}" value="0" />
+					<input type="hidden" data-index="{{ id }}" class="cheaper-alternative-id" id="form-cheaper-alternative-id-{{ id }}" value="0" />
+					<button data-index="{{ id }}" class="button ui-button-red action-confirm-delete-cheaper-alternative" data-icon-only="true"  data-icon-primary="ui-icon-closethick">Delete</button>
+				</td>
+			</tr>
+			<tr>
+				<td class="no-padding-top">
+					<div class="position-relative">
+						<input placeholder="Find a product&hellip;" type="text" id="search-product-{{ id }}" class="embedded-icon no-margin full" value="" />
+						<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</li>

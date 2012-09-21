@@ -1,0 +1,119 @@
+<script defer="defer" type="text/javascript">
+	$(document).ready(function() {
+		$("#form-secure-login-email-address").focus();
+			
+		{# Show and hide the forgotten your password section #}
+		$(".action-forgotten-your-password").live('click', function() {
+			$(".form-error").hide();
+			$("#secure-login-container").slideUp();
+			$("#forgotten-your-password-container").slideDown(function() {
+				$("#form-forgotten-your-password-email-address").focus();
+			});
+		});
+		$(".action-secure-login").live('click', function() {
+			$(".form-error").hide();
+			$("#forgotten-your-password-container").slideUp();
+			$("#secure-login-container").slideDown(function() {
+				$("#form-secure-login-email-address").focus();
+			});
+		});
+						
+		{# Login #}
+		$(".action-login").live('click', function() {
+			var secureLoginValidator = $("#secure-login :input").validator({
+    			position : 'center right', 
+    			offset : [0, -250], 
+    			messageClass : 'form-error', 
+        		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
+			});
+			if (secureLoginValidator.data("validator").checkValidity())
+			{
+				$.ajax({
+	   				type: "POST",
+	   				dataType: "json",
+	   				url: "{{ path('security_ajax_login') }}",
+	   				beforeSend: function() {
+	   					$("#ajax-loading").show();
+	   					$("#secure-login-error").hide();
+	   				},
+	   				data: {
+	   					emailAddress: $("#form-secure-login-email-address").val(),
+	   					password: $("#form-secure-login-password").val(),
+	   					referer: $("#form-secure-login-referer").val()
+	   				},
+	   				error: function(data) {
+	   					$("#message-error-text").html('Sorry, there was a problem trying to log you in. Please try again.');
+	   					$("#message-error").slideDown(function() {
+	   						setTimeout("resetMessages()", 5000);
+	   					});
+	   					$("#form-secure-login-email-address").focus();
+			      		$("#ajax-loading").hide();
+			      	},
+	   				success: function(data) {
+	   					if (data.response == 'success')
+	   					{
+	   						window.location = data.referer;
+	   					} else {
+	   						$("#message-error-text").html(data.message);
+		   					$("#message-error").slideDown(function() {
+		   						setTimeout("resetMessages()", 5000);
+		   					});
+		   					$("#form-secure-login-email-address").focus();
+				      		$("#ajax-loading").hide();
+	   					}
+	   				}
+	 			});
+	 		}
+		});
+		
+		{# Reset password #}
+		$(".action-reset-password").live('click', function() {
+			var forgottenYourPasswordValidator = $("#forgotten-your-password :input").validator({
+    			position : 'center right', 
+    			offset : [0, -250], 
+    			messageClass : 'form-error', 
+        		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
+			});
+			if (forgottenYourPasswordValidator.data("validator").checkValidity())
+			{
+				$.ajax({
+	   				type: "POST",
+	   				dataType: "json",
+	   				url: "{{ path('security_ajax_forgotten_your_password') }}",
+	   				beforeSend: function() {
+	   					$("#ajax-loading").show();
+	   					$("#secure-login-error").hide();
+	   				},
+	   				data: {
+	   					emailAddress: $("#form-forgotten-your-password-email-address").val()
+	   				},
+	   				error: function(data) {
+	   					$("#message-error-text").html('Sorry, there was a problem trying to reset your password. Please try again.');
+	   					$("#message-error").slideDown(function() {
+	   						setTimeout("resetMessages()", 5000);
+	   					});
+	   					$("#form-forgotten-your-password-email-address").focus();
+			      		$("#ajax-loading").hide();
+			      	},
+	   				success: function(data) {
+	   					if (data.response == 'success')
+	   					{
+	   						$("#message-success-text").html('An email was sent to your registered email address with instructions on how to reset your password.');
+		   					$("#message-success").slideDown(function() {
+		   						setTimeout("resetMessages()", 5000);
+		   					});
+				      		$("#ajax-loading").hide();
+	   					} else {
+	   						$("#message-error-text").html(data.message);
+		   					$("#message-error").slideDown(function() {
+		   						setTimeout("resetMessages()", 5000);
+		   					});
+		   					$("#form-forgotten-your-password-email-address").focus();
+				      		$("#ajax-loading").hide();
+	   					}
+	   				}
+	 			});
+	 		}
+		});
+	});	
+</script>

@@ -1,0 +1,26 @@
+{% if data.item is defined %}
+	{% if data.mode == 'update' %}
+		{% if data.item.parentId > 0 %}
+			<p class="breadcrumbs no-margin-top">{% spaceless %}
+				<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': 0}) }}">Start Again</a>&nbsp;&gt;&nbsp;
+				{% for breadcrumb in data.breadcrumbs %}
+					<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': breadcrumb.departmentId}) }}">{{ breadcrumb.name }}</a>{% if not loop.last %}&nbsp;&gt;&nbsp;{% endif %}
+				{% endfor %}
+			{% endspaceless %}</p>
+		{% endif %}
+		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+		<h2>{{ data.item.name }}</h2>
+	{% else %}
+		{% if data.item.parentId > 0 %}
+			<p class="breadcrumbs no-margin-top">{% spaceless %}
+				<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': 0}) }}">Start Again</a>&nbsp;&gt;&nbsp;
+				{% for breadcrumb in data.breadcrumbs %}
+					<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': breadcrumb.departmentId}) }}">{{ breadcrumb.name }}</a>{% if not loop.last %}&nbsp;&gt;&nbsp;{% endif %}
+				{% endfor %}
+			{% endspaceless %}</p>
+		{% endif %}
+		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" id="button-go-back" class="fr button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+    	<h2>Add a {{ data.settings.singleTitle }}</h2>
+	{% endif %}
+{% endif %}
+{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemToolbar.html.twig' with {'data': data} %}

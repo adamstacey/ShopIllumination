@@ -1,0 +1,106 @@
+<div class="ui-helper-hidden more-information-detail" id="contacts-{{ item.id }}">
+	{% if item.contacts is defined %}
+		{% if item.contacts|length > 0 %}
+			<div class="padding-5">
+				{% for contact in item.contacts %}
+					<h5{% if loop.first %} class="no-margin-top"{% endif %}>{{ contact.displayName }}</h5>
+					<div class="margin-top-5 sidebar-tabs">
+		                <ul>
+		                    <li id="tab-contact-numbers-{{ contact.id }}"><a href="#contact-numbers-{{ contact.id }}">Contact Numbers</a></li>
+		                    <li id="tab-addresses-{{ contact.id }}"><a href="#addresses-{{ contact.id }}">Addresses</a></li>
+		                    <li id="tab-email-addresses-{{ contact.id }}"><a href="#email-addresses-{{ contact.id }}">Email Addresses</a></li>
+		                    <li id="tab-web-addresses-{{ contact.id }}"><a href="#web-addresses-{{ contact.id }}">Web Addresses</a></li>
+		                </ul> 
+		                <section id="contact-numbers-{{ contact.id }}">
+		                	{% if contact.contactNumbers|length > 0 %}
+		                		<table width="100%">
+		                			{% for contactNumber in contact.contactNumbers %}
+		                				<tr>
+											<td class="label" width="40%"><label>{{ contactNumber.contactNumberType }}:</label></td>
+											<td width="60%">{{ contactNumber.displayName }}</td>
+										</tr>
+		                			{% endfor %}
+		                		</table>
+		                	{% else %}
+		                		<p>There are no contact numbers setup for <strong>{{ contact.displayName }}</strong>.</p>
+		                	{% endif %}
+		                </section>
+		                <section id="addresses-{{ contact.id }}">
+		                	{% if contact.contactAddresses|length > 0 %}
+		                		<table width="100%">
+		                			{% for contactAddress in contact.contactAddresses %}
+		                				<tr>
+											<td class="label" width="40%"><label>{{ contactAddress.contactAddressType }}:</label></td>
+											<td width="60%">{% spaceless %}
+												{% if (contactAddress.firstName != '') or (contactAddress.lastName != '') %}
+													{{ contactAddress.firstName }} {{ contactAddress.lastName }}<br />
+												{% endif %}
+												{% if contactAddress.organisationName != '' %}
+													{{ contactAddress.organisationName }}<br />
+												{% endif %}
+												{% if contactAddress.addressLine1 != '' %}
+													{{ contactAddress.addressLine1 }}<br />
+												{% endif %}
+												{% if contactAddress.addressLine2 != '' %}
+													{{ contactAddress.addressLine2 }}<br />
+												{% endif %}
+												{% if contactAddress.addressLine3 != '' %}
+													{{ contactAddress.addressLine3 }}<br />
+												{% endif %}
+												{% if contactAddress.townCity != '' %}
+													{{ contactAddress.townCity }}<br />
+												{% endif %}
+												{% if contactAddress.countyState != '' %}
+													{{ contactAddress.countyState }}<br />
+												{% endif %}
+												{% if contactAddress.postZipCode != '' %}
+													{{ contactAddress.postZipCode }}<br />
+												{% endif %}
+											{% endspaceless %}</td>
+										</tr>
+		                			{% endfor %}
+		                		</table>
+		                	{% else %}
+		                		<p>There are no addresses setup for <strong>{{ contact.displayName }}</strong>.</p>
+		                	{% endif %}
+		                </section>
+		                <section id="email-addresses-{{ contact.id }}">
+		                	{% if contact.contactEmailAddresses|length > 0 %}
+		                		<table width="100%">
+		                			{% for contactEmailAddress in contact.contactEmailAddresses %}
+		                				<tr>
+											<td class="label" width="40%"><label>{{ contactEmailAddress.contactEmailAddressType }}:</label></td>
+											<td width="60%"><a href="mailto:{{ contactEmailAddress.email }}">{{ contactEmailAddress.displayName }}</a></td>
+										</tr>
+		                			{% endfor %}
+		                		</table>
+		                	{% else %}
+		                		<p>There are no email addresses setup for <strong>{{ contact.displayName }}</strong>.</p>
+		                	{% endif %}
+		                </section>
+		                <section id="web-addresses-{{ contact.id }}">
+		                	{% if contact.contactWebAddresses|length > 0 %}
+		                		<table width="100%">
+		                			{% for contactWebAddress in contact.contactWebAddresses %}
+		                				<tr>
+											<td class="label" width="40%"><label>{{ contactWebAddress.contactWebAddressType }}:</label></td>
+											<td width="60%"><a target="_blank" href="{{ contactWebAddress.url }}">{{ contactWebAddress.displayName }}</a></td>
+										</tr>
+		                			{% endfor %}
+		                		</table>
+		                	{% else %}
+		                		<p>There are no web addresses setup for <strong>{{ contact.displayName }}</strong>.</p>
+		                	{% endif %}
+		                </section>
+		            </div>
+				{% endfor %}
+			</div>
+			{% else %}
+				<h5 class="no-margin-top">No Contacts</h5>
+				<p class="padding-top-5">There are currently no contacts setup for {{ item.brand }}.</p>
+			{% endif %}
+	{% else %}
+		<h5 class="no-margin-top">No Contacts</h5>
+		<p class="padding-top-5">There are currently no contacts setup for {{ item.brand }}.</p>
+	{% endif %}
+</div>

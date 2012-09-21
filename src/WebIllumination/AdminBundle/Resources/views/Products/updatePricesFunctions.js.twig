@@ -1,0 +1,229 @@
+{# Load the prices #}	
+function loadPrices()
+{
+	$.ajax({
+		type: "GET",
+		url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_get_prices') }}",
+		beforeSend: function() {
+			$pricesLoaded = false;
+			$("#ajax-prices-loading").show();
+		},
+		data: {
+			productId: {{ data.product.id }}
+		},
+		error: function(data) {
+  			$("#ajax-prices-loading").hide();
+      		$("#price-loading-error").fadeIn();
+	  	},
+		success: function(data) {
+			$("#ajax-prices").html(data);
+			initialiseUniform("ajax-prices");
+			$(".action-confirm-delete-prices, .action-unselect-all-prices").hide();
+	        $("#ajax-prices").fadeIn();
+	        $pricesLoaded = true;
+	        checkDataLoaded();
+    	    $("#ajax-prices-loading").hide();
+    	    $("#form-prices-container").sortable({
+				placeholder: "highlighted-sortable",
+				update: function(event, ui) {
+					reOrderPrices();
+				}
+			});
+		}
+	});
+}
+
+{# Function to update profit statuses #}
+function updateProfitStatuses()
+{
+	$(".price-markup-percentage, .price-profit-percentage").removeClass("ui-state-error ui-state-highlight ui-state-success");
+	$(".price-markup-percentage").each(function() {
+		var $markupPercentage = parseFloat($(this).val());
+		if ($markupPercentage >= 20)
+    	{
+    		$(this).addClass("ui-state-success");
+    	} else if (($markupPercentage < 20) && ($markupPercentage >= 10)) {
+    		$(this).addClass("ui-state-highlight");
+    	} else {
+    		$(this).addClass("ui-state-error");
+    	}
+	});
+	$(".price-profit-percentage").each(function() {
+		var $profitPercentage = parseFloat($(this).val());
+		if ($profitPercentage >= 20)
+    	{
+    		$(this).addClass("ui-state-success");
+    	} else if (($profitPercentage < 20) && ($profitPercentage >= 10)) {
+    		$(this).addClass("ui-state-highlight");
+    	} else {
+    		$(this).addClass("ui-state-error");
+    	}
+	});
+}
+
+{# Function to update all prices #}
+function updatePrices()
+{
+	$errorOccurred = false;
+	$numberOfElementsToProcess = $("input.price-requires-update[value='1']").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToProcess > 0)
+	{
+		$("#ajax_loading").show();
+		var pricesValidator = $("#prices :input").validator({
+			position : 'bottom left', 
+			offset : [0, 0], 
+			messageClass : 'form-error', 
+    		message : '<div><em/></div>'
+		});
+		if (pricesValidator.data("validator").checkValidity())
+		{
+			$("input.price-requires-update[value='1']").each(function(index) {
+				$elementIndex = String($(this).attr("data-index"));
+				$.ajax({
+			    	url: "{{ path('admin_products_ajax_update_price') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-price-id-"+$elementIndex).val(),
+			      		productId: {{ data.product.id }},
+			      		supplierId: $("#form-price-supplier-id-"+$elementIndex).val(),
+			      		costPrice: $("#form-price-cost-price-"+$elementIndex).val(),
+			      		recommendedRetailPrice: $("#form-price-recommended-retail-price-"+$elementIndex).val(),
+			      		listPrice: $("#form-price-list-price-"+$elementIndex).val(),
+			      		currencyCode: $("#form-price-currency-code-"+$elementIndex).val(),
+			      		displayOrder: $("#form-price-display-order-"+$elementIndex).val(),
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			        	$errorOccurred = true;
+			        	$("#price-"+$elementIndex).addClass("ui-state-error");
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#price-error-message-text").html('Problems occurred while trying to update your prices. Please try again.');
+								$("#price-error-message").fadeIn();
+							} else {
+								$("#price-success-message-text").html('Your prices were successfully updated.');
+								$("#price-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#prices-tab-to-redirect-to").val() > -1)
+							{
+								$("#prices .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#prices-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	},
+			      	success: function(data) {
+		      			if (data.response == 'success')
+		      			{
+		      				$("#price-"+data.elementIndex).removeClass("ui-state-error");
+		      				$("#form-price-id-"+data.elementIndex).val(data.id);
+		      				$("#form-price-requires-update-"+data.elementIndex).val("0");
+		      			} else {
+		      				$("#price-"+data.elementIndex).addClass("ui-state-error");
+		      				$errorOccurred = true;
+		      			}
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#price-error-message-text").html('Problems occurred while trying to update your prices. Please try again.');
+								$("#price-error-message").fadeIn();
+							} else {
+								$("#price-success-message-text").html('Your prices were successfully updated.');
+								$("#price-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#prices-tab-to-redirect-to").val() > -1)
+							{
+								$("#prices .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#prices-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	}
+			   	});
+			});
+		} else {
+			$("#price-error-message-text").html('Sorry, there was a problem saving. Please ensure all prices have been filled in and are valid. Please correct the highlighted prices and try again.');
+        	$("#price-error-message").fadeIn();
+        	$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+        	$("#ajax_loading").hide();
+		}
+	}
+}
+
+{# Function to load new price #}
+function loadNewPrice()
+{
+	$("#ajax_loading").show();
+	$nextElement = parseInt($("#price-count").val()) + 1;
+	$("#price-count").val($nextElement);
+	$.ajax({
+    	url: "{{ path('admin_products_ajax_add_price') }}",
+      	type: "GET",
+      	data: {
+      		id: $nextElement,
+      		productId: '{{ data.product.id }}'
+      	},
+      	error: function(data) {
+        	$("#price-error-message-text").html('Sorry, there was an error adding a new price. Please try again.');
+			$("#price-error-message").fadeIn();
+			$("html, body").animate({scrollTop: $("#price-error-message").offset().top - 100},'slow');
+      	},
+      	success: function(data) {
+  			$("#form-prices-container").append(data);
+				$("#price-"+$nextElement.toString()+" :checkbox:not(.no-uniform), #price-"+$nextElement.toString()+" :radio:not(.no-uniform), #price-"+$nextElement.toString()+" select:not(.no-uniform), #price-"+$nextElement.toString()+" :file:not(.no-uniform)").uniform();
+				$("#price-"+$nextElement.toString()).fadeIn();
+				$("#price-"+$nextElement.toString()+" .button").each(function () {
+	            $(this).button({
+	            	icons: {
+	                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+	                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+	        	});
+	        });
+	        reOrderPrices();
+	        $(".selector, .uploader").addClass("full");
+	        $("html, body").animate({scrollTop: $("#price-"+$nextElement.toString()).offset().top - 100},'slow');
+	        $("#ajax_loading").hide();
+      	}
+   	});
+}
+
+{# Function to re-order the price indexes #}
+function reOrderPrices()
+{
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$priceCount = 1;
+	$numberOfElementsToProcess = $("li.price-container:visible").length;
+	$numberOfElementsProcessed = 0;
+	$("li.price-container:visible").each(function(index) {
+		$row = $(this);
+		if ($row.find("input.price-display-order").val() != $priceCount)
+		{
+			if ($row.find("input.price-id").val() > 0)
+			{
+				$row.find("input.price-requires-update").val("1");
+			}
+		}
+		$row.find("input.price-display-order").val($priceCount);
+	    $priceCount++;
+	    $numberOfElementsProcessed++;
+	    if ($numberOfElementsProcessed == $numberOfElementsToProcess)
+	    {
+	    	updatePrices();
+	    }
+	});
+	$("li.price-container:hidden").each(function(index) {
+		$(this).remove();
+	});
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <title>{% block title %}Kitchen Appliance Centre{% endblock %}</title>
+        {% block stylesheets %}
+	        {% stylesheets
+	        	'@WebIlluminationAdminBundle/Resources/public/css/reset.css' 
+	        	'@WebIlluminationAdminBundle/Resources/public/css/grid.css' 
+	        	'@WebIlluminationAdminBundle/Resources/public/css/slider-navigation.css' 
+	        	'@WebIlluminationAdminBundle/Resources/public/css/ui.css' 
+				'@WebIlluminationAdminBundle/Resources/public/css/portlet.css' 
+				'@WebIlluminationAdminBundle/Resources/public/css/uniform.css' 
+				'@WebIlluminationAdminBundle/Resources/public/css/form.css' 
+				'@WebIlluminationAdminBundle/Resources/public/css/styles.css' 
+	        	output='css/compressed.css' filter='yui_css' %}
+				<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+			{% endstylesheets %}
+			<!--[if IE]>
+				{% stylesheets '@WebIlluminationAdminBundle/Resources/public/css/ie.css' output='css/ie.css' filter='yui_css' %}
+					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+				{% endstylesheets %} 
+			<![endif]-->
+			<!--[if gte IE 9]>
+				{% stylesheets '@WebIlluminationAdminBundle/Resources/public/css/ie9.css' output='css/shop-ie9.css' filter='yui_css' %}
+					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+				{% endstylesheets %} 
+			<![endif]-->
+			<!--[if IE 8]>
+				{% stylesheets '@WebIlluminationAdminBundle/Resources/public/css/ie8.css' output='css/shop-ie8.css' filter='yui_css' %}
+					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+				{% endstylesheets %} 
+			<![endif]-->
+			<!--[if IE 7]>
+				{% stylesheets '@WebIlluminationAdminBundle/Resources/public/css/ie7.css' output='css/shop-ie7.css' filter='yui_css' %}
+					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+				{% endstylesheets %} 
+			<![endif]-->
+		{% endblock %}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" type="text/javascript"></script>
+		{% block headerscripts %}
+			<!--[if lt IE 9]>
+				{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/html5.js' output='js/html5.js' filter='yui_js' %}
+					<script src="{{ asset_url }}" type="text/javascript"></script>
+				{% endjavascripts %} 
+			<![endif]-->
+        	{% javascripts
+	        	'@WebIlluminationAdminBundle/Resources/public/js/jquery.js' 
+	        	'@WebIlluminationAdminBundle/Resources/public/js/ui.js' 
+	        	'@WebIlluminationAdminBundle/Resources/public/js/tools.js' 
+	        	'@WebIlluminationAdminBundle/Resources/public/js/overlay.js' 
+	        	'@WebIlluminationAdminBundle/Resources/public/js/uniform.js' 
+				'@WebIlluminationAdminBundle/Resources/public/js/isotope.js' 
+				'@WebIlluminationAdminBundle/Resources/public/js/superfish.js' 
+				'@WebIlluminationAdminBundle/Resources/public/js/supersubs.js' 
+				'@WebIlluminationAdminBundle/Resources/public/js/global.js' 
+	        	output='js/compressed.js' filter='yui_js' %}
+	        	<script src="{{ asset_url }}" type="text/javascript"></script>
+			{% endjavascripts %}
+			<!--[if lt IE 9]>
+				{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/selectivizr.js' output='js/selectivizr.js' filter='yui_js' %}
+					<script src="{{ asset_url }}" type="text/javascript"></script>
+				{% endjavascripts %} 
+			<![endif]-->
+			<!--[if lt IE 8]>
+				{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/ie.js' output='js/ie.js' filter='yui_js' %}
+					<script src="{{ asset_url }}" type="text/javascript"></script>
+				{% endjavascripts %} 
+			<![endif]-->
+		{% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+    	<div id="exposeMask"></div>
+    	<div id="wrapper" class="clearfix">
+			{% include '::adminHeader.html.twig' %}
+			{% include '::adminFlashMessages.html.twig' %}
+        	<section>
+	            <div class="container_8 clearfix">                
+	                <section class="main-section grid_8">
+		                {% if is_granted('ROLE_ADMIN') %}
+	    	                <nav class="collapsed">
+	        	                <a class="chevron" href="#">&raquo;</a>
+	            	            <ul>
+	            	            	{% block leftmenu %}
+	            	            		<li class="{% if ((app.request.attributes.get('_route') == 'homepage') or (app.request.attributes.get('_route') == '')) %}current{% endif %}"><a href="{{ path('homepage') }}" class="navicon-grid">Dashboard</a></li>
+	            	            	{% endblock %}
+	            	            </ul>
+	                	    </nav>
+	                	{% endif %}
+	                    <div class="main-content">
+	                    	<header>
+	                    		{% block header %}{% endblock %}
+	                    	</header>
+    	                    {% block body %}{% endblock %}
+        	            </div>
+            	    </section>
+	            </div>
+	        </section>
+		</div>
+		{% if is_granted('ROLE_ADMIN') %}
+			<div id="dialog-image-popup" title="Detailed View" class="ui-helper-hidden">
+				<div class="ac">
+					<img id="dialog-image-popup-image" src="{{ asset('uploads/images/product/product/no-image-large.jpg') }}" border="0" alt="" />
+				</div>
+			</div>
+		{% endif %}
+        {% include '::adminFooter.html.twig' %}
+        {% include '::adminAjaxLoading.html.twig' %}
+        {% block javascripts %}{% endblock %}
+        {% include '::adminScript.js.twig' %}
+    </body>
+</html>

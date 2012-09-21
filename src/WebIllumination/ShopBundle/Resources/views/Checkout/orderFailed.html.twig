@@ -1,0 +1,32 @@
+{% extends '::shop.html.twig' %}
+{% block title %}Your Order Failed | {{ parent() }}{% endblock %}
+{% block body %}
+	<header>
+		<h1>Your Order Failed</h1>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_6">
+            <div class="portlet">
+                <header>
+                    <h2>Order: {{ order.orderNumber }} | {{ order.orderDate|date("l, jS F Y h:ia") }} | &pound;{{ order.total|number_format(2)|default('0.00') }} | {{ order.firstName }} {{ order.lastName }} | {{ order.status }}</h2>
+                </header>
+                <section>
+                	<p class="no-margin-top"><strong>Sorry, there was a problem placing your order. No money has been taken from your card. Please try again or <a href="{{ path('content_contact_us') }}">contact us</a> if you have any questions.</strong></p>
+                	{% if (order.paymentType == 'PayPal through SagePay') or (order.paymentType == 'SagePay') %}
+                		<div class="info-message ui-status-error">
+							<span class="info-message-icon ui-icon ui-icon-alert"></span>
+							<p><strong>{{ order.paymentResponse.Status }}:</strong> {{ order.paymentResponse.StatusDetail }}</p>
+							<div class="clear"></div>
+						</div>
+					{% endif %}
+					<div class="clearfix no-margin-bottom">
+						<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Try Securely Paying Again</a>
+						<p class="no-margin-bottom">If you would like to try again or pay using another payment method please try again.</p>
+					</div>
+                </section>
+            </div>
+        </div>
+        {% include 'WebIlluminationShopBundle:Checkout:orderInformation.html.twig' with {'order': order} %}
+	   	<div class="clear"></div>
+	</section>
+{% endblock %}

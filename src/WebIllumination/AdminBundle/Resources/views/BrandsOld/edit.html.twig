@@ -1,0 +1,119 @@
+{% extends '::admin.html.twig' %}
+{% block title %}{{ brand_description.brand }}  | {{ parent() }}{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/tinymce/jquery.tinymce.js' output='js/tinymce.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/data-table.js' output='js/data-table.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/file-upload.js' output='js/file-upload.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart','table']}]}"></script>
+{% endblock %}
+{% block leftmenu %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:Brands:leftMenu.html.twig' %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	
+	<h2>{{ brand_description.brand }}</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+    	<div class="grid_6"> 
+			<div class="portlet">
+				<header>
+	                <h2>Actions</h2>
+                </header>
+				<section>
+                    {% for brand_warning in brand_warnings %}
+        				<div class="brand-warning ui-status-{{ brand_warning.status }}{% if loop.last %} no-margin-bottom{% endif %}">
+	        				<span class="brand-warning-icon ui-icon ui-icon-{{ brand_warning.icon }}"></span>
+        					<button class="button action-fix" rel="{{ brand_warning.section }}" data-icon-primary="ui-icon-wrench">&nbsp;&nbsp;Fix This!</button>
+        					<p>{{ brand_warning.message|raw }}</p>
+        					<div class="clear"></div>
+        				</div>
+				    {% else %}
+				        <div class="brand-warning ui-status-success no-margin-bottom">
+	        				<span class="brand-warning-icon ui-icon ui-icon-circle-check"></span>
+        					<p>Your brand is up-to-date.<br />There are no actions required for this brand at this time.</p>
+        					<div class="clear"></div>
+        				</div>
+				    {% endfor %}
+	            </section>
+	        </div>
+	    </div>
+	   	<div class="clear"></div>
+	   	<form action="{{ path('brands_edit', { 'id': brand.id }) }}" method="post" enctype="multipart/form-data" class="form has-validation">
+	        <div class="grid_6 leading">
+	            <div class="portlet">
+	                <header>
+	                    <h2>Brand Information</h2>
+	                </header>
+	                <section>
+	                    <div class="sidebar-tabs" style="min-height: 368px">
+	                        <ul>
+	                            <li id="tab-general"><a href="#general">General</a></li>
+	                            <li id="tab-description"><a href="#description">Description</a></li>
+	                            <li id="tab-seo"><a href="#seo">SEO</a></li>
+	                            <li id="tab-pricing" class="ui-status-success"><a href="#pricing">Pricing</a></li>
+	                            <li id="tab-images"><a href="#images">Images</a></li>
+	                            <li id="tab-guarantees"><a href="#guarantees">Guarantees</a></li>
+	                            <li id="tab-redirects"><a href="#redirects">Redirects</a></li>
+	                            <li id="tab-attachments"><a href="#attachments">Attachments</a></li>
+	                        </ul>
+	                        {% include 'WebIlluminationAdminBundle:Brands:sectionGeneral.html.twig' with {'brand': brand, 'brand_description': brand_description} %}
+                            {% include 'WebIlluminationAdminBundle:Brands:sectionDescription.html.twig' with {'brand_description': brand_description} %}
+                            {% include 'WebIlluminationAdminBundle:Brands:sectionSeo.html.twig' with {'brand_description': brand_description, 'web_address': web_address} %}
+                            {% include 'WebIlluminationAdminBundle:Brands:sectionPricing.html.twig' with {'brand_description': brand_description} %}
+                            {% include 'WebIlluminationAdminBundle:Brands:sectionImages.html.twig' with {'brand_description': brand_description} %}
+                            {% include 'WebIlluminationAdminBundle:Brands:sectionGuarantees.html.twig' with {'brand_description': brand_description} %} 
+                            {% include 'WebIlluminationAdminBundle:Brands:sectionRedirects.html.twig' with {'brand_description': brand_description} %}
+	                        {% include 'WebIlluminationAdminBundle:Brands:sectionAttachments.html.twig' with {'brand_description': brand_description} %}
+	                    </div>
+	                </section>
+	            </div>
+	        </div>
+	        <input type="hidden" id="form-current-tab" name="current-tab" value="{% if current_tab is defined %}{{ current_tab }}{% else %}general{% endif %}" />
+	    </form>
+	    <div class="clear"></div>
+        <div class="grid_6 leading">
+            <div class="portlet">
+                <header>
+                    <h2>Statistics</h2>
+                </header>
+                <section>
+                    <div class="sidebar-tabs" style="min-height: 186px">
+                        <ul>
+                            <li id="tab-statistics-visits"><a href="#statistics-visits">Visits</a></li>
+                            <li id="tab-statistics-referrers"><a href="#statistics-referrers">Referrers</a></li>
+                            <li id="tab-competitors"><a href="#competitors">Competitors</a></li>
+                            <li id="tab-unique-product-identifiers"><a href="#unique-product-identifiers">Unique Product Identifiers</a></li>
+                        </ul>
+                        {% include 'WebIlluminationAdminBundle:Brands:sectionStatisticsVisits.html.twig' with {'brand': brand} %}
+                        {% include 'WebIlluminationAdminBundle:Brands:sectionStatisticsReferrers.html.twig' with {'brand': brand} %}
+                        {% include 'WebIlluminationAdminBundle:Products:sectionCompetitors.html.twig' with { 'product_search': product_search} %}
+                        {% include 'WebIlluminationAdminBundle:Products:sectionUniqueProductIdentifiers.html.twig' with {'product_search': product_search} %}
+                    </div>
+                </section>
+            </div>
+        </div>
+        <script type="text/javascript" defer="defer">
+        	
+			$(document).ready(function() {
+				
+				{# Select the current tab #}
+				{% if current_tab is defined %}
+					$(".sidebar-tabs").tabs("select", "#{{ current_tab }}");
+					$("html, body").animate({scrollTop: $(".sidebar-tabs").offset().top - 45},'slow');
+				{% endif %}
+				
+			});
+			
+		</script>
+	</section>
+{% endblock %}

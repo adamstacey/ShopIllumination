@@ -1,0 +1,83 @@
+#dcwp-avatar {float: left; display: block; width: 32px; height: 32px; background: url(images/dc_icon32.png) no-repeat 0 0; margin: 0 5px 0 0;}
+
+.dcwp-box {}
+.dcwp-box .hndle {margin-bottom: 10px;}
+.dcwp-box p, .dcwp-box ul {padding: 0 10px; margin: 0 0 1em 0; line-height: 1.5em;}
+.dcwp-box ul.bullet, ul.dcwp-rss {list-style: square; margin-left: 15px;}
+.dcwp-form {padding: 0 10px;}
+.dcwp-intro {padding: 5px 0;}
+.dcwp-form ul.half {width: 50%; float: left;}
+.dcwp-form ul.half.right, .dcwp-form ul.third.right {float: right;}
+.dcwp-form ul.third {width: 33%; float: left; margin-bottom: 20px;}
+.dcwp-form li {display: block; width: 100%; overflow: hidden; margin: 0 0 5px 0; padding: 5px 0; clear: both; position: relative;}
+.dcwp-form.dcssb-form h4 {margin: 0 0 5px 0; padding: 0 0 10px 0; background: url(images/bdr_h4.png) repeat-x 0 100%;}
+.dcwp-form li label {float: left; width: 25%; display: block; padding: 5px 0 0 0;}
+#dcssb_settings_page span.dcwp-note {display: block; padding: 5px 0 0 0; font-size: 11px;}
+label span.dcwp-note {padding: 2px 0 0 0; font-size: 11px;}
+.dcwp-checkbox {}
+
+.dcwp-rss-item {}
+.dcwp-icon-rss {}
+.dcwp-icon-twitter {}
+
+.dcwp-input-l {width: 70%;}
+.dcwp-input-m {width: 50%;}
+.dcwp-input-s {width: 30%;}
+.dcwp-textarea {width: 70%;}
+
+.dcwp-table tr td {vertical-align: top; padding: 5px 10px; height: 68px;}
+.dcwp-form.dcssb-form li .dcwp-table tr td h4 {background: none;}
+
+#slick-social-share-buttons-donatebox.dcwp-box p {padding: 0 7px;}
+#form-dcwp-donate {text-align: center; padding-bottom: 10px;}
+
+.margin-right {margin-right: 5px;}
+
+/* Widgets */
+.dcwp-widget-text {width: 98%; height: 65px;}
+.dcwp-widget-input {width: 100%;}
+.dcwp-widget-label {display: block;}
+
+p.dcwp-row {margin-bottom: 3px; width: 100%; overflow: hidden;}
+p.dcwp-row label {float: left; width: 70px; padding-top: 3px; display: block;}
+.dcssb-ul li {width: 100%; overflow: hidden;}
+.dcssb-ul .dcwp-widget-input, .dcssb-ul h4.left {float: left; width: 60%;}
+.dcssb-ul select, .dcssb-ul h4.right {float: right; width: 35%;}
+.dcssb-ul h4 {margin: 0;}
+.dcssb-ul label {display: none;}
+.dcssb-ul select, .dcssb-ul .dcwp-widget-input {font-size: 11px;}
+
+.dcwp-accordion a {display: block; clear: both;}
+
+/* Share */
+.dcwp-box ul#dc-share {margin: 0; padding: 0 10px; line-height: 1em;}
+.dcwp-box ul#dc-share li {float: left; padding: 0 3px; margin: 0; height: 75px;}
+
+/* Plugin specific */
+#sortable {padding-top: 10px;}
+#sortable li {cursor: move; background: #fff; border: 1px solid #ccc; margin-bottom: 1px; box-shadow: 0 1px 0 #FFFFFF; -moz-border-radius:5px;    -webkit-border-radius:5px;}
+#sortable li.sort-holder {height: 75px; background: #F2F5FF;}
+#sortable li .dcwp-table tr td {padding: 0 10px; height: 68px;}
+#sortable li .dcwp-table tr td.button-name, #sortable li .dcwp-table tr td.button-size {padding-top: 5px;}
+
+.button-name {width: 120px;}
+.dcwp-form li .button-name h4 {padding: 0; margin: 0 0 5px 0;}
+.button-size {width: 140px;}
+.dcwp-table tr td.button-eg {width: 120px; vertical-align: middle; text-align: center;}
+
+#dcssb_settings_page ul#sortable span.dcwp-note {display: inline;}
+.dcwp-form.dcssb-form {padding: 0;}
+.dcssb-form .postbox {margin: 0;}
+.dcssb-form .inside {padding: 0 15px;}
+
+select.dcssb-button, #dcssb_position, #dcssb_shortener, #dcssb_direction {width: 140px;}
+span.dcssb-button  {display: none;}
+
+.postbox-container .meta-box-sortables {min-height: 200px;}
+
+.dcwp-category-list {width: 45%; float: left; margin-right: 2%; padding: 1%; background: #fff; border: 1px solid #ccc; margin-bottom: 1px; box-shadow: 0 1px 0 #FFFFFF; -moz-border-radius:5px;    -webkit-border-radius:5px;}
+.dcwp-form .dcwp-category-list li {padding: 0; margin: 0 0 0 0;}
+.dcwp-form .dcwp-category-list li strong {display: block; padding: 0 3px 3px 3px;}
+.dcwp-form .dcwp-category-list li a {text-decoration: none; display: block; padding: 3px; border: 1px solid #fff; box-shadow: 0 1px 0 #FFFFFF; -moz-border-radius:3px;    -webkit-border-radius:3px;}
+.dcwp-form .dcwp-category-list li a:hover {background: #efefef; border-color: #d3d3d3; text-decoration: none;}
+.dcwp-form .dcwp-category-list li a.process {background: #E8F3F9; border-color: #d9ebf5;}

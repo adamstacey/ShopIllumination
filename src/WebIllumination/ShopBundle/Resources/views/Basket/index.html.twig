@@ -1,0 +1,123 @@
+{% extends '::shop.html.twig' %}
+{% block title %}Your Basket | {{ parent() }}{% endblock %}
+{% block body %}
+	<header>
+		<h1>Your Shopping Basket</h1>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_4"> 
+			<div class="portlet">
+				<header>
+	                <h2 id="products-found">Your Bakset Contents</h2>
+	            </header>
+				<section id="basket-contents-section">
+					<div class="clearfix separator">
+						<a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
+						{#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
+						<a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
+						<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+					<div id="basket-contents-loading" class="clearfix separator">
+						<img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+						<p>Loading your basket contents&hellip;</p>
+						<div class="clear"></div>
+					</div>
+					<div id="basket-contents" class="clearfix separator ui-helper-hidden"></div>
+					<div id="basket-totals-loading" class="clearfix separator">
+						<img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+						<p>Loading the totals of your basket&hellip;</p>
+						<div class="clear"></div>
+					</div>
+					<div id="voucher-code-membership-card-number" class="ar clearfix separator">
+						<table align="right" width="50%" cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td colspan="4" class="al">Voucher Code:</td>
+								{#<td colspan="3" class="al">Membership Card Number:</td>#}
+							</tr>
+							<tr>
+								<td>
+									<input class="uppercase small full" value="" type="text" id="form-voucher-code" name="voucher-code" placeholder="Voucher Code" />
+								</td>
+								<td id="delete-voucher-code" width="23" class="ar ui-helper-hidden">
+									<img width="18" height="18" class="link action-delete-voucher-code" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Voucher Code" />
+								</td>
+								<td width="5">
+									<img src="{{ asset('bundles/webilluminationshop/images/blank.gif') }}" border="0" width="5" height="0" alt="" />
+								</td>
+								<td width="53">
+									<a href="Javascript:void(0);" rel="nofollow" class="small action-redeem-voucher-code button ui-button-green">Redeem</a>
+								</td>
+								{#<td width="10">
+									<img src="{{ asset('bundles/webilluminationshop/images/blank.gif') }}" border="0" width="10" height="0" alt="" />
+								</td>
+								<td>
+									<input class="uppercase small full" value="{% if basket.discounts.membershipCardNumber > 1 %}{{ basket.discounts.membershipCardNumber }}{% endif %}" type="text" id="form-membership-card-number" name="membership-card-number" placeholder="Membership Card Number" />
+								</td>
+								<td width="23" id="delete-membership-card-number" class="ar{% if basket.discounts.membershipCardNumber == 0 %} ui-helper-hidden{% endif %}">
+									<img hspace="5" width="18" height="18" class="link action-delete-membership-card-number" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Membership Card Number" />
+								</td>
+								<td width="5">
+									<img src="{{ asset('bundles/webilluminationshop/images/blank.gif') }}" border="0" width="5" height="0" alt="" />
+								</td>
+								<td width="53">
+									<a href="Javascript:void(0);" class="small action-redeem-membership-card-number button ui-button-orange">Redeem</a>
+								</td>#}
+							</tr>
+						</table>
+					</div>
+					<div id="basket-totals" class="ar clearfix separator ui-helper-hidden"></div>
+					<div class="clear"></div>
+					<div class="clearfix">
+						<a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
+						{#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
+						<a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
+						<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+					{#<div id="membership-card-discount" class="ui-helper-hidden"></div>#}
+				</section>
+	        </div>
+	    </div>
+	    <div class="grid_2 fr"> 
+			<div class="portlet">
+				<header>
+	                <h2>Your Delivery</h2>
+	            </header>
+				<section id="your-delivery-section">
+					<div id="basket-delivery-options-loading" class="ac clearfix">
+						<img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+						<p>Loading your delivery options&hellip;</p>
+						<div class="clear"></div>
+					</div>
+					<div id="basket-delivery-options" class="clearfix ui-helper-hidden"></div>
+				</section>
+	        </div>
+	    </div>
+	    {#<div class="grid_2 leading fr"> 
+			<div class="portlet">
+				<header id="gift-voucher-code-header">
+	                <h2>Redeem Your Gift Voucher</h2>
+	            </header>
+				<section id="gift-voucher-code-section">
+					<div class="clearfix">
+						<div class="form-input ac">
+							<input class="fl" type="text" id="form-gift-voucher-code" name="gift-voucher-code" placeholder="GIFT VOUCHER CODE" />
+							<a href="Javascript:void(0);" class="fr action-redeem-gift-voucher-code button ui-button-orange">Redeem</a>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</section>
+				<div class="clear"></div>
+	        </div>
+	    </div>#}
+	   	<div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationShopBundle:Basket:indexScript.js.twig' with {'backUrl': backUrl, 'basket': basket} %}
+{% endblock %}

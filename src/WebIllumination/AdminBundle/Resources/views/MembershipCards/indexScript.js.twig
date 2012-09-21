@@ -1,0 +1,736 @@
+<script type="text/javascript" defer="defer">
+	{# Check all elements are loaded #}
+	var $listingCountLoaded = false;
+	var $listingLoaded = false;
+	var $listingPaginationLoaded = false;
+	
+	{# Setup the contacts list #}
+	var contacts = [
+		{% for contact in contacts %}
+			{
+				value: "{{ contact.objectId }}",
+				label: "{{ contact.firstName }} {% if contact.middleName != '' %}{{ contact.middleName }}{% endif %} {{ contact.lastName }}{% if contact.organisationName != '' %} ({{ contact.organisationName }}){% endif %}"
+			}{% if not loop.last %},{% endif %}
+		{% endfor %}
+	];
+		
+	$(document).ready(function() {
+		$("#user-search").autocomplete({
+			source: contacts,
+			select: function(event, ui) {
+				$("#user-"+ui.item.value).attr("checked", "checked");
+				$("#uniform-user-"+ui.item.value+" span").addClass("checked");
+				$("#filter-users").animate({scrollTop: ($("#filter-users").scrollTop() + ($("#uniform-user-"+ui.item.value).position().top - 60))}, 'slow');
+				$("#user-search").val("");
+				buildSelectedUsers();
+				return false;
+			}
+		});
+		
+		{# Clear the filters #}
+		$(".action-clear-filters").live('click', function() {
+			$("input[type='checkbox']").removeAttr("checked");
+			$("div.checker span").removeClass("checked");
+			$("#form-membership-number, #form-active, #form-user-id, #form-valid-from-date-from, #form-valid-from-date-from-formatted, #form-valid-from-date-to, #form-valid-from-date-to-formatted, #form-expiry-date-from, #form-expiry-date-from-formatted, #form-expiry-date-to, #form-expiry-date-to-formatted").val("");
+			$("#filter-users").animate({scrollTop: 0}, 'slow');
+			$("#form-current-page").val('1');
+			loadResults();
+		});
+		
+		{# Show the add membership card #}
+		$(".action-view-add-membership-card").live('click', function() {
+			$("#membership-card-add").slideDown(function() {
+				$("html, body").animate({scrollTop: $("#membership-card-add").offset().top - 50},'slow');
+			});
+		});
+		
+		{# Hide the add membership-card #}
+		$(".action-cancel-add-membership-card").live('click', function() {
+			$(".form-error").hide();
+			$("input, textarea, select").removeClass("invalid");
+			$("#membership-card-add").slideUp(function() {
+				$("#membership-card-membership-number").val("");
+				$("#membership-card-valid-from-date").val("{{ validFromDate|date("d/m/Y") }}");
+				$("#membership-card-expiry-date").val("{{ expiryDate|date("d/m/Y") }}");
+				$("#membership-card-valid-from-date-formatted").val("{{ validFromDate|date("Y-m-d") }}");
+				$("#membership-card-expiry-date-formatted").val("{{ expiryDate|date("Y-m-d") }}");
+				$("#membership-card-discount-use-container").hide();
+			});
+		});
+		
+		{# Add the membership card #}
+        $(".action-add-membership-card").live('click', function() {
+        	var addMembershipCardValidator = $("#membership-card-add :input").validator({
+    			position : 'bottom left', 
+    			offset : [0, 0], 
+    			messageClass : 'form-error', 
+        		message : '<div><em/></div>'
+			});
+			if (addMembershipCardValidator.data("validator").checkValidity())
+			{			
+	        	$("#ajax_loading").show();
+	        	$("#flash_messages .message").hide();
+	        	$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: "{{ path('admin_membership_cards_ajax_add_membership_card') }}",
+					data: {
+						membershipNumber: $("#membership-card-membership-number").val(),
+						validFromDate: $("#membership-card-valid-from-date-formatted").val(),
+						expiryDate: $("#membership-card-expiry-date-formatted").val()
+					},
+					error: function(data) {
+						$("#message-error .message-text").html('Sorry, there was a problem adding the membership card. Make sure you have filled in all fields and try again.');
+			      		$("#message-error").fadeIn();
+			      		$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+						$("#ajax_loading").hide();
+			      	},
+					success: function(data) {
+						if (data.response == 'error')
+						{
+							$("#message-error .message-text").html(data.message);
+			      			$("#message-error").fadeIn();
+			      			$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+							$("#ajax_loading").hide();
+						} else {
+							$("#membership-card-add").slideUp(function() {
+								$("#membership-card-membership-number").val("");
+								$("#membership-card-valid-from-date").val("{{ validFromDate|date("d/m/Y") }}");
+								$("#membership-card-expiry-date").val("{{ expiryDate|date("d/m/Y") }}");
+								$("#membership-card-valid-from-date-formatted").val("{{ validFromDate|date("Y-m-d") }}");
+								$("#membership-card-expiry-date-formatted").val("{{ expiryDate|date("Y-m-d") }}");
+								$("#membership-card-discount-use-container").hide();
+							});
+				      		loadResults();
+    						$("#message-success .message-text").html('The membership card was successfully added.');
+				      		$("#message-success").fadeIn();
+    						$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+							$("#ajax_loading").hide();
+						}
+					}
+				});
+			}
+        });
+        
+        {# Show the membership card #}
+        $(".action-view-membership-card").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'membership-card', $("tr#membership-card-"+$(this).attr("data-id")+" button.action-view-membership-card"));
+        });
+        
+        {# Show the customer #}
+        $(".action-view-customer").live('click', function() {
+        	var $id = $(this).attr("data-id");
+        	var $userId = $(this).attr("data-user-id");
+        	$("#customer-details-"+$(this).attr("data-id")).hide().html("");
+        	$("#customer-details-loading-"+$(this).attr("data-id")).show();
+        	showMoreInformation($(this).attr("data-id"), 'customer', $("tr#membership-card-"+$(this).attr("data-id")+" button.action-view-customer"));
+        	$.ajax({
+   				type: "GET",
+   				url: "{{ path('admin_membership_cards_ajax_get_customer') }}",
+   				data: {
+   					userId: $userId
+	   			},
+   				error: function(data) {
+   					$("#customer-details-loading-"+$id).hide();
+   					$("#customer-details-"+$id).html('<p class="ac">Sorry, the customer information could not be found.</p>').fadeIn();
+		      	},
+   				success: function(data) {
+   					$("#customer-details-loading-"+$id).hide();
+   					$("#customer-details-"+$id).html(data).fadeIn();
+   				}
+ 			});
+        });
+        
+        {# Show the assign user #}
+        $(".action-assign-user").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'assign-user', $("tr#membership-card-"+$(this).attr("data-id")+" button.action-assign-user"));
+        });
+		
+        {# Show the report #}
+        $(".action-view-report").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'report', $("tr#membership-card-"+$(this).attr("data-id")+" button.action-view-report"));
+        });
+        
+        {# Save the membership card #}
+        $(".action-save-membership-card").live('click', function() {
+        	var $id = $(this).attr("data-id");
+        	var saveMembershipCardValidator = $("#membership-card-membership-card-"+$id+" :input").validator({
+    			position : 'bottom left', 
+    			offset : [0, 0], 
+    			messageClass : 'form-error', 
+        		message : '<div><em/></div>'
+			});
+			if (saveMembershipCardValidator.data("validator").checkValidity())
+			{			
+	        	$("#ajax_loading").show();
+	        	$("#flash_messages .message").hide();
+	        	$.ajax({
+					type: "GET",
+					dataType: "json",
+					url: "{{ path('admin_membership_cards_ajax_save_membership_card') }}",
+					data: {
+						id: $id,
+						membershipNumber: $("#membership-card-membership-number-"+$id).val(),
+						validFromDate: $("#membership-card-valid-from-date-formatted-"+$id).val(),
+						expiryDate: $("#membership-card-expiry-date-formatted-"+$id).val()
+					},
+					error: function(data) {
+						$("#membership-card-error-message-text-"+$id).html('Sorry, there was a problem saving the membership card. Make sure you have filled in all fields and try again.');
+			      		$("#membership-card-error-message-"+$id).fadeIn();
+			      		$.mask.close();
+						$("#ajax_loading").hide();
+			      	},
+					success: function(data) {
+						if (data.response == 'error')
+						{
+							$("#membership-card-error-message-text-"+$id).html(data.message);
+				      		$("#membership-card-error-message-"+$id).fadeIn();
+							$("#ajax_loading").hide();
+						} else {
+				      		loadResults();
+				      		$.mask.close();
+    						$("#more-information-"+$id).hide();
+    						$("#more-information-"+$id+" .more-information-detail").hide();
+    						$("#message-success .message-text").html('The membership card was successfully saved.');
+				      		$("#message-success").fadeIn();
+    						$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+							$("#ajax_loading").hide();
+						}
+					}
+				});
+			}
+        });
+        
+        {# Save the user #}
+        $(".action-save-user").live('click', function() {
+        	var $id = $(this).attr("data-id");
+        	var assignUserValidator = $("#membership-card-assign-user-"+$id+" :input").validator({
+    			position : 'bottom left', 
+    			offset : [0, 0], 
+    			messageClass : 'form-error', 
+        		message : '<div><em/></div>'
+			});
+			if (assignUserValidator.data("validator").checkValidity())
+			{			
+	        	$("#ajax_loading").show();
+	        	$("#flash_messages .message").hide();
+	        	$.ajax({
+					type: "GET",
+					dataType: "json",
+					url: "{{ path('admin_membership_cards_ajax_save_user') }}",
+					data: {
+						id: $id,
+						userId: $("#user-id-"+$id).val()
+					},
+					error: function(data) {
+						$("#message-error-text-"+$id).html('Sorry, there was a problem assigning the customer. Make sure you have filled in all fields and try again.');
+			      		$("#message-error-"+$id).fadeIn();
+			      		$.mask.close();
+						$("#ajax_loading").hide();
+			      	},
+					success: function(data) {
+						if (data.response == 'error')
+						{
+							$("#message-error-text-"+$id).html(data.message);
+				      		$("#message-error-"+$id).fadeIn();
+							$("#ajax_loading").hide();
+						} else {
+				      		loadResults();
+				      		$.mask.close();
+    						$("#more-information-"+$id).hide();
+    						$("#more-information-"+$id+" .more-information-detail").hide();
+    						$("#message-success .message-text").html('The customer was successfully assigned.');
+				      		$("#message-success").fadeIn();
+    						$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+							$("#ajax_loading").hide();
+						}
+					}
+				});
+			}
+        });
+                                
+        {# Confirm the user release #}
+        $(".action-confirm-release-user").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'confirm-release-user', $("tr#membership-card-"+$(this).attr("data-id")+" button.action-confirm-release-user"));
+        });
+        $(".action-release-user").live('click', function() {
+        	$("#flash_messages .message").hide();
+        	$("#ajax_loading").show();
+        	var $id = $(this).attr("data-id");
+			$.ajax({
+		    	url: "{{ path('admin_membership_cards_ajax_release_user') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $id
+		      	},
+		      	error: function(data) {
+		      		$("#message-error .message-text").html('Sorry, there was a problem releasing the customer from the membership card. Please try again.');
+			      	$("#message-error").fadeIn();
+			      	$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+			      	$.mask.close();
+					$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		      		$("#form-current-page").val('1');
+		      		$(".more-information, .more-information-detail").hide();
+					$("tr.membership-card td").removeAttr("style");
+					$("tr.membership-card button").removeClass("ui-button-blue");
+					$.mask.close();
+					loadResults();
+					$("#message-success .message-text").html('The customer has been successfully released from the membership card.');
+			      	$("#message-success").fadeIn();
+			      	$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	}
+		   	});
+        });
+        
+        {# Confirm the membership card deletion #}
+        $(".action-confirm-delete-membership-card").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'confirm-delete', $("tr#membership-card-"+$(this).attr("data-id")+" button.action-confirm-delete-membership-card"));
+        });
+        $(".action-delete-membership-card").live('click', function() {
+        	$("#flash_messages .message").hide();
+        	$("#ajax_loading").show();
+        	var $id = $(this).attr("data-id");
+			$.ajax({
+		    	url: "{{ path('admin_membership_cards_ajax_delete_membership_card') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $id
+		      	},
+		      	error: function(data) {
+		      		$("#message-error .message-text").html('Sorry, there was a problem deleting the membership card. Please try again.');
+			      	$("#message-error").fadeIn();
+			      	$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+			      	$.mask.close();
+					$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		      		$("#form-current-page").val('1');
+		      		$(".more-information, .more-information-detail").hide();
+					$("tr.membership-card td").removeAttr("style");
+					$("tr.membership-card button").removeClass("ui-button-blue");
+					$.mask.close();
+					loadResults();
+					$("#message-success .message-text").html('The membership card has been successfully deleted.');
+			      	$("#message-success").fadeIn();
+			      	$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	}
+		   	});
+        });
+        $(".action-confirm-delete-membership-cards").live('click', function() {
+        	if ($(".action-select:checked").length > 0)
+			{
+	    		$("#membership-card-confirm-delete-membership-cards").fadeIn();
+	    		$("html, body").animate({scrollTop: $("#membership-card-confirm-delete-membership-cards").offset().top - 50},'slow');
+	    	}
+        });
+        $(".action-cancel-delete-membership-cards").live('click', function() {
+        	$("#membership-card-confirm-delete-membership-cards").fadeOut();
+        });
+        $(".action-delete-membership-cards").live('click', function() {
+        	$("#flash_messages .message").hide();
+        	if ($(".action-select:checked").length > 0)
+			{
+	        	$("#ajax_loading").show();
+	        	$("#membership-card-confirm-delete-membership-cards").hide();
+				var $numberOfMembershipCardsToDelete = $(".action-select:checked").length;
+				var $numberOfMembershipCardsDeleted = 0;
+				if ($numberOfMembershipCardsToDelete > 0)
+				{
+					$(".action-select:checked").each(function() {
+						var $id = $(this).attr("data-id");
+						$.ajax({
+							type: "GET",
+							url: "{{ path('admin_membership_cards_ajax_delete_membership_card') }}",
+							data: {
+								id: $id
+							},
+							error: function(data) {
+								$numberOfMembershipCardsDeleted = $numberOfMembershipCardsDeleted + 1;
+								$("#message-error .message-text").html('Sorry, there was a problem deleting the selected membership cards. Please try again.');
+						      	$("#message-error").fadeIn();
+						      	if ($numberOfMembershipCardsDeleted >= $numberOfMembershipCardsToDelete)
+						      	{
+						      		$("html, body").animate({scrollTop: $("#flash_messages").offset().top - 50},'slow');
+									$("#ajax_loading").hide();
+									$("#form-current-page").val('1');
+									$.mask.close();
+									loadResults();
+								}
+				      		},
+							success: function(data) {
+								$numberOfMembershipCardsDeleted = $numberOfMembershipCardsDeleted + 1;
+								$("#message-success .message-text").html('The membership cards were successfully deleted.');
+						      	$("#message-success").fadeIn();
+								if ($numberOfMembershipCardsDeleted >= $numberOfMembershipCardsToDelete)
+						      	{
+						      		$("html, body").animate({scrollTop: $("#flash_messages").offset().top - 50},'slow');
+									$("#ajax_loading").hide();
+									$("#form-current-page").val('1');
+									loadResults();
+								}
+							}
+						});
+					});
+				} else {
+					$("#flash_messages .message").hide();
+					$("#message-error .message-text").html('Sorry, you did not select any membership cards to delete.');
+			      	$("#message-error").fadeIn();
+			      	$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+				}
+			}
+        });
+    
+		{# Update check boxes #}
+		$(".membership-card-active").live('click', function() {
+			var $options = new Array();
+			$(".membership-card-active:checked").each(function(index) {
+				$options[$options.length] = $(this).attr("data-active");
+			});
+			$("#form-active").val($options.join("|"));
+			loadResults();
+		});
+		$(".user").live('click change', function() {
+			buildSelectedUsers();
+		});
+		
+		{# Select voucher codes #}
+		$(".action-select-all").live('click', function() {
+			if ($(".action-select-all").is(":checked"))
+			{
+				$(".action-select").attr("checked", "checked");
+				$(".action-select").parent().addClass("checked");
+				$("tr.membership-card").addClass("selected");
+			} else {
+				$(".action-select").attr("checked", false);
+				$(".action-select").parent().removeClass("checked");
+				$("tr.membership-card").removeClass("selected");
+			}
+		});
+        $(".action-select").live('click', function() {
+        	var $id = $(this).attr("data-id");
+        	if ($(this).is(":checked"))
+        	{
+        		$("#membership-card-"+$id).addClass("selected");
+        	} else {
+        		$("#membership-card-"+$id).removeClass("selected");
+        	}
+        });
+				
+		{# Close the more information panels #}
+		$(".action-close-more-information").live('click', function() {
+			$(".more-information, .more-information-detail").hide();
+			$("tr.membership-card td").removeAttr("style");
+			$("tr.membership-card button").removeClass("ui-button-blue");
+			$.mask.close();
+		});
+		
+		{# Setup date pickers #}
+		$("#form-valid-from-date-from").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-valid-from-date-from-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#form-valid-from-date-to").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-valid-from-date-to-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#form-expiry-date-from").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-expiry-date-from-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#form-expiry-date-to").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-expiry-date-to-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		
+		{# Check for number of uses #}
+		$("#voucher-code-discount-use").live('change', function() {
+			if ($(this).val() == 'f')
+			{
+				$("#voucher-code-discount-use-container").fadeIn();
+			} else {
+				$("#voucher-code-discount-use-container").fadeOut();
+			}
+		});
+	
+		{# Setup total range #}
+		$("#minimum-order-value-range").slider({
+			range: true,
+			min: 0,
+			max: 5000,
+			values: [0, 5000],
+			slide: function(event, ui) {
+				$("#minimum-order-value-range-amount").html("&pound;"+ui.values[0]+" - &pound;"+ui.values[1]);
+			},
+			change: function(event, ui) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#minimum-order-value-range-amount").html("&pound;"+$("#minimum-order-value-range").slider("values", 0)+" - &pound;"+$("#minimum-order-value-range").slider("values", 1));
+		
+		{# Show/Hide filters #}
+		$(".action-filter-results").live('click', function() {
+			if ($("#listing-filter").is(":hidden"))
+			{
+				$("#listing-filter").slideDown();
+				$("#filter-results-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-s").addClass("ui-icon-triangle-1-n");
+			} else {
+				$("#listing-filter").slideUp();
+				$("#filter-results-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+			}
+		});
+					
+		{# Update filters #}
+		$(".action-update-your-results").live('click', function() {
+			$("#form-current-page").val('1');
+			loadResults();
+		});
+		$("#form-voucher-code, #form-actives, #form-discount-types, #form-discount-uses, #form-valid-from-date-from-formatted, #form-valid-from-date-to-formatted, #form-expiry-date-from-formatted, #form-expiry-date-to-formatted").live('change', function() {
+			$("#form-current-page").val('1');
+			loadResults();
+		});
+		
+		$("#form-current-page").val('1');
+		loadResults();
+		
+		$("#form-sort-order, #form-max-results").live('change', function() {
+			$("#form-current-page").val('1');
+			loadResults();
+		});
+		
+		{# Change the page number #}
+		$(".page, .page-navigation").live('click', function() {
+			$("#form-current-page").val($(this).attr("data-page"));
+			loadResults();
+		});
+	});
+			
+	{# Show the more information #}
+	function showMoreInformation($id, $moreInformation, $button)
+	{
+		$(".form-error").hide();
+    	$("tr#membership-card-"+$id+" button").removeClass("ui-button-blue");
+    	if ($("#membership-card-"+$moreInformation+"-"+$id).is(":hidden"))
+    	{
+    		$("#more-information-"+$id+" .more-information-detail").hide();
+    		$("#more-information-"+$id).show();
+    		$("#membership-card-"+$moreInformation+"-"+$id).fadeIn();
+    		$("#more-information-"+$id+" td, #membership-card-"+$id+" td").expose({
+    			color: "#042F4F",
+    			loadSpeed: 2000,
+    			opacity: "0.6",
+    			onClose: function() {
+    				$(".form-error").hide();
+    				$(".more-information, .more-information-detail").fadeOut();
+    				$("#more-information-"+$id).fadeOut();
+    				$("#voucher-code-"+$id+" td").removeAttr("style");
+    				$("#more-information-"+$id+" .more-information-detail").fadeOut();
+    				$("tr#membership-card-"+$id+" button").removeClass("ui-button-blue");
+    			}
+    		});
+    		if (!$button.hasClass("ui-button-red"))
+    		{
+    			$button.addClass("ui-button-blue");
+    		}
+    	} else {
+    		$.mask.close();
+    		$("#more-information-"+$id).fadeOut();
+    		$("#more-information-"+$id+" .more-information-detail").fadeOut();
+    	}
+    	$("html, body").animate({scrollTop: $button.offset().top - 50},'slow');
+	}
+	
+	{# Build list of selected contacts #}
+	function buildSelectedUsers()
+	{
+		var $usersToCollect = $(".user:checked").length;
+		var $usersCollected = 0;
+		var $users = new Array();
+		$(".user:checked").each(function(index) {
+			$users[$users.length] = $(this).attr("data-id");
+			$usersCollected = $usersCollected + 1;
+			if ($usersCollected == $usersToCollect)
+			{
+				$("#form-user-id").val($users.join("|"));
+				loadResults();
+			}
+		});
+		if ($usersToCollect == 0)
+		{
+			$("#form-user-id").val("");
+			loadResults();
+		}
+	}
+	
+	{# Load the results #}
+	function loadResults()
+	{
+		$("#ajax_loading").show();
+		$listingCountLoaded = false;
+		$listingLoaded = false;
+		$listingPaginationLoaded = false;
+		loadListingCount();
+		loadListing();
+		loadListingPagination();
+	}
+	
+	{# Check all elements have been loaded #}
+	function checkResultsLoaded()
+	{
+		if ($listingCountLoaded && $listingLoaded && $listingPaginationLoaded)
+		{
+			$("#ajax_loading").hide();
+		}
+	}
+	
+	{# Load listing count #}
+	function loadListingCount()
+	{
+		$("#listing-count").html('<img src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /> Loading&hellip;');
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			url: "{{ path('admin_membership_cards_ajax_get_listing_count') }}",
+			data: {
+				membershipNumber: $("#form-membership-number").val(),
+	    		active: $("#form-active").val(),
+	    		userId: $("#form-user-id").val(),
+    			validFromDateFrom: $("#form-valid-from-date-from-formatted").val(),
+    			validFromDateTo: $("#form-valid-from-date-to-formatted").val(),
+    			expiryDateFrom: $("#form-expiry-date-from-formatted").val(),
+    			expiryDateTo: $("#form-expiry-date-to-formatted").val()
+			},
+			error: function(data) {
+				$("#listing-count").html('No Membership Cards Found');
+				$listingCountLoaded = true;
+				checkResultsLoaded();
+	      	},
+			success: function(data) {
+				if (data.response == 'success')
+    	    	{
+        			var $listingCount = parseInt(data.listingCount);
+        			if (($listingCount > 1) || ($listingCount < 1))
+        			{
+        				if ($listingCount < 1)
+	        			{
+    	    				$("#listing-count").html('No Membership Cards Found');
+        				} else {
+	        				$("#listing-count").html('Found '+$listingCount+' Membership Cards | Assigned: '+data.listingStatistics.assigned+' | Unassigned: '+data.listingStatistics.unassigned);
+	        			}
+	        		} else {
+    	    			$("#listing-count").html('Found 1 Membership Card | Assigned: '+data.listingStatistics.assigned+' | Unassigned: '+data.listingStatistics.unassigned);
+        			}	
+	        	} else {
+    	    		$("#listing-count").html('No Membership Cards Found');
+        		}
+        		$listingCountLoaded = true;
+	        	checkResultsLoaded();
+			}
+		});
+	}
+	
+	{# Load listing #}
+	function loadListing()
+	{
+		if ($("#listing").height() > 0)
+		{
+			$("#listing-loading").height($("#listing").height() - 12);
+		}
+		$("#listing-loading").show();
+		$("#listing").hide().html("");
+		$.ajax({
+			type: "GET",
+			url: "{{ path('admin_membership_cards_ajax_get_listing') }}",
+			data: {
+				membershipNumber: $("#form-membership-number").val(),
+	    		active: $("#form-actives").val(),
+	    		userId: $("#form-user-id").val(),
+    			validFromDateFrom: $("#form-valid-from-date-from-formatted").val(),
+    			validFromDateTo: $("#form-valid-from-date-to-formatted").val(),
+    			expiryDateFrom: $("#form-expiry-date-from-formatted").val(),
+    			expiryDateTo: $("#form-expiry-date-to-formatted").val(),
+	    		sortOrder: $("#form-sort-order").val(),
+	    		page: $("#form-current-page").val(),
+   				maxResults: $("#form-max-results").val()
+   			},
+			error: function(data) {
+				$("#listing-loading").hide();
+				$("#listing").html('<p class="ac">Sorry, no results were found.</p>').fadeIn();
+				$listingLoaded = true;
+				checkResultsLoaded();
+      		},
+			success: function(data) {
+				$("#listing-loading").hide();
+				$("#listing").html(data).fadeIn();
+        		$listingLoaded = true;
+        		checkResultsLoaded();
+			}
+		});
+	}
+	
+	{# Load listing pagination #}
+	function loadListingPagination()
+	{
+		$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+		$.ajax({
+			type: "GET",
+			url: "{{ path('admin_membership_cards_ajax_get_listing_pagination') }}",
+			data: {
+   				membershipNumber: $("#form-membership-number").val(),
+	    		active: $("#form-actives").val(),
+	    		userId: $("#form-user-id").val(),
+    			validFromDateFrom: $("#form-valid-from-date-from-formatted").val(),
+    			validFromDateTo: $("#form-valid-from-date-to-formatted").val(),
+    			expiryDateFrom: $("#form-expiry-date-from-formatted").val(),
+    			expiryDateTo: $("#form-expiry-date-to-formatted").val(),
+	    		page: $("#form-current-page").val(),
+   				maxResults: $("#form-max-results").val()
+   			},
+			error: function(data) {
+				$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+				$listingPaginationLoaded = true;
+				checkResultsLoaded();
+	      	},
+			success: function(data) {
+				$("#listing-pagination-top, #listing-pagination-bottom").html(data).fadeIn();
+	        	$listingPaginationLoaded = true;
+	        	checkResultsLoaded();
+			}
+		});
+	}
+</script>

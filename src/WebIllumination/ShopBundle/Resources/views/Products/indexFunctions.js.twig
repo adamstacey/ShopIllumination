@@ -1,0 +1,30 @@
+{# Function to update selected options #}
+function updateSelectedOptions()
+{
+	$("#ajax-loading").show();
+	var $selectedOptions = new Array();
+	$(".product-option-group").each(function(index) {
+		$selectedOptions[$selectedOptions.length] = $(this).val();
+	});
+	$("#selected-options-{{ product.id }}").val($selectedOptions.join("|"));
+	$("#product-price-loading").show();
+	$("#product-price").hide().html("");
+	$.ajax({
+			type: "GET",
+			url: "{{ path('products_ajax_get_product_price') }}",
+			data: {
+				productId: {{ product.id }},
+				selectedOptions: $("#selected-options-{{ product.id }}").val()
+			},
+			error: function(data) {
+				$("#product-price-loading").hide();
+				$("#product-price").html('<p class="no-results">Sorry, there was a problem updating the prices.</p>').fadeIn();
+				$("#ajax-loading").hide();
+      	},
+			success: function(data) {
+				$("#product-price-loading").hide();
+				$("#product-price").html(data).fadeIn();
+				$("#ajax-loading").hide();
+			}
+		});
+}

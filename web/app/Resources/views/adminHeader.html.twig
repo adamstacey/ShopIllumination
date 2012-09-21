@@ -1,0 +1,11 @@
+<header class="container_8 clearfix">
+	<div>
+		<h1><a title="Kitchen Appliance Centre: Control Panel" href="{{ path('homepage') }}"><strong>Kitchen Appliance Centre:</strong> Control Panel</a></h1>
+        {% if is_granted('ROLE_ADMIN') %}{% include '::adminSearch.html.twig' %}{% endif %}
+	</div>
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="grid_8">
+    		{% include '::adminTopMenu.html.twig' %}
+		</div>
+	{% endif %}
+</header>

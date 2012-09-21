@@ -1,0 +1,19 @@
+<p class="fl">Items: <strong>{{ basket.totals.items }}</strong><br />Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
+{% if basket.totals.items > 0 %}
+	<a title="Go to checkout" href="{{ path('checkout_secure_checkout') }}" class="button ui-button-green">Pay Now</a>
+	<a title="View your basket" href="{{ path('basket_your_basket') }}" class="button ui-button-blue">View</a>
+{% endif %}
+<script defer="defer" type="text/javascript">
+	$(document).ready(function() {
+		$("#basket-summary-content :checkbox:not(.no-uniform), #basket-summary-content :radio:not(.no-uniform), #basket-summary-content select:not(.no-uniform), #basket-summary-content :file:not(.no-uniform)").uniform();
+		$("#basket-summary-content .button").each(function () {
+            $(this).button({
+            	icons: {
+                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+                }, 
+               	text: $(this).attr('data-icon-only') === 'true'?false:true
+        	});
+        });
+	});
+</script>

@@ -1,0 +1,253 @@
+{% extends '::shop.html.twig' %}
+{% block title %}Delivery Costs and Delivery Times | {{ parent() }}{% endblock %}
+{% block metatags %}
+	<meta name="description" content="Free UK delivery on all orders where you spend over £500. Delivery times: 1-5 working days.">
+	<meta name="keywords" content="kitchen appliance centre, free uk delivery, uk mainland, ireland, kitchen appliances, delivery, quick delivery">
+{% endblock %}
+{% block slider %}
+	<div class="container_8 clearfix">
+		<header>
+			<div class="slider-gallery-container">
+				<div class="slider-gallery">
+					<div class="slider-element">
+						<img src="{{ asset('/bundles/webilluminationshop/images/headers/quick-delivery.jpg') }}" alt="Quick Delivery" />
+						<h3 class="right">Quick Delivery</h3>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+{% endblock %}
+{% block body %}
+	<header>
+		<h1>Your Delivery from Kitchen Appliance Centre</h1>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_6"> 
+			<div class="portlet">
+				<header>
+	                <h2>Delivery Information</h2>
+	            </header>
+				<section id="delivery-delivery-information">
+					<div class="clearfix">
+						<p class="no-margin-top">Kitchen Appliance Centre offers a variety of delivery options to suit your requirements. Please find below a list of options and our different delivery methods.</p>
+						<div class="ui-corner-all padding-10 ui-status-highlight margin-bottom-15">
+							<h3 class="no-margin-top">LONDON OLYMPICS AND PARALYMPICS 2012</h3>
+							<img class="fr margin-left-20 margin-top-5 margin-bottom-20" src="{{ asset('/bundles/webilluminationshop/images/logos/team-gb.png') }}" width="100" alt="Go Team GB" />
+							<p class="no-margin-top">While <strong>Team GB</strong> are doing all they can to bring home the gold we are trying to maintain the best possible service throughout the Games period. The greatest impact is expected from the end of July to the middle of September and affects the areas in and around central London, where roads will be busier and traffic restrictions will be in place. Other areas of the UK may also be affected, particularly those areas hosting Olympic events.</p>
+							<p>Unfortunately, orders being delivered by pallet to inner London addresses that have post codes beginning with HA, HP, NW, SW, UB, W, WC, TW, EN, E, N, IG, RM, EC, SE, DT, EX, RM, SS and SL during the games will automatically have a surcharge of <strong>&pound;50</strong> applied. This is what we are being charged by our delivery company and is being passed directly on.</p>
+							<p>Orders by mail, parcel or home delivery service delivered to inner London addresses during the games will <strong>NOT</strong> incur a surcharge, but may be delivered 1-2 days later.</p>
+							<p class="no-margin-bottom">Please <a href="{{ path('content_contact_us') }}">contact us</a> if you would like to arrange delivery at our normal rates after the games.</p>
+							<div class="clear"></div>
+						</div>
+						<div class="tabs">
+	                        <ul>
+	                            <li id="tab-delivery-prices"><a href="#delivery-prices">Delivery Prices</a></li>
+	                            <li id="tab-delivery-methods"><a href="#delivery-methods">Delivery Methods</a></li>
+	                            <li id="tab-faqs"><a href="#faqs">FAQs</a></li>
+	                            <li id="tab-terms-and-conditions"><a href="#terms-and-conditions">Terms &amp; Conditions</a></li>
+	                        </ul>
+	                        <section id="delivery-prices" class="form ui-helper-hidden">
+	                        	<h2 class="no-margin-top">Delivery Options</h2>
+	                        	<div class="info-message ui-status-highlight">
+									<span class="info-message-icon ui-icon ui-icon-info"></span>
+									<p>To find out how much delivery would cost to your address simply add the items you want to order to your <a href="{{ path('basket_your_basket') }}">basket</a>. From the <a href="{{ path('basket_your_basket') }}">basket</a> you can enter your post code for an exact cost and estimated delivery times.</p>
+									<div class="clear"></div>
+								</div>
+	                        	<h5>Delivery Options to UK Mainland (Monday - Friday)</h5>
+	                        	<h3>Small Packages</h3>
+	                        	<p>Small packages include items like: Ducting, Water Filters, Charcoal Filters, Lighting, Cleaning Products, After Care Kits and Plumbing.</p>
+	                        	<table class="listing" width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<th width="500" class="al">Delivery Options</th>
+										<th width="100" class="ac">Price</th>
+										<th class="ac">Estimated Delivery Times</th>
+									</tr>
+									<tr class="even">
+										<td width="500" class="al"><strong>Royal Mail 1st Class</strong><br /><span class="small">Small package sent recorded 1st Class by Royal Mail</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;3.95</span></strong></td>
+										<td class="ac"><strong>1-4 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+									<tr class="odd">
+										<td width="500" class="al"><strong>Royal Mail Economy</strong><br /><span class="small">Small package sent recorded Economy by Royal Mail</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;1.95</span></strong></td>
+										<td class="ac"><strong>3-7 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+	                        	</table>
+	                        	<h3>Medium Packages</h3>
+	                        	<p>Medium packages include items like: Taps, Plinth Heaters, Powerpods, Light Splashbacks, Small Extractors, Waste Disposals, Large Lighting, Large Ducting Kits, Small Hobs, Microwaves and Light Sinks.</p>
+	                        	<table class="listing" width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<th width="500" class="al">Delivery Options</th>
+										<th width="100" class="ac">Price</th>
+										<th class="ac">Estimated Delivery Times</th>
+									</tr>
+									<tr class="even">
+										<td width="500" class="al"><strong><span class="green">FREE DELIVERY</span> Parcel Express</strong><br /><span class="small">Package sent express service by courier DPD</span></td>
+										<td width="100" class="ac"><strong><span class="green">FREE</span></strong></td>
+										<td class="ac"><strong>1-5 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+	                        	</table>
+	                        	<h3>Large Packages</h3>
+	                        	<p>Large packages include items like: Fridges, Freezers, Ovens, Wine Coolers, Heavy Splashbacks, Compact Appliances, Heavy Sinks (Ceramic, Granite and certain Stainless Steel sinks), Large Extractors, Compact Appliances and Large Hobs.</p>
+	                        	<table class="listing" width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<th width="500" class="al">Delivery Options</th>
+										<th width="100" class="ac">Price</th>
+										<th class="ac">Estimated Delivery Times</th>
+									</tr>
+									<tr class="even">
+										<td width="500" class="al"><strong><span class="green">FREE DELIVERY</span> Pallet Express</strong><br /><span class="small">Pallet sent Express service by Palletways</span></td>
+										<td width="100" class="ac"><strong><span class="green">FREE</span></strong></td>
+										<td class="ac"><strong>1-6 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+									<tr class="odd">
+										<td width="500" class="al"><strong>Home Delivery Service</strong><br /><span class="small">Goods sent home delivery service by GHD Distribution</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;19.95-&pound;29.00</span></strong></td>
+										<td class="ac"><strong>5-14 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+	                        	</table>
+	                        	<h3>Extra Large Packages</h3>
+	                        	<p>Extra large packages include items like: American Fridge Freezers and Worktops.</p>
+	                        	<table class="listing" width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<th width="500" class="al">Delivery Options</th>
+										<th width="100" class="ac">Price</th>
+										<th class="ac">Estimated Delivery Times</th>
+									</tr>
+									<tr class="even">
+										<td width="500" class="al"><strong>Home Delivery Service</strong><br /><span class="small">Goods sent home delivery service by GHD Distribution</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;35.00-&pound;45.00</span></strong></td>
+										<td class="ac"><strong>5-16 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+	                        	</table>
+	                        	<h5 class="margin-top-20">Delivery Options Outside UK Mainland (Monday - Friday)</h5>
+	                        	<p><strong>Delivery to Republic of Ireland, Northern Ireland, Scottish Offshore, Scottish Highlands, Channel Islands, and Isle of Man.</strong></p>
+	                        	<h3>Small Packages</h3>
+	                        	<table class="listing" width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<th width="500" class="al">Delivery Options</th>
+										<th width="100" class="ac">Price</th>
+										<th class="ac">Estimated Delivery Times</th>
+									</tr>
+									<tr class="even">
+										<td width="500" class="al"><strong>Royal Mail 1st Class</strong><br /><span class="small">Small package sent recorded 1st Class by Royal Mail</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;4.95-&pound;7.95</span></strong></td>
+										<td class="ac"><strong>2-7 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+									<tr class="odd">
+										<td width="500" class="al"><strong>Royal Mail Economy</strong><br /><span class="small">Small package sent recorded Economy by Royal Mail</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;2.95 - &pound;3.95</span></strong></td>
+										<td class="ac"><strong>4-12 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+	                        	</table>
+	                        	<h3>Medium Packages</h3>
+	                        	<table class="listing" width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<th width="500" class="al">Delivery Options</th>
+										<th width="100" class="ac">Price</th>
+										<th class="ac">Estimated Delivery Times</th>
+									</tr>
+									<tr class="even">
+										<td width="500" class="al"><strong>Parcel Delivery Express</strong><br /><span class="small">Package sent express service by courier DPD</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;9.95-&pound;15.95</span></strong></td>
+										<td class="ac"><strong>2-8 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+									<tr class="odd">
+										<td width="500" class="al"><strong>Parcel Delivery Economy</strong><br /><span class="small">Package sent economy service by courier DPD</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;4.95 - &pound;7.95</span></strong></td>
+										<td class="ac"><strong>5-12 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+	                        	</table>
+	                        	<h3>Large Packages</h3>
+	                        	<table class="listing" width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<th width="500" class="al">Delivery Options</th>
+										<th width="100" class="ac">Price</th>
+										<th class="ac">Estimated Delivery Times</th>
+									</tr>
+									<tr class="even">
+										<td width="500" class="al"><strong>Pallet Delivery Service</strong><br /><span class="small">Pallet service by Palletways</span></td>
+										<td width="100" class="ac"><strong><span class="red">&pound;19.00-&pound;149.00</span></strong></td>
+										<td class="ac"><strong>2-14 Working Days</strong><br /><span class="small">If ordered before 2pm</span></td>
+									</tr>
+	                        	</table>
+	                        	<h3>Extra Large Packages</h3>
+	                        	<div class="info-message ui-status-error no-margin-bottom">
+									<span class="info-message-icon ui-icon ui-icon-alert"></span>
+									<p>Unfortunately, we are unable to deliver extra large packages to these areas at the moment.</p>
+									<p>If you have any items in your basket that are extra large and your delivery address falls in this area we will advise you, so you can remove the item from your basket and proceed with any smaller items you might have in your basket.</p>
+									<div class="clear"></div>
+								</div>
+	                        </section>
+	                        <section id="delivery-methods" class="form ui-helper-hidden">
+	                        	<h2 class="no-margin-top">Delivery Methods</h2>
+	                        	<h5>Mail Service</h5>
+	                        	<p>Our small packages are sent by mail through <a target="_blank" href="http://www.royalmail.com/">Royal Mail</a>. Once your order has been dispatched you will receive an email with details that will enable you to track and trace the delivery of your order.</p>
+	                        	<p><a target="_blank" href="http://track2.royalmail.com/">Track your order through Royal Mail.</a></p>
+	                        	<p><strong>Please Note:</strong> All mail sent through Royal Mail is sent recorded delivery. This means the recipient will be required to sign for delivery. To ensure your delivery is received on time please track your order, so the recipient is available when the order is due to be delivered.</p>
+	                        	<h5>Parcel Service</h5>
+	                        	<p>The majority of our medium packages are sent by parcel through <a target="_blank" href="http://www.dpd.co.uk/">DPD</a>. On some occasions we will send parcels by <a target="_blank" href="http://www.parcelforce.com/">Parcelforce</a>.</p>
+	                        	<p>Once your order has been dispatched with DPD you will receive an email with details that will enable you to track and trace the delivery of your order. If you supplied a mobile number with your order you will also receive a text message from DPD on the morning of your delivery advising you of your delivery slot.</p>
+	                        	<p><a target="_blank" href="http://www.dpd.co.uk/">Track your order through DPD.</a></p>
+	                        	<p>If your order has been dispatched with Parcelforce you will receive an email with details that will enable you to track and trace the delivery of your order.</p>
+	                        	<p><a target="_blank" href="http://www.parcelforce.com/track-trace">Track your order through Parcelforce.</a></p>
+	                        	<h5>Pallet Service</h5>
+	                        	<p>Our pallet service allows us to sometimes deliver much quicker if you are happy to have your goods delivered by pallet through <a target="_blank" href="http://www.palletways.com/">Palletways</a>.</p>
+	                        	<p>This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. (This service is subject to lorry access.)</p>
+	                        	<p>We will email you to let you know when your order has been dispatched. You will then receive a phone call 24 hours prior to delivery to arrange a suitable time slot. You will then receive a courtesy call one hour before your arranged delivery slot.</p>
+	                        	<h5>Home Delivery Service</h5>
+	                        	<p>Our home delivery service is provided by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.</p>
+	                        	<p class="no-margin-bottom">We will email you to let you know when your order has been dispatched. You will then receive a phone call within 1-3 days to arrange a suitable delivery time. When you are contacted you will be able to request a courtesy call one hour before your arranged delivery slot.</p>
+	                        </section>
+	                        <section id="faqs" class="form ui-helper-hidden">
+	                        	<h2 class="no-margin-top">Frequently asked Questions (FAQs)</h2>
+	                        	<h5>Do I have to pay delivery per item?</h5>
+	                        	<p><strong>The majority of items we sell can now be delivered at no cost (subject to items ordered and selected delivery address).</strong><br />If there is a delivery cost to pay you only pay per delivery and <strong>NOT</strong> per item.</p>
+	                        	<h5>Do you deliver anywhere?</h5>
+								<p>We deliver most items anywhere within the UK including Scottish Highlands, North and Republic of Ireland and Channel islands. (Some areas exclude Worktops and American Fridges.)</p>
+								<h5>Can you deliver to a different address?</h5>
+								<p>Yes we can but you will need to put your order through online for fraud security reasons.</p>
+								<h5>How do you deliver large/heavy items?</h5>
+								<p>We normally like to do most areas by home delivery using a two man delivery service. This way goods are handled correctly and taken into your property.</p>
+								<p>We also deliver by pallet service which is often much quicker, however this is a door step delivery only. (They will <strong>NOT</strong> take goods into the property.)</p>
+								<p><strong>Special Note</strong><br />Some parts of Scotland, Ireland and Channel islands are pallet service only.</p>						
+								<h5>Delivery Access</h5>
+								<p>Let us know if delivery access is restricted.</p>
+								<p>Restricted access includes:</p>
+								<ul class="no-margin-bottom">
+									<li>Parking permits</li>
+									<li>Yellow lines</li>
+									<li>Bus routes</li>
+									<li>Low bridges</li>
+									<li>Width restricted roads</li>
+									<li>Upper floor with no lift</li>
+									<li>Steps</li>
+								</ul>
+	                        </section>
+	                        <section id="terms-and-conditions" class="form ui-helper-hidden">
+	                        	<h2 class="no-margin-top">Terms &amp; Conditions</h2>
+	                        	<ul class="no-margin-bottom">
+	                        		<li>The delivery charges stated cover ground floor only. If you have any special requests for delivery, (for example you live in a flat) please make us aware of this at time of purchase and we shall endeavour to arrange special delivery for you. This may come with an additional charge. Please <a href="{{ path('content_contact_us') }}">contact us</a> for further information.</li>
+	                        		<li>We strongly recommend that you do not book fitters for your Appliances/Worktops until you have received and inspected your goods as delays/undeliverable items caused by a third party will not be compensated.</li>
+	                        		<li>
+	                        			The estimated delivery times are applicable when the following criteria has been met: 
+	                        			<ul>
+		                        			<li>The order is placed before the specified cut off time and all security checks have been completed.</li>
+		                        			<li>All items on the order are in stock and available for delivery.</li>
+		                        			<li>Cleared funds have been received in full for the order total.</li>
+		                        			<li>Delivery is to a UK mainland address, post code restrictions apply. Please check your delivery on the <a href="{{ path('basket_your_basket') }}">basket</a> before checking out.</li>
+		                        			<li>Product restrictions apply to products that don't deliver directly from our warehouse.</li>
+		                        			<li>Only available on items shipping directly from our warehouse.</li>
+	                        			</ul>
+	                        		</li>
+	                        	</ul>
+	                        </section>
+						</div>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	   	<div class="clear"></div>
+	</section>
+{% endblock %}

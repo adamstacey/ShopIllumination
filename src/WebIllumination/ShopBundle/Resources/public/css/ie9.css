@@ -1,0 +1,261 @@
+.gradient {
+	filter: none!important;
+}
+#wrapper > header > div.ddd,
+#wrapper > header nav > ul ul li a:hover,
+.portlet > header,
+.ui-widget-header,
+.ui-slider-handle,
+.ui-datepicker table .ui-state-highlight,
+.ui-datepicker table .ui-widget-content .ui-state-highlight,
+.ui-datepicker table .ui-widget-header .ui-state-highlight,
+.ui-datepicker table .ui-state-focus,
+.ui-datepicker table .ui-widget-content .ui-state-focus,
+.ui-datepicker table .ui-widget-header .ui-state-focus,
+.ui-autocomplete.ui-menu.ui-widget.ui-widget-content {
+	filter: none!important; /* IE6-8 */
+}
+.ui-tabs-vertical .ui-tabs-nav, .ui-slider-vertical .ui-slider-range {
+	filter: none!important; /* IE6-8 */
+}
+.pagination li a,
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.el-finder-cwd table tr th,
+div.selector span,
+div.uploader span.action,
+div.button,
+div.checker,
+div.radio,
+.el-finder-toolbar,
+.el-finder-statusbar,
+.defaultSkin .mceToolbar,
+.defaultSkin .mceStatusbar {
+	filter: none!important; /* IE6-8 */
+}
+.pagination li a:active,
+.pagination li a:hover:active,
+.ui-button.ui-state-hover:active,
+.ui-button.ui-widget.ui-state-active,
+.ui-buttonset .ui-button.ui-state-active,
+.fc-header .ui-state-down,
+.fc-header .ui-state-active,
+.slidernav .prev:active,
+.slidernav .next:active,
+.defaultSkin a.mceButton.mceButtonEnabled:hover:active,
+.defaultSkin table.mceSplitButton.mceSplitButtonEnabled:hover a.mceAction:active {
+	filter: none!important; /* IE6-8 */
+}
+.ui-button.ui-button-default {
+	filter: none!important; /* IE6-8 */
+}
+.ui-button-green, .ui-button-green:hover, .ui-button-green:link, .ui-button-green:visited
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-button-green:hover
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-button-red, .ui-button-red:hover, .ui-button-red:link, .ui-button-red:visited
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-button-red:hover
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-button-orange, .ui-button-orange:hover, .ui-button-orange:link, .ui-button-orange:visited
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-button-orange:hover
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-button.ui-button-default:active, .ui-button.ui-button-default.ui-state-active {
+	filter: none!important; /* IE6-8 */
+}
+.ui-button.ui-button-delete {
+	filter: none!important; /* IE6-8 */
+}
+.ui-button.ui-button-delete:active, .ui-button.ui-button-delete.ui-state-active {
+	filter: none!important; /* IE6-8 */
+}
+/* Progress */
+.ui-progressbar,
+.ui-slider-handle.ui-state-hover.ui-state-active,
+div.uploader.focus:active span.action,
+div.uploader:hover:active span.action,
+div.uploader.active:hover span span.action,
+div.selector.focus.active span.actiondiv.selector.focus:active span,
+div.selector:hover:active span,
+div.selector.active:hover span,
+div.selector.focus.active span,
+div.checker.focus:active,
+div.checker.hover:active,
+div.checker.active:hover,
+div.checker.focus.active,
+div.radio.focus:active,
+div.radio.hover:active,
+div.radio.active:hover,
+div.radio.focus.active {
+	filter: none!important; /* IE6-8 */
+}
+.pagination li a:hover,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+div.uploader.focus span.action,
+div.uploader.hover span.action,
+div.uploader:hover span.action,
+div.checker.focus,
+div.checker:focus,
+div.checker.hover,
+div.checker:hover,
+div.radio.focus,
+div.radio:focus,
+div.radio.hover,
+div.radio:hover,
+.defaultSkin a.mceButton.mceButtonEnabled:hover,
+.defaultSkin table.mceSplitButton.mceSplitButtonEnabled:hover a.mceAction {
+	filter: none!important; /* IE6-8 */
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+	filter: none!important; /* IE6-8 */
+}
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
+	filter: none!important; /* IE6-8 */
+}
+.ui-state-success, .ui-widget-content .ui-state-success, .ui-widget-header .ui-state-success {
+	filter: none!important; /* IE6-8 */
+}
+.ui-status-highlight
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-status-error
+{
+	filter: none!important; /* IE6-8 */
+}
+.ui-status-success
+{
+	filter: none!important; /* IE6-8 */
+}
+textarea,
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=seourl],
+input[type=date],
+input[type=number],
+input[type=time],
+input[type=date],
+div.checker,
+div.radio,
+div.selector span,
+div.uploader {
+	filter: none!important; /* IE6-8 */
+}
+textarea.error,
+input[type=text].error,
+input[type=password].error,
+input[type=email].error,
+input[type=url].error,
+input[type=seourl].error,
+input[type=date].error,
+input[type=number].error,
+input[type=time].error,
+input[type=date].error {
+	filter: none!important; /* IE6-8 */
+}
+textarea:focus,
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=email]:focus,
+input[type=url]:focus,
+input[type=seourl]:focus,
+input[type=date]:focus,
+input[type=number]:focus,
+input[type=time]:focus,
+input[type=date]:focus,
+.ui-focused {
+	filter: none!important; /* IE6-8 */
+}
+#ajax-loading
+{
+	filter: none!important; /* IE6-8 */
+}
+.special-offer .features-link
+{
+	filter: none!important; /* IE6-8 */
+}
+.product .features-link
+{
+	filter: none!important; /* IE6-8 */  
+}
+#wrapper > header .search-box
+{
+	filter: none!important; /* IE6-8 */  
+}
+#basket-summary
+{
+	filter: none!important; /* IE6-8 */  
+}
+#wrapper > header .search-box-glowing
+{
+	filter: none!important; /* IE6-8 */  
+}
+#wrapper > header .search-box > button
+{
+	filter: none!important; /* IE6-8 */  
+}
+#wrapper > header .main-menu
+{
+	filter: none!important; /* IE6-8 */  
+}
+#wrapper > header nav > ul ul li a
+{
+	filter: none!important; /* IE6-8 */  
+}
+#wrapper > header nav > ul ul li a:hover
+{
+	filter: none!important; /* IE6-8 */  
+}
+.main-section > nav a.chevron
+{
+	filter: none!important; /* IE6-8 */  
+}
+.main-section > nav a.chevron:hover
+{
+	filter: none!important; /* IE6-8 */  
+}
+.isotope-contacts li .photo
+{
+	filter: none!important; /* IE6-8 */  
+}
+ul.brand-department li a
+{
+	filter: none!important; /* IE6-8 */  
+}
+ul.brand-department li a:hover
+{
+	filter: none!important; /* IE6-8 */  
+}
+.basket-free-delivery
+{
+	filter: none!important; /* IE6-8 */  
+}
+.basket-privilege-card
+{
+	filter: none!important; /* IE6-8 */  
+}
+#basket-contents th
+{
+	filter: none!important; /* IE6-8 */  
+}

@@ -1,0 +1,227 @@
+<div class="ui-helper-hidden more-information-detail" id="voucher-code-discounts-{{ voucherCode.id }}">
+	{% if (voucherCode.discountType == 'd') or (voucherCode.discountType == 'm') %}
+		<div class="ui-widget message">
+		    <div class="ui-state-highlight ui-corner-all no-margin">
+		    	<span class="ui-icon ui-icon-info"></span>
+		        <p>This voucher code entitles the customer to <strong>"{{ voucherCode.discountTypeName }}"</strong>, so no further discounts are available.</p>
+		    </div>
+		</div>
+	{% else %}	
+		<div id="discounts-success-message-{{ voucherCode.id }}" class="ui-helper-hidden ui-widget message closeable">
+		    <div class="ui-state-success ui-corner-all no-margin">
+		    	<span class="ui-icon ui-icon-circle-check"></span>
+		        <p><strong>SUCCESS:</strong> <span id="discounts-success-message-text-{{ voucherCode.id }}"></span></p>
+		    </div>
+		</div>
+		<div id="discounts-error-message-{{ voucherCode.id }}" class="ui-helper-hidden ui-widget message closeable">
+		    <div class="ui-state-error ui-corner-all no-margin">
+		    	<span class="ui-icon ui-icon-alert"></span>
+		        <p><strong>ERROR:</strong> <span id="discounts-error-message-text-{{ voucherCode.id }}"></span></p>
+		    </div>
+		</div>
+		<h5 class="no-margin-top">Order Discount</h5>
+		<div class="ui-widget message no-margin-bottom">
+		    <div class="ui-state-highlight ui-corner-all no-margin">
+		    	<span class="ui-icon ui-icon-info"></span>
+		        <p>To take an amount off the total order value please enter the amount in the box below.</p>
+		    </div>
+		</div>
+		<table width="100%">
+			<tr>
+				<td width="140" class="label"><label>Order Discount ({{ voucherCode.discountTypeSymbol|raw }}):</label></td>
+				<td class="no-padding"><input type="text" id="discounts-discount-{{ voucherCode.id }}" class="no-margin full decimal" value="{{ voucherCode.discount|number_format(2) }}" /></td>
+				<td width="60" class="no-padding"><button data-id="{{ voucherCode.id }}" class="button no-float ui-button-green action-save-discount" data-icon-primary="ui-icon-check">Save</button></td>
+			</tr>
+		</table>
+		<h5>Brand Discounts<button data-id="{{ voucherCode.id }}" class="ui-corner-none ui-corner-tr button ui-button-green action-view-add-brand-discount" data-icon-primary="ui-icon-plusthick" data-icon-only="true">Add</button></h5>
+		<div id="brand-discount-confirm-delete-{{ voucherCode.id }}" class="ui-widget message ui-helper-hidden">
+		    <div class="ui-state-highlight ui-corner-all"> 
+		    	<div class="confirmation-message fl no-margin no-padding">
+		    		<span class="ui-icon ui-icon-help"></span>
+		    		<p class="small-message"><strong>WARNING:</strong> Are you sure you want to delete the highlighted brand discount?</p>
+		    	</div>
+		        <div class="fr no-margin no-padding">
+		        	<a href="Javascript:void(0);" data-brand-id="" data-voucher-code-id="" id="brand-discount-confirm-delete-button-{{ voucherCode.id }}" class="button ui-corner-none ui-corner-tr ui-corner-br ui-button-red action-delete-brand-discount" data-icon-primary="ui-icon-closethick">Confirm Delete</a>
+		        	<a href="Javascript:void(0);" data-brand-id="" data-voucher-code-id="" id="brand-discount-cancel-delete-button-{{ voucherCode.id }}" class="button ui-corner-none ui-corner-tl ui-corner-bl ui-button-blue action-cancel-delete-brand-discount">Cancel</a>
+		        </div>
+		        <div class="clear"></div>
+		    </div>
+		</div>
+		<div class="ui-helper-hidden" id="add-brand-discount-{{ voucherCode.id }}">
+			<table width="100%">
+				<tr>
+					<td width="80" class="label"><label>Brand:</label></td>
+					<td class="no-padding">
+						<select id="discounts-brand-id-{{ voucherCode.id }}" class="no-margin full">
+							<option value="">- Please Select -</option>
+							{% for brand in brands %}
+								<option value="{{ brand.id }}">{{ brand.brand }}</option>				
+							{% endfor %}
+						</select>
+					</td>
+					<td width="160" class="no-padding">
+						<div class="position-relative">
+							<input placeholder="Find a brand&hellip;" type="text" id="discounts-brand-{{ voucherCode.id }}" class="embedded-icon no-margin full" value="" />
+							<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+						</div>
+					</td>
+					<td width="80" class="label"><label>Discount ({{ voucherCode.discountTypeSymbol|raw }}):</label></td>
+					<td width="80" class="no-padding"><input type="text" id="discounts-brand-discount-{{ voucherCode.id }}" class="no-margin full decimal" value="0.00" /></td>
+					<td width="60" class="no-padding"><button data-id="{{ voucherCode.id }}" class="button no-float ui-button-green action-add-brand-discount" data-icon-primary="ui-icon-check">Save</button></td>
+				</tr>
+			</table>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("#discounts-brand-{{ voucherCode.id }}").autocomplete({
+						source: brands,
+						focus: function(event, ui) {
+							$("#discounts-brand-{{ voucherCode.id }}").val(ui.item.label);
+							$("#uniform-discounts-brand-id-{{ voucherCode.id }} span").html($("#discounts-brand-id-{{ voucherCode.id }} option[value='"+ui.item.value+"']").text());
+							$("#discounts-brand-id-{{ voucherCode.id }} option").removeAttr("selected");
+							$("#discounts-brand-id-{{ voucherCode.id }} option[value='"+ui.item.value+"']").attr("selected", "selected");
+							return false;
+						},
+						select: function(event, ui) {
+							$("#discounts-brand-{{ voucherCode.id }}").val("");
+							return false;
+						}
+					});
+				});
+			</script>
+		</div>
+		<div id="brand-discounts-loading-{{ voucherCode.id }}" class="loading-container">
+			<p class="ac"><img class="no-float" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+			<p class="ac">Loading&hellip;</p>
+		</div>
+		<div class="sub-table-data-container" id="brand-discounts-{{ voucherCode.id }}">
+			<p class="ac">There are no brand discounts setup.</p>
+		</div>
+		<h5>Department Discounts<button data-id="{{ voucherCode.id }}" class="ui-corner-none ui-corner-tr button ui-button-green action-view-add-department-discount" data-icon-primary="ui-icon-plusthick" data-icon-only="true">Add</button></h5>
+		<div id="department-discount-confirm-delete-{{ voucherCode.id }}" class="ui-widget message ui-helper-hidden">
+		    <div class="ui-state-highlight ui-corner-all"> 
+		    	<div class="confirmation-message fl no-margin no-padding">
+		    		<span class="ui-icon ui-icon-help"></span>
+		    		<p class="small-message"><strong>WARNING:</strong> Are you sure you want to delete the highlighted department discount?</p>
+		    	</div>
+		        <div class="fr no-margin no-padding">
+		        	<a href="Javascript:void(0);" data-department-id="" data-voucher-code-id="" id="department-discount-confirm-delete-button-{{ voucherCode.id }}" class="button ui-corner-none ui-corner-tr ui-corner-br ui-button-red action-delete-department-discount" data-icon-primary="ui-icon-closethick">Confirm Delete</a>
+		        	<a href="Javascript:void(0);" data-department-id="" data-voucher-code-id="" id="department-discount-cancel-delete-button-{{ voucherCode.id }}" class="button ui-corner-none ui-corner-tl ui-corner-bl ui-button-blue action-cancel-delete-department-discount">Cancel</a>
+		        </div>
+		        <div class="clear"></div>
+		    </div>
+		</div>
+		<div class="ui-helper-hidden" id="add-department-discount-{{ voucherCode.id }}">
+			<table width="100%">
+				<tr>
+					<td width="80" class="label"><label>Department:</label></td>
+					<td class="no-padding">
+						<select id="discounts-department-id-{{ voucherCode.id }}" class="no-margin full">
+							<option value="">- Please Select -</option>
+							{% for department in departments %}
+								<option value="{{ department.id }}">{% if department.level > 0 %}{% for level in 1..department.level %}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ department.department }} ({{ department.productCount }})</option>				
+							{% endfor %}
+						</select>
+					</td>
+					<td width="160" class="no-padding">
+						<div class="position-relative">
+							<input placeholder="Find a department&hellip;" type="text" id="discounts-department-{{ voucherCode.id }}" class="embedded-icon no-margin full" value="" />
+							<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+						</div>
+					</td>
+					<td width="80" class="label"><label>Discount ({{ voucherCode.discountTypeSymbol|raw }}):</label></td>
+					<td width="80" class="no-padding ac"><input type="text" id="discounts-department-discount-{{ voucherCode.id }}" class="ac no-margin full decimal" value="0.00" /></td>
+					<td width="60" class="no-padding"><button data-id="{{ voucherCode.id }}" class="button no-float ui-button-green action-add-department-discount" data-icon-primary="ui-icon-check">Save</button></td>
+				</tr>
+			</table>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("#discounts-department-{{ voucherCode.id }}").autocomplete({
+						source: departments,
+						focus: function(event, ui) {
+							$("#discounts-department-{{ voucherCode.id }}").val(ui.item.label);
+							$("#uniform-discounts-department-id-{{ voucherCode.id }} span").html($("#discounts-department-id-{{ voucherCode.id }} option[value='"+ui.item.value+"']").text());
+							$("#discounts-department-id-{{ voucherCode.id }} option").removeAttr("selected");
+							$("#discounts-department-id-{{ voucherCode.id }} option[value='"+ui.item.value+"']").attr("selected", "selected");
+							return false;
+						},
+						select: function(event, ui) {
+							$("#discounts-department-{{ voucherCode.id }}").val("");
+							return false;
+						}
+					});
+				});
+			</script>
+		</div>
+		<div id="department-discounts-loading-{{ voucherCode.id }}" class="loading-container">
+			<p class="ac"><img class="no-float" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+			<p class="ac">Loading&hellip;</p>
+		</div>
+		<div class="sub-table-data-container" id="department-discounts-{{ voucherCode.id }}">
+			<p class="ac">There are no department discounts setup.</p>
+		</div>
+		
+		<h5>Product Discounts<button data-id="{{ voucherCode.id }}" class="ui-corner-none ui-corner-tr button ui-button-green action-view-add-product-discount" data-icon-primary="ui-icon-plusthick" data-icon-only="true">Add</button></h5>
+		<div id="product-discount-confirm-delete-{{ voucherCode.id }}" class="ui-widget message ui-helper-hidden">
+		    <div class="ui-state-highlight ui-corner-all"> 
+		    	<div class="confirmation-message fl no-margin no-padding">
+		    		<span class="ui-icon ui-icon-help"></span>
+		    		<p class="small-message"><strong>WARNING:</strong> Are you sure you want to delete the highlighted product discount?</p>
+		    	</div>
+		        <div class="fr no-margin no-padding">
+		        	<a href="Javascript:void(0);" data-product-id="" data-voucher-code-id="" id="product-discount-confirm-delete-button-{{ voucherCode.id }}" class="button ui-corner-none ui-corner-tr ui-corner-br ui-button-red action-delete-product-discount" data-icon-primary="ui-icon-closethick">Confirm Delete</a>
+		        	<a href="Javascript:void(0);" data-product-id="" data-voucher-code-id="" id="product-discount-cancel-delete-button-{{ voucherCode.id }}" class="button ui-corner-none ui-corner-tl ui-corner-bl ui-button-blue action-cancel-delete-product-discount">Cancel</a>
+		        </div>
+		        <div class="clear"></div>
+		    </div>
+		</div>
+		<div class="ui-helper-hidden" id="add-product-discount-{{ voucherCode.id }}">
+			<table width="100%">
+				<tr>
+					<td width="80" class="label"><label>Product:</label></td>
+					<td class="no-padding">
+						<select id="discounts-product-id-{{ voucherCode.id }}" class="no-margin full">
+							<option value="">- Please Select -</option>
+							{% for product in products %}
+								<option value="{{ product.productId }}">{{ product.header }}</option>				
+							{% endfor %}
+						</select>
+					</td>
+					<td width="160" class="no-padding">
+						<div class="position-relative">
+							<input placeholder="Find a product&hellip;" type="text" id="discounts-product-{{ voucherCode.id }}" class="embedded-icon no-margin full" value="" />
+							<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+						</div>
+					</td>
+					<td width="80" class="label"><label>Discount ({{ voucherCode.discountTypeSymbol|raw }}):</label></td>
+					<td width="80" class="no-padding ac"><input type="text" id="discounts-product-discount-{{ voucherCode.id }}" class="ac no-margin full decimal" value="0.00" /></td>
+					<td width="60" class="no-padding"><button data-id="{{ voucherCode.id }}" class="button no-float ui-button-green action-add-product-discount" data-icon-primary="ui-icon-check">Save</button></td>
+				</tr>
+			</table>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$("#discounts-product-{{ voucherCode.id }}").autocomplete({
+						source: products,
+						focus: function(event, ui) {
+							$("#discounts-product-{{ voucherCode.id }}").val(ui.item.label);
+							$("#uniform-discounts-product-id-{{ voucherCode.id }} span").html($("#discounts-product-id-{{ voucherCode.id }} option[value='"+ui.item.value+"']").text());
+							$("#discounts-product-id-{{ voucherCode.id }} option").removeAttr("selected");
+							$("#discounts-product-id-{{ voucherCode.id }} option[value='"+ui.item.value+"']").attr("selected", "selected");
+							return false;
+						},
+						select: function(event, ui) {
+							$("#discounts-product-{{ voucherCode.id }}").val("");
+							return false;
+						}
+					});
+				});
+			</script>
+		</div>
+		<div id="product-discounts-loading-{{ voucherCode.id }}" class="loading-container">
+			<p class="ac"><img class="no-float" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+			<p class="ac">Loading&hellip;</p>
+		</div>
+		<div class="sub-table-data-container" id="product-discounts-{{ voucherCode.id }}">
+			<p class="ac">There are no product discounts setup.</p>
+		</div>
+	{% endif %}
+</div>

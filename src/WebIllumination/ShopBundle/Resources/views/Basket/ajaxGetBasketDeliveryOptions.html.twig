@@ -1,0 +1,74 @@
+<h5>Available Locations</h5>
+<div class="clearfix separator">
+	<div class="clearfix">
+		<div class="form-input">
+			<select class="full" name="delivery-country-code" id="form-delivery-country-code">
+				<option{% if basket.delivery.countryCode == 'GB' %} selected="selected"{% endif %} value="GB">United Kingdom</option>
+				<option{% if basket.delivery.countryCode == 'IE' %} selected="selected"{% endif %} value="IE">Republic of Ireland</option>
+			</select>
+		</div>
+	</div>
+    <div id="delivery-post-zip-code-container" class="clearfix{% if basket.delivery.countryCode != 'GB' %} ui-helper-hidden{% endif %}">
+        <div class="form-input"><input class="full" data-validation-type="postcode" placeholder="Postcode..." data-message="Invalid postcode" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" required="required" value="{{ basket.delivery.postZipCode|default('') }}" /></div>
+    </div>
+    <div class="clearfix ac margin-top-5">
+    	<a href="Javascript:void(0);" rel="nofollow" class="small full action-update-delivery-options button ui-button-green">Update Delivery Options</a>
+    </div>
+</div>
+<h5>Available Options</h5>
+<div class="clearfix separator">
+	{% if basket.delivery.postZipCode == '' %}
+		<div class="info-message ui-status-highlight margin-bottom-5">
+			<span class="info-message-icon ui-icon ui-icon-info"></span>
+			<p>Your options are currently based on delivery to our <a href="{{ path('content_delivery') }}">standard area</a>.</p>
+			<div class="clear"></div>
+		</div>
+	{% endif %}
+	{% for deliveryOption in basket.delivery.deliveryOptions %}
+		<div data-delivery-option="{{ loop.index }}" class="form-input delivery-option{% if loop.first %} no-margin-top{% endif %}">
+			<span data-delivery-option="{{ loop.index }}" class="fr action-show-delivery-option-description ui-button-icon-primary ui-icon ui-icon-help"></span>
+			<label>
+				<input{% if basket.delivery.service == deliveryOption.service %} checked="checked"{% endif %} type="radio" name="delivery-option" value="{{ deliveryOption.service }}" />
+				<span class="delivery-service">{{ deliveryOption.service|replace({'FREE DELIVERY': '<span class="free"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}{% if deliveryOption.price != 0 %} - <span class="delivery-price">&pound;{{ deliveryOption.price|number_format(2) }}</span>{% endif %}</span>
+				{% if deliveryOption.surcharge > 0 %}
+					<br /><span class="delivery-surcharge">{{ deliveryOption.surchargeDescription|raw }}</span>
+				{% endif %}
+				{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}
+					<br /><span class="delivery-timeframes"><em>({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days)</em></span>
+				{% endif %}
+			</label>
+		</div>
+		<div data-delivery-option="{{ loop.index }}" class="ui-helper-hidden delivery-option-description{% if loop.last %} no-margin-bottom{% endif %}">{{ deliveryOption.description|raw }}</div>
+	{% else %}
+		<div class="form-input delivery-option no-margin-top"><label><span class="no-padding delivery-service"><strong>There are no delivery options available.</strong></span></label></div>
+	{% endfor %}
+</div>
+{% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.end is defined) %}
+	<h5>Estimated Delivery Between</h5>
+	<div class="clearfix">
+		<p class="delivery-time"><strong>{{ basket.estimatedDeliveryDays.start }}</strong></p>
+		<p class="delivery-time">-</p>
+		<p class="delivery-time"><strong>{{ basket.estimatedDeliveryDays.end }}</strong></p>
+		<p class="ac small-info no-margin-bottom">Estimated delivery times are subject to availability, selected delivery options and locations.</p>
+	</div>
+{% endif %}
+<script defer="defer" type="text/javascript">
+	$(document).ready(function() {
+		$("#basket-delivery-options :checkbox:not(.no-uniform), #basket-delivery-options :radio:not(.no-uniform), #basket-delivery-options select:not(.no-uniform), #basket-delivery-options :file:not(.no-uniform)").uniform();
+		$("#basket-delivery-options .button").each(function () {
+            $(this).button({
+            	icons: {
+                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+                }, 
+               	text: $(this).attr('data-icon-only') === 'true'?false:true
+        	});
+        });
+        $("#basket-delivery-options .selector").addClass("full");
+        $("#form-delivery-post-zip-code").bind('keyup', function() {
+			var $currentCaretPosition = $(this).caret();
+	    	$(this).val($(this).val().toUpperCase());
+	    	$(this).caret($currentCaretPosition);
+		});
+	});
+</script>

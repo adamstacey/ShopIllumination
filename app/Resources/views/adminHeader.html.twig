@@ -1,0 +1,11 @@
+<header class="container_8 clearfix">
+	<div>
+		<h1><a title="Kitchen Appliance Centre" href="{{ path('orders') }}"><img height="70" src="{{ asset('bundles/webilluminationadmin/images/logos/kitchen-appliance-centre.png') }}" border="0" alt="Kitchen Appliance Centre" /></a></h1>
+        <!--{% if is_granted('ROLE_ADMIN') %}{% include '::adminSearch.html.twig' %}{% endif %}-->
+	</div>
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="grid_8">
+    		{% include '::adminTopMenu.html.twig' %}
+		</div>
+	{% endif %}
+</header>

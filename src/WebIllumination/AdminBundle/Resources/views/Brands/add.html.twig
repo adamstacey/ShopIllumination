@@ -1,0 +1,107 @@
+{% extends '::admin.html.twig' %}
+{% block title %}Add New {{ settings.singleItemTitle }} | {{ parent() }}{% endblock %}
+{% block headerscripts %}
+	{{ parent() }}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/tinymce/jquery.tinymce.js' output='js/tinymce.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/file-upload.js' output='js/file-upload.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+{% block leftmenu %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:Brands:leftMenu.html.twig' %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	<h2>Add New {{ settings.singleItemTitle }}</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+        <div class="grid_6">
+            <div class="portlet">
+                <header>
+                    <h2>{{ settings.singleItemTitle }} Information</h2>
+                </header>
+                <section>
+                	<form class="form has-validation" id="form-add" method="post" action="{{ path('admin_'~settings.multipleItemsPath~'_add') }}">
+						<div class="clearfix">
+					        <label for="form-brand" class="form-label"><em>*</em> Name<small>Enter the {{ settings.singleItemDescription }} name</small></label>
+					        <div class="form-input"><input type="text" id="form-brand" name="brand" required="required" data-message="Please enter the name of the {{ settings.singleItemDescription }}." value="" /></div>
+					    </div>
+					    
+					    <div class="clearfix">
+					        <label for="form-brand" class="form-label">Logo<small>Upload a logo</small></label>
+					        <div class="form-input">
+					        	<div class="images-container">
+									<ul class="list-fields">
+										<li>
+								        	<table width="100%">
+												<tbody>
+													<tr>
+														<td>
+															<div class="image-file-upload" id="logo-image-file-upload"></div>
+															<div class="image-file-uploading ui-helper-hidden" id="logo-image-file-uploading">
+																<img class="fl" alt="Loading" width="16" height="11" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-file-loader.gif') }}" />
+																<p>Please wait, uploading file&hellip;</p>
+															</div>
+															<div id="logo-image-upload-success" class="ui-widget image-upload-success image-upload-message ui-helper-hidden">
+															    <div class="ui-state-success no-margin ui-corner-all"> 
+															        <p class="no-margin">
+															            <span class="ui-icon ui-icon-circle-check"></span>
+															            <span class="image-upload-success-text" id="logo-image-upload-success-text"></span>
+															            <img class="fr action-cancel-logo-image-upload" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+															        </p>
+															    </div>
+															</div>
+															<div id="logo-image-upload-error" class="ui-widget image-upload-error image-upload-message ui-helper-hidden">
+															    <div class="ui-state-error no-margin ui-corner-all"> 
+															        <p class="no-margin">
+															            <span class="ui-icon ui-icon-alert"></span>
+															            <span class="image-upload-error-text" id="logo-image-upload-error-text"></span>
+															            <img class="fr action-cancel-logo-image-upload" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+															        </p>
+															    </div>
+															</div>
+															<input type="hidden" id="form-logo-image-file" class="image-file" />		
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</li>
+									</ul>
+								</div>
+					        </div>
+					    </div>
+					    <div class="clearfix">
+					    	<label for="form-description" class="form-label">Description<small>Detailed description</small></label>
+					        <div class="form-input">
+					        	<div class="ac">
+					                <div class="buttonset no-margin-right">
+					                    <input type="radio" class="show-tinymce" rel="#form-description" name="tinymce-description" value="1" id="tinymce-description-1" checked="checked" /><label for="tinymce-description-1">Visual</label>
+					                    <input type="radio" class="show-tinymce" rel="#form-description" name="tinymce-description" value="0" id="tinymce-description-0" /><label for="tinymce-description-0">HTML</label>
+					                    <hr class="inset" />
+					                </div>
+					                <div class="leading">
+					                    <textarea id="form-description" name="description" rows="3" class="tinymce-basic"></textarea>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					    <div class="clearfix">
+					        <div class="form-input buttons no-margin-bottom">
+					    		<button type="submit" class="button ui-button-green" data-icon-primary="ui-icon-check">Add New {{ settings.singleItemTitle }}</button>
+					        </div>
+					    </div>
+					</form>
+                </section>
+            </div>
+        </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':addScript.js.twig' with {'settings': settings, 'data': data} %}
+{% endblock %}

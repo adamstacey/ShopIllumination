@@ -1,0 +1,45 @@
+<script type="text/javascript">	
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-8584069-1']);
+	_gaq.push(['_trackPageview']);
+	_gaq.push(['_addTrans',
+    	'{{ order.orderNumber }}',
+    	'Kitchen Appliance Centre',
+    	'{{ order.total|number_format(2)|default('0.00') }}',
+    	'{{ order.vat|number_format(2)|default('0.00') }}',
+    	'{{ order.deliveryCharge|number_format(2)|default('0.00') }}',
+    	'{{ order.deliveryTownCity|default('') }}',
+    	'{{ order.deliveryCountyState|default('') }}',
+    	'{% if order.deliveryCountryCode == 'GB' %}United Kingdom{% elseif order.deliveryCountryCode == 'IE' %}Ireland{% endif %}'
+    ]);
+    {% for product in order.products %}
+	    _gaq.push(['_addItem',
+		    '{{ order.orderNumber }}',
+		    '{{ product.productCode }}',
+		    '{{ product.header }}',
+		    '{% if product.selectedOptionLabels|length > 0 %}{% for selectedOptionLabel in product.selectedOptionLabels %}{% if selectedOptionLabel != '' %}{{ selectedOptionLabel|raw }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}{% endif %}',
+		    '{{ product.unitCost|number_format(2)|default('0.00') }}',
+		    '{{ product.quantity }}'
+	    ]);
+	    _gaq.push(['_trackTrans']);
+	{% endfor %}
+    (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<script type="text/javascript">
+	var google_conversion_id = 1069059912;
+	var google_conversion_language = "en_GB";
+	var google_conversion_format = "1";
+	var google_conversion_color = "666666";
+	var google_conversion_label = "6EIdCIyxZRDInuL9Aw";
+	var google_conversion_value = {{ order.total|number_format(2)|default('0.00') }};
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js"></script>
+<noscript>
+	<div style="display:inline;">
+		<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1069059912/?value={{ order.total|number_format(2)|default('0.00') }}&amp;label=6EIdCIyxZRDInuL9Aw&amp;guid=ON&amp;script=0"/>
+	</div>
+</noscript>

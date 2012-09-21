@@ -1,0 +1,21 @@
+{% for deliveryOption in basket.delivery.deliveryOptions %}
+	<div data-delivery-option="{{ loop.index }}" class="delivery-option{% if loop.first %} no-margin-top{% endif %}"><span data-delivery-option="{{ loop.index }}" class="fr action-show-delivery-option-description ui-button-icon-primary ui-icon ui-icon-help"></span><label><input{% if basket.delivery.service == deliveryOption.service %} checked="checked"{% endif %} type="radio" name="delivery-option" value="{{ deliveryOption.service }}" /><span class="delivery-service">{{ deliveryOption.service|replace({'FREE DELIVERY': '<span class="free"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}{% if deliveryOption.price != 0 %} - <span class="delivery-price">&pound;{{ deliveryOption.price|number_format(2) }}</span>{% endif %}</span>{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}<br /><span class="delivery-timeframes"><em>({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days)</em></span>{% endif %}</label></div>
+	<div data-delivery-option="{{ loop.index }}" class="ui-helper-hidden delivery-option-description{% if loop.last %} no-margin-bottom{% endif %}">{{ deliveryOption.description|raw }}</div>
+{% else %}
+	<div class="delivery-option no-margin-top"><label><span class="no-padding delivery-service"><strong>There are no delivery options available.</strong></span></label></div>
+{% endfor %}
+<script defer="defer" type="text/javascript">
+	$(document).ready(function() {
+		$("#delivery-options :checkbox:not(.no-uniform), #delivery-options :radio:not(.no-uniform), #delivery-options select:not(.no-uniform), #delivery-options :file:not(.no-uniform)").uniform();
+		$("#delivery-options .button").each(function () {
+            $(this).button({
+            	icons: {
+                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+                }, 
+               	text: $(this).attr('data-icon-only') === 'true'?false:true
+        	});
+        });
+        $("#delivery-options .selector").addClass("full");
+	});
+</script>

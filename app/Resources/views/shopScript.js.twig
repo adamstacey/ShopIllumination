@@ -1,0 +1,248 @@
+<script defer="defer" type="text/javascript">
+	{% if (app.request.attributes.get('_route') != 'checkout_secure_checkout') and (app.request.attributes.get('_route') != 'checkout_order_failed') %}
+		{# Get the quick search results #}
+		function getSearchResults()
+		{
+			if ($("#quick_search").val().length >= 3)
+			{
+				$("#ajax-loading").show();
+				$(".slider-gallery-container").slideUp();
+				$("#search-results-title").html('Search Results: "'+$("#quick_search").val()+'"');
+				$("#search-container, .search-box-container").expose({
+	    			color: "#000000",
+	    			opacity: "0.3"
+	    		});
+				$.ajax({
+					type: "GET",
+					url: "{{ path('products_ajax_get_product_search') }}",
+					data: {
+	   					search: $("#quick_search").val()
+	   				},
+					error: function(data) {
+						$("#search-container").slideUp();
+						$(".slider-gallery-container").slideDown();
+		      			$("#ajax-loading").hide();
+		      		},
+					success: function(data) {
+						$("#search-results").html(data);
+						$("#search-container").slideDown(function() {
+							$("#ajax-loading").hide();
+						});
+					}
+				});
+			} else {
+				$("#search-container").slideUp();
+				$(".slider-gallery-container").slideDown();
+				$.mask.close();
+			}
+		}
+		
+		{# Update the basket summary #}
+		function getBasketSummary()
+		{
+			$("#basket-summary-loading").hide();
+			$("#basket-summary-content").show();
+			$.ajax({
+				type: "GET",
+				url: "{{ path('basket_ajax_get_basket_summary') }}",
+				error: function(data) {
+	      			$("#basket-summary-content").html('<p>Your basket could not be loaded at this time.</p>');
+	      		},
+				success: function(data) {
+					$("#basket-summary-content").html(data);
+					$("#basket-summary-loading").hide();
+					$("#basket-summary-content").fadeIn();
+				}
+			});
+		}
+	{% endif %}
+	
+	$(document).ready(function() {
+	
+	
+		{# Load the cookie policy #}
+		if ($.cookie('declinedCookies'))
+		{
+			$("#cookie-policy-disclaimer").hide();
+		}
+		if (!$.cookie('acceptedCookies')) {
+			$("#cookie-policy").slideDown();
+		} 
+		
+		{# Accept cookies #}
+		$(".action-accept-cookies").live('click', function() {
+			$.cookie('declinedCookies', null);
+			$.cookie('acceptedCookies', '1', {
+			     expires: 28,
+			     path: '/'
+			 });
+			 $("#cookie-policy").slideUp();
+		});
+		
+		{# Decline cookies #}
+		$(".action-decline-cookies").live('click', function() {
+			$.cookie('acceptedCookies', null);
+			$.cookie('declinedCookies', '1', {
+			     expires: 28,
+			     path: '/'
+			 });
+			 $("#cookie-policy-disclaimer").slideUp();
+		});
+		$("#cookie-policy h2").live('click', function() {
+			 $("#cookie-policy-disclaimer").slideDown();
+		});
+		
+		{% if (app.request.attributes.get('_route') != 'checkout_secure_checkout') and (app.request.attributes.get('_route') != 'checkout_order_failed') %}
+			{# Cancel the search #}
+			$(".action-cancel-search").live('click', function() {
+				$("#search-container").slideUp();
+				$(".slider-gallery-container").slideDown();
+				$("#quick_search").val("");
+				$.mask.close();
+			});
+			
+			{# Quick search #}
+			$("#quick_search").live('keyup', function() {
+				getSearchResults();
+			});
+			$(".action-quick-search").live('click', function() {
+				getSearchResults();
+			});
+			
+			{# Get basket summary #}
+			getBasketSummary();
+			
+			{# Add to basket #}
+			$(".action-add-to-basket").live('click', function() {
+				$("#ajax-loading").show();
+				$.ajax({
+	   				type: "GET",
+	   				dataType: "json",
+	   				url: "{{ path('basket_ajax_add_to_basket') }}",
+	   				data: {
+	   					productId: $(this).attr("data-product-id"),
+	   					quantity: $("#quantity-"+$(this).attr("data-product-id")).val(),
+	   					selectedOptions: $("#selected-options-"+$(this).attr("data-product-id")).val()
+	   				},
+	   				error: function(data) {
+	   					$("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
+						$("#message-error").fadeIn(function() {
+							$("html, body").animate({scrollTop: $("#message-error").offset().top - 15},'slow');
+							$("#ajax-loading").hide();
+						});
+			      	},
+	   				success: function(data) {
+	   					getBasketSummary();
+	   					$("html, body").animate({scrollTop: 0},'slow', function() {
+	   						$("#shopping-basket-popup-image").attr("src", data.thumbnailPath);
+	   						$("#shopping-basket-popup-image").attr("alt", data.header);
+	   						$("#shopping-basket-popup-title").attr("href", data.url);
+	   						$("#shopping-basket-popup-title").html(data.header);
+	   						$("#shopping-basket-popup-description").html(data.quantity+' &times; &pound;'+data.price+" = &pound;"+data.subTotal);
+	   						$("#shopping-basket-popup").dialog('open');
+	   						setTimeout('$("#shopping-basket-popup").dialog("close")', 5000);
+							$("#ajax-loading").hide();
+	   					});
+	   				}
+	 			});
+			});
+			
+			{# Shopping basket popup #}
+			$("#shopping-basket-popup").dialog({
+				autoOpen: false,
+				width: 400,
+				show: "fade",
+				hide: "fade",
+				resizable: false
+			});
+			$(".action-close-shopping-basket-popup").live('click', function() {
+				$("#shopping-basket-popup").dialog('close');
+			});
+			
+			$(".search-box").live("mouseover mouseenter click focus", function() {
+				$(this).addClass("search-box-interacting");
+			});
+			$(".search-box").live("mouseout mouseleave blur", function() {
+				$(this).removeClass("search-box-interacting");
+			});
+			$(".search-box").live("focus", function() {
+				$(this).addClass("search-box-glowing");
+			});
+			$(".search-box").live("blur", function() {
+				$(this).removeClass("search-box-glowing");
+			});
+			
+			$(".sub-department-link span").each(function() {
+				$(this).parent("a").addClass("single-line");
+			});
+			$("body").mousemove(function(e) {
+				var minimumX = ((parseInt($(document).width()) - 980) / 2);
+				if ((e.pageY < $("div.main-menu").position().top) || ((e.pageX < minimumX) || (e.pageX > (minimumX + 980))))
+				{
+					$("div.sub-departments:visible").slideUp(200);
+					$(".sub-department-link").parent("li").removeClass("active");
+					$(".sub-department").removeClass("sub-department-active");
+				}
+			});
+			$("ul.sf-menu li, div.brands-button").live('mouseenter', function(e) {
+				var $linkObject = $(this).find("a");
+				var $departmentId = $linkObject.attr("data-department-id");
+				var $menuLinkPosition = 0;
+				var $menuLinkCentre = 0;
+				if ($departmentId == 'brands')
+				{
+					var $menuLinkPosition = $linkObject.position();
+					var $menuLinkCentre = $menuLinkPosition.left + ($linkObject.width() / 2);
+				} else {
+					var $menuLinkPosition = $(this).position();
+					var $menuLinkCentre = $menuLinkPosition.left + ($(this).width() / 2);
+				}
+				var $subDepartmentX = $menuLinkCentre - ($("#sub-department-"+$departmentId).width() / 2) + 5;
+				if ($subDepartmentX < 0)
+				{
+					$subDepartmentX = 0;
+				}
+				if (($subDepartmentX + $("#sub-department-"+$departmentId).width()) > 979)
+				{
+					$subDepartmentX = 979 - $("#sub-department-"+$departmentId).width();
+				}
+				$("#sub-department-"+$departmentId).css("margin-left", $subDepartmentX+"px");
+				$(".sub-department-link").parent("li").removeClass("active");
+				$(this).addClass("active");
+				$(".sub-department").removeClass("sub-department-active");
+				$("div.sub-departments").each(function() {
+					if ($(this).attr("id") == "sub-department-"+$departmentId)
+					{
+						$(this).slideDown(400);
+					} else {
+						$(this).slideUp(200);
+					}
+				});
+			});
+			$(".sub-departments:visible").live('mouseleave', function() {
+				$(this).slideUp(200);
+				$(".sub-department-link").parent("li").removeClass("active");
+			});
+			$("body").live('mouseenter', function() {
+				$("div.sub-departments:visible").slideUp(200);
+				$(".sub-department-link").parent("li").removeClass("active");
+				$(".sub-department").removeClass("sub-department-active");
+			});
+			$(".sub-department").live('mouseover mouseenter', function() {
+				$(this).addClass("sub-department-active");
+			});
+			$(".sub-department").live('mouseleave', function() {
+				$(this).removeClass("sub-department-active");
+			});
+			$(".brand").live('mouseover mouseenter', function() {
+				$(this).addClass("brand-active");
+			});
+			$(".brand").live('mouseleave', function() {
+				$(this).removeClass("brand-active");
+			});
+			$(".action-close-large-image").live('click', function() {
+				$("#large-image-container").fadeOut();
+			});
+		{% endif %}
+	});
+</script>

@@ -1,0 +1,101 @@
+<h3 class="ui-widget-header ui-corner-top no-margin">Brand</h3>
+<div class="filter">
+	<ul>
+		<li><a class="product-filter-brand selected-filter" data-brand-id="all" href="Javascript:void(0);">All Brands</a></li>
+		{% for brand in filters.brands %}	
+			<li><a class="product-filter-brand" data-brand-id="{{ brand.brandId }}" href="Javascript:void(0);">{{ brand.brand }}</a></li>
+		{% endfor %}
+	</ul>
+</div>
+<h3 class="ui-widget-header ui-corner-top no-margin">Department</h3>
+<div class="filter">
+	<ul>
+		<li><a class="product-filter-department selected-filter" data-department-id="all" href="Javascript:void(0);">All Departments</a></li>
+		{% for department in filters.departments %}	
+			<li><a class="product-filter-department" data-department-id="{{ department.departmentId }}" href="Javascript:void(0);">{{ department.department }}</a></li>
+		{% endfor %}
+	</ul>
+</div>
+<h3 class="ui-widget-header ui-corner-top no-margin">Price</h3>
+<div class="filter price-range-filter no-margin">
+	<div class="price-range" id="price-range"></div>
+	<div class="price-range" id="price-range-slider"></div>
+</div>
+<script type="text/javascript">
+	var $selectedBrandId = 'all';
+	var $selectedDepartmentId = 'all';
+	function filterProducts()
+	{
+		$("a.product-filter-brand").removeClass("selected-filter");
+		$("a.product-filter-brand[data-brand-id='"+$selectedBrandId+"']").addClass("selected-filter");
+		$("a.product-filter-department").removeClass("selected-filter");
+		$("a.product-filter-department[data-department-id='"+$selectedDepartmentId+"']").addClass("selected-filter");
+		$("div.product").show();
+		if ($selectedBrandId != 'all')
+		{
+			$("div.product").each(function(index) {
+				var $brandId = $(this).attr("data-brand-id");
+				if ($selectedBrandId != $brandId)
+				{
+					$(this).fadeOut(function() {
+						updateProductsFound();
+					});
+				}
+			});
+		}
+		if ($selectedDepartmentId != 'all')
+		{
+			$("div.product").each(function(index) {
+				var $departmentIds = $(this).attr("data-department-ids");
+				if ($departmentIds.indexOf('|'+$selectedDepartmentId+'|') > -1)
+				{
+					$(this).fadeOut(function() {
+						updateProductsFound();
+					});
+				}
+			});
+		}
+		updateProductsFound();
+	}
+	function updateProductsFound()
+	{
+		if (($("div.product:visible").length < 1) || ($("div.product:visible").length > 1))
+		{
+			$("#products-found").html('Found '+$("div.product:visible").length+' Products');
+		} else {
+			$("#products-found").html('Found '+$("div.product:visible").length+' Product');
+		}
+	}
+	$(document).ready(function() {
+		$("#price-range-slider").slider({
+			range: true,
+			min: {{ filters.cheapestPrice }},
+			max: {{ filters.mostExpensivePrice }},
+			values: [{{ filters.cheapestPrice }}, {{ filters.mostExpensivePrice }}],
+			slide: function(event, ui) {
+				$("#price-range").html("Price Range <strong>&pound;"+ui.values[0]+" - &pound;"+ui.values[1]+"</strong>");
+				filterProducts();
+				$("div.product").each(function(index) {
+					var $listPrice = $(this).attr("data-list-price");
+					if (($listPrice < ui.values[0]) || ($listPrice > ui.values[1]))
+					{
+						$(this).fadeOut(function() {
+							updateProductsFound();
+						});
+					}
+				});
+				
+			}
+		});
+		$("#price-range").html("Price Range <strong>&pound;"+$("#price-range-slider").slider("values", 0)+" - &pound;"+$("#price-range-slider").slider("values", 1)+"</strong>");		
+		$(".product-filter-brand").live('click', function() {
+			$selectedBrandId = $(this).attr("data-brand-id");
+			filterProducts();
+		});
+		
+		$(".product-filter-department").live('click', function() {
+			$selectedDepartmentId = $(this).attr("data-department-id");
+			filterProducts();
+		});
+	});
+</script>

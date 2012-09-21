@@ -1,0 +1,23 @@
+<header class="clearfix">
+	<div class="top-menu-container">
+		<div class="container_8">
+			<!--[if gt IE 7]>
+				{% include '::shopSocialMediaInteractions.html.twig' %}
+			<![endif]-->
+			<!--[if !IE]> -->
+				{% include '::shopSocialMediaInteractions.html.twig' %}
+			<!-- <![endif]-->
+			{% include '::shopTopMenu.html.twig' %}
+		</div>
+	</div>
+	<div class="container_8">
+		<a class="logo" title="Kitchen Appliance Centre" href="{{ path('homepage') }}"><img src="{{ asset('bundles/webilluminationshop/images/logos/kitchen-appliance-centre.png') }}" border="0" alt="Kitchen Appliance Centre" /></a>
+        {% include '::shopSearch.html.twig' %}
+        {% include '::shopBasket.html.twig' %}
+        <div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+    {% render "WebIlluminationShopBundle:System:mainMenu" %}
+    <div class="clear"></div>
+    {% include '::shopUniqueSellingPoints.html.twig' %}
+</header>

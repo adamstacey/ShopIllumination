@@ -1,0 +1,30 @@
+{% extends '::email.txt.twig' %}
+{% block body %}
+Hello {{ order.firstName }},
+
+You have received a message from Kitchen Appliance Centre regarding your order {{ order.orderNumber }}. The message is below:
+
+{% spaceless %}
+	{% if orderStatus == 'Open Payment' %}
+		Thank you for your interest in one or more of our products. We noticed you entered the secure checkout process, but did not complete the order. We are constantly looking to improve our online shop and would really appreciate any help in understanding if you encountered any problems or if you had any feedback about your experience. Please <a href="{{ asset(path('content_contact_us'), 'nocdn') }}">contact us</a> if you have any feedback or want to discuss the prices of any of our products.
+	{% elseif orderStatus == 'Payment Failed' %}
+		Thank you for your interest in one or more of our products. Unfortunately, your payment did not go through and your order was not processed. Please <a href="{{ asset(path('content_contact_us'), 'nocdn') }}">contact us</a> if you need any further assistance.
+	{% elseif orderStatus == 'Cancelled' %}
+		Thank you for your interest in Kitchen Appliance Centre. Your order has now been cancelled. If you had already paid for your order this money has also been refunded.
+	{% elseif orderStatus == 'Payment Received' %}
+		Thank you for your interest in one or more of our products. Your payment has been successfully authorised. We will shortly be processing your order and keep you updated by email.
+	{% elseif orderStatus == 'Processing Your Order' %}
+		We are now processing your order and will keep you updated by email. If you have any questions in the mean time please <a href="{{ asset(path('content_contact_us'), 'nocdn') }}">contact us</a>.
+	{% elseif orderStatus == 'Back Ordered' %}
+		Unfortunately, some or all of the items you have ordered are not currently in stock. We have now ordered these items with our suppliers and will update you on progress shortly. Please <a href="{{ asset(path('content_contact_us'), 'nocdn') }}">contact us</a> if you need any further assistance.
+	{% elseif orderStatus == 'Part Delivered' %}
+		We have now sent out the items we currently have in stock while we wait for the remaining items to come in to stock. We will keep you updated by email on the progress of the remaining items. Please <a href="{{ asset(path('content_contact_us'), 'nocdn') }}">contact us</a> if you need any further assistance.
+	{% elseif orderStatus == 'Order with Delivery Company' %}
+		Your order is currently with our delivery company. You will shortly receive details on how you can track your order with our delivery company. Please <a href="{{ asset(path('content_contact_us'), 'nocdn') }}">contact us</a> if you need any further assistance.
+	{% elseif orderStatus == 'Order Completed' %}
+		Your order has now been dispatched to your requested delivery address. Please <a href="{{ asset(path('content_contact_us'), 'nocdn') }}">contact us</a> if you need any further assistance.
+	{% endif %}
+{% endspaceless %}
+
+{% include '::emailFooter.txt.twig' %}
+{% endblock %}

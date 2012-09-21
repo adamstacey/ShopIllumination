@@ -1,0 +1,83 @@
+<div class="clearfix separator">
+	<table class="sub-data-table" width="100%">
+		<tr>
+			<th class="al">Product</th>
+			<th class="ac">Code</th>
+			<th class="ac" colspan="5" width="1">Price</th>
+		</tr>
+		{% for product in order.products %}
+			<tr>
+				<td>
+					<strong>{{ product.header }}</strong>
+					{% if product.selectedOptionLabels|length > 0 %}
+						<br />
+						{% for selectedOptionLabel in product.selectedOptionLabels %}
+							{% if selectedOptionLabel != '' %}
+								&nbsp;&nbsp;-&nbsp;&nbsp;{{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				</td>
+				<td class="ac"><strong>{{ product.productCode }}</strong></td>
+				<td width="1" class="ac">{{ product.quantity }}</td>
+				<td width="1" class="ac">&times;</td>
+				<td width="1" class="ac">&pound;{{ product.unitCost|number_format(2) }}</td>
+				<td width="1" class="ac">=</td>
+				<td width="1" class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
+			</tr>
+		{% endfor %}
+		{% if order.membershipCardPurchased > 0 %}
+			<tr>
+				<td><a href="{{ path('content_privilege_card') }}">Ride Direct Privilege Card</a></td>
+				<td class="ac"><strong>PRIVILEGE</strong></td>
+				<td width="1" class="ac">1</td>
+				<td width="1" class="ac">&times;</td>
+				<td width="1" class="ac">&pound;1.00</td>
+				<td width="1" class="ac">=</td>
+				<td width="1" class="ac">&pound;1.00</td>
+			</tr>
+		{% endif %}
+	</table>
+</div>
+<div class="clearfix no-margin-bottom">
+	<table class="sub-data-table" align="right">
+		{% if order.recommendedRetailPrice > order.subTotal %}
+			<tr>
+				<td class="al"><strong>RRP (inc. VAT):</strong></td>
+				<td width="1" class="price ar">&pound;{{ order.recommendedRetailPrice|number_format(2) }}</td>
+			</tr>
+		{% endif %}
+		<tr>
+			<td class="al"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
+			<td width="1" class="price ar"><strong>&pound;{{ order.subTotal|number_format(2) }}</strong></td>
+		</tr>
+		{% if order.savings > 0 %}
+			<tr>
+				<td class="al"><strong>You Save:</strong></td>
+				<td width="1" class="price free ar">&pound;{{ order.savings|number_format(2) }}</td>
+			</tr>
+		{% endif %}
+		<tr>
+			<td class="al"><strong>Delivery Charge (inc. VAT):</strong></td>
+			{% if order.deliveryType == 'Collection' %}
+				<td width="1" class="important">Collection</td>		
+			{% else %}				
+				{% if order.deliveryCharge == 0 %}
+					<td width="1" class="price free ar">FREE</td>
+				{% else %}
+					<td width="1" class="price ar">&pound;{{ order.deliveryCharge|number_format(2) }}</td>
+				{% endif %}
+			{% endif %}
+		</tr>
+		{% if order.discount > 0 %}
+			<tr>
+				<td class="al"><strong>Discount:</strong></td>
+				<td width="1" class="discount ar">&pound;{{ order.discount|number_format(2) }}</td>
+			</tr>
+		{% endif %}
+		<tr>
+			<td class="al"><strong>Total to Pay (inc. VAT):</strong></td>
+			<td width="1" class="price ar"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
+		</tr>
+	</table>
+</div>

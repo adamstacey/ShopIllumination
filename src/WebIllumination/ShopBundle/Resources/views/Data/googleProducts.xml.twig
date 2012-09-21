@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+	<channel>
+		<title><![CDATA[Worktops, Charcoal Filters, Cooker Hoods, Built-in Microwaves, Integrated Dishwashers, Integrated Washing Machines, Refrigeration, Cleaning Products, Glass Splashbacks, Waste Disposer, Sinks, Taps, Plinth Heaters, Range Cookers, Ducting, Hobs, Ovens, Coffee Machines, Solid Surface Worktops, Kitchen Appliances]]></title>
+		<link><![CDATA[http://www.kitchenappliancecentre.co.uk/]]></link>
+		<description><![CDATA[Kitchen Appliance Centre - A wide selection of kitchen appliances including Kitchen Sinks, Range Cookers, Fridges, Freezers, Dishwashers, Washing Machines, Worktops, Ovens and Hobs, all at low affordable prices.]]></description>
+		{% for product in products %}
+			{% if product.status == 'a' %}
+				<item>
+				    <title><![CDATA[{{ product.pageTitle }}]]></title>
+				    <link><![CDATA[http://www.kitchenappliancecentre.co.uk{{ path('page_request', {'url': product.url}) }}?utm_source=Google+Shopping&utm_medium=organic&utm_campaign=Google+Shopping]]></link>
+				    <description><![CDATA[{{ product.header }}{{ product.departments|replace({'|': ', '})|replace({', ^, ': ', '}) }}{{ product.productCode }}{% if product.shortDescription %}, {{ product.shortDescription }}{% endif %}]]></description>
+				    <g:id>{{ product.productId }}</g:id>
+				    <g:condition>new</g:condition>
+				    <g:price>{{ product.listPrice }} GBP</g:price>
+				    <g:availability>in stock</g:availability>
+				    <g:image_link><![CDATA[http://www.kitchenappliancecentre.co.uk{{ product.mediumPath }}]]></g:image_link>
+					<g:shipping>
+						<g:country>GB</g:country>
+						<g:service>Standard Delivery</g:service>
+						<g:price>{{ product.deliveryCost }} GBP</g:price>
+					</g:shipping>
+					<g:shipping_weight>{{ product.weight }} kg</g:shipping_weight>
+					<g:mpn><![CDATA[{{ product.productCode }}]]></g:mpn>
+					<g:brand><![CDATA[{{ product.brand }}]]></g:brand>
+					<g:google_product_category><![CDATA[{{ product.googleDepartment }}]]></g:google_product_category>
+					<g:product_type><![CDATA[{{ product.firstDepartmentPath }}]]></g:product_type>
+			    </item>
+		    {% endif %}
+		{% endfor %}
+	</channel>
+</rss>

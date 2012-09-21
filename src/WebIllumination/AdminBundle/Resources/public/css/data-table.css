@@ -1,0 +1,422 @@
+/*
+ * jQuery UI specific styling
+ */
+.dataTables_wrapper .ui-toolbar {
+  padding: 10px;
+}
+.dataTables_wrapper .ui-toolbar .ui-widget-header {
+  font-weight: normal;
+}
+.dataTables_wrapper .paging_two_button .ui-button {
+  cursor: pointer;
+  float: left;
+}
+.dataTables_wrapper .paging_full_numbers {
+  /*width: 350px !important;*/
+
+}
+.dataTables_wrapper .paging_full_numbers .ui-button {
+  padding: 2px 6px;
+  margin: 0;
+  cursor: pointer;
+}
+.dataTables_wrapper .paging_full_numbers span.paginate_button, .dataTables_wrapper .paging_full_numbers span.paginate_active {
+  border: 1px solid #aaa;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 2px 5px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.dataTables_wrapper .paging_full_numbers span.paginate_button {
+  background-color: #ddd;
+}
+.dataTables_wrapper .paging_full_numbers span.paginate_button:hover {
+  background-color: #ccc;
+}
+.dataTables_wrapper .paging_full_numbers span.paginate_active {
+  background-color: #99B3FF;
+}
+.dataTables_wrapper .dataTables_paginate {
+  width: auto;
+}
+.dataTables_wrapper .dataTables_paginate .ui-button {
+  margin-right: -0.1em !important;
+}
+.dataTables_wrapper .dataTables_info {
+  padding-top: 5px;
+}
+/*
+ * Sort arrow icon positioning
+ */
+table.display thead th, table.basic-display thead th, table.data-table thead th {
+  border-top-width: 0;
+  padding: 5px 0px 5px 5px;
+  cursor: pointer;
+}
+table.display thead th div.DataTables_sort_wrapper, table.basic-display thead th div.DataTables_sort_wrapper, table.data-table thead th div.DataTables_sort_wrapper {
+  position: relative;
+  padding-right: 5px;
+}
+table.display thead th div.DataTables_sort_wrapper span, table.basic-display thead th div.DataTables_sort_wrapper span, table.data-table thead th div.DataTables_sort_wrapper span {
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  right: 0;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * Everything below this line is the same as demo_table.css. This file is
+ * required for 'cleanliness' of the markup
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables features
+ */
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+}
+.dataTables_processing {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  width: 250px;
+  margin-left: -125px;
+  border: 1px solid #ddd;
+  text-align: center;
+  color: #999;
+  font-size: 11px;
+  padding: 2px 0;
+}
+.dataTables_length {
+  width: 40%;
+  float: left;
+}
+.dataTables_filter {
+  width: 50%;
+  float: right;
+  text-align: right;
+}
+.dataTables_filter input {
+  margin: 0;
+}
+.dataTables_info {
+  width: 50%;
+  float: left;
+}
+.dataTables_paginate {
+  float: right;
+  text-align: right;
+}
+/* Pagination nested */
+.paginate_disabled_previous,
+.paginate_enabled_previous,
+.paginate_disabled_next,
+.paginate_enabled_next {
+  height: 19px;
+  width: 19px;
+  margin-left: 5px;
+  float: left;
+}
+.paginate_disabled_previous {
+  background-image: url(/bundles/webilluminationadmin/images/icons/back_disabled.jpg);
+}
+.paginate_enabled_previous {
+  background-image: url(/bundles/webilluminationadmin/images/icons/back_enabled.jpg);
+}
+.paginate_disabled_next {
+  background-image: url(/bundles/webilluminationadmin/images/icons/forward_disabled.jpg);
+}
+.paginate_enabled_next {
+  background-image: url(/bundles/webilluminationadmin/images/icons/forward_enabled.jpg);
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables display
+ */
+table.display, table.basic-display, table.data-table {
+  margin: 0 auto;
+  width: 100%;
+  clear: both;
+  border-collapse: collapse;
+}
+table.display tfoot th, table.basic-display tfoot th, table.data-table tfoot th {
+  padding: 5px 0px 5px 5px;
+  font-weight: bold;
+  font-weight: normal;
+}
+table.display tr.heading2 td, table.basic-display tr.heading2 td, table.data-table tr.heading2 td {
+  border-bottom: 1px solid #aaa;
+}
+table.display tr td, table.basic-display tr td, table.data-table tr td {
+  padding: 5px;
+  vertical-align: middle!important;
+  font-size: 11px;
+  line-height: 120%
+}
+table.display tr td.no-wrap, table.basic-display tr td.no-wrap, table.data-table tr td.no-wrap {
+  white-space: nowrap!important;
+}
+table.display tr td a.link, table.basic-display tr td a.link, table.data-table tr td a.link {
+  color: #2E667F;
+  font-weight: bold;
+  font-size: 12px;
+}
+table.display tr td.small, table.basic-display tr td.small, table.data-table tr td.small {
+  font-size: 10px;
+}
+table.display tr td img, table.basic-display tr td img, table.data-table tr td img {
+  padding: 0!important;
+  border: 1px solid #C1C1C1;
+  cursor: pointer;
+  float: none!important;
+  margin: 0!important;
+  display: block;
+}
+table.display tr .center, table.basic-display tr .center, table.data-table tr .center {
+  text-align: center;
+}
+table.display tr .left, table.basic-display tr .left, table.data-table tr .left {
+  text-align: left;
+}
+table.display tr .right, table.basic-display tr .right, table.data-table tr .right {
+  text-align: right;
+}
+.dataTables_wrapper table.display, .dataTables_wrapper table.basic-display, .dataTables_wrapper table.data-table {
+  border-left: 1px solid #bbb;
+  border-right: 1px solid #bbb;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables sorting
+ */
+.sorting_asc {
+  background: url(/bundles/webilluminationadmin/images/icons/sort_asc.png) no-repeat center right;
+}
+.sorting_desc {
+  background: url(/bundles/webilluminationadmin/images/icons/sort_desc.png) no-repeat center right;
+}
+.sorting {
+  background: url(/bundles/webilluminationadmin/images/icons/sort_both.png) no-repeat center right;
+}
+.sorting_asc_disabled {
+  background: url(/bundles/webilluminationadmin/images/icons/sort_asc_disabled.png) no-repeat center right;
+}
+.sorting_desc_disabled {
+  background: url(/bundles/webilluminationadmin/images/icons/sort_desc_disabled.png) no-repeat center right;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * DataTables row classes
+ */
+table.display tr.odd, table.basic-display tr.odd, table.data-table tr.odd {
+  background-color: #EEE;
+}
+table.display tr.odd.gradeA, table.basic-display tr.odd.gradeA, table.data-table tr.odd.gradeA {
+  background-color: #ddffdd;
+}
+table.display tr.odd.gradeC, table.basic-display tr.odd.gradeC, table.data-table tr.odd.gradeC {
+  background-color: #ddddff;
+}
+table.display tr.odd.gradeX, table.basic-display tr.odd.gradeX, table.data-table tr.odd.gradeX {
+  background-color: #ffdddd;
+}
+table.display tr.odd.gradeU, table.basic-display tr.odd.gradeU, table.data-table tr.odd.gradeU {
+  background-color: #DDD;
+}
+table.display tr.even, table.basic-display tr.even, table.data-table tr.even {
+  background-color: #FFF;
+}
+table.display tr.even.gradeA, table.basic-display tr.even.gradeA, table.data-table tr.even.gradeA {
+  background-color: #eeffee;
+}
+table.display tr.even.gradeC, table.basic-display tr.even.gradeC, table.data-table tr.even.gradeC {
+  background-color: #eeeeff;
+}
+table.display tr.even.gradeX, table.basic-display tr.even.gradeX, table.data-table tr.even.gradeX {
+  background-color: #ffeeee;
+}
+table.display tr.even.gradeU, table.basic-display tr.even.gradeU, table.data-table tr.even.gradeU {
+  background-color: #CCC;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * Misc
+ */
+.dataTables_scroll {
+  clear: both;
+}
+.top .dataTables_info {
+  float: none;
+}
+.dataTables_empty {
+  text-align: center;
+}
+td.group {
+  background-color: #d1cfd0;
+  border-bottom: 2px solid #A19B9E;
+  border-top: 2px solid #A19B9E;
+}
+td.details {
+  background-color: #d1cfd0;
+  border: 2px solid #A19B9E;
+}
+.example_alt_pagination div.dataTables_info {
+  width: 40%;
+}
+table.display tfoot input, table.basic-display tfoot input, table.data-table tfoot input {
+  margin: 0.5em 0;
+  width: 100%;
+  color: #444;
+}
+table.display tfoot input.search_init, table.basic-display tfoot input.search_init, table.data-table tfoot input.search_init {
+  color: #999;
+}
+table.display tbody, table.basic-display tbody, table.data-table tbody {
+  /*
+         * Sorting classes for columns
+         */
+
+  /* For the standard odd/even */
+
+  /* For the Conditional-CSS grading rows */
+
+  /*
+            Colour calculations (based off the main row colours)
+          Level 1:
+                dd > c4
+                ee > d5
+            Level 2:
+              dd > d1
+              ee > e2
+         */
+
+  /*
+         * Row highlighting
+         */
+
+}
+table.display tbody tr.even.row_selected td, table.basic-display tbody tr.even.row_selected td, table.data-table tbody tr.even.row_selected td {
+  background-color: #B0BED9;
+}
+table.display tbody tr.odd.row_selected td, table.basic-display tbody tr.odd.row_selected td, table.data-table tbody tr.odd.row_selected td {
+  background-color: #9FAFD1;
+}
+table.display tbody tr.odd td.sorting_1, table.basic-display tbody tr.odd td.sorting_1, table.data-table tbody tr.odd td.sorting_1 {
+  background-color: #9DBED7;
+}
+table.display tbody tr.odd td.sorting_2, table.basic-display tbody tr.odd td.sorting_2, table.data-table tbody tr.odd td.sorting_2 {
+  background-color: #DADCFF;
+}
+table.display tbody tr.odd td.sorting_3, table.basic-display tbody tr.odd td.sorting_3, table.data-table tbody tr.odd td.sorting_3 {
+  background-color: #E0E2FF;
+}
+table.display tbody tr.even td.sorting_1, table.basic-display tbody tr.even td.sorting_1, table.data-table tbody tr.even td.sorting_1 {
+  background-color: #CEDEEB;
+}
+table.display tbody tr.even td.sorting_2, table.basic-display tbody tr.even td.sorting_2, table.data-table tbody tr.even td.sorting_2 {
+  background-color: #F2F3FF;
+}
+table.display tbody tr.even td.sorting_3, table.basic-display tbody tr.even td.sorting_3, table.data-table tbody tr.even td.sorting_3 {
+  background-color: #F9F9FF;
+}
+table.display tbody tr.odd.gradeA td.sorting_1, table.basic-display tbody tr.odd.gradeA td.sorting_1, table.data-table tbody tr.odd.gradeA td.sorting_1 {
+  background-color: #c4ffc4;
+}
+table.display tbody tr.odd.gradeA td.sorting_2, table.basic-display tbody tr.odd.gradeA td.sorting_2, table.data-table tbody tr.odd.gradeA td.sorting_2 {
+  background-color: #d1ffd1;
+}
+table.display tbody tr.odd.gradeA td.sorting_3, table.basic-display tbody tr.odd.gradeA td.sorting_3, table.data-table tbody tr.odd.gradeA td.sorting_3 {
+  background-color: #d1ffd1;
+}
+table.display tbody tr.odd.gradeC td.sorting_1, table.basic-display tbody tr.odd.gradeC td.sorting_1, table.data-table tbody tr.odd.gradeC td.sorting_1 {
+  background-color: #c4c4ff;
+}
+table.display tbody tr.odd.gradeC td.sorting_2, table.basic-display tbody tr.odd.gradeC td.sorting_2, table.data-table tbody tr.odd.gradeC td.sorting_2 {
+  background-color: #d1d1ff;
+}
+table.display tbody tr.odd.gradeC td.sorting_3, table.basic-display tbody tr.odd.gradeC td.sorting_3, table.data-table tbody tr.odd.gradeC td.sorting_3 {
+  background-color: #d1d1ff;
+}
+table.display tbody tr.odd.gradeX td.sorting_1, table.basic-display tbody tr.odd.gradeX td.sorting_1, table.data-table tbody tr.odd.gradeX td.sorting_1 {
+  background-color: #ffc4c4;
+}
+table.display tbody tr.odd.gradeX td.sorting_2, table.basic-display tbody tr.odd.gradeX td.sorting_2, table.data-table tbody tr.odd.gradeX td.sorting_2 {
+  background-color: #ffd1d1;
+}
+table.display tbody tr.odd.gradeX td.sorting_3, table.basic-display tbody tr.odd.gradeX td.sorting_3, table.data-table tbody tr.odd.gradeX td.sorting_3 {
+  background-color: #ffd1d1;
+}
+table.display tbody tr.odd.gradeU td.sorting_1, table.basic-display tbody tr.odd.gradeU td.sorting_1, table.data-table tbody tr.odd.gradeU td.sorting_1 {
+  background-color: #c4c4c4;
+}
+table.display tbody tr.odd.gradeU td.sorting_2, table.basic-display tbody tr.odd.gradeU td.sorting_2, table.data-table tbody tr.odd.gradeU td.sorting_2 {
+  background-color: #d1d1d1;
+}
+table.display tbody tr.odd.gradeU td.sorting_3, table.basic-display tbody tr.odd.gradeU td.sorting_3, table.data-table tbody tr.odd.gradeU td.sorting_3 {
+  background-color: #d1d1d1;
+}
+table.display tbody tr.even.gradeA td.sorting_1, table.basic-display tbody tr.even.gradeA td.sorting_1, table.data-table tbody tr.even.gradeA td.sorting_1 {
+  background-color: #d5ffd5;
+}
+table.display tbody tr.even.gradeA td.sorting_2, table.basic-display tbody tr.even.gradeA td.sorting_2, table.data-table tbody tr.even.gradeA td.sorting_2 {
+  background-color: #e2ffe2;
+}
+table.display tbody tr.even.gradeA td.sorting_3, table.basic-display tbody tr.even.gradeA td.sorting_3, table.data-table tbody tr.even.gradeA td.sorting_3 {
+  background-color: #e2ffe2;
+}
+table.display tbody tr.even.gradeC td.sorting_1, table.basic-display tbody tr.even.gradeC td.sorting_1, table.data-table tbody tr.even.gradeC td.sorting_1 {
+  background-color: #d5d5ff;
+}
+table.display tbody tr.even.gradeC td.sorting_2, table.basic-display tbody tr.even.gradeC td.sorting_2, table.data-table tbody tr.even.gradeC td.sorting_2 {
+  background-color: #e2e2ff;
+}
+table.display tbody tr.even.gradeC td.sorting_3, table.basic-display tbody tr.even.gradeC td.sorting_3, table.data-table tbody tr.even.gradeC td.sorting_3 {
+  background-color: #e2e2ff;
+}
+table.display tbody tr.even.gradeX td.sorting_1, table.basic-display tbody tr.even.gradeX td.sorting_1, table.data-table tbody tr.even.gradeX td.sorting_1 {
+  background-color: #ffd5d5;
+}
+table.display tbody tr.even.gradeX td.sorting_2, table.basic-display tbody tr.even.gradeX td.sorting_2, table.data-table tbody tr.even.gradeX td.sorting_2 {
+  background-color: #ffe2e2;
+}
+table.display tbody tr.even.gradeX td.sorting_3, table.basic-display tbody tr.even.gradeX td.sorting_3, table.data-table tbody tr.even.gradeX td.sorting_3 {
+  background-color: #ffe2e2;
+}
+table.display tbody tr.even.gradeU td.sorting_1, table.basic-display tbody tr.even.gradeU td.sorting_1, table.data-table tbody tr.even.gradeU td.sorting_1 {
+  background-color: #d5d5d5;
+}
+table.display tbody tr.even.gradeU td.sorting_2, table.basic-display tbody tr.even.gradeU td.sorting_2, table.data-table tbody tr.even.gradeU td.sorting_2 {
+  background-color: #e2e2e2;
+}
+table.display tbody tr.even.gradeU td.sorting_3, table.basic-display tbody tr.even.gradeU td.sorting_3, table.data-table tbody tr.even.gradeU td.sorting_3 {
+  background-color: #e2e2e2;
+}
+table.display tbody tr.even:hover, table.display tbody tr.even td.highlighted, table.basic-display tbody tr.even:hover, table.basic-display tbody tr.even td.highlighted, table.data-table tbody tr.even:hover, table.data-table tbody tr.even td.highlighted {
+  background-color: #B0E8F6;
+}
+table.display tbody tr.even:hover, table.basic-display tbody tr.even:hover, table.data-table tbody tr.even:hover {
+  background-color: #B0E8F6;
+}
+table.display tbody tr.even:hover td.sorting_1, table.basic-display tbody tr.even:hover td.sorting_1, table.data-table tbody tr.even:hover td.sorting_1 {
+  background-color: #61D1ED;
+}
+table.display tbody tr.even:hover td.sorting_2, table.basic-display tbody tr.even:hover td.sorting_2, table.data-table tbody tr.even:hover td.sorting_2 {
+  background-color: #E7FF9E;
+}
+table.display tbody tr.even:hover td.sorting_3, table.basic-display tbody tr.even:hover td.sorting_3, table.data-table tbody tr.even:hover td.sorting_3 {
+  background-color: #E2FF89;
+}
+table.display tbody tr.odd:hover, table.display tbody tr.odd td.highlighted, table.basic-display tbody tr.odd:hover, table.basic-display tbody tr.odd td.highlighted, table.data-table tbody tr.odd:hover, table.data-table tbody tr.odd td.highlighted {
+  background-color: #B0E8F6;
+}
+table.display tbody tr.odd:hover, table.basic-display tbody tr.odd:hover, table.data-table tbody tr.odd:hover {
+  background-color: #B0E8F6;
+}
+table.display tbody tr.odd:hover td.sorting_1, table.basic-display tbody tr.odd:hover td.sorting_1, table.data-table tbody tr.odd:hover td.sorting_1 {
+  background-color: #61D1ED	;
+}
+table.display tbody tr.odd:hover td.sorting_2, table.basic-display tbody tr.odd:hover td.sorting_2, table.data-table tbody tr.odd:hover td.sorting_2 {
+  background-color: #E0FF84;
+}
+table.display tbody tr.odd:hover td.sorting_3, table.basic-display tbody tr.odd:hover td.sorting_3, table.data-table tbody tr.odd:hover td.sorting_3 {
+  background-color: #DBFF70;
+}

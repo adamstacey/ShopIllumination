@@ -1,0 +1,26 @@
+<li class="redirect-container" data-index="{{ index }}" id="redirect-{{ index }}">
+	<div>
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td width="1" class="select delete">
+						<input data-index="{{ index }}" type="checkbox" class="redirect-select" id="form-redirect-select-{{ index }}" value="1" />
+					</td>
+					<td>
+						<input type="text" required="required" data-message="Please enter a redirect." class="seo-url redirect-from" id="form-redirect-from-{{ index }}" name="redirect-from-{{ index }}" placeholder="Enter a redirect" value="{% if data.redirectFrom is defined %}{{ data.redirectFrom }}{% endif %}" />
+					</td>
+					<td width="1">
+						<select autocomplete="off" class="redirect-code full" name="redirect-code-{{ index }}" id="form-redirect-code-{{ index }}">
+			        		<option value="301"{% if data.redirectCode is defined %}{% if data.redirectCode == '301' %} selected="selected"{% endif %}{% endif %}>301</option>
+			        	</select>
+					</td>
+					<td width="1">
+						<input type="hidden" data-index="{{ index }}" class="redirect-requires-update" id="form-redirect-requires-update-{{ index }}" value="0" />
+						<input type="hidden" data-index="{{ index }}" class="redirect-id" id="form-redirect-id-{{ index }}" value="{% if data.id is defined %}{{ data.id }}{% else %}0{% endif %}" />
+						<a href="Javascript:void(0);" data-index="{{ index }}" class="button ui-button-red action-confirm-delete-redirect" data-icon-primary="ui-icon-closethick">Delete</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</li>

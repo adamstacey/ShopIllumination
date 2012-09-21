@@ -1,0 +1,7 @@
+<div class="buy-now">
+	{% if (product.availableForPurchase == 1) and (product.hidePrice == 0) %}
+		<a href="{{ path('page_request', {'url': product.url}) }}" class="fr button ui-button-green">Buy Now</a>
+	{% else %}
+		<a href="{{ path('content_contact_us') }}" class="fr button ui-button-green">Contact Us to Buy</a>
+	{% endif %}
+</div>

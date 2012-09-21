@@ -1,0 +1,41 @@
+<div id="flash-messages">
+	<div id="message-notice" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
+    	<span class="ui-icon ui-icon-info"></span>
+        <p>
+            <strong>NOTICE:</strong> <span id="message-notice-text">{% if app.session.hasFlash('notice') %}{{ app.session.flash('notice')|raw }}{% endif %}</span>
+        </p>
+	</div>
+	<div id="message-success" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
+    	<span class="ui-icon ui-icon-circle-check"></span>
+        <p>		            
+            <strong>SUCCESS:</strong> <span id="message-success-text">{% if app.session.hasFlash('success') %}{{ app.session.flash('success')|raw }}{% endif %}</span>
+        </p>
+	</div>
+	<div id="message-error" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
+        <span class="ui-icon ui-icon-alert"></span> 
+        <p>
+            <strong>ERROR:</strong> <span id="message-error-text">{% if app.session.hasFlash('error') %}{{ app.session.flash('error')|raw }}{% endif %}</span>
+        </p>
+	</div>
+</div>
+{% if app.session.hasFlash('error') or app.session.hasFlash('notice') or app.session.hasFlash('success') %}
+	<script defer="defer" type="text/javascript">
+		$(window).load(function() {
+			{% if app.session.hasFlash('notice') %}
+				$("#message-notice").slideDown(function() {
+					setTimeout("resetMessages()", 6000);
+				});
+			{% endif %}
+			{% if app.session.hasFlash('success') %}
+				$("#message-success").slideDown(function() {
+					setTimeout("resetMessages()", 6000);
+				});
+			{% endif %}
+			{% if app.session.hasFlash('error') %}
+				$("#message-error").slideDown(function() {
+					setTimeout("resetMessages()", 6000);
+				});
+			{% endif %}
+		});
+	</script>
+{% endif %}

@@ -1,0 +1,186 @@
+{% extends '::email.html.twig' %}
+{% block title %}Your Order with Kitchen Appliance Centre: {{ order.orderNumber }} | {{ parent() }}{% endblock %}
+{% block body %}
+	<table cellspacing="0" border="0" style="background-color: #DDDDDD;" cellpadding="0" width="100%">
+		<tr>
+			<td valign="top" style="padding: 10px;">
+				<table cellspacing="0" border="0" align="center" style="background: #FFFFFF; border: 1px solid #CCCCCC;" cellpadding="0" width="800">
+					<tr>
+						<td valign="top">
+							<table cellspacing="0" border="0" cellpadding="0" width="800">
+								<tr>
+									<td valign="top" style="padding: 20px;" width="760">
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">Hello {{ order.firstName }},</p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">Thank you for ordering from Kitchen Appliance Centre.</p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">The details of your order can be found below. Please take a quick look and check the details. If anything's wrong, please call us on <strong>01159 385 111</strong>.</p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">A copy of your invoice has also been attached. The attachment is in PDF format and can be opened using Adobe Reader. You can download a free copy of Adobe Reader by visiting the <a style="font-family: Arial; font-size: 11px; color: #4EC0E3;" target="_blank" href="http://get.adobe.com/reader/">Adobe</a> website.</p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 {% if order.deliveryType == 'Collection' %}10px{% else %}0{% endif %} 0; margin: 0; line-height: 120%;">We'll let you know what's happening with your order by email.</p>
+										{% if order.deliveryType == 'Collection' %}
+											<p style="font-family: Arial; font-weight: bold; font-size: 11px; color: #CC0000; padding: 0 0 0 0; margin: 0; line-height: 120%;">PLEASE NOTE: YOU HAVE CHOSEN TO COLLECT YOUR ORDER. WE WILL CONTACT YOU AS SOON AS YOUR ORDER IS READY FOR COLLECTION.</p>
+										{% endif %}
+										<h3 style="border-bottom: 1px dotted #676767; line-height: 100%; color: #000; font-size: 14px; font-family: Arial; padding: 20px 0px 5px 0px; margin: 0px 0px 10px 0px;">Order Details</h3>
+										<table style="border-collapse: collapse; border: 1px solid #CCC;" cellspacing="0" border="0" cellpadding="0" width="100%">
+											<tr>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Order Number:</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.orderNumber|default('-') }}</td>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Order Status:</strong></td>
+												<td colspan="3" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.status|default('-') }}</td>
+											</tr>
+											<tr>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Name:</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.firstName }} {{ order.lastName }}</td>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Email Address:</strong></td>
+												<td colspan="3" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; text-transform: lowercase;">{{ order.emailAddress }}</td>
+											</tr>
+											<tr>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Payment Method:</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.paymentType|default('-') }}</td>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Delivery Method:</strong></td>
+												{% if order.deliveryType == 'Collection' %}
+													<td colspan="3" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; font-weight: bold; background: #FFFFFF; color: #CC0000; font-size: 10px; font-family: 'Arial Black', Arial; padding: 5px 10px;">COLLECTION</td>
+												{% else %}
+													<td colspan="3" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.deliveryType|default('-') }}</td>
+												{% endif %}
+											</tr>
+											<tr>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Telephone (Daytime):</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.telephoneDaytime|default('-') }}</td>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Telephone (Evening):</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.telephoneEvening|default('-') }}</td>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Mobile:</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px;">{{ order.mobile|default('-') }}</td>
+											</tr>								
+											<tr>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;" width="25%"><strong>Billing Address:</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; text-transform: uppercase;">{% spaceless %}
+													{{ order.billingFirstName }} {{ order.billingLastName }}<br />
+													{% if order.billingOrganisationName != '' %}
+														{{ order.billingOrganisationName }}<br />
+													{% endif %}
+													{{ order.billingAddressLine1 }}<br />
+													{% if order.billingAddressLine2 != '' %}
+														{{ order.billingAddressLine2 }}<br />
+													{% endif %}
+													{{ order.billingTownCity }}<br />
+													{% if order.billingCountyState != '' %}
+														{{ order.billingCountyState }}<br />
+													{% endif %}
+													{% if order.billingCountryCode == 'GB' %}
+														{{ order.billingPostZipCode }}<br />
+													{% endif %}
+													{% if order.billingCountryCode == 'IE' %}
+														Republic of Ireland
+													{% endif %}
+												{% endspaceless %}</td>
+												<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;"><strong>Delivery{% if order.deliveryType != 'Collection' %} Address{% endif %}:</strong></td>
+												{% if order.deliveryType == 'Collection' %}
+													<td colspan="3" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #CC0000; font-size: 10px; font-family: 'Arial Black', Arial; font-weight: bold; padding: 5px 10px; text-transform: uppercase;">COLLECTION</td>
+												{% else %}
+													<td colspan="3" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; text-transform: uppercase;">{% spaceless %}
+														{{ order.deliveryFirstName }} {{ order.deliveryLastName }}<br />
+														{% if order.deliveryOrganisationName != '' %}
+															{{ order.deliveryOrganisationName }}<br />
+														{% endif %}
+														{{ order.deliveryAddressLine1 }}<br />
+														{% if order.deliveryAddressLine2 != '' %}
+															{{ order.deliveryAddressLine2 }}<br />
+														{% endif %}
+														{{ order.deliveryTownCity }}<br />
+														{% if order.deliveryCountyState != '' %}
+															{{ order.deliveryCountyState }}<br />
+														{% endif %}
+														{% if order.deliveryCountryCode == 'GB' %}
+															{{ order.deliveryPostZipCode }}<br />
+														{% endif %}
+														{% if order.deliveryCountryCode == 'IE' %}
+															Republic of Ireland
+														{% endif %}
+													{% endspaceless %}</td>
+												{% endif %}
+											</tr>
+											{% if order.deliveryType != 'Collection' %}
+												<tr>
+													<td width="120" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #DDDDDD; color: #000; font-size: 10px; font-family: Arial; padding: 5px 10px; font-weight: bold;" width="25%"><strong>Estimated Delivery:</strong></td>
+													<td colspan="5" valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #4EC0E3; font-size: 10px; font-family: Arial; padding: 5px 10px; text-transform: uppercase;"><strong>{{ order.estimatedDeliveryDaysStart }} - {{ order.estimatedDeliveryDaysEnd }}</strong><br /><em>Please Note: Estimated delivery times are subject to availability.</em></td>
+												</tr>
+											{% endif %}
+										</table>
+										{% if order.customerNotes|length > 0 %}
+											<h3 style="border-bottom: 1px dotted #676767; line-height: 100%; color: #000; font-size: 14px; font-family: Arial; padding: 20px 0px 5px 0px; margin: 0px 0px 0px 0px;">Notes</h3>
+											{% for note in order.customerNotes %}
+												<p style="font-family: Arial; font-size: 11px; color: #CC0000; padding: 10px 0 0 0; margin: 0; line-height: 100%;"><em>{{ note.note }}</em></p>
+											{% endfor %}
+										{% endif %}
+										<h3 style="border-bottom: 1px dotted #676767; line-height: 100%; color: #000; font-size: 14px; font-family: Arial; padding: 20px 0px 5px 0px; margin: 0px 0px 10px 0px;">Your Order</h3>
+										<table style="border-collapse: collapse; border: 1px solid #CCC;" cellspacing="0" border="0" cellpadding="0" width="100%">
+											<tr>
+												<td width="1" colspan="2" valign="top" align="left" style="border: 1px solid #CCC; text-align: center; line-height: 120%; background: #DDDDDD; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; font-weight: bold;" align="center" width="180"><strong>Qty</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; text-align: center; line-height: 120%; background: #DDDDDD; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; font-weight: bold;" align="center" width="180"><strong>Product</strong></td>
+												<td valign="top" align="left" style="border: 1px solid #CCC; text-align: center; line-height: 120%; background: #DDDDDD; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; font-weight: bold;" align="center" width="180"><strong>Code</strong></td>
+												<td width="1" colspan="3" valign="top" align="left" style="border: 1px solid #CCC; text-align: center; line-height: 120%; background: #DDDDDD; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; font-weight: bold;" align="center" width="180"><strong>Price</strong></td>
+											</tr>
+											{% for product in order.products %}
+												<tr>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: center;" align="center" width="1">{{ product.quantity }}</td>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: center;" align="center" width="1">&times;</td>
+													<td valign="top" align="left" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px;">{% spaceless %}
+														<strong>{{ product.header }}</strong>
+														{% if product.selectedOptionLabels|length > 0 %}
+															<br />
+															{% for selectedOptionLabel in product.selectedOptionLabels %}
+																{% if selectedOptionLabel != '' %}
+																	&nbsp;&nbsp;-&nbsp;&nbsp;{{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+																{% endif %}
+															{% endfor %}
+														{% endif %}
+													{% endspaceless %}</td>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: center;" align="center">{{ product.productCode }}</td>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: center;" align="center" width="1">&pound;{{ product.unitCost|number_format(2) }}</td>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: center;" align="center" width="1">=</td>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: center;" align="center" width="1">&pound;{{ product.subTotal|number_format(2) }}</td>
+												</tr>
+											{% endfor %}
+										</table>
+										<table style="border-collapse: collapse; border: 1px solid #CCC;" cellspacing="0" border="0" cellpadding="0" width="100%">
+											<tr>
+												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
+												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #B72C54; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right" width="1"><strong>&pound;{{ order.subTotal|number_format(2) }}</strong></td>
+											</tr>
+											<tr>
+												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right"><strong>Delivery Charge (inc. VAT):</strong></td>
+												{% if order.deliveryType == 'Collection' %}
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #CC0000; color: #FFFFFF; font-weight: bold; font-size: 11px; font-family: 'Arial Black', Arial; padding: 5px 10px; text-align: right;" align="right" width="1">COLLECTION</td>
+												{% else %}
+													{% if order.deliveryCharge == 0 %}
+														<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #4EC0E3; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right" width="1">FREE</td>
+													{% else %}
+														<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #B72C54; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right" width="1">&pound;{{ order.deliveryCharge|number_format(2) }}</td>
+													{% endif %}
+												{% endif %}
+											</tr>
+											{% if order.discount > 0 %}
+												<tr>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right"><strong>You Saved:</strong></td>
+													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #4EC0E3; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right" width="1">&pound;{{ order.discount|number_format(2) }}</td>
+												</tr>
+											{% endif %}
+											<tr>
+												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right"><strong>VAT (20%):</strong></td>
+												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #B72C54; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right" width="1"><strong>&pound;{{ order.vat|number_format(2) }}</strong></td>
+											</tr>
+											<tr>
+												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right"><strong>Total to Pay (inc. VAT):</strong></td>
+												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #B72C54; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right" width="1"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
+											</tr>
+										</table>
+										{% include '::emailFooter.html.twig' %}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+{% endblock %}

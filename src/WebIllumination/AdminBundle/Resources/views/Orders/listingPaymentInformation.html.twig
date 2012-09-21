@@ -1,0 +1,113 @@
+<div class="ui-helper-hidden more-information-detail" id="payment-information-{{ item.id }}">
+	{% if (item.paymentType == 'PayPal through SagePay') or (item.paymentType == 'SagePay') %}
+		<h5 class="no-margin-top">Payment Information</h5>
+		<table width="100%">
+			<tr>
+				<td class="label" width="20%"><label>Payment Type:</label></td>
+				<td width="30%">{{ item.paymentType|default('-') }}</td>
+				<td class="label" width="20%"><label>Amount:</label></td>
+				<td width="30%">&pound;{{ item.total|number_format(2)|default('-') }}</td>
+			</tr>
+			<tr>
+				<td class="label" width="20%"><label>Transaction Status:</label></td>
+				<td width="30%">{{ (item.paymentResponse.Status is defined?item.paymentResponse.Status|default('-'):'-') }}</td>
+				<td class="label" width="20%"><label>Authorisation Code:</label></td>
+				<td width="30%">{{ (item.paymentResponse.TxAuthNo is defined?item.paymentResponse.TxAuthNo|default('-'):'-') }}</td>
+			</tr>
+			<tr>
+				<td class="label" width="20%"><label>Status Information:</label></td>
+				<td colspan="3" width="80%">{{ (item.paymentResponse.StatusDetail is defined?item.paymentResponse.StatusDetail|default('-'):'-') }}</td>
+			</tr>
+			<tr>
+				<td class="label" width="20%"><label>Unique Transaction ID:</label></td>
+				<td colspan="3" width="80%">{{ (item.paymentResponse.VPSTxId is defined?item.paymentResponse.VPSTxId|default('-'):'-') }}</td>
+			</tr>
+		</table>
+	{% endif %}
+	<h5>Standard Fraud Checks</h5>
+	<table width="100%">
+		<tr>
+			<td class="label" width="40%"><label>Has customer ordered before?</label></td>
+			<td width="10%"{{ (item.fraudCheckCustomerOrdered == 1?' class="green"':' class="amber"') }}>{{ (item.fraudCheckCustomerOrdered == 1?'YES':'NO') }}</td>
+			<td class="label" width="40%"><label>Is the billing and delivery address the same?</label></td>
+			<td width="10%"{{ (item.fraudCheckAddressMatch == 1?' class="green"':' class="amber"') }}>{{ (item.fraudCheckAddressMatch == 1?'YES':'NO') }}</td>
+		</tr>
+		<tr>
+			<td class="label" width="40%"><label>Name found on a different order?</label></td>
+			<td width="10%"{{ (item.fraudCheckNameUsedOnDifferentOrder == 1?' class="red"':' class="green"') }}>{{ (item.fraudCheckNameUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+			<td class="label" width="40%"><label>Post code found on a different order?</label></td>
+			<td width="10%"{{ (item.fraudCheckPostZipCodeUsedOnDifferentOrder == 1?' class="red"':' class="green"') }}>{{ (item.fraudCheckPostZipCodeUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+		</tr>
+		<tr>
+			<td class="label" width="40%"><label>Telphone number found on a different order?</label></td>
+			<td width="10%"{{ (item.fraudCheckTelephoneUsedOnDifferentOrder == 1?' class="red"':' class="green"') }}>{{ (item.fraudCheckTelephoneUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+			<td colspan="2" width="50%">&nbsp;</td>
+		</tr>
+	</table>
+	{% if item.paymentType == 'PayPal through SagePay' %}
+		<h5>PayPal Fraud Checks</h5>
+		<table width="100%">
+			<tr>
+				<td class="label" width="20%"><label>Address Status:</label></td>
+				{% if item.paymentResponse.AddressStatus is defined %}
+					<td width="30%"{% if item.paymentResponse.AddressStatus == 'CONFIRMED' %} class="green"{% elseif item.paymentResponse.AddressStatus == 'UNCONFIRMED' %} class="red"{% else %} class="amber"{% endif %}>{{ item.paymentResponse.AddressStatus|default('-') }}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+				<td class="label" width="20%"><label>Payer Status:</label></td>
+				{% if item.paymentResponse.PayerStatus is defined %}
+					<td width="30%"{% if item.paymentResponse.PayerStatus == 'VERIFIED' %} class="green"{% else %} class="red"{% endif %}>{{ item.paymentResponse.PayerStatus|default('-') }}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+			</tr>
+		</table>
+	{% elseif item.paymentType == 'SagePay' %}
+		<h5>SagePay Fraud Checks</h5>
+		<table width="100%">
+			<tr>
+				<td class="label" width="20%"><label>Card Type:</label></td>
+				{% if item.paymentResponse.CardType is defined %}
+					<td width="30%">{{ item.paymentResponse.CardType|default('-') }}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+				<td class="label" width="20%"><label>Card Number:</label></td>
+				{% if item.paymentResponse.Last4Digits is defined %}
+					<td width="30%">{% if item.paymentResponse.Last4Digits > 0 %}**** **** **** {{ item.paymentResponse.Last4Digits|default('-') }}{% else %}-{% endif %}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td class="label" width="20%"><label>Address Check:</label></td>
+				{% if item.paymentResponse.AddressResult is defined %}
+					<td width="30%"{% if item.paymentResponse.AddressResult == 'MATCHED' %} class="green"{% elseif item.paymentResponse.AddressResult == 'NOTMATCHED' %} class="red"{% else %} class="amber"{% endif %}>{{ item.paymentResponse.AddressResult|default('-') }}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+				<td class="label" width="20%"><label>Post Code Check:</label></td>
+				{% if item.paymentResponse.PostCodeResult is defined %}
+					<td width="30%"{% if item.paymentResponse.PostCodeResult == 'MATCHED' %} class="green"{% elseif item.paymentResponse.PostCodeResult == 'NOTMATCHED' %} class="red"{% else %} class="amber"{% endif %}>{{ item.paymentResponse.PostCodeResult|default('-') }}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+			</tr>
+			<tr>
+				<td class="label" width="20%"><label>AVS/CV2 Check:</label></td>
+				{% if item.paymentResponse.AVSCV2 is defined %}
+					<td width="30%"{% if item.paymentResponse.AVSCV2 == 'ALL MATCH' %} class="green"{% elseif item.paymentResponse.AVSCV2 == 'NO DATA MATCHES' %} class="red"{% else %} class="amber"{% endif %}>{{ item.paymentResponse.AVSCV2|default('-') }}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+				<td class="label" width="20%"><label>CV2 Result:</label></td>
+				{% if item.paymentResponse.CV2Result is defined %}
+					<td width="30%"{% if item.paymentResponse.CV2Result == 'MATCHED' %} class="green"{% elseif item.paymentResponse.CV2Result == 'NOTMATCHED' %} class="red"{% else %} class="amber"{% endif %}>{{ item.paymentResponse.CV2Result|default('-') }}</td>
+				{% else %}
+					<td width="30%">-</td>
+				{% endif %}
+			</tr>
+			
+		</table>
+	{% endif %}
+</div>

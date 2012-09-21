@@ -1,0 +1,31 @@
+{% extends '::email.txt.twig' %}
+{% block body %}
+Thank you for registering to join us at the Ride Direct Practice Day at the all new, all-weather practice track.
+
+RIDE DIRECT VOUCHER: £10 ONLY
+
+This Discounted Price is Only Valid with Your Ride Direct Privilege Membership Card.
+
+Please make sure you read all details below and make sure you bring this voucher and your membership card with you:
+
+Name: {{ name }}
+Membership Number: {{ membershipNumber }}
+Your Email Address: {{ emailAddress }}
+Your Contact Number: {{ contactNumber }}
+Your Post Code: {{ postZipCode }}
+Age Selected: {{ ageRange }}
+Day Selected: {{ dayAttending }}
+Time: 10am till 4pm
+
+Bike Make, Model and CC:
+{{ bikeDetails }}
+
+Venue Address:
+Stalker MX Track Gonerby Moor, Great Gonerby, Grantham, Lincolnshire, NG32 2AB
+
+Contact Number Before Event: Ride Direct on 01332 365 913
+Contact Numbers on Event: 07940 585 505 or 07785 425 499
+
+SPECIAL NOTE: Weather-permitting, please check our website the day before.
+{% include '::emailFooter.txt.twig' %}
+{% endblock %}

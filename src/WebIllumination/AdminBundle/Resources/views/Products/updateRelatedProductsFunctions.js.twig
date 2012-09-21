@@ -1,0 +1,205 @@
+{# Dragabble sorting #}
+$("#form-related-products-container").sortable({
+	placeholder: "highlighted-sortable",
+	update: function(event, ui) {
+		reOrderRelatedProducts();
+	}
+});
+
+{# Load the related products #}	
+function loadRelatedProducts()
+{
+	$.ajax({
+		type: "GET",
+		url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_get_related_products') }}",
+		beforeSend: function() {
+			$relatedProductsLoaded = false;
+			$("#ajax-related-products-loading").show();
+		},
+		data: {
+			productId: {{ data.product.id }}
+		},
+		error: function(data) {
+  			$("#ajax-related-products-loading").hide();
+      		$("#related-product-loading-error").fadeIn();
+	  	},
+		success: function(data) {
+			$("#ajax-related-products").html(data);
+			initialiseUniform("ajax-related-products");
+			$(".action-confirm-delete-related-products, .action-unselect-all-related-products").hide();
+	        $("#ajax-related-products").fadeIn();
+	        $relatedProductsLoaded = true;
+	        checkDataLoaded();
+    	    $("#ajax-related-products-loading").hide();
+    	    $("#form-related-products-container").sortable({
+				placeholder: "highlighted-related-product",
+				update: function(event, ui) {
+					reOrderRelatedProducts();
+				}
+			});
+		}
+	});
+}
+
+{# Function to update all related products #}
+function updateRelatedProducts()
+{
+	$errorOccurred = false;
+	$numberOfElementsToProcess = $("input.related-product-requires-update[value='1']").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToProcess > 0)
+	{
+		$("#ajax_loading").show();
+		var relatedProductsValidator = $("#related-products :input").validator({
+			position : 'bottom left', 
+			offset : [0, 0], 
+			messageClass : 'form-error', 
+    		message : '<div><em/></div>'
+		});
+		if (relatedProductsValidator.data("validator").checkValidity())
+		{
+			$("input.related-product-requires-update[value='1']").each(function(index) {
+				$elementIndex = String($(this).attr("data-index"));
+				$.ajax({
+			    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_related_product') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-related-product-id-"+$elementIndex).val(),
+			      		productId: {{ data.product.id }},
+			      		productLinkId: $("#form-product-link-id-"+$elementIndex).val(),
+			      		displayOrder: $("#form-related-product-display-order-"+$elementIndex).val(),
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			        	$errorOccurred = true;
+			        	$("#related-product-"+$elementIndex).addClass("ui-state-error");
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#related-product-error-message-text").html('Problems occurred while trying to update your related products. Please try again.');
+								$("#related-product-error-message").fadeIn();
+							} else {
+								$("#related-product-success-message-text").html('Your related products were successfully updated.');
+								$("#related-product-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#related-products").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#related-products-tab-to-redirect-to").val() > -1)
+							{
+								$("#related-products .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#related-products-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	},
+			      	success: function(data) {
+		      			if (data.response == 'success')
+		      			{
+		      				$("#related-product-"+data.elementIndex).removeClass("ui-state-error");
+		      				$("#form-related-product-id-"+data.elementIndex).val(data.id);
+		      				$("#form-related-product-requires-update-"+data.elementIndex).val("0");
+		      			} else {
+		      				$("#related-product-"+data.elementIndex).addClass("ui-state-error");
+		      				$errorOccurred = true;
+		      			}
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#related-product-error-message-text").html('Problems occurred while trying to update your related products. Please try again.');
+								$("#related-product-error-message").fadeIn();
+							} else {
+								$("#related-product-success-message-text").html('Your related products were successfully updated.');
+								$("#related-product-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#related-products").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#related-products-tab-to-redirect-to").val() > -1)
+							{
+								$("#related-products .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#related-products-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	}
+			   	});
+			});
+		} else {
+			$("#related-product-error-message-text").html('Sorry, there was a problem updating. Please ensure all related products have been filled in and are valid. Please correct the highlighted related products and try again.');
+        	$("#related-product-error-message").fadeIn();
+        	$("html, body").animate({scrollTop: $("#related-products").offset().top + 35},'slow');
+        	$("#ajax_loading").hide();
+		}
+	}
+}
+
+{# Function to load new related product #}
+function loadNewRelatedProduct()
+{
+	$("#ajax_loading").show();
+	$nextElement = parseInt($("#related-product-count").val()) + 1;
+	$("#related-product-count").val($nextElement);
+	$.ajax({
+    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_add_related_product') }}",
+      	type: "GET",
+      	data: {
+      		id: $nextElement,
+      		productId: '{{ data.product.id }}'
+      	},
+      	error: function(data) {
+        	$("#related-product-error-message-text").html('Sorry, there was an error adding a new related product. Please try again.');
+			$("#related-product-error-message").fadeIn();
+			$("html, body").animate({scrollTop: $("#related-product-error-message").offset().top - 100},'slow');
+      	},
+      	success: function(data) {
+  			$("#form-related-products-container").append(data);
+				$("#related-product-"+$nextElement.toString()+" :checkbox:not(.no-uniform), #related-product-"+$nextElement.toString()+" :radio:not(.no-uniform), #related-product-"+$nextElement.toString()+" select:not(.no-uniform), #related-product-"+$nextElement.toString()+" :file:not(.no-uniform)").uniform();
+				$("#related-product-"+$nextElement.toString()).fadeIn();
+				$("#related-product-"+$nextElement.toString()+" .button").each(function () {
+	            $(this).button({
+	            	icons: {
+	                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+	                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+	        	});
+	        });
+	        reOrderRelatedProducts();
+	        $(".selector, .uploader").addClass("full");
+	        $("html, body").animate({scrollTop: $("#related-product-"+$nextElement.toString()).offset().top - 100},'slow');
+	        $("#ajax_loading").hide();
+      	}
+   	});
+}
+
+{# Function to re-order the related product indexes #}
+function reOrderRelatedProducts()
+{
+	$("#related-products .message").hide();
+	$(".form-error").remove();
+	$relatedProductCount = 1;
+	$numberOfElementsToProcess = $("li.related-product-container:visible").length;
+	$numberOfElementsProcessed = 0;
+	$("li.related-product-container:visible").each(function(index) {
+		$row = $(this);
+		if ($row.find("input.related-product-display-order").val() != $relatedProductCount)
+		{
+			if ($row.find("input.related-product-id").val() > 0)
+			{
+				$row.find("input.related-product-requires-update").val("1");
+			}
+		}
+		$row.find("input.related-product-display-order").val($relatedProductCount);
+	    $relatedProductCount++;
+	    $numberOfElementsProcessed++;
+	    if ($numberOfElementsProcessed == $numberOfElementsToProcess)
+	    {
+	    	updateRelatedProducts();
+	    }
+	});
+	$("li.related-product-container:hidden").each(function(index) {
+		$(this).remove();
+	});
+}

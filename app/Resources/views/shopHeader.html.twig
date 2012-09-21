@@ -1,0 +1,39 @@
+<header class="clearfix{% if (app.request.attributes.get('_route') == 'checkout_secure_checkout') or (app.request.attributes.get('_route') == 'checkout_order_failed') %} short{% endif %}">
+	{% if (app.request.attributes.get('_route') != 'checkout_secure_checkout') and (app.request.attributes.get('_route') != 'checkout_order_failed') %}
+		<div class="top-menu-container">
+			<div class="container_8">
+				<!--[if gt IE 7]>
+					{% include '::shopSocialMediaInteractions.html.twig' %}
+				<![endif]-->
+				<!--[if !IE]> -->
+					{% include '::shopSocialMediaInteractions.html.twig' %}
+				<!-- <![endif]-->
+				{% include '::shopTopMenu.html.twig' %}
+			</div>
+		</div>
+	{% endif %}
+	<div class="container_8">
+		<a class="logo{% if (app.request.attributes.get('_route') == 'checkout_secure_checkout') or (app.request.attributes.get('_route') == 'checkout_order_failed') %} no-padding{% endif %}" title="Kitchen Appliance Centre" href="{{ path('homepage') }}"><img src="{{ asset('bundles/webilluminationshop/images/logos/kitchen-appliance-centre.png') }}" border="0" alt="Kitchen Appliance Centre" /></a>
+		{% if (app.request.attributes.get('_route') != 'checkout_secure_checkout') and (app.request.attributes.get('_route') != 'checkout_order_failed') %}
+	        {% include '::shopSearch.html.twig' %}
+	        {% include '::shopBasket.html.twig' %}
+	    {% else %}
+	    	<div class="clearfix secure-checkout-header">
+	    		<a href="{{ path('basket_your_basket') }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fr button ui-button-orange">View Basket</a>
+	    		<a id="checkout-continue-shopping" href="{{ path('homepage') }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fr button ui-button-blue">Continue Shopping</a>
+	    		<h1 class="fr">Secure Checkout</h1>
+				<div class="clear"></div>
+			</div>
+        {% endif %}
+        <div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+	{% if (app.request.attributes.get('_route') != 'checkout_secure_checkout') and (app.request.attributes.get('_route') != 'checkout_order_failed') %}
+	    {% render "WebIlluminationShopBundle:System:mainMenu" %}
+	    <div class="clear"></div>
+	    {% include '::shopUniqueSellingPoints.html.twig' %}
+	    <div class="clear"></div>
+	{% else %}
+		<div class="border-spacer"></div>
+    {% endif %}
+</header>

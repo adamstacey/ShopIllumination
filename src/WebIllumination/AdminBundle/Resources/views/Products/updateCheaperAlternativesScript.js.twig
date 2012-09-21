@@ -1,0 +1,356 @@
+{# Load the cheaper alternatives #}
+loadCheaperAlternatives();
+
+{# Select and unselect all rows #}
+$(".action-unselect-all-cheaper-alternatives").hide();
+$(".action-select-all-cheaper-alternatives").live('click', function() {
+	$("li.cheaper-alternative-container td.delete div.checker span").addClass("checked");
+	$("li.cheaper-alternative-container").addClass("ui-state-highlight");
+	$("input.cheaper-alternative-select").attr("checked", "checked");
+	$(".action-confirm-delete-cheaper-alternatives").fadeIn();
+	$(".action-select-all-cheaper-alternatives").hide();
+	$(".action-unselect-all-cheaper-alternatives").fadeIn();
+});
+$(".action-unselect-all-cheaper-alternatives").live('click', function() {
+	$("li.cheaper-alternative-container td.delete div.checker span").removeClass("checked");
+	$("li.cheaper-alternative-container").removeClass("ui-state-highlight");
+	$("input.cheaper-alternative-select").attr("checked", "");
+	$(".action-confirm-delete-cheaper-alternatives").hide();
+	$(".action-unselect-all-cheaper-alternatives").hide();
+	$(".action-select-all-cheaper-alternatives").fadeIn();
+});
+
+{# Select rows for selection #}
+$(".action-confirm-delete-cheaper-alternatives").hide();
+$("input.cheaper-alternative-select").live('change', function() {
+	if ($(this).is(":checked"))
+	{
+		$("#cheaper-alternative-"+$(this).attr("data-index")).addClass("ui-state-highlight");
+	} else {
+		$("#cheaper-alternative-"+$(this).attr("data-index")).removeClass("ui-state-highlight");
+	}
+	if ($("li.cheaper-alternative-container:visible .cheaper-alternative-select:checked").length < $("li.cheaper-alternative-container:visible .cheaper-alternative-select").length)
+	{
+		$(".action-select-all-cheaper-alternatives").fadeIn();
+	} else {
+		$(".action-select-all-cheaper-alternatives").hide();
+	}
+	if ($("li.cheaper-alternative-container:visible .cheaper-alternative-select:checked").length > 0)
+	{
+		$(".action-confirm-delete-cheaper-alternatives").fadeIn();
+		$(".action-unselect-all-cheaper-alternatives").fadeIn();
+	} else {
+		$(".action-confirm-delete-cheaper-alternatives").hide();
+		$(".action-unselect-all-cheaper-alternatives").hide();
+	}
+});
+
+{# Add a new cheaper alternative #}
+$(".action-add-new-cheaper-alternative").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	loadNewCheaperAlternative();
+});
+
+{# Detect any changes #}
+$(".product-link-id").live('change', function() {
+	$("#form-cheaper-alternative-requires-update-"+$(this).closest("li.cheaper-alternative-container").attr("data-index")).val("1");
+});
+
+{# Update cheaper-alternatives and leave #}
+$(".action-update-cheaper-alternatives-and-leave").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	updateCheaperAlternatives();
+});
+			
+{# Update cheaper alternatives #}
+$(".action-update-cheaper-alternatives").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$("#cheaper-alternatives-tab-to-redirect-to").val("-1");
+	updateCheaperAlternatives();
+});
+
+{# Confirm delete of a cheaper alternative #}
+$(".action-confirm-delete-cheaper-alternative").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$elementIndex = $(this).attr("data-index");
+	if ($("#form-cheaper-alternative-id-"+$elementIndex).val() == "0")
+	{
+		$("#cheaper-alternative-"+$elementIndex).fadeOut(function() {
+			$("#cheaper-alternative-"+$elementIndex).remove();
+			if ($("li.cheaper-alternative-container").length < 1)
+			{
+				$(".action-confirm-delete-cheaper-alternatives").hide();
+				$(".action-unselect-all-cheaper-alternatives").hide();
+				$(".action-select-all-cheaper-alternatives").fadeIn();
+				loadNewCheaperAlternative();
+			} else {
+				reOrderCheaperAlternatives();
+			}
+			$("#ajax_loading").hide();
+		});
+	} else {
+		$("#cheaper-alternative-confirm-delete-button").attr("data-index", $elementIndex);
+		$("#cheaper-alternative-cancel-delete-button").attr("data-index", $elementIndex);
+		$("#cheaper-alternative-confirm-delete").fadeIn();
+		$("html, body").animate({scrollTop: $("#cheaper-alternative-confirm-delete").offset().top - 10},'slow');
+		$("#cheaper-alternative-"+$elementIndex).addClass("ui-state-error");
+		$("#cheaper-alternative-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+		$("#cheaper-alternative-"+$elementIndex+" input.cheaper-alternative-select").attr("checked", "checked");
+		$("#ajax_loading").hide();
+	}
+});
+
+{# Cancel delete of a cheaper alternative #}
+$(".action-cancel-delete-cheaper-alternative").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$elementIndex = $(this).attr("data-index");
+	$("#cheaper-alternative-"+$elementIndex).removeClass("ui-state-error");
+	$("#cheaper-alternative-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+	$("#cheaper-alternative-"+$elementIndex+" input.cheaper-alternative-select").attr("checked", "");
+	$("#cheaper-alternative-confirm-delete").hide();
+	$("#ajax_loading").hide();
+});
+
+{# Delete a cheaper alternative #}
+$(".action-delete-cheaper-alternative").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$elementIndex = $(this).attr("data-index");				
+	$.ajax({
+    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_delete_cheaper_alternative') }}",
+      	type: "GET",
+      	dataType: "json",
+      	data: {
+      		id: $("#form-cheaper-alternative-id-"+$elementIndex).val(),
+      		elementIndex: $elementIndex
+      	},
+      	error: function(data) {
+      		$("#cheaper-alternative-error-message-text").html('Sorry, there was a problem deleting your cheaper alternative. Please try again.');
+      		$("#cheaper-alternative-error-message").fadeIn();
+      		$("#cheaper-alternative-confirm-delete").hide();
+        	$("#ajax_loading").hide();
+        	$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+      	},
+      	success: function(data) {
+        	if (data.response == 'success')
+        	{
+        		$("#cheaper-alternative-"+data.elementIndex).fadeOut(function() {
+        			$("#cheaper-alternative-"+data.elementIndex).remove();
+        			if ($("li.cheaper-alternative-container").length < 1)
+        			{
+        				$(".action-confirm-delete-cheaper-alternatives").hide();
+						$(".action-unselect-all-cheaper-alternatives").hide();
+						$(".action-select-all-cheaper-alternatives").fadeIn();
+        				loadNewCheaperAlternative();
+        			} else {
+        				reOrderCheaperAlternatives();
+        			}
+        		});
+        	} else {
+        		$("#cheaper-alternative-error-message-text").html('Sorry, there was a problem deleting your cheaper alternative. Please try again.');
+        		$("#cheaper-alternative-error-message").fadeIn();
+        		$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+        	}
+        	$("#cheaper-alternative-confirm-delete").hide();
+        	$("#ajax_loading").hide();
+      	}
+   	});
+});
+
+{# Confirm deleting of cheaper alternatives #}
+$(".action-confirm-delete-cheaper-alternatives").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$deletesNeedingConfirmation = 0;
+	$("li.cheaper-alternative-container:visible input.cheaper-alternative-select:checked").each(function(index) {
+		$elementIndex = $(this).attr("data-index");
+		if ($("#form-cheaper-alternative-id-"+$elementIndex).val() == "0")
+		{
+			$("#cheaper-alternative-"+$elementIndex).fadeOut(function() {
+    			$("#cheaper-alternative-"+$elementIndex).remove();
+    			if ($("li.cheaper-alternative-container:visible").length < 1)
+    			{
+    				$(".action-confirm-delete-cheaper-alternatives").hide();
+					$(".action-unselect-all-cheaper-alternatives").hide();
+					$(".action-select-all-cheaper-alternatives").fadeIn();
+    				loadNewCheaperAlternative();
+    			} else {
+    				reOrderCheaperAlternatives();
+    			}
+    			$("#ajax_loading").hide();
+    		});
+		} else {
+			$deletesNeedingConfirmation++;
+		}
+	});
+	if ($deletesNeedingConfirmation > 0)
+	{
+		$("#cheaper-alternative-confirm-deletes").fadeIn();
+		$("html, body").animate({scrollTop: $("#cheaper-alternative-confirm-deletes").offset().top - 10},'slow');
+	}
+	$("#ajax_loading").hide();
+});
+
+{# Cancel deleting of cheaper alternatives #}
+$(".action-cancel-delete-cheaper-alternatives").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$("#cheaper-alternative-confirm-deletes").hide();
+	$("#ajax_loading").hide();
+});
+
+{# Delete cheaper alternatives #}
+$(".action-delete-cheaper-alternatives").live('click', function() {
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$errorOccurred = false;
+	$numberOfElementsToDelete = $("li.cheaper-alternative-container:visible input.cheaper-alternative-select:checked").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToDelete > 0)
+	{
+		$("li.cheaper-alternative-container:visible input.cheaper-alternative-select:checked").each(function(index) {
+			$elementIndex = $(this).attr("data-index");				
+			$.ajax({
+		    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_delete_cheaper_alternative') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $("#form-cheaper-alternative-id-"+$elementIndex).val(),
+		      		elementIndex: $elementIndex
+		      	},
+		      	error: function(data) {
+		      		$errorOccurred = true;
+		      		$numberOfElementsProcessed++;
+		      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+		        	{
+		        		if ($errorOccurred)
+		        		{
+		        			$("#cheaper-alternative-error-message-text").html('Sorry, there were problems deleting your selected cheaper alternatives. Please try again.');
+		        			$("#cheaper-alternative-error-message").fadeIn();
+		        			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+		        		}
+		        		if ($("li.cheaper-alternative-container:visible").length < 1)
+	        			{
+	        				$(".action-confirm-delete-cheaper-alternatives").hide();
+							$(".action-unselect-all-cheaper-alternatives").hide();
+							$(".action-select-all-cheaper-alternatives").fadeIn();
+	        				loadNewCheaperAlternative();
+	        			} else {
+		        			reOrderCheaperAlternatives();
+		        		}
+		        		$("#cheaper-alternative-confirm-deletes").hide();
+		        		if ($("li.cheaper-alternative-container:visible input.cheaper-alternative-select:checked").length < 1)
+		        		{
+		        			$(".action-confirm-delete-cheaper-alternatives").fadeOut();
+		        		}
+		        		$("#ajax_loading").hide();
+		        	}
+		      	},
+		      	success: function(data) {
+		        	if (data.response == 'success')
+		        	{
+		        		$("#cheaper-alternative-"+data.elementIndex).fadeOut(function() {
+		        			$("#cheaper-alternative-"+data.elementIndex).remove();
+		        			$numberOfElementsProcessed++;
+		        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#cheaper-alternative-error-message-text").html('Sorry, there were problems deleting your selected cheaper alternatives. Please try again.');
+				        			$("#cheaper-alternative-error-message").fadeIn();
+				        			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+				        		}
+				        		if ($("li.cheaper-alternative-container:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-cheaper-alternatives").hide();
+									$(".action-unselect-all-cheaper-alternatives").hide();
+									$(".action-select-all-cheaper-alternatives").fadeIn();
+			        				loadNewCheaperAlternative();
+			        			} else {
+				        			reOrderCheaperAlternatives();
+				        		}
+				        		$("#cheaper-alternative-confirm-deletes").hide();
+				        		if ($("li.cheaper-alternative-container:visible input.cheaper-alternative-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-cheaper-alternatives").fadeOut();
+				        		}
+				        		$.ajax({
+							    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_rebuild_product') }}",
+							      	type: "GET",
+							      	data: {
+							      		productId: '{{ data.product.id }}',
+							      	}
+							   	});
+				        		$("#ajax_loading").hide();
+				        	}
+		        		});
+		        	} else {
+		        		$errorOccurred = true;
+		        		$numberOfElementsProcessed++;
+		        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred)
+			        		{
+			        			$("#cheaper-alternative-error-message-text").html('Sorry, there were problems deleting your selected cheaper alternatives. Please try again.');
+			        			$("#cheaper-alternative-error-message").fadeIn();
+			        			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+			        		}
+			        		if ($("li.cheaper-alternative-container:visible").length < 1)
+		        			{
+		        				$(".action-confirm-delete-cheaper-alternatives").hide();
+								$(".action-unselect-all-cheaper-alternatives").hide();
+								$(".action-select-all-cheaper-alternatives").fadeIn();
+		        				loadNewCheaperAlternative();
+		        			} else {
+			        			reOrderCheaperAlternatives();
+			        		}
+			        		$("#cheaper-alternative-confirm-deletes").hide();
+			        		if ($("li.cheaper-alternative-container:visible input.cheaper-alternative-select:checked").length < 1)
+			        		{
+			        			$(".action-confirm-delete-cheaper-alternatives").fadeOut();
+			        		}
+			        		$("#ajax_loading").hide();
+			        	}
+		        	}
+		      	}
+		   	});
+		});
+	}
+});
+
+$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+	if ($("input.cheaper-alternative-requires-update[value='1']").length > 0)
+	{
+		$("#cheaper-alternatives .message").hide();
+		$(".form-error").remove();
+		$("#cheaper-alternative-leave-cheaper-alternatives-button").attr("data-tab-index", ui.index);
+		$("#cheaper-alternatives-tab-to-redirect-to").val(ui.index);
+		$("#cheaper-alternative-confirm-leave").fadeIn();
+		$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+		return false;
+	}
+	return true;
+});
+
+$(".action-leave-cheaper-alternatives").live('click', function() {
+	$("input.cheaper-alternative-requires-update").val("0");
+	$("input.cheaper-alternative-id[value='0']").each(function(index) {
+		$elementIndex = $(this).attr("data-index");
+		$("#cheaper-alternative-"+$elementIndex).remove();
+	});
+	$("#cheaper-alternatives .message").hide();
+	$(".form-error").remove();
+	$(".sidebar-tabs").tabs("select", parseInt($(this).attr("data-tab-index")));
+	$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+});

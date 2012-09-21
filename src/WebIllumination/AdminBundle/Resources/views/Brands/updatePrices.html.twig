@@ -1,0 +1,26 @@
+<section id="prices" class="form ui-helper-hidden">
+	<h2>Prices</h2>
+	<div class="clearfix">
+		<div class="clearfix">
+	        <label for="form-hide-prices" class="form-label">Hide Prices<small>Hide prices for this brand?</small></label>
+	        <div class="form-input"><label><input type="radio" name="hide-prices" id="form-hide-prices-1" value="1"{% if data.brand.hidePrices == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="hide-prices" id="form-hide-prices-0" value="0"{% if data.brand.hidePrices == 0 %} checked="checked"{% endif %} /> No</label></div>
+	    </div>
+	    <div id="show-prices-out-of-hours-container" class="{% if data.brand.hidePrices == 0 %}ui-helper-hidden {% endif %}clearfix">
+	        <label for="form-show-prices-out-of-hours" class="form-label">Show Prices Out of Hours<small>Show prices out of hours?</small></label>
+	        <div class="form-input"><label><input type="radio" name="show-prices-out-of-hours" id="form-show-prices-out-of-hours-1" value="1"{% if data.brand.showPricesOutOfHours == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="show-prices-out-of-hours" id="form-show-prices-out-of-hours-0" value="0"{% if data.brand.showPricesOutOfHours == 0 %} checked="checked"{% endif %} /> No</label></div>
+	    </div>
+		<div class="clearfix">
+	        <label for="form-membership-card-discount-available" class="form-label">Discount with Membership<small>Discount with membership card?</small></label>
+	        <div class="form-input" id="form-membership-card-discount-available"><label><input type="radio" name="membership-card-discount-available" id="form-membership-card-discount-available-1" value="1"{% if data.brand.membershipCardDiscountAvailable == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="membership-card-discount-available" id="form-membership-card-discount-available-0" value="0"{% if data.brand.membershipCardDiscountAvailable == 0 %} checked="checked"{% endif %} /> No</label></div>
+	    </div>
+	    <div id="maximum-membership-card-discount-container" class="{% if data.brand.membershipCardDiscountAvailable == 0 %}ui-helper-hidden {% endif %}clearfix">
+	        <label for="form-maximum-membership-card-discount" class="form-label">Membership Discount (%)<small>Maximum membership discount</small></label>
+	        <div class="form-input"><input type="text" id="form-maximum-membership-card-discount" name="maximum-membership-card-discount" class="decimal" value="{{ data.brand.maximumMembershipCardDiscount|number_format(2) }}" /></div>
+	    </div>
+	    <div class="clearfix">
+	        <div class="form-input-long buttons">
+	        	<button class="button ui-button-green action-update-price-settings-section" data-icon-primary="ui-icon-check">Update</button>
+	        </div>
+	    </div>
+	</div>
+</section>

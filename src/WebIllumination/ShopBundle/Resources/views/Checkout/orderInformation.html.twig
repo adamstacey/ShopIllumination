@@ -1,0 +1,248 @@
+<div class="grid_3 leading">
+    <div class="portlet">
+        <section id="your-details-1">
+			<dl>
+				<dt>Name:</dt>
+					<dd>{{ order.firstName }} {{ order.lastName }}</dd>
+				<dt>Company:</dt>
+					<dd>{{ order.billingOrganisationName|default('-') }}</dd>
+				<dt>Email Address:</dt>
+					<dd>{{ order.emailAddress|default('-') }}</dd>
+			</dl>
+			<div class="clear"></div>
+        </section>
+    </div>
+</div>
+<div class="grid_3 leading">
+    <div class="portlet">
+        <section id="your-details-2">
+			<dl>
+				<dt>Telephone (Daytime):</dt>
+					<dd>{{ order.telephoneDaytime|default('-') }}</dd>
+				<dt>Telephone (Evening):</dt>
+					<dd>{{ order.telephoneEvening|default('-') }}</dd>
+				<dt>Mobile:</dt>
+					<dd>{{ order.mobile|default('-') }}</dd>
+			</dl>
+			<div class="clear"></div>
+        </section>
+    </div>
+</div>
+<div class="clear"></div>
+{% if order.customerNotes|length > 0 %}
+	<div class="grid_6 leading">
+	    <div class="portlet">
+	    	<header>
+	            <h2>Notes</h2>
+	        </header>
+	        <section>
+				{% for note in order.customerNotes %}
+					<p class="no-margin"><em>{{ note.note }}</em></p>
+				{% endfor %}										
+	        </section>
+	    </div>
+	</div>
+	<div class="clear"></div>
+{% endif %}
+<div class="grid_2 leading">
+    <div class="portlet">
+        <header>
+            <h2>Order Details</h2>
+        </header>
+        <section id="order-details">
+			<dl>
+				<dt>Order Number:</dt>
+					<dd>{{ order.orderNumber|default('-') }}</dd>
+				<dt>Order Status:</dt>
+					<dd>{{ order.status|default('-') }}</dd>
+				<dt>Order Total:</dt>
+					<dd>&pound;{{ order.total|number_format(2)|default('0.00') }}</dd>
+				<dt>Payment Method:</dt>
+					<dd>{{ order.paymentType|default('-') }}</dd>
+				<dt>Delivery Method:</dt>
+					<dd{% if order.deliveryType == 'Collection' %} class="important"{% endif %}>{{ order.deliveryType|default('-') }}</dd>
+			</dl>
+			<div class="clear"></div>
+        </section>
+    </div>
+</div>
+<div class="grid_2 leading">
+    <div class="portlet">
+        <header>
+            <h2>Billing Address</h2>
+        </header>
+        <section id="billing-address" class="uppercase">{% spaceless %}
+			{{ order.billingFirstName }} {{ order.billingLastName }}<br />
+			{% if order.billingOrganisationName != '' %}
+				{{ order.billingOrganisationName }}<br />
+			{% endif %}
+			{{ order.billingAddressLine1 }}<br />
+			{% if order.billingAddressLine2 != '' %}
+				{{ order.billingAddressLine2 }}<br />
+			{% endif %}
+			{{ order.billingTownCity }}<br />
+			{% if order.billingCountyState != '' %}
+				{{ order.billingCountyState }}<br />
+			{% endif %}
+			{% if order.billingCountryCode == 'GB' %}
+				{{ order.billingPostZipCode }}<br />
+			{% endif %}
+			{% if order.billingCountryCode == 'IE' %}
+				Republic of Ireland
+			{% endif %}
+		{% endspaceless %}</section>
+    </div>
+</div>
+<div class="grid_2 leading">
+    <div class="portlet">
+        <header>
+            <h2>Delivery{% if order.deliveryType != 'Collection' %} Address{% endif %}</h2>
+        </header>
+        {% if order.deliveryType == 'Collection' %}
+        	<section id="delivery-address"><p class="important ac">Collection</p></section>
+        {% else %}
+	        <section id="delivery-address" class="uppercase">{% spaceless %}
+				{{ order.deliveryFirstName }} {{ order.deliveryLastName }}<br />
+				{% if order.deliveryOrganisationName != '' %}
+					{{ order.deliveryOrganisationName }}<br />
+				{% endif %}
+				{{ order.deliveryAddressLine1 }}<br />
+				{% if order.deliveryAddressLine2 != '' %}
+					{{ order.deliveryAddressLine2 }}<br />
+				{% endif %}
+				{{ order.deliveryTownCity }}<br />
+				{% if order.deliveryCountyState != '' %}
+					{{ order.deliveryCountyState }}<br />
+				{% endif %}
+				{% if order.deliveryCountryCode == 'GB' %}
+					{{ order.deliveryPostZipCode }}<br />
+				{% endif %}
+				{% if order.deliveryCountryCode == 'IE' %}
+					Republic of Ireland
+				{% endif %}
+			{% endspaceless %}</section>
+		{% endif %}
+    </div>
+</div>
+<div class="clear"></div>
+<div class="grid_6 leading">
+    <div class="portlet">
+        <header>
+            <h2>Your Order</h2>
+        </header>
+        <section>
+			<div id="basket-contents" class="clearfix separator">
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<th class="al">Product</th>
+						<th class="ac">Code</th>
+						<th class="ac" colspan="5" width="1">Price</th>
+					</tr>
+					{% for product in order.products %}
+						<tr>
+							<td>
+								<strong>{{ product.header }}</strong>
+								{% if product.selectedOptionLabels|length > 0 %}
+									<br />
+									{% for selectedOptionLabel in product.selectedOptionLabels %}
+										{% if selectedOptionLabel != '' %}
+											&nbsp;&nbsp;-&nbsp;&nbsp;{{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</td>
+							<td class="ac"><strong>{{ product.productCode }}</strong></td>
+							<td width="1" class="ac">{{ product.quantity }}</td>
+							<td width="1" class="ac">&times;</td>
+							<td width="1" class="ac">&pound;{{ product.unitCost|number_format(2) }}</td>
+							<td width="1" class="ac">=</td>
+							<td width="1" class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
+						</tr>
+					{% endfor %}
+					{% if order.membershipCardNumber == 1 %}
+						<tr>
+							<td><a href="{{ path('content_privilege_card') }}">Ride Direct Privilege Card</a></td>
+							<td class="ac"><strong>PRIVILEGE</strong></td>
+							<td width="1" class="ac">1</td>
+							<td width="1" class="ac">&times;</td>
+							<td width="1" class="ac">&pound;1.00</td>
+							<td width="1" class="ac">=</td>
+							<td width="1" class="ac">&pound;1.00</td>
+						</tr>
+					{% endif %}
+				</table>
+			</div>
+			<div id="basket-totals" class="clearfix no-margin-bottom">
+				<table align="right" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td>&nbsp;</td>
+						<td class="al"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
+						<td width="1" class="price ar"><strong>&pound;{{ order.subTotal|number_format(2) }}</strong></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td class="al"><strong>Delivery Charge (inc. VAT):</strong></td>
+						{% if order.deliveryType == 'Collection' %}
+							<td width="1" class="important">Collection</td>		
+						{% else %}				
+							{% if order.deliveryCharge == 0 %}
+								<td width="1" class="price free ar">FREE</td>
+							{% else %}
+								<td width="1" class="price ar">&pound;{{ order.deliveryCharge|number_format(2) }}</td>
+							{% endif %}
+						{% endif %}
+					</tr>
+					{% if order.discount > 0 %}
+						<tr>
+							<td>&nbsp;</td>
+							<td class="al"><strong>You Saved:</strong></td>
+							<td width="1" class="discount ar">&pound;{{ order.discount|number_format(2) }}</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td>&nbsp;</td>
+						<td class="al"><strong>VAT (20%):</strong></td>
+						<td width="1" class="price ar"><strong>&pound;{{ order.vat|number_format(2) }}</strong></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td class="al"><strong>Total Paid (inc. VAT):</strong></td>
+						<td width="1" class="price ar"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
+					</tr>
+				</table>
+			</div>
+        </section>
+    </div>
+</div>
+<script defer="defer" type="text/javascript">
+	$(document).ready(function() {
+		var $orderDetailsHeight = 0;
+		if ($("#order-details").height() > $orderDetailsHeight)
+		{
+			$orderDetailsHeight = $("#order-details").height();
+		}
+		if ($("#billing-address").height() > $orderDetailsHeight)
+		{
+			$orderDetailsHeight = $("#billing-address").height();
+		}
+		if ($("#delivery-address").height() > $orderDetailsHeight)
+		{
+			$orderDetailsHeight = $("#delivery-address").height();
+		}
+		$("#order-details").height($orderDetailsHeight);
+		$("#billing-address").height($orderDetailsHeight);
+		$("#delivery-address").height($orderDetailsHeight);
+		
+		var $yourDetailsHeight = 0;
+		if ($("#your-details-1").height() > $yourDetailsHeight)
+		{
+			$yourDetailsHeight = $("#your-details-1").height();
+		}
+		if ($("#your-details-2").height() > $yourDetailsHeight)
+		{
+			$yourDetailsHeight = $("#your-details-2").height();
+		}
+		$("#your-details-1").height($yourDetailsHeight);
+		$("#your-details-2").height($yourDetailsHeight);
+	});
+</script>

@@ -1,0 +1,25 @@
+{% extends '::email.txt.twig' %}
+{% block body %}
+Hello {{ firstName }},
+
+Thank you for ordering The Ride Direct Privilege Card.
+
+You will shortly receive your shiny new Ride Direct Privilege card in the post!
+
+In the mean time please take a note of your privilege card number below:
+{{ membershipNumber }}
+
+What benefits do I receive with my card?
+
+- 10% Ongoing Discount Off Parts, Gear and Accessories (Off RRP price)
+- Big Discounts Off New Kawasaki Motocross and Enduro Bikes
+- Kawasaki Test Days
+- Savings at Stalker MX Practice Track
+{#- Discount Off Paul Malin Motocross Training School#}
+- Monthly Exclusive Members Online Offers
+- Free Stickers
+- £50 Online Discount Vouchers
+- More Members Benefit's and Savings Coming Soon...
+
+{% include '::emailFooter.txt.twig' %}
+{% endblock %}

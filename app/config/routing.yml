@@ -1,0 +1,11 @@
+_welcome:
+    pattern:  /
+    defaults: { _controller: WebIlluminationShopBundle:System:index }
+
+WebIlluminationShopBundle:
+    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
+    prefix:   /
+
+WebIlluminationAdminBundle:
+    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
+    prefix:   /

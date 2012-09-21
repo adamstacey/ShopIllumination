@@ -1,0 +1,55 @@
+<div id="contact-web-address-success-message-{{ contactId }}" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-success ui-corner-all">
+    	<span class="ui-icon ui-icon-circle-check"></span>
+        <p><strong>SUCCESS:</strong> <span id="contact-web-address-success-message-text-{{ contactId }}"></span></p>
+    </div>
+</div>
+<div id="contact-web-address-error-message-{{ contactId }}" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-alert"></span>
+        <p><strong>ERROR:</strong> <span id="contact-web-address-error-message-text-{{ contactId }}"></span></p>
+    </div>
+</div>
+<div id="contact-web-address-confirm-delete-{{ contactId }}" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all"> 
+        <span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the highlighted contact web address?</p>
+        <p>
+        	<button data-contact-id="{{ contactId }}" data-index="" id="contact-web-address-confirm-delete-button-{{ contactId }}" class="button ui-button-red action-delete-contact-web-address" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-contact-id="{{ contactId }}" data-index="" id="contact-web-address-cancel-delete-button-{{ contactId }}" class="button ui-button-blue action-cancel-delete-contact-web-address">Cancel</button>
+        </p>
+    </div>
+</div>
+<div id="contact-web-address-confirm-deletes-{{ contactId }}" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the selected contact web addresses?</p>
+        <p>
+        	<button data-contact-id="{{ contactId }}" id="contact-web-address-confirm-deletes-button-{{ contactId }}" class="button ui-button-red action-delete-contact-web-addresses" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-contact-id="{{ contactId }}" id="contact-web-address-cancel-deletes-button-{{ contactId }}" class="button ui-button-blue action-cancel-delete-contact-web-addresses">Cancel</button>
+        </p>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="form-input-long">
+		<div class="contact-web-addresses-container">
+			<input type="hidden" id="contact-web-address-count-{{ contactId }}" value="{% if contactWebAddresses|length > 1 %}{{ contactWebAddresses|length }}{% else %}1{% endif %}" />
+			<ul class="list-fields contact-web-addresses-container" id="form-contact-web-addresses-container-{{ contactId }}">
+				{% for contactWebAddress in contactWebAddresses %}
+					{% include 'WebIlluminationAdminBundle:System:contactWebAddress.html.twig' with {'contactId': contactId, 'index': loop.index, 'data': contactWebAddress, 'contactWebAddressTypes': contactWebAddressTypes} %}
+			    {% else %}
+			    	{% include 'WebIlluminationAdminBundle:System:contactWebAddress.html.twig' with {'contactId': contactId, 'index': "1", 'contactWebAddressTypes': contactWebAddressTypes} %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="clearfix">
+    <div class="form-input-long buttons no-margin-bottom">
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-green action-update-contact-web-addresses" data-icon-primary="ui-icon-check">Update</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-red action-confirm-delete-contact-web-addresses ui-helper-hidden" data-icon-primary="ui-icon-closethick">Delete</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-blue action-add-new-contact-web-address" data-icon-primary="ui-icon-plusthick">Add</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-blue action-select-all-contact-web-addresses" data-icon-primary="ui-icon-radio-on">Select All</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-blue action-unselect-all-contact-web-addresses ui-helper-hidden" data-icon-primary="ui-icon-bullet">Unselect All</button>
+    </div>
+</div>

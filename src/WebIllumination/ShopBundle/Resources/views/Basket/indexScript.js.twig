@@ -1,0 +1,531 @@
+<script defer="defer" type="text/javascript">
+	var $basketRequiresUpdate = false;
+	var $basketContentsLoaded = false;
+	var $basketTotalsLoaded = false;
+	var $basketDeliveryOptionsLoaded = false;
+	
+	{# Update the basket contents #}
+	function updateBasket()
+	{
+		$("#ajax-loading").show();
+		var $basketItemsToUpdate = $("#basket-contents .quantity").length;
+		var $basketItemsUpdated = 0;
+		$("#basket-contents .quantity").each(function() {
+			$.ajax({
+   				type: "GET",
+   				url: "{{ path('basket_ajax_update_basket_item') }}",
+   				data: {
+   					productId: $(this).attr("data-product-id"),
+   					quantity: $(this).val(),
+   					selectedOptions: $(this).attr("data-selected-options")
+   				},
+   				error: function(data) {
+   					$basketItemsUpdated++;
+   					if ($basketItemsUpdated >= $basketItemsToUpdate)
+   					{
+		      			loadBasket();
+		      		}
+		      	},
+   				success: function(data) {
+   					$basketItemsUpdated++;
+   					if ($basketItemsUpdated >= $basketItemsToUpdate)
+   					{
+		      			loadBasket();
+		      			getBasketSummary();
+		      		}
+   				}
+ 			});
+		});
+	}
+			
+	{# Get the basket contents #}
+	function getBasketContents()
+	{
+		$("#basket-contents").hide();
+		$("#basket-contents-loading").show();
+		$("#basket-contents").html("");
+		$.ajax({
+			type: "GET",
+			url: "{{ path('basket_ajax_get_basket_contents') }}",
+			error: function(data) {
+	      		$("#basket-contents").html('<p>Sorry, there was a problem retrieving the contents of your basket.</p>');
+				$("#basket-contents-loading").hide();
+				$("#basket-contents").fadeIn(function() {
+					$basketContentsLoaded = true;
+					checkBasketLoaded();
+				});
+	      	},
+			success: function(data) {
+				$("#basket-contents").html(data);
+				$("#basket-contents tr").removeClass("even odd");
+				$("#basket-contents tr:even").addClass("even");
+				$("#basket-contents tr:odd").addClass("odd");
+				$("#basket-contents-loading").hide();
+				$("#basket-contents").fadeIn(function() {
+					if ($("#basket-contents table tr").length == 0)
+					{
+						window.location = '{{ backUrl }}';
+					}
+					$basketContentsLoaded = true;
+					checkBasketLoaded();
+				});
+			}
+		});
+	}
+			
+	{# Get the basket totals #}
+	function getBasketTotals()
+	{
+		$("#basket-totals").hide();
+		$("#basket-totals-loading").show();
+		$("#basket-totals").html("");
+		$.ajax({
+			type: "GET",
+			url: "{{ path('basket_ajax_get_basket_totals') }}",
+			error: function(data) {
+	      		$("#basket-totals").html('<p>Sorry, there was a problem calculating your basket totals.</p>');
+				$("#basket-totals-loading").hide();
+				$("#basket-totals").fadeIn(function() {
+					$basketTotalsLoaded = true;
+					checkBasketLoaded();
+				});
+	      	},
+			success: function(data) {
+				$("#basket-totals").html(data);
+				$("#basket-totals-loading").hide();
+				$("#basket-totals").fadeIn(function() {
+					$basketTotalsLoaded = true;
+					checkBasketLoaded();
+				});
+			}
+		});
+	}
+	
+	{# Get the basket delivery options #}
+	function getBasketDeliveryOptions()
+	{
+		$("#basket-delivery-options").hide();
+		$("#basket-delivery-options-loading").show();
+		$("#basket-delivery-options").html("");
+		$.ajax({
+			type: "GET",
+			url: "{{ path('basket_ajax_get_basket_delivery_options') }}",
+			error: function(data) {
+	      		$("#basket-delivery-options").html('<p>Sorry, there was a problem calculating your delivery options.</p>');
+				$("#basket-delivery-options-loading").hide();
+				$("#basket-delivery-options").fadeIn(function() {
+					$basketDeliveryOptionsLoaded = true;
+					checkBasketLoaded();
+				});
+	      	},
+			success: function(data) {
+				$("#basket-delivery-options").html(data);
+				$("#basket-delivery-options-loading").hide();
+				$("#basket-delivery-options").fadeIn(function() {
+					$basketDeliveryOptionsLoaded = true;
+					checkBasketLoaded();
+				});
+			}
+		});
+	}
+	
+	{# Refresh the heights of the portlets #}
+	function refreshPortletHeights()
+	{
+		{#var $basketContentsSectionHeight = $("#basket-contents-section").height() + 30;
+		var $rightColumnSectionHeight = $("#your-delivery-section").height() + 31 + 20 + $("#gift-voucher-code-header").height() + 2 + $("#gift-voucher-code-section").height() + 31;
+		if ($rightColumnSectionHeight >= $basketContentsSectionHeight)
+		{
+			var $heightDifference = $rightColumnSectionHeight - $basketContentsSectionHeight;
+			$("#basket-contents-section").height($("#basket-contents-section").height() + $heightDifference);
+			
+		}#}
+		if ($("#your-delivery-section").height() >= $("#basket-contents-section").height())
+		{
+			$("#basket-contents-section").height($("#your-delivery-section").height());
+		} else {
+			$("#your-delivery-section").height($("#basket-contents-section").height());
+		}
+	}
+	
+	{# Load the basket #}
+	function loadBasket()
+	{
+		$basketContentsLoaded = false;
+		$basketTotalsLoaded = false;
+		$basketDeliveryOptionsLoaded = false;
+		getBasketContents();
+		getBasketTotals();
+		getBasketDeliveryOptions();
+	}
+	
+	{# Check basket has loaded #}
+	function checkBasketLoaded()
+	{
+		if ($basketContentsLoaded && $basketTotalsLoaded && $basketDeliveryOptionsLoaded)
+		{
+			$("#ajax-loading").hide();
+			refreshPortletHeights();
+		}
+	}
+	
+	{# Load the delivery options #}
+	function loadDeliveryOptions()
+	{
+		$.ajax({
+			type: "GET",
+			url: "{{ path('basket_ajax_update_delivery_options') }}",
+			beforeSend: function() {
+				$("#ajax-loading").show();
+			},
+			data: {
+				countryCode: $("#form-delivery-country-code").val(),
+				postZipCode: $("#form-delivery-post-zip-code").val(),
+				deliveryOption: $("input[name='delivery-option']:checked").val()
+			},
+			error: function(data) {
+      			$("#ajax-loading").hide();
+      		},
+			success: function(data) {
+				loadBasket();
+			}
+		});
+	}
+	
+	{# Check delivery #}
+	function checkDelivery()
+	{
+		if ($("#form-delivery-country-code").val() == 'GB')
+		{
+			$("#delivery-post-zip-code-container").show();
+			if ($("#form-delivery-post-zip-code").val() == '')
+			{
+				loadDeliveryOptions();
+			} else {
+				var checkDeliveryPostZipCodeValidator = $("#delivery-post-zip-code-container :input").validator({
+					position : 'center right', 
+					offset : [0, -150], 
+					messageClass : 'form-error-small', 
+		    		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
+				});
+				if (checkDeliveryPostZipCodeValidator.data("validator").checkValidity())
+				{
+					loadDeliveryOptions();
+				} else {
+					$("#form-delivery-post-zip-code").focus();
+				}
+			}
+		} else {
+			$("#delivery-post-zip-code-container").hide();
+			loadDeliveryOptions();
+		}
+	}
+	
+	{# Redeem voucher code #}
+	function redeemVoucherCode()
+	{
+		if ($("#form-voucher-code").val() != '')
+		{
+			$.ajax({
+				type: "GET",
+				dataType: "json",
+				beforeSend: function () {
+					$("#ajax-loading").show();
+				},
+				url: "{{ path('basket_ajax_redeem_voucher_code') }}",
+				data: {
+					voucherCode: $("#form-voucher-code").val()
+				},
+				error: function(data) {
+		      		$("#message-error-text").html('Sorry, there was a problem trying to redeem the voucher code. Please try again.');
+					$("#message-error").slideDown(function() {
+							setTimeout("resetMessages()", 5000);
+						$("#ajax-loading").hide();
+					});
+		      	},
+				success: function(data) {
+					if (data.response != 'success')
+					{
+					$("#message-error-text").html('Sorry, there was a problem trying to redeem the voucher code. Please try again.');
+					$("#message-error").slideDown(function() {
+							setTimeout("resetMessages()", 5000);
+						});
+					}
+					$("#delete-voucher-code").fadeIn();
+					loadBasket();
+				}
+			});
+		}
+	}
+	
+	$(document).ready(function() {
+		loadBasket();
+		
+		{# Update the widths on the selectors #}
+		$(".selector").addClass("full");
+		
+		{# Update the delivery based on the delivery location #}
+		$("#form-delivery-country-code, input[name='delivery-option']").live('change', function() {
+			checkDelivery();
+		});
+		
+		{# Update delivery options #}
+		$("#form-delivery-post-zip-code").live('keypress', function(event) {
+			var $keyCode = event.keyCode || event.which;
+			if ($keyCode == 13)
+			{
+				checkDelivery();
+			}
+		});
+		$(".action-update-delivery-options").live('click', function() {
+			checkDelivery();
+		});
+		
+		{# Show and hide the delivery option description #}
+		$(".action-show-delivery-option-description").live('mouseenter', function() {
+			var $deliveryOption = $(this).attr("data-delivery-option");
+			$(".delivery-option-description[data-delivery-option='"+$deliveryOption+"']").slideDown();
+		});
+		$(".delivery-option").live('mouseleave', function() {
+			var $deliveryOption = $(this).attr("data-delivery-option");
+			$(".delivery-option-description[data-delivery-option='"+$deliveryOption+"']").slideUp();
+		});
+		
+		{# Add the membership card to the basket #}
+		$(".action-add-membership-card-to-basket").live('click', function() {
+			$("#ajax-loading").show();
+			$.ajax({
+   				type: "GET",
+   				url: "{{ path('basket_ajax_add_membership_card_to_basket') }}",
+   				error: function(data) {
+		      		$("#ajax-loading").hide();
+		      	},
+   				success: function(data) {
+   					loadBasket();
+   				}
+ 			});
+		});
+		
+		{# Delete the membership card from the basket #}
+		$(".action-delete-membership-card").live('click', function() {
+			$("#ajax-loading").show();
+			$.ajax({
+   				type: "GET",
+   				url: "{{ path('basket_ajax_delete_membership_card') }}",
+   				error: function(data) {
+		      		$("#ajax-loading").hide();
+		      	},
+   				success: function(data) {
+   					loadBasket();
+   				}
+ 			});
+		});
+		
+		{# Redeem membership number #}
+		$(".action-redeem-membership-card-number").live('click', function() {
+			$("#ajax-loading").show();
+			$.ajax({
+   				type: "GET",
+   				dataType: "json",
+   				url: "{{ path('basket_ajax_redeem_membership_card_number') }}",
+   				data: {
+   					membershipCardNumber: $("#form-membership-card-number").val()
+   				},
+   				error: function(data) {
+		      		$("#message-error-text").html('Sorry, there was a problem trying to use your membership card number. Please try again.');
+					$("#message-error").slideDown(function() {
+   						setTimeout("resetMessages()", 5000);
+						$("#ajax-loading").hide();
+					});
+		      	},
+   				success: function(data) {
+   					if (data.response != 'success')
+   					{
+						$("#message-error-text").html('Sorry, there was a problem trying to use your membership card number. Please try again.');
+						$("#message-error").slideDown(function() {
+	   						setTimeout("resetMessages()", 5000);
+	   					});
+   					}
+   					$("#delete-membership-card-number").fadeIn();
+   					loadBasket();
+   				}
+ 			});
+		});
+		
+		{# Delete membership number #}
+		$(".action-delete-membership-card-number").live('click', function() {
+			$("#ajax-loading").show();
+			$.ajax({
+   				type: "GET",
+   				dataType: "json",
+   				url: "{{ path('basket_ajax_delete_membership_card_number') }}",
+   				error: function(data) {
+		      		$("#message-error-text").html('Sorry, there was a problem trying to remove your membership card number. Please try again.');
+					$("#message-error").slideDown(function() {
+   						setTimeout("resetMessages()", 5000);
+						$("#ajax-loading").hide();
+					});
+		      	},
+   				success: function(data) {
+   					if (data.response != 'success')
+   					{
+						$("#message-error-text").html('Sorry, there was a problem trying to remove your membership card number. Please try again.');
+						$("#message-error").slideDown(function() {
+	   						setTimeout("resetMessages()", 5000);
+	   					});
+   					}
+   					$("#form-membership-card-number").val("");
+   					$("#delete-membership-card-number").fadeOut();
+   					loadBasket();
+   				}
+ 			});
+		});
+				
+		{# Redeem voucher code #}
+		$("#form-voucher-code").live('keypress', function(event) {
+			var $keyCode = event.keyCode || event.which;
+			if ($keyCode == 13)
+			{
+				redeemVoucherCode();
+			}
+		});
+		$(".action-redeem-voucher-code").live('click', function() {
+			redeemVoucherCode();
+		});
+		
+		{# Delete voucher code #}
+		$(".action-delete-voucher-code").live('click', function() {
+			$("#ajax-loading").show();
+			$.ajax({
+   				type: "GET",
+   				dataType: "json",
+   				url: "{{ path('basket_ajax_delete_voucher_code') }}",
+   				error: function(data) {
+		      		$("#message-error-text").html('Sorry, there was a problem trying to remove the voucher code. Please try again.');
+					$("#message-error").slideDown(function() {
+	   					setTimeout("resetMessages()", 5000);
+						$("#ajax-loading").hide();
+					});
+		      	},
+   				success: function(data) {
+   					if (data.response != 'success')
+   					{
+						$("#message-error-text").html('Sorry, there was a problem trying to remove the voucher code. Please try again.');
+						$("#message-error").slideDown(function() {
+	   						setTimeout("resetMessages()", 5000);
+	   					});
+   					}
+   					$("#form-voucher-code").val("");
+   					$("#delete-voucher-code").fadeOut();
+   					loadBasket();
+   				}
+ 			});
+		});
+		
+		{# Update the basket #}
+		$(".action-update-basket").live('click', function() {
+			updateBasket();
+		});
+		$("#basket-contents .quantity").live('change', function() {
+			$basketRequiresUpdate = true;
+		});
+		
+		{# Increase quantity #}
+		$(".action-increase-quantity").live('click', function() {
+			var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+			var $newQuantity = parseInt($quantityObject.val()) + 1;
+			$quantityObject.val($newQuantity);
+			updateBasket();
+		});
+		
+		{# Decrease quantity #}
+		$(".action-decrease-quantity").live('click', function() {
+			var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+			var $newQuantity = parseInt($quantityObject.val()) - 1;
+			if ($newQuantity < 1)
+			{
+				$newQuantity = 1;
+			}
+			$quantityObject.val($newQuantity);
+			updateBasket();
+		});
+		
+		{# Check if basket requires update before moving away #}
+		$("a").live('click', function(e) {
+			if ($basketRequiresUpdate)
+			{
+   				e.preventDefault();
+   				$("#ajax-loading").show();
+   				$("#basket-contents").hide();
+				$("#basket-contents-loading").show();
+				$("#basket-totals").hide();
+				$("#basket-totals-loading").show();
+  				var $linkObject = $(this);
+				var $basketItemsToUpdate = $("#basket-contents .quantity").length;
+				var $basketItemsUpdated = 0;
+				$("#basket-contents .quantity").each(function() {
+					$.ajax({
+		   				type: "GET",
+		   				url: "{{ path('basket_ajax_update_basket_item') }}",
+		   				data: {
+		   					productId: $(this).attr("data-product-id"),
+		   					quantity: $(this).val(),
+		   					selectedOptions: $(this).attr("data-selected-options")
+		   				},
+		   				error: function(data) {
+		   					$basketItemsUpdated++;
+		   					if ($basketItemsUpdated >= $basketItemsToUpdate)
+		   					{
+								$("#ajax-loading").hide();
+								$basketRequiresUpdate = false;
+								document.location = $linkObject.attr("href");
+				      		}
+				      	},
+		   				success: function(data) {
+		   					$basketItemsUpdated++;
+		   					if ($basketItemsUpdated >= $basketItemsToUpdate)
+		   					{
+		   						$("#ajax-loading").hide();
+		   						$basketRequiresUpdate = false;
+								document.location = $linkObject.attr("href");
+				      		}
+		   				}
+		 			});
+				});
+			}
+		});
+		
+		{# Delete a basket item #}
+		$(".action-delete-basket-item").live('click', function() {
+			$("#ajax-loading").show();
+			$.ajax({
+   				type: "GET",
+   				url: "{{ path('basket_ajax_delete_basket_item') }}",
+   				data: {
+   					basketItemId: $(this).attr("data-basket-item-id")
+   				},
+   				error: function(data) {
+		      		$("#ajax-loading").hide();
+		      	},
+   				success: function(data) {
+   					loadBasket();
+   				}
+ 			});
+		});
+		
+		{# Clear the basket #}
+		$(".action-clear-basket").live('click', function() {
+			$("#ajax-loading").show();
+			$.ajax({
+   				type: "GET",
+   				url: "{{ path('basket_ajax_clear_basket') }}",
+   				error: function(data) {
+		      		$("#ajax-loading").hide();
+		      	},
+   				success: function(data) {
+   					window.location = '{{ backUrl }}';
+   				}
+ 			});
+		});
+	});
+</script>
