@@ -63,7 +63,12 @@ class DepartmentIndex
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="check_delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     */
+    private $inheritedDeliveryBand;
+    
+    /**
+     * @ORM\Column(name="check_delivery_band", type="integer", length="1")
      */
     private $checkDeliveryBand;
     
@@ -76,6 +81,11 @@ class DepartmentIndex
      * @ORM\Column(name="locale", type="string", length="2")
      */
     private $locale;
+    
+    /**
+     * @ORM\Column(name="delivery_band_notes", type="text")
+     */
+    private $deliveryBandNotes;
     
     /**
      * @ORM\Column(name="name", type="string", length="255")
@@ -686,5 +696,245 @@ class DepartmentIndex
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set deliveryBand
+     *
+     * @param decimal $deliveryBand
+     */
+    public function setDeliveryBand($deliveryBand)
+    {
+        $this->deliveryBand = $deliveryBand;
+    }
+
+    /**
+     * Get deliveryBand
+     *
+     * @return decimal 
+     */
+    public function getDeliveryBand()
+    {
+        return $this->deliveryBand;
+    }
+
+    /**
+     * Set inheritedDeliveryBand
+     *
+     * @param decimal $inheritedDeliveryBand
+     */
+    public function setInheritedDeliveryBand($inheritedDeliveryBand)
+    {
+        $this->inheritedDeliveryBand = $inheritedDeliveryBand;
+    }
+
+    /**
+     * Get inheritedDeliveryBand
+     *
+     * @return decimal 
+     */
+    public function getInheritedDeliveryBand()
+    {
+        return $this->inheritedDeliveryBand;
+    }
+
+    /**
+     * Set checkDeliveryBand
+     *
+     * @param integer $checkDeliveryBand
+     */
+    public function setCheckDeliveryBand($checkDeliveryBand)
+    {
+        $this->checkDeliveryBand = $checkDeliveryBand;
+    }
+
+    /**
+     * Get checkDeliveryBand
+     *
+     * @return integer 
+     */
+    public function getCheckDeliveryBand()
+    {
+        return $this->checkDeliveryBand;
+    }
+
+    /**
+     * Set deliveryBandNotes
+     *
+     * @param text $deliveryBandNotes
+     */
+    public function setDeliveryBandNotes($deliveryBandNotes)
+    {
+        $this->deliveryBandNotes = $deliveryBandNotes;
+    }
+
+    /**
+     * Get deliveryBandNotes
+     *
+     * @return text 
+     */
+    public function getDeliveryBandNotes()
+    {
+        return $this->deliveryBandNotes;
+    }
+
+    /**
+     * Set pageTitleTemplate
+     *
+     * @param text $pageTitleTemplate
+     */
+    public function setPageTitleTemplate($pageTitleTemplate)
+    {
+        $this->pageTitleTemplate = $pageTitleTemplate;
+    }
+
+    /**
+     * Get pageTitleTemplate
+     *
+     * @return text 
+     */
+    public function getPageTitleTemplate()
+    {
+        return $this->pageTitleTemplate;
+    }
+
+    /**
+     * Set metaDescriptionTemplate
+     *
+     * @param text $metaDescriptionTemplate
+     */
+    public function setMetaDescriptionTemplate($metaDescriptionTemplate)
+    {
+        $this->metaDescriptionTemplate = $metaDescriptionTemplate;
+    }
+
+    /**
+     * Get metaDescriptionTemplate
+     *
+     * @return text 
+     */
+    public function getMetaDescriptionTemplate()
+    {
+        return $this->metaDescriptionTemplate;
+    }
+
+    /**
+     * Set url
+     *
+     * @param text $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    /**
+     * Get url
+     *
+     * @return text 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set departmentCount
+     *
+     * @param integer $departmentCount
+     */
+    public function setDepartmentCount($departmentCount)
+    {
+        $this->departmentCount = $departmentCount;
+    }
+
+    /**
+     * Get departmentCount
+     *
+     * @return integer 
+     */
+    public function getDepartmentCount()
+    {
+        return $this->departmentCount;
+    }
+
+    /**
+     * Set departmentIds
+     *
+     * @param text $departmentIds
+     */
+    public function setDepartmentIds($departmentIds)
+    {
+        $this->departmentIds = $departmentIds;
+    }
+
+    /**
+     * Get departmentIds
+     *
+     * @return text 
+     */
+    public function getDepartmentIds()
+    {
+        return $this->departmentIds;
+    }
+
+    /**
+     * Set departments
+     *
+     * @param text $departments
+     */
+    public function setDepartments($departments)
+    {
+        $this->departments = $departments;
+    }
+
+    /**
+     * Get departments
+     *
+     * @return text 
+     */
+    public function getDepartments()
+    {
+        return $this->departments;
+    }
+
+    /**
+     * Set productCount
+     *
+     * @param integer $productCount
+     */
+    public function setProductCount($productCount)
+    {
+        $this->productCount = $productCount;
+    }
+
+    /**
+     * Get productCount
+     *
+     * @return integer 
+     */
+    public function getProductCount()
+    {
+        return $this->productCount;
+    }
+
+    /**
+     * Set directProductCount
+     *
+     * @param integer $directProductCount
+     */
+    public function setDirectProductCount($directProductCount)
+    {
+        $this->directProductCount = $directProductCount;
+    }
+
+    /**
+     * Get directProductCount
+     *
+     * @return integer 
+     */
+    public function getDirectProductCount()
+    {
+        return $this->directProductCount;
     }
 }

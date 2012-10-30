@@ -15,7 +15,7 @@
 						<a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
 						{#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
 						<a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
-						<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>
+						{% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>{% endif %}
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>
@@ -73,7 +73,7 @@
 						<a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
 						{#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
 						<a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
-						<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>
+						{% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>{% endif %}
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>

@@ -1176,6 +1176,7 @@ class ProductService {
     	$product['metaKeywords'] = $productDescriptionObject->getMetaKeywords();
     	$product['searchWords'] = $productDescriptionObject->getSearchWords();
     	$product['deliveryBand'] = $productObject->getDeliveryBand();
+    	$product['inheritedDeliveryBand'] = $productObject->getInheritedDeliveryBand();
     	$product['deliveryCost'] = $productObject->getDeliveryCost();
     	$product['weight'] = $productObject->getWeight();
     	$product['length'] = $productObject->getLength();
@@ -1210,6 +1211,16 @@ class ProductService {
 	    	$product['brand']['routing'] = $brandRoutingObject->getUrl();
 	    	$product['brand']['membershipCardDiscountAvailable'] = $brandObject->getMembershipCardDiscountAvailable();
 	    	$product['brand']['maximumMembershipCardDiscount'] = $brandObject->getMaximumMembershipCardDiscount();
+	    	
+	    	// Get brand logo
+	    	$brandLogoObject = $em->getRepository('WebIlluminationAdminBundle:Image')->find($brandDescriptionObject->getLogoImageId());
+	    	if ($brandLogoObject)
+	    	{
+		    	$product['brand']['logoOriginalPath'] = $brandLogoObject->getOriginalPath();
+		    	$product['brand']['logoThumbnailPath'] = $brandLogoObject->getThumbnailPath();
+		    	$product['brand']['logoMediumPath'] = $brandLogoObject->getMediumPath();
+		    	$product['brand']['logoLargePath'] = $brandLogoObject->getLargePath();
+	    	}
 	    	
 	    	// Get the guarantees
 	    	$guarantees = array();
@@ -1402,7 +1413,7 @@ class ProductService {
     	
     	// Get the related products
     	$relatedProducts = array();
-		$relatedProductsObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1));
+		$relatedProductsObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
 		foreach ($relatedProductsObject as $relatedProductObject)
 		{
 			$relatedProduct = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $relatedProductObject->getProductLinkId()));
@@ -1412,7 +1423,7 @@ class ProductService {
 		
 		// Get the cheaper alternatives
     	$cheaperAlternatives = array();
-		$cheaperAlternativesObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'cheaper-alternative', 'active' => 1));
+		$cheaperAlternativesObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
 		foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
 		{
 			$cheaperAlternative = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $cheaperAlternativeObject->getProductLinkId()));
@@ -1533,6 +1544,25 @@ class ProductService {
    		return $product;
     }
     
+    // Rebuild all the products
+    public function rebuildProducts()
+    {
+    	// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	$productService = $this->container->get('web_illumination_admin.product_service');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the products
+		$productObjects = $em->getRepository('WebIlluminationAdminBundle:Product')->findAll();
+		foreach ($productObjects as $productObject)
+		{
+			error_log('Rebuilding product index for product ID: '.$productObject->getId());
+			$this->rebuildProduct($productObject->getId());
+		}		
+    }
+    
     // Rebuild the product
     public function rebuildProduct($productId)
     {
@@ -1558,6 +1588,25 @@ class ProductService {
 	    	}
     	}
     	
+    	// Get the cheaper alternatives from price
+    	if (sizeof($product['cheaperAlternatives']) > 0)
+    	{
+    		$cheaperAlternativePrice = 999999;
+    		foreach ($product['cheaperAlternatives'] as $cheaperAlternative)
+    		{
+	    		if ($cheaperAlternative->getListPrice() < $cheaperAlternativePrice)
+	    		{
+		    		$cheaperAlternativePrice = $cheaperAlternative->getListPrice();
+	    		}
+    		}
+    		if ($cheaperAlternativePrice == 999999)
+    		{
+	    		$cheaperAlternativePrice = 0;
+    		}
+    	} else {
+	    	$cheaperAlternativePrice = 0;
+    	}
+    	
     	// Update the product index
     	$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $productId));
     	if (!$productIndexObject)
@@ -1577,6 +1626,9 @@ class ProductService {
 		$productIndexObject->setProductCode($product['productCode']);
 		$productIndexObject->setProductGroupCode($product['productGroupCode']);
 		$productIndexObject->setAlternativeProductCodes($product['alternativeProductCodes']);
+		$productIndexObject->setCheaperAlternativePrice(0);
+		$productIndexObject->setCheaperAlternativeUrl('');
+		$productIndexObject->setGuarantees('');
 		$productIndexObject->setShortDescription($product['shortDescription']);
 		$productIndexObject->setDescription($product['description']);
 		$productIndexObject->setSearchWords($product['searchWords']);
@@ -1589,10 +1641,11 @@ class ProductService {
 		$productIndexObject->setMembershipCardDiscountAvailable($product['membershipCardDiscountAvailable']);
     	$productIndexObject->setMaximumMembershipCardDiscount($product['maximumMembershipCardDiscount']); 
 		$productIndexObject->setDeliveryBand($product['deliveryBand']);
+		$productIndexObject->setInheritedDeliveryBand($product['inheritedDeliveryBand']);
 		if ($product['deliveryBand'] == 1)
 		{
 			$productIndexObject->setDeliveryCost('1.95');
-		} elseif ($product['deliveryBand'] == 5) {
+		} elseif ($product['deliveryBand'] == 6) {
 			$productIndexObject->setDeliveryCost('35.0000');
 		} else {
 			$productIndexObject->setDeliveryCost('0.0000');
@@ -1600,6 +1653,8 @@ class ProductService {
 		$productIndexObject->setWeight($product['weight']);
 		$productIndexObject->setBrandId($product['brand']['id']);
 		$productIndexObject->setBrand($product['brand']['brand']);
+		$productIndexObject->setBrandLogoThumbnailPath($product['brand']['logoThumbnailPath']);
+		$productIndexObject->setBrandUrl($product['brand']['routing']);
 		$departmentIds =  array();
 		$departments =  array();
 		$departmentPaths =  array();
@@ -1644,6 +1699,8 @@ class ProductService {
 		}
 		$productIndexObject->setProductOptions('|'.join('|', $productOptions).'|');
 		$productIndexObject->setProductFeatures('');
+		$productIndexObject->setAdditionalProductColoursCount(0);
+		$productIndexObject->setAdditionalProductsCount(0);
 		if (isset($product['images'][0]))
 		{
 			$productIndexObject->setOriginalPath($product['images'][0]['originalPath']);
@@ -1675,13 +1732,16 @@ class ProductService {
 			$productIndexObject->setCurrencyCode('GBP');
 		}
 		$productFeatures = array();
-		foreach($product['productFeatures'] as $productFeature)
+		if (sizeof($product['productFeatures']) > 0)
 		{
-			if (isset($productFeature[0]))
+			foreach($product['productFeatures'] as $productFeature)
 			{
-				if ($productFeature[0]['filter'] > 0)
+				if (isset($productFeature[0]))
 				{
-					$productFeatures[] = $productFeature[0]['productFeatureGroup'].':'.$productFeature[0]['productFeature'];
+					if ($productFeature[0]['filter'] > 0)
+					{
+						$productFeatures[] = $productFeature[0]['productFeatureGroup'].':'.$productFeature[0]['productFeature'];
+					}
 				}
 			}
 		}
@@ -2029,9 +2089,87 @@ class ProductService {
 	
 	}
 	
+	// Update the product delivery bands
+	public function updateProductDeliveryBand($id, $locale = 'en')
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the inherited delivery band
+		$inheritedDeliveryBand = 0;
+		
+		// Get the product objects
+		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
+		$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $id));
+		
+		// Check to see if the delivery band has been set by the product
+		if ($productObject && $productIndexObject)
+		{
+			if ($productObject->getDeliveryBand() > 0)
+			{
+				$inheritedDeliveryBand = $productObject->getDeliveryBand();
+			} else {
+				// Get the department ids
+				if (strpos($productIndexObject->getDepartmentIds(), '^') !== false)
+				{
+					$departmentIds = explode('^', $productIndexObject->getDepartmentIds());
+					$departmentIds = array_reverse(explode('|', substr(substr($departmentIds[0], 1), 0, -1)));
+				} else {
+					$departmentIds = array_reverse(explode('|', substr(substr($productIndexObject->getDepartmentIds(), 1), 0, -1)));	
+				}
+				
+				// Check each of the departments
+				foreach ($departmentIds as $departmentId)
+				{
+					// Check the brand department for a delivery band
+					$brandToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findOneBy(array('departmentId' => $departmentId, 'brandId' => $productIndexObject->getBrandId()));
+					if ($brandToDepartmentObject)
+					{
+						if ($brandToDepartmentObject->getDeliveryBand() > 0)
+						{
+							$inheritedDeliveryBand = $brandToDepartmentObject->getDeliveryBand();
+						}
+					}
+					
+					// Check the department for a delivery band
+					if ($inheritedDeliveryBand < 1)
+					{
+						$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));	
+						if ($departmentIndexObject)
+						{
+							if ($departmentIndexObject->getInheritedDeliveryBand() > 0)
+							{
+								$inheritedDeliveryBand = $departmentIndexObject->getInheritedDeliveryBand();
+							}
+						}
+					}
+					
+					// Check if we need to keep checking
+					if ($inheritedDeliveryBand > 0)
+					{
+						break;
+					}
+				}
+								
+				error_log('Delivery Band for '.$productIndexObject->getProductId().': '.$inheritedDeliveryBand);
+				
+				// Update the delivery band
+				$productObject->setInheritedDeliveryBand($inheritedDeliveryBand);
+				$em->persist($productObject);
+				$em->flush();
+				$productIndexObject->setInheritedDeliveryBand($inheritedDeliveryBand);
+				$em->persist($productIndexObject);
+				$em->flush();
+			}
+		}
+	}
+	
 	// Get the root upload directory
     public function getUploadRootDir()
     {
         return __DIR__.'/../../../../web';
-    }
+    } 
 }

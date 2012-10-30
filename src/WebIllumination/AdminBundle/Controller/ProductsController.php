@@ -26,7 +26,7 @@ class ProductsController extends Controller
 		$systemService = $this->get('web_illumination_admin.system_service');
 		$brandService = $this->get('web_illumination_admin.brand_service');
 		$departmentService = $this->get('web_illumination_admin.department_service');
-    	
+		
     	// Initialise the session
     	$systemService->initialiseSettingsSession();
     	
@@ -464,6 +464,7 @@ class ProductsController extends Controller
     		$productObject->setJan('');
     		$productObject->setIsbn('');
     		$productObject->setDeliveryBand($deliveryBand);
+    		$productObject->setInheritedDeliveryBand($deliveryBand);
     		$productObject->setDeliveryCost(0.0000);
     		$productObject->setWeight(0.00);
     		$productObject->setLength(0.00);
@@ -582,6 +583,11 @@ class ProductsController extends Controller
 						
 			// Build the product index
 			$productService->rebuildProduct($productObject->getId());
+			
+			if ($deliveryBand < 1)
+			{
+				$productService->updateProductDeliveryBand($productObject->getId(), 'en');
+			}
 			
 			// Clear the full product index so it is rebuilt
 			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
@@ -852,6 +858,9 @@ class ProductsController extends Controller
     		{
     			$resetSeo = true;
     		}
+    		
+    		// ADS!!! Temporary prevent reset
+    		$resetSeo = false;
 	   		
 	        // Update the product
 	        $productObject->setStatus($status);
@@ -859,6 +868,7 @@ class ProductsController extends Controller
 	        $productObject->setBrandId($brandId);
 	        $productObject->setProductCode($productCode);
 	        $productObject->setDeliveryBand($deliveryBand);
+	        $productObject->setInheritedDeliveryBand($deliveryBand);
 	        $productObject->setFeatureComparison($featureComparison);
 	        $productObject->setDownloadable($downloadable);
 	        $productObject->setSpecialOffer($specialOffer);
@@ -876,6 +886,11 @@ class ProductsController extends Controller
 	        
 	        // Refresh the product index
 			$productService->rebuildProduct($id);
+			
+			if ($deliveryBand < 1)
+			{
+				$productService->updateProductDeliveryBand($id, 'en');
+			}
 			
 			// Clear the full product index so it is rebuilt
 			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));

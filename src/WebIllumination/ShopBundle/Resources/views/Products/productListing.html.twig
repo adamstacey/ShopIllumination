@@ -1,40 +1,72 @@
-<div itemscope itemtype="http://schema.org/Product" class="product" data-product-id="{{ product.productId }}" id="product-{{ product.productId }}">
-	<h4 class="no-margin"><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
-	<p class="no-margin uppercase">{{ product.tagline|default('&nbsp;')|raw }}</p>
-	<p class="no-margin uppercase blue">{% spaceless %}
-		{% for productFeature in product.productFeatures|explode('|') %}
-			{% if 'COLOUR:' in productFeature %}
-				<strong>{{ productFeature|replace({'COLOUR:': ''}) }}</strong>&nbsp;
+<div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.productId }}" id="product-{{ product.productId }}">
+	<a href="{{ path('page_request', {'url': product.url}) }}"><img class="fl product-image" itemprop="image" src="{{ asset(product.mediumPath) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
+	{% if product.brandLogoThumbnailPath != '' %}
+		<a href="{{ path('page_request', {'url': product.brandUrl}) }}"><img class="fr brand-logo-image" src="{{ asset(product.brandLogoThumbnailPath) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23"></a>
+	{% endif %}
+	<h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.pageTitle|raw }}</a></h4>
+	<div class="product-information">
+		<p class="product-code uppercase">{% spaceless %}
+			{% if url != '' %}
+				<a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': url}) }}">
 			{% endif %}
-		{% endfor %}
-	{% endspaceless %}&nbsp;</p>
-	<div class="clear"></div>
-	<div class="product-information relative">
-		{% if '|1034|1122|69|' in product.departmentIds %}
-			<div class="small-floating-offer small-floating-offer-top-left">
-				<p class="small-floating-offer-title">40% OFF</p>
-				<p class="small-floating-offer-description">Stellar<br />Pans</p>
-			</div>
-		{% endif %}
-		{% if product.brandId == '7' %}
-			<div class="medium-floating-offer medium-floating-offer-bottom-left">
-				<p class="medium-floating-offer-title">10% OFF</p>
-				<p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
-			</div>
-		{% endif %}
-		<a href="{{ path('page_request', {'url': product.url}) }}"><img itemprop="image" src="{{ asset(product.thumbnailPath) }}" border="0" alt="{{ product.header|raw }}" width="100" height="100"></a>
-		<div class="product-description">
-			{% include 'WebIlluminationShopBundle:Products:price.html.twig' with {'url': product.url,'productCode': product.productCode, 'recommendedRetailPrice': product.recommendedRetailPrice, 'listPrice': product.listPrice, 'savings': product.savings, 'membershipCardPrice': product.membershipCardPrice, 'hidePrice': product.hidePrice} %}
-			{% include 'WebIlluminationShopBundle:Products:buyNow.html.twig' with {'product': product} %}
-			{% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') or (noAjax > 0) %}
-				{% if not group %}
-					{% if product.productGroupCode %}
-						<a href="{{ path('department_with_group', {'group': product.productGroupId, 'url': url}) }}" class="fr margin-top-2 padding-left-5 padding-right-5 button ui-button-blue small">View Other Options</a>
-					{% endif %}
+			PRODUCT CODE: <strong>{{ product.productCode }}</strong>
+			{% if url != '' %}
+				</a>
+			{% endif %}
+		{% endspaceless %}</p>
+		{% if (product.productFeatures != '') or (product.tagline != '') %}
+			{% if 'ENERGY RATING:' in product.tagline|upper %}
+				<p class="energy-rating">{{ product.tagline|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
+			{% endif %}
+			{% for productFeature in product.productFeatures|explode('|') %}
+				{% if (productFeature != '') and ('ENERGY RATING:' in productFeature|upper) %}
+					<p class="energy-rating">{{ productFeature|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
 				{% endif %}
-			{% endif %}
-		</div>
+			{% endfor %}
+			<ul>
+				{% if (product.tagline != '') and ('ENERGY RATING:' not in product.tagline|upper) %}
+					<li>{{ product.tagline|raw }}</li>
+				{% endif %}
+				{% for productFeature in product.productFeatures|explode('|') %}
+					{% if (productFeature != '') and ('COLOUR GROUP:' not in productFeature|upper) and ('ENERGY RATING:' not in productFeature|upper) %}
+						{% set productFeatureData = productFeature|explode(':') %}
+						{% if productFeatureData.1|upper not in product.pageTitle|upper %}
+							<li>{{ productFeature|replace({':': ': '})|raw|upper }}</li>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			</ul>
+		{% endif %}
 		<div class="clear"></div>
 	</div>
+	<div class="product-options">
+		{% include 'WebIlluminationShopBundle:Products:price.html.twig' with {'url': product.url, 'productCode': product.productCode, 'recommendedRetailPrice': product.recommendedRetailPrice, 'listPrice': product.listPrice, 'savings': product.savings, 'membershipCardPrice': product.membershipCardPrice, 'hidePrice': product.hidePrice} %}
+		<a href="{{ path('page_request', {'url': product.url}) }}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
+		{% include 'WebIlluminationShopBundle:Products:buyNow.html.twig' with {'product': product} %}
+		{% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') or (noAjax > 0) %}
+			{% if not group %}
+				{% if product.productGroupCode %}
+					<!--<a href="{{ path('department_with_group', {'group': product.productGroupId, 'url': product.url}) }}" class="fr padding-right-5 small button ui-button-blue">View Other Colours or Options for this product</a>-->
+				{% endif %}
+			{% endif %}
+		{% endif %}
+		{% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') or (noAjax > 0) %}
+			{% if product.cheaperAlternativePrice > 0 %}
+				<a href="{{ path('page_request', {'url': product.cheaperAlternativeUrl}) }}" class="cheaper-alternative-listing">Cheaper Alternative <strong>&pound;{{ product.cheaperAlternativePrice|number_format(0) }}</strong></a>
+			{% endif %}
+		{% endif %}
+	</div>
+	{% if '|1034|1122|69|' in product.departmentIds %}
+		<div class="small-floating-offer small-floating-offer-top-left">
+			<p class="small-floating-offer-title">40% OFF</p>
+			<p class="small-floating-offer-description">Stellar<br />Pans</p>
+		</div>
+	{% endif %}
+	{% if product.brandId == '7' %}
+		<div class="medium-floating-offer medium-floating-offer-bottom-left">
+			<p class="medium-floating-offer-title">10% OFF</p>
+			<p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
+		</div>
+	{% endif %}
 	<div class="clear"></div>
 </div>

@@ -1,17 +1,16 @@
 {% if data.mode == 'update' %}
-	<li><a class="navicon-share" href="{{ path('admin_'~data.settings.multipleClass) }}">{{ data.settings.multipleTitle }}</a></li>
-	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update') %} class="current"{% endif %}><a class="navicon-sticky-note" href="{{ path('admin_'~data.settings.multipleClass~'_update', {'id': data.item.departmentId}) }}">General</a></li>
+	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update') %} class="current"{% endif %}><a class="navicon-set-white navicon-notepad" href="{{ path('admin_'~data.settings.multipleClass~'_update', {'id': data.item.departmentId}) }}">General</a></li>
 	{% if data.item.directProductCount > 0 %}
-		<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_settings') %} class="current"{% endif %}><a class="navicon-gear-2" href="{{ path('admin_'~data.settings.multipleClass~'_update_settings', {'id': data.item.departmentId}) }}">Settings</a></li>
+		<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_settings') %} class="current"{% endif %}><a class="navicon-set-white navicon-template" href="{{ path('admin_'~data.settings.multipleClass~'_update_settings', {'id': data.item.departmentId}) }}">Templates</a></li>
 	{% endif %}
 	<!--<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_images') %} class="current"{% endif %}><a class="navicon-landscape" href="{{ path('admin_'~data.settings.multipleClass~'_update_images', {'id': data.item.departmentId}) }}">Images</a></li>-->
 	{% if data.item.directProductCount > 0 %}
-		<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_product_features') %} class="current"{% endif %}><a class="navicon-menu" href="{{ path('admin_'~data.settings.multipleClass~'_update_product_features', {'id': data.item.departmentId}) }}">Product Features</a></li>
+		<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_product_features') %} class="current"{% endif %}><a class="navicon-set-white navicon-list" href="{{ path('admin_'~data.settings.multipleClass~'_update_product_features', {'id': data.item.departmentId}) }}">Product Features</a></li>
 	{% endif %}
-	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_delivery') %} class="current"{% endif %}><a class="navicon-box" href="{{ path('admin_'~data.settings.multipleClass~'_update_delivery', {'id': data.item.departmentId}) }}">Delivery</a></li>
+	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_delivery') %} class="current"{% endif %}><a class="navicon-set-white navicon-open-box" href="{{ path('admin_'~data.settings.multipleClass~'_update_delivery', {'id': data.item.departmentId}) }}">Delivery</a></li>
 	<!--<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_guarantees') %} class="current"{% endif %}><a class="navicon-shield" href="{{ path('admin_'~data.settings.multipleClass~'_update_guarantees', {'id': data.item.departmentId}) }}">Guarantees</a></li>-->
-	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_redirects') %} class="current"{% endif %}><a class="navicon-shuffle" href="{{ path('admin_'~data.settings.multipleClass~'_update_redirects', {'id': data.item.departmentId}) }}">Redirects</a></li>
-	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_search_engine_optimisation') %} class="current"{% endif %}><a class="navicon-magnify" href="{{ path('admin_'~data.settings.multipleClass~'_update_search_engine_optimisation', {'id': data.item.departmentId}) }}">SEO</a></li>
+	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_redirects') %} class="current"{% endif %}><a class="navicon-set-white navicon-network" href="{{ path('admin_'~data.settings.multipleClass~'_update_redirects', {'id': data.item.departmentId}) }}">Redirects</a></li>
+	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_search_engine_optimisation') %} class="current"{% endif %}><a class="navicon-set-white navicon-magnifying-glass" href="{{ path('admin_'~data.settings.multipleClass~'_update_search_engine_optimisation', {'id': data.item.departmentId}) }}">SEO</a></li>
 {% else %}
-	<li class="current"><a class="navicon-share" href="{{ path('admin_'~data.settings.multipleClass) }}">{{ data.settings.multipleTitle }}</a></li>
+	<li class="current"><a class="navicon-set-white navicon-share" href="{{ path('admin_'~data.settings.multipleClass) }}">{{ data.settings.multipleTitle }}</a></li>
 {% endif %}

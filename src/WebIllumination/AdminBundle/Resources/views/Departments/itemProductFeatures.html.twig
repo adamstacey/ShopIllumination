@@ -11,10 +11,10 @@
     <section class="container_6 clearfix">
     	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
 	    	<div class="grid_6">
-	    		<div id="confirm-multiple-delete" class="info-message ui-helper-hidden">
+				<div id="confirm-multiple-delete" class="info-message ui-helper-hidden">
 	    			<div class="fr no-margin no-padding">
-			        	<button class="fl button ui-corner-none ui-corner-tl ui-corner-bl ui-button-blue action-cancel-multiple-delete">Cancel</button>
-			        	<button class="fl button ui-corner-none ui-corner-tr ui-corner-br ui-button-red action-multiple-delete" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+			        	<button class="fl button ui-corner-left ui-button-black action-cancel-multiple-delete">Cancel</button>
+			        	<button class="fl button ui-corner-right icon-set-white ui-button-red action-multiple-delete" data-icon-primary="ui-icon-circle-cross">Confirm Delete</button>
 			        </div>
 					<span class="info-message-icon ui-icon ui-icon-help"></span>
 					<p><strong>WARNING:</strong> Are you sure you want to delete the selected product features below?</p>
@@ -37,6 +37,9 @@
 										<th width="19" class="ac"><input type="checkbox" class="action-select-all-add" value="1" /></th>
 										<th class="al">Product Feature Group</th>
 										<th class="ac">Default Product Feature</th>
+										<th class="ac">Filter?</th>
+										<th class="ac">Listing?</th>
+										<th class="ac">Product?</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -49,7 +52,9 @@
 											<select data-add-required="required" data-message="Select Product Feature Group" data-id="listing-add-product-feature-group-id" id="listing-add-product-feature-group-id-1" data-name="add-product-feature-group-id" name="add-product-feature-group-id[1]" class="product-feature-group no-uniform full">
 												<option value="">- PLEASE SELECT -</option>
 												{% for productFeatureGroup in data.productFeatureGroups %}
-													<option value="{{ productFeatureGroup.id }}">{{ productFeatureGroup.productFeatureGroup }}</option>
+													{% if '|'~productFeatureGroup.id~'|' not in data.existingProductFeatureGroupIds %}
+														<option value="{{ productFeatureGroup.id }}">{{ productFeatureGroup.productFeatureGroup }}</option>
+													{% endif %}
 												{% endfor %}
 											</select>
 										</td>
@@ -58,37 +63,63 @@
 												<option value="0">- SELECT A PRODUCT FEATURE GROUP -</option>
 											</select>
 										</td>
+										<td width="19" class="ac">
+											<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-filter" id="listing-add-display-on-filter-1" data-name="add-display-on-filter" name="add-display-on-filter[1]" value="1" />
+										</td>
+										<td width="19" class="ac">
+											<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-listing" id="listing-add-display-on-listing-1" data-name="add-display-on-listing" name="add-display-on-listing[1]" value="1" />
+										</td>
+										<td width="19" class="ac">
+											<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-product" id="listing-add-display-on-product-1" data-name="add-display-on-product" name="add-display-on-product[1]" value="1" checked="checked" />
+										</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 			        	<div class="clear"></div>
 		        		<div class="clearfix padding-10">
-		        			<button type="button" class="fr small button ui-corner-none ui-corner-tr ui-corner-br ui-button-blue action-close-add" data-icon-primary="ui-icon-triangle-1-n">Close</button>
-		        			<button type="button" class="fr small button ui-corner-none ui-button-red action-multiple-delete-add" data-icon-primary="ui-icon-closethick">Delete Selected</button>
-			        		<button type="button" class="fr small button ui-corner-none ui-button-green action-add-another" data-icon-primary="ui-icon-plusthick">Add Another</button>
-			        		<button id="button-listing-add-go-back" type="button" class="fr small button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Save &amp; Go Back</button>
-			        		<button id="button-listing-add" type="button" class="fr small button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-check">Save</button>
+		        			<button type="button" class="fr small button icon-set-white ui-corner-right ui-button-black action-close-add" data-icon-primary="ui-icon-arrow-up">Close</button>
+		        			<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-red action-multiple-delete-add" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+			        		<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-green action-add-another" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+			        		<button id="button-listing-add-go-back" type="button" class="fr small button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Save &amp; Go Back</button>
+			        		<button id="button-listing-add" type="button" class="fr small button icon-set-white ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Save</button>
 						</div>
 					</section>
 		        </div>
 	    		<div class="portlet">
 					<header>
-						<button type="button" class="header-button button ui-button-blue fr action-add" data-icon-primary="ui-icon-plusthick">Add a Product Feature</button>
-						<button type="button" class="header-button button ui-button-blue fr extra-action" data-extra-action="getProductFeaturesFromProducts" data-icon-primary="ui-icon-refresh">Get Product Features From Products</button>
-						<button type="button" class="header-button button ui-button-blue fr" data-icon-primary="ui-icon-cart">View Products</button>
+						<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr action-add" data-icon-primary="ui-icon-circle-plus">Add a Product Feature</button>
 	           			<h2>Product Features</h2>
 	                </header>
 					<section class="no-padding">
 						<div id="listing" class="position-relative">
+							<div class="listing-settings">
+								<div class="fr filter-listing-container">
+									<div class="fr margin-left-10">
+										<select class="extra-action full fr">
+							        		<option value="">Get Features from Department</option>
+							        		{% for departmentId, productFeatureDepartment in data.productFeatureDepartments %}
+							        			<option value="getProductFeaturesFromDepartment|{{ departmentId }}">{{ productFeatureDepartment }}</option>
+											{% endfor %}
+							        	</select>
+									</div>
+									<button type="button" class="button ui-button-black ui-corner-right icon-set-white fr extra-action" data-extra-action="getProductFeaturesFromProducts" data-icon-primary="ui-icon-list">Get Features from Products</button>
+									<button type="button" class="button ui-button-black ui-corner-left icon-set-white fr" data-icon-primary="ui-icon-shopping-basket">View Products</button>
+								</div>
+							    <div class="clear"></div>
+							</div>
 							{% if data.items|length > 0 %}
 								<table class="data-table sortable" id="data" width="100%">
 									<thead>
 										<tr>
 											<th>&nbsp;</th>
 											<th width="19" class="ac"><input type="checkbox" class="action-select-all" value="1" /></th>
+											<th class="ar" width="1">&nbsp;</th>
 											<th class="al">Product Feature Group</th>
 											<th class="ac">Default Product Feature</th>
+											<th class="ac">Filter?</th>
+											<th class="ac">Listing?</th>
+											<th class="ac">Product?</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -101,6 +132,7 @@
 												<td width="19" class="ac select">
 													<input data-id="{{ item.id }}" type="checkbox" class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" />
 												</td>
+												<td width="1" class="ar">{{ loop.index }}</td>
 												<td class="al">
 													<select data-id="{{ item.id }}" required="required" data-message="Select Product Feature Group" id="listing-product-feature-group-id-{{ item.id }}" name="product-feature-group-id[{{ item.id }}]" class="product-feature-group full">
 														<option value="">- PLEASE SELECT -</option>
@@ -119,6 +151,15 @@
 														{% endfor %}
 													</select>
 												</td>
+												<td width="19" class="ac">
+													<input data-id="{{ item.id }}" type="checkbox" name="display-on-filter[{{ item.id }}]" id="listing-display-on-filter-{{ item.id }}"{% if item.displayOnFilter == 1 %} checked="checked"{% endif %} value="1" />
+												</td>
+												<td width="19" class="ac">
+													<input data-id="{{ item.id }}" type="checkbox" name="display-on-listing[{{ item.id }}]" id="listing-display-on-listing-{{ item.id }}"{% if item.displayOnListing == 1 %} checked="checked"{% endif %} value="1" />
+												</td>
+												<td width="19" class="ac">
+													<input data-id="{{ item.id }}" type="checkbox" name="display-on-product[{{ item.id }}]" id="listing-display-on-product-{{ item.id }}"{% if item.displayOnProduct == 1 %} checked="checked"{% endif %} value="1" />
+												</td>
 											</tr>
 										{% endfor %}
 									</tbody>
@@ -133,10 +174,10 @@
 					        	<input type="hidden" value="" id="form-extra-action" name="extra-action" />
 					        	<input type="hidden" value="0" id="form-delete" name="delete" />
 				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
-				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-none ui-corner-tr ui-corner-br button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
-				        		<button class="fr button ui-corner-none ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-closethick">Delete Selected</button>
-				        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Update Selected &amp; Go Back</button>
-				        		<button id="button-update" type="submit" class="fr button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-check">Update Selected</button>
+				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr icon-set-white ui-corner-right button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+				        		<button class="fr button icon-set-white ui-corner-none ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+				        		<button id="button-update-go-back" type="submit" class="fr button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected &amp; Go Back</button>
+				        		<button id="button-update" type="submit" class="fr button icon-set-white ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected</button>
 						    </div>
 						</div>
 					</section>

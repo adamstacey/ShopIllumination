@@ -1,0 +1,155 @@
+{% extends '::admin.html.twig' %}
+{% block title %}Order {{ data.item.id }} - Customer | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} #}
+	{% include 'WebIlluminationAdminBundle:Orrders:itemLeftMenu.html.twig' with {'data': data} %}
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} #}
+	{% include 'WebIlluminationAdminBundle:Orrders:itemHeader.html.twig' with {'data': data} %}
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+    	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
+	    	<div class="grid_6">
+				<div class="info-message">
+					<span class="info-message-icon ui-icon ui-icon-info"></span>
+					<p><strong class="important">PLEASE NOTE:</strong> If you want to add a note that the customer will <strong>NOT</strong> be able to view ensure you set the type of note to "Staff".</p>
+					<div class="clear"></div>
+				</div>
+	    		<div class="portlet">
+					<header>
+	           			{% if data.mode == 'update' %}
+	            			<h2>Customer</h2>
+	            		{% else %}
+		                	<h2>Add a Customer</h2>
+		                {% endif %}
+	                </header>
+					<section class="no-padding">
+						<form class="form has-validation" id="form-{{ data.mode }}" method="post" action="{{ data.formAction }}">
+	                		<div class="form-element clearfix no-margin-top">
+	                			<span data-help-container="parent-id" class="info-message-icon ui-icon ui-icon-help"></span>
+						        <label for="form-parent-id" class="form-label"><em>*</em> Department</label>
+						        <div class="form-input">
+						        	<table width="100%">
+										<tr>
+											<td>
+												<select id="form-parent-id" name="parent-id" class="no-margin full" required="required" data-message="Please select a department.">
+													<option value="0">Top Level</option>
+												</select>
+											</td>
+											<td width="10">&nbsp;</td>
+											<td width="200">
+												<div class="position-relative">
+													<input placeholder="Find a department&hellip;" type="text" id="search-department" class="embedded-icon no-margin full" value="" />
+													<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+												</div>
+											</td>
+										</tr>
+									</table>
+						        </div>
+						    </div>
+						    <div id="form-help-parent-id" class="form-help ui-helper-hidden">
+						    	<p>Select the department you want this department to fall under.</p>
+						    </div>
+						    <div class="form-element clearfix">
+						    	<span data-help-container="status" class="info-message-icon ui-icon ui-icon-help"></span>
+						        <label for="form-status" class="form-label"><em>*</em> Status</label>
+						        <div class="form-input {{ data.item.statusColour|default('yellow') }}">
+							        <select id="form-status" name="status" required="required" data-message="Select a status">
+										<option{% if data.item is defined %}{% if data.item.status == 'a' %} selected="selected"{% endif %}{% endif %} value="a">Active</option>
+										<option{% if data.item is defined %}{% if data.item.status == 'h' %} selected="selected"{% endif %}{% else %} selected="selected"{% endif %} value="h">Hidden</option>
+										<option{% if data.item is defined %}{% if data.item.status == 'd' %} selected="selected"{% endif %}{% endif %} value="d">Disabled</option>
+									</select>
+						        </div>
+						    </div>
+						    <div id="form-help-status" class="form-help ui-helper-hidden">
+						    	<p>Select the status of the department. Any sub-departments will also inherit this status.</p>
+						    </div>
+	                		<div class="form-element clearfix">
+						    	<span data-help-container="name" class="info-message-icon ui-icon ui-icon-help"></span>
+						        <label for="form-name" class="form-label"><em>*</em> Name</label>
+						        <div class="form-input"><input type="text" id="form-name" name="name" value="{{ data.item.name|default('') }}" required="required" data-message="Enter the department name" /></div>
+						    </div>
+						    <div id="form-help-name" class="form-help ui-helper-hidden">
+						    	<p>Enter the name of the department.</p>
+						    </div>
+						    {% if data.mode == 'add' %}
+							    <div class="form-element clearfix">
+		                			<span data-help-container="google-department" class="info-message-icon ui-icon ui-icon-help"></span>
+							        <label for="form-google-department" class="form-label"><em>*</em> Google Department</label>
+							        <div class="form-input">
+							        	<table width="100%">
+											<tr>
+												<td>
+													<select id="form-google-department" name="google-department" class="no-margin full" required="required" data-message="Please select a Google department.">
+														<option value="">- Please Select -</option>
+														{% for googleDepartment in data.taxonomy.google %}
+															<option value="{{ googleDepartment.name }}">{{ googleDepartment.name }}</option>
+														{% endfor %}
+													</select>
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="200">
+													<div class="position-relative">
+														<input placeholder="Find a Google department&hellip;" type="text" id="search-google-department" class="embedded-icon no-margin full" value="" />
+														<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+													</div>
+												</td>
+											</tr>
+										</table>
+							        </div>
+							    </div>
+							    <div id="form-help-google-department" class="form-help ui-helper-hidden">
+							    	<p>Select the equivalent Google department that matches this department. This is very important as Google require this for the Google products feed.</p>
+							    </div>
+						    {% endif %}
+						    <div class="form-element clearfix no-margin-top">
+			                	<span data-help-container="description" class="info-message-icon ui-icon ui-icon-help"></span>
+						    	<label for="form-description" class="form-label">Description</label>
+						        <div class="form-input">
+						        	<div class="ac">
+						            	<div class="buttonset no-margin-right">
+						                	<input type="radio" class="show-tinymce" rel="#form-description" name="tinymce-description" value="1" id="tinymce-description-1" checked="checked" /><label for="tinymce-description-1">Visual</label>
+						                    <input type="radio" class="show-tinymce" rel="#form-description" name="tinymce-description" value="0" id="tinymce-description-0" /><label for="tinymce-description-0">HTML</label>
+						                    <hr class="inset" />
+						                </div>
+						                <div class="leading">
+						                	<textarea id="form-description" name="description" rows="3" class="tinymce-basic">{{ data.item.description|default('') }}</textarea>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						    <div id="form-help-description" class="form-help ui-helper-hidden">
+						    	<p>Enter a detailed description about the department. Include a brief description of the range of products that are contained within the department and the key selling points of the range.</p>
+						    </div>
+							<div class="padding-15 padding-top-5">
+					        	<div id="float-buttons" class="clearfix">
+							        <div id="float-buttons-content" class="float-buttons clearfix buttons">
+							        	{% if data.mode == 'update' %}
+							        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
+							        		<a href="{{ path('admin_'~data.settings.multiplePath) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+							        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
+							        		<button id="button-update" type="submit" class="fr button ui-corner-left icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update</button>
+							        	{% elseif data.mode == 'add' %}
+								        	<input type="hidden" value="0" id="form-add-another" name="add-another" />
+								        	<a href="{{ path('admin_'~data.settings.multiplePath) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+								        	<button id="button-add-another" type="submit" class="fr button ui-corner-none icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Add &amp; Add Another</button>
+								        	<button id="button-add" type="submit" class="fr button ui-corner-left icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Add &amp; Go Back</button>
+								        {% endif %}
+								    </div>
+								</div>
+				        	</div>
+						</form>
+					</section>
+		        </div>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} #}
+	{% include 'WebIlluminationAdminBundle:Orrders:itemScript.js.twig' with {'data': data} %}
+{% endblock %}

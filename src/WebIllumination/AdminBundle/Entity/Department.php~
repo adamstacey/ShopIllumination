@@ -59,7 +59,12 @@ class Department
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="check_delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     */
+    private $inheritedDeliveryBand;
+    
+    /**
+     * @ORM\Column(name="check_delivery_band", type="integer", length="1")
      */
     private $checkDeliveryBand;
     
@@ -350,9 +355,29 @@ class Department
     }
 
     /**
+     * Set inheritedDeliveryBand
+     *
+     * @param decimal $inheritedDeliveryBand
+     */
+    public function setInheritedDeliveryBand($inheritedDeliveryBand)
+    {
+        $this->inheritedDeliveryBand = $inheritedDeliveryBand;
+    }
+
+    /**
+     * Get inheritedDeliveryBand
+     *
+     * @return decimal 
+     */
+    public function getInheritedDeliveryBand()
+    {
+        return $this->inheritedDeliveryBand;
+    }
+
+    /**
      * Set checkDeliveryBand
      *
-     * @param decimal $checkDeliveryBand
+     * @param integer $checkDeliveryBand
      */
     public function setCheckDeliveryBand($checkDeliveryBand)
     {
@@ -362,7 +387,7 @@ class Department
     /**
      * Get checkDeliveryBand
      *
-     * @return decimal 
+     * @return integer 
      */
     public function getCheckDeliveryBand()
     {

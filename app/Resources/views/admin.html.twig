@@ -9,10 +9,10 @@
 	        	'@WebIlluminationAdminBundle/Resources/public/css/reset.css' 
 	        	'@WebIlluminationAdminBundle/Resources/public/css/grid.css' 
 	        	'@WebIlluminationAdminBundle/Resources/public/css/slider-navigation.css' 
-	        	'@WebIlluminationAdminBundle/Resources/public/css/ui.css' 
 				'@WebIlluminationAdminBundle/Resources/public/css/portlet.css' 
 				'@WebIlluminationAdminBundle/Resources/public/css/uniform.css' 
 				'@WebIlluminationAdminBundle/Resources/public/css/form.css' 
+				'@WebIlluminationAdminBundle/Resources/public/css/ui.css' 
 				'@WebIlluminationAdminBundle/Resources/public/css/styles.css' 
 	        	output='css/compressed.css' filter='yui_css' %}
 				<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
@@ -105,7 +105,7 @@
 		{% if is_granted('ROLE_ADMIN') %}
 			<div id="dialog-image-popup" title="Detailed View" class="ui-helper-hidden">
 				<div class="ac">
-					<img id="dialog-image-popup-image" src="{{ asset('uploads/images/product/product/no-image-large.jpg') }}" border="0" alt="" />
+					<img id="dialog-image-popup-image" src="" border="0" alt="" />
 				</div>
 			</div>
 		{% endif %}

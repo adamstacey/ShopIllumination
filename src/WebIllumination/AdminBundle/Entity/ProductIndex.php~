@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="product_index")
+ * @ORM\Table(name="product_index", indexes={@ORM\index(name="search_idx", columns={"status", "available_for_purchase", "hide_price", "show_price_out_of_hours", "page_title", "list_price", "brand_id", "locale", "currency_code", "product_group_id"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class ProductIndex
@@ -77,10 +78,30 @@ class ProductIndex
      */
     private $productGroupCode;
     
+    /**
+     * @ORM\Column(name="additional_product_colours_count", type="integer", length="11")
+     */
+    private $additionalProductColoursCount;
+    
+    /**
+     * @ORM\Column(name="additional_products_count", type="integer", length="11")
+     */
+    private $additionalProductsCount;
+    
 	/**
      * @ORM\Column(name="alternative_product_codes", type="text")
      */
     private $alternativeProductCodes;
+    
+    /**
+     * @ORM\Column(name="cheaper_alternative_url", type="text")
+     */
+    private $cheaperAlternativeUrl;
+    
+    /**
+     * @ORM\Column(name="cheaper_alternative_price", type="decimal", precision="12", scale="4")
+     */
+    private $cheaperAlternativePrice;
         
     /**
      * @ORM\Column(name="short_description", type="text")
@@ -143,6 +164,11 @@ class ProductIndex
     private $deliveryBand;
     
     /**
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     */
+    private $inheritedDeliveryBand;
+    
+    /**
      * @ORM\Column(name="delivery_cost", type="decimal", precision="12", scale="4")
      */
     private $deliveryCost;
@@ -161,6 +187,21 @@ class ProductIndex
      * @ORM\Column(name="brand", type="string", length="255")
      */
     private $brand;
+    
+    /**
+     * @ORM\Column(name="brand_logo_thumbnail_path", type="text")
+     */
+    private $brandLogoThumbnailPath;
+    
+    /**
+     * @ORM\Column(name="brand_url", type="text")
+     */
+    private $brandUrl;
+    
+    /**
+     * @ORM\Column(name="guarantees", type="text")
+     */
+    private $guarantees;
     
     /**
      * @ORM\Column(name="department_ids", type="text")
@@ -203,22 +244,22 @@ class ProductIndex
     private $productFeatures;
     
     /**
-     * @ORM\Column(name="original_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="original_path", type="text", nullable="TRUE")
      */
     private $originalPath;
     
     /**
-     * @ORM\Column(name="thumbnail_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="thumbnail_path", type="text", nullable="TRUE")
      */
     private $thumbnailPath;
     
     /**
-     * @ORM\Column(name="medium_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="medium_path", type="text", nullable="TRUE")
      */
     private $mediumPath;
     
     /**
-     * @ORM\Column(name="large_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="large_path", type="text", nullable="TRUE")
      */
     private $largePath;
     
@@ -258,7 +299,7 @@ class ProductIndex
     private $currencyCode;
     
     /**
-     * @ORM\Column(name="url", type="string", length="255")
+     * @ORM\Column(name="url", type="text")
      */
     private $url;
     

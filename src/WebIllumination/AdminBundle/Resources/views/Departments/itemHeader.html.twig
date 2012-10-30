@@ -8,7 +8,7 @@
 				{% endfor %}
 			{% endspaceless %}</p>
 		{% endif %}
-		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr button icon-set-white ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
 		<h2>{{ data.item.name }}</h2>
 	{% else %}
 		{% if data.item.parentId > 0 %}
@@ -19,7 +19,7 @@
 				{% endfor %}
 			{% endspaceless %}</p>
 		{% endif %}
-		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" id="button-go-back" class="fr button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" id="button-go-back" class="fr button icon-set-white ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
     	<h2>Add a {{ data.settings.singleTitle }}</h2>
 	{% endif %}
 {% endif %}

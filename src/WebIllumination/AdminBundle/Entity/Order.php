@@ -43,6 +43,37 @@ class Order
     private $deliveryType;
     
     /**
+     * @ORM\Column(name="courier", type="string", length="255")
+     */
+    private $courier;
+    
+    /**
+     * @ORM\Column(name="number_of_packages", type="integer", length="3")
+     */
+    private $numberOfPackages;
+    
+    /**
+     * @ORM\Column(name="tracking_number", type="string", length="255")
+     */
+    private $trackingNumber;
+        
+    /**
+     * @ORM\Column(name="labels_printed", type="integer", length="1")
+     */
+    private $labelsPrinted;
+    
+    /**
+     * @ORM\Column(name="send_review_request", type="integer", length="1")
+     */
+    private $sendReviewRequest;
+    
+    /**
+     * @ORM\Column(name="review_requested", type="integer", length="1")
+     */
+    private $reviewRequested;
+    
+    
+    /**
      * @ORM\Column(name="items", type="string", length="255")
      */
     private $items;
@@ -367,11 +398,12 @@ class Order
     		case 'Payment Received':
     			return 'green';
     		case 'Processing Your Order':
-    			return 'yellow';
-    		case 'Back Ordered':
     			return 'orange';
+    		case 'Back Ordered':
+    			return 'yellow';
     		case 'Part Delivered':
     			return 'turquoise';
+    		case 'Order Ready for Collection':
     		case 'Order with Delivery Company':
     			return 'blue';
     		case 'Order Completed':
@@ -450,24 +482,24 @@ class Order
     }
     
     /**
-     * Get paymentResponseFraudIcon
+     * Get paymentResponseFraudColour
      *
      * @return text 
      */
-    public function getPaymentResponseFraudIcon()
+    public function getPaymentResponseFraudColour()
     {
-    	$icon = 'green';
+    	$colour = 'green';
     	if ($this->fraudCheckNameUsedOnDifferentOrder > 0)
     	{
-    		$icon = 'red';
+    		$colour = 'red';
     	}
     	if ($this->fraudCheckPostZipCodeUsedOnDifferentOrder > 0)
     	{
-    		$icon = 'red';
+    		$colour = 'red';
     	}
     	if ($this->fraudCheckTelephoneUsedOnDifferentOrder > 0)
     	{
-    		$icon = 'red';
+    		$colour = 'red';
     	}
     	
     	// Get the payment response
@@ -475,65 +507,68 @@ class Order
     	
     	if ($paymentResponse != '')
     	{
-	    	if ($icon != 'red')
+	    	if ($colour != 'red')
 	    	{
 		    	switch ($this->paymentType)
 		    	{
 		    		case 'SagePay':
-		    			if (isset($paymentResponse['AVSCV2']))
+		    			if ($colour != 'red')
 		    			{
-			    			if ($paymentResponse['AVSCV2'] == 'NO DATA MATCHES')
+			    			if (isset($paymentResponse['AVSCV2']))
 			    			{
-			    				$icon = 'red';
-			    			} elseif (($paymentResponse['AVSCV2'] == 'SECURITY CODE MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'ADDRESS MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'DATA NOT CHECKED')) {
-			    				$icon = 'yellow';
-			    			}
-			    		}
-		    			if ($icon != 'red')
+				    			if ($paymentResponse['AVSCV2'] == 'NO DATA MATCHES')
+				    			{
+				    				$colour = 'red';
+				    			} elseif (($paymentResponse['AVSCV2'] == 'SECURITY CODE MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'ADDRESS MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'DATA NOT CHECKED')) {
+				    				$colour = 'orange';
+				    			}
+				    		}
+				    	}
+		    			if ($colour != 'red')
 		    			{
 		    				if (isset($paymentResponse['AddressResult']))
 		    				{
 			    				if ($paymentResponse['AddressResult'] == 'NOTMATCHED')
 				    			{
-				    				$icon = 'red';
+				    				$colour = 'red';
 				    			} elseif (($paymentResponse['AddressResult'] == 'NOTPROVIDED') || ($paymentResponse['AddressResult'] == 'NOTCHECKED')) {
-				    				$icon = 'yellow';
+				    				$colour = 'orange';
 				    			}
 				    		}
 		    			}
-		    			if ($icon != 'red')
+		    			if ($colour != 'red')
 		    			{
 		    				if (isset($paymentResponse['PostCodeResult']))
 		    				{
 			    				if ($paymentResponse['PostCodeResult'] == 'NOTMATCHED')
 				    			{
-				    				$icon = 'red';
+				    				$colour = 'red';
 				    			} elseif (($paymentResponse['PostCodeResult'] == 'NOTPROVIDED') || ($paymentResponse['PostCodeResult'] == 'NOTCHECKED')) {
-				    				$icon = 'yellow';
+				    				$colour = 'orange';
 				    			}
 				    		}
 		    			}
-		    			if ($icon != 'red')
+		    			if ($colour != 'red')
 		    			{
 		    				if (isset($paymentResponse['CV2Result']))
 		    				{
 			    				if ($paymentResponse['CV2Result'] == 'NOTMATCHED')
 				    			{
-				    				$icon = 'red';
+				    				$colour = 'red';
 				    			} elseif (($paymentResponse['CV2Result'] == 'NOTPROVIDED') || ($paymentResponse['CV2Result'] == 'NOTCHECKED')) {
-				    				$icon = 'yellow';
+				    				$colour = 'orange';
 				    			}
 				    		}
 		    			}
-		    			if ($icon != 'red')
+		    			if ($colour != 'red')
 		    			{
 		    				if (isset($paymentResponse['3DSecureStatus']))
 		    				{
-			    				if ($paymentResponse['3DSecureStatus'] == 'NOTAUTHED')
+			    				if ($paymentResponse['3DSecureStatus'] == 'OK')
 				    			{
-				    				$icon = 'red';
-				    			} elseif (($paymentResponse['3DSecureStatus'] == 'NOTCHECKED') || ($paymentResponse['3DSecureStatus'] == 'NOTAVAILABLE') || ($paymentResponse['3DSecureStatus'] == 'INCOMPLETE') || ($paymentResponse['3DSecureStatus'] == 'ERROR')) {
-				    				$icon = 'yellow';
+				    				$colour = 'green';
+				    			} else {
+				    				$colour = 'red';
 				    			}
 				    		}
 		    			}
@@ -543,18 +578,18 @@ class Order
 		    			{
 			    			if ($paymentResponse['PayerStatus'] == 'UNVERIFIED')
 			    			{
-			    				$icon = 'red';
+			    				$colour = 'red';
 			    			}
 			    		}
-		    			if ($icon != 'red')
+		    			if ($colour != 'red')
 		    			{
 		    				if (isset($paymentResponse['AddressStatus']))
 		    				{
 				    			if ($paymentResponse['AddressStatus'] == 'UNCONFIRMED')
 				    			{
-				    				$icon = 'red';
+				    				$colour = 'red';
 				    			} elseif ($paymentResponse['AddressStatus'] == 'NONE') {
-				    				$icon = 'yellow';
+				    				$colour = 'orange';
 				    			}
 				    		}
 			    		}
@@ -566,7 +601,18 @@ class Order
 		    	}
 		    }
 		}
-        return 'bundles/webilluminationadmin/images/icons/'.$icon.'-light-icon.png';
+        return $colour;
+    }
+    
+    /**
+     * Get paymentResponseFraudIcon
+     *
+     * @return text 
+     */
+    public function getPaymentResponseFraudIcon()
+    {
+    	$iconColour = $this->getPaymentResponseFraudColour();
+        return 'bundles/webilluminationadmin/images/icons/'.$iconColour.'-light-icon.png';
     }
 
     /**
@@ -1547,5 +1593,125 @@ class Order
     public function getMembershipCardPurchased()
     {
         return $this->membershipCardPurchased;
+    }
+
+    /**
+     * Set courier
+     *
+     * @param string $courier
+     */
+    public function setCourier($courier)
+    {
+        $this->courier = $courier;
+    }
+
+    /**
+     * Get courier
+     *
+     * @return string 
+     */
+    public function getCourier()
+    {
+        return $this->courier;
+    }
+
+    /**
+     * Set numberOfPackages
+     *
+     * @param integer $numberOfPackages
+     */
+    public function setNumberOfPackages($numberOfPackages)
+    {
+        $this->numberOfPackages = $numberOfPackages;
+    }
+
+    /**
+     * Get numberOfPackages
+     *
+     * @return integer 
+     */
+    public function getNumberOfPackages()
+    {
+        return $this->numberOfPackages;
+    }
+
+    /**
+     * Set trackingNumber
+     *
+     * @param string $trackingNumber
+     */
+    public function setTrackingNumber($trackingNumber)
+    {
+        $this->trackingNumber = $trackingNumber;
+    }
+
+    /**
+     * Get trackingNumber
+     *
+     * @return string 
+     */
+    public function getTrackingNumber()
+    {
+        return $this->trackingNumber;
+    }
+
+    /**
+     * Set labelsPrinted
+     *
+     * @param integer $labelsPrinted
+     */
+    public function setLabelsPrinted($labelsPrinted)
+    {
+        $this->labelsPrinted = $labelsPrinted;
+    }
+
+    /**
+     * Get labelsPrinted
+     *
+     * @return integer 
+     */
+    public function getLabelsPrinted()
+    {
+        return $this->labelsPrinted;
+    }
+
+    /**
+     * Set sendReviewRequest
+     *
+     * @param integer $sendReviewRequest
+     */
+    public function setSendReviewRequest($sendReviewRequest)
+    {
+        $this->sendReviewRequest = $sendReviewRequest;
+    }
+
+    /**
+     * Get sendReviewRequest
+     *
+     * @return integer 
+     */
+    public function getSendReviewRequest()
+    {
+        return $this->sendReviewRequest;
+    }
+
+    /**
+     * Set reviewRequested
+     *
+     * @param integer $reviewRequested
+     */
+    public function setReviewRequested($reviewRequested)
+    {
+        $this->reviewRequested = $reviewRequested;
+    }
+
+    /**
+     * Get reviewRequested
+     *
+     * @return integer 
+     */
+    public function getReviewRequested()
+    {
+        return $this->reviewRequested;
     }
 }

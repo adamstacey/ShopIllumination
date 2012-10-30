@@ -58,6 +58,14 @@ class DepartmentsController extends Controller
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	$productService = $this->get('web_illumination_admin.product_service');
+    	
+    	/*$productIds = array(5035 ,5036 ,5037 ,5054 ,5055 ,5056 ,5057 ,5062 ,5063 ,5064 ,5065 ,805 ,3299 ,3296 ,3300 ,3301 ,3297 ,3298 ,3294 ,153 ,153 ,45 ,45 ,46 ,46 ,111 ,123 ,123 ,124 ,124 ,125 ,125 ,126 ,126 ,73 ,74 ,49 ,50 ,168 ,169 ,170 ,127 ,127 ,128 ,128 ,129 ,129 ,130 ,130 ,1897 ,1897 ,1898 ,1898 ,2254 ,2254 ,2255 ,2255 ,2224 ,2224 ,2225 ,2225 ,2168 ,2168 ,2169 ,2169 ,1974 ,1975 ,2150 ,2150 ,2151 ,2151 ,2142 ,2142 ,2143 ,2143 ,2144 ,2144 ,2145 ,2145 ,2146 ,2146 ,2147 ,2147 ,2022 ,2023 ,2038 ,2038 ,2039 ,2039 ,1992 ,1992 ,1993 ,1993 ,1885 ,1886 ,1900 ,1901 ,2226 ,2229 ,1868 ,1868 ,1869 ,1869 ,1872 ,2049 ,2050 ,2083 ,2084 ,2085 ,2062 ,2063 ,2064 ,2065 ,1649 ,1153 ,1155 ,1156 ,1151 ,1152 ,1154 ,1159 ,1160 ,755 ,859 ,806 ,1260 ,1261 ,1263 ,1264 ,1367 ,1368 ,3359 ,1369 ,1370 ,1372 ,1373 ,1371 ,4825 ,1383 ,1383 ,1384 ,1384 ,1640 ,3295 ,3289 ,3467 ,3467 ,2094 ,1910 ,1910 ,1911 ,1911 ,1910 ,1910 ,1911 ,1911 ,2036 ,2036 ,2037 ,2037 ,2069 ,4823 ,851 ,2090 ,2179 ,2177 ,2178 ,2175 ,2176 ,4169 ,4169 ,4169 ,4169 ,4169 ,4170 ,4170 ,4170 ,4170 ,4170 ,4171 ,4171 ,4171 ,4171 ,4171 ,4186 ,4186 ,4186 ,4186 ,4186 ,4187 ,4187 ,4187 ,4187 ,4187 ,4188 ,4188 ,4188 ,4188 ,4188 ,4189 ,4189 ,4189 ,4189 ,4189 ,4172 ,4172 ,4172 ,4172 ,4172 ,4173 ,4173 ,4173 ,4173 ,4173 ,4174 ,4174 ,4174 ,4174 ,4174 ,4175 ,4175 ,4175 ,4175 ,4175 ,4183 ,4183 ,4183 ,4183 ,4183 ,4184 ,4184 ,4184 ,4184 ,4184 ,4185 ,4185 ,4185 ,4185 ,4185 ,4723 ,770 ,3354 ,4828 ,849 ,832 ,831 ,4845 ,4844 ,1711 ,1712 ,1150 ,5174 ,5174 ,5174 ,5174 ,4826);
+    	foreach ($productIds as $productId)
+    	{
+	    	$productService->rebuildProduct($productId);
+    	}*/
+    	
     	    	
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
@@ -82,24 +90,7 @@ class DepartmentsController extends Controller
     		$deliveryBand = $request->request->get('delivery-band');
     		$displayOrder = $request->request->get('display-order');
     		$delete = $request->request->get('delete');
-    		
-    		// Check if the display order needs updating
-			if ($this->listing['sortable'] && ($delete < 1))
-			{
-    			foreach ($displayOrder as $itemId => $value)
-    			{
-    				// Get the item
-    				$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($itemId);
-    				if ($itemObject)
-    				{
-		    			$itemObject->setDisplayOrder($value);
-		    			$em->persist($itemObject);
-		    			$em->flush();
-		    			$service->rebuildDepartmentIndexObject($itemId, 'en');
-		    		}
-    			}
-			}
-    		
+    		    		
     		// Run through all selected items
     		if (sizeof($select) > 0)
     		{
@@ -133,6 +124,22 @@ class DepartmentsController extends Controller
 		    					foreach ($relatedItemDescriptionObjects as $relatedItemDescriptionObject)
 		    					{
 			    					$em->remove($relatedItemDescriptionObject);
+			    					$em->flush();
+		    					}
+		    					
+		    					// Delete any feature templates
+		    					$relatedDepartmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
+		    					foreach ($relatedDepartmentToFeatureObjects as $relatedDepartmentToFeatureObject)
+		    					{
+			    					$em->remove($relatedDepartmentToFeatureObject);
+			    					$em->flush();
+		    					}
+		    					
+		    					// Delete any brand associations
+		    					$relatedBrandToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
+		    					foreach ($relatedBrandToDepartmentObjects as $relatedBrandToDepartmentObject)
+		    					{
+			    					$em->remove($relatedBrandToDepartmentObject);
 			    					$em->flush();
 		    					}
 		    					
@@ -188,12 +195,32 @@ class DepartmentsController extends Controller
 							}
 			    		} else {
 				    		$itemStatus = $status[$itemId];
+				    		$itemExistingStatus = $itemObject->getStatus();
 				    		$itemDeliveryBand = $deliveryBand[$itemId];
-			    			$itemObject->setStatus($itemStatus);
-			    			$itemObject->setDeliveryBand($itemDeliveryBand);
-			    			$em->persist($itemObject);
-			    			$em->flush();
-			    			$service->rebuildDepartmentIndexObject($itemId, 'en');
+				    		$itemExistingDeliveryBand = $itemObject->getDeliveryBand();
+				    		$itemDisplayOrder = $displayOrder[$itemId];
+				    		$itemExistingDisplayOrder = $itemObject->getDisplayOrder();
+				    		if (($itemStatus != $itemExistingStatus) || ($itemDeliveryBand != $itemExistingDeliveryBand) || ($itemDisplayOrder != $itemExistingDisplayOrder))
+				    		{
+					    		$itemObject->setStatus($itemStatus);
+				    			$itemObject->setDeliveryBand($itemDeliveryBand);
+				    			if ($itemDeliveryBand > 0)
+				    			{
+					    			$itemObject->setInheritedDeliveryBand($itemDeliveryBand);
+				    			}
+				    			$itemObject->setDisplayOrder($itemDisplayOrder);
+				    			$em->persist($itemObject);
+				    			$em->flush();
+				    			$service->rebuildDepartmentIndexObject($itemId, 'en');
+				    			if ($itemDeliveryBand != $itemExistingDeliveryBand)
+				    			{
+				    				// Update the department delivery bands
+				    				$service->updateDepartmentDeliveryBands($itemId);
+
+				    				// Update the delivery bands for the products
+				    				$service->updateProductDeliveryBands($itemId, 'en');
+				    			}
+				    		}
 			    		}
 	    			}
     			}
@@ -367,7 +394,7 @@ class DepartmentsController extends Controller
     		$sessionListing['admin'][$this->settings['singleClass']]['order'] = $order;
     		$sessionListing['admin'][$this->settings['singleClass']]['maxResults'] = $maxResults;
     		$sessionListing['admin'][$this->settings['singleClass']]['currentPage'] = $currentPage;
-			$this->get('session')->set('listing', $sessionListing);    
+			$this->get('session')->set('listing', $sessionListing);
 			
     		// Get filters data
     		$emptyFilters = true;
@@ -420,6 +447,10 @@ class DepartmentsController extends Controller
     		$showPricesOutOfHours = 0;
     		$membershipCardDiscountAvailable = 0;
     		$maximumMembershipCardDiscount = 0.0000;
+    		$deliveryBand = 0.0000;
+    		$parentDepartmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $parentId, 'locale' => 'en'));
+    		$checkDeliveryBand = $parentDepartmentIndexObject->getCheckDeliveryBand();
+    		$inheritedDeliveryBand = $parentDepartmentIndexObject->getInheritedDeliveryBand();
     		$displayOrder = 999999;
     		$locale = 'en';
     		$name = trim($request->request->get('name'));
@@ -445,6 +476,9 @@ class DepartmentsController extends Controller
     		$object->setShowPricesOutOfHours($showPricesOutOfHours);
     		$object->setMembershipCardDiscountAvailable($membershipCardDiscountAvailable);
     		$object->setMaximumMembershipCardDiscount($maximumMembershipCardDiscount);
+    		$object->setDeliveryBand($deliveryBand);
+    		$object->setCheckDeliveryBand($checkDeliveryBand);
+    		$object->setInheritedDeliveryBand($inheritedDeliveryBand);
     		$object->setDisplayOrder($displayOrder);
     		$em->persist($object);
     		$em->flush();
@@ -458,8 +492,10 @@ class DepartmentsController extends Controller
     		$objectDescription->setDescription($description);
     		$objectDescription->setMenuTitle($menuTitle);
     		$objectDescription->setPageTitle($pageTitle);
+    		$objectDescription->setPageTitleTemplate('');
     		$objectDescription->setHeader($header);
     		$objectDescription->setMetaDescription($metaDescription);
+    		$objectDescription->setMetaDescriptionTemplate('');
     		$objectDescription->setMetaKeywords($metaKeywords);
     		$objectDescription->setSearchWords($searchWords);
     		$objectDescription->setGoogleDepartment($googleDepartment);
@@ -1074,33 +1110,59 @@ class DepartmentsController extends Controller
     		$select = $request->request->get('select');
     		$productFeatureGroupId = $request->request->get('product-feature-group-id');
     		$defaultProductFeatureId = $request->request->get('default-product-feature-id');
+    		$displayOnFilter = $request->request->get('display-on-filter');
+    		$displayOnListing = $request->request->get('display-on-listing');
+    		$displayOnProduct = $request->request->get('display-on-product');
     		$addItem = $request->request->get('add-item');
     		$addProductFeatureGroupId = $request->request->get('add-product-feature-group-id');
     		$addDefaultProductFeatureId = $request->request->get('add-default-product-feature-id');
+    		$addDisplayOnFilter = $request->request->get('add-display-on-filter');
+    		$addDisplayOnListing = $request->request->get('add-display-on-listing');
+    		$addDisplayOnProduct = $request->request->get('add-display-on-product');
     		$displayOrder = $request->request->get('display-order');
     		$goBack = $request->request->get('go-back');
     		$delete = $request->request->get('delete');
     		$extraAction = $request->request->get('extra-action');
     		
-    		// Check if the display order needs updating
-			if ($delete < 1)
-			{
-				if (sizeof($displayOrder) > 0)
-				{
-	    			foreach ($displayOrder as $itemId => $value)
-	    			{
-	    				// Get the item
-	    				$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->find($itemId);
-	    				if ($departmentToFeatureObject)
-	    				{
-			    			$departmentToFeatureObject->setDisplayOrder($value);
-			    			$em->persist($departmentToFeatureObject);
-			    			$em->flush();
-			    		}
-	    			}
+    		// Check if any extra actions are required
+    		if (strpos($extraAction, 'getProductFeaturesFromDepartment') !== false)
+    		{
+	    		// Get any new product features added
+	    		$departmentId = str_replace('getProductFeaturesFromDepartment|', '', $extraAction);
+    			$productFeaturesAdded = $service->getProductFeatureGroupsFromDepartment($id, $departmentId, 'en');
+    			
+    			// Notify user
+    			if ($productFeaturesAdded > 0)
+    			{
+    				$this->get('session')->setFlash('success', '<strong>'.$productFeaturesAdded.'</strong> new product feature'.($productFeaturesAdded != 1?'s':'').' have been found through the selected department and added.');
+    			} else {
+	    			$this->get('session')->setFlash('notice', 'There are no new product features to add. This could be because the product features in the selected department already match what is in this department.');
+    			}
+    			
+    			// Forward
+    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
+    		} else {
+	    		switch ($extraAction)
+	    		{
+	    			// Get the product features from the products directly in the departments
+		    		case 'getProductFeaturesFromProducts':
+		    			// Get any new product features added
+		    			$productFeaturesAdded = $service->getProductFeatureGroupsFromProducts($id, 'en');
+		    			
+		    			// Notify user
+		    			if ($productFeaturesAdded > 0)
+		    			{
+		    				$this->get('session')->setFlash('success', '<strong>'.$productFeaturesAdded.'</strong> new product feature'.($productFeaturesAdded != 1?'s':'').' have been found through the products associated with this department and added.');
+		    			} else {
+			    			$this->get('session')->setFlash('notice', 'There are no new product features to add. This could be because there are no products directly associated to this department, so there are no available product features.');
+		    			}
+		    			
+		    			// Forward
+		    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
+		    			break;
 	    		}
-			}
-    		
+	    	}
+    		    		
     		// Run through all selected items
     		if (sizeof($select) > 0)
     		{
@@ -1118,8 +1180,28 @@ class DepartmentsController extends Controller
 			    		} else {
 				    		$itemProductFeatureGroupId = $productFeatureGroupId[$itemId];
 				    		$itemDefaultProductFeatureId = $defaultProductFeatureId[$itemId];
+				    		$itemDisplayOnFilter = 0;
+						    if (isset($displayOnFilter[$itemId]))
+						    {
+							    $itemDisplayOnFilter = $displayOnFilter[$itemId];
+						    }
+						    $itemDisplayOnListing = 0;
+						    if (isset($displayOnListing[$itemId]))
+						    {
+							    $itemDisplayOnListing = $displayOnListing[$itemId];
+						    }
+						    $itemDisplayOnProduct = 0;
+						    if (isset($displayOnProduct[$itemId]))
+						    {
+							    $itemDisplayOnProduct = $displayOnProduct[$itemId];
+						    }
+						    $itemDisplayOrder = $displayOrder[$itemId];
 			    			$departmentToFeatureObject->setProductFeatureGroupId($itemProductFeatureGroupId);
 			    			$departmentToFeatureObject->setDefaultProductFeatureId($itemDefaultProductFeatureId);
+			    			$departmentToFeatureObject->setDisplayOnFilter($itemDisplayOnFilter);
+			    			$departmentToFeatureObject->setDisplayOnListing($itemDisplayOnListing);
+			    			$departmentToFeatureObject->setDisplayOnProduct($itemDisplayOnProduct);
+			    			$departmentToFeatureObject->setDisplayOrder($itemDisplayOrder);
 			    			$em->persist($departmentToFeatureObject);
 			    			$em->flush();
 			    		}
@@ -1134,6 +1216,21 @@ class DepartmentsController extends Controller
     			{
     				$itemProductFeatureGroupId = $addProductFeatureGroupId[$itemId];
 				    $itemDefaultProductFeatureId = $addDefaultProductFeatureId[$itemId];
+				    $itemDisplayOnFilter = 0;
+				    if (isset($addDisplayOnFilter[$itemId]))
+				    {
+					    $itemDisplayOnFilter = $addDisplayOnFilter[$itemId];
+				    }
+				    $itemDisplayOnListing = 0;
+				    if (isset($addDisplayOnListing[$itemId]))
+				    {
+					    $itemDisplayOnListing = $addDisplayOnListing[$itemId];
+				    }
+				    $itemDisplayOnProduct = 0;
+				    if (isset($addDisplayOnProduct[$itemId]))
+				    {
+					    $itemDisplayOnProduct = $addDisplayOnProduct[$itemId];
+				    }
 				    if ($itemProductFeatureGroupId)
 				    {
 					    $departmentToFeatureObject = new DepartmentToFeature();
@@ -1141,39 +1238,22 @@ class DepartmentsController extends Controller
 	    				$departmentToFeatureObject->setDepartmentId($id);
 	    				$departmentToFeatureObject->setProductFeatureGroupId($itemProductFeatureGroupId);
 	    				$departmentToFeatureObject->setDefaultProductFeatureId($itemDefaultProductFeatureId);
+		    			$departmentToFeatureObject->setDisplayOnFilter($itemDisplayOnFilter);
+		    			$departmentToFeatureObject->setDisplayOnListing($itemDisplayOnListing);
+		    			$departmentToFeatureObject->setDisplayOnProduct($itemDisplayOnProduct);
 		    			$departmentToFeatureObject->setDisplayOrder(1);
 		    			$em->persist($departmentToFeatureObject);
 		    			$em->flush();
 		    		}
     			}
     		}
-    		
-    		// Check if any extra actions are required
-    		switch ($extraAction)
-    		{
-    			// Get the product features from the products directly in the departments
-	    		case 'getProductFeaturesFromProducts':
-	    			// Get any new product features added
-	    			$productFeaturesAdded = $service->getProductFeatureGroupsFromProducts($id);
-	    			if ($productFeaturesAdded > 0)
-	    			{
-	    				$this->get('session')->setFlash('success', '<strong>'.$productFeaturesAdded.'</strong> new product feature'.($productFeaturesAdded != 1?'s':'').' have been found through the products associated with this department and added.');
-	    			} else {
-		    			$this->get('session')->setFlash('notice', 'There are no new product features to add. This could be because there are no products directly associated to this department, so there are no available product features.');
-	    			}
-	    			break;
-    		}
     		 
-    		// Check if there was any extra action   	
-    		if (!$extraAction)
-    		{
-	    		// Notify user
-	    		if ($delete > 0)
-		    	{
-	    			$this->get('session')->setFlash('success', 'The selected product features have been deleted.');
-	    		} else {
-		    		$this->get('session')->setFlash('success', 'The selected product features have been updated.');
-	    		}
+    		// Notify user
+    		if ($delete > 0)
+	    	{
+    			$this->get('session')->setFlash('success', 'The selected product features have been deleted.');
+    		} else {
+		    	$this->get('session')->setFlash('success', 'The selected product features have been updated.');
 	    	}
     		
     		// Forward
@@ -1195,15 +1275,26 @@ class DepartmentsController extends Controller
     	// Get the items
 		$data['items'] = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
 		
+		// Get the existing product feature group ids
+		$existingProductFeatureGroupIds = array();
+		foreach ($data['items'] as $item)
+		{
+			$existingProductFeatureGroupIds[] = $item->getProductFeatureGroupId();
+		}
+		$data['existingProductFeatureGroupIds'] = '|'.implode('|', $existingProductFeatureGroupIds).'|';
+		
 		// Get the product feature groups
 		$data['productFeatureGroups'] = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeatureGroup' => 'ASC'));
 		
 		// Get the product features
 		$data['productFeatures'] = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeature' => 'ASC'));
+		
+		// Get the product feature departments
+    	$data['productFeatureDepartments'] = $service->getProductFeatureGroupDepartments('en');
     	
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
-    	    	    	
+    	    	    	    	
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemProductFeatures.html.twig', array('data' => $data));
     }
     
@@ -1324,21 +1415,21 @@ class DepartmentsController extends Controller
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	$seoService = $this->get('web_illumination_admin.seo_service');
     	$productService = $this->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+		$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
+		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-			$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-			if (!$itemObject)
+			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
 				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
@@ -1349,47 +1440,100 @@ class DepartmentsController extends Controller
 			
     		// Get submitted data
     		$deliveryBand = $request->request->get('delivery-band');
+    		$existingDeliveryBand = $itemObject->getDeliveryBand();
     		$checkDeliveryBand = $request->request->get('check-delivery-band');
-    		$brandDeliveryBands = $request->request->get('brand-delivery-bands');
-    		$productDeliveryBands = $request->request->get('product-delivery-bands');
+    		$existingCheckDeliveryBand = $itemObject->getCheckDeliveryBand();
+    		$deliveryBandNotes = $request->request->get('delivery-band-notes');
+    		$existingDeliveryBandNotes = $itemDescriptionObject->getDeliveryBandNotes();
+    		$brandDeliveryBands = $request->request->get('brand-delivery-band');
+    		$productDeliveryBands = $request->request->get('product-delivery-band');
     		$goBack = $request->request->get('go-back');
     		    		
     		// Update objects
-    		$itemObject->setDeliveryBand($deliveryBand);
-    		$itemObject->setCheckDeliveryBand($deliveryBand);
-    		$em->persist($itemObject);
-    		$em->flush();
-    		foreach ($brandDeliveryBands as $brandToDepartmentId => $brandDeliveryBand)
+    		if (($deliveryBand != $existingDeliveryBand) || ($checkDeliveryBand != $existingCheckDeliveryBand) || ($deliveryBandNotes != $existingDeliveryBandNotes))
     		{
-	    		$brandToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->find($brandToDepartmentId);
-	    		if ($brandToDepartmentObject)
+	    		$itemObject->setDeliveryBand($deliveryBand);
+	    		$itemObject->setCheckDeliveryBand($checkDeliveryBand);
+	    		if ($deliveryBand > 0)
 	    		{
-	    			if ($brandToDepartmentObject->getDeliveryBand() != $brandDeliveryBand)
-	    			{
-		    			$brandToDepartmentObject->setDeliveryBand($brandDeliveryBand);
-		    			$em->persist($brandToDepartmentObject);
-		    			$em->flush();
-		    		}
+		    		$itemObject->setInheritedDeliveryBand($deliveryBand);
 	    		}
-    		}
-    		foreach ($productDeliveryBands as $productId => $productDeliveryBand)
-    		{
-	    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($productId);
-	    		if ($productObject)
+	    		$em->persist($itemObject);
+	    		$em->flush();
+	    		$itemDescriptionObject->setDeliveryBandNotes($deliveryBandNotes);
+	    		$em->persist($itemDescriptionObject);
+	    		$em->flush();
+	    		
+	    		if ($deliveryBand != $existingDeliveryBand)
 	    		{
-	    			if ($productObject->getDeliveryBand() != $productDeliveryBand)
-	    			{
-		    			$productObject->setDeliveryBand($productDeliveryBand);
-		    			$em->persist($productObject);
-		    			$em->flush();
-		    			$productService->rebuildProduct($productId);
+		    		// Update the department delivery bands
+		    		$service->updateDepartmentDeliveryBands($id);
+		    		
+		    		// Update the delivery bands for the products
+		    		$service->updateProductDeliveryBands($id, 'en');
+		    	}
+	    		
+	    		// Rebuild the index
+	    		$service->rebuildDepartmentIndexObject($id, 'en');
+	    	}
+	    	
+	    	// Update brand departments
+	    	if (sizeof($brandDeliveryBands) > 0)
+	    	{
+		    	foreach ($brandDeliveryBands as $itemId => $brandDeliveryBand)
+		    	{
+			    	// Get the product objects
+					$brandToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->find($itemId);
+					if ($brandToDepartmentObject)
+					{
+						$brandToDepartmentObject->setDeliveryBand($brandDeliveryBand);
+						$em->persist($brandToDepartmentObject);
+			    		$em->flush();
 		    		}
-	    		}
-    		}
-    		
-    		// Rebuild the index
-    		$service->rebuildDepartmentIndexObject($id, 'en');
-    		
+		    	}
+		    	
+		    	// Update the department delivery bands
+	    		$service->updateDepartmentDeliveryBands($id);
+	    		
+	    		// Update the delivery bands for the products
+	    		$service->updateProductDeliveryBands($id, 'en');
+	    	}
+	    	
+	    	// Update products
+	    	if (sizeof($productDeliveryBands) > 0)
+	    	{
+		    	foreach ($productDeliveryBands as $itemId => $productDeliveryBand)
+		    	{
+			    	// Get the product objects
+					$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($itemId);
+					$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $itemId));
+					if ($productObject && $productIndexObject)
+					{
+						if ($productDeliveryBand > 0)
+						{
+							$productObject->setDeliveryBand($productDeliveryBand);
+							$productObject->setInheritedDeliveryBand($productDeliveryBand);
+							$em->persist($productObject);
+				    		$em->flush();
+				    		$productIndexObject->setDeliveryBand($productDeliveryBand);
+							$productIndexObject->setInheritedDeliveryBand($productDeliveryBand);
+							$em->persist($productIndexObject);
+				    		$em->flush();
+				    	} else {
+					    	$productObject->setDeliveryBand(0.0000);
+							$productObject->setInheritedDeliveryBand(0.0000);
+							$em->persist($productObject);
+				    		$em->flush();
+				    		$productIndexObject->setDeliveryBand(0.0000);
+							$productIndexObject->setInheritedDeliveryBand(0.0000);
+							$em->persist($productIndexObject);
+				    		$em->flush();
+				    		$productService->updateProductDeliveryBand($itemId, 'en');
+				    	}
+		    		}
+		    	}
+	    	}
+    		    		
     		// Notify user
     		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
     		
@@ -1415,11 +1559,11 @@ class DepartmentsController extends Controller
     	// Get the brands
     	$data['brands'] = $service->getBrands($id, 'en');
     	
-    	// Get the products
-    	$data['products'] = $em->createQuery("SELECT pi FROM WebIlluminationAdminBundle:ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%' ORDER BY pi.pageTitle ASC")->getResult();
-    	
     	// Get the brand to departments
     	$data['brandToDepartments'] = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array('departmentId' => $id));
+    	
+    	// Get the products
+    	$data['products'] = $em->createQuery("SELECT pi.productId, pi.deliveryBand, pi.inheritedDeliveryBand, pi.pageTitle, pi.brand FROM WebIlluminationAdminBundle:ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%' ORDER BY pi.pageTitle ASC")->getResult();
 	        	    	    	
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemDelivery.html.twig', array('data' => $data));
     }

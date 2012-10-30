@@ -97,7 +97,10 @@ $(".action-confirm-delete-cheaper-alternative").live('click', function() {
 		$("#cheaper-alternative-confirm-delete-button").attr("data-index", $elementIndex);
 		$("#cheaper-alternative-cancel-delete-button").attr("data-index", $elementIndex);
 		$("#cheaper-alternative-confirm-delete").fadeIn();
-		$("html, body").animate({scrollTop: $("#cheaper-alternative-confirm-delete").offset().top - 10},'slow');
+		if ($("#cheaper-alternative-confirm-delete"))
+		{
+			$("html, body").animate({scrollTop: $("#cheaper-alternative-confirm-delete").offset().top - 10},'slow');
+		}
 		$("#cheaper-alternative-"+$elementIndex).addClass("ui-state-error");
 		$("#cheaper-alternative-"+$elementIndex+" td.delete div.checker span").addClass("checked");
 		$("#cheaper-alternative-"+$elementIndex+" input.cheaper-alternative-select").attr("checked", "checked");
@@ -137,7 +140,10 @@ $(".action-delete-cheaper-alternative").live('click', function() {
       		$("#cheaper-alternative-error-message").fadeIn();
       		$("#cheaper-alternative-confirm-delete").hide();
         	$("#ajax_loading").hide();
-        	$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+        	if ($("#cheaper-alternatives"))
+        	{
+        		$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+        	}
       	},
       	success: function(data) {
         	if (data.response == 'success')
@@ -157,7 +163,10 @@ $(".action-delete-cheaper-alternative").live('click', function() {
         	} else {
         		$("#cheaper-alternative-error-message-text").html('Sorry, there was a problem deleting your cheaper alternative. Please try again.');
         		$("#cheaper-alternative-error-message").fadeIn();
-        		$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+        		if ($("#cheaper-alternatives"))
+        		{
+        			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+        		}
         	}
         	$("#cheaper-alternative-confirm-delete").hide();
         	$("#ajax_loading").hide();
@@ -195,7 +204,10 @@ $(".action-confirm-delete-cheaper-alternatives").live('click', function() {
 	if ($deletesNeedingConfirmation > 0)
 	{
 		$("#cheaper-alternative-confirm-deletes").fadeIn();
-		$("html, body").animate({scrollTop: $("#cheaper-alternative-confirm-deletes").offset().top - 10},'slow');
+		if ($("#cheaper-alternative-confirm-deletes"))
+		{
+			$("html, body").animate({scrollTop: $("#cheaper-alternative-confirm-deletes").offset().top - 10},'slow');
+		}
 	}
 	$("#ajax_loading").hide();
 });
@@ -238,7 +250,10 @@ $(".action-delete-cheaper-alternatives").live('click', function() {
 		        		{
 		        			$("#cheaper-alternative-error-message-text").html('Sorry, there were problems deleting your selected cheaper alternatives. Please try again.');
 		        			$("#cheaper-alternative-error-message").fadeIn();
-		        			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+		        			if ($("#cheaper-alternatives"))
+		        			{
+		        				$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+		        			}
 		        		}
 		        		if ($("li.cheaper-alternative-container:visible").length < 1)
 	        			{
@@ -269,7 +284,10 @@ $(".action-delete-cheaper-alternatives").live('click', function() {
 				        		{
 				        			$("#cheaper-alternative-error-message-text").html('Sorry, there were problems deleting your selected cheaper alternatives. Please try again.');
 				        			$("#cheaper-alternative-error-message").fadeIn();
-				        			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+				        			if ($("#cheaper-alternatives"))
+				        			{
+				        				$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+				        			}
 				        		}
 				        		if ($("li.cheaper-alternative-container:visible").length < 1)
 			        			{
@@ -304,7 +322,10 @@ $(".action-delete-cheaper-alternatives").live('click', function() {
 			        		{
 			        			$("#cheaper-alternative-error-message-text").html('Sorry, there were problems deleting your selected cheaper alternatives. Please try again.');
 			        			$("#cheaper-alternative-error-message").fadeIn();
-			        			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+			        			if ($("#cheaper-alternatives"))
+			        			{
+			        				$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+			        			}
 			        		}
 			        		if ($("li.cheaper-alternative-container:visible").length < 1)
 		        			{
@@ -337,7 +358,10 @@ $(".sidebar-tabs").bind("tabsselect", function(event, ui) {
 		$("#cheaper-alternative-leave-cheaper-alternatives-button").attr("data-tab-index", ui.index);
 		$("#cheaper-alternatives-tab-to-redirect-to").val(ui.index);
 		$("#cheaper-alternative-confirm-leave").fadeIn();
-		$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+		if ($("#cheaper-alternatives"))
+		{
+			$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+		}
 		return false;
 	}
 	return true;
@@ -352,5 +376,8 @@ $(".action-leave-cheaper-alternatives").live('click', function() {
 	$("#cheaper-alternatives .message").hide();
 	$(".form-error").remove();
 	$(".sidebar-tabs").tabs("select", parseInt($(this).attr("data-tab-index")));
-	$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+	if ($("#cheaper-alternatives"))
+	{
+		$("html, body").animate({scrollTop: $("#cheaper-alternatives").offset().top + 35},'slow');
+	}
 });

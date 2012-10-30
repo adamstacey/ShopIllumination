@@ -532,6 +532,17 @@ class OrderService {
 		$orderObject->setUserId($order['userId']);
 		$orderObject->setPaymentType($order['paymentType']);
 		$orderObject->setDeliveryType($basket['delivery']['service']);
+		switch ($basket['delivery']['service'])
+		{
+			default:
+				$orderObject->setCourier('');
+				break;
+		}
+		$orderObject->setNumberOfPackages(1);
+		$orderObject->setTrackingNumber('');
+		$orderObject->setLabelsPrinted(0);
+		$orderObject->setSendReviewRequest(1);
+		$orderObject->setReviewRequested(0);
 		$orderObject->setEstimatedDeliveryDaysStart($basket['estimatedDeliveryDays']['start']);
 		$orderObject->setEstimatedDeliveryDaysEnd($basket['estimatedDeliveryDays']['end']);
 		$orderObject->setItems($basket['totals']['items']);

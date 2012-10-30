@@ -15,7 +15,7 @@
 		{% for product in data.products %}
 			{
 				value: "{{ product.productId }}",
-				label: "{{ product.header }} ({{ product.productCode }})"
+				label: "{{ product.pageTitle }}"
 			}{% if not loop.last %},{% endif %}
 		{% endfor %}
 	];

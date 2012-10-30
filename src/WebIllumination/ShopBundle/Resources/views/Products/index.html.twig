@@ -64,6 +64,9 @@
 						</header>
 						<section>
 							<div>
+								<p class="ar product-code uppercase">
+									<span itemprop="model" class="uppercase">PRODUCT CODE: <strong>{{ product.productCode }}</strong></span>
+								</p>
 								<div id="product-price-loading" class="loading-container ui-helper-hidden">
 									<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
 									<p>Updating Prices&hellip;</p>
@@ -125,6 +128,14 @@
 									{% endif %}
 									<div class="clear"></div>
 								</div>
+								{% if product.cheaperAlternatives|length > 0 %}
+									{% for cheaperAlternative in product.cheaperAlternatives %}
+										{% if loop.first %}
+											<a class="cheaper-alternative" href="{{ path('page_request', {'url': cheaperAlternative.url}) }}">Cheaper Alternative Only <strong>&pound;{{ cheaperAlternative.listPrice|number_format(2) }}</strong></a>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+								<div class="clear"></div>
 							</div>
 						</section>
 			        </div>
@@ -190,10 +201,15 @@
 		                <section>
 		                    <div class="sidebar-tabs">
 		                        <ul>
+		                        	{% if product.description %}<li id="tab-description"><a href="#description">Description</a></li>{% endif %}
 		                            {% if product.productFeatures|length > 0 %}<li id="tab-features"><a href="#features">Features</a></li>{% endif %}
-		                            {% if product.description %}<li id="tab-description"><a href="#description">Description</a></li>{% endif %}
 		                            {% if product.brand.guarantees|length > 0 %}<li id="tab-guarantees"><a href="#guarantees">Guarantees</a></li>{% endif %}
 		                        </ul>
+		                        {% if product.description %}
+			                        <section id="description" class="form ui-helper-hidden">
+			                        	<div itemprop="description" class="product-description">{{ product.description|raw }}</div>
+			                        </section>
+			                    {% endif %}
 		                        {% if product.productFeatures|length > 0 %}
 			                        <section id="features" class="form ui-helper-hidden">
 			                        	<dl>
@@ -203,11 +219,6 @@
 			                        		{% endfor %}
 										</dl>
 										<div class="clear"></div>
-			                        </section>
-			                    {% endif %}
-		                        {% if product.description %}
-			                        <section id="description" class="form ui-helper-hidden">
-			                        	<div itemprop="description" class="product-description">{{ product.description|raw }}</div>
 			                        </section>
 			                    {% endif %}
 			                    {% if product.guarantees|length > 0 %}

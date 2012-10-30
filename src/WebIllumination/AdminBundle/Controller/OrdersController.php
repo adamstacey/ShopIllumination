@@ -1110,7 +1110,7 @@ class OrdersController extends Controller
 			$email->addPart($this->renderView('WebIlluminationShopBundle:Checkout:invoice.txt.twig', array('order' => $order)), 'text/plain');
 			if (file_exists($attachment))
 			{
-				$email->attach(\Swift_Attachment::fromPath($attachment)->setFilename('ride-direct-invoice-'.$id.'.pdf'));
+				$email->attach(\Swift_Attachment::fromPath($attachment)->setFilename('kitchen-appliance-centre-invoice-'.$id.'.pdf'));
 			}
     		$this->get('mailer')->send($email);
 		} catch (Exception $exception) {

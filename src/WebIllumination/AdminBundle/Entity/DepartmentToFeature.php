@@ -38,6 +38,21 @@ class DepartmentToFeature
     private $defaultProductFeatureId;
         
     /**
+     * @ORM\Column(name="display_on_filter", type="integer", length="1")
+     */
+    private $displayOnFilter;
+    
+    /**
+     * @ORM\Column(name="display_on_listing", type="integer", length="1")
+     */
+    private $displayOnListing;
+    
+    /**
+     * @ORM\Column(name="display_on_product", type="integer", length="1")
+     */
+    private $displayOnProduct;
+    
+    /**
      * @ORM\Column(name="display_order", type="integer", length="11")
      */
     private $displayOrder;
@@ -157,6 +172,66 @@ class DepartmentToFeature
     public function getDefaultProductFeatureId()
     {
         return $this->defaultProductFeatureId;
+    }
+
+    /**
+     * Set displayOnFilter
+     *
+     * @param integer $displayOnFilter
+     */
+    public function setDisplayOnFilter($displayOnFilter)
+    {
+        $this->displayOnFilter = $displayOnFilter;
+    }
+
+    /**
+     * Get displayOnFilter
+     *
+     * @return integer 
+     */
+    public function getDisplayOnFilter()
+    {
+        return $this->displayOnFilter;
+    }
+
+    /**
+     * Set displayOnListing
+     *
+     * @param integer $displayOnListing
+     */
+    public function setDisplayOnListing($displayOnListing)
+    {
+        $this->displayOnListing = $displayOnListing;
+    }
+
+    /**
+     * Get displayOnListing
+     *
+     * @return integer 
+     */
+    public function getDisplayOnListing()
+    {
+        return $this->displayOnListing;
+    }
+
+    /**
+     * Set displayOnProduct
+     *
+     * @param integer $displayOnProduct
+     */
+    public function setDisplayOnProduct($displayOnProduct)
+    {
+        $this->displayOnProduct = $displayOnProduct;
+    }
+
+    /**
+     * Get displayOnProduct
+     *
+     * @return integer 
+     */
+    public function getDisplayOnProduct()
+    {
+        return $this->displayOnProduct;
     }
 
     /**

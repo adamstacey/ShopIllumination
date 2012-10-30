@@ -287,14 +287,18 @@ ul.action-buttons li a {
   text-decoration: none;
 }
 .pagination li.current a {
-  background: #86AECC!important;
-  background: -webkit-gradient(linear, left top, left bottom, from(#D4E4EF), to(#86AECC))!important;
-  background: -moz-linear-gradient(top, #D4E4EF, #86AECC)!important;
-  background: linear-gradient(top, #D4E4EF, #86AECC)!important;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D4E4EF', endColorstr='#86AECC')!important;
-  color: #666;
-  filter: none;
-  text-shadow: none!important;
+  background: #afafaf!important;
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2FmYWZhZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMlIiBzdG9wLWNvbG9yPSIjNGQ0ZDRkIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=)!important;
+	background: -moz-linear-gradient(top,  #afafaf 0%, #4d4d4d 3%, #000000 100%)!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#afafaf), color-stop(3%,#4d4d4d), color-stop(100%,#000000))!important;
+	background: -webkit-linear-gradient(top,  #afafaf 0%,#4d4d4d 3%,#000000 100%)!important;
+	background: -o-linear-gradient(top,  #afafaf 0%,#4d4d4d 3%,#000000 100%)!important;
+	background: -ms-linear-gradient(top,  #afafaf 0%,#4d4d4d 3%,#000000 100%)!important;
+	background: linear-gradient(to bottom,  #afafaf 0%,#4d4d4d 3%,#000000 100%)!important;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#afafaf', endColorstr='#000000',GradientType=0 )!important;
+	color: #FFF!important;
+	text-shadow: 0 1px 0 #000!important;
+	border: 1px solid #000000!important;
 }
 .pagination li.current a:active {
   -webkit-box-shadow: none;
@@ -518,7 +522,7 @@ input.large, button.large {
  */
 .tooltip {
 	background: #FFF;
-	border: 5px solid #20426C;
+	border: 5px solid #000;
 	display: none;
 	padding: 5px;
 	z-index: 999;
@@ -546,7 +550,15 @@ input.large, button.large {
 {
 	font-weight: bold;
 	white-space: nowrap;
-	background: #DDD;
+	background: #fefefe!important;
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZlZmVmZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMlIiBzdG9wLWNvbG9yPSIjZDlkOWQ5IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2E2YTZhNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=)!important;
+	background: -moz-linear-gradient(top,  #fefefe 0%, #d9d9d9 3%, #a6a6a6 100%)!important;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefefe), color-stop(3%,#d9d9d9), color-stop(100%,#a6a6a6))!important;
+	background: -webkit-linear-gradient(top,  #fefefe 0%,#d9d9d9 3%,#a6a6a6 100%)!important;
+	background: -o-linear-gradient(top,  #fefefe 0%,#d9d9d9 3%,#a6a6a6 100%)v;
+	background: -ms-linear-gradient(top,  #fefefe 0%,#d9d9d9 3%,#a6a6a6 100%)!important;
+	background: linear-gradient(to bottom,  #fefefe 0%,#d9d9d9 3%,#a6a6a6 100%)!important;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#a6a6a6',GradientType=0 )!important;
 }
 .tooltip table td p
 {
@@ -555,6 +567,11 @@ input.large, button.large {
 	line-height: 120%!important;
 	margin: 0 0 5px 0!important;
 	color: #000!important;
+}
+.tooltip .gradient-background-red, .tooltip .gradient-background-orange, .tooltip .gradient-background-green
+{
+	color: #FFF;
+	font-weight: bold;
 }
 .form-element
 {

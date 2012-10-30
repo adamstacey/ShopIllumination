@@ -162,8 +162,8 @@
 											{% endif %}
 											<th width="19" class="ac"><input type="checkbox" class="action-select-all" value="1" /></th>
 											<th class="al">Department</th>
-											<th class="ac">Delivery</th>
-											<th class="ac">Status</th>
+											<th class="ac" width="90">Delivery</th>
+											<th class="ac" width="90">Status</th>
 											<th width="1" class="ac">&nbsp;</th>
 										</tr>
 									</thead>
@@ -175,9 +175,9 @@
 												{% endif %}
 												<td width="19" class="ac select"><input data-id="{{ item.departmentId }}" type="checkbox" class="action-select" name="select[{{ item.departmentId }}]" id="listing-select-{{ item.departmentId }}" value="1" /></td>
 												<td class="al small">
-													<a class="tooltip-preview-left" data-tooltip-id="#tooltip-description-{{ item.departmentId }}" href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}"><strong>{{ item.name }}</strong></a>
+													<a class="tooltip-preview-left" data-tooltip-id="#tooltip-description-{{ item.departmentId }}" href="{% if item.departmentCount > 0 %} {{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}{% else %}{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.departmentId}) }}{% endif %}"><strong>{{ item.name }}</strong></a>
 												</td>
-												<td width="1" class="ac{% if item.deliveryBand < 1 %} red{% endif %}">
+												<td width="90" class="ac{% if item.deliveryBand < 1 %} red{% endif %}">
 													<select name="delivery-band[{{ item.departmentId }}]" id="listing-delivery-band-{{ item.departmentId }}" data-id="{{ item.departmentId }}" class="delivery-band full">
 														<option value="0">- Not Set -</option>
 														<option{% if item.deliveryBand == '1' %} selected="selected"{% endif %} value="1">Band 1</option>
@@ -185,9 +185,10 @@
 														<option{% if item.deliveryBand == '3' %} selected="selected"{% endif %} value="3">Band 3</option>
 														<option{% if item.deliveryBand == '4' %} selected="selected"{% endif %} value="4">Band 4</option>
 														<option{% if item.deliveryBand == '5' %} selected="selected"{% endif %} value="5">Band 5</option>
+														<option{% if item.deliveryBand == '6' %} selected="selected"{% endif %} value="6">Band 6</option>
 													</select>
 												</td>
-												<td width="1" class="ac {{ item.statusColour }}">
+												<td width="90" class="ac {{ item.statusColour }}">
 													<select name="status[{{ item.departmentId }}]" id="listing-status-{{ item.departmentId }}" data-id="{{ item.departmentId }}" class="listing-status full">
 														<option{% if item.status == 'a' %} selected="selected"{% endif %} value="a">Active</option>
 														<option{% if item.status == 'h' %} selected="selected"{% endif %} value="h">Hidden</option>
@@ -195,13 +196,14 @@
 													</select>
 												</td>
 												<td width="1" class="buttons-container ac no-wrap">
-													<input type="hidden" class="listing-display-order" name="display-order[{{ item.departmentId }}]" id="display-order-{{ item.departmentId }}" data-id="{{ item.departmentId }}" value="{{ item.displayOrder }}" />
+													{% if item.displayOrder is defined %}
+														<input type="hidden" class="listing-display-order" name="display-order[{{ item.departmentId }}]" id="display-order-{{ item.departmentId }}" data-id="{{ item.departmentId }}" value="{{ item.displayOrder }}" />
+													{% endif %}
 													<img class="buttons-spacer" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="0" alt="" />
 													<div class="clear"></div>
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.departmentId}) }}" class="button ui-button-blue ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>
 													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button ui-button-blue ui-corner-none"{% if item.productCount > 0 %} data-notification="{{ item.productCount }}"{% endif %} data-icon-primary="ui-icon-cart" data-icon-only="true">Products</a>
 													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button ui-button-blue ui-corner-none tooltip-preview-right"{% if item.departmentCount > 0 %} data-notification="{{ item.departmentCount }}"{% endif %} data-icon-primary="ui-icon-folder-{% if item.departmentCount > 0 %}open{% else %}collapsed{% endif %}" data-tooltip-id="#tooltip-departments-{{ item.departmentId }}" data-icon-only="true">Departments</a>
-													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_delivery', {'id': item.departmentId}) }}" class="button ui-button-blue ui-corner-none" data-icon-primary="ui-icon-clipboard" data-icon-only="true">Delivery</a>
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_search_engine_optimisation', {'id': item.departmentId}) }}" class="button ui-button-blue ui-corner-none ui-corner-tl ui-corner-bl tooltip-preview-right" data-tooltip-id="#tooltip-seo-{{ item.departmentId }}" data-icon-primary="ui-icon-search" data-icon-only="true">Search Engine Optimisation (SEO)</a>
 												</td>
 											</tr>

@@ -24,7 +24,7 @@ td .selector,
 td .checker,
 td .radio,
 td .uploader {
-  display: block;
+  /*display: block;*/
 }
 input,
 textarea,
@@ -49,9 +49,9 @@ div.selector,
 div.uploader,
 div.checker {
   border: 1px solid #c1c1c1;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 .inner-table td
 {
@@ -61,26 +61,26 @@ div.checker {
 }
 .status
 {
-  -webkit-border-radius: 5px!important;
-  -moz-border-radius: 5px!important;
-  border-radius: 5px!important;
-  padding-left: 5px!important;
+  -webkit-border-radius: 4px!important;
+  -moz-border-radius: 4px!important;
+  border-radius: 4px!important;
+  padding-left: 4px!important;
 }
 .buttons
 {
   padding: 5px;
   background: #EDEFF0;
-  -webkit-border-radius: 5px!important;
-  -moz-border-radius: 5px!important;
-  border-radius: 5px!important;
-  padding-left: 5px!important;
+  -webkit-border-radius: 4px!important;
+  -moz-border-radius: 4px!important;
+  border-radius: 4px!important;
+  padding-left: 4px!important;
   margin: 0 0 15px 0;
 }
 .product-warning, .brand-warning
 {
-  -webkit-border-radius: 5px!important;
-  -moz-border-radius: 5px!important;
-  border-radius: 5px!important;
+  -webkit-border-radius: 4px!important;
+  -moz-border-radius: 4px!important;
+  border-radius: 4px!important;
   padding: 2px 2px 2px 5px!important;
   font-size: 10px;
   margin-bottom: 5px;
@@ -104,9 +104,9 @@ div.checker {
 .image-container
 {
 	margin: 0 0 5px 0;
-	-webkit-border-radius: 5px!important;
-  	-moz-border-radius: 5px!important;
-  	border-radius: 5px!important;
+	-webkit-border-radius: 4px!important;
+  	-moz-border-radius: 4px!important;
+  	border-radius: 4px!important;
   	border: 1px solid #C1C1C1;
   	padding: 5px;
   	background: url(/bundles/webilluminationadmin/images/backgrounds/image-container.png) repeat scroll left top #777777;
@@ -164,7 +164,7 @@ input[type=time],
 input[type=date],
 div.selector span,
 div.uploader span {
-  padding: 4px 6px;
+  padding: 7px 6px;
 }
 /*  *************************************  *
 	  Select 

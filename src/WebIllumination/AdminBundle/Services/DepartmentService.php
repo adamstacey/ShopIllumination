@@ -651,7 +651,6 @@ class DepartmentService {
    		foreach ($em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findBy(array(), array('name' => 'ASC')) as $departmentDescriptionObject)
    		{
    			$department = $this->getDepartment($departmentDescriptionObject->getDepartmentId(), $locale, $currencyCode);
-   			error_log('Department Count: '.$department['productCount']);
    			if (($department['status'] == 'a'))
    			{
    				$departments[$departmentDescriptionObject->getDepartmentId()] = $department;
@@ -841,6 +840,42 @@ class DepartmentService {
     	return $breadcrumbs;
 	}
 	
+	// Get the available departments that have product feature groups
+	public function getProductFeatureGroupDepartments($locale = 'en')
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+    	
+		// Get the product feature group departments
+    	$productFeatureGroupDepartments = array();
+    	$qb = $em->createQueryBuilder();
+    	$qb->select('DISTINCT dtf.departmentId');
+    	$qb->from('WebIlluminationAdminBundle:DepartmentToFeature', 'dtf');
+    	$productFeatureGroupDepartmentIds = $qb->getQuery()->getResult();
+    	foreach ($productFeatureGroupDepartmentIds as $productFeatureGroupDepartmentId)
+    	{
+    		$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($productFeatureGroupDepartmentId['departmentId']);
+    		if ($departmentObject)
+    		{
+	    		$productFeatureGroupDepartment = array();
+	    		foreach (explode('|', $departmentObject->getDepartmentPath()) as $departmentPathId)
+	    		{
+		    		$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId, 'locale' => $locale));
+		    		if ($departmentDescriptionObject)
+		    		{
+			    		$productFeatureGroupDepartment[] = $departmentDescriptionObject->getName();
+		    		}
+	    		}
+	    		$productFeatureGroupDepartments[$productFeatureGroupDepartmentId['departmentId']] = implode(' > ', $productFeatureGroupDepartment);
+    		}
+    	}
+    	
+    	return $productFeatureGroupDepartments;
+	}
+	
 	// Get the product feature groups
     public function getProductFeatureGroups($id, $locale = 'en')
     {
@@ -886,10 +921,10 @@ class DepartmentService {
     	
     	// Get the product feature groups
     	$brandIds = array();
-    	$productToDepartmentObjects = $em->createQuery("SELECT pi FROM WebIlluminationAdminBundle:ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%'")->getResult();
+    	$productToDepartmentObjects = $em->createQuery("SELECT pi.brandId FROM WebIlluminationAdminBundle:ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%'")->getResult();
     	foreach ($productToDepartmentObjects as $productToDepartmentObject)
     	{
-    		$brandIds[] = $productToDepartmentObject->getBrandId();
+    		$brandIds[] = $productToDepartmentObject['brandId'];
     	}
     	if (sizeof($brandIds) > 0)
     	{
@@ -993,8 +1028,49 @@ class DepartmentService {
 					$departmentToFeatureObject->setDepartmentId($id);
 					$departmentToFeatureObject->setProductFeatureGroupId($productFeatureGroupId);
 					$departmentToFeatureObject->setDefaultProductFeatureId(0);
+					$departmentToFeatureObject->setDisplayOnFilter(0);
+					$departmentToFeatureObject->setDisplayOnListing(0);
+	    			$departmentToFeatureObject->setDisplayOnProduct(1);
 	    			$departmentToFeatureObject->setDisplayOrder(1);
 	    			$em->persist($departmentToFeatureObject);
+	    			$em->flush();
+	    			$productFeaturesAdded++;
+	    		}
+			}
+		}
+		
+		return $productFeaturesAdded;
+	}
+	
+	// Get the product feature groups from a department
+	public function getProductFeatureGroupsFromDepartment($id, $departmentId, $locale = 'en')
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the product feature groups
+		$productFeaturesAdded = 0;
+		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $departmentId));
+		if (sizeof($departmentToFeatureObjects) > 0)
+		{
+			foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
+			{
+				$departmentToFeatureCheckObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId()));
+				if (!$departmentToFeatureCheckObject)
+				{
+	    			$newDepartmentToFeatureObject = new DepartmentToFeature();
+					$newDepartmentToFeatureObject->setActive($departmentToFeatureObject->getActive());
+					$newDepartmentToFeatureObject->setDepartmentId($id);
+					$newDepartmentToFeatureObject->setProductFeatureGroupId($departmentToFeatureObject->getProductFeatureGroupId());
+					$newDepartmentToFeatureObject->setDefaultProductFeatureId($departmentToFeatureObject->getDefaultProductFeatureId());
+					$newDepartmentToFeatureObject->setDisplayOnFilter($departmentToFeatureObject->getDisplayOnFilter());
+					$newDepartmentToFeatureObject->setDisplayOnListing($departmentToFeatureObject->getDisplayOnListing());
+	    			$newDepartmentToFeatureObject->setDisplayOnProduct($departmentToFeatureObject->getDisplayOnProduct());
+	    			$newDepartmentToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
+	    			$em->persist($newDepartmentToFeatureObject);
 	    			$em->flush();
 	    			$productFeaturesAdded++;
 	    		}
@@ -1051,6 +1127,9 @@ class DepartmentService {
 					$departmentToFeatureObject->setDepartmentId($id);
 					$departmentToFeatureObject->setProductFeatureGroupId($productFeatureGroupId);
 					$departmentToFeatureObject->setDefaultProductFeatureId(0);
+					$departmentToFeatureObject->setDisplayOnFilter(0);
+					$departmentToFeatureObject->setDisplayOnListing(0);
+	    			$departmentToFeatureObject->setDisplayOnProduct(1);
 	    			$departmentToFeatureObject->setDisplayOrder(1);
 	    			$em->persist($departmentToFeatureObject);
 	    			$em->flush();
@@ -1060,6 +1139,110 @@ class DepartmentService {
 		}
 		
 		return $productFeaturesAdded;
+	}
+	
+	// Update the product delivery bands
+	public function updateProductDeliveryBands($id, $locale = 'en')
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	$productService = $this->container->get('web_illumination_admin.product_service');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+				
+		// Get the product indexes
+		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
+				
+		// Update the products
+		$count = 0;
+		foreach ($productToDepartmentObjects as $productToDepartmentObject)
+		{
+			// Update the delivery band
+			$count++;
+			$productService->updateProductDeliveryBand($productToDepartmentObject->getProductId(), $locale);
+			error_log('Updating product delivery band ('.$count.' of '.sizeof($productToDepartmentObject).'): '.$productToDepartmentObject->getProductId());
+		}
+
+	    return true;
+	}
+	
+	// Update the department delivery band
+	public function updateDepartmentDeliveryBand($id)
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	$productService = $this->container->get('web_illumination_admin.product_service');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+				
+		// Get the department objects
+		$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
+		$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id));
+				
+		// Update the departments
+		if ($departmentIndexObject)
+		{
+			// Set a default delivery band
+			$inheritedDeliveryBand = 6;
+			
+			// Check if the department already has a delivery band
+			if ($departmentIndexObject->getDeliveryBand() > 0)
+			{
+				$inheritedDeliveryBand = $departmentIndexObject->getDeliveryBand();
+			} else {
+				// Get the department ids
+				$departmentIds = array_reverse(explode('|', substr(substr($departmentIndexObject->getDepartmentPath(), 1), 0, -1)));
+				array_shift($departmentIds);
+				
+				// Update the department delivery bands
+				foreach ($departmentIds as $departmentId)
+				{
+					$departmentPathIndexObject =  $em->getRepository('WebIlluminationAdminBundle:Department')->find($departmentId);
+					if ($departmentPathIndexObject)
+					{
+						if ($departmentPathIndexObject->getDeliveryBand() > 0)
+						{
+							$inheritedDeliveryBand = $departmentPathIndexObject->getDeliveryBand();
+							break;
+						}
+					}
+				}
+			}
+			
+			// Update the delivery band
+			$departmentObject->setInheritedDeliveryBand($inheritedDeliveryBand);
+			$em->persist($departmentObject);
+			$em->flush();
+			$departmentIndexObject->setInheritedDeliveryBand($inheritedDeliveryBand);
+			$em->persist($departmentIndexObject);
+			$em->flush();
+		}
+
+	    return true;
+	}
+	
+	// Update the department delivery bands
+	public function updateDepartmentDeliveryBands($id)
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	$productService = $this->container->get('web_illumination_admin.product_service');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+				
+		// Get the department indexes
+		$departmentIndexObjects = $em->createQuery("SELECT di FROM WebIlluminationAdminBundle:DepartmentIndex di WHERE di.departmentPath LIKE '%|".$id."|%' AND di.departmentId != '".$id."' ORDER BY di.departmentPath ASC")->getResult();
+				
+		// Update the departments
+		foreach ($departmentIndexObjects as $departmentIndexObject)
+		{
+			$this->updateDepartmentDeliveryBand($departmentIndexObject->getDepartmentId());
+		}
+
+	    return true;
 	}
 	
 	// Get the page title template content
@@ -1145,68 +1328,68 @@ class DepartmentService {
 		// Get the department index
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
 		
-		// Get the products
-		$products = $this->getProducts($id, $locale);
+		// Get the product indexes
+		$productIndexObjects = $this->getProducts($id, $locale);
 		
-		// Get the page title template parts
-		$pageTitleTemplateParts = explode('^', $itemIndexObject->getPageTitleTemplate());
+		// Get the template parts
+		$templateParts = explode('^', $itemIndexObject->getPageTitleTemplate());
 		
 		// Get the previews
-		$pageTitleTemplateProductPreviews = array();
-		foreach ($products as $product)
+		$templatePreviews = array();
+		foreach ($productIndexObjects as $productIndexObject)
 		{
-			$pageTitleTemplateProductPreview = array();
-			foreach ($pageTitleTemplateParts as $pageTitleTemplatePart)
+			$templatePreview = array();
+			foreach ($templateParts as $templatePart)
 			{
-				switch ($pageTitleTemplatePart)
+				switch ($templatePart)
 				{
 					case 'brand':
-						if ($product->getBrand() != '')
+						if ($productIndexObject->getBrand() != '')
 						{
-							$pageTitleTemplateProductPreview[] = trim($product->getBrand());
+							$templatePreview[] = trim($productIndexObject->getBrand());
 						}
 						break;
 					case 'productCode':
-						if ($product->getProductCode() != '')
+						if ($productIndexObject->getProductCode() != '')
 						{
-							$pageTitleTemplateProductPreview[] = trim($product->getProductCode());
+							$templatePreview[] = trim($productIndexObject->getProductCode());
 						}
 						break;
 					case 'department':
 						if ($itemIndexObject->getName() != '')
 						{
-							$pageTitleTemplateProductPreview[] = trim($itemIndexObject->getName());
+							$templatePreview[] = trim($itemIndexObject->getName());
 						}
 						break;
 					case 'productExtraKeyword':
-						if ($product->getPrefix() != '')
+						if ($productIndexObject->getPrefix() != '')
 						{
-							$pageTitleTemplateProductPreview[] = trim($product->getPrefix());
+							$templatePreview[] = trim($productIndexObject->getPrefix());
 						}
 						break;
 					case 'keyMessage':
-						if ($product->getTagline() != '')
+						if ($productIndexObject->getTagline() != '')
 						{
-							$pageTitleTemplateProductPreview[] = trim($product->getTagline());
+							$templatePreview[] = trim($productIndexObject->getTagline());
 						}
 						break;
 					default:
-						$pageTitleTemplatePartParts = explode('|', $pageTitleTemplatePart);
-						$pageTitlePartName = false;
-						$pageTitlePartValue = false;
-						if (isset($pageTitleTemplatePartParts[0]))
+						$templatePartParts = explode('|', $templatePart);
+						$templatePartName = false;
+						$templatePartValue = false;
+						if (isset($templatePartParts[0]))
 						{
-							$pageTitlePartName = $pageTitleTemplatePartParts[0];
+							$templatePartName = $templatePartParts[0];
 						}
-						if (isset($pageTitleTemplatePartParts[1]))
+						if (isset($templatePartParts[1]))
 						{
-							$pageTitlePartValue = $pageTitleTemplatePartParts[1];
+							$templatePartValue = $templatePartParts[1];
 						}
-						if ($pageTitlePartName && $pageTitlePartValue)
+						if ($templatePartName && $templatePartValue)
 						{
-							if ($pageTitlePartName == 'productFeatureGroup')
+							if ($templatePartName == 'productFeatureGroup')
 							{
-								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $product->getProductId()));
+								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $product->getProductId()));
 								if ($productToFeatureObject)
 								{
 									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
@@ -1215,12 +1398,12 @@ class DepartmentService {
 										$productFeatureValue = $productFeatureObject->getProductFeature();
 										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
 										{
-											$pageTitleTemplateProductPreview[] = trim($pageTitlePartValue);
+											$templatePreview[] = trim($templatePartValue);
 										}
 									}
 								}
-							} elseif ($pageTitlePartName == 'freeText') {
-								$pageTitleTemplateProductPreview[] = trim($pageTitlePartValue);
+							} elseif ($templatePartName == 'freeText') {
+								$templatePreview[] = trim($templatePartValue);
 							}
 						}
 						break;
@@ -1230,6 +1413,120 @@ class DepartmentService {
 		}
 
 	    return $pageTitleTemplateProductPreviews;
+	}
+	
+	// Update the product page titles
+	public function updateProductPageTitles($id, $locale = 'en')
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the department index
+		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		
+		// Get the product indexes
+		$productIndexObjects = $this->getProducts($id, $locale);
+		
+		// Get the template parts
+		$templateParts = explode('^', $itemIndexObject->getPageTitleTemplate());
+		
+		// Get the previews
+		$templatePreviews = array();
+		foreach ($productIndexObjects as $productIndexObject)
+		{
+			$templatePreview = array();
+			foreach ($templateParts as $templatePart)
+			{
+				switch ($templatePart)
+				{
+					case 'brand':
+						if ($productIndexObject->getBrand() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getBrand());
+						}
+						break;
+					case 'productCode':
+						if ($productIndexObject->getProductCode() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getProductCode());
+						}
+						break;
+					case 'department':
+						if ($itemIndexObject->getName() != '')
+						{
+							$templatePreview[] = trim($itemIndexObject->getName());
+						}
+						break;
+					case 'productExtraKeyword':
+						if ($productIndexObject->getPrefix() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getPrefix());
+						}
+						break;
+					case 'keyMessage':
+						if ($productIndexObject->getTagline() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getTagline());
+						}
+						break;
+					default:
+						$templatePartParts = explode('|', $templatePart);
+						$templatePartName = false;
+						$templatePartValue = false;
+						if (isset($templatePartParts[0]))
+						{
+							$templatePartName = $templatePartParts[0];
+						}
+						if (isset($templatePartParts[1]))
+						{
+							$templatePartValue = $templatePartParts[1];
+						}
+						if ($templatePartName && $templatePartValue)
+						{
+							if ($templatePartName == 'productFeatureGroup')
+							{
+								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $product->getProductId()));
+								if ($productToFeatureObject)
+								{
+									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
+									if ($productFeatureObject)
+									{
+										$productFeatureValue = $productFeatureObject->getProductFeature();
+										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
+										{
+											$templatePreview[] = trim($templatePartValue);
+										}
+									}
+								}
+							} elseif ($templatePartName == 'freeText') {
+								$templatePreview[] = trim($templatePartValue);
+							}
+						}
+						break;
+				}
+			}
+			
+			// Check if an update is required
+			$templatePreview = implode(' ', $templatePreview);
+			if ($productIndexObject->getPageTitle() != $templatePreview)
+			{
+				$productIndexObject->setPageTitle($templatePreviews);
+				$em->persist($productIndexObject);
+				$em->flush();
+				$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
+				if ($productDescriptionObject)
+				{
+					$productDescriptionObject->setPageTitle($templatePreviews);
+					$em->persist($productDescriptionObject);
+					$em->flush();
+				}
+			}
+		}
+
+	    return true;
 	}
 	
 	// Get the meta description template content
@@ -1401,9 +1698,11 @@ class DepartmentService {
 		$departmentIndexObject->setMembershipCardDiscountAvailable($departmentObject->getMembershipCardDiscountAvailable());
 		$departmentIndexObject->setMaximumMembershipCardDiscount($departmentObject->getMaximumMembershipCardDiscount());
 		$departmentIndexObject->setDeliveryBand($departmentObject->getDeliveryBand());
+		$departmentIndexObject->setInheritedDeliveryBand($departmentObject->getInheritedDeliveryBand());
 		$departmentIndexObject->setCheckDeliveryBand($departmentObject->getCheckDeliveryBand());
 		$departmentIndexObject->setDisplayOrder($departmentObject->getDisplayOrder());
     	$departmentIndexObject->setLocale($locale);
+    	$departmentIndexObject->setDeliveryBandNotes($departmentDescriptionObject->getDeliveryBandNotes());
 		$departmentIndexObject->setName($departmentDescriptionObject->getName());
 		$departmentIndexObject->setGoogleDepartment($departmentDescriptionObject->getGoogleDepartment());
 		$departmentIndexObject->setEbayDepartment($departmentDescriptionObject->getEbayDepartment());

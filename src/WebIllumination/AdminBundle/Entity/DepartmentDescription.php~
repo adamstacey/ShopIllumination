@@ -28,6 +28,11 @@ class DepartmentDescription
     private $locale;
     
     /**
+     * @ORM\Column(name="delivery_band_notes", type="text")
+     */
+    private $deliveryBandNotes;
+    
+    /**
      * @ORM\Column(name="name", type="string", length="255")
      */
     private $name;
@@ -427,6 +432,26 @@ class DepartmentDescription
     public function getAmazonDepartment()
     {
         return $this->amazonDepartment;
+    }
+
+    /**
+     * Set deliveryBandNotes
+     *
+     * @param text $deliveryBandNotes
+     */
+    public function setDeliveryBandNotes($deliveryBandNotes)
+    {
+        $this->deliveryBandNotes = $deliveryBandNotes;
+    }
+
+    /**
+     * Get deliveryBandNotes
+     *
+     * @return text 
+     */
+    public function getDeliveryBandNotes()
+    {
+        return $this->deliveryBandNotes;
     }
 
     /**

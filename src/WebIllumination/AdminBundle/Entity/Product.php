@@ -148,6 +148,11 @@ class Product
     private $deliveryBand;
     
     /**
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     */
+    private $inheritedDeliveryBand;
+    
+    /**
      * @ORM\Column(name="delivery_cost", type="decimal", precision="12", scale="4")
      */
     private $deliveryCost;
@@ -888,5 +893,25 @@ class Product
     public function getProductGroupCode()
     {
         return $this->productGroupCode;
+    }
+
+    /**
+     * Set inheritedDeliveryBand
+     *
+     * @param decimal $inheritedDeliveryBand
+     */
+    public function setInheritedDeliveryBand($inheritedDeliveryBand)
+    {
+        $this->inheritedDeliveryBand = $inheritedDeliveryBand;
+    }
+
+    /**
+     * Get inheritedDeliveryBand
+     *
+     * @return decimal 
+     */
+    public function getInheritedDeliveryBand()
+    {
+        return $this->inheritedDeliveryBand;
     }
 }

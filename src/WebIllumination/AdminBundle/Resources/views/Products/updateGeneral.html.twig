@@ -46,14 +46,19 @@
     </div>
     <div class="clearfix">
         <label for="form-delivery-band" class="form-label"><em>*</em> Delivery Band<small>Select the delivery band</small></label>
-        <div class="form-input">
+        <div class="form-input{% if data.product.deliveryBand|number_format(0) == 0 %} red{% endif %}">
 	        <select id="form-delivery-band" required="required" data-message="Please select the delivery band.">
-		        <option value="1"{% if (data.product.deliveryBand == 1) %} selected="selected"{% endif %}>Delivery Band 1</option>
-		        <option value="2"{% if (data.product.deliveryBand == 2) %} selected="selected"{% endif %}>Delivery Band 2</option>
-		        <option value="3"{% if (data.product.deliveryBand == 3) %} selected="selected"{% endif %}>Delivery Band 3</option>
-		        <option value="4"{% if (data.product.deliveryBand == 4) %} selected="selected"{% endif %}>Delivery Band 4</option>
-		        <option value="5"{% if (data.product.deliveryBand == 5) or (data.product.deliveryBand < 1) %} selected="selected"{% endif %}>Delivery Band 5</option>
+		        <option value="0"{% if (data.product.deliveryBand|number_format(0) == 0) %} selected="selected"{% endif %}>- Not Set -</option>
+		        <option value="1"{% if (data.product.deliveryBand|number_format(0) == 1) %} selected="selected"{% endif %}>Band 1</option>
+		        <option value="2"{% if (data.product.deliveryBand|number_format(0) == 2) %} selected="selected"{% endif %}>Band 2</option>
+		        <option value="3"{% if (data.product.deliveryBand|number_format(0) == 3) %} selected="selected"{% endif %}>Band 3</option>
+		        <option value="4"{% if (data.product.deliveryBand|number_format(0) == 4) %} selected="selected"{% endif %}>Band 4</option>
+		        <option value="5"{% if (data.product.deliveryBand|number_format(0) == 5) %} selected="selected"{% endif %}>Band 5</option>
+		        <option value="6"{% if (data.product.deliveryBand|number_format(0) == 6) %} selected="selected"{% endif %}>Band 6</option>
 	        </select>
+	        {% if data.product.deliveryBand == 0 %}
+	        	(Band: {{ data.product.inheritedDeliveryBand|number_format(0) }})
+	        {% endif %}
         </div>
     </div>
     <div class="clearfix">

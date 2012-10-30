@@ -26,21 +26,52 @@ admin_bugs_delete:
     defaults:  { _controller: WebIlluminationAdminBundle:Bugs:delete, id: 0 }
     
 # Orders
-admin_ordersnew:
-    pattern:   /admin/ordersnew
-    defaults:  { _controller: WebIlluminationAdminBundle:Ordersnew:index }
-admin_ordersnew_update_listing:
-    pattern:   /admin/ordersnew/updateListing
-    defaults:  { _controller: WebIlluminationAdminBundle:Ordersnew:updateListing }
-admin_ordersnew_add:
-    pattern:   /admin/ordersnew/add
-    defaults:  { _controller: WebIlluminationAdminBundle:Ordersnew:add }
-admin_ordersnew_update:
-    pattern:   /admin/ordersnew/update/{id}
-    defaults:  { _controller: WebIlluminationAdminBundle:Ordersnew:update, id: 0 }
-admin_ordersnew_delete:
-    pattern:   /admin/ordersnew/delete/{id}
-    defaults:  { _controller: WebIlluminationAdminBundle:Ordersnew:delete, id: 0 }
+admin_orders:
+    pattern:   /admin/orrders
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:index }
+admin_orders_update_listing:
+    pattern:   /admin/orrders/updateListing
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateListing }
+admin_orders_process_deliveries:
+    pattern:   /admin/orrders/processDeliveries
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:processDeliveries }
+admin_orders_import_tracking:
+    pattern:   /admin/orrders/importTracking
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:importTracking }
+admin_orders_add:
+    pattern:   /admin/orrders/add
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:add }
+admin_orders_update:
+    pattern:   /admin/orrders/update/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:update, id: 0 }
+admin_orders_update_payment:
+    pattern:   /admin/orrders/updatePayment/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updatePayment, id: 0 }
+admin_orders_update_delivery:
+    pattern:   /admin/orrders/updateDelivery/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateDelivery, id: 0 }
+admin_orders_update_products:
+    pattern:   /admin/orrders/updateProducts/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateProducts, id: 0 }
+admin_orders_update_notes:
+    pattern:   /admin/orrders/updateNotes/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateNotes, id: 0 }
+admin_orders_delete:
+    pattern:   /admin/orrders/delete/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:delete, id: 0 }
+admin_orders_view_copy_order:
+    pattern:  /admin/orrders/viewCopyOrder/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewCopyOrder, id: 0 }
+admin_orders_view_delivery_note:
+    pattern:  /admin/orrders/viewDeliveryNote/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewDeliveryNote, id: 0 }
+admin_orders_view_invoice:
+    pattern:  /admin/orrders/viewInvoice/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewInvoice, id: 0 }
+admin_orders_view_order:
+    pattern:  /admin/orrders/viewOrder/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewOrder, id: 0 }
+
     
 # Departments
 admin_departments:
@@ -82,6 +113,47 @@ admin_departments_update_search_engine_optimisation:
 admin_departments_delete:
     pattern:   /admin/departments/delete/{id}
     defaults:  { _controller: WebIlluminationAdminBundle:Departments:delete, id: 0 }
+    
+# Prroducts
+admin_prroducts:
+    pattern:   /admin/prroducts
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:index }
+admin_prroducts_update_listing:
+    pattern:   /admin/prroducts/updateListing
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateListing }
+admin_prroducts_add:
+    pattern:   /admin/prroducts/add/department/{parentId}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:add, parentId: 0 }
+admin_prroducts_update:
+    pattern:   /admin/prroducts/update/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:update, id: 0 }
+admin_prroducts_update_settings:
+    pattern:   /admin/prroducts/updateSettings/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateSettings, id: 0 }
+admin_prroducts_update_product_features:
+    pattern:   /admin/prroducts/updateProductFeatures/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateProductFeatures, id: 0 }
+admin_prroducts_update_delivery:
+    pattern:   /admin/prroducts/updateDelivery/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateDelivery, id: 0 }
+admin_prroducts_update_rules:
+    pattern:   /admin/prroducts/updateRules/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateRules, id: 0 }
+admin_prroducts_update_images:
+    pattern:   /admin/prroducts/updateImages/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateImges, id: 0 }
+admin_prroducts_update_guarantees:
+    pattern:   /admin/prroducts/updateGuarantees/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateGuarantees, id: 0 }
+admin_prroducts_update_redirects:
+    pattern:   /admin/prroducts/updateRedirects/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateRedirects, id: 0 }
+admin_prroducts_update_search_engine_optimisation:
+    pattern:   /admin/prroducts/updateSearchEngineOptimisation/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateSearchEngineOptimisation, id: 0 }
+admin_prroducts_delete:
+    pattern:   /admin/prroducts/delete/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:delete, id: 0 }
     
 # Security
 admin_security:

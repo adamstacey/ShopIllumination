@@ -23,7 +23,7 @@
 			<th class="ac">&nbsp;</th>
 		</tr>
 		{% for product in basket.products %}
-			<tr>
+			<tr{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="red"{% endif %}>
 				<td>
 					<a class="uppercase" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header }}</a>
 					{% if product.selectedOptionLabels|length > 0 %}
@@ -53,6 +53,17 @@
 				<td class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
 				<td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
 			</tr>
+			{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %}
+				<tr>
+					<td colspan="8">
+						<div class="info-message ui-status-highlight no-margin">
+							<span class="info-message-icon ui-icon ui-icon-info"></span>
+							<p>Sorry, we are currently unable to deliver large worktop products to your selected delivery area. We can deliver all our other products to your selected delivery area. Please remove products highlighted in <span clas="red">RED</span> to continue with your order for delivery.</p>
+							<div class="clear"></div>
+						</div>
+					</td>
+				</tr>
+			{% endif %}
 		{% endfor %}
 		{% if basket.membershipCardNumber == 1 %}
 			<tr>

@@ -63,7 +63,12 @@ class DepartmentIndex
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="check_delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     */
+    private $inheritedDeliveryBand;
+    
+    /**
+     * @ORM\Column(name="check_delivery_band", type="integer", length="1")
      */
     private $checkDeliveryBand;
     
@@ -76,6 +81,11 @@ class DepartmentIndex
      * @ORM\Column(name="locale", type="string", length="2")
      */
     private $locale;
+    
+    /**
+     * @ORM\Column(name="delivery_band_notes", type="text")
+     */
+    private $deliveryBandNotes;
     
     /**
      * @ORM\Column(name="name", type="string", length="255")
@@ -709,9 +719,29 @@ class DepartmentIndex
     }
 
     /**
+     * Set inheritedDeliveryBand
+     *
+     * @param decimal $inheritedDeliveryBand
+     */
+    public function setInheritedDeliveryBand($inheritedDeliveryBand)
+    {
+        $this->inheritedDeliveryBand = $inheritedDeliveryBand;
+    }
+
+    /**
+     * Get inheritedDeliveryBand
+     *
+     * @return decimal 
+     */
+    public function getInheritedDeliveryBand()
+    {
+        return $this->inheritedDeliveryBand;
+    }
+
+    /**
      * Set checkDeliveryBand
      *
-     * @param decimal $checkDeliveryBand
+     * @param integer $checkDeliveryBand
      */
     public function setCheckDeliveryBand($checkDeliveryBand)
     {
@@ -721,11 +751,31 @@ class DepartmentIndex
     /**
      * Get checkDeliveryBand
      *
-     * @return decimal 
+     * @return integer 
      */
     public function getCheckDeliveryBand()
     {
         return $this->checkDeliveryBand;
+    }
+
+    /**
+     * Set deliveryBandNotes
+     *
+     * @param text $deliveryBandNotes
+     */
+    public function setDeliveryBandNotes($deliveryBandNotes)
+    {
+        $this->deliveryBandNotes = $deliveryBandNotes;
+    }
+
+    /**
+     * Get deliveryBandNotes
+     *
+     * @return text 
+     */
+    public function getDeliveryBandNotes()
+    {
+        return $this->deliveryBandNotes;
     }
 
     /**

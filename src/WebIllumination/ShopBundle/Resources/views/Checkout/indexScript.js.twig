@@ -275,16 +275,28 @@
 		}});
 		                		
 		{# Set the datepicker up #}
-		$("#form-requested-delivery-date").datepicker({
-			dateFormat: "DD d MM yy",
-			changeMonth: true,
-			changeYear: true,
-			minDate: new Date("{{ basket.estimatedDeliveryDays.requestedDeliveryDateStart }}"),
-			beforeShowDay: function(date) {
-				var day = date.getDay(); 
-				return [day == 1, ""];
-			}
-		});
+		{% if basket.estimatedDeliveryDays.requestedDeliveryDateStart is defined %}
+			$("#form-requested-delivery-date").datepicker({
+				dateFormat: "DD d MM yy",
+				changeMonth: true,
+				changeYear: true,
+				minDate: new Date("{{ basket.estimatedDeliveryDays.requestedDeliveryDateStart }}"),
+				beforeShowDay: function(date) {
+					var day = date.getDay(); 
+					return [day == 1, ""];
+				}
+			});
+		{% else %}
+			$("#form-requested-delivery-date").datepicker({
+				dateFormat: "DD d MM yy",
+				changeMonth: true,
+				changeYear: true,
+				beforeShowDay: function(date) {
+					var day = date.getDay(); 
+					return [day == 1, ""];
+				}
+			});
+		{% endif %}
 		
 		{# Get the order information #}
 		getOrderInformation();

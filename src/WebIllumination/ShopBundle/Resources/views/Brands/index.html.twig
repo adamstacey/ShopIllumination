@@ -37,7 +37,7 @@
 		<div class="grid_2">
 			<div class="portlet">
 				<section>
-					<h3 class="no-margin-top">{{ brand.brand }} Departments</h3>
+					<h3 class="no-margin-top">Departments</h3>
 					{% if brand.departments|length > 0 %}
 						<ul class="brand-department">
 							{% for department in brand.departments %}
@@ -45,7 +45,7 @@
 							{% endfor %}
 						</ul>
 					{% else %}
-						<p>There are currently no dpeartments available for {{ brand.brand }}.</p>
+						<p>There are currently no departments available for {{ brand.brand }}.</p>
 					{% endif %}
 					<div class="clear"></div>
 				</section>

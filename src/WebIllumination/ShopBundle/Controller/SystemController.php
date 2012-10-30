@@ -241,7 +241,38 @@ class SystemController extends Controller
    					return $this->forward('WebIlluminationShopBundle:Departments:index', array('id' => $routingObject->getObjectId(), 'url' => $url, 'brand' => $brand, 'group' => $group));
    					break;
    				case 'product':
-   					return $this->forward('WebIlluminationShopBundle:Products:index', array('id' => $routingObject->getObjectId()));
+   					// Check the status of the product
+   					$productIndexObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $routingObject->getObjectId(), 'locale' => 'en'));
+   					if ($productIndexObject)
+   					{
+	   					if ($productIndexObject->getStatus() == 'a')
+	   					{
+		   					return $this->forward('WebIlluminationShopBundle:Products:index', array('id' => $routingObject->getObjectId()));		
+	   					} else {
+	   						$productToDepartmentObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findOneBy(array('productId' => $routingObject->getObjectId(), 'displayOrder' => '1'));
+	   						$departmentRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $productToDepartmentObject->getDepartmentId(), 'objectType' => 'department', 'locale' => 'en'));
+	   						if ($productToDepartmentObject && $departmentRoutingObject)
+	   						{
+		   						return $this->forward('WebIlluminationShopBundle:Departments:index', array('id' => $productToDepartmentObject->getDepartmentId(), 'url' => $departmentRoutingObject->getUrl(), 'brand' => 0, 'group' => 0));
+	   						} else {
+		   						$search = $seoService->generateUrl($url);
+						   		$searchObjects = explode('-', $search);
+						   		if (sizeof($searchObjects) > 3)
+						   		{
+							   		$search = $searchObjects[sizeof($searchObjects) - 3].'-'.$searchObjects[sizeof($searchObjects) - 2].'-'.$searchObjects[sizeof($searchObjects) - 1];
+						   		}
+						   		return $this->forward('WebIlluminationShopBundle:Products:productSearch', array('search' => $search));
+	   						}
+	   					}
+   					} else {
+	   					$search = $seoService->generateUrl($url);
+				   		$searchObjects = explode('-', $search);
+				   		if (sizeof($searchObjects) > 3)
+				   		{
+					   		$search = $searchObjects[sizeof($searchObjects) - 3].'-'.$searchObjects[sizeof($searchObjects) - 2].'-'.$searchObjects[sizeof($searchObjects) - 1];
+				   		}
+				   		return $this->forward('WebIlluminationShopBundle:Products:productSearch', array('search' => $search));
+   					}
    					break;
    			}
    		}

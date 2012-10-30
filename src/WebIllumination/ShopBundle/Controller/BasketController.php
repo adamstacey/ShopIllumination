@@ -305,7 +305,7 @@ class BasketController extends Controller
     		$newProduct['brand'] = $product['brand'];
     		$newProduct['shortDescription'] = $product['shortDescription'];
     		$newProduct['weight'] = $product['weight'];
-    		$newProduct['deliveryBand'] = $product['deliveryBand'];
+    		$newProduct['deliveryBand'] = $product['inheritedDeliveryBand'];
     		$newProduct['quantity'] = $quantity;
     		$newProduct['unitCost'] = $price;
     		$newProduct['recommendedRetailPrice'] = $recommendedRetailPrice;

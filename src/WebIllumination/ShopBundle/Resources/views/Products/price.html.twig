@@ -1,23 +1,12 @@
-<p class="ar product-code uppercase">{% spaceless %}
-	{% if url != '' %}
-		<a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': url}) }}">
-	{% endif %}
-	CODE: <strong>{{ productCode }}</strong>
-	{% if url != '' %}
-		</a>
-	{% endif %}
-{% endspaceless %}</p>
 <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-	<p class="ar product-was-price uppercase">{% spaceless %}
-		{% if (recommendedRetailPrice > listPrice) and (hidePrice == 0) %}
+	{% if (recommendedRetailPrice > listPrice) and (hidePrice == 0) %}
+		<p class="ar product-was-price uppercase">{% spaceless %}
 			was&nbsp;<span>&pound;{{ recommendedRetailPrice|number_format(2) }}</span>
 			{% if savings > 0 %}
 				&nbsp;save &pound;{{ savings|number_format(2) }}
 			{% endif %}
-		{% else %}
-			&nbsp;
-		{% endif %}
-	{% endspaceless %}</p>
+		{% endspaceless %}</p>
+	{% endif %}
 	<p class="ar product-price uppercase">{% spaceless %}
 		{% if hidePrice == 0 %}
 			{% if url != '' %}

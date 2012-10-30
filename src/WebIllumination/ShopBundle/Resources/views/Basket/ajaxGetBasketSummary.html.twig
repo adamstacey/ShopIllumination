@@ -1,6 +1,6 @@
 <p class="fl">Items: <strong>{{ basket.totals.items }}</strong><br />Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
 {% if basket.totals.items > 0 %}
-	<a title="Go to checkout" href="{{ path('checkout_secure_checkout') }}" class="button ui-button-green">Pay Now</a>
+	{% if basket.delivery.service != '' %}<a title="Go to checkout" href="{{ path('checkout_secure_checkout') }}" class="button ui-button-green">Pay Now</a>{% endif %}
 	<a title="View your basket" href="{{ path('basket_your_basket') }}" class="button ui-button-blue">View</a>
 {% endif %}
 <script defer="defer" type="text/javascript">

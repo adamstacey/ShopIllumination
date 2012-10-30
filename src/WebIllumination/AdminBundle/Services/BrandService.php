@@ -5,6 +5,7 @@ namespace WebIllumination\AdminBundle\Services;
 use Symfony\Component\HttpFoundation\Request;
 use WebIllumination\AdminBundle\Entity\Routing;
 use WebIllumination\AdminBundle\Entity\BrandIndex;
+use WebIllumination\AdminBundle\Entity\ObjectIndex;
 
 class BrandService {
 
@@ -485,7 +486,7 @@ class BrandService {
 							$department = array();
 							$department['id'] = $departmentId;
 							$department['productCount'] = 1;
-							$department['name'] = $brand['brand'].' '.$departmentDescriptionObject->getName();
+							$department['name'] = $departmentDescriptionObject->getName();
 							$department['url'] = $routingObject->getUrl();
 							$departments[$departmentId] = $department;
 						}

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="product_index")
+ * @ORM\Table(name="product_index", indexes={@ORM\index(name="search_idx", columns={"status", "available_for_purchase", "hide_price", "show_price_out_of_hours", "page_title", "list_price", "brand_id", "locale", "currency_code", "product_group_id"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class ProductIndex
@@ -77,10 +78,30 @@ class ProductIndex
      */
     private $productGroupCode;
     
+    /**
+     * @ORM\Column(name="additional_product_colours_count", type="integer", length="11")
+     */
+    private $additionalProductColoursCount;
+    
+    /**
+     * @ORM\Column(name="additional_products_count", type="integer", length="11")
+     */
+    private $additionalProductsCount;
+    
 	/**
      * @ORM\Column(name="alternative_product_codes", type="text")
      */
     private $alternativeProductCodes;
+    
+    /**
+     * @ORM\Column(name="cheaper_alternative_url", type="text")
+     */
+    private $cheaperAlternativeUrl;
+    
+    /**
+     * @ORM\Column(name="cheaper_alternative_price", type="decimal", precision="12", scale="4")
+     */
+    private $cheaperAlternativePrice;
         
     /**
      * @ORM\Column(name="short_description", type="text")
@@ -143,6 +164,11 @@ class ProductIndex
     private $deliveryBand;
     
     /**
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     */
+    private $inheritedDeliveryBand;
+    
+    /**
      * @ORM\Column(name="delivery_cost", type="decimal", precision="12", scale="4")
      */
     private $deliveryCost;
@@ -161,6 +187,21 @@ class ProductIndex
      * @ORM\Column(name="brand", type="string", length="255")
      */
     private $brand;
+    
+    /**
+     * @ORM\Column(name="brand_logo_thumbnail_path", type="text")
+     */
+    private $brandLogoThumbnailPath;
+    
+    /**
+     * @ORM\Column(name="brand_url", type="text")
+     */
+    private $brandUrl;
+    
+    /**
+     * @ORM\Column(name="guarantees", type="text")
+     */
+    private $guarantees;
     
     /**
      * @ORM\Column(name="department_ids", type="text")
@@ -203,22 +244,22 @@ class ProductIndex
     private $productFeatures;
     
     /**
-     * @ORM\Column(name="original_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="original_path", type="text", nullable="TRUE")
      */
     private $originalPath;
     
     /**
-     * @ORM\Column(name="thumbnail_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="thumbnail_path", type="text", nullable="TRUE")
      */
     private $thumbnailPath;
     
     /**
-     * @ORM\Column(name="medium_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="medium_path", type="text", nullable="TRUE")
      */
     private $mediumPath;
     
     /**
-     * @ORM\Column(name="large_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="large_path", type="text", nullable="TRUE")
      */
     private $largePath;
     
@@ -258,7 +299,7 @@ class ProductIndex
     private $currencyCode;
     
     /**
-     * @ORM\Column(name="url", type="string", length="255")
+     * @ORM\Column(name="url", type="text")
      */
     private $url;
     
@@ -1372,5 +1413,165 @@ class ProductIndex
     public function getPageTitle()
     {
         return $this->pageTitle;
+    }
+
+    /**
+     * Set additionalProductColoursCount
+     *
+     * @param integer $additionalProductColoursCount
+     */
+    public function setAdditionalProductColoursCount($additionalProductColoursCount)
+    {
+        $this->additionalProductColoursCount = $additionalProductColoursCount;
+    }
+
+    /**
+     * Get additionalProductColoursCount
+     *
+     * @return integer 
+     */
+    public function getAdditionalProductColoursCount()
+    {
+        return $this->additionalProductColoursCount;
+    }
+
+    /**
+     * Set additionalProductsCount
+     *
+     * @param integer $additionalProductsCount
+     */
+    public function setAdditionalProductsCount($additionalProductsCount)
+    {
+        $this->additionalProductsCount = $additionalProductsCount;
+    }
+
+    /**
+     * Get additionalProductsCount
+     *
+     * @return integer 
+     */
+    public function getAdditionalProductsCount()
+    {
+        return $this->additionalProductsCount;
+    }
+
+    /**
+     * Set cheaperAlternativeUrl
+     *
+     * @param text $cheaperAlternativeUrl
+     */
+    public function setCheaperAlternativeUrl($cheaperAlternativeUrl)
+    {
+        $this->cheaperAlternativeUrl = $cheaperAlternativeUrl;
+    }
+
+    /**
+     * Get cheaperAlternativeUrl
+     *
+     * @return text 
+     */
+    public function getCheaperAlternativeUrl()
+    {
+        return $this->cheaperAlternativeUrl;
+    }
+
+    /**
+     * Set cheaperAlternativePrice
+     *
+     * @param decimal $cheaperAlternativePrice
+     */
+    public function setCheaperAlternativePrice($cheaperAlternativePrice)
+    {
+        $this->cheaperAlternativePrice = $cheaperAlternativePrice;
+    }
+
+    /**
+     * Get cheaperAlternativePrice
+     *
+     * @return decimal 
+     */
+    public function getCheaperAlternativePrice()
+    {
+        return $this->cheaperAlternativePrice;
+    }
+
+    /**
+     * Set inheritedDeliveryBand
+     *
+     * @param decimal $inheritedDeliveryBand
+     */
+    public function setInheritedDeliveryBand($inheritedDeliveryBand)
+    {
+        $this->inheritedDeliveryBand = $inheritedDeliveryBand;
+    }
+
+    /**
+     * Get inheritedDeliveryBand
+     *
+     * @return decimal 
+     */
+    public function getInheritedDeliveryBand()
+    {
+        return $this->inheritedDeliveryBand;
+    }
+
+    /**
+     * Set brandLogoThumbnailPath
+     *
+     * @param text $brandLogoThumbnailPath
+     */
+    public function setBrandLogoThumbnailPath($brandLogoThumbnailPath)
+    {
+        $this->brandLogoThumbnailPath = $brandLogoThumbnailPath;
+    }
+
+    /**
+     * Get brandLogoThumbnailPath
+     *
+     * @return text 
+     */
+    public function getBrandLogoThumbnailPath()
+    {
+        return $this->brandLogoThumbnailPath;
+    }
+
+    /**
+     * Set brandUrl
+     *
+     * @param text $brandUrl
+     */
+    public function setBrandUrl($brandUrl)
+    {
+        $this->brandUrl = $brandUrl;
+    }
+
+    /**
+     * Get brandUrl
+     *
+     * @return text 
+     */
+    public function getBrandUrl()
+    {
+        return $this->brandUrl;
+    }
+
+    /**
+     * Set guarantees
+     *
+     * @param text $guarantees
+     */
+    public function setGuarantees($guarantees)
+    {
+        $this->guarantees = $guarantees;
+    }
+
+    /**
+     * Get guarantees
+     *
+     * @return text 
+     */
+    public function getGuarantees()
+    {
+        return $this->guarantees;
     }
 }

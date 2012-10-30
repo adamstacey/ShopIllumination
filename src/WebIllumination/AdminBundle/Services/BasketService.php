@@ -262,6 +262,9 @@ class BasketService {
 					case 5:
 						$weighting += (75000 * $product['quantity']);
 						break;
+					case 6:
+						$weighting += (75000000 * $product['quantity']);
+						break;
 				}
 			}
 		}
@@ -284,6 +287,9 @@ class BasketService {
 				case 5:
 					$weighting += 75000;
 					break;
+				case 6:
+					$weighting += 75000000;
+					break;
 			}
 		}
 		if ($weighting < 5)
@@ -295,8 +301,10 @@ class BasketService {
 			$band = 3;
 		} elseif (($weighting >= 75) && ($weighting < 75000)) {
 			$band = 4;
-		} elseif ($weighting >= 75000) {
+		} elseif (($weighting >= 75000) && ($weighting < 75000000)) {
 			$band = 5;
+		} elseif ($weighting >= 75000000) {
+			$band = 6;
 		}
 		$delivery['weighting'] = $weighting;
 		$delivery['weight'] = $weight;
@@ -386,18 +394,18 @@ class BasketService {
 				{
 					case 1:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Royal Mail 1st Class';
-						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
-						$deliveryOption['price'] = 3.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 1;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 4;
-						$deliveryOptions[] = $deliveryOption;
-						$deliveryOption = array();
 						$deliveryOption['service'] = 'Royal Mail Economy';
 						$deliveryOption['description'] = 'Small package sent recorded Economy by Royal Mail.';
 						$deliveryOption['price'] = 1.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
+						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Royal Mail 1st Class';
+						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
+						$deliveryOption['price'] = 3.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 1;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 4;
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 2:
@@ -442,6 +450,22 @@ class BasketService {
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 5:
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
+						$deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 0;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 1;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
+						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Home Delivery Service';
+						$deliveryOption['description'] = 'Goods sent home delivery service by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.';
+						$deliveryOption['price'] = 35.00;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 5;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 10;
+						$deliveryOptions[] = $deliveryOption;
+						break;
+					case 6:
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Home Delivery Service';
 						$deliveryOption['description'] = 'Goods sent home delivery service by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.';
@@ -451,24 +475,32 @@ class BasketService {
 						$deliveryOptions[] = $deliveryOption;
 						break;
 				}
+				// Include collection
+				$deliveryOption = array();
+				$deliveryOption['service'] = 'Collection';
+				$deliveryOption['description'] = 'You will need to collect your order from our shop in Nottingham. We will contact you as soon as your order is ready for collection.';
+				$deliveryOption['price'] = 0;
+				$deliveryOption['estimatedDeliveryDaysStart'] = 0;
+				$deliveryOption['estimatedDeliveryDaysEnd'] = 0;
+				$deliveryOptions[] = $deliveryOption;
 				break;
 			case 2:
 				switch ($band)
 				{
 					case 1:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Royal Mail 1st Class';
-						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
-						$deliveryOption['price'] = 3.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 1;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 4;
-						$deliveryOptions[] = $deliveryOption;
-						$deliveryOption = array();
 						$deliveryOption['service'] = 'Royal Mail Economy';
 						$deliveryOption['description'] = 'Small package sent recorded Economy by Royal Mail.';
 						$deliveryOption['price'] = 1.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
+						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Royal Mail 1st Class';
+						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
+						$deliveryOption['price'] = 3.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 1;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 4;
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 2:
@@ -513,6 +545,22 @@ class BasketService {
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 5:
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
+						$deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 0;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 1;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
+						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Home Delivery Service';
+						$deliveryOption['description'] = 'Goods sent home delivery service by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.';
+						$deliveryOption['price'] = 45;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 5;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 14;
+						$deliveryOptions[] = $deliveryOption;
+						break;
+					case 6:
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Home Delivery Service';
 						$deliveryOption['description'] = 'Goods sent home delivery service by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.';
@@ -528,28 +576,21 @@ class BasketService {
 				{
 					case 1:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Royal Mail 1st Class';
-						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
-						$deliveryOption['price'] = 4.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 5;
-						$deliveryOptions[] = $deliveryOption;
-						$deliveryOption = array();
 						$deliveryOption['service'] = 'Royal Mail Economy';
 						$deliveryOption['description'] = 'Small package sent recorded Economy by Royal Mail.';
 						$deliveryOption['price'] = 2.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 4;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 8;
 						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Royal Mail 1st Class';
+						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
+						$deliveryOption['price'] = 4.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 5;
+						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 2:
-						$deliveryOption = array();
-						$deliveryOption['service'] = 'Parcel Delivery Express';
-						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
-						$deliveryOption['price'] = 9.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
-						$deliveryOptions[] = $deliveryOption;
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Parcel Delivery Economy';
 						$deliveryOption['description'] = 'Package sent economy service by courier DPD.';
@@ -557,15 +598,15 @@ class BasketService {
 						$deliveryOption['estimatedDeliveryDaysStart'] = 5;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 8;
 						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Parcel Delivery Express';
+						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
+						$deliveryOption['price'] = 9.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
+						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 3:
-						$deliveryOption = array();
-						$deliveryOption['service'] = 'Pallet Delivery Express';
-						$deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
-						$deliveryOption['price'] = 39;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
-						$deliveryOptions[] = $deliveryOption;
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Pallet Delivery Economy';
 						$deliveryOption['description'] = 'Pallet sent Economy service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
@@ -573,8 +614,22 @@ class BasketService {
 						$deliveryOption['estimatedDeliveryDaysStart'] = 7;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
 						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Pallet Delivery Express';
+						$deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 39;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
+						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 4:
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Pallet Delivery Economy';
+						$deliveryOption['description'] = 'Pallet sent Economy service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 29.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 7;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+						$deliveryOptions[] = $deliveryOption;
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Pallet Delivery Express';
 						$deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
@@ -582,12 +637,14 @@ class BasketService {
 						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
 						$deliveryOptions[] = $deliveryOption;
+						break;
+					case 5:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Pallet Delivery Economy';
-						$deliveryOption['description'] = 'Pallet sent Economy service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
-						$deliveryOption['price'] = 29.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 7;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+						$deliveryOption['service'] = 'Pallet Delivery Express';
+						$deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 49;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
 						$deliveryOptions[] = $deliveryOption;
 						break;
 				}
@@ -597,34 +654,34 @@ class BasketService {
 				{
 					case 1:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Royal Mail 1st Class';
-						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
-						$deliveryOption['price'] = 7.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
-						$deliveryOptions[] = $deliveryOption;
-						$deliveryOption = array();
 						$deliveryOption['service'] = 'Royal Mail Economy';
 						$deliveryOption['description'] = 'Small package sent recorded Economy by Royal Mail.';
 						$deliveryOption['price'] = 3.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 5;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 9;
 						$deliveryOptions[] = $deliveryOption;
-						break;
-					case 2:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Parcel Delivery Express';
-						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
-						$deliveryOption['price'] = 9.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
+						$deliveryOption['service'] = 'Royal Mail 1st Class';
+						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
+						$deliveryOption['price'] = 7.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
 						$deliveryOptions[] = $deliveryOption;
+						break;
+					case 2:
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Parcel Delivery Economy';
 						$deliveryOption['description'] = 'Package sent economy service by courier DPD.';
 						$deliveryOption['price'] = 4.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 5;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 10;
+						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Parcel Delivery Express';
+						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
+						$deliveryOption['price'] = 9.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 2;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 3:
@@ -637,6 +694,15 @@ class BasketService {
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 4:
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Pallet Delivery Service';
+						$deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 69;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 4;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+						$deliveryOptions[] = $deliveryOption;
+						break;
+					case 5:
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Pallet Delivery Service';
 						$deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
@@ -652,34 +718,34 @@ class BasketService {
 				{
 					case 1:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Royal Mail 1st Class';
-						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
-						$deliveryOption['price'] = 7.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
-						$deliveryOptions[] = $deliveryOption;
-						$deliveryOption = array();
 						$deliveryOption['service'] = 'Royal Mail Economy';
 						$deliveryOption['description'] = 'Small package sent recorded Economy by Royal Mail.';
 						$deliveryOption['price'] = 3.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 5;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 10;
 						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Royal Mail 1st Class';
+						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
+						$deliveryOption['price'] = 7.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 6;
+						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 2:
-						$deliveryOption = array();
-						$deliveryOption['service'] = 'Parcel Delivery Express';
-						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
-						$deliveryOption['price'] = 15.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 8;
-						$deliveryOptions[] = $deliveryOption;
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Parcel Delivery Economy';
 						$deliveryOption['description'] = 'Package sent economy service by courier DPD.';
 						$deliveryOption['price'] = 7.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 7;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Parcel Delivery Express';
+						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
+						$deliveryOption['price'] = 15.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 8;
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 3:
@@ -700,6 +766,15 @@ class BasketService {
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
 						$deliveryOptions[] = $deliveryOption;
 						break;
+					case 5:
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Pallet Delivery Service';
+						$deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 89;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 4;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+						$deliveryOptions[] = $deliveryOption;
+						break;
 				}
 				break;
 			case 6:
@@ -707,34 +782,34 @@ class BasketService {
 				{
 					case 1:
 						$deliveryOption = array();
-						$deliveryOption['service'] = 'Royal Mail 1st Class';
-						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
-						$deliveryOption['price'] = 7.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
-						$deliveryOptions[] = $deliveryOption;
-						$deliveryOption = array();
 						$deliveryOption['service'] = 'Royal Mail Economy';
 						$deliveryOption['description'] = 'Small package sent recorded Economy by Royal Mail.';
 						$deliveryOption['price'] = 3.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 6;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
 						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Royal Mail 1st Class';
+						$deliveryOption['description'] = 'Small package sent recorded 1st Class by Royal Mail.';
+						$deliveryOption['price'] = 7.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 7;
+						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 2:
-						$deliveryOption = array();
-						$deliveryOption['service'] = 'Parcel Delivery Express';
-						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
-						$deliveryOption['price'] = 15.95;
-						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
-						$deliveryOption['estimatedDeliveryDaysEnd'] = 8;
-						$deliveryOptions[] = $deliveryOption;
 						$deliveryOption = array();
 						$deliveryOption['service'] = 'Parcel Delivery Economy';
 						$deliveryOption['description'] = 'Package sent economy service by courier DPD.';
 						$deliveryOption['price'] = 7.95;
 						$deliveryOption['estimatedDeliveryDaysStart'] = 7;
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 12;
+						$deliveryOptions[] = $deliveryOption;
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Parcel Delivery Express';
+						$deliveryOption['description'] = 'Package sent express service by courier DPD.';
+						$deliveryOption['price'] = 15.95;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 3;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 8;
 						$deliveryOptions[] = $deliveryOption;
 						break;
 					case 3:
@@ -755,18 +830,18 @@ class BasketService {
 						$deliveryOption['estimatedDeliveryDaysEnd'] = 14;
 						$deliveryOptions[] = $deliveryOption;
 						break;
+					case 5:
+						$deliveryOption = array();
+						$deliveryOption['service'] = 'Pallet Delivery Service';
+						$deliveryOption['description'] = 'Pallet service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+						$deliveryOption['price'] = 149;
+						$deliveryOption['estimatedDeliveryDaysStart'] = 5;
+						$deliveryOption['estimatedDeliveryDaysEnd'] = 14;
+						$deliveryOptions[] = $deliveryOption;
+						break;
 				}
 				break;
 		}
-		
-		// Include collection
-		$deliveryOption = array();
-		$deliveryOption['service'] = 'Collection';
-		$deliveryOption['description'] = 'You will need to collect your order from our shop in Nottingham. We will contact you as soon as your order is ready for collection.';
-		$deliveryOption['price'] = 0;
-		$deliveryOption['estimatedDeliveryDaysStart'] = 0;
-		$deliveryOption['estimatedDeliveryDaysEnd'] = 0;
-		$deliveryOptions[] = $deliveryOption;
 		
 		// Add any surcharges to the delivery options
 		foreach ($deliveryOptions as $index => $deliveryOption)
@@ -1082,24 +1157,27 @@ class BasketService {
 			$totalCdaDiscount = 0;	
 			foreach ($basket['products'] as $product)
 			{
-				$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
-				if ($productIndexObject->getBrandId() == '7')
-				{
-					if ($numberOfCdaAppliances >= 3)
+	 			$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
+	 			if ($productIndexObject)
+	 			{
+					if ($productIndexObject->getBrandId() == '7')
 					{
-						$cdaDiscount = $productIndexObject->getListPrice() * 0.1;
-						if ($productIndexObject->getListPrice() < $productIndexObject->getRecommendedRetailPrice())
+						if ($numberOfCdaAppliances >= 3)
 						{
-							$basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $productIndexObject->getListPrice();
+							$cdaDiscount = $productIndexObject->getListPrice() * 0.1;
+							if ($productIndexObject->getListPrice() < $productIndexObject->getRecommendedRetailPrice())
+							{
+								$basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $productIndexObject->getListPrice();
+							}
+							$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice() - $cdaDiscount;
+							$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+							$totalDiscount += ($cdaDiscount * $product['quantity']);
+							$totalCdaDiscount += ($cdaDiscount * $product['quantity']);
+						} else {
+							$basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $productIndexObject->getRecommendedRetailPrice();
+							$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice();
+							$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
 						}
-						$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice() - $cdaDiscount;
-						$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-						$totalDiscount += ($cdaDiscount * $product['quantity']);
-						$totalCdaDiscount += ($cdaDiscount * $product['quantity']);
-					} else {
-						$basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $productIndexObject->getRecommendedRetailPrice();
-						$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice();
-						$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
 					}
 				}
 			}
