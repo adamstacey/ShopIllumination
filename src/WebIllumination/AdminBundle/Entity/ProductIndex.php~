@@ -1414,4 +1414,164 @@ class ProductIndex
     {
         return $this->pageTitle;
     }
+
+    /**
+     * Set additionalProductColoursCount
+     *
+     * @param integer $additionalProductColoursCount
+     */
+    public function setAdditionalProductColoursCount($additionalProductColoursCount)
+    {
+        $this->additionalProductColoursCount = $additionalProductColoursCount;
+    }
+
+    /**
+     * Get additionalProductColoursCount
+     *
+     * @return integer 
+     */
+    public function getAdditionalProductColoursCount()
+    {
+        return $this->additionalProductColoursCount;
+    }
+
+    /**
+     * Set additionalProductsCount
+     *
+     * @param integer $additionalProductsCount
+     */
+    public function setAdditionalProductsCount($additionalProductsCount)
+    {
+        $this->additionalProductsCount = $additionalProductsCount;
+    }
+
+    /**
+     * Get additionalProductsCount
+     *
+     * @return integer 
+     */
+    public function getAdditionalProductsCount()
+    {
+        return $this->additionalProductsCount;
+    }
+
+    /**
+     * Set cheaperAlternativeUrl
+     *
+     * @param text $cheaperAlternativeUrl
+     */
+    public function setCheaperAlternativeUrl($cheaperAlternativeUrl)
+    {
+        $this->cheaperAlternativeUrl = $cheaperAlternativeUrl;
+    }
+
+    /**
+     * Get cheaperAlternativeUrl
+     *
+     * @return text 
+     */
+    public function getCheaperAlternativeUrl()
+    {
+        return $this->cheaperAlternativeUrl;
+    }
+
+    /**
+     * Set cheaperAlternativePrice
+     *
+     * @param decimal $cheaperAlternativePrice
+     */
+    public function setCheaperAlternativePrice($cheaperAlternativePrice)
+    {
+        $this->cheaperAlternativePrice = $cheaperAlternativePrice;
+    }
+
+    /**
+     * Get cheaperAlternativePrice
+     *
+     * @return decimal 
+     */
+    public function getCheaperAlternativePrice()
+    {
+        return $this->cheaperAlternativePrice;
+    }
+
+    /**
+     * Set inheritedDeliveryBand
+     *
+     * @param decimal $inheritedDeliveryBand
+     */
+    public function setInheritedDeliveryBand($inheritedDeliveryBand)
+    {
+        $this->inheritedDeliveryBand = $inheritedDeliveryBand;
+    }
+
+    /**
+     * Get inheritedDeliveryBand
+     *
+     * @return decimal 
+     */
+    public function getInheritedDeliveryBand()
+    {
+        return $this->inheritedDeliveryBand;
+    }
+
+    /**
+     * Set brandLogoThumbnailPath
+     *
+     * @param text $brandLogoThumbnailPath
+     */
+    public function setBrandLogoThumbnailPath($brandLogoThumbnailPath)
+    {
+        $this->brandLogoThumbnailPath = $brandLogoThumbnailPath;
+    }
+
+    /**
+     * Get brandLogoThumbnailPath
+     *
+     * @return text 
+     */
+    public function getBrandLogoThumbnailPath()
+    {
+        return $this->brandLogoThumbnailPath;
+    }
+
+    /**
+     * Set brandUrl
+     *
+     * @param text $brandUrl
+     */
+    public function setBrandUrl($brandUrl)
+    {
+        $this->brandUrl = $brandUrl;
+    }
+
+    /**
+     * Get brandUrl
+     *
+     * @return text 
+     */
+    public function getBrandUrl()
+    {
+        return $this->brandUrl;
+    }
+
+    /**
+     * Set guarantees
+     *
+     * @param text $guarantees
+     */
+    public function setGuarantees($guarantees)
+    {
+        $this->guarantees = $guarantees;
+    }
+
+    /**
+     * Get guarantees
+     *
+     * @return text 
+     */
+    public function getGuarantees()
+    {
+        return $this->guarantees;
+    }
 }
