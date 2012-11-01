@@ -11,7 +11,7 @@
 {% endblock %}
 {% block header %}
 	{{ parent() }}
-	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':header.html.twig' with {'data': data} %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
 {% endblock %}
 {% block body %}
 	<section class="container_6 clearfix">
@@ -68,7 +68,7 @@
 					    <div class="form-element clearfix">
 					    	<span data-help-container="status" class="info-message-icon ui-icon ui-icon-help"></span>
 					        <label for="form-status" class="form-label"><em>*</em> Status</label>
-					        <div class="form-input {{ data.item.statusColour|default('yellow') }}">
+					        <div class="form-input {{ data.item.statusColour|default('orange') }}">
 						        <select id="form-status" name="status" required="required" data-message="Select a status">
 									<option{% if data.item is defined %}{% if data.item.status == 'a' %} selected="selected"{% endif %}{% endif %} value="a">Active</option>
 									<option{% if data.item is defined %}{% if data.item.status == 'h' %} selected="selected"{% endif %}{% else %} selected="selected"{% endif %} value="h">Hidden</option>
@@ -140,14 +140,14 @@
 					        <div id="float-buttons-content" class="float-buttons clearfix buttons">
 					        	{% if data.mode == 'update' %}
 					        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
-					        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-none ui-corner-tr ui-corner-br button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>			        		
-					        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Update &amp; Go Back</button>
-					        		<button id="button-update" type="submit" class="fr button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-check">Update</button>
+					        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>			        		
+					        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
+					        		<button id="button-update" type="submit" class="fr button ui-corner-left icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update</button>
 					        	{% elseif data.mode == 'add' %}
 						        	<input type="hidden" value="0" id="form-add-another" name="add-another" />
-						        	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" id="button-go-back" class="fr ui-corner-none ui-corner-tr ui-corner-br button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
-						        	<button id="button-add-another" type="submit" class="fr button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Add &amp; Add Another</button>
-						        	<button id="button-add" type="submit" class="fr button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-check">Add &amp; Go Back</button>
+						        	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" id="button-go-back" class="fr ui-corner-right icon-set-white button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+						        	<button id="button-add-another" type="submit" class="fr button ui-corner-none ui-button-green icon-set-white " data-icon-primary="ui-icon-circle-tick">Add &amp; Add Another</button>
+						        	<button id="button-add" type="submit" class="fr button ui-corner-left ui-button-green icon-set-white " data-icon-primary="ui-icon-circle-tick">Add &amp; Go Back</button>
 						        {% endif %}
 						    </div>
 						</div>

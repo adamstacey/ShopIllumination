@@ -12,5 +12,5 @@
 	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_redirects') %} class="current"{% endif %}><a class="navicon-set-white navicon-network" href="{{ path('admin_'~data.settings.multipleClass~'_update_redirects', {'id': data.item.departmentId}) }}">Redirects</a></li>
 	<li{% if (app.request.attributes.get('_route') == 'admin_'~data.settings.multipleClass~'_update_search_engine_optimisation') %} class="current"{% endif %}><a class="navicon-set-white navicon-magnifying-glass" href="{{ path('admin_'~data.settings.multipleClass~'_update_search_engine_optimisation', {'id': data.item.departmentId}) }}">SEO</a></li>
 {% else %}
-	<li class="current"><a class="navicon-set-white navicon-share" href="{{ path('admin_'~data.settings.multipleClass) }}">{{ data.settings.multipleTitle }}</a></li>
+	<li class="current"><a class="navicon-set-white navicon-tree-directory" href="{{ path('admin_'~data.settings.multipleClass) }}">{{ data.settings.multipleTitle }}</a></li>
 {% endif %}

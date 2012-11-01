@@ -1082,7 +1082,7 @@ button.ui-button-icons-only {
   padding: 6px;
 }
 .ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text {
-  padding: .4em;
+  padding: 6px;
   text-indent: -9999999px;
 }
 .ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text {
