@@ -1598,6 +1598,7 @@ class ProductService {
     	if (sizeof($product['cheaperAlternatives']) > 0)
     	{
     		$cheaperAlternativePrice = 999999;
+    		$cheaperAlternativeUrl = '';
     		foreach ($product['cheaperAlternatives'] as $cheaperAlternative)
     		{
     			if ($cheaperAlternative)
@@ -1605,15 +1606,18 @@ class ProductService {
 		    		if ($cheaperAlternative->getListPrice() < $cheaperAlternativePrice)
 		    		{
 			    		$cheaperAlternativePrice = $cheaperAlternative->getListPrice();
+			    		$cheaperAlternativeUrl = $cheaperAlternative->getUrl();
 		    		}
 		    	}
     		}
     		if ($cheaperAlternativePrice == 999999)
     		{
 	    		$cheaperAlternativePrice = 0;
+	    		$cheaperAlternativeUrl = '';
     		}
     	} else {
 	    	$cheaperAlternativePrice = 0;
+	    	$cheaperAlternativeUrl = '';
     	}
     	
     	// Update the product index
@@ -1635,8 +1639,8 @@ class ProductService {
 		$productIndexObject->setProductCode($product['productCode']);
 		$productIndexObject->setProductGroupCode($product['productGroupCode']);
 		$productIndexObject->setAlternativeProductCodes($product['alternativeProductCodes']);
-		$productIndexObject->setCheaperAlternativePrice(0);
-		$productIndexObject->setCheaperAlternativeUrl('');
+		$productIndexObject->setCheaperAlternativePrice($cheaperAlternativePrice);
+		$productIndexObject->setCheaperAlternativeUrl($cheaperAlternativeUrl);
 		$productIndexObject->setGuarantees('');
 		$productIndexObject->setShortDescription($product['shortDescription']);
 		$productIndexObject->setDescription($product['description']);
