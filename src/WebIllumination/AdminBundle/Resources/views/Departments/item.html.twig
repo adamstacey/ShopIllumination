@@ -146,7 +146,7 @@
 					        	{% elseif data.mode == 'add' %}
 						        	<input type="hidden" value="0" id="form-add-another" name="add-another" />
 						        	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" id="button-go-back" class="fr ui-corner-right icon-set-white button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
-						        	<button id="button-add-another" type="submit" class="fr button ui-corner-none ui-button-green icon-set-white " data-icon-primary="ui-icon-circle-tick">Add &amp; Add Another</button>
+						        	<button type="submit" class="fr button ui-corner-none ui-button-green icon-set-white " data-icon-primary="ui-icon-circle-tick">Add &amp; Update</button>
 						        	<button id="button-add" type="submit" class="fr button ui-corner-left ui-button-green icon-set-white " data-icon-primary="ui-icon-circle-tick">Add &amp; Go Back</button>
 						        {% endif %}
 						    </div>

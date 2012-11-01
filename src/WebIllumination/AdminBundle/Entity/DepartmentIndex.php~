@@ -291,7 +291,7 @@ class DepartmentIndex
     		case 'a':
     			return 'green';
     		case 'h':
-    			return 'yellow';
+    			return 'orange';
     		case 'd':
     			return 'red';
     	}

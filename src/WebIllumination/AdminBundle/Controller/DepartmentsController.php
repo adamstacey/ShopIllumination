@@ -534,7 +534,7 @@ class DepartmentsController extends Controller
     		{
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_add', array('parentId' => $parentId)));
     		} else {
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $parentId)));
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $object->getId())));
     		}
     	}
     	
