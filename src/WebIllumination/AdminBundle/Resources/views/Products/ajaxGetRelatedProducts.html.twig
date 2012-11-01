@@ -63,28 +63,28 @@
 										<input data-index="{{ loop.index }}" type="checkbox" class="related-product-select" id="form-related-product-select-{{ loop.index }}" value="1" />
 									</td>
 									<td class="no-padding-bottom">
-										<select id="form-product-link-id-{{ loop.index }}" class="product-link-id full">
+										<select id="form-product-link-for-related-product-id-{{ loop.index }}" class="product-link-id full">
 											<option value="">- Please Select -</option>
 											{% for product in products %}
-												<option{% if product.productId == relatedProduct.productLinkId %} selected="selected"{% endif %} value="{{ product.productId }}">({{ product.productCode }}) {{ product.header }} - {{ product.tagline }}</option>				
+												<option{% if product.productId == relatedProduct.productLinkId %} selected="selected"{% endif %} value="{{ product.productId }}">{{ product.pageTitle }}</option>				
 											{% endfor %}
 										</select>
 									</td>
 									<td width="1" rowspan="2">
 										<script type="text/javascript" defer="defer">
 											$(document).ready(function() {
-												$("#search-product-{{ loop.index }}").autocomplete({
+												$("#search-product-for-related-product-{{ loop.index }}").autocomplete({
 													source: products,
 													focus: function(event, ui) {
-														$("#search-product-{{ loop.index }}").val(ui.item.label);
-														$("#uniform-form-product-link-id-{{ loop.index }} span").html($("#form-product-link-id-{{ loop.index }} option[value='"+ui.item.value+"']").text());
-														$("#form-product-link-id-{{ loop.index }} option").removeAttr("selected");
-														$("#form-product-link-id-{{ loop.index }} option[value='"+ui.item.value+"']").attr("selected", "selected");
+														$("#search-product-for-related-product-{{ loop.index }}").val(ui.item.label);
+														$("#uniform-form-product-link-for-related-product-id-{{ loop.index }} span").html($("#form-product-link-for-related-product-id-{{ loop.index }} option[value='"+ui.item.value+"']").text());
+														$("#form-product-link-for-related-product-id-{{ loop.index }} option").removeAttr("selected");
+														$("#form-product-link-for-related-product-id-{{ loop.index }} option[value='"+ui.item.value+"']").attr("selected", "selected");
 														$("#form-related-product-requires-update-{{ loop.index }}").val("1");
 														return false;
 													},
 													select: function(event, ui) {
-														$("#search-product-{{ loop.index }}").val("");
+														$("#search-product-for-related-product-{{ loop.index }}").val("");
 														$("#form-related-product-requires-update-{{ loop.index }}").val("1");
 														return false;
 													}
@@ -100,7 +100,7 @@
 								<tr>
 									<td class="no-padding-top">
 										<div class="position-relative">
-											<input placeholder="Find a product&hellip;" type="text" id="search-product-{{ loop.index }}" class="embedded-icon no-margin full" value="" />
+											<input placeholder="Find a product&hellip;" type="text" id="search-product-for-related-product-{{ loop.index }}" class="embedded-icon no-margin full" value="" />
 											<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
 										</div>
 									</td>
@@ -120,28 +120,28 @@
 										<input data-index="1" type="checkbox" class="related-product-select" id="form-related-product-select-1" value="1" />
 									</td>
 									<td class="no-padding-bottom">
-										<select id="form-product-link-id-1" class="product-link-id full">
+										<select id="form-product-link-for-related-product-id-1" class="product-link-id full">
 											<option value="">- Please Select -</option>
 											{% for product in products %}
-												<option value="{{ product.productId }}">({{ product.productCode }}) {{ product.header }} - {{ product.tagline }}</option>				
+												<option value="{{ product.productId }}">{{ product.pageTitle }}</option>				
 											{% endfor %}
 										</select>
 									</td>
 									<td width="1" rowspan="2">
 										<script type="text/javascript" defer="defer">
 											$(document).ready(function() {
-												$("#search-product-1").autocomplete({
+												$("#search-product-for-related-product-1").autocomplete({
 													source: products,
 													focus: function(event, ui) {
-														$("#search-product-1").val(ui.item.label);
-														$("#uniform-form-product-link-id-1 span").html($("#form-product-link-id-1 option[value='"+ui.item.value+"']").text());
-														$("#form-product-link-id-1 option").removeAttr("selected");
-														$("#form-product-link-id-1 option[value='"+ui.item.value+"']").attr("selected", "selected");
+														$("#search-product-for-related-product-1").val(ui.item.label);
+														$("#uniform-form-product-link-for-related-product-id-1 span").html($("#form-product-link-for-related-product-id-1 option[value='"+ui.item.value+"']").text());
+														$("#form-product-link-for-related-product-id-1 option").removeAttr("selected");
+														$("#form-product-link-for-related-product-id-1 option[value='"+ui.item.value+"']").attr("selected", "selected");
 														$("#form-related-product-requires-update-1").val("1");
 														return false;
 													},
 													select: function(event, ui) {
-														$("#search-product-1").val("");
+														$("#search-product-for-related-product-1").val("");
 														$("#form-related-product-requires-update-1").val("1");
 														return false;
 													}
@@ -157,7 +157,7 @@
 								<tr>
 									<td class="no-padding-top">
 										<div class="position-relative">
-											<input placeholder="Find a product&hellip;" type="text" id="search-product-1" class="embedded-icon no-margin full" value="" />
+											<input placeholder="Find a product&hellip;" type="text" id="search-product-for-related-product-1" class="embedded-icon no-margin full" value="" />
 											<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
 										</div>
 									</td>

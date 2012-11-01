@@ -35,9 +35,6 @@ Icon?
 Thumbs.db
 
 app/cache/*
-app/config/config*
-app/config/parameters.ini
-app/config/security.yml
 app/logs/*
 web/bundles/*
 web/css/*

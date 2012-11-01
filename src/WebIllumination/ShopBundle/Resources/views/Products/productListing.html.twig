@@ -6,11 +6,11 @@
 	<h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.pageTitle|raw }}</a></h4>
 	<div class="product-information">
 		<p class="product-code uppercase">{% spaceless %}
-			{% if url != '' %}
-				<a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': url}) }}">
+			{% if product.url != '' %}
+				<a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': product.url}) }}">
 			{% endif %}
 			PRODUCT CODE: <strong>{{ product.productCode }}</strong>
-			{% if url != '' %}
+			{% if product.url != '' %}
 				</a>
 			{% endif %}
 		{% endspaceless %}</p>
@@ -43,14 +43,14 @@
 		{% include 'WebIlluminationShopBundle:Products:price.html.twig' with {'url': product.url, 'productCode': product.productCode, 'recommendedRetailPrice': product.recommendedRetailPrice, 'listPrice': product.listPrice, 'savings': product.savings, 'membershipCardPrice': product.membershipCardPrice, 'hidePrice': product.hidePrice} %}
 		<a href="{{ path('page_request', {'url': product.url}) }}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
 		{% include 'WebIlluminationShopBundle:Products:buyNow.html.twig' with {'product': product} %}
-		{% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') or (noAjax > 0) %}
+		{% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') %}
 			{% if not group %}
 				{% if product.productGroupCode %}
 					<!--<a href="{{ path('department_with_group', {'group': product.productGroupId, 'url': product.url}) }}" class="fr padding-right-5 small button ui-button-blue">View Other Colours or Options for this product</a>-->
 				{% endif %}
 			{% endif %}
 		{% endif %}
-		{% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') or (noAjax > 0) %}
+		{% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') %}
 			{% if product.cheaperAlternativePrice > 0 %}
 				<a href="{{ path('page_request', {'url': product.cheaperAlternativeUrl}) }}" class="cheaper-alternative-listing">Cheaper Alternative <strong>&pound;{{ product.cheaperAlternativePrice|number_format(0) }}</strong></a>
 			{% endif %}

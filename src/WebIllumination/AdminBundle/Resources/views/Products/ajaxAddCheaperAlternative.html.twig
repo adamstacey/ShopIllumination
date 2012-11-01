@@ -9,27 +9,28 @@
 					<input data-index="{{ id }}" type="checkbox" class="cheaper-alternative-select" id="form-cheaper-alternative-select-{{ id }}" value="1" />
 				</td>
 				<td class="no-padding-bottom">
-					<select id="form-product-link-id-{{ id }}" class="product-link-id full">
+					<select id="form-product-link-for-cheaper-alternative-id-{{ id }}" class="product-link-id full">
 						<option value="">- Please Select -</option>
 						{% for product in products %}
-							<option value="{{ product.productId }}">{{ product.header }}</option>				
+							<option value="{{ product.productId }}">{{ product.pageTitle }}</option>				
 						{% endfor %}
 					</select>
 				</td>
 				<td width="1" rowspan="2">
 					<script type="text/javascript" defer="defer">
 						$(document).ready(function() {
-							$("#search-product-{{ id }}").autocomplete({
+							$("#search-product-for-cheaper-alternative-{{ id }}").autocomplete({
 								source: products,
 								focus: function(event, ui) {
-									$("#search-product-{{ id }}").val(ui.item.label);
-									$("#uniform-form-product-link-id-1 span").html($("#form-product-link-id-{{ id }} option[value='"+ui.item.value+"']").text());
-									$("#form-product-link-id-{{ id }} option").removeAttr("selected");
-									$("#form-product-link-id-{{ id }} option[value='"+ui.item.value+"']").attr("selected", "selected");
+									$("#search-product-for-cheaper-alternative-{{ id }}").val(ui.item.label);
+									$("#uniform-form-product-link-for-cheaper-alternative-id-{{ id }} span").html($("#form-product-link-for-cheaper-alternative-id-{{ id }} option[value='"+ui.item.value+"']").text());
+									$("#form-product-link-for-cheaper-alternative-id-{{ id }} option").removeAttr("selected");
+									$("#form-product-link-for-cheaper-alternative-id-{{ id }} option[value='"+ui.item.value+"']").attr("selected", "selected");
+									$("#form-cheaper-alternative-requires-update-{{ id }}").val("1");
 									return false;
 								},
 								select: function(event, ui) {
-									$("#search-product-{{ id }}").val("");
+									$("#search-product-for-cheaper-alternative-{{ id }}").val("");
 									return false;
 								}
 							});
@@ -44,7 +45,7 @@
 			<tr>
 				<td class="no-padding-top">
 					<div class="position-relative">
-						<input placeholder="Find a product&hellip;" type="text" id="search-product-{{ id }}" class="embedded-icon no-margin full" value="" />
+						<input placeholder="Find a product&hellip;" type="text" id="search-product-for-cheaper-alternative-{{ id }}" class="embedded-icon no-margin full" value="" />
 						<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
 					</div>
 				</td>

@@ -109,9 +109,12 @@ $("#description input, #description select, #description textarea").live("change
 {# Check if section needs updating #}
 $(".sidebar-tabs").bind("tabsselect", function(event, ui) {
 	var editor = tinyMCE.get("form-description");
-	if (editor.isDirty())
+	if (editor)
 	{
-		$("#description-requires-update").val(1);
+		if (editor.isDirty())
+		{
+			$("#description-requires-update").val(1);
+		}
 	}
 	if ($("#description-requires-update").val() > 0)
 	{
