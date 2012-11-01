@@ -1417,7 +1417,10 @@ class ProductService {
 		foreach ($relatedProductsObject as $relatedProductObject)
 		{
 			$relatedProduct = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $relatedProductObject->getProductLinkId()));
-			$relatedProducts[] = $relatedProduct;
+			if ($relatedProductObject)
+			{
+				$relatedProducts[] = $relatedProduct;
+			}
 		}
 		$product['relatedProducts'] = $relatedProducts;
 		
@@ -1427,7 +1430,10 @@ class ProductService {
 		foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
 		{
 			$cheaperAlternative = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $cheaperAlternativeObject->getProductLinkId()));
-			$cheaperAlternatives[] = $cheaperAlternative;
+			if ($cheaperAlternative)
+			{
+				$cheaperAlternatives[] = $cheaperAlternative;
+			}
 		}
 		$product['cheaperAlternatives'] = $cheaperAlternatives;
 		
@@ -1594,10 +1600,13 @@ class ProductService {
     		$cheaperAlternativePrice = 999999;
     		foreach ($product['cheaperAlternatives'] as $cheaperAlternative)
     		{
-	    		if ($cheaperAlternative->getListPrice() < $cheaperAlternativePrice)
-	    		{
-		    		$cheaperAlternativePrice = $cheaperAlternative->getListPrice();
-	    		}
+    			if ($cheaperAlternative)
+    			{
+		    		if ($cheaperAlternative->getListPrice() < $cheaperAlternativePrice)
+		    		{
+			    		$cheaperAlternativePrice = $cheaperAlternative->getListPrice();
+		    		}
+		    	}
     		}
     		if ($cheaperAlternativePrice == 999999)
     		{

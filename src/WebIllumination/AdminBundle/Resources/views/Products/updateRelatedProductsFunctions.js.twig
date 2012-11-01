@@ -67,7 +67,7 @@ function updateRelatedProducts()
 			      	data: {
 			      		id: $("#form-related-product-id-"+$elementIndex).val(),
 			      		productId: {{ data.product.id }},
-			      		productLinkId: $("#form-product-link-id-"+$elementIndex).val(),
+			      		productLinkId: $("#form-product-link-for-related-product-id-"+$elementIndex).val(),
 			      		displayOrder: $("#form-related-product-display-order-"+$elementIndex).val(),
 			      		elementIndex: $elementIndex
 			      	},
