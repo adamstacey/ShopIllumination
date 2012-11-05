@@ -1409,7 +1409,22 @@ class ProductService {
     		$image['title'] = $imageObject->getTitle();
     		$images[] = $image;
     	}
-    	$product['images'] = $images; 
+    	$product['images'] = $images;
+    	
+    	// Get the videos
+    	$videos = array();
+    	$videosObject = $em->getRepository('WebIlluminationAdminBundle:Video')->findBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
+    	foreach ($videosObject as $videoObject)
+    	{
+    		$video = array();
+    		$video['title'] = $videoObject->getTitle();
+    		$video['description'] = $videoObject->getDescription();
+    		$video['alignment'] = $videoObject->getAlignment();
+    		$video['link'] = $videoObject->getLink();
+    		$video['path'] = $videoObject->getPath();
+    		$videos[] = $video;
+    	}
+    	$product['videos'] = $videos; 
     	
     	// Get the related products
     	$relatedProducts = array();
