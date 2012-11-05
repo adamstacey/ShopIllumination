@@ -169,7 +169,7 @@ class Department
     		case 'a':
     			return 'green';
     		case 'h':
-    			return 'yellow';
+    			return 'orange';
     	}
         return '';
     }

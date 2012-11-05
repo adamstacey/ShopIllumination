@@ -14,15 +14,15 @@
 		{% endspaceless %}</p>
 	{% endif %}
 	{% if data.parentId > 0 %}
-    	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.department.parentId}) }}" id="button-go-back" class="fr button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+    	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.department.parentId}) }}" id="button-go-back" class="fr button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
     {% endif %}
-	<div class="quick-search-container fr{% if data.parentId > 0 %} padding-right-10{% endif %}">
-		<span>Quick Search</span>
-		<input type="text" id="form-quick-search" value="{{ data.listing.search }}" />
+    <div class="quick-search-container fr">
+		<span class="fl padding-right-10">Quick Search</span>
+		<input class="fl ui-corner-left no-margin" type="text" id="form-quick-search" value="{{ data.listing.search }}" />
 		{% if data.listing.search %}
-			<button id="quick-search-button" class="button small ui-button-red action-clear-quick-search" data-icon-primary="ui-icon-closethick" data-icon-only="true">Clear</button>
+			<button type="button" class="fl ui-button button ui-corner-none ui-button-red icon-set-white action-clear-quick-search" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Clear</button>
 		{% endif %}
-		<button id="quick-search-button" class="button small ui-button-blue action-quick-search" data-icon-primary="ui-icon-search">Search</button>
+		<button type="button" id="quick-search-button" class="fl ui-corner-right ui-button button icon-set-white ui-button-black action-quick-search" data-icon-primary="ui-icon-magnifying-glass">Search</button>
 	</div>
 	<h2>{% if data.parentId > 0 %}{{ data.department.name }}{% else %}{{ data.settings.multipleTitle }}{% endif %}</h2>
 	<div class="clear"></div>
@@ -55,18 +55,8 @@
 			{% endif %}
     		<div class="portlet">
 				<header>
-					<button id="filter-button" class="button ui-button-blue fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-{% if data.filter.empty > 0 %}s{% else %}n{% endif %}">Filter Results</button>
-	                <h2>{% spaceless %}
-		                {% if data.listing.itemCount > 0 %}
-		                	{% if data.listing.itemCount == 1 %}
-								Found 1 {{ data.settings.singleTitle }}                	
-			                {% else %}
-			                	Found {{ data.listing.itemCount }} {{ data.settings.multipleTitle }}
-			                {% endif %}
-		                {% else %}
-		                	No {{ data.settings.multipleTitle }} Found
-		                {% endif %}
-	                {% endspaceless %}</h2>
+					<button type="button" id="filter-button" class="button ui-button icon-set-black fr action-show-hide-filter" data-icon-primary="ui-icon-arrow-{% if data.filter.empty > 0 %}down{% else %}up{% endif %}">Filter Results</button>
+	                <h2>{{ data.settings.multipleTitle }} Found ({{ data.listing.itemCount }})</h2>
 	            </header>
 				<section class="no-padding">
 					<form id="form-update-listing" class="form" action="{{ path('admin_'~data.settings.multiplePath~'_update_listing', {'parentId': data.parentId}) }}" method="post">
@@ -91,16 +81,10 @@
 						<div class="separator">
 							<table width="100%">
 								<tr>
-									<td class="label" width="20%"><label class="al" for="filter-status">Status:</label></td>
-									<td width="1%"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="24" alt="" /></td>
-									<td class="label" width="19%">&nbsp;</td>
-									<td width="1%"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="24" alt="" /></td>
-									<td class="label" width="19%">&nbsp;</td>
-									<td width="1%"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="24" alt="" /></td>
-									<td class="label" width="19%">&nbsp;</td>
+									<td class="label"><label class="al" for="filter-status">Status:</label></td>
 								</tr>
 								<tr>
-									<td width="20%" class="vat checkboxes">
+									<td class="vat checkboxes">
 										<div class="filter-checkbox">
 											<input{% if '|a|' in data.filter.statuses %} checked="checked"{% endif %} data-update-object="update-listing-statuses" data-filter-value="a" type="checkbox" class="filter-status" value="1" />Active
 										</div>
@@ -111,18 +95,12 @@
 											<input{% if '|d|' in data.filter.statuses %} checked="checked"{% endif %} data-update-object="update-listing-statuses" data-filter-value="d" type="checkbox" class="filter-status" value="1" />Disabled
 										</div>
 									</td>
-									<td width="1%" class="vat"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="20" alt="" /></td>
-									<td width="19%" class="vat checkboxes">&nbsp;</td>
-									<td width="1%" class="vat"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="20" alt="" /></td>
-									<td width="19%" class="vat checkboxes">&nbsp;</td>
-									<td width="1%" class="vat"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="20" alt="" /></td>
-									<td width="19%" class="vat checkboxes">&nbsp;</td>
 								</tr>
 							</table>
 						</div>
 						<div class="ac">
-							<button class="button bottom-button ui-button-green action-update-your-results" data-icon-primary="ui-icon-refresh">Update Your Results</button>
-							<button class="button bottom-button ui-button-red action-clear-filters" data-icon-primary="ui-icon-closethick">Clear Filters</button>
+							<button class="button bottom-button icon-set-white ui-button-green action-update-your-results" data-icon-primary="ui-icon-refresh">Update Your Results</button>
+							<button class="button bottom-button icon-set-white ui-button-red action-clear-filters" data-icon-primary="ui-icon-circle-cross">Clear Filters</button>
 						</div>
 					</div>
 					<form id="form-update" class="form" action="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" method="post">
@@ -201,10 +179,10 @@
 													{% endif %}
 													<img class="buttons-spacer" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="0" alt="" />
 													<div class="clear"></div>
-													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.departmentId}) }}" class="button ui-button-blue ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>
-													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button ui-button-blue ui-corner-none"{% if item.productCount > 0 %} data-notification="{{ item.productCount }}"{% endif %} data-icon-primary="ui-icon-cart" data-icon-only="true">Products</a>
-													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button ui-button-blue ui-corner-none tooltip-preview-right"{% if item.departmentCount > 0 %} data-notification="{{ item.departmentCount }}"{% endif %} data-icon-primary="ui-icon-folder-{% if item.departmentCount > 0 %}open{% else %}collapsed{% endif %}" data-tooltip-id="#tooltip-departments-{{ item.departmentId }}" data-icon-only="true">Departments</a>
-													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_search_engine_optimisation', {'id': item.departmentId}) }}" class="button ui-button-blue ui-corner-none ui-corner-tl ui-corner-bl tooltip-preview-right" data-tooltip-id="#tooltip-seo-{{ item.departmentId }}" data-icon-primary="ui-icon-search" data-icon-only="true">Search Engine Optimisation (SEO)</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.departmentId}) }}" class="button icon-set-white ui-button-black ui-corner-right" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button icon-set-white ui-button-black ui-corner-none"{% if item.productCount > 0 %} data-notification="{{ item.productCount }}"{% endif %} data-icon-primary="ui-icon-barcode" data-icon-only="true">Products</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button icon-set-white ui-button-black ui-corner-none tooltip-preview-right"{% if item.departmentCount > 0 %} data-notification="{{ item.departmentCount }}"{% endif %} data-icon-primary="ui-icon-tree-directory" data-tooltip-id="#tooltip-departments-{{ item.departmentId }}" data-icon-only="true">Departments</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_search_engine_optimisation', {'id': item.departmentId}) }}" class="button icon-set-white ui-button-black ui-corner-left tooltip-preview-right" data-tooltip-id="#tooltip-seo-{{ item.departmentId }}" data-icon-primary="ui-icon-magnifying-glass" data-icon-only="true">Search Engine Optimisation (SEO)</a>
 												</td>
 											</tr>
 										{% endfor %}
@@ -281,13 +259,13 @@
 						        <div id="float-buttons-content" class="float-buttons clearfix buttons">
 						        	<input type="hidden" value="0" id="form-delete" name="delete" />
 						        	{% if data.parentId > 0 %}
-							        	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.department.parentId}) }}" id="button-go-back" class="fr ui-corner-none ui-corner-tr ui-corner-br button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+							        	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.department.parentId}) }}" id="button-go-back" class="fr ui-corner-right button icon-set-white ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
 							        {% endif %}
 							        {% if data.items|length > 0 %}
-							        	<button class="fr button ui-corner-none{% if data.parentId == 0 %} ui-corner-tr ui-corner-br{% endif %} ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-closethick">Delete Selected</button>
-							        	<button type="submit" class="fr button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Update Selected</button>
+							        	<button class="fr button ui-corner-{% if data.parentId == 0 %}right{% else %}none{% endif %} icon-set-white ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+							        	<button type="submit" class="fr button ui-corner-none icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected</button>
 						        	{% endif %}
-						        	<a href="{{ path('admin_'~data.settings.multiplePath~'_add', {'parentId': data.parentId}) }}" class="fr button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-plusthick">Add a {{ data.settings.singleTitle }}</a>
+						        	<a href="{{ path('admin_'~data.settings.multiplePath~'_add', {'parentId': data.parentId}) }}" class="fr button ui-corner-left icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-plus">Add a {{ data.settings.singleTitle }}</a>
 							    </div>
 							</div>
 			        	</div>

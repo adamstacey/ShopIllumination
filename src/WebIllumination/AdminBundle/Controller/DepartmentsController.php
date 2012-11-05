@@ -58,14 +58,7 @@ class DepartmentsController extends Controller
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	$productService = $this->get('web_illumination_admin.product_service');
-    	
-    	/*$productIds = array(5035 ,5036 ,5037 ,5054 ,5055 ,5056 ,5057 ,5062 ,5063 ,5064 ,5065 ,805 ,3299 ,3296 ,3300 ,3301 ,3297 ,3298 ,3294 ,153 ,153 ,45 ,45 ,46 ,46 ,111 ,123 ,123 ,124 ,124 ,125 ,125 ,126 ,126 ,73 ,74 ,49 ,50 ,168 ,169 ,170 ,127 ,127 ,128 ,128 ,129 ,129 ,130 ,130 ,1897 ,1897 ,1898 ,1898 ,2254 ,2254 ,2255 ,2255 ,2224 ,2224 ,2225 ,2225 ,2168 ,2168 ,2169 ,2169 ,1974 ,1975 ,2150 ,2150 ,2151 ,2151 ,2142 ,2142 ,2143 ,2143 ,2144 ,2144 ,2145 ,2145 ,2146 ,2146 ,2147 ,2147 ,2022 ,2023 ,2038 ,2038 ,2039 ,2039 ,1992 ,1992 ,1993 ,1993 ,1885 ,1886 ,1900 ,1901 ,2226 ,2229 ,1868 ,1868 ,1869 ,1869 ,1872 ,2049 ,2050 ,2083 ,2084 ,2085 ,2062 ,2063 ,2064 ,2065 ,1649 ,1153 ,1155 ,1156 ,1151 ,1152 ,1154 ,1159 ,1160 ,755 ,859 ,806 ,1260 ,1261 ,1263 ,1264 ,1367 ,1368 ,3359 ,1369 ,1370 ,1372 ,1373 ,1371 ,4825 ,1383 ,1383 ,1384 ,1384 ,1640 ,3295 ,3289 ,3467 ,3467 ,2094 ,1910 ,1910 ,1911 ,1911 ,1910 ,1910 ,1911 ,1911 ,2036 ,2036 ,2037 ,2037 ,2069 ,4823 ,851 ,2090 ,2179 ,2177 ,2178 ,2175 ,2176 ,4169 ,4169 ,4169 ,4169 ,4169 ,4170 ,4170 ,4170 ,4170 ,4170 ,4171 ,4171 ,4171 ,4171 ,4171 ,4186 ,4186 ,4186 ,4186 ,4186 ,4187 ,4187 ,4187 ,4187 ,4187 ,4188 ,4188 ,4188 ,4188 ,4188 ,4189 ,4189 ,4189 ,4189 ,4189 ,4172 ,4172 ,4172 ,4172 ,4172 ,4173 ,4173 ,4173 ,4173 ,4173 ,4174 ,4174 ,4174 ,4174 ,4174 ,4175 ,4175 ,4175 ,4175 ,4175 ,4183 ,4183 ,4183 ,4183 ,4183 ,4184 ,4184 ,4184 ,4184 ,4184 ,4185 ,4185 ,4185 ,4185 ,4185 ,4723 ,770 ,3354 ,4828 ,849 ,832 ,831 ,4845 ,4844 ,1711 ,1712 ,1150 ,5174 ,5174 ,5174 ,5174 ,4826);
-    	foreach ($productIds as $productId)
-    	{
-	    	$productService->rebuildProduct($productId);
-    	}*/
-    	
+    	$productService = $this->get('web_illumination_admin.product_service');    	
     	    	
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
@@ -493,6 +486,7 @@ class DepartmentsController extends Controller
     		$objectDescription->setMenuTitle($menuTitle);
     		$objectDescription->setPageTitle($pageTitle);
     		$objectDescription->setPageTitleTemplate('');
+    		$objectDescription->setDeliveryBandNotes('');
     		$objectDescription->setHeader($header);
     		$objectDescription->setMetaDescription($metaDescription);
     		$objectDescription->setMetaDescriptionTemplate('');
@@ -540,7 +534,7 @@ class DepartmentsController extends Controller
     		{
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_add', array('parentId' => $parentId)));
     		} else {
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $parentId)));
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $object->getId())));
     		}
     	}
     	
@@ -723,8 +717,90 @@ class DepartmentsController extends Controller
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
     }
     
-     // Update settings
-    public function updateSettingsAction(Request $request, $id)
+    // Update templates
+    public function updateTemplatesAction(Request $request, $id)
+    {
+    	// Get the services
+    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get the item
+		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		
+    	// Update
+    	if ($request->getMethod() == 'POST')
+    	{   
+    		// Get the item
+			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+			if (!$itemDescriptionObject)
+			{
+				// Notify user
+				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
+    		
+				// Forward
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
+    		}
+			
+    		// Get submitted data
+    		$pageTitleTemplate = trim($request->request->get('page-title-template'));
+    		$metaDescriptionTemplate = trim($request->request->get('meta-description-template'));
+    		$goBack = $request->request->get('go-back');
+    		    		
+    		// Update objects
+    		$itemDescriptionObject->setPageTitleTemplate($pageTitleTemplate);
+    		$itemDescriptionObject->setMetaDescriptionTemplate($metaDescriptionTemplate);
+    		$em->persist($itemDescriptionObject);
+    		$em->flush();
+    		    		    		    		
+    		// Rebuild the index
+    		$service->rebuildDepartmentIndexObject($id, 'en');
+    		
+    		// Notify user
+    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+    		
+    		// Forward
+    		if ($goBack > 0)
+    		{
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
+    		} else {
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
+    		}
+    	}
+    	
+    	
+    	
+    	// Setup the data
+    	$data = array();
+    	$data['settings'] = $this->settings;
+    	$data['item'] = $itemIndexObject;
+    	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id));
+    	$data['mode'] = 'update';
+    	
+    	// Get the breadcrumbs
+    	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
+    	
+    	// Get the product feature groups
+	    $data['productFeatureGroups'] = $service->getProductFeatureGroups($id, 'en');
+	    
+	    // Get the current page title template content
+	    $data['pageTitleTemplate'] = $service->getTemplateContent($id, 'page-title', 'en');
+	    
+	    // Get the current page title product previews
+	    $data['pageTitleTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'page-title', 'en');
+	    	    
+	    // Get the current meta description template content
+	    $data['metaDescriptionTemplate'] = $service->getTemplateContent($id, 'meta-description', 'en');
+	    
+	    // Get the current meta description product previews
+	    $data['metaDescriptionTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'meta-description', 'en');
+    	    	
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemTemplates.html.twig', array('data' => $data));
+    }
+    
+    // Update pricing
+    public function updatePricingAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
@@ -747,7 +823,7 @@ class DepartmentsController extends Controller
 				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
     		
 				// Forward
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_settings', array('id' => $id)));
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id)));
     		}
 			
     		// Get submitted data
@@ -782,7 +858,7 @@ class DepartmentsController extends Controller
     		{
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
     		} else {
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_settings', array('id' => $id)));
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id)));
     		}
     	}
     	
@@ -790,7 +866,7 @@ class DepartmentsController extends Controller
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
-    	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_settings', array('id' => $id));
+    	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id));
     	$data['mode'] = 'update';
     	
     	// Get the breadcrumbs
@@ -808,7 +884,7 @@ class DepartmentsController extends Controller
 	    // Get the current meta description template content
 	    $data['metaDescriptionTemplate'] = $service->getMetaDescriptionTemplateContent($id, 'en');
     	    	
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemSettings.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemPricing.html.twig', array('data' => $data));
     }
     
     

@@ -1244,80 +1244,9 @@ class DepartmentService {
 
 	    return true;
 	}
-	
-	// Get the page title template content
-	public function getPageTitleTemplateContent($id, $locale = 'en')
-	{
-		// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
 		
-		// Get the department index
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
-		
-		// Get the page title template content
-		$pageTitleTemplate = '';
-	    if ($itemIndexObject->getPageTitleTemplate())
-	    {
-	    	$pageTitlePartsCount = 0;
-			$pageTitleParts = explode('^', $itemIndexObject->getPageTitleTemplate());
-			foreach ($pageTitleParts as $pageTitlePart)
-			{
-				$pageTitlePartsCount++;
-				switch ($pageTitlePart)
-				{
-					case 'brand':
-						$pageTitleTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$pageTitlePartsCount.'" data-value="brand">Brand<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
-						break;
-					case 'productCode':
-						$pageTitleTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$pageTitlePartsCount.'" data-value="productCode">Product Code<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
-						break;
-					case 'department':
-						$pageTitleTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$pageTitlePartsCount.'" data-value="department">Department<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
-						break;
-					case 'productExtraKeyword':
-						$pageTitleTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$pageTitlePartsCount.'" data-value="productExtraKeyword">Product Extra Keyword<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
-						break;
-					case 'keyMessage':
-						$pageTitleTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$pageTitlePartsCount.'" data-value="keyMessage">Key Message<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
-						break;
-					default:
-						$pageTitlePartParts = explode('|', $pageTitlePart);
-						$pageTitlePartName = false;
-						$pageTitlePartValue = false;
-						if (isset($pageTitlePartParts[0]))
-						{
-							$pageTitlePartName = $pageTitlePartParts[0];
-						}
-						if (isset($pageTitlePartParts[1]))
-						{
-							$pageTitlePartValue = $pageTitlePartParts[1];
-						}
-						if ($pageTitlePartName && $pageTitlePartValue)
-						{
-							if ($pageTitlePartName == 'productFeatureGroup')
-							{
-								$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($pageTitlePartValue);
-								if ($productFeatureGroupObject)
-								{
-									$pageTitleTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$pageTitlePartsCount.'" data-value="productFeatureGroup|'.$pageTitlePartValue.'">Feature Group: '.$productFeatureGroupObject->getProductFeatureGroup().'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
-								}
-							} elseif ($pageTitlePartName == 'freeText') {
-								$pageTitleTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$pageTitlePartsCount.'" data-value="freeText|'.$pageTitlePartValue.'">Free Text: '.$pageTitlePartValue.'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
-							}
-						}
-						break;
-				}
-			}
-	    }
-	    
-	    return $pageTitleTemplate;
-	}
-	
-	// Get the page title template product previews
-	public function getPageTitleTemplateProductPreviews($id, $locale = 'en')
+	// Update the products from template
+	public function updateProductsFromTemplate($id, $templateField, $locale = 'en')
 	{
 		// Get the services
     	$doctrineService = $this->container->get('doctrine');
@@ -1331,107 +1260,23 @@ class DepartmentService {
 		// Get the product indexes
 		$productIndexObjects = $this->getProducts($id, $locale);
 		
-		// Get the template parts
-		$templateParts = explode('^', $itemIndexObject->getPageTitleTemplate());
-		
-		// Get the previews
-		$templatePreviews = array();
-		foreach ($productIndexObjects as $productIndexObject)
+		// Get the template
+		$template = array();
+		switch ($templateField)
 		{
-			$templatePreview = array();
-			foreach ($templateParts as $templatePart)
-			{
-				switch ($templatePart)
-				{
-					case 'brand':
-						if ($productIndexObject->getBrand() != '')
-						{
-							$templatePreview[] = trim($productIndexObject->getBrand());
-						}
-						break;
-					case 'productCode':
-						if ($productIndexObject->getProductCode() != '')
-						{
-							$templatePreview[] = trim($productIndexObject->getProductCode());
-						}
-						break;
-					case 'department':
-						if ($itemIndexObject->getName() != '')
-						{
-							$templatePreview[] = trim($itemIndexObject->getName());
-						}
-						break;
-					case 'productExtraKeyword':
-						if ($productIndexObject->getPrefix() != '')
-						{
-							$templatePreview[] = trim($productIndexObject->getPrefix());
-						}
-						break;
-					case 'keyMessage':
-						if ($productIndexObject->getTagline() != '')
-						{
-							$templatePreview[] = trim($productIndexObject->getTagline());
-						}
-						break;
-					default:
-						$templatePartParts = explode('|', $templatePart);
-						$templatePartName = false;
-						$templatePartValue = false;
-						if (isset($templatePartParts[0]))
-						{
-							$templatePartName = $templatePartParts[0];
-						}
-						if (isset($templatePartParts[1]))
-						{
-							$templatePartValue = $templatePartParts[1];
-						}
-						if ($templatePartName && $templatePartValue)
-						{
-							if ($templatePartName == 'productFeatureGroup')
-							{
-								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $product->getProductId()));
-								if ($productToFeatureObject)
-								{
-									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
-									if ($productFeatureObject)
-									{
-										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
-										{
-											$templatePreview[] = trim($templatePartValue);
-										}
-									}
-								}
-							} elseif ($templatePartName == 'freeText') {
-								$templatePreview[] = trim($templatePartValue);
-							}
-						}
-						break;
-				}
-			}
-			$pageTitleTemplateProductPreviews[] = implode(' ', $pageTitleTemplateProductPreview);
+			case 'page-title':
+				$template = $itemIndexObject->getPageTitleTemplate();
+				break;
+			case 'header':
+				$template = $itemIndexObject->getHeaderTemplate();
+				break;
+			case 'meta-description':
+				$template = $itemIndexObject->getMetaDescriptionTemplate();
+				break;
 		}
-
-	    return $pageTitleTemplateProductPreviews;
-	}
-	
-	// Update the product page titles
-	public function updateProductPageTitles($id, $locale = 'en')
-	{
-		// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
-		
-		// Get the department index
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
-		
-		// Get the product indexes
-		$productIndexObjects = $this->getProducts($id, $locale);
 		
 		// Get the template parts
-		$templateParts = explode('^', $itemIndexObject->getPageTitleTemplate());
+		$templateParts = explode('^', $template);
 		
 		// Get the previews
 		$templatePreviews = array();
@@ -1488,7 +1333,7 @@ class DepartmentService {
 						{
 							if ($templatePartName == 'productFeatureGroup')
 							{
-								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $product->getProductId()));
+								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $templatePartValue, 'productId' => $productIndexObject->getProductId()));
 								if ($productToFeatureObject)
 								{
 									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
@@ -1510,27 +1355,61 @@ class DepartmentService {
 			}
 			
 			// Check if an update is required
-			$templatePreview = implode(' ', $templatePreview);
-			if ($productIndexObject->getPageTitle() != $templatePreview)
+			switch ($templateField)
 			{
-				$productIndexObject->setPageTitle($templatePreviews);
-				$em->persist($productIndexObject);
-				$em->flush();
-				$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
-				if ($productDescriptionObject)
-				{
-					$productDescriptionObject->setPageTitle($templatePreviews);
-					$em->persist($productDescriptionObject);
-					$em->flush();
-				}
+				case 'page-title':
+					if ($productIndexObject->getPageTitle() != $templatePreview)
+					{
+						$productIndexObject->setPageTitle($templatePreview);
+						$em->persist($productIndexObject);
+						$em->flush();
+						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
+						if ($productDescriptionObject)
+						{
+							$productDescriptionObject->setPageTitle($templatePreview);
+							$em->persist($productDescriptionObject);
+							$em->flush();
+						}
+					}
+					break;
+				case 'header':
+					if ($productIndexObject->getHeader() != $templatePreview)
+					{
+						$productIndexObject->setHeader($templatePreview);
+						$em->persist($productIndexObject);
+						$em->flush();
+						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
+						if ($productDescriptionObject)
+						{
+							$productDescriptionObject->setHeader($templatePreview);
+							$em->persist($productDescriptionObject);
+							$em->flush();
+						}
+					}
+					break;
+				case 'meta-description':
+					if ($productIndexObject->getMetaDescription() != $templatePreview)
+					{
+						$productIndexObject->setMetaDescription($templatePreview);
+						$em->persist($productIndexObject);
+						$em->flush();
+						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
+						if ($productDescriptionObject)
+						{
+							$productDescriptionObject->setMetaDescription($templatePreview);
+							$em->persist($productDescriptionObject);
+							$em->flush();
+						}
+					}
+					break;
 			}
 		}
 
 	    return true;
 	}
 	
-	// Get the meta description template content
-	public function getMetaDescriptionTemplateContent($id, $locale = 'en')
+	// Get the template content
+	public function getTemplateContent($id, $templateField, $locale = 'en')
 	{
 		// Get the services
     	$doctrineService = $this->container->get('doctrine');
@@ -1541,55 +1420,70 @@ class DepartmentService {
 		// Get the department index
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
 		
-		// Get the meta description template content
-		$metaDescriptionTemplate = '';
-	    if ($itemIndexObject->getMetaDescriptionTemplate())
+		// Get the template
+		$template = false;
+		switch ($templateField)
+		{
+			case 'page-title':
+				$template = $itemIndexObject->getPageTitleTemplate();
+				break;
+			case 'header':
+				$template = $itemIndexObject->getHeaderTemplate();
+				break;
+			case 'meta-description':
+				$template = $itemIndexObject->getMetaDescriptionTemplate();
+				break;
+		}
+		
+		// Get the template content
+		$templateContent = '';
+	    if ($template)
 	    {
-	    	$metaDescriptionPartsCount = 0;
-			$metaDescriptionParts = explode('^', $itemIndexObject->getMetaDescriptionTemplate());
-			foreach ($metaDescriptionParts as $metaDescriptionPart)
+	    	$templatePartsCount = 0;
+			$templateParts = explode('^', $template);
+			foreach ($templateParts as $templatePart)
 			{
-				$metaDescriptionPartsCount++;
-				switch ($metaDescriptionPart)
+				$templatePartsCount++;
+				switch ($templatePart)
 				{
 					case 'brand':
-						$metaDescriptionTemplate .= '<li data-flat-sortable-list-object="meta-description-template" id="flat-sortable-list-item-'.$metaDescriptionPartsCount.'" data-value="brand">Brand<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="brand">Brand<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 						break;
 					case 'productCode':
-						$metaDescriptionTemplate .= '<li data-flat-sortable-list-object="meta-description-template" id="flat-sortable-list-item-'.$metaDescriptionPartsCount.'" data-value="productCode">Product Code<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productCode">Product Code<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 						break;
 					case 'department':
-						$metaDescriptionTemplate .= '<li data-flat-sortable-list-object="meta-description-template" id="flat-sortable-list-item-'.$metaDescriptionPartsCount.'" data-value="department">Department<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="department">Department<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 						break;
 					case 'productExtraKeyword':
-						$metaDescriptionTemplate .= '<li data-flat-sortable-list-object="meta-description-template" id="flat-sortable-list-item-'.$metaDescriptionPartsCount.'" data-value="productExtraKeyword">Product Extra Keyword<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productExtraKeyword">Product Extra Keyword<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 						break;
 					case 'keyMessage':
-						$metaDescriptionTemplate .= '<li data-flat-sortable-list-object="meta-description-template" id="flat-sortable-list-item-'.$metaDescriptionPartsCount.'" data-value="keyMessage">Key Message<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="keyMessage">Key Message<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 						break;
 					default:
-						$metaDescriptionPartParts = explode('|', $metaDescriptionPart);
-						$metaDescriptionPartName = false;
-						$metaDescriptionPartValue = false;
-						if (isset($metaDescriptionPartParts[0]))
+						$templatePartParts = explode('|', $templatePart);
+						$templatePartName = false;
+						$templatePartValue = false;
+						if (isset($templatePartParts[0]))
 						{
-							$metaDescriptionPartName = $metaDescriptionPartParts[0];
+							$templatePartName = $templatePartParts[0];
 						}
-						if (isset($metaDescriptionPartParts[1]))
+						if (isset($templatePartParts[1]))
 						{
-							$metaDescriptionPartValue = $metaDescriptionPartParts[1];
+							$templatePartValue = $templatePartParts[1];
 						}
-						if ($metaDescriptionPartName && $metaDescriptionPartValue)
+						if ($templatePartName && $templatePartValue)
 						{
-							if ($metaDescriptionPartName == 'productFeatureGroup')
+							if ($templatePartName == 'productFeatureGroup')
 							{
-								$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($metaDescriptionPartValue);
+								$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($templatePartValue);
 								if ($productFeatureGroupObject)
 								{
-									$metaDescriptionTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$metaDescriptionPartsCount.'" data-value="productFeatureGroup|'.$metaDescriptionPartValue.'">Feature Group: '.$productFeatureGroupObject->getProductFeatureGroup().'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+									$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productFeatureGroup|'.$templatePartValue.'">Feature Group: '.$productFeatureGroupObject->getProductFeatureGroup().'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 								}
-							} elseif ($metaDescriptionPartName == 'freeText') {
-								$metaDescriptionTemplate .= '<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-item-'.$metaDescriptionPartsCount.'" data-value="freeText|'.$metaDescriptionPartValue.'">Free Text: '.$metaDescriptionPartValue.'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+							} elseif ($templatePartName == 'freeText') {
+								$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="freeText|'.$templatePartValue.'">Free Text: '.$templatePartValue.'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 							}
 						}
 						break;
@@ -1597,7 +1491,121 @@ class DepartmentService {
 			}
 	    }
 	    
-	    return $metaDescriptionTemplate;
+	    return $templateContent;
+	}
+	
+	// Get the template product previews
+	public function getTemplateProductPreviews($id, $templateField, $locale = 'en')
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the department index
+		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		
+		// Get the product indexes
+		$productIndexObjects = $this->getProducts($id, $locale);
+		
+		// Get the template
+		$template = array();
+		switch ($templateField)
+		{
+			case 'page-title':
+				$template = $itemIndexObject->getPageTitleTemplate();
+				break;
+			case 'header':
+				$template = $itemIndexObject->getHeaderTemplate();
+				break;
+			case 'meta-description':
+				$template = $itemIndexObject->getMetaDescriptionTemplate();
+				break;
+		}
+		
+		// Get the template parts
+		$templateParts = explode('^', $template);
+		
+		// Get the previews
+		$templatePreviews = array();
+		foreach ($productIndexObjects as $productIndexObject)
+		{
+			$templatePreview = array();
+			foreach ($templateParts as $templatePart)
+			{
+				switch ($templatePart)
+				{
+					case 'brand':
+						if ($productIndexObject->getBrand() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getBrand());
+						}
+						break;
+					case 'productCode':
+						if ($productIndexObject->getProductCode() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getProductCode());
+						}
+						break;
+					case 'department':
+						if ($itemIndexObject->getName() != '')
+						{
+							$templatePreview[] = trim($itemIndexObject->getName());
+						}
+						break;
+					case 'productExtraKeyword':
+						if ($productIndexObject->getPrefix() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getPrefix());
+						}
+						break;
+					case 'keyMessage':
+						if ($productIndexObject->getTagline() != '')
+						{
+							$templatePreview[] = trim($productIndexObject->getTagline());
+						}
+						break;
+					default:
+						$templatePartParts = explode('|', $templatePart);
+						$templatePartName = false;
+						$templatePartValue = false;
+						if (isset($templatePartParts[0]))
+						{
+							$templatePartName = $templatePartParts[0];
+						}
+						if (isset($templatePartParts[1]))
+						{
+							$templatePartValue = $templatePartParts[1];
+						}
+						if ($templatePartName && $templatePartValue)
+						{
+							if ($templatePartName == 'productFeatureGroup')
+							{
+								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $productIndexObject->getProductId()));
+								if ($productToFeatureObject)
+								{
+									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
+									if ($productFeatureObject)
+									{
+										$productFeatureValue = $productFeatureObject->getProductFeature();
+										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
+										{
+											$templatePreview[] = trim($templatePartValue);
+										}
+									}
+								}
+							} elseif ($templatePartName == 'freeText') {
+								$templatePreview[] = trim($templatePartValue);
+							}
+						}
+						break;
+				}
+			}
+			$templatePreviews[] = implode(' ', $templatePreview);
+		}
+
+	    return $templatePreviews;
 	}
     
     // Rebuild the department index
