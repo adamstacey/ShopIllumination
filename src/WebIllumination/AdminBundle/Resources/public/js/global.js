@@ -82,6 +82,14 @@
 // USAGE: 
 //$('input[placeholder]').placeholder();
 
+// Return a helper with preserved width of cells
+var fixWidthHelper = function(e, ui) {
+	ui.children().each(function() {
+		$(this).width($(this).width());
+	});
+	return ui;
+};
+
 (function ($) {
     $.fn.placeholder = function (options) {
         return this.each(function () {
@@ -773,10 +781,11 @@ $(document).ready(function () {
 		return false;
 	});
 	$(".flat-sortable-list ul").sortable({
+		helper: fixWidthHelper,
 		update: function(event, ui) {
 			updateFlatSortableList(ui.item.attr("data-flat-sortable-list-object"));
 		}
-   	});
+   	}).disableSelection();
 	
 	$("input.free-text").live('keypress', function(event) {
 		var $flatSortableListObjectName = $(this).attr("data-flat-sortable-list-object")
@@ -810,6 +819,7 @@ $(document).ready(function () {
 	});
 	$(".action-add-flat-sortable-list-item").live('click', function() {
 		var $flatSortableListObjectName = $(this).attr("data-flat-sortable-list-object");
+		var $flatSortableListObjectFieldName = $flatSortableListObjectName.replace('-template', '');
 		var $flatSortableListObject = $("#flat-sortable-list-"+$flatSortableListObjectName);
 		var $selectObject = $("select.flat-sortable-list-parts[data-flat-sortable-list-object='"+$flatSortableListObjectName+"']");
 		var $freeTextObject = $("input.free-text[data-flat-sortable-list-object='"+$flatSortableListObjectName+"']");
@@ -819,14 +829,14 @@ $(document).ready(function () {
 			var $appendObject = '';
 			if ($selectObject.val() == 'freeText')
 			{
-				$appendObject = '<li data-flat-sortable-list-object="' + $flatSortableListObjectName + '" id="flat-sortable-list-item-' + $nextItemNumber + '" data-value="freeText|' + $freeTextObject.val() + '">Free Text: "' + $freeTextObject.val() + '"<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+				$appendObject = '<li data-flat-sortable-list-object="' + $flatSortableListObjectName + '" id="flat-sortable-list-'+$flatSortableListObjectFieldName+'-item-' + $nextItemNumber + '" data-value="freeText|' + $freeTextObject.val() + '">Free Text: "' + $freeTextObject.val() + '"<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 			} else {
-				$appendObject = '<li data-flat-sortable-list-object="' + $flatSortableListObjectName + '" id="flat-sortable-list-item-' + $nextItemNumber + '" data-value="' + $selectObject.val() + '">' + $selectObject.find("option[value='"+$selectObject.val()+"']").text() + '<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a></li>';
+				$appendObject = '<li data-flat-sortable-list-object="' + $flatSortableListObjectName + '" id="flat-sortable-list-'+$flatSortableListObjectFieldName+'-item-' + $nextItemNumber + '" data-value="' + $selectObject.val() + '">' + $selectObject.find("option[value='"+$selectObject.val()+"']").text() + '<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 			}
 			$flatSortableListObject.append($appendObject);
-			if ($("#flat-sortable-list-item-"+$nextItemNumber+" .button").length > 0)
+			if ($("#flat-sortable-list-"+$flatSortableListObjectFieldName+"-item-"+$nextItemNumber+" .button").length > 0)
 			{
-				$("#flat-sortable-list-item-"+$nextItemNumber+" .button").each(function () {
+				$("#flat-sortable-list-"+$flatSortableListObjectFieldName+"-item-"+$nextItemNumber+" .button").each(function () {
 		            $(this).button({
 		            	icons: {
 		                	primary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-primary') : null, 

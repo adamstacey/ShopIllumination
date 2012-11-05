@@ -717,8 +717,90 @@ class DepartmentsController extends Controller
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
     }
     
-     // Update settings
-    public function updateSettingsAction(Request $request, $id)
+    // Update templates
+    public function updateTemplatesAction(Request $request, $id)
+    {
+    	// Get the services
+    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get the item
+		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		
+    	// Update
+    	if ($request->getMethod() == 'POST')
+    	{   
+    		// Get the item
+			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+			if (!$itemDescriptionObject)
+			{
+				// Notify user
+				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
+    		
+				// Forward
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
+    		}
+			
+    		// Get submitted data
+    		$pageTitleTemplate = trim($request->request->get('page-title-template'));
+    		$metaDescriptionTemplate = trim($request->request->get('meta-description-template'));
+    		$goBack = $request->request->get('go-back');
+    		    		
+    		// Update objects
+    		$itemDescriptionObject->setPageTitleTemplate($pageTitleTemplate);
+    		$itemDescriptionObject->setMetaDescriptionTemplate($metaDescriptionTemplate);
+    		$em->persist($itemDescriptionObject);
+    		$em->flush();
+    		    		    		    		
+    		// Rebuild the index
+    		$service->rebuildDepartmentIndexObject($id, 'en');
+    		
+    		// Notify user
+    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+    		
+    		// Forward
+    		if ($goBack > 0)
+    		{
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
+    		} else {
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
+    		}
+    	}
+    	
+    	
+    	
+    	// Setup the data
+    	$data = array();
+    	$data['settings'] = $this->settings;
+    	$data['item'] = $itemIndexObject;
+    	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id));
+    	$data['mode'] = 'update';
+    	
+    	// Get the breadcrumbs
+    	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
+    	
+    	// Get the product feature groups
+	    $data['productFeatureGroups'] = $service->getProductFeatureGroups($id, 'en');
+	    
+	    // Get the current page title template content
+	    $data['pageTitleTemplate'] = $service->getTemplateContent($id, 'page-title', 'en');
+	    
+	    // Get the current page title product previews
+	    $data['pageTitleTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'page-title', 'en');
+	    	    
+	    // Get the current meta description template content
+	    $data['metaDescriptionTemplate'] = $service->getTemplateContent($id, 'meta-description', 'en');
+	    
+	    // Get the current meta description product previews
+	    $data['metaDescriptionTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'meta-description', 'en');
+    	    	
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemTemplates.html.twig', array('data' => $data));
+    }
+    
+    // Update pricing
+    public function updatePricingAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
@@ -741,7 +823,7 @@ class DepartmentsController extends Controller
 				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
     		
 				// Forward
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_settings', array('id' => $id)));
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id)));
     		}
 			
     		// Get submitted data
@@ -776,7 +858,7 @@ class DepartmentsController extends Controller
     		{
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
     		} else {
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_settings', array('id' => $id)));
+	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id)));
     		}
     	}
     	
@@ -784,7 +866,7 @@ class DepartmentsController extends Controller
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
-    	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_settings', array('id' => $id));
+    	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id));
     	$data['mode'] = 'update';
     	
     	// Get the breadcrumbs
@@ -802,7 +884,7 @@ class DepartmentsController extends Controller
 	    // Get the current meta description template content
 	    $data['metaDescriptionTemplate'] = $service->getMetaDescriptionTemplateContent($id, 'en');
     	    	
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemSettings.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemPricing.html.twig', array('data' => $data));
     }
     
     

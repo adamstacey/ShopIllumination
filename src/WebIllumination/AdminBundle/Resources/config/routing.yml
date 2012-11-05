@@ -86,9 +86,12 @@ admin_departments_add:
 admin_departments_update:
     pattern:   /admin/departments/update/{id}
     defaults:  { _controller: WebIlluminationAdminBundle:Departments:update, id: 0 }
-admin_departments_update_settings:
-    pattern:   /admin/departments/updateSettings/{id}
-    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateSettings, id: 0 }
+admin_departments_update_templates:
+    pattern:   /admin/departments/updateTemplates/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateTemplates, id: 0 }
+admin_departments_update_pricing:
+    pattern:   /admin/departments/updatePricing/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updatePricing, id: 0 }
 admin_departments_update_product_features:
     pattern:   /admin/departments/updateProductFeatures/{id}
     defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateProductFeatures, id: 0 }
