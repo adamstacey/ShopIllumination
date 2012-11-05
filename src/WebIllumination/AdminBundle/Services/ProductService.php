@@ -1409,7 +1409,22 @@ class ProductService {
     		$image['title'] = $imageObject->getTitle();
     		$images[] = $image;
     	}
-    	$product['images'] = $images; 
+    	$product['images'] = $images;
+    	
+    	// Get the videos
+    	$videos = array();
+    	$videosObject = $em->getRepository('WebIlluminationAdminBundle:Video')->findBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
+    	foreach ($videosObject as $videoObject)
+    	{
+    		$video = array();
+    		$video['title'] = $videoObject->getTitle();
+    		$video['description'] = $videoObject->getDescription();
+    		$video['alignment'] = $videoObject->getAlignment();
+    		$video['link'] = $videoObject->getLink();
+    		$video['path'] = $videoObject->getPath();
+    		$videos[] = $video;
+    	}
+    	$product['videos'] = $videos; 
     	
     	// Get the related products
     	$relatedProducts = array();
@@ -1598,6 +1613,7 @@ class ProductService {
     	if (sizeof($product['cheaperAlternatives']) > 0)
     	{
     		$cheaperAlternativePrice = 999999;
+    		$cheaperAlternativeUrl = '';
     		foreach ($product['cheaperAlternatives'] as $cheaperAlternative)
     		{
     			if ($cheaperAlternative)
@@ -1605,15 +1621,18 @@ class ProductService {
 		    		if ($cheaperAlternative->getListPrice() < $cheaperAlternativePrice)
 		    		{
 			    		$cheaperAlternativePrice = $cheaperAlternative->getListPrice();
+			    		$cheaperAlternativeUrl = $cheaperAlternative->getUrl();
 		    		}
 		    	}
     		}
     		if ($cheaperAlternativePrice == 999999)
     		{
 	    		$cheaperAlternativePrice = 0;
+	    		$cheaperAlternativeUrl = '';
     		}
     	} else {
 	    	$cheaperAlternativePrice = 0;
+	    	$cheaperAlternativeUrl = '';
     	}
     	
     	// Update the product index
@@ -1635,8 +1654,8 @@ class ProductService {
 		$productIndexObject->setProductCode($product['productCode']);
 		$productIndexObject->setProductGroupCode($product['productGroupCode']);
 		$productIndexObject->setAlternativeProductCodes($product['alternativeProductCodes']);
-		$productIndexObject->setCheaperAlternativePrice(0);
-		$productIndexObject->setCheaperAlternativeUrl('');
+		$productIndexObject->setCheaperAlternativePrice($cheaperAlternativePrice);
+		$productIndexObject->setCheaperAlternativeUrl($cheaperAlternativeUrl);
 		$productIndexObject->setGuarantees('');
 		$productIndexObject->setShortDescription($product['shortDescription']);
 		$productIndexObject->setDescription($product['description']);
