@@ -56,10 +56,13 @@ class BasketService {
     		$basket['totals']['vat'] = 0;
     		$basket['totals']['total'] = 0;	
     		
-    		// Setup the discounts
+    		// Setup the donations
     		$basket['discounts'] = array();
     		$basket['membershipCardNumber'] = 0;
     		$basket['possibleDiscount'] = 0;
+    		
+    		// Setup the donations
+    		$basket['donations'] = array();
     		
     		// Setup the estimated delivery range
     		$basket['estimatedDeliveryDays'] = array();
@@ -187,6 +190,10 @@ class BasketService {
     		if (!isset($basket['possibleDiscount']))
     		{
 	    		$basket['possibleDiscount'] = 0;
+    		}
+    		if (!is_array($basket['donations']))
+    		{
+    			$basket['donations'] = array();
     		}
     		if (!is_array($basket['estimatedDeliveryDays']))
     		{
@@ -1051,6 +1058,8 @@ class BasketService {
 		$stellarPanSetDiscountsAvailable = 0;
 		$numberOfCdaAppliances = 0;
 		$basket['discounts'] = array();
+		$basket['donations']['company']['description'] = '';
+		$basket['donations']['company']['donation'] = 0;
 		
 		// Check for a membership card
 		$membershipCardObject = false;
@@ -1086,13 +1095,23 @@ class BasketService {
 				$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
 				if ($productIndexObject)
 				{
+					// Check for Stellar Pans
 					if (strpos($productIndexObject->getDepartmentIds(), '|1034|1122|69|') !== false)
 					{
 						$stellarPanSetDiscountsAvailable += $product['quantity'];
 					}
+					
+					// Check for CDA products
 					if ($productIndexObject->getBrandId() == '7')
 					{
 						$numberOfCdaAppliances += $product['quantity'];
+					}
+					
+					// Check for Movember products
+					if (($productIndexObject->getProductCode() == 'KHCH') || ($productIndexObject->getProductCode() == 'EVOLUTION200') || ($productIndexObject->getProductCode() == 'SE80050SS') || ($productIndexObject->getProductCode() == 'C95030') || ($productIndexObject->getProductCode() == '119.0179.532') || ($productIndexObject->getProductCode() == 'PH01SS') || ($productIndexObject->getProductCode() == 'FWC302SS'))
+					{
+						$basket['donations']['company']['description'] = 'Movember Donation from Kitchen Appliance Centre';
+						$basket['donations']['company']['donation'] = $product['quantity'];
 					}
 				}
 			}
@@ -1527,7 +1546,23 @@ class BasketService {
 		$total = $subTotal + $deliveryCharge;
 		$vat = $total - ($total / 1.2);
 		
-		// Save the totals
+		// Update the donations
+		if (isset($basket['donations']['customer']['donation']))
+		{
+			if ($basket['donations']['customer']['donation'] > 0)
+			{
+				$total = $total + $basket['donations']['customer']['donation'];
+				$messages['success'][] = 'Thank you for donating <strong>&pound;'.$basket['donations']['customer']['donation'].'</strong> to Movember.';
+			}
+		}
+		if (isset($basket['donations']['company']['donation']))
+		{
+			if ($basket['donations']['company']['donation'] > 0)
+			{
+				$messages['success'][] = 'You have Movember products in your basket! We will donate <strong>&pound;'.$basket['donations']['company']['donation'].'</strong> to Movember on your behalf.';
+			}
+		}
+		
 		// Save the totals
 		$basket['totals']['items'] = $items;
 		$basket['totals']['subTotal'] = $subTotal;

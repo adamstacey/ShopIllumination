@@ -199,6 +199,9 @@ basket_ajax_redeem_membership_card_number:
 basket_ajax_redeem_voucher_code:
     pattern:  /basket/ajaxRedeemVoucherCode
     defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxRedeemVoucherCode }
+basket_ajax_make_donation:
+    pattern:  /basket/ajaxMakeDonation
+    defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxMakeDonation }
 basket_ajax_delete_membership_card_number:
     pattern:  /basket/ajaxDeleteMembershipCardNumber
     defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxDeleteMembershipCardNumber }

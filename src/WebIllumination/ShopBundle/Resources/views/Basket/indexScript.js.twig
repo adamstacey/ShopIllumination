@@ -258,6 +258,39 @@
 		}
 	}
 	
+	{# Make donation #}
+	function makeDonation($donation)
+	{
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			beforeSend: function () {
+				$("#ajax-loading").show();
+			},
+			url: "{{ path('basket_ajax_make_donation') }}",
+			data: {
+				donation: $donation
+			},
+			error: function(data) {
+	      		$("#message-error-text").html('Sorry, there was a problem trying to make your donation. Please try again.');
+				$("#message-error").slideDown(function() {
+					setTimeout("resetMessages()", 5000);
+					$("#ajax-loading").hide();
+				});
+	      	},
+			success: function(data) {
+				if (data.response != 'success')
+				{
+					$("#message-error-text").html('Sorry, there was a problem trying to make your donation. Please try again.');
+					$("#message-error").slideDown(function() {
+						setTimeout("resetMessages()", 5000);
+					});
+				}
+				loadBasket();
+			}
+		});
+	}
+	
 	$(document).ready(function() {
 		loadBasket();
 		
@@ -277,6 +310,10 @@
 				checkDelivery();
 			}
 		});
+		$(".action-make-donation").live('click', function() {
+			makeDonation(parseInt($(this).attr("data-donation")));
+		});
+		
 		$(".action-update-delivery-options").live('click', function() {
 			checkDelivery();
 		});
