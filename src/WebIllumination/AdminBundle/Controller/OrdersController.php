@@ -817,7 +817,10 @@ class OrdersController extends Controller
 	    	$statistic['count']++;
 	    	$statistic['total'] = $statistic['total'] + $order->getTotal();
     	}
-		$statistic['averageOrderValue'] = $statistic['total'] / $statistic['count'];
+    	if ($statistic['count'] > 0)
+    	{
+			$statistic['averageOrderValue'] = $statistic['total'] / $statistic['count'];
+		}
 		$data['statistics']['selected'] = $statistic;
 		
 		// Get the listing
