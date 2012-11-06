@@ -28,20 +28,6 @@
 				<p><strong class="important">WARNING:</strong> Are you sure you want to delete the selected {{ data.settings.multipleDescription }} below?</p>
 				<div class="clear"></div>
 			</div>
-			{% if data.statistics|length > 0 %}
-				<div class="clearfix">
-		    		<ul class="isotope-widgets isotope-container">
-		    			{% for statistic in data.statistics %}
-			                <li>
-			                    <a data-update-object="{{ statistic.filterUpdateObject }}" data-filter-value="{{ statistic.filterValue }}" class="statistic-filter button-{{ statistic.colour }} ui-corner-all" href="Javascript:void(0);">
-			                        <strong>{{ statistic.statistic }}</strong>
-			                        <span>{{ statistic.description }}</span>
-			                    </a>
-			                </li>
-			            {% endfor %}
-		            </ul>
-				</div>
-			{% endif %}
 			{% if data.document != '' %}
 				<div class="info-message">
 	    			<div class="fr no-margin no-padding">
@@ -229,6 +215,7 @@
 						</div>
 					</div>
 					<form id="form-update" class="form" action="{{ path('admin_'~data.settings.multiplePath) }}" method="post">
+						<div class="quick-stats"><strong>Successful Orders:</strong> {{ data.statistics.selected.count }} | <strong>Order Value:</strong> &pound;{{ data.statistics.selected.total|number_format(2) }} | <strong>Average Order Value:</strong> &pound;{{ data.statistics.selected.averageOrderValue|number_format(2) }}</div>
 						<div id="listing-settings">
 							<div class="fl">
 								<div class="listing-settings-title fl">Sort By</div>

@@ -627,6 +627,7 @@ class OrdersController extends Controller
     	}
 		$itemCount = $qb->getQuery()->getSingleScalarResult();
 		$this->listing['itemCount'] = $itemCount;
+		$data['statistics']['selected']['count'] = $itemCount;
 				
 		// Get the pagination
     	if ($itemCount <= $this->listing['maxResults'])
@@ -703,6 +704,14 @@ class OrdersController extends Controller
     			$qb->andWhere($qb->expr()->eq('i.deliveryType', $qb->expr()->literal($option)));
     		}
     	}
+    	if ($this->filter['totalFrom'] > 0)
+    	{
+    		$qb->andWhere($qb->expr()->gte('i.total', $qb->expr()->literal($this->filter['totalFrom'])));
+    	}
+    	if ($this->filter['totalTo'] > 0)
+    	{
+    		$qb->andWhere($qb->expr()->lte('i.total', $qb->expr()->literal($this->filter['totalTo'])));
+    	}
     	if ($this->filter['dateFromFormatted'] != '')
     	{
     		$qb->andWhere($qb->expr()->gte('i.createdAt', $qb->expr()->literal($this->filter['dateFromFormatted']." 00:00:00")));
@@ -716,6 +725,100 @@ class OrdersController extends Controller
 	   	$qb->setMaxResults($this->listing['maxResults']);
 		$items = $qb->getQuery()->getResult();
 		$data['items'] = $items;
+		
+		// Get the quick stats
+		$statistic = array();
+		$statistic['count'] = 0;
+		$statistic['total'] = 0;
+		$statistic['averageOrderValue'] = 0;
+		$qb = $em->createQueryBuilder();
+    	$qb->select('i');
+    	$qb->from('WebIlluminationAdminBundle:'.$this->settings['singleModel'], 'i');
+    	if ($this->filter['id'])
+    	{
+    		$qb->andWhere($qb->expr()->like('i.id', $qb->expr()->literal('%'.$this->filter['id'].'%')));
+    	}
+    	if ($this->filter['customer'])
+    	{
+    		$customerNames = explode(' ', $this->filter['customer']);
+    		foreach ($customerNames as $customerName)
+    		{
+	    		$qb->andWhere($qb->expr()->orx(
+		    		$qb->expr()->like('i.firstName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.lastName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.organisationName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.billingFirstName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.billingLastName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.billingOrganisationName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.deliveryFirstName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.deliveryLastName', $qb->expr()->literal('%'.$customerName.'%')),
+		    		$qb->expr()->like('i.deliveryOrganisationName', $qb->expr()->literal('%'.$customerName.'%'))
+		    	));
+		    }
+    	}
+    	if ($this->filter['emailAddress'])
+    	{
+    		$qb->andWhere($qb->expr()->like('i.emailAddress', $qb->expr()->literal('%'.$this->filter['emailAddress'].'%')));
+    	}
+    	if ($this->filter['statuses'])
+    	{
+    		$option = $this->filter['statuses'];
+    		$options = explode('|', $option);
+    		if (sizeof($options) > 1)
+    		{
+    			$qb->andWhere($qb->expr()->in('i.status', $options));
+    		} else {
+    			$qb->andWhere($qb->expr()->eq('i.status', $qb->expr()->literal($option)));
+    		}
+    	}
+    	if ($this->filter['paymentTypes'])
+    	{
+    		$option = $this->filter['paymentTypes'];
+    		$options = explode('|', $option);
+    		if (sizeof($options) > 1)
+    		{
+    			$qb->andWhere($qb->expr()->in('i.paymentType', $options));
+    		} else {
+    			$qb->andWhere($qb->expr()->eq('i.paymentType', $qb->expr()->literal($option)));
+    		}
+    	}
+    	if ($this->filter['deliveryTypes'])
+    	{
+    		$option = $this->filter['deliveryTypes'];
+    		$options = explode('|', $option);
+    		if (sizeof($options) > 1)
+    		{
+    			$qb->andWhere($qb->expr()->in('i.deliveryType', $options));
+    		} else {
+    			$qb->andWhere($qb->expr()->eq('i.deliveryType', $qb->expr()->literal($option)));
+    		}
+    	}
+    	if ($this->filter['totalFrom'] > 0)
+    	{
+    		$qb->andWhere($qb->expr()->gte('i.total', $qb->expr()->literal($this->filter['totalFrom'])));
+    	}
+    	if ($this->filter['totalTo'] > 0)
+    	{
+    		$qb->andWhere($qb->expr()->lte('i.total', $qb->expr()->literal($this->filter['totalTo'])));
+    	}
+    	if ($this->filter['dateFromFormatted'] != '')
+    	{
+    		$qb->andWhere($qb->expr()->gte('i.createdAt', $qb->expr()->literal($this->filter['dateFromFormatted']." 00:00:00")));
+    	}
+    	if ($this->filter['dateToFormatted'] != '')
+    	{
+    		$qb->andWhere($qb->expr()->lte('i.createdAt', $qb->expr()->literal($this->filter['dateToFormatted']." 23:59:59")));
+    	}
+    	$qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Open Payment')));
+    	$qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Payment Failed')));
+    	$qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Cancelled')));
+    	foreach ($qb->getQuery()->getResult() as $order)
+    	{
+	    	$statistic['count']++;
+	    	$statistic['total'] = $statistic['total'] + $order->getTotal();
+    	}
+		$statistic['averageOrderValue'] = $statistic['total'] / $statistic['count'];
+		$data['statistics']['selected'] = $statistic;
 		
 		// Get the listing
 		$data['listing'] = $this->listing;
