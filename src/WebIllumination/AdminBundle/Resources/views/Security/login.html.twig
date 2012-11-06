@@ -12,25 +12,35 @@
 	                <h2>Secure Login</h2>
 	            </header>
 				<section>
-					<div id="message-notice" class="ui-widget message">
-					    <div class="ui-state-highlight ui-corner-all no-margin-top"> 
-					        <p class="no-margin"><span class="ui-icon ui-icon-info"></span>To access the control panel please enter your email address and password and click the "Login Securely" button.</p>
-					    </div>
+					<div class="info-message">
+						<span class="info-message-icon ui-icon ui-icon-info"></span>
+						<p>To access the control panel please enter your email address and password and click the "Login Securely" button.</p>
+						<div class="clear"></div>
 					</div>
 					<form id="form-login" class="form has-validation" action="{{ path('admin_security_login') }}" method="post">
-						<div class="clearfix">
-					        <label for="form-header" class="form-label"><em>*</em> Email Address<small>Enter your email address</small></label>
-					        <div class="form-input"><input class="full" data-message="Please enter a valid email address." type="email" class="lowercase emai" id="form-email-address" name="email-address" required="required" value="{{ emailAddress|default('') }}" /></div>
+						<div class="form-element clearfix">
+					    	<span data-help-container="email-address" class="info-message-icon ui-icon ui-icon-help"></span>
+					        <label for="form-email-address" class="form-label"><em>*</em> Email Address</label>
+					        <div class="form-input"><input class="full" data-message="Enter a valid email address" type="email" class="lowercase email" id="form-email-address" name="email-address" required="required" value="{{ emailAddress|default('') }}" /></div>
 					    </div>
-						<div class="clearfix">
-					        <label for="form-header" class="form-label"><em>*</em> Password<small>Enter your password</small></label>
-					        <div class="form-input"><input class="full" data-message="Please enter your password." type="password" id="form-password" name="password" required="required" value="" /></div>
+					    <div id="form-help-email-address" class="form-help ui-helper-hidden">
+					    	<p>Enter your email address.</p>
 					    </div>
-					    <div class="clearfix">
-					        <div class="form-input buttons no-margin-bottom">
-					    		<button class="button ui-button-green" data-icon-primary="ui-icon-key">Login Securely</button>
-					        </div>
+					    <div class="form-element clearfix">
+					    	<span data-help-container="password" class="info-message-icon ui-icon ui-icon-help"></span>
+					        <label for="form-password" class="form-label"><em>*</em> Password</label>
+					        <div class="form-input"><input class="full" data-message="Enter your password" type="password" class="lowercase email" id="form-password" name="password" required="required" value="" /></div>
 					    </div>
+					    <div id="form-help-password" class="form-help ui-helper-hidden">
+					    	<p>Enter your password.</p>
+					    </div>
+					    <div class="padding-15 padding-top-5">
+				        	<div id="float-buttons" class="clearfix">
+						        <div id="float-buttons-content" class="float-buttons clearfix buttons">
+							        <button type="submit" class="fr button ui-button-green icon-set-white" data-icon-primary="ui-icon-key">Login Securely</button>
+							    </div>
+							</div>
+			        	</div>
 				    </form>
 				</section>
 	        </div>

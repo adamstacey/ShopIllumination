@@ -3936,6 +3936,10 @@ table.no-border, table.no-border th, table.no-border td
 {
   background-position: 0px -360px!important;
 }
+.icon-set-white .ui-icon-key, .icon-set-black .ui-icon-key
+{
+  background-position: 0px -380px!important;
+}
 
 
 .navicon-circle-pound
