@@ -373,7 +373,7 @@ hr.inset
   margin: 0;
   text-align: right;
   width: 200px;
-  line-height: 24px;
+  line-height: 30px;
   color: #444;
 }
 .form .form-label small {
@@ -491,8 +491,8 @@ input.large, button.large {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ee4e4e', endColorstr='#cc0000',GradientType=0 ); /* IE6-8 */
 	border-left: 5px solid #CC0000;
 	width: 235px;
-	height: 24px;
-	line-height: 24px;
+	height: 30px;
+	line-height: 30px;
 	padding: 0 5px;
 	text-align: right;
 	-webkit-border-radius: 0 4px 4px 0;
@@ -510,7 +510,7 @@ input.large, button.large {
   margin: 0px;
   padding: 0px;
   font-size: 11px;
-  line-height: 24px;
+  line-height: 30px;
 }
 .form-error .ui-icon
 {
