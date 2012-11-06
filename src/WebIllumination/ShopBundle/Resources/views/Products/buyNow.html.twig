@@ -2,6 +2,9 @@
 	{% if (product.availableForPurchase == 1) and (product.hidePrice == 0) %}
 		<table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
 			<tr>
+				{% if (product.productCode == 'KHCH') or (product.productCode == 'EVOLUTION200') or (product.productCode == 'SE80050SS') or (product.productCode == 'C95030') or (product.productCode == '119.0179.532') or (product.productCode == 'PH01SS') or (product.productCode == 'FWC302SS') %}
+						<td class="no-padding no-border"><img class="movember-offer margin-right-5" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" width="100" height="27" /></td>
+				{% endif %}
 				<td class="no-padding no-border"><input id="quantity-{{ product.productId }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" /></td>
 				<td class="no-padding no-border">
 					<div class="quantity-buttons-container no-padding">

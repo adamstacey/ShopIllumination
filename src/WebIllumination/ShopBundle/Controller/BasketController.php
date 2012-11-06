@@ -456,6 +456,31 @@ class BasketController extends Controller
     	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));	    	   		    	
     }
     
+    // Make donation
+	public function ajaxMakeDonationAction(Request $request)
+    {
+		// Get the services
+    	$basketService = $this->get('web_illumination_admin.basket_service');
+    	
+    	// Get the basket session
+		$basket = $this->get('session')->get('basket');
+    	
+    	// Get submitted data
+		$donation = $request->query->get('donation');
+		
+		// Update the donation
+	    $basket['donations']['customer']['description'] = 'Movember Donation from You - Thank You';
+		$basket['donations']['customer']['donation'] = $donation;
+    	
+    	// Update the basket session
+    	$this->get('session')->set('basket', $basket);
+    	
+    	// Update the basket totals
+    	$basketService->updateBasketTotals();
+    	
+    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));	    	   		    	
+    }
+    
     // Delete voucher code
 	public function ajaxDeleteVoucherCodeAction(Request $request)
     {

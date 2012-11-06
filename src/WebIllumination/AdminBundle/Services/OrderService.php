@@ -505,6 +505,7 @@ class OrderService {
 			$orderObject->setActioned(0);
 			$orderObject->setPaymentResponse('');
 			$orderObject->setDiscountsCount(0);
+			$orderObject->setDonationsCount(0);
 			$orderObject->setNotesCount(0);
 		} else {
 			// Clear the existing order products
@@ -514,18 +515,28 @@ class OrderService {
     			$em->remove($orderProduct);
 				$em->flush();
     		}
-    		// Clear any existing order notes
-    		$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $order['orderNumber']));
-    		foreach ($orderNotes as $orderNote)
-    		{
-    			$em->remove($orderNote);
-				$em->flush();
-    		}
+    		
     		// Clear any existing order discounts
     		$orderDiscounts = $em->getRepository('WebIlluminationAdminBundle:OrderDiscount')->findBy(array('orderId' => $order['orderNumber']));
     		foreach ($orderDiscounts as $orderDiscount)
     		{
     			$em->remove($orderDiscount);
+				$em->flush();
+    		}
+    		
+    		// Clear any existing order donations
+    		$orderDonations = $em->getRepository('WebIlluminationAdminBundle:OrderDonation')->findBy(array('orderId' => $order['orderNumber']));
+    		foreach ($orderDonations as $orderDonation)
+    		{
+    			$em->remove($orderDonation);
+				$em->flush();
+    		}
+    		
+    		// Clear any existing order notes
+    		$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $order['orderNumber']));
+    		foreach ($orderNotes as $orderNote)
+    		{
+    			$em->remove($orderNote);
 				$em->flush();
     		}
 		}
@@ -660,6 +671,7 @@ class OrderService {
 	    $em->flush();
 	    
 	    // Save the discounts
+	    $basketDiscountsCount = 0;
 	    foreach ($basket['discounts'] as $discount)
 	    {
 	    	if (($discount['discount'] > 0) && ($discount['description'] != ''))
@@ -672,9 +684,29 @@ class OrderService {
 		    	$orderDiscountObject->setDiscount(($discount['discount']?$discount['discount']:0));
 		    	$em->persist($orderDiscountObject);
 		    	$em->flush();
+		    	$basketDiscountsCount++;
 		    }
 	    }
-	    $orderObject->setDiscountsCount(sizeof($basket['discounts']));
+	    $orderObject->setDiscountsCount($basketDiscountsCount);
+	 	$em->persist($orderObject);
+	    $em->flush();
+	    
+	    // Save the donations
+	    $basketDonationsCount = 0;
+	    foreach ($basket['donations'] as $donation)
+	    {
+	    	if (($donation['donation'] > 0) && ($donation['description'] != ''))
+	    	{
+			    $orderDonationObject = new OrderDiscount();
+		    	$orderDonationObject->setOrderId($order['orderNumber']);
+		    	$orderDonationObject->setDescription(($donation['description']?$donation['description']:''));
+		    	$orderDonationObject->setDonation(($donation['donation']?$donation['donation']:0));
+		    	$em->persist($orderDonationObject);
+		    	$em->flush();
+		    	$basketDonationsCount++;
+		    }
+	    }
+	    $orderObject->setDonationsCount($basketDonationsCount);
 	 	$em->persist($orderObject);
 	    $em->flush();
 	    
@@ -1075,6 +1107,7 @@ class OrderService {
    		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
     	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
     	$orderDiscounts = $em->getRepository('WebIlluminationAdminBundle:OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+    	$orderDonations = $em->getRepository('WebIlluminationAdminBundle:OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
@@ -1174,6 +1207,17 @@ class OrderService {
 	    }
 	    $order['discounts'] = $discounts;
 	    
+	    // Setup the order donations
+    	$donations = array();
+		foreach ($orderDonations as $orderDonationObject)
+		{
+			$newDonation = array();
+	    	$newDonation['description'] = $orderDonationObject->getDescription();
+	    	$newDonation['donation'] = $orderDonationObject->getDiscount();
+	    	$donations[] = $newDonation;
+	    }
+	    $order['donations'] = $donations;
+	    
 	    // Setup the order notes
     	$customerNotes = array();
     	$staffNotes = array();
@@ -1212,23 +1256,39 @@ class OrderService {
    		// Get the order details
    		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
     	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderDiscounts = $em->getRepository('WebIlluminationAdminBundle:OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+    	$orderDonations = $em->getRepository('WebIlluminationAdminBundle:OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;
     	} 
     	
-    	// Delete the notes
-    	foreach ($orderNotes as $orderNoteObject)
-    	{
-    		$em->remove($orderNoteObject);
-			$em->flush();
-    	}
-    	
     	// Delete the products
     	foreach ($orderProducts as $orderProductObject)
     	{
     		$em->remove($orderProductObject);
+			$em->flush();
+    	}
+    	
+    	// Delete the discounts
+    	foreach ($orderDiscounts as $orderDiscountObject)
+    	{
+    		$em->remove($orderDiscountObject);
+			$em->flush();
+    	}
+    	
+    	// Delete the donations
+    	foreach ($orderDonations as $orderDonationObject)
+    	{
+    		$em->remove($orderDonationObject);
+			$em->flush();
+    	}
+    	
+    	// Delete the notes
+    	foreach ($orderNotes as $orderNoteObject)
+    	{
+    		$em->remove($orderNoteObject);
 			$em->flush();
     	}
     	

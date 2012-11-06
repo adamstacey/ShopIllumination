@@ -13,7 +13,7 @@
 		</div>
 	{% endif %}
 	<div class="container_8">
-		<a class="logo{% if (app.request.attributes.get('_route') == 'checkout_secure_checkout') or (app.request.attributes.get('_route') == 'checkout_order_failed') %} no-padding{% endif %}" title="Kitchen Appliance Centre" href="{{ path('homepage') }}"><img src="{{ asset('bundles/webilluminationshop/images/logos/kitchen-appliance-centre.png') }}" border="0" alt="Kitchen Appliance Centre" /></a>
+		<a class="logo{% if (app.request.attributes.get('_route') == 'checkout_secure_checkout') or (app.request.attributes.get('_route') == 'checkout_order_failed') %} no-padding{% endif %}" title="Kitchen Appliance Centre Supporting Movember" href="{{ path('homepage') }}"><img src="{{ asset('bundles/webilluminationshop/images/logos/kitchen-appliance-centre-movember.png') }}" border="0" alt="Kitchen Appliance Centre" /></a>
 		{% if (app.request.attributes.get('_route') != 'checkout_secure_checkout') and (app.request.attributes.get('_route') != 'checkout_order_failed') %}
 	        {% include '::shopSearch.html.twig' %}
 	        {% include '::shopBasket.html.twig' %}

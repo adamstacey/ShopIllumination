@@ -124,6 +124,11 @@ class Order
     private $discountsCount;
     
     /**
+     * @ORM\Column(name="donations_count", type="integer", length="11")
+     */
+    private $donationsCount;
+    
+    /**
      * @ORM\Column(name="notes_count", type="integer", length="11")
      */
     private $notesCount;
@@ -1713,5 +1718,25 @@ class Order
     public function getReviewRequested()
     {
         return $this->reviewRequested;
+    }
+
+    /**
+     * Set donationsCount
+     *
+     * @param integer $donationsCount
+     */
+    public function setDonationsCount($donationsCount)
+    {
+        $this->donationsCount = $donationsCount;
+    }
+
+    /**
+     * Get donationsCount
+     *
+     * @return integer 
+     */
+    public function getDonationsCount()
+    {
+        return $this->donationsCount;
     }
 }
