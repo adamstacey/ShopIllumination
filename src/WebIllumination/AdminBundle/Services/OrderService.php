@@ -1214,7 +1214,7 @@ class OrderService {
 		{
 			$newDonation = array();
 	    	$newDonation['description'] = $orderDonationObject->getDescription();
-	    	$newDonation['donation'] = $orderDonationObject->getDiscount();
+	    	$newDonation['donation'] = $orderDonationObject->getDonation();
 	    	$donations[] = $newDonation;
 	    }
 	    $order['donations'] = $donations;
