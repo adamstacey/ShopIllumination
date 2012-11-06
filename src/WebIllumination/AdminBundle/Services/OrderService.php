@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use WebIllumination\AdminBundle\Entity\Order;
 use WebIllumination\AdminBundle\Entity\OrderProduct;
 use WebIllumination\AdminBundle\Entity\OrderDiscount;
+use WebIllumination\AdminBundle\Entity\OrderDonation;
 use WebIllumination\AdminBundle\Entity\OrderNote;
 
 class OrderService {
@@ -697,7 +698,7 @@ class OrderService {
 	    {
 	    	if (($donation['donation'] > 0) && ($donation['description'] != ''))
 	    	{
-			    $orderDonationObject = new OrderDiscount();
+			    $orderDonationObject = new OrderDonation();
 		    	$orderDonationObject->setOrderId($order['orderNumber']);
 		    	$orderDonationObject->setDescription(($donation['description']?$donation['description']:''));
 		    	$orderDonationObject->setDonation(($donation['donation']?$donation['donation']:0));
