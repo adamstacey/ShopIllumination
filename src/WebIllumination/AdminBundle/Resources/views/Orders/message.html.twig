@@ -1,5 +1,5 @@
 {% extends '::email.html.twig' %}
-{% block title %}You have a new Message from Kitchen Appliance Centre about your Order: {{ order.orderNumber }} | {{ parent() }}{% endblock %}
+{% block title %}You have a new Message from Kitchen Appliance Centre about your Order: {{ order.id }} | {{ parent() }}{% endblock %}
 {% block body %}
 	<table cellspacing="0" border="0" style="background-color: #DDDDDD;" cellpadding="0" width="100%">
 		<tr>
@@ -11,8 +11,10 @@
 								<tr>
 									<td valign="top" style="padding: 20px;" width="560">
 										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">Hello {{ order.firstName }},</p>
-										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">You have received a message from Kitchen Appliance Centre regarding your order <strong>{{ order.orderNumber }}</strong>. The message is below:</p>
-										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">{{ note|nl2br }}</p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">You have received a message from Kitchen Appliance Centre regarding your order <strong>{{ order.id }}</strong>. The message is below:</p>
+										<hr style="border: 1px solid #DDDDDD;" />
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">{{ note|raw|nl2br }}</p>
+										<hr style="border: 1px solid #DDDDDD;" />
 										{% include '::emailFooter.html.twig' %}
 									</td>
 								</tr>
