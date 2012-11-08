@@ -78,6 +78,11 @@ class DepartmentDescription
     private $header;
     
     /**
+     * @ORM\Column(name="header_template", type="text")
+     */
+    private $headerTemplate;
+    
+    /**
      * @ORM\Column(name="meta_description", type="text")
      */
     private $metaDescription;
@@ -492,5 +497,25 @@ class DepartmentDescription
     public function getMetaDescriptionTemplate()
     {
         return $this->metaDescriptionTemplate;
+    }
+
+    /**
+     * Set headerTemplate
+     *
+     * @param text $headerTemplate
+     */
+    public function setHeaderTemplate($headerTemplate)
+    {
+        $this->headerTemplate = $headerTemplate;
+    }
+
+    /**
+     * Get headerTemplate
+     *
+     * @return text 
+     */
+    public function getHeaderTemplate()
+    {
+        return $this->headerTemplate;
     }
 }

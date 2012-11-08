@@ -104,6 +104,79 @@
 						    	<p>The page title template is the template used by the products that are directly within this department to automatically generate the page title. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead.</p>
 						    </div>
 						    <div class="form-element clearfix">
+						    	<span data-help-container="header-template" class="info-message-icon-right ui-icon ui-icon-help"></span>
+						        <label for="form-header-template" class="al form-label">Header Template</label>
+						        <div class="form-input no-margin">
+						        	<div class="margin-top-5 margin-bottom-5">
+							        	<table width="100%">
+											<tr>
+												<td>
+													<select data-flat-sortable-list-object="header-template" class="flat-sortable-list-parts no-margin full">
+														<option value="">- Add New Part -</option>
+														<option value="freeText">Free Text</option>
+														<option value="brand">Brand</option>
+														<option value="productCode">Product Code</option>
+														<option value="department">Department</option>
+														<option value="productExtraKeyword">Product Extra Keyword</option>
+														<option value="keyMessage">Key Message</option>
+														<optgroup label="Symbols">
+															<option value="freeText">×</option>
+															<option value="freeText">⌀</option>
+															<option value="freeText">°</option>
+															<option value="freeText">²</option>
+															<option value="freeText">³</option>
+														</optgroup>
+														{% if data.productFeatureGroups|length > 0 %}
+															<optgroup label="Feature Groups">
+															{% for productFeatureGroup in data.productFeatureGroups %}
+																<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>
+															{% endfor %}
+															</optgroup>
+														{% endif %}
+													</select>
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="200">
+													<input class="full free-text" disabled="disabled" placeholder="Enter free text&hellip;" type="text" data-flat-sortable-list-object="header-template" value="" />
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="1">
+													<button type="button" data-flat-sortable-list-object="header-template" class="button action-add-flat-sortable-list-item ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-plus">Add</button>
+												</td>
+											</tr>
+										</table>
+						        	</div>
+						        	<div class="flat-sortable-list">
+						        		<ul id="flat-sortable-list-header-template">
+						        			{% if data.headerTemplate %}
+						        				{{ data.headerTemplate|raw }}
+							        		{% endif %}
+						        		</ul>
+						        		<div class="clear"></div>
+						        	</div>
+						        	<input class="flat-sortable-list-values" type="hidden" data-flat-sortable-list-object="header-template" id="form-header-template" name="header-template" value="{{ data.item.headerTemplate }}" />
+						        </div>
+						        {% if (data.headerTemplateProductPreviews|length > 0) and (data.item.headerTemplate != '') %}
+							        <div class="preview-list">
+							        	<h5>Previews</h5>
+							        	<div class="scrollable">
+							        		<table width="100%">
+							        			{% for headerTemplateProductPreview in data.headerTemplateProductPreviews %}
+									        		{% if headerTemplateProductPreview != '' %}
+									        			<tr>
+									        				<td>{{ headerTemplateProductPreview }}</td>
+									        			</tr>
+													{% endif %}
+												{% endfor %}
+							        		</table>								        	
+							        	</div>
+							        </div>
+							    {% endif %}
+						    </div>
+						    <div id="form-help-header-template" class="form-help ui-helper-hidden">
+						    	<p>The header template is the template used by the products that are directly within this department to automatically generate the header text that is displayed on the product listings. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead.</p>
+						    </div>
+						    <div class="form-element clearfix">
 						    	<span data-help-container="meta-description-template" class="info-message-icon-right ui-icon ui-icon-help"></span>
 						        <label for="form-meta-description-template" class="al form-label">Meta Description Template</label>
 						        <div class="form-input no-margin">
