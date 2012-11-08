@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="department")
+ * @ORM\Table(name="department", indexes={@ORM\index(name="search_idx", columns={"id", "parent_id", "status", "hide_prices", "show_prices_out_of_hours", "membership_card_discount_available", "maximum_membership_card_discount", "delivery_band", "inherited_delivery_band", "check_delivery_band", "display_order", "created_at", "updated_at"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class Department
