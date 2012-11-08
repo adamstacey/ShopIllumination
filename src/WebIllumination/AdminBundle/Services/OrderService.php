@@ -1301,6 +1301,331 @@ class OrderService {
    		return true;
     }
     
+    // Get new statistics
+    public function getNewStatistics()
+    {
+    	// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+    	$em = $doctrineService->getEntityManager();
+   		
+   		// Get statistics
+   		$statistics = array();
+		$statistics['count'] = 0;
+		$statistics['total'] = 0;
+		$statistics['totalNett'] = 0;
+		$statistics['averageOrderValue'] = 0;
+		$statistics['averageOrderValueNett'] = 0;
+		$qb = $em->createQueryBuilder();
+    	$qb->select('o');
+    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->andWhere($qb->expr()->eq('o.status', $qb->expr()->literal('Payment Received')));
+    	foreach ($qb->getQuery()->getResult() as $order)
+    	{
+	    	$statistics['count']++;
+	    	$statistics['total'] = $statistics['total'] + $order->getTotal();
+    	}
+    	$statistics['totalNett'] = $statistics['total'] / 1.2;
+    	if ($statistics['count'] > 0)
+    	{
+			$statistics['averageOrderValue'] = $statistics['total'] / $statistics['count'];
+			$statistics['averageOrderValueNett'] = $statistics['totalNett'] / $statistics['count'];
+		}
+		
+		return $statistics;
+	}
+    
+    // Get todays statistics
+    public function getTodaysStatistics()
+    {
+    	// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+    	$em = $doctrineService->getEntityManager();
+   		
+   		// Get statistics
+   		$statistics = array();
+		$statistics['count'] = 0;
+		$statistics['total'] = 0;
+		$statistics['totalNett'] = 0;
+		$statistics['averageOrderValue'] = 0;
+		$statistics['averageOrderValueNett'] = 0;
+		$statistics['projectedTotal'] = 0;
+		$statistics['projectedTotalNett'] = 0;
+		$qb = $em->createQueryBuilder();
+    	$qb->select('o');
+    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y-m-d")." 00:00:00")));
+    	$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y-m-d")." 23:59:59")));
+    	$qb->andWhere($qb->expr()->neq('o.status', $qb->expr()->literal('Open Payment')));
+    	$qb->andWhere($qb->expr()->neq('o.status', $qb->expr()->literal('Payment Failed')));
+    	$qb->andWhere($qb->expr()->neq('o.status', $qb->expr()->literal('Cancelled')));
+    	$orders = $qb->getQuery()->getResult();
+    	foreach ($orders as $order)
+    	{
+	    	$statistics['count']++;
+	    	$statistics['total'] = $statistics['total'] + $order->getTotal();
+    	}
+    	$statistics['totalNett'] = $statistics['total'] / 1.2;
+    	if ($statistics['count'] > 0)
+    	{
+			$statistics['averageOrderValue'] = $statistics['total'] / $statistics['count'];
+			$statistics['averageOrderValueNett'] = $statistics['totalNett'] / $statistics['count'];
+		}
+		$statistics['projectedTotal'] = ($statistics['total'] / (date("G") + 1)) * 24;
+		$statistics['projectedTotalNett'] = $statistics['projectedTotal'] / 1.2;
+		
+		// Get the top brands and products stats
+		$topBrandAndProductStatistics = $this->getTopBrandsAndProducts($orders);
+		$statistics['topBrandsByQuantity'] = $topBrandAndProductStatistics['topBrandsByQuantity'];
+		$statistics['topBrandsByTotal'] = $topBrandAndProductStatistics['topBrandsByTotal'];
+		$statistics['topProductsByQuantity'] = $topBrandAndProductStatistics['topProductsByQuantity'];
+		$statistics['topProductsByTotal'] = $topBrandAndProductStatistics['topProductsByTotal'];
+    		    		    		    	   		
+   		return $statistics;
+    }
+    
+    // Get statistics
+    public function getStatistics($timeFrame)
+    {
+    	// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+    	$em = $doctrineService->getEntityManager();
+   		
+   		// Get statistics
+   		$statistics = array();
+		$statistics['count'] = 0;
+		$statistics['total'] = 0;
+		$statistics['totalNett'] = 0;
+		$statistics['averageOrderValue'] = 0;
+		$statistics['averageOrderValueNett'] = 0;
+		$statistics['projectedTotal'] = 0;
+		$statistics['projectedTotalNett'] = 0;
+		$qb = $em->createQueryBuilder();
+    	$qb->select('o');
+    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	switch ($timeFrame)
+    	{
+    		default:
+	    	case 'today':
+	    		$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y-m-d")." 00:00:00")));
+	    		$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y-m-d")." 23:59:59")));
+	    		break;
+	    	case 'week':
+	    		$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y-m-d", strtotime("monday this week"))." 00:00:00")));
+	    		$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y-m-d", strtotime("sunday this week"))." 23:59:59")));
+	    		break;
+	    	case 'month':
+	    		$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y-m-d", strtotime("first day of this month"))." 00:00:00")));
+	    		$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y-m-d", strtotime("last day of this month"))." 23:59:59")));
+	    		break;
+	    	case 'quarter':
+	    		if ((date("n") >= 1) && (date("n") <= 3))
+		    	{
+			    	$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y")."-01-01 00:00:00")));
+			    	$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y")."-03-31 23:59:59")));
+			    	$currentQuarter = 1;
+		    	} else if ((date("n") > 3) && (date("n") <= 6)) {
+		    		$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y")."-04-01 00:00:00")));
+			    	$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y")."-06-30 23:59:59")));
+			    	$currentQuarter = 2;
+		    	} else if ((date("n") > 6) && (date("n") <= 9)) {
+			    	$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y")."-07-01 00:00:00")));
+			    	$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y")."-09-30 23:59:59")));
+			    	$currentQuarter = 3;
+		    	} else {
+			    	$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y")."-10-01 00:00:00")));
+			    	$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y")."-12-31 23:59:59")));
+			    	$currentQuarter = 4;
+		    	}
+	    		break;
+	    	case 'year':
+	    		$qb->andWhere($qb->expr()->gte('o.createdAt', $qb->expr()->literal(date("Y")."-01-01 00:00:00")));
+	    		$qb->andWhere($qb->expr()->lte('o.createdAt', $qb->expr()->literal(date("Y")."-12-31 23:59:59")));
+	    		break;
+    	}
+    	$qb->andWhere($qb->expr()->neq('o.status', $qb->expr()->literal('Open Payment')));
+    	$qb->andWhere($qb->expr()->neq('o.status', $qb->expr()->literal('Payment Failed')));
+    	$qb->andWhere($qb->expr()->neq('o.status', $qb->expr()->literal('Cancelled')));
+    	$orders = $qb->getQuery()->getResult();
+    	foreach ($orders as $order)
+    	{
+	    	$statistics['count']++;
+	    	$statistics['total'] = $statistics['total'] + $order->getTotal();
+    	}
+    	$statistics['totalNett'] = $statistics['total'] / 1.2;
+    	if ($statistics['count'] > 0)
+    	{
+			$statistics['averageOrderValue'] = $statistics['total'] / $statistics['count'];
+			$statistics['averageOrderValueNett'] = $statistics['totalNett'] / $statistics['count'];
+		}
+		switch ($timeFrame)
+    	{
+    		default:
+	    	case 'today':
+	    		$statistics['projectedTotal'] = ($statistics['total'] / (date("G") + 1)) * 24;
+	    		break;
+	    	case 'week':
+	    		$statistics['projectedTotal'] = ($statistics['total'] / date("N")) * 7;
+	    		break;
+	    	case 'month':
+	    		$statistics['projectedTotal'] = ($statistics['total'] / date("j")) * date("t");
+	    		break;
+	    	case 'quarter':
+	    		$statistics['projectedTotal'] = ($statistics['total'] / ((date("n") % 3) + 1)) * 3;
+	    		break;
+	    	case 'year':
+	    		$statistics['projectedTotal'] = ($statistics['total'] / date("n")) * 12;
+	    		break;
+    	}
+    	$statistics['projectedTotalNett'] = $statistics['projectedTotal'] / 1.2;
+		
+		// Get the top brands and products stats
+		$topBrandAndProductStatistics = $this->getTopBrandsAndProducts($orders);
+		$statistics['topBrandsByQuantity'] = $topBrandAndProductStatistics['topBrandsByQuantity'];
+		$statistics['topBrandsByTotal'] = $topBrandAndProductStatistics['topBrandsByTotal'];
+		$statistics['topProductsByQuantity'] = $topBrandAndProductStatistics['topProductsByQuantity'];
+		$statistics['topProductsByTotal'] = $topBrandAndProductStatistics['topProductsByTotal'];
+    		    		    		    	   		
+   		return $statistics;
+    }
+                    
+    // Sort the brands by quantity
+	public function getTopBrandsAndProducts($orders)
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+    	$em = $doctrineService->getEntityManager();
+    	
+    	// Get the statistics
+		$brands = array();
+		$products = array();
+		$statistics = array();
+		$statistics['topBrandsByQuantity'] = array();
+		$statistics['topBrandsByTotal'] = array();
+		$statistics['topProductsByQuantity'] = array();
+		$statistics['topProductsByTotal'] = array();
+		
+		// Get the brands and products
+		foreach ($orders as $order)
+    	{
+	    	$orderProductObjects = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $order->getId()));
+	    	foreach ($orderProductObjects as $orderProductObject)
+	    	{
+	    		if ($orderProductObject)
+	    		{
+	    			// Get the brands
+			    	if (!isset($brands[$orderProductObject->getBrand()]))
+			    	{
+				    	$brands[$orderProductObject->getBrand()] = array();
+				    	$brands[$orderProductObject->getBrand()]['brand'] = $orderProductObject->getBrand();
+				    	$brands[$orderProductObject->getBrand()]['quantity'] = $orderProductObject->getQuantity();
+				    	$brands[$orderProductObject->getBrand()]['total'] = $orderProductObject->getSubTotal();
+			    	} else {
+				    	$brands[$orderProductObject->getBrand()]['quantity'] += $orderProductObject->getQuantity();
+				    	$brands[$orderProductObject->getBrand()]['total'] += $orderProductObject->getSubTotal();
+			    	}
+			    	
+			    	// Get the products
+			    	if (!isset($products[$orderProductObject->getProductId()]))
+			    	{
+				    	$products[$orderProductObject->getProductId()] = array();
+				    	$products[$orderProductObject->getProductId()]['product'] = $orderProductObject->getHeader();
+				    	$products[$orderProductObject->getProductId()]['quantity'] = $orderProductObject->getQuantity();
+				    	$products[$orderProductObject->getProductId()]['total'] = $orderProductObject->getSubTotal();
+			    	} else {
+				    	$products[$orderProductObject->getProductId()]['quantity'] += $orderProductObject->getQuantity();
+				    	$products[$orderProductObject->getProductId()]['total'] += $orderProductObject->getSubTotal();
+			    	}
+			    }
+	    	}
+    	}
+    	
+    	// Get the top brands by quantity
+		$count = 0;
+		usort($brands, array($this, "sortBrandsByQuantity"));
+		foreach ($brands as $brand)
+		{
+			$count++;
+			if ($count > 5)
+			{
+				break;
+			}
+			$statistics['topBrandsByQuantity'][$count] = $brand;
+		}
+		
+		// Get the top brands by quantity
+		$count = 0;
+		usort($brands, array($this, "sortBrandsByTotal"));
+		foreach ($brands as $brand)
+		{
+			$count++;
+			if ($count > 5)
+			{
+				break;
+			}
+			$statistics['topBrandsByTotal'][$count] = $brand;
+		}
+		
+		// Get the top products by quantity
+		$count = 0;
+		usort($products, array($this, "sortProductsByQuantity"));
+		foreach ($products as $product)
+		{
+			$count++;
+			if ($count > 5)
+			{
+				break;
+			}
+			$statistics['topProductsByQuantity'][$count] = $product;
+		}
+		
+		// Get the top products by quantity
+		$count = 0;
+		usort($products, array($this, "sortProductsByTotal"));
+		foreach ($products as $product)
+		{
+			$count++;
+			if ($count > 5)
+			{
+				break;
+			}
+			$statistics['topProductsByTotal'][$count] = $product;
+		}
+		
+	    return $statistics;
+	}
+    
+    // Sort the brands by quantity
+	static function sortBrandsByQuantity($a, $b)
+	{
+	    return $a['quantity']<$b['quantity'];
+	}
+	
+	// Sort the brands by total
+	static function sortBrandsByTotal($a, $b)
+	{
+	    return $a['total']<$b['total'];
+	}
+	
+	// Sort the products by quantity
+	static function sortProductsByQuantity($a, $b)
+	{
+	    return $a['quantity']<$b['quantity'];
+	}
+	
+	// Sort the products by total
+	static function sortProductsByTotal($a, $b)
+	{
+	    return $a['total']<$b['total'];
+	}
+    
     // Get the root upload directory
     public function getUploadRootDir()
     {

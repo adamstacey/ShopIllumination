@@ -45,5 +45,22 @@
 			$("tr#item-"+$itemId).addClass("selected");
 		});
 		
+		$(".action-view-new-orders").live('click', function() {
+			$("#ajax_loading").show();
+			$("#update-listing-search").val("");
+			$("#filter-date-from").val("");
+			$("#filter-date-from-formatted").val("");
+			$("#filter-date-to").val("");
+			$("#filter-date-to-formatted").val("");
+			if ($(".filter-text-box").length > 0)
+			{
+				$(".filter-text-box").each(function() {
+					$(this).val("");
+				});
+			}
+			$("#listing-filter input[type='checkbox']").removeAttr("checked").parent().removeClass("checked");
+			$("input[data-filter-value='Payment Received']").attr("checked", "checked").parent().addClass("checked");
+			updateResults();
+		});		
 	});
 </script>

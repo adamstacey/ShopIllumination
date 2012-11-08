@@ -730,7 +730,9 @@ class OrdersController extends Controller
 		$statistic = array();
 		$statistic['count'] = 0;
 		$statistic['total'] = 0;
+		$statistic['totalNett'] = 0;
 		$statistic['averageOrderValue'] = 0;
+		$statistic['averageOrderValueNett'] = 0;
 		$qb = $em->createQueryBuilder();
     	$qb->select('i');
     	$qb->from('WebIlluminationAdminBundle:'.$this->settings['singleModel'], 'i');
@@ -817,11 +819,31 @@ class OrdersController extends Controller
 	    	$statistic['count']++;
 	    	$statistic['total'] = $statistic['total'] + $order->getTotal();
     	}
+    	$statistic['totalNett'] = $statistic['total'] / 1.2;
     	if ($statistic['count'] > 0)
     	{
 			$statistic['averageOrderValue'] = $statistic['total'] / $statistic['count'];
+			$statistic['averageOrderValueNett'] = $statistic['totalNett'] / $statistic['count'];
 		}
 		$data['statistics']['selected'] = $statistic;
+		
+		// Get the new order stats
+		$data['statistics']['new'] = $service->getNewStatistics();
+		
+		// Get todays stats
+		$data['statistics']['today'] = $service->getStatistics('today');
+				
+		// Get this weeks stats
+		$data['statistics']['week'] = $service->getStatistics('week');
+
+		// Get this months stats
+		$data['statistics']['month'] = $service->getStatistics('month');
+		
+		// Get this quarters stats
+		$data['statistics']['quarter'] = $service->getStatistics('quarter');
+		
+		// Get this years stats
+		$data['statistics']['year'] = $service->getStatistics('year');
 		
 		// Get the listing
 		$data['listing'] = $this->listing;

@@ -1109,6 +1109,15 @@ $(document).ready(function () {
 	});
 	
 	$(".action-show-hide-filter").live('click', function() {
+		$("#listing-statistics").hide();
+		if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
+		{
+			$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+		}
+		if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
+		{
+			$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
+		}
 		if ($("#listing-filter").is(":hidden"))
 		{
 			$("#listing-filter").show();
@@ -1129,6 +1138,39 @@ $(document).ready(function () {
 			if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
 			{
 				$("#filter-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
+			}
+		}
+	});
+	$(".action-show-hide-statistics").live('click', function() {
+		$("#listing-filter").hide();
+		if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
+		{
+			$("#filter-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+		}
+		if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
+		{
+			$("#filter-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
+		}
+		if ($("#listing-statistics").is(":hidden"))
+		{
+			$("#listing-statistics").show();
+			if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-s"))
+			{
+				$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-s").addClass("ui-icon-triangle-1-n");
+			}
+			if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-down"))
+			{
+				$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-down").addClass("ui-icon-arrow-up");
+			}
+		} else {
+			$("#listing-statistics").hide();
+			if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
+			{
+				$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+			}
+			if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
+			{
+				$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
 			}
 		}
 	});
