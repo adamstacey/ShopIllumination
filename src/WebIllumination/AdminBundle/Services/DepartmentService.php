@@ -1582,7 +1582,7 @@ class DepartmentService {
 						{
 							if ($templatePartName == 'productFeatureGroup')
 							{
-								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $productIndexObject->getProductId()));
+								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $templatePartValue, 'productId' => $productIndexObject->getProductId()));
 								if ($productToFeatureObject)
 								{
 									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
@@ -1591,7 +1591,7 @@ class DepartmentService {
 										$productFeatureValue = $productFeatureObject->getProductFeature();
 										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
 										{
-											$templatePreview[] = trim($templatePartValue);
+											$templatePreview[] = trim($productFeatureValue);
 										}
 									}
 								}
@@ -1606,6 +1606,67 @@ class DepartmentService {
 		}
 
 	    return $templatePreviews;
+	}
+    
+    // Rebuild the header templates
+    public function rebuildHeaderTemplates($locale = 'en')
+    {
+    	// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the departments
+		$departmentObjects = $em->getRepository('WebIlluminationAdminBundle:Department')->findAll();
+		
+		// Update the departments
+		foreach ($departmentObjects as $departmentObject)
+		{
+			$this->rebuildHeaderTemplate($departmentObject->getId(), $locale);
+		}
+    }
+    
+    // Rebuild the header template
+    public function rebuildHeaderTemplate($id, $locale = 'en')
+    {
+    	// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the objects
+    	$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+    	$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+    	
+    	// Check the objects exist
+    	if (!$departmentDescriptionObject || !$departmentIndexObject)
+    	{
+	    	return false;
+    	}
+    	
+    	// Get the header template
+    	$headerTemplate = array();
+    	$pageTitleTemplate = $departmentIndexObject->getPageTitleTemplate();
+    	foreach (explode('^', $pageTitleTemplate) as $pageTitleTemplatePart)
+    	{
+	    	if (($pageTitleTemplatePart != 'productCode') && (strpos($pageTitleTemplatePart, 'productFeatureGroup|') === false))
+	    	{
+		    	$headerTemplate[] = $pageTitleTemplatePart;
+	    	}
+    	}
+    	$headerTemplate = implode('^', $headerTemplate);
+    	
+    	// Update the department
+    	$departmentDescriptionObject->setHeaderTemplate($headerTemplate);
+    	$em->persist($departmentDescriptionObject);
+		$em->flush();
+    	$departmentIndexObject->setHeaderTemplate($headerTemplate);
+    	$em->persist($departmentIndexObject);
+		$em->flush();    	
+		    
+    	return true;
 	}
     
     // Rebuild the department index
@@ -1720,6 +1781,7 @@ class DepartmentService {
 		$departmentIndexObject->setPageTitle($departmentDescriptionObject->getPageTitle());
 		$departmentIndexObject->setPageTitleTemplate($departmentDescriptionObject->getPageTitleTemplate());
 		$departmentIndexObject->setHeader($departmentDescriptionObject->getHeader());
+		$departmentIndexObject->setHeaderTemplate($departmentDescriptionObject->getHeaderTemplate());
 		$departmentIndexObject->setMetaDescription($departmentDescriptionObject->getMetaDescription());
 		$departmentIndexObject->setMetaDescriptionTemplate($departmentDescriptionObject->getMetaDescriptionTemplate());
 		$departmentIndexObject->setMetaKeywords($departmentDescriptionObject->getMetaKeywords());

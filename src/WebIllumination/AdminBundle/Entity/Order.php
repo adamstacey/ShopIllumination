@@ -72,7 +72,6 @@ class Order
      */
     private $reviewRequested;
     
-    
     /**
      * @ORM\Column(name="items", type="string", length="255")
      */

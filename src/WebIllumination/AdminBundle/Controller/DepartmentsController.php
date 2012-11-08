@@ -488,6 +488,7 @@ class DepartmentsController extends Controller
     		$objectDescription->setPageTitleTemplate('');
     		$objectDescription->setDeliveryBandNotes('');
     		$objectDescription->setHeader($header);
+    		$objectDescription->setHeaderTemplate('');
     		$objectDescription->setMetaDescription($metaDescription);
     		$objectDescription->setMetaDescriptionTemplate('');
     		$objectDescription->setMetaKeywords($metaKeywords);
@@ -745,11 +746,13 @@ class DepartmentsController extends Controller
 			
     		// Get submitted data
     		$pageTitleTemplate = trim($request->request->get('page-title-template'));
+    		$headerTemplate = trim($request->request->get('header-template'));
     		$metaDescriptionTemplate = trim($request->request->get('meta-description-template'));
     		$goBack = $request->request->get('go-back');
     		    		
     		// Update objects
     		$itemDescriptionObject->setPageTitleTemplate($pageTitleTemplate);
+    		$itemDescriptionObject->setHeaderTemplate($headerTemplate);
     		$itemDescriptionObject->setMetaDescriptionTemplate($metaDescriptionTemplate);
     		$em->persist($itemDescriptionObject);
     		$em->flush();
@@ -769,8 +772,6 @@ class DepartmentsController extends Controller
     		}
     	}
     	
-    	
-    	
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
@@ -789,7 +790,13 @@ class DepartmentsController extends Controller
 	    
 	    // Get the current page title product previews
 	    $data['pageTitleTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'page-title', 'en');
-	    	    
+	    
+	    // Get the current header template content
+	    $data['headerTemplate'] = $service->getTemplateContent($id, 'header', 'en');
+	    
+	    // Get the current header product previews
+	    $data['headerTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'header', 'en');	    
+	    
 	    // Get the current meta description template content
 	    $data['metaDescriptionTemplate'] = $service->getTemplateContent($id, 'meta-description', 'en');
 	    
