@@ -498,4 +498,24 @@ class DepartmentDescription
     {
         return $this->metaDescriptionTemplate;
     }
+
+    /**
+     * Set headerTemplate
+     *
+     * @param text $headerTemplate
+     */
+    public function setHeaderTemplate($headerTemplate)
+    {
+        $this->headerTemplate = $headerTemplate;
+    }
+
+    /**
+     * Get headerTemplate
+     *
+     * @return text 
+     */
+    public function getHeaderTemplate()
+    {
+        return $this->headerTemplate;
+    }
 }

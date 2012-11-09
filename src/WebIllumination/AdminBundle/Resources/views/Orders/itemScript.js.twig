@@ -1,0 +1,21 @@
+<script type="text/javascript" defer="defer">
+	
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemFunctions.js.twig' with {'data': data} %}
+	
+	$(document).ready(function() {
+	
+		$("select.add-note-type").live('change', function() {
+			if ($(this).val() == 'staff')
+			{
+				$(this).parents("tr").removeClass("blue").addClass("blue");
+				$(this).parents("td").removeClass("blue").addClass("blue");
+				$(this).parents("td").next().find("div").hide();
+			} else {
+				$(this).parents("tr").removeClass("blue");
+				$(this).parents("td").removeClass("blue");
+				$(this).parents("td").next().find("div").show();
+			}
+		});
+
+	});
+</script>

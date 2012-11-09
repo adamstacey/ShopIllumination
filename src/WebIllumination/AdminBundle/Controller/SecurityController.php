@@ -79,7 +79,7 @@ class SecurityController extends Controller
 			// Set success message
 		   	$this->get('session')->setFlash('success', 'Welcome back '.$contact['firstName'].', you are now securely logged in. You last logged in on '.date("l, jS F Y h:ia", $user['lastLoggedIn']->getTimestamp()).'.');
 			
-			return $this->redirect($this->get('router')->generate('orders'));
+			return $this->redirect($this->get('router')->generate('admin_orders'));
     	}
 		
 		/*$em = $this->getDoctrine()->getEntityManager();
