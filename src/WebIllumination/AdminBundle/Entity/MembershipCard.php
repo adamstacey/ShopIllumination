@@ -12,38 +12,38 @@ class MembershipCard
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="user_id", type="integer", length="11")
+     * @ORM\Column(name="user_id", type="integer", length=11)
      */
     private $userId;
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
         
     /**
-     * @ORM\Column(name="membership_number", type="string", length="255")
+     * @ORM\Column(name="membership_number", type="string", length=255)
      */
     private $membershipNumber;
         
     /**
-     * @ORM\Column(name="items", type="string", length="255")
+     * @ORM\Column(name="items", type="string", length=255)
      */
     private $items;
     
     /**
-     * @ORM\Column(name="sub_total", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4)
      */
     private $subTotal;
     
     /**
-     * @ORM\Column(name="savings", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="savings", type="decimal", precision=12, scale=4)
      */
     private $savings;
     
@@ -68,7 +68,7 @@ class MembershipCard
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -77,7 +77,7 @@ class MembershipCard
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

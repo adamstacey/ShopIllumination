@@ -184,41 +184,43 @@
 					$(".sub-department").removeClass("sub-department-active");
 				}
 			});
-			$("ul.sf-menu li, div.brands-button").live('mouseenter', function(e) {
-				var $linkObject = $(this).find("a");
-				var $departmentId = $linkObject.attr("data-department-id");
-				var $menuLinkPosition = 0;
-				var $menuLinkCentre = 0;
-				if ($departmentId == 'brands')
-				{
-					var $menuLinkPosition = $linkObject.position();
-					var $menuLinkCentre = $menuLinkPosition.left + ($linkObject.width() / 2);
-				} else {
-					var $menuLinkPosition = $(this).position();
-					var $menuLinkCentre = $menuLinkPosition.left + ($(this).width() / 2);
-				}
-				var $subDepartmentX = $menuLinkCentre - ($("#sub-department-"+$departmentId).width() / 2) + 5;
-				if ($subDepartmentX < 0)
-				{
-					$subDepartmentX = 0;
-				}
-				if (($subDepartmentX + $("#sub-department-"+$departmentId).width()) > 979)
-				{
-					$subDepartmentX = 979 - $("#sub-department-"+$departmentId).width();
-				}
-				$("#sub-department-"+$departmentId).css("margin-left", $subDepartmentX+"px");
-				$(".sub-department-link").parent("li").removeClass("active");
-				$(this).addClass("active");
-				$(".sub-department").removeClass("sub-department-active");
-				$("div.sub-departments").each(function() {
-					if ($(this).attr("id") == "sub-department-"+$departmentId)
+			$("ul.sf-menu > li, div.brands-button").hoverIntent(
+				function(e) {
+					var $linkObject = $(this).find("a");
+					var $departmentId = $linkObject.attr("data-department-id");
+					var $menuLinkPosition = 0;
+					var $menuLinkCentre = 0;
+					if ($departmentId == 'brands')
 					{
-						$(this).slideDown(400);
+						var $menuLinkPosition = $linkObject.position();
+						var $menuLinkCentre = $menuLinkPosition.left + ($linkObject.width() / 2);
 					} else {
-						$(this).slideUp(200);
+						var $menuLinkPosition = $(this).position();
+						var $menuLinkCentre = $menuLinkPosition.left + ($(this).width() / 2);
 					}
-				});
-			});
+					var $subDepartmentX = $menuLinkCentre - ($("#sub-department-"+$departmentId).width() / 2) + 5;
+					if ($subDepartmentX < 0)
+					{
+						$subDepartmentX = 0;
+					}
+					if (($subDepartmentX + $("#sub-department-"+$departmentId).width()) > 979)
+					{
+						$subDepartmentX = 979 - $("#sub-department-"+$departmentId).width();
+					}
+					$("#sub-department-"+$departmentId).css("margin-left", $subDepartmentX+"px");
+					$(".sub-department-link").parent("li").removeClass("active");
+					$(this).addClass("active");
+					$(".sub-department").removeClass("sub-department-active");
+					$("div.sub-departments").each(function() {
+						if ($(this).attr("id") == "sub-department-"+$departmentId)
+						{
+							$(this).slideDown(400);
+						} else {
+							$(this).slideUp(200);
+						}
+					});
+				}, function() { }
+			);
 			$(".sub-departments:visible").live('mouseleave', function() {
 				$(this).slideUp(200);
 				$(".sub-department-link").parent("li").removeClass("active");
@@ -227,19 +229,10 @@
 				$("div.sub-departments:visible").slideUp(200);
 				$(".sub-department-link").parent("li").removeClass("active");
 				$(".sub-department").removeClass("sub-department-active");
-			});
-			$(".sub-department").live('mouseover mouseenter', function() {
-				$(this).addClass("sub-department-active");
-			});
-			$(".sub-department").live('mouseleave', function() {
-				$(this).removeClass("sub-department-active");
-			});
-			$(".brand").live('mouseover mouseenter', function() {
-				$(this).addClass("brand-active");
-			});
-			$(".brand").live('mouseleave', function() {
-				$(this).removeClass("brand-active");
-			});
+			});			
+			$(".sub-department").hoverIntent(function() { $(this).addClass("sub-department-active"); }, function() { $(this).removeClass("sub-department-active"); });
+			$(".brand").hoverIntent(function() { $(this).addClass("brand-active"); }, function() { $(this).removeClass("brand-active"); });
+
 			$(".action-close-large-image").live('click', function() {
 				$("#large-image-container").fadeOut();
 			});

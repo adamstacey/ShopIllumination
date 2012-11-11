@@ -12,28 +12,28 @@ class Message
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="message_type", type="string", length="100")
+     * @ORM\Column(name="message_type", type="string", length=100)
      */
     private $messageType;
     
     /**
-     * @ORM\Column(name="name", type="string", length="255")
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
     
     /**
-     * @ORM\Column(name="email_address", type="string", length="255")
+     * @ORM\Column(name="email_address", type="string", length=255)
      */
     private $emailAddress;
     
     /**
-     * @ORM\Column(name="contact_number", type="string", length="255")
+     * @ORM\Column(name="contact_number", type="string", length=255)
      */
     private $contactNumber;
 	
@@ -43,17 +43,17 @@ class Message
     private $message;
     
     /**
-     * @ORM\Column(name="printed", type="integer", length="1")
+     * @ORM\Column(name="printed", type="integer", length=1)
      */
     private $printed;
     
     /**
-     * @ORM\Column(name="viewed", type="integer", length="1")
+     * @ORM\Column(name="viewed", type="integer", length=1)
      */
     private $viewed;
     
     /**
-     * @ORM\Column(name="actioned", type="integer", length="1")
+     * @ORM\Column(name="actioned", type="integer", length=1)
      */
     private $actioned;
                 
@@ -68,7 +68,7 @@ class Message
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -77,7 +77,7 @@ class Message
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

@@ -12,7 +12,7 @@ class Bug
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
@@ -28,12 +28,12 @@ class Bug
     private $testScenario;
     
     /**
-     * @ORM\Column(name="operating_system", type="string", length="255")
+     * @ORM\Column(name="operating_system", type="string", length=255)
      */
     private $operatingSystem;
     
     /**
-     * @ORM\Column(name="internet_browser", type="string", length="255")
+     * @ORM\Column(name="internet_browser", type="string", length=255)
      */
     private $internetBrowser;
     
@@ -43,27 +43,27 @@ class Bug
     private $url;
     
     /**
-     * @ORM\Column(name="status", type="integer", length="11")
+     * @ORM\Column(name="status", type="integer", length=11)
      */
     private $status;
 	
 	/**
-     * @ORM\Column(name="priority", type="integer", length="1")
+     * @ORM\Column(name="priority", type="integer", length=1)
      */
     private $priority;
     
     /**
-     * @ORM\Column(name="owner_contact_id", type="integer", length="11")
+     * @ORM\Column(name="owner_contact_id", type="integer", length=11)
      */
     private $ownerContactId;
     
     /**
-     * @ORM\Column(name="assigned_to_contact_id", type="integer", length="11")
+     * @ORM\Column(name="assigned_to_contact_id", type="integer", length=11)
      */
     private $assignedToContactId;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
 	        
@@ -78,7 +78,7 @@ class Bug
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -87,7 +87,7 @@ class Bug
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

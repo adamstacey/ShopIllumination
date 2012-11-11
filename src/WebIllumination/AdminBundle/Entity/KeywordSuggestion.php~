@@ -12,13 +12,13 @@ class KeywordSuggestion
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
 	/**
-     * @ORM\Column(name="keyword_phrase", type="string", length="255")
+     * @ORM\Column(name="keyword_phrase", type="string", length=255)
      */
     private $keywordPhrase;
     
@@ -38,7 +38,7 @@ class KeywordSuggestion
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -47,7 +47,7 @@ class KeywordSuggestion
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

@@ -12,48 +12,48 @@ class DepartmentToFeature
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
     
     /**
-     * @ORM\Column(name="department_id", type="integer", length="11")
+     * @ORM\Column(name="department_id", type="integer", length=11)
      */
     private $departmentId;
     
     /**
-     * @ORM\Column(name="product_feature_group_id", type="integer", length="11")
+     * @ORM\Column(name="product_feature_group_id", type="integer", length=11)
      */
     private $productFeatureGroupId;
     
     /**
-     * @ORM\Column(name="default_product_feature_id", type="integer", length="11")
+     * @ORM\Column(name="default_product_feature_id", type="integer", length=11)
      */
     private $defaultProductFeatureId;
         
     /**
-     * @ORM\Column(name="display_on_filter", type="integer", length="1")
+     * @ORM\Column(name="display_on_filter", type="integer", length=1)
      */
     private $displayOnFilter;
     
     /**
-     * @ORM\Column(name="display_on_listing", type="integer", length="1")
+     * @ORM\Column(name="display_on_listing", type="integer", length=1)
      */
     private $displayOnListing;
     
     /**
-     * @ORM\Column(name="display_on_product", type="integer", length="1")
+     * @ORM\Column(name="display_on_product", type="integer", length=1)
      */
     private $displayOnProduct;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -68,7 +68,7 @@ class DepartmentToFeature
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -77,7 +77,7 @@ class DepartmentToFeature
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

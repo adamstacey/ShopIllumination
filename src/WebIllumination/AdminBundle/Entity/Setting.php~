@@ -12,13 +12,13 @@ class Setting
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="setting_key", type="string", length="255", unique="TRUE")
+     * @ORM\Column(name="setting_key", type="string", length=255, unique=TRUE)
      */
     private $settingKey;
         
@@ -33,7 +33,7 @@ class Setting
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -42,7 +42,7 @@ class Setting
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

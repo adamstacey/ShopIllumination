@@ -12,33 +12,33 @@ class OrderDiscount
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="order_id", type="integer", length="11")
+     * @ORM\Column(name="order_id", type="integer", length=11)
      */
     private $orderId;
     
     /**
-     * @ORM\Column(name="voucher_code", type="string", length="255")
+     * @ORM\Column(name="voucher_code", type="string", length=255)
      */
     private $voucherCode;
     
     /**
-     * @ORM\Column(name="gift_voucher_code", type="string", length="255")
+     * @ORM\Column(name="gift_voucher_code", type="string", length=255)
      */
     private $giftVoucherCode;
     
     /**
-     * @ORM\Column(name="description", type="string", length="255")
+     * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
         
     /**
-     * @ORM\Column(name="discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
      */
     private $discount;
                     
@@ -53,7 +53,7 @@ class OrderDiscount
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class OrderDiscount
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

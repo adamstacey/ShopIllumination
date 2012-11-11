@@ -12,23 +12,23 @@ class OrderDonation
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="order_id", type="integer", length="11")
+     * @ORM\Column(name="order_id", type="integer", length=11)
      */
     private $orderId;
         
     /**
-     * @ORM\Column(name="description", type="string", length="255")
+     * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
         
     /**
-     * @ORM\Column(name="donation", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="donation", type="decimal", precision=12, scale=4)
      */
     private $donation;
                     
@@ -43,7 +43,7 @@ class OrderDonation
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -52,7 +52,7 @@ class OrderDonation
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

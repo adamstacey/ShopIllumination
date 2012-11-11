@@ -12,33 +12,33 @@ class Image
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
    
     /**
-     * @ORM\Column(name="object_id", type="integer", length="11")
+     * @ORM\Column(name="object_id", type="integer", length=11)
      */
     private $objectId;
     
      /**
-     * @ORM\Column(name="object_type", type="string", length="100")
+     * @ORM\Column(name="object_type", type="string", length=100)
      */
     private $objectType;
     
      /**
-     * @ORM\Column(name="image_type", type="string", length="100")
+     * @ORM\Column(name="image_type", type="string", length=100)
      */
     private $imageType;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
 	
 	/**
-     * @ORM\Column(name="title", type="string", length="255")
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
     
@@ -48,37 +48,37 @@ class Image
     private $description;
     
     /**
-     * @ORM\Column(name="alignment", type="string", length="10")
+     * @ORM\Column(name="alignment", type="string", length=10)
      */
     private $alignment;
     
     /**
-     * @ORM\Column(name="link", type="string", length="255")
+     * @ORM\Column(name="link", type="string", length=255)
      */
     private $link;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
 
     /**
-     * @ORM\Column(name="original_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="original_path", type="string", length=255, nullable=true)
      */
     private $originalPath;
     
     /**
-     * @ORM\Column(name="thumbnail_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="thumbnail_path", type="string", length=255, nullable=true)
      */
     private $thumbnailPath;
     
     /**
-     * @ORM\Column(name="medium_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="medium_path", type="string", length=255, nullable=true)
      */
     private $mediumPath;
     
     /**
-     * @ORM\Column(name="large_path", type="string", length="255", nullable="TRUE")
+     * @ORM\Column(name="large_path", type="string", length=255, nullable=true)
      */
     private $largePath;
         
@@ -93,7 +93,7 @@ class Image
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -102,7 +102,7 @@ class Image
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

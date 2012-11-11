@@ -28,22 +28,6 @@
 	                </header>
 					<section class="no-padding">
 						<form class="form has-validation" id="form-{{ data.mode }}" method="post" action="{{ data.formAction }}">
-							<div class="form-element clearfix">
-						    	<span data-help-container="name" class="info-message-icon ui-icon ui-icon-help"></span>
-						        <label for="form-name" class="form-label"><em>*</em> Name</label>
-						        <div class="form-input">
-						        	<table width="100%">
-										<tr>
-											<td width="50%"><input type="text" id="form-first-name" name="first-name" value="{{ data.item.firstName|default('') }}" required="required" data-message="Enter the first name" /></td>
-											<td width="50%"><input type="text" id="form-last-name" name="first-name" value="{{ data.item.lastName|default('') }}" required="required" data-message="Enter the last name" /></td>
-										</tr>
-									</table>
-						        </div>
-						    </div>
-						    <div id="form-help-name" class="form-help ui-helper-hidden">
-						    	<p>Enter the first name and last name of the person placing the order.</p>
-						    </div>
-						
 	                		<div class="form-element clearfix no-margin-top">
 	                			<span data-help-container="parent-id" class="info-message-icon ui-icon ui-icon-help"></span>
 						        <label for="form-parent-id" class="form-label"><em>*</em> Department</label>

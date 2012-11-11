@@ -12,23 +12,23 @@ class Order
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="user_id", type="integer", length="11")
+     * @ORM\Column(name="user_id", type="integer", length=11)
      */
     private $userId;
     
     /**
-     * @ORM\Column(name="status", type="string", length="255")
+     * @ORM\Column(name="status", type="string", length=255)
      */
     private $status;
         
     /**
-     * @ORM\Column(name="payment_type", type="string", length="255")
+     * @ORM\Column(name="payment_type", type="string", length=255)
      */
     private $paymentType;
     
@@ -38,272 +38,272 @@ class Order
     private $paymentResponse;
     
     /**
-     * @ORM\Column(name="delivery_type", type="string", length="255")
+     * @ORM\Column(name="delivery_type", type="string", length=255)
      */
     private $deliveryType;
     
     /**
-     * @ORM\Column(name="courier", type="string", length="255")
+     * @ORM\Column(name="courier", type="string", length=255)
      */
     private $courier;
     
     /**
-     * @ORM\Column(name="number_of_packages", type="integer", length="3")
+     * @ORM\Column(name="number_of_packages", type="integer", length=3)
      */
     private $numberOfPackages;
     
     /**
-     * @ORM\Column(name="tracking_number", type="string", length="255")
+     * @ORM\Column(name="tracking_number", type="string", length=255)
      */
     private $trackingNumber;
         
     /**
-     * @ORM\Column(name="labels_printed", type="integer", length="1")
+     * @ORM\Column(name="labels_printed", type="integer", length=1)
      */
     private $labelsPrinted;
     
     /**
-     * @ORM\Column(name="send_review_request", type="integer", length="1")
+     * @ORM\Column(name="send_review_request", type="integer", length=1)
      */
     private $sendReviewRequest;
     
     /**
-     * @ORM\Column(name="review_requested", type="integer", length="1")
+     * @ORM\Column(name="review_requested", type="integer", length=1)
      */
     private $reviewRequested;
     
     /**
-     * @ORM\Column(name="items", type="string", length="255")
+     * @ORM\Column(name="items", type="string", length=255)
      */
     private $items;
         
     /**
-     * @ORM\Column(name="sub_total", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4)
      */
     private $subTotal;
         
     /**
-     * @ORM\Column(name="delivery_charge", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_charge", type="decimal", precision=12, scale=4)
      */
     private $deliveryCharge;
     
     /**
-     * @ORM\Column(name="discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
      */
     private $discount;
     
     /**
-     * @ORM\Column(name="vat", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="vat", type="decimal", precision=12, scale=4)
      */
     private $vat;
     
     /**
-     * @ORM\Column(name="total", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="total", type="decimal", precision=12, scale=4)
      */
     private $total;
     
     /**
-     * @ORM\Column(name="membership_card_purchased", type="integer", length="1")
+     * @ORM\Column(name="membership_card_purchased", type="integer", length=1)
      */
     private $membershipCardPurchased;
     
     /**
-     * @ORM\Column(name="membership_card_number", type="string", length="255")
+     * @ORM\Column(name="membership_card_number", type="string", length=255)
      */
     private $membershipCardNumber;
     
     /**
-     * @ORM\Column(name="possible_discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="possible_discount", type="decimal", precision=12, scale=4)
      */
     private $possibleDiscount;
     
     /**
-     * @ORM\Column(name="discounts_count", type="integer", length="11")
+     * @ORM\Column(name="discounts_count", type="integer", length=11)
      */
     private $discountsCount;
     
     /**
-     * @ORM\Column(name="donations_count", type="integer", length="11")
+     * @ORM\Column(name="donations_count", type="integer", length=11)
      */
     private $donationsCount;
     
     /**
-     * @ORM\Column(name="notes_count", type="integer", length="11")
+     * @ORM\Column(name="notes_count", type="integer", length=11)
      */
     private $notesCount;
         
     /**
-     * @ORM\Column(name="first_name", type="string", length="255")
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
     
     /**
-     * @ORM\Column(name="last_name", type="string", length="255")
+     * @ORM\Column(name="last_name", type="string", length=255)
      */
     private $lastName;
     
     /**
-     * @ORM\Column(name="organisation_name", type="string", length="255")
+     * @ORM\Column(name="organisation_name", type="string", length=255)
      */
     private $organisationName;
     
     /**
-     * @ORM\Column(name="email_address", type="string", length="255")
+     * @ORM\Column(name="email_address", type="string", length=255)
      */
     private $emailAddress;
     
     /**
-     * @ORM\Column(name="telephone_daytime", type="string", length="50")
+     * @ORM\Column(name="telephone_daytime", type="string", length=50)
      */
     private $telephoneDaytime;
     
     /**
-     * @ORM\Column(name="telephone_evening", type="string", length="50")
+     * @ORM\Column(name="telephone_evening", type="string", length=50)
      */
     private $telephoneEvening;
     
     /**
-     * @ORM\Column(name="mobile", type="string", length="50")
+     * @ORM\Column(name="mobile", type="string", length=50)
      */
     private $mobile;
     
     /**
-     * @ORM\Column(name="billing_first_name", type="string", length="255")
+     * @ORM\Column(name="billing_first_name", type="string", length=255)
      */
     private $billingFirstName;
     
     /**
-     * @ORM\Column(name="billing_last_name", type="string", length="255")
+     * @ORM\Column(name="billing_last_name", type="string", length=255)
      */
     private $billingLastName;
     
     /**
-     * @ORM\Column(name="billing_organisation_name", type="string", length="255")
+     * @ORM\Column(name="billing_organisation_name", type="string", length=255)
      */
     private $billingOrganisationName;
     
     /**
-     * @ORM\Column(name="billing_address_line_1", type="string", length="255")
+     * @ORM\Column(name="billing_address_line_1", type="string", length=255)
      */
     private $billingAddressLine1;
     
     /**
-     * @ORM\Column(name="billing_address_line_2", type="string", length="255")
+     * @ORM\Column(name="billing_address_line_2", type="string", length=255)
      */
     private $billingAddressLine2;
     
     /**
-     * @ORM\Column(name="billing_town_city", type="string", length="255")
+     * @ORM\Column(name="billing_town_city", type="string", length=255)
      */
     private $billingTownCity;
     
     /**
-     * @ORM\Column(name="billing_county_state", type="string", length="255")
+     * @ORM\Column(name="billing_county_state", type="string", length=255)
      */
     private $billingCountyState;
     
     /**
-     * @ORM\Column(name="billing_post_zip_code", type="string", length="255")
+     * @ORM\Column(name="billing_post_zip_code", type="string", length=255)
      */
     private $billingPostZipCode;
     
     /**
-     * @ORM\Column(name="billing_country_code", type="string", length="2")
+     * @ORM\Column(name="billing_country_code", type="string", length=2)
      */
     private $billingCountryCode;
     
    	/**
-     * @ORM\Column(name="delivery_first_name", type="string", length="255")
+     * @ORM\Column(name="delivery_first_name", type="string", length=255)
      */
     private $deliveryFirstName;
     
     /**
-     * @ORM\Column(name="delivery_last_name", type="string", length="255")
+     * @ORM\Column(name="delivery_last_name", type="string", length=255)
      */
     private $deliveryLastName;
     
     /**
-     * @ORM\Column(name="delivery_organisation_name", type="string", length="255")
+     * @ORM\Column(name="delivery_organisation_name", type="string", length=255)
      */
     private $deliveryOrganisationName;
     
     /**
-     * @ORM\Column(name="delivery_address_line_1", type="string", length="255")
+     * @ORM\Column(name="delivery_address_line_1", type="string", length=255)
      */
     private $deliveryAddressLine1;
     
     /**
-     * @ORM\Column(name="delivery_address_line_2", type="string", length="255")
+     * @ORM\Column(name="delivery_address_line_2", type="string", length=255)
      */
     private $deliveryAddressLine2;
     
     /**
-     * @ORM\Column(name="delivery_town_city", type="string", length="255")
+     * @ORM\Column(name="delivery_town_city", type="string", length=255)
      */
     private $deliveryTownCity;
     
     /**
-     * @ORM\Column(name="delivery_county_state", type="string", length="255")
+     * @ORM\Column(name="delivery_county_state", type="string", length=255)
      */
     private $deliveryCountyState;
     
     /**
-     * @ORM\Column(name="delivery_post_zip_code", type="string", length="255")
+     * @ORM\Column(name="delivery_post_zip_code", type="string", length=255)
      */
     private $deliveryPostZipCode;
     
     /**
-     * @ORM\Column(name="delivery_country_code", type="string", length="2")
+     * @ORM\Column(name="delivery_country_code", type="string", length=2)
      */
     private $deliveryCountryCode;
     
     /**
-     * @ORM\Column(name="estimated_delivery_days_start", type="string", length="255")
+     * @ORM\Column(name="estimated_delivery_days_start", type="string", length=255)
      */
     private $estimatedDeliveryDaysStart;
     
     /**
-     * @ORM\Column(name="estimated_delivery_days_end", type="string", length="255")
+     * @ORM\Column(name="estimated_delivery_days_end", type="string", length=255)
      */
     private $estimatedDeliveryDaysEnd;
     
     /**
-     * @ORM\Column(name="order_printed", type="integer", length="1")
+     * @ORM\Column(name="order_printed", type="integer", length=1)
      */
     private $orderPrinted;
     
     /**
-     * @ORM\Column(name="delivery_note_printed", type="integer", length="1")
+     * @ORM\Column(name="delivery_note_printed", type="integer", length=1)
      */
     private $deliveryNotePrinted;
     
     /**
-     * @ORM\Column(name="actioned", type="integer", length="1")
+     * @ORM\Column(name="actioned", type="integer", length=1)
      */
     private $actioned;
     
     /**
-     * @ORM\Column(name="fraud_check_customer_ordered", type="integer", length="1")
+     * @ORM\Column(name="fraud_check_customer_ordered", type="integer", length=1)
      */
     private $fraudCheckCustomerOrdered;
     
     /**
-     * @ORM\Column(name="fraud_check_address_match", type="integer", length="1")
+     * @ORM\Column(name="fraud_check_address_match", type="integer", length=1)
      */
     private $fraudCheckAddressMatch;
     
     /**
-     * @ORM\Column(name="fraud_check_name_used_on_different_order", type="integer", length="1")
+     * @ORM\Column(name="fraud_check_name_used_on_different_order", type="integer", length=1)
      */
     private $fraudCheckNameUsedOnDifferentOrder;
     
     /**
-     * @ORM\Column(name="fraud_check_post_zip_code_used_on_different_order", type="integer", length="1")
+     * @ORM\Column(name="fraud_check_post_zip_code_used_on_different_order", type="integer", length=1)
      */
     private $fraudCheckPostZipCodeUsedOnDifferentOrder;
     
     /**
-     * @ORM\Column(name="fraud_check_telephone_used_on_different_order", type="integer", length="1")
+     * @ORM\Column(name="fraud_check_telephone_used_on_different_order", type="integer", length=1)
      */
     private $fraudCheckTelephoneUsedOnDifferentOrder;
                     
@@ -318,7 +318,7 @@ class Order
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -327,7 +327,7 @@ class Order
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {
@@ -1723,10 +1723,13 @@ class Order
      * Set donationsCount
      *
      * @param integer $donationsCount
+     * @return Order
      */
     public function setDonationsCount($donationsCount)
     {
         $this->donationsCount = $donationsCount;
+    
+        return $this;
     }
 
     /**

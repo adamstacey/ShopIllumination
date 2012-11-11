@@ -12,33 +12,33 @@ class ContactWebAddress
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="contact_web_address_type_id", type="integer", length="11")
+     * @ORM\Column(name="contact_web_address_type_id", type="integer", length=11)
      */
     private $contactWebAddressTypeId;
     
     /**
-     * @ORM\Column(name="contact_id", type="integer", length="11")
+     * @ORM\Column(name="contact_id", type="integer", length=11)
      */
     private $contactId;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
     
     /**
-     * @ORM\Column(name="display_name", type="string", length="255")
+     * @ORM\Column(name="display_name", type="string", length=255)
      */
     private $displayName;
     
 	/**
-     * @ORM\Column(name="url", type="string", length="255")
+     * @ORM\Column(name="url", type="string", length=255)
      */
     private $url;
         
@@ -53,7 +53,7 @@ class ContactWebAddress
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class ContactWebAddress
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

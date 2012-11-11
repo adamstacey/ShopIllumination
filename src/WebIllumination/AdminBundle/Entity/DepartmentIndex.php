@@ -12,23 +12,23 @@ class DepartmentIndex
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="department_id", type="integer", length="11")
+     * @ORM\Column(name="department_id", type="integer", length=11)
      */
     private $departmentId;
     
     /**
-     * @ORM\Column(name="parent_id", type="integer", length="11")
+     * @ORM\Column(name="parent_id", type="integer", length=11)
      */
     private $parentId;
     
     /**
-     * @ORM\Column(name="status", type="string", length="1")
+     * @ORM\Column(name="status", type="string", length=1)
      */
     private $status;
     
@@ -38,47 +38,47 @@ class DepartmentIndex
     private $departmentPath;
     
     /**
-     * @ORM\Column(name="hide_prices", type="integer", length="1")
+     * @ORM\Column(name="hide_prices", type="integer", length=1)
      */
     private $hidePrices;
     
     /**
-     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length="1")
+     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length=1)
      */
     private $showPricesOutOfHours;
     
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="integer", length="1")
+     * @ORM\Column(name="membership_card_discount_available", type="integer", length=1)
      */
     private $membershipCardDiscountAvailable;
     
     /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
     private $maximumMembershipCardDiscount;
     
     /**
-     * @ORM\Column(name="delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
     private $inheritedDeliveryBand;
     
     /**
-     * @ORM\Column(name="check_delivery_band", type="integer", length="1")
+     * @ORM\Column(name="check_delivery_band", type="integer", length=1)
      */
     private $checkDeliveryBand;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
         
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
@@ -88,7 +88,7 @@ class DepartmentIndex
     private $deliveryBandNotes;
     
     /**
-     * @ORM\Column(name="name", type="string", length="255")
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
     
@@ -113,12 +113,12 @@ class DepartmentIndex
     private $description;
         
     /**
-     * @ORM\Column(name="menu_title", type="string", length="255")
+     * @ORM\Column(name="menu_title", type="string", length=255)
      */
     private $menuTitle;
     
     /**
-     * @ORM\Column(name="page_title", type="string", length="255")
+     * @ORM\Column(name="page_title", type="string", length=255)
      */
     private $pageTitle;
     
@@ -128,7 +128,7 @@ class DepartmentIndex
     private $pageTitleTemplate;
     
     /**
-     * @ORM\Column(name="header", type="string", length="255")
+     * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
     
@@ -163,7 +163,7 @@ class DepartmentIndex
     private $url;
     
     /**
-     * @ORM\Column(name="department_count", type="integer", length="11")
+     * @ORM\Column(name="department_count", type="integer", length=11)
      */
     private $departmentCount;
     
@@ -178,12 +178,12 @@ class DepartmentIndex
     private $departments;
     
     /**
-     * @ORM\Column(name="product_count", type="integer", length="11")
+     * @ORM\Column(name="product_count", type="integer", length=11)
      */
     private $productCount;
     
     /**
-     * @ORM\Column(name="direct_product_count", type="integer", length="11")
+     * @ORM\Column(name="direct_product_count", type="integer", length=11)
      */
     private $directProductCount;
 
@@ -198,7 +198,7 @@ class DepartmentIndex
     public $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -207,7 +207,7 @@ class DepartmentIndex
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

@@ -12,23 +12,23 @@ class ProductToDepartment
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;
     
     /**
-     * @ORM\Column(name="department_id", type="integer", length="11")
+     * @ORM\Column(name="department_id", type="integer", length=11)
      */
     private $departmentId;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -43,7 +43,7 @@ class ProductToDepartment
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -52,7 +52,7 @@ class ProductToDepartment
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

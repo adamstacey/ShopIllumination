@@ -12,33 +12,33 @@ class ProductLink
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;
     
     /**
-     * @ORM\Column(name="product_link_id", type="integer", length="11")
+     * @ORM\Column(name="product_link_id", type="integer", length=11)
      */
     private $productLinkId;
     
     /**
-     * @ORM\Column(name="link_type", type="string", length="255")
+     * @ORM\Column(name="link_type", type="string", length=255)
      */
     private $linkType;
             
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -53,7 +53,7 @@ class ProductLink
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class ProductLink
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

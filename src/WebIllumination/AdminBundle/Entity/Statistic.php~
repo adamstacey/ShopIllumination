@@ -12,18 +12,18 @@ class Statistic
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	    
     /**
-     * @ORM\Column(name="statistic_type", type="string", length="100")
+     * @ORM\Column(name="statistic_type", type="string", length=100)
      */
     private $statisticType;
     
 	/**
-     * @ORM\Column(name="url", type="string", length="255")
+     * @ORM\Column(name="url", type="string", length=255)
      */
     private $url;
     
@@ -43,7 +43,7 @@ class Statistic
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -52,7 +52,7 @@ class Statistic
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

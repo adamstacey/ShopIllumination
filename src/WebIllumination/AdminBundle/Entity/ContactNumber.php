@@ -12,38 +12,38 @@ class ContactNumber
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="contact_number_type_id", type="integer", length="11")
+     * @ORM\Column(name="contact_number_type_id", type="integer", length=11)
      */
     private $contactNumberTypeId;
     
     /**
-     * @ORM\Column(name="contact_id", type="integer", length="11")
+     * @ORM\Column(name="contact_id", type="integer", length=11)
      */
     private $contactId;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
     
     /**
-     * @ORM\Column(name="display_name", type="string", length="255")
+     * @ORM\Column(name="display_name", type="string", length=255)
      */
     private $displayName;
     
 	/**
-     * @ORM\Column(name="number", type="string", length="255")
+     * @ORM\Column(name="number", type="string", length=255)
      */
     private $number;
     
     /**
-     * @ORM\Column(name="country_code", type="string", length="2")
+     * @ORM\Column(name="country_code", type="string", length=2)
      */
     private $countryCode;
         
@@ -58,7 +58,7 @@ class ContactNumber
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -67,7 +67,7 @@ class ContactNumber
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

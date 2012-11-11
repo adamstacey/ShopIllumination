@@ -12,23 +12,23 @@ class GuaranteeType
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="guarantee_type", type="string", length="255")
+     * @ORM\Column(name="guarantee_type", type="string", length=255)
      */
     private $guaranteeType;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
     
@@ -43,7 +43,7 @@ class GuaranteeType
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -52,7 +52,7 @@ class GuaranteeType
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

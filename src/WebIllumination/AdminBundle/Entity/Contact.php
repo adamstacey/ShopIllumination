@@ -12,53 +12,53 @@ class Contact
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="object_id", type="integer", length="11")
+     * @ORM\Column(name="object_id", type="integer", length=11)
      */
     private $objectId;
     
      /**
-     * @ORM\Column(name="object_type", type="string", length="100")
+     * @ORM\Column(name="object_type", type="string", length=100)
      */
     private $objectType;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
     
     /**
-     * @ORM\Column(name="display_name", type="string", length="255")
+     * @ORM\Column(name="display_name", type="string", length=255)
      */
     private $displayName;
     
     /**
-     * @ORM\Column(name="organisation_name", type="string", length="255")
+     * @ORM\Column(name="organisation_name", type="string", length=255)
      */
     private $organisationName;
     
     /**
-     * @ORM\Column(name="contact_title_id", type="integer", length="11")
+     * @ORM\Column(name="contact_title_id", type="integer", length=11)
      */
     private $contactTitleId;
     
     /**
-     * @ORM\Column(name="first_name", type="string", length="255")
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
     
     /**
-     * @ORM\Column(name="middle_name", type="string", length="255")
+     * @ORM\Column(name="middle_name", type="string", length=255)
      */
     private $middleName;
     
     /**
-     * @ORM\Column(name="last_name", type="string", length="255")
+     * @ORM\Column(name="last_name", type="string", length=255)
      */
     private $lastName;
             
@@ -73,7 +73,7 @@ class Contact
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -82,7 +82,7 @@ class Contact
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

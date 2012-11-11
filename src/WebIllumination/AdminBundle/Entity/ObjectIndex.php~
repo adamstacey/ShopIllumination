@@ -12,18 +12,18 @@ class ObjectIndex
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="object_type", type="string", length="255")
+     * @ORM\Column(name="object_type", type="string", length=255)
      */
     private $objectType;
 	
 	/**
-     * @ORM\Column(name="object_key", type="string", length="255")
+     * @ORM\Column(name="object_key", type="string", length=255)
      */
     private $objectKey;
 	    
@@ -33,12 +33,12 @@ class ObjectIndex
     private $objectData;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
     /**
-     * @ORM\Column(name="rebuild", type="integer", length="1")
+     * @ORM\Column(name="rebuild", type="integer", length=1)
      */
     private $rebuild;
             
@@ -53,7 +53,7 @@ class ObjectIndex
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class ObjectIndex
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

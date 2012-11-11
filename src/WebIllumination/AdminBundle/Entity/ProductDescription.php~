@@ -12,33 +12,33 @@ class ProductDescription
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;  
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
     /**
-     * @ORM\Column(name="product", type="string", length="255")
+     * @ORM\Column(name="product", type="string", length=255)
      */
     private $product;
     
     /**
-     * @ORM\Column(name="prefix", type="string", length="255")
+     * @ORM\Column(name="prefix", type="string", length=255)
      */
     private $prefix;
     
     /**
-     * @ORM\Column(name="tagline", type="string", length="255")
+     * @ORM\Column(name="tagline", type="string", length=255)
      */
     private $tagline;
     
@@ -53,12 +53,12 @@ class ProductDescription
     private $shortDescription;
     
     /**
-     * @ORM\Column(name="page_title", type="string", length="255")
+     * @ORM\Column(name="page_title", type="string", length=255)
      */
     private $pageTitle;
     
     /**
-     * @ORM\Column(name="header", type="string", length="255")
+     * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
     
@@ -88,7 +88,7 @@ class ProductDescription
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -97,7 +97,7 @@ class ProductDescription
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

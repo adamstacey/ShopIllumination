@@ -12,13 +12,13 @@ class ProductSearch
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="search_phrase", type="string", length="255")
+     * @ORM\Column(name="search_phrase", type="string", length=255)
      */
     private $searchPhrase;
 	    
@@ -33,7 +33,7 @@ class ProductSearch
     private $createdAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	private function create()
 	{

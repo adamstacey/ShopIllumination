@@ -12,33 +12,33 @@ class GuaranteeLength
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="display_name", type="string", length="255")
+     * @ORM\Column(name="display_name", type="string", length=255)
      */
     private $displayName;
 	
 	/**
-     * @ORM\Column(name="guarantee_length", type="string", length="255")
+     * @ORM\Column(name="guarantee_length", type="string", length=255)
      */
     private $guaranteeLength;
     
     /**
-     * @ORM\Column(name="guarantee_title", type="string", length="255")
+     * @ORM\Column(name="guarantee_title", type="string", length=255)
      */
     private $guaranteeTitle;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
     
@@ -53,7 +53,7 @@ class GuaranteeLength
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class GuaranteeLength
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

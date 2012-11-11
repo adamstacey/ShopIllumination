@@ -12,48 +12,48 @@ class VoucherCode
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="code", type="string", length="255", unique="true")
+     * @ORM\Column(name="code", type="string", length=255, unique=true)
      */
     private $code;
 	
 	/**
-     * @ORM\Column(name="description", type="string", length="255")
+     * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
     
     /**
-     * @ORM\Column(name="minimum_order_value", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="minimum_order_value", type="decimal", precision=12, scale=4)
      */
     private $minimumOrderValue;
     
     /**
-     * @ORM\Column(name="discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
      */
     private $discount;
     
     /**
-     * @ORM\Column(name="discount_type", type="string", length="1")
+     * @ORM\Column(name="discount_type", type="string", length=1)
      */
     private $discountType;
     
     /**
-     * @ORM\Column(name="discount_use", type="string", length="1")
+     * @ORM\Column(name="discount_use", type="string", length=1)
      */
     private $discountUse;
     
     /**
-     * @ORM\Column(name="number_of_uses", type="integer", length="11")
+     * @ORM\Column(name="number_of_uses", type="integer", length=11)
      */
     private $numberOfUses;
     
     /**
-     * @ORM\Column(name="number_used", type="integer", length="11")
+     * @ORM\Column(name="number_used", type="integer", length=11)
      */
     private $numberUsed;
     
@@ -78,12 +78,12 @@ class VoucherCode
     private $orders;
     
     /**
-     * @ORM\Column(name="creator", type="string", length="255")
+     * @ORM\Column(name="creator", type="string", length=255)
      */
     private $creator;
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
     
@@ -108,7 +108,7 @@ class VoucherCode
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -117,7 +117,7 @@ class VoucherCode
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

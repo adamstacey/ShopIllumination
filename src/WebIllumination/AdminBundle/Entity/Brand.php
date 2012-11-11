@@ -12,53 +12,53 @@ class Brand
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="status", type="string", length="1")
+     * @ORM\Column(name="status", type="string", length=1)
      */
     private $status;
 	            
     /**
-     * @ORM\Column(name="request_a_brochure", type="integer", length="1")
+     * @ORM\Column(name="request_a_brochure", type="integer", length=1)
      */
     private $requestABrochure;
     
     /**
-     * @ORM\Column(name="brochure_web_address", type="string", length="255")
+     * @ORM\Column(name="brochure_web_address", type="string", length=255)
      */
     private $brochureWebAddress;
     
      /**
-     * @ORM\Column(name="request_a_sample", type="integer", length="1")
+     * @ORM\Column(name="request_a_sample", type="integer", length=1)
      */
     private $requestASample;
     
     /**
-     * @ORM\Column(name="sample_web_address", type="string", length="255")
+     * @ORM\Column(name="sample_web_address", type="string", length=255)
      */
     private $sampleWebAddress;
     
     /**
-     * @ORM\Column(name="hide_prices", type="integer", length="1")
+     * @ORM\Column(name="hide_prices", type="integer", length=1)
      */
     private $hidePrices;
     
     /**
-     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length="1")
+     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length=1)
      */
     private $showPricesOutOfHours;
     
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="integer", length="1")
+     * @ORM\Column(name="membership_card_discount_available", type="integer", length=1)
      */
     private $membershipCardDiscountAvailable;
     
     /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
     private $maximumMembershipCardDiscount;
         
@@ -73,7 +73,7 @@ class Brand
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -82,7 +82,7 @@ class Brand
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

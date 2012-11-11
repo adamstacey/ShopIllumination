@@ -12,43 +12,43 @@ class Product
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
     
     /**
-     * @ORM\Column(name="product_group_id", type="integer", length="11")
+     * @ORM\Column(name="product_group_id", type="integer", length=11)
      */
     private $productGroupId;
     
     /**
-     * @ORM\Column(name="status", type="string", length="1")
+     * @ORM\Column(name="status", type="string", length=1)
      */
     private $status;
     
     /**
-     * @ORM\Column(name="checked", type="integer", length="1")
+     * @ORM\Column(name="checked", type="integer", length=1)
      */
     private $checked;
     
     /**
-     * @ORM\Column(name="available_for_purchase", type="integer", length="1")
+     * @ORM\Column(name="available_for_purchase", type="integer", length=1)
      */
     private $availableForPurchase;
     
     /**
-     * @ORM\Column(name="brand_id", type="integer", length="11")
+     * @ORM\Column(name="brand_id", type="integer", length=11)
      */
     private $brandId;
     
     /**
-     * @ORM\Column(name="product_code", type="string", length="100")
+     * @ORM\Column(name="product_code", type="string", length=100)
      */
     private $productCode;
     
     /**
-     * @ORM\Column(name="product_group_code", type="string", length="100")
+     * @ORM\Column(name="product_group_code", type="string", length=100)
      */
     private $productGroupCode;
     
@@ -58,117 +58,117 @@ class Product
     private $alternativeProductCodes;
     
     /**
-     * @ORM\Column(name="feature_comparison", type="integer", length="1")
+     * @ORM\Column(name="feature_comparison", type="integer", length=1)
      */
     private $featureComparison;
     
     /**
-     * @ORM\Column(name="downloadable", type="integer", length="1")
+     * @ORM\Column(name="downloadable", type="integer", length=1)
      */
     private $downloadable;
     
     /**
-     * @ORM\Column(name="special_offer", type="integer", length="1")
+     * @ORM\Column(name="special_offer", type="integer", length=1)
      */
     private $specialOffer;
     
     /**
-     * @ORM\Column(name="recommended", type="integer", length="1")
+     * @ORM\Column(name="recommended", type="integer", length=1)
      */
     private $recommended;
     
     /**
-     * @ORM\Column(name="accessory", type="integer", length="1")
+     * @ORM\Column(name="accessory", type="integer", length=1)
      */
     private $accessory;
     
     /**
-     * @ORM\Column(name="new", type="integer", length="1")
+     * @ORM\Column(name="new", type="integer", length=1)
      */
     private $new;
     
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="integer", length="1")
+     * @ORM\Column(name="membership_card_discount_available", type="integer", length=1)
      */
     private $membershipCardDiscountAvailable;
     
     /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
     private $maximumMembershipCardDiscount;
     
     /**
-     * @ORM\Column(name="mpn", type="string", length="100")
+     * @ORM\Column(name="mpn", type="string", length=100)
      */
     private $mpn;
     
     /**
-     * @ORM\Column(name="ean", type="string", length="14")
+     * @ORM\Column(name="ean", type="string", length=14)
      */
     private $ean;
     
     /**
-     * @ORM\Column(name="upc", type="string", length="12")
+     * @ORM\Column(name="upc", type="string", length=12)
      */
     private $upc;
     
     /**
-     * @ORM\Column(name="jan", type="string", length="13")
+     * @ORM\Column(name="jan", type="string", length=13)
      */
     private $jan;
     
     /**
-     * @ORM\Column(name="isbn", type="string", length="13")
+     * @ORM\Column(name="isbn", type="string", length=13)
      */
     private $isbn;
     
     /**
-     * @ORM\Column(name="weight", type="decimal", precision="12", scale="2")
+     * @ORM\Column(name="weight", type="decimal", precision=12, scale=2)
      */
     private $weight;
     
     /**
-     * @ORM\Column(name="length", type="decimal", precision="12", scale="2")
+     * @ORM\Column(name="length", type="decimal", precision=12, scale=2)
      */
     private $length;
  	
  	/**
-     * @ORM\Column(name="width", type="decimal", precision="12", scale="2")
+     * @ORM\Column(name="width", type="decimal", precision=12, scale=2)
      */
     private $width;
     
     /**
-     * @ORM\Column(name="height", type="decimal", precision="12", scale="2")
+     * @ORM\Column(name="height", type="decimal", precision=12, scale=2)
      */
     private $height;   
     
     /**
-     * @ORM\Column(name="delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
     private $inheritedDeliveryBand;
     
     /**
-     * @ORM\Column(name="delivery_cost", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_cost", type="decimal", precision=12, scale=4)
      */
     private $deliveryCost;
     
     /**
-     * @ORM\Column(name="sample_request", type="integer", length="1")
+     * @ORM\Column(name="sample_request", type="integer", length=1)
      */
     private $sampleRequest;
     
     /**
-     * @ORM\Column(name="hide_price", type="integer", length="1")
+     * @ORM\Column(name="hide_price", type="integer", length=1)
      */
     private $hidePrice;
     
     /**
-     * @ORM\Column(name="show_price_out_of_hours", type="integer", length="1")
+     * @ORM\Column(name="show_price_out_of_hours", type="integer", length=1)
      */
     private $showPriceOutOfHours;
         
@@ -188,7 +188,7 @@ class Product
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -198,7 +198,7 @@ class Product
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

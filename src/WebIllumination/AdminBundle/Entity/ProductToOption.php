@@ -12,48 +12,48 @@ class ProductToOption
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;
     
     /**
-     * @ORM\Column(name="product_option_group_id", type="integer", length="11")
+     * @ORM\Column(name="product_option_group_id", type="integer", length=11)
      */
     private $productOptionGroupId;
     
     /**
-     * @ORM\Column(name="product_option_id", type="integer", length="11")
+     * @ORM\Column(name="product_option_id", type="integer", length=11)
      */
     private $productOptionId;
     
     /**
-     * @ORM\Column(name="price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
      */
     private $price;
     
     /**
-     * @ORM\Column(name="price_type", type="string", length="1")
+     * @ORM\Column(name="price_type", type="string", length=1)
      */
     private $priceType;
     
     /**
-     * @ORM\Column(name="price_use", type="string", length="1")
+     * @ORM\Column(name="price_use", type="string", length=1)
      */
     private $priceUse;
         
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -68,7 +68,7 @@ class ProductToOption
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -77,7 +77,7 @@ class ProductToOption
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

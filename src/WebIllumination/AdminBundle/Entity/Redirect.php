@@ -12,18 +12,18 @@ class Redirect
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="object_id", type="integer", length="11")
+     * @ORM\Column(name="object_id", type="integer", length=11)
      */
     private $objectId;
 	
 	/**
-     * @ORM\Column(name="object_type", type="string", length="100")
+     * @ORM\Column(name="object_type", type="string", length=100)
      */
     private $objectType;
 	
@@ -38,7 +38,7 @@ class Redirect
     private $redirectTo;
     
     /**
-     * @ORM\Column(name="redirect_code", type="string", length="5")
+     * @ORM\Column(name="redirect_code", type="string", length=5)
      */
     private $redirectCode;
         
@@ -53,7 +53,7 @@ class Redirect
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class Redirect
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

@@ -12,33 +12,33 @@ class ProductToFeature
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;
     
     /**
-     * @ORM\Column(name="product_feature_group_id", type="integer", length="11")
+     * @ORM\Column(name="product_feature_group_id", type="integer", length=11)
      */
     private $productFeatureGroupId;
     
     /**
-     * @ORM\Column(name="product_feature_id", type="integer", length="11")
+     * @ORM\Column(name="product_feature_id", type="integer", length=11)
      */
     private $productFeatureId;
         
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -53,7 +53,7 @@ class ProductToFeature
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class ProductToFeature
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

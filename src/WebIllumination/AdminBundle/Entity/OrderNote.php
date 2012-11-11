@@ -12,28 +12,28 @@ class OrderNote
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="creator", type="string", length="255")
+     * @ORM\Column(name="creator", type="string", length=255)
      */
     private $creator;
     
     /**
-     * @ORM\Column(name="order_id", type="integer", length="11")
+     * @ORM\Column(name="order_id", type="integer", length=11)
      */
     private $orderId;
     
     /**
-     * @ORM\Column(name="note_type", type="string", length="255")
+     * @ORM\Column(name="note_type", type="string", length=255)
      */
     private $noteType;
         
     /**
-     * @ORM\Column(name="notified", type="integer", length="1")
+     * @ORM\Column(name="notified", type="integer", length=1)
      */
     private $notified;
     
@@ -53,7 +53,7 @@ class OrderNote
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class OrderNote
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

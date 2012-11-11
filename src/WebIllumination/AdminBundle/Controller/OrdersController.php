@@ -108,7 +108,7 @@ class OrdersController extends Controller
 				    				// Get the order and update
 					    			$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($itemId);
 					    			if ($itemObject)
-					    			{
+					    			{ 
 						    			if ($itemObject->getStatus() == 'Payment Received')
 						    			{
 						    				$itemObject->setStatus('Processing Your Order');
@@ -160,7 +160,7 @@ class OrdersController extends Controller
 								    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrders.html.twig', array('orders' => $orders));
 								    
 								    // Get the files
-								    $ordersHtmlFileName = 'orde rs-'.date('dmYHis').'.html';
+								    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
 								    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
 								    $document = 'orders-'.date('dmYHis');
 								    $ordersPdfFileName = $document.'.pdf';

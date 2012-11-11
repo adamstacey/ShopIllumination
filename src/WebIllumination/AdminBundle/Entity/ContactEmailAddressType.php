@@ -12,13 +12,13 @@ class ContactEmailAddressType
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
     
     /**
-     * @ORM\Column(name="contact_email_address_type", type="string", length="255")
+     * @ORM\Column(name="contact_email_address_type", type="string", length=255)
      */
     private $contactEmailAddressType;
     
@@ -28,12 +28,12 @@ class ContactEmailAddressType
     private $description;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -48,7 +48,7 @@ class ContactEmailAddressType
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -57,7 +57,7 @@ class ContactEmailAddressType
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

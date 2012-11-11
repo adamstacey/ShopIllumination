@@ -12,88 +12,88 @@ class OrderProduct
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="order_id", type="integer", length="11")
+     * @ORM\Column(name="order_id", type="integer", length=11)
      */
     private $orderId;
     
     /**
-     * @ORM\Column(name="basket_item_id", type="string", length="255")
+     * @ORM\Column(name="basket_item_id", type="string", length=255)
      */
     private $basketItemId;
         
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;
     
     /**
-     * @ORM\Column(name="product", type="string", length="255")
+     * @ORM\Column(name="product", type="string", length=255)
      */
     private $product;
     
     /**
-     * @ORM\Column(name="url", type="string", length="255")
+     * @ORM\Column(name="url", type="string", length=255)
      */
     private $url;
     
     /**
-     * @ORM\Column(name="header", type="string", length="255")
+     * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
     
     /**
-     * @ORM\Column(name="product_code", type="string", length="255")
+     * @ORM\Column(name="product_code", type="string", length=255)
      */
     private $productCode;
     
     /**
-     * @ORM\Column(name="brand", type="string", length="255")
+     * @ORM\Column(name="brand", type="string", length=255)
      */
     private $brand;
     
     /**
-     * @ORM\Column(name="short_description", type="string", length="255")
+     * @ORM\Column(name="short_description", type="string", length=255)
      */
     private $shortDescription;
     
     /**
-     * @ORM\Column(name="quantity", type="integer", length="11")
+     * @ORM\Column(name="quantity", type="integer", length=11)
      */
     private $quantity;
     
     /**
-     * @ORM\Column(name="unit_cost", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="unit_cost", type="decimal", precision=12, scale=4)
      */
     private $unitCost;
     
     /**
-     * @ORM\Column(name="recommended_retail_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
      */
     private $recommendedRetailPrice;
     
     /**
-     * @ORM\Column(name="discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
      */
     private $discount;
     
     /**
-     * @ORM\Column(name="savings", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="savings", type="decimal", precision=12, scale=4)
      */
     private $savings;
     
     /**
-     * @ORM\Column(name="vat", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="vat", type="decimal", precision=12, scale=4)
      */
     private $vat;
     
     /**
-     * @ORM\Column(name="sub_total", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4)
      */
     private $subTotal;
     
@@ -118,7 +118,7 @@ class OrderProduct
     private $updatedAt;
     
     /**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -127,7 +127,7 @@ class OrderProduct
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

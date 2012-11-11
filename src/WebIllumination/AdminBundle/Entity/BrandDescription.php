@@ -12,28 +12,28 @@ class BrandDescription
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="brand_id", type="integer", length="11")
+     * @ORM\Column(name="brand_id", type="integer", length=11)
      */
     private $brandId;  
     
 	/**
-     * @ORM\Column(name="logo_image_id", type="integer", length="11")
+     * @ORM\Column(name="logo_image_id", type="integer", length=11)
      */
     private $logoImageId;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
     /**
-     * @ORM\Column(name="brand", type="string", length="255")
+     * @ORM\Column(name="brand", type="string", length=255)
      */
     private $brand;
     
@@ -58,12 +58,12 @@ class BrandDescription
     private $moreInformation; 
     
     /**
-     * @ORM\Column(name="page_title", type="string", length="255")
+     * @ORM\Column(name="page_title", type="string", length=255)
      */
     private $pageTitle;
     
     /**
-     * @ORM\Column(name="header", type="string", length="255")
+     * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
     
@@ -93,7 +93,7 @@ class BrandDescription
     private $updatedAt;
     
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -102,7 +102,7 @@ class BrandDescription
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

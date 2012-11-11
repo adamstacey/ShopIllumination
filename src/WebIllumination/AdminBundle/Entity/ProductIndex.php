@@ -6,85 +6,85 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="product_index")
- * @ORM\Table(name="product_index", indexes={@ORM\index(name="search_idx", columns={"status", "available_for_purchase", "hide_price", "show_price_out_of_hours", "page_title", "list_price", "brand_id", "locale", "currency_code", "product_group_id"})})
+ * @ORM\Table(name="product_index", indexes={@ORM\Index(name="search_idx", columns={"status", "available_for_purchase", "hide_price", "show_price_out_of_hours", "page_title", "list_price", "brand_id", "locale", "currency_code", "product_group_id"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class ProductIndex
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;
     
     /**
-     * @ORM\Column(name="product_group_id", type="integer", length="11")
+     * @ORM\Column(name="product_group_id", type="integer", length=11)
      */
     private $productGroupId;
     
     /**
-     * @ORM\Column(name="status", type="string", length="1")
+     * @ORM\Column(name="status", type="string", length=1)
      */
     private $status;
     
     /**
-     * @ORM\Column(name="checked", type="integer", length="1")
+     * @ORM\Column(name="checked", type="integer", length=1)
      */
     private $checked;
     
     /**
-     * @ORM\Column(name="available_for_purchase", type="integer", length="1")
+     * @ORM\Column(name="available_for_purchase", type="integer", length=1)
      */
     private $availableForPurchase;
     
     /**
-     * @ORM\Column(name="product", type="string", length="255")
+     * @ORM\Column(name="product", type="string", length=255)
      */
     private $product;
     
     /**
-     * @ORM\Column(name="prefix", type="string", length="255")
+     * @ORM\Column(name="prefix", type="string", length=255)
      */
     private $prefix;
     
     /**
-     * @ORM\Column(name="tagline", type="string", length="255")
+     * @ORM\Column(name="tagline", type="string", length=255)
      */
     private $tagline;
     
     /**
-     * @ORM\Column(name="header", type="string", length="255")
+     * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
     
     /**
-     * @ORM\Column(name="page_title", type="string", length="255")
+     * @ORM\Column(name="page_title", type="string", length=255)
      */
     private $pageTitle;
     
     /**
-     * @ORM\Column(name="product_code", type="string", length="100")
+     * @ORM\Column(name="product_code", type="string", length=100)
      */
     private $productCode;
     
     /**
-     * @ORM\Column(name="product_group_code", type="string", length="100")
+     * @ORM\Column(name="product_group_code", type="string", length=100)
      */
     private $productGroupCode;
     
     /**
-     * @ORM\Column(name="additional_product_colours_count", type="integer", length="11")
+     * @ORM\Column(name="additional_product_colours_count", type="integer", length=11)
      */
     private $additionalProductColoursCount;
     
     /**
-     * @ORM\Column(name="additional_products_count", type="integer", length="11")
+     * @ORM\Column(name="additional_products_count", type="integer", length=11)
      */
     private $additionalProductsCount;
     
@@ -99,7 +99,7 @@ class ProductIndex
     private $cheaperAlternativeUrl;
     
     /**
-     * @ORM\Column(name="cheaper_alternative_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="cheaper_alternative_price", type="decimal", precision=12, scale=4)
      */
     private $cheaperAlternativePrice;
         
@@ -119,72 +119,72 @@ class ProductIndex
     private $searchWords;
     
     /**
-     * @ORM\Column(name="special_offer", type="integer", length="1")
+     * @ORM\Column(name="special_offer", type="integer", length=1)
      */
     private $specialOffer;
     
     /**
-     * @ORM\Column(name="recommended", type="integer", length="1")
+     * @ORM\Column(name="recommended", type="integer", length=1)
      */
     private $recommended;
     
     /**
-     * @ORM\Column(name="accessory", type="integer", length="1")
+     * @ORM\Column(name="accessory", type="integer", length=1)
      */
     private $accessory;
     
     /**
-     * @ORM\Column(name="new", type="integer", length="1")
+     * @ORM\Column(name="new", type="integer", length=1)
      */
     private $new;
     
     /**
-     * @ORM\Column(name="hide_price", type="integer", length="1")
+     * @ORM\Column(name="hide_price", type="integer", length=1)
      */
     private $hidePrice;
     
     /**
-     * @ORM\Column(name="show_price_out_of_hours", type="integer", length="1")
+     * @ORM\Column(name="show_price_out_of_hours", type="integer", length=1)
      */
     private $showPriceOutOfHours;
     
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="integer", length="1")
+     * @ORM\Column(name="membership_card_discount_available", type="integer", length=1)
      */
     private $membershipCardDiscountAvailable;
     
     /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
     private $maximumMembershipCardDiscount;
     
     /**
-     * @ORM\Column(name="delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
     private $inheritedDeliveryBand;
     
     /**
-     * @ORM\Column(name="delivery_cost", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_cost", type="decimal", precision=12, scale=4)
      */
     private $deliveryCost;
     
     /**
-     * @ORM\Column(name="weight", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="weight", type="decimal", precision=12, scale=4)
      */
     private $weight;
     
     /**
-     * @ORM\Column(name="brand_id", type="integer", length="11")
+     * @ORM\Column(name="brand_id", type="integer", length=11)
      */
     private $brandId;
     
     /**
-     * @ORM\Column(name="brand", type="string", length="255")
+     * @ORM\Column(name="brand", type="string", length=255)
      */
     private $brand;
     
@@ -244,57 +244,57 @@ class ProductIndex
     private $productFeatures;
     
     /**
-     * @ORM\Column(name="original_path", type="text", nullable="TRUE")
+     * @ORM\Column(name="original_path", type="text", nullable=true)
      */
     private $originalPath;
     
     /**
-     * @ORM\Column(name="thumbnail_path", type="text", nullable="TRUE")
+     * @ORM\Column(name="thumbnail_path", type="text", nullable=true)
      */
     private $thumbnailPath;
     
     /**
-     * @ORM\Column(name="medium_path", type="text", nullable="TRUE")
+     * @ORM\Column(name="medium_path", type="text", nullable=true)
      */
     private $mediumPath;
     
     /**
-     * @ORM\Column(name="large_path", type="text", nullable="TRUE")
+     * @ORM\Column(name="large_path", type="text", nullable=true)
      */
     private $largePath;
     
     /**
-     * @ORM\Column(name="cost_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="cost_price", type="decimal", precision=12, scale=4)
      */
     private $costPrice;
     
     /**
-     * @ORM\Column(name="recommended_retail_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
      */
     private $recommendedRetailPrice;
     
     /**
-     * @ORM\Column(name="list_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="list_price", type="decimal", precision=12, scale=4)
      */
     private $listPrice;
     
     /**
-     * @ORM\Column(name="membership_card_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="membership_card_price", type="decimal", precision=12, scale=4)
      */
     private $membershipCardPrice;
     
     /**
-     * @ORM\Column(name="discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
      */
     private $discount;
     
     /**
-     * @ORM\Column(name="savings", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="savings", type="decimal", precision=12, scale=4)
      */
     private $savings;
     
     /**
-     * @ORM\Column(name="currency_code", type="string", length="3")
+     * @ORM\Column(name="currency_code", type="string", length=3)
      */
     private $currencyCode;
     
@@ -304,7 +304,7 @@ class ProductIndex
     private $url;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     
@@ -319,7 +319,7 @@ class ProductIndex
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -328,7 +328,7 @@ class ProductIndex
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

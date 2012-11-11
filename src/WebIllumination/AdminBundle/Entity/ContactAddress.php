@@ -12,88 +12,88 @@ class ContactAddress
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="contact_address_type_id", type="integer", length="11")
+     * @ORM\Column(name="contact_address_type_id", type="integer", length=11)
      */
     private $contactAddressTypeId;
     
     /**
-     * @ORM\Column(name="contact_id", type="integer", length="11")
+     * @ORM\Column(name="contact_id", type="integer", length=11)
      */
     private $contactId;
         
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
     
     /**
-     * @ORM\Column(name="display_name", type="string", length="255")
+     * @ORM\Column(name="display_name", type="string", length=255)
      */
     private $displayName;
     
     /**
-     * @ORM\Column(name="organisation_name", type="string", length="255")
+     * @ORM\Column(name="organisation_name", type="string", length=255)
      */
     private $organisationName;
     
     /**
-     * @ORM\Column(name="contact_title_id", type="integer", length="11")
+     * @ORM\Column(name="contact_title_id", type="integer", length=11)
      */
     private $contactTitleId;
     
     /**
-     * @ORM\Column(name="first_name", type="string", length="255")
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
     
     /**
-     * @ORM\Column(name="middle_name", type="string", length="255")
+     * @ORM\Column(name="middle_name", type="string", length=255)
      */
     private $middleName;
     
     /**
-     * @ORM\Column(name="last_name", type="string", length="255")
+     * @ORM\Column(name="last_name", type="string", length=255)
      */
     private $lastName;
     
     /**
-     * @ORM\Column(name="address_line_1", type="string", length="255")
+     * @ORM\Column(name="address_line_1", type="string", length=255)
      */
     private $addressLine1;
     
     /**
-     * @ORM\Column(name="address_line_2", type="string", length="255")
+     * @ORM\Column(name="address_line_2", type="string", length=255)
      */
     private $addressLine2;
     
     /**
-     * @ORM\Column(name="address_line_3", type="string", length="255")
+     * @ORM\Column(name="address_line_3", type="string", length=255)
      */
     private $addressLine3;
     
     /**
-     * @ORM\Column(name="town_city", type="string", length="100")
+     * @ORM\Column(name="town_city", type="string", length=100)
      */
     private $townCity;
     
     /**
-     * @ORM\Column(name="county_state", type="string", length="100")
+     * @ORM\Column(name="county_state", type="string", length=100)
      */
     private $countyState;
     
     /**
-     * @ORM\Column(name="post_zip_code", type="string", length="20")
+     * @ORM\Column(name="post_zip_code", type="string", length=20)
      */
     private $postZipCode;
     
      /**
-     * @ORM\Column(name="country_code", type="string", length="2")
+     * @ORM\Column(name="country_code", type="string", length=2)
      */
     private $countryCode;
         
@@ -108,7 +108,7 @@ class ContactAddress
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -117,7 +117,7 @@ class ContactAddress
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

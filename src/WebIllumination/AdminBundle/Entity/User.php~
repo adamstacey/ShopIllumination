@@ -13,33 +13,33 @@ class User implements UserInterface
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="contact_id", type="integer", length="11")
+     * @ORM\Column(name="contact_id", type="integer", length=11)
      */
     private $contactId;
 	
 	/**
-     * @ORM\Column(name="email_address", type="string", length="255", unique="true")
+     * @ORM\Column(name="email_address", type="string", length=255, unique=true)
      */
     private $emailAddress;
     
     /**
-     * @ORM\Column(name="salt", type="string", length="255")
+     * @ORM\Column(name="salt", type="string", length=255)
      */
     private $salt;
     
     /**
-     * @ORM\Column(name="password", type="string", length="255")
+     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
             
@@ -59,7 +59,7 @@ class User implements UserInterface
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -69,7 +69,7 @@ class User implements UserInterface
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

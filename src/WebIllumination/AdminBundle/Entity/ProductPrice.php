@@ -12,43 +12,43 @@ class ProductPrice
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length="11")
+     * @ORM\Column(name="product_id", type="integer", length=11)
      */
     private $productId;
     
     /**
-     * @ORM\Column(name="supplier_id", type="integer", length="11")
+     * @ORM\Column(name="supplier_id", type="integer", length=11)
      */
     private $supplierId;
     
     /**
-     * @ORM\Column(name="cost_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="cost_price", type="decimal", precision=12, scale=4)
      */
     private $costPrice;
     
     /**
-     * @ORM\Column(name="recommended_retail_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
      */
     private $recommendedRetailPrice;
     
     /**
-     * @ORM\Column(name="list_price", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="list_price", type="decimal", precision=12, scale=4)
      */
     private $listPrice;
     
     /**
-     * @ORM\Column(name="currency_code", type="string", length="3")
+     * @ORM\Column(name="currency_code", type="string", length=3)
      */
     private $currencyCode;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -63,7 +63,7 @@ class ProductPrice
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -72,7 +72,7 @@ class ProductPrice
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

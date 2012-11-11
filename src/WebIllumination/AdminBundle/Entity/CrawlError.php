@@ -12,7 +12,7 @@ class CrawlError
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
@@ -23,12 +23,12 @@ class CrawlError
     private $url;
     
     /**
-     * @ORM\Column(name="response_code", type="integer", length="5")
+     * @ORM\Column(name="response_code", type="integer", length=5)
      */
     private $responseCode;
 	
 	/**
-     * @ORM\Column(name="actioned", type="integer", length="1")
+     * @ORM\Column(name="actioned", type="integer", length=1)
      */
     private $actioned;
 	        
@@ -43,7 +43,7 @@ class CrawlError
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -52,7 +52,7 @@ class CrawlError
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

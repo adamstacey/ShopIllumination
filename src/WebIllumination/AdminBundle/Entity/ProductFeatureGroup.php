@@ -12,28 +12,28 @@ class ProductFeatureGroup
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
     
     /**
-     * @ORM\Column(name="active", type="integer", length="1")
+     * @ORM\Column(name="active", type="integer", length=1)
      */
     private $active;
     
     /**
-     * @ORM\Column(name="filter", type="integer", length="1")
+     * @ORM\Column(name="filter", type="integer", length=1)
      */
     private $filter;
     
     /**
-     * @ORM\Column(name="product_feature_group", type="string", length="255")
+     * @ORM\Column(name="product_feature_group", type="string", length=255)
      */
     private $productFeatureGroup;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
                 
@@ -48,7 +48,7 @@ class ProductFeatureGroup
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -57,7 +57,7 @@ class ProductFeatureGroup
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

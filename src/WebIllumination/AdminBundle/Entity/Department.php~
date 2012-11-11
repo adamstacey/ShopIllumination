@@ -6,25 +6,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="department", indexes={@ORM\index(name="search_idx", columns={"id", "parent_id", "status", "hide_prices", "show_prices_out_of_hours", "membership_card_discount_available", "maximum_membership_card_discount", "delivery_band", "inherited_delivery_band", "check_delivery_band", "display_order", "created_at", "updated_at"})})
+ * @ORM\Table(name="department", indexes={@ORM\Index(name="search_idx", columns={"id", "parent_id", "status", "hide_prices", "show_prices_out_of_hours", "membership_card_discount_available", "maximum_membership_card_discount", "delivery_band", "inherited_delivery_band", "check_delivery_band", "display_order", "created_at", "updated_at"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class Department
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="parent_id", type="integer", length="11")
+     * @ORM\Column(name="parent_id", type="integer", length=11)
      */
     private $parentId;
     
     /**
-     * @ORM\Column(name="status", type="string", length="1")
+     * @ORM\Column(name="status", type="string", length=1)
      */
     private $status;
     
@@ -34,42 +34,42 @@ class Department
     private $departmentPath;
     
     /**
-     * @ORM\Column(name="hide_prices", type="integer", length="1")
+     * @ORM\Column(name="hide_prices", type="integer", length=1)
      */
     private $hidePrices;
     
     /**
-     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length="1")
+     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length=1)
      */
     private $showPricesOutOfHours;
     
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="integer", length="1")
+     * @ORM\Column(name="membership_card_discount_available", type="integer", length=1)
      */
     private $membershipCardDiscountAvailable;
     
     /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
     private $maximumMembershipCardDiscount;
     
     /**
-     * @ORM\Column(name="delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
     private $inheritedDeliveryBand;
     
     /**
-     * @ORM\Column(name="check_delivery_band", type="integer", length="1")
+     * @ORM\Column(name="check_delivery_band", type="integer", length=1)
      */
     private $checkDeliveryBand;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
             
@@ -84,7 +84,7 @@ class Department
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -93,7 +93,7 @@ class Department
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

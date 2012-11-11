@@ -12,7 +12,7 @@ class Taxonomy
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
@@ -23,17 +23,17 @@ class Taxonomy
     private $name;
     
     /**
-     * @ORM\Column(name="reference", type="string", length="255")
+     * @ORM\Column(name="reference", type="string", length=255)
      */
     private $reference;
     
     /**
-     * @ORM\Column(name="object_type", type="string", length="255")
+     * @ORM\Column(name="object_type", type="string", length=255)
      */
     private $objectType;
     
     /**
-     * @ORM\Column(name="locale", type="string", length="2")
+     * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
     	        
@@ -48,7 +48,7 @@ class Taxonomy
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -57,7 +57,7 @@ class Taxonomy
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

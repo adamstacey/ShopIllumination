@@ -12,33 +12,33 @@ class BrandToDepartment
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
     
     /**
-     * @ORM\Column(name="brand_id", type="integer", length="11")
+     * @ORM\Column(name="brand_id", type="integer", length=11)
      */
     private $brandId;
     
     /**
-     * @ORM\Column(name="department_id", type="integer", length="11")
+     * @ORM\Column(name="department_id", type="integer", length=11)
      */
     private $departmentId;
             
     /**
-     * @ORM\Column(name="delivery_band", type="decimal", precision="12", scale="4")
+     * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
     private $deliveryBand;
     
     /**
-     * @ORM\Column(name="page_title", type="string", length="255")
+     * @ORM\Column(name="page_title", type="string", length=255)
      */
     private $pageTitle;
     
     /**
-     * @ORM\Column(name="header", type="string", length="255")
+     * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
     
@@ -68,7 +68,7 @@ class BrandToDepartment
     public $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -77,7 +77,7 @@ class BrandToDepartment
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

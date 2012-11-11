@@ -12,33 +12,33 @@ class Guarantee
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="object_id", type="integer", length="11")
+     * @ORM\Column(name="object_id", type="integer", length=11)
      */
     private $objectId;
 	    
     /**
-     * @ORM\Column(name="object_type", type="string", length="100")
+     * @ORM\Column(name="object_type", type="string", length=100)
      */
     private $objectType;
     
     /**
-     * @ORM\Column(name="guarantee_type_id", type="integer", length="11")
+     * @ORM\Column(name="guarantee_type_id", type="integer", length=11)
      */
     private $guaranteeTypeId;
     
      /**
-     * @ORM\Column(name="guarantee_length_id", type="integer", length="11")
+     * @ORM\Column(name="guarantee_length_id", type="integer", length=11)
      */
     private $guaranteeLengthId;
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length="11")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
     
@@ -53,7 +53,7 @@ class Guarantee
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -62,7 +62,7 @@ class Guarantee
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {

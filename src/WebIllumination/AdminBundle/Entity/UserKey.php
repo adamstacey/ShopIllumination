@@ -11,18 +11,18 @@ class UserKey
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length="11")
+     * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 	
 	/**
-     * @ORM\Column(name="user_id", type="integer", length="11")
+     * @ORM\Column(name="user_id", type="integer", length=11)
      */
     private $userId;
 	
 	/**
-     * @ORM\Column(name="user_key", type="string", length="50")
+     * @ORM\Column(name="user_key", type="string", length=50)
      */
     private $userKey;
                 
@@ -42,7 +42,7 @@ class UserKey
     private $updatedAt;
 
 	/**
-	 * @ORM\prePersist
+	 * @ORM\PrePersist
 	 */
 	public function create()
 	{
@@ -53,7 +53,7 @@ class UserKey
 	}
 	
 	/**
-	 * @ORM\preUpdate
+	 * @ORM\PreUpdate
 	 */
     public function update()
     {
