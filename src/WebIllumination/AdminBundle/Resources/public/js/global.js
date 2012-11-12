@@ -827,29 +827,31 @@ $(document).ready(function () {
 		if ($selectObject.val() != "")
 		{
 			var $appendObject = '';
-			if ($selectObject.val() == 'freeText')
+			if (($selectObject.val() == 'freeText') && ($freeTextObject.val() != ''))
 			{
 				$appendObject = '<li data-flat-sortable-list-object="' + $flatSortableListObjectName + '" id="flat-sortable-list-'+$flatSortableListObjectFieldName+'-item-' + $nextItemNumber + '" data-value="freeText|' + $freeTextObject.val() + '">Free Text: "' + $freeTextObject.val() + '"<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
-			} else {
+			} else if ($selectObject.val() != 'freeText') {
 				$appendObject = '<li data-flat-sortable-list-object="' + $flatSortableListObjectName + '" id="flat-sortable-list-'+$flatSortableListObjectFieldName+'-item-' + $nextItemNumber + '" data-value="' + $selectObject.val() + '">' + $selectObject.find("option[value='"+$selectObject.val()+"']").text() + '<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
 			}
-			$flatSortableListObject.append($appendObject);
-			if ($("#flat-sortable-list-"+$flatSortableListObjectFieldName+"-item-"+$nextItemNumber+" .button").length > 0)
+			if ($appendObject != '')
 			{
-				$("#flat-sortable-list-"+$flatSortableListObjectFieldName+"-item-"+$nextItemNumber+" .button").each(function () {
-		            $(this).button({
-		            	icons: {
-		                	primary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-primary') : null, 
-		                    secondary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-secondary') : null
-		                }, 
-		                text: $(this).attr('data-icon-only') === 'true' ? false : true
-		            });
-		        });
-	        }
-			updateFlatSortableList($flatSortableListObjectName);
+				$flatSortableListObject.append($appendObject);
+				if ($("#flat-sortable-list-"+$flatSortableListObjectFieldName+"-item-"+$nextItemNumber+" .button").length > 0)
+				{
+					$("#flat-sortable-list-"+$flatSortableListObjectFieldName+"-item-"+$nextItemNumber+" .button").each(function () {
+			            $(this).button({
+			            	icons: {
+			                	primary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-primary') : null, 
+			                    secondary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-secondary') : null
+			                }, 
+			                text: $(this).attr('data-icon-only') === 'true' ? false : true
+			            });
+			        });
+		        }
+				updateFlatSortableList($flatSortableListObjectName);
+			}
 		}
 	});
-	
 	
 	$("#add .action-multiple-delete-add").live('click', function() {
 		if ($("#add .action-select-add:checked").length > 0)

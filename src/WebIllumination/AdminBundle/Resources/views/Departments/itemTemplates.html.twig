@@ -35,11 +35,11 @@
 													<select data-flat-sortable-list-object="page-title-template" class="flat-sortable-list-parts no-margin full">
 														<option value="">- Add New Part -</option>
 														<option value="freeText">Free Text</option>
-														<option value="brand">Brand</option>
-														<option value="productCode">Product Code</option>
-														<option value="department">Department</option>
-														<option value="productExtraKeyword">Product Extra Keyword</option>
-														<option value="keyMessage">Key Message</option>
+														{% if 'brand' not in data.item.pageTitleTemplate %}<option value="brand">Brand</option>{% endif %}
+														{% if 'productCode' not in data.item.pageTitleTemplate %}<option value="productCode">Product Code</option>{% endif %}
+														{% if 'department' not in data.item.pageTitleTemplate %}<option value="department">Department</option>{% endif %}
+														{% if 'productExtraKeyword' not in data.item.pageTitleTemplate %}<option value="productExtraKeyword">Product Extra Keyword</option>{% endif %}
+														{% if 'keyMessage' not in data.item.pageTitleTemplate %}<option value="keyMessage">Key Message</option>{% endif %}
 														<optgroup label="Symbols">
 															<option value="freeText">×</option>
 															<option value="freeText">⌀</option>
@@ -50,7 +50,7 @@
 														{% if data.productFeatureGroups|length > 0 %}
 															<optgroup label="Feature Groups">
 															{% for productFeatureGroup in data.productFeatureGroups %}
-																<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>
+																{% if 'productFeatureGroup|'~productFeatureGroup.id not in data.item.pageTitleTemplate %}<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>{% endif %}
 															{% endfor %}
 															</optgroup>
 														{% endif %}
@@ -114,11 +114,11 @@
 													<select data-flat-sortable-list-object="header-template" class="flat-sortable-list-parts no-margin full">
 														<option value="">- Add New Part -</option>
 														<option value="freeText">Free Text</option>
-														<option value="brand">Brand</option>
-														<option value="productCode">Product Code</option>
-														<option value="department">Department</option>
-														<option value="productExtraKeyword">Product Extra Keyword</option>
-														<option value="keyMessage">Key Message</option>
+														{% if 'brand' not in data.item.headerTemplate %}<option value="brand">Brand</option>{% endif %}
+														{% if 'productCode' not in data.item.headerTemplate %}<option value="productCode">Product Code</option>{% endif %}
+														{% if 'department' not in data.item.headerTemplate %}<option value="department">Department</option>{% endif %}
+														{% if 'productExtraKeyword' not in data.item.headerTemplate %}<option value="productExtraKeyword">Product Extra Keyword</option>{% endif %}
+														{% if 'keyMessage' not in data.item.headerTemplate %}<option value="keyMessage">Key Message</option>{% endif %}
 														<optgroup label="Symbols">
 															<option value="freeText">×</option>
 															<option value="freeText">⌀</option>
@@ -129,7 +129,7 @@
 														{% if data.productFeatureGroups|length > 0 %}
 															<optgroup label="Feature Groups">
 															{% for productFeatureGroup in data.productFeatureGroups %}
-																<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>
+																{% if 'productFeatureGroup|'~productFeatureGroup.id not in data.item.headerTemplate %}<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>{% endif %}
 															{% endfor %}
 															</optgroup>
 														{% endif %}
@@ -187,11 +187,11 @@
 													<select data-flat-sortable-list-object="meta-description-template" class="flat-sortable-list-parts no-margin full">
 														<option value="">- Add New Part -</option>
 														<option value="freeText">Free Text</option>
-														<option value="brand">Brand</option>
-														<option value="productCode">Product Code</option>
-														<option value="department">Department</option>
-														<option value="productExtraKeyword">Product Extra Keyword</option>
-														<option value="keyMessage">Key Message</option>
+														{% if 'brand' not in data.item.metaDescriptionTemplate %}<option value="brand">Brand</option>{% endif %}
+														{% if 'productCode' not in data.item.metaDescriptionTemplate %}<option value="productCode">Product Code</option>{% endif %}
+														{% if 'department' not in data.item.metaDescriptionTemplate %}<option value="department">Department</option>{% endif %}
+														{% if 'productExtraKeyword' not in data.item.metaDescriptionTemplate %}<option value="productExtraKeyword">Product Extra Keyword</option>{% endif %}
+														{% if 'keyMessage' not in data.item.metaDescriptionTemplate %}<option value="keyMessage">Key Message</option>{% endif %}
 														<optgroup label="Symbols">
 															<option value="freeText">×</option>
 															<option value="freeText">⌀</option>
@@ -202,7 +202,7 @@
 														{% if data.productFeatureGroups|length > 0 %}
 															<optgroup label="Feature Groups">
 															{% for productFeatureGroup in data.productFeatureGroups %}
-																<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>
+																{% if 'productFeatureGroup|'~productFeatureGroup.id not in data.item.metaDescriptionTemplate %}<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>{% endif %}
 															{% endfor %}
 															</optgroup>
 														{% endif %}

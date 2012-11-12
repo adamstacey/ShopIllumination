@@ -5,7 +5,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="department_description", indexes={@ORM\index(name="search_idx", columns={"id", "department_id", "locale", "name", "created_at", "updated_at"})})
+ * @ORM\Table(name="department_description", indexes={@ORM\Index(name="search_idx", columns={"id", "department_id", "locale", "name", "created_at", "updated_at"})})
  * @ORM\HasLifecycleCallbacks()
  */
 class DepartmentDescription
