@@ -1420,7 +1420,7 @@ class OrdersController extends Controller
 					    	$orderNoteObject->setNoteType('customer');
 					    	$orderNoteObject->setNotified(1);
 					    	$orderNoteObject->setNote($plainTextNote);
-					    	$orderNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
+					    	$orderNoteObject->setCreator('Automated');
 					    	$em->persist($orderNoteObject);
 						    $em->flush();
 						    
