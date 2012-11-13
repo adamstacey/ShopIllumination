@@ -749,6 +749,26 @@ class DepartmentsController extends Controller
     		$headerTemplate = trim($request->request->get('header-template'));
     		$metaDescriptionTemplate = trim($request->request->get('meta-description-template'));
     		$goBack = $request->request->get('go-back');
+    		$extraAction = $request->request->get('extra-action');
+    		
+    		// Check if any extra actions are required
+    		if (strpos($extraAction, 'getTemplatesFromDepartment') !== false)
+    		{
+	    		// Get any new product features added
+	    		$departmentId = str_replace('getTemplatesFromDepartment|', '', $extraAction);
+    			$templatesAdded = $service->getTemplatesFromDepartment($id, $departmentId, 'en');
+    			
+    			// Notify user
+    			if ($templatesAdded)
+    			{
+    				$this->get('session')->getFlashBag()->add('success', 'The templates from the selected department have been used and the department has been updated.');
+    			} else {
+	    			$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem using the templates from the selected department. Please try again.');
+    			}
+    			
+    			// Forward
+    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
+    		}
     		    		
     		// Update objects
     		$itemDescriptionObject->setPageTitleTemplate($pageTitleTemplate);

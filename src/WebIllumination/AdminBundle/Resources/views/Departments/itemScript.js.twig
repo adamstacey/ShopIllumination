@@ -99,6 +99,7 @@
 						$("#form-get-templates-from-department option").removeAttr("selected");
 						$("#form-get-templates-from-department option[value='"+ui.item.value+"']").attr("selected", "selected");
 						$("#search-department").val("");
+						$("#form-extra-action").val(ui.item.value);
 						$("#form-update").submit();
 						return false;
 					}
@@ -112,6 +113,7 @@
 						$("#form-get-product-features-from-department option").removeAttr("selected");
 						$("#form-get-product-features-from-department option[value='"+ui.item.value+"']").attr("selected", "selected");
 						$("#search-department").val("");
+						$("#form-extra-action").val(ui.item.value);
 						$("#form-update").submit();
 						return false;
 					}

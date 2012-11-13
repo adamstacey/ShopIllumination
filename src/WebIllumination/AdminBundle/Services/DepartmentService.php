@@ -1086,6 +1086,41 @@ class DepartmentService {
 		return $productFeaturesAdded;
 	}
 	
+	// Get the templates from a department
+	public function getTemplatesFromDepartment($id, $departmentId, $locale = 'en')
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the department
+		$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		
+		// Get the department to get the templates from
+		$departmentDescriptionToGetTemplatesFromObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));
+		
+		// Update the department templates
+		if ($departmentDescriptionObject && $departmentIndexObject && $departmentDescriptionToGetTemplatesFromObject)
+		{
+			$departmentDescriptionObject->setPageTitleTemplate($departmentDescriptionToGetTemplatesFromObject->getPageTitleTemplate());
+			$departmentDescriptionObject->setHeaderTemplate($departmentDescriptionToGetTemplatesFromObject->getHeaderTemplate());
+			$departmentDescriptionObject->setMetaDescriptionTemplate($departmentDescriptionToGetTemplatesFromObject->getMetaDescriptionTemplate());
+			$em->persist($departmentDescriptionObject);
+	    	$em->flush();
+	    	$departmentIndexObject->setPageTitleTemplate($departmentDescriptionToGetTemplatesFromObject->getPageTitleTemplate());
+			$departmentIndexObject->setHeaderTemplate($departmentDescriptionToGetTemplatesFromObject->getHeaderTemplate());
+			$departmentIndexObject->setMetaDescriptionTemplate($departmentDescriptionToGetTemplatesFromObject->getMetaDescriptionTemplate());
+			$em->persist($departmentIndexObject);
+	    	$em->flush();
+	    	return true;
+		}
+		
+		return false;
+	}
+	
 	// Get the products product feature groups
 	public function getProductProductFeatureGroups($id, $locale = 'en')
 	{

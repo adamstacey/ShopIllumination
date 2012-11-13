@@ -290,6 +290,7 @@
                         </div>
 					    <div id="float-buttons" class="clearfix">
 					        <div id="float-buttons-content" class="float-buttons clearfix buttons">
+					        	<input type="hidden" value="" id="form-extra-action" name="extra-action" />
 				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
 				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>			        		
 				        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
