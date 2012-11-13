@@ -32,14 +32,35 @@
 		
 		{# Setup the department list #}
 		{% if data.departments is defined %}
-			var departments = [
-				{% for department in data.departments %}
-					{
-						value: "{{ department.id }}",
-						label: "{{ department.name|raw }}"
-					}{% if not loop.last %},{% endif %}
-				{% endfor %}
-			];
+			if ($("#form-parent-id").length > 0)
+			{
+				var departments = [
+					{% for department in data.departments %}
+						{
+							value: "{{ department.id }}",
+							label: "{{ department.name|raw }}"
+						}{% if not loop.last %},{% endif %}
+					{% endfor %}
+				];
+			} else if ($("#form-get-templates-from-department").length > 0) {
+				var departments = [
+					{% for department in data.departments %}
+						{
+							value: "getTemplatesFromDepartment|{{ department.id }}",
+							label: "{{ department.name|raw }}"
+						}{% if not loop.last %},{% endif %}
+					{% endfor %}
+				];
+			} else if ($("#form-get-product-features-from-department").length > 0) {
+				var departments = [
+					{% for department in data.departments %}
+						{
+							value: "getProductFeaturesFromDepartment|{{ department.id }}",
+							label: "{{ department.name|raw }}"
+						}{% if not loop.last %},{% endif %}
+					{% endfor %}
+				];
+			}
 		{% endif %}
 		
 		{# Setup the taxonomy list #}
@@ -56,17 +77,46 @@
 		
 		{# Setup the searches #}
 		{% if data.departments is defined %}
-			$("#search-department").autocomplete({
-				source: departments,
-				select: function(event, ui) {
-					$("#form-parent-id").val(ui.item.label);
-					$("#uniform-form-parent-id span").html($("#form-parent-id option[value='"+ui.item.value+"']").text());
-					$("#form-parent-id option").removeAttr("selected");
-					$("#form-parent-id option[value='"+ui.item.value+"']").attr("selected", "selected");
-					$("#search-department").val("");
-					return false;
-				}
-			});
+			if ($("#form-parent-id").length > 0)
+			{
+				$("#search-department").autocomplete({
+					source: departments,
+					select: function(event, ui) {
+						$("#form-parent-id").val(ui.item.value);
+						$("#uniform-form-parent-id span").html($("#form-parent-id option[value='"+ui.item.value+"']").text());
+						$("#form-parent-id option").removeAttr("selected");
+						$("#form-parent-id option[value='"+ui.item.value+"']").attr("selected", "selected");
+						$("#search-department").val("");
+						return false;
+					}
+				});
+			} else if ($("#form-get-templates-from-department").length > 0) {
+				$("#search-department").autocomplete({
+					source: departments,
+					select: function(event, ui) {
+						$("#form-get-templates-from-department").val(ui.item.value);
+						$("#uniform-form-get-templates-from-department span").html($("#form-get-templates-from-department option[value='"+ui.item.value+"']").text());
+						$("#form-get-templates-from-department option").removeAttr("selected");
+						$("#form-get-templates-from-department option[value='"+ui.item.value+"']").attr("selected", "selected");
+						$("#search-department").val("");
+						$("#form-update").submit();
+						return false;
+					}
+				});
+			} else if ($("#form-get-product-features-from-department").length > 0) {
+				$("#search-department").autocomplete({
+					source: departments,
+					select: function(event, ui) {
+						$("#form-get-product-features-from-department").val(ui.item.value);
+						$("#uniform-form-get-product-features-from-department span").html($("#form-get-product-features-from-department option[value='"+ui.item.value+"']").text());
+						$("#form-get-product-features-from-department option").removeAttr("selected");
+						$("#form-get-product-features-from-department option[value='"+ui.item.value+"']").attr("selected", "selected");
+						$("#search-department").val("");
+						$("#form-update").submit();
+						return false;
+					}
+				});
+			}
 		{% endif %}
 		{% if data.taxonomy.google is defined %}
 			$("#search-google-department").autocomplete({

@@ -5,214 +5,6 @@ body {
 	background: #555555 url(/bundles/webilluminationadmin/images/backgrounds/body-background.png) repeat 0 0;
 	font: normal normal normal 12px/160% 'Lucida Grande', Verdana, sans-serif;
 }
-.no-border {
-	border: none !important;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-}
-.no-padding {
-  padding: 0 !important;
-}
-.no-padding-top {
-  padding-top: 0 !important;
-}
-.no-padding-right {
-  padding-right: 0 !important;
-}
-.no-padding-bottom {
-  padding-bottom: 0 !important;
-}
-.no-padding-left {
-  padding-left: 0 !important;
-}
-.padding-5 {
-  	padding: 5px;
-}
-.padding-top-5 {
-  	padding-top: 5px!important;
-}
-.padding-right-5 {
-  	padding-right: 5px!important;
-}
-.padding-bottom-5 {
-  	padding-bottom: 5px!important;
-}
-.padding-left-5 {
-	padding-left: 5px!important;
-}
-.padding-10 {
-  	padding: 10px;
-}
-.padding-top-10 {
-  	padding-top: 10px!important;
-}
-.padding-right-10 {
-  	padding-right: 10px!important;
-}
-.padding-bottom-10 {
-  	padding-bottom: 10px!important;
-}
-.padding-left-10 {
-	padding-left: 10px!important;
-}
-.padding-15 {
-  	padding: 15px;
-}
-.padding-top-15 {
-  	padding-top: 15px!important;
-}
-.padding-right-15 {
-  	padding-right: 15px!important;
-}
-.padding-bottom-15 {
-  	padding-bottom: 15px!important;
-}
-.padding-left-15 {
-	padding-left: 15px!important;
-}
-.padding-20 {
-  	padding: 20px;
-}
-.padding-top-20 {
-  	padding-top: 20px!important;
-}
-.padding-right-20 {
-  	padding-right: 20px!important;
-}
-.padding-bottom-20 {
-  	padding-bottom: 20px!important;
-}
-.padding-left-20 {
-	padding-left: 20px!important;
-}
-.padding-30 {
-  	padding: 30px;
-}
-.padding-top-30 {
-  	padding-top: 30px!important;
-}
-.padding-right-30 {
-  	padding-right: 30px!important;
-}
-.padding-bottom-30 {
-  	padding-bottom: 30px!important;
-}
-.padding-left-30 {
-	padding-left: 30px!important;
-}
-.padding-40 {
-  	padding: 40px;
-}
-.padding-top-40 {
-  	padding-top: 40px!important;
-}
-.padding-right-40 {
-  	padding-right: 40px!important;
-}
-.padding-bottom-40 {
-  	padding-bottom: 40px!important;
-}
-.padding-left-40 {
-	padding-left: 40px!important;
-}
-.no-margin {
-  margin: 0 !important;
-}
-.no-margin-top {
-  margin-top: 0 !important;
-}
-.no-margin-right {
-  margin-right: 0 !important;
-}
-.no-margin-bottom {
-  margin-bottom: 0 !important;
-}
-.no-margin-left {
-  margin-left: 0 !important;
-}
-.margin-2 {
-  margin: 2px;
-}
-.margin-top-2 {
-  margin-top: 2px!important;
-}
-.margin-right-2 {
-  margin-right: 2px!important;
-}
-.margin-bottom-2 {
-  margin-bottom: 2px!important;
-}
-.margin-left-2 {
-  margin-left: 2px!important;
-}
-.margin-5 {
-  margin: 5px;
-}
-.margin-top-5 {
-  margin-top: 5px!important;
-}
-.margin-right-5 {
-  margin-right: 5px!important;
-}
-.margin-bottom-5 {
-  margin-bottom: 5px!important;
-}
-.margin-left-5 {
-  margin-left: 5px!important;
-}
-.margin-10 {
-  margin: 10px;
-}
-.margin-top-10 {
-  margin-top: 10px!important;
-}
-.margin-right-10 {
-  margin-right: 10px!important;
-}
-.margin-bottom-10 {
-  margin-bottom: 10px!important;
-}
-.margin-left-10 {
-  margin-left: 10px!important;
-}
-.margin-15 {
-  margin: 15px;
-}
-.margin-top-15 {
-  margin-top: 15px!important;
-}
-.margin-right-15 {
-  margin-right: 15px!important;
-}
-.margin-bottom-15 {
-  margin-bottom: 15px!important;
-}
-.margin-left-15 {
-  margin-left: 15px!important;
-}
-.margin-20 {
-  margin: 20px;
-}
-.margin-top-20 {
-  margin-top: 20px!important;
-}
-.margin-right-20 {
-  margin-right: 20px!important;
-}
-.margin-bottom-20 {
-  margin-bottom: 20px!important;
-}
-.margin-left-20 {
-  margin-left: 20px!important;
-}
-.leading {
-	margin-top: 20px !important;
-}
-.full {
-	width: 100%!important;
-	max-width: none!important;
-}
 .hide
 {
 	display: none;
@@ -3106,9 +2898,17 @@ table.sub-data-table th
 	color: #FFF;
 	font-size: 12px;
 	margin: 0;
-	padding: 0 5px;
+	padding: 5px;
 	line-height: 100%;
-	line-height: 28px;
+}
+.preview-list p
+{
+	color: #DDD;
+	font-size: 11px;
+	margin: 0;
+	padding: 5px;
+	line-height: 100%;
+	text-shadow: 0 1px 0 #222;
 }
 .preview-list table, .preview-list table td
 {
@@ -3621,19 +3421,10 @@ td.white
 }
 div.flat-sortable-list
 {
-	background: #edeff0; /* Old browsers */
-	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VkZWZmMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-	background: -moz-linear-gradient(top,  #edeff0 0%, #ffffff 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#edeff0), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #edeff0 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #edeff0 0%,#ffffff 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #edeff0 0%,#ffffff 100%); /* IE10+ */
-	background: linear-gradient(top,  #edeff0 0%,#ffffff 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edeff0', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
-	-webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-	-moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+	background-image: url(/bundles/webilluminationadmin/images/backgrounds/label-background.png)!important;
+	-webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
 	text-shadow: 0 1px 0 #fff;
 	padding: 5px 0 0 5px;
 	border: 1px solid #C1C1C1;
@@ -3802,7 +3593,7 @@ div.float-buttons label
 .icon-embedded
 {
 	position: absolute;
-	top: 5px;
+	top: 6px;
 	right: 6px;
 }
 .embedded-icon
@@ -3852,6 +3643,10 @@ div.toolbar-buttons .icon-set-white, div.toolbar-buttons .icon-set-black
 table.no-border, table.no-border th, table.no-border td
 {
 	border: 0 none!important;
+}
+table.no-padding, table.no-padding th, table.no-padding td
+{
+	padding: 0!important;
 }
 #listing input.quantity
 {
@@ -3907,6 +3702,217 @@ table.no-border, table.no-border th, table.no-border td
 	line-height: 32px;
 	padding: 0 5px 0 0;
 }
+
+.no-border {
+	border: none !important;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+.no-padding {
+  padding: 0 !important;
+}
+.no-padding-top {
+  padding-top: 0 !important;
+}
+.no-padding-right {
+  padding-right: 0 !important;
+}
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+.no-padding-left {
+  padding-left: 0 !important;
+}
+.padding-5 {
+  	padding: 5px;
+}
+.padding-top-5 {
+  	padding-top: 5px!important;
+}
+.padding-right-5 {
+  	padding-right: 5px!important;
+}
+.padding-bottom-5 {
+  	padding-bottom: 5px!important;
+}
+.padding-left-5 {
+	padding-left: 5px!important;
+}
+.padding-10 {
+  	padding: 10px;
+}
+.padding-top-10 {
+  	padding-top: 10px!important;
+}
+.padding-right-10 {
+  	padding-right: 10px!important;
+}
+.padding-bottom-10 {
+  	padding-bottom: 10px!important;
+}
+.padding-left-10 {
+	padding-left: 10px!important;
+}
+.padding-15 {
+  	padding: 15px;
+}
+.padding-top-15 {
+  	padding-top: 15px!important;
+}
+.padding-right-15 {
+  	padding-right: 15px!important;
+}
+.padding-bottom-15 {
+  	padding-bottom: 15px!important;
+}
+.padding-left-15 {
+	padding-left: 15px!important;
+}
+.padding-20 {
+  	padding: 20px;
+}
+.padding-top-20 {
+  	padding-top: 20px!important;
+}
+.padding-right-20 {
+  	padding-right: 20px!important;
+}
+.padding-bottom-20 {
+  	padding-bottom: 20px!important;
+}
+.padding-left-20 {
+	padding-left: 20px!important;
+}
+.padding-30 {
+  	padding: 30px;
+}
+.padding-top-30 {
+  	padding-top: 30px!important;
+}
+.padding-right-30 {
+  	padding-right: 30px!important;
+}
+.padding-bottom-30 {
+  	padding-bottom: 30px!important;
+}
+.padding-left-30 {
+	padding-left: 30px!important;
+}
+.padding-40 {
+  	padding: 40px;
+}
+.padding-top-40 {
+  	padding-top: 40px!important;
+}
+.padding-right-40 {
+  	padding-right: 40px!important;
+}
+.padding-bottom-40 {
+  	padding-bottom: 40px!important;
+}
+.padding-left-40 {
+	padding-left: 40px!important;
+}
+.no-margin {
+  margin: 0 !important;
+}
+.no-margin-top {
+  margin-top: 0 !important;
+}
+.no-margin-right {
+  margin-right: 0 !important;
+}
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+.no-margin-left {
+  margin-left: 0 !important;
+}
+.margin-2 {
+  margin: 2px;
+}
+.margin-top-2 {
+  margin-top: 2px!important;
+}
+.margin-right-2 {
+  margin-right: 2px!important;
+}
+.margin-bottom-2 {
+  margin-bottom: 2px!important;
+}
+.margin-left-2 {
+  margin-left: 2px!important;
+}
+.margin-5 {
+  margin: 5px;
+}
+.margin-top-5 {
+  margin-top: 5px!important;
+}
+.margin-right-5 {
+  margin-right: 5px!important;
+}
+.margin-bottom-5 {
+  margin-bottom: 5px!important;
+}
+.margin-left-5 {
+  margin-left: 5px!important;
+}
+.margin-10 {
+  margin: 10px;
+}
+.margin-top-10 {
+  margin-top: 10px!important;
+}
+.margin-right-10 {
+  margin-right: 10px!important;
+}
+.margin-bottom-10 {
+  margin-bottom: 10px!important;
+}
+.margin-left-10 {
+  margin-left: 10px!important;
+}
+.margin-15 {
+  margin: 15px;
+}
+.margin-top-15 {
+  margin-top: 15px!important;
+}
+.margin-right-15 {
+  margin-right: 15px!important;
+}
+.margin-bottom-15 {
+  margin-bottom: 15px!important;
+}
+.margin-left-15 {
+  margin-left: 15px!important;
+}
+.margin-20 {
+  margin: 20px;
+}
+.margin-top-20 {
+  margin-top: 20px!important;
+}
+.margin-right-20 {
+  margin-right: 20px!important;
+}
+.margin-bottom-20 {
+  margin-bottom: 20px!important;
+}
+.margin-left-20 {
+  margin-left: 20px!important;
+}
+.leading {
+	margin-top: 20px !important;
+}
+.full {
+	width: 100%!important;
+	max-width: none!important;
+}
+
+
 .icon-set-white .ui-icon-credit-card-back, .icon-set-black .ui-icon-credit-card-back
 {
   background-position: 0px 0px!important;

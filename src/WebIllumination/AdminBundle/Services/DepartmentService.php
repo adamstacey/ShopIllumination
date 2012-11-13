@@ -869,9 +869,15 @@ class DepartmentService {
 			    		$productFeatureGroupDepartment[] = $departmentDescriptionObject->getName();
 		    		}
 	    		}
-	    		$productFeatureGroupDepartments[$productFeatureGroupDepartmentId['departmentId']] = implode(' > ', $productFeatureGroupDepartment);
+	    		if (sizeof($productFeatureGroupDepartment) > 0)
+	    		{
+	    			$productFeatureGroupDepartments[$productFeatureGroupDepartmentId['departmentId']] = implode(' > ', $productFeatureGroupDepartment);
+	    		}
     		}
     	}
+    	
+    	// Sort the array
+    	asort($productFeatureGroupDepartments);
     	
     	return $productFeatureGroupDepartments;
 	}
@@ -1602,7 +1608,10 @@ class DepartmentService {
 						break;
 				}
 			}
-			$templatePreviews[] = implode(' ', $templatePreview);
+			if (sizeof($templatePreview) > 0)
+			{
+				$templatePreviews[] = implode(' ', $templatePreview);
+			}
 		}
 
 	    return $templatePreviews;

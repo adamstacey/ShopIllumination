@@ -5,6 +5,11 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+	public function getCharset()
+    {
+    	return 'utf-8';
+    }
+    
     public function registerBundles()
     {
         $bundles = array(

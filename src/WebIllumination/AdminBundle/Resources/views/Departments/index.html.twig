@@ -153,7 +153,7 @@
 												{% endif %}
 												<td width="19" class="ac select"><input data-id="{{ item.departmentId }}" type="checkbox" class="action-select" name="select[{{ item.departmentId }}]" id="listing-select-{{ item.departmentId }}" value="1" /></td>
 												<td class="al small">
-													<a class="tooltip-preview-left" data-tooltip-id="#tooltip-description-{{ item.departmentId }}" href="{% if item.departmentCount > 0 %} {{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}{% else %}{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.departmentId}) }}{% endif %}"><strong>{{ item.name }}</strong></a>
+													<a class="tooltip-preview-left" data-tooltip-id="#tooltip-description-{{ item.departmentId }}" href="{% if item.departmentCount > 0 %} {{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}{% else %}{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.departmentId}) }}{% endif %}"><strong>{{ item.name|convert_encoding('UTF-8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS') }}</strong></a>
 												</td>
 												<td width="90" class="ac{% if item.deliveryBand < 1 %} red{% endif %}">
 													<select name="delivery-band[{{ item.departmentId }}]" id="listing-delivery-band-{{ item.departmentId }}" data-id="{{ item.departmentId }}" class="delivery-band full">

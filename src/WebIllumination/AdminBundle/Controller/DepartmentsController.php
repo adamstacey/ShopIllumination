@@ -802,8 +802,15 @@ class DepartmentsController extends Controller
 	    
 	    // Get the current meta description product previews
 	    $data['metaDescriptionTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'meta-description', 'en');
-    	    	
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemTemplates.html.twig', array('data' => $data));
+	    
+	    // Get the departments
+    	$departments = $service->getFullDepartmentList();
+    	$data['departments'] = $departments;
+    	        
+        $response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemTemplates.html.twig', array('data' => $data));
+		$response->headers->set('Connection', 'Keep-Alive');
+		$response->headers->set('Content-Type', 'text/html; charset=utf-8');
+		return $response;
     }
     
     // Update pricing
@@ -1372,8 +1379,9 @@ class DepartmentsController extends Controller
 		// Get the product features
 		$data['productFeatures'] = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeature' => 'ASC'));
 		
-		// Get the product feature departments
-    	$data['productFeatureDepartments'] = $service->getProductFeatureGroupDepartments('en');
+		// Get the departments
+    	$departments = $service->getFullDepartmentList();
+    	$data['departments'] = $departments;
     	
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());

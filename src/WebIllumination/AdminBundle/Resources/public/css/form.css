@@ -584,7 +584,7 @@ input.large, button.large {
 {
 	background-image: url(/bundles/webilluminationadmin/images/ui/ui-icons-information.png)!important;
 	position: absolute;
-	top: 7px;
+	top: 9px;
 	cursor: pointer;
 }
 .form-element .info-message-icon, .form-element .info-message-icon-left
