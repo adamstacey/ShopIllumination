@@ -1,13 +1,11 @@
 {% extends '::admin.html.twig' %}
 {% block title %}Order {{ data.item.id }} - Notes | {{ parent() }}{% endblock %}
 {% block leftmenu %}
-	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} #}
-	{% include 'WebIlluminationAdminBundle:Orrders:itemLeftMenu.html.twig' with {'data': data} %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} %}
 {% endblock %}
 {% block header %}
 	{{ parent() }}
-	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} #}
-	{% include 'WebIlluminationAdminBundle:Orrders:itemHeader.html.twig' with {'data': data} %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
 {% endblock %}
 {% block body %}
     <section class="container_6 clearfix">
@@ -117,7 +115,7 @@
 												<td width="1" class="ac filterable small{% if item.noteType == 'staff' %} gradient-background-blue{% endif %}">{{ (item.noteType == 'customer'?'Customer':'Staff') }}</td>
 												<td class="ac"><strong>{{ item.creator }}</strong></td>
 												<td class="ac small">{{ item.createdAt|date("d/m/Y h:iA") }}</td>
-												<td class="al small">{{ item.note|nl2br }}</td>
+												<td class="al small">{{ item.note|raw|nl2br }}</td>
 												<td width="1" class="ac small{% if item.noteType == 'customer' %} gradient-background-{{ (item.notified > 0?'orange':'green') }}{% endif %}">{% if item.noteType == 'customer' %}{{ (item.notified > 0?'YES':'NO') }}{% else %}-{% endif %}</td>
 											</tr>
 										{% endfor %}
@@ -145,6 +143,5 @@
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
-	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} #}
-	{% include 'WebIlluminationAdminBundle:Orrders:itemScript.js.twig' with {'data': data} %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} %}
 {% endblock %}
