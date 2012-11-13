@@ -1923,7 +1923,7 @@ class OrdersController extends Controller
 	    // Get the order
 	    $item = $service->getOrder($id);
     	
-    	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewDeliveryNote.html.twig', array('order' => $item));
+    	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoice.html.twig', array('order' => $item));
     }
     
     // View order
