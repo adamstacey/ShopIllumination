@@ -9,7 +9,7 @@
 		<span class="fl padding-right-10">Quick Search</span>
 		<input class="fl ui-corner-left no-margin" type="text" id="form-quick-search" value="{{ data.listing.search }}" />
 		{% if data.listing.search %}
-			<button type="button" class="fl ui-button button ui-corner-none ui-button-red small icon-set-white action-clear-quick-search" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Clear</button>
+			<button type="button" class="fl ui-button button ui-corner-none ui-button-red icon-set-white action-clear-quick-search" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Clear</button>
 		{% endif %}
 		<button type="button" id="quick-search-button" class="fl ui-corner-right ui-button button icon-set-white ui-button-black action-quick-search" data-icon-primary="ui-icon-magnifying-glass">Search</button>
 	</div>
@@ -20,7 +20,7 @@
     <section class="container_6 clearfix no-padding-top">
     	<div class="grid_6">
     		{% if data.statistics.new.count > 0 %}
-    			<div class="new-orders"><strong>NEW ORDERS</strong> - <strong>Orders:</strong> {{ data.statistics.new.count }} | <strong>Orders Total:</strong> &pound;{{ data.statistics.new.total|number_format(0) }} (&pound;{{ data.statistics.new.totalNett|number_format(0) }}) | <strong>Average Order:</strong> &pound;{{ data.statistics.new.averageOrderValue|number_format(0) }} (&pound;{{ data.statistics.new.averageOrderValueNett|number_format(0) }})<button type="button" class="button ui-corner-right ui-button-green icon-set-white action-view-new-orders" data-icon-primary="ui-icon-credit-card-back">View New Orders</button></div>
+    			<div class="new-orders margin-bottom-15"><strong>NEW ORDERS</strong> - <strong>Orders:</strong> {{ data.statistics.new.count }} | <strong>Orders Total:</strong> &pound;{{ data.statistics.new.total|number_format(0) }} (&pound;{{ data.statistics.new.totalNett|number_format(0) }}) | <strong>Average Order:</strong> &pound;{{ data.statistics.new.averageOrderValue|number_format(0) }} (&pound;{{ data.statistics.new.averageOrderValueNett|number_format(0) }})<button type="button" class="button ui-corner-right ui-button-green icon-set-white action-view-new-orders" data-icon-primary="ui-icon-credit-card-back">View New Orders</button></div>
     		{% endif %}
     		<div id="confirm-multiple-delete" class="info-message ui-helper-hidden">
     			<div class="fr no-margin no-padding">
