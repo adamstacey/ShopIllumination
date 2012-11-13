@@ -226,7 +226,7 @@ class UsersController extends Controller
     		$this->get('session')->set('customer', $customer);
 	    	
 	    	// Set success message
-	    	$this->get('session')->setFlash('success', 'Welcome to Kitchen Appliance Centre! You have successfully created an account.');
+	    	$this->get('session')->getFlashBag()->add('success', 'Welcome to Kitchen Appliance Centre! You have successfully created an account.');
     		        		
     		return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order)), ENT_NOQUOTES));
    	    }
@@ -243,7 +243,7 @@ class UsersController extends Controller
     	// Check the user is logged in
     	if (!$this->get('session')->get('customer')) {
 	        // Set error message
-		   	$this->get('session')->setFlash('error', 'You need to login before you can access this page.');
+		   	$this->get('session')->getFlashBag()->add('error', 'You need to login before you can access this page.');
 		
 	    	return $this->redirect($this->get('router')->generate('security_login'));
     	}

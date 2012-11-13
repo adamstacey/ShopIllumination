@@ -43,7 +43,7 @@ class BasketController extends Controller
    		if ($basket['totals']['items'] < 1)
    		{
    			// Set notice message
-		    $this->get('session')->setFlash('notice', 'Sorry, you have no products in your basket.');
+		    $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 		    
 		    // Forward to the last catalogue page
 		    return $this->redirect($backUrl);
@@ -71,7 +71,7 @@ class BasketController extends Controller
 		if ((sizeof($basket['products']) > 0) || ($basket['membershipCardNumber'] != ''))
 		{
 			// Set notice message
-			$this->get('session')->setFlash('notice', 'Sorry, you have no products in your basket.');
+			$this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 		}
 		
 		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketContents.html.twig', array('departmentHistory' => $departmentHistory, 'basket' => $basket, 'messages' => $messages));

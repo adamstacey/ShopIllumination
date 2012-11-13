@@ -96,10 +96,10 @@ class ContentController extends Controller
 	    		$this->get('mailer')->send($email);
 	    		
 	    		// Set success message
-		    	$this->get('session')->setFlash('success', 'Thank you for your enquiry. We will make every effort to respond to your enquiry as soon as possible.');
+		    	$this->get('session')->getFlashBag()->add('success', 'Thank you for your enquiry. We will make every effort to respond to your enquiry as soon as possible.');
 			} catch (Exception $exception) {
 		    	// Set error message
-		    	$this->get('session')->setFlash('error', 'Sorry, there was a problem sending your enquiry. Please try contacting us using an alternative method.');
+		    	$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem sending your enquiry. Please try contacting us using an alternative method.');
 			}
 			
 			// Forward to the contact us page
@@ -171,14 +171,14 @@ class ContentController extends Controller
 	    		$this->get('mailer')->send($email);
 	    		
 	    		// Set success message
-		    	$this->get('session')->setFlash('success', 'Thank you for your enquiry. We will make every effort to respond to your enquiry as soon as possible.');
+		    	$this->get('session')->getFlashBag()->add('success', 'Thank you for your enquiry. We will make every effort to respond to your enquiry as soon as possible.');
 			} catch (Exception $exception) {
 		    	// Set error message
-		    	$this->get('session')->setFlash('error', 'Sorry, there was a problem sending your enquiry. Please try contacting us using an alternative method.');
+		    	$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem sending your enquiry. Please try contacting us using an alternative method.');
 			}*/
 			
 			// Set success message
-		    $this->get('session')->setFlash('success', 'Thank you for your request. We will make every effort to process your link as soon as possible.');
+		    $this->get('session')->getFlashBag()->add('success', 'Thank you for your request. We will make every effort to process your link as soon as possible.');
 			
 			// Forward to the contact us page
 		    return $this->redirect($this->get('router')->generate('content_link_to_us', array()));
@@ -396,10 +396,10 @@ class ContentController extends Controller
 	    		$this->get('mailer')->send($email);
 	    		
 	    		// Set success message
-		    	$this->get('session')->setFlash('success', 'Thank you for registering for our track day. We have sent you an email with all the information you will need for the day.');
+		    	$this->get('session')->getFlashBag()->add('success', 'Thank you for registering for our track day. We have sent you an email with all the information you will need for the day.');
 			} catch (Exception $exception) {
 		    	// Set error message
-		    	$this->get('session')->setFlash('error', 'Sorry, there was a problem registering your details. Please contact us.');
+		    	$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem registering your details. Please contact us.');
 			}
 			
 			// Forward to the contact us page

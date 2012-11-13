@@ -229,7 +229,7 @@ class PrroductsController extends Controller
     			if (!$this->listing['sortable'])
     			{
 		    		// Notify user
-		    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
+		    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
 		    		
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $parentId)));
@@ -239,9 +239,9 @@ class PrroductsController extends Controller
     		// Notify user
     		if ($delete > 0)
 	    	{
-    			$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
+    			$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
     		} else {
-	    		$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
+	    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
     		}
     		
     		// Forward
@@ -534,7 +534,7 @@ class PrroductsController extends Controller
     		}
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$name.'"</strong> has been added.');
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$name.'"</strong> has been added.');
     		
     		// Forward
     		if ($addAnother > 0)
@@ -590,7 +590,7 @@ class PrroductsController extends Controller
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
-				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
+				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
     		
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
@@ -696,7 +696,7 @@ class PrroductsController extends Controller
     		$service->rebuildDepartmentIndexObject($id, 'en');
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
     		
     		// Forward
     		if ($goBack > 0)
@@ -745,7 +745,7 @@ class PrroductsController extends Controller
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
-				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
+				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
     		
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_settings', array('id' => $id)));
@@ -776,7 +776,7 @@ class PrroductsController extends Controller
     		$service->rebuildDepartmentIndexObject($id, 'en');
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
     		
     		// Forward
     		if ($goBack > 0)
@@ -951,7 +951,7 @@ class PrroductsController extends Controller
     			if (!$this->listing['sortable'])
     			{
 		    		// Notify user
-		    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
+		    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
 		    		
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $parentId)));
@@ -961,9 +961,9 @@ class PrroductsController extends Controller
     		// Notify user
     		if ($delete > 0)
 	    	{
-    			$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
+    			$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
     		} else {
-	    		$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
+	    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
     		}
     		
     		// Forward
@@ -1197,9 +1197,9 @@ class PrroductsController extends Controller
 	    			$productFeaturesAdded = $service->getProductFeatureGroupsFromProducts($id);
 	    			if ($productFeaturesAdded > 0)
 	    			{
-	    				$this->get('session')->setFlash('success', '<strong>'.$productFeaturesAdded.'</strong> new product feature'.($productFeaturesAdded != 1?'s':'').' have been found through the products associated with this department and added.');
+	    				$this->get('session')->getFlashBag()->add('success', '<strong>'.$productFeaturesAdded.'</strong> new product feature'.($productFeaturesAdded != 1?'s':'').' have been found through the products associated with this department and added.');
 	    			} else {
-		    			$this->get('session')->setFlash('notice', 'There are no new product features to add. This could be because there are no products directly associated to this department, so there are no available product features.');
+		    			$this->get('session')->getFlashBag()->add('notice', 'There are no new product features to add. This could be because there are no products directly associated to this department, so there are no available product features.');
 	    			}
 	    			break;
     		}
@@ -1210,9 +1210,9 @@ class PrroductsController extends Controller
 	    		// Notify user
 	    		if ($delete > 0)
 		    	{
-	    			$this->get('session')->setFlash('success', 'The selected product features have been deleted.');
+	    			$this->get('session')->getFlashBag()->add('success', 'The selected product features have been deleted.');
 	    		} else {
-		    		$this->get('session')->setFlash('success', 'The selected product features have been updated.');
+		    		$this->get('session')->getFlashBag()->add('success', 'The selected product features have been updated.');
 	    		}
 	    	}
     		
@@ -1322,9 +1322,9 @@ class PrroductsController extends Controller
     		// Notify user
     		if ($delete > 0)
 	    	{
-    			$this->get('session')->setFlash('success', 'The selected redirects have been deleted.');
+    			$this->get('session')->getFlashBag()->add('success', 'The selected redirects have been deleted.');
     		} else {
-	    		$this->get('session')->setFlash('success', 'The selected redirects have been updated.');
+	    		$this->get('session')->getFlashBag()->add('success', 'The selected redirects have been updated.');
     		}
     		
     		// Forward
@@ -1393,7 +1393,7 @@ class PrroductsController extends Controller
 			if (!$itemObject)
 			{
 				// Notify user
-				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
+				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
     		
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_delivery', array('id' => $id)));
@@ -1467,7 +1467,7 @@ class PrroductsController extends Controller
     		//$service->updateProductDeliveryBands($id, 'en');
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
     		
     		// Forward
     		if ($goBack > 0)
@@ -1528,7 +1528,7 @@ class PrroductsController extends Controller
 			if (!$itemDescriptionObject || !$itemRoutingObject)
 			{
 				// Notify user
-				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
+				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
     		
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_search_engine_optimsation', array('id' => $id)));
@@ -1600,7 +1600,7 @@ class PrroductsController extends Controller
     		$service->rebuildDepartmentIndexObject($id, 'en');
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
     		
     		// Forward
     		if ($goBack > 0)

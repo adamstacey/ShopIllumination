@@ -172,7 +172,7 @@ class SecurityController extends Controller
     		if ($referer)
     		{
     			// Set success message
-		    	$this->get('session')->setFlash('success', 'Welcome back '.$contact['firstName'].'! You have successfully logged in.');
+		    	$this->get('session')->getFlashBag()->add('success', 'Welcome back '.$contact['firstName'].'! You have successfully logged in.');
 		    }
     		        		
     		return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'order' => $order, 'referer' => $referer)), ENT_NOQUOTES));
@@ -263,7 +263,7 @@ class SecurityController extends Controller
 		$orderService->resetOrderSession();
 				
 		// Set success message
-	    $this->get('session')->setFlash('success', 'You have been safely and securely logged out.');
+	    $this->get('session')->getFlashBag()->add('success', 'You have been safely and securely logged out.');
 	    
     	return $this->redirect($this->get('router')->generate('shop_homepage'));
     }
@@ -386,7 +386,7 @@ class SecurityController extends Controller
 		    		$this->get('session')->set('customer', $customer);
 		    		
 		    		// Set success message
-				    $this->get('session')->setFlash('success', 'You have now been temporarily logged in. Please take this opportunity to change your password to something memorable.');
+				    $this->get('session')->getFlashBag()->add('success', 'You have now been temporarily logged in. Please take this opportunity to change your password to something memorable.');
 				    
 			    	return $this->redirect($this->get('router')->generate('users_user'));
 		    	}
@@ -394,7 +394,7 @@ class SecurityController extends Controller
 		}
 		
 		// Set error message
-	    $this->get('session')->setFlash('error', 'The reset password link you followed was invalid or has expired. Please try again.');
+	    $this->get('session')->getFlashBag()->add('error', 'The reset password link you followed was invalid or has expired. Please try again.');
 	    
     	return $this->redirect($this->get('router')->generate('security_login'));
     }

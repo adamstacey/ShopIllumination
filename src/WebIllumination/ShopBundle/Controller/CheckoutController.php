@@ -50,7 +50,7 @@ class CheckoutController extends Controller
    		if ($basket['totals']['items'] < 1)
    		{
    			// Set notice message
-		    $this->get('session')->setFlash('notice', 'Sorry, you have no products in your basket.');
+		    $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 		    
 		    // Forward to the last catalogue page
 		    return $this->redirect($this->get('router')->generate('page_request', array('url' => $departmentHistory[0])));
@@ -374,7 +374,7 @@ class CheckoutController extends Controller
     	if (!$orderObject)
     	{
     		// Set error message
-		    $this->get('session')->setFlash('error', 'Sorry, we could not find your order. Please contact us.');
+		    $this->get('session')->getFlashBag()->add('error', 'Sorry, we could not find your order. Please contact us.');
 		    
 		    // Forward to the home page
 		    return $this->redirect($this->get('router')->generate('shop_homepage'));
@@ -555,7 +555,7 @@ class CheckoutController extends Controller
     	if (!$orderObject)
     	{
     		// Set error message
-		    $this->get('session')->setFlash('error', 'Sorry, we could not find your order. Please contact us.');
+		    $this->get('session')->getFlashBag()->add('error', 'Sorry, we could not find your order. Please contact us.');
 		    
 		    // Forward to the home page
 		    return $this->redirect($this->get('router')->generate('shop_homepage'));
@@ -630,7 +630,7 @@ class CheckoutController extends Controller
    		if ($basket['totals']['items'] < 1)
    		{
    			// Set notice message
-		    $this->get('session')->setFlash('notice', 'Sorry, you have no products in your basket.');
+		    $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 		    
 		    // Forward to the last catalogue page
 		    return $this->redirect($this->get('router')->generate('page_request', array('url' => $departmentHistory[0])));

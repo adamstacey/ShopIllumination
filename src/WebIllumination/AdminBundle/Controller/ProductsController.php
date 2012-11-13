@@ -132,7 +132,7 @@ class ProductsController extends Controller
 	    apc_clear_cache('user');
    		
         // Set success message
-		$this->get('session')->setFlash('success', 'The headers have been rebuilt.');
+		$this->get('session')->getFlashBag()->add('success', 'The headers have been rebuilt.');
         
         // Forward to the product
 		return $this->redirect($this->get('router')->generate('admin_products'));
@@ -599,7 +599,7 @@ class ProductsController extends Controller
 			}
 			
 			// Set success message
-		    $this->get('session')->setFlash('success', 'The product "'.$pageTitle.'" has been added.');
+		    $this->get('session')->getFlashBag()->add('success', 'The product "'.$pageTitle.'" has been added.');
 		    
 		    // Forward to the product
 		    return $this->redirect($this->get('router')->generate('admin_products_update', array('id' => $productObject->getId())));
@@ -743,7 +743,7 @@ class ProductsController extends Controller
 	    	$data['pricesUpdated'] = $pricesUpdated;
 						
 			// Set success message
-		    $this->get('session')->setFlash('success', 'The prices have been successfully imported.');
+		    $this->get('session')->getFlashBag()->add('success', 'The prices have been successfully imported.');
     	}
     	    	
     	return $this->render('WebIlluminationAdminBundle:Products:priceImport.html.twig', array('data' => $data));

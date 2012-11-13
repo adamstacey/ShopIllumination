@@ -81,7 +81,7 @@ class SystemController extends Controller
 		   			break;
 		   		default:
 		   			// Set error message
-					$this->get('session')->setFlash('error', 'Sorry, you cannot access this page directly.');
+					$this->get('session')->getFlashBag()->add('error', 'Sorry, you cannot access this page directly.');
 					    
 				    // Forward to the last catalogue page
 				    return $this->redirect($this->get('router')->generate('homepage'));

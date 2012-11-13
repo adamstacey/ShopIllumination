@@ -29,7 +29,7 @@ class SecurityController extends Controller
 		  	if (!$userObject)
 		  	{
 		  		// Set error message
-		    	$this->get('session')->setFlash('error', 'Sorry, we could not find your email address. Please try another email address.');
+		    	$this->get('session')->getFlashBag()->add('error', 'Sorry, we could not find your email address. Please try another email address.');
 		
 		    	return $this->redirect($this->get('router')->generate('admin_security_login'));
 		  	}
@@ -43,7 +43,7 @@ class SecurityController extends Controller
 		  	if ($passwordToCheck != $userObject->getPassword())
 		  	{
 		  		// Set error message
-		    	$this->get('session')->setFlash('error', 'Sorry, the password you entered was incorrect. Please try again.');
+		    	$this->get('session')->getFlashBag()->add('error', 'Sorry, the password you entered was incorrect. Please try again.');
 		
 		    	return $this->redirect($this->get('router')->generate('admin_security_login'));
 		  	}
@@ -77,7 +77,7 @@ class SecurityController extends Controller
 			$this->get('session')->set('admin', $admin);
 						
 			// Set success message
-		   	$this->get('session')->setFlash('success', 'Welcome back '.$contact['firstName'].', you are now securely logged in. You last logged in on '.date("l, jS F Y h:ia", $user['lastLoggedIn']->getTimestamp()).'.');
+		   	$this->get('session')->getFlashBag()->add('success', 'Welcome back '.$contact['firstName'].', you are now securely logged in. You last logged in on '.date("l, jS F Y h:ia", $user['lastLoggedIn']->getTimestamp()).'.');
 			
 			return $this->redirect($this->get('router')->generate('admin_orders'));
     	}
@@ -103,7 +103,7 @@ class SecurityController extends Controller
 		$this->get('request')->getSession()->invalidate();
 		
 		// Set success message
-	    $this->get('session')->setFlash('success', 'You have been safely and securely logged out.');
+	    $this->get('session')->getFlashBag()->add('success', 'You have been safely and securely logged out.');
 	    
     	return $this->redirect($this->get('router')->generate('admin_security_login'));
     }

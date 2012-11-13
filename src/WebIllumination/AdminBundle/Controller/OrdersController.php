@@ -187,7 +187,7 @@ class OrdersController extends Controller
 					    	}
 				    	} else {
 				    		// Notify user
-				    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
+				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
 				    		
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -248,7 +248,7 @@ class OrdersController extends Controller
 					    	}
 				    	} else {
 				    		// Notify user
-				    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
+				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
 				    		
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -327,7 +327,7 @@ class OrdersController extends Controller
 					    	}
 				    	} else {
 				    		// Notify user
-				    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
+				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
 				    		
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -388,7 +388,7 @@ class OrdersController extends Controller
 					    	}
 				    	} else {
 				    		// Notify user
-				    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
+				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
 				    		
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -423,13 +423,13 @@ class OrdersController extends Controller
 				    		}
 				    		
 				    		// Notify user
-				    		$this->get('session')->setFlash('success', 'The customer invoices were successfully emailed.');
+				    		$this->get('session')->getFlashBag()->add('success', 'The customer invoices were successfully emailed.');
 				    		
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 				    	} else {
 				    		// Notify user
-				    		$this->get('session')->setFlash('notice', 'You did not select any orders to email.');
+				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any orders to email.');
 				    		
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -487,7 +487,7 @@ class OrdersController extends Controller
 	    			}
 	    		} else {
 		    		// Notify user
-		    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
+		    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
 		    		
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -496,9 +496,9 @@ class OrdersController extends Controller
 	    		// Notify user
 	    		if ($delete > 0)
 		    	{
-	    			$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
+	    			$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
 	    		} else {
-		    		$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
+		    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
 	    		}
     		
 	    		// Forward
@@ -951,7 +951,7 @@ class OrdersController extends Controller
 		}
 		
 		// Notify user
-		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
+		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
 		
 		// Forward
 		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -1326,20 +1326,20 @@ class OrdersController extends Controller
 					fclose($fileHandle);
 					
 					// Notify user
-		    		$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been updated and '.sizeof($select).' DPD '.(sizeof($select) == 1?'order has':'orders have').' have been sent to the label printer.');
+		    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated and '.sizeof($select).' DPD '.(sizeof($select) == 1?'order has':'orders have').' have been sent to the label printer.');
 		    		
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
     			} else {
 	    			// Notify user
-		    		$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
+		    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
 		    		
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
     			}
     		} else {
 	    		// Notify user
-	    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
+	    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
 	    		
 	    		// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
@@ -1583,7 +1583,7 @@ class OrdersController extends Controller
     		}
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$name.'"</strong> has been added.');
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$name.'"</strong> has been added.');
     		
     		// Forward
     		if ($addAnother > 0)
@@ -1635,7 +1635,7 @@ class OrdersController extends Controller
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
-				$this->get('session')->setFlash('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
+				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
     		
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
@@ -1741,7 +1741,7 @@ class OrdersController extends Controller
     		$service->rebuildDepartmentIndexObject($id, 'en');
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
     		
     		// Forward
     		if ($goBack > 0)
@@ -1863,9 +1863,9 @@ class OrdersController extends Controller
     		// Notify user
     		if ($delete > 0)
 	    	{
-    			$this->get('session')->setFlash('success', 'The selected product features have been deleted.');
+    			$this->get('session')->getFlashBag()->add('success', 'The selected product features have been deleted.');
     		} else {
-	    		$this->get('session')->setFlash('success', 'The selected product features have been updated.');
+	    		$this->get('session')->getFlashBag()->add('success', 'The selected product features have been updated.');
     		}
     		
     		// Forward
