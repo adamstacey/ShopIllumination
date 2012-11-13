@@ -1,8 +1,7 @@
 {% extends '::admin.html.twig' %}
 {% block title %}Process Deliveries  | {{ parent() }}{% endblock %}
 {% block leftmenu %}
-	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':leftMenu.html.twig' with {'data': data} #}
-	{% include 'WebIlluminationAdminBundle:Orrders:leftMenu.html.twig' with {'data': data} %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':leftMenu.html.twig' with {'data': data} %}
 {% endblock %}
 {% block header %}
 	{{ parent() }}
@@ -260,6 +259,5 @@
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
-	{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':processDeliveriesScript.js.twig' with {'data': data} #}
-	{% include 'WebIlluminationAdminBundle:Orrders:processDeliveriesScript.js.twig' with {'data': data} %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':processDeliveriesScript.js.twig' with {'data': data} %}
 {% endblock %}
