@@ -1,43 +1,17 @@
-<div id="flash-messages">
-	<div id="message-notice" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
-    	<span class="ui-icon ui-icon-info"></span>
-    	{% for flashMessage in app.session.flashbag.get('notice') %}
-        	<p><strong>NOTICE:</strong> <span>{{ flashMessage|raw }}</span></p>
-        {% else %}
-        	<p><strong>NOTICE:</strong> <span id="message-notice-text"></span></p>
-        {% endif %}
-	</div>
-	<div id="message-success" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
-    	<span class="ui-icon ui-icon-circle-check"></span>
-    	{% for flashMessage in app.session.flashbag.get('success') %}
-        	<p><strong>SUCCESS:</strong> <span>{{ flashMessage|raw }}</span></p>
-        {% else %}
-        	<p><strong>SUCCESS:</strong> <span id="message-success-text"></span></p>
-        {% endif %}
-	</div>
-	<div id="message-error" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
-        <span class="ui-icon ui-icon-alert"></span>
-        {% for flashMessage in app.session.flashbag.get('error') %}
-        	<p><strong>ERROR:</strong> <span>{{ flashMessage|raw }}</span></p>
-        {% else %}
-        	<p><strong>ERROR:</strong> <span id="message-error-text"></span></p>
-        {% endif %}
-	</div>
-</div>
-{% if app.session.hasFlash('error') or app.session.hasFlash('notice') or app.session.hasFlash('success') %}
+{% if app.session.flashbag.has('notice') or app.session.flashbag.has('success') or app.session.flashbag.has('error') %}
 	<script defer="defer" type="text/javascript">
 		$(window).load(function() {
-			{% if app.session.flashbag.get('notice')|length > 0 %}
+			{% if app.session.flashbag.has('notice') %}
 				$("#message-notice").slideDown(function() {
 					setTimeout("resetMessages()", 6000);
 				});
 			{% endif %}
-			{% if app.session.flashbag.get('success')|length > 0 %}
+			{% if app.session.flashbag.has('success') %}
 				$("#message-success").slideDown(function() {
 					setTimeout("resetMessages()", 6000);
 				});
 			{% endif %}
-			{% if app.session.flashbag.get('error')|length > 0 %}
+			{% if app.session.flashbag.has('error') %}
 				$("#message-error").slideDown(function() {
 					setTimeout("resetMessages()", 6000);
 				});
@@ -45,3 +19,29 @@
 		});
 	</script>
 {% endif %}
+<div id="flash-messages">
+	<div id="message-notice" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
+    	<span class="ui-icon ui-icon-info"></span>
+    	{% for flashMessage in app.session.flashbag.get('notice') %}
+        	<p><strong>NOTICE:</strong> <span>{{ flashMessage|raw }}</span></p>
+        {% else %}
+        	<p><strong>NOTICE:</strong> <span id="message-notice-text"></span></p>
+        {% endfor %}
+	</div>
+	<div id="message-success" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
+    	<span class="ui-icon ui-icon-circle-check"></span>
+    	{% for flashMessage in app.session.flashbag.get('success') %}
+        	<p><strong>SUCCESS:</strong> <span>{{ flashMessage|raw }}</span></p>
+        {% else %}
+        	<p><strong>SUCCESS:</strong> <span id="message-success-text"></span></p>
+        {% endfor %}
+	</div>
+	<div id="message-error" class="ui-widget message ui-corner-bottom closeable ui-helper-hidden">
+        <span class="ui-icon ui-icon-alert"></span>
+        {% for flashMessage in app.session.flashbag.get('error') %}
+        	<p><strong>ERROR:</strong> <span>{{ flashMessage|raw }}</span></p>
+        {% else %}
+        	<p><strong>ERROR:</strong> <span id="message-error-text"></span></p>
+        {% endfor %}
+	</div>
+</div>
