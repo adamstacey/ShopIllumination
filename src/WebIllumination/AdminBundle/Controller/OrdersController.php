@@ -830,6 +830,7 @@ class OrdersController extends Controller
 		// Get the new order stats
 		$data['statistics']['new'] = $service->getNewStatistics();
 		
+		/*
 		// Get todays stats
 		$data['statistics']['today'] = $service->getStatistics('today');
 				
@@ -843,7 +844,7 @@ class OrdersController extends Controller
 		$data['statistics']['quarter'] = $service->getStatistics('quarter');
 		
 		// Get this years stats
-		$data['statistics']['year'] = $service->getStatistics('year');
+		$data['statistics']['year'] = $service->getStatistics('year');*/
 		
 		// Get the listing
 		$data['listing'] = $this->listing;
