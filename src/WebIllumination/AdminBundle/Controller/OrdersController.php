@@ -65,6 +65,9 @@ class OrdersController extends Controller
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	$systemService = $this->get('web_illumination_admin.system_service');
     	
+    	// Temp
+    	$service->generateOrderDocuments(66982);
+    	
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
 		
@@ -81,10 +84,11 @@ class OrdersController extends Controller
 		
 		// Setup the document
 		$document = $request->query->get('document');
-		
+		error_log('1. Loading orders page!');
 		// Update
     	if ($request->getMethod() == 'POST')
     	{ 
+    		error_log('2. Post detected!');
     		// Get submitted data
     		$select = $request->request->get('select');
     		$status = $request->request->get('status');
@@ -92,6 +96,8 @@ class OrdersController extends Controller
     		$displayOrder = $request->request->get('display-order');
     		$delete = $request->request->get('delete');
     		$extraAction = $request->request->get('extra-action');
+    		
+    		error_log('3. Extra Action: '.$extraAction);
     		
     		// Check for any extra actions
     		if ($extraAction != '')
@@ -122,10 +128,14 @@ class OrdersController extends Controller
 						    			$em->flush();
 						    		}
 						    		
-						    		// Get the documents link
-									if (file_exists($this->get('kernel')->getRootdir().'/../web/uploads/documents/order/order-'.$itemId.'.pdf'))
+									// Get the files
+									$document = 'order-'.$itemId;
+								    $ordersPdfFileName = $document.'.pdf';
+								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
+									
+									// Get the documents link
+									if (file_exists($ordersPdfFilePath))
 									{
-										$document = 'order-'.$itemId;
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
@@ -194,20 +204,28 @@ class OrdersController extends Controller
 			    		}
 		    			break;
 		    		case 'printCopyOrders':
+		    			error_log('4. Printing copy orders!');
 		    			if (sizeof($select) > 0)
 			    		{
+			    			error_log('5. We have at least one item!');
 			    			if (sizeof($select) == 1)
 			    			{
+			    				error_log('6. We have only one item!');
 			    				foreach ($select as $itemId => $item)
 				    			{			    				
-						    		// Get the documents link
-									if (file_exists($this->get('kernel')->getRootdir().'/../web/uploads/documents/order/copy-order-'.$itemId.'.pdf'))
+									// Get the files
+								    $document = 'copy-order-'.$itemId;
+								    $ordersPdfFileName = $document.'.pdf';
+								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
+									
+									// Get the documents link
+									if (file_exists($ordersPdfFilePath))
 									{
-										$document = 'copy-order-'.$itemId;
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
 			    			} else {
+			    				error_log('6. We have more than one item!');
 				    			foreach ($select as $itemId => $item)
 				    			{
 					    			$orders = array();
@@ -269,11 +287,15 @@ class OrdersController extends Controller
 						    			$em->persist($itemObject);
 						    			$em->flush();
 						    		}
-						    			    				
-						    		// Get the documents link
-									if (file_exists($this->get('kernel')->getRootdir().'/../web/uploads/documents/order/delivery-note-'.$itemId.'.pdf'))
+						    			    													
+									// Get the files
+								    $document = 'delivery-note-'.$itemId;
+								    $ordersPdfFileName = $document.'.pdf';
+								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
+								    
+									// Get the documents link
+									if (file_exists($ordersPdfFilePath))
 									{
-										$document = 'delivery-note-'.$itemId;
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
@@ -340,10 +362,14 @@ class OrdersController extends Controller
 			    			{
 			    				foreach ($select as $itemId => $item)
 				    			{			    				
-						    		// Get the documents link
-									if (file_exists($this->get('kernel')->getRootdir().'/../web/uploads/documents/order/invoice-'.$itemId.'.pdf'))
+									// Get the files
+								    $document = 'invoice-'.$itemId;
+								    $ordersPdfFileName = $document.'.pdf';
+								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
+									
+									// Get the documents link
+									if (file_exists($ordersPdfFilePath))
 									{
-										$document = 'invoice-'.$itemId;
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
@@ -361,7 +387,7 @@ class OrdersController extends Controller
 								    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoices.html.twig', array('orders' => $orders));
 								    
 								    // Get the files
-								    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
+								    $ordersHtmlFileName = 'invoices-'.date('dmYHis').'.html';
 								    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
 								    $document = 'invoices-'.date('dmYHis');
 								    $ordersPdfFileName = $document.'.pdf';

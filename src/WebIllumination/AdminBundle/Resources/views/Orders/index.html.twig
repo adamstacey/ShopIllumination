@@ -523,7 +523,7 @@
 								<table class="data-table" id="data" width="100%">
 									<thead>
 										<tr>
-											<th width="19" class="ac"><input type="checkbox" class="action-select-all" value="1" /></th>
+											<th width="19" class="ac"><input type="checkbox"{% if data.items|length == 1 %} checked="checked"{% endif %} class="action-select-all" value="1" /></th>
 											<th class="ac">Order</th>
 											<th class="ac">Total</th>
 											<th class="ac">Customer</th>
@@ -535,7 +535,7 @@
 									<tbody>
 										{% for item in data.items %}
 											<tr class="item {{ item.statusColour }} no-row-colour" id="item-{{ item.id }}">
-												<td width="19" class="ac select"><input data-id="{{ item.id }}" type="checkbox" class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" /></td>
+												<td width="19" class="ac select"><input data-id="{{ item.id }}" type="checkbox"{% if data.items|length == 1 %} checked="checked"{% endif %} class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" /></td>
 												<td class="ac">
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.id}) }}"><strong>{{ item.id }}</strong></a>
 												</td>
@@ -544,7 +544,6 @@
 												</td>
 												<td class="ac">
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.id}) }}" class="tooltip-preview-left" data-tooltip-id="#tooltip-customer-{{ item.id }}">{{ item.firstName|upper }} {{ item.lastName|upper }}</a>
-													
 												</td>
 												<td class="ac small">
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.id}) }}">{{ item.createdAt|date("d/m/Y") }} {{ item.createdAt|date("h:iA") }}</a>
