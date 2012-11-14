@@ -65,9 +65,6 @@ class OrdersController extends Controller
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	$systemService = $this->get('web_illumination_admin.system_service');
     	
-    	// Temp
-    	$service->generateOrderDocuments(66982);
-    	
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
 		
@@ -84,11 +81,10 @@ class OrdersController extends Controller
 		
 		// Setup the document
 		$document = $request->query->get('document');
-		error_log('1. Loading orders page!');
+
 		// Update
     	if ($request->getMethod() == 'POST')
     	{ 
-    		error_log('2. Post detected!');
     		// Get submitted data
     		$select = $request->request->get('select');
     		$status = $request->request->get('status');
@@ -96,8 +92,6 @@ class OrdersController extends Controller
     		$displayOrder = $request->request->get('display-order');
     		$delete = $request->request->get('delete');
     		$extraAction = $request->request->get('extra-action');
-    		
-    		error_log('3. Extra Action: '.$extraAction);
     		
     		// Check for any extra actions
     		if ($extraAction != '')
@@ -204,13 +198,10 @@ class OrdersController extends Controller
 			    		}
 		    			break;
 		    		case 'printCopyOrders':
-		    			error_log('4. Printing copy orders!');
 		    			if (sizeof($select) > 0)
 			    		{
-			    			error_log('5. We have at least one item!');
 			    			if (sizeof($select) == 1)
 			    			{
-			    				error_log('6. We have only one item!');
 			    				foreach ($select as $itemId => $item)
 				    			{			    				
 									// Get the files
@@ -225,7 +216,6 @@ class OrdersController extends Controller
 									}
 								}
 			    			} else {
-			    				error_log('6. We have more than one item!');
 				    			foreach ($select as $itemId => $item)
 				    			{
 					    			$orders = array();
@@ -508,6 +498,9 @@ class OrdersController extends Controller
 					    		$itemObject->setStatus($itemStatus);
 				    			$em->persist($itemObject);
 				    			$em->flush();
+				    			
+				    			// Update the order documents
+				    			$service->generateOrderDocuments($itemId);
 				    		}
 		    			}
 	    			}
