@@ -198,7 +198,7 @@
 		if ($("#form-delivery-country-code").val() == 'GB')
 		{
 			$("#delivery-post-zip-code-container").show();
-			if ($("#form-delivery-post-zip-code").val() == '')
+			if (($("#form-delivery-post-zip-code").val() == '') || ($("#form-delivery-post-zip-code").val() == '000'))
 			{
 				loadDeliveryOptions();
 			} else {
@@ -216,6 +216,10 @@
 				}
 			}
 		} else {
+			if ($("#form-delivery-country-code").val() == 'GB')
+			{
+				$("#form-delivery-post-zip-code").val('000');
+			}
 			$("#delivery-post-zip-code-container").hide();
 			loadDeliveryOptions();
 		}

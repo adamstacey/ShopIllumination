@@ -9,7 +9,7 @@
 		</div>
 	</div>
     <div id="delivery-post-zip-code-container" class="clearfix{% if basket.delivery.countryCode != 'GB' %} ui-helper-hidden{% endif %}">
-        <div class="form-input"><input class="full" data-validation-type="postcode" placeholder="Postcode..." data-message="Invalid postcode" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" required="required" value="{{ basket.delivery.postZipCode|default('') }}" /></div>
+        <div class="form-input"><input class="full" data-validation-type="postcode" placeholder="Postcode..." data-message="Invalid postcode" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" required="required" value="{% if basket.delivery.countryCode == 'IE' %}000{% else %}{{ basket.delivery.postZipCode|default('') }}{% endif %}" /></div>
     </div>
     <div class="clearfix ac margin-top-5">
     	<a href="Javascript:void(0);" rel="nofollow" class="small full action-update-delivery-options button ui-button-green">Update Delivery Options</a>
