@@ -131,6 +131,10 @@ class OrdersController extends Controller
 									if (file_exists($ordersPdfFilePath))
 									{
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
+									} else {
+										// Update the order documents
+										$service->generateOrderDocuments($itemId);
+										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
 			    			} else {
@@ -213,6 +217,10 @@ class OrdersController extends Controller
 									if (file_exists($ordersPdfFilePath))
 									{
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
+									} else {
+										// Update the order documents
+										$service->generateOrderDocuments($itemId);
+										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
 			    			} else {
@@ -287,6 +295,10 @@ class OrdersController extends Controller
 									if (file_exists($ordersPdfFilePath))
 									{
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
+									} else {
+										// Update the order documents
+										$service->generateOrderDocuments($itemId);
+										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
 			    			} else {
@@ -360,6 +372,10 @@ class OrdersController extends Controller
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
+										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
+									} else {
+										// Update the order documents
+										$service->generateOrderDocuments($itemId);
 										return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('document' => $document)));
 									}
 								}
