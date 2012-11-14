@@ -1630,7 +1630,7 @@ class DepartmentService {
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
+										if (($productFeatureValue != '') && ($productFeatureValue != 'N/A') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
 										{
 											$templatePreview[] = trim($productFeatureValue);
 										}
