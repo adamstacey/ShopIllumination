@@ -1,0 +1,230 @@
+{# Load the features #}	
+function loadFeatures()
+{
+	$.ajax({
+		type: "GET",
+		url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_get_features') }}",
+		beforeSend: function() {
+			$("#ajax-features-loading").show();
+		},
+		data: {
+			productId: {{ data.product.id }}
+		},
+		error: function(data) {
+  			$("#ajax-features-loading").hide();
+      		$("#feature-loading-error").fadeIn();
+	  	},
+		success: function(data) {
+			$("#ajax-features").html(data);
+			$("#ajax-features :checkbox:not(.no-uniform), #ajax-features :radio:not(.no-uniform), #ajax-features select:not(.no-uniform), #ajax-features :file:not(.no-uniform)").uniform();
+			$("#ajax-features .button").each(function () {
+    	        $(this).button({
+        	    	icons: {
+            	    	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                	    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+    	    	});
+        	});
+	        $("#ajax-features .selector").addClass("full");
+	        $("#ajax-features").fadeIn();
+	        $(".action-unselect-all-features, .action-confirm-delete-features, .action-confirm-delete-feature-groups, .action-unselect-all-feature-groups").hide();
+	        if ($("li.product-feature-group-container").length > 0)
+	        {
+	        	$("#feature-group-buttons").fadeIn();
+	        }
+	        $featuresLoaded = true;
+	        checkDataLoaded();
+    	    $("#ajax-features-loading").hide();
+    	    $("#product-feature-groups-container, .product-features-container").sortable({
+				placeholder: "highlighted-sortable",
+				update: function(event, ui) {
+					reOrderFeatures(true);
+				}
+			});
+		}
+	});
+}
+
+{# Function to update all features #}
+function updateFeatures()
+{
+	$errorOccurred = false;
+	$numberOfElementsToProcess = $("input.feature-requires-update[value='1']").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToProcess > 0)
+	{
+		$("#ajax_loading").show();
+		$("input.feature-requires-update[value='1']").each(function(index) {
+			$elementIndex = String($(this).attr("data-index"));
+			$.ajax({
+		    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_feature') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $("#form-feature-id-"+$elementIndex).val(),
+		      		productId: '{{ data.product.id }}',
+		      		productFeatureGroupId: $("#form-feature-product-feature-group-id-"+$elementIndex).val(),
+		      		productFeatureId: $("#form-feature-product-feature-id-"+$elementIndex).val(),
+		      		productFeature: $("#form-feature-product-feature-"+$elementIndex).val(),
+		      		displayOrder: $("#form-feature-display-order-"+$elementIndex).val(),
+		      		elementIndex: $elementIndex
+		      	},
+		      	error: function(data) {
+		        	$errorOccurred = true;
+		        	$("#feature-"+$elementIndex).addClass("ui-state-error");
+		        	$numberOfElementsProcessed++;
+		        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+		        	{
+		        		if ($errorOccurred == true)
+						{
+							$("#feature-error-message-text").html('Problems occurred while trying to update the features. Make sure all fields are filled in.');
+							$("#feature-error-message").fadeIn();
+						} else {
+							$("#feature-success-message-text").html('Your features were successfully updated.');
+							$("#feature-success-message").fadeIn();
+						}
+						$("html, body").animate({scrollTop: $("#features").offset().top + 35},'slow');
+						$.ajax({
+					    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_rebuild_product') }}",
+					      	type: "GET",
+					      	data: {
+					      		productId: '{{ data.product.id }}',
+					      	}
+					   	});
+						$("#ajax_loading").hide();
+						if ($("#features-tab-to-redirect-to").val() > -1)
+						{
+							$("#features .message").hide();
+							$(".sidebar-tabs").tabs("select", parseInt($("#features-tab-to-redirect-to").val()));
+						}
+		        	}
+		      	},
+		      	success: function(data) {
+	      			if (data.response == 'success')
+	      			{
+	      				$("#feature-"+data.elementIndex).removeClass("ui-state-error ui-state-highlight");
+	      				$("#form-feature-id-"+data.elementIndex).val(data.id);
+	      				$("#form-feature-requires-update-"+data.elementIndex).val("0");
+	      			} else {
+	      				$("#feature-"+data.elementIndex).addClass("ui-state-error");
+	      				$errorOccurred = true;
+	      			}
+		        	$numberOfElementsProcessed++;
+		        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+		        	{
+		        		if ($errorOccurred == true)
+						{
+							$("#feature-error-message-text").html('Problems occurred while trying to update the features. Make sure all fields are filled in.');
+							$("#feature-error-message").fadeIn();
+						} else {
+							$("#feature-success-message-text").html('Your features were successfully updated.');
+							$("#feature-success-message").fadeIn();
+						}
+						$("html, body").animate({scrollTop: $("#features").offset().top + 35},'slow');
+						$.ajax({
+					    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_rebuild_product') }}",
+					      	type: "GET",
+					      	data: {
+					      		productId: '{{ data.product.id }}'
+					      	}
+					   	});
+						$("#ajax_loading").hide();
+						if ($("#features-tab-to-redirect-to").val() > -1)
+						{
+							$("#features .message").hide();
+							$(".sidebar-tabs").tabs("select", parseInt($("#features-tab-to-redirect-to").val()));
+						}
+		        	}
+		      	}
+		   	});
+		});
+	}
+}
+
+{# Function to load new feature #}
+function loadNewFeature($featureGroupId)
+{
+	$("#ajax_loading").show();
+	$nextElement = parseInt($("#feature-count-"+$featureGroupId).val()) + 1;
+	$("#feature-count-"+$featureGroupId).val($nextElement);
+	$.ajax({
+    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_add_feature') }}",
+      	type: "GET",
+      	data: {
+      		id: $nextElement,
+      		featureGroupId: $featureGroupId,
+      		productId: '{{ data.product.id }}'
+      	},
+      	error: function(data) {
+        	$("#feature-error-message-text").html('Sorry, there was an error adding the feature. Please try again.');
+			$("#feature-error-message").fadeIn();
+			$("html, body").animate({scrollTop: $("#feature-error-message").offset().top - 100},'slow');
+			$("#ajax_loading").hide();
+      	},
+      	success: function(data) {
+  			$("#product-features-container-"+$featureGroupId).append(data);
+				$("#feature-"+$featureGroupId.toString()+"-"+$nextElement.toString()+" :checkbox:not(.no-uniform), #feature-"+$featureGroupId.toString()+"-"+$nextElement.toString()+" :radio:not(.no-uniform), #feature-"+$featureGroupId.toString()+"-"+$nextElement.toString()+" select:not(.no-uniform), #feature-"+$featureGroupId.toString()+"-"+$nextElement.toString()+" :file:not(.no-uniform)").uniform();
+				$("#feature-"+$featureGroupId.toString()+"-"+$nextElement.toString()).fadeIn();
+				$("#feature-"+$featureGroupId.toString()+"-"+$nextElement.toString()+" .button").each(function () {
+	            $(this).button({
+	            	icons: {
+	                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+	                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+	        	});
+	        });
+	        reOrderFeatures(false);
+	        $(".selector, .uploader").removeClass("full").addClass("full");
+	        $("html, body").animate({scrollTop: $("#feature-"+$featureGroupId.toString()+"-"+$nextElement.toString()).offset().top - 100},'slow');
+	        $("#ajax_loading").hide();
+      	}
+   	});
+}
+	
+{# Function to build the feature indexes #}
+function buildFeaturesIndex()
+{
+	$("#features .message").hide();
+	$(".form-error").remove();
+	$featureCount = 1;
+	$("li.product-feature-container").each(function(index) {
+		$row = $(this);
+		$row.find("input.feature-display-order").val($featureCount);
+	    $featureCount++;
+	});
+}
+
+{# Function to re-order the feature indexes #}
+function reOrderFeatures($updateFeatures)
+{
+	$("#features .message").hide();
+	$(".form-error").remove();
+	$featureCount = 1;
+	$numberOfElementsToProcess = $("li.product-feature-container:visible").length;
+	$numberOfElementsProcessed = 0;
+	$("li.product-feature-container:visible").each(function(index) {
+		$row = $(this);
+		if ($row.find("input.feature-display-order").val() != $featureCount)
+		{
+			if ($row.find("input.feature-id").val() > 0)
+			{
+				$row.find("input.feature-requires-update").val("1");
+			}
+		}
+		$row.find("input.feature-display-order").val($featureCount);
+	    $featureCount++;
+	    $numberOfElementsProcessed++;
+	    if ($numberOfElementsProcessed == $numberOfElementsToProcess)
+	    {
+	    	if ($updateFeatures)
+	    	{
+	    		updateFeatures();
+	    	}
+	    }
+	});
+	$("li.product-feature-container:hidden").each(function(index) {
+		$(this).remove();
+	});
+}

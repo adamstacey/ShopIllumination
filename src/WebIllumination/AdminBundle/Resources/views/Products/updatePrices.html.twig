@@ -1,0 +1,39 @@
+<section id="prices" class="form ui-helper-hidden">
+	<h2>Prices</h2>
+	<div class="clearfix">
+		<h3>Price Setings</h3>
+		<div class="clearfix">
+	        <label for="form-hide-price" class="form-label">Hide Price<small>Hide price for this product?</small></label>
+	        <div class="form-input"><label><input type="radio" name="hide-price" id="form-hide-price-1" value="1"{% if data.product.hidePrice == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="hide-price" id="form-hide-price-0" value="0"{% if data.product.hidePrice == 0 %} checked="checked"{% endif %} /> No</label></div>
+	    </div>
+	    <div id="show-price-out-of-hours-container" class="{% if data.product.hidePrice == 0 %}ui-helper-hidden {% endif %}clearfix">
+	        <label for="form-show-price-out-of-hours" class="form-label">Show Price Out of Hours<small>Show price out of hours?</small></label>
+	        <div class="form-input"><label><input type="radio" name="show-price-out-of-hours" id="form-show-price-out-of-hours-1" value="1"{% if data.product.showPriceOutOfHours == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="show-price-out-of-hours" id="form-show-price-out-of-hours-0" value="0"{% if data.product.showPriceOutOfHours == 0 %} checked="checked"{% endif %} /> No</label></div>
+	    </div>
+		<div class="clearfix">
+	        <label for="form-membership-card-discount-available" class="form-label">Discount with Membership<small>Discount with membership card?</small></label>
+	        <div class="form-input" id="form-membership-card-discount-available"><label><input type="radio" name="membership-card-discount-available" id="form-membership-card-discount-available-1" value="1"{% if data.product.membershipCardDiscountAvailable == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="membership-card-discount-available" id="form-membership-card-discount-available-0" value="0"{% if data.product.membershipCardDiscountAvailable == 0 %} checked="checked"{% endif %} /> No</label></div>
+	    </div>
+	    <div id="maximum-membership-card-discount-container" class="{% if data.product.membershipCardDiscountAvailable == 0 %}ui-helper-hidden {% endif %}clearfix">
+	        <label for="form-maximum-membership-card-discount" class="form-label">Membership Discount (%)<small>Maximum membership discount</small></label>
+	        <div class="form-input"><input type="text" id="form-maximum-membership-card-discount" name="maximum-membership-card-discount" class="decimal" value="{{ data.product.maximumMembershipCardDiscount|number_format(2) }}" /></div>
+	    </div>
+	    <div class="clearfix">
+	        <div class="form-input-long buttons">
+	        	<button class="button ui-button-green action-update-price-settings-section" data-icon-primary="ui-icon-check">Update</button>
+	        </div>
+	    </div>
+	    <h3>Prices</h3>
+		<div id="price-loading-error" class="ui-widget message margin-bottom-5 ui-helper-hidden">
+		    <div class="ui-state-error no-margin-top ui-corner-all">
+		    	<span class="ui-icon ui-icon-alert"></span>
+		        <p class="no-margin"><strong>ERROR:</strong> Sorry, there was a problem loading the prices. Please contact support and advise.</p>
+		    </div>
+		</div>
+		<div id="ajax-prices-loading" class="ac">
+			<p>Loading prices, please wait&hellip;</p>
+			<p><img alt="Loading" width="16" height="16" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-loader-eeeeee.gif') }}" /></p>
+		</div>
+		<div id="ajax-prices" class="ui-helper-hidden"></div>
+	</div>
+</section>

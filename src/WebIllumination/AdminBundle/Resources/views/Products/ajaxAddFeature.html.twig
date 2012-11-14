@@ -1,0 +1,33 @@
+<li class="product-feature-container ui-state-highlight" data-index="{{ featureGroupId }}-{{ id }}" id="feature-{{ featureGroupId }}-{{ id }}">
+	<table width="100%">
+		<tbody>
+			<tr>
+				<td width="9">
+					<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+				</td>
+				<td width="1" class="select delete">
+					<input data-feature-group-id="{{ featureGroupId }}" data-index="{{ featureGroupId }}-{{ id }}" type="checkbox" class="feature-select feature-select-{{ featureGroupId }}" id="form-feature-select-{{ featureGroupId }}-{{ id }}" value="1" />
+				</td>
+				<td class="al no-padding-left no-padding-top no-padding-bottom">
+					{% if productFeatureObjects|length > 0 %}
+						<select id="form-feature-product-feature-id-{{ featureGroupId }}-{{ id }}" class="full feature-product-feature-id">
+							<option value="">- Please Select -</option>
+							{% for productFeatureObject in productFeatureObjects %}
+								<option value="{{ productFeatureObject.id }}">{{ productFeatureObject.productFeature }}</option>
+							{% endfor %}
+						</select>
+					{% else %}
+						No features found.
+					{% endif %}
+				</td>
+				<td width="1">
+					<input type="hidden" class="feature-id" id="form-feature-id-{{ featureGroupId }}-{{ id }}" value="0" />
+					<input type="hidden" class="feature-product-feature-group-id" id="form-feature-product-feature-group-id-{{ featureGroupId }}-{{ id }}" value="{{ featureGroupId }}" />
+					<input type="hidden" class="feature-display-order" id="form-feature-display-order-{{ featureGroupId }}-{{ id }}" value="" />
+					<input type="hidden" data-index="{{ featureGroupId }}-{{ id }}" class="feature-requires-update" id="form-feature-requires-update-{{ featureGroupId }}-{{ id }}" value="1" />
+					<button data-feature-group-id="{{ featureGroupId }}" data-index="{{ featureGroupId }}-{{ id }}" class="button ui-button-red action-confirm-delete-feature" data-icon-only="true" data-icon-primary="ui-icon-closethick">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</li>

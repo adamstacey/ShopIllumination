@@ -1,0 +1,118 @@
+{# Check data has been loaded #}
+if ($("#listing-unique-product-identifiers tr").length > 1)
+{
+	$("#unique-product-identifier-error-message").hide();
+	$("#listing-unique-product-identifiers tr:even").addClass("even");
+	$("#listing-unique-product-identifiers").fadeIn();
+} else {
+	$("#listing-unique-product-identifiers").hide();
+	$("#unique-product-identifier-error-message").fadeIn();
+}
+
+{# Load a selected unique product identifier #}
+$(".action-load-unique-product-identifier").live('click', function() {
+	$("#"+$("#unique-product-identifier-type-"+$(this).attr("rel")).val()).val($("#unique-product-identifier-"+$(this).attr("rel")).val());
+	$("#unique-product-identifiers-requires-update").val(1);
+	$("#dialog-unique-product-identifier").dialog("close");
+});
+
+{# Dialog: Lookup Unique Product Identifiers #}
+$("#dialog-unique-product-identifier").dialog({
+	autoOpen: false,
+	modal: true,
+	width: 900,
+	show: "fade",
+	hide: "fade",
+	buttons: [{
+		text: "Close",
+		click: function() {
+			$(this).dialog("close");
+		}
+	}]
+}).parents('.ui-dialog').find(".ui-dialog-titlebar-close").after('<div/>');
+	
+{# Action: Lookup Unique Product Identifiers #}
+$(".action-lookup-unique-product-identifiers").live('click', function() {
+	$("#dialog-unique-product-identifier").dialog("open");
+	return false;
+});
+
+{# Update the section #}
+$(".action-update-unique-product-identifiers-section").live('click', function() {
+	var updateUniqueProductIdentifiersValidator = $("#general :input").validator({
+		position : 'bottom left', 
+		offset : [0, 0], 
+		messageClass : 'form-error', 
+		message : '<div><em/></div>'
+	});
+	if (updateUniqueProductIdentifiersValidator.data("validator").checkValidity())
+	{
+    	$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_unique_product_identifiers_section') }}",
+			beforeSend: function() {
+				resetInteractions();
+				$("#ajax_loading").show();
+			},
+			data: {
+				id: {{ data.product.id }},
+    			mpn: $("#form-mpn").val(),
+    			ean: $("#form-ean").val(),
+	    		upc: $("#form-upc").val(),
+	    		jan: $("#form-jan").val(),
+	    		isbn: $("#form-isbn").val()
+			},
+			error: function(data) {
+				loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+				finishInteractions();
+	      	},
+			success: function(data) {
+				if (data.response == 'success')
+				{
+					loadNotificationMessage("message-success", "The {{ settings.singleItemDescription }} was successfully updated.");
+					if (data.resetSeo == true)
+					{
+						resetSeo();
+					}
+				} else {
+					loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+				}
+				finishInteractions();
+				if ($("#unique-product-identifiers-tab-to-redirect-to").val() > -1)
+				{
+					$("#unique-product-identifiers-requires-update").val(0);
+					$("#unique-product-identifiers-confirm-leave").hide();
+					$(".sidebar-tabs").tabs("select", parseInt($("#unique-product-identifiers-tab-to-redirect-to").val()));
+					$("#unique-product-identifiers-tab-to-redirect-to").val(-1);
+				}
+			}
+		});
+	}
+});
+
+{# Detect if an update is required #}
+$("#unique-product-identifiers input, #unique-product-identifiers select, #unique-product-identifiers textarea").live("change", function() {
+	$("#unique-product-identifiers-requires-update").val(1);
+});
+
+{# Check if section needs updating #}
+$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+	if ($("#unique-product-identifiers-requires-update").val() > 0)
+	{
+		$("#unique-product-identifiers-tab-to-redirect-to").val(ui.index);
+		$("#unique-product-identifiers-confirm-leave").fadeIn();
+		$("html, body").animate({scrollTop: $("#unique-product-identifiers").offset().top + 35},'slow');
+		return false;
+	}
+	return true;
+});
+
+{# Leave section without saving #}
+$(".action-leave-unique-product-identifiers").live('click', function() {
+	$("#unique-product-identifiers-requires-update").val(0);
+	$(".sidebar-tabs").tabs("select", parseInt($("#unique-product-identifiers-tab-to-redirect-to").val()));
+	$("#unique-product-identifiers-tab-to-redirect-to").val(-1);
+	$("#unique-product-identifiers-confirm-leave").hide();
+	$("html, body").animate({scrollTop: $("#unique-product-identifiers").offset().top + 35},'slow');
+});

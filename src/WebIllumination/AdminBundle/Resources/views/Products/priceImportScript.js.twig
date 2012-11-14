@@ -1,0 +1,58 @@
+<script type="text/javascript" defer="defer">
+	$(document).ready(function() {
+		{# Update the action button #}
+		$("#form-action").live('change', function() {
+			$("button[type='submit'] span.ui-button-text").html($("#form-action option[value='"+$("#form-action").val()+"']").text());
+		});
+		
+		{# Cancel image upload #}
+		$(".action-cancel-import-file-upload").live('click', function() {
+			$("#import-file-upload-error, #import-file-upload-success, #import-file-uploading").hide();
+			$("#import-file-file-upload .qq-upload-list").html("");
+			$("#import-file-file-upload span.filename").html("No file selected");
+			$("#form-import-file-file").val("");
+			$("#import-file-upload").fadeIn();
+		});
+		
+		{# File uploader #}
+		var uploader = new qq.FileUploader({
+		    element: document.getElementById('import-file-upload'),
+		    action: '{{ path('system_ajax_upload_file') }}',
+		    onSubmit: function(id, fileName) {
+		    	$("#form-import-file").val("");
+		    	$("#import-file-upload").hide();
+		    	var fileExtensions = fileName.toLowerCase().split(".");
+				var fileExtension = fileExtensions[(fileExtensions.length - 1)];
+				if ((fileExtension == 'csv') || (fileExtension == 'txt'))
+				{
+					$("#import-file-uploading").fadeIn();
+				} else {
+					$("#import-file-upload-error-text").html("csv and txt files only.");
+					$("#import-file-upload-error").fadeIn();
+					return false;
+			    }
+		    },
+			onComplete: function(id, fileName, responseJSON) {
+				$("#import-file-upload, #import-file-uploading, #import-file-upload-error, #import-file-upload-success").hide();
+				if (responseJSON.response == 'success')
+				{
+					$("#import-file-upload-success-text").html("File Uploaded: "+responseJSON.fileSize);
+					$("#form-import-file").val(responseJSON.fileName);
+					$("#import-file-upload-success").fadeIn();
+				} else {
+					$("#import-file-upload-error-text").html(responseJSON.message);
+					$("#import-file-upload-error").fadeIn();
+				}
+			}
+		});
+		$("#import-file-upload :file:not(.no-uniform)").uniform();
+
+		{# Validate form #}
+		$("#form-add").validator({
+			position : 'bottom left', 
+			offset : [0, 0], 
+			messageClass : 'form-error', 
+    		message : '<div><em/></div>'
+		});
+	});
+</script>
