@@ -945,7 +945,7 @@ class DepartmentService {
 		    	if (!$brandToDepartmentObject)
 		    	{
 		    		$brandId = $brandIndexObject->getBrandId();
-		    		$pageTitle = $brandIndexObject->getBrand().' '.$departmentIndexObject->getName();
+		    		$pageTitle = trim($brandIndexObject->getBrand().' '.$departmentIndexObject->getName());
 		    		$metaKeywords = $seoService->generateKeywords($pageTitle);
 		    		$metaDescription = $departmentIndexObject->getMetaDescription();
 			    	$brandToDepartmentObject = new BrandToDepartment();
