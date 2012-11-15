@@ -940,6 +940,7 @@ class DepartmentService {
 	    	// Check to make sure the brand to department is setup
 	    	foreach ($brandIndexObjects as $brandIndexObject)
 	    	{
+	    		// Check for the brand to department
 		    	$brandToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findOneBy(array('departmentId' => $id, 'brandId' => $brandIndexObject->getBrandId()));
 		    	if (!$brandToDepartmentObject)
 		    	{
@@ -959,6 +960,21 @@ class DepartmentService {
 			    	$em->persist($brandToDepartmentObject);
 			    	$em->flush();
 			    }
+			    
+			    // Check for the brand to department routing
+		    	$brandToDepartmentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $brandToDepartmentObject->getId(), 'objectType' => 'brandToDepartment', 'locale' => 'en'));
+	    		if (!$brandToDepartmentRoutingObject)
+	    		{	
+	    			$pageTitle = trim($brandIndexObject->getBrand().' '.$departmentIndexObject->getName());
+	    			$url = $seoService->createUrl($seoService->generateUrl($pageTitle, ''));
+	    			$brandToDepartmentRoutingObject = new Routing();
+			    	$brandToDepartmentRoutingObject->setObjectId($brandToDepartmentObject->getId());
+			    	$brandToDepartmentRoutingObject->setObjectType('brandToDepartment');
+			    	$brandToDepartmentRoutingObject->setLocale('en');
+			    	$brandToDepartmentRoutingObject->setUrl($url);
+			    	$em->persist($brandToDepartmentRoutingObject);
+			    	$em->flush();
+	    		}
 	    	}
 	    	
 	    	return $brandIndexObjects;
@@ -1901,7 +1917,6 @@ class DepartmentService {
     	}
     	
     	// Get the routing
-    	$parentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $departmentObject->getParentId(), 'locale' => $locale));
     	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $id, 'locale' => $locale));
     	
     	// Get the URLs
@@ -1909,12 +1924,7 @@ class DepartmentService {
     	$url = $seoService->generateUrl($departmentDescriptionObject->getPageTitle());
     	
     	// Setup the routing
-    	if ($parentRoutingObject)
-    	{
-	    	$routingUrl = $seoService->createUrl($parentRoutingObject->getUrl().'/'.$url, $routingObject->getUrl());
-    	} else {
-	    	$routingUrl = $seoService->createUrl($url, $routingObject->getUrl());
-    	}
+	    $routingUrl = $seoService->createUrl($url, $routingObject->getUrl());
     	$routingObject->setUrl($routingUrl);
     	$em->persist($routingObject);
     	$em->flush();

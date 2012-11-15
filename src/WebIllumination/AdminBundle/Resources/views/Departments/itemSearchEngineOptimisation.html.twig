@@ -95,50 +95,53 @@
 					    <div id="form-help-url" class="form-help ui-helper-hidden">
 					    	<p>The internal web address is automatically generated and is kept up-to-date by the rules setup in the system. However, you can make any changes to enhance the internal web address here.</p>
 					    </div>
-					    <h3>Brands</h3>
-					    <div class="sidebar-tabs">
-                            <ul>
-                            	{% for brand in data.brands %}
-                                	<li><a href="#tab-brand-{{ brand.brandId }}">{{ brand.brand }}</a></li>
-                                {% endfor %}
-                            </ul>
-                            {% for brandToDepartment in data.brandToDepartments %}
-                            	<section id="tab-brand-{{ brandToDepartment.brandId }}">
-	                            	 <div class="form-element clearfix no-margin-top">
-								        <label for="form-page-title-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Page Title</span></label>
-								        <div class="form-input">
-								        	<textarea class="maximum-characters" data-maximum-characters="70" data-maximum-characters-object="form-page-title-maximum-characters-{{ brandToDepartment.brandId }}" id="form-page-title-{{ brandToDepartment.brandId }}" name="brand-to-department-page-title[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.pageTitle|default('') }}</textarea>
-								        	<p class="maximum-characters-message" id="form-page-title-maximum-characters-{{ brandToDepartment.brandId }}"></p>
-								        </div>
-								    </div>
-								    <div class="form-element clearfix">
-								        <label for="form-header-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Header</span></label>
-								        <div class="form-input"><textarea id="form-header-{{ brandToDepartment.brandId }}" name="brand-to-department-header[{{ brandToDepartment.brandId }}]" rows="1">{{ brandToDepartment.header|default('') }}</textarea></div>
-								    </div>
-								    <div class="form-element clearfix">
-								        <label for="form-meta-description-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Meta Description</span></label>
-								        <div class="form-input">
-								        	<textarea class="maximum-characters" data-maximum-characters="160" data-maximum-characters-object="form-meta-description-maximum-characters-{{ brandToDepartment.brandId }}" id="form-meta-description-{{ brandToDepartment.brandId }}" name="brand-to-department-meta-description-[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.metaDescription|default('') }}</textarea>
-								        	<p class="maximum-characters-message" id="form-meta-description-maximum-characters-{{ brandToDepartment.brandId }}"></p>
-								        </div>
-								    </div>
-								    <div class="form-element clearfix">
-								        <label for="form-search-words-{{ brandToDepartment.brandId }}" class="form-label">Search Words</label>
-								        <div class="form-input"><textarea id="form-search-words-{{ brandToDepartment.brandId }}" name="brand-to-department-search-words[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.searchWords|default('') }}</textarea></div>
-								    </div>
-								    <div class="form-element clearfix">
-								        <label for="form-url-{{ brandToDepartment.brandId }}" class="form-label">Internal Web Address</label>
-								        <div class="form-input"><input type="text" class="seo-url" id="form-url-{{ brandToDepartment.brandId }}" name="brand-to-department-url[{{ brandToDepartment.brandId }}]" value="{{ brandToDepartment.url|default('') }}" /></div>
-								    </div>
-	                            </section>
-                            {% endfor %}
-                        </div>
+					    {% if data.brandToDepartments|length > 0 %}
+					    	<h3>Brands</h3>
+						    <div class="sidebar-tabs">
+	                            <ul>
+	                            	{% for brand in data.brands %}
+	                                	<li><a href="#tab-brand-{{ brand.brandId }}">{{ brand.brand }}</a></li>
+	                                {% endfor %}
+	                                <div class="clear"></div>
+	                            </ul>
+	                            {% for brandToDepartment in data.brandToDepartments %}
+	                            	<section id="tab-brand-{{ brandToDepartment.brandId }}">
+		                            	 <div class="form-element clearfix no-margin-top">
+									        <label for="form-page-title-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Page Title</span></label>
+									        <div class="form-input">
+									        	<textarea class="maximum-characters" data-maximum-characters="70" data-maximum-characters-object="form-page-title-maximum-characters-{{ brandToDepartment.brandId }}" id="form-page-title-{{ brandToDepartment.brandId }}" name="brand-to-department-page-title[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.pageTitle|default('') }}</textarea>
+									        	<p class="maximum-characters-message" id="form-page-title-maximum-characters-{{ brandToDepartment.brandId }}"></p>
+									        </div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-header-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Header</span></label>
+									        <div class="form-input"><textarea id="form-header-{{ brandToDepartment.brandId }}" name="brand-to-department-header[{{ brandToDepartment.brandId }}]" rows="1">{{ brandToDepartment.header|default('') }}</textarea></div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-meta-description-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Meta Description</span></label>
+									        <div class="form-input">
+									        	<textarea class="maximum-characters" data-maximum-characters="160" data-maximum-characters-object="form-meta-description-maximum-characters-{{ brandToDepartment.brandId }}" id="form-meta-description-{{ brandToDepartment.brandId }}" name="brand-to-department-meta-description[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.metaDescription|default('') }}</textarea>
+									        	<p class="maximum-characters-message" id="form-meta-description-maximum-characters-{{ brandToDepartment.brandId }}"></p>
+									        </div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-search-words-{{ brandToDepartment.brandId }}" class="form-label">Search Words</label>
+									        <div class="form-input"><textarea id="form-search-words-{{ brandToDepartment.brandId }}" name="brand-to-department-search-words[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.searchWords|default('') }}</textarea></div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-url-{{ brandToDepartment.brandId }}" class="form-label">Internal Web Address</label>
+									        <div class="form-input"><input type="text" class="seo-url" id="form-url-{{ brandToDepartment.brandId }}" name="brand-to-department-url[{{ brandToDepartment.brandId }}]" value="{{ attribute(data.brandToDepartmentsRouting, brandToDepartment.id)|default('') }}" /></div>
+									    </div>
+		                            </section>
+	                            {% endfor %}
+	                        </div>
+	                    {% endif %}
 					    <div id="float-buttons" class="clearfix">
 					        <div id="float-buttons-content" class="float-buttons clearfix buttons">
 				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
-				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-none ui-corner-tr ui-corner-br button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>			        		
-				        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Update &amp; Go Back</button>
-				        		<button id="button-update" type="submit" class="fr button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-check">Update</button>
+				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>			        		
+				        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
+				        		<button id="button-update" type="submit" class="fr button ui-corner-left ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update</button>
 						    </div>
 						</div>
 					</form>

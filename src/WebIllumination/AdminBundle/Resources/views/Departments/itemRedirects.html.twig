@@ -59,17 +59,17 @@
 						</div>
 			        	<div class="clear"></div>
 		        		<div class="clearfix padding-10">
-		        			<button type="button" class="fr small button ui-corner-none ui-corner-tr ui-corner-br ui-button-blue action-close-add" data-icon-primary="ui-icon-triangle-1-n">Close</button>
-		        			<button type="button" class="fr small button ui-corner-none ui-button-red action-multiple-delete-add" data-icon-primary="ui-icon-closethick">Delete Selected</button>
-			        		<button type="button" class="fr small button ui-corner-none ui-button-green action-add-another" data-icon-primary="ui-icon-plusthick">Add Another</button>
-			        		<button id="button-listing-add-go-back" type="button" class="fr small button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Save &amp; Go Back</button>
-			        		<button id="button-listing-add" type="button" class="fr small button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-check">Save</button>
+		        			<button type="button" class="fr small icon-set-white button ui-corner-right ui-button-black action-close-add" data-icon-primary="ui-icon-arrow-up">Close</button>
+		        			<button type="button" class="fr small icon-set-white button ui-corner-none ui-button-red action-multiple-delete-add" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+			        		<button type="button" class="fr small icon-set-white button ui-corner-none ui-button-green action-add-another" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+			        		<button id="button-listing-add-go-back" type="button" class="fr small icon-set-white button ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Save &amp; Go Back</button>
+			        		<button id="button-listing-add" type="button" class="fr small icon-set-white button ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Save</button>
 						</div>
 					</section>
 		        </div>
 	    		<div class="portlet">
 					<header>
-						<button type="button" class="header-button button ui-button-blue fr action-add" data-icon-primary="ui-icon-plusthick">Add a Redirect</button>
+						<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr action-add" data-icon-primary="ui-icon-circle-plus">Add a Redirect</button>
 	           			<h2>Redirects</h2>
 	                </header>
 					<section class="no-padding">
@@ -108,10 +108,10 @@
 					        <div id="float-buttons-content" class="float-buttons clearfix buttons no-margin">
 					        	<input type="hidden" value="0" id="form-delete" name="delete" />
 				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
-				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-none ui-corner-tr ui-corner-br button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
-				        		<button class="fr button ui-corner-none ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-closethick">Delete Selected</button>
-				        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Update Selected &amp; Go Back</button>
-				        		<button id="button-update" type="submit" class="fr button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-check">Update Selected</button>
+				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr icon-set-white ui-corner-right button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+				        		<button class="fr icon-set-white button ui-corner-none ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+				        		<button id="button-update-go-back" type="submit" class="fr icon-set-white button ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected &amp; Go Back</button>
+				        		<button id="button-update" type="submit" class="fr icon-set-white button ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected</button>
 						    </div>
 						</div>
 					</section>

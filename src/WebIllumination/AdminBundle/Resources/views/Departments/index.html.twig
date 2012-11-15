@@ -14,7 +14,7 @@
 		{% endspaceless %}</p>
 	{% endif %}
 	{% if data.parentId > 0 %}
-    	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.department.parentId}) }}" id="button-go-back" class="fr button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+    	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.department.parentId}) }}" id="button-go-back" class="fr button ui-button-black icon-set-white margin-left-10" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
     {% endif %}
     <div class="quick-search-container fr">
 		<span class="fl padding-right-10">Quick Search</span>

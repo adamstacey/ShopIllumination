@@ -1402,7 +1402,7 @@ input.ui-button {
   width: 100%;
   border-bottom: 1px solid #aaa !important;
   border-right-width: 0;
-  margin: 0 -1px 0.2em 0;
+  margin: 0 0 1px 0;
 }
 .ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
   display: block;

@@ -1681,9 +1681,8 @@ function initGlobalFunctions()
 			    	}
 		    	});
 		    }
-	    	return true;
-	    } else {
 		    $("#ajax_loading").show();
+	    	return true;
 	    }
     });
     
