@@ -69,6 +69,21 @@ class SeoService {
 		$redirect->setRedirectCode('301');
 	    $em->persist($redirect);
 	    $em->flush();
+	    
+	    // Send an email to update the marketing team
+		try
+		{
+			$email = \Swift_Message::newInstance();
+	    	$email->setSubject('Kitchen Appliance Centre: URL Change');
+	    	$email->setFrom(array('support@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
+	    	$email->setTo(array('me@adamstacey.co.uk' => 'Adam Stacey'));
+	    	$email->setBcc(array('me@adamstacey.co.uk' => 'Adam Stacey'));
+	    	$email->setBody($this->container->get('templating')->renderResponse('WebIlluminationShopBundle:System:urlChange.html.twig', array('existingUrl' => $redirectFrom, 'url' => $redirectTo)), 'text/html');
+			$email->addPart($this->container->get('templating')->renderResponse('WebIlluminationShopBundle:System:urlChange.txt.twig', array('existingUrl' => $redirectFrom, 'url' => $redirectTo)), 'text/plain');
+			$this->container->get('mailer')->send($email);
+		} catch (Exception $exception) {
+			error_log('Error sending email!');
+		}
 	        	
     	return true;
     }

@@ -1403,7 +1403,7 @@ class DepartmentsController extends Controller
     		$brandToDepartmentSearchWords = $request->request->get('brand-to-department-search-words');
     		$googleDepartment = $request->request->get('google-department');
     		$existingUrl = $itemIndexObject->getUrl();
-    		$url = $seoService->createUrl($seoService->generateUrl(trim($request->request->get('url'))), $existingUrl);
+    		$url = $seoService->createUrl(trim($request->request->get('url')), $existingUrl);
     		$brandToDepartmentUrl = $request->request->get('brand-to-department-url');
     		$goBack = $request->request->get('go-back');
     		    		
@@ -1459,7 +1459,7 @@ class DepartmentsController extends Controller
 			    	$em->flush();
 	    		}
 	    		$existingUrl = $brandToDepartmentRoutingObject->getUrl();
-	    		$url = $seoService->createUrl($seoService->generateUrl(trim($brandToDepartmentUrl[$brandId]), $existingUrl));
+	    		$url = $seoService->createUrl(trim($brandToDepartmentUrl[$brandId]), $existingUrl);
 	    		$brandToDepartmentRoutingObject->setUrl($url);
 		    	$em->persist($brandToDepartmentRoutingObject);
 		    	$em->flush();
