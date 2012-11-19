@@ -864,23 +864,7 @@ class OrdersController extends Controller
 		
 		// Get the new order stats
 		$data['statistics']['new'] = $service->getNewStatistics();
-		
-		/*
-		// Get todays stats
-		$data['statistics']['today'] = $service->getStatistics('today');
 				
-		// Get this weeks stats
-		$data['statistics']['week'] = $service->getStatistics('week');
-
-		// Get this months stats
-		$data['statistics']['month'] = $service->getStatistics('month');
-		
-		// Get this quarters stats
-		$data['statistics']['quarter'] = $service->getStatistics('quarter');
-		
-		// Get this years stats
-		$data['statistics']['year'] = $service->getStatistics('year');*/
-		
 		// Get the listing
 		$data['listing'] = $this->listing;
 		
@@ -889,8 +873,10 @@ class OrdersController extends Controller
 		
 		// Get the documents
 		$data['document'] = $document;
-		
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':index.html.twig', array('data' => $data));
+
+        $response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':index.html.twig', array('data' => $data));
+		$response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // Update listing
@@ -972,7 +958,9 @@ class OrdersController extends Controller
 		// Get the listing
 		$data['listing'] = $this->listing;
 				
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetStatistics.html.twig', array('data' => $data));
+        $response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetStatistics.html.twig', array('data' => $data));
+		$response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // Print orders
@@ -1423,7 +1411,9 @@ class OrdersController extends Controller
 		$items = $qb->getQuery()->getResult();
 		$data['items'] = $items;
 						
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':processDeliveries.html.twig', array('data' => $data));
+        $response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':processDeliveries.html.twig', array('data' => $data));
+        $response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // Import tracking
@@ -1536,7 +1526,9 @@ class OrdersController extends Controller
     	$data['settings'] = $this->settings;
     	$data['ordersUpdated'] = $ordersUpdated;
     	    	    	    	    							
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':importTracking.html.twig', array('data' => $data));
+        $resposne = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':importTracking.html.twig', array('data' => $data));
+        $response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // Add
@@ -1822,7 +1814,9 @@ class OrdersController extends Controller
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id));
     	$data['mode'] = 'update';
     	
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
+        $response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
+        $response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // Update notes
@@ -1950,7 +1944,9 @@ class OrdersController extends Controller
     	// Get the items
 		$data['items'] = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
 		
-		return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemNotes.html.twig', array('data' => $data));    	    	    	
+		$response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemNotes.html.twig', array('data' => $data));
+		$response->headers->set('Connection', 'Keep-Alive');
+		return $response;	    	
     }
     
     // View copy order
@@ -1962,7 +1958,9 @@ class OrdersController extends Controller
 	    // Get the order
 	    $item = $service->getOrder($id);
     	
-    	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewCopyOrder.html.twig', array('order' => $item));
+    	$response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewCopyOrder.html.twig', array('order' => $item));
+    	$response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // View delivery note
@@ -1974,7 +1972,9 @@ class OrdersController extends Controller
 	    // Get the order
 	    $item = $service->getOrder($id);
     	
-    	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewDeliveryNote.html.twig', array('order' => $item));
+    	$resposne = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewDeliveryNote.html.twig', array('order' => $item));
+    	$response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // View invoice
@@ -1986,7 +1986,9 @@ class OrdersController extends Controller
 	    // Get the order
 	    $item = $service->getOrder($id);
     	
-    	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoice.html.twig', array('order' => $item));
+    	$response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoice.html.twig', array('order' => $item));
+    	$response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }
     
     // View order
@@ -1998,6 +2000,8 @@ class OrdersController extends Controller
 	    // Get the order
 	    $item = $service->getOrder($id);
     	
-    	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrder.html.twig', array('order' => $item));
+    	$response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrder.html.twig', array('order' => $item));
+    	$response->headers->set('Connection', 'Keep-Alive');
+		return $response;
     }     
 }

@@ -180,12 +180,11 @@ $(window).load(function(){
 	if ($("td.buttons-container:eq(0) .button").length > 0)
 	{
 		$("td.buttons-container:eq(0) .button").each(function() {
-			$actionButtonsWidth = $actionButtonsWidth + $(this).outerWidth(true) + 1;
+			$actionButtonsWidth = $actionButtonsWidth + $(this).outerWidth(true);
 		});
 	}
 	if ($actionButtonsWidth > 0)
 	{
-		$actionButtonsWidth = $actionButtonsWidth - 2;
 		$(".buttons-spacer").width($actionButtonsWidth).attr("width", $actionButtonsWidth);
 	}
 	
