@@ -32,6 +32,24 @@ admin_orders:
 admin_orders_update_listing:
     pattern:   /admin/orders/updateListing
     defaults:  { _controller: WebIlluminationAdminBundle:Orders:updateListing }
+admin_orders_ajax_get_customer:
+    pattern:   /admin/orders/ajaxGetCustomer
+    defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetCustomer }
+admin_orders_ajax_get_delivery_information:
+    pattern:   /admin/orders/ajaxGetDeliveryInformation
+    defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetDeliveryInformation }
+admin_orders_ajax_get_documents:
+    pattern:   /admin/orders/ajaxGetDocuments
+    defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetDocuments }
+admin_orders_ajax_get_notes:
+    pattern:   /admin/orders/ajaxGetNotes
+    defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetNotes }
+admin_orders_ajax_get_payment_information:
+    pattern:   /admin/orders/ajaxGetPaymentInformation
+    defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetPaymentInformation }
+admin_orders_ajax_get_products:
+    pattern:   /admin/orders/ajaxGetProducts
+    defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetProducts }
 admin_orders_ajax_get_statistics:
     pattern:   /admin/orders/ajaxGetStatistics
     defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetStatistics }

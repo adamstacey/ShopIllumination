@@ -757,7 +757,7 @@ class OrdersController extends Controller
     	}
 	    $qb->addOrderBy('i.'.$this->listing['sort'], $this->listing['order']);
     	$qb->setFirstResult($this->listing['firstResult']);
-    	if ($itemCount > 500) && ($this->listing['maxResults'] > 500)
+    	if (($itemCount > 500) && ($this->listing['maxResults'] > 500))
     	{
 	   		$qb->setMaxResults(500);
 	   	} else {
@@ -937,11 +937,140 @@ class OrdersController extends Controller
     	return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
     }
     
+    // Get the customer via Ajax
+    public function ajaxGetCustomerAction(Request $request)
+    {
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get submitted data
+    	$id = $request->query->get('id');
+		
+		// Setup the data
+    	$data = array();
+		
+		// Get the item
+		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+		$data['item'] = $itemObject;
+						
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetCustomer.html.twig', array('data' => $data));
+    }
+    
+    // Get the delivery information via Ajax
+    public function ajaxGetDeliveryInformationAction(Request $request)
+    {
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get submitted data
+    	$id = $request->query->get('id');
+		
+		// Setup the data
+    	$data = array();
+		
+		// Get the item
+		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+		$data['item'] = $itemObject;
+						
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetDeliveryInformation.html.twig', array('data' => $data));
+    }
+    
+    // Get the documents via Ajax
+    public function ajaxGetDocumentsAction(Request $request)
+    {
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get submitted data
+    	$id = $request->query->get('id');
+		
+		// Setup the data
+    	$data = array();
+		
+		// Get the item
+		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+		$data['item'] = $itemObject;
+						
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetDocuments.html.twig', array('data' => $data));
+    }
+    
+    // Get the notes via Ajax
+    public function ajaxGetNotesAction(Request $request)
+    {
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get submitted data
+    	$id = $request->query->get('id');
+		
+		// Setup the data
+    	$data = array();
+		
+		// Get the item
+		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+		$data['item'] = $itemObject;
+		
+		// Get the notes
+		$itemNoteObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Note')->findBy(array('orderId' => $id));
+		$data['notes'] = $itemNoteObjects;
+		
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetNotes.html.twig', array('data' => $data));
+    }
+    
+    // Get the payment information via Ajax
+    public function ajaxGetPaymentInformationAction(Request $request)
+    {
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get submitted data
+    	$id = $request->query->get('id');
+		
+		// Setup the data
+    	$data = array();
+		
+		// Get the item
+		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+		$data['item'] = $itemObject;
+						
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetPaymentInformation.html.twig', array('data' => $data));
+    }
+    
+    // Get the products via Ajax
+    public function ajaxGetProductsAction(Request $request)
+    {
+    	// Get the entity manager
+		$em = $this->getDoctrine()->getEntityManager();
+		
+		// Get submitted data
+    	$id = $request->query->get('id');
+		
+		// Setup the data
+    	$data = array();
+		
+		// Get the item
+		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+		$data['item'] = $itemObject;
+		
+		// Get the products
+		$itemProductObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Product')->findBy(array('orderId' => $id));
+		$data['products'] = $itemProductObjects;
+		
+		// Get the donations
+		$itemDonationObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Donation')->findBy(array('orderId' => $id));
+		$data['donations'] = $itemDonationObjects;
+    			
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetProducts.html.twig', array('data' => $data));
+    }
+    
     // Get the statistics via Ajax
     public function ajaxGetStatisticsAction(Request $request)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	
+    	// Setup the data
+    	$data = array();
     	
 		// Get todays stats
 		$data['statistics']['today'] = $service->getStatistics('today');
@@ -958,9 +1087,6 @@ class OrdersController extends Controller
 		// Get this years stats
 		$data['statistics']['year'] = $service->getStatistics('year');
 		
-		// Get the listing
-		$data['listing'] = $this->listing;
-				
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetStatistics.html.twig', array('data' => $data));
     }
     

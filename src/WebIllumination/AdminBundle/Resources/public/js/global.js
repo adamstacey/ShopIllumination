@@ -213,60 +213,7 @@ $(window).load(function(){
 	
 	$(".preview-list table tr:odd:not(.no-row-colour)").addClass("odd");
 	$("table.data-table > tbody > tr:odd:not(.no-row-colour)").addClass("odd");
-	
-	if ($(".tooltip-preview-left").length > 0)
-	{
-		$(".tooltip-preview-left").each(function() {
-			var $tooltipObject = $($(this).attr("data-tooltip-id"));
-			var $tooltipHeight = $tooltipObject.outerHeight(true);
-			var $tooltipWidth = $tooltipObject.outerWidth(true);
-			var $tooltipTriggerPosition = $(this).position();
-			var $tooltipTriggerWidth = $(this).outerWidth(true);
-			var $tooltipTriggerHeight = $(this).outerHeight(true);
-			var $tooltipTop = parseInt($tooltipTriggerPosition.top - (($tooltipHeight - $tooltipTriggerHeight) / 2));
-			if (($("#listing").offset().top + $tooltipTop) < ($(window).scrollTop() + 10))
-		{
-			$tooltipTop = $tooltipTop + (($(window).scrollTop() + 10) - ($("#listing").offset().top + $tooltipTop));
-		} else if (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) > ($(window).outerHeight(true) + $(window).scrollTop())) {
-			$tooltipTop = $tooltipTop - (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) - ($(window).outerHeight(true) + $(window).scrollTop()));
-		}
-			var $tooltipLeft = parseInt($tooltipTriggerPosition.left + $tooltipTriggerWidth + 6);
-			var $mainSectionWidth = parseInt($(".main-section").outerWidth(true));
-			var $maximumWidth = $mainSectionWidth - $tooltipLeft - 200;
-			if ($tooltipWidth > $maximumWidth)
-			{
-				$tooltipObject.css({width: $maximumWidth, top: $tooltipTop, left: $tooltipLeft});
-			} else {
-				$tooltipObject.css({ top: $tooltipTop, left: $tooltipLeft});
-			}
-		});
-	}
-	if ($(".tooltip-preview-right").length > 0)
-	{
-		$(".tooltip-preview-right").each(function() {
-			var $tooltipObject = $($(this).attr("data-tooltip-id"));
-			var $tooltipHeight = $tooltipObject.outerHeight(true);
-			var $tooltipWidth = $tooltipObject.outerWidth(true);
-			var $tooltipTriggerPosition = $(this).position();
-			var $tooltipTriggerWidth = $(this).outerWidth(true);
-			var $tooltipTriggerHeight = $(this).outerHeight(true);
-			var $tooltipTop = parseInt($tooltipTriggerPosition.top - (($tooltipHeight - $tooltipTriggerHeight) / 2));
-			if ($tooltipTop < 10)
-			{
-				$tooltipTop = 10;
-			}
-			var $tooltipLeft = parseInt($tooltipTriggerPosition.left - $tooltipWidth - 6);
-			var $mainSectionWidth = parseInt($(".main-section").outerWidth(true));
-			var $maximumWidth = $tooltipTriggerPosition.left - 206;
-			if ($tooltipWidth > $maximumWidth)
-			{
-				$tooltipObject.css({width: $maximumWidth, top: $tooltipTop, left: $tooltipLeft});
-			} else {
-				$tooltipObject.css({ top: $tooltipTop, left: $tooltipLeft});
-			}
-		});
-	}
-	
+		
 	if ($(".sidebar-tabs").length > 0)
 	{
 		$(".sidebar-tabs").each(function() {
@@ -900,8 +847,7 @@ $(document).ready(function () {
 			$("#ajax_loading").hide();
 		}
 	}).disableSelection();
-	
-	
+		
 	$(".update-filter").live('click', function() {
 		$("#ajax_loading").show();
 		$("#form-update-listing input[type='hidden']").val("");
@@ -913,55 +859,81 @@ $(document).ready(function () {
 		$("#form-update-listing").submit();
 	});
 	
-	$(".tooltip-preview-left").live('mouseover', function() {
-		var $tooltipObject = $($(this).attr("data-tooltip-id"));
-		var $tooltipHeight = $tooltipObject.outerHeight(true);
-		var $tooltipWidth = $tooltipObject.outerWidth(true);
-		var $tooltipTriggerPosition = $(this).position();
-		var $tooltipTriggerWidth = $(this).outerWidth(true);
-		var $tooltipTriggerHeight = $(this).outerHeight(true);
-		var $tooltipTop = parseInt($tooltipTriggerPosition.top - (($tooltipHeight - $tooltipTriggerHeight) / 2));
-		if (($("#listing").offset().top + $tooltipTop) < ($(window).scrollTop() + 10))
-		{
-			$tooltipTop = $tooltipTop + (($(window).scrollTop() + 10) - ($("#listing").offset().top + $tooltipTop));
-		} else if (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) > ($(window).outerHeight(true) + $(window).scrollTop())) {
-			$tooltipTop = $tooltipTop - (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) - ($(window).outerHeight(true) + $(window).scrollTop()));
-		}
-		var $tooltipLeft = parseInt($tooltipTriggerPosition.left + $tooltipTriggerWidth + 6);
+	$(".tooltip-preview-left, .tooltip-preview-right").live('mouseover', function() {
+		var $thisObject = $(this);
 		var $mainSectionWidth = parseInt($(".main-section").outerWidth(true));
-		var $maximumWidth = $mainSectionWidth - $tooltipLeft - 200;
-		if ($tooltipWidth > $maximumWidth)
+		var $tooltipTriggerPosition = $thisObject.position();
+		var $tooltipTriggerWidth = $thisObject.outerWidth(true);
+		var $tooltipTriggerHeight = $thisObject.outerHeight(true);
+		var $maximumWidth = $mainSectionWidth - 350;
+		var $tooltipObject = $($thisObject.attr("data-tooltip-id"));
+		if (($thisObject.attr("data-ajax-path") != '') && ($thisObject.attr("data-ajax-path") != 'undefined'))
 		{
-			$tooltipObject.css({width: $maximumWidth, top: $tooltipTop, left: $tooltipLeft});
+			if ($tooltipObject.find(".tooltip-content").html() == '')
+			{
+				$.ajax({
+					type: "GET",
+					url: $thisObject.attr("data-ajax-path"),
+					beforeSend: function() {
+						$("#ajax_loading").show();
+					},
+					data: {
+						id: $thisObject.attr("data-id")
+					},
+					error: function() {
+						$("#ajax_loading").hide();
+					},
+					success: function(data) {
+						$tooltipObject.find(".tooltip-content").html(data);
+						$tooltipObject.css({ position: "absolute", visibility: "hidden", display: "block" });
+						$tooltipHeight = $tooltipObject.outerHeight(true);
+						$tooltipWidth = $tooltipObject.outerWidth(true);
+						if ($tooltipWidth > $maximumWidth)
+						{
+							$tooltipWidth = $maximumWidth;
+						}
+						$tooltipObject.css({ position: "", visibility: "", display: "" });
+						$tooltipTop = parseInt($tooltipTriggerPosition.top - (($tooltipHeight - $tooltipTriggerHeight) / 2));
+						if (($("#listing").offset().top + $tooltipTop) < ($(window).scrollTop() + 10))
+						{
+							$tooltipTop = $tooltipTop + (($(window).scrollTop() + 10) - ($("#listing").offset().top + $tooltipTop));
+						} else if (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) > ($(window).outerHeight(true) + $(window).scrollTop())) {
+							$tooltipTop = $tooltipTop - (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) - ($(window).outerHeight(true) + $(window).scrollTop()));
+						}
+						if ($thisObject.hasClass("tooltip-preview-left"))
+						{
+							$tooltipLeft = parseInt($tooltipTriggerPosition.left + $tooltipTriggerWidth + 6);
+						} else {
+							$tooltipLeft = parseInt($tooltipTriggerPosition.left - $tooltipWidth - 26);
+						}
+						$tooltipObject.css({width: $tooltipWidth, top: $tooltipTop, left: $tooltipLeft});
+						$tooltipObject.show();
+						$("#ajax_loading").hide();
+					}
+				});
+			} else {
+				$tooltipObject.show();
+			}
 		} else {
-			$tooltipObject.css({ top: $tooltipTop, left: $tooltipLeft});
+			$tooltipObject.css({ position: "absolute", visibility: "hidden", display: "block" });
+			$tooltipHeight = $tooltipObject.outerHeight(true);
+			$tooltipWidth = $tooltipObject.outerWidth(true);
+			if ($tooltipWidth > $maximumWidth)
+			{
+				$tooltipWidth = $maximumWidth;
+			}
+			$tooltipObject.css({ position: "", visibility: "", display: "" });
+			$tooltipTop = parseInt($tooltipTriggerPosition.top - (($tooltipHeight - $tooltipTriggerHeight) / 2));
+			if (($("#listing").offset().top + $tooltipTop) < ($(window).scrollTop() + 10))
+			{
+				$tooltipTop = $tooltipTop + (($(window).scrollTop() + 10) - ($("#listing").offset().top + $tooltipTop));
+			} else if (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) > ($(window).outerHeight(true) + $(window).scrollTop())) {
+				$tooltipTop = $tooltipTop - (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) - ($(window).outerHeight(true) + $(window).scrollTop()));
+			}
+			$tooltipLeft = parseInt($tooltipTriggerPosition.left - $tooltipWidth - 26);
+			$tooltipObject.css({width: $tooltipWidth, top: $tooltipTop, left: $tooltipLeft});
+			$tooltipObject.show();
 		}
-		$tooltipObject.show();
-	});
-	$(".tooltip-preview-right").live('mouseover', function() {
-		var $tooltipObject = $($(this).attr("data-tooltip-id"));
-		var $tooltipHeight = $tooltipObject.outerHeight(true);
-		var $tooltipWidth = $tooltipObject.outerWidth(true);
-		var $tooltipTriggerPosition = $(this).position();
-		var $tooltipTriggerWidth = $(this).outerWidth(true);
-		var $tooltipTriggerHeight = $(this).outerHeight(true);
-		var $tooltipTop = parseInt($tooltipTriggerPosition.top - (($tooltipHeight - $tooltipTriggerHeight) / 2));
-		if (($("#listing").offset().top + $tooltipTop) < ($(window).scrollTop() + 10))
-		{
-			$tooltipTop = $tooltipTop + (($(window).scrollTop() + 10) - ($("#listing").offset().top + $tooltipTop));
-		} else if (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) > ($(window).outerHeight(true) + $(window).scrollTop())) {
-			$tooltipTop = $tooltipTop - (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) - ($(window).outerHeight(true) + $(window).scrollTop()));
-		}
-		var $tooltipLeft = parseInt($tooltipTriggerPosition.left - $tooltipWidth - 6);
-		var $mainSectionWidth = parseInt($(".main-section").outerWidth(true));
-		var $maximumWidth = $tooltipTriggerPosition.left - 206;
-		if ($tooltipWidth > $maximumWidth)
-		{
-			$tooltipObject.css({width: $maximumWidth, top: $tooltipTop, left: $tooltipLeft});
-		} else {
-			$tooltipObject.css({ top: $tooltipTop, left: $tooltipLeft});
-		}
-		$tooltipObject.show();
 	});
 	$(".tooltip-preview-left, .tooltip-preview-right").live('mouseout', function() {
 		$(".tooltip").hide();

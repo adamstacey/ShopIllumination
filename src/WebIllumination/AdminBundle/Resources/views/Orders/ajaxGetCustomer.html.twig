@@ -1,0 +1,65 @@
+<h3>Customer</h3>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td class="label">Name</td>
+		<td>{{ data.item.firstName|upper }} {{ data.item.lastName|upper }}</td>
+	</tr>
+	<tr>
+		<td class="label">Email Address</td>
+		<td><a href="mailto:{{ data.item.emailAddress|lower }}">{{ data.item.emailAddress|lower }}</a></td>
+	</tr>
+	{% if data.item.telephoneDaytime != '' %}
+		<tr>
+			<td class="label">Telephone (Daytime)</td>
+			<td>{{ data.item.telephoneDaytime }}</td>
+		</tr>
+	{% endif %}
+	{% if data.item.telephoneEvening != '' %}
+		<tr>
+			<td class="label">Telephone (Evening)</td>
+			<td>{{ data.item.telephoneEvening }}</td>
+		</tr>
+	{% endif %}
+	{% if data.item.mobile != '' %}
+		<tr>
+			<td class="label">Mobile</td>
+			<td>{{ data.item.mobile }}</td>
+		</tr>
+	{% endif %}
+	<tr>
+		<td class="label">Billing Address</td>
+		<td>{% spaceless %}
+			{{ data.item.billingFirstName|upper }} {{ data.item.billingLastName|upper }}<br />
+			{% if data.item.billingOrganisationName != '' %}
+				{{ data.item.billingOrganisationName|upper }}<br />
+			{% endif %}
+			{{ data.item.billingAddressLine1|upper }}<br />
+			{% if data.item.billingAddressLine2 != '' %}
+				{{ data.item.billingAddressLine2|upper }}<br />
+			{% endif %}
+			{{ data.item.billingTownCity|upper }}<br />
+			{% if data.item.billingCountyState != '' %}
+				{{ data.item.billingCountyState|upper }}<br />
+			{% endif %}
+			{{ data.item.billingPostZipCode|upper }}
+		{% endspaceless %}</td>
+	</tr>
+	<tr>
+		<td class="label">Delivery Address</td>
+		<td>{% spaceless %}
+			{{ data.item.deliveryFirstName|upper }} {{ data.item.deliveryLastName|upper }}<br />
+			{% if data.item.deliveryOrganisationName != '' %}
+				{{ data.item.deliveryOrganisationName|upper }}<br />
+			{% endif %}
+			{{ data.item.deliveryAddressLine1|upper }}<br />
+			{% if data.item.deliveryAddressLine2 != '' %}
+				{{ data.item.deliveryAddressLine2|upper }}<br />
+			{% endif %}
+			{{ data.item.deliveryTownCity|upper }}<br />
+			{% if data.item.deliveryCountyState != '' %}
+				{{ data.item.deliveryCountyState|upper }}<br />
+			{% endif %}
+			{{ data.item.deliveryPostZipCode|upper }}
+		{% endspaceless %}</td>
+	</tr>
+</table>
