@@ -261,7 +261,7 @@
 										<tr>
 											<th width="19" class="ac"><input type="checkbox"{% if data.items|length == 1 %} checked="checked"{% endif %} class="action-select-all" value="1" /></th>
 											<th class="ac">Order</th>
-											<th class="ac">Total</th>
+											<th class="ac" colspan="2">Total</th>
 											<th class="ac">Customer</th>
 											<th class="ac">Date</th>
 											<th class="ac">Status</th>
@@ -277,6 +277,9 @@
 												</td>
 												<td class="ac">
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.id}) }}">&pound;{{ item.total|number_format(2)|default('0.00') }}</a>
+												</td>
+												<td class="ac">
+													{% if item.paymentType == '' %}&nbsp;-&nbsp;{% else %}<img width="50" class="no-border" src="{{ asset(item.paymentTypeLogo) }}" border="0" alt="{{ item.paymentType }}" />{% endif %}
 												</td>
 												<td class="ac">
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.id}) }}" class="tooltip-preview-left" data-tooltip-id="#tooltip-customer-{{ item.id }}">{{ item.firstName|upper }} {{ item.lastName|upper }}</a>
