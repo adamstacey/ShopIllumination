@@ -1155,7 +1155,12 @@ $(document).ready(function () {
 		}
 		if ($("#listing-statistics").is(":hidden"))
 		{
-			$("#listing-statistics").show();
+			if ($("#listing-statistics").html() != '')
+			{
+				$("#listing-statistics").show();
+			} else {
+				$("#listing-statistics-loading").show();
+			}
 			if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-s"))
 			{
 				$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-s").addClass("ui-icon-triangle-1-n");
@@ -1165,6 +1170,7 @@ $(document).ready(function () {
 				$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-down").addClass("ui-icon-arrow-up");
 			}
 		} else {
+			$("#listing-statistics-loading").hide();
 			$("#listing-statistics").hide();
 			if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
 			{

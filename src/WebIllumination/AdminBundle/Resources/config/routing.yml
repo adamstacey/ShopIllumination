@@ -32,6 +32,9 @@ admin_orders:
 admin_orders_update_listing:
     pattern:   /admin/orders/updateListing
     defaults:  { _controller: WebIlluminationAdminBundle:Orders:updateListing }
+admin_orders_ajax_get_statistics:
+    pattern:   /admin/orders/ajaxGetStatistics
+    defaults:  { _controller: WebIlluminationAdminBundle:Orders:ajaxGetStatistics }
 admin_orders_process_deliveries:
     pattern:   /admin/orders/processDeliveries
     defaults:  { _controller: WebIlluminationAdminBundle:Orders:processDeliveries }

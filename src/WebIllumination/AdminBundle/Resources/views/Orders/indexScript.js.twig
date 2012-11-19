@@ -61,6 +61,47 @@
 			$("#listing-filter input[type='checkbox']").removeAttr("checked").parent().removeClass("checked");
 			$("input[data-filter-value='Payment Received']").attr("checked", "checked").parent().addClass("checked");
 			updateResults();
-		});		
+		});
+		
+        $("button.action-show-hide-statistics").live('click', function() {
+        	if ($("#listing-statistics").html() == '')
+        	{
+	        	$.ajax({
+					type: "GET",
+					url: "{{ path('admin_orders_ajax_get_statistics') }}",
+					beforeSend: function() {
+						$("#ajax_loading").show();
+					},
+					error: function() {
+						$("#listing-filter").hide();
+						if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
+						{
+							$("#filter-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+						}
+						if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
+						{
+							$("#filter-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
+						}
+						$("#listing-statistics-loading").hide();
+						$("#listing-statistics").hide();
+						if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
+						{
+							$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+						}
+						if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
+						{
+							$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
+						}
+						$("#ajax_loading").hide();
+					},
+					success: function(data) {
+						$("#listing-statistics").html(data);
+						$("#listing-statistics").show();
+						$("#listing-statistics-loading").hide();
+						$("#ajax_loading").hide();
+					}
+				});
+			}
+		});	
 	});
 </script>

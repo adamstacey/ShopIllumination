@@ -948,6 +948,33 @@ class OrdersController extends Controller
     	return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
     }
     
+    // Get the statistics via Ajax
+    public function ajaxGetStatisticsAction(Request $request)
+    {
+    	// Get the services
+    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	
+		// Get todays stats
+		$data['statistics']['today'] = $service->getStatistics('today');
+				
+		// Get this weeks stats
+		$data['statistics']['week'] = $service->getStatistics('week');
+
+		// Get this months stats
+		$data['statistics']['month'] = $service->getStatistics('month');
+		
+		// Get this quarters stats
+		$data['statistics']['quarter'] = $service->getStatistics('quarter');
+		
+		// Get this years stats
+		$data['statistics']['year'] = $service->getStatistics('year');
+		
+		// Get the listing
+		$data['listing'] = $this->listing;
+				
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetStatistics.html.twig', array('data' => $data));
+    }
+    
     // Print orders
     public function printOrdersAction(Request $request)
     {
