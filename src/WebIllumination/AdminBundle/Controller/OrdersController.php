@@ -757,7 +757,12 @@ class OrdersController extends Controller
     	}
 	    $qb->addOrderBy('i.'.$this->listing['sort'], $this->listing['order']);
     	$qb->setFirstResult($this->listing['firstResult']);
-	   	$qb->setMaxResults($this->listing['maxResults']);
+    	if ($itemCount > 500) && ($this->listing['maxResults'] > 500)
+    	{
+	   		$qb->setMaxResults(500);
+	   	} else {
+		   	$qb->setMaxResults($this->listing['maxResults']);
+	   	}
 		$items = $qb->getQuery()->getResult();
 		$data['items'] = $items;
 		

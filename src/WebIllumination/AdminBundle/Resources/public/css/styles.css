@@ -1461,11 +1461,11 @@ ul.isotope-widgets > li a {
  * Misc
  */
  
-table.data-table tr
+table.data-table > tr
 {
 	background: #FFF;
 }
-table.data-table tr.odd
+table.data-table > tr.odd
 {
 	background: #EFEFEF!important;
 }
