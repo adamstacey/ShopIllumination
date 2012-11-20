@@ -3,7 +3,116 @@
 	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemFunctions.js.twig' with {'data': data} %}
 	
 	$(document).ready(function() {
-	
+		
+		getBillingAddressPreview();
+		getDeliveryAddressPreview();
+		
+		$("div#billing-address-container input").live('keyup change', function() {
+			getBillingAddressPreview();
+		});
+		$("div#delivery-address-container input").live('keyup change', function() {
+			getDeliveryAddressPreview();
+		});
+		
+		$("div#billing-address-container select").live('change', function() {
+			getBillingAddressPreview();
+		});
+		$("div#delivery-address-container select").live('change', function() {
+			getDeliveryAddressPreview();
+		});
+		
+		$(".action-clear-billing-address").live('click', function() {
+			$("div#billing-address-container input").val("");
+			$("div#billing-address-container select option").attr("selected", false);
+			$("div#billing-address-container select option:eq(0)").attr("selected", "selected");
+			$("div#billing-address-container div.selector span").html($("div#billing-address-container select option:eq(0)").text());
+			getBillingAddressPreview();
+		});
+		$(".action-clear-delivery-address").live('click', function() {
+			$("div#delivery-address-container input").val("");
+			$("div#delivery-address-container select option").attr("selected", false);
+			$("div#delivery-address-container select option:eq(0)").attr("selected", "selected");
+			$("div#delivery-address-container div.selector span").html($("div#delivery-address-container select option:eq(0)").text());
+			getDeliveryAddressPreview();
+		});
+		
+		$(".action-use-billing-address").live('click', function() {
+			$("input#form-delivery-first-name").val($("input#form-billing-first-name").val());
+			$("input#form-delivery-last-name").val($("input#form-billing-last-name").val());
+			$("input#form-delivery-organisation-name").val($("input#form-billing-organisation-name").val());
+			$("select#form-delivery-country-code option").attr("selected", false);
+			$("select#form-delivery-country-code option[value='"+$("select#form-billing-country-code option:selected").val()+"']").attr("selected", "selected");
+			$("div#uniform-form-delivery-country-code span").html($("div#uniform-form-billing-country-code span").html());
+			if ($("select#form-billing-country-code").val() == 'GB')
+			{
+				$("input#form-billing-post-zip-code").val($("input#form-delivery-post-zip-code").val());
+				$("input#form-billing-post-zip-code").show();
+				$("input#form-billing-county-state").removeClass("ui-corner-bottom").addClass("ui-corner-none");
+			} else if ($("select#form-delivery-country-code").val() == 'IE') {
+				$("input#form-billing-post-zip-code").hide().val("000");
+				$("input#form-billing-county-state").removeClass("ui-corner-none").addClass("ui-corner-bottom");
+			}
+			$("input#form-delivery-address-line-1").val($("input#form-billing-address-line-1").val());
+			$("input#form-delivery-address-line-2").val($("input#form-billing-address-line-2").val());
+			$("input#form-delivery-town-city").val($("input#form-billing-town-city").val());
+			$("input#form-delivery-county-state").val($("input#form-billing-county-state").val());
+			getDeliveryAddressPreview();
+		});
+		$(".action-use-delivery-address").live('click', function() {
+			$("input#form-billing-first-name").val($("input#form-delivery-first-name").val());
+			$("input#form-billing-last-name").val($("input#form-delivery-last-name").val());
+			$("input#form-billing-organisation-name").val($("input#form-delivery-organisation-name").val());
+			$("select#form-billing-country-code option").attr("selected", false);
+			$("select#form-billing-country-code option[value='"+$("select#form-delivery-country-code option:selected").val()+"']").attr("selected", "selected");
+			$("div#uniform-form-billing-country-code span").html($("div#uniform-form-delivery-country-code span").html());
+			if ($("select#form-delivery-country-code").val() == 'GB')
+			{
+				$("input#form-billing-post-zip-code").val($("input#form-delivery-post-zip-code").val());
+				$("input#form-billing-post-zip-code").show();
+				$("input#form-billing-county-state").removeClass("ui-corner-bottom").addClass("ui-corner-none");
+			} else if ($("select#form-delivery-country-code").val() == 'IE') {
+				$("input#form-billing-post-zip-code").hide().val("000");
+				$("input#form-billing-county-state").removeClass("ui-corner-none").addClass("ui-corner-bottom");
+			}
+			$("input#form-billing-address-line-1").val($("input#form-delivery-address-line-1").val());
+			$("input#form-billing-address-line-2").val($("input#form-delivery-address-line-2").val());
+			$("input#form-billing-town-city").val($("input#form-delivery-town-city").val());
+			$("input#form-billing-county-state").val($("input#form-delivery-county-state").val());
+			getBillingAddressPreview();
+		});
+		
+		$("select#form-billing-country-code").live('change', function() {
+			if ($(this).val() == 'GB')
+			{
+				if ($("input#form-billing-post-zip-code").val() == '000')
+				{
+					$("input#form-billing-post-zip-code").val("");
+				}
+				$("input#form-billing-post-zip-code").show();
+				$("input#form-billing-county-state").removeClass("ui-corner-bottom").addClass("ui-corner-none");
+			} else if ($(this).val() == 'IE') {
+				$("input#form-billing-post-zip-code").hide().val("000");
+				$("input#form-billing-county-state").removeClass("ui-corner-none").addClass("ui-corner-bottom");
+			}
+			getBillingAddressPreview();
+		});
+		
+		$("select#form-delivery-country-code").live('change', function() {
+			if ($(this).val() == 'GB')
+			{
+				if ($("input#form-delivery-post-zip-code").val() == '000')
+				{
+					$("input#form-delivery-post-zip-code").val("");
+				}
+				$("input#form-delivery-post-zip-code").show();
+				$("input#form-delivery-county-state").removeClass("ui-corner-bottom").addClass("ui-corner-none");
+			} else if ($(this).val() == 'IE') {
+				$("input#form-delivery-post-zip-code").hide().val("000");
+				$("input#form-delivery-county-state").removeClass("ui-corner-none").addClass("ui-corner-bottom");
+			}
+			getBillingAddressPreview();
+		});
+		
 		$("select.add-note-type").live('change', function() {
 			if ($(this).val() == 'staff')
 			{

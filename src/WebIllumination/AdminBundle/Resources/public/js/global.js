@@ -238,6 +238,11 @@ $(window).load(function(){
 			$("#ajax_loading").hide();
 		}, 5000);	
 	}
+	
+	$("div.selector > select.ui-corner-none").each(function() {
+		$(this).parent().addClass("ui-corner-none").find("span").addClass("ui-corner-none");
+	});
+	
 });
 
 function resetFromValidation()

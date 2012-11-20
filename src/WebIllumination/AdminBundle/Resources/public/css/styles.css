@@ -2228,7 +2228,7 @@ div.radio,
 {
 	color: #000!important;
 }
-td.gradient-background-green, td.gradient-background-orange, td.gradient-background-red, td.gradient-background-blue
+.gradient-background-green, .gradient-background-orange, .gradient-background-red, .gradient-background-blue
 {
 	color: #FFF;
 	font-weight: bold;
@@ -3982,6 +3982,15 @@ table.no-padding, table.no-padding th, table.no-padding td
 {
   background-position: 0px -380px!important;
 }
+.icon-set-white .ui-icon-email, .icon-set-black .ui-icon-email
+{
+  background-position: 0px -400px!important;
+}
+.icon-set-white .ui-icon-copy, .icon-set-black .ui-icon-copy
+{
+  background-position: 0px -420px!important;
+}
+
 
 
 .navicon-circle-pound
