@@ -2925,8 +2925,8 @@ table.sub-data-table th
 
 .update-list
 {
-	background: #000;
-	border: 1px solid #000;
+	background: #444;
+	border: 1px solid #444;
 	margin-bottom: 15px;
 }
 .update-list .scrollable
@@ -2937,7 +2937,7 @@ table.sub-data-table th
 .update-list h5
 {
 	color: #FFF;
-	font-size: 13px;
+	font-size: 12px;
 	margin: 0;
 	padding: 0px 5px;
 	line-height: 28px;
@@ -2950,21 +2950,24 @@ table.sub-data-table th
 .update-list p
 {
 	color: #000;
-	font-size: 12px;
+	font-size: 11px;
 	margin: 0;
 	padding: 5px;
-	background: #DDD;
+	background: #D5D5D5;
 	line-height: 100%;
-	text-shadow: 0 1px 0 #CCC;
 }
 .update-list p a
 {
 	color: #000;
 	text-decoration: underline;
 }
+.update-list ul
+{
+	margin-bottom: 10px;
+}
 .update-list li
 {
-	font-size: 11px;
+	font-size: 10px;
 }
 
 

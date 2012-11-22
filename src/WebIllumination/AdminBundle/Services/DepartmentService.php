@@ -2027,9 +2027,9 @@ class DepartmentService {
 				// Update the log
 				if (sizeof($productUpdate) > 0)
 				{
-					$productUpdate = '<div><p><strong>'.$productCount.'.</strong> The product <strong>'.$productIndexObject->getProductCode().'</strong> has been updated:</p><ul>'.implode('', $productUpdate).'</ul></div>';
+					$productUpdate = '<div><p><strong>'.$productCount.'.</strong> The product <strong><a target="_blank" href="'.$this->container->get('router')->generate('admin_products_update', array('id' => $productId)).'">'.$productIndexObject->getProductCode().'</a></strong> has been updated:</p><ul>'.implode('', $productUpdate).'</ul></div>';
 				} else {
-					$productUpdate = '<div><p><strong>'.$productCount.'.</strong> The product <strong>'.$productIndexObject->getProductCode().'</strong> is already up-to-date.</p></div>';
+					$productUpdate = '<div><p><strong>'.$productCount.'.</strong> The product <strong><a target="_blank" href="'.$this->container->get('router')->generate('admin_products_update', array('id' => $productId)).'">'.$productIndexObject->getProductCode().'</a></strong> is already up-to-date.</p></div>';
 				}
 				$productUpdates[] = $productUpdate;
 			}
