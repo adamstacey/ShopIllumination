@@ -1505,19 +1505,19 @@ class DepartmentService {
 				switch ($templatePart)
 				{
 					case 'brand':
-						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="brand">Brand<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="brand">Brand<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>';
 						break;
 					case 'productCode':
-						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productCode">Product Code<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productCode">Product Code<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>';
 						break;
 					case 'department':
-						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="department">Department<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="department">Department<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>';
 						break;
 					case 'productExtraKeyword':
-						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productExtraKeyword">Product Extra Keyword<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productExtraKeyword">Product Extra Keyword<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>';
 						break;
 					case 'keyMessage':
-						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="keyMessage">Key Message<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
+						$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="keyMessage">Key Message<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>';
 						break;
 					default:
 						$templatePartParts = explode('|', $templatePart);
@@ -1538,10 +1538,10 @@ class DepartmentService {
 								$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($templatePartValue);
 								if ($productFeatureGroupObject)
 								{
-									$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productFeatureGroup|'.$templatePartValue.'">Feature Group: '.$productFeatureGroupObject->getProductFeatureGroup().'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
+									$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productFeatureGroup|'.$templatePartValue.'">Feature Group: '.$productFeatureGroupObject->getProductFeatureGroup().'<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>';
 								}
 							} elseif ($templatePartName == 'freeText') {
-								$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="freeText|'.$templatePartValue.'">Free Text: '.$templatePartValue.'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
+								$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="freeText|'.$templatePartValue.'">Free Text: '.$templatePartValue.'<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>';
 							}
 						}
 						break;
