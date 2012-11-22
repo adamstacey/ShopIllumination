@@ -45,12 +45,12 @@
 			$("div#uniform-form-delivery-country-code span").html($("div#uniform-form-billing-country-code span").html());
 			if ($("select#form-billing-country-code").val() == 'GB')
 			{
-				$("input#form-billing-post-zip-code").val($("input#form-delivery-post-zip-code").val());
-				$("input#form-billing-post-zip-code").show();
-				$("input#form-billing-county-state").removeClass("ui-corner-bottom").addClass("ui-corner-none");
-			} else if ($("select#form-delivery-country-code").val() == 'IE') {
-				$("input#form-billing-post-zip-code").hide().val("000");
-				$("input#form-billing-county-state").removeClass("ui-corner-none").addClass("ui-corner-bottom");
+				$("input#form-delivery-post-zip-code").val($("input#form-billing-post-zip-code").val());
+				$("input#form-delivery-post-zip-code").show();
+				$("input#form-delivery-county-state").removeClass("ui-corner-bottom").addClass("ui-corner-none");
+			} else if ($("select#form-billing-country-code").val() == 'IE') {
+				$("input#form-delivery-post-zip-code").hide().val("000");
+				$("input#form-delivery-county-state").removeClass("ui-corner-none").addClass("ui-corner-bottom");
 			}
 			$("input#form-delivery-address-line-1").val($("input#form-billing-address-line-1").val());
 			$("input#form-delivery-address-line-2").val($("input#form-billing-address-line-2").val());
@@ -110,7 +110,7 @@
 				$("input#form-delivery-post-zip-code").hide().val("000");
 				$("input#form-delivery-county-state").removeClass("ui-corner-none").addClass("ui-corner-bottom");
 			}
-			getBillingAddressPreview();
+			getDeliveryAddressPreview();
 		});
 		
 		$("select.add-note-type").live('change', function() {

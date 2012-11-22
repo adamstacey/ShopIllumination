@@ -12,12 +12,33 @@
     	<div class="grid_6">
         	<div class="portlet">
             	<header>
+            		<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Update Products from Templates</button>
            			<h2>Product Templates</h2>
                 </header>
                 <section>
                 	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
+                		{% if data.productsUpdated %}
+	                    	{% if data.productUpdates|length > 0 %}
+	                    		<div id="product-updates">
+									<div class="success-message">
+										<span class="ui-icon ui-icon-circle-check"></span>
+										<p>The products for this department have been updated:</p>
+										<div class="clear"></div>
+									</div>
+									<div class="update-list">
+										<button type="button" data-object-to-hide="product-updates" class="fr small action-hide button ui-corner-none ui-button-red icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button>
+										<h5>Product Updates</h5>
+										<div class="scrollable">
+											{% for productUpdate in data.productUpdates %}
+												{{ productUpdate|raw }}
+											{% endfor %}
+										</div>
+									</div>
+	                    		</div>
+							{% endif %}
+						{% endif %}
                     	<div class="info-message">
-							<span class="info-message-icon ui-icon ui-icon-info"></span>
+							<span class="ui-icon ui-icon-info"></span>
 							<p>The product templates allow you to build page title, header and meta description templates for the products in this department. These templates ensure the SEO for the products are relevant, consistent and more importantly set. The template is followed for all new products added to this department.</p>
 							<p>Any updates you make to the templates automatically update the products unless the products are manually overridden.</p>
 							<div class="clear"></div>

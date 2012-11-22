@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use WebIllumination\AdminBundle\Entity\Routing;
 use WebIllumination\AdminBundle\Entity\ProductIndex;
 use WebIllumination\AdminBundle\Entity\ObjectIndex;
+use WebIllumination\AdminBundle\Entity\ProductToFeature;
 
 class ProductService {
 
@@ -2199,5 +2200,5 @@ class ProductService {
     public function getUploadRootDir()
     {
         return __DIR__.'/../../../../web';
-    } 
+    }
 }

@@ -2919,6 +2919,58 @@ table.sub-data-table th
 {
 	background: #D5D5D5;
 }
+
+
+
+
+.update-list
+{
+	background: #000;
+	border: 1px solid #000;
+	margin-bottom: 15px;
+}
+.update-list .scrollable
+{
+	height: 200px;
+	overflow: scroll;	
+}
+.update-list h5
+{
+	color: #FFF;
+	font-size: 13px;
+	margin: 0;
+	padding: 0px 5px;
+	line-height: 28px;
+}
+.update-list div
+{
+	background: #FFF;
+	border-bottom: 1px solid #000;
+}
+.update-list p
+{
+	color: #000;
+	font-size: 12px;
+	margin: 0;
+	padding: 5px;
+	background: #DDD;
+	line-height: 100%;
+	text-shadow: 0 1px 0 #CCC;
+}
+.update-list p a
+{
+	color: #000;
+	text-decoration: underline;
+}
+.update-list li
+{
+	font-size: 11px;
+}
+
+
+
+
+
 .form .buttons, .more-information-detail .message, .more-information-detail .buttons
 {
 	margin: 0px;

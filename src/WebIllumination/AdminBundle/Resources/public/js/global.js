@@ -365,6 +365,10 @@ $(document).ready(function () {
 		}});
 	}
 	
+	$(".action-hide").live('click', function() {
+		$("#"+$(this).attr("data-object-to-hide")).hide();
+	});
+	
 	$(".form-element .info-message-icon, .form-element .info-message-icon-left, .form-element .info-message-icon-right").live('mouseenter', function() {
 		var $helpMessage = $(this).attr("data-help-container");
 		$("#form-help-"+$helpMessage).slideDown();

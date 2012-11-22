@@ -701,6 +701,9 @@ class DepartmentsController extends Controller
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
+		// Check for any product updates
+		$productsUpdated = false;
+		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
@@ -739,28 +742,41 @@ class DepartmentsController extends Controller
     			
     			// Forward
     			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
-    		}
-    		    		
-    		// Update objects
-    		$itemDescriptionObject->setPageTitleTemplate($pageTitleTemplate);
-    		$itemDescriptionObject->setHeaderTemplate($headerTemplate);
-    		$itemDescriptionObject->setMetaDescriptionTemplate($metaDescriptionTemplate);
-    		$em->persist($itemDescriptionObject);
-    		$em->flush();
-    		    		    		    		
-    		// Rebuild the index
-    		$service->rebuildDepartmentIndexObject($id, 'en');
-    		
-    		// Notify user
-    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
-    		
-    		// Forward
-    		if ($goBack > 0)
-    		{
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
     		} else {
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
-    		}
+	    		switch ($extraAction)
+	    		{
+	    			// Update the products from the department templates
+		    		case 'updateProductsFromTemplates':
+		    			// Get any new product updates
+		    			$productUpdates = $service->updateProductsFromTemplates($id, 'en');
+		    			$productsUpdated= true;	    			
+		    			break;
+	    		}
+	    	}
+    		
+    		if (!$productsUpdated)
+    		{
+	    		// Update objects
+	    		$itemDescriptionObject->setPageTitleTemplate($pageTitleTemplate);
+	    		$itemDescriptionObject->setHeaderTemplate($headerTemplate);
+	    		$itemDescriptionObject->setMetaDescriptionTemplate($metaDescriptionTemplate);
+	    		$em->persist($itemDescriptionObject);
+	    		$em->flush();
+	    		    		    		    		
+	    		// Rebuild the index
+	    		$service->rebuildDepartmentIndexObject($id, 'en');
+	    		
+	    		// Notify user
+	    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
+	    		
+	    		// Forward
+	    		if ($goBack > 0)
+	    		{
+		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
+	    		} else {
+		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
+	    		}
+	    	}
     	}
     	
     	// Setup the data
@@ -769,6 +785,13 @@ class DepartmentsController extends Controller
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id));
     	$data['mode'] = 'update';
+    	
+    	// Check if there were any product updates
+    	if ($productsUpdated)
+    	{
+    		$data['productUpdates'] = $productUpdates;
+    	}
+    	$data['productsUpdated'] = $productsUpdated;
     	
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
