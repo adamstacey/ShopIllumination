@@ -2926,7 +2926,7 @@ table.sub-data-table th
 .update-list
 {
 	background: #444;
-	border: 1px solid #444;
+	border: 2px solid #444;
 	margin-bottom: 15px;
 }
 .update-list .scrollable
@@ -2945,7 +2945,7 @@ table.sub-data-table th
 .update-list div
 {
 	background: #FFF;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #444;
 }
 .update-list p
 {
