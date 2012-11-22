@@ -11,10 +11,20 @@
     <section class="container_6 clearfix">
     	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
 	    	<div class="grid_6">
+				<div id="save-required-warning" class="info-message ui-helper-hidden">
+	    			<div class="fr no-margin no-padding">
+			        	<button type="button" data-object-to-hide="save-required-warning" class="fl button ui-corner-left ui-button-black action-hide">Cancel</button>
+			        	<button type="submit" class="fl button ui-corner-right icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Save</button>
+			        </div>
+					<span class="info-message-icon ui-icon ui-icon-help"></span>
+					<p><strong>WARNING:</strong> You need to save your changes first before you can delete.</p>
+					<div class="clear"></div>
+				</div>
+				
 				<div id="confirm-multiple-delete" class="info-message ui-helper-hidden">
 	    			<div class="fr no-margin no-padding">
-			        	<button class="fl button ui-corner-left ui-button-black action-cancel-multiple-delete">Cancel</button>
-			        	<button class="fl button ui-corner-right icon-set-white ui-button-red action-multiple-delete" data-icon-primary="ui-icon-circle-cross">Confirm Delete</button>
+			        	<button type="button" class="fl button ui-corner-left ui-button-black action-cancel-multiple-delete">Cancel</button>
+			        	<button type="button" class="fl button ui-corner-right icon-set-white ui-button-red action-multiple-delete" data-icon-primary="ui-icon-circle-cross">Confirm Delete</button>
 			        </div>
 					<span class="info-message-icon ui-icon ui-icon-help"></span>
 					<p><strong>WARNING:</strong> Are you sure you want to delete the selected product features below?</p>
@@ -214,6 +224,7 @@
 					        	<input type="hidden" value="" id="form-extra-action" name="extra-action" />
 					        	<input type="hidden" value="0" id="form-delete" name="delete" />
 				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
+				        		<input type="hidden" value="0" id="form-save-required" />
 				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr icon-set-white ui-corner-right button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
 				        		<button class="fr button icon-set-white ui-corner-none ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
 				        		<button id="button-update-go-back" type="submit" class="fr button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected &amp; Go Back</button>
