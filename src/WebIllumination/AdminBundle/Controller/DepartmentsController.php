@@ -749,7 +749,7 @@ class DepartmentsController extends Controller
 		    		case 'updateProductsFromTemplates':
 		    			// Get any new product updates
 		    			$productUpdates = $service->updateProductsFromTemplates($id, 'en');
-		    			$productsUpdated= true;	    			
+		    			$productsUpdated = true;	    			
 		    			break;
 	    		}
 	    	}
@@ -926,6 +926,9 @@ class DepartmentsController extends Controller
 		
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		
+		// Check for any product updates
+		$productsUpdated = false;
 				
 		// Update
     	if ($request->getMethod() == 'POST')
@@ -984,109 +987,118 @@ class DepartmentsController extends Controller
 		    			// Forward
 		    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
 		    			break;
+		    		// Update the products from the department templates
+		    		case 'updateProductsFromTemplates':
+		    			// Get any new product updates
+		    			$productUpdates = $service->updateProductsFromProductFeatures($id, 'en');
+		    			$productsUpdated = true;	    			
+		    			break;
 	    		}
 	    	}
-    		    		
-    		// Run through all selected items
-    		if (sizeof($select) > 0)
-    		{
-    			foreach ($select as $itemId => $item)
-    			{
-	    			// Get the item
-	    			$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->find($itemId);
-	    			if ($departmentToFeatureObject)
+    		 
+    		if (!$productsUpdated)
+    		{   		
+	    		// Run through all selected items
+	    		if (sizeof($select) > 0)
+	    		{
+	    			foreach ($select as $itemId => $item)
 	    			{
-	    				// Delete the item
-	    				if ($delete > 0)
-	    				{
-	    					$em->remove($departmentToFeatureObject);
-			    			$em->flush();
-			    		} else {
-				    		$itemProductFeatureGroupId = $productFeatureGroupId[$itemId];
-				    		$itemDefaultProductFeatureId = $defaultProductFeatureId[$itemId];
-				    		$itemDisplayOnFilter = 0;
-						    if (isset($displayOnFilter[$itemId]))
-						    {
-							    $itemDisplayOnFilter = $displayOnFilter[$itemId];
-						    }
-						    $itemDisplayOnListing = 0;
-						    if (isset($displayOnListing[$itemId]))
-						    {
-							    $itemDisplayOnListing = $displayOnListing[$itemId];
-						    }
-						    $itemDisplayOnProduct = 0;
-						    if (isset($displayOnProduct[$itemId]))
-						    {
-							    $itemDisplayOnProduct = $displayOnProduct[$itemId];
-						    }
-						    $itemDisplayOrder = $displayOrder[$itemId];
-			    			$departmentToFeatureObject->setProductFeatureGroupId($itemProductFeatureGroupId);
-			    			$departmentToFeatureObject->setDefaultProductFeatureId($itemDefaultProductFeatureId);
+		    			// Get the item
+		    			$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->find($itemId);
+		    			if ($departmentToFeatureObject)
+		    			{
+		    				// Delete the item
+		    				if ($delete > 0)
+		    				{
+		    					$em->remove($departmentToFeatureObject);
+				    			$em->flush();
+				    		} else {
+					    		$itemProductFeatureGroupId = $productFeatureGroupId[$itemId];
+					    		$itemDefaultProductFeatureId = $defaultProductFeatureId[$itemId];
+					    		$itemDisplayOnFilter = 0;
+							    if (isset($displayOnFilter[$itemId]))
+							    {
+								    $itemDisplayOnFilter = $displayOnFilter[$itemId];
+							    }
+							    $itemDisplayOnListing = 0;
+							    if (isset($displayOnListing[$itemId]))
+							    {
+								    $itemDisplayOnListing = $displayOnListing[$itemId];
+							    }
+							    $itemDisplayOnProduct = 0;
+							    if (isset($displayOnProduct[$itemId]))
+							    {
+								    $itemDisplayOnProduct = $displayOnProduct[$itemId];
+							    }
+							    $itemDisplayOrder = $displayOrder[$itemId];
+				    			$departmentToFeatureObject->setProductFeatureGroupId($itemProductFeatureGroupId);
+				    			$departmentToFeatureObject->setDefaultProductFeatureId($itemDefaultProductFeatureId);
+				    			$departmentToFeatureObject->setDisplayOnFilter($itemDisplayOnFilter);
+				    			$departmentToFeatureObject->setDisplayOnListing($itemDisplayOnListing);
+				    			$departmentToFeatureObject->setDisplayOnProduct($itemDisplayOnProduct);
+				    			$departmentToFeatureObject->setDisplayOrder($itemDisplayOrder);
+				    			$em->persist($departmentToFeatureObject);
+				    			$em->flush();
+				    		}
+		    			}
+	    			}
+	    		}
+	    		
+	    		// Run through all added items
+	    		if (sizeof($addItem) > 0)
+	    		{
+	    			foreach ($addItem as $itemId => $item)
+	    			{
+	    				$itemProductFeatureGroupId = $addProductFeatureGroupId[$itemId];
+					    $itemDefaultProductFeatureId = $addDefaultProductFeatureId[$itemId];
+					    $itemDisplayOnFilter = 0;
+					    if (isset($addDisplayOnFilter[$itemId]))
+					    {
+						    $itemDisplayOnFilter = $addDisplayOnFilter[$itemId];
+					    }
+					    $itemDisplayOnListing = 0;
+					    if (isset($addDisplayOnListing[$itemId]))
+					    {
+						    $itemDisplayOnListing = $addDisplayOnListing[$itemId];
+					    }
+					    $itemDisplayOnProduct = 0;
+					    if (isset($addDisplayOnProduct[$itemId]))
+					    {
+						    $itemDisplayOnProduct = $addDisplayOnProduct[$itemId];
+					    }
+					    if ($itemProductFeatureGroupId)
+					    {
+						    $departmentToFeatureObject = new DepartmentToFeature();
+		    				$departmentToFeatureObject->setActive(1);
+		    				$departmentToFeatureObject->setDepartmentId($id);
+		    				$departmentToFeatureObject->setProductFeatureGroupId($itemProductFeatureGroupId);
+		    				$departmentToFeatureObject->setDefaultProductFeatureId($itemDefaultProductFeatureId);
 			    			$departmentToFeatureObject->setDisplayOnFilter($itemDisplayOnFilter);
 			    			$departmentToFeatureObject->setDisplayOnListing($itemDisplayOnListing);
 			    			$departmentToFeatureObject->setDisplayOnProduct($itemDisplayOnProduct);
-			    			$departmentToFeatureObject->setDisplayOrder($itemDisplayOrder);
+			    			$departmentToFeatureObject->setDisplayOrder(1);
 			    			$em->persist($departmentToFeatureObject);
 			    			$em->flush();
 			    		}
 	    			}
-    			}
-    		}
-    		
-    		// Run through all added items
-    		if (sizeof($addItem) > 0)
-    		{
-    			foreach ($addItem as $itemId => $item)
-    			{
-    				$itemProductFeatureGroupId = $addProductFeatureGroupId[$itemId];
-				    $itemDefaultProductFeatureId = $addDefaultProductFeatureId[$itemId];
-				    $itemDisplayOnFilter = 0;
-				    if (isset($addDisplayOnFilter[$itemId]))
-				    {
-					    $itemDisplayOnFilter = $addDisplayOnFilter[$itemId];
-				    }
-				    $itemDisplayOnListing = 0;
-				    if (isset($addDisplayOnListing[$itemId]))
-				    {
-					    $itemDisplayOnListing = $addDisplayOnListing[$itemId];
-				    }
-				    $itemDisplayOnProduct = 0;
-				    if (isset($addDisplayOnProduct[$itemId]))
-				    {
-					    $itemDisplayOnProduct = $addDisplayOnProduct[$itemId];
-				    }
-				    if ($itemProductFeatureGroupId)
-				    {
-					    $departmentToFeatureObject = new DepartmentToFeature();
-	    				$departmentToFeatureObject->setActive(1);
-	    				$departmentToFeatureObject->setDepartmentId($id);
-	    				$departmentToFeatureObject->setProductFeatureGroupId($itemProductFeatureGroupId);
-	    				$departmentToFeatureObject->setDefaultProductFeatureId($itemDefaultProductFeatureId);
-		    			$departmentToFeatureObject->setDisplayOnFilter($itemDisplayOnFilter);
-		    			$departmentToFeatureObject->setDisplayOnListing($itemDisplayOnListing);
-		    			$departmentToFeatureObject->setDisplayOnProduct($itemDisplayOnProduct);
-		    			$departmentToFeatureObject->setDisplayOrder(1);
-		    			$em->persist($departmentToFeatureObject);
-		    			$em->flush();
-		    		}
-    			}
-    		}
-    		 
-    		// Notify user
-    		if ($delete > 0)
-	    	{
-    			$this->get('session')->getFlashBag()->add('success', 'The selected product features have been deleted.');
-    		} else {
-		    	$this->get('session')->getFlashBag()->add('success', 'The selected product features have been updated.');
+	    		}
+	    		 
+	    		// Notify user
+	    		if ($delete > 0)
+		    	{
+	    			$this->get('session')->getFlashBag()->add('success', 'The selected product features have been deleted.');
+	    		} else {
+			    	$this->get('session')->getFlashBag()->add('success', 'The selected product features have been updated.');
+		    	}
+	    		
+	    		// Forward
+	    		if ($goBack > 0)
+	    		{
+		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
+	    		} else {
+		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
+	    		}
 	    	}
-    		
-    		// Forward
-    		if ($goBack > 0)
-    		{
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $itemIndexObject->getParentId())));
-    		} else {
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
-    		}
     	}
     	
     	// Setup the data
@@ -1095,6 +1107,13 @@ class DepartmentsController extends Controller
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id));
     	$data['mode'] = 'update';
+    	
+    	// Check if there were any product updates
+    	if ($productsUpdated)
+    	{
+    		$data['productUpdates'] = $productUpdates;
+    	}
+    	$data['productsUpdated'] = $productsUpdated;
     	
     	// Get the items
 		$data['items'] = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));

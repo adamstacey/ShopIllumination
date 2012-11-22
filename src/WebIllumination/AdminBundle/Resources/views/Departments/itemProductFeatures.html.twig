@@ -20,6 +20,26 @@
 					<p><strong>WARNING:</strong> Are you sure you want to delete the selected product features below?</p>
 					<div class="clear"></div>
 				</div>
+				{% if data.productsUpdated %}
+                	{% if data.productUpdates|length > 0 %}
+                		<div id="product-updates">
+							<div class="success-message">
+								<span class="ui-icon ui-icon-circle-check"></span>
+								<p>The products for this department have been updated:</p>
+								<div class="clear"></div>
+							</div>
+							<div class="update-list">
+								<button type="button" data-object-to-hide="product-updates" class="fr small action-hide button ui-corner-none ui-button-red icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button>
+								<h5>Product Updates</h5>
+								<div class="scrollable">
+									{% for productUpdate in data.productUpdates %}
+										{{ productUpdate|raw }}
+									{% endfor %}
+								</div>
+							</div>
+                		</div>
+					{% endif %}
+				{% endif %}
 				<div class="info-message">
 					<span class="info-message-icon ui-icon ui-icon-info"></span>
 					<p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
@@ -123,7 +143,7 @@
 						<div id="listing" class="position-relative">
 							<div class="listing-settings">
 								<div class="fr filter-listing-container">
-									<button type="button" class="button ui-button-black ui-corner-right icon-set-white fr extra-action" data-extra-action="getProductFeaturesFromProducts" data-icon-primary="ui-icon-list">Get Features from Products</button>
+									<button type="button" class="button ui-button-black ui-corner-right icon-set-white fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Update Products from Templates</button>
 									<button type="button" class="button ui-button-black ui-corner-left icon-set-white fr" data-icon-primary="ui-icon-shopping-basket">View Products</button>
 								</div>
 							    <div class="clear"></div>

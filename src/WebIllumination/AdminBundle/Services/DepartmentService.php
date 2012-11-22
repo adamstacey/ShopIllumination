@@ -8,6 +8,7 @@ use WebIllumination\AdminBundle\Entity\DepartmentIndex;
 use WebIllumination\AdminBundle\Entity\BrandToDepartment;
 use WebIllumination\AdminBundle\Entity\DepartmentToFeature;
 use WebIllumination\AdminBundle\Entity\ProductIndex;
+use WebIllumination\AdminBundle\Entity\ProductToFeature;
 
 class DepartmentService {
 
@@ -2049,10 +2050,10 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 		
 		// Get a log
-		$log = array();
+		$productUpdates = array();
 		
 		// Get the department features
-		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findBy(array('departmentId' => $id));
+		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id));
 		$departmentToFeatureProductFeatureGroupIds = array();
 		foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 		{
@@ -2060,12 +2061,14 @@ class DepartmentService {
 		}
 		
 		// Get the products in the department
-		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $departmentObject->getId()));
+		$productCount = 0;
+		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
 		foreach ($productsToDepartmentObjects as $productsToDepartmentObject)
 		{
 			// Get the product objects
+			$productCount++;
+			$productUpdate = array();
 			$productId = $productsToDepartmentObject->getProductId();
-			$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productId, 'locale' => $locale));
 			$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $productId, 'locale' => $locale));
 			$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'product', 'objectId' => $productId, 'locale' => $locale));
 
@@ -2086,7 +2089,7 @@ class DepartmentService {
 								$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
 								$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
 								$defaultProductFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $departmentToFeatureObject->getDefaultProductFeatureId(), 'locale' => $locale));
-								$log[] = '<p>A default product group did not match for the product <strong>'.$productIndexObject->getProductCode().'</strong>:<br /><em>The product group <strong>'.$productFeatureGroupObject->getProductFeatureGroup().'</strong> has the product feature set as <strong>'.$defaultProductFeatureObject->getProductFeature().'</strong> by default. It currently has the product feature set as <strong>'.$productFeatureObject->getProductFeature().'</strong></em></p>';
+								$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Default product feature ('.$defaultProductFeatureObject->getProductFeature().') doesn\'t match what is set ('.$productFeatureObject->getProductFeature().')</li>';
 							}
 						}
 						
@@ -2094,7 +2097,7 @@ class DepartmentService {
 						if ($departmentToFeatureObject->getDisplayOrder() != $productToFeatureObject->getDisplayOrder())
 						{
 							$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
-							$log[] = '<p>Updated the sort order of a product group for product <strong>'.$productIndexObject->getProductCode().'</strong>:<br /><em><strong>'.$productFeatureGroupObject->getProductFeatureGroup().'</strong>: '.$productToFeatureObject->getDisplayOrder().' -> '.$departmentToFeatureObject->getDisplayOrder().'</em></p>';
+							$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Updated sort order from '.$productToFeatureObject->getDisplayOrder().' to '.$departmentToFeatureObject->getDisplayOrder().'</li>';
 							$productToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
 							$em->persist($productToFeatureObject);
 							$em->flush();
@@ -2102,6 +2105,7 @@ class DepartmentService {
 					} else {
 						$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
 						$log[] = '<p>Added the product group to the product <strong>'.$productIndexObject->getProductCode().'</strong>:<br /><em><strong>'.$productFeatureGroupObject->getProductFeatureGroup().'</strong></em></p>';
+						$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Added to the product</li>';
 						$productToFeatureObject = new ProductToFeature();
 						$productToFeatureObject->setActive(1);
 						$productToFeatureObject->setProductId($productId);
@@ -2126,12 +2130,23 @@ class DepartmentService {
 				if (!in_array($productToFeatureObject->getProductFeatureGroupId(), $departmentToFeatureProductFeatureGroupIds))
 				{
 					$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
-					$log[] = '<p>Deleted a product group that is not on the template from the product <strong>'.$productIndexObject->getProductCode().'</strong>:<br /><em><strong>'.$productFeatureGroupObject->getProductFeatureGroup().'</strong></em></p>';
+					$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> REMOVED from the product</li>';
 					$em->remove($redirectObject);
 				}
 			}
 			$em->flush();
+			
+			// Update the log
+			if (sizeof($productUpdate) > 0)
+			{
+				$productUpdate = '<div><p><strong>'.$productCount.'.</strong> The product <strong><a target="_blank" href="'.$this->container->get('router')->generate('admin_products_update', array('id' => $productId)).'">'.$productIndexObject->getProductCode().'</a></strong> has been updated:</p><ul>'.implode('', $productUpdate).'</ul></div>';
+			} else {
+				$productUpdate = '<div><p><strong>'.$productCount.'.</strong> The product <strong><a target="_blank" href="'.$this->container->get('router')->generate('admin_products_update', array('id' => $productId)).'">'.$productIndexObject->getProductCode().'</a></strong> is already up-to-date.</p></div>';
+			}
+			$productUpdates[] = $productUpdate;
 		}
+		
+		return $productUpdates;
     }
     
     // Get product field from department template
