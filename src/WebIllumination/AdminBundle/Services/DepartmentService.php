@@ -1981,7 +1981,7 @@ class DepartmentService {
 				$newPageTitle = $this->getProductFieldFromDepartmentTemplate($productIndexObject, $departmentDescriptionObject, $departmentDescriptionObject->getPageTitleTemplate());
 				if ($newPageTitle && ($newPageTitle != $productIndexObject->getPageTitle()))
 				{	
-					$productUpdate[] = '<li>Page Title: <em>'.$productIndexObject->getPageTitle().' -> '.$newPageTitle.'</em></li>';
+					$productUpdate[] = '<li><strong>Page Title:</strong> '.$productIndexObject->getPageTitle().' -> '.$newPageTitle.'</li>';
 					$productDescriptionObject->setPageTitle($newPageTitle);
 					$productIndexObject->setPageTitle($newPageTitle);
 				}
@@ -1990,7 +1990,7 @@ class DepartmentService {
 				$newHeader = $this->getProductFieldFromDepartmentTemplate($productIndexObject, $departmentDescriptionObject, $departmentDescriptionObject->getHeaderTemplate());
 				if ($newHeader && ($newHeader != $productIndexObject->getHeader()))
 				{	
-					$productUpdate[] = '<li>Header: <em>'.$productIndexObject->getHeader().' -> '.$newHeader.'</em></li>';
+					$productUpdate[] = '<li><strong>Header:</strong> '.$productIndexObject->getHeader().' -> '.$newHeader.'</li>';
 					$productDescriptionObject->setHeader($newHeader);
 					$productIndexObject->setHeader($newHeader);
 				}
@@ -1999,7 +1999,7 @@ class DepartmentService {
 				$newMetaDescription = $this->getProductFieldFromDepartmentTemplate($productIndexObject, $departmentDescriptionObject, $departmentDescriptionObject->getMetaDescriptionTemplate());
 				if ($newMetaDescription && ($newMetaDescription != $productDescriptionObject->getMetaDescription()))
 				{	
-					$productUpdate[] = '<li>Meta Description: <em>'.$productDescriptionObject->getMetaDescription().' -> '.$newMetaDescription.'</em></li>';
+					$productUpdate[] = '<li><strong>Meta Description:</strong> '.$productDescriptionObject->getMetaDescription().' -> '.$newMetaDescription.'</li>';
 					$productDescriptionObject->setMetaDescription($newMetaDescription);
 				}
 				
@@ -2020,7 +2020,7 @@ class DepartmentService {
 		    	// Setup any redirects if required
 				if ($url != $routingUrl)
 				{
-					$productUpdate[] = '<li>URL: <em>'.$url.' -> '.$routingUrl.'</em></li>';
+					$productUpdate[] = '<li><strong>URL:</strong> '.$url.' -> '.$routingUrl.'</li>';
 					$seoService->updateRedirects($productId, 'product', $url, $routingUrl);
 				}
 				
