@@ -6,7 +6,7 @@
 	{% if product.brandLogoThumbnailPath != '' %}
 		<a href="{{ path('page_request', {'url': product.brandUrl}) }}"><img class="fr brand-logo-image" src="{{ asset(product.brandLogoThumbnailPath) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23"></a>
 	{% endif %}
-	<h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.pageTitle|raw }}</a></h4>
+	<h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
 	<div class="product-information">
 		<p class="product-code uppercase">{% spaceless %}
 			{% if product.url != '' %}
@@ -17,28 +17,8 @@
 				</a>
 			{% endif %}
 		{% endspaceless %}</p>
-		{% if (product.productFeatures != '') or (product.tagline != '') %}
-			{% if 'ENERGY RATING:' in product.tagline|upper %}
-				<p class="energy-rating">{{ product.tagline|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
-			{% endif %}
-			{% for productFeature in product.productFeatures|explode('|') %}
-				{% if (productFeature != '') and ('ENERGY RATING:' in productFeature|upper) %}
-					<p class="energy-rating">{{ productFeature|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
-				{% endif %}
-			{% endfor %}
-			<ul>
-				{% if (product.tagline != '') and ('ENERGY RATING:' not in product.tagline|upper) %}
-					<li>{{ product.tagline|raw }}</li>
-				{% endif %}
-				{% for productFeature in product.productFeatures|explode('|') %}
-					{% if (productFeature != '') and ('COLOUR GROUP:' not in productFeature|upper) and ('ENERGY RATING:' not in productFeature|upper) %}
-						{% set productFeatureData = productFeature|explode(':') %}
-						{% if productFeatureData.1|upper not in product.pageTitle|upper %}
-							<li>{{ productFeature|replace({':': ': '})|raw|upper }}</li>
-						{% endif %}
-					{% endif %}
-				{% endfor %}
-			</ul>
+		{% if (product.description != '') %}
+			{{ product.description|raw }}
 		{% endif %}
 		<div class="clear"></div>
 	</div>

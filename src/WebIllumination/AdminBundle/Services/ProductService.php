@@ -1101,7 +1101,6 @@ class ProductService {
 		}
 		
 		// Sort the features
-		ksort($features);
 		foreach ($features as $featureGroup => $feature)
 		{
 			usort($features[$featureGroup], array($this, "sortProductFeaturesByFeature"));
@@ -1483,13 +1482,17 @@ class ProductService {
 			$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
 			if ($productFeatureGroupObject && $productFeatureObject)
 			{
-				$productFeature['id'] = $productToFeatureObject->getId();
-				$productFeature['productFeatureGroupId'] = $productFeatureGroupObject->getId();
-				$productFeature['productFeatureGroup'] = $productFeatureGroupObject->getProductFeatureGroup();
-				$productFeature['filter'] = $productFeatureGroupObject->getFilter();
-				$productFeature['productFeatureId'] = $productFeatureObject->getId();
-				$productFeature['productFeature'] = $productFeatureObject->getProductFeature();
-				$productFeatures[$productFeatureGroupObject->getProductFeatureGroup()][] = $productFeature;
+				$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findOneBy(array('departmentId' => $departments[0]['id'], 'productFeatureGroupId' => $productToFeatureObject->getProductFeatureGroupId(), 'displayOnProduct' => 1));
+				if ($departmentToFeatureObject)
+				{
+					$productFeature['id'] = $productToFeatureObject->getId();
+					$productFeature['productFeatureGroupId'] = $productFeatureGroupObject->getId();
+					$productFeature['productFeatureGroup'] = $productFeatureGroupObject->getProductFeatureGroup();
+					$productFeature['filter'] = $productFeatureGroupObject->getFilter();
+					$productFeature['productFeatureId'] = $productFeatureObject->getId();
+					$productFeature['productFeature'] = $productFeatureObject->getProductFeature();
+					$productFeatures[$productFeatureGroupObject->getProductFeatureGroup()][] = $productFeature;
+				}
 			}
 		}
 		$product['productFeatures'] = $productFeatures;

@@ -9,6 +9,8 @@ use WebIllumination\AdminBundle\Entity\BrandToDepartment;
 use WebIllumination\AdminBundle\Entity\DepartmentToFeature;
 use WebIllumination\AdminBundle\Entity\ProductIndex;
 use WebIllumination\AdminBundle\Entity\ProductToFeature;
+use WebIllumination\AdminBundle\Entity\ProductFeatureGroup;
+use WebIllumination\AdminBundle\Entity\ProductFeature;
 
 class DepartmentService {
 
@@ -2002,6 +2004,8 @@ class DepartmentService {
 				{	
 					$productUpdate[] = '<li><strong>Meta Description:</strong> '.$productDescriptionObject->getMetaDescription().' -> '.$newMetaDescription.'</li>';
 					$productDescriptionObject->setMetaDescription($newMetaDescription);
+					$productDescriptionObject->setShortDescription($newMetaDescription);
+					$productIndexObject->setShortDescription($newMetaDescription);
 				}
 				
 				// Save the product
@@ -2053,7 +2057,7 @@ class DepartmentService {
 		$productUpdates = array();
 		
 		// Get the department features
-		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id));
+		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
 		$departmentToFeatureProductFeatureGroupIds = array();
 		foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 		{
@@ -2072,6 +2076,12 @@ class DepartmentService {
 			$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $productId, 'locale' => $locale));
 			if ($productIndexObject)
 			{			
+				// Set the bullets
+				$bullets = array();
+				
+				// Set the filters
+				$filters = array();
+				
 				// Update the product features
 				foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 				{
@@ -2081,13 +2091,31 @@ class DepartmentService {
 						$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productId' => $productId, 'productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId()));
 						if ($productToFeatureObject)
 						{
+							// Get the product feature group and product feature
+							$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
+							$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => $locale));
+							
+							// Check for bullets and filters
+							if (($productFeatureGroupObject instanceof ProductFeatureGroup) && ($productFeatureObject instanceof ProductFeature))
+							{
+								// Check for a bullet
+								if ($departmentToFeatureObject->getDisplayOnListing() > 0)
+								{
+									$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
+								}
+								
+								// Check for a filter
+								if ($departmentToFeatureObject->getDisplayOnFilter() > 0)
+								{
+									$filters[] = trim($productFeatureGroupObject->getProductFeatureGroup()).':'.trim($productFeatureObject->getProductFeature());
+								}
+							}
+							
 							// Check if the default product feature is set and matches
 							if ($departmentToFeatureObject->getDefaultProductFeatureId() > 0)
 							{
 								if ($departmentToFeatureObject->getDefaultProductFeatureId() != $productToFeatureObject->getProductFeatureId())
 								{
-									$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
-									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
 									$defaultProductFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $departmentToFeatureObject->getDefaultProductFeatureId(), 'locale' => $locale));
 									$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Default product feature ('.$defaultProductFeatureObject->getProductFeature().') doesn\'t match what is set ('.$productFeatureObject->getProductFeature().')</li>';
 								}
@@ -2096,7 +2124,6 @@ class DepartmentService {
 							// Check the sort order of the product feature
 							if ($departmentToFeatureObject->getDisplayOrder() != $productToFeatureObject->getDisplayOrder())
 							{
-								$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
 								$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Updated sort order from '.$productToFeatureObject->getDisplayOrder().' to '.$departmentToFeatureObject->getDisplayOrder().'</li>';
 								$productToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
 								$em->persist($productToFeatureObject);
@@ -2133,6 +2160,26 @@ class DepartmentService {
 						$em->remove($productToFeatureObject);
 					}
 				}
+				$em->flush();
+				
+				// Update the bullets
+				if (sizeof($bullets) > 0)
+				{
+					$bullets = '<ul><li>'.implode('</li><li>', $bullets).'</li></ul>';
+					$productUpdate[] = '<li>The bullets were updated</li>';
+					$productIndexObject->setDescription($bullets);
+				}
+				
+				// Update the filters
+				if (sizeof($filters) > 0)
+				{
+					$filters = '|'.implode('|', $filters).'|';
+					$productUpdate[] = '<li>The filters were updated</li>';
+					$productIndexObject->setProductFeatures($filters);
+				}
+				
+				// Save any changes to the product index
+				$em->persist($productIndexObject);
 				$em->flush();
 				
 				// Update the log
