@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Compiled source #
 ###################
 *.com
@@ -34,8 +33,13 @@ ehthumbs.db
 Icon?
 Thumbs.db
 
+app/autoload.php
+app/AppCache.php
+app/AppKernel.php
 app/cache/*
 app/logs/*
+web/app.php
+web/app_dev.php
 web/bundles/*
 web/css/*
 web/js/*
@@ -60,4 +64,3 @@ web/bundles/*
 
 # Configuration files
 app/config/parameters.ini
->>>>>>> 0bb5c1b12eb9164ddacdbfd16acdcef0bb894554
