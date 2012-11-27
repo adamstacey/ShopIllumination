@@ -1068,6 +1068,106 @@ class DepartmentService {
 		return $productFeaturesAdded;
 	}
 	
+	// Get the product feature groups from the sub departments
+	public function getProductFeatureGroupsFromSubDepartments($id)
+	{
+		// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+		$em = $doctrineService->getEntityManager();
+		
+		// Get the product features added
+		$productFeaturesAdded = 0;
+		
+		// Get the product feature group id list
+		$productFeatureGroupIds = array();
+		
+		// Get all sub departments
+		$subDepartmentIds = $this->getSubDepartmentIdList($id);
+		$subDepartmentIds = array_unique($subDepartmentIds);
+		
+		// Get the available product feature groups
+		foreach ($subDepartmentIds as $subDepartmentId)
+		{
+			// Get the department index object
+			$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $subDepartmentId));
+			if ($departmentIndexObject)
+			{
+				if ($departmentIndexObject->getDirectProductCount() > 0)
+				{
+					// Get the department product features
+					$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $subDepartmentId), array('displayOrder' => 'ASC'));
+					$newProductFeatureGroupIds = array();
+					foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
+					{
+						$newProductFeatureGroupIds[] = $departmentToFeatureObject->getProductFeatureGroupId();
+					}
+					$productFeatureGroupIds = array_merge($productFeatureGroupIds, $newProductFeatureGroupIds);
+				}
+			}
+		}
+		$productFeatureGroupIds = array_unique($productFeatureGroupIds);
+		
+		// Add the feature groups
+		$productFeatureGroupCount = 0;
+		foreach ($productFeatureGroupIds as $productFeatureGroupId)
+		{
+			$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $productFeatureGroupId));
+			if (!$departmentToFeatureObject)
+			{
+    			$departmentToFeatureObject = new DepartmentToFeature();
+				$departmentToFeatureObject->setActive(1);
+				$departmentToFeatureObject->setDepartmentId($id);
+				$departmentToFeatureObject->setProductFeatureGroupId($productFeatureGroupId);
+				$departmentToFeatureObject->setDefaultProductFeatureId(0);
+				$departmentToFeatureObject->setDisplayOnFilter(0);
+				$departmentToFeatureObject->setDisplayOnListing(0);
+    			$departmentToFeatureObject->setDisplayOnProduct(0);
+    			$departmentToFeatureObject->setDisplayOrder($productFeatureGroupCount);
+    			$em->persist($departmentToFeatureObject);
+    			$em->flush();
+    			$productFeaturesAdded++;
+    		}
+    		$productFeatureGroupCount++;
+		}
+		
+		return $productFeaturesAdded;
+	}
+	
+	// Get the sub department id list
+    public function getSubDepartmentIdList($parentId = 0)
+    {
+    	// Get the services
+    	$doctrineService = $this->container->get('doctrine');
+    	
+    	// Get the entity manager
+    	$em = $doctrineService->getEntityManager();
+    	
+    	// Setup the departments array
+    	$departmentIds = array();
+    	
+    	// Get the sub departments
+    	$subDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+		
+		// Make sure some departments exist
+		if (sizeof($subDepartmentObjects) > 0 )
+		{
+	        foreach ($subDepartmentObjects as $subDepartmentObject)
+	        {
+	    		$departmentIds[] = $subDepartmentObject->getDepartmentId();
+	    		$subDepartmentIds = $this->getSubDepartmentIdList($subDepartmentObject->getDepartmentId());
+	    		if (sizeof($subDepartmentIds) > 0)
+	    		{
+	    			$departmentIds = array_merge($departmentIds, $subDepartmentIds);
+	    		}
+	        }
+		}
+		
+		// Return the department ids
+		return $departmentIds;
+    }
+	
 	// Get the product feature groups from a department
 	public function getProductFeatureGroupsFromDepartment($id, $departmentId, $locale = 'en')
 	{

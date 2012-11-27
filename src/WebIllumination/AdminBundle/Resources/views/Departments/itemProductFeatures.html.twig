@@ -50,79 +50,89 @@
                 		</div>
 					{% endif %}
 				{% endif %}
-				<div class="info-message">
-					<span class="info-message-icon ui-icon ui-icon-info"></span>
-					<p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
-					<div class="clear"></div>
-				</div>
-				<div id="add" class="portlet margin-bottom-15 ui-helper-hidden">
-					<header>
-	           			<h2>Add a Product Feature</h2>
-	                </header>
-					<section class="no-padding">
-						<div id="listing" class="position-relative">
-							<table class="data-table" id="data-add" width="100%">
-								<thead>
-									<tr>
-										<th width="19" class="ac"><input type="checkbox" class="action-select-all-add" value="1" /></th>
-										<th class="al">Product Feature Group</th>
-										<th class="ac">Default Product Feature</th>
-										<th class="ac">Filter?</th>
-										<th class="ac">Listing?</th>
-										<th class="ac">Product?</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr id="add-row" class="item-add ui-helper-hidden">
-										<td width="19" class="ac select-add">
-											<input type="checkbox" class="no-uniform action-select-add" data-id="listing-add-select" id="listing-add-select-1" data-name="add-select" name="add-select[1]" value="1" />
-											<input type="hidden" data-id="listing-add-item" id="listing-add-item-1" data-name="add-item" name="add-item[1]" value="1" />
-										</td>
-										<td class="al">
-											<select data-add-required="required" data-message="Select Product Feature Group" data-id="listing-add-product-feature-group-id" id="listing-add-product-feature-group-id-1" data-name="add-product-feature-group-id" name="add-product-feature-group-id[1]" class="product-feature-group no-uniform full">
-												<option value="">- PLEASE SELECT -</option>
-												{% for productFeatureGroup in data.productFeatureGroups %}
-													{% if '|'~productFeatureGroup.id~'|' not in data.existingProductFeatureGroupIds %}
-														<option value="{{ productFeatureGroup.id }}">{{ productFeatureGroup.productFeatureGroup }}</option>
-													{% endif %}
-												{% endfor %}
-											</select>
-										</td>
-										<td class="ac">
-											<select data-id="listing-add-default-product-feature-id" id="listing-add-default-product-feature-id-1" data-name="add-default-product-feature-id" name="add-default-product-feature-id[1]" class="no-uniform full">
-												<option value="0">- SELECT A PRODUCT FEATURE GROUP -</option>
-											</select>
-										</td>
-										<td width="19" class="ac">
-											<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-filter" id="listing-add-display-on-filter-1" data-name="add-display-on-filter" name="add-display-on-filter[1]" value="1" />
-										</td>
-										<td width="19" class="ac">
-											<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-listing" id="listing-add-display-on-listing-1" data-name="add-display-on-listing" name="add-display-on-listing[1]" value="1" />
-										</td>
-										<td width="19" class="ac">
-											<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-product" id="listing-add-display-on-product-1" data-name="add-display-on-product" name="add-display-on-product[1]" value="1" checked="checked" />
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-			        	<div class="clear"></div>
-		        		<div class="clearfix padding-10">
-		        			<button type="button" class="fr small button icon-set-white ui-corner-right ui-button-black action-close-add" data-icon-primary="ui-icon-arrow-up">Close</button>
-		        			<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-red action-multiple-delete-add" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
-			        		<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-green action-add-another" data-icon-primary="ui-icon-circle-plus">Add Another</button>
-			        		<button id="button-listing-add-go-back" type="button" class="fr small button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Save &amp; Go Back</button>
-			        		<button id="button-listing-add" type="button" class="fr small button icon-set-white ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Save</button>
-						</div>
-					</section>
-		        </div>
+				{% if data.item.departmentCount > 0 %}
+					<div class="info-message">
+						<span class="info-message-icon ui-icon ui-icon-info"></span>
+						<p>Update the order of the product features that are setup for the sub departments of this department.</p>
+						<div class="clear"></div>
+					</div>
+				{% else %}
+					<div class="info-message">
+						<span class="info-message-icon ui-icon ui-icon-info"></span>
+						<p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
+						<div class="clear"></div>
+					</div>
+				{% endif %}
+				{% if data.item.directProductCount > 0 %}
+					<div id="add" class="portlet margin-bottom-15 ui-helper-hidden">
+						<header>
+		           			<h2>Add a Product Feature</h2>
+		                </header>
+						<section class="no-padding">
+							<div id="listing" class="position-relative">
+								<table class="data-table" id="data-add" width="100%">
+									<thead>
+										<tr>
+											<th width="19" class="ac"><input type="checkbox" class="action-select-all-add" value="1" /></th>
+											<th class="al">Product Feature Group</th>
+											<th class="ac">Default Product Feature</th>
+											<th class="ac">Filter?</th>
+											<th class="ac">Listing?</th>
+											<th class="ac">Product?</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr id="add-row" class="item-add ui-helper-hidden">
+											<td width="19" class="ac select-add">
+												<input type="checkbox" class="no-uniform action-select-add" data-id="listing-add-select" id="listing-add-select-1" data-name="add-select" name="add-select[1]" value="1" />
+												<input type="hidden" data-id="listing-add-item" id="listing-add-item-1" data-name="add-item" name="add-item[1]" value="1" />
+											</td>
+											<td class="al">
+												<select data-add-required="required" data-message="Select Product Feature Group" data-id="listing-add-product-feature-group-id" id="listing-add-product-feature-group-id-1" data-name="add-product-feature-group-id" name="add-product-feature-group-id[1]" class="product-feature-group no-uniform full">
+													<option value="">- PLEASE SELECT -</option>
+													{% for productFeatureGroup in data.productFeatureGroups %}
+														{% if '|'~productFeatureGroup.id~'|' not in data.existingProductFeatureGroupIds %}
+															<option value="{{ productFeatureGroup.id }}">{{ productFeatureGroup.productFeatureGroup }}</option>
+														{% endif %}
+													{% endfor %}
+												</select>
+											</td>
+											<td class="ac">
+												<select data-id="listing-add-default-product-feature-id" id="listing-add-default-product-feature-id-1" data-name="add-default-product-feature-id" name="add-default-product-feature-id[1]" class="no-uniform full">
+													<option value="0">- SELECT A PRODUCT FEATURE GROUP -</option>
+												</select>
+											</td>
+											<td width="19" class="ac">
+												<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-filter" id="listing-add-display-on-filter-1" data-name="add-display-on-filter" name="add-display-on-filter[1]" value="1" />
+											</td>
+											<td width="19" class="ac">
+												<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-listing" id="listing-add-display-on-listing-1" data-name="add-display-on-listing" name="add-display-on-listing[1]" value="1" />
+											</td>
+											<td width="19" class="ac">
+												<input type="checkbox" class="no-uniform" data-id="listing-add-display-on-product" id="listing-add-display-on-product-1" data-name="add-display-on-product" name="add-display-on-product[1]" value="1" checked="checked" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+				        	<div class="clear"></div>
+			        		<div class="clearfix padding-10">
+			        			<button type="button" class="fr small button icon-set-white ui-corner-right ui-button-black action-close-add" data-icon-primary="ui-icon-arrow-up">Close</button>
+			        			<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-red action-multiple-delete-add" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+				        		<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-green action-add-another" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+				        		<button id="button-listing-add-go-back" type="button" class="fr small button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Save &amp; Go Back</button>
+				        		<button id="button-listing-add" type="button" class="fr small button icon-set-white ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Save</button>
+							</div>
+						</section>
+			        </div>
+			    {% endif %}
 	    		<div class="portlet">
 					<header>
-						<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr action-add" data-icon-primary="ui-icon-circle-plus">Add a Product Feature</button>
 						{% if data.item.directProductCount > 0 %}
+							<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr action-add" data-icon-primary="ui-icon-circle-plus">Add a Product Feature</button>
 							<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Update Products from Templates</button>
 						{% elseif data.item.departmentCount > 0 %}
-							<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Get Product Features from Sub Departments</button>
+							<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr extra-action" data-extra-action="getProductFeaturesFromSubDepartments" data-icon-primary="ui-icon-list">Get Product Features from Sub Departments</button>
 						{% endif %}
 	           			<h2>Product Features</h2>
 	                </header>
@@ -166,10 +176,12 @@
 											<th width="19" class="ac"><input type="checkbox" class="action-select-all" value="1" /></th>
 											<th class="ar" width="1">&nbsp;</th>
 											<th class="al">Product Feature Group</th>
-											<th class="ac">Default Product Feature</th>
-											<th class="ac">Filter?</th>
-											<th class="ac">Listing?</th>
-											<th class="ac">Product?</th>
+											{% if data.item.directProductCount > 0 %}
+												<th class="ac">Default Product Feature</th>
+												<th class="ac">Filter?</th>
+												<th class="ac">Listing?</th>
+												<th class="ac">Product?</th>
+											{% endif %}
 										</tr>
 									</thead>
 									<tbody>
@@ -191,25 +203,27 @@
 														{% endfor %}
 													</select>
 												</td>
-												<td class="al">
-													<select data-id="{{ item.id }}" id="listing-default-product-feature-id-{{ item.id }}" name="default-product-feature-id[{{ item.id }}]" class="full">
-														<option value="0">- NOT SET -</option>
-														{% for productFeature in data.productFeatures %}
-															{% if item.productFeatureGroupId == productFeature.productFeatureGroupId %}
-																<option{% if item.defaultProductFeatureId == productFeature.id %} selected="selected"{% endif %} value="{{ productFeature.id }}">{{ productFeature.productFeature }}</option>
-															{% endif %}
-														{% endfor %}
-													</select>
-												</td>
-												<td width="19" class="ac">
-													<input data-id="{{ item.id }}" type="checkbox" name="display-on-filter[{{ item.id }}]" id="listing-display-on-filter-{{ item.id }}"{% if item.displayOnFilter == 1 %} checked="checked"{% endif %} value="1" />
-												</td>
-												<td width="19" class="ac">
-													<input data-id="{{ item.id }}" type="checkbox" name="display-on-listing[{{ item.id }}]" id="listing-display-on-listing-{{ item.id }}"{% if item.displayOnListing == 1 %} checked="checked"{% endif %} value="1" />
-												</td>
-												<td width="19" class="ac">
-													<input data-id="{{ item.id }}" type="checkbox" name="display-on-product[{{ item.id }}]" id="listing-display-on-product-{{ item.id }}"{% if item.displayOnProduct == 1 %} checked="checked"{% endif %} value="1" />
-												</td>
+												{% if data.item.directProductCount > 0 %}
+													<td class="al">
+														<select data-id="{{ item.id }}" id="listing-default-product-feature-id-{{ item.id }}" name="default-product-feature-id[{{ item.id }}]" class="full">
+															<option value="0">- NOT SET -</option>
+															{% for productFeature in data.productFeatures %}
+																{% if item.productFeatureGroupId == productFeature.productFeatureGroupId %}
+																	<option{% if item.defaultProductFeatureId == productFeature.id %} selected="selected"{% endif %} value="{{ productFeature.id }}">{{ productFeature.productFeature }}</option>
+																{% endif %}
+															{% endfor %}
+														</select>
+													</td>
+													<td width="19" class="ac">
+														<input data-id="{{ item.id }}" type="checkbox" name="display-on-filter[{{ item.id }}]" id="listing-display-on-filter-{{ item.id }}"{% if item.displayOnFilter == 1 %} checked="checked"{% endif %} value="1" />
+													</td>
+													<td width="19" class="ac">
+														<input data-id="{{ item.id }}" type="checkbox" name="display-on-listing[{{ item.id }}]" id="listing-display-on-listing-{{ item.id }}"{% if item.displayOnListing == 1 %} checked="checked"{% endif %} value="1" />
+													</td>
+													<td width="19" class="ac">
+														<input data-id="{{ item.id }}" type="checkbox" name="display-on-product[{{ item.id }}]" id="listing-display-on-product-{{ item.id }}"{% if item.displayOnProduct == 1 %} checked="checked"{% endif %} value="1" />
+													</td>
+												{% endif %}
 											</tr>
 										{% endfor %}
 									</tbody>

@@ -987,6 +987,22 @@ class DepartmentsController extends Controller
 		    			// Forward
 		    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
 		    			break;
+		    		// Get the product features from the products directly in the departments
+		    		case 'getProductFeaturesFromSubDepartments':
+		    			// Get any new product features added
+		    			$productFeaturesAdded = $service->getProductFeatureGroupsFromSubDepartments($id);
+		    			
+		    			// Notify user
+		    			if ($productFeaturesAdded > 0)
+		    			{
+		    				$this->get('session')->getFlashBag()->add('success', '<strong>'.$productFeaturesAdded.'</strong> new product feature'.($productFeaturesAdded != 1?'s':'').' have been found through the sub departments associated with this department and added.');
+		    			} else {
+			    			$this->get('session')->getFlashBag()->add('notice', 'There are no new product features to add. This could be because there are no sub departments directly associated to this department, so there are no available product features.');
+		    			}
+		    			
+		    			// Forward
+		    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
+		    			break;
 		    		// Update the products from the department templates
 		    		case 'updateProductsFromTemplates':
 		    			// Get any new product updates
@@ -1014,7 +1030,11 @@ class DepartmentsController extends Controller
 				    			$em->flush();
 				    		} else {
 					    		$itemProductFeatureGroupId = $productFeatureGroupId[$itemId];
-					    		$itemDefaultProductFeatureId = $defaultProductFeatureId[$itemId];
+					    		$itemDefaultProductFeatureId = 0;
+					    		if (isset($defaultProductFeatureId[$itemId]))
+							    {
+					    			$itemDefaultProductFeatureId = $defaultProductFeatureId[$itemId];
+					    		}
 					    		$itemDisplayOnFilter = 0;
 							    if (isset($displayOnFilter[$itemId]))
 							    {
