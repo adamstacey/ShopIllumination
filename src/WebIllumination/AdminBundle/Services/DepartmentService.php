@@ -1101,7 +1101,11 @@ class DepartmentService {
 					$newProductFeatureGroupIds = array();
 					foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 					{
-						$newProductFeatureGroupIds[] = $departmentToFeatureObject->getProductFeatureGroupId();
+						// Make sure the department feature is set as a filter
+						if ($departmentToFeatureObject->getDisplayOnFilter() > 0)
+						{
+							$newProductFeatureGroupIds[] = $departmentToFeatureObject->getProductFeatureGroupId();
+						}
 					}
 					$productFeatureGroupIds = array_merge($productFeatureGroupIds, $newProductFeatureGroupIds);
 				}
@@ -2198,16 +2202,22 @@ class DepartmentService {
 							// Check for bullets and filters
 							if (($productFeatureGroupObject instanceof ProductFeatureGroup) && ($productFeatureObject instanceof ProductFeature))
 							{
-								// Check for a bullet
-								if ($departmentToFeatureObject->getDisplayOnListing() > 0)
-								{
-									$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
-								}
+								$productFeatureGroup = trim($productFeatureGroupObject->getProductFeatureGroup());
+								$productFeature = trim($productFeatureObject->getProductFeature());
 								
-								// Check for a filter
-								if ($departmentToFeatureObject->getDisplayOnFilter() > 0)
+								if ((strtoupper($productFeature) != '*** NOT SET ***') && (strtoupper($productFeature) != 'UNKNOWN') && (strtoupper($productFeature) != ''))
 								{
-									$filters[] = trim($productFeatureGroupObject->getProductFeatureGroup()).':'.trim($productFeatureObject->getProductFeature());
+									// Check for a bullet
+									if ($departmentToFeatureObject->getDisplayOnListing() > 0)
+									{
+										$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
+									}
+								
+									// Check for a filter
+									if ($departmentToFeatureObject->getDisplayOnFilter() > 0)
+									{
+										$filters[] = trim($productFeatureGroupObject->getProductFeatureGroup()).':'.trim($productFeatureObject->getProductFeature());
+									}
 								}
 							}
 							
