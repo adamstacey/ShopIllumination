@@ -119,45 +119,45 @@
 	    		<div class="portlet">
 					<header>
 						<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr action-add" data-icon-primary="ui-icon-circle-plus">Add a Product Feature</button>
+						{% if data.item.directProductCount > 0 %}
+							<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Update Products from Templates</button>
+						{% elseif data.item.departmentCount > 0 %}
+							<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Get Product Features from Sub Departments</button>
+						{% endif %}
 	           			<h2>Product Features</h2>
 	                </header>
 					<section class="no-padding">
-						<div class="form-element clearfix no-margin-top">
-                			<span data-help-container="get-templates-from-department" class="info-message-icon ui-icon ui-icon-help"></span>
-					        <label for="form-parent-id" class="form-label">Get from Department</label>
-					        <div class="form-input">
-					        	<table width="100%" class="no-padding">
-									<tr>
-										<td>
-											<select id="form-get-product-features-from-department" class="extra-action no-margin full">
-												<option value="">- Select Department -</option>
-												{% for department in data.departments %}
-													<option value="getProductFeaturesFromDepartment|{{ department.id }}">{% if department.level > 0 %}{% for level in 1..department.level %}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ department.name }}</option>
-												{% endfor %}
-											</select>
-										</td>
-										<td width="10">&nbsp;</td>
-										<td width="200">
-											<div class="position-relative margin-right-10">
-												<input placeholder="Find a department&hellip;" type="text" id="search-department" class="embedded-icon no-margin full" value="" />
-												<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
-											</div>
-										</td>
-									</tr>
-								</table>
-					        </div>
-					    </div>
-					    <div id="form-help-get-templates-from-department" class="form-help ui-helper-hidden">
-					    	<p>If you want to copy the product features used by another department find and select the department you want to copy the product features from.</p>
-					    </div>
+						{% if data.item.directProductCount > 0 %}
+							<div class="form-element clearfix no-margin-top">
+	                			<span data-help-container="get-templates-from-department" class="info-message-icon ui-icon ui-icon-help"></span>
+						        <label for="form-parent-id" class="form-label">Get from Department</label>
+						        <div class="form-input">
+						        	<table width="100%" class="no-padding">
+										<tr>
+											<td>
+												<select id="form-get-product-features-from-department" class="extra-action no-margin full">
+													<option value="">- Select Department -</option>
+													{% for department in data.departments %}
+														<option value="getProductFeaturesFromDepartment|{{ department.id }}">{% if department.level > 0 %}{% for level in 1..department.level %}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ department.name }}</option>
+													{% endfor %}
+												</select>
+											</td>
+											<td width="10">&nbsp;</td>
+											<td width="200">
+												<div class="position-relative margin-right-10">
+													<input placeholder="Find a department&hellip;" type="text" id="search-department" class="embedded-icon no-margin full" value="" />
+													<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+												</div>
+											</td>
+										</tr>
+									</table>
+						        </div>
+						    </div>
+						    <div id="form-help-get-templates-from-department" class="form-help ui-helper-hidden">
+						    	<p>If you want to copy the product features used by another department find and select the department you want to copy the product features from.</p>
+						    </div>
+						{% endif %}
 						<div id="listing" class="position-relative">
-							<div class="listing-settings">
-								<div class="fr filter-listing-container">
-									<button type="button" class="button ui-button-black ui-corner-right icon-set-white fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Update Products from Templates</button>
-									<button type="button" class="button ui-button-black ui-corner-left icon-set-white fr" data-icon-primary="ui-icon-shopping-basket">View Products</button>
-								</div>
-							    <div class="clear"></div>
-							</div>
 							{% if data.items|length > 0 %}
 								<table class="data-table sortable" id="data" width="100%">
 									<thead>
