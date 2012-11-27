@@ -876,6 +876,7 @@ $(document).ready(function () {
 	});
 	
 	$(".tooltip-preview-left, .tooltip-preview-right").hoverIntent(function() {
+		$(".tooltip").hide();
 		var $thisObject = $(this);
 		var $mainSectionWidth = parseInt($(".main-section").outerWidth(true));
 		var $tooltipTriggerPosition = $thisObject.position();
@@ -883,7 +884,7 @@ $(document).ready(function () {
 		var $tooltipTriggerHeight = $thisObject.outerHeight(true);
 		var $maximumWidth = $mainSectionWidth - 350;
 		var $tooltipObject = $($thisObject.attr("data-tooltip-id"));
-		if (($thisObject.attr("data-ajax-path") != '') && ($thisObject.attr("data-ajax-path") != 'undefined'))
+		if (($thisObject.attr("data-ajax-path") != '') && ($thisObject.attr("data-ajax-path") != undefined))
 		{
 			if ($tooltipObject.find(".tooltip-content").html() == '')
 			{
@@ -946,7 +947,12 @@ $(document).ready(function () {
 			} else if (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) > ($(window).outerHeight(true) + $(window).scrollTop())) {
 				$tooltipTop = $tooltipTop - (($("#listing").offset().top + $tooltipTop + $tooltipHeight + 10) - ($(window).outerHeight(true) + $(window).scrollTop()));
 			}
-			$tooltipLeft = parseInt($tooltipTriggerPosition.left - $tooltipWidth - 26);
+			if ($thisObject.hasClass("tooltip-preview-left"))
+			{
+				$tooltipLeft = parseInt($tooltipTriggerPosition.left + $tooltipTriggerWidth + 6);
+			} else {
+				$tooltipLeft = parseInt($tooltipTriggerPosition.left - $tooltipWidth - 26);
+			}
 			$tooltipObject.css({width: $tooltipWidth, top: $tooltipTop, left: $tooltipLeft});
 			$tooltipObject.show();
 		}

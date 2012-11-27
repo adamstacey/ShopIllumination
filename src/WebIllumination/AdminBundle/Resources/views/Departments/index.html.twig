@@ -191,59 +191,64 @@
 								{% for item in data.items %}
 									{% if item.metaDescription != '' %}
 										<div id="tooltip-description-{{ item.departmentId }}" class="tooltip">
-											<p class="no-margin">{{ item.metaDescription|raw }}</p>
+											<div class="tooltip-content">
+												<p class="no-margin">{{ item.metaDescription|raw }}</p>
+											</div>
 										</div>
 									{% endif %}
 									<div id="tooltip-seo-{{ item.departmentId }}" class="tooltip">
-										<h3>Search Engine Optimisation (SEO)</h3>
-										<table cellpadding="0" cellspacing="0" border="0">
-											<tr>
-												<td class="label">Page Title</td>
-												<td>{{ item.pageTitle }}</td>
-											</tr>
-											<tr>
-												<td class="label">Meta Description</td>
-												<td>{{ item.metaDescription }}</td>
-											</tr>
-											<tr>
-												<td class="label">Meta Keywords</td>
-												<td>{{ item.metaKeywords }}</td>
-											</tr>
-											{% if item.googleDepartment %}
+										<div class="tooltip-content">
+											<h3>Search Engine Optimisation (SEO)</h3>
+											<table cellpadding="0" cellspacing="0" border="0">
 												<tr>
-													<td class="label">Google Department</td>
-													<td>{{ item.googleDepartment }}</td>
+													<td class="label">Page Title</td>
+													<td>{{ item.pageTitle }}</td>
 												</tr>
-											{% endif %}
-											{% if item.ebayDepartment %}
 												<tr>
-													<td class="label">eBay Department</td>
-													<td>{{ item.ebayDepartment }}</td>
+													<td class="label">Meta Description</td>
+													<td>{{ item.metaDescription }}</td>
 												</tr>
-											{% endif %}
-											{% if item.amazonDepartment %}
 												<tr>
-													<td class="label">Amazon Department</td>
-													<td>{{ item.amazonDepartment }}</td>
+													<td class="label">Meta Keywords</td>
+													<td>{{ item.metaKeywords }}</td>
 												</tr>
-											{% endif %}
-											<tr>
-												<td class="label">Web Address</td>
-												<td>/{{ item.url }}.html</td>
-											</tr>
-										</table>
+												{% if item.googleDepartment %}
+													<tr>
+														<td class="label">Google Department</td>
+														<td>{{ item.googleDepartment }}</td>
+													</tr>
+												{% endif %}
+												{% if item.ebayDepartment %}
+													<tr>
+														<td class="label">eBay Department</td>
+														<td>{{ item.ebayDepartment }}</td>
+													</tr>
+												{% endif %}
+												{% if item.amazonDepartment %}
+													<tr>
+														<td class="label">Amazon Department</td>
+														<td>{{ item.amazonDepartment }}</td>
+													</tr>
+												{% endif %}
+												<tr>
+													<td class="label">Web Address</td>
+													<td>/{{ item.url }}.html</td>
+												</tr>
+											</table>
+										</div>
 									</div>
 									{% if item.departmentCount > 0 %}
 										<div id="tooltip-departments-{{ item.departmentId }}" class="tooltip">
-											<h3>Departments</h3>
-											<ul>
-												{% for department in item.departments|explode('|') %}
-													{% if department != '' %}
-														<li>{{ department }}</li>
-													{% endif %}
-												{% endfor %}
-											</ul>
-											</table>
+											<div class="tooltip-content">
+												<h3>Departments</h3>
+												<ul>
+													{% for department in item.departments|explode('|') %}
+														{% if department != '' %}
+															<li>{{ department }}</li>
+														{% endif %}
+													{% endfor %}
+												</ul>
+											</div>
 										</div>
 									{% endif %}
 								{% endfor %}
