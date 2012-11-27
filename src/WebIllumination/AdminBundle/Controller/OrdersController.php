@@ -2018,8 +2018,8 @@ class OrdersController extends Controller
 					        	$email->setSubject('You have a new Message from Kitchen Appliance Centre about your Order: '.$itemObject->getId());
 					        	$email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
 					        	$email->setTo(array($itemObject->getEmailAddress() => $itemObject->getFirstName().' '.$itemObject->getLastName()));
-					        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-								$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+					        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/html');
+								$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/plain');
 					    		$this->get('mailer')->send($email);				    		
 							} catch (Exception $exception) {
 								error_log('Error sending email!');
