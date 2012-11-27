@@ -8,10 +8,6 @@
 				$("#ajax-loading").show();
 				$(".slider-gallery-container").slideUp();
 				$("#search-results-title").html('Search Results: "'+$("#quick_search").val()+'"');
-				$("#search-container, .search-box-container").expose({
-	    			color: "#000000",
-	    			opacity: "0.3"
-	    		});
 				$.ajax({
 					type: "GET",
 					url: "{{ path('products_ajax_get_product_search') }}",
@@ -33,7 +29,6 @@
 			} else {
 				$("#search-container").slideUp();
 				$(".slider-gallery-container").slideDown();
-				$.mask.close();
 			}
 		}
 		

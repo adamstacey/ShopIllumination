@@ -1277,7 +1277,8 @@ div.quick-search
   padding: 0 20px 0 20px;
   position: relative;
 }
-.main-content > header h1, .main-content > div > header h1, #search-container header h1 {
+.main-content > header h1, .main-content > div > header h1, #search-container header h1,
+.main-content > header h2, .main-content > div > header h2, #search-container header h2 {
   color: #384246;
   font-family: 'Stag Medium', Arial;
   font-weight: normal;
@@ -3651,7 +3652,7 @@ input[type=date]:focus,
 }
 .product h4, .product h4 a, .product-title
 {
-	font-size: 15px;
+	font-size: 13px;
 	line-height: 23px;
 	padding: 0;
 	color: #143B49;
