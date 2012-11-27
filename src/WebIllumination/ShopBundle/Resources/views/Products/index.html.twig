@@ -1,5 +1,5 @@
 {% extends '::shop.html.twig' %}
-{% block title %}{{ product.pageTitle|raw }} | {{ parent() }}{% endblock %}
+{% block title %}{{ product.pageTitle|raw }}{% endblock %}
 {% block metatags %}
 	<meta name="description" content="{{ product.metaDescription }}">
 	<meta name="keywords" content="{{ product.metaKeywords }}">
