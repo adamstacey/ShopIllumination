@@ -2041,9 +2041,9 @@ class OrdersController extends Controller
     		// Notify user
     		if ($delete > 0)
 	    	{
-    			$this->get('session')->getFlashBag()->add('success', 'The selected product features have been deleted.');
+    			$this->get('session')->getFlashBag()->add('success', 'The selected notes have been deleted.');
     		} else {
-	    		$this->get('session')->getFlashBag()->add('success', 'The selected product features have been updated.');
+	    		$this->get('session')->getFlashBag()->add('success', 'The selected notes have been updated.');
     		}
     		
     		// Forward
