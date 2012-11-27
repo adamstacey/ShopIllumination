@@ -46,6 +46,9 @@ input[type=number]::-webkit-outer-spin-button {
   -moz-border-radius: 0;
   border-radius: 0;
 }
+.no-border-top {
+  border-top: none !important;
+}
 .no-padding {
   padding: 0 !important;
 }
@@ -416,7 +419,7 @@ small, sup, sub {
 .ac {
   text-align: center !important;
 }
-.fl {
+.fl, .fl .selector {
   float: left !important;
 }
 .fr {
@@ -1966,6 +1969,7 @@ p.small
 	font-weight: bold;
 	text-transform: uppercase;
 	border-bottom: 3px solid #C5D2D6;
+	border-top: 1px solid #143B49;
 }
 .portlet .separator
 {
@@ -2119,10 +2123,6 @@ p.small
 	font-size: 13px;
 	line-height: 100%;
 	margin: 0;
-}
-#filters h5
-{
-	margin: 15px 0 0 0;
 }
 #filters .loading-container
 {
@@ -3651,8 +3651,8 @@ input[type=date]:focus,
 }
 .product h4, .product h4 a, .product-title
 {
-	font-size: 13px;
-	line-height: 110%;
+	font-size: 15px;
+	line-height: 23px;
 	padding: 0;
 	color: #143B49;
 	font-weight: bold;
@@ -3706,14 +3706,12 @@ input[type=date]:focus,
 .product-information
 {
 	float: left;
-	width: 200px;
 	margin: 0 15px 0 0;
 	padding: 5px 0 0 0;
 }
 .product-options
 {
-	float: left;
-	width: 202px;
+	float: right;
 	padding: 5px 0 0 0;
 }
 .product p, .product-description p
@@ -3724,7 +3722,7 @@ input[type=date]:focus,
 	font-size: 10px;
 	text-transform: uppercase;
 }
-.product p.product-code, .product p.product-code a, p.product-code
+.product p.product-code, .product p.product-code a, p.product-code, .product p.colour, .product p.colour a, p.colour
 {
 	font-size: 11px;
 	color: #4EC0E3!important;
@@ -3996,7 +3994,7 @@ input[type=date]:focus,
 }
 .filter ul li label
 {
-	font-size: 11px;
+	font-size: 10px;
 	cursor: pointer;
 }
 .filter ul li label a
@@ -4027,7 +4025,7 @@ input[type=date]:focus,
 }
 .range-slider-values input
 {
-	width: 80px;
+	width: 60px;
 	text-align: center;
 }
 .price-range-filter

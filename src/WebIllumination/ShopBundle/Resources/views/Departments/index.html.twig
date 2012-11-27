@@ -29,7 +29,7 @@
 		{% endif %}
 	</header>
 	<section class="container_6 clearfix">
-		<div class="fr grid_4 grid-listings"> 
+		<div class="grid_4 grid-listings"> 
 			<div class="portlet">
 				<header>
 	                <h2 id="product-count">
@@ -43,7 +43,7 @@
 				<section class="clearfix no-padding-right no-padding-bottom">
 					<div id="product-sorting">
 						<div class="fl">
-							<div class="buttonset-title">Sort By</div>
+							<div class="buttonset-title fl">Sort By</div>
 							<select name="sort-order" id="sort-order">
 								<option{% if productListingSettings.sortOrder == 'listPrice:ASC' %} selected="selected"{% endif %} value="listPrice:ASC">Price: Lowest First</option>
 								<option{% if productListingSettings.sortOrder == 'listPrice:DESC' %} selected="selected"{% endif %} value="listPrice:DESC">Price: Highest First</option>
@@ -95,13 +95,13 @@
 				<header>
 	                <h2>Refine Search By</h2>
 	            </header>
-				<section>
+				<section class="no-padding">
 					<div id="filters">
 						<input type="hidden" name="filter-group" id="filter-group" value="{{ departmentListing.group }}" />
-						<h5 id="filter-price-header" class="no-margin">{% spaceless %}
+						<h5 id="filter-price-header" class="no-margin no-border-top">{% spaceless %}
 							Price
-							<button data-filter="price" class="ui-corner-none ui-corner-tr ui-corner-br small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-							<button data-filter="price" class="ui-corner-none ui-corner-tl ui-corner-bl small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+							<button data-filter="price" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="price" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
 						{% endspaceless %}</h5>
 						<div id="filter-price-container">
 							<div id="filter-price-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
@@ -116,10 +116,10 @@
 							<input type="hidden" name="filter-price-reset-from" id="filter-price-reset-from" value="{{ departmentListing.priceFrom }}" />
 							<input type="hidden" name="filter-price-reset-to" id="filter-price-reset-to" value="{{ departmentListing.priceTo }}" />
 						</div>
-						<h5 id="filter-department-header">{% spaceless %}
+						<h5 id="filter-department-header" class="no-margin">{% spaceless %}
 							Department
-							<button data-filter="department" class="ui-corner-none ui-corner-tr ui-corner-br small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-							<button data-filter="department" class="ui-corner-none ui-corner-tl ui-corner-bl small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+							<button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
 						{% endspaceless %}</h5>
 						<div id="filter-department-container">
 							<div id="filter-department-loading" class="loading-container no-margin{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
@@ -135,10 +135,10 @@
 						{% if departmentListing.brandId > 0 %}
 							<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brandId }}" />
 						{% else %}
-							<h5 id="filter-brand-header">{% spaceless %}
+							<h5 id="filter-brand-header" class="no-margin">{% spaceless %}
 								Brands
-								<button data-filter="brand" class="ui-corner-none ui-corner-tr ui-corner-br small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-								<button data-filter="brand" class="ui-corner-none ui-corner-tl ui-corner-bl small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+								<button data-filter="brand" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+								<button data-filter="brand" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
 							{% endspaceless %}</h5>
 							<div id="filter-brand-container">
 								<div id="filter-brand-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
@@ -153,10 +153,10 @@
 								<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brands }}" />
 							</div>
 						{% endif %}
-						<h5 id="filter-feature-header">{% spaceless %}
+						<h5 id="filter-feature-header" class="no-margin">{% spaceless %}
 							Features
-							<button data-filter="feature" class="ui-corner-none ui-corner-tr ui-corner-br small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-							<button data-filter="feature" class="ui-corner-none ui-corner-tl ui-corner-bl small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+							<button data-filter="feature" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="feature" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
 						{% endspaceless %}</h5>
 						<div id="filter-feature-container">
 							<div id="filter-feature-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
