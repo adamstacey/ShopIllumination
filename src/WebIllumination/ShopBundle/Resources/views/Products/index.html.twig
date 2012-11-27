@@ -59,9 +59,6 @@
 			    </div>
 			    <div class="grid_3"> 
 					<div class="portlet">
-						<header>
-							<h2>Product Options</h2>
-						</header>
 						<section>
 							<div>
 								<p class="ar product-code uppercase">
@@ -207,16 +204,11 @@
 		                <section>
 		                    <div class="sidebar-tabs">
 		                        <ul>
+		                        	{% if product.productFeatures|length > 0 %}<li id="tab-features"><a href="#features">Features</a></li>{% endif %}
 		                        	{% if product.description %}<li id="tab-description"><a href="#description">Description</a></li>{% endif %}
-		                            {% if product.productFeatures|length > 0 %}<li id="tab-features"><a href="#features">Features</a></li>{% endif %}
 		                            {% if product.brand.guarantees|length > 0 %}<li id="tab-guarantees"><a href="#guarantees">Guarantees</a></li>{% endif %}
 		                            {% if product.videos|length > 0 %}<li id="tab-videos"><a href="#videos">Videos</a></li>{% endif %}
 		                        </ul>
-		                        {% if product.description %}
-			                        <section id="description" class="form ui-helper-hidden">
-			                        	<div itemprop="description" class="product-description">{{ product.description|raw }}</div>
-			                        </section>
-			                    {% endif %}
 		                        {% if product.productFeatures|length > 0 %}
 			                        <section id="features" class="form ui-helper-hidden">
 			                        	<dl>
@@ -226,6 +218,11 @@
 			                        		{% endfor %}
 										</dl>
 										<div class="clear"></div>
+			                        </section>
+			                    {% endif %}
+		                        {% if product.description %}
+			                        <section id="description" class="form ui-helper-hidden">
+			                        	<div itemprop="description" class="product-description">{{ product.description|raw }}</div>
 			                        </section>
 			                    {% endif %}
 			                    {% if product.guarantees|length > 0 %}
