@@ -300,7 +300,7 @@ class BasketController extends Controller
     		$newProduct['productId'] = $productId;
     		$newProduct['product'] = $product['pageTitle'];
     		$newProduct['url'] = $product['url'];
-    		$newProduct['header'] = $product['pageTitle'];
+    		$newProduct['header'] = str_replace(' '.$product['productCode'].' ', ' ', $product['header']);
     		$newProduct['productCode'] = $product['productCode'];
     		$newProduct['brand'] = $product['brand'];
     		$newProduct['shortDescription'] = $product['shortDescription'];
