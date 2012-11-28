@@ -1656,56 +1656,9 @@ class ProductService {
 	    	$cheaperAlternativePrice = 0;
 	    	$cheaperAlternativeUrl = '';
     	}
-    	
-    	// Update the product index
-    	$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $productId));
-    	if (!$productIndexObject)
-    	{
-    		$productIndexObject = new ProductIndex();
-    		$productIndexObject->setProductId($productId);
-    		$productIndexObject->setChecked(0);
-    	}
-		$productIndexObject->setProductGroupId($product['productGroupId']);
-		$productIndexObject->setStatus($product['status']);
-		$productIndexObject->setAvailableForPurchase($product['availableForPurchase']);
-		$productIndexObject->setProduct('');
-		$productIndexObject->setPrefix($product['prefix']);
-		$productIndexObject->setTagline($product['tagline']);
-		$productIndexObject->setHeader($product['header']);
-		$productIndexObject->setPageTitle($product['pageTitle']);
-		$productIndexObject->setProductCode($product['productCode']);
-		$productIndexObject->setProductGroupCode($product['productGroupCode']);
-		$productIndexObject->setAlternativeProductCodes($product['alternativeProductCodes']);
-		$productIndexObject->setCheaperAlternativePrice($cheaperAlternativePrice);
-		$productIndexObject->setCheaperAlternativeUrl($cheaperAlternativeUrl);
-		$productIndexObject->setGuarantees('');
-		$productIndexObject->setShortDescription($product['shortDescription']);
-		$productIndexObject->setDescription($product['description']);
-		$productIndexObject->setSearchWords($product['searchWords']);
-		$productIndexObject->setSpecialOffer($product['specialOffer']);
-		$productIndexObject->setRecommended($product['recommended']);
-		$productIndexObject->setAccessory($product['accessory']);
-		$productIndexObject->setNew($product['new']);
-		$productIndexObject->setHidePrice($product['hidePrice']);
-    	$productIndexObject->setShowPriceOutOfHours($product['showPriceOutOfHours']); 
-		$productIndexObject->setMembershipCardDiscountAvailable($product['membershipCardDiscountAvailable']);
-    	$productIndexObject->setMaximumMembershipCardDiscount($product['maximumMembershipCardDiscount']); 
-		$productIndexObject->setDeliveryBand($product['deliveryBand']);
-		$productIndexObject->setInheritedDeliveryBand($product['inheritedDeliveryBand']);
-		if ($product['deliveryBand'] == 1)
-		{
-			$productIndexObject->setDeliveryCost('1.95');
-		} elseif ($product['deliveryBand'] == 6) {
-			$productIndexObject->setDeliveryCost('35.0000');
-		} else {
-			$productIndexObject->setDeliveryCost('0.0000');
-		}
-		$productIndexObject->setWeight($product['weight']);
-		$productIndexObject->setBrandId($product['brand']['id']);
-		$productIndexObject->setBrand($product['brand']['brand']);
-		$productIndexObject->setBrandLogoThumbnailPath($product['brand']['logoThumbnailPath']);
-		$productIndexObject->setBrandUrl($product['brand']['routing']);
-		$departmentIds =  array();
+
+    	// Get the department data
+    	$departmentIds =  array();
 		$departments =  array();
 		$departmentPaths =  array();
 		if (is_array($product['departments']))
@@ -1730,6 +1683,118 @@ class ProductService {
 		$departmentIds = join('^', $departmentIds);
 		$departments = join('^', $departments);
 		$departmentPaths = join('|', $departmentPaths);
+    	
+    	// Set the bullets
+		$bullets = array();
+		
+		// Set the filters
+		$filters = array();
+		
+		// Get the department features
+		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $product['departments'][0]['id']), array('displayOrder' => 'ASC'));
+		
+		// Update the product features
+		foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
+		{
+			if ($departmentToFeatureObject)
+			{
+				// Get the equivalent product feature
+				$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productId' => $productId, 'productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId()));
+				if ($productToFeatureObject)
+				{
+					// Get the product feature group and product feature
+					$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
+					$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => $locale));
+					
+					// Check for bullets and filters
+					if (($productFeatureGroupObject) && ($productFeatureObject))
+					{
+						$productFeatureGroup = trim($productFeatureGroupObject->getProductFeatureGroup());
+						$productFeature = trim($productFeatureObject->getProductFeature());
+						
+						if ((strtoupper($productFeature) != '*** NOT SET ***') && (strtoupper($productFeature) != 'UNKNOWN') && (strtoupper($productFeature) != ''))
+						{
+							// Check for a bullet
+							if ($departmentToFeatureObject->getDisplayOnListing() > 0)
+							{
+								$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
+							}
+						
+							// Check for a filter
+							if ($departmentToFeatureObject->getDisplayOnFilter() > 0)
+							{
+								$filters[] = trim($productFeatureGroupObject->getProductFeatureGroup()).':'.trim($productFeatureObject->getProductFeature());
+							}
+						}
+					}					
+				}
+			}
+		}		
+		
+		// Update the bullets
+		if (sizeof($bullets) > 0)
+		{
+			$bullets = '<ul><li>'.implode('</li><li>', $bullets).'</li></ul>';
+		} else {
+			$bullets = '';
+		}
+		
+		// Update the filters
+		if (sizeof($filters) > 0)
+		{
+			$filters = '|'.implode('|', $filters).'|';
+		} else {
+			$filters = '';
+		}		
+    	
+    	// Update the product index
+    	$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $productId));
+    	if (!$productIndexObject)
+    	{
+    		$productIndexObject = new ProductIndex();
+    		$productIndexObject->setProductId($productId);
+    		$productIndexObject->setChecked(0);
+    	}
+		$productIndexObject->setProductGroupId($product['productGroupId']);
+		$productIndexObject->setStatus($product['status']);
+		$productIndexObject->setAvailableForPurchase($product['availableForPurchase']);
+		$productIndexObject->setProduct('');
+		$productIndexObject->setPrefix($product['prefix']);
+		$productIndexObject->setTagline($product['tagline']);
+		$productIndexObject->setHeader($product['header']);
+		$productIndexObject->setPageTitle($product['pageTitle']);
+		$productIndexObject->setProductCode($product['productCode']);
+		$productIndexObject->setProductGroupCode($product['productGroupCode']);
+		$productIndexObject->setAlternativeProductCodes($product['alternativeProductCodes']);
+		$productIndexObject->setCheaperAlternativePrice($cheaperAlternativePrice);
+		$productIndexObject->setCheaperAlternativeUrl($cheaperAlternativeUrl);
+		$productIndexObject->setGuarantees('');
+		$productIndexObject->setShortDescription($product['shortDescription']);
+		$productIndexObject->setDescription($bullets);
+		$productIndexObject->setSearchWords($product['searchWords']);
+		$productIndexObject->setSpecialOffer($product['specialOffer']);
+		$productIndexObject->setRecommended($product['recommended']);
+		$productIndexObject->setAccessory($product['accessory']);
+		$productIndexObject->setNew($product['new']);
+		$productIndexObject->setHidePrice($product['hidePrice']);
+    	$productIndexObject->setShowPriceOutOfHours($product['showPriceOutOfHours']); 
+		$productIndexObject->setMembershipCardDiscountAvailable($product['membershipCardDiscountAvailable']);
+    	$productIndexObject->setMaximumMembershipCardDiscount($product['maximumMembershipCardDiscount']); 
+		$productIndexObject->setDeliveryBand($product['deliveryBand']);
+		$productIndexObject->setInheritedDeliveryBand($product['inheritedDeliveryBand']);
+		if ($product['deliveryBand'] == 1)
+		{
+			$productIndexObject->setDeliveryCost('1.95');
+		} elseif ($product['deliveryBand'] == 6) {
+			$productIndexObject->setDeliveryCost('35.0000');
+		} else {
+			$productIndexObject->setDeliveryCost('0.0000');
+		}
+		$productIndexObject->setWeight($product['weight']);
+		$productIndexObject->setBrandId($product['brand']['id']);
+		$productIndexObject->setBrand($product['brand']['brand']);
+		$productIndexObject->setBrandLogoThumbnailPath($product['brand']['logoThumbnailPath']);
+		$productIndexObject->setBrandUrl($product['brand']['routing']);
 		$productIndexObject->setDepartmentIds($departmentIds);
 		$productIndexObject->setDepartments($departments);
 		$productIndexObject->setDepartmentPaths($departmentPaths);
@@ -1748,7 +1813,7 @@ class ProductService {
 			}
 		}
 		$productIndexObject->setProductOptions('|'.join('|', $productOptions).'|');
-		$productIndexObject->setProductFeatures('');
+		$productIndexObject->setProductFeatures($filters);
 		$productIndexObject->setAdditionalProductColoursCount(0);
 		$productIndexObject->setAdditionalProductsCount(0);
 		if (isset($product['images'][0]))
@@ -1780,26 +1845,6 @@ class ProductService {
 			$productIndexObject->setSavings(0.0000);
 			$productIndexObject->setMembershipCardPrice(0.0000);
 			$productIndexObject->setCurrencyCode('GBP');
-		}
-		$productFeatures = array();
-		if (sizeof($product['productFeatures']) > 0)
-		{
-			foreach($product['productFeatures'] as $productFeature)
-			{
-				if (isset($productFeature[0]))
-				{
-					if ($productFeature[0]['filter'] > 0)
-					{
-						$productFeatures[] = $productFeature[0]['productFeatureGroup'].':'.$productFeature[0]['productFeature'];
-					}
-				}
-			}
-		}
-		if (sizeof($productFeatures) > 0)
-		{
-			$productIndexObject->setProductFeatures('|'.join('|', $productFeatures).'|');
-		} else {
-			$productIndexObject->setProductFeatures('');
 		}
 		$productIndexObject->setUrl($product['url']);
 		$productIndexObject->setLocale('en');    		
