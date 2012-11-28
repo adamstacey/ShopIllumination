@@ -596,6 +596,7 @@ class DepartmentsController extends Controller
     		$name = $request->request->get('name');
     		$existingName = $itemDescriptionObject->getName();
     		$existingPageTitle = $itemDescriptionObject->getPageTitle();
+    		$existingHeader = $itemDescriptionObject->getHeader();
     		$description = $seoService->cleanHtml($request->request->get('description'));
     		$metaDescription = $itemDescriptionObject->getMetaDescription();
     		$goBack = $request->request->get('go-back');
@@ -606,6 +607,14 @@ class DepartmentsController extends Controller
     		$em->persist($itemObject);
     		$em->flush();
     		$itemDescriptionObject->setName($name);
+    		if ($existingName == $existingPageTitle)
+    		{
+	    		$itemDescriptionObject->setPageTitle($name);
+    		}
+    		if ($existingName == $existingHeader)
+    		{
+	    		$itemDescriptionObject->setHeader($name);
+    		}
     		$itemDescriptionObject->setDescription($description);
     		if (!$metaDescription)
     		{
@@ -614,6 +623,61 @@ class DepartmentsController extends Controller
     		}
     		$em->persist($itemDescriptionObject);
     		$em->flush();
+    		
+    		// Rebuild brand department page titles and URLs
+    		if ($existingName == $existingPageTitle)
+    		{
+    			// Update the routing
+	    		$departmentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => 'en'));
+	    		if ($departmentRoutingObject)
+	    		{
+	    			$departmentExistingUrl = $departmentRoutingObject->getUrl();
+		    		$departmentUrl = $seoService->createUrl($seoService->generateUrl($itemDescriptionObject->getPageTitle()), $departmentExistingUrl);
+			    	$departmentRoutingObject->setUrl($departmentUrl);
+			    	$em->persist($departmentRoutingObject);
+			    	$em->flush();
+			    	
+			    	// Setup any redirects if required
+		    		if ($departmentExistingUrl != $departmentUrl)
+		    		{
+						$seoService->updateRedirects($id, 'department', $brandToDepartmentExistingUrl, $departmentUrl);
+					}
+	    		}	    		
+    			
+	    		// Get brand departments
+	    		$brandToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array($this->settings['singleClass'].'Id' => $id));
+	    		foreach ($brandToDepartmentObjects as $brandToDepartmentObject)
+	    		{
+	    			// Update the brand to department
+		    		$brandToDepartmentObject->setPageTitle(str_replace($existingPageTitle, $name, $brandToDepartmentObject->getPageTitle()));
+		    		$em->persist($brandToDepartmentObject);
+		    		$em->flush();
+		    		
+		    		// Get the routing
+		    		$brandToDepartmentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $brandToDepartmentObject->getId(), 'objectType' => 'brandToDepartment', 'locale' => 'en'));
+		    		if (!$brandToDepartmentRoutingObject)
+		    		{
+			    		$brandToDepartmentRoutingObject = new Routing();
+			    		$brandToDepartmentRoutingObject->setObjectId($brandToDepartmentObject->getId());
+			    		$brandToDepartmentRoutingObject->setObjectType('brandToDepartment');
+			    		$brandToDepartmentRoutingObject->setLocale('en');
+			    		$brandToDepartmentRoutingObject->setUrl('');
+			    		$em->persist($brandToDepartmentRoutingObject);
+			    		$em->flush();
+		    		}
+		    		$brandToDepartmentExistingUrl = $brandToDepartmentRoutingObject->getUrl();
+		    		$brandToDepartmentUrl = $seoService->createUrl($seoService->generateUrl($brandToDepartmentObject->getPageTitle()), $brandToDepartmentExistingUrl);
+    		    	$brandToDepartmentRoutingObject->setUrl($brandToDepartmentUrl);
+			    	$em->persist($brandToDepartmentRoutingObject);
+			    	$em->flush();
+    		
+		    		// Setup any redirects if required
+		    		if ($brandToDepartmentExistingUrl != $brandToDepartmentUrl)
+		    		{
+						$seoService->updateRedirects($brandToDepartmentObject->getId(), 'brandToDepartment', $brandToDepartmentExistingUrl, $brandToDepartmentUrl);
+					}
+	    		}
+    		}
     		
     		// Rebuild the path
     		$service->rebuildPath($id);

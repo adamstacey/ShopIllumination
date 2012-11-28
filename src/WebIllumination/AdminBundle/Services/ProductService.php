@@ -1131,7 +1131,7 @@ class ProductService {
 	// Sort the product features by feature
 	static function sortProductFeaturesByFeature($a, $b)
 	{
-	    return strcmp($a['productFeature'], $b['productFeature']);
+	    return strnatcmp($a['productFeature'], $b['productFeature']);
 	}
 	
 	// Sort the product features by product count
