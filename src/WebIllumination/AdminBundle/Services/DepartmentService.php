@@ -2222,7 +2222,7 @@ class DepartmentService {
 							}
 							
 							// Check if the default product feature is set and matches
-							if ($departmentToFeatureObject->getDefaultProductFeatureId() > 0)
+							if (($departmentToFeatureObject->getDefaultProductFeatureId() > 0) && ($productFeatureGroupObject instanceof ProductFeatureGroup) && ($productFeatureObject instanceof ProductFeature))
 							{
 								if ($departmentToFeatureObject->getDefaultProductFeatureId() != $productToFeatureObject->getProductFeatureId())
 								{
@@ -2232,7 +2232,7 @@ class DepartmentService {
 							}
 							
 							// Check the sort order of the product feature
-							if ($departmentToFeatureObject->getDisplayOrder() != $productToFeatureObject->getDisplayOrder())
+							if (($departmentToFeatureObject->getDisplayOrder() != $productToFeatureObject->getDisplayOrder()) && ($productFeatureGroupObject instanceof ProductFeatureGroup))
 							{
 								$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Updated sort order from '.$productToFeatureObject->getDisplayOrder().' to '.$departmentToFeatureObject->getDisplayOrder().'</li>';
 								$productToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
