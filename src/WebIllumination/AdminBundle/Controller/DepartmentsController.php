@@ -650,6 +650,7 @@ class DepartmentsController extends Controller
 	    		{
 	    			// Update the brand to department
 		    		$brandToDepartmentObject->setPageTitle(str_replace($existingPageTitle, $name, $brandToDepartmentObject->getPageTitle()));
+		    		$brandToDepartmentObject->setHeader(str_replace($existingPageTitle, $name, $brandToDepartmentObject->getHeader()));
 		    		$em->persist($brandToDepartmentObject);
 		    		$em->flush();
 		    		
@@ -723,6 +724,10 @@ class DepartmentsController extends Controller
     		    		    		
     		// Rebuild the index
     		$service->rebuildDepartmentIndexObject($id, 'en');
+    		if ($parentId > 0)
+	    	{
+	    		$service->rebuildDepartmentIndexObject($parentId, 'en');
+	    	}
     		
     		// Notify user
     		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
