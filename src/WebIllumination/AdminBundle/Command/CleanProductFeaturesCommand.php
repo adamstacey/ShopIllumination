@@ -24,8 +24,8 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
    		$em = $this->getContainer()->get('doctrine')->getEntityManager();
    		
    		// Common words
-   		$commonWordsSearch = array(' The ', ' Be ', ' To ', ' Of ', ' And ', ' A ', ' In ', ' That ', ' Have ', ' It ', ' For ', ' Not ', ' On ', ' With ', ' He ', ' As ', ' You ', ' Do ', ' At ', ' This ', ' But ', ' His ', ' By ', ' From' , ' They ', ' We ', ' Say ', ' Her ', ' She ', ' Or ', ' An ', ' Will ', ' My ', ' One ', ' All ', ' Would ', ' There ', ' Their ', ' What ', ' So ', ' Up ', ' Out ', ' If ', ' About ', ' Who ', ' Get ', ' Which ', ' Go ', ' Me ', ' When ', ' Make ', ' Can ', ' Like ', ' Just ', ' Him ', ' Know ', ' Take ', ' Into ', ' Your ', ' Some ', ' Could ', ' Them ', ' See ',  ' Other ', ' Than ', ' Then ', ' Now ', ' Look ', ' Only ', ' Come ', ' Its ', ' Also ', ' Back ', ' After ', ' Use ', ' How ', ' Our ', ' Work ', ' Well ', ' Way ', ' New ', ' Want ', ' Because ', ' Any ', ' These ', ' Give ', ' Most ', ' Us ', ' Per ', 'Pvc', 'Led', 'Hd', 'Lcd', 'Lpg', 'Usb', 'N/a', 'Max.', 'Min.', 'Maximum', 'Minimum', 'Fa', 'Ise6445hj', 'Bb', 'Aaa', 'Aa', '(if Above May Require Pressure Reducing Valve)', ' Cubic Metres', '°c');
-   		$commonWordsReplace = array(' the ', ' be ', ' to ', ' of ', ' & ', ' a ', ' in ', ' that ', ' have ', ' it ', ' for ', ' not ', ' on ', ' with ', ' he ', ' as ', ' you ', ' do ', ' at ', ' this ', ' but ', ' his ', ' by ', ' from' , ' they ', ' we ', ' say ', ' her ', ' she ', ' or ', ' an ', ' will ', ' my ', ' one ', ' all ', ' would ', ' there ', ' their ', ' what ', ' so ', ' up ', ' out ', ' if ', ' about ', ' who ', ' get ', ' which ', ' go ', ' me ', ' when ', ' make ', ' can ', ' like ', ' just ', ' him ', ' know ', ' take ', ' into ', ' your ', ' some ', ' could ', ' them ', ' see ',  ' other ', ' than ', ' then ', ' now ', ' look ', ' only ', ' come ', ' its ', ' also ', ' back ', ' after ', ' use ', ' how ', ' our ', ' work ', ' well ', ' way ', ' new ', ' want ', ' because ', ' any ', ' these ', ' give ', ' most ', ' us ', ' per ', 'PVC', 'LED', 'HD', 'LCD', 'LPG', 'USB', 'N/A', 'Max', 'Min', 'Max', 'Min', 'FA', 'ISE6445HJ', 'BB', 'AAA', 'AA', '(if above may require pressure reducing valve)', 'm³', '°C');
+   		$commonWordsSearch = array(' The ', ' Be ', ' To ', ' Of ', ' And ', ' A ', ' In ', ' That ', ' Have ', ' It ', ' For ', ' Not ', ' On ', ' With ', ' He ', ' As ', ' You ', ' Do ', ' At ', ' This ', ' But ', ' His ', ' By ', ' From' , ' They ', ' We ', ' Say ', ' Her ', ' She ', ' Or ', ' An ', ' Will ', ' My ', ' One ', ' All ', ' Would ', ' There ', ' Their ', ' What ', ' So ', ' Up ', ' Out ', ' If ', ' About ', ' Who ', ' Get ', ' Which ', ' Go ', ' Me ', ' When ', ' Make ', ' Can ', ' Like ', ' Just ', ' Him ', ' Know ', ' Take ', ' Into ', ' Your ', ' Some ', ' Could ', ' Them ', ' See ',  ' Other ', ' Than ', ' Then ', ' Now ', ' Look ', ' Only ', ' Come ', ' Its ', ' Also ', ' Back ', ' After ', ' Use ', ' How ', ' Our ', ' Work ', ' Well ', ' Way ', ' New ', ' Want ', ' Because ', ' Any ', ' These ', ' Give ', ' Most ', ' Us ', ' Per ', 'Pvc', 'Led', 'Hd', 'Lcd', 'Lpg', 'Usb', 'N/a', 'Max.', 'Min.', 'Maximum', 'Minimum', 'Ise6445hj', 'Bb', 'Aaa', 'Aa', '(if Above May Require Pressure Reducing Valve)', ' Cubic Metres', '°c', 'Co²');
+   		$commonWordsReplace = array(' the ', ' be ', ' to ', ' of ', ' & ', ' a ', ' in ', ' that ', ' have ', ' it ', ' for ', ' not ', ' on ', ' with ', ' he ', ' as ', ' you ', ' do ', ' at ', ' this ', ' but ', ' his ', ' by ', ' from' , ' they ', ' we ', ' say ', ' her ', ' she ', ' or ', ' an ', ' will ', ' my ', ' one ', ' all ', ' would ', ' there ', ' their ', ' what ', ' so ', ' up ', ' out ', ' if ', ' about ', ' who ', ' get ', ' which ', ' go ', ' me ', ' when ', ' make ', ' can ', ' like ', ' just ', ' him ', ' know ', ' take ', ' into ', ' your ', ' some ', ' could ', ' them ', ' see ',  ' other ', ' than ', ' then ', ' now ', ' look ', ' only ', ' come ', ' its ', ' also ', ' back ', ' after ', ' use ', ' how ', ' our ', ' work ', ' well ', ' way ', ' new ', ' want ', ' because ', ' any ', ' these ', ' give ', ' most ', ' us ', ' per ', 'PVC', 'LED', 'HD', 'LCD', 'LPG', 'USB', 'N/A', 'Max', 'Min', 'Max', 'Min', 'ISE6445HJ', 'BB', 'AAA', 'AA', '(if above may require pressure reducing valve)', 'm³', '°C', 'CO²');
    		
 		// Replacements
 	  	$search = array();
@@ -203,6 +203,10 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
 	  	$search[] = "/([0-9]+)[\s]?[Ww]$/";
 	  	$replace[] = "$1W";
 	  	
+	  	// Tidy up dB
+	  	$search[] = "/([0-9]+)[\s]?[Dd][Bb]$/";
+	  	$replace[] = "$1dB";
+	  	
 	  	// Tidy up V
 	  	$search[] = "/([0-9]+)[\s]?[Vv]$/";
 	  	$replace[] = "$1V";
@@ -255,6 +259,10 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
 	  	$search[] = "/M[Mm]/";
 	  	$replace[] = "mm";
 	  	
+	  	// Tidy up mm
+	  	$search[] = "/\/[Hh][Rr]/";
+	  	$replace[] = "/h";
+	  	
 	  	// Tidy up ize to ise
 	  	$search[] = "/([a-zA-Z]{2})ize/";
 	  	$replace[] = "$1ise";
@@ -272,9 +280,9 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
 	  	$replace[] = "$1isation";
 	  	
 	  	// Tidy up times symbol
-	  	$search[] = "/([0-9A-Za-z]+)\s*[Xx×]\s*([0-9A-Za-z]+)/";
+	  	$search[] = "/$([0-9]+[0-9A-Za-z]+)\s*[Xx×]\s*([0-9]+[0-9A-Za-z]+)$/";
 	  	$replace[] = "$1 × $2";
-	  	$search[] = "/([0-9A-Za-z]+)\s*[Xx×]\s*([0-9A-Za-z]+)\s*[Xx×]\s*([0-9A-Za-z]+)/";
+	  	$search[] = "/$([0-9]+[0-9A-Za-z]+)\s*[Xx×]\s*([0-9]+[0-9A-Za-z]+)\s*[Xx×]\s*([0-9]+[0-9A-Za-z]+)$/";
 	  	$replace[] = "$1 × $2 × $2";
 	  	
 	  	// Tidy up worktop
@@ -313,9 +321,13 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
 	  	$search[] = "/[\r\n\t]/";
 	  	$replace[] = "";
 	  	
+	  	// Update FA
+	  	$search[] = "/$[Ff][Aa]$/";
+	  	$replace[] = "FA";
+	  	
 	  	// Remove any extra spaces
 		$search[] = "/\s{2,}/";
-	  	$replace[] = " ";		
+	  	$replace[] = " ";	
     	
     	// Get the product group features
     	$productFeatureCount = 1;
@@ -345,7 +357,6 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
 		    {
 		    	$productFeatureObject->setProductFeature($newProductFeature);
 		    	$em->persist($productFeatureObject);
-	    		$em->flush();
 		    }
 		    
 		    // Next product feature group
@@ -356,6 +367,9 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
 		    unset($existingProductFeature);
 		    unset($newProductFeature);
 	    }
+	    
+	    // Update the database
+	    $em->flush();
 	    	    
         $output->writeln('Finished!');
     }
