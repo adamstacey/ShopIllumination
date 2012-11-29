@@ -194,6 +194,23 @@
 					{% endif %}
 			    </div>
 			</div>
+		   	{% if product.relatedProducts|length > 0 %}
+		   		<div class="clear"></div>
+			   	<div class="grid_6 leading">
+			   		<div class="portlet">
+						<header>
+							<h2>Related Products</h2>
+						</header>
+						<section class="no-padding-bottom no-padding-right">
+							{% for relatedProduct in product.relatedProducts %}
+								{% include 'WebIlluminationShopBundle:Products:productListing.html.twig' with {'product': relatedProduct} %}
+							{% endfor %}
+							<div class="clear"></div>
+						</section>
+			        </div>
+			    </div>
+			    <div class="clear"></div>
+			{% endif %}
 			{% if product.description or (product.productFeatures|length > 0) %}
 				<div class="clear"></div>
 				<div class="grid_6 leading">
@@ -261,22 +278,6 @@
 				</div>
 			{% endif %}		  
 		   	<div class="clear"></div>
-		   	{% if product.relatedProducts|length > 0 %}
-			   	<div class="grid_6 leading">
-			   		<div class="portlet">
-						<header>
-							<h2>Related Products</h2>
-						</header>
-						<section class="no-padding-bottom no-padding-right">
-							{% for relatedProduct in product.relatedProducts %}
-								{% include 'WebIlluminationShopBundle:Products:productListing.html.twig' with {'product': relatedProduct} %}
-							{% endfor %}
-							<div class="clear"></div>
-						</section>
-			        </div>
-			    </div>
-			    <div class="clear"></div>
-			{% endif %}
 		</section>
 	</div>
 {% endblock %}
