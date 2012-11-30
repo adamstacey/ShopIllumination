@@ -2080,6 +2080,7 @@ p.small
 #basket-contents td a, table.listing td a, .order-summary td a
 {
 	font-size: 11px;
+	color: #000!important;
 }
 #basket-totals-loading, #basket-totals
 {
