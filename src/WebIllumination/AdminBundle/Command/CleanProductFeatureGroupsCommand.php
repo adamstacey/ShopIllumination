@@ -24,8 +24,8 @@ class CleanProductFeatureGroupsCommand extends ContainerAwareCommand
    		$em = $this->getContainer()->get('doctrine')->getEntityManager();
    		
    		// Common words
-   		$commonWordsSearch = array(' The ', ' Be ', ' To ', ' Of ', ' And ', ' A ', ' In ', ' That ', ' Have ', ' It ', ' For ', ' Not ', ' On ', ' With ', ' He ', ' As ', ' You ', ' Do ', ' At ', ' This ', ' But ', ' His ', ' By ', ' From' , ' They ', ' We ', ' Say ', ' Her ', ' She ', ' Or ', ' An ', ' Will ', ' My ', ' One ', ' All ', ' Would ', ' There ', ' Their ', ' What ', ' So ', ' Up ', ' Out ', ' If ', ' About ', ' Who ', ' Get ', ' Which ', ' Go ', ' Me ', ' When ', ' Make ', ' Can ', ' Like ', ' Just ', ' Him ', ' Know ', ' Take ', ' Into ', ' Your ', ' Some ', ' Could ', ' Them ', ' See ',  ' Other ', ' Than ', ' Then ', ' Now ', ' Look ', ' Only ', ' Come ', ' Its ', ' Also ', ' Back ', ' After ', ' Use ', ' How ', ' Our ', ' Work ', ' Well ', ' Way ', ' New ', ' Want ', ' Because ', ' Any ', ' These ', ' Give ', ' Most ', ' Us ', ' Per ', 'Pvc', 'Led', 'Hd', 'Lcd', 'Lpg', 'Usb', 'N/a', 'Max.', 'Min.', 'Maximum', 'Minimum', 'Ise6445hj', 'Bb', 'Aaa', 'Aa', '(if Above May Require Pressure Reducing Valve)', ' Cubic Metres', '°c', 'Co²');
-   		$commonWordsReplace = array(' the ', ' be ', ' to ', ' of ', ' & ', ' a ', ' in ', ' that ', ' have ', ' it ', ' for ', ' not ', ' on ', ' with ', ' he ', ' as ', ' you ', ' do ', ' at ', ' this ', ' but ', ' his ', ' by ', ' from' , ' they ', ' we ', ' say ', ' her ', ' she ', ' or ', ' an ', ' will ', ' my ', ' one ', ' all ', ' would ', ' there ', ' their ', ' what ', ' so ', ' up ', ' out ', ' if ', ' about ', ' who ', ' get ', ' which ', ' go ', ' me ', ' when ', ' make ', ' can ', ' like ', ' just ', ' him ', ' know ', ' take ', ' into ', ' your ', ' some ', ' could ', ' them ', ' see ',  ' other ', ' than ', ' then ', ' now ', ' look ', ' only ', ' come ', ' its ', ' also ', ' back ', ' after ', ' use ', ' how ', ' our ', ' work ', ' well ', ' way ', ' new ', ' want ', ' because ', ' any ', ' these ', ' give ', ' most ', ' us ', ' per ', 'PVC', 'LED', 'HD', 'LCD', 'LPG', 'USB', 'N/A', 'Max', 'Min', 'Max', 'Min', 'ISE6445HJ', 'BB', 'AAA', 'AA', '(if above may require pressure reducing valve)', 'm³', '°C', 'CO²');
+   		$commonWordsSearch = array(' The ', ' Be ', ' To ', ' Of ', ' And ', ' A ', ' In ', ' That ', ' Have ', ' It ', ' For ', ' Not ', ' On ', ' With ', ' He ', ' As ', ' You ', ' Do ', ' At ', ' This ', ' But ', ' His ', ' By ', ' From' , ' They ', ' We ', ' Say ', ' Her ', ' She ', ' Or ', ' An ', ' Will ', ' My ', ' One ', ' All ', ' Would ', ' There ', ' Their ', ' What ', ' So ', ' Up ', ' Out ', ' If ', ' About ', ' Who ', ' Get ', ' Which ', ' Go ', ' Me ', ' When ', ' Make ', ' Can ', ' Like ', ' Just ', ' Him ', ' Know ', ' Take ', ' Into ', ' Your ', ' Some ', ' Could ', ' Them ', ' See ',  ' Other ', ' Than ', ' Then ', ' Now ', ' Look ', ' Only ', ' Come ', ' Its ', ' Also ', ' Back ', ' After ', ' Use ', ' How ', ' Our ', ' Work ', ' Well ', ' Way ', ' New ', ' Want ', ' Because ', ' Any ', ' These ', ' Give ', ' Most ', ' Us ', ' Per ', 'Pvc', 'Led', 'Hd', 'Lcd', 'Lpg', 'Usb', 'N/a', 'Max.', 'Min.', 'Maximum', 'Minimum', 'Ise6445hj', 'Bb', 'Aaa', 'Aa', '(if Above May Require Pressure Reducing Valve)', ' Cubic Metres', '°c', 'Co²', '2.5 Rec & 1m Round');
+   		$commonWordsReplace = array(' the ', ' be ', ' to ', ' of ', ' & ', ' a ', ' in ', ' that ', ' have ', ' it ', ' for ', ' not ', ' on ', ' with ', ' he ', ' as ', ' you ', ' do ', ' at ', ' this ', ' but ', ' his ', ' by ', ' from' , ' they ', ' we ', ' say ', ' her ', ' she ', ' or ', ' an ', ' will ', ' my ', ' one ', ' all ', ' would ', ' there ', ' their ', ' what ', ' so ', ' up ', ' out ', ' if ', ' about ', ' who ', ' get ', ' which ', ' go ', ' me ', ' when ', ' make ', ' can ', ' like ', ' just ', ' him ', ' know ', ' take ', ' into ', ' your ', ' some ', ' could ', ' them ', ' see ',  ' other ', ' than ', ' then ', ' now ', ' look ', ' only ', ' come ', ' its ', ' also ', ' back ', ' after ', ' use ', ' how ', ' our ', ' work ', ' well ', ' way ', ' new ', ' want ', ' because ', ' any ', ' these ', ' give ', ' most ', ' us ', ' per ', 'PVC', 'LED', 'HD', 'LCD', 'LPG', 'USB', 'N/A', 'Max', 'Min', 'Max', 'Min', 'ISE6445HJ', 'BB', 'AAA', 'AA', '(if above may require pressure reducing valve)', 'm³', '°C', 'CO²', '2.5m Rec & 1m Round');
    		
 		// Replacements
 	  	$search = array();
@@ -211,6 +211,10 @@ class CleanProductFeatureGroupsCommand extends ContainerAwareCommand
 	  	$search[] = "/([0-9]+)[\s]?[Vv]$/";
 	  	$replace[] = "$1V";
 	  	
+	  	// Tidy up L
+	  	$search[] = "/([0-9]+)[\s]?[Ll]$/";
+	  	$replace[] = "$1L";
+	  	
 	  	// Tidy up bar
 	  	$search[] = "/([0-9]+)[\s]?[Bb][Aa][Rr]/";
 	  	$replace[] = "$1bar";
@@ -229,7 +233,7 @@ class CleanProductFeatureGroupsCommand extends ContainerAwareCommand
 	  	
 	  	// Tidy up l
 	  	$search[] = "/[\s]?[Ll]itre/";
-	  	$replace[] = "l";
+	  	$replace[] = "L";
 	  	
   		// Tidy up -in
 	  	$search[] = "/\-[Ii]n/";
@@ -327,7 +331,7 @@ class CleanProductFeatureGroupsCommand extends ContainerAwareCommand
 	  	
 	  	// Remove any extra spaces
 		$search[] = "/\s{2,}/";
-	  	$replace[] = " ";		
+	  	$replace[] = " ";			
     	
     	// Get the product group features
     	$productFeatureGroupCount = 1;
