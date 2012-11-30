@@ -1496,13 +1496,18 @@ class ProductsController extends Controller
 				$feature = array();
 				$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($productToFeatureObject->getProductFeatureGroupId());
 				$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
-				if ($productFeatureGroupObject && $productFeatureObject)
+				if ($productFeatureGroupObject)
 				{
 					$feature['id'] = $productToFeatureObject->getId();
 					$feature['productFeatureGroupId'] = $productFeatureGroupObject->getId();
 					$feature['productFeatureGroup'] = $productFeatureGroupObject->getProductFeatureGroup();
-					$feature['productFeatureId'] = $productFeatureObject->getId();
-					$feature['productFeature'] = $productFeatureObject->getProductFeature();
+					$feature['productFeatureId'] = 0;
+					$feature['productFeature'] = '';
+					if ($productFeatureObject)
+					{
+						$feature['productFeatureId'] = $productFeatureObject->getId();
+						$feature['productFeature'] = $productFeatureObject->getProductFeature();
+					}
 					$features[$productFeatureGroupObject->getProductFeatureGroup()][] = $feature;
 				}
 			}

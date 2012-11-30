@@ -85,7 +85,7 @@
 											<input data-index="{{ loop.index }}" type="checkbox" class="feature-group-select" id="form-feature-group-select-{{ loop.index }}" value="1" />
 										</td>
 										<td class="al">
-											<h3 class="no-margin no-padding no-border">{{ productFeatureGroup }}</h3>
+											<h3 class="no-margin no-padding no-border">{{ loop.index }}. {{ productFeatureGroup }}</h3>
 										</td>
 										<td width="164">
 											<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" data-index="{{ loop.index }}" class="button ui-button-red action-confirm-delete-feature-group" data-icon-primary="ui-icon-closethick">Delete Feature Group</button>
