@@ -14,9 +14,9 @@
 		<header>
 			<a href="{{ backUrl }}" class="margin-left-15 button ui-button-blue fr" data-icon-primary="ui-icon-arrowthick-1-w">Go Back</a>
 			<h1 itemprop="name" class="uppercase no-padding-top no-margin-bottom{">{{ product.header|raw }}</h1>
-			<h2 class="no-margin uppercase blue">{% spaceless %}
+			<h2 class="no-margin blue no-margin no-padding">{% spaceless %}
 				{% for productFeature in product.productFeatures %}
-					{% if productFeature.0.productFeatureGroup == 'COLOUR' %}
+					{% if 'COLOUR' in productFeature.0.productFeatureGroup|upper %}
 						{% if productFeature.0.productFeature != 'N/A' %}
 							{{ productFeature.0.productFeature|raw }}&nbsp;
 						{% endif %}
@@ -229,10 +229,12 @@
 		                        {% if product.productFeatures|length > 0 %}
 			                        <section id="features" class="form ui-helper-hidden">
 			                        	<dl>
-			                        		{% for productFeature in product.productFeatures %}
-			                        			<dt>{{ productFeature.0.productFeatureGroup|raw }}</dt>
-    												<dd>{{ productFeature.0.productFeature|raw }}</dd>
-			                        		{% endfor %}
+			                        		{% if productFeature.0.productFeature != '*** NOT SET ***' %}
+				                        		{% for productFeature in product.productFeatures %}
+				                        			<dt>{{ productFeature.0.productFeatureGroup|raw }}</dt>
+	    												<dd>{{ productFeature.0.productFeature|raw }}</dd>
+				                        		{% endfor %}
+				                        	{% endif %}
 										</dl>
 										<div class="clear"></div>
 			                        </section>
