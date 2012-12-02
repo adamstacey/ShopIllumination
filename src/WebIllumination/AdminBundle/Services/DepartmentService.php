@@ -1001,7 +1001,7 @@ class DepartmentService {
     	
     	// Get the product feature groups
     	$productIds = array();
-    	$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
+    	$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
     	foreach ($productToDepartmentObjects as $productToDepartmentObject)
     	{
     		$productIds[] = $productToDepartmentObject->getProductId();
@@ -1317,7 +1317,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 				
 		// Get the product indexes
-		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
+		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
 				
 		// Update the products
 		$count = 0;
@@ -1911,7 +1911,7 @@ class DepartmentService {
 		$productCount = $qb->getQuery()->getSingleScalarResult();
 		
 		// Get direct product count
-		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
+		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
 		$directProductCount = sizeof($productToDepartmentObjects);
 		
     	$qb = $em->createQueryBuilder();
@@ -2072,7 +2072,7 @@ class DepartmentService {
 		
 		// Get the products in the department
 		$productCount = 0;
-		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
+		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
 		foreach ($productsToDepartmentObjects as $productsToDepartmentObject)
 		{
 			// Get the product objects
@@ -2170,7 +2170,7 @@ class DepartmentService {
 		
 		// Get the products in the department
 		$productCount = 0;
-		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
+		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
 		foreach ($productsToDepartmentObjects as $productsToDepartmentObject)
 		{
 			// Get the product objects
