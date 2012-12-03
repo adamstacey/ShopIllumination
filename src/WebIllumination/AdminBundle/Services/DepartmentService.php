@@ -1443,8 +1443,7 @@ class DepartmentService {
 		// Get the template parts
 		$templateParts = explode('^', $template);
 		
-		// Get the previews
-		$templatePreviews = array();
+		// Get the templates
 		foreach ($productIndexObjects as $productIndexObject)
 		{
 			$templatePreview = array();
@@ -1505,9 +1504,9 @@ class DepartmentService {
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
+										if (($productFeatureValue != '') && (strtoupper($productFeatureValue) != '*** NOT SET ***') && (strtoupper($productFeatureValue) != 'YES') && (strtoupper($productFeatureValue) != 'NO') && (strtoupper($productFeatureValue) != 'UNKNOWN'))
 										{
-											$templatePreview[] = trim($templatePartValue);
+											$templatePreview[] = trim($productFeatureValue);
 										}
 									}
 								}
@@ -1518,6 +1517,7 @@ class DepartmentService {
 						break;
 				}
 			}
+			$templatePreview = implode(' ', $templatePreview);
 			
 			// Check if an update is required
 			switch ($templateField)
@@ -1553,9 +1553,9 @@ class DepartmentService {
 					}
 					break;
 				case 'meta-description':
-					if ($productIndexObject->getMetaDescription() != $templatePreview)
+					if ($productIndexObject->getShortDescription() != $templatePreview)
 					{
-						$productIndexObject->setMetaDescription($templatePreview);
+						$productIndexObject->setShortDescription($templatePreview);
 						$em->persist($productIndexObject);
 						$em->flush();
 						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
@@ -1754,7 +1754,7 @@ class DepartmentService {
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if (($productFeatureValue != '') && ($productFeatureValue != 'N/A') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
+										if ((strtoupper($productFeatureValue) != '') && (strtoupper($productFeatureValue) != 'N/A') && (strtoupper($productFeatureValue) != '*** NOT SET ***') && (strtoupper($productFeatureValue) != 'YES') && (strtoupper($productFeatureValue) != 'NO') && (strtoupper($productFeatureValue) != 'UNKNOWN'))
 										{
 											$templatePreview[] = trim($productFeatureValue);
 										}
@@ -2380,7 +2380,7 @@ class DepartmentService {
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if (($productFeatureValue != '') && ($productFeatureValue != 'N/A') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
+										if (($productFeatureValue != '') && (strtoupper($productFeatureValue) != 'N/A') && (strtoupper($productFeatureValue) != '*** NOT SET ***') && (strtoupper($productFeatureValue) != 'YES') && (strtoupper($productFeatureValue) != 'NO') && (strtoupper($productFeatureValue) != 'UNKNOWN'))
 										{
 											$newField[] = trim($productFeatureValue);
 										}
