@@ -64,6 +64,9 @@
 								<p class="ar product-code uppercase">
 									<span itemprop="model" class="uppercase">PRODUCT CODE: <strong>{{ product.productCode }}</strong></span>
 								</p>
+								{% if product.bullets != '' %}
+									<div>{{ product.bullets|raw }}</div>
+								{% endif %}
 								<div id="product-price-loading" class="loading-container ui-helper-hidden">
 									<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
 									<p>Updating Prices&hellip;</p>

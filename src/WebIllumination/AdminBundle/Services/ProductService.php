@@ -1171,7 +1171,8 @@ class ProductService {
    		// Get the product
    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
     	$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $id, 'locale' => $locale));
-    	if (!$productObject || !$productDescriptionObject)
+    	$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $id, 'locale' => $locale));
+    	if (!$productObject || !$productDescriptionObject || !$productIndexObject)
 	    {
         	return false;
     	} 
@@ -1188,6 +1189,7 @@ class ProductService {
     	$product['alternativeProductCodes'] = $productObject->getAlternativeProductCodes();
     	$product['description'] = $productDescriptionObject->getDescription();
     	$product['shortDescription'] = $productDescriptionObject->getShortDescription();
+    	$product['bullets'] = $productIndexObject->getDescription();
     	$product['pageTitle'] = $productDescriptionObject->getPageTitle();
     	$product['header'] = $productDescriptionObject->getHeader();
     	$product['metaDescription'] = $productDescriptionObject->getMetaDescription();
