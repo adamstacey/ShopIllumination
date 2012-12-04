@@ -14,7 +14,7 @@
 		<header>
 			<a href="{{ backUrl }}" class="margin-left-15 button ui-button-blue fr" data-icon-primary="ui-icon-arrowthick-1-w">Go Back</a>
 			<h1 itemprop="name" class="uppercase no-padding-top no-margin-bottom{">{{ product.header|raw }}</h1>
-			<h2 class="no-margin blue no-margin no-padding">{% spaceless %}
+			<h2 class="no-margin blue uppercase">{% spaceless %}
 				{% for productFeature in product.productFeatures %}
 					{% if 'COLOUR' in productFeature.0.productFeatureGroup|upper %}
 						{% if productFeature.0.productFeature != 'N/A' %}
