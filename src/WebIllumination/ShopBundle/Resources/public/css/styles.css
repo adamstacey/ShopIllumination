@@ -893,6 +893,7 @@ div.border-spacer
 }
 #wrapper > header nav > ul > li > a.special {
 	color: #FFD980;
+	text-transform: uppercase;
 }
 
 .ui-widget-content dt
@@ -3725,6 +3726,21 @@ input[type=date]:focus,
 	float: left;
 	margin: 0 15px 0 0;
 	padding: 5px 0 0 0;
+}
+.product-information ul
+{
+	margin: 0 0 0 5px;
+	padding: 0;
+}
+.product-information ul li
+{
+	list-style: none;
+	background: url(/bundles/webilluminationshop/images/icons/small-green-tick.png) top left no-repeat;
+	margin: 0;
+	line-height: 16px;
+	padding: 0 0 0 20px;
+	font-size: 12px;
+	color: #000;
 }
 .product-options
 {
