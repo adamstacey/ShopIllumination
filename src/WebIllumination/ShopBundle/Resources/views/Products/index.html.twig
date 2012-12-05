@@ -13,7 +13,7 @@
 	<div itemscope itemtype="http://schema.org/Product">
 		<header>
 			<a href="{{ backUrl }}" class="margin-left-15 button ui-button-blue fr" data-icon-primary="ui-icon-arrowthick-1-w">Go Back</a>
-			<h1 itemprop="name" class="uppercase no-padding-top no-margin-bottom{">{{ product.header|raw }}</h1>
+			<h1 itemprop="name" class="no-padding-top no-margin-bottom{">{{ product.header|raw }}</h1>
 			<h2 class="no-margin blue uppercase">{% spaceless %}
 				{% for productFeature in product.productFeatures %}
 					{% if 'COLOUR' in productFeature.0.productFeatureGroup|upper %}
@@ -61,11 +61,14 @@
 					<div class="portlet">
 						<section>
 							<div>
-								<p class="ar product-code uppercase">
-									<span itemprop="model" class="uppercase">PRODUCT CODE: <strong>{{ product.productCode }}</strong></span>
+								<p class="ar product-code">
+									<span itemprop="model">Product Code: <strong>{{ product.productCode }}</strong></span>
 								</p>
 								{% if product.bullets != '' %}
-									<div>{{ product.bullets|raw }}</div>
+									<div class="product-bullets">
+										{{ product.bullets|raw }}
+										<div class="clear"></div>
+									</div>
 								{% endif %}
 								<div id="product-price-loading" class="loading-container ui-helper-hidden">
 									<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
@@ -107,21 +110,22 @@
 									{% if product.availableForPurchase == 1 %}										
 										<table cellpadding="0" cellspacing="0" border="0" align="right">
 											<tr>
-												{# if (product.productCode == 'KHCH') or (product.productCode == 'EVOLUTION200') or (product.productCode == 'SE80050SS') or (product.productCode == 'C95030') or (product.productCode == '119.0179.532') or (product.productCode == 'PH01SS') or (product.productCode == 'FWC302SS') %}
-														<td class="no-padding no-border"><img class="movember-offer margin-right-5" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" width="100" height="27" /></td>
-												{% endif #}
-												<td><span class="quantity-label">Quantity:</span></td>
-												<td><input id="quantity-{{ product.id }}" class="quantity ui-corner-none ui-corner-left" width="20" type="text" value="1" /></td>
-												<td>
-													<div class="quantity-buttons-container">
-														<div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.id }}">+</div>
-														<div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.id }}">-</div>
-													</div>
-												</td>
-												<td>
-													<button data-product-id="{{ product.id }}" class="action-add-to-basket button ui-button-green">Add to Basket</button>
-													<input type="hidden" value="" id="selected-options-{{ product.id }}" />
-												</td>
+												{% if product.productCode == 'SE80050AL' %}
+													<td class="out-of-stock">Out of Stock Until Further Notice</td>
+												{% else %}
+													<td><span class="quantity-label">Quantity:</span></td>
+													<td><input id="quantity-{{ product.id }}" class="quantity ui-corner-none ui-corner-left" width="20" type="text" value="1" /></td>
+													<td>
+														<div class="quantity-buttons-container">
+															<div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.id }}">+</div>
+															<div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.id }}">-</div>
+														</div>
+													</td>
+													<td>
+														<button data-product-id="{{ product.id }}" class="action-add-to-basket button ui-button-green">Add to Basket</button>
+														<input type="hidden" value="" id="selected-options-{{ product.id }}" />
+													</td>
+												{% endif %}
 											</tr>
 										</table>
 									{% else %}

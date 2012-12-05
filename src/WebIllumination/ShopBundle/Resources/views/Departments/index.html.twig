@@ -14,7 +14,7 @@
 {% endblock %}
 {% block body %}
 	<header>
-		<h1 class="uppercase">{{ department.header }}</h1>
+		<h1>{{ department.header }}</h1>
 		{% if department.departmentPaths|length > 1 %}
 			<div class="breadcrumb-trail no-margin" itemprop="breadcrumb">
 				{% for departmentPath in department.departmentPaths %}

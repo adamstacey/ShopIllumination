@@ -282,7 +282,6 @@ input[type=number]::-webkit-outer-spin-button {
 .product-option-group-container label
 {
 	line-height: 24px;
-	text-transform: uppercase;
 	color: #143B49;
 	font-weight: bold;
 	font-size: 16px;
@@ -597,7 +596,6 @@ div.border-spacer
 	color: #000;
 	font-weight: normal;
 	letter-spacing: 1px;
-	text-transform: uppercase;
 	font-family: 'Stag Medium', Arial;
 	text-shadow: 0 1px 0 #EEE;
 	text-shadow: 0 1px 0 rgb(238,238,238);
@@ -612,7 +610,6 @@ div.border-spacer
 	letter-spacing: 1px;
 	font-family: 'Stag Medium', Arial;
 	text-decoration: none;
-	text-transform: uppercase;
 	text-shadow: 0 1px 0 #EEE;
 	text-shadow: 0 1px 0 rgb(238,238,238);
 	text-shadow: 0 1px 0 rgba(238,238,238,1);
@@ -625,7 +622,6 @@ div.border-spacer
 	line-height: 14px;
 	font-size: 11px;
 	color: #384246;
-	text-transform: uppercase;
 	text-shadow: 0 1px 0 #EEE;
 	text-shadow: 0 1px 0 rgb(238,238,238);
 	text-shadow: 0 1px 0 rgba(238,238,238,1);
@@ -635,7 +631,6 @@ div.border-spacer
 	line-height: 14px;
 	font-size: 10px;
 	color: #384246;
-	text-transform: uppercase;
 	text-decoration: none;
 	text-shadow: 0 1px 0 #EEE;
 	text-shadow: 0 1px 0 rgb(238,238,238);
@@ -750,7 +745,6 @@ div.border-spacer
 	border-bottom: 1px dotted #FFF;
 	font-family: 'Stag Medium', Arial;
 	font-weight: normal;
-	text-transform: uppercase;
 }
 #basket-summary p
 {
@@ -899,7 +893,6 @@ div.border-spacer
 }
 #wrapper > header nav > ul > li > a.special {
 	color: #FFD980;
-	text-transform: uppercase;
 }
 
 .ui-widget-content dt
@@ -1277,6 +1270,14 @@ div.quick-search
   padding: 0 20px 0 20px;
   position: relative;
 }
+.out-of-stock
+{
+	background: #FF2300;
+	color: #FFF;
+	text-transform: uppercase;
+	font-size: 14px;
+	padding: 5px;
+}
 .main-content > header h1, .main-content > div > header h1, #search-container header h1
 {
   color: #384246;
@@ -1298,12 +1299,26 @@ div.quick-search
   font-size: 18px;
   line-height: 100%;
   margin: 0;
-  padding: 20px 0 0 0;
+  padding: 0;
   text-shadow: 0 1px 0 #fff;
   text-shadow: 0 1px 0 rgb(255,255,255);
   text-shadow: 0 1px 0 rgba(255,255,255,1);
-  padding: 0px;
-  margin: 0px;
+}
+.product-bullets ul
+{
+	float: right;
+}
+.product-bullets ul li
+{
+	text-align: right;
+	list-style: none;
+	background: url(/bundles/webilluminationshop/images/icons/small-green-tick.png) top right no-repeat;
+	padding: 0;
+	margin: 2px 0;
+	line-height: 16px;
+	padding: 0 26px;
+	font-size: 13px;
+	color: #000;
 }
 #search-container header
 {
@@ -1412,7 +1427,6 @@ body > footer .accreditation
 	margin: 0 0 10px 0;
 	background: #143B49;
 	text-align: center;
-	text-transform: uppercase;
 	border-bottom: 3px solid #0A1215;
 	font-weight: normal;
 }
@@ -1855,7 +1869,6 @@ p.brand-address
 	text-align: center;
 	font-family: Arial Black, Arial;
 	font-size: 11px;
-	text-transform: uppercase;
 	text-shadow: 0 1px 0 #000;
 	text-shadow: 0 1px 0 rgb(0,0,0);
 	text-shadow: 0 1px 0 rgba(0,0,0,1);
@@ -1881,7 +1894,6 @@ p.brand-address
 	color: #454D52;
 	font-weight: bold;
 	line-height: 100%;
-	text-transform: uppercase;
 }
 p.small
 {
@@ -1903,7 +1915,6 @@ p.small
 	text-shadow: 0 1px 0 rgba(255,255,255,1);
 	margin: 0 20px 15px 20px;
 	font-weight: normal;
-	text-transform: uppercase;
 	padding: 5px 10px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1936,7 +1947,6 @@ p.small
 	text-shadow: 0 1px 0 rgba(0,0,0,1);
 	margin: 10px 0 0 0;
 	font-weight: normal;
-	text-transform: uppercase;
 	padding: 5px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -1983,7 +1993,6 @@ p.small
 	padding: 5px;
 	background: #E4EAEC;
 	font-weight: bold;
-	text-transform: uppercase;
 	border-bottom: 3px solid #C5D2D6;
 	border-top: 1px solid #143B49;
 }
@@ -2052,7 +2061,6 @@ p.small
 	text-shadow: 0 1px 0 #FFF;
 	text-shadow: 0 1px 0 rgb(255,255,255);
 	text-shadow: 0 1px 0 rgba(255,255,255,1);
-	text-transform: uppercase;
 	padding: 10px 5px;
 	background: #F3F6F6; /* Old browsers */
 	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -2074,7 +2082,6 @@ p.small
 	text-shadow: 0 1px 0 #FFF;
 	text-shadow: 0 1px 0 rgb(255,255,255);
 	text-shadow: 0 1px 0 rgba(255,255,255,1);
-	text-transform: uppercase;
 	padding: 5px;
 	text-align: left;
 	background: #F3F6F6; /* Old browsers */
@@ -2278,7 +2285,6 @@ td img
   font-weight: normal;
   letter-spacing: 1px;
   font-family: 'Stag Medium', Arial;
-  text-transform: uppercase;
 }
 .ui-tabs-vertical .ui-tabs-nav, .ui-slider-vertical .ui-slider-range {
 	background: #c4c9c3; /* Old browsers */
@@ -2470,7 +2476,6 @@ img.border
 	padding: 0 5px 0 70px;
 	font-weight: normal;
 	line-height: 35px;
-	text-transform: uppercase;
 }
 .brand h4 img, .brand-active h4 img
 {
@@ -2503,7 +2508,6 @@ img.border
 	padding: 5px;
 	background: #E4EAEC;
 	font-weight: bold;
-	text-transform: uppercase;
 	border-bottom: 3px solid #C5D2D6;
 }
 .video-gallery {
@@ -2518,7 +2522,6 @@ img.border
 	padding: 5px;
 	background: #E4EAEC;
 	font-weight: bold;
-	text-transform: uppercase;
 	border-bottom: 3px solid #C5D2D6;
 }
 .video-gallery h4 i {
@@ -3673,7 +3676,6 @@ input[type=date]:focus,
 	padding: 0;
 	color: #143B49;
 	font-weight: bold;
-	text-transform: uppercase;
 	margin: 0;
 }
 .product ul
@@ -3708,7 +3710,6 @@ input[type=date]:focus,
 	text-shadow: 0 1px 0 #FFD980;
 	text-shadow: 0 1px 0 rgb(0,0,0);
 	text-shadow: 0 1px 0 rgba(0,0,0,1);
-	text-transform: uppercase;
 	font-weight: normal;
 	font-size: 11px!important;
 	line-height: 100%;
@@ -3736,7 +3737,6 @@ input[type=date]:focus,
 	padding: 0px;
 	margin: 0;
 	font-size: 10px;
-	text-transform: uppercase;
 }
 .product p.product-code, .product p.product-code a, p.product-code, .product p.colour, .product p.colour a, p.colour
 {
@@ -3784,7 +3784,6 @@ input[type=date]:focus,
 }
 .product .product-tax, .product-tax
 {
-	font-style: italic!important;
 	padding: 0 0 5px 0!important;
 }
 .product .product-price, .product .product-price a, .product-price, .product-price a
@@ -3922,7 +3921,6 @@ input[type=date]:focus,
 {
 	line-height: 24px;
 	font-weight: bold;
-	text-transform: uppercase;
 	margin: 0 5px 0 0;
 	font-size: 11px;
 }
@@ -4414,7 +4412,6 @@ div.product-thumbnail-container .selected
 	color: #FF2300!important;
 	font-weight: bold!important;
 	font-family: "Arial Black", Arial!important;
-	text-transform: uppercase;
 }
 p.important
 {
@@ -4488,7 +4485,6 @@ p.important
 	line-height: 38px;
 	font-family: 'Stag Medium', Arial;
 	font-weight: normal;
-	text-transform: uppercase;
 }
 #cookie-policy p
 {
@@ -4627,7 +4623,6 @@ ul.display-inline li {
 	margin: 5px 0 0 0;
 	color: #FFF;
 	font-size: 14px;
-	text-transform: uppercase;
 	font-weight: bold;
 	text-shadow: 0 1px 0 #444;
 	text-shadow: 0 1px 0 rgb(68,68,68);
@@ -4655,7 +4650,6 @@ ul.display-inline li {
 	margin: 5px 0 0 0;
 	color: #FFF;
 	font-size: 12px;
-	text-transform: uppercase;
 	font-weight: normal;
 	text-shadow: 0 1px 0 #444;
 	text-shadow: 0 1px 0 rgb(68,68,68);
@@ -4666,7 +4660,6 @@ ul.display-inline li {
 {
 	color: #FFF;
 	font-size: 12px;
-	text-transform: uppercase;
 	font-weight: normal;
 }
 .special-offer-banner span
@@ -4718,7 +4711,6 @@ ul.display-inline li {
 	text-shadow: 0 1px 0 #FFD980;
 	text-shadow: 0 1px 0 rgb(0,0,0);
 	text-shadow: 0 1px 0 rgba(0,0,0,1);
-	text-transform: uppercase;
 	font-weight: normal;
 	float: right;
 	-webkit-border-radius: 4px;
@@ -4831,7 +4823,6 @@ ul.display-inline li {
 	text-shadow: 0 1px 0 #FFD980;
 	text-shadow: 0 1px 0 rgb(0,0,0);
 	text-shadow: 0 1px 0 rgba(0,0,0,1);
-	text-transform: uppercase;
 	font-weight: normal;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -4847,7 +4838,6 @@ p.movember-offer
 {
 	background: #000;
 	color: #FFF;
-	text-transform: uppercase;
 	padding: 5px;
 	line-height: 100%;
 	font-size: 11px;
@@ -4857,7 +4847,6 @@ p.movember-offer a
 {
 	color: #FFF;
 	font-size: 11px;
-	text-transform: uppercase;
 	text-decoration: underline!important;
 }
 .pointer
