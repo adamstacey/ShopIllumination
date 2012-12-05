@@ -421,7 +421,7 @@ small, sup, sub {
 .fl, .fl .selector {
   float: left !important;
 }
-.fr {
+.fr, .fr .selector {
   float: right !important;
 }
 /**

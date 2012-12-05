@@ -14,9 +14,9 @@
 					<li class="page-navigation" data-page="{{ productPagination }}"><a href="Javascript:void(0);">&hellip;{{ productPagination }}</a></li>
 				{% endif %}
 				{% if brandId > 0 %}
-					<li><a href="{{ asset(path('department_with_brand_view_all', {'url': url, 'brand': brand}), 'nocdn') }}">VIEW ALL</a></li>
+					<li><a href="{{ asset(path('department_with_brand_view_all', {'url': url, 'brand': brand}), 'nocdn') }}">View All</a></li>
 				{% else %}
-					<li><a href="{{ asset(path('department_view_all', {'url': url}), 'nocdn') }}">VIEW ALL</a></li>
+					<li><a href="{{ asset(path('department_view_all', {'url': url}), 'nocdn') }}">View All</a></li>
 				{% endif %}
 			</ul>
 		</div>	
