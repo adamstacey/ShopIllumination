@@ -2210,7 +2210,14 @@ class DepartmentService {
 									// Check for a bullet
 									if ($departmentToFeatureObject->getDisplayOnListing() > 0)
 									{
-										$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
+										$bulletClass = 'bullet';
+										if (strtoupper(trim($productFeatureObject->getProductFeature())) == 'YES')
+										{
+											$bulletClass = 'green-tick';
+										} elseif (strtoupper(trim($productFeatureObject->getProductFeature())) == 'NO') {
+											$bulletClass = 'red-cross';
+										}
+										$bullets[] = '<li class="'.$bulletClass.'">'.trim($productFeatureGroupObject->getProductFeatureGroup()).': <strong>'.trim($productFeatureObject->getProductFeature()).'</strong></li>';
 									}
 								
 									// Check for a filter
@@ -2237,7 +2244,6 @@ class DepartmentService {
 								$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Updated sort order from '.$productToFeatureObject->getDisplayOrder().' to '.$departmentToFeatureObject->getDisplayOrder().'</li>';
 								$productToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
 								$em->persist($productToFeatureObject);
-								$em->flush();
 							}
 						} else {
 							$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
@@ -2254,7 +2260,6 @@ class DepartmentService {
 							}
 							$productToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
 							$em->persist($productToFeatureObject);
-							$em->flush();	
 						}
 					}
 				}
@@ -2270,12 +2275,11 @@ class DepartmentService {
 						$em->remove($productToFeatureObject);
 					}
 				}
-				$em->flush();
 				
 				// Update the bullets
 				if (sizeof($bullets) > 0)
 				{
-					$bullets = '<ul><li>'.implode('</li><li>', $bullets).'</li></ul>';
+					$bullets = '<ul>'.implode('', $bullets).'</ul>';
 					$productUpdate[] = '<li>The bullets were updated</li>';
 					$productIndexObject->setDescription($bullets);
 				}
@@ -2290,6 +2294,8 @@ class DepartmentService {
 				
 				// Save any changes to the product index
 				$em->persist($productIndexObject);
+				
+				// Update the database
 				$em->flush();
 				
 				// Update the log

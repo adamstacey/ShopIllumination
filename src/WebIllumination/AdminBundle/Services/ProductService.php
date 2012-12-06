@@ -1102,7 +1102,7 @@ class ProductService {
 		
 		// Get the departments to features for the department to work out the sort order
 		$sortedFeatures = array();
-		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $departmentId, 'displayOnFilter' => 1), array('displayOrder' => 'ASC'));
+		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $departmentId), array('displayOrder' => 'ASC'));
 		foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 		{
 			// Get product feature group

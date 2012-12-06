@@ -90,7 +90,14 @@ class UpdateProductsFromDepartmentFeaturesCommand extends ContainerAwareCommand
 										// Check for a bullet
 										if ($departmentToFeatureObject->getDisplayOnListing() > 0)
 										{
-											$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
+											$bulletClass = 'bullet';
+											if (strtoupper(trim($productFeatureObject->getProductFeature())) == 'YES')
+											{
+												$bulletClass = 'green-tick';
+											} elseif (strtoupper(trim($productFeatureObject->getProductFeature())) == 'NO') {
+												$bulletClass = 'red-cross';
+											}
+											$bullets[] = '<li class="'.$bulletClass.'">'.trim($productFeatureGroupObject->getProductFeatureGroup()).': <strong>'.trim($productFeatureObject->getProductFeature()).'</strong></li>';
 										}
 									
 										// Check for a filter
@@ -165,7 +172,7 @@ class UpdateProductsFromDepartmentFeaturesCommand extends ContainerAwareCommand
 					// Update the bullets
 					if (sizeof($bullets) > 0)
 					{
-						$bullets = '<ul><li>'.implode('</li><li>', $bullets).'</li></ul>';
+						$bullets = '<ul>'.implode('', $bullets).'</ul>';
 						$output->writeln('       - <fg=green;options=bold>The bullets were updated</fg=green;options=bold>');
 						if (!$input->getOption('dry-run'))
 						{
