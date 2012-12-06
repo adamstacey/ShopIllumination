@@ -1313,13 +1313,24 @@ div.quick-search
 {
 	text-align: right;
 	list-style: none;
-	background: url(/bundles/webilluminationshop/images/icons/small-green-tick.png) top right no-repeat;
 	padding: 0;
 	margin: 2px 0;
 	line-height: 16px;
 	padding: 0 26px;
 	font-size: 13px;
 	color: #000;
+}
+.product-bullets ul li.bullet
+{
+	background: url(/bundles/webilluminationshop/images/icons/small-bullet.png) top right no-repeat;
+}
+.product-bullets ul li.green-tick
+{
+	background: url(/bundles/webilluminationshop/images/icons/small-green-tick.png) top right no-repeat;
+}
+.product-bullets ul li.red-cross
+{
+	background: url(/bundles/webilluminationshop/images/icons/small-red-cross.png) top right no-repeat;
 }
 #search-container header
 {
