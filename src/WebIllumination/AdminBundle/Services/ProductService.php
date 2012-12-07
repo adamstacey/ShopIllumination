@@ -1100,9 +1100,17 @@ class ProductService {
 			}
 		}
 		
+		// Get the department index
+		$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));
+		
 		// Get the departments to features for the department to work out the sort order
 		$sortedFeatures = array();
-		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $departmentId), array('displayOrder' => 'ASC'));
+		if ($departmentIndexObject->getDirectProductCount() > 0)
+		{
+			$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $departmentId, 'displayOnFilter' => 1), array('displayOrder' => 'ASC'));
+		} else {
+			$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $departmentId), array('displayOrder' => 'ASC'));
+		}
 		foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 		{
 			// Get product feature group
@@ -1111,6 +1119,13 @@ class ProductService {
 			// Sort the product feature groups
 			if ($productFeatureGroupObject)
 			{
+				$featureList = array();
+				foreach ($features as $featureName => $feature)
+				{
+					$featureList[] = $featureName;
+				}
+				$featureList = '|'.implode('|', $featureList).'|';
+				
 				if (isset($features[$productFeatureGroupObject->getProductFeatureGroup()]))
 				{
 					$sortedFeatures[$productFeatureGroupObject->getProductFeatureGroup()] = $features[$productFeatureGroupObject->getProductFeatureGroup()];

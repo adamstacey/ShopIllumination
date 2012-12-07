@@ -178,6 +178,11 @@ class UpdateProductsFromDepartmentFeaturesCommand extends ContainerAwareCommand
 						{
 							$productIndexObject->setDescription($bullets);
 						}
+					} else {
+						if (!$input->getOption('dry-run'))
+						{
+							$productIndexObject->setDescription('');
+						}
 					}
 					
 					// Update the filters
@@ -188,6 +193,11 @@ class UpdateProductsFromDepartmentFeaturesCommand extends ContainerAwareCommand
 						if (!$input->getOption('dry-run'))
 						{
 							$productIndexObject->setProductFeatures($filters);
+						}
+					} else {
+						if (!$input->getOption('dry-run'))
+						{
+							$productIndexObject->setProductFeatures('');
 						}
 					}
 					

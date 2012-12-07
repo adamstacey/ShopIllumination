@@ -1097,7 +1097,7 @@ class DepartmentService {
 				if ($departmentIndexObject->getDirectProductCount() > 0)
 				{
 					// Get the department product features
-					$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $subDepartmentId), array('displayOrder' => 'ASC'));
+					$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $subDepartmentId, 'displayOnFilter' => 1), array('displayOrder' => 'ASC'));
 					$newProductFeatureGroupIds = array();
 					foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 					{
@@ -2200,7 +2200,7 @@ class DepartmentService {
 							$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => $locale));
 							
 							// Check for bullets and filters
-							if (($productFeatureGroupObject instanceof ProductFeatureGroup) && ($productFeatureObject instanceof ProductFeature))
+							if ($productFeatureGroupObject && $productFeatureObject)
 							{
 								$productFeatureGroup = trim($productFeatureGroupObject->getProductFeatureGroup());
 								$productFeature = trim($productFeatureObject->getProductFeature());
@@ -2223,7 +2223,7 @@ class DepartmentService {
 									// Check for a filter
 									if (($departmentToFeatureObject->getDisplayOnFilter() > 0) || ($productToFeatureObject->getProductFeatureGroupId() == 2))
 									{
-										$filters[] = trim($productFeatureGroupObject->getProductFeatureGroup()).':'.trim($productFeatureObject->getProductFeature());
+										$filters[] = $productFeatureGroup.':'.$productFeature;
 									}
 								}
 							}
@@ -2282,6 +2282,8 @@ class DepartmentService {
 					$bullets = '<ul>'.implode('', $bullets).'</ul>';
 					$productUpdate[] = '<li>The bullets were updated</li>';
 					$productIndexObject->setDescription($bullets);
+				} else {
+					$productIndexObject->setDescription('');
 				}
 				
 				// Update the filters
@@ -2290,13 +2292,12 @@ class DepartmentService {
 					$filters = '|'.implode('|', $filters).'|';
 					$productUpdate[] = '<li>The filters were updated</li>';
 					$productIndexObject->setProductFeatures($filters);
+				} else {
+					$productIndexObject->setProductFeatures('');
 				}
 				
 				// Save any changes to the product index
 				$em->persist($productIndexObject);
-				
-				// Update the database
-				$em->flush();
 				
 				// Update the log
 				if (sizeof($productUpdate) > 0)
@@ -2308,6 +2309,9 @@ class DepartmentService {
 				$productUpdates[] = $productUpdate;
 			}
 		}
+		
+		// Update the database
+		$em->flush();
 		
 		return $productUpdates;
     }

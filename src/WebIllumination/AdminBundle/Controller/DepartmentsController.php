@@ -1073,7 +1073,7 @@ class DepartmentsController extends Controller
 		    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
 		    			break;
 		    		// Update the products from the department templates
-		    		case 'updateProductsFromTemplates':
+		    		case 'updateProductsFromDepartmentFeatures':
 		    			// Get any new product updates
 		    			$productUpdates = $service->updateProductsFromProductFeatures($id, 'en');
 		    			$productsUpdated = true;	    			
