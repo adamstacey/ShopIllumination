@@ -32,35 +32,13 @@
 ehthumbs.db
 Icon?
 Thumbs.db
+.idea
 
-app/autoload.php
-app/AppCache.php
-app/AppKernel.php
+web/bundles/
+app/bootstrap.php.cache
 app/cache/*
 app/logs/*
-web/app.php
-web/app_dev.php
-web/bundles/*
-web/css/*
-web/js/*
-web/uploads/documents/brand/*
-web/uploads/documents/department/*
-web/uploads/documents/order/*
-web/uploads/documents/product/*
-web/uploads/images/brand/*
-web/uploads/images/department/*
-web/uploads/images/product/*
-web/uploads/temporary/*
-=======
-# Bootstrap
-app/bootstrap*
-
-# Symfony directories
-vendor/*
-*/logs/*
-*/cache/*
-web/uploads/*
-web/bundles/*
-
-# Configuration files
-app/config/parameters.ini
+build/
+vendor
+bin
+composer.phar
