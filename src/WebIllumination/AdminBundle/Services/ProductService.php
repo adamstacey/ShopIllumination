@@ -1723,8 +1723,8 @@ class ProductService {
 				if ($productToFeatureObject)
 				{
 					// Get the product feature group and product feature
-					$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
-					$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => $locale));
+					$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureGroupId(), 'locale' => 'en'));
+					$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => 'en'));
 					
 					// Check for bullets and filters
 					if ($productFeatureGroupObject && $productFeatureObject)
@@ -1773,79 +1773,7 @@ class ProductService {
 		} else {
 			$filters = '';
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-    	
-    	// Set the bullets
-		$bullets = array();
-		
-		// Set the filters
-		$filters = array();
-		
-		// Get the department features
-		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $product['departments'][0]['id']), array('displayOrder' => 'ASC'));
-		
-		// Update the product features
-		foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
-		{
-			if ($departmentToFeatureObject)
-			{
-				// Get the equivalent product feature
-				$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productId' => $productId, 'productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId()));
-				if ($productToFeatureObject)
-				{
-					// Get the product feature group and product feature
-					$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
-					$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => $locale));
-					
-					// Check for bullets and filters
-					if (($productFeatureGroupObject) && ($productFeatureObject))
-					{
-						$productFeatureGroup = trim($productFeatureGroupObject->getProductFeatureGroup());
-						$productFeature = trim($productFeatureObject->getProductFeature());
-						
-						if ((strtoupper($productFeature) != '*** NOT SET ***') && (strtoupper($productFeature) != 'UNKNOWN') && (strtoupper($productFeature) != ''))
-						{
-							// Check for a bullet
-							if ($departmentToFeatureObject->getDisplayOnListing() > 0)
-							{
-								$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
-							}
-						
-							// Check for a filter
-							if ($departmentToFeatureObject->getDisplayOnFilter() > 0)
-							{
-								$filters[] = trim($productFeatureGroupObject->getProductFeatureGroup()).':'.trim($productFeatureObject->getProductFeature());
-							}
-						}
-					}					
-				}
-			}
-		}		
-		
-		// Update the bullets
-		if (sizeof($bullets) > 0)
-		{
-			$bullets = '<ul><li>'.implode('</li><li>', $bullets).'</li></ul>';
-		} else {
-			$bullets = '';
-		}
-		
-		// Update the filters
-		if (sizeof($filters) > 0)
-		{
-			$filters = '|'.implode('|', $filters).'|';
-		} else {
-			$filters = '';
-		}		
-    	
+		    	
     	// Update the product index
     	$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $productId));
     	if (!$productIndexObject)
