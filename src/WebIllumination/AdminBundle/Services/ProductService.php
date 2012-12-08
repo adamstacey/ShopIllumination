@@ -1700,6 +1700,88 @@ class ProductService {
 		$departmentIds = join('^', $departmentIds);
 		$departments = join('^', $departments);
 		$departmentPaths = join('|', $departmentPaths);
+		
+		
+		
+		
+		// Set the bullets
+		$bullets = array();
+		
+		// Set the filters
+		$filters = array();
+		
+		// Get the department features
+		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $product['departments'][0]['id']), array('displayOrder' => 'ASC'));
+		
+		// Update the product features
+		foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
+		{
+			if ($departmentToFeatureObject)
+			{
+				// Get the equivalent product feature
+				$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productId' => $productId, 'productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId()));
+				if ($productToFeatureObject)
+				{
+					// Get the product feature group and product feature
+					$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
+					$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => $locale));
+					
+					// Check for bullets and filters
+					if ($productFeatureGroupObject && $productFeatureObject)
+					{
+						$productFeatureGroup = trim($productFeatureGroupObject->getProductFeatureGroup());
+						$productFeature = trim($productFeatureObject->getProductFeature());
+						
+						if ((strtoupper($productFeature) != '*** NOT SET ***') && (strtoupper($productFeature) != 'UNKNOWN') && (strtoupper($productFeature) != ''))
+						{
+							// Check for a bullet
+							if ($departmentToFeatureObject->getDisplayOnListing() > 0)
+							{
+								$bulletClass = 'bullet';
+								if (strtoupper(trim($productFeatureObject->getProductFeature())) == 'YES')
+								{
+									$bulletClass = 'green-tick';
+								} elseif (strtoupper(trim($productFeatureObject->getProductFeature())) == 'NO') {
+									$bulletClass = 'red-cross';
+								}
+								$bullets[] = '<li class="'.$bulletClass.'">'.trim($productFeatureGroupObject->getProductFeatureGroup()).': <strong>'.trim($productFeatureObject->getProductFeature()).'</strong></li>';
+							}
+						
+							// Check for a filter
+							if (($departmentToFeatureObject->getDisplayOnFilter() > 0) || ($productToFeatureObject->getProductFeatureGroupId() == 2))
+							{
+								$filters[] = $productFeatureGroup.':'.$productFeature;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		// Update the bullets
+		if (sizeof($bullets) > 0)
+		{
+			$bullets = '<ul>'.implode('', $bullets).'</ul>';
+		} else {
+			$bullets = '';
+		}
+		
+		// Update the filters
+		if (sizeof($filters) > 0)
+		{
+			$filters = '|'.implode('|', $filters).'|';
+		} else {
+			$filters = '';
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
     	
     	// Set the bullets
 		$bullets = array();
