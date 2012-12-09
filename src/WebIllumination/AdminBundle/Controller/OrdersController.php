@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use WebIllumination\AdminBundle\Entity\OrderNote;
+use WebIllumination\AdminBundle\Entity\OrderProduct;
 
 class OrdersController extends Controller
 {
@@ -1582,7 +1583,6 @@ class OrdersController extends Controller
 		    				$itemObject->setStatus('Order Completed');
 		    				$em->persist($itemObject);
 		    				$em->flush();
-
 		    				// Get the admin
 		    				$admin = $this->get('session')->get('admin');
 
@@ -1675,11 +1675,6 @@ class OrdersController extends Controller
     	// Update
     	if ($request->getMethod() == 'POST')
     	{
-            /**
-             * Get the item
-             * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
-             */
-            $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
     		if (!$itemObject)
 			{
 				// Notify user
@@ -1759,11 +1754,6 @@ class OrdersController extends Controller
         // Update
         if ($request->getMethod() == 'POST')
         {
-            /**
-             * Get the item
-             * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
-             */
-            $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
             if (!$itemObject)
             {
                 // Notify user
@@ -1833,11 +1823,6 @@ class OrdersController extends Controller
         // Update
         if ($request->getMethod() == 'POST')
         {
-            /**
-             * Get the item
-             * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
-             */
-            $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
             if (!$itemObject)
             {
                 // Notify user
@@ -1900,24 +1885,145 @@ class OrdersController extends Controller
     {
         // Get the services
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $productService = $this->get('web_illumination_admin.product_service');
 
         // Get the entity manager
         $em = $this->getDoctrine()->getEntityManager();
 
-        // Get the item
+        /**
+         * Get the item
+         * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
+         */
         $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+
+        $products = $productService->getAllProducts();
+        $productLabels = array();
+        foreach($products as $product) {
+            $productLabels[] = array(
+                'label' => $product->getPageTitle(),
+                'value' => $product->getProductId(),
+            );
+        }
 
         // Update
         if ($request->getMethod() == 'POST')
         {
+            if (!$itemObject)
+            {
+                // Notify user
+                $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemObject->getId().'"</strong>. Please try again.');
 
+                // Forward
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
+            }
+
+            // Get submitted data
+            $newItem = $request->request->get('new-item');
+            $productQuantity = $request->request->get('new-product-quantity');
+            $productId = $request->request->get('new-product-id');
+            $select = $request->request->get('select');
+            $goBack = $request->request->get('go-back');
+            $delete = $request->request->get('delete');
+
+            if (sizeof($select) > 0)
+            {
+                foreach ($select as $itemId => $item)
+                {
+                    // Get the item
+                    /**
+                     * Get the item
+                     * @var \WebIllumination\AdminBundle\Entity\OrderNote $itemNoteObject
+                     */
+                    $itemProductObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Product')->find($itemId);
+
+                    if ($itemProductObject)
+                    {
+                        // Delete the item
+                        if ($delete > 0)
+                        {
+                            $em->remove($itemProductObject);
+                        // Update the item
+                        } else {
+                            if (isset($productQuantity[$itemId]))
+                            {
+                                $itemProductObject->setQuantity($productQuantity[$itemId]);
+                            }
+
+                            $em->persist($itemProductObject);
+                        }
+                    }
+                }
+
+                $em->flush();
+            }
+
+            // Add item
+            if($newItem)
+            {
+                /**
+                 * Find product
+                 * @var \WebIllumination\AdminBundle\Entity\ProductIndex $product
+                 */
+                if (!$productId || !($product = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->find($productId)))
+                {
+                    // Notify user
+                    $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem finding the product <strong>"'.$request->request->get('product-id').'"</strong>. Please try again.');
+
+                    // Forward
+                    return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
+                }
+
+                $itemProductObject = new OrderProduct();
+                $itemProductObject->setOrderId($id);
+                $itemProductObject->setQuantity($productQuantity);
+                $itemProductObject->setBasketItemId(12345);
+                $itemProductObject->setProductId($product->getProductId());
+                $itemProductObject->setProduct($product->getProduct());
+                $itemProductObject->setProductCode($product->getProductCode());
+                $itemProductObject->setUrl($product->getUrl());
+                $itemProductObject->setHeader($product->getHeader());
+                $itemProductObject->setBrand($product->getBrand());
+                $itemProductObject->setShortDescription($product->getShortDescription());
+
+                $itemProductObject->setUnitCost(0);
+                $itemProductObject->setRecommendedRetailPrice(0);
+                $itemProductObject->setDiscount(0);
+                $itemProductObject->setSavings(0);
+                $itemProductObject->setVat(0);
+                $itemProductObject->setSubTotal(0);
+
+                $itemProductObject->setSelectedOptions("");
+                $itemProductObject->setSelectedOptionLabels("");
+
+
+                $em->persist($itemProductObject);
+                $em->flush();
+            }
+
+            // Notify user
+            if ($delete > 0)
+            {
+                $this->get('session')->getFlashBag()->add('success', 'The selected notes have been deleted.');
+            } else {
+                $this->get('session')->getFlashBag()->add('success', 'The selected notes have been updated.');
+            }
+
+            // Forward
+            if ($goBack > 0)
+            {
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
+            } else {
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_products', array('id' => $id)));
+            }
         }
 
         // Setup the data
         $data = array();
         $data['settings'] = $this->settings;
         $data['item'] = $itemObject;
-        $data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_notes', array('id' => $id));
+        $data['products'] = $products;
+        $data['productsJson'] = $productLabels;
+        $data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_products', array('id' => $id));
         $data['mode'] = 'update';
 
         // Get the items
