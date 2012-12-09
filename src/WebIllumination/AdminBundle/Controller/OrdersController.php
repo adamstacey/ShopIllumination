@@ -29,7 +29,7 @@ class OrdersController extends Controller
 		$settings['singleModel'] = 'Order';
 		$settings['multipleModel'] = 'Orders';
 		$this->settings = $settings;
-		
+
 		// Setup listing
     	$listing = array();
     	$listing['search'] = '';
@@ -39,7 +39,7 @@ class OrdersController extends Controller
 		$listing['maxResults'] = 20;
 		$listing['currentPage'] = 1;
 		$this->listing = $listing;
-		
+
 		// Setup filter
 		$filter = array();
     	$filter['id'] = '';
@@ -57,17 +57,17 @@ class OrdersController extends Controller
 		$filter['empty'] = 1;
 		$this->filter = $filter;
     }
-    
+
 	// Index
     public function indexAction(Request $request, $document = '')
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	$systemService = $this->get('web_illumination_admin.system_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Setup listing
     	$sessionListing = $this->get('session')->get('listing');
 		if (isset($sessionListing['admin'][$this->settings['singleClass']]))
@@ -78,13 +78,13 @@ class OrdersController extends Controller
 			$sessionListing['admin'][$this->settings['singleClass']] = $this->listing;
 			$this->get('session')->set('listing', $sessionListing);
 		}
-		
+
 		// Setup the document
 		$document = $request->query->get('document');
 
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get submitted data
     		$select = $request->request->get('select');
     		$status = $request->request->get('status');
@@ -92,7 +92,7 @@ class OrdersController extends Controller
     		$displayOrder = $request->request->get('display-order');
     		$delete = $request->request->get('delete');
     		$extraAction = $request->request->get('extra-action');
-    		
+
     		// Check for any extra actions
     		if ($extraAction != '')
     		{
@@ -104,11 +104,11 @@ class OrdersController extends Controller
 			    			if (sizeof($select) == 1)
 			    			{
 			    				foreach ($select as $itemId => $item)
-				    			{			    				
+				    			{
 				    				// Get the order and update
 					    			$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($itemId);
 					    			if ($itemObject)
-					    			{ 
+					    			{
 						    			if ($itemObject->getStatus() == 'Payment Received')
 						    			{
 						    				$itemObject->setStatus('Processing Your Order');
@@ -121,12 +121,12 @@ class OrdersController extends Controller
 						    			$em->persist($itemObject);
 						    			$em->flush();
 						    		}
-						    		
+
 									// Get the files
 									$document = 'order-'.$itemId;
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-									
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -159,33 +159,33 @@ class OrdersController extends Controller
 							    			$em->persist($itemObject);
 							    			$em->flush();
 							    		}
-						    			
+
 						    			// Get full order to print
 								    	$orders[] = $service->getOrder($itemId);
 								    }
-								    
+
 								    // Get the order HTML
 								    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrders.html.twig', array('orders' => $orders));
-								    
+
 								    // Get the files
 								    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
 								    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
 								    $document = 'orders-'.date('dmYHis');
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-								    
+
 								    // Generate the HTML file
 									$fileHandle = fopen($ordersHtmlFilePath, 'w');
 									fwrite($fileHandle, $orderHtml);
 									fclose($fileHandle);
-									
+
 									// Generate the PDF
 									if (file_exists($ordersHtmlFilePath))
 									{
 										$systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
 										unlink($ordersHtmlFilePath);
 									}
-									
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -196,7 +196,7 @@ class OrdersController extends Controller
 				    	} else {
 				    		// Notify user
 				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
-				    		
+
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 			    		}
@@ -207,12 +207,12 @@ class OrdersController extends Controller
 			    			if (sizeof($select) == 1)
 			    			{
 			    				foreach ($select as $itemId => $item)
-				    			{			    				
+				    			{
 									// Get the files
 								    $document = 'copy-order-'.$itemId;
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-									
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -228,33 +228,33 @@ class OrdersController extends Controller
 				    			{
 					    			$orders = array();
 						    		foreach ($select as $itemId => $item)
-						    		{						    			
+						    		{
 						    			// Get full order to print
 								    	$orders[] = $service->getOrder($itemId);
 								    }
-								    
+
 								    // Get the order HTML
 								    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewCopyOrders.html.twig', array('orders' => $orders));
-								    
+
 								    // Get the files
 								    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
 								    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
 								    $document = 'copy-orders-'.date('dmYHis');
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-								    
+
 								    // Generate the HTML file
 									$fileHandle = fopen($ordersHtmlFilePath, 'w');
 									fwrite($fileHandle, $orderHtml);
 									fclose($fileHandle);
-									
+
 									// Generate the PDF
 									if (file_exists($ordersHtmlFilePath))
 									{
 										$systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
 										unlink($ordersHtmlFilePath);
 									}
-									
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -265,7 +265,7 @@ class OrdersController extends Controller
 				    	} else {
 				    		// Notify user
 				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
-				    		
+
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 			    		}
@@ -285,12 +285,12 @@ class OrdersController extends Controller
 						    			$em->persist($itemObject);
 						    			$em->flush();
 						    		}
-						    			    													
+
 									// Get the files
 								    $document = 'delivery-note-'.$itemId;
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-								    
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -306,7 +306,7 @@ class OrdersController extends Controller
 				    			{
 					    			$orders = array();
 						    		foreach ($select as $itemId => $item)
-						    		{				
+						    		{
 						    			// Get the order and update
 						    			$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($itemId);
 						    			if ($itemObject)
@@ -315,33 +315,33 @@ class OrdersController extends Controller
 							    			$em->persist($itemObject);
 							    			$em->flush();
 							    		}
-						    				    			
+
 						    			// Get full order to print
 								    	$orders[] = $service->getOrder($itemId);
 								    }
-								    
+
 								    // Get the order HTML
 								    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewDeliveryNotes.html.twig', array('orders' => $orders));
-								    
+
 								    // Get the files
 								    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
 								    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
 								    $document = 'delivery-notes-'.date('dmYHis');
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-								    
+
 								    // Generate the HTML file
 									$fileHandle = fopen($ordersHtmlFilePath, 'w');
 									fwrite($fileHandle, $orderHtml);
 									fclose($fileHandle);
-									
+
 									// Generate the PDF
 									if (file_exists($ordersHtmlFilePath))
 									{
 										$systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
 										unlink($ordersHtmlFilePath);
 									}
-									
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -352,7 +352,7 @@ class OrdersController extends Controller
 				    	} else {
 				    		// Notify user
 				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
-				    		
+
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 			    		}
@@ -363,12 +363,12 @@ class OrdersController extends Controller
 			    			if (sizeof($select) == 1)
 			    			{
 			    				foreach ($select as $itemId => $item)
-				    			{			    				
+				    			{
 									// Get the files
 								    $document = 'invoice-'.$itemId;
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-									
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -384,33 +384,33 @@ class OrdersController extends Controller
 				    			{
 					    			$orders = array();
 						    		foreach ($select as $itemId => $item)
-						    		{						    			
+						    		{
 						    			// Get full order to print
 								    	$orders[] = $service->getOrder($itemId);
 								    }
-								    
+
 								    // Get the order HTML
 								    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoices.html.twig', array('orders' => $orders));
-								    
+
 								    // Get the files
 								    $ordersHtmlFileName = 'invoices-'.date('dmYHis').'.html';
 								    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
 								    $document = 'invoices-'.date('dmYHis');
 								    $ordersPdfFileName = $document.'.pdf';
 								    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-								    
+
 								    // Generate the HTML file
 									$fileHandle = fopen($ordersHtmlFilePath, 'w');
 									fwrite($fileHandle, $orderHtml);
 									fclose($fileHandle);
-									
+
 									// Generate the PDF
 									if (file_exists($ordersHtmlFilePath))
 									{
 										$systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
 										unlink($ordersHtmlFilePath);
 									}
-									
+
 									// Get the documents link
 									if (file_exists($ordersPdfFilePath))
 									{
@@ -421,7 +421,7 @@ class OrdersController extends Controller
 				    	} else {
 				    		// Notify user
 				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to print.');
-				    		
+
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 			    		}
@@ -430,10 +430,10 @@ class OrdersController extends Controller
 		    			if (sizeof($select) > 0)
 			    		{
 			    			foreach ($select as $itemId => $item)
-			    			{		
+			    			{
 						    	// Get the order
 						    	$order = $service->getOrder($itemId);
-						    	
+
 						    	// Send the email
 								try
 								{
@@ -453,23 +453,23 @@ class OrdersController extends Controller
 									error_log('Error sending invoice email!');
 								}
 				    		}
-				    		
+
 				    		// Notify user
 				    		$this->get('session')->getFlashBag()->add('success', 'The customer invoices were successfully emailed.');
-				    		
+
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 				    	} else {
 				    		// Notify user
 				    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any orders to email.');
-				    		
+
 				    		// Forward
 				    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 			    		}
 		    			break;
 	    		}
     		} else {
-    		
+
 	    		// Run through all selected items
 	    		if (sizeof($select) > 0)
 	    		{
@@ -489,7 +489,7 @@ class OrdersController extends Controller
 			    					$em->remove($itemDiscountObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any item notes
 		    					$itemNoteObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Note')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
 		    					foreach ($itemNoteObjects as $itemNoteObject)
@@ -497,7 +497,7 @@ class OrdersController extends Controller
 			    					$em->remove($itemNoteObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any item products
 		    					$itemProductObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Product')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
 		    					foreach ($itemProductObjects as $itemProductObject)
@@ -505,7 +505,7 @@ class OrdersController extends Controller
 			    					$em->remove($itemProductObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete the item index
 		    					$em->remove($itemObject);
 		    					$em->flush();
@@ -514,7 +514,7 @@ class OrdersController extends Controller
 					    		$itemObject->setStatus($itemStatus);
 				    			$em->persist($itemObject);
 				    			$em->flush();
-				    			
+
 				    			// Update the order documents
 				    			$service->generateOrderDocuments($itemId);
 				    		}
@@ -523,11 +523,11 @@ class OrdersController extends Controller
 	    		} else {
 		    		// Notify user
 		    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
-		    		
+
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 	    		}
-	    		    		
+
 	    		// Notify user
 	    		if ($delete > 0)
 		    	{
@@ -535,12 +535,12 @@ class OrdersController extends Controller
 	    		} else {
 		    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
 	    		}
-    		
+
 	    		// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
 	    	}
     	}
-		
+
 		// Setup filter
     	$sessionFilter = $this->get('session')->get('filter');
 		if (isset($sessionFilter['admin'][$this->settings['singleClass']]))
@@ -551,7 +551,7 @@ class OrdersController extends Controller
 			$sessionFilter['admin'][$this->settings['singleClass']] = $this->filter;
 			$this->get('session')->set('filter', $sessionFilter);
 		}
-		
+
 		// Check for the quick search and update the filters
 		if ($this->listing['search'])
 		{
@@ -583,12 +583,12 @@ class OrdersController extends Controller
 			$sessionFilter['admin'][$this->settings['singleClass']] = $this->filter;
 			$this->get('session')->set('filter', $sessionFilter);
 		}
-		
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['statistics'] = array();
-    	    	    	    	
+
     	// Get the number of items
     	$qb = $em->createQueryBuilder();
     	$qb->select($qb->expr()->count("i.id"));
@@ -663,7 +663,7 @@ class OrdersController extends Controller
 		$itemCount = $qb->getQuery()->getSingleScalarResult();
 		$this->listing['itemCount'] = $itemCount;
 		$data['statistics']['selected']['count'] = $itemCount;
-				
+
 		// Get the pagination
     	if ($itemCount <= $this->listing['maxResults'])
     	{
@@ -675,7 +675,7 @@ class OrdersController extends Controller
     	$this->listing['previousPage'] = $this->listing['currentPage'] - 1;
     	$this->listing['nextPage'] = $this->listing['currentPage'] + 1;
     	$this->listing['firstResult'] = ($this->listing['currentPage'] - 1) * $this->listing['maxResults'];
-    	
+
 		// Get the items
 		$qb = $em->createQueryBuilder();
     	$qb->select('i');
@@ -765,7 +765,7 @@ class OrdersController extends Controller
 	   	}
 		$items = $qb->getQuery()->getResult();
 		$data['items'] = $items;
-		
+
 		// Get the quick stats
 		$statistic = array();
 		$statistic['count'] = 0;
@@ -866,28 +866,28 @@ class OrdersController extends Controller
 			$statistic['averageOrderValueNett'] = $statistic['totalNett'] / $statistic['count'];
 		}
 		$data['statistics']['selected'] = $statistic;
-		
+
 		// Get the new order stats
 		$data['statistics']['new'] = $service->getNewStatistics();
-				
+
 		// Get the listing
 		$data['listing'] = $this->listing;
-		
+
 		// Get the filter
 		$data['filter'] = $this->filter;
-		
+
 		// Get the documents
 		$data['document'] = $document;
-		
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':index.html.twig', array('data' => $data));
     }
-    
+
     // Update listing
     public function updateListingAction(Request $request)
     {
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get listings data
     		$search = $request->request->get('search');
     		$sortOrder = $request->request->get('sort-order');
@@ -896,7 +896,7 @@ class OrdersController extends Controller
     		$order = $sortOrderParts[1];
     		$maxResults = $request->request->get('max-results');
     		$currentPage = $request->request->get('current-page');
-    		
+
     		// Update the listing session
     		$sessionListing = $this->get('session')->get('listing');
     		$sessionListing['admin'][$this->settings['singleClass']]['search'] = $search;
@@ -905,8 +905,8 @@ class OrdersController extends Controller
     		$sessionListing['admin'][$this->settings['singleClass']]['order'] = $order;
     		$sessionListing['admin'][$this->settings['singleClass']]['maxResults'] = $maxResults;
     		$sessionListing['admin'][$this->settings['singleClass']]['currentPage'] = $currentPage;
-			$this->get('session')->set('listing', $sessionListing);    
-			
+			$this->get('session')->set('listing', $sessionListing);
+
     		// Get filters data
     		$emptyFilters = true;
     		$filters = $request->request->get('filters');
@@ -928,191 +928,191 @@ class OrdersController extends Controller
     		{
 	    		$sessionFilter['admin'][$this->settings['singleClass']]['empty'] = 0;
     		}
-    		
+
     		// Update the filter session
-			$this->get('session')->set('filter', $sessionFilter);    		
+			$this->get('session')->set('filter', $sessionFilter);
     	}
-		
+
 		// Forward
     	return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
     }
-    
+
     // Get the customer via Ajax
     public function ajaxGetCustomerAction(Request $request)
     {
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get submitted data
     	$id = $request->query->get('id');
-		
+
 		// Setup the data
     	$data = array();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 		$data['item'] = $itemObject;
-						
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetCustomer.html.twig', array('data' => $data));
     }
-    
+
     // Get the delivery information via Ajax
     public function ajaxGetDeliveryInformationAction(Request $request)
     {
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get submitted data
     	$id = $request->query->get('id');
-		
+
 		// Setup the data
     	$data = array();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 		$data['item'] = $itemObject;
-						
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetDeliveryInformation.html.twig', array('data' => $data));
     }
-    
+
     // Get the documents via Ajax
     public function ajaxGetDocumentsAction(Request $request)
     {
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get submitted data
     	$id = $request->query->get('id');
-		
+
 		// Setup the data
     	$data = array();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 		$data['item'] = $itemObject;
-						
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetDocuments.html.twig', array('data' => $data));
     }
-    
+
     // Get the notes via Ajax
     public function ajaxGetNotesAction(Request $request)
     {
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get submitted data
     	$id = $request->query->get('id');
-		
+
 		// Setup the data
     	$data = array();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 		$data['item'] = $itemObject;
-		
+
 		// Get the notes
 		$itemNoteObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Note')->findBy(array('orderId' => $id));
 		$data['notes'] = $itemNoteObjects;
-		
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetNotes.html.twig', array('data' => $data));
     }
-    
+
     // Get the payment information via Ajax
     public function ajaxGetPaymentInformationAction(Request $request)
     {
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get submitted data
     	$id = $request->query->get('id');
-		
+
 		// Setup the data
     	$data = array();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 		$data['item'] = $itemObject;
-						
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetPaymentInformation.html.twig', array('data' => $data));
     }
-    
+
     // Get the products via Ajax
     public function ajaxGetProductsAction(Request $request)
     {
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get submitted data
     	$id = $request->query->get('id');
-		
+
 		// Setup the data
     	$data = array();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 		$data['item'] = $itemObject;
-		
+
 		// Get the products
 		$itemProductObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Product')->findBy(array('orderId' => $id));
 		$data['products'] = $itemProductObjects;
-		
+
 		// Get the donations
 		$itemDonationObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Donation')->findBy(array('orderId' => $id));
 		$data['donations'] = $itemDonationObjects;
-    			
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetProducts.html.twig', array('data' => $data));
     }
-    
+
     // Get the statistics via Ajax
     public function ajaxGetStatisticsAction(Request $request)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	
+
     	// Setup the data
     	$data = array();
-    	
+
 		// Get todays stats
 		$data['statistics']['today'] = $service->getStatistics('today');
-				
+
 		// Get this weeks stats
 		$data['statistics']['week'] = $service->getStatistics('week');
 
 		// Get this months stats
 		$data['statistics']['month'] = $service->getStatistics('month');
-		
+
 		// Get this quarters stats
 		$data['statistics']['quarter'] = $service->getStatistics('quarter');
-		
+
 		// Get this years stats
 		$data['statistics']['year'] = $service->getStatistics('year');
-		
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetStatistics.html.twig', array('data' => $data));
     }
-    
+
     // Print orders
     public function printOrdersAction(Request $request)
     {
     	// Get the orders
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get the services
     		$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     		$systemService = $this->container->get('web_illumination_admin.system_service');
-    		
+
     		// Get submitted data
     		$select = $request->request->get('select');
-    		
+
     		// Get the orders
     		if (sizeof($select) > 0)
     		{
     			$orders = array();
 	    		foreach ($select as $itemId => $item)
-	    		{		
+	    		{
 			    	$orders[] = $service->getOrder($itemId);
 			    }
 			    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrders.html.twig', array('orders' => $orders));
-			    
+
 			    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
 			    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
 			    $ordersPdfFileName = 'orders-'.date('dmYHis').'.pdf';
@@ -1127,26 +1127,26 @@ class OrdersController extends Controller
 				return $this->redirect('/uploads/documents/order/'.$ordersPdfFileName);
 			}
 		}
-		
+
 		// Notify user
 		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
-		
+
 		// Forward
 		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
     }
-    
+
     // Process deliveries
     public function processDeliveriesAction(Request $request)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-				
+
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get submitted data
     		$select = $request->request->get('select');
     		$courier = $request->request->get('courier');
@@ -1156,13 +1156,13 @@ class OrdersController extends Controller
     		$deliveryService = $request->request->get('delivery-service');
     		$deliveryDateFrom = $request->request->get('delivery-date-from');
     		$deliveryDateTo = $request->request->get('delivery-date-to');
-    		
+
     		// Run through all selected items
     		if (sizeof($select) > 0)
     		{
     			// Setup DPD import file
     			$dpdImportFile = "Account|AddressCode|Name|Address 1|Address 2|Town|County|PostCode|Service|Qty of Labels|Contact|Telephone|Email|Email2|Additional Info\n";
-    			
+
     			foreach ($select as $itemId => $item)
     			{
 	    			// Get the item
@@ -1203,14 +1203,14 @@ class OrdersController extends Controller
 			    		$itemObject->setSendReviewRequest($itemSendReviewRequest);
 			    		$em->persist($itemObject);
 			    		$em->flush();
-			    		
+
 			    		// Get the admin
 			    		$admin = $this->get('session')->get('admin');
-			    		
-			    		// Update the order according to the courier		
+
+			    		// Update the order according to the courier
 			    		switch ($itemCourier)
 			    		{
-			    			case 'Royal Mail':			    							    				
+			    			case 'Royal Mail':
 			    				// Add the new note
 			    				if ($itemTrackingNumber != '')
 			    				{
@@ -1232,12 +1232,12 @@ class OrdersController extends Controller
 						    	$orderNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
 						    	$em->persist($orderNoteObject);
 							    $em->flush();
-							    
+
 							    // Update notes count on order
 							    $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
 			    				$em->persist($itemObject);
 			    				$em->flush();
-						    
+
 							    // Send the email
 								try
 								{
@@ -1252,7 +1252,7 @@ class OrdersController extends Controller
 						        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
 									$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
 						    		$this->get('mailer')->send($email);
-						    		
+
 						    		// Set the review as requested
 								    $itemObject->setReviewRequested(1);
 				    				$em->persist($itemObject);
@@ -1260,7 +1260,7 @@ class OrdersController extends Controller
 								} catch (Exception $exception) {
 									error_log('Error sending email!');
 								}
-								
+
 								// Update the order status
 			    				$itemObject->setStatus('Order Completed');
 			    				$itemObject->setLabelsPrinted(1);
@@ -1312,14 +1312,14 @@ class OrdersController extends Controller
 								$dpdImportFile .= '"'.($itemObject->getMobile()?str_replace(array(' ', '-'), '', $itemObject->getMobile()):' ').'"|';
 								$dpdImportFile .= '"FRAGILE HANDLE WITH CARE"';
 								$dpdImportFile .= "\n";
-								
+
 								// Update the order status
 			    				$itemObject->setStatus('Order with Delivery Company');
 			    				$itemObject->setLabelsPrinted(1);
 			    				$em->persist($itemObject);
 			    				$em->flush();
 			    				break;
-			    			case 'Parcelforce':			    							    				
+			    			case 'Parcelforce':
 			    				// Add the new note
 			    				$htmlNote = "Your item has been dispatched for signed delivery with Parcelforce. Your consignment number is ".$itemTrackingNumber.".\n\n";
 			    				$htmlNote .= "<a href=\"http://www.parcelforce.com/track-trace?trackNumber=".$itemTrackingNumber."\">Click here to track your delivery.</a>\n\n";
@@ -1335,12 +1335,12 @@ class OrdersController extends Controller
 						    	$orderNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
 						    	$em->persist($orderNoteObject);
 							    $em->flush();
-							    
+
 							    // Update notes count on order
 							    $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
 			    				$em->persist($itemObject);
 			    				$em->flush();
-						    
+
 							    // Send the email
 								try
 								{
@@ -1355,7 +1355,7 @@ class OrdersController extends Controller
 						        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
 									$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
 						    		$this->get('mailer')->send($email);
-						    		
+
 						    		// Set the review as requested
 								    $itemObject->setReviewRequested(1);
 				    				$em->persist($itemObject);
@@ -1363,17 +1363,17 @@ class OrdersController extends Controller
 								} catch (Exception $exception) {
 									error_log('Error sending email!');
 								}
-								
+
 								// Update the order status
 			    				$itemObject->setStatus('Order Completed');
 			    				$itemObject->setLabelsPrinted(1);
 			    				$em->persist($itemObject);
 			    				$em->flush();
 			    				break;
-			    			case 'Palletways':		
+			    			case 'Palletways':
 			    				// Check a service has been selected
 			    				if ($itemDeliveryService != '')
-			    				{	    							    				
+			    				{
 				    				// Add the new note
 				    				if ($itemDeliveryService == 'Arranged')
 				    				{
@@ -1403,12 +1403,12 @@ class OrdersController extends Controller
 							    	$orderNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
 							    	$em->persist($orderNoteObject);
 								    $em->flush();
-								    
+
 								    // Update notes count on order
 								    $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
 				    				$em->persist($itemObject);
 				    				$em->flush();
-							    
+
 								    // Send the email
 									try
 									{
@@ -1423,7 +1423,7 @@ class OrdersController extends Controller
 							        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
 										$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
 							    		$this->get('mailer')->send($email);
-							    		
+
 							    		// Set the review as requested
 									    $itemObject->setReviewRequested(1);
 					    				$em->persist($itemObject);
@@ -1431,7 +1431,7 @@ class OrdersController extends Controller
 									} catch (Exception $exception) {
 										error_log('Error sending email!');
 									}
-									
+
 									// Update the order status
 				    				$itemObject->setStatus('Order Completed');
 				    				$itemObject->setLabelsPrinted(1);
@@ -1439,9 +1439,9 @@ class OrdersController extends Controller
 				    				$em->flush();
 				    			}
 			    				break;
-			    			case 'GHD Transport':			    							    				
+			    			case 'GHD Transport':
 			    				// Add the new note
-			    				
+
 			    				$htmlNote = "GHD Transport Limited will be contacting you with your delivery date soon.\n\n";
 			    				$htmlNote .= "For Delivery Enquiries Tel: 0115 944 3702 (GHD Transport Limited).\n\n";
 			    				$htmlNote .= "Please check all items before signing. Thank you.";
@@ -1456,12 +1456,12 @@ class OrdersController extends Controller
 						    	$orderNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
 						    	$em->persist($orderNoteObject);
 							    $em->flush();
-							    
+
 							    // Update notes count on order
 							    $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
 			    				$em->persist($itemObject);
 			    				$em->flush();
-						    
+
 							    // Send the email
 								try
 								{
@@ -1476,7 +1476,7 @@ class OrdersController extends Controller
 						        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
 									$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
 						    		$this->get('mailer')->send($email);
-						    		
+
 						    		// Set the review as requested
 								    $itemObject->setReviewRequested(1);
 				    				$em->persist($itemObject);
@@ -1484,7 +1484,7 @@ class OrdersController extends Controller
 								} catch (Exception $exception) {
 									error_log('Error sending email!');
 								}
-								
+
 								// Update the order status
 			    				$itemObject->setStatus('Order Completed');
 			    				$itemObject->setLabelsPrinted(1);
@@ -1494,7 +1494,7 @@ class OrdersController extends Controller
 			    		}
 	    			}
     			}
-    			
+
     			// Check if we need to save the DPD import file
     			if ($dpdImportFile != "Account|AddressCode|Name|Address 1|Address 2|Town|County|PostCode|Service|Qty of Labels|Contact|Telephone|Email|Email2|Additional Info\n")
     			{
@@ -1502,32 +1502,32 @@ class OrdersController extends Controller
 					$fileHandle = fopen($dpdImportFileName, 'w');
 					fwrite($fileHandle, $dpdImportFile);
 					fclose($fileHandle);
-					
+
 					// Notify user
 		    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated and '.sizeof($select).' DPD '.(sizeof($select) == 1?'order has':'orders have').' have been sent to the label printer.');
-		    		
+
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
     			} else {
 	    			// Notify user
 		    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
-		    		
+
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
     			}
     		} else {
 	    		// Notify user
 	    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
-	    		
+
 	    		// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
     		}
     	}
-				
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
-    	    	    	    	    	
+
     	// Get the items
 		$qb = $em->createQueryBuilder();
     	$qb->select('i');
@@ -1537,22 +1537,22 @@ class OrdersController extends Controller
     	$qb->andWhere($qb->expr()->eq('i.status', $qb->expr()->literal('Processing Your Order')));
 		$items = $qb->getQuery()->getResult();
 		$data['items'] = $items;
-						
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':processDeliveries.html.twig', array('data' => $data));
     }
-    
+
     // Import tracking
     public function importTrackingAction(Request $request)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Set the number of orders updated
 		$ordersUpdated = 0;
-		
+
    		// Get tracking data
 		$trackingFileName = '/var/www/vhosts/kitchenappliancecentre.co.uk/webapps/web/uploads/exports/dpd/EXPORT.TXT';
 		$renamedTrackingFileName = '/var/www/vhosts/kitchenappliancecentre.co.uk/webapps/web/uploads/exports/dpd/export-'.date("dmYHis").'.txt';
@@ -1566,14 +1566,14 @@ class OrdersController extends Controller
 				if (sizeof($orderInfo) > 1)
 				{
 					$orderId = $orderInfo[3];
-					
+
 					// Get the item
 					$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($orderId);
 	    			if ($itemObject)
 	    			{
 	    				// Get the new tracking number
 	    				$trackingNumber = $orderInfo[0].$orderInfo[1];
-	    				
+
 	    				// Make sure there is no tracking number already set
 	    				if (($itemObject->getTrackingNumber() == '') || ($itemObject->getTrackingNumber() != $trackingNumber))
 	    				{
@@ -1582,10 +1582,10 @@ class OrdersController extends Controller
 		    				$itemObject->setStatus('Order Completed');
 		    				$em->persist($itemObject);
 		    				$em->flush();
-		    				
+
 		    				// Get the admin
 		    				$admin = $this->get('session')->get('admin');
-		    				
+
 		    				// Add the new note
 		    				$htmlNote = "Your item has been dispatched for signed delivery with DPD. Your consignment number is ".$trackingNumber.".\n\n";
 		    				$htmlNote .= "<a href=\"http://www.dpd.co.uk/service/tracking?parcel=".$trackingNumber."\">Click here to track your delivery.<a>\n\n";
@@ -1601,12 +1601,12 @@ class OrdersController extends Controller
 					    	$orderNoteObject->setCreator('Automated');
 					    	$em->persist($orderNoteObject);
 						    $em->flush();
-						    
+
 						    // Update notes count on order
 						    $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
 		    				$em->persist($itemObject);
 		    				$em->flush();
-						    
+
 						    // Send the email
 							try
 							{
@@ -1621,7 +1621,7 @@ class OrdersController extends Controller
 					        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
 								$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
 					    		$this->get('mailer')->send($email);
-					    		
+
 					    		// Set the review as requested
 							    $itemObject->setReviewRequested(1);
 			    				$em->persist($itemObject);
@@ -1629,15 +1629,15 @@ class OrdersController extends Controller
 							} catch (Exception $exception) {
 								error_log('Error sending email!');
 							}
-		    				
+
 		    				// Set that importing has occurred
 		    				$ordersUpdated++;
 	    				}
-	    			
+
 	    			}
 	    		}
 			}
-			
+
 			// Rename the tracking import file
 			if ($ordersUpdated > 0)
 			{
@@ -1645,282 +1645,86 @@ class OrdersController extends Controller
 			}
 			fclose($fileHandle);
 		}
-				
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['ordersUpdated'] = $ordersUpdated;
-    	    	    	    	    							
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':importTracking.html.twig', array('data' => $data));
     }
-    
+
     // Add
     public function addAction(Request $request)
     {
-    	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	$seoService = $this->get('web_illumination_admin.seo_service');
-    	
-    	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
-		
-    	// Add
-    	if ($request->getMethod() == 'POST')
-    	{
-    		// Get submitted data
-    		$parentId = $request->request->get('parent-id');
-    		$status = $request->request->get('status');
-    		$departmentPath = $parentId;
-    		$hidePrices = 0;
-    		$showPricesOutOfHours = 0;
-    		$membershipCardDiscountAvailable = 0;
-    		$maximumMembershipCardDiscount = 0.0000;
-    		$deliveryBand = 0.0000;
-    		$parentDepartmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $parentId, 'locale' => 'en'));
-    		$checkDeliveryBand = $parentDepartmentIndexObject->getCheckDeliveryBand();
-    		$inheritedDeliveryBand = $parentDepartmentIndexObject->getInheritedDeliveryBand();
-    		$displayOrder = 999999;
-    		$locale = 'en';
-    		$name = trim($request->request->get('name'));
-    		$description = $seoService->cleanHtml($request->request->get('description'));
-    		$menuTitle = $seoService->getMenuTitle($name);
-    		$pageTitle = $name;
-    		$header = $name;
-    		$metaDescription = $seoService->shortenContent($description, 160);
-    		$metaKeywords = $seoService->generateKeywords($name.' '.$description);
-    		$searchWords = $metaKeywords;
-    		$googleDepartment = $request->request->get('google-department');
-    		$ebayDepartment = '';
-    		$amazonDepartment = '';
-    		$url = $seoService->generateUrl($pageTitle);
-    		$addAnother = $request->request->get('add-another');
-    		
-    		// Add object
-    		$object = new Department();
-    		$object->setParentId($parentId);
-    		$object->setStatus($status);
-    		$object->setDepartmentPath($departmentPath);
-    		$object->setHidePrices($hidePrices);
-    		$object->setShowPricesOutOfHours($showPricesOutOfHours);
-    		$object->setMembershipCardDiscountAvailable($membershipCardDiscountAvailable);
-    		$object->setMaximumMembershipCardDiscount($maximumMembershipCardDiscount);
-    		$object->setDeliveryBand($deliveryBand);
-    		$object->setCheckDeliveryBand($checkDeliveryBand);
-    		$object->setInheritedDeliveryBand($inheritedDeliveryBand);
-    		$object->setDisplayOrder($displayOrder);
-    		$em->persist($object);
-    		$em->flush();
-    		$id = $object->getId();
-    		
-    		// Add object description
-    		$objectDescription = new DepartmentDescription();
-    		$objectDescription->setDepartmentId($id);
-    		$objectDescription->setLocale($locale);
-    		$objectDescription->setName($name);
-    		$objectDescription->setDescription($description);
-    		$objectDescription->setMenuTitle($menuTitle);
-    		$objectDescription->setPageTitle($pageTitle);
-    		$objectDescription->setPageTitleTemplate('');
-    		$objectDescription->setHeader($header);
-    		$objectDescription->setMetaDescription($metaDescription);
-    		$objectDescription->setMetaDescriptionTemplate('');
-    		$objectDescription->setMetaKeywords($metaKeywords);
-    		$objectDescription->setSearchWords($searchWords);
-    		$objectDescription->setGoogleDepartment($googleDepartment);
-    		$objectDescription->setEbayDepartment($ebayDepartment);
-    		$objectDescription->setAmazonDepartment($amazonDepartment);
-    		$em->persist($objectDescription);
-    		$em->flush();
-    		
-    		// Rebuild path
-    		$service->rebuildPath($id);
-    		
-    		// Get the parent routing
-    		$parentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $parentId, 'objectType' => 'department'));
-    		
-    		// Setup the routing
-    		if ($parentRoutingObject)
-    		{
-	    		$routingUrl = $seoService->createUrl($parentRoutingObject->getUrl().'/'.$url);
-    		} else {
-	    		$routingUrl = $seoService->createUrl($url);
-    		}
-    		$routingObject = new Routing();
-    		$routingObject->setObjectId($id);
-    		$routingObject->setObjectType('department');
-    		$routingObject->setLocale($locale);
-    		$routingObject->setUrl($routingUrl);
-    		$em->persist($routingObject);
-    		$em->flush();
-    		
-    		// Rebuild the object indexes
-    		$service->rebuildDepartmentIndexObject($id, $locale);
-    		if ($parentId > 0)
-    		{
-    			$service->rebuildDepartmentIndexObject($parentId, $locale);
-    		}
-    		
-    		// Notify user
-    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$name.'"</strong> has been added.');
-    		
-    		// Forward
-    		if ($addAnother > 0)
-    		{
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_add'));
-    		} else {
-	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
-    		}
-    	}
-    	
-    	// Setup the data
-    	$data = array();
-    	$data['settings'] = $this->settings;
-    	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_add');
-    	$data['parentId'] = $parentId;
-    	$data['mode'] = 'add';
-    	
-    	// Get the departments
-    	$departments = $service->getFullDepartmentList();
-    	$data['departments'] = $departments;
-    	
-    	// Get the taxonomy
-    	$taxonomy = array();
-    	$taxonomyGoogle = $em->getRepository('WebIlluminationAdminBundle:Taxonomy')->findBy(array('objectType' => 'google', 'locale' => 'en'), array('name' => 'ASC'));
-    	$taxonomy['google'] = $taxonomyGoogle;
-    	$data['taxonomy'] = $taxonomy;
-    	    	
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
+    	//TODO: Add add logic
     }
-    
+
     // Update
     public function updateAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-		
+
     	// Update
     	if ($request->getMethod() == 'POST')
-    	{   
-    		// Get the item
-    		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-			if (!$itemObject || !$itemDescriptionObject)
+    	{
+            /**
+             * Get the item
+             * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
+             */
+            $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+    		if (!$itemObject)
 			{
 				// Notify user
-				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
-    		
+				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemObject->getId().'"</strong>. Please try again.');
+
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
     		}
-			
-    		// Get the existing information
-    		$existingParentId = $itemObject->getParentId();
-    		
-    		// Get submitted data
-    		$parentId = $request->request->get('parent-id');
-    		if ($parentId == $id)
-    		{
-	    		$parentId = $existingParentId;
-    		}
-    		$status = $request->request->get('status');
-    		$name = $request->request->get('name');
-    		$existingName = $itemDescriptionObject->getName();
-    		$existingPageTitle = $itemDescriptionObject->getPageTitle();
-    		$description = $seoService->cleanHtml($request->request->get('description'));
-    		$metaDescription = $itemDescriptionObject->getMetaDescription();
-    		$goBack = $request->request->get('go-back');
-    		    		
+
+            // Get submitted data
+            $goBack = $request->request->get('go-back');
+
     		// Update object
-    		$itemObject->setParentId($parentId);
-    		$itemObject->setStatus($status);
+            $itemObject->setFirstName($request->request->get('first-name'));
+            $itemObject->setLastName($request->request->get('last-name'));
+            $itemObject->setEmailAddress($request->request->get('email-address'));
+            $itemObject->setTelephoneDaytime($request->request->get('telephone-daytime'));
+            $itemObject->setTelephoneEvening($request->request->get('telephone-evening'));
+
+            $itemObject->setBillingFirstName($request->request->get('billing-first-name'));
+            $itemObject->setBillingLastName($request->request->get('billing-last-name'));
+            $itemObject->setBillingOrganisationName($request->request->get('billing-organisation-name'));
+            $itemObject->setBillingCountryCode($request->request->get('billing-country-code'));
+            $itemObject->setBillingAddressLine1($request->request->get('billing-address-line-1'));
+            $itemObject->setBillingAddressLine2($request->request->get('billing-address-line-2'));
+            $itemObject->setBillingTownCity($request->request->get('billing-town-city'));
+            $itemObject->setBillingCountyState($request->request->get('billing-county-state'));
+            $itemObject->setBillingPostZipCode($request->request->get('billing-post-zip-code'));
+
+    		$itemObject->setDeliveryFirstName($request->request->get('delivery-first-name'));
+            $itemObject->setDeliveryLastName($request->request->get('delivery-last-name'));
+            $itemObject->setDeliveryOrganisationName($request->request->get('delivery-organisation-name'));
+            $itemObject->setDeliveryCountryCode($request->request->get('delivery-country-code'));
+            $itemObject->setDeliveryAddressLine1($request->request->get('delivery-address-line-1'));
+            $itemObject->setDeliveryAddressLine2($request->request->get('delivery-address-line-2'));
+            $itemObject->setDeliveryTownCity($request->request->get('delivery-town-city'));
+            $itemObject->setDeliveryCountyState($request->request->get('delivery-county-state'));
+            $itemObject->setDeliveryPostZipCode($request->request->get('delivery-post-zip-code'));
+
     		$em->persist($itemObject);
     		$em->flush();
-    		$itemDescriptionObject->setName($name);
-    		$itemDescriptionObject->setDescription($description);
-    		if (!$metaDescription)
-    		{
-	    		$metaDescription = $seoService->shortenContent($description, 160);
-	    		$itemDescriptionObject->setMetaDescription($metaDescription);
-    		}
-    		$em->persist($itemDescriptionObject);
-    		$em->flush();
-    		
-    		// Rebuild the path
-    		$service->rebuildPath($id);
-    		
-    		// Rebuild the routing
-    		$service->rebuildRouting($id, 'en');
-    		
-    		// Check to see if the paths need updating
-    		if ($parentId != $existingParentId)
-    		{
-    			// Get all related departments
-	    		$relatedIndexObjects = $em->createQuery("SELECT di FROM WebIlluminationAdminBundle:DepartmentIndex di WHERE di.departmentPath LIKE '%|".$id."|%' AND di.departmentId != '".$id."' ORDER BY di.departmentPath ASC")->getResult();
-	    		
-	    		// Rebuild the paths (need to do all paths first before building routes as routes are based on paths)
-	    		foreach ($relatedIndexObjects as $relatedIndexObject)
-	    		{
-	    			if ($relatedIndexObject)
-	    			{
-		    			$service->rebuildPath($relatedIndexObject->getDepartmentId());
-	    			}
-	    		}
-	    		
-	    		// Rebuild the routes and the indexes
-	    		foreach ($relatedIndexObjects as $relatedIndexObject)
-	    		{
-	    			if ($relatedIndexObject)
-	    			{
-		    			$service->rebuildRouting($relatedIndexObject->getDepartmentId(), 'en');
-		    			$service->rebuildDepartmentIndexObject($relatedIndexObject->getDepartmentId(), 'en');
-	    			}
-	    		}
-	    		
-	    		// Rebuild the existing and new parent department indexes
-	    		if ($parentId > 0)
-	    		{
-	    			$service->rebuildDepartmentIndexObject($parentId, 'en');
-	    		}
-	    		if ($existingParentId > 0)
-	    		{
-	    			$service->rebuildDepartmentIndexObject($existingParentId, 'en');
-	    		}
-    		}
-    		    		
-    		// Check to see if the page title needs changing
-    		if (($existingName == $existingPageTitle) && ($name != $existingName))
-    		{
-    			// Update the page title
-	    		$itemDescriptionObject->setPageTitle($name);
-	    		$em->persist($itemDescriptionObject);
-	    		$em->flush();
-	    		
-	    		// Get all related departments
-	    		$relatedIndexObjects = $em->createQuery("SELECT di FROM WebIlluminationAdminBundle:DepartmentIndex di WHERE di.departmentPath LIKE '%|".$id."|%' AND di.departmentId != '".$id."' ORDER BY di.departmentPath ASC")->getResult();
-	    		
-	    		// Rebuild the routes and the indexes
-	    		foreach ($relatedIndexObjects as $relatedIndexObject)
-	    		{
-	    			if ($relatedIndexObject)
-	    			{
-		    			$service->rebuildRouting($relatedIndexObject->getDepartmentId(), 'en');
-		    			$service->rebuildDepartmentIndexObject($relatedIndexObject->getDepartmentId(), 'en');
-	    			}
-	    		}
-    		}
-    		
-    		// Rebuild the index
-    		$service->rebuildDepartmentIndexObject($id, 'en');
-    		
+
     		// Notify user
-    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
-    		
+    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemObject->getId().'"</strong> has been updated.');
+
     		// Forward
     		if ($goBack > 0)
     		{
@@ -1929,66 +1733,273 @@ class OrdersController extends Controller
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
     		}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
     }
-    
+
+    // Update payment
+    public function updatePaymentAction(Request $request, $id)
+    {
+        // Get the services
+        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+
+        // Get the entity manager
+        $em = $this->getDoctrine()->getEntityManager();
+
+        // Get the item
+        $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+
+        // Update
+        if ($request->getMethod() == 'POST')
+        {
+            /**
+             * Get the item
+             * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
+             */
+            $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+            if (!$itemObject)
+            {
+                // Notify user
+                $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemObject->getId().'"</strong>. Please try again.');
+
+                // Forward
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
+            }
+
+            // Get submitted data
+            $goBack = $request->request->get('go-back');
+
+            // Update object
+            $itemObject->setPaymentType($request->request->get('payment-type'));
+
+            $itemObject->setBillingFirstName($request->request->get('billing-first-name'));
+            $itemObject->setBillingLastName($request->request->get('billing-last-name'));
+            $itemObject->setBillingOrganisationName($request->request->get('billing-organisation-name'));
+            $itemObject->setBillingCountryCode($request->request->get('billing-country-code'));
+            $itemObject->setBillingAddressLine1($request->request->get('billing-address-line-1'));
+            $itemObject->setBillingAddressLine2($request->request->get('billing-address-line-2'));
+            $itemObject->setBillingTownCity($request->request->get('billing-town-city'));
+            $itemObject->setBillingCountyState($request->request->get('billing-county-state'));
+            $itemObject->setBillingPostZipCode($request->request->get('billing-post-zip-code'));
+
+            $em->persist($itemObject);
+            $em->flush();
+
+            // Notify user
+            $this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemObject->getId().'"</strong> has been updated.');
+
+            // Forward
+            if ($goBack > 0)
+            {
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
+            } else {
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_payment', array('id' => $id)));
+            }
+        }
+
+
+        // Setup the data
+        $data = array();
+        $data['settings'] = $this->settings;
+        $data['item'] = $itemObject;
+        $data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_payment', array('id' => $id));
+        $data['mode'] = 'update';
+
+        // Get the items
+        $data['items'] = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemPayment.html.twig', array('data' => $data));
+    }
+
+    // Update delivery
+    public function updateDeliveryAction(Request $request, $id)
+    {
+        // Get the services
+        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+
+        // Get the entity manager
+        $em = $this->getDoctrine()->getEntityManager();
+
+        // Get the item
+        $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+
+        // Update
+        if ($request->getMethod() == 'POST')
+        {
+            /**
+             * Get the item
+             * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
+             */
+            $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+            if (!$itemObject)
+            {
+                // Notify user
+                $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemObject->getId().'"</strong>. Please try again.');
+
+                // Forward
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
+            }
+
+            // Get submitted data
+            $goBack = $request->request->get('go-back');
+
+            // Update object
+            $itemObject->setDeliveryFirstName($request->request->get('delivery-first-name'));
+            $itemObject->setDeliveryLastName($request->request->get('delivery-last-name'));
+            $itemObject->setDeliveryOrganisationName($request->request->get('delivery-organisation-name'));
+            $itemObject->setDeliveryCountryCode($request->request->get('delivery-country-code'));
+            $itemObject->setDeliveryAddressLine1($request->request->get('delivery-address-line-1'));
+            $itemObject->setDeliveryAddressLine2($request->request->get('delivery-address-line-2'));
+            $itemObject->setDeliveryTownCity($request->request->get('delivery-town-city'));
+            $itemObject->setDeliveryCountyState($request->request->get('delivery-county-state'));
+            $itemObject->setDeliveryPostZipCode($request->request->get('delivery-post-zip-code'));
+
+            $itemObject->setCourier($request->request->get('courier'));
+            $itemObject->setNumberOfPackages($request->request->get('number-of-packages'));
+            $itemObject->setTrackingNumber($request->request->get('tracking-number'));
+            $itemObject->setReviewRequested($request->request->get('send-review-request'));
+
+            $em->persist($itemObject);
+            $em->flush();
+
+            // Notify user
+            $this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemObject->getId().'"</strong> has been updated.');
+
+            // Forward
+            if ($goBack > 0)
+            {
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
+            } else {
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_delivery', array('id' => $id)));
+            }
+        }
+
+
+        // Setup the data
+        $data = array();
+        $data['settings'] = $this->settings;
+        $data['item'] = $itemObject;
+        $data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_delivery', array('id' => $id));
+        $data['mode'] = 'update';
+
+        // Get the items
+        $data['items'] = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemDelivery.html.twig', array('data' => $data));
+    }
+
+    // Update products
+    public function updateProductsAction(Request $request, $id)
+    {
+        // Get the services
+        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+
+        // Get the entity manager
+        $em = $this->getDoctrine()->getEntityManager();
+
+        // Get the item
+        $itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+
+        // Update
+        if ($request->getMethod() == 'POST')
+        {
+
+        }
+
+        // Setup the data
+        $data = array();
+        $data['settings'] = $this->settings;
+        $data['item'] = $itemObject;
+        $data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_notes', array('id' => $id));
+        $data['mode'] = 'update';
+
+        // Get the items
+        $data['items'] = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemProducts.html.twig', array('data' => $data));
+    }
+
     // Update notes
     public function updateNotesAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-				
+
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get submitted data
     		$select = $request->request->get('select');
     		$addItem = $request->request->get('add-item');
+            $listingNoteType = $request->request->get('listing-note-type');
+            $listingNote = $request->request->get('listing-note');
+            $listingNotified = $request->request->get('listing-notified');
     		$addNoteType = $request->request->get('add-note-type');
     		$addNotified = $request->request->get('add-notified');
     		$addNote = $request->request->get('add-note');
     		$goBack = $request->request->get('go-back');
     		$delete = $request->request->get('delete');
-											    		    		
+
     		// Run through all selected items
     		if (sizeof($select) > 0)
     		{
     			foreach ($select as $itemId => $item)
     			{
 	    			// Get the item
-	    			$itemNoteObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Note')->find($itemId);
+                    /**
+                     * Get the item
+                     * @var \WebIllumination\AdminBundle\Entity\OrderNote $itemNoteObject
+                     */
+                    $itemNoteObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Note')->find($itemId);
+
 	    			if ($itemNoteObject)
 	    			{
 	    				// Delete the item
 	    				if ($delete > 0)
 	    				{
 	    					$em->remove($itemNoteObject);
-			    			$em->flush();
-			    		}
+			    		// Update the item
+                        } else {
+                            if (isset($listingNoteType[$itemId]))
+                            {
+                                $itemNoteObject->setNoteType($listingNoteType[$itemId]);
+                            }
+                            if (isset($listingNote[$itemId]))
+                            {
+                                $itemNoteObject->setNote($listingNote[$itemId]);
+                            }
+                            if (isset($listingNotified[$itemId]))
+                            {
+                                $itemNoteObject->setNotified($listingNotified[$itemId]);
+                            }
+
+                            $em->persist($itemNoteObject);
+                        }
 	    			}
     			}
+
+                $em->flush();
     		}
-    		
+
     		// Run through all added items
     		if (sizeof($addItem) > 0)
     		{
     			// Get the admin
 			    $admin = $this->get('session')->get('admin');
-			    		
+
     			foreach ($addItem as $itemId => $item)
     			{
     				$itemNoteType = $addNoteType[$itemId];
@@ -2008,7 +2019,7 @@ class OrdersController extends Controller
 				    	$itemNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
 				    	$em->persist($itemNoteObject);
 					    $em->flush();
-					    
+
 					    // Send an email if customer notification is requested
 					    if (($itemNotified > 0) && ($itemNoteType == 'customer'))
 					    {
@@ -2020,14 +2031,14 @@ class OrdersController extends Controller
 					        	$email->setTo(array($itemObject->getEmailAddress() => $itemObject->getFirstName().' '.$itemObject->getLastName()));
 					        	$email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/html');
 								$email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/plain');
-					    		$this->get('mailer')->send($email);				    		
+					    		$this->get('mailer')->send($email);
 							} catch (Exception $exception) {
 								error_log('Error sending email!');
 							}
 						}
 		    		}
     			}
-    			
+
     			// Update items count
     			$qb = $em->createQueryBuilder();
 		    	$qb->select($qb->expr()->count("i.id"));
@@ -2037,7 +2048,7 @@ class OrdersController extends Controller
     			$em->persist($itemObject);
 			    $em->flush();
     		}
-    		 
+
     		// Notify user
     		if ($delete > 0)
 	    	{
@@ -2045,7 +2056,7 @@ class OrdersController extends Controller
     		} else {
 	    		$this->get('session')->getFlashBag()->add('success', 'The selected notes have been updated.');
     		}
-    		
+
     		// Forward
     		if ($goBack > 0)
     		{
@@ -2054,65 +2065,65 @@ class OrdersController extends Controller
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_notes', array('id' => $id)));
     		}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_notes', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
     	// Get the items
 		$data['items'] = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-		
-		return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemNotes.html.twig', array('data' => $data));    	    	    	
+
+		return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemNotes.html.twig', array('data' => $data));
     }
-    
+
     // View copy order
     public function viewCopyOrderAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-	    	    	
+
 	    // Get the order
 	    $item = $service->getOrder($id);
-    	
+
     	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewCopyOrder.html.twig', array('order' => $item));
     }
-    
+
     // View delivery note
     public function viewDeliveryNoteAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-	    
+
 	    // Get the order
 	    $item = $service->getOrder($id);
-    	
+
     	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewDeliveryNote.html.twig', array('order' => $item));
     }
-    
+
     // View invoice
     public function viewInvoiceAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-	    
+
 	    // Get the order
 	    $item = $service->getOrder($id);
-    	
+
     	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoice.html.twig', array('order' => $item));
     }
-    
+
     // View order
     public function viewOrderAction(Request $request, $id)
     {
     	// Get the services
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-	    
+
 	    // Get the order
 	    $item = $service->getOrder($id);
-    	
+
     	return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrder.html.twig', array('order' => $item));
-    }     
+    }
 }

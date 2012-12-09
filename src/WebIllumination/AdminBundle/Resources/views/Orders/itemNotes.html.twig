@@ -99,25 +99,36 @@
 											<th width="19" class="ac"><input type="checkbox" class="action-select-all-add" value="1" /></th>
 											<th width="1" class="ar">&nbsp;</th>
 											<th width="1" class="ac">Type</th>
+                                            <th width="1" class="ac">Notified?</th>
 											<th class="ac">Creator</th>
 											<th class="ac">Date</th>
 											<th class="al">Note</th>
-											<th width="1" class="ac">Notified?</th>
 										</tr>
 									</thead>
 									<tbody>
 										{% for item in data.items %}
-											<tr class="item{% if item.noteType == 'staff' %} blue{% endif %}" id="item-{{ item.id }}" data-note-type="{{ item.noteType }}">
-												<td width="19" class="ac select">
-													<input data-id="{{ item.id }}" type="checkbox" class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" />
-												</td>
-												<td width="1" class="ar small">{{ loop.index }}</td>
-												<td width="1" class="ac filterable small{% if item.noteType == 'staff' %} gradient-background-blue{% endif %}">{{ (item.noteType == 'customer'?'Customer':'Staff') }}</td>
-												<td class="ac"><strong>{{ item.creator }}</strong></td>
-												<td class="ac small">{{ item.createdAt|date("d/m/Y h:iA") }}</td>
-												<td class="al small">{{ item.note|raw|nl2br }}</td>
-												<td width="1" class="ac small{% if item.noteType == 'customer' %} gradient-background-{{ (item.notified > 0?'orange':'green') }}{% endif %}">{% if item.noteType == 'customer' %}{{ (item.notified > 0?'YES':'NO') }}{% else %}-{% endif %}</td>
-											</tr>
+                                            <tr class="item{% if item.noteType == 'staff' %} blue{% endif %}" id="item-{{ item.id }}" data-note-type="{{ item.noteType }}">
+                                                <td width="19" class="ac select">
+                                                    <input data-id="{{ item.id }}" type="checkbox" class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" />
+                                                </td>
+                                                <td width="1" class="ar small">{{ loop.index }}</td>
+                                                <td width="90" class="ac filterable small{% if item.noteType == 'staff' %} blue{% endif %}">
+                                                    <select data-id="listing-note-type" id="listing-note-type-{{ item.id }}" data-name="listing-note-type" name="listing-note-type[{{ item.id }}]"  class="listing-note-type uniform full">
+                                                        <option value="staff" {% if item.noteType == 'staff' %}selected="selected"{%  endif  %}>Staff</option>
+                                                        <option value="customer" {% if item.noteType == 'customer' %}selected="selected"{%  endif  %}>Customer</option>
+                                                    </select>
+                                                </td>
+                                                <td width="1" class="ac{% if item.noteType == 'customer' %} gradient-background-{{ (item.notified?'green':'orange') }}{% endif %}">
+                                                    <div class="{% if item.noteType == 'staff' %}ui-helper-hidden{% endif %}">
+                                                        <input type="checkbox" class="no-uniform listing-notified" data-id="listing-notified" id="listing-notified-{{ item.id }}" data-name="listing-notified" name="listing-notified[{{ item.id }}]" {%  if item.notified %}selected="selected"{% endif %} />
+                                                    </div>
+                                                </td>
+                                                <td class="ac"><strong>{{ item.creator }}</strong></td>
+                                                <td class="ac">{{ item.createdAt|date("d/m/Y h:iA") }}</td>
+                                                <td class="al">
+                                                    <textarea data-add-required="required" data-message="Enter a note" rows="3" class="no-uniform full" data-id="listing-note" id="listing-note-{{ item.id }}" data-name="listing-note" name="listing-note[{{ item.id }}]">{{ item.note|raw|nl2br }}</textarea>
+                                                </td>
+                                            </tr>
 										{% endfor %}
 									</tbody>
 								</table>
@@ -128,12 +139,15 @@
 			        	<div class="clear"></div>
 		        		<div id="float-buttons" class="clearfix padding-15">
 					        <div id="float-buttons-content" class="float-buttons clearfix buttons no-margin">
-					        	<input type="hidden" value="" id="form-extra-action" name="extra-action" />
-					        	<input type="hidden" value="0" id="form-delete" name="delete" />
-				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
-				        		<a href="{{ path('admin_'~data.settings.multiplePath) }}" id="button-go-back" class="fr icon-set-white ui-corner-right button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
-				        		<button class="fr button icon-set-white ui-corner-left ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
-						    </div>
+                                <input type="hidden" value="" id="form-extra-action" name="extra-action" />
+                                <input type="hidden" value="0" id="form-delete" name="delete" />
+                                <input type="hidden" value="0" id="form-go-back" name="go-back" />
+                                <input type="hidden" value="0" id="form-save-required" />
+                                <a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr icon-set-white ui-corner-right button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+                                <button class="fr button icon-set-white ui-corner-none ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+                                <button id="button-update-go-back" type="submit" class="fr button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected &amp; Go Back</button>
+                                <button id="button-update" type="submit" class="fr button icon-set-white ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected</button>
+                            </div>
 						</div>
 					</section>
 		        </div>

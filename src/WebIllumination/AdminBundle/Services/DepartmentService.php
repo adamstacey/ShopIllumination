@@ -1001,7 +1001,7 @@ class DepartmentService {
     	
     	// Get the product feature groups
     	$productIds = array();
-    	$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
+    	$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
     	foreach ($productToDepartmentObjects as $productToDepartmentObject)
     	{
     		$productIds[] = $productToDepartmentObject->getProductId();
@@ -1097,7 +1097,7 @@ class DepartmentService {
 				if ($departmentIndexObject->getDirectProductCount() > 0)
 				{
 					// Get the department product features
-					$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $subDepartmentId, 'displayOnFilter' => 1), array('displayOrder' => 'ASC'));
+					$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $subDepartmentId), array('displayOrder' => 'ASC'));
 					$newProductFeatureGroupIds = array();
 					foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 					{
@@ -1317,7 +1317,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 				
 		// Get the product indexes
-		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
+		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
 				
 		// Update the products
 		$count = 0;
@@ -1443,7 +1443,8 @@ class DepartmentService {
 		// Get the template parts
 		$templateParts = explode('^', $template);
 		
-		// Get the templates
+		// Get the previews
+		$templatePreviews = array();
 		foreach ($productIndexObjects as $productIndexObject)
 		{
 			$templatePreview = array();
@@ -1504,9 +1505,9 @@ class DepartmentService {
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if (($productFeatureValue != '') && (strtoupper($productFeatureValue) != '*** NOT SET ***') && (strtoupper($productFeatureValue) != 'YES') && (strtoupper($productFeatureValue) != 'NO') && (strtoupper($productFeatureValue) != 'UNKNOWN'))
+										if (($productFeatureValue != '') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
 										{
-											$templatePreview[] = trim($productFeatureValue);
+											$templatePreview[] = trim($templatePartValue);
 										}
 									}
 								}
@@ -1517,7 +1518,6 @@ class DepartmentService {
 						break;
 				}
 			}
-			$templatePreview = implode(' ', $templatePreview);
 			
 			// Check if an update is required
 			switch ($templateField)
@@ -1553,9 +1553,9 @@ class DepartmentService {
 					}
 					break;
 				case 'meta-description':
-					if ($productIndexObject->getShortDescription() != $templatePreview)
+					if ($productIndexObject->getMetaDescription() != $templatePreview)
 					{
-						$productIndexObject->setShortDescription($templatePreview);
+						$productIndexObject->setMetaDescription($templatePreview);
 						$em->persist($productIndexObject);
 						$em->flush();
 						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
@@ -1754,7 +1754,7 @@ class DepartmentService {
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if ((strtoupper($productFeatureValue) != '') && (strtoupper($productFeatureValue) != 'N/A') && (strtoupper($productFeatureValue) != '*** NOT SET ***') && (strtoupper($productFeatureValue) != 'YES') && (strtoupper($productFeatureValue) != 'NO') && (strtoupper($productFeatureValue) != 'UNKNOWN'))
+										if (($productFeatureValue != '') && ($productFeatureValue != 'N/A') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
 										{
 											$templatePreview[] = trim($productFeatureValue);
 										}
@@ -1911,7 +1911,7 @@ class DepartmentService {
 		$productCount = $qb->getQuery()->getSingleScalarResult();
 		
 		// Get direct product count
-		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
+		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
 		$directProductCount = sizeof($productToDepartmentObjects);
 		
     	$qb = $em->createQueryBuilder();
@@ -2072,7 +2072,7 @@ class DepartmentService {
 		
 		// Get the products in the department
 		$productCount = 0;
-		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
+		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
 		foreach ($productsToDepartmentObjects as $productsToDepartmentObject)
 		{
 			// Get the product objects
@@ -2170,7 +2170,7 @@ class DepartmentService {
 		
 		// Get the products in the department
 		$productCount = 0;
-		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => 1));
+		$productsToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
 		foreach ($productsToDepartmentObjects as $productsToDepartmentObject)
 		{
 			// Get the product objects
@@ -2200,7 +2200,7 @@ class DepartmentService {
 							$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('id' => $productToFeatureObject->getProductFeatureId(), 'locale' => $locale));
 							
 							// Check for bullets and filters
-							if ($productFeatureGroupObject && $productFeatureObject)
+							if (($productFeatureGroupObject instanceof ProductFeatureGroup) && ($productFeatureObject instanceof ProductFeature))
 							{
 								$productFeatureGroup = trim($productFeatureGroupObject->getProductFeatureGroup());
 								$productFeature = trim($productFeatureObject->getProductFeature());
@@ -2210,20 +2210,13 @@ class DepartmentService {
 									// Check for a bullet
 									if ($departmentToFeatureObject->getDisplayOnListing() > 0)
 									{
-										$bulletClass = 'bullet';
-										if (strtoupper(trim($productFeatureObject->getProductFeature())) == 'YES')
-										{
-											$bulletClass = 'green-tick';
-										} elseif (strtoupper(trim($productFeatureObject->getProductFeature())) == 'NO') {
-											$bulletClass = 'red-cross';
-										}
-										$bullets[] = '<li class="'.$bulletClass.'">'.trim($productFeatureGroupObject->getProductFeatureGroup()).': <strong>'.trim($productFeatureObject->getProductFeature()).'</strong></li>';
+										$bullets[] = trim($productFeatureGroupObject->getProductFeatureGroup()).': '.trim($productFeatureObject->getProductFeature());
 									}
 								
 									// Check for a filter
-									if (($departmentToFeatureObject->getDisplayOnFilter() > 0) || ($productToFeatureObject->getProductFeatureGroupId() == 2))
+									if ($departmentToFeatureObject->getDisplayOnFilter() > 0)
 									{
-										$filters[] = $productFeatureGroup.':'.$productFeature;
+										$filters[] = trim($productFeatureGroupObject->getProductFeatureGroup()).':'.trim($productFeatureObject->getProductFeature());
 									}
 								}
 							}
@@ -2244,6 +2237,7 @@ class DepartmentService {
 								$productUpdate[] = '<li><strong>'.$productFeatureGroupObject->getProductFeatureGroup().':</strong> Updated sort order from '.$productToFeatureObject->getDisplayOrder().' to '.$departmentToFeatureObject->getDisplayOrder().'</li>';
 								$productToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
 								$em->persist($productToFeatureObject);
+								$em->flush();
 							}
 						} else {
 							$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('id' => $departmentToFeatureObject->getProductFeatureGroupId(), 'locale' => $locale));
@@ -2260,6 +2254,7 @@ class DepartmentService {
 							}
 							$productToFeatureObject->setDisplayOrder($departmentToFeatureObject->getDisplayOrder());
 							$em->persist($productToFeatureObject);
+							$em->flush();	
 						}
 					}
 				}
@@ -2275,15 +2270,14 @@ class DepartmentService {
 						$em->remove($productToFeatureObject);
 					}
 				}
+				$em->flush();
 				
 				// Update the bullets
 				if (sizeof($bullets) > 0)
 				{
-					$bullets = '<ul>'.implode('', $bullets).'</ul>';
+					$bullets = '<ul><li>'.implode('</li><li>', $bullets).'</li></ul>';
 					$productUpdate[] = '<li>The bullets were updated</li>';
 					$productIndexObject->setDescription($bullets);
-				} else {
-					$productIndexObject->setDescription('');
 				}
 				
 				// Update the filters
@@ -2292,12 +2286,11 @@ class DepartmentService {
 					$filters = '|'.implode('|', $filters).'|';
 					$productUpdate[] = '<li>The filters were updated</li>';
 					$productIndexObject->setProductFeatures($filters);
-				} else {
-					$productIndexObject->setProductFeatures('');
 				}
 				
 				// Save any changes to the product index
 				$em->persist($productIndexObject);
+				$em->flush();
 				
 				// Update the log
 				if (sizeof($productUpdate) > 0)
@@ -2309,9 +2302,6 @@ class DepartmentService {
 				$productUpdates[] = $productUpdate;
 			}
 		}
-		
-		// Update the database
-		$em->flush();
 		
 		return $productUpdates;
     }
@@ -2390,7 +2380,7 @@ class DepartmentService {
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
-										if (($productFeatureValue != '') && (strtoupper($productFeatureValue) != 'N/A') && (strtoupper($productFeatureValue) != '*** NOT SET ***') && (strtoupper($productFeatureValue) != 'YES') && (strtoupper($productFeatureValue) != 'NO') && (strtoupper($productFeatureValue) != 'UNKNOWN'))
+										if (($productFeatureValue != '') && ($productFeatureValue != 'N/A') && ($productFeatureValue != '*** NOT SET ***') && ($productFeatureValue != 'Yes') && ($productFeatureValue != 'NO') && ($productFeatureValue != 'UNKNOWN'))
 										{
 											$newField[] = trim($productFeatureValue);
 										}
