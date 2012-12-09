@@ -74,7 +74,7 @@
 										<script type="text/javascript" defer="defer">
 											$(document).ready(function() {
 												$("#search-product-for-related-product-{{ loop.index }}").autocomplete({
-													source: products,
+													source: ,
 													focus: function(event, ui) {
 														$("#search-product-for-related-product-{{ loop.index }}").val(ui.item.label);
 														$("#uniform-form-product-link-for-related-product-id-{{ loop.index }} span").html($("#form-product-link-for-related-product-id-{{ loop.index }} option[value='"+ui.item.value+"']").text());

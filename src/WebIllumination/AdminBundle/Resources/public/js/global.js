@@ -1214,6 +1214,13 @@ $(document).ready(function () {
 			$("html, body").animate({scrollTop: $("#add").offset().top - 20}, 'slow');
 		}
 	});
+    $(".action-new").live('click', function(event) {
+        if ($("#new"))
+        {
+            $("#new").show();
+            $("html, body").animate({scrollTop: $("#new").offset().top - 20}, 'slow');
+        }
+    });
 	$(".action-close-add").live('click', function(event) {
 		$("div.form-error").hide();
 		$("#add").hide();
@@ -1223,6 +1230,12 @@ $(document).ready(function () {
 				$(this).parent().parent().parent().parent().remove();
 			});
 		}
+		$("html, body").animate({scrollTop: 0}, 'slow');
+	});
+	$(".action-close-new").live('click', function(event) {
+		$("div.form-error").hide();
+		$("#new").hide();
+        $("#new")[0].reset();
 		$("html, body").animate({scrollTop: 0}, 'slow');
 	});
 		
@@ -1251,6 +1264,13 @@ $(document).ready(function () {
 	});
 	$("#add #button-listing-add").live('click', function() {
 		$("#form-go-back").val("0");
+		$("#form-update").submit();
+		return true;
+	});
+
+	$("#new #button-listing-new").live('click', function() {
+		$("#form-go-back").val("0");
+        $("#form-new-item").val(1);
 		$("#form-update").submit();
 		return true;
 	});
