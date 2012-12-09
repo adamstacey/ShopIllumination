@@ -1,0 +1,135 @@
+{% extends '::admin.html.twig' %}
+{% block title %}Order {{ data.item.id }} - Products | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} %}
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+    	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
+	    	<div class="grid_6">
+				<div id="confirm-multiple-delete" class="info-message ui-helper-hidden">
+	    			<div class="fr no-margin no-padding">
+			        	<button class="fl button ui-corner-left ui-button-black action-cancel-multiple-delete">Cancel</button>
+			        	<button class="fl button ui-corner-right icon-set-white ui-button-red action-multiple-delete" data-icon-primary="ui-icon-circle-cross">Confirm Delete</button>
+			        </div>
+					<span class="info-message-icon ui-icon ui-icon-help"></span>
+					<p><strong class="important">WARNING:</strong> Are you sure you want to delete the selected products below?</p>
+					<div class="clear"></div>
+				</div>
+				<div id="add" class="portlet margin-bottom-15 ui-helper-hidden">
+					<header>
+	           			<h2>Add a product</h2>
+	                </header>
+					<section class="no-padding">
+					</section>
+		        </div>
+	    		<div class="portlet">
+					<header>
+						<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr action-add" data-icon-primary="ui-icon-circle-plus">Add a Product</button>
+	           			<h2 id="listing-title-products">Products ({{ data.items|length }})</h2>
+	                </header>
+					<section class="no-padding">
+						<div id="listing" class="position-relative">
+							{% if data.items|length > 0 %}
+								<table class="data-table" id="listing-products" width="100%">
+									<thead>
+										<tr>
+											<th width="19" class="ac"><input type="checkbox" class="action-select-all-add" value="1" /></th>
+											<th width="1" class="ar">&nbsp;</th>
+											<th width="1" class="ac">Quantity</th>
+											<th class="ac">Product</th>
+											<th class="ac">Code</th>
+                                            <th class="ac" width="1" colspan="3">Price</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for item in data.items %}
+											<tr class="item{% if item.noteType == 'staff' %} blue{% endif %}" id="item-{{ item.id }}" data-note-type="{{ item.noteType }}">
+												<td width="19" class="ac select">
+													<input data-id="{{ item.id }}" type="checkbox" class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" />
+												</td>
+												<td width="1" class="ar small">{{ loop.index }}</td>
+                                                <td class="ac {% if item.quantity > 1 %} gradient-background-red{% endif %}" width="1">{{ item.quantity }}</td>
+                                                <td class="ac">{{ item.header }}</td>
+                                                <td class="ac" width="1">{{ item.productCode }}</td>
+                                                <td class="ac" width="1">&pound;{{ item.unitCost|number_format(2) }}</td>
+                                                <td class="ac" width="1">=</td>
+                                                <td class="ac" width="1"><strong>&pound;{{ item.subTotal|number_format(2) }}</strong></td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							{% else %}
+								<p class="no-results">Sorry, no products were found.</p>found.</p>
+							{% endif %}
+						</div>
+
+                        <div id="listing-totals" class="position-relative">
+                            <table class="data-table margin-top-10" width="100%" cellspacing="0">
+                                <tbody>
+                                    <tr>
+                                        <td class="ar label">Subtotal before Delivery Charges (inc. VAT):</td>
+                                        <td width="1">&pound;{{ data.item.subTotal|number_format(2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ar label">Delivery Charge (inc. VAT):</td>
+                                        {% if data.item.deliveryType == 'Collection' %}
+                                            <td width="1" class="gradient-background-red">COLLECTION</td>
+                                        {% else %}
+                                            {% if data.item.deliveryCharge == 0 %}
+                                                <td width="1" class="gradient-background-green">FREE</td>
+                                            {% else %}
+                                                <td width="1">&pound;{{ data.item.deliveryCharge|number_format(2) }}</td>
+                                            {% endif %}
+                                        {% endif %}
+                                    </tr>
+                                    {% for donation in data.donations %}
+                                        {% if donation.donation > 0 %}
+                                            <tr>
+                                                <td class="ar label"><img class="margin-right-10" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" height="10" />{{ donation.description }}:</td>
+                                                <td width="1" class="gradient-background-green">&pound;{{ donation.donation|number_format(2) }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if data.item.discount > 0 %}
+                                        <tr>
+                                            <td class="ar label">Discount:</td>
+                                            <td width="1" class="gradient-background-green">&pound;{{ data.item.discount|number_format(2) }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td class="ar label">VAT (20%):</td>
+                                        <td width="1">&pound;{{ data.item.vat|number_format(2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ar label">Total Paid (inc. VAT):</td>
+                                        <td width="1"><strong>&pound;{{ data.item.total|number_format(2) }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+			        	<div class="clear"></div>
+		        		<div id="float-buttons" class="clearfix padding-15">
+					        <div id="float-buttons-content" class="float-buttons clearfix buttons no-margin">
+					        	<input type="hidden" value="" id="form-extra-action" name="extra-action" />
+					        	<input type="hidden" value="0" id="form-delete" name="delete" />
+				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
+				        		<a href="{{ path('admin_'~data.settings.multiplePath) }}" id="button-go-back" class="fr icon-set-white ui-corner-right button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+				        		<button class="fr button icon-set-white ui-corner-left ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+						    </div>
+						</div>
+					</section>
+		        </div>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} %}
+{% endblock %}

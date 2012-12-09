@@ -113,18 +113,35 @@
 			getDeliveryAddressPreview();
 		});
 		
-		$("select.add-note-type").live('change', function() {
+		$("select.add-note-type, select.listing-note-type").live('change', function() {
 			if ($(this).val() == 'staff')
 			{
 				$(this).parents("tr").removeClass("blue").addClass("blue");
 				$(this).parents("td").removeClass("blue").addClass("blue");
-				$(this).parents("td").next().find("div").hide();
+				$(this).parents("td").next().removeClass("gradient-background-green").removeClass("gradient-background-orange").find("div").hide();
 			} else {
 				$(this).parents("tr").removeClass("blue");
 				$(this).parents("td").removeClass("blue");
 				$(this).parents("td").next().find("div").show();
+                var input = $(this).parents("td").next().find("input.listing-notified");
+                if(input.is(':checked')) {
+                    input.parents("td").addClass("gradient-background-green");
+                    input.parents("td").removeClass("gradient-background-orange");
+                } else {
+                    input.parents("td").addClass("gradient-background-orange");
+                    input.parents("td").removeClass("gradient-background-green");
+                }
 			}
 		});
+        $("input.listing-notified").live('change', function() {
+            if($(this).is(':checked')) {
+                $(this).parents("td").addClass("gradient-background-green");
+                $(this).parents("td").removeClass("gradient-background-orange");
+            } else {
+                $(this).parents("td").addClass("gradient-background-orange");
+                $(this).parents("td").removeClass("gradient-background-green");
+            }
+        });
 
 	});
 </script>

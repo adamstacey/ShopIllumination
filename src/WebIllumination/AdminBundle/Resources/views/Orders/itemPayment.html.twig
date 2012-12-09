@@ -1,0 +1,231 @@
+{% extends '::admin.html.twig' %}
+{% block title %}Order {{ data.item.id }} - Payment | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+    {% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} %}
+{% endblock %}
+{% block header %}
+    {{ parent() }}
+    {% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
+{% endblock %}
+{% block body %}
+	<section class="container_6 clearfix">
+    	<div class="grid_6">
+        	<div class="portlet">
+            	<header>
+           			<h2>Payment</h2>
+                </header>
+                <section>
+                    <form class="form has-validation" id="form-{{ data.mode }}" method="post" action="{{ data.formAction }}">
+                        <div id="billing-address-container" class="form-element clearfix">
+                            <span data-help-container="billing-address" class="info-message-icon ui-icon ui-icon-help"></span>
+                            <label for="form-name" class="form-label">
+                                <em>*</em> Billing Address
+                                <div class="padding-left-5 fr">
+                                    <button type="button" class="fr action-clear-billing-address full button icon-set-white ui-button-red ui-corner-all ar" data-icon-primary="ui-icon-circle-cross">Clear Address</button>
+                                    <textarea id="billing-address-preview" rows="9" class="full ac margin-top-5"></textarea>
+                                </div>
+                            </label>
+                            <div class="form-input">
+                                <table class="no-padding" width="100%">
+                                    <tr>
+                                        <td width="50%"><input class="ui-corner-tl" placeholder="First Name *" type="text" id="form-billing-first-name" name="billing-first-name" value="{{ data.item.billingFirstName|default('') }}" required="required" data-message="Enter the first name" /></td>
+                                        <td width="50%"><input class="ui-corner-tr" placeholder="Last Name *" type="text" id="form-billing-last-name" name="billing-last-name" value="{{ data.item.billingLastName|default('') }}" required="required" data-message="Enter the last name" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" placeholder="Company" type="text" id="form-billing-organisation-name" name="billing-organisation-name" value="{{ data.item.billingOrganisationName|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <select class="ui-corner-none" id="form-billing-country-code" name="billing-country-code" required="required" data-message="Select a Country">
+                                                <option{% if data.item is defined %}{% if data.item.billingCountryCode == 'GB' %} selected="selected"{% endif %}{% else %} selected="selected"{% endif %} value="GB">United Kingdom</option>
+                                                <option{% if data.item is defined %}{% if data.item.billingCountryCode == 'IE' %} selected="selected"{% endif %}{% endif %} value="IE">Republic of Ireland</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" required="required" data-message="Enter an address" placeholder="Address Line 1 *" type="text" id="form-billing-address-line-1" name="billing-address-line-1" value="{{ data.item.billingAddressLine1|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" placeholder="Address Line 2" type="text" id="form-billing-address-line-2" name="billing-address-line-2" value="{{ data.item.billingAddressLine2|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" required="required" data-message="Enter a town or city" placeholder="Town/City *" type="text" id="form-billing-town-city" name="billing-town-city" value="{{ data.item.billingTownCity|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" placeholder="County" type="text" id="form-billing-county-state" name="billing-county-state" value="{{ data.item.billingCountyState|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-bottom" required="required" data-message="Enter a post code" placeholder="Post Code *" type="text" id="form-billing-post-zip-code" name="billing-post-zip-code" value="{{ data.item.billingPostZipCode|upper|default('') }}" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="form-element clearfix padding-bottom-5">
+                            <h3>Payment Information</h3>
+                            <table class="data-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                {% if data.item.paymentType != '' %}
+                                    <tr>
+                                        <td class="label">Payment Type</td>
+                                        <td>
+                                            <select data-id="payment-payment-type" id="form-payment-type" data-name="payment-type" name="payment-type"  class="payment-type uniform full">
+                                                <option value="" {% if data.item.paymentType == '' %}selected="selected"{%  endif  %}>-</option>
+                                                <option value="SagePay" {% if data.item.paymentType == 'SagePay' %}selected="selected"{%  endif  %}>SagePay</option>
+                                                <option value="PayPal through SagePay" {% if data.item.paymentType == 'PayPal through SagePay' %}selected="selected"{%  endif  %}>PayPal through SagePay</option>
+                                                <option value="Google Wallet" {% if data.item.paymentType == 'Google Wallet' %}selected="selected"{%  endif  %}>Google Wallet</option>
+                                            </select>
+                                        </td>
+                                        {#<td>{% if data.item.paymentType == '' %}&nbsp;-&nbsp;{% else %}<img class="no-border" src="{{ asset(data.item.paymentTypeLogo) }}" border="0" alt="{{ data.item.paymentType }}" />{% endif %}</td>#}
+                                    </tr>
+                                {% endif %}
+                                <tr>
+                                    <td class="label">Total Amount</td>
+                                    <td>&pound;{{ data.item.total|number_format(2)|default('0.00') }}</td>
+                                </tr>
+                                {% if data.item.paymentResponse != '' %}
+                                    <tr>
+                                        <td class="label">Transaction Status</td>
+                                        <td{% if data.item.paymentResponse.Status is defined %} class="gradient-background-{% if data.item.paymentResponse.Status|upper == 'SUCCESS' %}green{% else %}red{% endif %}"{% endif %}>{{ (data.item.paymentResponse.Status is defined?item.paymentResponse.Status|default('-'):'-') }}</td>
+                                    </tr>
+                                    {% if data.item.paymentResponse.TxAuthNo is defined %}
+                                        <tr>
+                                            <td class="label">Authorisation Code</td>
+                                            <td>{{ data.item.paymentResponse.TxAuthNo|default('-') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if data.item.paymentResponse.StatusDetail is defined %}
+                                        <tr>
+                                            <td class="label">Status Information</td>
+                                            <td>{{ data.item.paymentResponse.StatusDetail|default('-') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if data.item.paymentResponse.VPSTxId is defined %}
+                                        <tr>
+                                            <td class="label">Unique Transaction ID</td>
+                                            <td>{{ data.item.paymentResponse.VPSTxId|default('-') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% else %}
+                                    <tr>
+                                        <td class="label">Transaction Status</td>
+                                        <td class="gradient-background-red">NO PAYMENT TAKEN</td>
+                                    </tr>
+                                {% endif %}
+                            </table>
+                        </div>
+                        <div class="form-element clearfix padding-bottom-5">
+                            <h3>Standard Fraud Checks</h3>
+                            <table class="data-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td class="label">Has customer ordered before?</td>
+                                    <td class="ac gradient-background-{{ (data.item.fraudCheckCustomerOrdered == 1?'green':'orange') }}">{{ (data.item.fraudCheckCustomerOrdered == 1?'YES':'NO') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Is the billing and delivery address the same?</td>
+                                    <td class="ac gradient-background-{{ (data.item.fraudCheckAddressMatch == 1?'green':'orange') }}">{{ (data.item.fraudCheckAddressMatch == 1?'YES':'NO') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Name found on a different order?</td>
+                                    <td class="ac gradient-background-{{ (data.item.fraudCheckNameUsedOnDifferentOrder == 1?'red':'green') }}">{{ (data.item.fraudCheckNameUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Postcode found on a different order?</td>
+                                    <td class="ac gradient-background-{{ (data.item.fraudCheckPostZipCodeUsedOnDifferentOrder == 1?'red':'green') }}">{{ (data.item.fraudCheckPostZipCodeUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Telephone found on a different order?</td>
+                                    <td class="ac gradient-background-{{ (data.item.fraudCheckTelephoneUsedOnDifferentOrder == 1?'red':'green') }}">{{ (data.item.fraudCheckTelephoneUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="form-element clearfix padding-bottom-5">
+                            {% if data.item.paymentType == 'PayPal through SagePay' %}
+                                {% if (data.item.paymentResponse.AddressStatus is defined) or (data.item.paymentResponse.PayerStatus is defined) %}
+                                    <h3>PayPal Fraud Checks</h3>
+                                    <table class="data-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        {% if data.item.paymentResponse.AddressStatus is defined %}
+                                            <tr>
+                                                <td class="label">Address Status</td>
+                                                <td class="gradient-background-{% if data.item.paymentResponse.AddressStatus == 'CONFIRMED' %}green{% elseif data.item.paymentResponse.AddressStatus == 'UNCONFIRMED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.AddressStatus|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if data.item.paymentResponse.PayerStatus is defined %}
+                                            <tr>
+                                                <td class="label">Payer Status</td>
+                                                <td class="gradient-background-{% if data.item.paymentResponse.PayerStatus == 'VERIFIED' %}green{% else %}red{% endif %}">{{ data.item.paymentResponse.PayerStatus|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    </table>
+                                {% endif %}
+                            {% elseif data.item.paymentType == 'SagePay' %}
+                                {% if (data.item.paymentResponse.CardType is defined) or (data.item.paymentResponse.Last4Digits is defined) or (data.item.paymentResponse.AddressResult is defined) or (data.item.paymentResponse.PostCodeResult is defined) or (data.item.paymentResponse.AVSCV2 is defined) or (data.item.paymentResponse.CV2Result is defined) or (data.item.paymentResponse['3DSecureStatus'] is defined) %}
+                                    <h3>SagePay Fraud Checks</h3>
+                                    <table class="data-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                        {% if data.item.paymentResponse.CardType is defined %}
+                                            <tr>
+                                                <td class="label">Card Type</td>
+                                                <td>{{ data.item.paymentResponse.CardType|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if data.item.paymentResponse.Last4Digits is defined %}
+                                            <tr>
+                                                <td class="label">Card Number</td>
+                                                <td>{% if data.item.paymentResponse.Last4Digits > 0 %}**** **** **** {{ data.item.paymentResponse.Last4Digits|default('-') }}{% else %}-{% endif %}</td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if data.item.paymentResponse.AddressResult is defined %}
+                                            <tr>
+                                                <td class="label">Address Check</td>
+                                                <td class="gradient-background-{% if data.item.paymentResponse.AddressResult == 'MATCHED' %}green{% elseif data.item.paymentResponse.AddressResult == 'NOTMATCHED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.AddressResult|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if data.item.paymentResponse.PostCodeResult is defined %}
+                                            <tr>
+                                                <td class="label">Postcode Check</td>
+                                                <td class="gradient-background-{% if data.item.paymentResponse.PostCodeResult == 'MATCHED' %}green{% elseif data.item.paymentResponse.PostCodeResult == 'NOTMATCHED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.PostCodeResult|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if data.item.paymentResponse.AVSCV2 is defined %}
+                                            <tr>
+                                                <td class="label">AVS/CV2 Check</td>
+                                                <td class="gradient-background-{% if data.item.paymentResponse.AVSCV2 == 'ALL MATCH' %}green{% elseif data.item.paymentResponse.AVSCV2 == 'NO DATA MATCHES' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.AVSCV2|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if data.item.paymentResponse.CV2Result is defined %}
+                                            <tr>
+                                                <td class="label">CV2 Result</td>
+                                                <td class="gradient-background-{% if data.item.paymentResponse.CV2Result == 'MATCHED' %}green{% elseif data.item.paymentResponse.CV2Result == 'NOTMATCHED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.CV2Result|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        {% if data.item.paymentResponse['3DSecureStatus'] is defined %}
+                                            <tr>
+                                                <td class="label">3D Secure Status</td>
+                                                <td class="gradient-background-{% if data.item.paymentResponse['3DSecureStatus'] == 'OK' %}green{% else %}red{% endif %}">{{ data.item.paymentResponse['3DSecureStatus']|default('-') }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    </table>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                        <div id="float-buttons" class="clearfix">
+                            <div id="float-buttons-content" class="float-buttons clearfix buttons">
+                                <input type="hidden" value="" id="form-extra-action" name="extra-action" />
+                                <input type="hidden" value="0" id="form-delete" name="delete" />
+                                <input type="hidden" value="0" id="form-go-back" name="go-back" />
+                                <a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+                                <button id="button-update-go-back" type="submit" class="fr button ui-corner-none icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
+                                <button id="button-update" type="submit" class="fr button ui-corner-left icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} %}
+{% endblock %}

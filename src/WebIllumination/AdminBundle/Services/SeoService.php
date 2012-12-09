@@ -1,23 +1,22 @@
-<?php 
+<?php
 
 namespace WebIllumination\AdminBundle\Services;
 
 use WebIllumination\AdminBundle\Entity\Routing;
 use WebIllumination\AdminBundle\Entity\Redirect;
 
-require_once __DIR__.'/../../../../vendor/htmlpurifier/library/HTMLPurifier.auto.php';
-
 class SeoService {
 
 	protected $container;
-	
+
 	// HTML Purifier config
 	protected $htmlPurifierConfig;
 
     public function __construct($container)
     {
+        \HTMLPurifier_Bootstrap::registerAutoload();
         $this->container = $container;
-        
+
         // HTML Purifier config
         $this->htmlPurifierConfig = \HTMLPurifier_Config::createDefault();
 		$this->htmlPurifierConfig->set('Core.Encoding', 'UTF-8');
@@ -29,7 +28,7 @@ class SeoService {
 		$this->htmlPurifierConfig->set('HTML.ForbiddenElements', array('div', 'span', 'font', 'pre'));
 		$this->htmlPurifierConfig->set('HTML.ForbiddenAttributes', array('class', 'id', 'style'));
     }
-    
+
     // Update redirects
     public function updateRedirects($objectId, $objectType, $redirectFrom, $redirectTo)
     {
@@ -37,13 +36,13 @@ class SeoService {
     	{
     		return false;
     	}
-    	
+
     	// Get the doctrine service
     	$doctrineService = $this->container->get('doctrine');
-    	
+
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
-    	
+
     	// Remove any redirects to the new URL
     	$existingRedirects = $doctrineService->getRepository('WebIlluminationAdminBundle:Redirect')->findByRedirectFrom($redirectTo);
     	foreach ($existingRedirects as $existingRedirect)
@@ -51,7 +50,7 @@ class SeoService {
     		$em->remove($existingRedirect);
     		$em->flush();
     	}
-    	
+
     	// Update any redirects that are redirected to the existing URL
     	$existingRedirects = $doctrineService->getRepository('WebIlluminationAdminBundle:Redirect')->findByRedirectTo($redirectFrom);
     	foreach ($existingRedirects as $existingRedirect)
@@ -59,7 +58,7 @@ class SeoService {
     		$existingRedirect->setRedirectTo($redirectTo);
     		$em->flush();
     	}
-    	
+
     	// Create a new redirect
     	$redirect = new Redirect();
     	$redirect->setObjectId($objectId);
@@ -69,7 +68,7 @@ class SeoService {
 		$redirect->setRedirectCode('301');
 	    $em->persist($redirect);
 	    $em->flush();
-	    
+
 	    // Send an email to update the marketing team
 		try
 		{
@@ -84,19 +83,19 @@ class SeoService {
 		} catch (Exception $exception) {
 			error_log('Error sending email!');
 		}
-	        	
+
     	return true;
     }
-    
+
     // Create URL
     public function createUrl($url, $existingUrl = '')
     {
     	// Count duplicate URLs
     	$duplicate_count = 0;
-    	
+
     	// Generate the URL
     	$url = $this->generateUrl($url);
-    	
+
     	// Check if the URL already exist
     	if ($url != $existingUrl)
     	{
@@ -105,41 +104,41 @@ class SeoService {
 	    		$duplicate_count++;
 	    		$url = $url.'-'.$duplicate_count;
 	    	}
-		}    	
+		}
     	return $url;
     }
-    
+
     // Generate a URL
     public function generateUrl($url = '')
-    {	
+    {
     	if ($url != '')
     	{
 	    	// Add spaces to ending HTMl tags
 	    	$url = preg_replace("/<\/([^\s])>/", "</$1> ", $url);
-	    	
+
 	    	// Strip tags
 	    	$url = strip_tags($url);
-	    	
+
 	    	// Convert all HTML entities
 	    	$url = html_entity_decode($url);
-	    		    	
+
 	    	// Replace any white space
 	    	$url = preg_replace("/[\r\n\t\s]+/s", "-", $url);
-	    	
+
 	    	// Replace any dashes
 	    	$url = preg_replace("/[\-]+/s", "-", $url);
 	    	$url = str_replace('--', '-', $url);
-	    	
+
 	    	// Convert to lowercase
 	    	$url = strtolower($url);
-	    	
+
 	    	// Remove any unexpected characters
 	    	$url = preg_replace("/[^a-zA-Z0-9\-\/]?/", "", $url);
 	    }
- 
+
     	return $url;
     }
-	
+
 	// Check if URL already exists
     public function doesUrlExist($url = '')
     {
@@ -153,23 +152,23 @@ class SeoService {
     	}
         return false;
     }
-    
+
     // Clean HTML
     public function cleanHtml($content = '')
     {
     	// Remove any extra spaces
     	$content = preg_replace("/[\r\n\t\s]+/s", " ", $content);
     	$content = str_replace('> <', '><', $content);
-    	
+
     	// Convert the encoding of the content
     	$content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
-    	    	
+
     	// Get the purifier
 		$purifier = new \HTMLPurifier($this->htmlPurifierConfig);
-		
-		// Clean any dirty formatting	
+
+		// Clean any dirty formatting
 		$content = $purifier->purify($content);
-		
+
 		// Remove any extra spaces
     	$content = preg_replace("/[\r\n\t\s]+/s", " ", $content);
     	$content = str_replace('> <', '><', $content);
@@ -179,13 +178,13 @@ class SeoService {
 
 	// Shorten content
     public function shortenContent($content = '', $minimum_length = 0)
-    {	
+    {
     	// Remove HTML
     	$content = $this->removeHtml($content);
-    	
+
     	// Clean
     	$content = $this->clean($content);
-    	
+
     	// Shorten the content
     	if (($minimum_length > 0) && (strlen($content) > $minimum_length))
     	{
@@ -196,95 +195,95 @@ class SeoService {
     		}
     		$content = $content.'...';
     	}
-    
+
     	return $content;
     }
-    
+
     // Get menu title
     public function getMenuTitle($content = '')
-    {	
+    {
     	// Ampersand replacements
     	$replacements = array(' AND ', ' ANd ', ' AnD ', ' aNd ', ' aND ', ' anD ', ' and ', ' + ');
     	$content = str_replace($replacements, ' & ', $content);
-    	    	    
+
     	return $content;
     }
-    
+
     // Convert to HTML
     public function convertToHtml($content = '')
-    {	
+    {
     	// Remove HTML
     	$content = $this->removeHtml($content);
-    	
+
     	// Remove any extra spaces
     	$content = preg_replace("/[\t\s]+/s", " ", $content);
-    	
+
     	// Replace new lines
     	$content = preg_replace("/[\r\n]+/", "<br />", $content);
-    	
+
     	// Add a paragraph
     	$content = '<p>'.$content.'</p>';
-    	    
+
     	return $content;
     }
-    
+
     // Remove any HTML
     public function removeHtml($content = '')
     {
     	// Clean HTML
     	$content = $this->cleanHtml($content);
-    	
+
     	// Add spaces to ending HTMl tags
     	$content = preg_replace("/<\/([^\s])>/", "</$1> ", $content);
-    	
+
     	// Strip tags
     	$content = strip_tags($content);
-    	
+
     	// Remove any extra spaces
     	$content = preg_replace("/[\r\n\t\s]+/s", " ", $content);
-    	
+
     	// Tidy up spacing
     	$content = preg_replace("/\s{2,}/", " ", $content);
-    	
+
     	// Convert all HTML entities
     	$content = html_entity_decode($content);
-    	
+
     	return $content;
     }
-    
+
     // Clean content
     public function clean($content = '')
     {
     	// Remove any extra spaces
     	$content = preg_replace("/[\r\n\t\s]+/s", " ", $content);
-    	
+
     	// Remove any unexpected characters
     	$content = preg_replace("/[^a-zA-Z0-9\?\<\>\!\(\)\*\%\&\@\:\;\"\'\ \.\,\_\-\^\|\/]?/", "", $content);
-    	
+
 		return $content;
     }
-    
+
     // Generate keywords
     public function generateKeywords($content = '', $separator = ', ')
     {
     	// Common words to ignore
     	$words_to_ignore = array('the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'person', 'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us');
-    	
+
     	// Remove HTML
     	$content = $this->removeHtml($content);
-    	
+
     	// Clean
     	$content = $this->clean($content);
-    	
+
     	// Remove any unexpected characters
     	$content = preg_replace("/[^a-zA-Z0-9\ \-]?/", "", $content);
-    	
+
     	// Convert to lowercase
 	    $content = strtolower($content);
-	    
+
 	    // Split into words
 	    $keywords = explode(' ', $content);
-	    
+
 	    // Remove any words on the ignore list
 	    foreach ($keywords as $index => $keyword)
 	    {
@@ -295,26 +294,26 @@ class SeoService {
 	    		unset($keywords[$index]);
 	    	}
 	    }
-	    
+
 	    // Add separator
     	$keywords = implode($separator, $keywords);
-    	
+
 		return $keywords;
     }
-    
+
     // Generate alternative product codes
     public function generateAlternativeProductCodes($product_code = '')
-    {    
+    {
     	// Store the alternatives
     	$product_codes = array();
-    	
+
     	// Add the initial product code
     	$product_codes[] = strtoupper($product_code);
-    	
+
     	// Store number of passes
     	$current_pass = 0;
     	$number_of_passes = strlen($product_code);
-    	
+
 		// Generate alternatives
 		while ($current_pass < $number_of_passes)
 		{
@@ -322,7 +321,7 @@ class SeoService {
 			{
 				foreach (str_split($product_code) as $index => $letter)
 				{
-					
+
 					$alternative_product_code = '';
 					foreach (str_split($product_code) as $alternative_index => $alternative_letter)
 					{
@@ -333,7 +332,7 @@ class SeoService {
 							$alternative_product_code .= $alternative_letter;
 						}
 					}
-					
+
 					// Generate the new product codes
 					if (strrpos($product_code, "1") !== false)
 					{
@@ -399,15 +398,15 @@ class SeoService {
 						$product_codes[] = str_replace('*', $letter, str_replace(' ', '', $alternative_product_code));
 					}
 				}
-				
+
 				// Only return unique product codes
 				$product_codes = array_unique($product_codes);
-				
+
 				// Next pass
 				$current_pass++;
 			}
 		}
-    	
+
 		return $product_codes;
     }
 }
