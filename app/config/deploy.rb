@@ -1,6 +1,6 @@
 # Enable multistage extension
-set :stages, ["dev", "staging", "production"]
-set :default_stage, "dev"
+set :stages, ["staging", "production"]
+set :default_stage, "staging"
 set :stage_dir,     "app/config"
 require 'capistrano/ext/multistage'
 
@@ -14,7 +14,7 @@ default_run_options[:pty] = true
 set :writable_dirs,     ["app/cache", "app/logs"]
 set :webserver_user,    "www-data"
 set :permission_method, :acl
-set :use_permissions, true
+set :set_permissions, true
 set :use_sudo , true
 
 # Repository configuration
