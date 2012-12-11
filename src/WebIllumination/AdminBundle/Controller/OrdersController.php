@@ -1919,8 +1919,9 @@ class OrdersController extends Controller
 
             // Get submitted data
             $newItem = $request->request->get('new-item');
-            $productQuantity = $request->request->get('new-product-quantity');
-            $productId = $request->request->get('new-product-id');
+            $newProductId = $request->request->get('new-product-id');
+            $newProductQuantity = $request->request->get('new-product-quantity');
+            $listingProductQuantity = $request->request->get('listing-product-quantity');
             $select = $request->request->get('select');
             $goBack = $request->request->get('go-back');
             $delete = $request->request->get('delete');
@@ -1944,10 +1945,12 @@ class OrdersController extends Controller
                             $em->remove($itemProductObject);
                         // Update the item
                         } else {
-                            if (isset($productQuantity[$itemId]))
+                            if (isset($listingProductQuantity[$itemId]))
                             {
-                                $itemProductObject->setQuantity($productQuantity[$itemId]);
+                                $itemProductObject->setQuantity($listingProductQuantity[$itemId]);
                             }
+
+                            $itemProductObject->setSubTotal($itemProductObject->getUnitCost() * $itemProductObject->getQuantity());
 
                             $em->persist($itemProductObject);
                         }
@@ -1964,7 +1967,7 @@ class OrdersController extends Controller
                  * Find product
                  * @var \WebIllumination\AdminBundle\Entity\ProductIndex $product
                  */
-                if (!$productId || !($product = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->find($productId)))
+                if (!$newProductId || !($product = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->find($newProductId)))
                 {
                     // Notify user
                     $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem finding the product <strong>"'.$request->request->get('product-id').'"</strong>. Please try again.');
@@ -1975,8 +1978,8 @@ class OrdersController extends Controller
 
                 $itemProductObject = new OrderProduct();
                 $itemProductObject->setOrderId($id);
-                $itemProductObject->setQuantity($productQuantity);
-                $itemProductObject->setBasketItemId(12345);
+                $itemProductObject->setQuantity($newProductQuantity);
+                $itemProductObject->setBasketItemId($id.'-1');
                 $itemProductObject->setProductId($product->getProductId());
                 $itemProductObject->setProduct($product->getProduct());
                 $itemProductObject->setProductCode($product->getProductCode());
@@ -1985,12 +1988,12 @@ class OrdersController extends Controller
                 $itemProductObject->setBrand($product->getBrand());
                 $itemProductObject->setShortDescription($product->getShortDescription());
 
-                $itemProductObject->setUnitCost(0);
-                $itemProductObject->setRecommendedRetailPrice(0);
-                $itemProductObject->setDiscount(0);
-                $itemProductObject->setSavings(0);
-                $itemProductObject->setVat(0);
-                $itemProductObject->setSubTotal(0);
+                $itemProductObject->setUnitCost($product->getListPrice());
+                $itemProductObject->setRecommendedRetailPrice($product->getRecommendedRetailPrice());
+                $itemProductObject->setDiscount($product->getDiscount());
+                $itemProductObject->setSavings($product->getSavings());
+                $itemProductObject->setVat($itemObject->getVat());
+                $itemProductObject->setSubTotal($product->getListPrice() * $newProductQuantity);
 
                 $itemProductObject->setSelectedOptions("");
                 $itemProductObject->setSelectedOptionLabels("");
@@ -1999,6 +2002,18 @@ class OrdersController extends Controller
                 $em->persist($itemProductObject);
                 $em->flush();
             }
+
+            // Recalculate totals
+            $itemOrderProducts =  $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Product')->findBy(array('orderId' => $id));
+            $itemObject->setSubTotal(0);
+
+            foreach($itemOrderProducts as $product)
+            {
+                $itemObject->setSubTotal($itemObject->getSubTotal() + $product->getSubTotal());
+            }
+            $itemObject->setTotal($itemObject->getSubTotal() + $itemObject->getDeliveryCharge());
+            $em->persist($itemObject);
+            $em->flush();
 
             // Notify user
             if ($delete > 0)
@@ -2052,7 +2067,6 @@ class OrdersController extends Controller
     		$addItem = $request->request->get('add-item');
             $listingNoteType = $request->request->get('listing-note-type');
             $listingNote = $request->request->get('listing-note');
-            $listingNotified = $request->request->get('listing-notified');
     		$addNoteType = $request->request->get('add-note-type');
     		$addNotified = $request->request->get('add-notified');
     		$addNote = $request->request->get('add-note');
@@ -2086,10 +2100,6 @@ class OrdersController extends Controller
                             if (isset($listingNote[$itemId]))
                             {
                                 $itemNoteObject->setNote($listingNote[$itemId]);
-                            }
-                            if (isset($listingNotified[$itemId]))
-                            {
-                                $itemNoteObject->setNotified($listingNotified[$itemId]);
                             }
 
                             $em->persist($itemNoteObject);

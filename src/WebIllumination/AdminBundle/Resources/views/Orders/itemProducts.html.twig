@@ -112,11 +112,11 @@
                                                 <td class="ac {% if item.quantity > 1 %} gradient-background-red{% endif %}" width="70">
                                                     <table class="no-border" align="center">
                                                         <tr>
-                                                            <td class="no-padding"><input name="quantity[{{ item.id }}]" id="form-quantity-{{ item.id }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="{{ item.quantity }}" /></td>
+                                                            <td class="no-padding"><input name="listing-product-quantity[{{ item.id }}]" id="form-listing-product-quantity-{{ item.id }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="{{ item.quantity }}" /></td>
                                                             <td class="no-padding">
                                                                 <div class="quantity-buttons-container no-padding">
-                                                                    <div class="ui-corner-tr action-increase-quantity" data-quantity-object="form-quantity-{{ item.id }}">+</div>
-                                                                    <div class="ui-corner-br action-decrease-quantity" data-quantity-object="form-quantity-{{ item.id }}">-</div>
+                                                                    <div class="ui-corner-tr action-increase-quantity" data-quantity-object="form-listing-product-quantity-{{ item.id }}">+</div>
+                                                                    <div class="ui-corner-br action-decrease-quantity" data-quantity-object="form-listing-product-quantity-{{ item.id }}">-</div>
                                                                 </div>
                                                             </td>
                                                         </tr>

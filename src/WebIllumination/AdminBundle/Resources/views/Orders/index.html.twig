@@ -318,7 +318,7 @@
 													
 													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_products', {'id': item.id}) }}" class="button icon-set-white ui-button-black ui-corner-none tooltip-preview-right" data-icon-primary="ui-icon-shopping-basket" data-icon-only="true" data-notification="{{ item.items }}" data-tooltip-id="#tooltip-products-{{ item.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_products') }}" data-id="{{ item.id }}">Shopping Basket</a>
 													
-													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_de', {'id': item.id}) }}" class="button icon-set-white ui-button-black ui-corner-left" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_delivery', {'id': item.id}) }}" class="button icon-set-white ui-button-black ui-corner-left" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>
 												</td>
 											</tr>
 										{% endfor %}
