@@ -110,7 +110,7 @@
 									{% if product.availableForPurchase == 1 %}										
 										<table cellpadding="0" cellspacing="0" border="0" align="right">
 											<tr>
-												{% if product.productCode == 'SE80050AL' %}
+												{% if product.productCode == '' %}
 													<td class="out-of-stock">Out of Stock Until Further Notice</td>
 												{% else %}
 													<td><span class="quantity-label">Quantity:</span></td>
@@ -193,9 +193,6 @@
 							</div>
 						{% endif %}
 					{% endfor %}
-					{# if (product.productCode == 'KHCH') or (product.productCode == 'EVOLUTION200') or (product.productCode == 'SE80050SS') or (product.productCode == 'C95030') or (product.productCode == '119.0179.532') or (product.productCode == 'PH01SS') or (product.productCode == 'FWC302SS') %}
-						<div class="movember-banner">WE WILL DONATE <strong>&pound;1</strong> FROM THE SALE OF THIS PRODUCT TO <a href="http://uk.movember.com/team/502833">MOVEMBER</a></div>
-					{% endif #}
 					{% if product.brand.id == '7' %}
 						<div class="special-offer-banner">10% Off All CDA Appliances when you buy 3 or more<br /><span>Simply add your items to the basket and your 10% will be taken off</span></div>
 					{% endif %}
