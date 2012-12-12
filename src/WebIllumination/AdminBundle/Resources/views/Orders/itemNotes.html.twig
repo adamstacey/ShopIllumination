@@ -118,11 +118,7 @@
                                                         <option value="customer" {% if item.noteType == 'customer' %}selected="selected"{%  endif  %}>Customer</option>
                                                     </select>
                                                 </td>
-                                                <td width="1" class="ac{% if item.noteType == 'customer' %} gradient-background-{{ (item.notified?'green':'orange') }}{% endif %}">
-                                                    <div class="{% if item.noteType == 'staff' %}ui-helper-hidden{% endif %}">
-                                                        <input type="checkbox" class="no-uniform listing-notified" data-id="listing-notified" id="listing-notified-{{ item.id }}" data-name="listing-notified" name="listing-notified[{{ item.id }}]" {%  if item.notified %}selected="selected"{% endif %} />
-                                                    </div>
-                                                </td>
+                                                <td width="1" class="ac small{% if item.noteType == 'customer' %} gradient-background-{{ (item.notified > 0?'orange':'green') }}{% endif %}">{% if item.noteType == 'customer' %}{{ (item.notified > 0?'YES':'NO') }}{% else %}-{% endif %}</td>
                                                 <td class="ac"><strong>{{ item.creator }}</strong></td>
                                                 <td class="ac">{{ item.createdAt|date("d/m/Y h:iA") }}</td>
                                                 <td class="al">

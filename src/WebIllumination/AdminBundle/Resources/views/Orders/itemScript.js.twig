@@ -133,7 +133,7 @@
                 }
 			}
 		});
-        $("input.listing-notified").live('change', function() {
+        $("input.listing-notified, input.listing-add-notified").live('change', function() {
             if($(this).is(':checked')) {
                 $(this).parents("td").addClass("gradient-background-green");
                 $(this).parents("td").removeClass("gradient-background-orange");
