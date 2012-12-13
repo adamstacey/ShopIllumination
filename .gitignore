@@ -33,6 +33,10 @@ ehthumbs.db
 Icon?
 Thumbs.db
 
+# Editor Files #
+################
+.idea
+
 app/autoload.php
 app/AppCache.php
 app/AppKernel.php
