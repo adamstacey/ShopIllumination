@@ -562,7 +562,7 @@ $(document).ready(function () {
 	$(".action-increase-quantity").live('click', function() {
 		var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
 		var $newQuantity = parseInt($quantityObject.val()) + 1;
-		$quantityObject.val($newQuantity);
+		$quantityObject.val($newQuantity).change();
 	});
 	
 	$(".action-decrease-quantity").live('click', function() {
@@ -572,7 +572,7 @@ $(document).ready(function () {
 		{
 			$newQuantity = 1;
 		}
-		$quantityObject.val($newQuantity);
+		$quantityObject.val($newQuantity).change();
 	});
 	
 	$("button.apply-to-all").live('click', function() {

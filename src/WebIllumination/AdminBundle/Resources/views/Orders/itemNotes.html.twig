@@ -113,7 +113,7 @@
                                                 </td>
                                                 <td width="1" class="ar small">{{ loop.index }}</td>
                                                 <td width="90" class="ac filterable small{% if item.noteType == 'staff' %} blue{% endif %}">
-                                                    <select data-id="listing-note-type" id="listing-note-type-{{ item.id }}" data-name="listing-note-type" name="listing-note-type[{{ item.id }}]"  class="listing-note-type uniform full">
+                                                    <select data-id="{{ item.id }}" id="listing-note-type-{{ item.id }}" data-name="listing-note-type" name="listing-note-type[{{ item.id }}]"  class="listing-note-type uniform full">
                                                         <option value="staff" {% if item.noteType == 'staff' %}selected="selected"{%  endif  %}>Staff</option>
                                                         <option value="customer" {% if item.noteType == 'customer' %}selected="selected"{%  endif  %}>Customer</option>
                                                     </select>
@@ -122,7 +122,7 @@
                                                 <td class="ac"><strong>{{ item.creator }}</strong></td>
                                                 <td class="ac">{{ item.createdAt|date("d/m/Y h:iA") }}</td>
                                                 <td class="al">
-                                                    <textarea data-add-required="required" data-message="Enter a note" rows="3" class="no-uniform full" data-id="listing-note" id="listing-note-{{ item.id }}" data-name="listing-note" name="listing-note[{{ item.id }}]">{{ item.note|raw|nl2br }}</textarea>
+                                                    <textarea data-add-required="required" data-message="Enter a note" rows="3" class="no-uniform full" data-id="{{ item.id }}" id="listing-note-{{ item.id }}" data-name="listing-note" name="listing-note[{{ item.id }}]">{{ item.note|raw|nl2br }}</textarea>
                                                 </td>
                                             </tr>
 										{% endfor %}
