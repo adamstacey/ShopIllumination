@@ -5,7 +5,7 @@ set :stage_dir,     "app/config"
 require 'capistrano/ext/multistage'
 
 # Main deployment configuration
-set :deploy_via, :remote_cache
+#set :deploy_via, :remote_cache
 set :keep_releases,  3
 ssh_options[:forward_agent] = true
 #default_run_options[:pty] = true
