@@ -65,6 +65,12 @@ doctrine:
         query_cache_driver: apc
         result_cache_driver: apc
 
+# Doctrine Extensions Configuration
+stof_doctrine_extensions:
+    default_locale: "%locale%"
+    orm:
+        default: ~
+
 # Swiftmailer Configuration
 swiftmailer:
     transport:  "%mailer_transport%"
