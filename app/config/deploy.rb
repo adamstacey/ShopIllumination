@@ -5,17 +5,9 @@ set :stage_dir,     "app/config"
 require 'capistrano/ext/multistage'
 
 # Main deployment configuration
-#set :deploy_via, :remote_cache
 set :keep_releases,  3
 ssh_options[:forward_agent] = true
-#default_run_options[:pty] = true
-
-# Permissions
-set :writable_dirs,     ["app/cache", "app/logs"]
-set :webserver_user,    "apache"
-set :permission_method, :chmod
-set :use_set_permissions, true
-set :use_sudo , false
+default_run_options[:pty] = true
 
 # Repository configuration
 set :repository,  "git@github.com:adamstacey/KitchenApplianceCentre.git"
@@ -31,6 +23,19 @@ set :dump_assetic_assets, true
 set :model_manager, "doctrine"
 
 # Hooks
-#after "deploy", "deploy:cleanup"
+after "deploy:update_code" do
+  capifony_pretty_print "--> Setting permissions"
+  ["app/cache", "app/logs"].each do |link|
+    if shared_children && shared_children.include?(link)
+      absolute_link = shared_path + "/" + link
+    else
+      absolute_link = latest_release + "/" + link
+    end
 
-logger.level = Logger::MAX_LEVEL
+    try_sudo "chown apache:apache #{absolute_link}"
+    capifony_puts_ok
+  end
+end
+after "deploy", "deploy:cleanup"
+
+#logger.level = Logger::MAX_LEVEL
