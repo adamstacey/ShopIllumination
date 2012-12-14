@@ -8,14 +8,14 @@ require 'capistrano/ext/multistage'
 # set :deploy_via, :remote_cache
 set :keep_releases,  3
 ssh_options[:forward_agent] = true
-default_run_options[:pty] = true
+#default_run_options[:pty] = true
 
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]
 set :webserver_user,    "www-data"
 set :permission_method, :acl
 set :set_permissions, true
-set :use_sudo , true
+set :use_sudo , false
 
 # Repository configuration
 set :repository,  "git@github.com:dancannon/KitchenApplianceCentre.git"
