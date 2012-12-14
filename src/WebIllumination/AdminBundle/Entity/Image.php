@@ -1,6 +1,7 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -81,264 +82,19 @@ class Image
      * @ORM\Column(name="large_path", type="string", length=255, nullable=true)
      */
     private $largePath;
-        
+
     /**
-     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
-    
+
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
-    
-    /**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set objectId
-     *
-     * @param integer $objectId
-     */
-    public function setObjectId($objectId)
-    {
-        $this->objectId = $objectId;
-    }
-
-    /**
-     * Get objectId
-     *
-     * @return integer 
-     */
-    public function getObjectId()
-    {
-        return $this->objectId;
-    }
-
-    /**
-     * Set objectType
-     *
-     * @param string $objectType
-     */
-    public function setObjectType($objectType)
-    {
-        $this->objectType = $objectType;
-    }
-
-    /**
-     * Get objectType
-     *
-     * @return string 
-     */
-    public function getObjectType()
-    {
-        return $this->objectType;
-    }
-
-    /**
-     * Set imageType
-     *
-     * @param string $imageType
-     */
-    public function setImageType($imageType)
-    {
-        $this->imageType = $imageType;
-    }
-
-    /**
-     * Get imageType
-     *
-     * @return string 
-     */
-    public function getImageType()
-    {
-        return $this->imageType;
-    }
-
-    /**
-     * Set locale
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return string 
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string 
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param text $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get description
-     *
-     * @return text 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set alignment
-     *
-     * @param string $alignment
-     */
-    public function setAlignment($alignment)
-    {
-        $this->alignment = $alignment;
-    }
-
-    /**
-     * Get alignment
-     *
-     * @return string 
-     */
-    public function getAlignment()
-    {
-        return $this->alignment;
-    }
-
-    /**
-     * Set link
-     *
-     * @param string $link
-     */
-    public function setLink($link)
-    {
-        $this->link = $link;
-    }
-
-    /**
-     * Get link
-     *
-     * @return string 
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
-     * Set displayOrder
-     *
-     * @param integer $displayOrder
-     */
-    public function setDisplayOrder($displayOrder)
-    {
-        $this->displayOrder = $displayOrder;
-    }
-
-    /**
-     * Get displayOrder
-     *
-     * @return integer 
-     */
-    public function getDisplayOrder()
-    {
-        return $this->displayOrder;
-    }
-
-    /**
-     * Set originalPath
-     *
-     * @param string $originalPath
-     */
-    public function setOriginalPath($originalPath)
-    {
-        $this->originalPath = $originalPath;
-    }
-
-    /**
-     * Get originalPath
-     *
-     * @return string 
-     */
-    public function getOriginalPath()
-    {
-        return $this->originalPath;
-    }
-
-    /**
-     * Set thumbnailPath
-     *
-     * @param string $thumbnailPath
-     */
-    public function setThumbnailPath($thumbnailPath)
-    {
-        $this->thumbnailPath = $thumbnailPath;
-    }
-
-    /**
-     * Get thumbnailPath
-     *
-     * @return string 
-     */
-    public function getThumbnailPath()
-    {
-        return $this->thumbnailPath;
-    }
-    
     /**
      * Get thumbnailWidth
      *
@@ -359,26 +115,6 @@ class Image
     {
     	list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->thumbnailPath);
         return $height;
-    }
-
-    /**
-     * Set mediumPath
-     *
-     * @param string $mediumPath
-     */
-    public function setMediumPath($mediumPath)
-    {
-        $this->mediumPath = $mediumPath;
-    }
-
-    /**
-     * Get mediumPath
-     *
-     * @return string 
-     */
-    public function getMediumPath()
-    {
-        return $this->mediumPath;
     }
     
     /**
@@ -401,26 +137,6 @@ class Image
     {
     	list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->mediumPath);
         return $height;
-    }
-
-    /**
-     * Set largePath
-     *
-     * @param string $largePath
-     */
-    public function setLargePath($largePath)
-    {
-        $this->largePath = $largePath;
-    }
-
-    /**
-     * Get largePath
-     *
-     * @return string 
-     */
-    public function getLargePath()
-    {
-        return $this->largePath;
     }
     
     /**
@@ -453,45 +169,5 @@ class Image
     		$height = 0;
     	}
         return $height;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param datetime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return datetime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param datetime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return datetime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 }

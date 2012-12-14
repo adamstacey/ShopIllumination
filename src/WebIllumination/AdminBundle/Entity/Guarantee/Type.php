@@ -1,15 +1,15 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Guarantee;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="guarantees")
+ * @ORM\Table(name="guarantee_types")
  * @ORM\HasLifecycleCallbacks()
  */
-class Guarantee
+class Type
 {
     /**
      * @ORM\Id
@@ -19,24 +19,19 @@ class Guarantee
     private $id;    
 	
 	/**
-     * @ORM\Column(name="object_id", type="integer", length=11)
+     * @ORM\Column(name="guarantee_type", type="string", length=255)
      */
-    private $objectId;
-	    
+    private $guaranteeType;
+    
     /**
-     * @ORM\Column(name="object_type", type="string", length=100)
+     * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $objectType;
-
+    private $locale;
+    
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Type")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $type;
-
-    /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Length")
-     */
-    private $length;
+    private $displayOrder;
 
     /**
      * @Gedmo\Timestampable(on="create")

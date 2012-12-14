@@ -1,15 +1,15 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Contact;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="guarantees")
+ * @ORM\Table(name="contact_titles")
  * @ORM\HasLifecycleCallbacks()
  */
-class Guarantee
+class ContactTitle
 {
     /**
      * @ORM\Id
@@ -17,26 +17,26 @@ class Guarantee
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
-	
-	/**
-     * @ORM\Column(name="object_id", type="integer", length=11)
-     */
-    private $objectId;
-	    
+    
     /**
-     * @ORM\Column(name="object_type", type="string", length=100)
+     * @ORM\Column(name="contact_title", type="string", length=255)
      */
-    private $objectType;
-
+    private $contactTitle;
+    
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Type")
+     * @ORM\Column(name="description", type="text")
      */
-    private $type;
-
+    private $description;
+    
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Length")
+     * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $length;
+    private $displayOrder;
+    
+    /**
+     * @ORM\Column(name="locale", type="string", length=2)
+     */
+    private $locale;
 
     /**
      * @Gedmo\Timestampable(on="create")

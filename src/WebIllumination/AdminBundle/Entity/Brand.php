@@ -1,11 +1,12 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="brand")
+ * @ORM\Table(name="brands")
  * @ORM\HasLifecycleCallbacks()
  */
 class Brand
@@ -15,7 +16,12 @@ class Brand
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
+    private $id;
+
+    /**
+     * @OneToMany(targetEntity="WebIlluminationAdminBundle:Brand/Description", mappedBy="description")
+     **/
+    private $descriptions;
 	
 	/**
      * @ORM\Column(name="status", type="string", length=1)
@@ -63,62 +69,17 @@ class Brand
     private $maximumMembershipCardDiscount;
         
     /**
-     * @ORM\Column(name="created_at", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
-    
+
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string 
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-    
     /**
      * Get statusColour
      *
@@ -140,205 +101,5 @@ class Brand
     			break;
     	}
         return '';
-    }
-
-    /**
-     * Set requestABrochure
-     *
-     * @param integer $requestABrochure
-     */
-    public function setRequestABrochure($requestABrochure)
-    {
-        $this->requestABrochure = $requestABrochure;
-    }
-
-    /**
-     * Get requestABrochure
-     *
-     * @return integer 
-     */
-    public function getRequestABrochure()
-    {
-        return $this->requestABrochure;
-    }
-
-    /**
-     * Set brochureWebAddress
-     *
-     * @param string $brochureWebAddress
-     */
-    public function setBrochureWebAddress($brochureWebAddress)
-    {
-        $this->brochureWebAddress = $brochureWebAddress;
-    }
-
-    /**
-     * Get brochureWebAddress
-     *
-     * @return string 
-     */
-    public function getBrochureWebAddress()
-    {
-        return $this->brochureWebAddress;
-    }
-
-    /**
-     * Set requestASample
-     *
-     * @param integer $requestASample
-     */
-    public function setRequestASample($requestASample)
-    {
-        $this->requestASample = $requestASample;
-    }
-
-    /**
-     * Get requestASample
-     *
-     * @return integer 
-     */
-    public function getRequestASample()
-    {
-        return $this->requestASample;
-    }
-
-    /**
-     * Set sampleWebAddress
-     *
-     * @param string $sampleWebAddress
-     */
-    public function setSampleWebAddress($sampleWebAddress)
-    {
-        $this->sampleWebAddress = $sampleWebAddress;
-    }
-
-    /**
-     * Get sampleWebAddress
-     *
-     * @return string 
-     */
-    public function getSampleWebAddress()
-    {
-        return $this->sampleWebAddress;
-    }
-
-    /**
-     * Set hidePrices
-     *
-     * @param integer $hidePrices
-     */
-    public function setHidePrices($hidePrices)
-    {
-        $this->hidePrices = $hidePrices;
-    }
-
-    /**
-     * Get hidePrices
-     *
-     * @return integer 
-     */
-    public function getHidePrices()
-    {
-        return $this->hidePrices;
-    }
-
-    /**
-     * Set showPricesOutOfHours
-     *
-     * @param integer $showPricesOutOfHours
-     */
-    public function setShowPricesOutOfHours($showPricesOutOfHours)
-    {
-        $this->showPricesOutOfHours = $showPricesOutOfHours;
-    }
-
-    /**
-     * Get showPricesOutOfHours
-     *
-     * @return integer 
-     */
-    public function getShowPricesOutOfHours()
-    {
-        return $this->showPricesOutOfHours;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param datetime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return datetime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param datetime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return datetime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Set membershipCardDiscountAvailable
-     *
-     * @param integer $membershipCardDiscountAvailable
-     */
-    public function setMembershipCardDiscountAvailable($membershipCardDiscountAvailable)
-    {
-        $this->membershipCardDiscountAvailable = $membershipCardDiscountAvailable;
-    }
-
-    /**
-     * Get membershipCardDiscountAvailable
-     *
-     * @return integer 
-     */
-    public function getMembershipCardDiscountAvailable()
-    {
-        return $this->membershipCardDiscountAvailable;
-    }
-
-    /**
-     * Set maximumMembershipCardDiscount
-     *
-     * @param decimal $maximumMembershipCardDiscount
-     */
-    public function setMaximumMembershipCardDiscount($maximumMembershipCardDiscount)
-    {
-        $this->maximumMembershipCardDiscount = $maximumMembershipCardDiscount;
-    }
-
-    /**
-     * Get maximumMembershipCardDiscount
-     *
-     * @return decimal 
-     */
-    public function getMaximumMembershipCardDiscount()
-    {
-        return $this->maximumMembershipCardDiscount;
     }
 }
