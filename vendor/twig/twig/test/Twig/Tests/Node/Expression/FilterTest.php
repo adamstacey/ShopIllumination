@@ -35,19 +35,6 @@ class Twig_Tests_Node_Expression_FilterTest extends Twig_Test_NodeTestCase
         parent::testCompile($node, $source, $environment);
     }
 
-    /**
-     * @covers Twig_Node_Expression_Filter::compile
-     * @expectedException Twig_Error_Syntax
-     * @expectedExceptionMessage The filter "lowe" does not exist. Did you mean "lower" at line 1
-     */
-    public function testCompileUnknownFilter()
-    {
-        $expr = new Twig_Node_Expression_Constant('foo', 1);
-        $node = $this->createFilter($expr, 'lowe', array(new Twig_Node_Expression_Constant('bar', 1), new Twig_Node_Expression_Constant('foobar', 1)));
-
-        $node->compile($this->getCompiler());
-    }
-
     public function getTests()
     {
         $tests = array();
@@ -62,18 +49,63 @@ class Twig_Tests_Node_Expression_FilterTest extends Twig_Test_NodeTestCase
             $tests[] = array($node, 'twig_number_format_filter($this->env, strtoupper("foo"), 2, ".", ",")');
         }
 
+        // named arguments
+        $date = new Twig_Node_Expression_Constant(0, 1);
+        $node = $this->createFilter($date, 'date', array(
+            'timezone' => new Twig_Node_Expression_Constant('America/Chicago', 1),
+            'format'   => new Twig_Node_Expression_Constant('d/m/Y H:i:s P', 1),
+        ));
+        $tests[] = array($node, 'twig_date_format_filter($this->env, 0, "d/m/Y H:i:s P", "America/Chicago")');
+
+        // skip an optional argument
+        $date = new Twig_Node_Expression_Constant(0, 1);
+        $node = $this->createFilter($date, 'date', array(
+            'timezone' => new Twig_Node_Expression_Constant('America/Chicago', 1),
+        ));
+        $tests[] = array($node, 'twig_date_format_filter($this->env, 0, null, "America/Chicago")');
+
+        // underscores vs camelCase for named arguments
+        $string = new Twig_Node_Expression_Constant('abc', 1);
+        $node = $this->createFilter($string, 'reverse', array(
+            'preserve_keys' => new Twig_Node_Expression_Constant(true, 1),
+        ));
+        $tests[] = array($node, 'twig_reverse_filter($this->env, "abc", true)');
+        $node = $this->createFilter($string, 'reverse', array(
+            'preserveKeys' => new Twig_Node_Expression_Constant(true, 1),
+        ));
+        $tests[] = array($node, 'twig_reverse_filter($this->env, "abc", true)');
+
         return $tests;
     }
 
     /**
-     * @covers Twig_Node_Expression_Filter::compile
      * @expectedException        Twig_Error_Syntax
-     * @expectedExceptionMessage The filter "uppe" does not exist. Did you mean "upper" at line 1
+     * @expectedExceptionMessage Unknown argument "foobar" for filter "date".
      */
-    public function testUnknownFilter()
+    public function testCompileWithWrongNamedArgumentName()
     {
-        $node = $this->createFilter(new Twig_Node_Expression_Constant('foo', 1), 'uppe');
-        $node->compile($this->getCompiler());
+        $date = new Twig_Node_Expression_Constant(0, 1);
+        $node = $this->createFilter($date, 'date', array(
+            'foobar' => new Twig_Node_Expression_Constant('America/Chicago', 1),
+        ));
+
+        $compiler = $this->getCompiler();
+        $compiler->compile($node);
+    }
+
+    /**
+     * @expectedException        Twig_Error_Syntax
+     * @expectedExceptionMessage Value for argument "from" is required for filter "replace".
+     */
+    public function testCompileWithMissingNamedArgument()
+    {
+        $value = new Twig_Node_Expression_Constant(0, 1);
+        $node = $this->createFilter($value, 'replace', array(
+            'to' => new Twig_Node_Expression_Constant('foo', 1),
+        ));
+
+        $compiler = $this->getCompiler();
+        $compiler->compile($node);
     }
 
     protected function createFilter($node, $name, array $arguments = array())

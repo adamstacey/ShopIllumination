@@ -205,6 +205,35 @@ projects where storing all templates in a single PHP file might make sense.
     don't want to see your cache grows out of control, you need to take care
     of clearing the old cache file by yourself.
 
+``Twig_Loader_Chain``
+.....................
+
+``Twig_Loader_Chain`` delegates the loading of templates to other loaders::
+
+    $loader1 = new Twig_Loader_Array(array(
+        'base.html' => '{% block content %}{% endblock %}',
+    ));
+    $loader2 = new Twig_Loader_Array(array(
+        'index.html' => '{% extends "base.twig" %}{% block content %}Hello {{ name }}{% endblock %}',
+        'base.html'  => 'Will never be loaded',
+    ));
+
+    $loader = new Twig_Loader_Chain(array($loader1, $loader2));
+
+    $twig = new Twig_Environment($loader);
+
+When looking for a template, Twig will try each loader in turn and it will
+return as soon as the template is found. When rendering the ``index.html``
+template from the above example, Twig will load it with ``$loader2`` but the
+``base.html`` template will be loaded from ``$loader1``.
+
+``Twig_Loader_Chain`` accepts any loader that implements
+``Twig_LoaderInterface``.
+
+.. note::
+
+    You can also add loaders via the ``addLoader()`` method.
+
 Create your own Loader
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -262,6 +291,11 @@ As an example, here is how the built-in ``Twig_Loader_String`` reads::
 The ``isFresh()`` method must return ``true`` if the current cached template
 is still fresh, given the last modification time, or ``false`` otherwise.
 
+.. tip::
+
+    As of Twig 1.11.0, you can also implement ``Twig_ExistsLoaderInterface``
+    to make your loader faster when used with the chain loader.
+
 Using Extensions
 ----------------
 
@@ -283,10 +317,7 @@ Twig comes bundled with the following extensions:
 * *Twig_Extension_Optimizer*: Optimizers the node tree before compilation.
 
 The core, escaper, and optimizer extensions do not need to be added to the
-Twig environment, as they are registered by default. You can disable an
-already registered extension::
-
-    $twig->removeExtension('escaper');
+Twig environment, as they are registered by default.
 
 Built-in Extensions
 -------------------
@@ -462,10 +493,10 @@ The escaping rules are implemented as follows:
 
   .. code-block:: jinja
 
-        {% autoescape true js %}
-        {{ var|escape('html') }} {# will be escaped for html and javascript #}
-        {{ var }} {# will be escaped for javascript #}
-        {{ var|escape('js') }} {# won't be double-escaped #}
+        {% autoescape 'js' %}
+            {{ var|escape('html') }} {# will be escaped for html and javascript #}
+            {{ var }} {# will be escaped for javascript #}
+            {{ var|escape('js') }} {# won't be double-escaped #}
         {% endautoescape %}
 
 .. note::

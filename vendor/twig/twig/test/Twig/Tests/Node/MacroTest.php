@@ -9,7 +9,6 @@
  * file that was distributed with this source code.
  */
 
-
 class Twig_Tests_Node_MacroTest extends Twig_Test_NodeTestCase
 {
     /**
@@ -38,16 +37,20 @@ class Twig_Tests_Node_MacroTest extends Twig_Test_NodeTestCase
     public function getTests()
     {
         $body = new Twig_Node_Text('foo', 1);
-        $arguments = new Twig_Node(array(new Twig_Node_Expression_Name('foo', 1)), array(), 1);
+        $arguments = new Twig_Node(array(
+            'foo' => new Twig_Node_Expression_Constant(null, 1),
+            'bar' => new Twig_Node_Expression_Constant('Foo', 1),
+        ), array(), 1);
         $node = new Twig_Node_Macro('foo', $body, $arguments, 1);
 
         return array(
             array($node, <<<EOF
 // line 1
-public function getfoo(\$foo = null)
+public function getfoo(\$_foo = null, \$_bar = "Foo")
 {
     \$context = \$this->env->mergeGlobals(array(
-        "foo" => \$foo,
+        "foo" => \$_foo,
+        "bar" => \$_bar,
     ));
 
     \$blocks = array();
@@ -55,13 +58,13 @@ public function getfoo(\$foo = null)
     ob_start();
     try {
         echo "foo";
-    } catch(Exception \$e) {
+    } catch (Exception \$e) {
         ob_end_clean();
 
         throw \$e;
     }
 
-    return ob_get_clean();
+    return ('' === \$tmp = ob_get_clean()) ? '' : new Twig_Markup(\$tmp, \$this->env->getCharset());
 }
 EOF
             ),

@@ -16,10 +16,30 @@ use Assetic\Extension\Twig\AsseticExtension;
 
 class AsseticExtensionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Assetic\AssetManager
+     */
     private $am;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Assetic\FilterManager
+     */
     private $fm;
+
+    /**
+     * @var AssetFactory
+     */
     private $factory;
+
+    /**
+     * @var \Twig_Environment
+     */
     private $twig;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|\Assetic\ValueSupplierInterface
+     */
+    private $valueSupplier;
 
     protected function setUp()
     {
@@ -198,7 +218,7 @@ class AsseticExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Twig_Error
+     * @expectedException \Twig_Error
      */
     public function testUnclosedTag()
     {

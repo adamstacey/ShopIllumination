@@ -107,11 +107,13 @@ class AsseticExtensionTest extends \PHPUnit_Framework_TestCase
             array('cssembed', array('jar' => '/path/to/cssembed.jar')),
             array('cssimport'),
             array('cssrewrite'),
+            array('jsmin'),
+            array('jsminplus'),
             array('jpegoptim'),
             array('jpegtran'),
             array('less'),
             array('lessphp'),
-            array('scssphp'),
+            array('scssphp', array('compass' => true)),
             array('optipng'),
             array('packager'),
             array('pngout'),
@@ -212,5 +214,18 @@ class AsseticExtensionTest extends \PHPUnit_Framework_TestCase
         $container->set('kernel', $this->kernel);
 
         return $container;
+    }
+
+    public function testCompassCanBeEnabled()
+    {
+        $extension = new AsseticExtension();
+        $extension->load(array(array(
+            'filters' => array(
+                'scssphp' => array('compass' => true),
+            ),
+        )), $this->container);
+
+        $this->assertTrue($this->container->get('assetic.filter.scssphp')->isCompassEnabled());
+        //$this->getDumpedContainer();
     }
 }
