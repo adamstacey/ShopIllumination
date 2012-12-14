@@ -36,6 +36,9 @@ after "deploy:update_code" do
     capifony_puts_ok
   end
 end
+after "deploy:update_code" do
+  capifony_pretty_print "--> APC bytecode cache flush"
+  try_sudo php -r 'apc_clear_cache() ? exit( 0 ) : exit( -1 );'"
+  capifony_puts_ok
+end
 after "deploy", "deploy:cleanup"
-
-#logger.level = Logger::MAX_LEVEL
