@@ -12,9 +12,9 @@ ssh_options[:forward_agent] = true
 
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]
-set :webserver_user,    "www-data"
-set :permission_method, :acl
-set :set_permissions, true
+set :webserver_user,    "apache"
+set :permission_method, :chmod
+set :use_set_permissions, true
 set :use_sudo , false
 
 # Repository configuration
