@@ -14,7 +14,6 @@ set :webserver_user,    "apache"
 set :permission_method, :chmod
 set :use_set_permissions, true
 set :use_sudo , false
->>>>>>> b6ae4eebedfe25f9e28ec556d7fb65bbaede62c9
 
 # Repository configuration
 set :repository,  "git@github.com:adamstacey/KitchenApplianceCentre.git"
