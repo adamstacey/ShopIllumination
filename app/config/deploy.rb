@@ -5,7 +5,7 @@ set :stage_dir,     "app/config"
 require 'capistrano/ext/multistage'
 
 # Main deployment configuration
-# set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
 set :keep_releases,  3
 ssh_options[:forward_agent] = true
 #default_run_options[:pty] = true
@@ -18,7 +18,7 @@ set :set_permissions, true
 set :use_sudo , false
 
 # Repository configuration
-set :repository,  "git@github.com:dancannon/KitchenApplianceCentre.git"
+set :repository,  "git@github.com:adamstacey/KitchenApplianceCentre.git"
 set :scm, :git
 
 # Symfony2 configuration
@@ -31,6 +31,6 @@ set :dump_assetic_assets, true
 set :model_manager, "doctrine"
 
 # Hooks
-after "deploy", "deploy:cleanup"
+#after "deploy", "deploy:cleanup"
 
 logger.level = Logger::MAX_LEVEL
