@@ -56,4 +56,4 @@ namespace :deploy do
   end
 end
 
-logger.level = Logger::MAX_LEVEL
+#logger.level = Logger::MAX_LEVEL
