@@ -19,12 +19,12 @@ class Description
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Brand", inversedBy="descriptions")
+     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Brand", inversedBy="descriptions")
      */
     private $brand;
 
 	/**
-     * @ORM\OneToOne(targetEntity="WebIlluminationAdminBundle:Image")
+     * @ORM\OneToOne(targetEntity="WebIllumination\AdminBundle\Entity\Brand")
      */
     private $logoImage;
     
@@ -85,13 +85,13 @@ class Description
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 }

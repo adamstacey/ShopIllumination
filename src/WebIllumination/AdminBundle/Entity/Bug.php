@@ -54,12 +54,12 @@ class Bug
     private $priority;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact")
+     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact")
      */
     private $ownerContact;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact")
+     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact")
      */
     private $assignedToContact;
     
@@ -70,13 +70,13 @@ class Bug
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
     

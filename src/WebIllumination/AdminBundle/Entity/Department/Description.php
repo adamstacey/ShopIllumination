@@ -18,7 +18,7 @@ class Description
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Department", inversedBy="descriptions")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Department", inversedBy="descriptions")
      */
     private $department;
         
@@ -99,13 +99,13 @@ class Description
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 }

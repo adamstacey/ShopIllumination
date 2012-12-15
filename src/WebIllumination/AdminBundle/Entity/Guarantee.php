@@ -29,24 +29,24 @@ class Guarantee
     private $objectType;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Type")
+     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Type")
      */
     private $type;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Length")
+     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Length")
      */
     private $length;
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 }

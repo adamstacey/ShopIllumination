@@ -44,7 +44,7 @@ class Contact
     private $organisationName;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact/Title")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\Title")
      */
     private $contactTitle;
     
@@ -64,14 +64,34 @@ class Contact
     private $lastName;
 
     /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Contact\Address", mappedBy="contact")
+     */
+    private $addresses;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Contact\EmailAddress", mappedBy="contact")
+     */
+    private $emails;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Contact\Number", mappedBy="contact")
+     */
+    private $numbers;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Contact\WebAddress", mappedBy="contact")
+     */
+    private $webAddresses;
+
+    /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 }

@@ -58,12 +58,12 @@ class DepartmentsController extends Controller
     public function indexAction(Request $request, $parentId)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	$productService = $this->get('web_illumination_admin.product_service');    	
-    	    	
+    	$service = $this->get('web_illumination_admin.department_service');
+    	$productService = $this->get('web_illumination_admin.product_service');
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Setup listing
     	$sessionListing = $this->get('session')->get('listing');
 		if (isset($sessionListing['admin'][$this->settings['singleClass']]))
@@ -74,33 +74,32 @@ class DepartmentsController extends Controller
 			$sessionListing['admin'][$this->settings['singleClass']] = $this->listing;
 			$this->get('session')->set('listing', $sessionListing);
 		}
-		
+
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get submitted data
     		$select = $request->request->get('select');
     		$status = $request->request->get('status');
     		$deliveryBand = $request->request->get('delivery-band');
     		$displayOrder = $request->request->get('display-order');
     		$delete = $request->request->get('delete');
-    		    		
+
     		// Run through all selected items
     		if (sizeof($select) > 0)
     		{
     			foreach ($select as $itemId => $item)
     			{
 	    			// Get the item
-	    			$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($itemId);
-	    			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $itemId));
-	    			if ($itemObject && $itemDescriptionObject)
+	    			$itemObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($itemId);
+                    if ($itemObject)
 	    			{
 	    				// Delete the item
 	    				if ($delete > 0)
 	    				{
 	    					// Get the current parent id
 	    					$parentId = $itemObject->getParentId();
-	    					
+
 	    					// Get all related departments
 	    					$relatedIndexObjects = $em->createQuery("SELECT di FROM WebIlluminationAdminBundle:DepartmentIndex di WHERE di.departmentPath LIKE '%|".$itemId."|%' ORDER BY di.departmentPath ASC")->getResult();
 	    					foreach ($relatedIndexObjects as $relatedIndexObject)
@@ -112,7 +111,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedItemObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any item descriptions
 		    					$relatedItemDescriptionObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedItemDescriptionObjects as $relatedItemDescriptionObject)
@@ -120,7 +119,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedItemDescriptionObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any feature templates
 		    					$relatedDepartmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedDepartmentToFeatureObjects as $relatedDepartmentToFeatureObject)
@@ -128,7 +127,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedDepartmentToFeatureObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any brand associations
 		    					$relatedBrandToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedBrandToDepartmentObjects as $relatedBrandToDepartmentObject)
@@ -136,7 +135,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedBrandToDepartmentObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any product associations
 		    					$relatedProductToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedProductToDepartmentObjects as $relatedProductToDepartmentObject)
@@ -144,7 +143,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedProductToDepartmentObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any images
 		    					$relatedImageObjects = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedImageObjects as $relatedImageObject)
@@ -152,7 +151,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedImageObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any guarantees
 		    					$relatedGuaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedGuaranteeObjects as $relatedGuaranteeObject)
@@ -160,7 +159,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedGuaranteeObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any redirects
 		    					$relatedRedirectObjects = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedRedirectObjects as $relatedRedirectObject)
@@ -168,7 +167,7 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedRedirectObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete any routings
 		    					$relatedRoutingObjects = $em->getRepository('WebIlluminationAdminBundle:Routing')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedRoutingObjects as $relatedRoutingObject)
@@ -176,12 +175,12 @@ class DepartmentsController extends Controller
 			    					$em->remove($relatedRoutingObject);
 			    					$em->flush();
 		    					}
-		    					
+
 		    					// Delete the item index
 		    					$em->remove($relatedIndexObject);
 		    					$em->flush();
 	    					}
-	    					
+
 							// Rebuild the parent object index
 							if ($parentId > 0)
 							{
@@ -223,12 +222,12 @@ class DepartmentsController extends Controller
     			{
 		    		// Notify user
 		    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
-		    		
+
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $parentId)));
 		    	}
     		}
-    		    		
+
     		// Notify user
     		if ($delete > 0)
 	    	{
@@ -236,11 +235,11 @@ class DepartmentsController extends Controller
     		} else {
 	    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
     		}
-    		
+
     		// Forward
     		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $parentId)));
     	}
-		
+
 		// Setup filter
     	$sessionFilter = $this->get('session')->get('filter');
 		if (isset($sessionFilter['admin'][$this->settings['singleClass']]))
@@ -251,7 +250,7 @@ class DepartmentsController extends Controller
 			$sessionFilter['admin'][$this->settings['singleClass']] = $this->filter;
 			$this->get('session')->set('filter', $sessionFilter);
 		}
-		
+
 		// Check for the quick search and update the filters
 		if ($this->listing['search'])
 		{
@@ -262,19 +261,19 @@ class DepartmentsController extends Controller
 			$sessionFilter['admin'][$this->settings['singleClass']] = $this->filter;
 			$this->get('session')->set('filter', $sessionFilter);
 		}
-		
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['statistics'] = array();
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($parentId);
-    	
+
     	// Get the department
     	$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
     	$data['department'] = $departmentIndexObject;
-    	    	
+
     	// Get the number of items
     	$qb = $em->createQueryBuilder();
     	$qb->select($qb->expr()->count("i.id"));
@@ -288,7 +287,7 @@ class DepartmentsController extends Controller
     	if ($this->filter['name'])
     	{
     		$qb->andWhere($qb->expr()->like('i.name', $qb->expr()->literal('%'.$this->filter['name'].'%')));
-    	} 
+    	}
     	if ($this->filter['statuses'])
     	{
     		$option = $this->filter['statuses'];
@@ -302,7 +301,7 @@ class DepartmentsController extends Controller
     	}
 		$itemCount = $qb->getQuery()->getSingleScalarResult();
 		$this->listing['itemCount'] = $itemCount;
-				
+
 		// Get the pagination
     	if ($itemCount <= $this->listing['maxResults'])
     	{
@@ -314,7 +313,7 @@ class DepartmentsController extends Controller
     	$this->listing['previousPage'] = $this->listing['currentPage'] - 1;
     	$this->listing['nextPage'] = $this->listing['currentPage'] + 1;
     	$this->listing['firstResult'] = ($this->listing['currentPage'] - 1) * $this->listing['maxResults'];
-    	
+
     	// Get the items
 		$qb = $em->createQueryBuilder();
     	$qb->select('i');
@@ -345,25 +344,25 @@ class DepartmentsController extends Controller
 	   	$qb->setMaxResults($this->listing['maxResults']);
 		$items = $qb->getQuery()->getResult();
 		$data['items'] = $items;
-		
+
 		// Get the listing
 		$data['listing'] = $this->listing;
-		
+
 		// Get the filter
 		$data['filter'] = $this->filter;
-		
+
 		// Get the parent id
 		$data['parentId'] = $parentId;
-    	    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':index.html.twig', array('data' => $data));
     }
-    
+
     // Update listing
     public function updateListingAction(Request $request, $parentId)
     {
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get listings data
     		$search = $request->request->get('search');
     		$sortOrder = $request->request->get('sort-order');
@@ -378,7 +377,7 @@ class DepartmentsController extends Controller
 	    		$sortable = true;
 	    		$maxResults = 99999999;
     		}
-    		
+
     		// Update the listing session
     		$sessionListing = $this->get('session')->get('listing');
     		$sessionListing['admin'][$this->settings['singleClass']]['search'] = $search;
@@ -389,7 +388,7 @@ class DepartmentsController extends Controller
     		$sessionListing['admin'][$this->settings['singleClass']]['maxResults'] = $maxResults;
     		$sessionListing['admin'][$this->settings['singleClass']]['currentPage'] = $currentPage;
 			$this->get('session')->set('listing', $sessionListing);
-			
+
     		// Get filters data
     		$emptyFilters = true;
     		$filters = $request->request->get('filters');
@@ -411,25 +410,25 @@ class DepartmentsController extends Controller
     		{
 	    		$sessionFilter['admin'][$this->settings['singleClass']]['empty'] = 0;
     		}
-    		
+
     		// Update the filter session
-			$this->get('session')->set('filter', $sessionFilter);    		
+			$this->get('session')->set('filter', $sessionFilter);
     	}
-		
+
 		// Forward
     	return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'], array('parentId' => $parentId)));
     }
-    
+
     // Add
     public function addAction(Request $request, $parentId)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	$service = $this->get('web_illumination_admin.department_service');
     	$seoService = $this->get('web_illumination_admin.seo_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
     	// Add
     	if ($request->getMethod() == 'POST')
     	{
@@ -460,7 +459,7 @@ class DepartmentsController extends Controller
     		$amazonDepartment = '';
     		$url = $seoService->generateUrl($pageTitle);
     		$addAnother = $request->request->get('add-another');
-    		
+
     		// Add object
     		$object = new Department();
     		$object->setParentId($parentId);
@@ -477,7 +476,7 @@ class DepartmentsController extends Controller
     		$em->persist($object);
     		$em->flush();
     		$id = $object->getId();
-    		
+
     		// Add object description
     		$objectDescription = new DepartmentDescription();
     		$objectDescription->setDepartmentId($id);
@@ -499,10 +498,10 @@ class DepartmentsController extends Controller
     		$objectDescription->setAmazonDepartment($amazonDepartment);
     		$em->persist($objectDescription);
     		$em->flush();
-    		
+
     		// Rebuild path
     		$service->rebuildPath($id);
-    		
+
     		// Add the routing
 	    	$routingUrl = $seoService->createUrl($url);
     		$routingObject = new Routing();
@@ -512,17 +511,17 @@ class DepartmentsController extends Controller
     		$routingObject->setUrl($routingUrl);
     		$em->persist($routingObject);
     		$em->flush();
-    		
+
     		// Rebuild the object indexes
     		$service->rebuildDepartmentIndexObject($id, $locale);
     		if ($parentId > 0)
     		{
     			$service->rebuildDepartmentIndexObject($parentId, $locale);
     		}
-    		
+
     		// Notify user
     		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$name.'"</strong> has been added.');
-    		
+
     		// Forward
     		if ($addAnother > 0)
     		{
@@ -531,46 +530,46 @@ class DepartmentsController extends Controller
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $object->getId())));
     		}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_add');
     	$data['parentId'] = $parentId;
     	$data['mode'] = 'add';
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($parentId);
-    	
+
     	// Get the departments
     	$departments = $service->getFullDepartmentList();
     	$data['departments'] = $departments;
-    	
+
     	// Get the taxonomy
     	$taxonomy = array();
     	$taxonomyGoogle = $em->getRepository('WebIlluminationAdminBundle:Taxonomy')->findBy(array('objectType' => 'google', 'locale' => 'en'), array('name' => 'ASC'));
     	$taxonomy['google'] = $taxonomyGoogle;
     	$data['taxonomy'] = $taxonomy;
-    	    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
     }
-    
+
     // Update
     public function updateAction(Request $request, $id)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	$service = $this->get('web_illumination_admin.department_service');
     	$seoService = $this->get('web_illumination_admin.seo_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-		
+
     	// Update
     	if ($request->getMethod() == 'POST')
-    	{   
+    	{
     		// Get the item
     		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
@@ -578,14 +577,14 @@ class DepartmentsController extends Controller
 			{
 				// Notify user
 				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
-    		
+
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
     		}
-			
+
     		// Get the existing information
     		$existingParentId = $itemObject->getParentId();
-    		
+
     		// Get submitted data
     		$parentId = $request->request->get('parent-id');
     		if ($parentId == $id)
@@ -600,7 +599,7 @@ class DepartmentsController extends Controller
     		$description = $seoService->cleanHtml($request->request->get('description'));
     		$metaDescription = $itemDescriptionObject->getMetaDescription();
     		$goBack = $request->request->get('go-back');
-    		    		
+
     		// Update object
     		$itemObject->setParentId($parentId);
     		$itemObject->setStatus($status);
@@ -623,7 +622,7 @@ class DepartmentsController extends Controller
     		}
     		$em->persist($itemDescriptionObject);
     		$em->flush();
-    		
+
     		// Rebuild brand department page titles and URLs
     		if ($existingName == $existingPageTitle)
     		{
@@ -636,14 +635,14 @@ class DepartmentsController extends Controller
 			    	$departmentRoutingObject->setUrl($departmentUrl);
 			    	$em->persist($departmentRoutingObject);
 			    	$em->flush();
-			    	
+
 			    	// Setup any redirects if required
 		    		if ($departmentExistingUrl != $departmentUrl)
 		    		{
 						$seoService->updateRedirects($id, 'department', $brandToDepartmentExistingUrl, $departmentUrl);
 					}
-	    		}	    		
-    			
+	    		}
+
 	    		// Get brand departments
 	    		$brandToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array($this->settings['singleClass'].'Id' => $id));
 	    		foreach ($brandToDepartmentObjects as $brandToDepartmentObject)
@@ -653,7 +652,7 @@ class DepartmentsController extends Controller
 		    		$brandToDepartmentObject->setHeader(str_replace($existingPageTitle, $name, $brandToDepartmentObject->getHeader()));
 		    		$em->persist($brandToDepartmentObject);
 		    		$em->flush();
-		    		
+
 		    		// Get the routing
 		    		$brandToDepartmentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $brandToDepartmentObject->getId(), 'objectType' => 'brandToDepartment', 'locale' => 'en'));
 		    		if (!$brandToDepartmentRoutingObject)
@@ -671,7 +670,7 @@ class DepartmentsController extends Controller
     		    	$brandToDepartmentRoutingObject->setUrl($brandToDepartmentUrl);
 			    	$em->persist($brandToDepartmentRoutingObject);
 			    	$em->flush();
-    		
+
 		    		// Setup any redirects if required
 		    		if ($brandToDepartmentExistingUrl != $brandToDepartmentUrl)
 		    		{
@@ -679,19 +678,19 @@ class DepartmentsController extends Controller
 					}
 	    		}
     		}
-    		
+
     		// Rebuild the path
     		$service->rebuildPath($id);
-    		
+
     		// Rebuild the routing
     		$service->rebuildRouting($id, 'en');
-    		
+
     		// Check to see if the paths need updating
     		if ($parentId != $existingParentId)
     		{
     			// Get all related departments
 	    		$relatedIndexObjects = $em->createQuery("SELECT di FROM WebIlluminationAdminBundle:DepartmentIndex di WHERE di.departmentPath LIKE '%|".$id."|%' AND di.departmentId != '".$id."' ORDER BY di.departmentPath ASC")->getResult();
-	    		
+
 	    		// Rebuild the paths (need to do all paths first before building routes as routes are based on paths)
 	    		foreach ($relatedIndexObjects as $relatedIndexObject)
 	    		{
@@ -700,7 +699,7 @@ class DepartmentsController extends Controller
 		    			$service->rebuildPath($relatedIndexObject->getDepartmentId());
 	    			}
 	    		}
-	    		
+
 	    		// Rebuild the routes and the indexes
 	    		foreach ($relatedIndexObjects as $relatedIndexObject)
 	    		{
@@ -710,7 +709,7 @@ class DepartmentsController extends Controller
 		    			$service->rebuildDepartmentIndexObject($relatedIndexObject->getDepartmentId(), 'en');
 	    			}
 	    		}
-	    		
+
 	    		// Rebuild the existing and new parent department indexes
 	    		if ($parentId > 0)
 	    		{
@@ -721,17 +720,17 @@ class DepartmentsController extends Controller
 	    			$service->rebuildDepartmentIndexObject($existingParentId, 'en');
 	    		}
     		}
-    		    		    		
+
     		// Rebuild the index
     		$service->rebuildDepartmentIndexObject($id, 'en');
     		if ($parentId > 0)
 	    	{
 	    		$service->rebuildDepartmentIndexObject($parentId, 'en');
 	    	}
-    		
+
     		// Notify user
     		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
-    		
+
     		// Forward
     		if ($goBack > 0)
     		{
@@ -740,67 +739,67 @@ class DepartmentsController extends Controller
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
     		}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
-    	
+
     	// Get the departments
     	$departments = $service->getFullDepartmentList();
     	$data['departments'] = $departments;
-    	    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
     }
-    
+
     // Update templates
     public function updateTemplatesAction(Request $request, $id)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	
+    	$service = $this->get('web_illumination_admin.department_service');
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-		
+
 		// Check for any product updates
 		$productsUpdated = false;
-		
+
     	// Update
     	if ($request->getMethod() == 'POST')
-    	{   
+    	{
     		// Get the item
 			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			if (!$itemDescriptionObject)
 			{
 				// Notify user
 				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
-    		
+
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
     		}
-			
+
     		// Get submitted data
     		$pageTitleTemplate = trim($request->request->get('page-title-template'));
     		$headerTemplate = trim($request->request->get('header-template'));
     		$metaDescriptionTemplate = trim($request->request->get('meta-description-template'));
     		$goBack = $request->request->get('go-back');
     		$extraAction = $request->request->get('extra-action');
-    		
+
     		// Check if any extra actions are required
     		if (strpos($extraAction, 'getTemplatesFromDepartment') !== false)
     		{
 	    		// Get any new product features added
 	    		$departmentId = str_replace('getTemplatesFromDepartment|', '', $extraAction);
     			$templatesAdded = $service->getTemplatesFromDepartment($id, $departmentId, 'en');
-    			
+
     			// Notify user
     			if ($templatesAdded)
     			{
@@ -808,7 +807,7 @@ class DepartmentsController extends Controller
     			} else {
 	    			$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem using the templates from the selected department. Please try again.');
     			}
-    			
+
     			// Forward
     			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id)));
     		} else {
@@ -818,11 +817,11 @@ class DepartmentsController extends Controller
 		    		case 'updateProductsFromTemplates':
 		    			// Get any new product updates
 		    			$productUpdates = $service->updateProductsFromTemplates($id, 'en');
-		    			$productsUpdated = true;	    			
+		    			$productsUpdated = true;
 		    			break;
 	    		}
 	    	}
-    		
+
     		if (!$productsUpdated)
     		{
 	    		// Update objects
@@ -831,13 +830,13 @@ class DepartmentsController extends Controller
 	    		$itemDescriptionObject->setMetaDescriptionTemplate($metaDescriptionTemplate);
 	    		$em->persist($itemDescriptionObject);
 	    		$em->flush();
-	    		    		    		    		
+
 	    		// Rebuild the index
 	    		$service->rebuildDepartmentIndexObject($id, 'en');
-	    		
+
 	    		// Notify user
 	    		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
-	    		
+
 	    		// Forward
 	    		if ($goBack > 0)
 	    		{
@@ -847,70 +846,70 @@ class DepartmentsController extends Controller
 	    		}
 	    	}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_templates', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
     	// Check if there were any product updates
     	if ($productsUpdated)
     	{
     		$data['productUpdates'] = $productUpdates;
     	}
     	$data['productsUpdated'] = $productsUpdated;
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
-    	
+
     	// Get the product feature groups
 	    $data['productFeatureGroups'] = $service->getProductFeatureGroups($id, 'en');
-	    
+
 	    // Get the current page title template content
 	    $data['pageTitleTemplate'] = $service->getTemplateContent($id, 'page-title', 'en');
-	    
+
 	    // Get the current page title product previews
 	    $data['pageTitleTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'page-title', 'en');
-	    
+
 	    // Get the current header template content
 	    $data['headerTemplate'] = $service->getTemplateContent($id, 'header', 'en');
-	    
+
 	    // Get the current header product previews
-	    $data['headerTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'header', 'en');	    
-	    
+	    $data['headerTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'header', 'en');
+
 	    // Get the current meta description template content
 	    $data['metaDescriptionTemplate'] = $service->getTemplateContent($id, 'meta-description', 'en');
-	    
+
 	    // Get the current meta description product previews
 	    $data['metaDescriptionTemplateProductPreviews'] = $service->getTemplateProductPreviews($id, 'meta-description', 'en');
-	    
+
 	    // Get the departments
     	$departments = $service->getFullDepartmentList();
     	$data['departments'] = $departments;
-    	        
+
         $response = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemTemplates.html.twig', array('data' => $data));
 		$response->headers->set('Connection', 'Keep-Alive');
 		$response->headers->set('Content-Type', 'text/html; charset=utf-8');
 		return $response;
     }
-    
+
     // Update pricing
     public function updatePricingAction(Request $request, $id)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	
+    	$service = $this->get('web_illumination_admin.department_service');
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-		
+
     	// Update
     	if ($request->getMethod() == 'POST')
-    	{   
+    	{
     		// Get the item
     		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
@@ -918,11 +917,11 @@ class DepartmentsController extends Controller
 			{
 				// Notify user
 				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
-    		
+
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id)));
     		}
-			
+
     		// Get submitted data
     		$hidePrices = $request->request->get('hide-prices');
     		$showPricesOutOfHours = $request->request->get('show-prices-out-of-hours');
@@ -931,7 +930,7 @@ class DepartmentsController extends Controller
     		$pageTitleTemplate = trim($request->request->get('page-title-template'));
     		$metaDescriptionTemplate = trim($request->request->get('meta-description-template'));
     		$goBack = $request->request->get('go-back');
-    		    		
+
     		// Update objects
     		$itemObject->setHidePrices($hidePrices);
     		$itemObject->setShowPricesOutOfHours($showPricesOutOfHours);
@@ -943,13 +942,13 @@ class DepartmentsController extends Controller
     		$itemDescriptionObject->setMetaDescriptionTemplate($metaDescriptionTemplate);
     		$em->persist($itemDescriptionObject);
     		$em->flush();
-    		    		    		    		
+
     		// Rebuild the index
     		$service->rebuildDepartmentIndexObject($id, 'en');
-    		
+
     		// Notify user
     		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
-    		
+
     		// Forward
     		if ($goBack > 0)
     		{
@@ -958,50 +957,50 @@ class DepartmentsController extends Controller
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id)));
     		}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_pricing', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
-    	
+
     	// Get the product feature groups
 	    $data['productFeatureGroups'] = $service->getProductFeatureGroups($id, 'en');
-	    
+
 	    // Get the current page title template content
 	    $data['pageTitleTemplate'] = $service->getPageTitleTemplateContent($id, 'en');
-	    
+
 	    // Get the current page title product previews
 	    $data['pageTitleTemplateProductPreviews'] = $service->getPageTitleTemplateProductPreviews($id, 'en');
-	    	    
+
 	    // Get the current meta description template content
 	    $data['metaDescriptionTemplate'] = $service->getMetaDescriptionTemplateContent($id, 'en');
-    	    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemPricing.html.twig', array('data' => $data));
     }
-    
+
     // Update product features
     public function updateProductFeaturesAction(Request $request, $id)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	    	
+    	$service = $this->get('web_illumination_admin.department_service');
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-		
+
 		// Check for any product updates
 		$productsUpdated = false;
-				
+
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get submitted data
     		$select = $request->request->get('select');
     		$productFeatureGroupId = $request->request->get('product-feature-group-id');
@@ -1019,14 +1018,14 @@ class DepartmentsController extends Controller
     		$goBack = $request->request->get('go-back');
     		$delete = $request->request->get('delete');
     		$extraAction = $request->request->get('extra-action');
-    		
+
     		// Check if any extra actions are required
     		if (strpos($extraAction, 'getProductFeaturesFromDepartment') !== false)
     		{
 	    		// Get any new product features added
 	    		$departmentId = str_replace('getProductFeaturesFromDepartment|', '', $extraAction);
     			$productFeaturesAdded = $service->getProductFeatureGroupsFromDepartment($id, $departmentId, 'en');
-    			
+
     			// Notify user
     			if ($productFeaturesAdded > 0)
     			{
@@ -1034,7 +1033,7 @@ class DepartmentsController extends Controller
     			} else {
 	    			$this->get('session')->getFlashBag()->add('notice', 'There are no new product features to add. This could be because the product features in the selected department already match what is in this department.');
     			}
-    			
+
     			// Forward
     			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
     		} else {
@@ -1044,7 +1043,7 @@ class DepartmentsController extends Controller
 		    		case 'getProductFeaturesFromProducts':
 		    			// Get any new product features added
 		    			$productFeaturesAdded = $service->getProductFeatureGroupsFromProducts($id, 'en');
-		    			
+
 		    			// Notify user
 		    			if ($productFeaturesAdded > 0)
 		    			{
@@ -1052,7 +1051,7 @@ class DepartmentsController extends Controller
 		    			} else {
 			    			$this->get('session')->getFlashBag()->add('notice', 'There are no new product features to add. This could be because there are no products directly associated to this department, so there are no available product features.');
 		    			}
-		    			
+
 		    			// Forward
 		    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
 		    			break;
@@ -1060,7 +1059,7 @@ class DepartmentsController extends Controller
 		    		case 'getProductFeaturesFromSubDepartments':
 		    			// Get any new product features added
 		    			$productFeaturesAdded = $service->getProductFeatureGroupsFromSubDepartments($id);
-		    			
+
 		    			// Notify user
 		    			if ($productFeaturesAdded > 0)
 		    			{
@@ -1068,7 +1067,7 @@ class DepartmentsController extends Controller
 		    			} else {
 			    			$this->get('session')->getFlashBag()->add('notice', 'There are no new product features to add. This could be because there are no sub departments directly associated to this department, so there are no available product features.');
 		    			}
-		    			
+
 		    			// Forward
 		    			return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id)));
 		    			break;
@@ -1076,13 +1075,13 @@ class DepartmentsController extends Controller
 		    		case 'updateProductsFromTemplates':
 		    			// Get any new product updates
 		    			$productUpdates = $service->updateProductsFromProductFeatures($id, 'en');
-		    			$productsUpdated = true;	    			
+		    			$productsUpdated = true;
 		    			break;
 	    		}
 	    	}
-    		 
+
     		if (!$productsUpdated)
-    		{   		
+    		{
 	    		// Run through all selected items
 	    		if (sizeof($select) > 0)
 	    		{
@@ -1132,7 +1131,7 @@ class DepartmentsController extends Controller
 		    			}
 	    			}
 	    		}
-	    		
+
 	    		// Run through all added items
 	    		if (sizeof($addItem) > 0)
 	    		{
@@ -1171,7 +1170,7 @@ class DepartmentsController extends Controller
 			    		}
 	    			}
 	    		}
-	    		 
+
 	    		// Notify user
 	    		if ($delete > 0)
 		    	{
@@ -1179,7 +1178,7 @@ class DepartmentsController extends Controller
 	    		} else {
 			    	$this->get('session')->getFlashBag()->add('success', 'The selected product features have been updated.');
 		    	}
-	    		
+
 	    		// Forward
 	    		if ($goBack > 0)
 	    		{
@@ -1189,24 +1188,24 @@ class DepartmentsController extends Controller
 	    		}
 	    	}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_product_features', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
     	// Check if there were any product updates
     	if ($productsUpdated)
     	{
     		$data['productUpdates'] = $productUpdates;
     	}
     	$data['productsUpdated'] = $productsUpdated;
-    	
+
     	// Get the items
 		$data['items'] = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
-		
+
 		// Get the existing product feature group ids
 		$existingProductFeatureGroupIds = array();
 		foreach ($data['items'] as $item)
@@ -1214,38 +1213,38 @@ class DepartmentsController extends Controller
 			$existingProductFeatureGroupIds[] = $item->getProductFeatureGroupId();
 		}
 		$data['existingProductFeatureGroupIds'] = '|'.implode('|', $existingProductFeatureGroupIds).'|';
-		
+
 		// Get the product feature groups
 		$data['productFeatureGroups'] = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeatureGroup' => 'ASC'));
-		
+
 		// Get the product features
 		$data['productFeatures'] = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeature' => 'ASC'));
-		
+
 		// Get the departments
     	$departments = $service->getFullDepartmentList();
     	$data['departments'] = $departments;
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
-    	    	    	    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemProductFeatures.html.twig', array('data' => $data));
     }
-    
+
     // Update redirects
     public function updateRedirectsAction(Request $request, $id)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
-    	    	
+    	$service = $this->get('web_illumination_admin.department_service');
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-				
+
 		// Update
     	if ($request->getMethod() == 'POST')
-    	{ 
+    	{
     		// Get submitted data
     		$select = $request->request->get('select');
     		$redirectFrom = $request->request->get('redirect-from');
@@ -1255,7 +1254,7 @@ class DepartmentsController extends Controller
     		$addRedirectCode = $request->request->get('add-redirect-code');
     		$goBack = $request->request->get('go-back');
     		$delete = $request->request->get('delete');
-    		
+
     		// Run through all selected items
     		if (sizeof($select) > 0)
     		{
@@ -1281,7 +1280,7 @@ class DepartmentsController extends Controller
 	    			}
     			}
     		}
-    		
+
     		// Run through all added items
     		if (sizeof($addItem) > 0)
     		{
@@ -1302,7 +1301,7 @@ class DepartmentsController extends Controller
 		    		}
     			}
     		}
-    		    		
+
     		// Notify user
     		if ($delete > 0)
 	    	{
@@ -1310,7 +1309,7 @@ class DepartmentsController extends Controller
     		} else {
 	    		$this->get('session')->getFlashBag()->add('success', 'The selected redirects have been updated.');
     		}
-    		
+
     		// Forward
     		if ($goBack > 0)
     		{
@@ -1319,52 +1318,52 @@ class DepartmentsController extends Controller
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_redirects', array('id' => $id)));
     		}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_redirects', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
     	// Get the items
 		$items = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectType' => 'department', 'objectId' => $id), array('redirectFrom' => 'ASC'));
 		$data['items'] = $items;
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
-    	    	    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemRedirects.html.twig', array('data' => $data));
     }
-    
+
     // Update delivery
     public function updateDeliveryAction(Request $request, $id)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	$service = $this->get('web_illumination_admin.department_service');
     	$productService = $this->get('web_illumination_admin.product_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
 		$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
-		
+
     	// Update
     	if ($request->getMethod() == 'POST')
-    	{   
+    	{
     		// Get the item
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
 				$this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem saving the '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong>. Please try again.');
-    		
+
 				// Forward
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_delivery', array('id' => $id)));
     		}
-			
+
     		// Get submitted data
     		$deliveryBand = $request->request->get('delivery-band');
     		$existingDeliveryBand = $itemObject->getDeliveryBand();
@@ -1375,7 +1374,7 @@ class DepartmentsController extends Controller
     		$brandDeliveryBands = $request->request->get('brand-delivery-band');
     		$productDeliveryBands = $request->request->get('product-delivery-band');
     		$goBack = $request->request->get('go-back');
-    		    		
+
     		// Update objects
     		if (($deliveryBand != $existingDeliveryBand) || ($checkDeliveryBand != $existingCheckDeliveryBand) || ($deliveryBandNotes != $existingDeliveryBandNotes))
     		{
@@ -1390,20 +1389,20 @@ class DepartmentsController extends Controller
 	    		$itemDescriptionObject->setDeliveryBandNotes($deliveryBandNotes);
 	    		$em->persist($itemDescriptionObject);
 	    		$em->flush();
-	    		
+
 	    		if ($deliveryBand != $existingDeliveryBand)
 	    		{
 		    		// Update the department delivery bands
 		    		$service->updateDepartmentDeliveryBands($id);
-		    		
+
 		    		// Update the delivery bands for the products
 		    		$service->updateProductDeliveryBands($id, 'en');
 		    	}
-	    		
+
 	    		// Rebuild the index
 	    		$service->rebuildDepartmentIndexObject($id, 'en');
 	    	}
-	    	
+
 	    	// Update brand departments
 	    	if (sizeof($brandDeliveryBands) > 0)
 	    	{
@@ -1418,14 +1417,14 @@ class DepartmentsController extends Controller
 			    		$em->flush();
 		    		}
 		    	}
-		    	
+
 		    	// Update the department delivery bands
 	    		$service->updateDepartmentDeliveryBands($id);
-	    		
+
 	    		// Update the delivery bands for the products
 	    		$service->updateProductDeliveryBands($id, 'en');
 	    	}
-	    	
+
 	    	// Update products
 	    	if (sizeof($productDeliveryBands) > 0)
 	    	{
@@ -1460,10 +1459,10 @@ class DepartmentsController extends Controller
 		    		}
 		    	}
 	    	}
-    		    		
+
     		// Notify user
     		$this->get('session')->getFlashBag()->add('success', 'The '.$this->settings['singleDescription'].' <strong>"'.$itemIndexObject->getName().'"</strong> has been updated.');
-    		
+
     		// Forward
     		if ($goBack > 0)
     		{
@@ -1472,45 +1471,45 @@ class DepartmentsController extends Controller
 	    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_delivery', array('id' => $id)));
     		}
     	}
-    	
+
     	// Setup the data
     	$data = array();
     	$data['settings'] = $this->settings;
     	$data['item'] = $itemIndexObject;
     	$data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update_delivery', array('id' => $id));
     	$data['mode'] = 'update';
-    	
+
     	// Get the breadcrumbs
     	$data['breadcrumbs'] = $service->getBreadcrumbs($itemIndexObject->getParentId());
-    	
+
     	// Get the brands
     	$data['brands'] = $service->getBrands($id, 'en');
-    	
+
     	// Get the brand to departments
     	$data['brandToDepartments'] = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array('departmentId' => $id));
-    	
+
     	// Get the products
     	$data['products'] = $em->createQuery("SELECT pi.productId, pi.deliveryBand, pi.inheritedDeliveryBand, pi.pageTitle, pi.brand FROM WebIlluminationAdminBundle:ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%' ORDER BY pi.pageTitle ASC")->getResult();
-	        	    	    	
+
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemDelivery.html.twig', array('data' => $data));
     }
-    
+
     // Update search engine optimisation
     public function updateSearchEngineOptimisationAction(Request $request, $id)
     {
     	// Get the services
-    	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+    	$service = $this->get('web_illumination_admin.department_service');
     	$seoService = $this->get('web_illumination_admin.seo_service');
-    	
+
     	// Get the entity manager
 		$em = $this->getDoctrine()->getEntityManager();
-		
+
 		// Get the item
 		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-		
+
     	// Update
     	if ($request->getMethod() == 'POST')
-    	{   
+    	{
     		// Get the item
 			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			$itemRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $id, 'locale' => 'en'));

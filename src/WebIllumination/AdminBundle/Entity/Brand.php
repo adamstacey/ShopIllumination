@@ -19,19 +19,19 @@ class Brand
     private $id;
 
     /**
-     * @OneToMany(targetEntity="WebIlluminationAdminBundle:Brand/Description", mappedBy="description")
+     * @OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Brand\Description", mappedBy="brand")
      **/
     private $descriptions;
 	
 	/**
      * @ORM\Column(name="status", type="string", length=1)
      */
-    private $status;
+    private $status = 'a';
 	            
     /**
-     * @ORM\Column(name="request_a_brochure", type="integer", length=1)
+     * @ORM\Column(name="request_a_brochure", type="boolean")
      */
-    private $requestABrochure;
+    private $requestABrochure = false;
     
     /**
      * @ORM\Column(name="brochure_web_address", type="string", length=255)
@@ -39,9 +39,9 @@ class Brand
     private $brochureWebAddress;
     
      /**
-     * @ORM\Column(name="request_a_sample", type="integer", length=1)
+     * @ORM\Column(name="request_a_sample", type="boolean")
      */
-    private $requestASample;
+    private $requestASample = false;
     
     /**
      * @ORM\Column(name="sample_web_address", type="string", length=255)
@@ -49,34 +49,34 @@ class Brand
     private $sampleWebAddress;
     
     /**
-     * @ORM\Column(name="hide_prices", type="integer", length=1)
+     * @ORM\Column(name="hide_prices", type="boolean")
      */
-    private $hidePrices;
+    private $hidePrices = false;
     
     /**
-     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length=1)
+     * @ORM\Column(name="show_prices_out_of_hours", type="boolean")
      */
-    private $showPricesOutOfHours;
+    private $showPricesOutOfHours = false;
     
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="integer", length=1)
+     * @ORM\Column(name="membership_card_discount_available", type="boolean")
      */
-    private $membershipCardDiscountAvailable;
+    private $membershipCardDiscountAvailable = true;
     
     /**
      * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
-    private $maximumMembershipCardDiscount;
-        
+    private $maximumMembershipCardDiscount = 0.0000;
+
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 

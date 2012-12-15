@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="contact_numbers")
  * @ORM\HasLifecycleCallbacks()
  */
-class ContactNumber
+class Number
 {
     /**
      * @ORM\Id
@@ -19,12 +19,12 @@ class ContactNumber
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact", inversedBy="emails")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact", inversedBy="numbers")
      */
     private $contact;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact/DetailType")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\DetailType")
      */
     private $type;
 
@@ -50,13 +50,13 @@ class ContactNumber
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 }

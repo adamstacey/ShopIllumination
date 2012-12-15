@@ -19,12 +19,12 @@ class Address
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact", inversedBy="emails")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact", inversedBy="emails")
      */
     private $contact;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact/DetailType")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\DetailType")
      */
     private $type;
         
@@ -44,7 +44,7 @@ class Address
     private $organisationName;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact/Title")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\Title")
      */
     private $contactTitle;
     
@@ -100,13 +100,13 @@ class Address
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
 }

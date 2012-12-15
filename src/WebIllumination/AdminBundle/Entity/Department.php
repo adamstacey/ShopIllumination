@@ -20,14 +20,19 @@ class Department
     private $id;
 
     /**
-     * @OneToMany(targetEntity="WebIlluminationAdminBundle:Department", mappedBy="parent")
+     * @OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Department", mappedBy="parent")
      **/
     private $children;
 
     /**
-     * @ManyToOne(targetEntity="WebIlluminationAdminBundle:Department", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Department", inversedBy="children")
      **/
     private $parent;
+
+    /**
+     * @OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Department\Description", mappedBy="department")
+     **/
+    private $descriptions;
     
     /**
      * @ORM\Column(name="status", type="string", length=1)
@@ -81,13 +86,13 @@ class Department
 
     /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
      * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
     
