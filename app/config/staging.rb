@@ -1,6 +1,6 @@
-server "staging.kitchenappliancecentre.co.uk", :app, :web, :db, :primary => true
-
 set :domain, "staging.kitchenappliancecentre.co.uk"
-set :user, "kacstaging"
-set :deploy_to, "/var/www/vhosts/#{domain}"
+set :user, "root"
+set :deploy_to, "/var/www/vhosts/#{domain}/webapps"
 ssh_options[:port] = 2020
+
+server "staging.kitchenappliancecentre.co.uk", :app, :web, :db, :primary => true
