@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
             new WebIllumination\ShopBundle\WebIlluminationShopBundle(),
+            new WebIllumination\SiteBundle\WebIlluminationSiteBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
