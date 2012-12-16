@@ -13,6 +13,19 @@ class ProductIndexer extends Indexer
         $update = $this->solarium->createUpdate();
         $document = $update->createDocument();
 
+        $document->id = $product->getId();
+        $document->group = $product->getProductGroupId();
+        $document->status = $product->getStatus();
+        $document->checked = $product->getChecked();
+        $document->availableForPurchase = $product->getAvailableForPurchase();
+        $document->name = $product->getDescription()->getName();
+        $document->prefix = $product->getDescription()->getPrefix();
+        $document->description = $product->getDescription()->getDescription();
+        $document->metaDescription = $product->getDescription()->getMetaDescription();
+        $document->metaKeywords = $product->getDescription()->getMetaKeywords();
+        // TODO: Decide what fields we want indexed
+
+
         $update->addDocument($document);
         $update->addCommit();
         $this->solarium->update($update);

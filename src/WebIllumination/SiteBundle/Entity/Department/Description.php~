@@ -1,12 +1,12 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Product;
+namespace WebIllumination\SiteBundle\Entity\Department;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_descriptions")
+ * @ORM\Table(name="department_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
 class Description
@@ -19,14 +19,19 @@ class Description
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="description")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="descriptions")
      */
-    private $product;
-    
+    private $department;
+        
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
+    
+    /**
+     * @ORM\Column(name="delivery_band_notes", type="text")
+     */
+    private $deliveryBandNotes;
     
     /**
      * @ORM\Column(name="name", type="string", length=255)
@@ -34,24 +39,29 @@ class Description
     private $name;
     
     /**
-     * @ORM\Column(name="prefix", type="string", length=255)
+     * @ORM\Column(name="google_department", type="text")
      */
-    private $prefix;
+    private $googleDepartment;
     
     /**
-     * @ORM\Column(name="tagline", type="string", length=255)
+     * @ORM\Column(name="ebay_department", type="text")
      */
-    private $tagline;
+    private $ebayDepartment;
+    
+    /**
+     * @ORM\Column(name="amazon_department", type="text")
+     */
+    private $amazonDepartment;
     
     /**
      * @ORM\Column(name="description", type="text")
      */
     private $description;
-    
+        
     /**
-     * @ORM\Column(name="short_description", type="text")
+     * @ORM\Column(name="menu_title", type="string", length=255)
      */
-    private $shortDescription;
+    private $menuTitle;
     
     /**
      * @ORM\Column(name="page_title", type="string", length=255)
@@ -59,9 +69,19 @@ class Description
     private $pageTitle;
     
     /**
+     * @ORM\Column(name="page_title_template", type="text")
+     */
+    private $pageTitleTemplate;
+    
+    /**
      * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
+    
+    /**
+     * @ORM\Column(name="header_template", type="text")
+     */
+    private $headerTemplate;
     
     /**
      * @ORM\Column(name="meta_description", type="text")
@@ -69,14 +89,14 @@ class Description
     private $metaDescription;
     
     /**
+     * @ORM\Column(name="meta_description_template", type="text")
+     */
+    private $metaDescriptionTemplate;
+    
+    /**
      * @ORM\Column(name="meta_keywords", type="text")
      */
     private $metaKeywords;
-    
-    /**
-     * @ORM\Column(name="search_words", type="text")
-     */
-    private $searchWords;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -124,6 +144,29 @@ class Description
     }
 
     /**
+     * Set deliveryBandNotes
+     *
+     * @param string $deliveryBandNotes
+     * @return Description
+     */
+    public function setDeliveryBandNotes($deliveryBandNotes)
+    {
+        $this->deliveryBandNotes = $deliveryBandNotes;
+    
+        return $this;
+    }
+
+    /**
+     * Get deliveryBandNotes
+     *
+     * @return string 
+     */
+    public function getDeliveryBandNotes()
+    {
+        return $this->deliveryBandNotes;
+    }
+
+    /**
      * Set name
      *
      * @param string $name
@@ -147,49 +190,72 @@ class Description
     }
 
     /**
-     * Set prefix
+     * Set googleDepartment
      *
-     * @param string $prefix
+     * @param string $googleDepartment
      * @return Description
      */
-    public function setPrefix($prefix)
+    public function setGoogleDepartment($googleDepartment)
     {
-        $this->prefix = $prefix;
+        $this->googleDepartment = $googleDepartment;
     
         return $this;
     }
 
     /**
-     * Get prefix
+     * Get googleDepartment
      *
      * @return string 
      */
-    public function getPrefix()
+    public function getGoogleDepartment()
     {
-        return $this->prefix;
+        return $this->googleDepartment;
     }
 
     /**
-     * Set tagline
+     * Set ebayDepartment
      *
-     * @param string $tagline
+     * @param string $ebayDepartment
      * @return Description
      */
-    public function setTagline($tagline)
+    public function setEbayDepartment($ebayDepartment)
     {
-        $this->tagline = $tagline;
+        $this->ebayDepartment = $ebayDepartment;
     
         return $this;
     }
 
     /**
-     * Get tagline
+     * Get ebayDepartment
      *
      * @return string 
      */
-    public function getTagline()
+    public function getEbayDepartment()
     {
-        return $this->tagline;
+        return $this->ebayDepartment;
+    }
+
+    /**
+     * Set amazonDepartment
+     *
+     * @param string $amazonDepartment
+     * @return Description
+     */
+    public function setAmazonDepartment($amazonDepartment)
+    {
+        $this->amazonDepartment = $amazonDepartment;
+    
+        return $this;
+    }
+
+    /**
+     * Get amazonDepartment
+     *
+     * @return string 
+     */
+    public function getAmazonDepartment()
+    {
+        return $this->amazonDepartment;
     }
 
     /**
@@ -216,26 +282,26 @@ class Description
     }
 
     /**
-     * Set shortDescription
+     * Set menuTitle
      *
-     * @param string $shortDescription
+     * @param string $menuTitle
      * @return Description
      */
-    public function setShortDescription($shortDescription)
+    public function setMenuTitle($menuTitle)
     {
-        $this->shortDescription = $shortDescription;
+        $this->menuTitle = $menuTitle;
     
         return $this;
     }
 
     /**
-     * Get shortDescription
+     * Get menuTitle
      *
      * @return string 
      */
-    public function getShortDescription()
+    public function getMenuTitle()
     {
-        return $this->shortDescription;
+        return $this->menuTitle;
     }
 
     /**
@@ -262,6 +328,29 @@ class Description
     }
 
     /**
+     * Set pageTitleTemplate
+     *
+     * @param string $pageTitleTemplate
+     * @return Description
+     */
+    public function setPageTitleTemplate($pageTitleTemplate)
+    {
+        $this->pageTitleTemplate = $pageTitleTemplate;
+    
+        return $this;
+    }
+
+    /**
+     * Get pageTitleTemplate
+     *
+     * @return string 
+     */
+    public function getPageTitleTemplate()
+    {
+        return $this->pageTitleTemplate;
+    }
+
+    /**
      * Set header
      *
      * @param string $header
@@ -282,6 +371,29 @@ class Description
     public function getHeader()
     {
         return $this->header;
+    }
+
+    /**
+     * Set headerTemplate
+     *
+     * @param string $headerTemplate
+     * @return Description
+     */
+    public function setHeaderTemplate($headerTemplate)
+    {
+        $this->headerTemplate = $headerTemplate;
+    
+        return $this;
+    }
+
+    /**
+     * Get headerTemplate
+     *
+     * @return string 
+     */
+    public function getHeaderTemplate()
+    {
+        return $this->headerTemplate;
     }
 
     /**
@@ -308,6 +420,29 @@ class Description
     }
 
     /**
+     * Set metaDescriptionTemplate
+     *
+     * @param string $metaDescriptionTemplate
+     * @return Description
+     */
+    public function setMetaDescriptionTemplate($metaDescriptionTemplate)
+    {
+        $this->metaDescriptionTemplate = $metaDescriptionTemplate;
+    
+        return $this;
+    }
+
+    /**
+     * Get metaDescriptionTemplate
+     *
+     * @return string 
+     */
+    public function getMetaDescriptionTemplate()
+    {
+        return $this->metaDescriptionTemplate;
+    }
+
+    /**
      * Set metaKeywords
      *
      * @param string $metaKeywords
@@ -328,29 +463,6 @@ class Description
     public function getMetaKeywords()
     {
         return $this->metaKeywords;
-    }
-
-    /**
-     * Set searchWords
-     *
-     * @param string $searchWords
-     * @return Description
-     */
-    public function setSearchWords($searchWords)
-    {
-        $this->searchWords = $searchWords;
-    
-        return $this;
-    }
-
-    /**
-     * Get searchWords
-     *
-     * @return string 
-     */
-    public function getSearchWords()
-    {
-        return $this->searchWords;
     }
 
     /**
@@ -400,25 +512,25 @@ class Description
     }
 
     /**
-     * Set product
+     * Set department
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @param \WebIllumination\SiteBundle\Entity\Department $department
      * @return Description
      */
-    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    public function setDepartment(\WebIllumination\SiteBundle\Entity\Department $department = null)
     {
-        $this->product = $product;
+        $this->department = $department;
     
         return $this;
     }
 
     /**
-     * Get product
+     * Get department
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product 
+     * @return \WebIllumination\SiteBundle\Entity\Department 
      */
-    public function getProduct()
+    public function getDepartment()
     {
-        return $this->product;
+        return $this->department;
     }
 }

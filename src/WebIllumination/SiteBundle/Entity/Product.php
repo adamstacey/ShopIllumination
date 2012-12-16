@@ -24,9 +24,9 @@ class Product
     private $productGroupId;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
      */
-    private $descriptions;
+    private $description;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToOption", mappedBy="product")
@@ -244,7 +244,6 @@ class Product
      */
     public function __construct()
     {
-        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
@@ -1022,36 +1021,26 @@ class Product
     }
 
     /**
-     * Add descriptions
+     * Set description
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\Description $description
      * @return Product
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function setDescription(\WebIllumination\SiteBundle\Entity\Product\Description $description = null)
     {
-        $this->descriptions[] = $descriptions;
+        $this->description = $description;
     
         return $this;
     }
 
     /**
-     * Remove descriptions
+     * Get description
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @return \WebIllumination\SiteBundle\Entity\Product\Description 
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function getDescription()
     {
-        $this->descriptions->removeElement($descriptions);
-    }
-
-    /**
-     * Get descriptions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDescriptions()
-    {
-        return $this->descriptions;
+        return $this->description;
     }
 
     /**

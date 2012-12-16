@@ -1,12 +1,12 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Product;
+namespace WebIllumination\SiteBundle\Entity\Brand;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_descriptions")
+ * @ORM\Table(name="brand_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
 class Description
@@ -19,9 +19,15 @@ class Description
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="description")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand", inversedBy="descriptions")
      */
-    private $product;
+    private $brand;
+
+	/**
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand")
+     * @ORM\JoinColumn(name="logo_image_id", referencedColumnName="id")
+     */
+    private $logoImage;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
@@ -34,24 +40,24 @@ class Description
     private $name;
     
     /**
-     * @ORM\Column(name="prefix", type="string", length=255)
-     */
-    private $prefix;
-    
-    /**
-     * @ORM\Column(name="tagline", type="string", length=255)
-     */
-    private $tagline;
-    
-    /**
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+        
+    /**
+     * @ORM\Column(name="about", type="text")
+     */
+    private $about;
     
     /**
-     * @ORM\Column(name="short_description", type="text")
+     * @ORM\Column(name="history", type="text")
      */
-    private $shortDescription;
+    private $history;
+    
+    /**
+     * @ORM\Column(name="more_information", type="text")
+     */
+    private $moreInformation; 
     
     /**
      * @ORM\Column(name="page_title", type="string", length=255)
@@ -147,52 +153,6 @@ class Description
     }
 
     /**
-     * Set prefix
-     *
-     * @param string $prefix
-     * @return Description
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-    
-        return $this;
-    }
-
-    /**
-     * Get prefix
-     *
-     * @return string 
-     */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
-    /**
-     * Set tagline
-     *
-     * @param string $tagline
-     * @return Description
-     */
-    public function setTagline($tagline)
-    {
-        $this->tagline = $tagline;
-    
-        return $this;
-    }
-
-    /**
-     * Get tagline
-     *
-     * @return string 
-     */
-    public function getTagline()
-    {
-        return $this->tagline;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -216,26 +176,72 @@ class Description
     }
 
     /**
-     * Set shortDescription
+     * Set about
      *
-     * @param string $shortDescription
+     * @param string $about
      * @return Description
      */
-    public function setShortDescription($shortDescription)
+    public function setAbout($about)
     {
-        $this->shortDescription = $shortDescription;
+        $this->about = $about;
     
         return $this;
     }
 
     /**
-     * Get shortDescription
+     * Get about
      *
      * @return string 
      */
-    public function getShortDescription()
+    public function getAbout()
     {
-        return $this->shortDescription;
+        return $this->about;
+    }
+
+    /**
+     * Set history
+     *
+     * @param string $history
+     * @return Description
+     */
+    public function setHistory($history)
+    {
+        $this->history = $history;
+    
+        return $this;
+    }
+
+    /**
+     * Get history
+     *
+     * @return string 
+     */
+    public function getHistory()
+    {
+        return $this->history;
+    }
+
+    /**
+     * Set moreInformation
+     *
+     * @param string $moreInformation
+     * @return Description
+     */
+    public function setMoreInformation($moreInformation)
+    {
+        $this->moreInformation = $moreInformation;
+    
+        return $this;
+    }
+
+    /**
+     * Get moreInformation
+     *
+     * @return string 
+     */
+    public function getMoreInformation()
+    {
+        return $this->moreInformation;
     }
 
     /**
@@ -400,25 +406,48 @@ class Description
     }
 
     /**
-     * Set product
+     * Set brand
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @param \WebIllumination\SiteBundle\Entity\Brand $brand
      * @return Description
      */
-    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    public function setBrand(\WebIllumination\SiteBundle\Entity\Brand $brand = null)
     {
-        $this->product = $product;
+        $this->brand = $brand;
     
         return $this;
     }
 
     /**
-     * Get product
+     * Get brand
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product 
+     * @return \WebIllumination\SiteBundle\Entity\Brand 
      */
-    public function getProduct()
+    public function getBrand()
     {
-        return $this->product;
+        return $this->brand;
+    }
+
+    /**
+     * Set logoImage
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Brand $logoImage
+     * @return Description
+     */
+    public function setLogoImage(\WebIllumination\SiteBundle\Entity\Brand $logoImage = null)
+    {
+        $this->logoImage = $logoImage;
+    
+        return $this;
+    }
+
+    /**
+     * Get logoImage
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Brand 
+     */
+    public function getLogoImage()
+    {
+        return $this->logoImage;
     }
 }
