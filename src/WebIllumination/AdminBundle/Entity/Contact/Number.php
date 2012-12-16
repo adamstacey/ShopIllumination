@@ -24,7 +24,8 @@ class Number
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\DetailType")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\NumberType")
+     * @ORM\JoinColumn(name="contact_number_type_id", referencedColumnName="id")
      */
     private $type;
 

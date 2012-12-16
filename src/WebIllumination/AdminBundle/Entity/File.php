@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="file")
+ * @ORM\Table(name="files")
  * @ORM\HasLifecycleCallbacks()
  */
 class File

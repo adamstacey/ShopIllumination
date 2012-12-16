@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="contact")
+ * @ORM\Table(name="contacts")
  * @ORM\HasLifecycleCallbacks()
  */
 class Contact
@@ -45,6 +45,7 @@ class Contact
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\Title")
+     * @ORM\JoinColumn(name="contact_title_id", referencedColumnName="id")
      */
     private $contactTitle;
     

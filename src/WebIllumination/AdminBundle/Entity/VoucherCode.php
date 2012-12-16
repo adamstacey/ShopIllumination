@@ -1,11 +1,12 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="voucher_code")
+ * @ORM\Table(name="voucher_codes")
  * @ORM\HasLifecycleCallbacks()
  */
 class VoucherCode
@@ -83,7 +84,7 @@ class VoucherCode
     private $creator;
     
     /**
-     * @ORM\Column(name="active", type="integer", length=1)
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active;
     
@@ -96,143 +97,18 @@ class VoucherCode
      * @ORM\Column(name="expiry_date", type="datetime")
      */
     private $expiryDate;
-    
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }    
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set code
-     *
-     * @param string $code
-     */
-    public function setCode($code)
-    {
-        $this->code = $code;
-    }
-
-    /**
-     * Get code
-     *
-     * @return string 
-     */
-    public function getCode()
-    {
-        return $this->code;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set minimumOrderValue
-     *
-     * @param decimal $minimumOrderValue
-     */
-    public function setMinimumOrderValue($minimumOrderValue)
-    {
-        $this->minimumOrderValue = $minimumOrderValue;
-    }
-
-    /**
-     * Get minimumOrderValue
-     *
-     * @return decimal 
-     */
-    public function getMinimumOrderValue()
-    {
-        return $this->minimumOrderValue;
-    }
-
-    /**
-     * Set discount
-     *
-     * @param decimal $discount
-     */
-    public function setDiscount($discount)
-    {
-        $this->discount = $discount;
-    }
-
-    /**
-     * Get discount
-     *
-     * @return decimal 
-     */
-    public function getDiscount()
-    {
-        return $this->discount;
-    }
-
-    /**
-     * Set discountType
-     *
-     * @param string $discountType
-     */
-    public function setDiscountType($discountType)
-    {
-        $this->discountType = $discountType;
-    }
-
-    /**
-     * Get discountType
-     *
-     * @return string 
-     */
-    public function getDiscountType()
-    {
-        return $this->discountType;
-    }
     
     /**
      * Get discountTypeName
@@ -278,26 +154,6 @@ class VoucherCode
     	}
         return '';
     }
-
-    /**
-     * Set discountUse
-     *
-     * @param string $discountUse
-     */
-    public function setDiscountUse($discountUse)
-    {
-        $this->discountUse = $discountUse;
-    }
-
-    /**
-     * Get discountUse
-     *
-     * @return string 
-     */
-    public function getDiscountUse()
-    {
-        return $this->discountUse;
-    }
     
     /**
      * Get discountUseName
@@ -316,166 +172,6 @@ class VoucherCode
     			return 'Fixed Number of Times';
     	}
         return 'Unknown';
-    }
-
-    /**
-     * Set numberOfUses
-     *
-     * @param integer $numberOfUses
-     */
-    public function setNumberOfUses($numberOfUses)
-    {
-        $this->numberOfUses = $numberOfUses;
-    }
-
-    /**
-     * Get numberOfUses
-     *
-     * @return integer 
-     */
-    public function getNumberOfUses()
-    {
-        return $this->numberOfUses;
-    }
-
-    /**
-     * Set numberUsed
-     *
-     * @param integer $numberUsed
-     */
-    public function setNumberUsed($numberUsed)
-    {
-        $this->numberUsed = $numberUsed;
-    }
-
-    /**
-     * Get numberUsed
-     *
-     * @return integer 
-     */
-    public function getNumberUsed()
-    {
-        return $this->numberUsed;
-    }
-
-    /**
-     * Set brands
-     *
-     * @param text $brands
-     */
-    public function setBrands($brands)
-    {
-        $this->brands = $brands;
-    }
-
-    /**
-     * Get brands
-     *
-     * @return text 
-     */
-    public function getBrands()
-    {
-        return $this->brands;
-    }
-
-    /**
-     * Set departments
-     *
-     * @param text $departments
-     */
-    public function setDepartments($departments)
-    {
-        $this->departments = $departments;
-    }
-
-    /**
-     * Get departments
-     *
-     * @return text 
-     */
-    public function getDepartments()
-    {
-        return $this->departments;
-    }
-
-    /**
-     * Set products
-     *
-     * @param text $products
-     */
-    public function setProducts($products)
-    {
-        $this->products = $products;
-    }
-
-    /**
-     * Get products
-     *
-     * @return text 
-     */
-    public function getProducts()
-    {
-        return $this->products;
-    }
-
-    /**
-     * Set orders
-     *
-     * @param text $orders
-     */
-    public function setOrders($orders)
-    {
-        $this->orders = $orders;
-    }
-
-    /**
-     * Get orders
-     *
-     * @return text 
-     */
-    public function getOrders()
-    {
-        return $this->orders;
-    }
-
-    /**
-     * Set creator
-     *
-     * @param string $creator
-     */
-    public function setCreator($creator)
-    {
-        $this->creator = $creator;
-    }
-
-    /**
-     * Get creator
-     *
-     * @return string 
-     */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * Set active
-     *
-     * @param integer $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * Get active
-     *
-     * @return integer 
-     */
-    public function getActive()
-    {
-        return $this->active;
     }
     
     /**
@@ -504,85 +200,5 @@ class VoucherCode
     public function getActiveIcon()
     {
         return 'bundles/webilluminationadmin/images/icons/'.$this->getActiveColour().'-light-icon.png';
-    }
-
-    /**
-     * Set validFromDate
-     *
-     * @param datetime $validFromDate
-     */
-    public function setValidFromDate($validFromDate)
-    {
-        $this->validFromDate = $validFromDate;
-    }
-
-    /**
-     * Get validFromDate
-     *
-     * @return datetime 
-     */
-    public function getValidFromDate()
-    {
-        return $this->validFromDate;
-    }
-
-    /**
-     * Set expiryDate
-     *
-     * @param datetime $expiryDate
-     */
-    public function setExpiryDate($expiryDate)
-    {
-        $this->expiryDate = $expiryDate;
-    }
-
-    /**
-     * Get expiryDate
-     *
-     * @return datetime 
-     */
-    public function getExpiryDate()
-    {
-        return $this->expiryDate;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param datetime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return datetime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param datetime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return datetime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
     }
 }

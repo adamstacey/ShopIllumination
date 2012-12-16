@@ -6,42 +6,42 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="redirects")
+ * @ORM\Table(name="order_discounts")
  * @ORM\HasLifecycleCallbacks()
  */
-class Redirect
+class OrderDiscount
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-	
-	/**
-     * @ORM\Column(name="object_id", type="integer", length=11)
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Order", inversedBy="discounts")
      */
-    private $objectId;
-	
-	/**
-     * @ORM\Column(name="object_type", type="string", length=100)
-     */
-    private $objectType;
-	
-	/**
-     * @ORM\Column(name="redirect_from", type="text")
-     */
-    private $redirectFrom;
+    private $order;
     
     /**
-     * @ORM\Column(name="redirect_to", type="text")
+     * @ORM\Column(name="voucher_code", type="string", length=255)
      */
-    private $redirectTo;
+    private $voucherCode;
     
     /**
-     * @ORM\Column(name="redirect_code", type="string", length=5)
+     * @ORM\Column(name="gift_voucher_code", type="string", length=255)
      */
-    private $redirectCode;
+    private $giftVoucherCode;
+    
+    /**
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+        
+    /**
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
+     */
+    private $discount;
 
     /**
      * @Gedmo\Timestampable(on="create")

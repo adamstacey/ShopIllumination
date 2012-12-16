@@ -20,7 +20,7 @@ class Department
     private $id;
 
     /**
-     * @OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Department", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Department", mappedBy="parent")
      **/
     private $children;
 
@@ -30,9 +30,14 @@ class Department
     private $parent;
 
     /**
-     * @OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Department\Description", mappedBy="department")
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Department\Description", mappedBy="department")
      **/
     private $descriptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\DepartmentToFeature", mappedBy="department")
+     **/
+    private $features;
     
     /**
      * @ORM\Column(name="status", type="string", length=1)
@@ -45,17 +50,17 @@ class Department
     private $departmentPath;
     
     /**
-     * @ORM\Column(name="hide_prices", type="integer", length=1)
+     * @ORM\Column(name="hide_prices", type="boolean")
      */
     private $hidePrices;
     
     /**
-     * @ORM\Column(name="show_prices_out_of_hours", type="integer", length=1)
+     * @ORM\Column(name="show_prices_out_of_hours", type="boolean")
      */
     private $showPricesOutOfHours;
     
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="integer", length=1)
+     * @ORM\Column(name="membership_card_discount_available", type="boolean")
      */
     private $membershipCardDiscountAvailable;
     
@@ -75,7 +80,7 @@ class Department
     private $inheritedDeliveryBand;
     
     /**
-     * @ORM\Column(name="check_delivery_band", type="integer", length=1)
+     * @ORM\Column(name="check_delivery_band", type="boolean")
      */
     private $checkDeliveryBand;
     

@@ -1,14 +1,15 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Product;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_search")
+ * @ORM\Table(name="product_searches")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductSearch
+class Search
 {
     /**
      * @ORM\Id
@@ -26,19 +27,18 @@ class ProductSearch
      * @ORM\Column(name="product_data", type="text")
      */
     private $productData;
-            
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
-	/**
-	 * @ORM\PrePersist
-	 */
-	private function create()
-	{
-	    $this->createdAt = new \DateTime();
-	}
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
 
     /**
      * Get id

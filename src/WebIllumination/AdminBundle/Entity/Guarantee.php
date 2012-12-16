@@ -29,12 +29,14 @@ class Guarantee
     private $objectType;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Type")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Guarantee\Type")
+     * @ORM\JoinColumn(name="guarantee_type_id", referencedColumnName="id")
      */
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Guarantee/Length")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Guarantee\Length")
+     * @ORM\JoinColumn(name="guarantee_length_id", referencedColumnName="id")
      */
     private $length;
 

@@ -1,14 +1,15 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_description")
+ * @ORM\Table(name="brand_to_department")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductDescription
+class BrandToDepartment
 {
     /**
      * @ORM\Id
@@ -16,41 +17,21 @@ class ProductDescription
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
-     * @ORM\Column(name="product_id", type="integer", length=11)
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Department", inversedBy="departments")
      */
-    private $productId;  
-    
+    private $brand;
+
     /**
-     * @ORM\Column(name="locale", type="string", length=2)
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Department")
      */
-    private $locale;
-    
+    private $department;
+            
     /**
-     * @ORM\Column(name="product", type="string", length=255)
+     * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
-    private $product;
-    
-    /**
-     * @ORM\Column(name="prefix", type="string", length=255)
-     */
-    private $prefix;
-    
-    /**
-     * @ORM\Column(name="tagline", type="string", length=255)
-     */
-    private $tagline;
-    
-    /**
-     * @ORM\Column(name="description", type="text")
-     */
-    private $description;
-    
-    /**
-     * @ORM\Column(name="short_description", type="text")
-     */
-    private $shortDescription;
+    private $deliveryBand;
     
     /**
      * @ORM\Column(name="page_title", type="string", length=255)
@@ -76,33 +57,18 @@ class ProductDescription
      * @ORM\Column(name="search_words", type="text")
      */
     private $searchWords;
-           
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
     /**
      * Get id
@@ -115,103 +81,63 @@ class ProductDescription
     }
 
     /**
-     * Set productId
+     * Set brand
      *
-     * @param integer $productId
+     * @param Brand $brand
      */
-    public function setProductId($productId)
+    public function setBrand($brand)
     {
-        $this->productId = $productId;
+        $this->brand = $brand;
     }
 
     /**
-     * Get productId
+     * Get brand
      *
-     * @return integer 
+     * @return Brand
      */
-    public function getProductId()
+    public function getBrand()
     {
-        return $this->productId;
+        return $this->brand;
     }
 
     /**
-     * Set locale
+     * Set department
      *
-     * @param string $locale
+     * @param Department $department
      */
-    public function setLocale($locale)
+    public function setDepartment($department)
     {
-        $this->locale = $locale;
+        $this->department = $department;
     }
 
     /**
-     * Get locale
+     * Get department
      *
-     * @return string 
+     * @return Department
      */
-    public function getLocale()
+    public function getDepartment()
     {
-        return $this->locale;
+        return $this->department;
     }
 
     /**
-     * Set product
+     * Set deliveryBand
      *
-     * @param string $product
+     * @param decimal $deliveryBand
      */
-    public function setProduct($product)
+    public function setDeliveryBand($deliveryBand)
     {
-        $this->product = $product;
+        $this->deliveryBand = $deliveryBand;
     }
 
     /**
-     * Get product
+     * Get deliveryBand
      *
-     * @return string 
+     * @return decimal 
      */
-    public function getProduct()
+    public function getDeliveryBand()
     {
-        return $this->product;
-    }
-
-    /**
-     * Set description
-     *
-     * @param text $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * Get description
-     *
-     * @return text 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set shortDescription
-     *
-     * @param text $shortDescription
-     */
-    public function setShortDescription($shortDescription)
-    {
-        $this->shortDescription = $shortDescription;
-    }
-
-    /**
-     * Get shortDescription
-     *
-     * @return text 
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
+        return $this->deliveryBand;
     }
 
     /**
@@ -352,45 +278,5 @@ class ProductDescription
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set prefix
-     *
-     * @param string $prefix
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-    }
-
-    /**
-     * Get prefix
-     *
-     * @return string 
-     */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
-    /**
-     * Set tagline
-     *
-     * @param string $tagline
-     */
-    public function setTagline($tagline)
-    {
-        $this->tagline = $tagline;
-    }
-
-    /**
-     * Get tagline
-     *
-     * @return string 
-     */
-    public function getTagline()
-    {
-        return $this->tagline;
     }
 }

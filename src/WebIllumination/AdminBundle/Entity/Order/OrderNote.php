@@ -6,22 +6,42 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="settings")
+ * @ORM\Table(name="order_notes")
  * @ORM\HasLifecycleCallbacks()
  */
-class Setting
+class OrderNote
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-	
-	/**
-     * @ORM\Column(name="setting_key", type="string", length=255, unique=TRUE)
+    private $id;
+    
+    /**
+     * @ORM\Column(name="creator", type="string", length=255)
      */
-    private $settingKey;
+    private $creator;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Order", inversedBy="discounts")
+     */
+    private $order;
+    
+    /**
+     * @ORM\Column(name="note_type", type="string", length=255)
+     */
+    private $noteType;
+        
+    /**
+     * @ORM\Column(name="notified", type="boolean")
+     */
+    private $notified;
+    
+    /**
+     * @ORM\Column(name="note", type="text")
+     */
+    private $note;
 
     /**
      * @Gedmo\Timestampable(on="create")

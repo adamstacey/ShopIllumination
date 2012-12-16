@@ -1,37 +1,43 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="taxonomies")
+ * @ORM\Table(name="product_features")
  * @ORM\HasLifecycleCallbacks()
  */
-class Taxonomy
+class Feature
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-	
+    private $id;
+    
 	/**
-     * @ORM\Column(name="name", type="text")
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $name;
+    private $active;
     
     /**
-     * @ORM\Column(name="reference", type="string", length=255)
+     * @ORM\Column(name="filter", type="boolean")
      */
-    private $reference;
+    private $filter;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product\FeatureGroup", inversedBy="features")
+     * @ORM\JoinColumn(name="product_feature_group_id", referencedColumnName="id")
+     */
+    private $productFeatureGroup;
     
     /**
-     * @ORM\Column(name="object_type", type="string", length=255)
+     * @ORM\Column(name="product_feature", type="string", length=255)
      */
-    private $objectType;
+    private $productFeature;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)

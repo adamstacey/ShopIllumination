@@ -19,12 +19,13 @@ class Description
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Brand", inversedBy="descriptions")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Brand", inversedBy="descriptions")
      */
     private $brand;
 
 	/**
      * @ORM\OneToOne(targetEntity="WebIllumination\AdminBundle\Entity\Brand")
+     * @ORM\JoinColumn(name="logo_image_id", referencedColumnName="id")
      */
     private $logoImage;
     

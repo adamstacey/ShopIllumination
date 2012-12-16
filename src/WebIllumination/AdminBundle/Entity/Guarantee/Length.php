@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="guarantee_length")
+ * @ORM\Table(name="guarantee_lengths")
  * @ORM\HasLifecycleCallbacks()
  */
 class Length

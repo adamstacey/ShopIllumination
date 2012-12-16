@@ -19,9 +19,14 @@ class Brand
     private $id;
 
     /**
-     * @OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Brand\Description", mappedBy="brand")
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Brand\Description", mappedBy="brand")
      **/
     private $descriptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\BrandToDepartment", mappedBy="department")
+     **/
+    private $departments;
 	
 	/**
      * @ORM\Column(name="status", type="string", length=1)

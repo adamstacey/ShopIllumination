@@ -1,41 +1,42 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity\Contact;
+namespace WebIllumination\AdminBundle\Entity\Product;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="contact_number_type")
+ * @ORM\Table(name="product_option_groups")
  * @ORM\HasLifecycleCallbacks()
  */
-class DetailType
+class OptionGroup
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
+    private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\AdminBundle\Entity\Product\Option", mappedBy="productOptionGroup")
+     */
+    private $options;
     
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $name;
+    private $active;
     
     /**
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="product_option_group", type="string", length=255)
      */
-    private $description;
+    private $productOptionGroup;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
-    
-    /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
-     */
-    private $displayOrder;
 
     /**
      * @Gedmo\Timestampable(on="create")

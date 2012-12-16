@@ -1,63 +1,54 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Contact;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="order_donation")
+ * @ORM\Table(name="contact_web_address_types")
  * @ORM\HasLifecycleCallbacks()
  */
-class OrderDonation
+class WebAddressType
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $id;    
     
     /**
-     * @ORM\Column(name="order_id", type="integer", length=11)
+     * @ORM\Column(name="contact_web_address_type", type="string", length=255)
      */
-    private $orderId;
-        
+    private $contactWebAddressType;
+    
     /**
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="text")
      */
     private $description;
-        
+    
     /**
-     * @ORM\Column(name="donation", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $donation;
-                    
+    private $locale;
+    
     /**
+     * @ORM\Column(name="display_order", type="integer", length=11)
+     */
+    private $displayOrder;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-    
-    /**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
     /**
      * Get id
@@ -70,29 +61,29 @@ class OrderDonation
     }
 
     /**
-     * Set orderId
+     * Set contactWebAddressType
      *
-     * @param integer $orderId
+     * @param string $contactWebAddressType
      */
-    public function setOrderId($orderId)
+    public function setContactWebAddressType($contactWebAddressType)
     {
-        $this->orderId = $orderId;
+        $this->contactWebAddressType = $contactWebAddressType;
     }
 
     /**
-     * Get orderId
+     * Get contactWebAddressType
      *
-     * @return integer 
+     * @return string 
      */
-    public function getOrderId()
+    public function getContactWebAddressType()
     {
-        return $this->orderId;
+        return $this->contactWebAddressType;
     }
 
     /**
      * Set description
      *
-     * @param string $description
+     * @param text $description
      */
     public function setDescription($description)
     {
@@ -102,7 +93,7 @@ class OrderDonation
     /**
      * Get description
      *
-     * @return string 
+     * @return text 
      */
     public function getDescription()
     {
@@ -110,23 +101,43 @@ class OrderDonation
     }
 
     /**
-     * Set donation
+     * Set locale
      *
-     * @param decimal $donation
+     * @param string $locale
      */
-    public function setDonation($donation)
+    public function setLocale($locale)
     {
-        $this->donation = $donation;
+        $this->locale = $locale;
     }
 
     /**
-     * Get donation
+     * Get locale
      *
-     * @return decimal 
+     * @return string 
      */
-    public function getDonation()
+    public function getLocale()
     {
-        return $this->donation;
+        return $this->locale;
+    }
+
+    /**
+     * Set displayOrder
+     *
+     * @param integer $displayOrder
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+    }
+
+    /**
+     * Get displayOrder
+     *
+     * @return integer 
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
     }
 
     /**

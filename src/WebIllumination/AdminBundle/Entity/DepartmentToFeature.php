@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_to_feature")
+ * @ORM\Table(name="department_to_feature")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductToFeature
+class DepartmentToFeature
 {
     /**
      * @ORM\Id
@@ -24,9 +24,9 @@ class ProductToFeature
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product", inversedBy="features")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Department", inversedBy="features")
      **/
-    private $product;
+    private $department;
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product\Feature")
@@ -34,6 +34,21 @@ class ProductToFeature
      **/
     private $productFeature;
         
+    /**
+     * @ORM\Column(name="display_on_filter", type="boolean")
+     */
+    private $displayOnFilter;
+    
+    /**
+     * @ORM\Column(name="display_on_listing", type="boolean")
+     */
+    private $displayOnListing;
+    
+    /**
+     * @ORM\Column(name="display_on_product", type="boolean")
+     */
+    private $displayOnProduct;
+    
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
@@ -82,23 +97,23 @@ class ProductToFeature
     }
 
     /**
-     * Set productId
+     * Set departmentId
      *
-     * @param integer $productId
+     * @param integer $departmentId
      */
-    public function setProductId($productId)
+    public function setDepartmentId($departmentId)
     {
-        $this->productId = $productId;
+        $this->departmentId = $departmentId;
     }
 
     /**
-     * Get productId
+     * Get departmentId
      *
      * @return integer 
      */
-    public function getProductId()
+    public function getDepartmentId()
     {
-        return $this->productId;
+        return $this->departmentId;
     }
 
     /**
@@ -122,23 +137,83 @@ class ProductToFeature
     }
 
     /**
-     * Set productFeatureId
+     * Set defaultProductFeatureId
      *
-     * @param integer $productFeatureId
+     * @param integer $defaultProductFeatureId
      */
-    public function setProductFeatureId($productFeatureId)
+    public function setDefaultProductFeatureId($defaultProductFeatureId)
     {
-        $this->productFeatureId = $productFeatureId;
+        $this->defaultProductFeatureId = $defaultProductFeatureId;
     }
 
     /**
-     * Get productFeatureId
+     * Get defaultProductFeatureId
      *
      * @return integer 
      */
-    public function getProductFeatureId()
+    public function getDefaultProductFeatureId()
     {
-        return $this->productFeatureId;
+        return $this->defaultProductFeatureId;
+    }
+
+    /**
+     * Set displayOnFilter
+     *
+     * @param integer $displayOnFilter
+     */
+    public function setDisplayOnFilter($displayOnFilter)
+    {
+        $this->displayOnFilter = $displayOnFilter;
+    }
+
+    /**
+     * Get displayOnFilter
+     *
+     * @return integer 
+     */
+    public function getDisplayOnFilter()
+    {
+        return $this->displayOnFilter;
+    }
+
+    /**
+     * Set displayOnListing
+     *
+     * @param integer $displayOnListing
+     */
+    public function setDisplayOnListing($displayOnListing)
+    {
+        $this->displayOnListing = $displayOnListing;
+    }
+
+    /**
+     * Get displayOnListing
+     *
+     * @return integer 
+     */
+    public function getDisplayOnListing()
+    {
+        return $this->displayOnListing;
+    }
+
+    /**
+     * Set displayOnProduct
+     *
+     * @param integer $displayOnProduct
+     */
+    public function setDisplayOnProduct($displayOnProduct)
+    {
+        $this->displayOnProduct = $displayOnProduct;
+    }
+
+    /**
+     * Get displayOnProduct
+     *
+     * @return integer 
+     */
+    public function getDisplayOnProduct()
+    {
+        return $this->displayOnProduct;
     }
 
     /**

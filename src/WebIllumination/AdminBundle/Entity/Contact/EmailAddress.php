@@ -24,7 +24,8 @@ class EmailAddress
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\DetailType")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\EmailAddressType")
+     * @ORM\JoinColumn(name="contact_email_address_type_id", referencedColumnName="id")
      */
     private $type;
 

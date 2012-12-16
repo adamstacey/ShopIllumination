@@ -1,6 +1,7 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,49 +16,34 @@ class ProductToDepartment
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-    
+    private $id;
+
     /**
-     * @ORM\Column(name="product_id", type="integer", length=11)
-     */
-    private $productId;
-    
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product", inversedBy="options")
+     **/
+    private $product;
+
     /**
-     * @ORM\Column(name="department_id", type="integer", length=11)
-     */
-    private $departmentId;
-    
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Department")
+     **/
+    private $department;
+
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
-            
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
     /**
      * Get id

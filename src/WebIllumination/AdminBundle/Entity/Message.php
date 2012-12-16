@@ -1,11 +1,12 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="message")
+ * @ORM\Table(name="messages")
  * @ORM\HasLifecycleCallbacks()
  */
 class Message
@@ -43,254 +44,29 @@ class Message
     private $message;
     
     /**
-     * @ORM\Column(name="printed", type="integer", length=1)
+     * @ORM\Column(name="printed", type="boolean")
      */
     private $printed;
     
     /**
-     * @ORM\Column(name="viewed", type="integer", length=1)
+     * @ORM\Column(name="viewed", type="boolean")
      */
     private $viewed;
     
     /**
-     * @ORM\Column(name="actioned", type="integer", length=1)
+     * @ORM\Column(name="actioned", type="boolean")
      */
     private $actioned;
-                
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-    
-    /**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set messageType
-     *
-     * @param string $messageType
-     */
-    public function setMessageType($messageType)
-    {
-        $this->messageType = $messageType;
-    }
-
-    /**
-     * Get messageType
-     *
-     * @return string 
-     */
-    public function getMessageType()
-    {
-        return $this->messageType;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set emailAddress
-     *
-     * @param string $emailAddress
-     */
-    public function setEmailAddress($emailAddress)
-    {
-        $this->emailAddress = $emailAddress;
-    }
-
-    /**
-     * Get emailAddress
-     *
-     * @return string 
-     */
-    public function getEmailAddress()
-    {
-        return $this->emailAddress;
-    }
-
-    /**
-     * Set contactNumber
-     *
-     * @param string $contactNumber
-     */
-    public function setContactNumber($contactNumber)
-    {
-        $this->contactNumber = $contactNumber;
-    }
-
-    /**
-     * Get contactNumber
-     *
-     * @return string 
-     */
-    public function getContactNumber()
-    {
-        return $this->contactNumber;
-    }
-
-    /**
-     * Set message
-     *
-     * @param text $message
-     */
-    public function setMessage($message)
-    {
-        $this->message = $message;
-    }
-
-    /**
-     * Get message
-     *
-     * @return text 
-     */
-    public function getMessage()
-    {
-        return $this->message;
-    }
-
-    /**
-     * Set printed
-     *
-     * @param integer $printed
-     */
-    public function setPrinted($printed)
-    {
-        $this->printed = $printed;
-    }
-
-    /**
-     * Get printed
-     *
-     * @return integer 
-     */
-    public function getPrinted()
-    {
-        return $this->printed;
-    }
-
-    /**
-     * Set viewed
-     *
-     * @param integer $viewed
-     */
-    public function setViewed($viewed)
-    {
-        $this->viewed = $viewed;
-    }
-
-    /**
-     * Get viewed
-     *
-     * @return integer 
-     */
-    public function getViewed()
-    {
-        return $this->viewed;
-    }
-
-    /**
-     * Set actioned
-     *
-     * @param integer $actioned
-     */
-    public function setActioned($actioned)
-    {
-        $this->actioned = $actioned;
-    }
-
-    /**
-     * Get actioned
-     *
-     * @return integer 
-     */
-    public function getActioned()
-    {
-        return $this->actioned;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param datetime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return datetime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param datetime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return datetime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
 }

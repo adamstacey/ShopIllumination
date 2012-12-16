@@ -19,12 +19,13 @@ class WebAddress
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact", inversedBy="webAddresse")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact", inversedBy="webAddresses")
      */
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\DetailType")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact\WebAddressType")
+     * @ORM\JoinColumn(name="contact_web_address_type_id", referencedColumnName="id")
      */
     private $type;
     

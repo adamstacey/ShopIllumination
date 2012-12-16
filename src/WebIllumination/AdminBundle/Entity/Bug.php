@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="bug")
+ * @ORM\Table(name="bugs")
  * @ORM\HasLifecycleCallbacks()
  */
 class Bug
@@ -49,17 +49,19 @@ class Bug
     private $status;
 	
 	/**
-     * @ORM\Column(name="priority", type="integer", length=1)
+     * @ORM\Column(name="priority", type="integer", length=11)
      */
     private $priority;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact")
+     * @ORM\JoinColumn(name="owner_contact_id", referencedColumnName="id")
      */
     private $ownerContact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIlluminationAdminBundle:Contact")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Contact")
+     * @ORM\JoinColumn(name="assinged_to_contact_id", referencedColumnName="id")
      */
     private $assignedToContact;
     

@@ -1,14 +1,15 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Contact;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_feature_group")
+ * @ORM\Table(name="contact_email_address_types")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductFeatureGroup
+class EmailAddressType
 {
     /**
      * @ORM\Id
@@ -18,51 +19,36 @@ class ProductFeatureGroup
     private $id;    
     
     /**
-     * @ORM\Column(name="active", type="integer", length=1)
+     * @ORM\Column(name="contact_email_address_type", type="string", length=255)
      */
-    private $active;
+    private $contactEmailAddressType;
     
     /**
-     * @ORM\Column(name="filter", type="integer", length=1)
+     * @ORM\Column(name="description", type="text")
      */
-    private $filter;
-    
-    /**
-     * @ORM\Column(name="product_feature_group", type="string", length=255)
-     */
-    private $productFeatureGroup;
+    private $description;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
-                
+    
     /**
+     * @ORM\Column(name="display_order", type="integer", length=11)
+     */
+    private $displayOrder;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
     /**
      * Get id
@@ -75,43 +61,43 @@ class ProductFeatureGroup
     }
 
     /**
-     * Set active
+     * Set contactEmailAddressType
      *
-     * @param integer $active
+     * @param string $contactEmailAddressType
      */
-    public function setActive($active)
+    public function setContactEmailAddressType($contactEmailAddressType)
     {
-        $this->active = $active;
+        $this->contactEmailAddressType = $contactEmailAddressType;
     }
 
     /**
-     * Get active
-     *
-     * @return integer 
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Set productFeatureGroup
-     *
-     * @param string $productFeatureGroup
-     */
-    public function setProductFeatureGroup($productFeatureGroup)
-    {
-        $this->productFeatureGroup = $productFeatureGroup;
-    }
-
-    /**
-     * Get productFeatureGroup
+     * Get contactEmailAddressType
      *
      * @return string 
      */
-    public function getProductFeatureGroup()
+    public function getContactEmailAddressType()
     {
-        return $this->productFeatureGroup;
+        return $this->contactEmailAddressType;
+    }
+
+    /**
+     * Set description
+     *
+     * @param text $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return text 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -132,6 +118,26 @@ class ProductFeatureGroup
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * Set displayOrder
+     *
+     * @param integer $displayOrder
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+    }
+
+    /**
+     * Get displayOrder
+     *
+     * @return integer 
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
     }
 
     /**
@@ -172,25 +178,5 @@ class ProductFeatureGroup
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set filter
-     *
-     * @param integer $filter
-     */
-    public function setFilter($filter)
-    {
-        $this->filter = $filter;
-    }
-
-    /**
-     * Get filter
-     *
-     * @return integer 
-     */
-    public function getFilter()
-    {
-        return $this->filter;
     }
 }

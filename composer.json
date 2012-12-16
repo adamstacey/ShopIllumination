@@ -19,6 +19,7 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "stof/doctrine-extensions-bundle": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
         "google/adwords": "3.1.*",
         "ezyang/htmlpurifier": "dev-master"
     },

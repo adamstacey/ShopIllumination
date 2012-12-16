@@ -1,12 +1,12 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity\Department;
+namespace WebIllumination\AdminBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="department_descriptions")
+ * @ORM\Table(name="product_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
 class Description
@@ -19,19 +19,14 @@ class Description
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Department", inversedBy="descriptions")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product", inversedBy="descriptions")
      */
-    private $department;
-        
+    private $product;
+    
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
-    
-    /**
-     * @ORM\Column(name="delivery_band_notes", type="text")
-     */
-    private $deliveryBandNotes;
     
     /**
      * @ORM\Column(name="name", type="string", length=255)
@@ -39,29 +34,24 @@ class Description
     private $name;
     
     /**
-     * @ORM\Column(name="google_department", type="text")
+     * @ORM\Column(name="prefix", type="string", length=255)
      */
-    private $googleDepartment;
+    private $prefix;
     
     /**
-     * @ORM\Column(name="ebay_department", type="text")
+     * @ORM\Column(name="tagline", type="string", length=255)
      */
-    private $ebayDepartment;
-    
-    /**
-     * @ORM\Column(name="amazon_department", type="text")
-     */
-    private $amazonDepartment;
+    private $tagline;
     
     /**
      * @ORM\Column(name="description", type="text")
      */
     private $description;
-        
+    
     /**
-     * @ORM\Column(name="menu_title", type="string", length=255)
+     * @ORM\Column(name="short_description", type="text")
      */
-    private $menuTitle;
+    private $shortDescription;
     
     /**
      * @ORM\Column(name="page_title", type="string", length=255)
@@ -69,19 +59,9 @@ class Description
     private $pageTitle;
     
     /**
-     * @ORM\Column(name="page_title_template", type="text")
-     */
-    private $pageTitleTemplate;
-    
-    /**
      * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
-    
-    /**
-     * @ORM\Column(name="header_template", type="text")
-     */
-    private $headerTemplate;
     
     /**
      * @ORM\Column(name="meta_description", type="text")
@@ -89,14 +69,14 @@ class Description
     private $metaDescription;
     
     /**
-     * @ORM\Column(name="meta_description_template", type="text")
-     */
-    private $metaDescriptionTemplate;
-    
-    /**
      * @ORM\Column(name="meta_keywords", type="text")
      */
     private $metaKeywords;
+    
+    /**
+     * @ORM\Column(name="search_words", type="text")
+     */
+    private $searchWords;
 
     /**
      * @Gedmo\Timestampable(on="create")

@@ -1,37 +1,38 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="taxonomies")
+ * @ORM\Table(name="product_options")
  * @ORM\HasLifecycleCallbacks()
  */
-class Taxonomy
+class Option
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-	
-	/**
-     * @ORM\Column(name="name", type="text")
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product\OptionGroup", inversedBy="options")
+     * @ORM\JoinColumn(name="product_option_group_id", referencedColumnName="id")
      */
-    private $name;
+    private $productOptionGroup;
     
     /**
-     * @ORM\Column(name="reference", type="string", length=255)
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $reference;
+    private $active;
     
     /**
-     * @ORM\Column(name="object_type", type="string", length=255)
+     * @ORM\Column(name="product_option", type="string", length=255)
      */
-    private $objectType;
+    private $productOption;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)

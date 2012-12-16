@@ -1,73 +1,54 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Contact;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_link")
+ * @ORM\Table(name="contact_number_types")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductLink
+class NumberType
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $id;    
     
     /**
-     * @ORM\Column(name="active", type="integer", length=1)
+     * @ORM\Column(name="contact_number_type", type="string", length=255)
      */
-    private $active;
+    private $contactNumberType;
     
     /**
-     * @ORM\Column(name="product_id", type="integer", length=11)
+     * @ORM\Column(name="description", type="text")
      */
-    private $productId;
+    private $description;
     
     /**
-     * @ORM\Column(name="product_link_id", type="integer", length=11)
+     * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $productLinkId;
+    private $locale;
     
-    /**
-     * @ORM\Column(name="link_type", type="string", length=255)
-     */
-    private $linkType;
-            
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
-            
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
     /**
      * Get id
@@ -80,83 +61,63 @@ class ProductLink
     }
 
     /**
-     * Set active
+     * Set contactNumberType
      *
-     * @param integer $active
+     * @param string $contactNumberType
      */
-    public function setActive($active)
+    public function setContactNumberType($contactNumberType)
     {
-        $this->active = $active;
+        $this->contactNumberType = $contactNumberType;
     }
 
     /**
-     * Get active
-     *
-     * @return integer 
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Set productId
-     *
-     * @param integer $productId
-     */
-    public function setProductId($productId)
-    {
-        $this->productId = $productId;
-    }
-
-    /**
-     * Get productId
-     *
-     * @return integer 
-     */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
-
-    /**
-     * Set productLinkId
-     *
-     * @param integer $productLinkId
-     */
-    public function setProductLinkId($productLinkId)
-    {
-        $this->productLinkId = $productLinkId;
-    }
-
-    /**
-     * Get productLinkId
-     *
-     * @return integer 
-     */
-    public function getProductLinkId()
-    {
-        return $this->productLinkId;
-    }
-
-    /**
-     * Set linkType
-     *
-     * @param string $linkType
-     */
-    public function setLinkType($linkType)
-    {
-        $this->linkType = $linkType;
-    }
-
-    /**
-     * Get linkType
+     * Get contactNumberType
      *
      * @return string 
      */
-    public function getLinkType()
+    public function getContactNumberType()
     {
-        return $this->linkType;
+        return $this->contactNumberType;
+    }
+
+    /**
+     * Set description
+     *
+     * @param text $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return text 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
     /**

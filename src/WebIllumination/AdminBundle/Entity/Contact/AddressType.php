@@ -1,14 +1,15 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Contact;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_option_group")
+ * @ORM\Table(name="contact_address_types")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductOptionGroup
+class AddressType
 {
     /**
      * @ORM\Id
@@ -18,46 +19,36 @@ class ProductOptionGroup
     private $id;    
     
     /**
-     * @ORM\Column(name="active", type="integer", length=1)
+     * @ORM\Column(name="contact_address_type", type="string", length=255)
      */
-    private $active;
+    private $contactAddressType;
     
     /**
-     * @ORM\Column(name="product_option_group", type="string", length=255)
+     * @ORM\Column(name="description", type="text")
      */
-    private $productOptionGroup;
+    private $description;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
-                
+    
     /**
+     * @ORM\Column(name="display_order", type="integer", length=11)
+     */
+    private $displayOrder;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
     /**
      * Get id
@@ -70,43 +61,43 @@ class ProductOptionGroup
     }
 
     /**
-     * Set active
+     * Set contactAddressType
      *
-     * @param integer $active
+     * @param string $contactAddressType
      */
-    public function setActive($active)
+    public function setContactAddressType($contactAddressType)
     {
-        $this->active = $active;
+        $this->contactAddressType = $contactAddressType;
     }
 
     /**
-     * Get active
-     *
-     * @return integer 
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * Set productOptionGroup
-     *
-     * @param string $productOptionGroup
-     */
-    public function setProductOptionGroup($productOptionGroup)
-    {
-        $this->productOptionGroup = $productOptionGroup;
-    }
-
-    /**
-     * Get productOptionGroup
+     * Get contactAddressType
      *
      * @return string 
      */
-    public function getProductOptionGroup()
+    public function getContactAddressType()
     {
-        return $this->productOptionGroup;
+        return $this->contactAddressType;
+    }
+
+    /**
+     * Set description
+     *
+     * @param text $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return text 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -127,6 +118,26 @@ class ProductOptionGroup
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * Set displayOrder
+     *
+     * @param integer $displayOrder
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+    }
+
+    /**
+     * Get displayOrder
+     *
+     * @return integer 
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
     }
 
     /**

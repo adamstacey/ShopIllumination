@@ -1,15 +1,15 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_to_option")
+ * @ORM\Table(name="product_links")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductToOption
+class Link
 {
     /**
      * @ORM\Id
@@ -24,31 +24,21 @@ class ProductToOption
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product", inversedBy="options")
-     **/
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product", inversedBy="links")
+     */
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product\Option")
-     * @ORM\JoinColumn(name="product_option_id", referencedColumnName="id")
-     **/
-    private $productOption;
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product")
+     * @ORM\JoinColumn(name="linked_product_id", referencedColumnName="id")
+     */
+    private $linkedProduct;
     
     /**
-     * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="link_type", type="string", length=255)
      */
-    private $price;
-    
-    /**
-     * @ORM\Column(name="price_type", type="string", length=1)
-     */
-    private $priceType;
-    
-    /**
-     * @ORM\Column(name="price_use", type="string", length=1)
-     */
-    private $priceUse;
-        
+    private $linkType;
+            
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */

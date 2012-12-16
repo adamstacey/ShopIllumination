@@ -1,12 +1,13 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
@@ -39,7 +40,7 @@ class User implements UserInterface
     private $password;
     
     /**
-     * @ORM\Column(name="active", type="integer", length=1)
+     * @ORM\Column(name="active", type="boolean")
      */
     private $active;
             
@@ -47,13 +48,15 @@ class User implements UserInterface
      * @ORM\Column(name="last_logged_in", type="datetime")
      */
     private $lastLoggedIn;
-    
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
@@ -64,17 +67,7 @@ class User implements UserInterface
 	public function create()
 	{
 		$this->lastLoggedIn = new \DateTime();
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
 	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
     
     public function __construct()
     {
@@ -96,7 +89,7 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
-	
+
     public function getUsername()
     {
         return $this->emailAddress;
@@ -105,13 +98,13 @@ class User implements UserInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-    
+
     /**
      * Set contactId
      *
@@ -121,11 +114,11 @@ class User implements UserInterface
     {
         $this->contactId = $contactId;
     }
-    
+
     /**
      * Get contactId
      *
-     * @return integer 
+     * @return integer
      */
     public function getContactId()
     {
@@ -141,11 +134,11 @@ class User implements UserInterface
     {
         $this->emailAddress = $emailAddress;
     }
-    
+
     /**
      * Get emailAddress
      *
-     * @return string 
+     * @return string
      */
     public function getEmailAddress()
     {
@@ -161,11 +154,11 @@ class User implements UserInterface
     {
         $this->salt = $salt;
     }
-    
+
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt()
     {
@@ -181,11 +174,11 @@ class User implements UserInterface
     {
         $this->password = $password;
     }
-    
+
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -205,7 +198,7 @@ class User implements UserInterface
     /**
      * Get active
      *
-     * @return integer 
+     * @return integer
      */
     public function getActive()
     {
@@ -225,13 +218,13 @@ class User implements UserInterface
     /**
      * Get lastLoggedIn
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getLastLoggedIn()
     {
         return $this->lastLoggedIn;
     }
-    
+
     /**
      * Set createdAt
      *
@@ -245,7 +238,7 @@ class User implements UserInterface
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -265,7 +258,7 @@ class User implements UserInterface
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {

@@ -6,22 +6,32 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="settings")
+ * @ORM\Table(name="order_donations")
  * @ORM\HasLifecycleCallbacks()
  */
-class Setting
+class OrderDonation
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-	
-	/**
-     * @ORM\Column(name="setting_key", type="string", length=255, unique=TRUE)
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Order", inversedBy="donations")
      */
-    private $settingKey;
+    private $orderId;
+        
+    /**
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+        
+    /**
+     * @ORM\Column(name="donation", type="decimal", precision=12, scale=4)
+     */
+    private $donation;
 
     /**
      * @Gedmo\Timestampable(on="create")

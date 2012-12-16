@@ -1,11 +1,12 @@
 <?php
 namespace WebIllumination\AdminBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="object_index")
+ * @ORM\Table(name="object_indexes")
  * @ORM\HasLifecycleCallbacks()
  */
 class ObjectIndex
@@ -38,184 +39,19 @@ class ObjectIndex
     private $locale;
     
     /**
-     * @ORM\Column(name="rebuild", type="integer", length=1)
+     * @ORM\Column(name="rebuild", type="boolean")
      */
     private $rebuild;
-            
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set objectType
-     *
-     * @param string $objectType
-     */
-    public function setObjectType($objectType)
-    {
-        $this->objectType = $objectType;
-    }
-
-    /**
-     * Get objectType
-     *
-     * @return string 
-     */
-    public function getObjectType()
-    {
-        return $this->objectType;
-    }
-
-    /**
-     * Set objectKey
-     *
-     * @param string $objectKey
-     */
-    public function setObjectKey($objectKey)
-    {
-        $this->objectKey = $objectKey;
-    }
-
-    /**
-     * Get objectKey
-     *
-     * @return string 
-     */
-    public function getObjectKey()
-    {
-        return $this->objectKey;
-    }
-
-    /**
-     * Set objectData
-     *
-     * @param text $objectData
-     */
-    public function setObjectData($objectData)
-    {
-        $this->objectData = $objectData;
-    }
-
-    /**
-     * Get objectData
-     *
-     * @return text 
-     */
-    public function getObjectData()
-    {
-        return $this->objectData;
-    }
-
-    /**
-     * Set locale
-     *
-     * @param string $locale
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return string 
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
-
-    /**
-     * Set rebuild
-     *
-     * @param integer $rebuild
-     */
-    public function setRebuild($rebuild)
-    {
-        $this->rebuild = $rebuild;
-    }
-
-    /**
-     * Get rebuild
-     *
-     * @return integer 
-     */
-    public function getRebuild()
-    {
-        return $this->rebuild;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param datetime $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return datetime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param datetime $updatedAt
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return datetime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
 }

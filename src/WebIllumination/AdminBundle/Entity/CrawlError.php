@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="crawl_error")
+ * @ORM\Table(name="crawl_errors")
  * @ORM\HasLifecycleCallbacks()
  */
 class CrawlError
@@ -29,7 +29,7 @@ class CrawlError
     private $responseCode;
 	
 	/**
-     * @ORM\Column(name="actioned", type="integer", length=1)
+     * @ORM\Column(name="actioned", type="boolean")
      */
     private $actioned;
 

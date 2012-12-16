@@ -1,26 +1,27 @@
 <?php
-namespace WebIllumination\AdminBundle\Entity;
+namespace WebIllumination\AdminBundle\Entity\Product;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_price")
+ * @ORM\Table(name="product_prices")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductPrice
+class Price
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-    
+    private $id;
+
     /**
-     * @ORM\Column(name="product_id", type="integer", length=11)
+     * @ORM\ManyToOne(targetEntity="WebIllumination\AdminBundle\Entity\Product", inversedBy="prices")
      */
-    private $productId;
+    private $product;
     
     /**
      * @ORM\Column(name="supplier_id", type="integer", length=11)
@@ -51,33 +52,18 @@ class ProductPrice
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
-            
+
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
-    
+
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function create()
-	{
-	    $this->createdAt = new \DateTime();
-	    $this->updatedAt = new \DateTime();
-	}
-	
-	/**
-	 * @ORM\PreUpdate
-	 */
-    public function update()
-    {
-        $this->updatedAt = new \DateTime();
-    }
 
     /**
      * Get id
@@ -315,11 +301,11 @@ class ProductPrice
     		return 0;
     	}
     }
-    
+
     /**
      * Get savings
      *
-     * @return string 
+     * @return string
      */
     public function getSavings()
     {
@@ -339,7 +325,7 @@ class ProductPrice
     /**
      * Get currencyCode
      *
-     * @return string 
+     * @return string
      */
     public function getCurrencyCode()
     {
@@ -359,7 +345,7 @@ class ProductPrice
     /**
      * Get displayOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisplayOrder()
     {
@@ -379,7 +365,7 @@ class ProductPrice
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -399,7 +385,7 @@ class ProductPrice
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
