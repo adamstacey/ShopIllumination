@@ -275,4 +275,50 @@ class DepartmentToFeature
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Set department
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department $department
+     * @return DepartmentToFeature
+     */
+    public function setDepartment(\WebIllumination\SiteBundle\Entity\Department $department = null)
+    {
+        $this->department = $department;
+    
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Department 
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * Set productFeature
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $productFeature
+     * @return DepartmentToFeature
+     */
+    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $productFeature = null)
+    {
+        $this->productFeature = $productFeature;
+    
+        return $this;
+    }
+
+    /**
+     * Get productFeature
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
+     */
+    public function getProductFeature()
+    {
+        return $this->productFeature;
+    }
 }

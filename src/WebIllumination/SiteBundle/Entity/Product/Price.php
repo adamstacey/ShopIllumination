@@ -391,4 +391,27 @@ class Price
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Set product
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @return Price
+     */
+    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
 }

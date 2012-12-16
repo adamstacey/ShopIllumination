@@ -69,4 +69,244 @@ class Message
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set messageType
+     *
+     * @param string $messageType
+     * @return Message
+     */
+    public function setMessageType($messageType)
+    {
+        $this->messageType = $messageType;
+    
+        return $this;
+    }
+
+    /**
+     * Get messageType
+     *
+     * @return string 
+     */
+    public function getMessageType()
+    {
+        return $this->messageType;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Message
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set emailAddress
+     *
+     * @param string $emailAddress
+     * @return Message
+     */
+    public function setEmailAddress($emailAddress)
+    {
+        $this->emailAddress = $emailAddress;
+    
+        return $this;
+    }
+
+    /**
+     * Get emailAddress
+     *
+     * @return string 
+     */
+    public function getEmailAddress()
+    {
+        return $this->emailAddress;
+    }
+
+    /**
+     * Set contactNumber
+     *
+     * @param string $contactNumber
+     * @return Message
+     */
+    public function setContactNumber($contactNumber)
+    {
+        $this->contactNumber = $contactNumber;
+    
+        return $this;
+    }
+
+    /**
+     * Get contactNumber
+     *
+     * @return string 
+     */
+    public function getContactNumber()
+    {
+        return $this->contactNumber;
+    }
+
+    /**
+     * Set message
+     *
+     * @param string $message
+     * @return Message
+     */
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    
+        return $this;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string 
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * Set printed
+     *
+     * @param boolean $printed
+     * @return Message
+     */
+    public function setPrinted($printed)
+    {
+        $this->printed = $printed;
+    
+        return $this;
+    }
+
+    /**
+     * Get printed
+     *
+     * @return boolean 
+     */
+    public function getPrinted()
+    {
+        return $this->printed;
+    }
+
+    /**
+     * Set viewed
+     *
+     * @param boolean $viewed
+     * @return Message
+     */
+    public function setViewed($viewed)
+    {
+        $this->viewed = $viewed;
+    
+        return $this;
+    }
+
+    /**
+     * Get viewed
+     *
+     * @return boolean 
+     */
+    public function getViewed()
+    {
+        return $this->viewed;
+    }
+
+    /**
+     * Set actioned
+     *
+     * @param boolean $actioned
+     * @return Message
+     */
+    public function setActioned($actioned)
+    {
+        $this->actioned = $actioned;
+    
+        return $this;
+    }
+
+    /**
+     * Get actioned
+     *
+     * @return boolean 
+     */
+    public function getActioned()
+    {
+        return $this->actioned;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Message
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Message
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 }

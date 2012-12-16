@@ -154,4 +154,50 @@ class ProductToDepartment
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Set product
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @return ProductToDepartment
+     */
+    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set department
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department $department
+     * @return ProductToDepartment
+     */
+    public function setDepartment(\WebIllumination\SiteBundle\Entity\Department $department = null)
+    {
+        $this->department = $department;
+    
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Department 
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
 }

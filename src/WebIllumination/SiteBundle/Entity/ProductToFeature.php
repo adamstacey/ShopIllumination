@@ -200,4 +200,50 @@ class ProductToFeature
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Set product
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @return ProductToFeature
+     */
+    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set productFeature
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $productFeature
+     * @return ProductToFeature
+     */
+    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $productFeature = null)
+    {
+        $this->productFeature = $productFeature;
+    
+        return $this;
+    }
+
+    /**
+     * Get productFeature
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
+     */
+    public function getProductFeature()
+    {
+        return $this->productFeature;
+    }
 }

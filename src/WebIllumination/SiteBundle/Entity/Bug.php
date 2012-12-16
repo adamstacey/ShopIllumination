@@ -169,4 +169,290 @@ class Bug
     	}
         return '';
     }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set bug
+     *
+     * @param string $bug
+     * @return Bug
+     */
+    public function setBug($bug)
+    {
+        $this->bug = $bug;
+    
+        return $this;
+    }
+
+    /**
+     * Get bug
+     *
+     * @return string 
+     */
+    public function getBug()
+    {
+        return $this->bug;
+    }
+
+    /**
+     * Set testScenario
+     *
+     * @param string $testScenario
+     * @return Bug
+     */
+    public function setTestScenario($testScenario)
+    {
+        $this->testScenario = $testScenario;
+    
+        return $this;
+    }
+
+    /**
+     * Get testScenario
+     *
+     * @return string 
+     */
+    public function getTestScenario()
+    {
+        return $this->testScenario;
+    }
+
+    /**
+     * Set operatingSystem
+     *
+     * @param string $operatingSystem
+     * @return Bug
+     */
+    public function setOperatingSystem($operatingSystem)
+    {
+        $this->operatingSystem = $operatingSystem;
+    
+        return $this;
+    }
+
+    /**
+     * Get operatingSystem
+     *
+     * @return string 
+     */
+    public function getOperatingSystem()
+    {
+        return $this->operatingSystem;
+    }
+
+    /**
+     * Set internetBrowser
+     *
+     * @param string $internetBrowser
+     * @return Bug
+     */
+    public function setInternetBrowser($internetBrowser)
+    {
+        $this->internetBrowser = $internetBrowser;
+    
+        return $this;
+    }
+
+    /**
+     * Get internetBrowser
+     *
+     * @return string 
+     */
+    public function getInternetBrowser()
+    {
+        return $this->internetBrowser;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return Bug
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return Bug
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     * @return Bug
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+    
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer 
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * Set displayOrder
+     *
+     * @param integer $displayOrder
+     * @return Bug
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Get displayOrder
+     *
+     * @return integer 
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Bug
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Bug
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set ownerContact
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Contact $ownerContact
+     * @return Bug
+     */
+    public function setOwnerContact(\WebIllumination\SiteBundle\Entity\Contact $ownerContact = null)
+    {
+        $this->ownerContact = $ownerContact;
+    
+        return $this;
+    }
+
+    /**
+     * Get ownerContact
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Contact 
+     */
+    public function getOwnerContact()
+    {
+        return $this->ownerContact;
+    }
+
+    /**
+     * Set assignedToContact
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Contact $assignedToContact
+     * @return Bug
+     */
+    public function setAssignedToContact(\WebIllumination\SiteBundle\Entity\Contact $assignedToContact = null)
+    {
+        $this->assignedToContact = $assignedToContact;
+    
+        return $this;
+    }
+
+    /**
+     * Get assignedToContact
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Contact 
+     */
+    public function getAssignedToContact()
+    {
+        return $this->assignedToContact;
+    }
 }

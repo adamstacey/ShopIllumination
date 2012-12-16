@@ -55,4 +55,175 @@ class Feature
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Feature
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set filter
+     *
+     * @param boolean $filter
+     * @return Feature
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+    
+        return $this;
+    }
+
+    /**
+     * Get filter
+     *
+     * @return boolean 
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * Set productFeature
+     *
+     * @param string $productFeature
+     * @return Feature
+     */
+    public function setProductFeature($productFeature)
+    {
+        $this->productFeature = $productFeature;
+    
+        return $this;
+    }
+
+    /**
+     * Get productFeature
+     *
+     * @return string 
+     */
+    public function getProductFeature()
+    {
+        return $this->productFeature;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return Feature
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Feature
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Feature
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set productFeatureGroup
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeatureGroup
+     * @return Feature
+     */
+    public function setProductFeatureGroup(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeatureGroup = null)
+    {
+        $this->productFeatureGroup = $productFeatureGroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get productFeatureGroup
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
+     */
+    public function getProductFeatureGroup()
+    {
+        return $this->productFeatureGroup;
+    }
 }

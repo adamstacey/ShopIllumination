@@ -54,4 +54,192 @@ class FeatureGroup
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return FeatureGroup
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set filter
+     *
+     * @param boolean $filter
+     * @return FeatureGroup
+     */
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+    
+        return $this;
+    }
+
+    /**
+     * Get filter
+     *
+     * @return boolean 
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * Set productFeatureGroup
+     *
+     * @param string $productFeatureGroup
+     * @return FeatureGroup
+     */
+    public function setProductFeatureGroup($productFeatureGroup)
+    {
+        $this->productFeatureGroup = $productFeatureGroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get productFeatureGroup
+     *
+     * @return string 
+     */
+    public function getProductFeatureGroup()
+    {
+        return $this->productFeatureGroup;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return FeatureGroup
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return FeatureGroup
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return FeatureGroup
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add features
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $features
+     * @return FeatureGroup
+     */
+    public function addFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $features)
+    {
+        $this->features[] = $features;
+    
+        return $this;
+    }
+
+    /**
+     * Remove features
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $features
+     */
+    public function removeFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $features)
+    {
+        $this->features->removeElement($features);
+    }
+
+    /**
+     * Get features
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFeatures()
+    {
+        return $this->features;
+    }
 }

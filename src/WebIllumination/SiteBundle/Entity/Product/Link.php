@@ -55,4 +55,175 @@ class Link
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Link
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set linkType
+     *
+     * @param string $linkType
+     * @return Link
+     */
+    public function setLinkType($linkType)
+    {
+        $this->linkType = $linkType;
+    
+        return $this;
+    }
+
+    /**
+     * Get linkType
+     *
+     * @return string 
+     */
+    public function getLinkType()
+    {
+        return $this->linkType;
+    }
+
+    /**
+     * Set displayOrder
+     *
+     * @param integer $displayOrder
+     * @return Link
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Get displayOrder
+     *
+     * @return integer 
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Link
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Link
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @return Link
+     */
+    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set linkedProduct
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $linkedProduct
+     * @return Link
+     */
+    public function setLinkedProduct(\WebIllumination\SiteBundle\Entity\Product $linkedProduct = null)
+    {
+        $this->linkedProduct = $linkedProduct;
+    
+        return $this;
+    }
+
+    /**
+     * Get linkedProduct
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product 
+     */
+    public function getLinkedProduct()
+    {
+        return $this->linkedProduct;
+    }
 }
