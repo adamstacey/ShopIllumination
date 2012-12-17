@@ -1,0 +1,67 @@
+<?php
+namespace WebIllumination\SiteBundle\Entity\Order;
+
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="order_products")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Product
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer", length=11)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="products")
+     */
+    private $order;
+
+    /**
+     * @ORM\Column(name="basket_item_id", type="string", length=255)
+     */
+    private $basketItemId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order\Product")
+     */
+    private $product;
+
+    /**
+     * @ORM\Column(name="quantity", type="integer", length=11)
+     */
+    private $quantity;
+
+    /**
+     * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4)
+     */
+    private $subTotal;
+
+    /**
+     * @ORM\Column(name="selected_options", type="text")
+     */
+    private $selectedOptions;
+
+    /**
+     * @ORM\Column(name="selected_option_labels", type="text")
+     */
+    private $selectedOptionLabels;
+
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime")
+     */
+    private $updatedAt;
+}

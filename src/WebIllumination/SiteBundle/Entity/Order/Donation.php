@@ -1,44 +1,49 @@
 <?php
+namespace WebIllumination\SiteBundle\Entity\Order;
 
-namespace WebIllumination\SiteBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrderDonation
+ * @ORM\Entity
+ * @ORM\Table(name="order_donations")
+ * @ORM\HasLifecycleCallbacks()
  */
-class OrderDonation
+class Donation
 {
     /**
-     * @var integer
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer", length=11)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="donations")
+     */
+    private $orderId;
+
+    /**
+     * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
 
     /**
-     * @var float
+     * @ORM\Column(name="donation", type="decimal", precision=12, scale=4)
      */
     private $donation;
 
     /**
-     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-    /**
-     * @var \WebIllumination\SiteBundle\Entity\Order
-     */
-    private $orderId;
-
 
     /**
      * Get id
@@ -54,7 +59,7 @@ class OrderDonation
      * Set description
      *
      * @param string $description
-     * @return OrderDonation
+     * @return Donation
      */
     public function setDescription($description)
     {
@@ -77,7 +82,7 @@ class OrderDonation
      * Set donation
      *
      * @param float $donation
-     * @return OrderDonation
+     * @return Donation
      */
     public function setDonation($donation)
     {
@@ -100,7 +105,7 @@ class OrderDonation
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return OrderDonation
+     * @return Donation
      */
     public function setCreatedAt($createdAt)
     {
@@ -123,7 +128,7 @@ class OrderDonation
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return OrderDonation
+     * @return Donation
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -146,7 +151,7 @@ class OrderDonation
      * Set orderId
      *
      * @param \WebIllumination\SiteBundle\Entity\Order $orderId
-     * @return OrderDonation
+     * @return Donation
      */
     public function setOrderId(\WebIllumination\SiteBundle\Entity\Order $orderId = null)
     {

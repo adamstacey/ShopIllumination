@@ -308,7 +308,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->where($qb->expr()->eq('o.emailAddress', $qb->expr()->literal($emailAddress)));
 		$query = $qb->getQuery();
 	
@@ -337,7 +337,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->where($qb->expr()->orx(
     		$qb->expr()->andx(
     			$qb->expr()->like('o.firstName', $qb->expr()->literal('%'.$firstName.'%')),
@@ -380,7 +380,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->where($qb->expr()->orx(
     		$qb->expr()->andx(
     			$qb->expr()->like('o.billingPostZipCode', $qb->expr()->literal('%'.$postZipCode.'%')),
@@ -419,7 +419,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->where($qb->expr()->orx(
     		$qb->expr()->like('o.telephoneDaytime', $qb->expr()->literal('%'.$telephone.'%')),
     		$qb->expr()->like('o.telephoneEvening', $qb->expr()->literal('%'.$telephone.'%')),
@@ -496,7 +496,7 @@ class OrderService {
 		$basket = $this->container->get('session')->get('basket');
 			
     	// Save the order
-    	$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($order['orderNumber']);
+    	$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($order['orderNumber']);
     	if (!$orderObject)
     	{
 			$orderObject = new Order();
@@ -510,7 +510,7 @@ class OrderService {
 			$orderObject->setNotesCount(0);
 		} else {
 			// Clear the existing order products
-    		$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $order['orderNumber']));
+    		$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $order['orderNumber']));
     		foreach ($orderProducts as $orderProduct)
     		{
     			$em->remove($orderProduct);
@@ -518,7 +518,7 @@ class OrderService {
     		}
     		
     		// Clear any existing order discounts
-    		$orderDiscounts = $em->getRepository('WebIlluminationAdminBundle:OrderDiscount')->findBy(array('orderId' => $order['orderNumber']));
+    		$orderDiscounts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDiscount')->findBy(array('orderId' => $order['orderNumber']));
     		foreach ($orderDiscounts as $orderDiscount)
     		{
     			$em->remove($orderDiscount);
@@ -526,7 +526,7 @@ class OrderService {
     		}
     		
     		// Clear any existing order donations
-    		$orderDonations = $em->getRepository('WebIlluminationAdminBundle:OrderDonation')->findBy(array('orderId' => $order['orderNumber']));
+    		$orderDonations = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDonation')->findBy(array('orderId' => $order['orderNumber']));
     		foreach ($orderDonations as $orderDonation)
     		{
     			$em->remove($orderDonation);
@@ -534,7 +534,7 @@ class OrderService {
     		}
     		
     		// Clear any existing order notes
-    		$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $order['orderNumber']));
+    		$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $order['orderNumber']));
     		foreach ($orderNotes as $orderNote)
     		{
     			$em->remove($orderNote);
@@ -737,7 +737,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select('o');
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	if ($orderId)
     	{
     		$qb->andWhere($qb->expr()->like('o.id', $qb->expr()->literal('%'.$orderId.'%')));
@@ -856,7 +856,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	if ($orderId != '')
     	{
     		$qb->andWhere($qb->expr()->like('o.id', $qb->expr()->literal('%'.$orderId.'%')));
@@ -950,7 +950,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select('o');
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	if ($orderId != '')
     	{
     		$qb->andWhere($qb->expr()->like('o.id', $qb->expr()->literal('%'.$orderId.'%')));
@@ -1082,7 +1082,7 @@ class OrderService {
     	
     	// Build the query
     	$qb->select('o');
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->addOrderBy('o.createdAt', 'DESC');
     	    	
     	$query = $qb->getQuery();
@@ -1105,11 +1105,11 @@ class OrderService {
     	$order = array();
    		
    		// Get the order
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderDiscounts = $em->getRepository('WebIlluminationAdminBundle:OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderDonations = $em->getRepository('WebIlluminationAdminBundle:OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderDiscounts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+    	$orderDonations = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;
@@ -1255,11 +1255,11 @@ class OrderService {
     	$em = $doctrineService->getEntityManager();
    		
    		// Get the order details
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderDiscounts = $em->getRepository('WebIlluminationAdminBundle:OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderDonations = $em->getRepository('WebIlluminationAdminBundle:OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderDiscounts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+    	$orderDonations = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;
@@ -1319,7 +1319,7 @@ class OrderService {
 		$statistics['averageOrderValueNett'] = 0;
 		$qb = $em->createQueryBuilder();
     	$qb->select('o');
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->andWhere($qb->expr()->eq('o.status', $qb->expr()->literal('Payment Received')));
     	foreach ($qb->getQuery()->getResult() as $order)
     	{
@@ -1356,7 +1356,7 @@ class OrderService {
 		$statistics['projectedTotalNett'] = 0;
 		$qb = $em->createQueryBuilder();
     	$qb->select('o');
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	switch ($timeFrame)
     	{
     		default:
@@ -1464,7 +1464,7 @@ class OrderService {
 		// Get the brands and products
 		foreach ($orders as $order)
     	{
-	    	$orderProductObjects = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $order->getId()));
+	    	$orderProductObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $order->getId()));
 	    	foreach ($orderProductObjects as $orderProductObject)
 	    	{
 	    		if ($orderProductObject)

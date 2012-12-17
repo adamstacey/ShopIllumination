@@ -115,8 +115,8 @@ class DepartmentService {
     	}
     	
     	/*$qb->select(array('d, dd'));
-    	$qb->from('WebIlluminationAdminBundle:Department', 'd');
-    	$qb->innerJoin('d', 'WebIlluminationAdminBundle:DepartmentDescription', 'dd', 'ON', $qb->expr()->eq('d.id', 'dd.departmentId'));
+    	$qb->from('WebIllumination\SiteBundle\Entity\Department', 'd');
+    	$qb->innerJoin('d', 'WebIllumination\SiteBundle\Entity\DepartmentDescription', 'dd', 'ON', $qb->expr()->eq('d.id', 'dd.departmentId'));
     	if ($status != '')
     	{
     		$options = explode('|', $status);
@@ -205,8 +205,8 @@ class DepartmentService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("d.id"));
-    	$qb->from('WebIlluminationAdminBundle:Department', 'd');
-    	$qb->join('d', 'WebIlluminationAdminBundle:DepartmentDescription', 'dd', 'd.id = dd.departmentId');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Department', 'd');
+    	$qb->join('d', 'WebIllumination\SiteBundle\Entity\DepartmentDescription', 'dd', 'd.id = dd.departmentId');
     	if ($status != '')
     	{
     		$options = explode('|', $status);
@@ -317,7 +317,7 @@ class DepartmentService {
     	$em = $doctrineService->getEntityManager();
     	
     	// Check if the department is already stored
-    	$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'department', 'locale' => $locale));
+    	$departmentIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'department', 'locale' => $locale));
     	    	
    		// Check if the department needs rebuilding
    		$rebuildDepartment = true;
@@ -336,8 +336,8 @@ class DepartmentService {
 	    	$department = array();
 		   		
 	   		// Get the department
-	   		$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
-	    	$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+	   		$departmentObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($id);
+	    	$departmentDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
 	    	if (!$departmentObject || !$departmentDescriptionObject)
 		    {
 	        	return false;
@@ -368,7 +368,7 @@ class DepartmentService {
 	    	$department['productCount'] = $productService->getProductListingCount($departmentObject->getId(), false, false, false, false, 0, 0, $currencyCode, 'GBP');
 	    	
 	    	// Get the routing
-	    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
+	    	$routingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
 	    	if (!$routingObject)
 	    	{
 	    		// Add routing
@@ -417,7 +417,7 @@ class DepartmentService {
 	    	$em = $doctrineService->getEntityManager();
 	    	/*
 	    	// Check if the department is already stored
-	    	$departmentObject = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'department', 'locale' => $locale));
+	    	$departmentObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'department', 'locale' => $locale));
 	    	    	
 	   		// Check if the department needs rebuilding
 	   		$rebuildDepartment = true;
@@ -437,15 +437,15 @@ class DepartmentService {
 		    	$department = array();
 		   		
 		   		// Get the department
-		   		$department['department'] = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
-		    	$department['description'] = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		   		$department['department'] = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($id);
+		    	$department['description'] = $em->getRepository('WebIllumination\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
 		    	if (!$department['department'] || !$department['description'])
 			    {
 		        	return false;
 		    	}
 		   	    	    	
 		    	// Get the routing
-		    	$department['routing'] = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
+		    	$department['routing'] = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
 		    	if (!$department['routing'])
 		    	{
 		    		// Add routing
@@ -464,7 +464,7 @@ class DepartmentService {
 	    		if (sizeof($subDepartmentIndexList) > 0)
 	    		{
 					$productToDepartments = $em
-						->createQuery("SELECT ptd FROM WebIlluminationAdminBundle:ProductToDepartment ptd WHERE ptd.departmentId IN (:departments)")
+						->createQuery("SELECT ptd FROM WebIllumination\SiteBundle\Entity\ProductToDepartment ptd WHERE ptd.departmentId IN (:departments)")
 						->setParameter('departments', $subDepartmentIndexList)
 						->getResult();
 					foreach($productToDepartments as $productToDepartment)
@@ -474,7 +474,7 @@ class DepartmentService {
 				}
 		    		    	
 		    	// Get the redirects
-		    	$department['redirects'] = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'department'), array('redirectFrom' => 'ASC'));
+		    	$department['redirects'] = $em->getRepository('WebIllumination\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $id, 'objectType' => 'department'), array('redirectFrom' => 'ASC'));
 		    	/*	
 		    	// Check for the department object
 		   		if (!$departmentObject)
@@ -517,7 +517,7 @@ class DepartmentService {
     	$departments[] = $parentId;
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -554,7 +554,7 @@ class DepartmentService {
     	$departments[] = $parentId;
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -588,7 +588,7 @@ class DepartmentService {
     	$departments = array();
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -626,7 +626,7 @@ class DepartmentService {
             	d.id, d.parentId, d.status, d.departmentPath, d.hidePrices, d.showPricesOutOfHours, d.displayOrder, 
             	dd.department, dd.description, dd.shortDescription, dd.menuTitle, dd.pageTitle, dd.header, dd.metaDescription, dd.metaKeywords, dd.searchWords, 
             	r.url 
-            	FROM WebIlluminationAdminBundle:Department d, WebIlluminationAdminBundle:DepartmentDescription dd, WebIlluminationAdminBundle:Routing r   
+            	FROM WebIllumination\SiteBundle\Entity\Department d, WebIllumination\SiteBundle\Entity\DepartmentDescription dd, WebIllumination\SiteBundle\Entity\Routing r
             	WHERE d.id = dd.departmentId AND d.id = r.objectId AND d.parentId = '".$parentId."' AND r.objectType = 'department' 
             	ORDER BY d.displayOrder 
             	")
@@ -667,7 +667,7 @@ class DepartmentService {
     	$em = $doctrineService->getEntityManager();
     	
     	// Check if the departments are already stored
-    	$objectIndexObject = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => 'all', 'objectType' => 'departments', 'locale' => $locale));
+    	$objectIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ObjectIndex')->findOneBy(array('objectKey' => 'all', 'objectType' => 'departments', 'locale' => $locale));
     	    	
    		// Check if the departments need rebuilding
    		$rebuildDepartments = true;
@@ -686,7 +686,7 @@ class DepartmentService {
 	    	$departments = array();
 	   		
 	   		// Get the departments
-	   		foreach ($em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findBy(array(), array('department' => 'ASC')) as $departmentDescriptionObject)
+	   		foreach ($em->getRepository('WebIllumination\SiteBundle\Entity\DepartmentDescription')->findBy(array(), array('department' => 'ASC')) as $departmentDescriptionObject)
 	   		{
 	   			$department = $this->getDepartment($departmentDescriptionObject->getDepartmentId(), $locale, $currencyCode);
 	   			error_log('Department Count: '.$department['productCount']);
@@ -733,7 +733,7 @@ class DepartmentService {
         $query .= "d.id, d.parentId, d.status, d.departmentPath, d.hidePrices, d.showPricesOutOfHours, d.displayOrder, ";
         $query .= "dd.department, dd.description, dd.shortDescription, dd.menuTitle, dd.pageTitle, dd.header, dd.metaDescription, dd.metaKeywords, dd.searchWords, ";
         $query .= "r.url ";
-        $query .= "FROM WebIlluminationAdminBundle:Department d, WebIlluminationAdminBundle:DepartmentDescription dd, WebIlluminationAdminBundle:Routing r ";
+        $query .= "FROM WebIllumination\SiteBundle\Entity\Department d, WebIllumination\SiteBundle\Entity\DepartmentDescription dd, WebIllumination\SiteBundle\Entity\Routing r ";
         $query .= "WHERE d.id = dd.departmentId AND d.id = r.objectId AND r.objectType = 'department' AND d.parentId = '".$parentId."' ";
 		if ($status)
     	{
@@ -873,12 +873,12 @@ class DepartmentService {
     	$em = $doctrineService->getEntityManager();
     	
     	// Get images with http in original path
-    	$productIndexes = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findBy(array('thumbnailPath' => ''));
+    	$productIndexes = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findBy(array('thumbnailPath' => ''));
 		
 		// Process the images
 		foreach ($productIndexes as $productIndex)
 		{
-			$image = $em->getRepository('WebIlluminationAdminBundle:Image')->findOneBy(array('objectId' => $productIndex->getProductId(), 'objectType' => 'product'));
+			$image = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findOneBy(array('objectId' => $productIndex->getProductId(), 'objectType' => 'product'));
 			if ($image)
 			{
 				$productIndex->setThumbnailPath($image->getThumbnailPath());
@@ -900,7 +900,7 @@ class DepartmentService {
     	
     	// Get images with http in original path
 		$images = $em
-			->createQuery("SELECT i FROM WebIlluminationAdminBundle:Image i WHERE i.originalPath LIKE :originalPath AND i.objectType = :objectType AND i.imageType = :imageType AND i.locale = :locale")
+			->createQuery("SELECT i FROM WebIllumination\SiteBundle\Entity\Image i WHERE i.originalPath LIKE :originalPath AND i.objectType = :objectType AND i.imageType = :imageType AND i.locale = :locale")
 			->setParameter('originalPath', 'http://%')
 			->setParameter('objectType', 'product')
 			->setParameter('imageType', 'product')
@@ -936,7 +936,7 @@ class DepartmentService {
 	    	$this->resizeImage($filePath.'/'.$originalImageFilename, $filePath.'/'.$thumbnailImageFilename, 100, 100, 100, 100, 'gallery', 60, false);
 		    $image->setThumbnailPath('/'.$filePath.'/'.$thumbnailImageFilename);
 		    
-		    $productIndex = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $image->getObjectId()));
+		    $productIndex = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $image->getObjectId()));
 			if ($productIndex)
 			{
 				$productIndex->setThumbnailPath('/'.$filePath.'/'.$thumbnailImageFilename);

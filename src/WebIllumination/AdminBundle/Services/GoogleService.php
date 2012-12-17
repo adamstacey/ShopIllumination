@@ -122,7 +122,7 @@ class GoogleService {
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
 
-    	$keywordSuggestionData = $doctrineService->getRepository('WebIlluminationAdminBundle:KeywordSuggestion')->findOneByKeywordPhrase($keywordPhrase);
+    	$keywordSuggestionData = $doctrineService->getRepository('WebIllumination\SiteBundle\Entity\KeywordSuggestion')->findOneByKeywordPhrase($keywordPhrase);
 
     	// Check if product search has been found and if it is current
     	if ($keywordSuggestionData)
@@ -617,7 +617,7 @@ class GoogleService {
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
 
-    	$statistics_data = $doctrineService->getRepository('WebIlluminationAdminBundle:Statistic')->findOneBy(array('url' => $url, 'statisticType' => 'visits'));
+    	$statistics_data = $doctrineService->getRepository('WebIllumination\SiteBundle\Entity\Statistic')->findOneBy(array('url' => $url, 'statisticType' => 'visits'));
 
     	// Check if product search has been found and if it is current
     	if ($statistics_data)
@@ -766,7 +766,7 @@ class GoogleService {
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
 
-    	$statistics_data = $doctrineService->getRepository('WebIlluminationAdminBundle:Statistic')->findOneBy(array('url' => $url, 'statisticType' => 'referrers'));
+    	$statistics_data = $doctrineService->getRepository('WebIllumination\SiteBundle\Entity\Statistic')->findOneBy(array('url' => $url, 'statisticType' => 'referrers'));
 
     	// Check if product search has been found and if it is current
     	if ($statistics_data)
@@ -954,10 +954,10 @@ class GoogleService {
     	// Get timestamp
     	$timeStamp = new \DateTime();
 
-    	$productSearch = $doctrineService->getRepository('WebIlluminationAdminBundle:ProductSearch')->findOneBySearchPhrase($searchPhrase);
+    	$productSearch = $doctrineService->getRepository('WebIllumination\SiteBundle\Entity\ProductSearch')->findOneBySearchPhrase($searchPhrase);
     	if ($alternativeSearchPhrase != '')
     	{
-    		$alternativeProductSearch = $doctrineService->getRepository('WebIlluminationAdminBundle:ProductSearch')->findOneBySearchPhrase($alternativeSearchPhrase);
+    		$alternativeProductSearch = $doctrineService->getRepository('WebIllumination\SiteBundle\Entity\ProductSearch')->findOneBySearchPhrase($alternativeSearchPhrase);
     	}
 
     	// Check if product search has been found and if it is current

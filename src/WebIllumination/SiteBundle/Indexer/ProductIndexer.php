@@ -21,10 +21,23 @@ class ProductIndexer extends Indexer
         $document->name = $product->getDescription()->getName();
         $document->prefix = $product->getDescription()->getPrefix();
         $document->description = $product->getDescription()->getDescription();
-        $document->metaDescription = $product->getDescription()->getMetaDescription();
+        $document->shortDescription = $product->getDescription()->getShortDescription();
         $document->metaKeywords = $product->getDescription()->getMetaKeywords();
-        // TODO: Decide what fields we want indexed
+        $document->tagline = $product->getDescription()->getTagline();
+        $document->header = $product->getDescription()->getHeader();
+        $document->pageTitle = $product->getDescription()->getPageTitle();
+        $document->productCode = $product->getProductCode();
+        $document->productGroupCode = $product->getProductGroupCode();
+        $document->alternativeProductCodes = $product->getAlternativeProductCodes();
 
+        $document->specialOffer = $product->getSpecialOffer();
+        $document->recommended = $product->getRecommended();
+        $document->accessory = $product->getAccessory();
+        $document->new = $product->getNew();
+        $document->hidePrice = $product->getHidePrice();
+        $document->showPriceOutOfHours = $product->getShowPriceOutOfHours();
+        $document->membershipCardDiscountAvailable = $product->getMembershipCardDiscountAvailable();
+        $document->maximumMembershipCardDiscount = $product->getMembershipCardDiscountAvailable();
 
         $update->addDocument($document);
         $update->addCommit();

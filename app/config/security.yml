@@ -15,7 +15,7 @@ security:
 
     providers:
         admin:
-            entity: { class: WebIllumination\AdminBundle\Entity\User, property: emailAddress }
+            entity: { class: WebIllumination\SiteBundle\Entity\User, property: emailAddress }
 
     firewalls:
         dev:

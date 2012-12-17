@@ -1,54 +1,59 @@
 <?php
+namespace WebIllumination\SiteBundle\Entity\Order;
 
-namespace WebIllumination\SiteBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrderNote
+ * @ORM\Entity
+ * @ORM\Table(name="order_notes")
+ * @ORM\HasLifecycleCallbacks()
  */
-class OrderNote
+class Note
 {
     /**
-     * @var integer
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer", length=11)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
+     * @ORM\Column(name="creator", type="string", length=255)
      */
     private $creator;
 
     /**
-     * @var string
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="notes")
+     */
+    private $order;
+
+    /**
+     * @ORM\Column(name="note_type", type="string", length=255)
      */
     private $noteType;
 
     /**
-     * @var boolean
+     * @ORM\Column(name="notified", type="boolean")
      */
     private $notified;
 
     /**
-     * @var string
+     * @ORM\Column(name="note", type="text")
      */
     private $note;
 
     /**
-     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-    /**
-     * @var \WebIllumination\SiteBundle\Entity\Order
-     */
-    private $order;
-
 
     /**
      * Get id
@@ -64,7 +69,7 @@ class OrderNote
      * Set creator
      *
      * @param string $creator
-     * @return OrderNote
+     * @return Note
      */
     public function setCreator($creator)
     {
@@ -87,7 +92,7 @@ class OrderNote
      * Set noteType
      *
      * @param string $noteType
-     * @return OrderNote
+     * @return Note
      */
     public function setNoteType($noteType)
     {
@@ -110,7 +115,7 @@ class OrderNote
      * Set notified
      *
      * @param boolean $notified
-     * @return OrderNote
+     * @return Note
      */
     public function setNotified($notified)
     {
@@ -133,7 +138,7 @@ class OrderNote
      * Set note
      *
      * @param string $note
-     * @return OrderNote
+     * @return Note
      */
     public function setNote($note)
     {
@@ -156,7 +161,7 @@ class OrderNote
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return OrderNote
+     * @return Note
      */
     public function setCreatedAt($createdAt)
     {
@@ -179,7 +184,7 @@ class OrderNote
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return OrderNote
+     * @return Note
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -202,7 +207,7 @@ class OrderNote
      * Set order
      *
      * @param \WebIllumination\SiteBundle\Entity\Order $order
-     * @return OrderNote
+     * @return Note
      */
     public function setOrder(\WebIllumination\SiteBundle\Entity\Order $order = null)
     {

@@ -1,54 +1,59 @@
 <?php
+namespace WebIllumination\SiteBundle\Entity\Order;
 
-namespace WebIllumination\SiteBundle\Entity;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrderDiscount
+ * @ORM\Entity
+ * @ORM\Table(name="order_discounts")
+ * @ORM\HasLifecycleCallbacks()
  */
-class OrderDiscount
+class Discount
 {
     /**
-     * @var integer
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer", length=11)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="discounts")
+     */
+    private $order;
+
+    /**
+     * @ORM\Column(name="voucher_code", type="string", length=255)
      */
     private $voucherCode;
 
     /**
-     * @var string
+     * @ORM\Column(name="gift_voucher_code", type="string", length=255)
      */
     private $giftVoucherCode;
 
     /**
-     * @var string
+     * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
 
     /**
-     * @var float
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
      */
     private $discount;
 
     /**
-     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-    /**
-     * @var \WebIllumination\SiteBundle\Entity\Order
-     */
-    private $order;
-
 
     /**
      * Get id
@@ -64,7 +69,7 @@ class OrderDiscount
      * Set voucherCode
      *
      * @param string $voucherCode
-     * @return OrderDiscount
+     * @return Discount
      */
     public function setVoucherCode($voucherCode)
     {
@@ -87,7 +92,7 @@ class OrderDiscount
      * Set giftVoucherCode
      *
      * @param string $giftVoucherCode
-     * @return OrderDiscount
+     * @return Discount
      */
     public function setGiftVoucherCode($giftVoucherCode)
     {
@@ -110,7 +115,7 @@ class OrderDiscount
      * Set description
      *
      * @param string $description
-     * @return OrderDiscount
+     * @return Discount
      */
     public function setDescription($description)
     {
@@ -133,7 +138,7 @@ class OrderDiscount
      * Set discount
      *
      * @param float $discount
-     * @return OrderDiscount
+     * @return Discount
      */
     public function setDiscount($discount)
     {
@@ -156,7 +161,7 @@ class OrderDiscount
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return OrderDiscount
+     * @return Discount
      */
     public function setCreatedAt($createdAt)
     {
@@ -179,7 +184,7 @@ class OrderDiscount
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return OrderDiscount
+     * @return Discount
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -202,7 +207,7 @@ class OrderDiscount
      * Set order
      *
      * @param \WebIllumination\SiteBundle\Entity\Order $order
-     * @return OrderDiscount
+     * @return Discount
      */
     public function setOrder(\WebIllumination\SiteBundle\Entity\Order $order = null)
     {

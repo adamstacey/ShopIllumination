@@ -114,7 +114,7 @@ class BrandService {
     	
         // Get the brands
 		$query = "SELECT b.id ";
-        $query .= "FROM WebIlluminationAdminBundle:Brand b, WebIlluminationAdminBundle:BrandDescription bd ";
+        $query .= "FROM WebIllumination\SiteBundle\Entity\Brand b, WebIllumination\SiteBundle\Entity\BrandDescription bd ";
         $query .= "WHERE b.id = bd.brandId ";
 		if ($status)
     	{
@@ -215,7 +215,7 @@ class BrandService {
     	
         // Get the brands
 		$query = "SELECT COUNT(b.id) ";
-        $query .= "FROM WebIlluminationAdminBundle:Brand b, WebIlluminationAdminBundle:BrandDescription bd ";
+        $query .= "FROM WebIllumination\SiteBundle\Entity\Brand b, WebIllumination\SiteBundle\Entity\BrandDescription bd ";
         $query .= "WHERE b.id = bd.brandId ";
 		if ($status)
     	{
@@ -335,8 +335,8 @@ class BrandService {
     	$brand = array();
    		
    		// Get the brand
-   		$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
-    	$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id, 'locale' => $locale));
+   		$brandObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->find($id);
+    	$brandDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $id, 'locale' => $locale));
     	if (!$brandObject || !$brandDescriptionObject)
 	    {
         	return false;
@@ -374,7 +374,7 @@ class BrandService {
     	$brand['contacts'] = $contactService->getContacts($id, 'brand');
     	    	
     	// Get the routing
-    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
+    	$routingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
     	if (!$routingObject)
     	{
     		// Add routing
@@ -390,7 +390,7 @@ class BrandService {
     	
     	// Get the logo
     	$brand['logo'] = array();
-    	$imageObject = $em->getRepository('WebIlluminationAdminBundle:Image')->find($brandDescriptionObject->getLogoImageId());
+    	$imageObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->find($brandDescriptionObject->getLogoImageId());
     	if ($imageObject)
     	{
     		$logo = array();
@@ -411,7 +411,7 @@ class BrandService {
     	
     	// Get the images
     	$images = array();
-    	$imagesObject = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'brand', 'imageType' => 'gallery', 'locale' => $locale), array('displayOrder' => 'ASC'));
+    	$imagesObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'brand', 'imageType' => 'gallery', 'locale' => $locale), array('displayOrder' => 'ASC'));
     	foreach ($imagesObject as $imageObject)
     	{
     		$image = array();
@@ -433,13 +433,13 @@ class BrandService {
     	
     	// Get the guarantees
     	$guarantees = array();
-    	$guaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
+    	$guaranteeObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
 		foreach ($guaranteeObjects as $guaranteeObject)
 		{
 			if ($guaranteeObject)
 			{				
-				$guaranteeLengthObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
-				$guaranteeTypeObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
+				$guaranteeLengthObject = $em->getRepository('WebIllumination\SiteBundle\Entity\GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
+				$guaranteeTypeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
 				if ($guaranteeLengthObject && $guaranteeTypeObject)
 				{
 					$guarantee = array();
@@ -459,7 +459,7 @@ class BrandService {
 		// Get the departments
     	$departments = array();
     	$departmentIds = array();
-    	$productIndexObjects = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findBy(array('brandId' => $id, 'locale' => 'en'));
+    	$productIndexObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findBy(array('brandId' => $id, 'locale' => 'en'));
 		foreach ($productIndexObjects as $productIndexObject)
 		{
 			$departmentIdGroups = explode('^', $productIndexObject->getDepartmentIds());
@@ -478,9 +478,9 @@ class BrandService {
 					{
 						$departments[$departmentId]['productCount']++;
 					} else {
-						$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
-						$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
-						$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
+						$departmentObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
+						$departmentDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
+						$routingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
 						if ($departmentObject && $departmentDescriptionObject && $routingObject)
 						{
 							$department = array();
@@ -510,7 +510,7 @@ class BrandService {
     	$em = $doctrineService->getEntityManager();
     	
     	// Check if the brands are already stored
-    	$objectIndexObject = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => 'all', 'objectType' => 'brands', 'locale' => $locale));
+    	$objectIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ObjectIndex')->findOneBy(array('objectKey' => 'all', 'objectType' => 'brands', 'locale' => $locale));
     	    	
    		// Check if the brands need rebuilding
    		$rebuildBrands = true;
@@ -529,7 +529,7 @@ class BrandService {
 	    	$brands = array();
 	   		
 	   		// Get the brands
-	   		foreach ($em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findBy(array(), array('brand' => 'ASC')) as $brandDescriptionObject)
+	   		foreach ($em->getRepository('WebIllumination\SiteBundle\Entity\BrandDescription')->findBy(array(), array('brand' => 'ASC')) as $brandDescriptionObject)
 	   		{
 	   			$brand = $this->getBrand($brandDescriptionObject->getBrandId(), $locale);
 	   			if (($brand['status'] == 'a') && ($brand['productCount'] > 0))
@@ -570,7 +570,7 @@ class BrandService {
     	$brands = array();
    		
    		// Get the brands
-   		$brandDescriptions = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findBy(array('locale' => 'en'), array('brand' => 'ASC'));
+   		$brandDescriptions = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandDescription')->findBy(array('locale' => 'en'), array('brand' => 'ASC'));
    		foreach ($brandDescriptions as $brandDescriptionObject)
    		{
    			$brand = array();
@@ -592,7 +592,7 @@ class BrandService {
 		$em = $doctrineService->getEntityManager();
     
    		// Get the brand
-   		$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
+   		$brandObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->find($id);
     	if (!$brandObject)
 	    {
 	    	error_log('Can\'t find the brand!');
@@ -602,7 +602,7 @@ class BrandService {
     	}
     	
     	// Get the brand descriptions
-	    $brandDescriptions = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findBy(array('brandId' => $id));
+	    $brandDescriptions = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandDescription')->findBy(array('brandId' => $id));
 	    if (!$brandDescriptions)
 	    {
 	    	error_log('Can\'t find the brand description!');
@@ -618,14 +618,14 @@ class BrandService {
     	}
     	
     	// Get the object index
-   		$objectIndex = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'brand'));
+   		$objectIndex = $em->getRepository('WebIllumination\SiteBundle\Entity\ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'brand'));
 		if ($objectIndex)
 		{
 			$em->remove($objectIndex);
 		}
 	    	    	
 	    // Get the images
-	    $images = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+	    $images = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	foreach ($images as $imageObject)
     	{
     		if ($imageObject)
@@ -635,7 +635,7 @@ class BrandService {
     	}
     	
     	// Get the guarantees
-	    $guarantees = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+	    $guarantees = $em->getRepository('WebIllumination\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	foreach ($guarantees as $guaranteeObject)
     	{
     		if ($guaranteeObject)
@@ -645,7 +645,7 @@ class BrandService {
     	}
 	    	    	
     	// Get the routings
-    	$routings = $em->getRepository('WebIlluminationAdminBundle:Routing')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+    	$routings = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	foreach ($routings as $routingObject)
 		{
 			if ($routingObject)
@@ -655,7 +655,7 @@ class BrandService {
 		}
 		
 		// Get the redirects
-    	$redirects = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+    	$redirects = $em->getRepository('WebIllumination\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	foreach ($redirects as $redirectObject)
 		{
 			if ($routingObject)
@@ -665,7 +665,7 @@ class BrandService {
 		}
 		
 		// Remove product associations
-		$products = $em->getRepository('WebIlluminationAdminBundle:Product')->findBy(array('brandId' => $id));
+		$products = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findBy(array('brandId' => $id));
    		foreach ($products as $productObject)
 		{
 			if ($productObject)
@@ -778,7 +778,7 @@ class BrandService {
 		$em = $doctrineService->getEntityManager();
     	
     	// Get the brands
-    	$brandObjects = $em->getRepository('WebIlluminationAdminBundle:Brand')->findAll();
+    	$brandObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->findAll();
     	
     	// Rebuild the brand index
     	foreach ($brandObjects as $brandObject)
@@ -799,9 +799,9 @@ class BrandService {
 		$em = $doctrineService->getEntityManager();
     	
     	// Get the objects
-    	$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
-    	$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id, 'locale' => $locale));
-    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
+    	$brandObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->find($id);
+    	$brandDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $id, 'locale' => $locale));
+    	$routingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
     	
     	// Check the objects both exist
     	if (!$brandObject || !$brandDescriptionObject || !$routingObject)
@@ -812,12 +812,12 @@ class BrandService {
     	// Get product count
     	$qb = $em->createQueryBuilder();
     	$qb->select($qb->expr()->count("pi.id"));
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->andWhere($qb->expr()->eq('pi.brandId', $qb->expr()->literal($id)));
 		$productCount = $qb->getQuery()->getSingleScalarResult();
 		
 		// Update the index    	
-    	$brandIndexObject = $em->getRepository('WebIlluminationAdminBundle:BrandIndex')->findOneBy(array('brandId' => $id));
+    	$brandIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandIndex')->findOneBy(array('brandId' => $id));
     	if (!$brandIndexObject)
     	{
     		$brandIndexObject = new BrandIndex();

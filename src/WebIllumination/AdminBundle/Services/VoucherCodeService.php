@@ -78,7 +78,7 @@ class VoucherCodeService {
     	
     	// Build the query
     	$qb->select('vc');
-    	$qb->from('WebIlluminationAdminBundle:VoucherCode', 'vc');
+    	$qb->from('WebIllumination\SiteBundle\Entity\VoucherCode', 'vc');
     	if ($voucherCode)
     	{
     		$qb->andWhere($qb->expr()->like('vc.code', $qb->expr()->literal('%'.$voucherCode.'%')));
@@ -162,7 +162,7 @@ class VoucherCodeService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("vc.id"));
-    	$qb->from('WebIlluminationAdminBundle:VoucherCode', 'vc');
+    	$qb->from('WebIllumination\SiteBundle\Entity\VoucherCode', 'vc');
     	if ($voucherCode)
     	{
     		$qb->andWhere($qb->expr()->like('vc.code', $qb->expr()->literal('%'.$voucherCode.'%')));
@@ -270,7 +270,7 @@ class VoucherCodeService {
     	
     	// Build the query
     	$qb->select('o');
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->addOrderBy('o.createdAt', 'DESC');
     	    	
     	$query = $qb->getQuery();
@@ -293,9 +293,9 @@ class VoucherCodeService {
     	$order = array();
    		
    		// Get the order
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;
@@ -417,9 +417,9 @@ class VoucherCodeService {
     	$em = $doctrineService->getEntityManager();
    		
    		// Get the order details
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;

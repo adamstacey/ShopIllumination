@@ -133,7 +133,7 @@ class ProductService {
 	    	
 	    	// Build the query
 	    	$qb->select('pi');
-	    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+	    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
 	    	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
 	    	foreach ($search as $keyword)
 	    	{
@@ -179,7 +179,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->lt('pi.listPrice', 'pi.recommendedRetailPrice'));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -210,7 +210,7 @@ class ProductService {
 	    	
 	    	// Build the query
 	    	$qb->select('pi');
-	    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+	    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
 	    	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
 	    	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
 	    	$qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
@@ -243,7 +243,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	if ($status != '')
     	{
     		$options = explode('|', $status);
@@ -448,7 +448,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("pi.id"));
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	if ($status != '')
     	{
     		$options = explode('|', $status);
@@ -680,7 +680,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -784,7 +784,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("pi.id"));
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	if ($departmentId > 0)
     	{
@@ -876,7 +876,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -954,7 +954,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -1043,7 +1043,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -1170,7 +1170,7 @@ class ProductService {
     	$em = $doctrineService->getEntityManager();
     	
 		// Setup products
-    	$products = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findBy(array(), array('header' => 'ASC'));
+    	$products = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findBy(array(), array('header' => 'ASC'));
 	   		   				   			    	   		
     	return $products;
     }
@@ -1193,8 +1193,8 @@ class ProductService {
 	    	$product = array();
 	   		
 	   		// Get the product
-	   		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
-	    	$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $id, 'locale' => $locale));
+	   		$productObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($id);
+	    	$productDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $id, 'locale' => $locale));
 	    	if (!$productObject || !$productDescriptionObject)
 		    {
 	        	return false;
@@ -1239,9 +1239,9 @@ class ProductService {
 	    	$product['updatedAt'] = $productObject->getUpdatedAt();
 	    	
 	    	// Get the brand
-	    	$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($productObject->getBrandId());
-	    	$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $productObject->getBrandId(), 'locale' => $locale));
-	    	$brandRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $productObject->getBrandId(), 'locale' => 'en', 'objectType' => 'brand'));
+	    	$brandObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->find($productObject->getBrandId());
+	    	$brandDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $productObject->getBrandId(), 'locale' => $locale));
+	    	$brandRoutingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $productObject->getBrandId(), 'locale' => 'en', 'objectType' => 'brand'));
 	    	$product['brand'] = array();
 	    	if ($brandObject && $brandDescriptionObject && $brandRoutingObject)
 	    	{
@@ -1253,13 +1253,13 @@ class ProductService {
 		    	
 		    	// Get the guarantees
 		    	$guarantees = array();
-		    	$guaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $productObject->getBrandId(), 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
+		    	$guaranteeObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $productObject->getBrandId(), 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
 				foreach ($guaranteeObjects as $guaranteeObject)
 				{
 					if ($guaranteeObject)
 					{				
-						$guaranteeLengthObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
-						$guaranteeTypeObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
+						$guaranteeLengthObject = $em->getRepository('WebIllumination\SiteBundle\Entity\GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
+						$guaranteeTypeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
 						if ($guaranteeLengthObject && $guaranteeTypeObject)
 						{
 							$guarantee = array();
@@ -1289,15 +1289,15 @@ class ProductService {
 	    	
 	    	// Get the departments
 	    	$departments = array();
-	    	$productToDepartments = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('productId' => $id), array('displayOrder' => 'ASC'));
+	    	$productToDepartments = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToDepartment')->findBy(array('productId' => $id), array('displayOrder' => 'ASC'));
 	    	$departmentCount = 0;
 	    	foreach ($productToDepartments as $productToDepartmentObject)
 	    	{
 	    		if ($productToDepartmentObject)
 	    		{
-	    			$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($productToDepartmentObject->getDepartmentId());
-	    			$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $productToDepartmentObject->getDepartmentId()));
-	    			$departmentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $productToDepartmentObject->getDepartmentId(), 'locale' => 'en', 'objectType' => 'department'));
+	    			$departmentObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($productToDepartmentObject->getDepartmentId());
+	    			$departmentDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $productToDepartmentObject->getDepartmentId()));
+	    			$departmentRoutingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $productToDepartmentObject->getDepartmentId(), 'locale' => 'en', 'objectType' => 'department'));
 	    			if ($departmentObject && $departmentDescriptionObject && $departmentRoutingObject)
 	    			{
 	    				$departmentCount++;
@@ -1312,8 +1312,8 @@ class ProductService {
 	    				$departmentPathIds = explode('|', $department['pathIds']);
 	    				foreach ($departmentPathIds as $departmentPathId)
 	    				{
-	    					$departmentPathDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
-	    					$departmentPathRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
+	    					$departmentPathDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
+	    					$departmentPathRoutingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
 	    					if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
 	    					{
 	    						$departmentPathCount++;
@@ -1345,7 +1345,7 @@ class ProductService {
 	    	
 	    	// Get the prices
 	    	$prices = array();
-	    	$productPrices = $em->getRepository('WebIlluminationAdminBundle:ProductPrice')->findBy(array('productId' => $id, 'currencyCode' => $currencyCode), array('displayOrder' => 'ASC'));
+	    	$productPrices = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductPrice')->findBy(array('productId' => $id, 'currencyCode' => $currencyCode), array('displayOrder' => 'ASC'));
 	    	foreach ($productPrices as $productPriceObject)
 	    	{
 	    		$productPrice = array();
@@ -1411,7 +1411,7 @@ class ProductService {
 	    		    	
 	    	// Get the images
 	    	$images = array();
-	    	$imagesObject = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'product', 'imageType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
+	    	$imagesObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'product', 'imageType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
 	    	foreach ($imagesObject as $imageObject)
 	    	{
 	    		$image = array();
@@ -1442,32 +1442,32 @@ class ProductService {
 	    	
 	    	// Get the related products
 	    	$relatedProducts = array();
-			$relatedProductsObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1));
+			$relatedProductsObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductLink')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1));
 			foreach ($relatedProductsObject as $relatedProductObject)
 			{
-				$relatedProduct = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $relatedProductObject->getProductLinkId()));
+				$relatedProduct = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $relatedProductObject->getProductLinkId()));
 				$relatedProducts[] = $relatedProduct;
 			}
 			$product['relatedProducts'] = $relatedProducts;
 			
 			// Get the cheaper alternatives
 	    	$cheaperAlternatives = array();
-			$cheaperAlternativesObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'cheaper-alternative', 'active' => 1));
+			$cheaperAlternativesObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductLink')->findBy(array('productId' => $id, 'linkType' => 'cheaper-alternative', 'active' => 1));
 			foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
 			{
-				$cheaperAlternative = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $cheaperAlternativeObject->getProductLinkId()));
+				$cheaperAlternative = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $cheaperAlternativeObject->getProductLinkId()));
 				$cheaperAlternatives[] = $cheaperAlternative;
 			}
 			$product['cheaperAlternatives'] = $cheaperAlternatives;
 			
 			// Get the options
 	    	$productOptions = array();
-	    	$productToOptionsObject = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->findBy(array('productId' => $id, 'active' => 1), array('displayOrder' => 'ASC'));
+	    	$productToOptionsObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToOption')->findBy(array('productId' => $id, 'active' => 1), array('displayOrder' => 'ASC'));
 			foreach ($productToOptionsObject as $productToOptionObject)
 			{
 				$productOption = array();
-				$productOptionGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
-				$productOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->find($productToOptionObject->getProductOptionId());
+				$productOptionGroupObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
+				$productOptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductOption')->find($productToOptionObject->getProductOptionId());
 				$productOption['id'] = $productToOptionObject->getId();
 				$productOption['productOptionGroupId'] = $productOptionGroupObject->getId();
 				$productOption['productOptionGroup'] = $productOptionGroupObject->getProductOptionGroup();
@@ -1482,12 +1482,12 @@ class ProductService {
 			
 			// Get the features
 	    	$productFeatures = array();
-	    	$productToFeaturesObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $id, 'active' => 1), array('displayOrder' => 'ASC'));
+	    	$productToFeaturesObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToFeature')->findBy(array('productId' => $id, 'active' => 1), array('displayOrder' => 'ASC'));
 			foreach ($productToFeaturesObject as $productToFeatureObject)
 			{
 				$productFeature = array();
-				$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($productToFeatureObject->getProductFeatureGroupId());
-				$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
+				$productFeatureGroupObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductFeatureGroup')->find($productToFeatureObject->getProductFeatureGroupId());
+				$productFeatureObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductFeature')->find($productToFeatureObject->getProductFeatureId());
 				if ($productFeatureGroupObject && $productFeatureObject)
 				{
 					$productFeature['id'] = $productToFeatureObject->getId();
@@ -1502,7 +1502,7 @@ class ProductService {
 			$product['productFeatures'] = $productFeatures;
 	    	
 	    	// Get the routing
-	    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => $locale));
+	    	$routingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => $locale));
 	    	if (!$routingObject)
 	    	{
 	    		// Add routing
@@ -1518,13 +1518,13 @@ class ProductService {
 	    	
 	    	// Get the guarantees
 	    	$guarantees = array();
-	    	$guaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'product'), array('displayOrder' => 'ASC'));
+	    	$guaranteeObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'product'), array('displayOrder' => 'ASC'));
 			foreach ($guaranteeObjects as $guaranteeObject)
 			{
 				if ($guaranteeObject)
 				{				
-					$guaranteeLengthObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
-					$guaranteeTypeObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
+					$guaranteeLengthObject = $em->getRepository('WebIllumination\SiteBundle\Entity\GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
+					$guaranteeTypeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
 					if ($guaranteeLengthObject && $guaranteeTypeObject)
 					{
 						$guarantee = array();
@@ -1586,7 +1586,7 @@ class ProductService {
     	$product = $this->getProduct($productId, 'en', 'GBP');
     	
     	// Update the product index
-    	$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $productId));
+    	$productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $productId));
     	if (!$productIndexObject)
     	{
     		$productIndexObject = new ProductIndex();
@@ -1746,7 +1746,7 @@ class ProductService {
     		$selectedOptionIds = explode('|', $selectedOptions);
     		foreach ($selectedOptionIds as $selectedOptionId)
     		{
-    			$productToOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->find($selectedOptionId);
+    			$productToOptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToOption')->find($selectedOptionId);
 				$priceChange = $productToOptionObject->getPrice();
 				$priceType = $productToOptionObject->getPriceType();
 				$priceUse = $productToOptionObject->getPriceUse();
@@ -1873,7 +1873,7 @@ class ProductService {
     	apc_delete('kitchen_appliance_centre_product_'.$id);
     	
    		// Get the product
-   		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
+   		$productObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($id);
     	if (!$productObject)
 	    {
 	    	error_log('Can\'t find the product!');
@@ -1883,7 +1883,7 @@ class ProductService {
     	}
     	
     	// Get the product escriptions
-	    $productDescriptions = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findBy(array('productId' => $id));
+	    $productDescriptions = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductDescription')->findBy(array('productId' => $id));
 	    if (!$productDescriptions)
 	    {
 	    	error_log('Can\'t find the product description!');
@@ -1899,7 +1899,7 @@ class ProductService {
     	}
     	
     	// Get the product indexes
-   		$productIndexes = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findBy(array('productId' => $id));
+   		$productIndexes = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findBy(array('productId' => $id));
 	    foreach ($productIndexes as $productIndexObject)
 	    {
     		if ($productIndexObject)
@@ -1909,7 +1909,7 @@ class ProductService {
     	}
 	    
 	    // Get the departments
-	    $productToDepartments = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('productId' => $id));
+	    $productToDepartments = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToDepartment')->findBy(array('productId' => $id));
 	    foreach ($productToDepartments as $productToDepartmentObject)
 	    {
 	    	if ($productToDepartmentObject)
@@ -1919,7 +1919,7 @@ class ProductService {
 	    }
 
     	// Get the prices
-    	$productPrices = $em->getRepository('WebIlluminationAdminBundle:ProductPrice')->findBy(array('productId' => $id));
+    	$productPrices = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductPrice')->findBy(array('productId' => $id));
     	foreach ($productPrices as $productPriceObject)
     	{
     		if ($productPriceObject)
@@ -1929,7 +1929,7 @@ class ProductService {
     	}	    		    	
 	    	
 	    // Get the images
-	    $images = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'product', 'imageType' => 'product'));
+	    $images = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'product', 'imageType' => 'product'));
     	foreach ($images as $imageObject)
     	{
     		if ($imageObject)
@@ -1939,7 +1939,7 @@ class ProductService {
     	}
     	
     	// Get the guarantees
-	    $guarantees = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'product'));
+	    $guarantees = $em->getRepository('WebIllumination\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'product'));
     	foreach ($guarantees as $guaranteeObject)
     	{
     		if ($guaranteeObject)
@@ -1949,7 +1949,7 @@ class ProductService {
     	}
 	    	
 	    // Get linked products
-		$productLinks = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id));
+		$productLinks = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductLink')->findBy(array('productId' => $id));
 		foreach ($productLinks as $productLinkObject)
 		{
 			if ($productLinkObject)
@@ -1959,7 +1959,7 @@ class ProductService {
 		}
 			
 		// Get the options
-    	$productToOptions = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->findBy(array('productId' => $id));
+    	$productToOptions = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToOption')->findBy(array('productId' => $id));
 		foreach ($productToOptions as $productToOptionObject)
 		{
 			if ($productToOptionObject)
@@ -1969,7 +1969,7 @@ class ProductService {
 		}
 		
 		// Get the features
-    	$productToFeatures = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $id));
+    	$productToFeatures = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToFeature')->findBy(array('productId' => $id));
 		foreach ($productToFeatures as $productToFeatureObject)
 		{
 			if ($productToFeatureObject)
@@ -1979,7 +1979,7 @@ class ProductService {
 		}
     	
     	// Get the routings
-    	$routings = $em->getRepository('WebIlluminationAdminBundle:Routing')->findBy(array('objectId' => $id, 'objectType' => 'product'));
+    	$routings = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findBy(array('objectId' => $id, 'objectType' => 'product'));
     	foreach ($routings as $routingObject)
 		{
 			if ($routingObject)
@@ -1989,7 +1989,7 @@ class ProductService {
 		}
 		
 		// Get the redirects
-    	$redirects = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'product'));
+    	$redirects = $em->getRepository('WebIllumination\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $id, 'objectType' => 'product'));
     	foreach ($redirects as $redirectObject)
 		{
 			if ($routingObject)
@@ -2018,7 +2018,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
     	$qb->where($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
     	$qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));

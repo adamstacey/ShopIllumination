@@ -22,6 +22,26 @@ class Order
      * @ORM\Column(name="user_id", type="integer", length=11)
      */
     private $userId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Order\Discount", mappedBy="order")
+     */
+    private $discounts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Order\Donation", mappedBy="order")
+     */
+    private $donations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Order\Product", mappedBy="order")
+     */
+    private $products;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Order\Note", mappedBy="order")
+     */
+    private $notes;
     
     /**
      * @ORM\Column(name="status", type="string", length=255)
@@ -1903,5 +1923,147 @@ class Order
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->discounts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->donations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add discounts
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Discount $discounts
+     * @return Order
+     */
+    public function addDiscount(\WebIllumination\SiteBundle\Entity\Order\Discount $discounts)
+    {
+        $this->discounts[] = $discounts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove discounts
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Discount $discounts
+     */
+    public function removeDiscount(\WebIllumination\SiteBundle\Entity\Order\Discount $discounts)
+    {
+        $this->discounts->removeElement($discounts);
+    }
+
+    /**
+     * Get discounts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDiscounts()
+    {
+        return $this->discounts;
+    }
+
+    /**
+     * Add donations
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Donation $donations
+     * @return Order
+     */
+    public function addDonation(\WebIllumination\SiteBundle\Entity\Order\Donation $donations)
+    {
+        $this->donations[] = $donations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove donations
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Donation $donations
+     */
+    public function removeDonation(\WebIllumination\SiteBundle\Entity\Order\Donation $donations)
+    {
+        $this->donations->removeElement($donations);
+    }
+
+    /**
+     * Get donations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDonations()
+    {
+        return $this->donations;
+    }
+
+    /**
+     * Add products
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Product $products
+     * @return Order
+     */
+    public function addProduct(\WebIllumination\SiteBundle\Entity\Order\Product $products)
+    {
+        $this->products[] = $products;
+    
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Product $products
+     */
+    public function removeProduct(\WebIllumination\SiteBundle\Entity\Order\Product $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * Add notes
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Note $notes
+     * @return Order
+     */
+    public function addNote(\WebIllumination\SiteBundle\Entity\Order\Note $notes)
+    {
+        $this->notes[] = $notes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notes
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Order\Note $notes
+     */
+    public function removeNote(\WebIllumination\SiteBundle\Entity\Order\Note $notes)
+    {
+        $this->notes->removeElement($notes);
+    }
+
+    /**
+     * Get notes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
     }
 }

@@ -20,7 +20,7 @@ class Department
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department", mappedBy="parent", cascade={"remove"})
      **/
     private $children;
 
@@ -30,12 +30,12 @@ class Department
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department\Description", mappedBy="department")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department\Description", mappedBy="department", cascade={"all"})
      **/
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\DepartmentToFeature", mappedBy="department")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\DepartmentToFeature", mappedBy="department", cascade={"all"})
      **/
     private $features;
     
