@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use WebIllumination\SiteBundle\Entity\Order;
 use WebIllumination\SiteBundle\Entity\Order\Note as OrderNote;
 use WebIllumination\SiteBundle\Entity\Order\Product as OrderProduct;
 
@@ -88,98 +89,57 @@ class OrdersController extends Controller
                     case 'printOrders':
                         if (sizeof($select) > 0)
                         {
-                            if (sizeof($select) == 1)
+                            $orders = array();
+                            foreach ($select as $itemId => $item)
                             {
-                                foreach ($select as $itemId => $item)
+                                // Get the order and update
+                                $itemObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($itemId);
+                                if ($itemObject)
                                 {
-                                    // Get the order and update
-                                    $itemObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($itemId);
-                                    if ($itemObject)
-                                    {
-                                        if ($itemObject->getStatus() == 'Payment Received')
-                                        {
-                                            $itemObject->setStatus('Processing Your Order');
-                                        }
-                                        $itemObject->setOrderPrinted(1);
-                                        if (strpos($itemObject->getDeliveryType(), 'Royal Mail') !== false)
-                                        {
-                                            $itemObject->setDeliveryNotePrinted(1);
-                                        }
-                                        $em->persist($itemObject);
-                                        $em->flush();
-                                    }
-
-                                    // Get the files
-                                    $document = 'order-'.$itemId;
-                                    $ordersPdfFileName = $document.'.pdf';
-                                    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-
-                                    // Get the documents link
-                                    if (file_exists($ordersPdfFilePath))
-                                    {
-                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $document)));
-                                    } else {
-                                        // Update the order documents
-                                        $service->generateOrderDocuments($itemId);
-                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $document)));
-                                    }
+                                    $orders[] = $itemObject;
                                 }
-                            } else {
-                                foreach ($select as $itemId => $item)
+                            }
+
+                            /**
+                             * @var Order $order
+                             */
+                            foreach($orders as $order)
+                            {
+                                // Update order
+                                if ($order->getStatus() == 'Payment Received')
                                 {
-                                    $orders = array();
-                                    foreach ($select as $itemId => $item)
+                                    $order->setStatus('Processing Your Order');
+                                }
+                                if (strpos($order->getDeliveryType(), 'Royal Mail') !== false)
+                                {
+                                    $order->setDeliveryNotePrinted(1);
+                                }
+                                $order->setOrderPrinted(1);
+
+                                $em->persist($order);
+
+                                if(count($orders) <= 1)
+                                {
+                                    $filename = 'orders-'.$order->getId();
+                                    $filepath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$filename;
+                                    if(file_exists($filepath))
                                     {
-                                        // Get the order and update
-                                        $itemObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($itemId);
-                                        if ($itemObject)
-                                        {
-                                            if ($itemObject->getStatus() == 'Payment Received')
-                                            {
-                                                $itemObject->setStatus('Processing Your Order');
-                                            }
-                                            $itemObject->setOrderPrinted(1);
-                                            if (strpos($itemObject->getDeliveryType(), 'Royal Mail') !== false)
-                                            {
-                                                $itemObject->setDeliveryNotePrinted(1);
-                                            }
-                                            $em->persist($itemObject);
-                                            $em->flush();
-                                        }
-
-                                        // Get full order to print
-                                        $orders[] = $service->getOrder($itemId);
-                                    }
-
-                                    // Get the order HTML
-                                    $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewOrders.html.twig', array('orders' => $orders));
-
-                                    // Get the files
-                                    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
-                                    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
-                                    $document = 'orders-'.date('dmYHis');
-                                    $ordersPdfFileName = $document.'.pdf';
-                                    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-
-                                    // Generate the HTML file
-                                    $fileHandle = fopen($ordersHtmlFilePath, 'w');
-                                    fwrite($fileHandle, $orderHtml);
-                                    fclose($fileHandle);
-
-                                    // Generate the PDF
-                                    if (file_exists($ordersHtmlFilePath))
-                                    {
-                                        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
-                                        unlink($ordersHtmlFilePath);
-                                    }
-
-                                    // Get the documents link
-                                    if (file_exists($ordersPdfFilePath))
-                                    {
-                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $document)));
+                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $filename)));
                                     }
                                 }
                             }
+
+                            $filename = 'order-'.date('dmYHis');
+                            $filepath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$filename;
+                            if(file_exists($filepath))
+                            {
+                                return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $filename)));
+                            }
+
+                            $html = $this->render('WebIlluminationAdminBundle:Orders:viewOrders.html.twig', array('orders' => $orders));
+                            $this->get('knp_snappy.pdf')->generateFromHtml($html, $filepath);
+
+                            return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $filename)));
                         } else {
                             // Notify user
                             $this->get('session')->getFlashBag()->add('notice', 'You did not select any orders to print.');
@@ -191,64 +151,57 @@ class OrdersController extends Controller
                     case 'printCopyOrders':
                         if (sizeof($select) > 0)
                         {
-                            if (sizeof($select) == 1)
+                            $orders = array();
+                            foreach ($select as $itemId => $item)
                             {
-                                foreach ($select as $itemId => $item)
+                                // Get the order and update
+                                $itemObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($itemId);
+                                if ($itemObject)
                                 {
-                                    // Get the files
-                                    $document = 'copy-order-'.$itemId;
-                                    $ordersPdfFileName = $document.'.pdf';
-                                    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-
-                                    // Get the documents link
-                                    if (file_exists($ordersPdfFilePath))
-                                    {
-                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $document)));
-                                    } else {
-                                        // Update the order documents
-                                        $service->generateOrderDocuments($itemId);
-                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $document)));
-                                    }
+                                    $orders[] = $itemObject;
                                 }
-                            } else {
-                                foreach ($select as $itemId => $item)
+                            }
+
+                            /**
+                             * @var Order $order
+                             */
+                            foreach($orders as $order)
+                            {
+                                // Update order
+                                if ($order->getStatus() == 'Payment Received')
                                 {
-                                    $orders = array();
-                                    foreach ($select as $itemId => $item)
+                                    $order->setStatus('Processing Your Order');
+                                }
+                                if (strpos($order->getDeliveryType(), 'Royal Mail') !== false)
+                                {
+                                    $order->setDeliveryNotePrinted(1);
+                                }
+                                $order->setOrderPrinted(1);
+
+                                $em->persist($order);
+
+                                if(count($orders) <= 1)
+                                {
+                                    $filename = 'copy-order-'.$order->getId();
+                                    $filepath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$filename;
+                                    if(file_exists($filepath))
                                     {
-                                        // Get full order to print
-                                        $orders[] = $service->getOrder($itemId);
-                                    }
-
-                                    // Get the order HTML
-                                    $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewCopyOrders.html.twig', array('orders' => $orders));
-
-                                    // Get the files
-                                    $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
-                                    $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
-                                    $document = 'copy-orders-'.date('dmYHis');
-                                    $ordersPdfFileName = $document.'.pdf';
-                                    $ordersPdfFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$ordersPdfFileName;
-
-                                    // Generate the HTML file
-                                    $fileHandle = fopen($ordersHtmlFilePath, 'w');
-                                    fwrite($fileHandle, $orderHtml);
-                                    fclose($fileHandle);
-
-                                    // Generate the PDF
-                                    if (file_exists($ordersHtmlFilePath))
-                                    {
-                                        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
-                                        unlink($ordersHtmlFilePath);
-                                    }
-
-                                    // Get the documents link
-                                    if (file_exists($ordersPdfFilePath))
-                                    {
-                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $document)));
+                                        return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $filename)));
                                     }
                                 }
                             }
+
+                            $filename = 'copy-order-'.date('dmYHis');
+                            $filepath = $this->get('kernel')->getRootdir().'/../web/uploads/documents/order/'.$filename;
+                            if(file_exists($filepath))
+                            {
+                                return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $filename)));
+                            }
+
+                            $html = $this->render('WebIlluminationAdminBundle:Orders:viewCopyOrders.html.twig', array('orders' => $orders));
+                            $this->get('knp_snappy.pdf')->generateFromHtml($html, $filepath);
+
+                            return $this->redirect($this->get('router')->generate('admin_orders', array('document' => $filename)));
                         } else {
                             // Notify user
                             $this->get('session')->getFlashBag()->add('notice', 'You did not select any orders to print.');
@@ -1070,7 +1023,7 @@ class OrdersController extends Controller
                 $orders = array();
                 foreach ($select as $itemId => $item)
                 {
-                    $orders[] = $this->getDoctrine()->getManager()->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($itemId);
+                    $orders[] = $service->getOrder($itemId);
                 }
                 $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewOrders.html.twig', array('orders' => $orders));
 
@@ -2150,7 +2103,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
-        $item = $this->getDoctrine()->getManager()->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+        $item = $service->getOrder($id);
 
         return $this->render('WebIlluminationAdminBundle:Orders:viewCopyOrder.html.twig', array('order' => $item));
     }
@@ -2162,7 +2115,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
-        $item = $this->getDoctrine()->getManager()->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+        $item = $service->getOrder($id);
 
         return $this->render('WebIlluminationAdminBundle:Orders:viewDeliveryNote.html.twig', array('order' => $item));
     }
@@ -2174,7 +2127,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
-        $item = $this->getDoctrine()->getManager()->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+        $item = $service->getOrder($id);
 
         return $this->render('WebIlluminationAdminBundle:Orders:viewInvoice.html.twig', array('order' => $item));
     }
@@ -2186,7 +2139,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
-        $item = $this->getDoctrine()->getManager()->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+        $item = $service->getOrder($id);
 
         return $this->render('WebIlluminationAdminBundle:Orders:viewOrder.html.twig', array('order' => $item));
     }

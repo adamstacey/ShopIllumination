@@ -2,8 +2,8 @@
 
 namespace WebIllumination\AdminBundle\Services;
 
-use WebIllumination\AdminBundle\Entity\Routing;
-use WebIllumination\AdminBundle\Entity\Redirect;
+use WebIllumination\SiteBundle\Entity\Routing;
+use WebIllumination\SiteBundle\Entity\Redirect;
 
 class SeoService {
 

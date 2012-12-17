@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
             new WebIllumination\ShopBundle\WebIlluminationShopBundle(),
             new WebIllumination\SiteBundle\WebIlluminationSiteBundle(),

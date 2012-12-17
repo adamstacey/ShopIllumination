@@ -3,9 +3,9 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Routing;
-use WebIllumination\AdminBundle\Entity\BrandIndex;
-use WebIllumination\AdminBundle\Entity\ObjectIndex;
+use WebIllumination\SiteBundle\Entity\Routing;
+use WebIllumination\SiteBundle\Entity\BrandIndex;
+use WebIllumination\SiteBundle\Entity\ObjectIndex;
 
 class BrandService {
 
@@ -459,7 +459,7 @@ class BrandService {
 		// Get the departments
     	$departments = array();
     	$departmentIds = array();
-    	$productIndexObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findBy(array('brandId' => $id, 'locale' => 'en'));
+    	$productIndexObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findBy(array('brand' => $id, 'locale' => 'en'));
 		foreach ($productIndexObjects as $productIndexObject)
 		{
 			$departmentIdGroups = explode('^', $productIndexObject->getDepartmentIds());
@@ -764,92 +764,6 @@ class BrandService {
 	static function sortDepartmentsByName($a, $b)
 	{
 	    return $a['name']>$b['name'];
-	}
-	
-	
-	
-	// Rebuild the brand index
-    public function rebuildBrandIndex($locale = 'en')
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
-    	
-    	// Get the brands
-    	$brandObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->findAll();
-    	
-    	// Rebuild the brand index
-    	foreach ($brandObjects as $brandObject)
-    	{
-	    	$this->rebuildBrandIndexObject($brandObject->getId(), $locale);
-    	}
-		    
-    	return true;
-	}
-	
-	// Rebuild a brand index object
-    public function rebuildBrandIndexObject($id, $locale = 'en')
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
-    	
-    	// Get the objects
-    	$brandObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->find($id);
-    	$brandDescriptionObject = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $id, 'locale' => $locale));
-    	$routingObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
-    	
-    	// Check the objects both exist
-    	if (!$brandObject || !$brandDescriptionObject || !$routingObject)
-    	{
-	    	return false;
-    	}
-    	
-    	// Get product count
-    	$qb = $em->createQueryBuilder();
-    	$qb->select($qb->expr()->count("pi.id"));
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
-    	$qb->andWhere($qb->expr()->eq('pi.brandId', $qb->expr()->literal($id)));
-		$productCount = $qb->getQuery()->getSingleScalarResult();
-		
-		// Update the index    	
-    	$brandIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\BrandIndex')->findOneBy(array('brandId' => $id));
-    	if (!$brandIndexObject)
-    	{
-    		$brandIndexObject = new BrandIndex();
-    		$brandIndexObject->setBrandId($id);
-    	}
-		$brandIndexObject->setStatus($brandObject->getStatus());
-		$brandIndexObject->setRequestABrochure($brandObject->getRequestABrochure());
-		$brandIndexObject->setBrochureWebAddress($brandObject->getBrochureWebAddress());
-		$brandIndexObject->setRequestASample($brandObject->getRequestASample());
-		$brandIndexObject->setSampleWebAddress($brandObject->getSampleWebAddress());
-		$brandIndexObject->setHidePrices($brandObject->getHidePrices());
-		$brandIndexObject->setShowPricesOutOfHours($brandObject->getShowPricesOutOfHours());
-		$brandIndexObject->setMembershipCardDiscountAvailable($brandObject->getMembershipCardDiscountAvailable());
-		$brandIndexObject->setMaximumMembershipCardDiscount($brandObject->getMaximumMembershipCardDiscount());
-		$brandIndexObject->setLogoImageId($brandDescriptionObject->getLogoImageId());
-    	$brandIndexObject->setLocale($locale);
-		$brandIndexObject->setBrand($brandDescriptionObject->getBrand());
-		$brandIndexObject->setDescription($brandDescriptionObject->getDescription());
-		$brandIndexObject->setAbout($brandDescriptionObject->getAbout());
-		$brandIndexObject->setHistory($brandDescriptionObject->getHistory());
-		$brandIndexObject->setMoreInformation($brandDescriptionObject->getMoreInformation());
-		$brandIndexObject->setPageTitle($brandDescriptionObject->getPageTitle());
-		$brandIndexObject->setHeader($brandDescriptionObject->getHeader());
-		$brandIndexObject->setMetaDescription($brandDescriptionObject->getMetaDescription());
-		$brandIndexObject->setMetaKeywords($brandDescriptionObject->getMetaKeywords());
-		$brandIndexObject->setSearchWords($brandDescriptionObject->getSearchWords());
-		$brandIndexObject->setUrl($routingObject->getUrl());
-		$brandIndexObject->setProductCount($productCount);
-    	$em->persist($brandIndexObject);
-		$em->flush();
-		    
-    	return true;
 	}
 }
 

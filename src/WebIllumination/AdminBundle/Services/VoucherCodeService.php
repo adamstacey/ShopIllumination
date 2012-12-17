@@ -3,9 +3,9 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Order;
-use WebIllumination\AdminBundle\Entity\OrderProduct;
-use WebIllumination\AdminBundle\Entity\OrderNote;
+use WebIllumination\SiteBundle\Entity\Order;
+use WebIllumination\SiteBundle\Entity\OrderProduct;
+use WebIllumination\SiteBundle\Entity\OrderNote;
 
 class VoucherCodeService {
 

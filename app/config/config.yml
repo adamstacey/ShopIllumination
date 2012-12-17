@@ -80,3 +80,9 @@ swiftmailer:
     spool:      { type: memory }
     port:       587
     encryption: tls
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/bin/wkhtmltopdf-i386
+        options:    []

@@ -3,11 +3,11 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Order;
-use WebIllumination\AdminBundle\Entity\OrderProduct;
-use WebIllumination\AdminBundle\Entity\OrderDiscount;
-use WebIllumination\AdminBundle\Entity\OrderDonation;
-use WebIllumination\AdminBundle\Entity\OrderNote;
+use WebIllumination\SiteBundle\Entity\Order;
+use WebIllumination\SiteBundle\Entity\OrderProduct;
+use WebIllumination\SiteBundle\Entity\OrderDiscount;
+use WebIllumination\SiteBundle\Entity\OrderDonation;
+use WebIllumination\SiteBundle\Entity\OrderNote;
 
 class OrderService {
 
@@ -295,75 +295,33 @@ class OrderService {
     }
     
     // Fraud Check: Customer Ordered
-    public function getFraudCheckCustomerOrdered($emailAddress)
+    public function findNumOrdersByCustomer($emailAddress)
     {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-	    	
-    	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
-    	
-    	// Get the query builder
-    	$qb = $em->createQueryBuilder();
-    	
-    	// Build the query
-    	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
-    	$qb->where($qb->expr()->eq('o.emailAddress', $qb->expr()->literal($emailAddress)));
-		$query = $qb->getQuery();
-	
-		// Get the number of orders
-		$orderCount = $query->getSingleScalarResult();
-		
-		if ($orderCount > 0)
-		{
-			return 1;
-		}
-    	
-    	return 0;
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        // Get the entity manager
+        $em = $doctrineService->getEntityManager();
+
+        // Get the number of orders
+        $orderCount = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->findNumOrdersWithSameEmail($emailAddress);
+
+        return $orderCount > 0 ? 1 : 0;
     }
     
     // Fraud Check: Name Used On Different Order
     public function getFraudCheckNameUsedOnDifferentOrder($emailAddress, $firstName, $lastName)
     {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-	    	
-    	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
-    	
-    	// Get the query builder
-    	$qb = $em->createQueryBuilder();
-    	
-    	// Build the query
-    	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
-    	$qb->where($qb->expr()->orx(
-    		$qb->expr()->andx(
-    			$qb->expr()->like('o.firstName', $qb->expr()->literal('%'.$firstName.'%')),
-    			$qb->expr()->like('o.lastName', $qb->expr()->literal('%'.$lastName.'%'))
-    		),
-    		$qb->expr()->andx(
-    			$qb->expr()->like('o.billingFirstName', $qb->expr()->literal('%'.$firstName.'%')),
-    			$qb->expr()->like('o.billingLastName', $qb->expr()->literal('%'.$lastName.'%'))
-    		),
-    		$qb->expr()->andx(
-    			$qb->expr()->like('o.billingFirstName', $qb->expr()->literal('%'.$firstName.'%')),
-    			$qb->expr()->like('o.billingLastName', $qb->expr()->literal('%'.$lastName.'%'))
-    		)
-    	));
-    	$qb->andWhere($qb->expr()->neq('o.emailAddress', $qb->expr()->literal($emailAddress)));
-		$query = $qb->getQuery();
-	
-		// Get the number of orders
-		$orderCount = $query->getSingleScalarResult();
-		
-		if ($orderCount > 0)
-		{
-			return 1;
-		}
-    	
-    	return 0;
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        // Get the entity manager
+        $em = $doctrineService->getEntityManager();
+
+        // Get the number of orders
+        $orderCount = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->findNumOrdersWithSameName($emailAddress);
+
+        return $orderCount > 0 ? 1 : 0;
     }
     
     // Fraud Check: Post Zip Code Used On Different Order
@@ -371,71 +329,29 @@ class OrderService {
     {
     	// Get the services
     	$doctrineService = $this->container->get('doctrine');
-	    	
+
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
-    	
-    	// Get the query builder
-    	$qb = $em->createQueryBuilder();
-    	
-    	// Build the query
-    	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
-    	$qb->where($qb->expr()->orx(
-    		$qb->expr()->andx(
-    			$qb->expr()->like('o.billingPostZipCode', $qb->expr()->literal('%'.$postZipCode.'%')),
-    			$qb->expr()->like('o.deliveryPostZipCode', $qb->expr()->literal('%'.$postZipCode.'%'))
-    		),
-    		$qb->expr()->andx(
-    			$qb->expr()->like('o.billingPostZipCode', $qb->expr()->literal('%'.$postZipCode.'%')),
-    			$qb->expr()->like('o.deliveryPostZipCode', $qb->expr()->literal('%'.$postZipCode.'%'))
-    		)
-    	));
-    	$qb->andWhere($qb->expr()->neq('o.emailAddress', $qb->expr()->literal($emailAddress)));
-		$query = $qb->getQuery();
 	
 		// Get the number of orders
-		$orderCount = $query->getSingleScalarResult();
-		
-		if ($orderCount > 0)
-		{
-			return 1;
-		}
+		$orderCount = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->findNumOrdersWithSameAddress($emailAddress, $postZipCode);
     	
-    	return 0;
+    	return $orderCount > 0 ? 1 : 0;
     }
     
     // Fraud Check: Telephone Used On Different Order
     public function getFraudCheckTelephoneUsedOnDifferentOrder($emailAddress, $telephone)
     {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-	    	
-    	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
-    	
-    	// Get the query builder
-    	$qb = $em->createQueryBuilder();
-    	
-    	// Build the query
-    	$qb->select($qb->expr()->count("o.id"));
-    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
-    	$qb->where($qb->expr()->orx(
-    		$qb->expr()->like('o.telephoneDaytime', $qb->expr()->literal('%'.$telephone.'%')),
-    		$qb->expr()->like('o.telephoneEvening', $qb->expr()->literal('%'.$telephone.'%')),
-    		$qb->expr()->like('o.mobile', $qb->expr()->literal('%'.$telephone.'%'))
-    	));
-		$query = $qb->getQuery();
-	
-		// Get the number of orders
-		$orderCount = $query->getSingleScalarResult();
-		
-		if ($orderCount > 0)
-		{
-			return 1;
-		}
-    	
-    	return 0;
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        // Get the entity manager
+        $em = $doctrineService->getEntityManager();
+
+        // Get the number of orders
+        $orderCount = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->findNumOrdersWithSameTelephone($telephone);
+
+        return $orderCount > 0 ? 1 : 0;
     }
     
     public function generateOrderDocuments($id)
@@ -1066,239 +982,6 @@ class OrderService {
     	$pagination = ceil($listingCount / $maxResults);
     	
    		return $pagination;
-    }
-    
-	// Get orders
-    public function getOrders()
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-	    	
-    	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
-    	
-    	// Get the query builder
-    	$qb = $em->createQueryBuilder();
-    	
-    	// Build the query
-    	$qb->select('o');
-    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
-    	$qb->addOrderBy('o.createdAt', 'DESC');
-    	    	
-    	$query = $qb->getQuery();
-		
-		$orders = $query->getResult();
-
-   		return $orders;
-   	}  
-    
-    // Get an order
-    public function getOrder($id)
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
-
-   		// Setup the order
-    	$order = array();
-   		
-   		// Get the order
-   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderDiscounts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderDonations = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	if (!$orderObject)
-	    {
-        	return false;
-    	} 
-    	
-    	// Setup the order
-		$order['orderNumber'] = $orderObject->getId();
-		$order['orderDate'] = $orderObject->getCreatedAt();
-		$order['status'] = $orderObject->getStatus();
-		$order['orderPrinted'] = $orderObject->getOrderPrinted();
-		$order['deliveryNoteNotPrinted'] = $orderObject->getDeliveryNotePrinted();
-		$order['actioned'] = $orderObject->getActioned();
-		$order['notesCount'] = $orderObject->getNotesCount();
-		$order['discountsCount'] = $orderObject->getDiscountsCount();
-		$order['paymentResponse'] = $orderObject->getPaymentResponse();
-		$order['paymentType'] = $orderObject->getPaymentType();
-		$order['deliveryType'] = $orderObject->getDeliveryType();
-		$order['estimatedDeliveryDaysStart'] = $orderObject->getEstimatedDeliveryDaysStart();
-		$order['estimatedDeliveryDaysEnd'] = $orderObject->getEstimatedDeliveryDaysEnd();
-		$order['items'] = $orderObject->getItems();
-		$order['subTotal'] = $orderObject->getSubTotal();
-		$order['deliveryCharge'] = $orderObject->getDeliveryCharge();
-		$order['discount'] = $orderObject->getDiscount();
-		$order['vat'] = $orderObject->getVat();
-		$order['total'] = $orderObject->getTotal();
-		$order['membershipCardPurchased'] = $orderObject->getMembershipCardPurchased();
-		$order['membershipCardNumber'] = $orderObject->getMembershipCardNumber();
-		$order['possibleDiscount'] = $orderObject->getPossibleDiscount();
-		$order['firstName'] = $orderObject->getFirstName();
-		$order['lastName'] = $orderObject->getLastName();
-		$order['organisationName'] = $orderObject->getOrganisationName();
-		$order['emailAddress'] = $orderObject->getEmailAddress();
-		$order['telephoneDaytime'] = $orderObject->getTelephoneDaytime();
-		$order['telephoneEvening'] = $orderObject->getTelephoneEvening();
-		$order['mobile'] = $orderObject->getMobile();
-		$order['billingFirstName'] = $orderObject->getBillingFirstName();
-		$order['billingLastName'] = $orderObject->getBillingLastName();
-		$order['billingOrganisationName'] = $orderObject->getBillingOrganisationName();
-		$order['billingAddressLine1'] = $orderObject->getBillingAddressLine1();
-		$order['billingAddressLine2'] = $orderObject->getBillingAddressLine2();
-		$order['billingTownCity'] = $orderObject->getBillingTownCity();
-		$order['billingCountyState'] = $orderObject->getBillingCountyState();
-		$order['billingPostZipCode'] = $orderObject->getBillingPostZipCode();
-		$order['billingCountryCode'] = $orderObject->getBillingCountryCode();
-		$order['deliveryFirstName'] = $orderObject->getDeliveryFirstName();
-		$order['deliveryLastName'] = $orderObject->getDeliveryLastName();
-		$order['deliveryOrganisationName'] = $orderObject->getDeliveryOrganisationName();
-		$order['deliveryAddressLine1'] = $orderObject->getDeliveryAddressLine1();
-		$order['deliveryAddressLine2'] = $orderObject->getDeliveryAddressLine2();
-		$order['deliveryTownCity'] = $orderObject->getDeliveryTownCity();
-		$order['deliveryCountyState'] = $orderObject->getDeliveryCountyState();
-		$order['deliveryPostZipCode'] = $orderObject->getDeliveryPostZipCode();
-		$order['deliveryCountryCode'] = $orderObject->getDeliveryCountryCode();
-		$order['fraudCheckCustomerOrdered'] = $orderObject->getFraudCheckCustomerOrdered();
-		$order['fraudCheckAddressMatch'] = $orderObject->getFraudCheckAddressMatch();
-		$order['fraudCheckNameUsedOnDifferentOrder'] = $orderObject->getFraudCheckNameUsedOnDifferentOrder();
-		$order['fraudCheckPostZipCodeUsedOnDifferentOrder'] = $orderObject->getFraudCheckPostZipCodeUsedOnDifferentOrder();
-		$order['fraudCheckTelephoneUsedOnDifferentOrder'] = $orderObject->getFraudCheckTelephoneUsedOnDifferentOrder();
-    	
-    	// Setup the order products
-    	$products = array();
-		foreach ($orderProducts as $orderProductObject)
-		{
-			$newProduct = array();
-	    	$newProduct['basketItemId'] = $orderProductObject->getBasketItemId();
-	    	$newProduct['productId'] = $orderProductObject->getProductId();
-	    	$newProduct['product'] = $orderProductObject->getProduct();
-	    	$newProduct['url'] = $orderProductObject->getUrl();
-	    	$newProduct['header'] = $orderProductObject->getHeader();
-	    	$newProduct['productCode'] = $orderProductObject->getProductCode();
-	    	$newProduct['brand'] = $orderProductObject->getBrand();
-	    	$newProduct['shortDescription'] = $orderProductObject->getShortDescription();
-	    	$newProduct['quantity'] = $orderProductObject->getQuantity();
-	    	$newProduct['unitCost'] = $orderProductObject->getUnitCost();
-	    	$newProduct['recommendedRetailPrice'] = $orderProductObject->getRecommendedRetailPrice();
-	    	$newProduct['discount'] = $orderProductObject->getDiscount();
-	    	$newProduct['savings'] = $orderProductObject->getSavings();
-	    	$newProduct['subTotal'] = $orderProductObject->getVat();
-	    	$newProduct['subTotal'] = $orderProductObject->getSubTotal();
-	    	$newProduct['selectedOptions'] = $orderProductObject->getSelectedOptions();
-	    	$newProduct['selectedOptionLabels'] = explode('|', $orderProductObject->getSelectedOptionLabels());
-	    	$products[] = $newProduct;
-	    }
-	    $order['products'] = $products;
-	    
-	    // Setup the order discounts
-    	$discounts = array();
-		foreach ($orderDiscounts as $orderDiscountObject)
-		{
-			$newDiscount = array();
-	    	$newDiscount['voucherCode'] = $orderDiscountObject->getVoucherCode();
-	    	$newDiscount['giftVoucherCode'] = $orderDiscountObject->getGiftVoucherCode();
-	    	$newDiscount['description'] = $orderDiscountObject->getDescription();
-	    	$newDiscount['discount'] = $orderDiscountObject->getDiscount();
-	    	$discounts[] = $newDiscount;
-	    }
-	    $order['discounts'] = $discounts;
-	    
-	    // Setup the order donations
-    	$donations = array();
-		foreach ($orderDonations as $orderDonationObject)
-		{
-			$newDonation = array();
-	    	$newDonation['description'] = $orderDonationObject->getDescription();
-	    	$newDonation['donation'] = $orderDonationObject->getDonation();
-	    	$donations[] = $newDonation;
-	    }
-	    $order['donations'] = $donations;
-	    
-	    // Setup the order notes
-    	$customerNotes = array();
-    	$staffNotes = array();
-		foreach ($orderNotes as $orderNoteObject)
-		{
-			$newNote = array();
-	    	$newNote['id'] = $orderNoteObject->getId();
-	    	$newNote['orderId'] = $orderNoteObject->getOrderId();
-	    	$newNote['creator'] = $orderNoteObject->getCreator();
-	    	$newNote['noteType'] = $orderNoteObject->getNoteType();
-	    	$newNote['notified'] = $orderNoteObject->getNotified();
-	    	$newNote['note'] = $orderNoteObject->getNote();
-	    	$newNote['createdAt'] = $orderNoteObject->getCreatedAt();
-	    	if ($newNote['noteType'] == 'customer')
-	    	{
-	    		$customerNotes[] = $newNote;
-	    	} elseif ($newNote['noteType'] == 'staff') {
-	    		$staffNotes[] = $newNote;
-	    	}
-	    }
-	    $order['customerNotes'] = $customerNotes;
-	    $order['staffNotes'] = $staffNotes;
-    		    		    		    	   		
-   		return $order;
-    }
-    
-    // Delete an order
-    public function deleteOrder($id)
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
-   		
-   		// Get the order details
-   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderDiscounts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDiscount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderDonations = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderDonation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-    	if (!$orderObject)
-	    {
-        	return false;
-    	} 
-    	
-    	// Delete the products
-    	foreach ($orderProducts as $orderProductObject)
-    	{
-    		$em->remove($orderProductObject);
-			$em->flush();
-    	}
-    	
-    	// Delete the discounts
-    	foreach ($orderDiscounts as $orderDiscountObject)
-    	{
-    		$em->remove($orderDiscountObject);
-			$em->flush();
-    	}
-    	
-    	// Delete the donations
-    	foreach ($orderDonations as $orderDonationObject)
-    	{
-    		$em->remove($orderDonationObject);
-			$em->flush();
-    	}
-    	
-    	// Delete the notes
-    	foreach ($orderNotes as $orderNoteObject)
-    	{
-    		$em->remove($orderNoteObject);
-			$em->flush();
-    	}
-    	
-    	// Delete the order
-    	$em->remove($orderObject);
-		$em->flush();
-    	
-    		    		    		    	   		
-   		return true;
     }
     
     // Get new statistics

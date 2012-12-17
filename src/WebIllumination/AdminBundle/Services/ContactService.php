@@ -3,7 +3,7 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\ObjectIndex;
+use WebIllumination\SiteBundle\Entity\ObjectIndex;
 
 class ContactService {
 

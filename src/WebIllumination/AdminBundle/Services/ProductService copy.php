@@ -3,9 +3,9 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Routing;
-use WebIllumination\AdminBundle\Entity\ProductIndex;
-use WebIllumination\AdminBundle\Entity\ObjectIndex;
+use WebIllumination\SiteBundle\Entity\Routing;
+use WebIllumination\SiteBundle\Entity\ProductIndex;
+use WebIllumination\SiteBundle\Entity\ObjectIndex;
 
 class ProductService {
 

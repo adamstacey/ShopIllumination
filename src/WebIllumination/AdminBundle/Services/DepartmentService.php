@@ -3,14 +3,12 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Routing;
-use WebIllumination\AdminBundle\Entity\DepartmentIndex;
-use WebIllumination\AdminBundle\Entity\BrandToDepartment;
-use WebIllumination\AdminBundle\Entity\DepartmentToFeature;
-use WebIllumination\AdminBundle\Entity\ProductIndex;
-use WebIllumination\AdminBundle\Entity\ProductToFeature;
-use WebIllumination\AdminBundle\Entity\ProductFeatureGroup;
-use WebIllumination\AdminBundle\Entity\ProductFeature;
+use WebIllumination\SiteBundle\Entity\Routing;
+use WebIllumination\SiteBundle\Entity\BrandToDepartment;
+use WebIllumination\SiteBundle\Entity\DepartmentToFeature;
+use WebIllumination\SiteBundle\Entity\ProductToFeature;
+use WebIllumination\SiteBundle\Entity\ProductFeatureGroup;
+use WebIllumination\SiteBundle\Entity\ProductFeature;
 
 class DepartmentService {
 
@@ -897,7 +895,9 @@ class DepartmentService {
     	
     	// Get the product feature groups
     	$productFeatureGroupIds = array();
-    	$productToDepartmentObjects = $em->createQuery("SELECT pi FROM WebIllumination\SiteBundle\Entity\ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%'")->getResult();
+    	$productToDepartmentObjects = $em->createQuery("SELECT pi FROM WebIllumination\SiteBundle\Entity\Product p WHERE p.department = :department")
+            ->setParameter('department', $id)
+            ->getResult();
     	foreach ($productToDepartmentObjects as $productToDepartmentObject)
     	{
 	    	$productToFeatureObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductToFeature')->findBy(array('productId' => $productToDepartmentObject->getProductId()));
@@ -909,7 +909,7 @@ class DepartmentService {
     	if (sizeof($productFeatureGroupIds) > 0)
     	{
 	    	$productFeatureGroupIds = array_unique($productFeatureGroupIds);
-	    	$productFeatureGroupObjects = $em->createQuery("SELECT pfg FROM WebIllumination\SiteBundle\Entity\ProductFeatureGroup pfg WHERE pfg.id IN ('".join("', '", $productFeatureGroupIds)."') AND pfg.locale = '".$locale."' ORDER BY pfg.productFeatureGroup")->getResult();
+	    	$productFeatureGroupObjects = $em->createQuery("SELECT pfg FROM WebIllumination\SiteBundle\Entity\Product\FeatureGroup pfg WHERE pfg.id IN ('".join("', '", $productFeatureGroupIds)."') AND pfg.locale = '".$locale."' ORDER BY pfg.productFeatureGroup")->getResult();
 	    	return $productFeatureGroupObjects;
 	    }
 		    

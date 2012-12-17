@@ -3,9 +3,9 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\ProductSearch;
-use WebIllumination\AdminBundle\Entity\Statistic;
-use WebIllumination\AdminBundle\Entity\KeywordSuggestion;
+use WebIllumination\SiteBundle\Entity\ProductSearch;
+use WebIllumination\SiteBundle\Entity\Statistic;
+use WebIllumination\SiteBundle\Entity\KeywordSuggestion;
 
 class GoogleService {
 

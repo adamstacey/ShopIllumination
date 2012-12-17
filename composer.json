@@ -21,7 +21,8 @@
         "stof/doctrine-extensions-bundle": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "google/adwords": "3.1.*",
-        "ezyang/htmlpurifier": "dev-master"
+        "ezyang/htmlpurifier": "dev-master",
+        "knplabs/knp-snappy-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

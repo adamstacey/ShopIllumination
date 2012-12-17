@@ -3,7 +3,7 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use WebIllumination\AdminBundle\Entity\Image;
+use WebIllumination\SiteBundle\Entity\Image;
 
 class ImageService {
 

@@ -3,10 +3,10 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Routing;
-use WebIllumination\AdminBundle\Entity\ProductIndex;
-use WebIllumination\AdminBundle\Entity\ObjectIndex;
-use WebIllumination\AdminBundle\Entity\ProductToFeature;
+use WebIllumination\SiteBundle\Entity\Routing;
+use WebIllumination\SiteBundle\Entity\ObjectIndex;
+use WebIllumination\SiteBundle\Entity\ProductToFeature;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 class ProductService {
 
@@ -135,7 +135,7 @@ class ProductService {
 	    	
 	    	// Build the query
 	    	$qb->select('pi');
-	    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+	    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
 	    	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
 	    	foreach ($search as $keyword)
 	    	{
@@ -154,7 +154,7 @@ class ProductService {
 	    	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
     		$qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
     		$qb->addOrderBy('pi.accessory', 'ASC');
-	    	$qb->addOrderBy('pi.listPrice', 'ASC');
+//	    	$qb->addOrderBy('pi.listPrice', 'ASC');
 	    	$qb->setFirstResult(0);
 		   	$qb->setMaxResults(90);
 	    	
@@ -181,9 +181,9 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
-    	$qb->andWhere($qb->expr()->lt('pi.listPrice', 'pi.recommendedRetailPrice'));
+//    	$qb->andWhere($qb->expr()->lt('pi.listPrice', 'pi.recommendedRetailPrice'));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
 		$qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
     	$qb->addOrderBy('pi.listPrice', 'DESC');
@@ -209,7 +209,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
     	$qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
@@ -239,7 +239,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	if ($status != '')
     	{
     		$options = explode('|', $status);
@@ -444,7 +444,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("pi.id"));
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	if ($status != '')
     	{
     		$options = explode('|', $status);
@@ -664,23 +664,24 @@ class ProductService {
     {
     	// Get the services
     	$doctrineService = $this->container->get('doctrine');
-	    	
+
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->createQuery();
     	    	
     	// Calculate the first result
     	$firstResult = ($page - 1) * $maxResults;
-    	
-    	// Get the query builder
-    	$qb = $em->createQueryBuilder();
-    	
-    	// Build the query
-    	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
-    	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
-    	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
-    	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
-    	$qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
+
+        /**
+         * @var \Doctrine\DBAL\Query\QueryBuilder $qb
+         */
+        $qb->select(array('p', 'pd', 'pi'));
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'p');
+        $qb->innerJoin('p.department', 'pd');
+        $qb->innerJoin('p.price', 'pp');
+    	$qb->where($qb->expr()->eq('p.status', $qb->expr()->literal('a')));
+    	$qb->andWhere($qb->expr()->like('d.id', $qb->expr()->literal('%|'.$departmentId.'|%')));
+    	$qb->andWhere($qb->expr()->eq('d.locale', $qb->expr()->literal($locale)));
+    	$qb->andWhere($qb->expr()->eq('pp.currencyCode', $qb->expr()->literal($currencyCode)));
     	if ($brands)
     	{
     		if (!is_array($brands))
@@ -780,7 +781,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("pi.id"));
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	if ($departmentId > 0)
     	{
@@ -878,7 +879,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -943,7 +944,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -1019,7 +1020,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	$qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
     	$qb->andWhere($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
@@ -1150,7 +1151,7 @@ class ProductService {
     	$em = $doctrineService->getEntityManager();
     	
 		// Setup products
-    	$products = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findBy(array(), array('header' => 'ASC'));
+    	$products = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findBy(array(), array('header' => 'ASC'));
 	   		   				   			    	   		
     	return $products;
     }
@@ -1449,7 +1450,7 @@ class ProductService {
 		$relatedProductsObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductLink')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
 		foreach ($relatedProductsObject as $relatedProductObject)
 		{
-			$relatedProduct = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $relatedProductObject->getProductLinkId()));
+			$relatedProduct = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findOneBy(array('productId' => $relatedProductObject->getProductLinkId()));
 			if ($relatedProductObject)
 			{
 				$relatedProducts[] = $relatedProduct;
@@ -1462,7 +1463,7 @@ class ProductService {
 		$cheaperAlternativesObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductLink')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
 		foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
 		{
-			$cheaperAlternative = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $cheaperAlternativeObject->getProductLinkId()));
+			$cheaperAlternative = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findOneBy(array('productId' => $cheaperAlternativeObject->getProductLinkId()));
 			if ($cheaperAlternative)
 			{
 				$cheaperAlternatives[] = $cheaperAlternative;
@@ -1748,7 +1749,7 @@ class ProductService {
 		}		
     	
     	// Update the product index
-    	$productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $productId));
+    	$productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findOneBy(array('productId' => $productId));
     	if (!$productIndexObject)
     	{
     		$productIndexObject = new ProductIndex();
@@ -2030,7 +2031,7 @@ class ProductService {
     	}
     	
     	// Get the product indexes
-   		$productIndexes = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findBy(array('productId' => $id));
+   		$productIndexes = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findBy(array('productId' => $id));
 	    foreach ($productIndexes as $productIndexObject)
 	    {
     		if ($productIndexObject)
@@ -2149,7 +2150,7 @@ class ProductService {
     	
     	// Build the query
     	$qb->select('pi');
-    	$qb->from('WebIllumination\SiteBundle\Entity\ProductIndex', 'pi');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Product', 'pi');
     	$qb->where($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
     	$qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
     	$qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
@@ -2198,7 +2199,7 @@ class ProductService {
 		
 		// Get the product objects
 		$productObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($id);
-		$productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $id));
+		$productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findOneBy(array('productId' => $id));
 		
 		// Check to see if the delivery band has been set by the product
 		if ($productObject && $productIndexObject)
@@ -2232,7 +2233,7 @@ class ProductService {
 					// Check the department for a delivery band
 					if ($inheritedDeliveryBand < 1)
 					{
-						$departmentIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));
+						$departmentIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));
 						if ($departmentIndexObject)
 						{
 							if ($departmentIndexObject->getInheritedDeliveryBand() > 0)
