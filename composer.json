@@ -22,7 +22,8 @@
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "google/adwords": "3.1.*",
         "ezyang/htmlpurifier": "dev-master",
-        "knplabs/knp-snappy-bundle": "dev-master"
+        "knplabs/knp-snappy-bundle": "dev-master",
+        "nelmio/solarium-bundle": "1.*"
     },
     "scripts": {
         "post-install-cmd": [

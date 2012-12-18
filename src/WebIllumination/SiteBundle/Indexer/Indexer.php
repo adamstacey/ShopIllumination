@@ -8,7 +8,7 @@ abstract class Indexer implements IndexerInterface
     /**
      * @var \Solarium_Client
      */
-    protected $solarium;
+    private $solarium;
 
     function __construct(\Solarium_Client $solarium)
     {

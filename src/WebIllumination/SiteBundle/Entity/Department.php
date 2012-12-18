@@ -30,9 +30,9 @@ class Department
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department\Description", mappedBy="department", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department\Description", mappedBy="department", cascade={"all"})
      **/
-    private $descriptions;
+    private $description;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\DepartmentToFeature", mappedBy="department", cascade={"all"})
@@ -125,7 +125,6 @@ class Department
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -472,36 +471,26 @@ class Department
     }
 
     /**
-     * Add descriptions
+     * Set description
      *
-     * @param \WebIllumination\SiteBundle\Entity\Department\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Department\Description $description
      * @return Department
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Department\Description $descriptions)
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Department\Description $description)
     {
-        $this->descriptions[] = $descriptions;
+        $this->descriptions = $description;
     
         return $this;
     }
 
     /**
-     * Remove descriptions
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Department\Description $descriptions
-     */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Department\Description $descriptions)
-    {
-        $this->descriptions->removeElement($descriptions);
-    }
-
-    /**
      * Get descriptions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \WebIllumination\SiteBundle\Entity\Department\Description
      */
-    public function getDescriptions()
+    public function getDescription()
     {
-        return $this->descriptions;
+        return $this->description;
     }
 
     /**

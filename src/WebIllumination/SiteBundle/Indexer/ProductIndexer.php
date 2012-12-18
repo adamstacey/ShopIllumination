@@ -10,38 +10,79 @@ class ProductIndexer extends Indexer
      */
     function index($product)
     {
-        $update = $this->solarium->createUpdate();
+        // If product does not contain all the required fields ignore it
+        if(!$product->getDescription()) {
+            return;
+        }
+
+
+        $update = $this->getSolarium()->createUpdate();
+        $helper = $update->getHelper();
         $document = $update->createDocument();
 
-        $document->id = $product->getId();
-        $document->group = $product->getProductGroupId();
-        $document->status = $product->getStatus();
-        $document->checked = $product->getChecked();
-        $document->availableForPurchase = $product->getAvailableForPurchase();
-        $document->name = $product->getDescription()->getName();
-        $document->prefix = $product->getDescription()->getPrefix();
-        $document->description = $product->getDescription()->getDescription();
-        $document->shortDescription = $product->getDescription()->getShortDescription();
-        $document->metaKeywords = $product->getDescription()->getMetaKeywords();
-        $document->tagline = $product->getDescription()->getTagline();
-        $document->header = $product->getDescription()->getHeader();
-        $document->pageTitle = $product->getDescription()->getPageTitle();
-        $document->productCode = $product->getProductCode();
-        $document->productGroupCode = $product->getProductGroupCode();
-        $document->alternativeProductCodes = $product->getAlternativeProductCodes();
+        $prices = $product->getPrices();
+        $departmentName = "";
 
-        $document->specialOffer = $product->getSpecialOffer();
-        $document->recommended = $product->getRecommended();
-        $document->accessory = $product->getAccessory();
-        $document->new = $product->getNew();
-        $document->hidePrice = $product->getHidePrice();
-        $document->showPriceOutOfHours = $product->getShowPriceOutOfHours();
-        $document->membershipCardDiscountAvailable = $product->getMembershipCardDiscountAvailable();
-        $document->maximumMembershipCardDiscount = $product->getMembershipCardDiscountAvailable();
+        $document->setField('id', $product->getId());
+        $document->setField('brand_id', $product->getBrand()->getId());
+        $document->setField('group_id', $product->getProductGroupId());
+        foreach($product->getDepartments() as $department)
+        {
+            $document->addField('department_ids', $department->getDepartment()->getId());
+            if($department->getDisplayOrder() == 1)
+            {
+                $document->setField('department', $department->getDepartment()->getDescription()->getName());
+            }
+        }
+
+        $document->setField('status', $product->getStatus());
+        $document->setField('locale', $product->getDescription()->getLocale());
+        $document->setField('tagline', $product->getDescription()->getTagline());
+        $document->setField('header', $product->getDescription()->getHeader());
+        $document->setField('page_title', $product->getDescription()->getPageTitle());
+        $document->setField('short_description', $product->getDescription()->getShortDescription());
+        $document->setField('tagline', $product->getDescription()->getTagline());
+
+        $productCodes = explode(',', $product->getAlternativeProductCodes());
+        array_unshift($productCodes, $product->getProductCode());
+        foreach($productCodes as $productCode)
+        {
+            $document->addField('product_code', $productCode);
+        }
+        foreach(explode(',', $product->getDescription()->getSearchWords()) as $searchWord)
+        {
+            $document->addField('search_words', $searchWord);
+        }
+
+        $document->setField('brand', $product->getBrand()->getDescription()->getName());
+
+        $document->setField('available_for_purchase', $product->getAvailableForPurchase());
+        $document->setField('special_offer', $product->getSpecialOffer());
+        $document->setField('recommended', $product->getRecommended());
+        $document->setField('accessory', $product->getAccessory());
+        $document->setField('new', $product->getNew());
+        $document->setField('hide_price', $product->getHidePrice());
+        $document->setField('show_price_out_of_hours', $product->getShowPriceOutOfHours());
+
+        $document->setField('membership_discount_available', $product->getMembershipCardDiscountAvailable());
+        $document->setField('membership_maximum_discount', $product->getMaximumMembershipCardDiscount());
+
+        $document->setField('delivery_band', $product->getDeliveryBand());
+        $document->setField('inherited_delivery_band', $product->getInheritedDeliveryBand());
+        $document->setField('delivery_cost', $product->getDeliveryCost());
+        $document->setField('weight', $product->getWeight());
+        $document->setField('height', $product->getHeight());
+
+        $document->setField('cost_price', $prices[0]->getCostPrice());
+        $document->setField('rrp', $prices[0]->getRecommendedRetailPrice());
+        $document->setField('list_price', $prices[0]->getListPrice());
+
+        $document->setField('created_at', $helper->formatDate($product->getCreatedAt()));
+        $document->setField('updated_at', $helper->formatDate($product->getUpdatedAt()));
 
         $update->addDocument($document);
         $update->addCommit();
-        $this->solarium->update($update);
+        $this->getSolarium()->update($update);
     }
 
     /**
@@ -53,6 +94,6 @@ class ProductIndexer extends Indexer
         $delete->addDeleteQuery(null !== $product ? $product->getId() : '*:*');
         $delete->addCommit();
 
-        $this->solarium->update($delete);
+        $this->getSolarium()->update($delete);
     }
 }

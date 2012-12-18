@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Nelmio\SolariumBundle\NelmioSolariumBundle(),
             new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
             new WebIllumination\ShopBundle\WebIlluminationShopBundle(),
             new WebIllumination\SiteBundle\WebIlluminationSiteBundle(),

@@ -19,9 +19,9 @@ class Brand
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Brand\Description", mappedBy="brand", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand\Description", mappedBy="brand", cascade={"all"})
      **/
-    private $descriptions;
+    private $description;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
@@ -380,36 +380,26 @@ class Brand
     }
 
     /**
-     * Add descriptions
+     * Set the description
      *
-     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $description
      * @return Brand
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
+    public function setDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $description)
     {
-        $this->descriptions[] = $descriptions;
+        $this->description = $description;
     
         return $this;
     }
 
     /**
-     * Remove descriptions
+     * Get description
      *
-     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
+     * @return \WebIllumination\SiteBundle\Entity\Brand\Description
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
+    public function getDescription()
     {
-        $this->descriptions->removeElement($descriptions);
-    }
-
-    /**
-     * Get descriptions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDescriptions()
-    {
-        return $this->descriptions;
+        return $this->description;
     }
 
     /**

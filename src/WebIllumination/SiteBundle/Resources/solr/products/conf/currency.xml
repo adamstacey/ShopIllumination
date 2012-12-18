@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" ?>
 <!--
  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
@@ -16,21 +16,21 @@
  limitations under the License.
 -->
 
-<!--
- All (relative) paths are relative to the installation path
-  
-  persistent: Save changes made via the API to this file
-  sharedLib: path to a lib directory that will be shared across all cores
--->
-<solr persistent="false">
+<!-- Example exchange rates file for CurrencyField type named "currency" in example schema -->
 
-  <!--
-  adminPath: RequestHandler path to manage cores.  
-    If 'null' (or absent), cores will not be manageable via request handler
-  -->
-  <cores adminPath="/admin/cores">
-    <core name="brands" instanceDir="core_brands" />
-    <core name="departments" instanceDir="core_departments" />
-    <core name="products" instanceDir="core_products" />
-  </cores>
-</solr>
+<currencyConfig version="1.0">
+  <rates>
+    <!-- Updated from http://www.exchangerate.com/ at 2011-09-27 -->
+    <rate from="GBP" to="EUR" rate="1.2298" />
+    <rate from="GBP" to="USD" rate="1.6213" />
+    <rate from="GBP" to="NZD" rate="1.9242" />
+    <rate from="GBP" to="AUD" rate="1.5396" />
+    <rate from="GBP" to="CAD" rate="1.5959" />
+    <rate from="GBP" to="JPY" rate="135.92" />
+    <rate from="GBP" to="ZAR" rate="13.877" />
+    <rate from="GBP" to="AED" rate="5.9500" />
+    <rate from="GBP" to="INR" rate="88.978" />
+    <rate from="GBP" to="TRY" rate="2.8908" />
+    <rate from="GBP" to="CHF" rate="1.4855" />
+  </rates>
+</currencyConfig>

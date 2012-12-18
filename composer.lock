@@ -1,5 +1,5 @@
 {
-    "hash": "711722d2eb99bb96d17cf68919692b06",
+    "hash": "27b074f7badc64161016a8a5a2768488",
     "packages": [
         {
             "name": "doctrine/common",
@@ -77,26 +77,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal",
-                "reference": "f63af1948a609a96b8ea1c1302c7cdf2f9f51468"
+                "reference": "00f9575d24a15931c2ccfafd888b3d1d0bb5bd03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/dbal/archive/f63af1948a609a96b8ea1c1302c7cdf2f9f51468.zip",
-                "reference": "f63af1948a609a96b8ea1c1302c7cdf2f9f51468",
+                "url": "https://github.com/doctrine/dbal/archive/00f9575d24a15931c2ccfafd888b3d1d0bb5bd03.zip",
+                "reference": "00f9575d24a15931c2ccfafd888b3d1d0bb5bd03",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "doctrine/common": "2.3.*"
             },
-            "time": "2012-12-04 21:06:56",
+            "time": "2012-12-17 15:35:54",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.3.x-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Doctrine\\DBAL": "lib/"
@@ -1082,6 +1082,62 @@
             ]
         },
         {
+            "name": "nelmio/solarium-bundle",
+            "version": "dev-master",
+            "target-dir": "Nelmio/SolariumBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nelmio/NelmioSolariumBundle",
+                "reference": "85175416e5b6456e4bc53c9306e36876600efe60"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/nelmio/NelmioSolariumBundle/archive/85175416e5b6456e4bc53c9306e36876600efe60.zip",
+                "reference": "85175416e5b6456e4bc53c9306e36876600efe60",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*",
+                "solarium/solarium": ">=2.4,<2.5"
+            },
+            "require-dev": {
+                "symfony/yaml": "2.*"
+            },
+            "time": "2012-12-14 11:59:06",
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Nelmio\\SolariumBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nelmio",
+                    "homepage": "http://nelm.io"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/nelmio/NelmioSolariumBundle/contributors"
+                }
+            ],
+            "description": "Integration with solarium solr client.",
+            "keywords": [
+                "solr",
+                "search",
+                "solarium"
+            ]
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "2.1.x-dev",
             "target-dir": "Sensio/Bundle/DistributionBundle",
@@ -1224,6 +1280,49 @@
                 }
             ],
             "description": "This bundle generates code for you"
+        },
+        {
+            "name": "solarium/solarium",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/basdenooijer/solarium",
+                "reference": "2.4.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/basdenooijer/solarium/zipball/2.4.0",
+                "reference": "2.4.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "time": "2012-04-16 04:31:52",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Solarium": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "NewBSD"
+            ],
+            "authors": [
+                {
+                    "name": "See GitHub contributors",
+                    "homepage": "https://github.com/basdenooijer/solarium/contributors"
+                }
+            ],
+            "description": "PHP Solr client",
+            "homepage": "http://www.solarium-project.org",
+            "keywords": [
+                "php",
+                "solr",
+                "search"
+            ]
         },
         {
             "name": "stof/doctrine-extensions-bundle",
