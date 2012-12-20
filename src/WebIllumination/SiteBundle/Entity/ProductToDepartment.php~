@@ -56,46 +56,6 @@ class ProductToDepartment
     }
 
     /**
-     * Set productId
-     *
-     * @param integer $productId
-     */
-    public function setProductId($productId)
-    {
-        $this->productId = $productId;
-    }
-
-    /**
-     * Get productId
-     *
-     * @return integer 
-     */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
-
-    /**
-     * Set departmentId
-     *
-     * @param integer $departmentId
-     */
-    public function setDepartmentId($departmentId)
-    {
-        $this->departmentId = $departmentId;
-    }
-
-    /**
-     * Get departmentId
-     *
-     * @return integer 
-     */
-    public function getDepartmentId()
-    {
-        return $this->departmentId;
-    }
-
-    /**
      * Set displayOrder
      *
      * @param integer $displayOrder

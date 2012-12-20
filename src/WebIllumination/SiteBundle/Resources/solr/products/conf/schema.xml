@@ -484,17 +484,24 @@
         <field name="department_ids" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="product_group_id" type="string" indexed="true" stored="true" multiValued="false"/>
 
+        <field name="url" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="thumbnail_path" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="large_image_path" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="image_paths" type="string" indexed="true" stored="true" multiValued="false"/>
+
         <field name="status" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="locale" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="tagline" type="text_general" indexed="true" stored="true" multiValued="false"/>
         <field name="header" type="text_general" indexed="true" stored="true" multiValued="false"/>
         <field name="page_title" type="text_general" indexed="true" stored="true" multiValued="false"/>
-        <field name="additional_product_colours_count" type="text_general" indexed="false" stored="true" multiValued="false"/>
+        <field name="additional_product_colours" type="int" indexed="true" stored="true" multiValued="false"/>
+        <field name="additional_products" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="short_description" type="text_en" indexed="true" stored="true" multiValued="false"/>
-        <field name="product_code" type="text_en_splitting_tight" indexed="true" stored="true" multiValued="true"/>
+        <field name="product_code" type="text_ws" indexed="true" stored="true" multiValued="true"/>
         <field name="search_words" type="text_general" indexed="true" stored="true" multiValued="true"/>
 
         <field name="brand" type="text_general" indexed="true" stored="true" multiValued="false"/>
+        <field name="brand_logo" type="text_general" indexed="false" stored="true" multiValued="false"/>
         <field name="department" type="text_general" indexed="true" stored="true" multiValued="false"/>
 
         <field name="options" type="text_general" indexed="true" stored="true" multiValued="true"/>
@@ -511,8 +518,6 @@
         <field name="membership_discount_available" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="membership_maximum_discount" type="float" indexed="true" stored="true" multiValued="false"/>
 
-        <field name="delivery_band" type="float" indexed="false" stored="true" multiValued="false"/>
-        <field name="inherited_delivery_band" type="float" indexed="false" stored="true" multiValued="false"/>
         <field name="delivery_cost" type="float" indexed="false" stored="true" multiValued="false"/>
         <field name="weight" type="float" indexed="false" stored="true" multiValued="false"/>
         <field name="height" type="float" indexed="true" stored="true" multiValued="false"/>

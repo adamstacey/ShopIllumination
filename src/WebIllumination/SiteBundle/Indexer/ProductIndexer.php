@@ -67,8 +67,6 @@ class ProductIndexer extends Indexer
         $document->setField('membership_discount_available', $product->getMembershipCardDiscountAvailable());
         $document->setField('membership_maximum_discount', $product->getMaximumMembershipCardDiscount());
 
-        $document->setField('delivery_band', $product->getDeliveryBand());
-        $document->setField('inherited_delivery_band', $product->getInheritedDeliveryBand());
         $document->setField('delivery_cost', $product->getDeliveryCost());
         $document->setField('weight', $product->getWeight());
         $document->setField('height', $product->getHeight());
