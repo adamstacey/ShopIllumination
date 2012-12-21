@@ -19,7 +19,7 @@ class Description
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="description")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="descriptions")
      */
     private $product;
     

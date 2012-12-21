@@ -19,6 +19,11 @@ class Variant
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="description")
+     */
+    private $product;
+
+    /**
      * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
      */
     private $description;
@@ -571,5 +576,28 @@ class Variant
     public function getPrices()
     {
         return $this->prices;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @return Variant
+     */
+    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }

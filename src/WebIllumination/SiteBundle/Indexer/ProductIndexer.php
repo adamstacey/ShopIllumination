@@ -11,7 +11,7 @@ class ProductIndexer extends Indexer
     function index($product)
     {
         // If product does not contain all the required fields ignore it
-        if(!$product->getDescription()) {
+        if(count($product->getDescriptions()) === 0) {
             return;
         }
 
@@ -20,12 +20,10 @@ class ProductIndexer extends Indexer
         $helper = $update->getHelper();
         $document = $update->createDocument();
 
-        $prices = $product->getPrices();
-        $departmentName = "";
-
+        $descriptions = $product->getDescriptions();
+        
         $document->setField('id', $product->getId());
         $document->setField('brand_id', $product->getBrand()->getId());
-        $document->setField('group_id', $product->getProductGroupId());
         foreach($product->getDepartments() as $department)
         {
             $document->addField('department_ids', $department->getDepartment()->getId());
@@ -36,20 +34,24 @@ class ProductIndexer extends Indexer
         }
 
         $document->setField('status', $product->getStatus());
-        $document->setField('locale', $product->getDescription()->getLocale());
-        $document->setField('tagline', $product->getDescription()->getTagline());
-        $document->setField('header', $product->getDescription()->getHeader());
-        $document->setField('page_title', $product->getDescription()->getPageTitle());
-        $document->setField('short_description', $product->getDescription()->getShortDescription());
-        $document->setField('tagline', $product->getDescription()->getTagline());
+        $document->setField('locale', $descriptions[0]->getLocale());
+        $document->setField('tagline', $descriptions[0]->getTagline());
+        $document->setField('header', $descriptions[0]->getHeader());
+        $document->setField('page_title', $descriptions[0]->getPageTitle());
+        $document->setField('short_description', $descriptions[0]->getShortDescription());
+        $document->setField('tagline', $descriptions[0]->getTagline());
 
-        $productCodes = explode(',', $product->getAlternativeProductCodes());
-        array_unshift($productCodes, $product->getProductCode());
-        foreach($productCodes as $productCode)
+        foreach($product->getVariants() as $variant)
         {
-            $document->addField('product_code', $productCode);
+            $productCodes = explode(',', $variant->getAlternativeProductCodes());
+            array_unshift($productCodes, $variant->getProductCode());
+            foreach($productCodes as $productCode)
+            {
+                $document->addField('product_code', $productCode);
+            }
         }
-        foreach(explode(',', $product->getDescription()->getSearchWords()) as $searchWord)
+
+        foreach(explode(',', $descriptions[0]->getSearchWords()) as $searchWord)
         {
             $document->addField('search_words', $searchWord);
         }
@@ -68,12 +70,8 @@ class ProductIndexer extends Indexer
         $document->setField('membership_maximum_discount', $product->getMaximumMembershipCardDiscount());
 
         $document->setField('delivery_cost', $product->getDeliveryCost());
-        $document->setField('weight', $product->getWeight());
-        $document->setField('height', $product->getHeight());
-
-        $document->setField('cost_price', $prices[0]->getCostPrice());
-        $document->setField('rrp', $prices[0]->getRecommendedRetailPrice());
-        $document->setField('list_price', $prices[0]->getListPrice());
+        $document->setField('variants_count', count($product->getVariants()));
+        $document->setField('price', $product->getPrice());
 
         $document->setField('created_at', $helper->formatDate($product->getCreatedAt()));
         $document->setField('updated_at', $helper->formatDate($product->getUpdatedAt()));

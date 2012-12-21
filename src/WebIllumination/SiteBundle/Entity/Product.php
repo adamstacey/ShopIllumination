@@ -24,9 +24,9 @@ class Product
     private $brand;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
      */
-    private $description;
+    private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"})
@@ -37,7 +37,17 @@ class Product
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"all"})
      */
     private $links;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"all"})
+     */
+    private $variants;
+
+    /**
+     * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
+     */
+    private $price;
+
     /**
      * @ORM\Column(name="status", type="string", length=1)
      */
@@ -661,29 +671,6 @@ class Product
     }
 
     /**
-     * Set description
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $description
-     * @return Product
-     */
-    public function setDescription(\WebIllumination\SiteBundle\Entity\Product\Description $description = null)
-    {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Product\Description 
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * Add departments
      *
      * @param \WebIllumination\SiteBundle\Entity\ProductToDepartment $departments
@@ -747,5 +734,81 @@ class Product
     public function getLinks()
     {
         return $this->links;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * Add variants
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variants
+     * @return Product
+     */
+    public function addVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variants)
+    {
+        $this->variants[] = $variants;
+    
+        return $this;
+    }
+
+    /**
+     * Remove variants
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variants
+     */
+    public function removeVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variants)
+    {
+        $this->variants->removeElement($variants);
+    }
+
+    /**
+     * Get variants
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVariants()
+    {
+        return $this->variants;
+    }
+
+    /**
+     * Add descriptions
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @return Product
+     */
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    {
+        $this->descriptions[] = $descriptions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove descriptions
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     */
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    {
+        $this->descriptions->removeElement($descriptions);
+    }
+
+    /**
+     * Get descriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
     }
 }

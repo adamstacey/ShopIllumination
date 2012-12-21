@@ -525,4 +525,17 @@ class Department
     {
         return $this->features;
     }
+
+    /**
+     * Set description
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department\Description $description
+     * @return Department
+     */
+    public function setDescription(\WebIllumination\SiteBundle\Entity\Department\Description $description = null)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
 }
