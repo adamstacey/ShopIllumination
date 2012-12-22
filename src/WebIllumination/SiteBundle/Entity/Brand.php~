@@ -19,8 +19,8 @@ class Brand
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand\Description", mappedBy="brand", cascade={"all"})
-     **/
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Brand\Description", mappedBy="product", cascade={"all"})
+     */
     private $description;
 
     /**

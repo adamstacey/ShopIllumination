@@ -30,7 +30,12 @@ class Department
     private $parent;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department\Description", mappedBy="department", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
+     **/
+    private $brands;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department\Description", mappedBy="department", cascade={"all"})
      **/
     private $description;
 
@@ -537,5 +542,38 @@ class Department
         $this->description = $description;
     
         return $this;
+    }
+
+    /**
+     * Set brands
+     *
+     * @param \WebIllumination\SiteBundle\Entity\BrandToDepartment $brands
+     * @return Department
+     */
+    public function setBrands(\WebIllumination\SiteBundle\Entity\BrandToDepartment $brands = null)
+    {
+        $this->brands = $brands;
+    
+        return $this;
+    }
+
+    /**
+     * Get brands
+     *
+     * @return \WebIllumination\SiteBundle\Entity\BrandToDepartment 
+     */
+    public function getBrands()
+    {
+        return $this->brands;
+    }
+
+    /**
+     * Remove description
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department\Description $description
+     */
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Department\Description $description)
+    {
+        $this->description->removeElement($description);
     }
 }

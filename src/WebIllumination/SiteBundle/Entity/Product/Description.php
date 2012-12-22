@@ -22,6 +22,11 @@ class Description
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="descriptions")
      */
     private $product;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="descriptions")
+     */
+    private $variant;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
@@ -420,5 +425,28 @@ class Description
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set variant
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
+     * @return Description
+     */
+    public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
+    {
+        $this->variant = $variant;
+    
+        return $this;
+    }
+
+    /**
+     * Get variant
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\Variant 
+     */
+    public function getVariant()
+    {
+        return $this->variant;
     }
 }
