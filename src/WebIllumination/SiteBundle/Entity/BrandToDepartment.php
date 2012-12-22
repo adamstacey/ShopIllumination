@@ -19,7 +19,7 @@ class BrandToDepartment
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="departments")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand", inversedBy="departments")
      */
     private $brand;
 
@@ -27,32 +27,32 @@ class BrandToDepartment
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="brands")
      */
     private $department;
-            
+
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
     private $deliveryBand;
-    
+
     /**
      * @ORM\Column(name="page_title", type="string", length=255)
      */
     private $pageTitle;
-    
+
     /**
      * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
-    
+
     /**
      * @ORM\Column(name="meta_description", type="text")
      */
     private $metaDescription;
-    
+
     /**
      * @ORM\Column(name="meta_keywords", type="text")
      */
     private $metaKeywords;
-    
+
     /**
      * @ORM\Column(name="search_words", type="text")
      */
@@ -73,7 +73,7 @@ class BrandToDepartment
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -133,7 +133,7 @@ class BrandToDepartment
     /**
      * Get deliveryBand
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getDeliveryBand()
     {
@@ -153,7 +153,7 @@ class BrandToDepartment
     /**
      * Get pageTitle
      *
-     * @return string 
+     * @return string
      */
     public function getPageTitle()
     {
@@ -173,7 +173,7 @@ class BrandToDepartment
     /**
      * Get header
      *
-     * @return string 
+     * @return string
      */
     public function getHeader()
     {
@@ -193,7 +193,7 @@ class BrandToDepartment
     /**
      * Get metaDescription
      *
-     * @return text 
+     * @return text
      */
     public function getMetaDescription()
     {
@@ -213,7 +213,7 @@ class BrandToDepartment
     /**
      * Get metaKeywords
      *
-     * @return text 
+     * @return text
      */
     public function getMetaKeywords()
     {
@@ -233,7 +233,7 @@ class BrandToDepartment
     /**
      * Get searchWords
      *
-     * @return text 
+     * @return text
      */
     public function getSearchWords()
     {
@@ -253,7 +253,7 @@ class BrandToDepartment
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -273,7 +273,7 @@ class BrandToDepartment
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {

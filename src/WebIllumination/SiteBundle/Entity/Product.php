@@ -52,42 +52,42 @@ class Product
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status;
-    
+
     /**
      * @ORM\Column(name="checked", type="boolean")
      */
     private $checked;
-    
+
     /**
      * @ORM\Column(name="available_for_purchase", type="boolean")
      */
     private $availableForPurchase;
-    
+
     /**
      * @ORM\Column(name="feature_comparison", type="boolean")
      */
     private $featureComparison;
-    
+
     /**
      * @ORM\Column(name="downloadable", type="boolean")
      */
     private $downloadable;
-    
+
     /**
      * @ORM\Column(name="special_offer", type="boolean")
      */
     private $specialOffer;
-    
+
     /**
      * @ORM\Column(name="recommended", type="boolean")
      */
     private $recommended;
-    
+
     /**
      * @ORM\Column(name="accessory", type="boolean")
      */
     private $accessory;
-    
+
     /**
      * @ORM\Column(name="new", type="boolean")
      */
@@ -107,32 +107,32 @@ class Product
      * @ORM\Column(name="show_price_out_of_hours", type="boolean")
      */
     private $showPriceOutOfHours;
-    
+
     /**
      * @ORM\Column(name="membership_card_discount_available", type="boolean")
      */
     private $membershipCardDiscountAvailable;
-    
+
     /**
      * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
     private $maximumMembershipCardDiscount;
-    
+
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
     private $deliveryBand;
-    
+
     /**
      * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
     private $inheritedDeliveryBand;
-    
+
     /**
      * @ORM\Column(name="delivery_cost", type="decimal", precision=12, scale=4)
      */
     private $deliveryCost;
-        
+
     /**
      * @ORM\Column(name="last_checked", type="datetime")
      */
@@ -149,23 +149,23 @@ class Product
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-    
+
     /**
      * Get statusColour
      *
-     * @return string 
+     * @return string
      */
     public function getStatusColour()
     {
         switch ($this->status)
-    	{
-    		case 'd':
-    			return 'red';
-    		case 'a':
-    			return 'green';
-    		case 'h':
-    			return 'amber';
-    	}
+        {
+            case 'd':
+                return 'red';
+            case 'a':
+                return 'green';
+            case 'h':
+                return 'amber';
+        }
         return '';
     }
     /**
@@ -176,11 +176,11 @@ class Product
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->links = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -196,14 +196,14 @@ class Product
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -219,14 +219,14 @@ class Product
     public function setChecked($checked)
     {
         $this->checked = $checked;
-    
+
         return $this;
     }
 
     /**
      * Get checked
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getChecked()
     {
@@ -242,14 +242,14 @@ class Product
     public function setAvailableForPurchase($availableForPurchase)
     {
         $this->availableForPurchase = $availableForPurchase;
-    
+
         return $this;
     }
 
     /**
      * Get availableForPurchase
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAvailableForPurchase()
     {
@@ -265,14 +265,14 @@ class Product
     public function setFeatureComparison($featureComparison)
     {
         $this->featureComparison = $featureComparison;
-    
+
         return $this;
     }
 
     /**
      * Get featureComparison
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFeatureComparison()
     {
@@ -288,14 +288,14 @@ class Product
     public function setDownloadable($downloadable)
     {
         $this->downloadable = $downloadable;
-    
+
         return $this;
     }
 
     /**
      * Get downloadable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDownloadable()
     {
@@ -311,14 +311,14 @@ class Product
     public function setSpecialOffer($specialOffer)
     {
         $this->specialOffer = $specialOffer;
-    
+
         return $this;
     }
 
     /**
      * Get specialOffer
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSpecialOffer()
     {
@@ -334,14 +334,14 @@ class Product
     public function setRecommended($recommended)
     {
         $this->recommended = $recommended;
-    
+
         return $this;
     }
 
     /**
      * Get recommended
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRecommended()
     {
@@ -357,14 +357,14 @@ class Product
     public function setAccessory($accessory)
     {
         $this->accessory = $accessory;
-    
+
         return $this;
     }
 
     /**
      * Get accessory
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getAccessory()
     {
@@ -380,14 +380,14 @@ class Product
     public function setNew($new)
     {
         $this->new = $new;
-    
+
         return $this;
     }
 
     /**
      * Get new
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getNew()
     {
@@ -403,14 +403,14 @@ class Product
     public function setSampleRequest($sampleRequest)
     {
         $this->sampleRequest = $sampleRequest;
-    
+
         return $this;
     }
 
     /**
      * Get sampleRequest
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSampleRequest()
     {
@@ -426,14 +426,14 @@ class Product
     public function setHidePrice($hidePrice)
     {
         $this->hidePrice = $hidePrice;
-    
+
         return $this;
     }
 
     /**
      * Get hidePrice
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHidePrice()
     {
@@ -449,14 +449,14 @@ class Product
     public function setShowPriceOutOfHours($showPriceOutOfHours)
     {
         $this->showPriceOutOfHours = $showPriceOutOfHours;
-    
+
         return $this;
     }
 
     /**
      * Get showPriceOutOfHours
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getShowPriceOutOfHours()
     {
@@ -472,14 +472,14 @@ class Product
     public function setMembershipCardDiscountAvailable($membershipCardDiscountAvailable)
     {
         $this->membershipCardDiscountAvailable = $membershipCardDiscountAvailable;
-    
+
         return $this;
     }
 
     /**
      * Get membershipCardDiscountAvailable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getMembershipCardDiscountAvailable()
     {
@@ -495,14 +495,14 @@ class Product
     public function setMaximumMembershipCardDiscount($maximumMembershipCardDiscount)
     {
         $this->maximumMembershipCardDiscount = $maximumMembershipCardDiscount;
-    
+
         return $this;
     }
 
     /**
      * Get maximumMembershipCardDiscount
      *
-     * @return float 
+     * @return float
      */
     public function getMaximumMembershipCardDiscount()
     {
@@ -518,14 +518,14 @@ class Product
     public function setDeliveryBand($deliveryBand)
     {
         $this->deliveryBand = $deliveryBand;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryBand
      *
-     * @return float 
+     * @return float
      */
     public function getDeliveryBand()
     {
@@ -541,14 +541,14 @@ class Product
     public function setInheritedDeliveryBand($inheritedDeliveryBand)
     {
         $this->inheritedDeliveryBand = $inheritedDeliveryBand;
-    
+
         return $this;
     }
 
     /**
      * Get inheritedDeliveryBand
      *
-     * @return float 
+     * @return float
      */
     public function getInheritedDeliveryBand()
     {
@@ -564,14 +564,14 @@ class Product
     public function setDeliveryCost($deliveryCost)
     {
         $this->deliveryCost = $deliveryCost;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryCost
      *
-     * @return float 
+     * @return float
      */
     public function getDeliveryCost()
     {
@@ -587,14 +587,14 @@ class Product
     public function setLastChecked($lastChecked)
     {
         $this->lastChecked = $lastChecked;
-    
+
         return $this;
     }
 
     /**
      * Get lastChecked
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastChecked()
     {
@@ -610,14 +610,14 @@ class Product
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -633,14 +633,14 @@ class Product
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -656,14 +656,14 @@ class Product
     public function setBrand(\WebIllumination\SiteBundle\Entity\Brand $brand = null)
     {
         $this->brand = $brand;
-    
+
         return $this;
     }
 
     /**
      * Get brand
      *
-     * @return \WebIllumination\SiteBundle\Entity\Brand 
+     * @return \WebIllumination\SiteBundle\Entity\Brand
      */
     public function getBrand()
     {
@@ -679,7 +679,7 @@ class Product
     public function addDepartment(\WebIllumination\SiteBundle\Entity\ProductToDepartment $departments)
     {
         $this->departments[] = $departments;
-    
+
         return $this;
     }
 
@@ -696,7 +696,7 @@ class Product
     /**
      * Get departments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDepartments()
     {
@@ -712,7 +712,7 @@ class Product
     public function addLink(\WebIllumination\SiteBundle\Entity\Product\Link $links)
     {
         $this->links[] = $links;
-    
+
         return $this;
     }
 
@@ -729,7 +729,7 @@ class Product
     /**
      * Get links
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLinks()
     {
@@ -755,7 +755,7 @@ class Product
     public function addVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variants)
     {
         $this->variants[] = $variants;
-    
+
         return $this;
     }
 
@@ -772,7 +772,7 @@ class Product
     /**
      * Get variants
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getVariants()
     {
@@ -788,7 +788,7 @@ class Product
     public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
     {
         $this->descriptions[] = $descriptions;
-    
+
         return $this;
     }
 
@@ -805,7 +805,7 @@ class Product
     /**
      * Get descriptions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDescriptions()
     {

@@ -27,57 +27,57 @@ class Description
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="descriptions")
      */
     private $variant;
-    
+
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale;
-    
+
     /**
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
+
     /**
      * @ORM\Column(name="prefix", type="string", length=255)
      */
     private $prefix;
-    
+
     /**
      * @ORM\Column(name="tagline", type="string", length=255)
      */
     private $tagline;
-    
+
     /**
      * @ORM\Column(name="description", type="text")
      */
     private $description;
-    
+
     /**
      * @ORM\Column(name="short_description", type="text")
      */
     private $shortDescription;
-    
+
     /**
      * @ORM\Column(name="page_title", type="string", length=255)
      */
     private $pageTitle;
-    
+
     /**
      * @ORM\Column(name="header", type="string", length=255)
      */
     private $header;
-    
+
     /**
      * @ORM\Column(name="meta_description", type="text")
      */
     private $metaDescription;
-    
+
     /**
      * @ORM\Column(name="meta_keywords", type="text")
      */
     private $metaKeywords;
-    
+
     /**
      * @ORM\Column(name="search_words", type="text")
      */
@@ -98,7 +98,7 @@ class Description
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -114,14 +114,14 @@ class Description
     public function setLocale($locale)
     {
         $this->locale = $locale;
-    
+
         return $this;
     }
 
     /**
      * Get locale
      *
-     * @return string 
+     * @return string
      */
     public function getLocale()
     {
@@ -137,14 +137,14 @@ class Description
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -160,14 +160,14 @@ class Description
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
-    
+
         return $this;
     }
 
     /**
      * Get prefix
      *
-     * @return string 
+     * @return string
      */
     public function getPrefix()
     {
@@ -183,14 +183,14 @@ class Description
     public function setTagline($tagline)
     {
         $this->tagline = $tagline;
-    
+
         return $this;
     }
 
     /**
      * Get tagline
      *
-     * @return string 
+     * @return string
      */
     public function getTagline()
     {
@@ -206,14 +206,14 @@ class Description
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -229,14 +229,14 @@ class Description
     public function setShortDescription($shortDescription)
     {
         $this->shortDescription = $shortDescription;
-    
+
         return $this;
     }
 
     /**
      * Get shortDescription
      *
-     * @return string 
+     * @return string
      */
     public function getShortDescription()
     {
@@ -252,14 +252,14 @@ class Description
     public function setPageTitle($pageTitle)
     {
         $this->pageTitle = $pageTitle;
-    
+
         return $this;
     }
 
     /**
      * Get pageTitle
      *
-     * @return string 
+     * @return string
      */
     public function getPageTitle()
     {
@@ -275,14 +275,14 @@ class Description
     public function setHeader($header)
     {
         $this->header = $header;
-    
+
         return $this;
     }
 
     /**
      * Get header
      *
-     * @return string 
+     * @return string
      */
     public function getHeader()
     {
@@ -298,14 +298,14 @@ class Description
     public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
-    
+
         return $this;
     }
 
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -321,14 +321,14 @@ class Description
     public function setMetaKeywords($metaKeywords)
     {
         $this->metaKeywords = $metaKeywords;
-    
+
         return $this;
     }
 
     /**
      * Get metaKeywords
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeywords()
     {
@@ -344,14 +344,14 @@ class Description
     public function setSearchWords($searchWords)
     {
         $this->searchWords = $searchWords;
-    
+
         return $this;
     }
 
     /**
      * Get searchWords
      *
-     * @return string 
+     * @return string
      */
     public function getSearchWords()
     {
@@ -367,14 +367,14 @@ class Description
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -390,14 +390,14 @@ class Description
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -413,17 +413,40 @@ class Description
     public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
     {
         $this->product = $product;
-    
+
         return $this;
     }
 
     /**
      * Get product
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product 
+     * @return \WebIllumination\SiteBundle\Entity\Product
      */
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set variant
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
+     * @return Description
+     */
+    public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
+    {
+        $this->variant = $variant;
+
+        return $this;
+    }
+
+    /**
+     * Get variant
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\Variant
+     */
+    public function getVariant()
+    {
+        return $this->variant;
     }
 }
