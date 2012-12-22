@@ -1,11 +1,26 @@
-_welcome:
-    pattern:  /
-    defaults: { _controller: WebIlluminationShopBundle:System:index }
+#_welcome:
+#    pattern:  /
+#    defaults: { _controller: WebIlluminationShopBundle:System:index }
 
-WebIlluminationShopBundle:
-    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
-    prefix:   /
+#WebIlluminationShopBundle:
+#    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
+#    prefix:   /
+#
+#WebIlluminationAdminBundle:
+#    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
+#    prefix:   /
 
-WebIlluminationAdminBundle:
-    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
-    prefix:   /
+web_illumination_admin:
+    resource: "@WebIlluminationAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/
+
+admin_security:
+    pattern:   /admin/security/
+    defaults:  { _controller: WebIlluminationAdminBundle:Security:index }
+admin_security_login:
+    pattern:   /admin/security/login
+    defaults:  { _controller: WebIlluminationAdminBundle:Security:login }
+admin_security_logout:
+    pattern:   /admin/security/logout
+    defaults:  { _controller: WebIlluminationAdminBundle:Security:logout }

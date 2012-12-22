@@ -25,7 +25,7 @@ class SecurityController extends Controller
 		   	$password = trim($request->request->get('password'));
 		   	
 		   	// Find the user
-		  	$userObject = $em->getRepository('WebIlluminationAdminBundle:User')->findOneBy(array('emailAddress' => $emailAddress));
+		  	$userObject = $em->getRepository('WebIllumination\SiteBundle\Entity\User')->findOneBy(array('emailAddress' => $emailAddress));
 		  	if (!$userObject)
 		  	{
 		  		// Set error message
@@ -53,10 +53,7 @@ class SecurityController extends Controller
     		$token = new UsernamePasswordToken($userObject, null, 'admin', array('ROLE_ADMIN'));
 			$this->get('security.context')->setToken($token);
 			$this->get('session')->set('_security_'.'admin', serialize($token));
-			
-			// Get the services
-    		$contactService = $this->get('web_illumination_admin.contact_service');
-			
+
 			// Setup the session
 			$admin = array();
 			$user = array();
@@ -65,8 +62,6 @@ class SecurityController extends Controller
 			$user['emailAddress'] = $userObject->getEmailAddress();
 			$user['lastLoggedIn'] = $userObject->getLastLoggedIn();
 			$admin['user'] = $user;
-			$contact = $contactService->getContact($userObject->getContactId());
-			$admin['contact'] = $contact;
 			
 			// Update the last logged in date
 			$userObject->setLastLoggedIn(new \DateTime());
@@ -77,9 +72,9 @@ class SecurityController extends Controller
 			$this->get('session')->set('admin', $admin);
 						
 			// Set success message
-		   	$this->get('session')->getFlashBag()->add('success', 'Welcome back '.$contact['firstName'].', you are now securely logged in. You last logged in on '.date("l, jS F Y h:ia", $user['lastLoggedIn']->getTimestamp()).'.');
+		   	$this->get('session')->getFlashBag()->add('success', 'Welcome back ..., you are now securely logged in. You last logged in on '.date("l, jS F Y h:ia", $user['lastLoggedIn']->getTimestamp()).'.');
 			
-			return $this->redirect($this->get('router')->generate('admin_orders'));
+			return $this->redirect($this->get('router')->generate('admin_products'));
     	}
 		
 		/*$em = $this->getDoctrine()->getEntityManager();

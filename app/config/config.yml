@@ -17,15 +17,15 @@ framework:
         packages:
             cdn:
                 base_urls:
-                    http: [http://staging.kitchenappliancecentre.co.uk]
-                    ssl: [http://staging.kitchenappliancecentre.co.uk]
+                    http: ["%cdn_host%"]
+                    ssl: ["%cdn_host%"]
             nocdn:
                 base_urls:
-                    http: [http://staging.kitchenappliancecentre.co.uk]
-                    ssl: [http://staging.kitchenappliancecentre.co.uk]
+                    http: ["%cdn_host%"]
+                    ssl: ["%cdn_host%"]
         assets_base_urls:
-            http: [http://staging.kitchenappliancecentre.co.uk]
-            ssl: [http://staging.kitchenappliancecentre.co.uk]
+            http: ["%cdn_host%"]
+            ssl: ["%cdn_host%"]
     default_locale:  "%locale%"
     trust_proxy_headers: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
     session:         ~
@@ -39,7 +39,8 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [WebIlluminationShopBundle,WebIlluminationAdminBundle]
+    bundles:        [WebIlluminationAdminBundle]
+#    bundles:        [WebIlluminationShopBundle,WebIlluminationAdminBundle]
     filters:
         cssrewrite: ~
         yui_css:

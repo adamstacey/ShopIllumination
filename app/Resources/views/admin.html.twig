@@ -86,7 +86,7 @@
 	        	                <a class="chevron" href="Javascript:void(0);">&raquo;</a>
 	            	            <ul>
 	            	            	{% block leftmenu %}
-	            	            		<li class="{% if ((app.request.attributes.get('_route') == 'homepage') or (app.request.attributes.get('_route') == '')) %}current{% endif %}"><a href="{{ path('homepage') }}" class="navicon-grid">Dashboard</a></li>
+	            	            		{#<li class="{% if ((app.request.attributes.get('_route') == 'homepage') or (app.request.attributes.get('_route') == '')) %}current{% endif %}"><a href="{{ path('homepage') }}" class="navicon-grid">Dashboard</a></li>#}
 	            	            	{% endblock %}
 	            	            </ul>
 	                	    </nav>

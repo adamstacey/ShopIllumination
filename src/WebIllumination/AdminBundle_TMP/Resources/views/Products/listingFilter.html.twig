@@ -1,0 +1,217 @@
+<div id="listing-filter" class="no-padding-bottom listing-filter ui-helper-hidden">
+	<div class="separator">
+		<table width="100%">
+			<tr>
+				<td width="15%" class="label">
+					<label>Status</label>
+				</td>
+				<td>
+					<div class="filter-checkbox fl"><input{% for status in filters.status|explode("|") %}{% if status == 'a' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-status" value="a" />Active</div>
+					<div class="filter-checkbox fl"><input{% for status in filters.status|explode("|") %}{% if status == 'd' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-status" value="d" />Disabled</div>
+					<div class="filter-checkbox fl"><input{% for status in filters.status|explode("|") %}{% if status == 'h' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-status" value="h" />Hidden</div>
+					<input type="hidden" id="filter-status" value="{{ filters.status|default("") }}" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="separator">
+		<table width="100%">
+			<tr>
+				<td class="label" width="15%">
+					<label for="filter-product-code">Product Code</label>
+				</td>
+				<td width="15%">
+					<input type="text" autocomplete="off" id="filter-product-code" value="{{ filters.productCode|default("") }}" />
+				</td>
+				<td class="label" width="15%">
+					<label for="filter-name">Name</label>
+				</td>
+				<td width="15%">
+					<input type="text" autocomplete="off" id="filter-name" value="{{ filters.name|default("") }}" />
+				</td>
+				<td class="label" width="15%">
+					<label for="filter-description">Description</label>
+				</td>
+				<td width="25%">
+					<input type="text" autocomplete="off" id="filter-description" value="{{ filters.description|default("") }}" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<h5 class="no-margin-top margin-bottom-5">Filter Prices<button class="fr ui-corner-none ui-corner-tr button ui-button-blue action-show-hide-filter-section" data-filter-section="prices" data-icon-primary="ui-icon-triangle-1-s" data-icon-only="true">Filter Prices</button></h5>
+	<div id="filter-section-prices" class="filter-section ui-helper-hidden">
+		<div class="separator">
+			<table width="100%">
+				<tr>
+					<td class="label" width="10%"><label>Cost Price:</label></td>
+					<td width="40%">
+						<div class="range-slider-values">
+							<span>&pound;</span>
+							<input type="text" autocomplete="off" class="from-value" value="" />
+							<span>&nbsp;-&nbsp;</span>
+							<input type="text" autocomplete="off" class="to-value" value="" />
+						</div>
+						<div data-from="{{ filters.costPriceFrom|default("0") }}" data-to="{{ filters.costPriceTo|default("10000") }}" id="filter-cost-price" class="range-slider"></div>
+					</td>
+					<td class="label" width="10%"><label>RRP:</label></td>
+					<td width="40%">
+						<div class="range-slider-values">
+							<span>&pound;</span>
+							<input type="text" autocomplete="off" class="from-value" value="" />
+							<span>&nbsp;-&nbsp;</span>
+							<input type="text" autocomplete="off" class="to-value" value="" />
+						</div>
+						<div data-from="{{ filters.recommendedRetailPriceFrom|default("0") }}" data-to="{{ filters.recommendedRetailPriceTo|default("10000") }}" id="filter-recommended-retail-price" class="range-slider"></div>
+					</td>
+				</tr>
+				<tr>
+					<td class="label" width="10%"><label>List Price:</label></td>
+					<td width="40%">
+						<div class="range-slider-values">
+							<span>&pound;</span>
+							<input type="text" autocomplete="off" class="from-value" value="" />
+							<span>&nbsp;-&nbsp;</span>
+							<input type="text" autocomplete="off" class="to-value" value="" />
+						</div>
+						<div data-from="{{ filters.listPriceFrom|default("0") }}" data-to="{{ filters.listPriceTo|default("10000") }}" id="filter-list-price" class="range-slider"></div>
+					</td>
+					<td class="label" width="10%"><label>Discount:</label></td>
+					<td width="40%">
+						<div class="range-slider-values">
+							<span>&pound;</span>
+							<input type="text" autocomplete="off" class="from-value" value="" />
+							<span>&nbsp;-&nbsp;</span>
+							<input type="text" autocomplete="off" class="to-value" value="" />
+						</div>
+						<div data-from="{{ filters.discountFrom|default("0") }}" data-to="{{ filters.discountTo|default("1000") }}" id="filter-discount" class="range-slider"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<h5 class="no-margin-top margin-bottom-5">Filter Flags<button class="fr ui-corner-none ui-corner-tr button ui-button-blue action-show-hide-filter-section" data-filter-section="flags" data-icon-primary="ui-icon-triangle-1-s" data-icon-only="true">Filter Flags</button></h5>
+	<div id="filter-section-flags" class="filter-section ui-helper-hidden">
+		<div class="separator">
+			<table width="100%">
+				<tr>
+					<td class="label" width="10%"><label>Available for Purchase</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for availableForPurchase in filters.availableForPurchase|explode("|") %}{% if availableForPurchase == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-available-for-purchase" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for availableForPurchase in filters.availableForPurchase|explode("|") %}{% if availableForPurchase == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-available-for-purchase" value="0" />No</div>
+						<input type="hidden" id="filter-available-for-purchase" value="{{ filters.availableForPurchase|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>Hide Price</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for hidePrice in filters.hidePrice|explode("|") %}{% if hidePrice == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-hide-price" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for hidePrice in filters.hidePrice|explode("|") %}{% if hidePrice == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-hide-price" value="0" />No</div>
+						<input type="hidden" id="filter-hide-price" value="{{ filters.hidePrice|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>Show Price Out of Hours</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for showPriceOutOfHours in filters.showPriceOutOfHours|explode("|") %}{% if showPriceOutOfHours == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-show-price-out-of-hours" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for showPriceOutOfHours in filters.showPriceOutOfHours|explode("|") %}{% if showPriceOutOfHours == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-show-price-out-of-hours" value="0" />No</div>
+						<input type="hidden" id="filter-show-price-out-of-hours" value="{{ filters.showPriceOutOfHours|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>Available to Members</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for membershipCardDiscountAvailable in filters.membershipCardDiscountAvailable|explode("|") %}{% if membershipCardDiscountAvailable == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-membership-card-discount-available" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for membershipCardDiscountAvailable in filters.membershipCardDiscountAvailable|explode("|") %}{% if membershipCardDiscountAvailable == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-membership-card-discount-available" value="0" />No</div>
+						<input type="hidden" id="filter-membership-card-discount-available" value="{{ filters.membershipCardDiscountAvailable|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>Feature Comparison</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for featureComparison in filters.featureComparison|explode("|") %}{% if featureComparison == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-feature-comparison" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for featureComparison in filters.featureComparison|explode("|") %}{% if featureComparison == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-feature-comparison" value="0" />No</div>
+						<input type="hidden" id="filter-feature-comparison" value="{{ filters.featureComparison|default("") }}" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="separator">
+			<table width="100%">
+				<tr>
+					<td class="label" width="10%"><label>Download</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for downloadable in filters.downloadable|explode("|") %}{% if downloadable == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-downloadable" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for downloadable in filters.downloadable|explode("|") %}{% if downloadable == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-downloadable" value="0" />No</div>
+						<input type="hidden" id="filter-downloadable" value="{{ filters.downloadable|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>Special Offer</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for specialOffer in filters.specialOffer|explode("|") %}{% if specialOffer == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-special-offer" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for specialOffer in filters.specialOffer|explode("|") %}{% if specialOffer == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-special-offer" value="0" />No</div>
+						<input type="hidden" id="filter-special-offer" value="{{ filters.specialOffer|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>Recommend</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for recommended in filters.recommended|explode("|") %}{% if recommended == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-recommended" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for recommended in filters.recommended|explode("|") %}{% if recommended == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-recommended" value="0" />No</div>
+						<input type="hidden" id="filter-recommended" value="{{ filters.recommended|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>Accessory</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for accessory in filters.accessory|explode("|") %}{% if accessory == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-accessory" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for accessory in filters.accessory|explode("|") %}{% if accessory == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-accessory" value="0" />No</div>
+						<input type="hidden" id="filter-accessory" value="{{ filters.accessory|default("") }}" />
+					</td>
+					<td class="label" width="10%"><label>New</label></td>
+					<td width="10%">
+						<div class="filter-checkbox"><input{% for new in filters.new|explode("|") %}{% if new == '1' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-new" value="1" />Yes</div>
+						<div class="filter-checkbox"><input{% for new in filters.new|explode("|") %}{% if new == '0' %} checked="checked"{% endif %}{% endfor %} type="checkbox" data-field="filter-new" value="0" />No</div>
+						<input type="hidden" id="filter-new" value="{{ filters.new|default("") }}" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div>
+		<table width="100%">
+			<tr>
+				<td rowspan="2" class="label" width="10%"><label>Brand</label></td>
+				<td width="20%">
+					<div class="position-relative">
+						<input placeholder="Search for brand&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-brand-search" />
+						<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+					</div>
+				</td>
+				<td rowspan="2" class="label" width="10%"><label>Department</label></td>
+				<td width="60%">
+					<div class="position-relative">
+						<input placeholder="Search for department&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-department-search" />
+						<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td width="20%">
+					<div id="filter-brands" class="filter filter-scrollable ui-corner-all">
+						<ul>
+							{% for brand in data.brands %}	
+								<li class="filter-checkbox">
+									<input{% for selectedBrand in filters.brand|explode("|") %}{% if selectedBrand == brand.id %} checked="checked"{% endif %}{% endfor %} data-field="filter-brand" type="checkbox" id="brand-{{ brand.id }}" value="{{ brand.id }}" />
+									<label for="brand-{{ brand.id }}">{{ brand.brand }}</label>
+									<div class="clear"></div>
+								</li>
+							{% endfor %}
+						</ul>
+						<input type="hidden" id="filter-brand" value="{{ filters.brand|default("") }}" />
+					</div>
+				</td>
+				<td width="60%">
+					<div id="filter-departments" class="filter filter-scrollable ui-corner-all">
+						<ul>
+							{% for department in data.departments %}	
+								<li class="filter-checkbox">
+									<input{% for selectedDepartment in filters.department|explode("|") %}{% if selectedDepartment == department.id %} checked="checked"{% endif %}{% endfor %} data-field="filter-department" type="checkbox" id="department-{{ department.id }}" value="{{ department.id }}" />
+									<label for="department-{{ department.id }}">{% if department.level > 0 %}{% for level in 1..department.level %}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ department.name }} ({{ department.productCount }})</label>
+									<div class="clear"></div>
+								</li>
+							{% endfor %}
+						</ul>
+						<input type="hidden" id="filter-department" value="{{ filters.department|default("") }}" />
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

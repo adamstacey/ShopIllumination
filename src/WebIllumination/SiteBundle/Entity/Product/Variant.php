@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="products")
+ * @ORM\Table(name="product_variants")
  * @ORM\HasLifecycleCallbacks()
  */
 class Variant
