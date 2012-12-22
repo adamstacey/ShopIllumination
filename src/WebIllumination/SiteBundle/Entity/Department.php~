@@ -30,14 +30,14 @@ class Department
     private $parent;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
      **/
     private $brands;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department\Description", mappedBy="department", cascade={"all"})
      **/
-    private $description;
+    private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\DepartmentToFeature", mappedBy="department", cascade={"all"})
@@ -489,16 +489,6 @@ class Department
     }
 
     /**
-     * Get descriptions
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Department\Description
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * Add features
      *
      * @param \WebIllumination\SiteBundle\Entity\DepartmentToFeature $features
@@ -532,15 +522,45 @@ class Department
     }
 
     /**
-     * Set description
+     * Set brands
      *
-     * @param \WebIllumination\SiteBundle\Entity\Department\Description $description
+     * @param \WebIllumination\SiteBundle\Entity\BrandToDepartment $brands
      * @return Department
      */
-    public function setDescription(\WebIllumination\SiteBundle\Entity\Department\Description $description = null)
+    public function setBrands(\WebIllumination\SiteBundle\Entity\BrandToDepartment $brands = null)
     {
-        $this->description = $description;
+        $this->brands = $brands;
     
         return $this;
+    }
+
+    /**
+     * Get brands
+     *
+     * @return \WebIllumination\SiteBundle\Entity\BrandToDepartment 
+     */
+    public function getBrands()
+    {
+        return $this->brands;
+    }
+
+    /**
+     * Remove descriptions
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department\Description $descriptions
+     */
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Department\Description $descriptions)
+    {
+        $this->descriptions->removeElement($descriptions);
+    }
+
+    /**
+     * Get descriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
     }
 }

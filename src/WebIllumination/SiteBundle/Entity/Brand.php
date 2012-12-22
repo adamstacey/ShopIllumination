@@ -19,55 +19,55 @@ class Brand
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Brand\Description", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Brand\Description", mappedBy="brand", cascade={"all"})
      */
-    private $description;
+    private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="brand", cascade={"all"})
      **/
     private $departments;
-	
-	/**
+
+    /**
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status = 'a';
-	            
+
     /**
      * @ORM\Column(name="request_a_brochure", type="boolean")
      */
     private $requestABrochure = false;
-    
+
     /**
      * @ORM\Column(name="brochure_web_address", type="string", length=255)
      */
     private $brochureWebAddress;
-    
-     /**
+
+    /**
      * @ORM\Column(name="request_a_sample", type="boolean")
      */
     private $requestASample = false;
-    
+
     /**
      * @ORM\Column(name="sample_web_address", type="string", length=255)
      */
     private $sampleWebAddress;
-    
+
     /**
      * @ORM\Column(name="hide_prices", type="boolean")
      */
     private $hidePrices = false;
-    
+
     /**
      * @ORM\Column(name="show_prices_out_of_hours", type="boolean")
      */
     private $showPricesOutOfHours = false;
-    
+
     /**
      * @ORM\Column(name="membership_card_discount_available", type="boolean")
      */
     private $membershipCardDiscountAvailable = true;
-    
+
     /**
      * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
@@ -88,23 +88,23 @@ class Brand
     /**
      * Get statusColour
      *
-     * @return string 
+     * @return string
      */
     public function getStatusColour()
     {
         switch ($this->status)
-    	{
-    		
-    		case 'a':
-    			return 'green';
-    			break;
-    		case 'h':
-    			return 'amber';
-    			break;
-    		case 'd':
-    			return 'red';
-    			break;
-    	}
+        {
+
+            case 'a':
+                return 'green';
+                break;
+            case 'h':
+                return 'amber';
+                break;
+            case 'd':
+                return 'red';
+                break;
+        }
         return '';
     }
     /**
@@ -115,11 +115,11 @@ class Brand
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -135,14 +135,14 @@ class Brand
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -158,14 +158,14 @@ class Brand
     public function setRequestABrochure($requestABrochure)
     {
         $this->requestABrochure = $requestABrochure;
-    
+
         return $this;
     }
 
     /**
      * Get requestABrochure
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRequestABrochure()
     {
@@ -181,14 +181,14 @@ class Brand
     public function setBrochureWebAddress($brochureWebAddress)
     {
         $this->brochureWebAddress = $brochureWebAddress;
-    
+
         return $this;
     }
 
     /**
      * Get brochureWebAddress
      *
-     * @return string 
+     * @return string
      */
     public function getBrochureWebAddress()
     {
@@ -204,14 +204,14 @@ class Brand
     public function setRequestASample($requestASample)
     {
         $this->requestASample = $requestASample;
-    
+
         return $this;
     }
 
     /**
      * Get requestASample
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRequestASample()
     {
@@ -227,14 +227,14 @@ class Brand
     public function setSampleWebAddress($sampleWebAddress)
     {
         $this->sampleWebAddress = $sampleWebAddress;
-    
+
         return $this;
     }
 
     /**
      * Get sampleWebAddress
      *
-     * @return string 
+     * @return string
      */
     public function getSampleWebAddress()
     {
@@ -250,14 +250,14 @@ class Brand
     public function setHidePrices($hidePrices)
     {
         $this->hidePrices = $hidePrices;
-    
+
         return $this;
     }
 
     /**
      * Get hidePrices
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHidePrices()
     {
@@ -273,14 +273,14 @@ class Brand
     public function setShowPricesOutOfHours($showPricesOutOfHours)
     {
         $this->showPricesOutOfHours = $showPricesOutOfHours;
-    
+
         return $this;
     }
 
     /**
      * Get showPricesOutOfHours
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getShowPricesOutOfHours()
     {
@@ -296,14 +296,14 @@ class Brand
     public function setMembershipCardDiscountAvailable($membershipCardDiscountAvailable)
     {
         $this->membershipCardDiscountAvailable = $membershipCardDiscountAvailable;
-    
+
         return $this;
     }
 
     /**
      * Get membershipCardDiscountAvailable
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getMembershipCardDiscountAvailable()
     {
@@ -319,14 +319,14 @@ class Brand
     public function setMaximumMembershipCardDiscount($maximumMembershipCardDiscount)
     {
         $this->maximumMembershipCardDiscount = $maximumMembershipCardDiscount;
-    
+
         return $this;
     }
 
     /**
      * Get maximumMembershipCardDiscount
      *
-     * @return float 
+     * @return float
      */
     public function getMaximumMembershipCardDiscount()
     {
@@ -342,14 +342,14 @@ class Brand
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -365,41 +365,18 @@ class Brand
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set the description
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $description
-     * @return Brand
-     */
-    public function setDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $description)
-    {
-        $this->description = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Brand\Description
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -411,7 +388,7 @@ class Brand
     public function addDepartment(\WebIllumination\SiteBundle\Entity\BrandToDepartment $departments)
     {
         $this->departments[] = $departments;
-    
+
         return $this;
     }
 
@@ -428,7 +405,7 @@ class Brand
     /**
      * Get departments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDepartments()
     {
@@ -436,25 +413,35 @@ class Brand
     }
 
     /**
-     * Add description
+     * Add descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $description
+     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
      * @return Brand
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $description)
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
     {
-        $this->description[] = $description;
+        $this->descriptions[] = $descriptions;
     
         return $this;
     }
 
     /**
-     * Remove description
+     * Remove descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $description
+     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $description)
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
     {
-        $this->description->removeElement($description);
+        $this->descriptions->removeElement($descriptions);
+    }
+
+    /**
+     * Get descriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
     }
 }

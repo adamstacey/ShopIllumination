@@ -32,7 +32,7 @@
     		<div class="portlet">
 				<header>
 					<button id="filter-button" class="button ui-button-blue fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-s">Filter Results</button>
-	                <h2 id="listing-count"><img src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />Loading&hellip;</h2>
+	                <h2 id="listing-count">Found {{ pagination.totalCount is defined ? pagination.totalCount : 0 }} Products</h2>
 	            </header>
                 <section class="no-padding">
                     <form id="form-filter" class="form has-validation" method="GET">

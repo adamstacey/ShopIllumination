@@ -48,7 +48,7 @@ class ProductToDepartment
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,7 +68,7 @@ class ProductToDepartment
     /**
      * Get displayOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisplayOrder()
     {
@@ -88,7 +88,7 @@ class ProductToDepartment
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreatedAt()
     {
@@ -108,7 +108,7 @@ class ProductToDepartment
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdatedAt()
     {
@@ -124,14 +124,14 @@ class ProductToDepartment
     public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
     {
         $this->product = $product;
-    
+
         return $this;
     }
 
     /**
      * Get product
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product 
+     * @return \WebIllumination\SiteBundle\Entity\Product
      */
     public function getProduct()
     {
@@ -147,14 +147,14 @@ class ProductToDepartment
     public function setDepartment(\WebIllumination\SiteBundle\Entity\Department $department = null)
     {
         $this->department = $department;
-    
+
         return $this;
     }
 
     /**
      * Get department
      *
-     * @return \WebIllumination\SiteBundle\Entity\Department 
+     * @return \WebIllumination\SiteBundle\Entity\Department
      */
     public function getDepartment()
     {
