@@ -1,12 +1,13 @@
 # Enable multistage extension
 set :stages, ["staging", "production"]
 set :default_stage, "staging"
-set :stage_dir,     "app/config"
+set :stage_dir,     "app/config/deploy"
 require 'capistrano/ext/multistage'
 
 # Main deployment configuration
 set :keep_releases,  5
 ssh_options[:forward_agent] = true
+#set :deploy_via, :remote_cache
 
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]
@@ -30,7 +31,7 @@ set :model_manager, "doctrine"
 
 # Hooks
 after "deploy:update_code", "deploy:chown_directories"
-after "deploy", "deploy:flush_apc"
+after "deploy:update_code", "deploy:flush_apc"
 after "deploy", "deploy:cleanup"
 
 namespace :deploy do
@@ -44,7 +45,7 @@ namespace :deploy do
         absolute_link = latest_release + "/" + link
       end
 
-      try_sudo "chown apache:apache #{absolute_link}"
+      try_sudo "chown apache:apache -R #{absolute_link}"
     end
     capifony_puts_ok
   end
@@ -54,6 +55,12 @@ namespace :deploy do
     run "#{try_sudo} php -r 'apc_clear_cache() ? exit( 0 ) : exit( -1 );'"
     capifony_puts_ok
   end
+  desc "Gracefully restart Apache"
+  task :flush_apc do
+    capifony_pretty_print "--> Restart apache"
+    run "#{try_sudo} apachectl graceful"
+    capifony_puts_ok
+  end
 end
 
-logger.level = Logger::MAX_LEVEL
+#logger.level = Logger::MAX_LEVEL
