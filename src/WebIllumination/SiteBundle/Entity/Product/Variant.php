@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="products")
+ * @ORM\Table(name="product_variants")
  * @ORM\HasLifecycleCallbacks()
  */
 class Variant
@@ -19,12 +19,12 @@ class Variant
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="description")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="variants")
      */
     private $product;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="variant")
      */
     private $description;
 
@@ -42,12 +42,12 @@ class Variant
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Price", mappedBy="product", cascade={"all"})
      */
     private $prices;
-    
+
     /**
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status;
-    
+
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
      */
@@ -87,17 +87,17 @@ class Variant
      * @ORM\Column(name="weight", type="decimal", precision=12, scale=2)
      */
     private $weight;
-    
+
     /**
      * @ORM\Column(name="length", type="decimal", precision=12, scale=2)
      */
     private $length;
- 	
- 	/**
+
+    /**
      * @ORM\Column(name="width", type="decimal", precision=12, scale=2)
      */
     private $width;
-    
+
     /**
      * @ORM\Column(name="height", type="decimal", precision=12, scale=2)
      */
@@ -123,11 +123,11 @@ class Variant
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -143,14 +143,14 @@ class Variant
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -166,14 +166,14 @@ class Variant
     public function setProductCode($productCode)
     {
         $this->productCode = $productCode;
-    
+
         return $this;
     }
 
     /**
      * Get productCode
      *
-     * @return string 
+     * @return string
      */
     public function getProductCode()
     {
@@ -189,14 +189,14 @@ class Variant
     public function setAlternativeProductCodes($alternativeProductCodes)
     {
         $this->alternativeProductCodes = $alternativeProductCodes;
-    
+
         return $this;
     }
 
     /**
      * Get alternativeProductCodes
      *
-     * @return string 
+     * @return string
      */
     public function getAlternativeProductCodes()
     {
@@ -212,14 +212,14 @@ class Variant
     public function setMpn($mpn)
     {
         $this->mpn = $mpn;
-    
+
         return $this;
     }
 
     /**
      * Get mpn
      *
-     * @return string 
+     * @return string
      */
     public function getMpn()
     {
@@ -235,14 +235,14 @@ class Variant
     public function setEan($ean)
     {
         $this->ean = $ean;
-    
+
         return $this;
     }
 
     /**
      * Get ean
      *
-     * @return string 
+     * @return string
      */
     public function getEan()
     {
@@ -258,14 +258,14 @@ class Variant
     public function setUpc($upc)
     {
         $this->upc = $upc;
-    
+
         return $this;
     }
 
     /**
      * Get upc
      *
-     * @return string 
+     * @return string
      */
     public function getUpc()
     {
@@ -281,14 +281,14 @@ class Variant
     public function setJan($jan)
     {
         $this->jan = $jan;
-    
+
         return $this;
     }
 
     /**
      * Get jan
      *
-     * @return string 
+     * @return string
      */
     public function getJan()
     {
@@ -304,14 +304,14 @@ class Variant
     public function setIsbn($isbn)
     {
         $this->isbn = $isbn;
-    
+
         return $this;
     }
 
     /**
      * Get isbn
      *
-     * @return string 
+     * @return string
      */
     public function getIsbn()
     {
@@ -327,14 +327,14 @@ class Variant
     public function setWeight($weight)
     {
         $this->weight = $weight;
-    
+
         return $this;
     }
 
     /**
      * Get weight
      *
-     * @return float 
+     * @return float
      */
     public function getWeight()
     {
@@ -350,14 +350,14 @@ class Variant
     public function setLength($length)
     {
         $this->length = $length;
-    
+
         return $this;
     }
 
     /**
      * Get length
      *
-     * @return float 
+     * @return float
      */
     public function getLength()
     {
@@ -373,14 +373,14 @@ class Variant
     public function setWidth($width)
     {
         $this->width = $width;
-    
+
         return $this;
     }
 
     /**
      * Get width
      *
-     * @return float 
+     * @return float
      */
     public function getWidth()
     {
@@ -396,14 +396,14 @@ class Variant
     public function setHeight($height)
     {
         $this->height = $height;
-    
+
         return $this;
     }
 
     /**
      * Get height
      *
-     * @return float 
+     * @return float
      */
     public function getHeight()
     {
@@ -419,14 +419,14 @@ class Variant
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -442,14 +442,14 @@ class Variant
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -465,14 +465,14 @@ class Variant
     public function setDescription(\WebIllumination\SiteBundle\Entity\Product\Description $description = null)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product\Description 
+     * @return \WebIllumination\SiteBundle\Entity\Product\Description
      */
     public function getDescription()
     {
@@ -488,7 +488,7 @@ class Variant
     public function addOption(\WebIllumination\SiteBundle\Entity\ProductToOption $options)
     {
         $this->options[] = $options;
-    
+
         return $this;
     }
 
@@ -505,7 +505,7 @@ class Variant
     /**
      * Get options
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOptions()
     {
@@ -521,7 +521,7 @@ class Variant
     public function addFeature(\WebIllumination\SiteBundle\Entity\ProductToFeature $features)
     {
         $this->features[] = $features;
-    
+
         return $this;
     }
 
@@ -538,7 +538,7 @@ class Variant
     /**
      * Get features
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFeatures()
     {
@@ -554,7 +554,7 @@ class Variant
     public function addPrice(\WebIllumination\SiteBundle\Entity\Product\Price $prices)
     {
         $this->prices[] = $prices;
-    
+
         return $this;
     }
 
@@ -571,7 +571,7 @@ class Variant
     /**
      * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPrices()
     {
@@ -587,14 +587,14 @@ class Variant
     public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
     {
         $this->product = $product;
-    
+
         return $this;
     }
 
     /**
      * Get product
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product 
+     * @return \WebIllumination\SiteBundle\Entity\Product
      */
     public function getProduct()
     {

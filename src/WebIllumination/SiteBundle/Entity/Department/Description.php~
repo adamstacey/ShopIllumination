@@ -19,7 +19,7 @@ class Description
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="descriptions")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="descriptions")
      */
     private $department;
         

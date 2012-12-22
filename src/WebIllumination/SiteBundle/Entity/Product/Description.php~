@@ -22,6 +22,11 @@ class Description
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="descriptions")
      */
     private $product;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="descriptions")
+     */
+    private $variant;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)

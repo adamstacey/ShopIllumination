@@ -24,7 +24,7 @@ class BrandToDepartment
     private $brand;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="brands")
      */
     private $department;
             
