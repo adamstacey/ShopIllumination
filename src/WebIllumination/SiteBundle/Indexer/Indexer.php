@@ -10,9 +10,15 @@ abstract class Indexer implements IndexerInterface
      */
     private $solarium;
 
-    function __construct(\Solarium_Client $solarium)
+    /**
+     * @var Registry $doctrine
+     */
+    private $doctrine;
+
+    function __construct(\Solarium_Client $solarium, Registry $doctrine)
     {
         $this->solarium = $solarium;
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -21,5 +27,13 @@ abstract class Indexer implements IndexerInterface
     public function getSolarium()
     {
         return $this->solarium;
+    }
+
+    /**
+     * @return \Doctrine\Bundle\DoctrineBundle\Registry
+     */
+    public function getDoctrine()
+    {
+        return $this->doctrine;
     }
 }

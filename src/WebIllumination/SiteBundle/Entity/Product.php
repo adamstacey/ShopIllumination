@@ -46,95 +46,95 @@ class Product
     /**
      * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
      */
-    private $price;
+    private $price = 0;
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
      */
-    private $status;
+    private $status = 'd';
 
     /**
      * @ORM\Column(name="checked", type="boolean")
      */
-    private $checked;
+    private $checked = false;
 
     /**
      * @ORM\Column(name="available_for_purchase", type="boolean")
      */
-    private $availableForPurchase;
+    private $availableForPurchase = false;
 
     /**
      * @ORM\Column(name="feature_comparison", type="boolean")
      */
-    private $featureComparison;
+    private $featureComparison = false;
 
     /**
      * @ORM\Column(name="downloadable", type="boolean")
      */
-    private $downloadable;
+    private $downloadable = false;
 
     /**
      * @ORM\Column(name="special_offer", type="boolean")
      */
-    private $specialOffer;
+    private $specialOffer = false;
 
     /**
      * @ORM\Column(name="recommended", type="boolean")
      */
-    private $recommended;
+    private $recommended = false;
 
     /**
      * @ORM\Column(name="accessory", type="boolean")
      */
-    private $accessory;
+    private $accessory = false;
 
     /**
      * @ORM\Column(name="new", type="boolean")
      */
-    private $new;
+    private $new = false;
 
     /**
      * @ORM\Column(name="sample_request", type="boolean")
      */
-    private $sampleRequest;
+    private $sampleRequest = false;
 
     /**
      * @ORM\Column(name="hide_price", type="boolean")
      */
-    private $hidePrice;
+    private $hidePrice = false;
 
     /**
      * @ORM\Column(name="show_price_out_of_hours", type="boolean")
      */
-    private $showPriceOutOfHours;
+    private $showPriceOutOfHours = false;
 
     /**
      * @ORM\Column(name="membership_card_discount_available", type="boolean")
      */
-    private $membershipCardDiscountAvailable;
+    private $membershipCardDiscountAvailable = false;
 
     /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4, nullable=true)
      */
-    private $maximumMembershipCardDiscount;
+    private $maximumMembershipCardDiscount = 0;
 
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
-    private $deliveryBand;
+    private $deliveryBand = 1;
 
     /**
-     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4, nullable=true)
      */
-    private $inheritedDeliveryBand;
+    private $inheritedDeliveryBand = null;
 
     /**
      * @ORM\Column(name="delivery_cost", type="decimal", precision=12, scale=4)
      */
-    private $deliveryCost;
+    private $deliveryCost = 0;
 
     /**
-     * @ORM\Column(name="last_checked", type="datetime")
+     * @ORM\Column(name="last_checked", type="datetime", nullable=true)
      */
     private $lastChecked;
 
@@ -149,6 +149,8 @@ class Product
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    private $featureGroups;
 
     /**
      * Get statusColour
@@ -173,8 +175,22 @@ class Product
      */
     public function __construct()
     {
+        $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->featureGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->links = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -810,5 +826,27 @@ class Product
     public function getDescriptions()
     {
         return $this->descriptions;
+    }
+
+    public function getFeatureGroups()
+    {
+        return $this->featureGroups;
+    }
+
+    public function setFeatureGroups($featureGroup)
+    {
+        $this->featureGroups = $featureGroup;
+    }
+
+    public function addFeatureGroup(\WebIllumination\SiteBundle\Entity\ProductToFeature $featureGroup)
+    {
+        $this->featureGroups[] = $featureGroup;
+
+        return $this;
+    }
+
+    public function removeFeatureGroup(\WebIllumination\SiteBundle\Entity\ProductToFeature $featureGroup)
+    {
+        $this->featureGroups->removeElement($featureGroup);
     }
 }

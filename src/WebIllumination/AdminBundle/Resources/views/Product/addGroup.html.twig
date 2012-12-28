@@ -1,0 +1,71 @@
+{# Forms #}
+{% form_theme form _self %}
+{% block _admin_new_product_group_departments_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form) }}
+    </td>
+    <td class="ac" width="70">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+    <td class="ac" width="20">
+        <img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+    </td>
+{% endblock %}
+{% block _admin_new_product_group_featureGroups_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form) }}
+    </td>
+    <td class="ac" width="70">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+    <td class="ac" width="20">
+        <img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+    </td>
+{% endblock %}
+{% block _admin_new_product_group_variants_entry_widget %}
+    <td class="ac padding-top-5 padding-bottom-5" width="50">
+        {{ form_widget(form.active) }}
+    </td>
+    <td class="ac padding-top-5 padding-bottom-5" width="175">
+        {{ form_widget(form.productCode) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5">
+        <ul>
+            {% for feature in form.get('value').features %}
+                <li>{{ feature }}</li>
+            {% endfor %}
+        </ul>
+    </td>
+{% endblock %}
+
+{% extends '::admin.html.twig' %}
+{% block title %}Add New Product | {{ parent() }}{% endblock %}
+{% block headerscripts %}
+    {{ parent() }}
+    {% javascripts '@WebIlluminationAdminBundle/Resources/public/js/tinymce/jquery.tinymce.js' output='js/tinymce.js' filter='yui_js' %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block leftmenu %}
+    {{ parent() }}
+    {% include 'WebIlluminationAdminBundle:Product:leftStepMenu.html.twig' %}
+{% endblock %}
+{% block header %}
+    {{ parent() }}
+    <h2>Add New Product</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+        <div class="grid_6">
+            {% if flow.getCurrentStep() == 1 %}
+                {% include 'WebIlluminationAdminBundle:Product:addGroup_Step1.html.twig' %}
+            {% elseif flow.getCurrentStep() == 2 %}
+                {% include 'WebIlluminationAdminBundle:Product:addGroup_Step2.html.twig' %}
+            {% elseif flow.getCurrentStep() == 3 %}
+                {% include 'WebIlluminationAdminBundle:Product:addGroup_Step3.html.twig' %}
+            {% endif %}
+            {% block form_step %}{% endblock %}
+        </div>
+        <div class="clear"></div>
+    </section>
+{% endblock %}

@@ -116,6 +116,16 @@ class Brand
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
+    }
+
     /**
      * Get id
      *

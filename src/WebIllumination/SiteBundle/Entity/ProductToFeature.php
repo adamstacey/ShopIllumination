@@ -21,23 +21,29 @@ class ProductToFeature
     /**
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    private $active = true;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="features")
-     **/
-    private $product;
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="features")
+     */
+    private $variant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
-     * @ORM\JoinColumn(name="product_feature_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\FeatureGroup")
+     * @ORM\JoinColumn(name="product_feature_group_id", referencedColumnName="id")
      **/
     private $productFeature;
+
+    /**ProductToFeature
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
+     * @ORM\JoinColumn(name="default_product_feature_id", referencedColumnName="id")
+     **/
+    private $defaultFeature;
         
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -50,6 +56,11 @@ class ProductToFeature
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    public function __toString()
+    {
+        return $this->getDefaultFeature()->__toString();
+    }
 
     /**
      * Get id
@@ -64,17 +75,20 @@ class ProductToFeature
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
+     * @return ProductToFeature
      */
     public function setActive($active)
     {
         $this->active = $active;
+    
+        return $this;
     }
 
     /**
      * Get active
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getActive()
     {
@@ -82,73 +96,16 @@ class ProductToFeature
     }
 
     /**
-     * Set productId
-     *
-     * @param integer $productId
-     */
-    public function setProductId($productId)
-    {
-        $this->productId = $productId;
-    }
-
-    /**
-     * Get productId
-     *
-     * @return integer 
-     */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
-
-    /**
-     * Set productFeatureGroupId
-     *
-     * @param integer $productFeatureGroupId
-     */
-    public function setProductFeatureGroupId($productFeatureGroupId)
-    {
-        $this->productFeatureGroupId = $productFeatureGroupId;
-    }
-
-    /**
-     * Get productFeatureGroupId
-     *
-     * @return integer 
-     */
-    public function getProductFeatureGroupId()
-    {
-        return $this->productFeatureGroupId;
-    }
-
-    /**
-     * Set productFeatureId
-     *
-     * @param integer $productFeatureId
-     */
-    public function setProductFeatureId($productFeatureId)
-    {
-        $this->productFeatureId = $productFeatureId;
-    }
-
-    /**
-     * Get productFeatureId
-     *
-     * @return integer 
-     */
-    public function getProductFeatureId()
-    {
-        return $this->productFeatureId;
-    }
-
-    /**
      * Set displayOrder
      *
      * @param integer $displayOrder
+     * @return ProductToFeature
      */
     public function setDisplayOrder($displayOrder)
     {
         $this->displayOrder = $displayOrder;
+    
+        return $this;
     }
 
     /**
@@ -164,17 +121,20 @@ class ProductToFeature
     /**
      * Set createdAt
      *
-     * @param datetime $createdAt
+     * @param \DateTime $createdAt
+     * @return ProductToFeature
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    
+        return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getCreatedAt()
     {
@@ -184,17 +144,20 @@ class ProductToFeature
     /**
      * Set updatedAt
      *
-     * @param datetime $updatedAt
+     * @param \DateTime $updatedAt
+     * @return ProductToFeature
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    
+        return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getUpdatedAt()
     {
@@ -202,35 +165,35 @@ class ProductToFeature
     }
 
     /**
-     * Set product
+     * Set variant
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
      * @return ProductToFeature
      */
-    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {
-        $this->product = $product;
+        $this->variant = $variant;
     
         return $this;
     }
 
     /**
-     * Get product
+     * Get variant
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product 
+     * @return \WebIllumination\SiteBundle\Entity\Product\Variant 
      */
-    public function getProduct()
+    public function getVariant()
     {
-        return $this->product;
+        return $this->variant;
     }
 
     /**
      * Set productFeature
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $productFeature
+     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature
      * @return ProductToFeature
      */
-    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $productFeature = null)
+    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature = null)
     {
         $this->productFeature = $productFeature;
     
@@ -240,10 +203,33 @@ class ProductToFeature
     /**
      * Get productFeature
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
+     * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
      */
     public function getProductFeature()
     {
         return $this->productFeature;
+    }
+
+    /**
+     * Set defaultFeature
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature
+     * @return ProductToFeature
+     */
+    public function setDefaultFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature = null)
+    {
+        $this->defaultFeature = $defaultFeature;
+    
+        return $this;
+    }
+
+    /**
+     * Get defaultFeature
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
+     */
+    public function getDefaultFeature()
+    {
+        return $this->defaultFeature;
     }
 }

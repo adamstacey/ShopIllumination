@@ -58,6 +58,10 @@ a {
 a:hover {
 	text-decoration: underline;
 }
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
 abbr, acronym {
 	font-size: 85%;
 	letter-spacing: 0.1em;

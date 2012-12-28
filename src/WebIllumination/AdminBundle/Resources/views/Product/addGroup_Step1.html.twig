@@ -1,0 +1,77 @@
+{% block form_step %}
+<div class="portlet">
+    <header>
+        <h2>Enter Product Details</h2>
+    </header>
+    <section>
+        <form class="form has-validation" id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+            {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+            <div class="clearfix">
+                {{ form_errors(form) }}
+            </div>
+            {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
+            <div class="clearfix">
+                {{ form_label(form.departments, 'Departments', {'help': 'Select a department of the products. <br />The first department will be the products main department and the product will inherit its information from this product.'}) }}
+                <div class="form-input">
+                    <table class="sortable" id="departments-list" width="100%" data-prototype="{{ form_widget(form.departments.vars.prototype) | e }}">
+                        {% for row in form.departments %}
+                            <tr>
+
+                                {{ form_widget(row) }}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <button type="button" id="add-department" class="fr small button icon-set-white ui-button-green add-row" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+            </div>
+
+            <h3>Status</h3>
+            {{ form_row(form.status, {'label': 'Status', 'help': ''}) }}
+            {{ form_row(form.availableForPurchase, {'label': 'Available for Purchase', 'help': 'Is the product available to purchase?'}) }}
+            {{ form_row(form.featureComparison, {'label': 'Feature Comparison', 'help': 'Include in feature comparison?'}) }}
+            {{ form_row(form.downloadable, {'label': 'Downloadable', 'help': 'Is the product a download?'}) }}
+            {{ form_row(form.specialOffer, {'label': 'Special Offer', 'help': 'Is the product a special offer?'}) }}
+            {{ form_row(form.recommended, {'label': 'Recommended', 'help': 'Do you want to recommend?'}) }}
+            {{ form_row(form.accessory, {'label': 'Accessory', 'help': 'Is the product an accessory?'}) }}
+            {{ form_row(form.new, {'label': 'New', 'help': 'Is the product new?'}) }}
+
+            <h3>Prices</h3>
+            {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': ''}) }}
+            {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': ''}) }}
+            {{ form_row(form.membershipCardDiscountAvailable, {'label': 'Membership Discount Available', 'help': ''}) }}
+            {{ form_row(form.maximumMembershipCardDiscount, {'label': 'Maximum Membership Discount', 'help': ''}) }}
+
+            {{ form_rest(form) }}
+            {% include 'WebIlluminationAdminBundle:Product:stepControls.html.twig' %}
+        </form>
+    </section>
+</div>
+<script type="text/javascript">
+    var count = '{{ form.featureGroups | length }}';
+
+    jQuery(document).ready(function() {
+        jQuery('.delete-row').live('click', function() {
+            $(this).parent().parent().remove();
+        });
+        jQuery('.add-row').click(function() {
+            var list = jQuery('#departments-list');
+
+            var newItem = list.attr('data-prototype');
+            newItem = newItem.replace(/__name__/g, count);
+            count++;
+
+            var newRow = jQuery('<tr></tr>').html(newItem);
+            newRow.appendTo(list);
+            $('select', newRow).uniform();
+            $('.button', newRow).button({
+                icons: {
+                    primary: 'ui-icon-circle-cross'
+                },
+                text: $(this).attr('data-icon-only') !== 'true'
+            });
+
+            return false;
+        });
+    })
+</script>
+{% endblock %}

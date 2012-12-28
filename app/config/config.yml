@@ -34,6 +34,9 @@ framework:
 twig:
     cache:                "%kernel.cache_dir%/twig"
     debug:                "%kernel.debug%"
+    form:
+        resources:
+            - 'WebIlluminationAdminBundle::fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -70,7 +73,8 @@ doctrine:
 stof_doctrine_extensions:
     default_locale: "%locale%"
     orm:
-        default: ~
+        default:
+          timestampable: true
 
 # Swiftmailer Configuration
 swiftmailer:

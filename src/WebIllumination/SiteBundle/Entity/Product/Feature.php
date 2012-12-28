@@ -56,6 +56,11 @@ class Feature
      */
     private $updatedAt;
 
+    public function __toString()
+    {
+        return "(".$this->getProductFeatureGroup().") ".$this->getProductFeature();
+    }
+
     /**
      * Get id
      *

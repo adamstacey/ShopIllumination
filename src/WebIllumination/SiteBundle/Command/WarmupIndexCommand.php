@@ -23,7 +23,7 @@ class WarmupIndexCommand extends ContainerAwareCommand
         // Load products
         $em = $this->getContainer()->get('doctrine')->getManager();
         $products = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findAll();
-        $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'));
+        $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
 
         //Clear product index
         $productIndexer->delete();

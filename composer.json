@@ -24,7 +24,8 @@
         "ezyang/htmlpurifier": "dev-master",
         "knplabs/knp-snappy-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
-        "nelmio/solarium-bundle": "1.*"
+        "nelmio/solarium-bundle": "1.*",
+        "craue/formflow-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
@@ -44,5 +45,11 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "http://github.com/dancannon/knp-components"
+        }
+    ]
 }

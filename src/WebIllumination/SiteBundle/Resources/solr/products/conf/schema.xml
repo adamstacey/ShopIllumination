@@ -16,10 +16,10 @@
  limitations under the License.
 -->
 
-<!--  
+<!--
  This is the Solr schema file. This file should be named "schema.xml" and
  should be in the conf directory under the solr home
- (i.e. ./solr/conf/schema.xml by default) 
+ (i.e. ./solr/conf/schema.xml by default)
  or located where the classloader for the Solr webapp can find it.
 
  This example schema is the recommended starting point for users.
@@ -386,20 +386,6 @@
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <!-- The TrimFilter removes any leading or trailing whitespace -->
                 <filter class="solr.TrimFilterFactory"/>
-                <!-- The PatternReplaceFilter gives you the flexibility to use
-                     Java Regular expression to replace any sequence of characters
-                     matching a pattern with an arbitrary replacement string,
-                     which may include back references to portions of the original
-                     string matched by the pattern.
-
-                     See the Java Regular Expression documentation for more
-                     information on pattern and replacement string syntax.
-
-                     http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/package-summary.html
-                  -->
-                <filter class="solr.PatternReplaceFilterFactory"
-                        pattern="([^a-z])" replacement="" replace="all"
-                        />
             </analyzer>
         </fieldType>
 
@@ -437,8 +423,11 @@
         </fieldType>
 
         <fieldType name="text_path" class="solr.TextField" positionIncrementGap="100">
-            <analyzer>
-                <tokenizer class="solr.PathHierarchyTokenizerFactory"/>
+            <analyzer type="index">
+                <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="|" />
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.KeywordTokenizerFactory" />
             </analyzer>
         </fieldType>
 
@@ -487,41 +476,45 @@
         <field name="url" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="thumbnail_path" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="large_image_path" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="image_paths" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="image_paths" type="string" indexed="true" stored="true" multiValued="true"/>
 
         <field name="status" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="locale" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="tagline" type="text_general" indexed="true" stored="true" multiValued="false"/>
         <field name="header" type="text_general" indexed="true" stored="true" multiValued="false"/>
-        <field name="page_title" type="text_general" indexed="true" stored="true" multiValued="false"/>
+        <field name="page_title" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="additional_product_colours" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="additional_products" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="short_description" type="text_en" indexed="true" stored="true" multiValued="false"/>
         <field name="product_code" type="text_ws" indexed="true" stored="true" multiValued="true"/>
         <field name="search_words" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="variants_count" type="int" indexed="true" stored="true" multiValued="false"/>
 
-        <field name="brand" type="text_general" indexed="true" stored="true" multiValued="false"/>
-        <field name="brand_logo" type="text_general" indexed="false" stored="true" multiValued="false"/>
-        <field name="department" type="text_general" indexed="true" stored="true" multiValued="false"/>
+        <field name="brand" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="brand_logo" type="string" indexed="false" stored="true" multiValued="false"/>
+        <field name="department" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="department_path" type="text_path" indexed="true" stored="true" multiValued="true"/>
 
         <field name="options" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="features" type="text_general" indexed="true" stored="true" multiValued="true"/>
 
         <field name="available_for_purchase" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="hide_price" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="show_price_out_of_hours" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="membership_discount_available" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="membership_maximum_discount" type="float" indexed="true" stored="true" multiValued="false"/>
+        <field name="feature_comparison" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="download" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="special_offer" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="recommended" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="accessory" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="new" type="boolean" indexed="true" stored="true" multiValued="false"/>
-        <field name="hide_price" type="boolean" indexed="true" stored="true" multiValued="false"/>
-        <field name="show_price_out_of_hours" type="boolean" indexed="true" stored="true" multiValued="false"/>
-
-        <field name="membership_discount_available" type="boolean" indexed="true" stored="true" multiValued="false"/>
-        <field name="membership_maximum_discount" type="float" indexed="true" stored="true" multiValued="false"/>
 
         <field name="delivery_cost" type="float" indexed="false" stored="true" multiValued="false"/>
         <field name="weight" type="float" indexed="false" stored="true" multiValued="false"/>
         <field name="height" type="float" indexed="true" stored="true" multiValued="false"/>
 
+        <field name="price" type="float" indexed="true" stored="true" multiValued="false"/>
         <field name="cost_price" type="currency" indexed="true" stored="true" multiValued="false"/>
         <field name="rrp" type="currency" indexed="true" stored="true" multiValued="false"/>
         <field name="list_price" type="currency" indexed="true" stored="true" multiValued="false"/>
@@ -530,12 +523,17 @@
         <field name="updated_at" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="indexed_at" type="date" indexed="true" stored="true" multiValued="false" default="NOW"/>
 
+        <field name="_version_" type="long" indexed="true"  stored="true"/>
+
 
         <!-- catchall field, containing all other searchable text fields (implemented
              via copyField further on in this schema  -->
         <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
 
         <field name="spelling" type="textSpell" indexed="true" stored="false" multiValued="true"/>
+
+        <!-- Sortable fields -->
+        <field name="header_sort" type="alphaOnlySort" indexed="true" stored="false" multiValued="false"/>
     </fields>
 
     <!-- Field to use to determine and enforce document uniqueness.
@@ -562,4 +560,5 @@
     <copyField source="features" dest="spelling"/>
     <copyField source="options" dest="spelling"/>
 
+    <copyField source="header" dest="header_sort"/>
 </schema>

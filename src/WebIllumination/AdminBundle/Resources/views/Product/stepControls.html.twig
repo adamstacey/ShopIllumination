@@ -1,0 +1,17 @@
+<div class="clearfix">
+    {% set renderBackButton = flow.getCurrentStep() in (flow.getFirstStep() + 1) .. flow.getLastStep() %}
+    <div class="form-input buttons form-flow-buttons no-margin-bottom">
+        <button type="submit" class="button ui-button-green">
+            {%- if flow.getCurrentStep() < flow.getLastStep() -%}
+                Next Step
+            {%- else -%}
+                Finish
+            {%- endif -%}
+        </button>
+        {% if renderBackButton %}
+            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" formnovalidate="formnovalidate" class="button ui-button-black">
+                Back
+            </button>
+        {% endif %}
+    </div>
+</div>

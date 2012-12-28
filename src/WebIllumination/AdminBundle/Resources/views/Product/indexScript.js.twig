@@ -5,25 +5,25 @@
 	var $listingPaginationLoaded = false;
 	var $ignoreFilterChange = false;
 	
-	{# Setup the brand list #}
-	var brands = [
-		{% for brand in data.brands %}
-			{
-				value: "{{ brand.id }}",
-				label: "{{ brand.brand }}"
-			}{% if not loop.last %},{% endif %}
-		{% endfor %}
-	];
-	
-	{# Setup the department list #}
-	var departments = [
-		{% for department in data.departments %}
-			{
-				value: "{{ department.id }}",
-				label: "{{ department.name }}"
-			}{% if not loop.last %},{% endif %}
-		{% endfor %}
-	];
+	{#&#123;&#35; Setup the brand list &#35;&#125;#}
+	{#var brands = [#}
+		{#{% for brand in data.brands %}#}
+			{#{#}
+				{#value: "{{ brand.id }}",#}
+				{#label: "{{ brand.brand }}"#}
+			{#}{% if not loop.last %},{% endif %}#}
+		{#{% endfor %}#}
+	{#];#}
+	{##}
+	{#&#123;&#35; Setup the department list &#35;&#125;#}
+	{#var departments = [#}
+		{#{% for department in data.departments %}#}
+			{#{#}
+				{#value: "{{ department.id }}",#}
+				{#label: "{{ department.name }}"#}
+			{#}{% if not loop.last %},{% endif %}#}
+		{#{% endfor %}#}
+	{#];#}
 	
 	{% include 'WebIlluminationAdminBundle:Product:indexFunctions.js.twig' with {'data': data} %}
 	
@@ -34,7 +34,7 @@
 		{# ###### #}
 				
 		{# Show/Hide filter sections #}
-		$(".action-show-hide-filter-section").live('click', function() {
+		$(".action-show-hide-filter-section").live('click', function(e) {
 			var $filterSection = $("#filter-section-"+$(this).attr("data-filter-section"));
 			var $filterSectionButton = $(this).find("span.ui-button-icon-primary");
 			if ($filterSection.is(":hidden"))
@@ -45,6 +45,8 @@
 				$filterSection.slideUp();
 				$filterSectionButton.removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
 			}
+
+            e.preventDefault();
 		});
 		
 		{# Sliders #}
@@ -65,13 +67,6 @@
 					$fromObject.val(ui.values[0]);
 					$toObject.val(ui.values[1]);
 				},
-				change: function(event, ui) {
-					if (!$ignoreFilterChange)
-					{
-						$("#listing-current-page").val('1');
-						loadResults();
-					}
-				}
 			});
 		});
 		$(".from-value, .to-value").live('keyup', function() {
@@ -82,85 +77,73 @@
 		});
 		
 		{# Searches #}		
-		$("#filter-brand-search").autocomplete({
-			source: brands,
-			select: function(event, ui) {
-				$("#brand-"+ui.item.value).click();
-				$("#brand-"+ui.item.value).attr("checked", "checked");
-				$("#uniform-brand-"+ui.item.value+" span").addClass("checked");
-				$("#filter-brands").animate({scrollTop: ($("#filter-brands").scrollTop() + ($("#uniform-brand-"+ui.item.value).position().top - 60))}, 'slow');
-				$("#filter-brand-search").val("");
-				return false;
-			}
-		});
-		$("#filter-department-search").autocomplete({
-			source: departments,
-			select: function(event, ui) {
-				$("#department-"+ui.item.value).click();
-				$("#department-"+ui.item.value).attr("checked", "checked");
-				$("#uniform-department-"+ui.item.value+" span").addClass("checked");
-				$("#filter-departments").animate({scrollTop: ($("#filter-departments").scrollTop() + ($("#uniform-department-"+ui.item.value).position().top - 60))}, 'slow');
-				$("#filter-department-search").val("");
-				return false;
-			}
-		});
-		
-		{# Quick search #}
-		$(".action-quick-search").live('click', function() {
-			quickSearch();
-		});
-		$("#form-quick-search").live('keypress', function(event) {
-			var $keyCode = event.keyCode || event.which;
-			if ($keyCode == 13)
-			{
-				quickSearch();
-			}
-		});
-		
-		{# Clear the filters #}
-		$(".action-clear-filters").live('click', function() {
-			resetFilters();
-			loadResults();
-		});
-		
-		{# Update the filter #}
-		$("#listing-filter .filter-checkbox input[type='checkbox']").live('click change', function() {
-			var $field = $(this).attr("data-field");
-			var $valuesToCollect = $("#listing-filter .filter-checkbox input[data-field='"+$field+"']:checked").length;
-			var $valuesCollected = 0;
-			var $values = new Array();
-			$("#listing-filter .filter-checkbox input[data-field='"+$field+"']:checked").each(function(index) {
-				$values[$values.length] = $(this).val();
-				$valuesCollected = $valuesCollected + 1;
-				if ($valuesCollected == $valuesToCollect)
-				{
-					$("#"+$field).val($values.join("|"));
-					if (!$ignoreFilterChange)
-					{
-						loadResults();
-					}
-				}
-			});
-			if ($valuesToCollect == 0)
-			{
-				$("#"+$field).val("");
-				if (!$ignoreFilterChange)
-				{
-					loadResults();
-				}
-			}
-		});
-		$(".action-update-results").live('click', function() {
-			loadResults();
-		});
-		$("#listing-filter input").live('keypress', function(event) {
-			var $keyCode = event.keyCode || event.which;
-			if ($keyCode == 13)
-			{
-				$("#listing-current-page").val('1');
-				loadResults();
-			}
-		});
+		{#$("#filter-brand-search").autocomplete({#}
+			{#source: brands,#}
+			{#select: function(event, ui) {#}
+				{#$("#brand-"+ui.item.value).click();#}
+				{#$("#brand-"+ui.item.value).attr("checked", "checked");#}
+				{#$("#uniform-brand-"+ui.item.value+" span").addClass("checked");#}
+				{#$("#filter-brands").animate({scrollTop: ($("#filter-brands").scrollTop() + ($("#uniform-brand-"+ui.item.value).position().top - 60))}, 'slow');#}
+				{#$("#filter-brand-search").val("");#}
+				{#return false;#}
+			{#}#}
+		{#});#}
+		{#$("#filter-department-search").autocomplete({#}
+			{#source: departments,#}
+			{#select: function(event, ui) {#}
+				{#$("#department-"+ui.item.value).click();#}
+				{#$("#department-"+ui.item.value).attr("checked", "checked");#}
+				{#$("#uniform-department-"+ui.item.value+" span").addClass("checked");#}
+				{#$("#filter-departments").animate({scrollTop: ($("#filter-departments").scrollTop() + ($("#uniform-department-"+ui.item.value).position().top - 60))}, 'slow');#}
+				{#$("#filter-department-search").val("");#}
+				{#return false;#}
+			{#}#}
+		{#});#}
+		{##}
+		{#&#123;&#35; Clear the filters &#35;&#125;#}
+		{#$(".action-clear-filters").live('click', function() {#}
+			{#resetFilters();#}
+			{#loadResults();#}
+		{#});#}
+		{##}
+		{#&#123;&#35; Update the filter &#35;&#125;#}
+		{#$("#listing-filter .filter-checkbox input[type='checkbox']").live('click change', function() {#}
+			{#var $field = $(this).attr("data-field");#}
+			{#var $valuesToCollect = $("#listing-filter .filter-checkbox input[data-field='"+$field+"']:checked").length;#}
+			{#var $valuesCollected = 0;#}
+			{#var $values = new Array();#}
+			{#$("#listing-filter .filter-checkbox input[data-field='"+$field+"']:checked").each(function(index) {#}
+				{#$values[$values.length] = $(this).val();#}
+				{#$valuesCollected = $valuesCollected + 1;#}
+				{#if ($valuesCollected == $valuesToCollect)#}
+				{#{#}
+					{#$("#"+$field).val($values.join("|"));#}
+					{#if (!$ignoreFilterChange)#}
+					{#{#}
+						{#loadResults();#}
+					{#}#}
+				{#}#}
+			{#});#}
+			{#if ($valuesToCollect == 0)#}
+			{#{#}
+				{#$("#"+$field).val("");#}
+				{#if (!$ignoreFilterChange)#}
+				{#{#}
+					{#loadResults();#}
+				{#}#}
+			{#}#}
+		{#});#}
+		{#$(".action-update-results").live('click', function() {#}
+			{#loadResults();#}
+		{#});#}
+		{#$("#listing-filter input").live('keypress', function(event) {#}
+			{#var $keyCode = event.keyCode || event.which;#}
+			{#if ($keyCode == 13)#}
+			{#{#}
+				{#$("#listing-current-page").val('1');#}
+				{#loadResults();#}
+			{#}#}
+		{#});#}
 		
 		{# ######## #}
 		{# LISTINGS #}
@@ -168,20 +151,7 @@
 		
 		{# Update sort order or max results #}
 		$("#listing-sort-order, #listing-max-results").live('change', function() {
-			if (!$ignoreFilterChange)
-			{	
-				$("#listing-current-page").val('1');
-				loadResults();
-			}
-		});
-		
-		{# Change the page number #}
-		$(".page, .page-navigation").live('click', function() {
-			if (!$ignoreFilterChange)
-			{
-				$("#listing-current-page").val($(this).attr("data-page"));
-				loadResults();
-			}
+			$(this).parents('form')[0].submit();
 		});
 		
 		{# ###### #}
@@ -214,12 +184,12 @@
         });
         
         {# Change status #}
-		$(".listing-status").live('change', function() {
-			var $id = $(this).attr("data-id");
-			$("#listing-select-"+$id).attr("checked", "checked");
-			$("#listing-select-"+$id).parent().addClass("checked");
-			$("tr#item-"+$id).addClass("selected");
-		});
+//		$(".listing-status").live('change', function() {
+//			var $id = $(this).attr("data-id");
+//			$("#listing-select-"+$id).attr("checked", "checked");
+//			$("#listing-select-"+$id).parent().addClass("checked");
+//			$("tr#item-"+$id).addClass("selected");
+//		});
 		
 		{# ###### #}
 		{# UPDATE #}
@@ -388,12 +358,5 @@
 			$("tr.item button").removeClass("ui-button-blue");
 			$.mask.close();
 		});
-		
-		{# #### #}
-		{# LOAD #}
-		{# #### #}
-		
-		$("#listing-current-page").val('1');
-		loadResults();
 	});
 </script>

@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Nelmio\SolariumBundle\NelmioSolariumBundle(),
+            new Craue\FormFlowBundle\CraueFormFlowBundle(),
 //            new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
 //            new WebIllumination\ShopBundle\WebIlluminationShopBundle(),
             new WebIllumination\SiteBundle\WebIlluminationSiteBundle(),

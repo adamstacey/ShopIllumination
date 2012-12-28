@@ -116,6 +116,16 @@ class Brand
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
+    }
+
     /**
      * Get id
      *
@@ -410,5 +420,38 @@ class Brand
     public function getDepartments()
     {
         return $this->departments;
+    }
+
+    /**
+     * Add descriptions
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
+     * @return Brand
+     */
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
+    {
+        $this->descriptions[] = $descriptions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove descriptions
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
+     */
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
+    {
+        $this->descriptions->removeElement($descriptions);
+    }
+
+    /**
+     * Get descriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
     }
 }

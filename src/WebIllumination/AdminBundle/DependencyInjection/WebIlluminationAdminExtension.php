@@ -4,6 +4,7 @@ namespace WebIllumination\AdminBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Definition;
@@ -20,10 +21,17 @@ class WebIlluminationAdminExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $processor = new Processor();
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $config = $processor->processConfiguration($configuration, $configs);
+		
+		// Load services
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.yml');
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        // Load twig extensions
+        $definition = new Definition('WebIllumination\AdminBundle\Extensions\TwigExtensions');
+        $definition->addTag('twig.extension');
+        $container->setDefinition('twig_extensions', $definition);
     }
 }

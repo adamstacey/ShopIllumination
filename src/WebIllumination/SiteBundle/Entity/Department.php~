@@ -6,7 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @Gedmo\Tree(type="nested")
+ * @ORM\Entity(repositoryClass="Gedmo\Tree\Entity\Repository\NestedTreeRepository")
  * @ORM\Table(name="departments")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -20,14 +21,41 @@ class Department
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department", mappedBy="parent", cascade={"remove"})
-     **/
-    private $children;
+     * @Gedmo\TreeLeft
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $lft;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="children")
-     **/
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer")
+     */
+    private $lvl;
+
+    /**
+     * @Gedmo\TreeRight
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $rgt;
+
+    /**
+     * @Gedmo\TreeRoot
+     * @ORM\Column(name="root", type="integer", nullable=true)
+     */
+    private $root;
+
+    /**
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="Department", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+     */
     private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Department", mappedBy="parent")
+     * @ORM\OrderBy({"lft" = "ASC"})
+     */
+    private $children;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
@@ -124,443 +152,31 @@ class Department
     	}
         return '';
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
+
+    public function __toString()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
     }
 
-    /**
-     * Set status
-     *
-     * @param string $status
-     * @return Department
-     */
-    public function setStatus($status)
+    public function getIndentedString()
     {
-        $this->status = $status;
-    
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string 
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Set departmentPath
-     *
-     * @param string $departmentPath
-     * @return Department
-     */
-    public function setDepartmentPath($departmentPath)
-    {
-        $this->departmentPath = $departmentPath;
-    
-        return $this;
-    }
-
-    /**
-     * Get departmentPath
-     *
-     * @return string 
-     */
-    public function getDepartmentPath()
-    {
-        return $this->departmentPath;
-    }
-
-    /**
-     * Set hidePrices
-     *
-     * @param boolean $hidePrices
-     * @return Department
-     */
-    public function setHidePrices($hidePrices)
-    {
-        $this->hidePrices = $hidePrices;
-    
-        return $this;
-    }
-
-    /**
-     * Get hidePrices
-     *
-     * @return boolean 
-     */
-    public function getHidePrices()
-    {
-        return $this->hidePrices;
-    }
-
-    /**
-     * Set showPricesOutOfHours
-     *
-     * @param boolean $showPricesOutOfHours
-     * @return Department
-     */
-    public function setShowPricesOutOfHours($showPricesOutOfHours)
-    {
-        $this->showPricesOutOfHours = $showPricesOutOfHours;
-    
-        return $this;
-    }
-
-    /**
-     * Get showPricesOutOfHours
-     *
-     * @return boolean 
-     */
-    public function getShowPricesOutOfHours()
-    {
-        return $this->showPricesOutOfHours;
-    }
-
-    /**
-     * Set membershipCardDiscountAvailable
-     *
-     * @param boolean $membershipCardDiscountAvailable
-     * @return Department
-     */
-    public function setMembershipCardDiscountAvailable($membershipCardDiscountAvailable)
-    {
-        $this->membershipCardDiscountAvailable = $membershipCardDiscountAvailable;
-    
-        return $this;
-    }
-
-    /**
-     * Get membershipCardDiscountAvailable
-     *
-     * @return boolean 
-     */
-    public function getMembershipCardDiscountAvailable()
-    {
-        return $this->membershipCardDiscountAvailable;
-    }
-
-    /**
-     * Set maximumMembershipCardDiscount
-     *
-     * @param float $maximumMembershipCardDiscount
-     * @return Department
-     */
-    public function setMaximumMembershipCardDiscount($maximumMembershipCardDiscount)
-    {
-        $this->maximumMembershipCardDiscount = $maximumMembershipCardDiscount;
-    
-        return $this;
-    }
-
-    /**
-     * Get maximumMembershipCardDiscount
-     *
-     * @return float 
-     */
-    public function getMaximumMembershipCardDiscount()
-    {
-        return $this->maximumMembershipCardDiscount;
-    }
-
-    /**
-     * Set deliveryBand
-     *
-     * @param float $deliveryBand
-     * @return Department
-     */
-    public function setDeliveryBand($deliveryBand)
-    {
-        $this->deliveryBand = $deliveryBand;
-    
-        return $this;
-    }
-
-    /**
-     * Get deliveryBand
-     *
-     * @return float 
-     */
-    public function getDeliveryBand()
-    {
-        return $this->deliveryBand;
-    }
-
-    /**
-     * Set inheritedDeliveryBand
-     *
-     * @param float $inheritedDeliveryBand
-     * @return Department
-     */
-    public function setInheritedDeliveryBand($inheritedDeliveryBand)
-    {
-        $this->inheritedDeliveryBand = $inheritedDeliveryBand;
-    
-        return $this;
-    }
-
-    /**
-     * Get inheritedDeliveryBand
-     *
-     * @return float 
-     */
-    public function getInheritedDeliveryBand()
-    {
-        return $this->inheritedDeliveryBand;
-    }
-
-    /**
-     * Set checkDeliveryBand
-     *
-     * @param boolean $checkDeliveryBand
-     * @return Department
-     */
-    public function setCheckDeliveryBand($checkDeliveryBand)
-    {
-        $this->checkDeliveryBand = $checkDeliveryBand;
-    
-        return $this;
-    }
-
-    /**
-     * Get checkDeliveryBand
-     *
-     * @return boolean 
-     */
-    public function getCheckDeliveryBand()
-    {
-        return $this->checkDeliveryBand;
-    }
-
-    /**
-     * Set displayOrder
-     *
-     * @param integer $displayOrder
-     * @return Department
-     */
-    public function setDisplayOrder($displayOrder)
-    {
-        $this->displayOrder = $displayOrder;
-    
-        return $this;
-    }
-
-    /**
-     * Get displayOrder
-     *
-     * @return integer 
-     */
-    public function getDisplayOrder()
-    {
-        return $this->displayOrder;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Department
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Department
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Add children
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Department $children
-     * @return Department
-     */
-    public function addChildren(\WebIllumination\SiteBundle\Entity\Department $children)
-    {
-        $this->children[] = $children;
-    
-        return $this;
-    }
-
-    /**
-     * Remove children
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Department $children
-     */
-    public function removeChildren(\WebIllumination\SiteBundle\Entity\Department $children)
-    {
-        $this->children->removeElement($children);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Department $parent
-     * @return Department
-     */
-    public function setParent(\WebIllumination\SiteBundle\Entity\Department $parent = null)
-    {
-        $this->parent = $parent;
-    
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Department 
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * Set description
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Department\Description $description
-     * @return Department
-     */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Department\Description $description)
-    {
-        $this->descriptions = $description;
-    
-        return $this;
-    }
-
-    /**
-     * Add features
-     *
-     * @param \WebIllumination\SiteBundle\Entity\DepartmentToFeature $features
-     * @return Department
-     */
-    public function addFeature(\WebIllumination\SiteBundle\Entity\DepartmentToFeature $features)
-    {
-        $this->features[] = $features;
-    
-        return $this;
-    }
-
-    /**
-     * Remove features
-     *
-     * @param \WebIllumination\SiteBundle\Entity\DepartmentToFeature $features
-     */
-    public function removeFeature(\WebIllumination\SiteBundle\Entity\DepartmentToFeature $features)
-    {
-        $this->features->removeElement($features);
-    }
-
-    /**
-     * Get features
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getFeatures()
-    {
-        return $this->features;
-    }
-
-    /**
-     * Set brands
-     *
-     * @param \WebIllumination\SiteBundle\Entity\BrandToDepartment $brands
-     * @return Department
-     */
-    public function setBrands(\WebIllumination\SiteBundle\Entity\BrandToDepartment $brands = null)
-    {
-        $this->brands = $brands;
-    
-        return $this;
-    }
-
-    /**
-     * Get brands
-     *
-     * @return \WebIllumination\SiteBundle\Entity\BrandToDepartment 
-     */
-    public function getBrands()
-    {
-        return $this->brands;
-    }
-
-    /**
-     * Remove descriptions
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Department\Description $descriptions
-     */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Department\Description $descriptions)
-    {
-        $this->descriptions->removeElement($descriptions);
-    }
-
-    /**
-     * Get descriptions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDescriptions()
-    {
-        return $this->descriptions;
+        if(count($this->descriptions) > 0)
+        {
+            $indent = "";
+            if($this->getLevel() > 0) {
+                for($i=1; $i<=$this->getLevel();$i++)
+                {
+                    $indent .= "&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                }
+            }
+            return $indent.$this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
     }
 }

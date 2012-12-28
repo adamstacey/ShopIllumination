@@ -61,6 +61,11 @@ class FeatureGroup
     {
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    public function __toString()
+    {
+        return $this->getProductFeatureGroup();
+    }
     
     /**
      * Get id

@@ -5,7 +5,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="WebIllumination\SiteBundle\Repository\OrderRepository")
  * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks()
  */

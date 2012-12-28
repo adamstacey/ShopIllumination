@@ -1,5 +1,5 @@
 # Enable multistage extension
-set :stages, ["staging", "production"]
+set :stages, ["dev", "staging", "production"]
 set :default_stage, "staging"
 set :stage_dir,     "app/config/deploy"
 require 'capistrano/ext/multistage'

@@ -45,6 +45,11 @@ class ProductToDepartment
      */
     private $updatedAt;
 
+    public function __toString()
+    {
+        return $this->getDepartment()->__toString();
+    }
+
     /**
      * Get id
      *

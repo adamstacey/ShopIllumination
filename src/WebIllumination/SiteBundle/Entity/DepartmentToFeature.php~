@@ -29,10 +29,16 @@ class DepartmentToFeature
     private $department;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
-     * @ORM\JoinColumn(name="product_feature_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\FeatureGroup")
+     * @ORM\JoinColumn(name="product_feature_group_id", referencedColumnName="id")
      **/
     private $productFeature;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
+     * @ORM\JoinColumn(name="default_product_feature_id", referencedColumnName="id")
+     **/
+    private $defaultFeature;
         
     /**
      * @ORM\Column(name="display_on_filter", type="boolean")
@@ -66,6 +72,16 @@ class DepartmentToFeature
      */
     private $updatedAt;
 
+    public function __toString()
+    {
+        if($this->getProductFeature())
+        {
+            return $this->getProductFeature()->__toString();
+        } else {
+            return " -- ";
+        }
+    }
+
     /**
      * Get id
      *
@@ -79,17 +95,20 @@ class DepartmentToFeature
     /**
      * Set active
      *
-     * @param integer $active
+     * @param boolean $active
+     * @return DepartmentToFeature
      */
     public function setActive($active)
     {
         $this->active = $active;
+    
+        return $this;
     }
 
     /**
      * Get active
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getActive()
     {
@@ -97,79 +116,22 @@ class DepartmentToFeature
     }
 
     /**
-     * Set departmentId
-     *
-     * @param integer $departmentId
-     */
-    public function setDepartmentId($departmentId)
-    {
-        $this->departmentId = $departmentId;
-    }
-
-    /**
-     * Get departmentId
-     *
-     * @return integer 
-     */
-    public function getDepartmentId()
-    {
-        return $this->departmentId;
-    }
-
-    /**
-     * Set productFeatureGroupId
-     *
-     * @param integer $productFeatureGroupId
-     */
-    public function setProductFeatureGroupId($productFeatureGroupId)
-    {
-        $this->productFeatureGroupId = $productFeatureGroupId;
-    }
-
-    /**
-     * Get productFeatureGroupId
-     *
-     * @return integer 
-     */
-    public function getProductFeatureGroupId()
-    {
-        return $this->productFeatureGroupId;
-    }
-
-    /**
-     * Set defaultProductFeatureId
-     *
-     * @param integer $defaultProductFeatureId
-     */
-    public function setDefaultProductFeatureId($defaultProductFeatureId)
-    {
-        $this->defaultProductFeatureId = $defaultProductFeatureId;
-    }
-
-    /**
-     * Get defaultProductFeatureId
-     *
-     * @return integer 
-     */
-    public function getDefaultProductFeatureId()
-    {
-        return $this->defaultProductFeatureId;
-    }
-
-    /**
      * Set displayOnFilter
      *
-     * @param integer $displayOnFilter
+     * @param boolean $displayOnFilter
+     * @return DepartmentToFeature
      */
     public function setDisplayOnFilter($displayOnFilter)
     {
         $this->displayOnFilter = $displayOnFilter;
+    
+        return $this;
     }
 
     /**
      * Get displayOnFilter
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getDisplayOnFilter()
     {
@@ -179,17 +141,20 @@ class DepartmentToFeature
     /**
      * Set displayOnListing
      *
-     * @param integer $displayOnListing
+     * @param boolean $displayOnListing
+     * @return DepartmentToFeature
      */
     public function setDisplayOnListing($displayOnListing)
     {
         $this->displayOnListing = $displayOnListing;
+    
+        return $this;
     }
 
     /**
      * Get displayOnListing
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getDisplayOnListing()
     {
@@ -199,17 +164,20 @@ class DepartmentToFeature
     /**
      * Set displayOnProduct
      *
-     * @param integer $displayOnProduct
+     * @param boolean $displayOnProduct
+     * @return DepartmentToFeature
      */
     public function setDisplayOnProduct($displayOnProduct)
     {
         $this->displayOnProduct = $displayOnProduct;
+    
+        return $this;
     }
 
     /**
      * Get displayOnProduct
      *
-     * @return integer 
+     * @return boolean 
      */
     public function getDisplayOnProduct()
     {
@@ -220,10 +188,13 @@ class DepartmentToFeature
      * Set displayOrder
      *
      * @param integer $displayOrder
+     * @return DepartmentToFeature
      */
     public function setDisplayOrder($displayOrder)
     {
         $this->displayOrder = $displayOrder;
+    
+        return $this;
     }
 
     /**
@@ -239,17 +210,20 @@ class DepartmentToFeature
     /**
      * Set createdAt
      *
-     * @param datetime $createdAt
+     * @param \DateTime $createdAt
+     * @return DepartmentToFeature
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    
+        return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getCreatedAt()
     {
@@ -259,17 +233,20 @@ class DepartmentToFeature
     /**
      * Set updatedAt
      *
-     * @param datetime $updatedAt
+     * @param \DateTime $updatedAt
+     * @return DepartmentToFeature
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    
+        return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getUpdatedAt()
     {
@@ -302,10 +279,10 @@ class DepartmentToFeature
     /**
      * Set productFeature
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $productFeature
+     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature
      * @return DepartmentToFeature
      */
-    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $productFeature = null)
+    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature = null)
     {
         $this->productFeature = $productFeature;
     
@@ -315,10 +292,33 @@ class DepartmentToFeature
     /**
      * Get productFeature
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
+     * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
      */
     public function getProductFeature()
     {
         return $this->productFeature;
+    }
+
+    /**
+     * Set defaultFeature
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature
+     * @return DepartmentToFeature
+     */
+    public function setDefaultFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature = null)
+    {
+        $this->defaultFeature = $defaultFeature;
+    
+        return $this;
+    }
+
+    /**
+     * Get defaultFeature
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
+     */
+    public function getDefaultFeature()
+    {
+        return $this->defaultFeature;
     }
 }
