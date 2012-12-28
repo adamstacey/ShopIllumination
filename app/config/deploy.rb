@@ -7,7 +7,7 @@ require 'capistrano/ext/multistage'
 # Main deployment configuration
 set :keep_releases,  5
 ssh_options[:forward_agent] = true
-#set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
 
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]
@@ -30,7 +30,7 @@ set :dump_assetic_assets, true
 set :model_manager, "doctrine"
 
 # Hooks
-after "deploy:update_code", "deploy:chown_directories"
+# after "deploy:update_code", "deploy:chown_directories"
 after "deploy:update_code", "deploy:flush_apc"
 after "deploy", "deploy:cleanup"
 
