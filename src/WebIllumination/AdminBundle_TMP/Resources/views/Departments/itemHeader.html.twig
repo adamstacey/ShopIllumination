@@ -1,9 +1,0 @@
-{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':breadcrumbs.html.twig' with {'data': data} %}
-{% if data.mode == 'update' %}
-	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr icon-set-white button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
-	<h2>{{ data.item.name }}</h2>
-	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemToolbar.html.twig' with {'data': data} %}
-{% else %}
-	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.parentId}) }}" id="button-go-back" class="fr icon-set-white button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
-	<h2>Add a {{ data.settings.singleTitle }}</h2>
-{% endif %}
