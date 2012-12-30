@@ -24,6 +24,7 @@ class TwigExtensions extends \Twig_Extension
             'var_dump'  => new \Twig_Filter_Method($this, 'filter_var_dump'),
             'print_r'  => new \Twig_Filter_Method($this, 'filter_print_r'),
             'explode'  => new \Twig_Filter_Method($this, 'filter_explode'),
+            'osort'  => new \Twig_Filter_Method($this, 'filter_osort'),
         );
 
         return $filters;
@@ -59,6 +60,19 @@ class TwigExtensions extends \Twig_Extension
     public function filter_explode($string, $delim = ' ')
     {
         return explode($delim, $string);
+    }
+
+    public function filter_osort($object)
+    {
+        var_dump($object);die();
+        usort($object, function ($a, $b) {
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
+        });
+
+        return $object;
     }
 
 }

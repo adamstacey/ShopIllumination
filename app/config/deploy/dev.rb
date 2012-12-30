@@ -20,3 +20,17 @@ namespace :deploy do
     capifony_puts_ok
   end
 end
+
+task :include_app_dev do
+    capifony_pretty_print "--> Including app_dev.php"
+
+    origin_file = "web/app_dev.php"
+    destination_file = latest_release + "/web/app_dev.php"
+
+    try_sudo "mkdir -p #{File.dirname(destination_file)}"
+    top.upload(origin_file, destination_file)
+
+    capifony_puts_ok
+end
+
+after "deploy:update_code", "include_app_dev"

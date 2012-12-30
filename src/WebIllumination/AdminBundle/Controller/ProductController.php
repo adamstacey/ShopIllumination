@@ -27,6 +27,7 @@ class ProductController extends Controller
         $solarium = $this->get('solarium.client');
 
         $select = $solarium->createSelect();
+        $helper = $select->getHelper();
 
         $query = trim($request->query->get('q'));
         $searching = !empty($query);
@@ -37,18 +38,18 @@ class ProductController extends Controller
             $filters = $request->query->get('filter', array());
 
             // Filtering
-            $flags = array('status', 'available_for_purchase', 'hide_price', 'show_price_out_of_hours', 'membership_discount_available', 'feature_comparison', 'download', 'special_offer', 'recommended', 'accessory', 'new');
+            $flags = array('brand', 'department_path', 'status', 'available_for_purchase', 'hide_price', 'show_price_out_of_hours', 'membership_discount_available', 'feature_comparison', 'download', 'special_offer', 'recommended', 'accessory', 'new');
             foreach($flags as $flag)
             {
                 if(array_key_exists($flag, $filters))
                 {
                     $filter = $filters[$flag];
-                    array_walk($filter, function(&$item) use ($flag) {
+                    array_walk($filter, function(&$item) use ($flag, $helper) {
                         if(is_array($item) && count($item) == 2)
                         {
-                            $item = $flag.':'.$item[0].' TO '.$item[1];
+                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item[0]).' TO '.$helper->escapePhrase($item[1]);
                         } else {
-                            $item = $flag.':'.$item;
+                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
                         }
                     });
                     $select->createFilterQuery($flag)->setQuery(implode(' OR ', $filter));
@@ -56,7 +57,8 @@ class ProductController extends Controller
             }
             //Facets
             $facetSet = $select->getFacetSet();
-//            $facetSet->createFacetField('brands')->setField('brand');
+            $facetSet->createFacetField('brands')->setField('brand')->setMinCount(1)->setSort('index');
+            $facetSet->createFacetField('departments')->setField('department_path')->setMinCount(1)->setSort('index');
 
             // Sort results (If the user has entered a query they cannot sort)
             $sort = explode(':', $request->query->get('sort_order', 'header_sort:asc'));
@@ -64,7 +66,7 @@ class ProductController extends Controller
                 $sortCol = $sort[0];
                 $sortDir = ($sort[1] == 'asc') ? Solarium_Query_Select::SORT_ASC : Solarium_Query_Select::SORT_DESC;
 
-                $select->addSort($sortCol, $sortDir);
+                $select->addSort($helper->escapeTerm($sortCol), $sortDir);
             }
         } else {
             $query = $select->getHelper()->escapeTerm($query);

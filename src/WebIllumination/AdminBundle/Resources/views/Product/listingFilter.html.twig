@@ -132,39 +132,37 @@
     <div>
         <table width="100%">
             <tr>
-                {% set brandFacet = facets.facet('brand') %}
-                {#<td rowspan="2" class="label" width="10%"><label>Brand</label></td>#}
-                {#<td width="20%">#}
-                    {#<div class="position-relative">#}
-                        {#<input placeholder="Search for brand&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-brand-search" />#}
-                        {#<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>#}
-                    {#</div>#}
-                {#</td>#}
-                {#<td rowspan="2" class="label" width="10%"><label>Department</label></td>#}
-                {#<td width="60%">#}
-                    {#<div class="position-relative">#}
-                        {#<input placeholder="Search for department&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-department-search" />#}
-                        {#<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>#}
-                    {#</div>#}
-                {#</td>#}
+                <td rowspan="2" class="label" width="10%"><label>Brand</label></td>
+                <td width="20%">
+                    <div class="position-relative">
+                        <input placeholder="Search for brand&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-brand-search" />
+                        <span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+                    </div>
+                </td>
+                <td rowspan="2" class="label" width="10%"><label>Department</label></td>
+                <td width="60%">
+                    <div class="position-relative">
+                        <input placeholder="Search for department&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-department-search" />
+                        <span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+                    </div>
+                </td>
             </tr>
-            {#<tr>#}
-                {#<td width="20%">#}
-                    {#<div id="filter-brands" class="filter filter-scrollable ui-corner-all">#}
-                        {#<ul>#}
-                            {#{% for brand in data.brands %}#}
-                            {#<li class="filter-checkbox">#}
-                                {#<input{% for selectedBrand in filters.brand|explode("|") %}{% if selectedBrand == brand.id %} checked="checked"{% endif %} name="brand" type="checkbox" id="brand-{{ brand.id }}" value="{{ brand.id }}" />#}
-                                {#<label for="brand-{{ brand.id }}">{{ brand.brand }}</label>#}
-                                {#<div class="clear"></div>#}
-                            {#</li>#}
-                            {#{% endfor %}#}
-                        {#</ul>#}
-                        {#<input type="hidden" id="filter-brand" value="{{ filters.brand|default("") }}" />#}
-                    {#</div>#}
-                {#</td>#}
-                {#<td width="60%">#}
-                    {#<div id="filter-departments" class="filter filter-scrollable ui-corner-all">#}
+            <tr>
+                <td width="20%">
+                    <div id="filter-brands" class="filter filter-scrollable ui-corner-all">
+                        <ul>
+                            {% for brand, count in facets.facet('brands') %}
+                            <li class="filter-checkbox">
+                                <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}"  />
+                                <label for="filter-brand-{{ loop.index }}">{{ brand }} ({{ count }})</label>
+                                <div class="clear"></div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+                <td width="60%">
+                    <div id="filter-departments" class="filter filter-scrollable ui-corner-all">
                         {#<ul>#}
                             {#{% for department in data.departments %}#}
                             {#<li class="filter-checkbox">#}
@@ -174,10 +172,27 @@
                             {#</li>#}
                             {#{% endfor %}#}
                         {#</ul>#}
-                        {#<input type="hidden" id="filter-department" value="{{ filters.department|default("") }}" />#}
-                    {#</div>#}
-                {#</td>#}
-            {#</tr>#}
+                        <ul>
+                            {% for department, count in facets.facet('departments') %}
+                                <li class="filter-checkbox">
+                                    <input{% if department in app.request.get('filter[department_path]', null, true) %} checked="checked"{% endif %} name="filter[department_path][]" type="checkbox" value="{{ department }}" id="filter-department-{{ loop.index }}" />
+                                    <label for="filter-department-{{ loop.index }}">
+                                        {% set department_path = department|split('|') %}
+                                        {% if (department_path|length - 1) > 0 %}
+                                            {% for i in 1..((department_path|length) - 1) %}
+                                                {{ '&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' }}
+                                            {% endfor %}
+                                        {% endif %}
+                                        {{ department_path[(department_path|length)-1] }}
+                                        ({{ count }})
+                                    </label>
+                                    <div class="clear"></div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
         </table>
     </div>
     <div class="ac">

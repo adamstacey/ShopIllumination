@@ -422,12 +422,27 @@
             </analyzer>
         </fieldType>
 
-        <fieldType name="text_path" class="solr.TextField" positionIncrementGap="100">
-            <analyzer type="index">
+        <fieldType name="text_path" class="solr.TextField">
+            <analyzer>
                 <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="|" />
             </analyzer>
-            <analyzer type="query">
+        </fieldType>
+
+    <fieldType name="descendent_path" class="solr.TextField">
+        <analyzer type="index">
+            <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="|" />
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.KeywordTokenizerFactory" />
+        </analyzer>
+    </fieldType>
+
+        <fieldType name="ancestor_path" class="solr.TextField">
+            <analyzer type="index">
                 <tokenizer class="solr.KeywordTokenizerFactory" />
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.PathHierarchyTokenizerFactory" delimiter="|" />
             </analyzer>
         </fieldType>
 
@@ -493,7 +508,7 @@
         <field name="brand" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="brand_logo" type="string" indexed="false" stored="true" multiValued="false"/>
         <field name="department" type="string" indexed="true" stored="true" multiValued="true"/>
-        <field name="department_path" type="text_path" indexed="true" stored="true" multiValued="true"/>
+        <field name="department_path" type="descendent_path" indexed="true" stored="true" multiValued="true"/>
 
         <field name="options" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="features" type="text_general" indexed="true" stored="true" multiValued="true"/>
