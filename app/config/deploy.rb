@@ -12,6 +12,8 @@ set :deploy_via, :remote_cache
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]
 set :webserver_user,    "apache"
+set :web_user, "apache"
+set :web_group, "apache"
 set :permission_method, :chmod
 set :use_set_permissions, true
 set :use_sudo , false
@@ -45,7 +47,7 @@ namespace :deploy do
         absolute_link = latest_release + "/" + link
       end
 
-      try_sudo "chown apache:apache -R #{absolute_link}"
+      try_sudo "chown #{web_user}:#{web_group} -R #{absolute_link}"
     end
     capifony_puts_ok
   end
