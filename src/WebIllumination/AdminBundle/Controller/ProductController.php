@@ -57,8 +57,8 @@ class ProductController extends Controller
             }
             //Facets
             $facetSet = $select->getFacetSet();
-            $facetSet->createFacetField('brands')->setField('brand')->setMinCount(1)->setSort('index');
-            $facetSet->createFacetField('departments')->setField('department_path')->setMinCount(1)->setSort('index');
+            $facetSet->createFacetField('brands')->setField('brand')->setSort('index');
+            $facetSet->createFacetField('departments')->setField('department_path')->setSort('index');
 
             // Sort results (If the user has entered a query they cannot sort)
             $sort = explode(':', $request->query->get('sort_order', 'header_sort:asc'));

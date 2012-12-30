@@ -109,8 +109,7 @@ class ProductIndexer extends Indexer
         $update->addCommit();
         $this->getSolarium()->update($update);
         } catch(\Exception $e) {
-            \Doctrine\Common\Util\Debug::dump($e);die();
-//            echo "An error occured proccessing product ID " . $product->getId() . "\n";
+            echo "An error occured proccessing product ID " . $product->getId() . "\n";
         }
     }
 
