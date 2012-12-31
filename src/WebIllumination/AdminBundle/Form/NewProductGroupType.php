@@ -13,6 +13,14 @@ class NewProductGroupType extends AbstractType
     {
         switch ($options['flowStep']) {
             case 1:
+                $builder->add('type', 'choice', array(
+                    'choices' => array(
+                        's' => 'Single Product',
+                        'g' => 'Product Group',
+                    )
+                ));
+                break;
+            case 2:
                 $builder->add('brand', 'entity', array(
                     'class' => 'WebIllumination\SiteBundle\Entity\Brand',
                     'query_builder' => function(EntityRepository $er) {
@@ -41,7 +49,7 @@ class NewProductGroupType extends AbstractType
                 $builder->add('membershipCardDiscountAvailable', null, array('required' => false));
                 $builder->add('maximumMembershipCardDiscount', null, array('required' => false));
                 break;
-            case 2:
+            case 3:
                 $builder->add('featureGroups', 'collection', array(
                     'type' => new ProductFeatureType($options['department']),
                     'allow_add' => true,
@@ -49,7 +57,7 @@ class NewProductGroupType extends AbstractType
                 ));
 
                 break;
-            case 3:
+            case 4:
                 $builder->add('variants', 'collection', array(
                     'type' => new NewProductVariantType(),
                     'required'  => false,

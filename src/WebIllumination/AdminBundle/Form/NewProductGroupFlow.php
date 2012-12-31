@@ -13,19 +13,26 @@ use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class NewProductGroupFlow extends FormFlow
 {
-    protected $maxSteps = 3;
+    protected $maxSteps = 4;
     protected $allowDynamicStepNavigation = true;
 
     public function getFormOptions($formData, $step, array $options = array())
     {
         $options = parent::getFormOptions($formData, $step, $options);
 
-        if ($step > 1)
+        if($step > 1)
+        {
+            if($formData->getType() === 's')
+            {
+                $this->addSkipStep(array(3, 4));
+            }
+        }
+        if ($step > 2)
         {
             $options['departments'] = $formData->getDepartments();
             $options['department'] = (isset($options['departments']) && count($options['departments']) > 0) ? $options['departments'][0]->getDepartment()->getId() : null;
         }
-        if($step > 2)
+        if($step > 3)
         {
             set_time_limit(100);
             // Generate variations
@@ -82,6 +89,7 @@ class NewProductGroupFlow extends FormFlow
 
     protected function loadStepDescriptions() {
         return array(
+            'Choose Product Type',
             'Enter Product Details',
             'Choose Features',
             'Edit Product Variations',

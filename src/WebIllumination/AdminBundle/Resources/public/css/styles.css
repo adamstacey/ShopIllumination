@@ -501,7 +501,7 @@ div.quick-search
     position: relative;
     margin-bottom: 5px;
 }
-.main-section > nav ul li a {
+.main-section > nav ul li a, .main-section > nav ul li span {
     background-position: -4px center;
     background-repeat: no-repeat;
     color: #eee;
@@ -514,6 +514,10 @@ div.quick-search
     text-decoration: none;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.main-section > nav ul li a.step_skipped, .main-section > nav ul li span.step_skipped {
+    color: #2E2E2E;
+    text-shadow: 0 -1px 0 #2E2E2E;
 }
 .main-section > nav ul li a:hover {
     color: #fff;
@@ -543,7 +547,7 @@ div.quick-search
     position: relative;
     z-index: 10;
 }
-.main-section > nav.collapsed ul li a {
+.main-section > nav.collapsed ul li a, .main-section > nav.collapsed ul li span {
     height: 48px;
     padding-left: 0;
     text-indent: -9999em;

@@ -58,11 +58,13 @@
     <section class="container_6 clearfix">
         <div class="grid_6">
             {% if flow.getCurrentStep() == 1 %}
-                {% include 'WebIlluminationAdminBundle:Product:addGroup_Step1.html.twig' %}
+                {% include 'WebIlluminationAdminBundle:Product:add_Step1.html.twig' %}
             {% elseif flow.getCurrentStep() == 2 %}
-                {% include 'WebIlluminationAdminBundle:Product:addGroup_Step2.html.twig' %}
+                {% include 'WebIlluminationAdminBundle:Product:add_Step2.html.twig' %}
             {% elseif flow.getCurrentStep() == 3 %}
-                {% include 'WebIlluminationAdminBundle:Product:addGroup_Step3.html.twig' %}
+                {% include 'WebIlluminationAdminBundle:Product:add_Step3.html.twig' %}
+            {% elseif flow.getCurrentStep() == 4 %}
+                {% include 'WebIlluminationAdminBundle:Product:add_Step4.html.twig' %}
             {% endif %}
             {% block form_step %}{% endblock %}
         </div>

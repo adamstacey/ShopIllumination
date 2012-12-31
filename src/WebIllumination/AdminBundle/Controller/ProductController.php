@@ -13,6 +13,9 @@ use WebIllumination\SiteBundle\Entity\ProductToFeature;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Solarium_Query_Select;
 
+/**
+ * @Route("/products")
+ */
 class ProductController extends Controller
 {
     /**
@@ -102,44 +105,6 @@ class ProductController extends Controller
      * @Template()
      */
     public function addAction()
-    {
-        $product = new Product();
-        $product->addDepartment(new ProductToDepartment());
-        $product->addFeature(new ProductToFeature());
-
-        $flow = $this->get('web_illumination_admin.form.flow.new_product_group');
-        $flow->bind($product);
-
-        // form of the current step
-        $form = $flow->createForm($product);
-        if ($flow->isValid($form)) {
-            $flow->saveCurrentStepData();
-
-            if ($flow->nextStep()) {
-                // form for the next step
-                $form = $flow->createForm($product);
-            } else {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($product);
-                $em->flush();
-
-                $flow->reset();
-
-                return $this->redirect($this->generateUrl('admin_products'));
-            }
-        }
-
-        return array(
-            'form' => $form->createView(),
-            'flow' => $flow,
-        );
-    }
-
-    /**
-     * @Route("/add/group", name="admin_product_add_group")
-     * @Template()
-     */
-    public function addGroupAction()
     {
         $em = $this->getDoctrine()->getManager();
 

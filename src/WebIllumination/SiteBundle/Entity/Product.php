@@ -44,6 +44,12 @@ class Product
     private $variants;
 
     /**
+     * Product type ['s': Single product, 'g': Product group]
+     * @ORM\Column(name="type", type="string", length=1)
+     */
+    private $type;
+
+    /**
      * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
      */
     private $price = 0;
@@ -848,5 +854,15 @@ class Product
     public function removeFeatureGroup(\WebIllumination\SiteBundle\Entity\ProductToFeature $featureGroup)
     {
         $this->featureGroups->removeElement($featureGroup);
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }
