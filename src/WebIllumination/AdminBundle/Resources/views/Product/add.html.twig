@@ -1,28 +1,42 @@
 {# Forms #}
 {% form_theme form _self %}
-{% block _admin_new_product_group_departments_entry_widget %}
+{% block _admin_new_product_departments_entry_widget %}
     <td class="padding-top-5 padding-bottom-5">
         {{ form_widget(form) }}
     </td>
-    <td class="ac" width="70">
+{% endblock %}
+{% block _admin_new_product_descriptions_entry_widget %}
+    <td>
+        {{ form_widget(form.locale) }}
+    </td>
+    <td>
+        {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
+        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+    </td>
+    <td class="ac" width="65">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+{% endblock %}
+{% block _admin_new_product_featureGroups_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form) }}
+    </td>
+    <td class="ac" width="65">
         <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
     </td>
     <td class="ac" width="20">
         <img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
     </td>
 {% endblock %}
-{% block _admin_new_product_group_featureGroups_entry_widget %}
-    <td class="padding-top-5 padding-bottom-5">
+{% block _admin_new_product_features_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5" width="">
         {{ form_widget(form) }}
     </td>
-    <td class="ac" width="70">
-        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
-    </td>
-    <td class="ac" width="20">
-        <img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+    <td class="padding-top-5 padding-bottom-5 ac" width="200">
+        {{ form.get('value').productFeature }}
     </td>
 {% endblock %}
-{% block _admin_new_product_group_variants_entry_widget %}
+{% block _admin_new_product_variants_entry_widget %}
     <td class="ac padding-top-5 padding-bottom-5" width="50">
         {{ form_widget(form.active) }}
     </td>
@@ -55,7 +69,7 @@
     <h2>Add New Product</h2>
 {% endblock %}
 {% block body %}
-    <section class="container_6 clearfix">
+    <section class="container_6 clearfix add" id="add-product">
         <div class="grid_6">
             {% if flow.getCurrentStep() == 1 %}
                 {% include 'WebIlluminationAdminBundle:Product:add_Step1.html.twig' %}
@@ -65,8 +79,11 @@
                 {% include 'WebIlluminationAdminBundle:Product:add_Step3.html.twig' %}
             {% elseif flow.getCurrentStep() == 4 %}
                 {% include 'WebIlluminationAdminBundle:Product:add_Step4.html.twig' %}
+            {% elseif flow.getCurrentStep() == 5 %}
+                {% include 'WebIlluminationAdminBundle:Product:add_Step5.html.twig' %}
+            {% elseif flow.getCurrentStep() == 6 %}
+                {% include 'WebIlluminationAdminBundle:Product:add_Step6.html.twig' %}
             {% endif %}
-            {% block form_step %}{% endblock %}
         </div>
         <div class="clear"></div>
     </section>

@@ -4141,3 +4141,9 @@ table.no-padding, table.no-padding th, table.no-padding td
 {
     background-position: 0px -576px!important;
 }
+
+/* Products */
+#add-product #description-list textarea {
+    width: 100%;
+    resize: none;
+}

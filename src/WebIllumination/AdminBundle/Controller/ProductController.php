@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use WebIllumination\SiteBundle\Entity\Product;
+use WebIllumination\SiteBundle\Entity\Product\Description;
+use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
 use Craue\FormFlowBundle\Form\FormFlow;
 use WebIllumination\SiteBundle\Entity\ProductToFeature;
@@ -97,42 +99,69 @@ class ProductController extends Controller
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
 
-        return array('filters' => $filters, 'pagination' => $pagination, 'facets' => $facets, 'searching' => $searching);
+        return array('pagination' => $pagination, 'facets' => $facets, 'searching' => $searching);
     }
 
     /**
      * @Route("/add", name="admin_product_add")
      * @Template()
      */
-    public function addAction()
+    public function addAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = new Product();
-        $product->addDepartment(new ProductToDepartment());
-        $product->addFeatureGroup(new ProductToFeature());
+        $product = $this->getManager()->createProduct();
 
         /**
          * @var \Craue\FormFlowBundle\Form\FormFlow $flow
          */
-        $flow = $this->get('web_illumination_admin.form.flow.new_product_group');
+        $flow = $this->get('web_illumination_admin.form.flow.new_product');
         $flow->bind($product);
 
         // Get current form step
         $form = $flow->createForm($product);
+
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
 
-            if ($flow->nextStep()) {
-                // Get features
-                if($flow->getCurrentStep() == 2)
-                {
-
-                }
-
+            if ($flow->nextStep())
+            {
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
+                if($product->getType() === 's')
+                {
+                    // Finalize entity if it is a single product
+                    $variant = new Variant();
+                    $variant->setProductCode($product->getProductCode());
+                    foreach($product->getFeatureGroups() as $productToFeature)
+                    {
+                        $productToFeature->setVariant($variant);
+                        $variant->addFeature($productToFeature);
+                    }
+                    $variant->setProduct($product);
+                    $product->addVariant($variant);
+
+                    // Add all descriptions from product to variants
+                    foreach($product->getDescriptions() as $description)
+                    {
+                        $description->setProduct($product);
+                        $description->setVariant($variant);
+                        $variant->addDescription($description);
+                    }
+                } else {
+                    // Add all descriptions from product to variants
+                    foreach($product->getVariants() as $variant)
+                    {
+                        foreach($product->getDescriptions() as $description)
+                        {
+                            $description->setProduct($product);
+                            $description->setVariant($variant);
+                            $variant->addDescription($description);
+                        }
+                    }
+                }
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($product);
                 $em->flush();
@@ -177,5 +206,15 @@ class ProductController extends Controller
         );
 
         return array('filters' => $filters, 'settings' => $settings, 'pagination' => $paginator);
+    }
+
+    /**
+     * Fetch project manager from container
+     *
+     * @return \WebIllumination\SiteBundle\Manager\ProductManager
+     */
+    private function getManager()
+    {
+        return $this->get('web_illumination_site.manager.product');
     }
 }

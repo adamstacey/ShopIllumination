@@ -24,7 +24,7 @@ class Description
     private $brand;
 
 	/**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand")
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Image")
      * @ORM\JoinColumn(name="logo_image_id", referencedColumnName="id")
      */
     private $logoImage;
@@ -431,10 +431,10 @@ class Description
     /**
      * Set logoImage
      *
-     * @param \WebIllumination\SiteBundle\Entity\Brand $logoImage
+     * @param \WebIllumination\SiteBundle\Entity\Image $logoImage
      * @return Description
      */
-    public function setLogoImage(\WebIllumination\SiteBundle\Entity\Brand $logoImage = null)
+    public function setLogoImage(\WebIllumination\SiteBundle\Entity\Image $logoImage = null)
     {
         $this->logoImage = $logoImage;
     
@@ -444,7 +444,7 @@ class Description
     /**
      * Get logoImage
      *
-     * @return \WebIllumination\SiteBundle\Entity\Brand 
+     * @return \WebIllumination\SiteBundle\Entity\Image
      */
     public function getLogoImage()
     {

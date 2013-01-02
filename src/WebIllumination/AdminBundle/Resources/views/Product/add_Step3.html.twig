@@ -1,7 +1,7 @@
 {% block form_step %}
 <div class="portlet">
     <header>
-        <h2>Select Features</h2>
+        <h2>{{ flow.getCurrentStepDescription() }}</h2>
     </header>
     <section>
         <form class="form has-validation" id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
@@ -11,15 +11,24 @@
             </div>
             <div class="clearfix">
                 <div class="form-input" style="margin-left: 0;">
-                    <table class="sortable" id="feature-groups-list" width="100%" data-prototype="{{ form_widget(form.featureGroups.vars.prototype) | e }}">
-                        {% for row in form.featureGroups %}
+                    <table class="data-table sortable" id="feature-groups-list" width="100%" data-prototype="{{ form_widget(form.featureGroups.vars.prototype) | e }}">
+                        <thead>
                             <tr>
-                                {{ form_widget(row) }}
+                                <th>Feature</th>
+                                <th colspan="2"></th>
                             </tr>
-                        {% endfor %}
+                        </thead>
+                        <tbody>
+                            {% for row in form.featureGroups %}
+                                <tr>
+                                    {{ form_widget(row) }}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
-                <button type="button" id="add-row" class="fr small button icon-set-white ui-button-green add-row" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+                <button type="button" id="add-row" class="fr small button icon-set-white ui-button-green add-row margin-top-5" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+                {% do form.featureGroups.setRendered() %}
             </div>
 
             {{ form_rest(form) }}

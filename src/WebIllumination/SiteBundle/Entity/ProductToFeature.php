@@ -34,14 +34,14 @@ class ProductToFeature
      **/
     private $productFeature;
 
-    /**ProductToFeature
+    /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
-     * @ORM\JoinColumn(name="default_product_feature_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_feature_id", referencedColumnName="id")
      **/
     private $defaultFeature;
         
     /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
+     * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
      */
     private $displayOrder = 1;
 

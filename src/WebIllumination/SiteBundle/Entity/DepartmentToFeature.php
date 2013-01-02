@@ -36,7 +36,7 @@ class DepartmentToFeature
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
-     * @ORM\JoinColumn(name="default_product_feature_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="product_feature_id", referencedColumnName="id")
      **/
     private $defaultFeature;
         

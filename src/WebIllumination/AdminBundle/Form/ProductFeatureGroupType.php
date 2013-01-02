@@ -8,40 +8,41 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use WebIllumination\AdminBundle\Form\DataTransformer\FeatureGroupTransformer;
 
-class ProductFeatureType extends AbstractType
+class ProductFeatureGroupType extends AbstractType
 {
+    private $department;
+
+    public function __construct($department)
+    {
+        $this->department = $department;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('defaultFeature', 'entity', array(
+        $department = $this->department;
+
+        $builder->add('productFeature', 'entity', array(
             'required'  => false,
             'empty_value' => 'Select a feature to add.',
-            'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
-            'query_builder' => function(EntityRepository $er) use ($options) {
+            'class' => 'WebIllumination\SiteBundle\Entity\Product\FeatureGroup',
+            'query_builder' => function(EntityRepository $er) use ($department) {
                 $qb = $er->createQueryBuilder('f');
+                $qb2 = $er->createQueryBuilder('fg')
+                       ->from('WebIllumination\SiteBundle\Entity\DepartmentToFeature', 'df')
+                       ->andWhere($qb->expr()->eq('df.productFeature', 'fg.id'))
+                       ->andWhere($qb->expr()->eq('df.department', $department));
 
-                if($options['group'])
-                {
-                    $qb->add('where', $qb->expr()->eq('f.productFeatureGroup', $options['group']->getId()));
-                } else {
-                    $qb->add('where', $qb->expr()->eq('1', '0'));
-                }
+                $qb->add('where', $qb->expr()->exists($qb2->getDQL()));
 
-                $qb->orderBy('f.productFeature');
                 return $qb;
             },
         ));
-//        $builder->add('productFeature', 'hidden');
         $builder->add('displayOrder', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setRequired(array(
-           'group'
-        ));
-
         $resolver->setDefaults(array(
-            'group' => null,
             'data_class' => 'WebIllumination\SiteBundle\Entity\ProductToFeature'
         ));
     }

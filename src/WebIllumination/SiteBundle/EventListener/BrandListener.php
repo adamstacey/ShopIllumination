@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Listener;
+namespace WebIllumination\SiteBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use WebIllumination\SiteBundle\Indexer\Brandndexer;

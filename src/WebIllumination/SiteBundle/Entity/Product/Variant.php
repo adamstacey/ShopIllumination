@@ -614,6 +614,21 @@ class Variant
         return $this->descriptions;
     }
 
+    /**
+     * Get description
+     *
+     * @return Description
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
+    }
+
     public function getActive()
     {
         return $this->active;

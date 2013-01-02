@@ -31,7 +31,7 @@ class Description
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
@@ -39,12 +39,12 @@ class Description
     private $name;
 
     /**
-     * @ORM\Column(name="prefix", type="string", length=255)
+     * @ORM\Column(name="prefix", type="string", length=255, nullable=true)
      */
     private $prefix;
 
     /**
-     * @ORM\Column(name="tagline", type="string", length=255)
+     * @ORM\Column(name="tagline", type="string", length=255, nullable=true)
      */
     private $tagline;
 

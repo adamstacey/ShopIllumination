@@ -1,7 +1,7 @@
 {% block form_step %}
 <div class="portlet">
     <header>
-        <h2>Enter Product Details</h2>
+        <h2>{{ flow.getCurrentStepDescription() }}</h2>
     </header>
     <section>
         <form class="form has-validation" id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
@@ -9,24 +9,49 @@
             <div class="clearfix">
                 {{ form_errors(form) }}
             </div>
+            {% if form.productCode is defined %}
+                {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
+            {% endif %}
+
             {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
             <div class="clearfix">
                 {{ form_label(form.departments, 'Departments', {'help': 'Select a department of the products. <br />The first department will be the products main department and the product will inherit its information from this product.'}) }}
                 <div class="form-input">
-                    <table class="sortable" id="departments-list" width="100%" data-prototype="{{ form_widget(form.departments.vars.prototype) | e }}">
+                    <table class="sortable" id="departments-list" width="100%">
                         {% for row in form.departments %}
                             <tr>
-
                                 {{ form_widget(row) }}
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
-                <button type="button" id="add-department" class="fr small button icon-set-white ui-button-green add-row" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+                {% do form.departments.setRendered() %}
+            </div>
+
+            <h3>Descriptions</h3>
+            <div class="clearfix">
+                <table class="sortable data-table" id="description-list" width="100%" data-prototype="{{ form_widget(form.descriptions.vars.prototype) | e }}">
+                    <thead>
+                    <tr>
+                        <th width="100">Locale</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in form.descriptions %}
+                        <tr>
+                            {{ form_widget(row) }}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <button type="button" id="add-description" class="fr small button icon-set-white ui-button-green add-row margin-top-5" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+                {% do form.descriptions.setRendered() %}
             </div>
 
             <h3>Status</h3>
-            {{ form_row(form.status, {'label': 'Status', 'help': ''}) }}
+            {{ form_row(form.status, {'label': 'Status', 'help': 'Is the product available?'}) }}
             {{ form_row(form.availableForPurchase, {'label': 'Available for Purchase', 'help': 'Is the product available to purchase?'}) }}
             {{ form_row(form.featureComparison, {'label': 'Feature Comparison', 'help': 'Include in feature comparison?'}) }}
             {{ form_row(form.downloadable, {'label': 'Downloadable', 'help': 'Is the product a download?'}) }}
@@ -36,10 +61,10 @@
             {{ form_row(form.new, {'label': 'New', 'help': 'Is the product new?'}) }}
 
             <h3>Prices</h3>
-            {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': ''}) }}
-            {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': ''}) }}
-            {{ form_row(form.membershipCardDiscountAvailable, {'label': 'Membership Discount Available', 'help': ''}) }}
-            {{ form_row(form.maximumMembershipCardDiscount, {'label': 'Maximum Membership Discount', 'help': ''}) }}
+            {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': 'Hide price for this product?'}) }}
+            {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': 'Show price out of hours?'}) }}
+            {{ form_row(form.membershipCardDiscountAvailable, {'label': 'Membership Discount Available', 'help': 'Discount with membership card?'}) }}
+            {{ form_row(form.maximumMembershipCardDiscount, {'label': 'Maximum Membership Discount', 'help': 'Maximum membership discount'}) }}
 
             {{ form_rest(form) }}
             {% include 'WebIlluminationAdminBundle:Product:stepControls.html.twig' %}
@@ -53,8 +78,8 @@
         jQuery('.delete-row').live('click', function() {
             $(this).parent().parent().remove();
         });
-        jQuery('.add-row').click(function() {
-            var list = jQuery('#departments-list');
+        jQuery('#add-description').click(function() {
+            var list = jQuery("#description-list");
 
             var newItem = list.attr('data-prototype');
             newItem = newItem.replace(/__name__/g, count);
@@ -68,6 +93,22 @@
                     primary: 'ui-icon-circle-cross'
                 },
                 text: $(this).attr('data-icon-only') !== 'true'
+            });
+
+            $('textarea.tinymce-basic').tinymce({
+                script_url : '/bundles/webilluminationadmin/js/tinymce/tiny_mce.js',
+                theme : "advanced",
+                plugins : "contextmenu,paste,fullscreen,xhtmlxtras,spellchecker",
+                theme_advanced_buttons1 : "bold,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,outdent,indent,|,spellchecker",
+                theme_advanced_buttons2 : "",
+                theme_advanced_buttons3 : "",
+                theme_advanced_buttons4 : "",
+                theme_advanced_toolbar_location : "top",
+                theme_advanced_toolbar_align : "left",
+                theme_advanced_resizing : true,
+                theme_advanced_resize_horizontal : false,
+                theme_advanced_path : false,
+                content_css : "/bundles/webilluminationadmin/css/content.css"
             });
 
             return false;

@@ -1,0 +1,24 @@
+services:
+  # Managers
+  web_illumination_site.manager.product:
+    class: WebIllumination\SiteBundle\Manager\ProductManager
+    arguments: [@doctrine, @web_illumination_site.manager.seo]
+  web_illumination_site.manager.seo:
+    class: WebIllumination\SiteBundle\Manager\SeoManager
+    arguments: [@doctrine]
+
+  # Indexers
+  web_illumination_site.indexer.product:
+    class: WebIllumination\SiteBundle\Indexer\ProductIndexer
+    arguments: [@solarium.client.product, @doctrine]
+
+  # Listeners
+  web_illumination_site.listener.product:
+      class: WebIllumination\SiteBundle\EventListener\ProductListener
+      arguments: [@web_illumination_site.manager.product, @web_illumination_site.indexer.product]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: postRemove, method: postRemove}

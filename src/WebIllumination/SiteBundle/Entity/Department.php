@@ -593,6 +593,21 @@ class Department
     }
 
     /**
+     * Get description
+     *
+     * @return Department\Description
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Add features
      *
      * @param \WebIllumination\SiteBundle\Entity\DepartmentToFeature $features

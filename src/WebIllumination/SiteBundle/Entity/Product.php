@@ -24,22 +24,22 @@ class Product
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"persist", "remove"})
      */
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"persist", "remove"})
      */
     private $departments;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
      */
     private $links;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"persist", "remove"})
      */
     private $variants;
 
@@ -156,7 +156,8 @@ class Product
      */
     private $updatedAt;
 
-    private $featureGroups;
+    private $featureGroups = array();
+    private $productCode = '';
 
     /**
      * Get statusColour
@@ -182,7 +183,6 @@ class Product
     public function __construct()
     {
         $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->featureGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
@@ -726,6 +726,21 @@ class Product
     }
 
     /**
+     * Get description
+     *
+     * @return \WebIllumination\SiteBundle\Entity\ProductToDepartment
+     */
+    public function getDepartment()
+    {
+        if(count($this->departments) > 0)
+        {
+            return $this->departments[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Add links
      *
      * @param \WebIllumination\SiteBundle\Entity\Product\Link $links
@@ -834,26 +849,19 @@ class Product
         return $this->descriptions;
     }
 
-    public function getFeatureGroups()
+    /**
+     * Get description
+     *
+     * @return Product\Description
+     */
+    public function getDescription()
     {
-        return $this->featureGroups;
-    }
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
 
-    public function setFeatureGroups($featureGroup)
-    {
-        $this->featureGroups = $featureGroup;
-    }
-
-    public function addFeatureGroup(\WebIllumination\SiteBundle\Entity\ProductToFeature $featureGroup)
-    {
-        $this->featureGroups[] = $featureGroup;
-
-        return $this;
-    }
-
-    public function removeFeatureGroup(\WebIllumination\SiteBundle\Entity\ProductToFeature $featureGroup)
-    {
-        $this->featureGroups->removeElement($featureGroup);
+        return null;
     }
 
     public function getType()
@@ -864,5 +872,39 @@ class Product
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    public function getProductCode()
+    {
+        return $this->productCode;
+    }
+
+    public function setProductCode($productCode)
+    {
+        $this->productCode = $productCode;
+    }
+
+    public function getFeatureGroups()
+    {
+        return $this->featureGroups;
+    }
+
+    public function setFeatureGroups($featureGroups)
+    {
+        $this->featureGroups = $featureGroups;
+    }
+
+    public function addFeatureGroup($featureGroup)
+    {
+        $this->featureGroups[] = $featureGroup;
+    }
+
+    public function removeFeatureGroup($featureGroup)
+    {
+        $key = array_search($featureGroup, $this->featureGroups);
+        if($key)
+        {
+            unset($this->featureGroups[$key]);
+        }
     }
 }

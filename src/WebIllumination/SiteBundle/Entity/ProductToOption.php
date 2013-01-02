@@ -50,7 +50,7 @@ class ProductToOption
     private $priceUse;
         
     /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
+     * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
      */
     private $displayOrder;
 
