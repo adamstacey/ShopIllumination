@@ -78,7 +78,7 @@
                                             <a href="{{ path('admin_products_update', {'id': item.id}) }}" data-id="{{ item.id }}">{{ item.header }}</a>
                                             <br />
                                             <span class="small">
-                                                {{ item.department_path|reverse|join(' > ') }}
+                                                {{ item.department_path[0]|replace({'|': " > "}) }}
                                             </span>
                                         </td>
                                         <td class="ac small">{{ item.product_code[0] }}</td>
@@ -128,7 +128,7 @@
                         {{ pagination.render()|raw }}
                     </div>
                     <div class="clear"></div>
-                    {#{% include 'WebIlluminationAdminBundle:Product:listingToolbar.html.twig' with {'data': data} %}#}
+                    {% include 'WebIlluminationAdminBundle:Product:listingToolbar.html.twig' with {'data': data} %}
                 </section>
             </div>
         </div>
