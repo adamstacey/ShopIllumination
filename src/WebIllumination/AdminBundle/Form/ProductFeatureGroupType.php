@@ -26,13 +26,16 @@ class ProductFeatureGroupType extends AbstractType
             'empty_value' => 'Select a feature to add.',
             'class' => 'WebIllumination\SiteBundle\Entity\Product\FeatureGroup',
             'query_builder' => function(EntityRepository $er) use ($department) {
-                $qb = $er->createQueryBuilder('f');
-                $qb2 = $er->createQueryBuilder('fg')
-                       ->from('WebIllumination\SiteBundle\Entity\DepartmentToFeature', 'df')
-                       ->andWhere($qb->expr()->eq('df.productFeature', 'fg.id'))
-                       ->andWhere($qb->expr()->eq('df.department', $department));
+                $qb = $er->createQueryBuilder('fg');
+                $qb2 = $er->createQueryBuilder('fg2');
 
-                $qb->add('where', $qb->expr()->exists($qb2->getDQL()));
+                $qb->andWhere($qb->expr()->in('fg.id',
+                    $qb2->select('fg2.id')
+                        ->from('WebIllumination\SiteBundle\Entity\DepartmentToFeature', 'df')
+                        ->where($qb2->expr()->eq('df.department', $department))
+                        ->andWhere('df.productFeature = fg2')
+                        ->getDQL()
+                ));
 
                 return $qb;
             },

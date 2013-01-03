@@ -32,7 +32,7 @@ set :dump_assetic_assets, true
 set :model_manager, "doctrine"
 
 # Hooks
-# after "deploy:update_code", "deploy:chown_directories"
+after "deploy:update_code", "deploy:chown_directories"
 after "deploy:update_code", "deploy:flush_apc"
 after "deploy", "deploy:cleanup"
 

@@ -59,27 +59,27 @@ class Description
     private $shortDescription;
 
     /**
-     * @ORM\Column(name="page_title", type="string", length=255)
+     * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
      */
     private $pageTitle;
 
     /**
-     * @ORM\Column(name="header", type="string", length=255)
+     * @ORM\Column(name="header", type="string", length=255, nullable=true)
      */
     private $header;
 
     /**
-     * @ORM\Column(name="meta_description", type="text")
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
     private $metaDescription;
 
     /**
-     * @ORM\Column(name="meta_keywords", type="text")
+     * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      */
     private $metaKeywords;
 
     /**
-     * @ORM\Column(name="search_words", type="text")
+     * @ORM\Column(name="search_words", type="text", nullable=true)
      */
     private $searchWords;
 
