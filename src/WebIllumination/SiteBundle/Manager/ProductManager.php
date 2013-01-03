@@ -97,40 +97,57 @@ class ProductManager extends Manager
         }
     }
 
+    /**
+     * Add a blank image to the product. If the product already has an image then no image is added
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     */
     public function addBlankImage(Product $product)
     {
-        if(!$product->getDescription()) return;
+        $em = $this->doctrine->getManager();
 
-        $image = new Image();
-        $image->setLocale('en');
-        $image->setTitle($product->getDescription()->getHeader());
-        $image->setAlignment('');
-        $image->setDescription('');
-        $image->setLink('');
-        $image->setObjectType('product');
-        $image->setImageType('product');
-        $image->setObjectId($product->getId());
-        $image->setDisplayOrder(1);
-        $image->setOriginalPath('/uploads/images/product/product/no-image-large.jpg');
-        $image->setThumbnailPath('/uploads/images/product/product/no-image-thumbnail.jpg');
-        $image->setMediumPath('/uploads/images/product/product/no-image-medium.jpg');
-        $image->setLargePath('/uploads/images/product/product/no-image-large.jpg');
+        if($product->getDescription() || count($em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findAll()) === 0)
+        {
+            $image = new Image();
+            $image->setLocale('en');
+            $image->setTitle($product->getDescription()->getHeader());
+            $image->setAlignment('');
+            $image->setDescription('');
+            $image->setLink('');
+            $image->setObjectType('product');
+            $image->setImageType('product');
+            $image->setObjectId($product->getId());
+            $image->setDisplayOrder(1);
+            $image->setOriginalPath('/uploads/images/product/product/no-image-large.jpg');
+            $image->setThumbnailPath('/uploads/images/product/product/no-image-thumbnail.jpg');
+            $image->setMediumPath('/uploads/images/product/product/no-image-medium.jpg');
+            $image->setLargePath('/uploads/images/product/product/no-image-large.jpg');
 
-        $this->doctrine->getManager()->persist($image);
-        $this->doctrine->getManager()->flush();
+            $em->persist($image);
+            $em->flush();
+        }
     }
 
+    /**
+     * Add a new route to the routing table. If the URL already exists in the table it is not added
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     */
     public function addRoute(Product $product)
     {
+        $em = $this->doctrine->getManager();
         $url = $this->seoManager->createUrl($product->getDescription()->getPageTitle(), '');
 
-        $route = new Routing();
-        $route->setObjectId($product->getId());
-        $route->setObjectType('product');
-        $route->setLocale('en');
-        $route->setUrl($url);
+        if(count($em->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findBy(array('url' => $url))) === 0)
+        {
+            $route = new Routing();
+            $route->setObjectId($product->getId());
+            $route->setObjectType('product');
+            $route->setLocale('en');
+            $route->setUrl($url);
 
-        $this->doctrine->getManager()->persist($route);
-        $this->doctrine->getManager()->flush();
+            $em->persist($route);
+            $em->flush();
+        }
     }
 }
