@@ -1,0 +1,44 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_label %}
+    {% set label_attr = label_attr|merge({'class': label_attr['class'] ~ " form-label"}) %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if required %}
+                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {% if required %}
+                <em class="required" title="This field is required">*</em>
+            {% endif %}
+            {{ label|trans({}, translation_domain) }}
+            {% if help is defined %}
+                <small class="help">{{ help|raw }}</small>
+            {% endif %}
+            </label>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_label %}
+
+{% block form_row %}
+    <div class="clearfix">
+        {{ form_label(form) }}
+        <div class="form-input">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block form_rows %}
+    {% spaceless %}
+        {% for child in form %}
+            {{ form_widget(child) }}
+        {% endfor %}
+    {% endspaceless %}
+{% endblock form_rows %}

@@ -25,7 +25,8 @@
         "knplabs/knp-snappy-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "nelmio/solarium-bundle": "1.*",
-        "craue/formflow-bundle": "dev-master"
+        "craue/formflow-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [

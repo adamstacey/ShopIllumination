@@ -60,6 +60,11 @@ class Product
     private $status = 'd';
 
     /**
+     * @ORM\Column(name="product_code", type="string", length=100)
+     */
+    private $productCode = '';
+
+    /**
      * @ORM\Column(name="checked", type="boolean")
      */
     private $checked = false;
@@ -157,7 +162,6 @@ class Product
     private $updatedAt;
 
     private $featureGroups = array();
-    private $productCode = '';
 
     /**
      * Get statusColour

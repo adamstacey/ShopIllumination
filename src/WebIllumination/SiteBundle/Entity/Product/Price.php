@@ -24,9 +24,9 @@ class Price
     private $product;
     
     /**
-     * @ORM\Column(name="supplier_id", type="integer", length=11)
+     * @ORM\Column(name="supplier_id", type="integer", length=11, nullable=true)
      */
-    private $supplierId;
+    private $supplierId = 0;
     
     /**
      * @ORM\Column(name="cost_price", type="decimal", precision=12, scale=4)
@@ -46,12 +46,12 @@ class Price
     /**
      * @ORM\Column(name="currency_code", type="string", length=3)
      */
-    private $currencyCode;
+    private $currencyCode = 'GBP';
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
+     * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @Gedmo\Timestampable(on="create")

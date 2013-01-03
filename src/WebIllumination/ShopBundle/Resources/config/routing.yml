@@ -257,6 +257,11 @@ users_ajax_save_contact_addresses:
     defaults: { _controller: WebIlluminationShopBundle:Users:ajaxSaveContactAddresses }
 
 # System
+homepage:
+    pattern:  /
+    defaults: { _controller: WebIlluminationShopBundle:System:index }
+    requirements:
+        _scheme:  http
 shop_homepage:
     pattern:  /
     defaults: { _controller: WebIlluminationShopBundle:System:index }

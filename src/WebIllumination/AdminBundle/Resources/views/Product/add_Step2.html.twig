@@ -12,6 +12,28 @@
             {% if form.productCode is defined %}
                 {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
             {% endif %}
+            {% if form.prices is defined %}
+                <div class="clearfix">
+                    {{ form_label(form.departments, 'Price', {'help': ''}) }}
+                    <div class="form-input">
+                        <table class="sortable" id="price-list" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Cost Price</th>
+                                    <th>RRP</th>
+                                    <th>List Price</th>
+                                </tr>
+                            </thead>
+                            {% for row in form.prices %}
+                                <tr>
+                                    {{ form_widget(row) }}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% do form.departments.setRendered() %}
+                </div>
+            {% endif %}
 
             {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
             <div class="clearfix">

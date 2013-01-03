@@ -454,4 +454,19 @@ class Brand
     {
         return $this->descriptions;
     }
+
+    /**
+     * Get description
+     *
+     * @return Brand\Description
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
+    }
 }

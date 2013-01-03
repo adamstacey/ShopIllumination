@@ -1,5 +1,27 @@
 {# Forms #}
 {% form_theme form _self %}
+{% block _admin_new_product_prices_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.costPrice) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.recommendedRetailPrice) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.listPrice) }}
+    </td>
+{% endblock %}
+{% block _admin_new_product_descriptions_entry_widget %}
+    <td>
+        {{ form_widget(form.locale) }}
+    </td>
+    <td>
+        {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
+        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+    </td>
+    <td class="ac" width="65">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
 {% block _admin_new_product_departments_entry_widget %}
     <td class="padding-top-5 padding-bottom-5">
         {{ form_widget(form) }}

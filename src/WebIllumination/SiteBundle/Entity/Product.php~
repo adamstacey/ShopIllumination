@@ -156,7 +156,7 @@ class Product
      */
     private $updatedAt;
 
-    public $featureGroups = array();
+    private $featureGroups = array();
     private $productCode = '';
 
     /**
@@ -726,6 +726,21 @@ class Product
     }
 
     /**
+     * Get description
+     *
+     * @return \WebIllumination\SiteBundle\Entity\ProductToDepartment
+     */
+    public function getDepartment()
+    {
+        if(count($this->departments) > 0)
+        {
+            return $this->departments[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Add links
      *
      * @param \WebIllumination\SiteBundle\Entity\Product\Link $links
@@ -834,6 +849,21 @@ class Product
         return $this->descriptions;
     }
 
+    /**
+     * Get description
+     *
+     * @return Product\Description
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
+    }
+
     public function getType()
     {
         return $this->type;
@@ -852,5 +882,29 @@ class Product
     public function setProductCode($productCode)
     {
         $this->productCode = $productCode;
+    }
+
+    public function getFeatureGroups()
+    {
+        return $this->featureGroups;
+    }
+
+    public function setFeatureGroups($featureGroups)
+    {
+        $this->featureGroups = $featureGroups;
+    }
+
+    public function addFeatureGroup($featureGroup)
+    {
+        $this->featureGroups[] = $featureGroup;
+    }
+
+    public function removeFeatureGroup($featureGroup)
+    {
+        $key = array_search($featureGroup, $this->featureGroups);
+        if($key)
+        {
+            unset($this->featureGroups[$key]);
+        }
     }
 }

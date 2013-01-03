@@ -8,11 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\User;
-use WebIllumination\AdminBundle\Entity\Contact;
-use WebIllumination\AdminBundle\Entity\ContactNumber;
-use WebIllumination\AdminBundle\Entity\ContactAddress;
-use WebIllumination\AdminBundle\Entity\ContactEmailAddress;
+use WebIllumination\SiteBundle\Entity\Contact;
 
 class UsersController extends Controller
 {
@@ -99,10 +95,9 @@ class UsersController extends Controller
 			
 			// Create the contact object
 			$contactObject = new Contact();
-			$contactObject->setObjectId($userObject->getId());
+			$contactObject->setUser($userObject);
 			$contactObject->setObjectType('customer');
 			$contactObject->setDisplayOrder(1);
-			$contactObject->setContactTitleId(0);
 			$contactObject->setOrganisationName('');
 			$contactObject->setMiddleName('');
     		$contactObject->setDisplayName('');
@@ -303,10 +298,9 @@ class UsersController extends Controller
     			$contactObject = $em->getRepository('WebIlluminationAdminBundle:Contact')->find($customer['user']['contactId']);
     		} else {
     			$contactObject = new Contact();
-    			$contactObject->setObjectId($customer['user']['id']);
+    			$contactObject->setUser($customer['user']);
     			$contactObject->setObjectType('customer');
     			$contactObject->setDisplayOrder(1);
-    			$contactObject->setContactTitleId(0);
     			$contactObject->setOrganisationName('');
     			$contactObject->setMiddleName('');
     		}
@@ -493,10 +487,9 @@ class UsersController extends Controller
     			$contactObject = $em->getRepository('WebIlluminationAdminBundle:Contact')->find($customer['user']['contactId']);
     		} else {
     			$contactObject = new Contact();
-    			$contactObject->setObjectId($customer['user']['id']);
+    			$contactObject->setUser($customer['user']);
     			$contactObject->setObjectType('customer');
     			$contactObject->setDisplayOrder(1);
-    			$contactObject->setContactTitleId(0);
     			$contactObject->setOrganisationName('');
     			$contactObject->setMiddleName('');
     			$contactObject->setDisplayName('');

@@ -1,10 +1,10 @@
-#_welcome:
-#    pattern:  /
-#    defaults: { _controller: WebIlluminationShopBundle:System:index }
+_welcome:
+    pattern:  /
+    defaults: { _controller: WebIlluminationShopBundle:System:index }
 
-#WebIlluminationShopBundle:
-#    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
-#    prefix:   /
+WebIlluminationShopBundle:
+    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
+    prefix:   /
 #
 #WebIlluminationAdminBundle:
 #    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
@@ -15,12 +15,21 @@ web_illumination_admin:
     type:     annotation
     prefix:   /admin/
 
-admin_security:
-    pattern:   /admin/security/
-    defaults:  { _controller: WebIlluminationAdminBundle:Security:index }
-admin_security_login:
-    pattern:   /admin/security/login
-    defaults:  { _controller: WebIlluminationAdminBundle:Security:login }
-admin_security_logout:
-    pattern:   /admin/security/logout
-    defaults:  { _controller: WebIlluminationAdminBundle:Security:logout }
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /account
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /account

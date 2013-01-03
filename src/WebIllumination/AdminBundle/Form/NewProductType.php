@@ -22,10 +22,7 @@ class NewProductType extends AbstractType
                 ));
                 break;
             case 2:
-                if($options['type'] === 's')
-                {
-                   $builder->add('productCode');
-                }
+                $builder->add('productCode');
 
                 $builder->add('brand', 'entity', array(
                     'class' => 'WebIllumination\SiteBundle\Entity\Brand',

@@ -27,7 +27,42 @@ class ProductManager extends Manager
         return $product;
     }
 
-    public function updateDescription(Product\Description $description)
+    public function updateProductDescription(Product\Description $description)
+    {
+        if(!$description->getProduct()) return;
+
+        /* @var \WebIllumination\SiteBundle\Entity\Department $department*/
+        $brand = $description->getProduct()->getBrand();
+        $department = $description->getProduct()->getDepartment()->getDepartment();
+
+        if($brand && $department)
+        {
+            $pageTitle = $description->getProduct()->getProductCode();
+            $header = $description->getProduct()->getProductCode();
+            $metaKeywords = $description->getProduct()->getProductCode();
+
+            if ($brand->getDescription())
+            {
+                $pageTitle = $brand->getDescription()->getName().' '.$pageTitle;
+                $header = $brand->getDescription()->getName().' '.$header;
+                $metaKeywords .= ' '.$brand->getDescription()->getName();
+            }
+            if ($department->getDescription())
+            {
+                $pageTitle .= ' '.$department->getDescription()->getName();
+                $header .= ' '.$department->getDescription()->getName();
+                $metaKeywords .= ' '.$department->getDescription()->getName();
+            }
+
+            $description->setName($pageTitle);
+            $description->setPageTitle($pageTitle);
+            $description->setHeader($header);
+            $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
+            $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
+        }
+    }
+
+    public function updateVariantDescription(Product\VariantDescription $description)
     {
         if(!$description->getVariant()) return;
 

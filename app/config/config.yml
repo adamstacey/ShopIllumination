@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -28,7 +28,7 @@ framework:
             ssl: ["%cdn_host%"]
     default_locale:  "%locale%"
     trust_proxy_headers: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
-    session:         ~
+    session: ~
 
 # Twig Configuration
 twig:
@@ -101,3 +101,13 @@ nelmio_solarium:
             path: "%solr_path%"
             core: products
             timeout: 5
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: WebIllumination\UserBundle\Entity\User
+    registration:
+        form:
+            type: webillumination_user_registration
+    service:
+        user_manager: webillumination.user_manager.default
