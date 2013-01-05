@@ -29,9 +29,9 @@ class ProductToDepartment
     private $department;
 
     /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
+     * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -44,6 +44,11 @@ class ProductToDepartment
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    public function __toString()
+    {
+        return $this->getDepartment()->__toString();
+    }
 
     /**
      * Get id

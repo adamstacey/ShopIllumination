@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="object_indexes")
+ * @ORM\Table(name="object_index")
  * @ORM\HasLifecycleCallbacks()
  */
 class ObjectIndex
@@ -36,7 +36,7 @@ class ObjectIndex
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
     
     /**
      * @ORM\Column(name="rebuild", type="boolean")

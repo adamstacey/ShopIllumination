@@ -24,117 +24,123 @@ class Product
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"persist", "remove"})
      */
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"persist", "remove"})
      */
     private $departments;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
      */
     private $links;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"persist", "remove"})
      */
     private $variants;
 
     /**
+     * Product type ['s': Single product, 'g': Product group]
+     * @ORM\Column(name="type", type="string", length=1)
+     */
+    private $type;
+
+    /**
      * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
      */
-    private $price;
+    private $price = 0;
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
      */
-    private $status;
+    private $status = 'd';
 
     /**
      * @ORM\Column(name="checked", type="boolean")
      */
-    private $checked;
+    private $checked = false;
 
     /**
      * @ORM\Column(name="available_for_purchase", type="boolean")
      */
-    private $availableForPurchase;
+    private $availableForPurchase = false;
 
     /**
      * @ORM\Column(name="feature_comparison", type="boolean")
      */
-    private $featureComparison;
+    private $featureComparison = false;
 
     /**
      * @ORM\Column(name="downloadable", type="boolean")
      */
-    private $downloadable;
+    private $downloadable = false;
 
     /**
      * @ORM\Column(name="special_offer", type="boolean")
      */
-    private $specialOffer;
+    private $specialOffer = false;
 
     /**
      * @ORM\Column(name="recommended", type="boolean")
      */
-    private $recommended;
+    private $recommended = false;
 
     /**
      * @ORM\Column(name="accessory", type="boolean")
      */
-    private $accessory;
+    private $accessory = false;
 
     /**
      * @ORM\Column(name="new", type="boolean")
      */
-    private $new;
+    private $new = false;
 
     /**
      * @ORM\Column(name="sample_request", type="boolean")
      */
-    private $sampleRequest;
+    private $sampleRequest = false;
 
     /**
      * @ORM\Column(name="hide_price", type="boolean")
      */
-    private $hidePrice;
+    private $hidePrice = false;
 
     /**
      * @ORM\Column(name="show_price_out_of_hours", type="boolean")
      */
-    private $showPriceOutOfHours;
+    private $showPriceOutOfHours = false;
 
     /**
      * @ORM\Column(name="membership_card_discount_available", type="boolean")
      */
-    private $membershipCardDiscountAvailable;
+    private $membershipCardDiscountAvailable = false;
 
     /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4, nullable=true)
      */
-    private $maximumMembershipCardDiscount;
+    private $maximumMembershipCardDiscount = 0;
 
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
-    private $deliveryBand;
+    private $deliveryBand = 1;
 
     /**
-     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4, nullable=true)
      */
-    private $inheritedDeliveryBand;
+    private $inheritedDeliveryBand = null;
 
     /**
      * @ORM\Column(name="delivery_cost", type="decimal", precision=12, scale=4)
      */
-    private $deliveryCost;
+    private $deliveryCost = 0;
 
     /**
-     * @ORM\Column(name="last_checked", type="datetime")
+     * @ORM\Column(name="last_checked", type="datetime", nullable=true)
      */
     private $lastChecked;
 
@@ -149,6 +155,9 @@ class Product
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    private $featureGroups = array();
+    private $productCode = '';
 
     /**
      * Get statusColour
@@ -173,8 +182,21 @@ class Product
      */
     public function __construct()
     {
+        $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->links = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -704,6 +726,21 @@ class Product
     }
 
     /**
+     * Get description
+     *
+     * @return \WebIllumination\SiteBundle\Entity\ProductToDepartment
+     */
+    public function getDepartment()
+    {
+        if(count($this->departments) > 0)
+        {
+            return $this->departments[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Add links
      *
      * @param \WebIllumination\SiteBundle\Entity\Product\Link $links
@@ -810,5 +847,64 @@ class Product
     public function getDescriptions()
     {
         return $this->descriptions;
+    }
+
+    /**
+     * Get description
+     *
+     * @return Product\Description
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    public function getProductCode()
+    {
+        return $this->productCode;
+    }
+
+    public function setProductCode($productCode)
+    {
+        $this->productCode = $productCode;
+    }
+
+    public function getFeatureGroups()
+    {
+        return $this->featureGroups;
+    }
+
+    public function setFeatureGroups($featureGroups)
+    {
+        $this->featureGroups = $featureGroups;
+    }
+
+    public function addFeatureGroup($featureGroup)
+    {
+        $this->featureGroups[] = $featureGroup;
+    }
+
+    public function removeFeatureGroup($featureGroup)
+    {
+        $key = array_search($featureGroup, $this->featureGroups);
+        if($key)
+        {
+            unset($this->featureGroups[$key]);
+        }
     }
 }

@@ -116,6 +116,16 @@ class Brand
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
+    }
+
     /**
      * Get id
      *
@@ -443,5 +453,20 @@ class Brand
     public function getDescriptions()
     {
         return $this->descriptions;
+    }
+
+    /**
+     * Get description
+     *
+     * @return Brand\Description
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
     }
 }

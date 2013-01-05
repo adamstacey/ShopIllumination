@@ -19,7 +19,7 @@ class Address
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", inversedBy="emails")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", inversedBy="addresses")
      */
     private $contact;
 
@@ -46,6 +46,7 @@ class Address
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\Title")
+     * @ORM\JoinColumn(name="contact_title_id", referencedColumnName="id")
      */
     private $contactTitle;
     

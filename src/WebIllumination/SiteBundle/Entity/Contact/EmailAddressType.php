@@ -31,7 +31,7 @@ class EmailAddressType
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
     
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)

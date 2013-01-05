@@ -37,7 +37,7 @@ class Option
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
 
     /**
      * @Gedmo\Timestampable(on="create")

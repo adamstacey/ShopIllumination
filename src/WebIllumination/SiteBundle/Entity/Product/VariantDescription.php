@@ -1,15 +1,15 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Brand;
+namespace WebIllumination\SiteBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="brand_descriptions")
+ * @ORM\Table(name="product_variant_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
-class Description
+class VariantDescription
 {
     /**
      * @ORM\Id
@@ -19,68 +19,62 @@ class Description
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand", inversedBy="descriptions")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="descriptions")
      */
-    private $brand;
+    private $variant;
 
-	/**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Image")
-     * @ORM\JoinColumn(name="logo_image_id", referencedColumnName="id")
-     */
-    private $logoImage;
-    
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale = "en_GB";
-    
+
     /**
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
+
+    /**
+     * @ORM\Column(name="prefix", type="string", length=255, nullable=true)
+     */
+    private $prefix;
+
+    /**
+     * @ORM\Column(name="tagline", type="string", length=255, nullable=true)
+     */
+    private $tagline;
+
     /**
      * @ORM\Column(name="description", type="text")
      */
     private $description;
-        
+
     /**
-     * @ORM\Column(name="about", type="text")
+     * @ORM\Column(name="short_description", type="text")
      */
-    private $about;
-    
+    private $shortDescription;
+
     /**
-     * @ORM\Column(name="history", type="text")
-     */
-    private $history;
-    
-    /**
-     * @ORM\Column(name="more_information", type="text")
-     */
-    private $moreInformation; 
-    
-    /**
-     * @ORM\Column(name="page_title", type="string", length=255)
+     * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
      */
     private $pageTitle;
-    
+
     /**
-     * @ORM\Column(name="header", type="string", length=255)
+     * @ORM\Column(name="header", type="string", length=255, nullable=true)
      */
     private $header;
-    
+
     /**
-     * @ORM\Column(name="meta_description", type="text")
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
     private $metaDescription;
-    
+
     /**
-     * @ORM\Column(name="meta_keywords", type="text")
+     * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      */
     private $metaKeywords;
-    
+
     /**
-     * @ORM\Column(name="search_words", type="text")
+     * @ORM\Column(name="search_words", type="text", nullable=true)
      */
     private $searchWords;
 
@@ -99,7 +93,7 @@ class Description
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -115,14 +109,14 @@ class Description
     public function setLocale($locale)
     {
         $this->locale = $locale;
-    
+
         return $this;
     }
 
     /**
      * Get locale
      *
-     * @return string 
+     * @return string
      */
     public function getLocale()
     {
@@ -138,18 +132,64 @@ class Description
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set prefix
+     *
+     * @param string $prefix
+     * @return Description
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    /**
+     * Get prefix
+     *
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * Set tagline
+     *
+     * @param string $tagline
+     * @return Description
+     */
+    public function setTagline($tagline)
+    {
+        $this->tagline = $tagline;
+
+        return $this;
+    }
+
+    /**
+     * Get tagline
+     *
+     * @return string
+     */
+    public function getTagline()
+    {
+        return $this->tagline;
     }
 
     /**
@@ -161,14 +201,14 @@ class Description
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -176,72 +216,26 @@ class Description
     }
 
     /**
-     * Set about
+     * Set shortDescription
      *
-     * @param string $about
+     * @param string $shortDescription
      * @return Description
      */
-    public function setAbout($about)
+    public function setShortDescription($shortDescription)
     {
-        $this->about = $about;
-    
+        $this->shortDescription = $shortDescription;
+
         return $this;
     }
 
     /**
-     * Get about
+     * Get shortDescription
      *
-     * @return string 
+     * @return string
      */
-    public function getAbout()
+    public function getShortDescription()
     {
-        return $this->about;
-    }
-
-    /**
-     * Set history
-     *
-     * @param string $history
-     * @return Description
-     */
-    public function setHistory($history)
-    {
-        $this->history = $history;
-    
-        return $this;
-    }
-
-    /**
-     * Get history
-     *
-     * @return string 
-     */
-    public function getHistory()
-    {
-        return $this->history;
-    }
-
-    /**
-     * Set moreInformation
-     *
-     * @param string $moreInformation
-     * @return Description
-     */
-    public function setMoreInformation($moreInformation)
-    {
-        $this->moreInformation = $moreInformation;
-    
-        return $this;
-    }
-
-    /**
-     * Get moreInformation
-     *
-     * @return string 
-     */
-    public function getMoreInformation()
-    {
-        return $this->moreInformation;
+        return $this->shortDescription;
     }
 
     /**
@@ -253,14 +247,14 @@ class Description
     public function setPageTitle($pageTitle)
     {
         $this->pageTitle = $pageTitle;
-    
+
         return $this;
     }
 
     /**
      * Get pageTitle
      *
-     * @return string 
+     * @return string
      */
     public function getPageTitle()
     {
@@ -276,14 +270,14 @@ class Description
     public function setHeader($header)
     {
         $this->header = $header;
-    
+
         return $this;
     }
 
     /**
      * Get header
      *
-     * @return string 
+     * @return string
      */
     public function getHeader()
     {
@@ -299,14 +293,14 @@ class Description
     public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
-    
+
         return $this;
     }
 
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -322,14 +316,14 @@ class Description
     public function setMetaKeywords($metaKeywords)
     {
         $this->metaKeywords = $metaKeywords;
-    
+
         return $this;
     }
 
     /**
      * Get metaKeywords
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeywords()
     {
@@ -345,14 +339,14 @@ class Description
     public function setSearchWords($searchWords)
     {
         $this->searchWords = $searchWords;
-    
+
         return $this;
     }
 
     /**
      * Get searchWords
      *
-     * @return string 
+     * @return string
      */
     public function getSearchWords()
     {
@@ -368,14 +362,14 @@ class Description
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -391,14 +385,14 @@ class Description
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -406,48 +400,48 @@ class Description
     }
 
     /**
-     * Set brand
+     * Set product
      *
-     * @param \WebIllumination\SiteBundle\Entity\Brand $brand
+     * @param \WebIllumination\SiteBundle\Entity\Product $product
      * @return Description
      */
-    public function setBrand(\WebIllumination\SiteBundle\Entity\Brand $brand = null)
+    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
     {
-        $this->brand = $brand;
-    
+        $this->product = $product;
+
         return $this;
     }
 
     /**
-     * Get brand
+     * Get product
      *
-     * @return \WebIllumination\SiteBundle\Entity\Brand 
+     * @return \WebIllumination\SiteBundle\Entity\Product
      */
-    public function getBrand()
+    public function getProduct()
     {
-        return $this->brand;
+        return $this->product;
     }
 
     /**
-     * Set logoImage
+     * Set variant
      *
-     * @param \WebIllumination\SiteBundle\Entity\Image $logoImage
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
      * @return Description
      */
-    public function setLogoImage(\WebIllumination\SiteBundle\Entity\Image $logoImage = null)
+    public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {
-        $this->logoImage = $logoImage;
-    
+        $this->variant = $variant;
+
         return $this;
     }
 
     /**
-     * Get logoImage
+     * Get variant
      *
-     * @return \WebIllumination\SiteBundle\Entity\Image
+     * @return \WebIllumination\SiteBundle\Entity\Product\Variant
      */
-    public function getLogoImage()
+    public function getVariant()
     {
-        return $this->logoImage;
+        return $this->variant;
     }
 }

@@ -24,14 +24,9 @@ class Description
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="descriptions")
-     */
-    private $variant;
-
-    /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
@@ -39,12 +34,12 @@ class Description
     private $name;
 
     /**
-     * @ORM\Column(name="prefix", type="string", length=255)
+     * @ORM\Column(name="prefix", type="string", length=255, nullable=true)
      */
     private $prefix;
 
     /**
-     * @ORM\Column(name="tagline", type="string", length=255)
+     * @ORM\Column(name="tagline", type="string", length=255, nullable=true)
      */
     private $tagline;
 
@@ -59,27 +54,27 @@ class Description
     private $shortDescription;
 
     /**
-     * @ORM\Column(name="page_title", type="string", length=255)
+     * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
      */
     private $pageTitle;
 
     /**
-     * @ORM\Column(name="header", type="string", length=255)
+     * @ORM\Column(name="header", type="string", length=255, nullable=true)
      */
     private $header;
 
     /**
-     * @ORM\Column(name="meta_description", type="text")
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
     private $metaDescription;
 
     /**
-     * @ORM\Column(name="meta_keywords", type="text")
+     * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      */
     private $metaKeywords;
 
     /**
-     * @ORM\Column(name="search_words", type="text")
+     * @ORM\Column(name="search_words", type="text", nullable=true)
      */
     private $searchWords;
 

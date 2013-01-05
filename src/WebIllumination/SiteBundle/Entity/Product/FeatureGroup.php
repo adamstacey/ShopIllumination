@@ -41,7 +41,7 @@ class FeatureGroup
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -60,6 +60,11 @@ class FeatureGroup
     public function __construct()
     {
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getProductFeatureGroup();
     }
     
     /**

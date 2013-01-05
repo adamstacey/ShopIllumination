@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  * @ORM\Table(name="departments")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -20,14 +20,15 @@ class Department
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department", mappedBy="parent", cascade={"remove"})
-     **/
-    private $children;
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $parent;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="children")
-     **/
-    private $parent;
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department", mappedBy="parent")
+     */
+    private $children;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
@@ -124,12 +125,61 @@ class Department
     	}
         return '';
     }
+
+    public function __toString()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
+    }
+
+    public function getIndentedName()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return str_repeat("> ", $this->getLevel()).$this->getName();
+        } else {
+            return "";
+        }
+    }
+
+    public function getName()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     **/
+    public function getExplodedPath()
+    {
+        return explode('|', $this->getDepartmentPath());
+    }
+
+    /**
+     * {@inheritdoc}
+     **/
+    public function getLevel()
+    {
+        return count($this->getExplodedPath()) - 1;
+    }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->brands = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -420,6 +470,29 @@ class Department
     }
 
     /**
+     * Set parent
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department $parent
+     * @return Department
+     */
+    public function setParent(\WebIllumination\SiteBundle\Entity\Department $parent = null)
+    {
+        $this->parent = $parent;
+    
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Department 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * Add children
      *
      * @param \WebIllumination\SiteBundle\Entity\Department $children
@@ -427,6 +500,7 @@ class Department
      */
     public function addChildren(\WebIllumination\SiteBundle\Entity\Department $children)
     {
+        $children->setParent($this);
         $this->children[] = $children;
     
         return $this;
@@ -453,39 +527,84 @@ class Department
     }
 
     /**
-     * Set parent
+     * Add brands
      *
-     * @param \WebIllumination\SiteBundle\Entity\Department $parent
+     * @param \WebIllumination\SiteBundle\Entity\BrandToDepartment $brands
      * @return Department
      */
-    public function setParent(\WebIllumination\SiteBundle\Entity\Department $parent = null)
+    public function addBrand(\WebIllumination\SiteBundle\Entity\BrandToDepartment $brands)
     {
-        $this->parent = $parent;
+        $this->brands[] = $brands;
     
         return $this;
     }
 
     /**
-     * Get parent
+     * Remove brands
      *
-     * @return \WebIllumination\SiteBundle\Entity\Department 
+     * @param \WebIllumination\SiteBundle\Entity\BrandToDepartment $brands
      */
-    public function getParent()
+    public function removeBrand(\WebIllumination\SiteBundle\Entity\BrandToDepartment $brands)
     {
-        return $this->parent;
+        $this->brands->removeElement($brands);
     }
 
     /**
-     * Set description
+     * Get brands
      *
-     * @param \WebIllumination\SiteBundle\Entity\Department\Description $description
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBrands()
+    {
+        return $this->brands;
+    }
+
+    /**
+     * Add descriptions
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department\Description $descriptions
      * @return Department
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Department\Description $description)
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Department\Description $descriptions)
     {
-        $this->descriptions = $description;
+        $this->descriptions[] = $descriptions;
     
         return $this;
+    }
+
+    /**
+     * Remove descriptions
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Department\Description $descriptions
+     */
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Department\Description $descriptions)
+    {
+        $this->descriptions->removeElement($descriptions);
+    }
+
+    /**
+     * Get descriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
+    }
+
+    /**
+     * Get description
+     *
+     * @return Department\Description
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
     }
 
     /**
@@ -519,48 +638,5 @@ class Department
     public function getFeatures()
     {
         return $this->features;
-    }
-
-    /**
-     * Set brands
-     *
-     * @param \WebIllumination\SiteBundle\Entity\BrandToDepartment $brands
-     * @return Department
-     */
-    public function setBrands(\WebIllumination\SiteBundle\Entity\BrandToDepartment $brands = null)
-    {
-        $this->brands = $brands;
-    
-        return $this;
-    }
-
-    /**
-     * Get brands
-     *
-     * @return \WebIllumination\SiteBundle\Entity\BrandToDepartment 
-     */
-    public function getBrands()
-    {
-        return $this->brands;
-    }
-
-    /**
-     * Remove descriptions
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Department\Description $descriptions
-     */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Department\Description $descriptions)
-    {
-        $this->descriptions->removeElement($descriptions);
-    }
-
-    /**
-     * Get descriptions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getDescriptions()
-    {
-        return $this->descriptions;
     }
 }

@@ -19,7 +19,7 @@ class Address
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", inversedBy="emails")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", inversedBy="addresses")
      */
     private $contact;
 

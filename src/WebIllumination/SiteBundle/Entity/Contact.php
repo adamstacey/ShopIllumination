@@ -19,14 +19,14 @@ class Contact
     private $id;    
 	
 	/**
-     * @ORM\Column(name="object_id", type="integer", length=11)
+     * @ORM\ManyToOne(targetEntity="WebIllumination\UserBundle\Entity\User", inversedBy="contacts")
      */
-    private $objectId;
+    private $user;
     
      /**
      * @ORM\Column(name="object_type", type="string", length=100)
      */
-    private $objectType;
+    private $objectType = 'customer';
     
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
@@ -45,7 +45,7 @@ class Contact
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\Title")
-     * @ORM\JoinColumn(name="contact_title_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="contact_title_id", referencedColumnName="id", nullable=true)
      */
     private $contactTitle;
     
@@ -115,30 +115,6 @@ class Contact
     {
         return $this->id;
     }
-
-    /**
-     * Set objectId
-     *
-     * @param integer $objectId
-     * @return Contact
-     */
-    public function setObjectId($objectId)
-    {
-        $this->objectId = $objectId;
-    
-        return $this;
-    }
-
-    /**
-     * Get objectId
-     *
-     * @return integer 
-     */
-    public function getObjectId()
-    {
-        return $this->objectId;
-    }
-
     /**
      * Set objectType
      *
@@ -499,5 +475,15 @@ class Contact
     public function getWebAddresses()
     {
         return $this->webAddresses;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser($user)
+    {
+        $this->user = $user;
     }
 }

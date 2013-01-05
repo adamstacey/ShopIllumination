@@ -24,7 +24,12 @@ class Variant
     private $product;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="variant")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToFeature", mappedBy="variant", cascade={"all"})
+     */
+    private $features;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\VariantDescription", mappedBy="variant", cascade={"all"})
      */
     private $descriptions;
 
@@ -34,74 +39,69 @@ class Variant
     private $options;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToFeature", mappedBy="product", cascade={"all"})
-     */
-    private $features;
-
-    /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Price", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
      */
     private $prices;
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
      */
-    private $status;
+    private $status = 'a';
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
      */
-    private $productCode;
+    private $productCode = '';
 
     /**
-     * @ORM\Column(name="alternative_product_codes", type="text")
+     * @ORM\Column(name="alternative_product_codes", type="text", nullable=true)
      */
-    private $alternativeProductCodes;
+    private $alternativeProductCodes = '';
 
     /**
-     * @ORM\Column(name="mpn", type="string", length=100)
+     * @ORM\Column(name="mpn", type="string", length=100, nullable=true)
      */
-    private $mpn;
+    private $mpn = '';
 
     /**
-     * @ORM\Column(name="ean", type="string", length=14)
+     * @ORM\Column(name="ean", type="string", length=14, nullable=true)
      */
-    private $ean;
+    private $ean = '';
 
     /**
-     * @ORM\Column(name="upc", type="string", length=12)
+     * @ORM\Column(name="upc", type="string", length=12, nullable=true)
      */
-    private $upc;
+    private $upc = '';
 
     /**
-     * @ORM\Column(name="jan", type="string", length=13)
+     * @ORM\Column(name="jan", type="string", length=13, nullable=true)
      */
-    private $jan;
+    private $jan = '';
 
     /**
-     * @ORM\Column(name="isbn", type="string", length=13)
+     * @ORM\Column(name="isbn", type="string", length=13, nullable=true)
      */
-    private $isbn;
+    private $isbn = '';
 
     /**
-     * @ORM\Column(name="weight", type="decimal", precision=12, scale=2)
+     * @ORM\Column(name="weight", type="decimal", precision=12, scale=2, nullable=true)
      */
-    private $weight;
+    private $weight = 0;
 
     /**
-     * @ORM\Column(name="length", type="decimal", precision=12, scale=2)
+     * @ORM\Column(name="length", type="decimal", precision=12, scale=2, nullable=true)
      */
-    private $length;
+    private $length = 0;
 
     /**
-     * @ORM\Column(name="width", type="decimal", precision=12, scale=2)
+     * @ORM\Column(name="width", type="decimal", precision=12, scale=2, nullable=true)
      */
-    private $width;
+    private $width = 0;
 
     /**
-     * @ORM\Column(name="height", type="decimal", precision=12, scale=2)
+     * @ORM\Column(name="height", type="decimal", precision=12, scale=2, nullable=true)
      */
-    private $height;
+    private $height = 0;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -114,11 +114,15 @@ class Variant
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    private $active;
+
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
@@ -465,6 +469,7 @@ class Variant
     public function addOption(\WebIllumination\SiteBundle\Entity\ProductToOption $options)
     {
         $this->options[] = $options;
+        $options->setVariant($this);
 
         return $this;
     }
@@ -498,6 +503,7 @@ class Variant
     public function addFeature(\WebIllumination\SiteBundle\Entity\ProductToFeature $features)
     {
         $this->features[] = $features;
+        $features->setVariant($this);
 
         return $this;
     }
@@ -531,6 +537,7 @@ class Variant
     public function addPrice(\WebIllumination\SiteBundle\Entity\Product\Price $prices)
     {
         $this->prices[] = $prices;
+        $prices->setVariant($this);
 
         return $this;
     }
@@ -581,12 +588,13 @@ class Variant
     /**
      * Add descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
      * @return Variant
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
     {
         $this->descriptions[] = $descriptions;
+        $descriptions->setVariant($this);
     
         return $this;
     }
@@ -594,9 +602,9 @@ class Variant
     /**
      * Remove descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
     {
         $this->descriptions->removeElement($descriptions);
     }
@@ -609,5 +617,30 @@ class Variant
     public function getDescriptions()
     {
         return $this->descriptions;
+    }
+
+    /**
+     * Get description
+     *
+     * @return VariantDescription
+     */
+    public function getDescription()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0];
+        }
+
+        return null;
+    }
+
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
     }
 }

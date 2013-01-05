@@ -26,7 +26,7 @@ class Description
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
     
     /**
      * @ORM\Column(name="delivery_band_notes", type="text")

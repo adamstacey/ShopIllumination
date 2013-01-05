@@ -42,7 +42,7 @@ class Feature
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale;
+    private $locale = "en_GB";
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -55,6 +55,11 @@ class Feature
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    public function __toString()
+    {
+        return "(".$this->getProductFeatureGroup().") ".$this->getProductFeature();
+    }
 
     /**
      * Get id
