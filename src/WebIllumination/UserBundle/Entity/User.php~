@@ -19,15 +19,16 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\Column(name="contact_id", type="integer", length=11)
      */
-    private $contacts;
+    /**
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", mappedBy="user", cascade={"persist", "remove"})
+     **/
+    private $contact;
 
     public function __construct()
     {
         parent::__construct();
-
-        $this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -67,36 +68,26 @@ class User extends BaseUser
     }
 
     /**
-     * Add contact
+     * Set contact
      *
      * @param \WebIllumination\SiteBundle\Entity\Contact $contact
      * @return User
      */
-    public function addContact(\WebIllumination\SiteBundle\Entity\Contact $contact)
+    public function setContact(\WebIllumination\SiteBundle\Entity\Contact $contact = null)
     {
-        $this->contacts[] = $contact;
+        $this->contact = $contact;
         $contact->setUser($this);
-
+    
         return $this;
     }
 
     /**
-     * Remove contact
+     * Get contact
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact $contact
+     * @return \WebIllumination\SiteBundle\Entity\Contact 
      */
-    public function removeContact(\WebIllumination\SiteBundle\Entity\Contact $contact)
+    public function getContact()
     {
-        $this->contacts->removeElement($contact);
-    }
-
-    /**
-     * Get contacts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getContacts()
-    {
-        return $this->contacts;
+        return $this->contact;
     }
 }

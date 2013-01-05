@@ -24,15 +24,20 @@ class ProductToOption
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="options")
-     **/
-    private $product;
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="options")
+     */
+    private $variant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\OptionGroup")
+     * @ORM\JoinColumn(name="product_group_option_id", referencedColumnName="id")
+     **/
+    private $optionGroup;
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Option")
      * @ORM\JoinColumn(name="product_option_id", referencedColumnName="id")
      **/
-    private $productOption;
+    private $option;
     
     /**
      * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
@@ -240,12 +245,12 @@ class ProductToOption
     /**
      * Set product
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
      * @return ProductToOption
      */
-    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {
-        $this->product = $product;
+        $this->variant = $variant;
     
         return $this;
     }
@@ -253,33 +258,30 @@ class ProductToOption
     /**
      * Get product
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product 
+     * @return \WebIllumination\SiteBundle\Entity\Product\Variant
      */
-    public function getProduct()
+    public function getVariant()
     {
-        return $this->product;
+        return $this->variant;
     }
 
-    /**
-     * Set productOption
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Option $productOption
-     * @return ProductToOption
-     */
-    public function setProductOption(\WebIllumination\SiteBundle\Entity\Product\Option $productOption = null)
+    public function getOptionGroup()
     {
-        $this->productOption = $productOption;
-    
-        return $this;
+        return $this->optionGroup;
     }
 
-    /**
-     * Get productOption
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Product\Option 
-     */
-    public function getProductOption()
+    public function setOptionGroup($optionGroup)
     {
-        return $this->productOption;
+        $this->optionGroup = $optionGroup;
+    }
+
+    public function getOption()
+    {
+        return $this->option;
+    }
+
+    public function setOption($option)
+    {
+        $this->option = $option;
     }
 }

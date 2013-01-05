@@ -23,11 +23,16 @@ class ProductListener
 
         if($entity instanceof Product)
         {
+            foreach($entity->getDescriptions() as $description)
+            {
+
+                $this->manager->updateProductDescription($description);
+            }
             foreach($entity->getVariants() as $variant)
             {
                 foreach($variant->getDescriptions() as $description)
                 {
-                    $this->manager->updateDescription($description);
+                    $this->manager->updateVariantDescription($description);
                 }
             }
         }
@@ -39,11 +44,16 @@ class ProductListener
 
         if($entity instanceof Product)
         {
+            foreach($entity->getDescriptions() as $description)
+            {
+
+                $this->manager->updateProductDescription($description);
+            }
             foreach($entity->getVariants() as $variant)
             {
                 foreach($variant->getDescriptions() as $description)
                 {
-                    $this->manager->updateDescription($description);
+                    $this->manager->updateVariantDescription($description);
                 }
             }
         }
@@ -56,7 +66,7 @@ class ProductListener
         if($entity instanceof Product)
         {
             $this->manager->addBlankImage($entity);
-//            $this->manager->addRoute($entity);
+            $this->manager->addRoute($entity);
 
             $this->indexer->index($entity);
         }

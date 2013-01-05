@@ -11,15 +11,21 @@ class ProductPriceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('costPrice', 'money');
-        $builder->add('recommendedRetailPrice', 'money');
-        $builder->add('listPrice', 'money');
+        $builder->add('costPrice', 'money', array(
+            'currency' => false,
+        ));
+        $builder->add('recommendedRetailPrice', 'money', array(
+            'currency' => false,
+        ));
+        $builder->add('listPrice', 'money', array(
+            'currency' => false,
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WebIllumination\SiteBundle\Entity\ProductToDepartment'
+            'data_class' => 'WebIllumination\SiteBundle\Entity\Product\Price'
         ));
     }
 

@@ -4,42 +4,17 @@
         <h2>{{ flow.getCurrentStepDescription() }}</h2>
     </header>
     <section>
-        <form class="form has-validation" id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+        <form class="form" id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
             {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
             <div class="clearfix">
                 {{ form_errors(form) }}
             </div>
-            {% if form.productCode is defined %}
-                {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
-            {% endif %}
-            {% if form.prices is defined %}
-                <div class="clearfix">
-                    {{ form_label(form.departments, 'Price', {'help': ''}) }}
-                    <div class="form-input">
-                        <table class="sortable" id="price-list" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Cost Price</th>
-                                    <th>RRP</th>
-                                    <th>List Price</th>
-                                </tr>
-                            </thead>
-                            {% for row in form.prices %}
-                                <tr>
-                                    {{ form_widget(row) }}
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                    {% do form.departments.setRendered() %}
-                </div>
-            {% endif %}
-
+            {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
             {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
             <div class="clearfix">
                 {{ form_label(form.departments, 'Departments', {'help': 'Select a department of the products. <br />The first department will be the products main department and the product will inherit its information from this product.'}) }}
                 <div class="form-input">
-                    <table class="sortable" id="departments-list" width="100%">
+                    <table class=" id="departments-list" width="100%">
                         {% for row in form.departments %}
                             <tr>
                                 {{ form_widget(row) }}
@@ -52,7 +27,7 @@
 
             <h3>Descriptions</h3>
             <div class="clearfix">
-                <table class="sortable data-table" id="description-list" width="100%" data-prototype="{{ form_widget(form.descriptions.vars.prototype) | e }}">
+                <table class="data-table" id="description-list" width="100%" data-prototype="{{ form_widget(form.descriptions.vars.prototype) | e }}">
                     <thead>
                     <tr>
                         <th width="100">Locale</th>
@@ -87,6 +62,31 @@
             {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': 'Show price out of hours?'}) }}
             {{ form_row(form.membershipCardDiscountAvailable, {'label': 'Membership Discount Available', 'help': 'Discount with membership card?'}) }}
             {{ form_row(form.maximumMembershipCardDiscount, {'label': 'Maximum Membership Discount', 'help': 'Maximum membership discount'}) }}
+
+            {% if form.prices is defined %}
+                <div class="clearfix">
+                    {{ form_label(form.prices, 'Price', {'help': ''}) }}
+                    <div class="form-input">
+                        <table class="data-table" id="price-list" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Cost Price</th>
+                                    <th>RRP</th>
+                                    <th>List Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in form.prices %}
+                                    <tr>
+                                        {{ form_widget(row) }}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% do form.prices.setRendered() %}
+                </div>
+            {% endif %}
 
             {{ form_rest(form) }}
             {% include 'WebIlluminationAdminBundle:Product:stepControls.html.twig' %}

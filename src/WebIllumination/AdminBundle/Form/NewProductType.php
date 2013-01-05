@@ -85,6 +85,8 @@ class NewProductType extends AbstractType
                     'expanded' => true,
                     'multiple' => false
                 ));
+
+                // Prices
                 $builder->add('hidePrice', 'choice', array(
                     'choices' => array(true => 'Yes', false => 'No'),
                     'required' => false,
@@ -109,6 +111,14 @@ class NewProductType extends AbstractType
                     'expanded' => true,
                     'multiple' => false
                 ));
+                if($options['type'] === 's')
+                {
+                    $builder->add('prices', 'collection', array(
+                        'type' => new ProductPriceType(),
+                    ));
+                }
+
+
                 break;
             case 3:
                 $builder->add('featureGroups', 'collection', array(

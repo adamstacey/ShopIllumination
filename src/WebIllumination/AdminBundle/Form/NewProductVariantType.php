@@ -13,8 +13,15 @@ class NewProductVariantType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('active', 'checkbox');
         $builder->add('productCode', 'text');
+        $builder->add('prices', 'collection', array(
+            'type' => new ProductPriceType(),
+        ));
+        $builder->add('descriptions', 'collection', array(
+            'type' => new VariantDescriptionType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

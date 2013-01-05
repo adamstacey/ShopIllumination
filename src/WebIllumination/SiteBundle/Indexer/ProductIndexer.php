@@ -20,6 +20,9 @@ class ProductIndexer extends Indexer
         $helper = $update->getHelper();
         $document = $update->createDocument();
 
+        $lowestPrice = -1;
+        $highestPrice = -1;
+
         $descriptions = $product->getDescriptions();
 
         // Fetch images
@@ -56,16 +59,46 @@ class ProductIndexer extends Indexer
         $document->setField('page_title', $descriptions[0]->getPageTitle());
         $document->setField('short_description', $descriptions[0]->getShortDescription());
         $document->setField('tagline', $descriptions[0]->getTagline());
-            $document->setField('variants_count', count($product->getVariants()));
+        $document->setField('variants_count', count($product->getVariants()));
 
+        // Add product code from the product
+        $productCodes = explode(',', $product->getAlternativeProductCodes());
+        array_unshift($productCodes, $product->getProductCode());
+        foreach($productCodes as $productCode)
+        {
+            if(!empty($productCode))
+            {
+                $document->addField('product_code', $productCode);
+            }
+        }
+
+        // Add product codes from each variant
         foreach($product->getVariants() as $variant)
         {
             $productCodes = explode(',', $variant->getAlternativeProductCodes());
             array_unshift($productCodes, $variant->getProductCode());
             foreach($productCodes as $productCode)
             {
-                $document->addField('product_code', $productCode);
+                if(!empty($productCode))
+                {
+                    $document->addField('product_code', $productCode);
+                }
             }
+
+            foreach($variant->getPrices() as $price)
+            {
+                if ($lowestPrice === -1 || $price->getListPrice() < $lowestPrice)
+                {
+                    $lowestPrice = $price->getListPrice();
+                }
+                if ($highestPrice === -1 || $price->getListPrice() > $highestPrice)
+                {
+                    $highestPrice = $price->getListPrice();
+                }
+            }
+
+            $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
+            $document->setField('high_price', $highestPrice === -1 ? 0 : $highestPrice);
         }
 
         foreach(explode(',', $descriptions[0]->getSearchWords()) as $searchWord)
@@ -100,7 +133,6 @@ class ProductIndexer extends Indexer
         $document->setField('new', $product->getNew());
 
         $document->setField('delivery_cost', $product->getDeliveryCost());
-        $document->setField('price', $product->getPrice());
 
         $document->setField('created_at', $helper->formatDate($product->getCreatedAt()));
         $document->setField('updated_at', $helper->formatDate($product->getUpdatedAt()));
@@ -109,6 +141,7 @@ class ProductIndexer extends Indexer
         $update->addCommit();
         $this->getSolarium()->update($update);
         } catch(\Exception $e) {
+            \Doctrine\Common\Util\Debug::dump($e);die();
             echo "An error occured proccessing product ID " . $product->getId() . "\n";
         }
     }

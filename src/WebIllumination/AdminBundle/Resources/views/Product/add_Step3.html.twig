@@ -4,7 +4,7 @@
         <h2>{{ flow.getCurrentStepDescription() }}</h2>
     </header>
     <section>
-        <form class="form has-validation" id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+        <form class="form " id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
             {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
             <div class="clearfix">
                 {{ form_errors(form) }}

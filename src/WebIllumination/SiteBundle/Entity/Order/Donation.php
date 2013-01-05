@@ -21,7 +21,7 @@ class Donation
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="donations")
      */
-    private $orderId;
+    private $order;
 
     /**
      * @ORM\Column(name="description", type="string", length=255)
@@ -148,14 +148,14 @@ class Donation
     }
 
     /**
-     * Set orderId
+     * Set order
      *
-     * @param \WebIllumination\SiteBundle\Entity\Order $orderId
+     * @param \WebIllumination\SiteBundle\Entity\Order $order
      * @return Donation
      */
-    public function setOrderId(\WebIllumination\SiteBundle\Entity\Order $orderId = null)
+    public function setOrder(\WebIllumination\SiteBundle\Entity\Order $order = null)
     {
-        $this->orderId = $orderId;
+        $this->order = $order;
     
         return $this;
     }
@@ -165,8 +165,8 @@ class Donation
      *
      * @return \WebIllumination\SiteBundle\Entity\Order 
      */
-    public function getOrderId()
+    public function getOrder()
     {
-        return $this->orderId;
+        return $this->order;
     }
 }

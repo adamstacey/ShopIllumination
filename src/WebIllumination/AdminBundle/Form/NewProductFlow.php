@@ -15,7 +15,9 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use Craue\FormFlowBundle\Form\FormFlow;
 use WebIllumination\SiteBundle\Entity\Product\Feature;
+use WebIllumination\SiteBundle\Entity\Product\Price;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
+use WebIllumination\SiteBundle\Entity\Product\VariantDescription;
 use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class NewProductFlow extends FormFlow implements EventSubscriberInterface
@@ -129,6 +131,15 @@ class NewProductFlow extends FormFlow implements EventSubscriberInterface
                     $variant->addFeature($productToFeature);
                 }
                 $variant->setProduct($formData);
+                $variant->setProductCode($formData->getProductCode());
+                $variant->addPrice(new Price());
+                foreach($formData->getDescriptions() as $description)
+                {
+                    $variantDescription = new VariantDescription();
+                    $variantDescription->setLocale($description->getLocale());
+                    $variantDescription->setDescription($description->getDescription());
+                    $variant->addDescription($variantDescription);
+                }
                 $formData->addVariant($variant);
             }
 

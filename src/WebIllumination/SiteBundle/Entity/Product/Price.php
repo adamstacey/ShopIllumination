@@ -19,9 +19,9 @@ class Price
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="prices")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="prices")
      */
-    private $product;
+    private $variant;
     
     /**
      * @ORM\Column(name="supplier_id", type="integer", length=11, nullable=true)
@@ -395,12 +395,12 @@ class Price
     /**
      * Set product
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
      * @return Price
      */
-    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {
-        $this->product = $product;
+        $this->variant = $variant;
     
         return $this;
     }
@@ -410,8 +410,8 @@ class Price
      *
      * @return \WebIllumination\SiteBundle\Entity\Product 
      */
-    public function getProduct()
+    public function getVariant()
     {
-        return $this->product;
+        return $this->variant;
     }
 }

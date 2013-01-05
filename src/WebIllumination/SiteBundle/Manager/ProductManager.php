@@ -23,6 +23,7 @@ class ProductManager extends Manager
 
         $product->addDescription(new Product\Description());
         $product->addDepartment(new ProductToDepartment());
+        $product->addPrice(new Product\Price());
 
         return $product;
     }

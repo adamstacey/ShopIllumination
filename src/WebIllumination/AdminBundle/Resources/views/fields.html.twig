@@ -49,10 +49,6 @@
     </div>
 {% endblock %}
 
-{% block radio_row %}
-212rtrdgfgdfg
-{% endblock %}
-
 {% block form_rows %}
     {% spaceless %}
         {% for child in form %}
@@ -60,3 +56,140 @@
         {% endfor %}
     {% endspaceless %}
 {% endblock form_rows %}
+
+
+{% block _admin_new_product_prices_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.costPrice) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.recommendedRetailPrice) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.listPrice) }}
+    </td>
+{% endblock %}
+{% block _admin_new_product_variants_entry_prices_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.costPrice) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.recommendedRetailPrice) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form.listPrice) }}
+    </td>
+{% endblock %}
+{% block _admin_new_product_departments_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form) }}
+    </td>
+{% endblock %}
+{% block _admin_new_product_descriptions_entry_widget %}
+    <td>
+        {{ form_widget(form.locale) }}
+    </td>
+    <td>
+        {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
+        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+    </td>
+    <td class="ac" width="65">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+{% endblock %}
+{% block _admin_new_product_variants_entry_descriptions_entry_widget %}
+    <td>
+        {{ form_widget(form.locale) }}
+    </td>
+    <td>
+        {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
+        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+    </td>
+    <td class="ac" width="65">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+{% endblock %}
+{% block _admin_new_product_featureGroups_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5">
+        {{ form_widget(form) }}
+    </td>
+    <td class="ac" width="65">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+    <td class="ac" width="20">
+        <img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+    </td>
+{% endblock %}
+{% block _admin_new_product_features_entry_widget %}
+    <td class="padding-top-5 padding-bottom-5" width="">
+        {{ form_widget(form) }}
+    </td>
+    <td class="padding-top-5 padding-bottom-5 ac" width="200">
+        {{ form.get('value').productFeature }}
+    </td>
+{% endblock %}
+{% block _admin_new_product_variants_entry_widget %}
+    <tr>
+        <td class="ac padding-top-5 padding-bottom-5" width="175">
+            {{ form_widget(form.productCode) }}
+        </td>
+        <td class="padding-top-5 padding-bottom-5">
+            <ul>
+                {% for feature in form.get('value').features %}
+                    <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+    </tr>
+    <tr class="sub-row">
+        <td colspan="3">
+            <table width="100%">
+                <tr>
+                    <td>
+                        {{ form_label(form.prices, 'Descriptions', {'help': ''}) }}
+                        <table class="data-table" id="description-list" width="100%" data-prototype="{{ form_widget(form.descriptions.vars.prototype) | e }}">
+                            <thead>
+                            <tr>
+                                <th width="100">Locale</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in form.descriptions %}
+                                <tr>
+                                    {{ form_widget(row) }}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <button type="button" id="add-description" class="fr small button icon-set-white ui-button-green add-row margin-top-5" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+                        {% do form.descriptions.setRendered() %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ form_label(form.prices, 'Price', {'help': ''}) }}
+                        <table class="data-table" id="price-list" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Cost Price</th>
+                                <th>RRP</th>
+                                <th>List Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in form.prices %}
+                                <tr>
+                                    {{ form_widget(row) }}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% do form.prices.setRendered() %}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+{% endblock %}

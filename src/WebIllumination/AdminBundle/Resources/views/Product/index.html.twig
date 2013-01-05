@@ -6,7 +6,7 @@
 {% endblock %}
 {% block header %}
     {{ parent() }}
-    <form class="quick-search-container fr form has-validation" method="GET">
+    <form class="quick-search-container fr form " method="GET">
         <span>Quick Search</span>
         <input type="text" name="q" id="form-quick-search" value="{{ app.request.get('q') }}" />
         <button id="quick-search-button" class="button small ui-button-blue action-quick-search" data-icon-primary="ui-icon-search">Search</button>
@@ -85,13 +85,11 @@
                                         <td class="ac small">{{ item.brand }}</td>
                                         <td class="ac small no-wrap">
                                             {% spaceless %}
-                                                {% if item.rrp > item.list_price %}
-                                                    <span class="small strikethrough">&pound;{{ item.rrp|number_format(2) }}</span>
+                                                <span>&pound;{{ item.low_price|number_format(2) }}</span>
+                                                {% if item.low_price != item.high_price %}
                                                     <br />
-                                                    <span class="small">(-&pound;{{ item.savings|number_format(2) }})</span>
-                                                    <br />
+                                                    <span class="small">(&pound;{{ item.high_price|number_format(2) }})</span>
                                                 {% endif %}
-                                                &pound;{{ item.list_price|number_format(2) }}
                                             {% endspaceless %}
                                         </td>
                                         <td width="85" class="ac small {% include 'WebIlluminationAdminBundle:Includes:statusColour.html.twig' with {'status': item.status} %}">

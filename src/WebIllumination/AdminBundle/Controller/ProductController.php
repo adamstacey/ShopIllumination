@@ -131,35 +131,18 @@ class ProductController extends Controller
             } else {
                 if($product->getType() === 's')
                 {
-                    // Finalize entity if it is a single product
+                    // Create variant for single product
                     $variant = new Variant();
                     $variant->setProductCode($product->getProductCode());
+                    foreach($product->getPrices() as $price)
+                    {
+                        $variant->addPrice($price);
+                    }
                     foreach($product->getFeatureGroups() as $productToFeature)
                     {
-                        $productToFeature->setVariant($variant);
                         $variant->addFeature($productToFeature);
                     }
-                    $variant->setProduct($product);
                     $product->addVariant($variant);
-
-                    // Add all descriptions from product to variants
-                    foreach($product->getDescriptions() as $description)
-                    {
-                        $description->setProduct($product);
-                        $description->setVariant($variant);
-                        $variant->addDescription($description);
-                    }
-                } else {
-                    // Add all descriptions from product to variants
-                    foreach($product->getVariants() as $variant)
-                    {
-                        foreach($product->getDescriptions() as $description)
-                        {
-                            $description->setProduct($product);
-                            $description->setVariant($variant);
-                            $variant->addDescription($description);
-                        }
-                    }
                 }
 
                 $em = $this->getDoctrine()->getManager();

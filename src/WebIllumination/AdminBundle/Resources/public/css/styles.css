@@ -4147,3 +4147,8 @@ table.no-padding, table.no-padding th, table.no-padding td
     width: 100%;
     resize: none;
 }
+
+#product-variant-list .form-label {
+    padding-left: 5px;
+    float: none;
+}

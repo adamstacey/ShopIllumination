@@ -29,7 +29,7 @@ class Product
     private $basketItemId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order\Product")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product")
      */
     private $product;
 

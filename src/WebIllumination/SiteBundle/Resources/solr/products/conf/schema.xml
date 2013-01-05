@@ -529,10 +529,11 @@
         <field name="weight" type="float" indexed="false" stored="true" multiValued="false"/>
         <field name="height" type="float" indexed="true" stored="true" multiValued="false"/>
 
-        <field name="price" type="float" indexed="true" stored="true" multiValued="false"/>
-        <field name="cost_price" type="currency" indexed="true" stored="true" multiValued="false"/>
-        <field name="rrp" type="currency" indexed="true" stored="true" multiValued="false"/>
-        <field name="list_price" type="currency" indexed="true" stored="true" multiValued="false"/>
+        <field name="low_price" type="float" indexed="true" stored="true" multiValued="false"/>
+        <field name="high_price" type="float" indexed="true" stored="true" multiValued="false"/>
+        <!--<field name="cost_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
+        <!--<field name="rrp" type="currency" indexed="true" stored="true" multiValued="false"/>-->
+        <!--<field name="list_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
 
         <field name="created_at" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="updated_at" type="date" indexed="true" stored="true" multiValued="false"/>
