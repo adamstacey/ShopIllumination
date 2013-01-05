@@ -17,33 +17,33 @@ class User implements UserInterface
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-	
-	/**
-     * @ORM\Column(name="contact_id", type="integer", length=11)
+    private $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $contactId;
-	
+    private $contacts;
+
 	/**
      * @ORM\Column(name="email_address", type="string", length=255, unique=true)
      */
     private $emailAddress;
-    
+
     /**
      * @ORM\Column(name="salt", type="string", length=255)
      */
     private $salt;
-    
+
     /**
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
-    
+
     /**
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
-            
+
     /**
      * @ORM\Column(name="last_logged_in", type="datetime")
      */
@@ -68,12 +68,13 @@ class User implements UserInterface
 	{
 		$this->lastLoggedIn = new \DateTime();
 	}
-    
+
     public function __construct()
     {
         $this->active = 1;
         $this->lastLoggedIn = new \DateTime();
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getRoles()
@@ -106,23 +107,37 @@ class User implements UserInterface
     }
 
     /**
-     * Set contactId
+     * Add contact
      *
-     * @param integer $contactId
+     * @param \WebIllumination\SiteBundle\Entity\Contact $contact
+     * @return User
      */
-    public function setContactId($contactId)
+    public function addContact(\WebIllumination\SiteBundle\Entity\Contact $contact)
     {
-        $this->contactId = $contactId;
+        $this->contacts[] = $contact;
+        $contact->setUser($this);
+
+        return $this;
     }
 
     /**
-     * Get contactId
+     * Remove contact
      *
-     * @return integer
+     * @param \WebIllumination\SiteBundle\Entity\Contact $contact
      */
-    public function getContactId()
+    public function removeContact(\WebIllumination\SiteBundle\Entity\Contact $contact)
     {
-        return $this->contactId;
+        $this->contacts->removeElement($contact);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
     }
 
     /**

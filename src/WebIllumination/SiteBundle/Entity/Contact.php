@@ -16,28 +16,28 @@ class Contact
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
-	
+    private $id;
+
 	/**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\UserBundle\Entity\User", inversedBy="contacts")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\User", inversedBy="contacts")
      */
     private $user;
-    
+
      /**
      * @ORM\Column(name="object_type", type="string", length=100)
      */
     private $objectType = 'customer';
-    
+
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
-    
+
     /**
      * @ORM\Column(name="display_name", type="string", length=255)
      */
     private $displayName;
-    
+
     /**
      * @ORM\Column(name="organisation_name", type="string", length=255)
      */
@@ -48,17 +48,17 @@ class Contact
      * @ORM\JoinColumn(name="contact_title_id", referencedColumnName="id", nullable=true)
      */
     private $contactTitle;
-    
+
     /**
      * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
-    
+
     /**
      * @ORM\Column(name="middle_name", type="string", length=255)
      */
     private $middleName;
-    
+
     /**
      * @ORM\Column(name="last_name", type="string", length=255)
      */
@@ -105,11 +105,11 @@ class Contact
         $this->numbers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->webAddresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -124,14 +124,14 @@ class Contact
     public function setObjectType($objectType)
     {
         $this->objectType = $objectType;
-    
+
         return $this;
     }
 
     /**
      * Get objectType
      *
-     * @return string 
+     * @return string
      */
     public function getObjectType()
     {
@@ -147,14 +147,14 @@ class Contact
     public function setDisplayOrder($displayOrder)
     {
         $this->displayOrder = $displayOrder;
-    
+
         return $this;
     }
 
     /**
      * Get displayOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisplayOrder()
     {
@@ -170,14 +170,14 @@ class Contact
     public function setDisplayName($displayName)
     {
         $this->displayName = $displayName;
-    
+
         return $this;
     }
 
     /**
      * Get displayName
      *
-     * @return string 
+     * @return string
      */
     public function getDisplayName()
     {
@@ -193,14 +193,14 @@ class Contact
     public function setOrganisationName($organisationName)
     {
         $this->organisationName = $organisationName;
-    
+
         return $this;
     }
 
     /**
      * Get organisationName
      *
-     * @return string 
+     * @return string
      */
     public function getOrganisationName()
     {
@@ -216,14 +216,14 @@ class Contact
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-    
+
         return $this;
     }
 
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -239,14 +239,14 @@ class Contact
     public function setMiddleName($middleName)
     {
         $this->middleName = $middleName;
-    
+
         return $this;
     }
 
     /**
      * Get middleName
      *
-     * @return string 
+     * @return string
      */
     public function getMiddleName()
     {
@@ -262,14 +262,14 @@ class Contact
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    
+
         return $this;
     }
 
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -285,14 +285,14 @@ class Contact
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -308,14 +308,14 @@ class Contact
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -331,14 +331,14 @@ class Contact
     public function setContactTitle(\WebIllumination\SiteBundle\Entity\Contact\Title $contactTitle = null)
     {
         $this->contactTitle = $contactTitle;
-    
+
         return $this;
     }
 
     /**
      * Get contactTitle
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact\Title 
+     * @return \WebIllumination\SiteBundle\Entity\Contact\Title
      */
     public function getContactTitle()
     {
@@ -354,7 +354,7 @@ class Contact
     public function addAddresse(\WebIllumination\SiteBundle\Entity\Contact\Address $addresses)
     {
         $this->addresses[] = $addresses;
-    
+
         return $this;
     }
 
@@ -371,7 +371,7 @@ class Contact
     /**
      * Get addresses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAddresses()
     {
@@ -387,7 +387,7 @@ class Contact
     public function addEmail(\WebIllumination\SiteBundle\Entity\Contact\EmailAddress $emails)
     {
         $this->emails[] = $emails;
-    
+
         return $this;
     }
 
@@ -404,7 +404,7 @@ class Contact
     /**
      * Get emails
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEmails()
     {
@@ -420,7 +420,7 @@ class Contact
     public function addNumber(\WebIllumination\SiteBundle\Entity\Contact\Number $numbers)
     {
         $this->numbers[] = $numbers;
-    
+
         return $this;
     }
 
@@ -437,7 +437,7 @@ class Contact
     /**
      * Get numbers
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getNumbers()
     {
@@ -453,7 +453,7 @@ class Contact
     public function addWebAddresse(\WebIllumination\SiteBundle\Entity\Contact\WebAddress $webAddresses)
     {
         $this->webAddresses[] = $webAddresses;
-    
+
         return $this;
     }
 
@@ -470,7 +470,7 @@ class Contact
     /**
      * Get webAddresses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWebAddresses()
     {
