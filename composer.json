@@ -18,8 +18,12 @@
         "sensio/generator-bundle": "2.1.*",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
         "google/adwords": "3.1.*",
-        "ezyang/htmlpurifier": "dev-master"
+        "ezyang/htmlpurifier": "dev-master",
+        "knplabs/knp-snappy-bundle": "dev-master",
+        "nelmio/solarium-bundle": "1.*"
     },
     "scripts": {
         "post-install-cmd": [

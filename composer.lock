@@ -1,5 +1,5 @@
 {
-    "hash": "679a41ff2d9a68316df02389f8168ee2",
+    "hash": "27b074f7badc64161016a8a5a2768488",
     "packages": [
         {
             "name": "doctrine/common",
@@ -77,26 +77,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal",
-                "reference": "f63af1948a609a96b8ea1c1302c7cdf2f9f51468"
+                "reference": "00f9575d24a15931c2ccfafd888b3d1d0bb5bd03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/dbal/archive/f63af1948a609a96b8ea1c1302c7cdf2f9f51468.zip",
-                "reference": "f63af1948a609a96b8ea1c1302c7cdf2f9f51468",
+                "url": "https://github.com/doctrine/dbal/archive/00f9575d24a15931c2ccfafd888b3d1d0bb5bd03.zip",
+                "reference": "00f9575d24a15931c2ccfafd888b3d1d0bb5bd03",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "doctrine/common": "2.3.*"
             },
-            "time": "2012-12-04 21:06:56",
+            "time": "2012-12-17 15:35:54",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.3.x-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Doctrine\\DBAL": "lib/"
@@ -206,17 +206,127 @@
             ]
         },
         {
+            "name": "doctrine/doctrine-migrations-bundle",
+            "version": "dev-master",
+            "target-dir": "Doctrine/Bundle/MigrationsBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/DoctrineMigrationsBundle.git",
+                "reference": "e494aceebe05200c3f5e7b54c9facf2cf0b2099c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/doctrine/DoctrineMigrationsBundle/archive/e494aceebe05200c3f5e7b54c9facf2cf0b2099c.zip",
+                "reference": "e494aceebe05200c3f5e7b54c9facf2cf0b2099c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "doctrine/migrations": "*",
+                "symfony/framework-bundle": ">=2.1.0,<2.3-dev",
+                "doctrine/doctrine-bundle": "1.0.*"
+            },
+            "time": "2012-10-18 12:04:30",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Bundle\\MigrationsBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Doctrine Project",
+                    "homepage": "http://www.doctrine-project.org"
+                }
+            ],
+            "description": "Symfony DoctrineMigrationsBundle",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "dbal",
+                "migrations",
+                "schema"
+            ]
+        },
+        {
+            "name": "doctrine/migrations",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/migrations",
+                "reference": "c1d875ce7d092dd1bc7508c3867b5c6b97431e43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/doctrine/migrations/archive/c1d875ce7d092dd1bc7508c3867b5c6b97431e43.zip",
+                "reference": "c1d875ce7d092dd1bc7508c3867b5c6b97431e43",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "doctrine/dbal": ">=2.0,<2.5.x-dev"
+            },
+            "require-dev": {
+                "symfony/console": "2.*",
+                "symfony/yaml": "2.*"
+            },
+            "suggest": {
+                "symfony/console": "to run the migration from the console"
+            },
+            "time": "2012-10-19 10:37:24",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\DBAL\\Migrations": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com",
+                    "homepage": "http://www.jwage.com/"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                }
+            ],
+            "description": "Database Schema migrations using Doctrine DBAL",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "database",
+                "migrations"
+            ]
+        },
+        {
             "name": "doctrine/orm",
             "version": "2.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "59aef2ca950ab30c72dbbd77f9ae446551751e58"
+                "reference": "6d898753065056d178039844d80569f74b8fe6c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/archive/59aef2ca950ab30c72dbbd77f9ae446551751e58.zip",
-                "reference": "59aef2ca950ab30c72dbbd77f9ae446551751e58",
+                "url": "https://github.com/doctrine/doctrine2/archive/6d898753065056d178039844d80569f74b8fe6c6.zip",
+                "reference": "6d898753065056d178039844d80569f74b8fe6c6",
                 "shasum": ""
             },
             "require": {
@@ -228,7 +338,7 @@
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "2012-12-04 22:04:25",
+            "time": "2012-12-16 12:00:27",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -239,7 +349,7 @@
                     "dev-master": "2.3.x-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Doctrine\\ORM": "lib/"
@@ -282,20 +392,20 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/ezyang/htmlpurifier.git",
-                "reference": "8a8b123d3322d24d77114dfa767a5eafbe9ff24b"
+                "reference": "62d2550e16b1b99cf4946329c9b5b22a02f5ae09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ezyang/htmlpurifier/archive/8a8b123d3322d24d77114dfa767a5eafbe9ff24b.zip",
-                "reference": "8a8b123d3322d24d77114dfa767a5eafbe9ff24b",
+                "url": "https://github.com/ezyang/htmlpurifier/archive/62d2550e16b1b99cf4946329c9b5b22a02f5ae09.zip",
+                "reference": "62d2550e16b1b99cf4946329c9b5b22a02f5ae09",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2"
             },
-            "time": "2012-09-16 16:11:46",
+            "time": "2012-10-27 09:33:22",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "classmap": [
                     "library/"
@@ -316,6 +426,75 @@
             "homepage": "http://htmlpurifier.org/",
             "keywords": [
                 "html"
+            ]
+        },
+        {
+            "name": "gedmo/doctrine-extensions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/l3pp4rd/DoctrineExtensions.git",
+                "reference": "0cc2f18585020877c8f6b4f02bb90494ab9b2dba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/l3pp4rd/DoctrineExtensions/archive/0cc2f18585020877c8f6b4f02bb90494ab9b2dba.zip",
+                "reference": "0cc2f18585020877c8f6b4f02bb90494ab9b2dba",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "doctrine/common": ">=2.2,<2.5-dev"
+            },
+            "require-dev": {
+                "doctrine/mongodb": ">=1.0.0-BETA1",
+                "doctrine/mongodb-odm": ">=1.0.0-BETA6",
+                "doctrine/orm": ">=2.2",
+                "doctrine/dbal": ">=2.2"
+            },
+            "suggest": {
+                "doctrine/mongodb": ">=1.0.0-BETA1",
+                "doctrine/mongodb-odm": ">=1.0.0-BETA6",
+                "doctrine/orm": ">=2.2",
+                "doctrine/dbal": ">=2.2"
+            },
+            "time": "2012-12-18 21:02:17",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Gedmo": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gediminas Morkevicius",
+                    "email": "gediminas.morkevicius@gmail.com"
+                }
+            ],
+            "description": "Doctrine2 behavioral extensions",
+            "homepage": "http://gediminasm.org/",
+            "keywords": [
+                "tree",
+                "behaviors",
+                "doctrine2",
+                "extensions",
+                "gedmo",
+                "sluggable",
+                "loggable",
+                "translatable",
+                "nestedset",
+                "sortable",
+                "timestampable"
             ]
         },
         {
@@ -372,25 +551,25 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/jdorn/sql-formatter.git",
-                "reference": "0461ab0ff16e096b8c51f085349f38ed5f2ea241"
+                "reference": "15ab7a899e33f42682f74804d340a6995711a0d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/jdorn/sql-formatter/archive/0461ab0ff16e096b8c51f085349f38ed5f2ea241.zip",
-                "reference": "0461ab0ff16e096b8c51f085349f38ed5f2ea241",
+                "url": "https://github.com/jdorn/sql-formatter/archive/15ab7a899e33f42682f74804d340a6995711a0d4.zip",
+                "reference": "15ab7a899e33f42682f74804d340a6995711a0d4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-11-17 22:31:58",
+            "time": "2012-12-18 21:46:03",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.2.x-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "classmap": [
                     "lib"
@@ -675,6 +854,110 @@
             ]
         },
         {
+            "name": "knplabs/knp-snappy",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/KnpLabs/snappy.git",
+                "reference": "0.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/KnpLabs/snappy/archive/0.1.0.zip",
+                "reference": "0.1.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "symfony/process": "Process Component of Symfony2."
+            },
+            "time": "2012-11-07 09:48:01",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Snappy": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/snappy/contributors"
+                }
+            ],
+            "description": "PHP5 library allowing thumbnail, snapshot or PDF generation from a url or a html page. Wrapper for wkhtmltopdf/wkhtmltoimage.",
+            "homepage": "http://github.com/KnpLabs/snappy",
+            "keywords": [
+                "knp",
+                "knplabs",
+                "pdf",
+                "thumbnail",
+                "snapshot"
+            ]
+        },
+        {
+            "name": "knplabs/knp-snappy-bundle",
+            "version": "dev-master",
+            "target-dir": "Knp/Bundle/SnappyBundle",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/KnpLabs/KnpSnappyBundle.git",
+                "reference": "cabfd9b6ade11094002d3d873bdf260ec3ded3c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/KnpLabs/KnpSnappyBundle/archive/cabfd9b6ade11094002d3d873bdf260ec3ded3c7.zip",
+                "reference": "cabfd9b6ade11094002d3d873bdf260ec3ded3c7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.0.0",
+                "knplabs/knp-snappy": "*"
+            },
+            "time": "2012-11-05 12:46:28",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Bundle\\SnappyBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://github.com/KnpLabs/KnpSnappyBundle/contributors"
+                }
+            ],
+            "description": "Easily create PDF and images in Symfony2 by converting Twig/HTML templates.",
+            "homepage": "http://github.com/KnpLabs/KnpSnappyBundle",
+            "keywords": [
+                "knp",
+                "knplabs",
+                "bundle",
+                "snappy",
+                "pdf"
+            ]
+        },
+        {
             "name": "kriswallsmith/assetic",
             "version": "dev-master",
             "source": {
@@ -799,6 +1082,62 @@
             ]
         },
         {
+            "name": "nelmio/solarium-bundle",
+            "version": "dev-master",
+            "target-dir": "Nelmio/SolariumBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nelmio/NelmioSolariumBundle",
+                "reference": "85175416e5b6456e4bc53c9306e36876600efe60"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/nelmio/NelmioSolariumBundle/archive/85175416e5b6456e4bc53c9306e36876600efe60.zip",
+                "reference": "85175416e5b6456e4bc53c9306e36876600efe60",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*",
+                "solarium/solarium": ">=2.4,<2.5"
+            },
+            "require-dev": {
+                "symfony/yaml": "2.*"
+            },
+            "time": "2012-12-14 11:59:06",
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Nelmio\\SolariumBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nelmio",
+                    "homepage": "http://nelm.io"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/nelmio/NelmioSolariumBundle/contributors"
+                }
+            ],
+            "description": "Integration with solarium solr client.",
+            "keywords": [
+                "solr",
+                "search",
+                "solarium"
+            ]
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "2.1.x-dev",
             "target-dir": "Sensio/Bundle/DistributionBundle",
@@ -852,26 +1191,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioFrameworkExtraBundle",
-                "reference": "v2.1.4"
+                "reference": "cee8fd6d0793c545b25023ed9af072e07e441782"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioFrameworkExtraBundle/archive/v2.1.4.zip",
-                "reference": "v2.1.4",
+                "url": "https://github.com/sensio/SensioFrameworkExtraBundle/archive/cee8fd6d0793c545b25023ed9af072e07e441782.zip",
+                "reference": "cee8fd6d0793c545b25023ed9af072e07e441782",
                 "shasum": ""
             },
             "require": {
                 "symfony/framework-bundle": "2.1.*",
                 "doctrine/common": ">=2.1,<2.4-dev"
             },
-            "time": "2012-10-17 04:38:27",
+            "time": "2012-12-18 17:19:01",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.1.x-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Sensio\\Bundle\\FrameworkExtraBundle": ""
@@ -941,6 +1280,112 @@
                 }
             ],
             "description": "This bundle generates code for you"
+        },
+        {
+            "name": "solarium/solarium",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/basdenooijer/solarium",
+                "reference": "2.4.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/basdenooijer/solarium/zipball/2.4.0",
+                "reference": "2.4.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "time": "2012-04-16 04:31:52",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Solarium": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "NewBSD"
+            ],
+            "authors": [
+                {
+                    "name": "See GitHub contributors",
+                    "homepage": "https://github.com/basdenooijer/solarium/contributors"
+                }
+            ],
+            "description": "PHP Solr client",
+            "homepage": "http://www.solarium-project.org",
+            "keywords": [
+                "php",
+                "solr",
+                "search"
+            ]
+        },
+        {
+            "name": "stof/doctrine-extensions-bundle",
+            "version": "dev-master",
+            "target-dir": "Stof/DoctrineExtensionsBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stof/StofDoctrineExtensionsBundle",
+                "reference": "4a17550d8b101c5aafc56c9950149aa189b8402d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/stof/StofDoctrineExtensionsBundle/archive/4a17550d8b101c5aafc56c9950149aa189b8402d.zip",
+                "reference": "4a17550d8b101c5aafc56c9950149aa189b8402d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.1,<2.3-dev",
+                "gedmo/doctrine-extensions": "2.3.*"
+            },
+            "suggest": {
+                "doctrine/doctrine-bundle": "*",
+                "doctrine/mongodb-odm-bundle": "2.1.*"
+            },
+            "time": "2012-12-13 17:58:07",
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Stof\\DoctrineExtensionsBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                }
+            ],
+            "description": "Integration of the gedmo/doctrine-extensions with Symfony2",
+            "homepage": "https://github.com/stof/StofDoctrineExtensionsBundle",
+            "keywords": [
+                "tree",
+                "behaviors",
+                "doctrine2",
+                "extensions",
+                "gedmo",
+                "sluggable",
+                "loggable",
+                "translatable",
+                "nestedset",
+                "sortable",
+                "timestampable"
+            ]
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1174,12 +1619,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "563b20825f91074b962bc354b6e4a9af3ac52c67"
+                "reference": "4bee2e9d3a043f2f720d84e8d94f70f91e364c80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/563b20825f91074b962bc354b6e4a9af3ac52c67.zip",
-                "reference": "563b20825f91074b962bc354b6e4a9af3ac52c67",
+                "url": "https://github.com/symfony/symfony/archive/4bee2e9d3a043f2f720d84e8d94f70f91e364c80.zip",
+                "reference": "4bee2e9d3a043f2f720d84e8d94f70f91e364c80",
                 "shasum": ""
             },
             "require": {
@@ -1228,9 +1673,9 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "1.*"
             },
-            "time": "2012-12-14 20:05:05",
+            "time": "2012-12-20 07:21:29",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Symfony": "src/",
@@ -1263,18 +1708,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig-extensions",
-                "reference": "dcdff02fbac1282e6b8f4d0558cc7e9580105688"
+                "reference": "d1990ffaca93302709d1306d50ae153adb169f49"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig-extensions/archive/dcdff02fbac1282e6b8f4d0558cc7e9580105688.zip",
-                "reference": "dcdff02fbac1282e6b8f4d0558cc7e9580105688",
+                "url": "https://github.com/fabpot/Twig-extensions/archive/d1990ffaca93302709d1306d50ae153adb169f49.zip",
+                "reference": "d1990ffaca93302709d1306d50ae153adb169f49",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "1.*"
             },
-            "time": "2012-10-10 17:13:26",
+            "time": "2012-12-15 09:26:10",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1311,25 +1756,25 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "2757f482c679aa00bb8c7fdfcb337f2bb922fa5a"
+                "reference": "f095f3a1777431412954e478f92e8a10cb7b6495"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/archive/2757f482c679aa00bb8c7fdfcb337f2bb922fa5a.zip",
-                "reference": "2757f482c679aa00bb8c7fdfcb337f2bb922fa5a",
+                "url": "https://github.com/fabpot/Twig/archive/f095f3a1777431412954e478f92e8a10cb7b6495.zip",
+                "reference": "f095f3a1777431412954e478f92e8a10cb7b6495",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-12-11 14:30:16",
+            "time": "2012-12-18 10:01:32",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.12-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "Twig_": "lib/"
@@ -1362,6 +1807,9 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "ezyang/htmlpurifier": 20
+        "stof/doctrine-extensions-bundle": 20,
+        "doctrine/doctrine-migrations-bundle": 20,
+        "ezyang/htmlpurifier": 20,
+        "knplabs/knp-snappy-bundle": 20
     }
 }

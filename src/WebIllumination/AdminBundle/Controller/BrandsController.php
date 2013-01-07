@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use WebIllumination\AdminBundle\Entity\Brand;
-use WebIllumination\AdminBundle\Entity\BrandDescription;
+use WebIllumination\AdminBundle\Entity\Brand\Description;
 use WebIllumination\AdminBundle\Entity\Routing;
 
 class BrandsController extends Controller
@@ -88,7 +88,7 @@ class BrandsController extends Controller
 	    	$items = $brandService->getAdminListing($status, $hidePrices, $showPricesOutOfHours, $membershipCardDiscountAvailable, $name, $description, $sort, $order, $page, $maxResults);
 	    	if (!$items)
 	    	{
-	    		throw new AccessDeniedException();
+                throw new AccessDeniedException();
 	    	}
 	    	   		    	
 	        return $this->render('WebIlluminationAdminBundle:Brands:ajaxGetListing.html.twig', array('settings' => $settings, 'filters' => $filters, 'items' => $items));
@@ -214,7 +214,7 @@ class BrandsController extends Controller
 			 
 	       	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
     	}
-    	
+
     	throw new AccessDeniedException();
     }
 	    
@@ -315,15 +315,6 @@ class BrandsController extends Controller
     		
     		// Add the product object
     		$brandObject = new Brand();
-    		$brandObject->setStatus('a');
-    		$brandObject->setRequestABrochure(0);
-    		$brandObject->setBrochureWebAddress('');
-    		$brandObject->setRequestASample(0);
-    		$brandObject->setSampleWebAddress('');
-    		$brandObject->setHidePrices(0);
-    		$brandObject->setShowPricesOutOfHours(0);
-    		$brandObject->setMembershipCardDiscountAvailable(1);
-    		$brandObject->setMaximumMembershipCardDiscount(0.0000);
     		$em->persist($brandObject);
     		$em->flush();
 			
@@ -338,14 +329,10 @@ class BrandsController extends Controller
 			
 			// Add the product description object
 			$brandDescriptionObject = new BrandDescription();
-			$brandDescriptionObject->setBrandId($brandObject->getId());
-			$brandDescriptionObject->setLogoImageId(0);
+			$brandDescriptionObject->setBrand($brandObject);
 			$brandDescriptionObject->setLocale('en');
 			$brandDescriptionObject->setBrand($brand);
 			$brandDescriptionObject->setDescription($description);
-			$brandDescriptionObject->setAbout('');
-			$brandDescriptionObject->setHistory('');
-			$brandDescriptionObject->setMoreInformation('');
 			$brandDescriptionObject->setPageTitle($brand);
 			$brandDescriptionObject->setHeader($brand);
 			$brandDescriptionObject->setMetaDescription($metaDescription);

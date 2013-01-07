@@ -2,8 +2,8 @@
 
 namespace WebIllumination\AdminBundle\Services;
 
-use WebIllumination\AdminBundle\Entity\Routing;
-use WebIllumination\AdminBundle\Entity\Redirect;
+use WebIllumination\SiteBundle\Entity\Routing;
+use WebIllumination\SiteBundle\Entity\Redirect;
 
 class SeoService {
 
@@ -44,7 +44,7 @@ class SeoService {
     	$em = $doctrineService->getEntityManager();
 
     	// Remove any redirects to the new URL
-    	$existingRedirects = $doctrineService->getRepository('WebIlluminationAdminBundle:Redirect')->findByRedirectFrom($redirectTo);
+    	$existingRedirects = $doctrineService->getRepository('WebIllumination\SiteBundle\Entity\Redirect')->findByRedirectFrom($redirectTo);
     	foreach ($existingRedirects as $existingRedirect)
     	{
     		$em->remove($existingRedirect);
@@ -52,7 +52,7 @@ class SeoService {
     	}
 
     	// Update any redirects that are redirected to the existing URL
-    	$existingRedirects = $doctrineService->getRepository('WebIlluminationAdminBundle:Redirect')->findByRedirectTo($redirectFrom);
+    	$existingRedirects = $doctrineService->getRepository('WebIllumination\SiteBundle\Entity\Redirect')->findByRedirectTo($redirectFrom);
     	foreach ($existingRedirects as $existingRedirect)
     	{
     		$existingRedirect->setRedirectTo($redirectTo);
@@ -144,7 +144,7 @@ class SeoService {
     {
     	if ($url != '')
     	{
-    		$urlCheck = $this->container->get('doctrine')->getRepository('WebIlluminationAdminBundle:Routing')->findOneByUrl($url);
+    		$urlCheck = $this->container->get('doctrine')->getRepository('WebIllumination\SiteBundle\Entity\Routing')->findOneByUrl($url);
     		if ($urlCheck)
     		{
     			return true;

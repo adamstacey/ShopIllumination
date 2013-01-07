@@ -1065,7 +1065,7 @@ class BasketService {
 		$membershipCardObject = false;
 		if ($basket['membershipCardNumber'] > 1)
 		{
-			$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('membershipNumber' => $basket['membershipCardNumber']));
+			$membershipCardObject = $em->getRepository('WebIllumination\SiteBundle\Entity\MembershipCard')->findOneBy(array('membershipNumber' => $basket['membershipCardNumber']));
 			if (!$membershipCardObject)
 			{
 				$messages['error'][] =  'The membership number <strong>"'.$basket['membershipCardNumber'].'"</strong> does not exist or is not active. Please try another one.';
@@ -1078,7 +1078,7 @@ class BasketService {
 		{
 			if ($discount['voucherCode'] != '')
 			{
-				$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->findOneBy(array('code' => $discount['voucherCode']));
+				$voucherCodeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\VoucherCode')->findOneBy(array('code' => $discount['voucherCode']));
 				if (!$voucherCodeObject)
 				{
 					$messages['error'][] = 'The voucher code <strong>"'.$discount['voucherCode'].'"</strong> does not exist. Please try another one.';
@@ -1092,17 +1092,20 @@ class BasketService {
     		// Check if there are any stellar pan set discounts available
     		foreach ($basket['products'] as $product)
 			{
-				$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
+				$productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($product['productId']);
 				if ($productIndexObject)
 				{
 					// Check for Stellar Pans
-					if (strpos($productIndexObject->getDepartmentIds(), '|1034|1122|69|') !== false)
-					{
-						$stellarPanSetDiscountsAvailable += $product['quantity'];
-					}
+                    foreach($productIndexObject->getDepartments() as $department)
+                    {
+                        if(array_search($department->getId(), array(1034, 1122, 69)))
+                        {
+                            $stellarPanSetDiscountsAvailable += $product['quantity'];
+                        }
+                    }
 					
 					// Check for CDA products
-					if ($productIndexObject->getBrandId() == '7')
+					if ($productIndexObject->getBrand()->getId() == '7')
 					{
 						$numberOfCdaAppliances += $product['quantity'];
 					}
@@ -1124,7 +1127,7 @@ class BasketService {
 				uasort($basket['products'], array($this, "sortBasketProductsByPrice"));
 				foreach ($basket['products'] as $product)
 				{
-					$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
+                    $productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($product['productId']);
 					if ($stellarPanSetDiscountsAvailable > 0)
 					{
 						if (($product['productCode'] == 'S7C1D') || ($product['productCode'] == 'S7A1D'))
@@ -1176,7 +1179,7 @@ class BasketService {
 			$totalCdaDiscount = 0;	
 			foreach ($basket['products'] as $product)
 			{
-	 			$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
+                $productIndexObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($product['productId']);
 	 			if ($productIndexObject)
 	 			{
 					if ($productIndexObject->getBrandId() == '7')
@@ -1214,7 +1217,6 @@ class BasketService {
 			// Update the basket
 			foreach ($basket['products'] as $product)
 			{
-				$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
 				$items += $product['quantity'];
 				$recommendedRetailPrice += ($product['recommendedRetailPrice'] * $product['quantity']);
 				$subTotal += ($product['unitCost'] * $product['quantity']);

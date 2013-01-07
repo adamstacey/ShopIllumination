@@ -75,7 +75,7 @@ class MembershipCardService {
     	
     	// Build the query
     	$qb->select('mc');
-    	$qb->from('WebIlluminationAdminBundle:MembershipCard', 'mc');
+    	$qb->from('WebIllumination\SiteBundle\Entity\MembershipCard', 'mc');
     	if ($membershipNumber)
     	{
     		$qb->andWhere($qb->expr()->like('mc.membershipNumber', $qb->expr()->literal('%'.$membershipNumber.'%')));
@@ -141,7 +141,7 @@ class MembershipCardService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("mc.id"));
-    	$qb->from('WebIlluminationAdminBundle:MembershipCard', 'mc');
+    	$qb->from('WebIllumination\SiteBundle\Entity\MembershipCard', 'mc');
     	if ($membershipNumber)
     	{
     		$qb->andWhere($qb->expr()->like('mc.membershipNumber', $qb->expr()->literal('%'.$membershipNumber.'%')));
@@ -204,7 +204,7 @@ class MembershipCardService {
     	
     	// Build the query
     	$qb->select('mc');
-    	$qb->from('WebIlluminationAdminBundle:MembershipCard', 'mc');
+    	$qb->from('WebIllumination\SiteBundle\Entity\MembershipCard', 'mc');
     	if ($membershipNumber)
     	{
     		$qb->andWhere($qb->expr()->like('mc.membershipNumber', $qb->expr()->literal('%'.$membershipNumber.'%')));
@@ -299,7 +299,7 @@ class MembershipCardService {
     	
     	// Build the query
     	$qb->select('o');
-    	$qb->from('WebIlluminationAdminBundle:Order', 'o');
+    	$qb->from('WebIllumination\SiteBundle\Entity\Order', 'o');
     	$qb->addOrderBy('o.createdAt', 'DESC');
     	    	
     	$query = $qb->getQuery();
@@ -322,9 +322,9 @@ class MembershipCardService {
     	$order = array();
    		
    		// Get the order
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;
@@ -446,9 +446,9 @@ class MembershipCardService {
     	$em = $doctrineService->getEntityManager();
    		
    		// Get the order details
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderNotes = $em->getRepository('WebIllumination\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;

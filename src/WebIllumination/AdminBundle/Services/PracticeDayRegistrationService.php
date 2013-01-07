@@ -83,7 +83,7 @@ class PracticeDayRegistrationService {
     	
     	// Build the query
     	$qb->select('pdr');
-    	$qb->from('WebIlluminationAdminBundle:PracticeDayRegistration', 'pdr');
+    	$qb->from('WebIllumination\SiteBundle\Entity\PracticeDayRegistration', 'pdr');
     	if ($name != '')
     	{
     		$qb->andWhere($qb->expr()->like('pdr.name', $qb->expr()->literal('%'.$name.'%')));
@@ -159,7 +159,7 @@ class PracticeDayRegistrationService {
     	
     	// Build the query
     	$qb->select($qb->expr()->count("pdr.id"));
-    	$qb->from('WebIlluminationAdminBundle:PracticeDayRegistration', 'pdr');
+    	$qb->from('WebIllumination\SiteBundle\Entity\PracticeDayRegistration', 'pdr');
     	if ($name != '')
     	{
     		$qb->andWhere($qb->expr()->like('pdr.name', $qb->expr()->literal('%'.$name.'%')));

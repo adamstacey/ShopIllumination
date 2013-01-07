@@ -3,7 +3,7 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\ObjectIndex;
+use WebIllumination\SiteBundle\Entity\ObjectIndex;
 
 class ContactService {
 
@@ -27,7 +27,7 @@ class ContactService {
 	    $contact = array();
 	   		
    		// Get the contacts
-   		$contactObject = $em->getRepository('WebIlluminationAdminBundle:Contact')->find($id);
+   		$contactObject = $em->getRepository('WebIllumination\SiteBundle\Entity\Contact')->find($id);
    		if ($contactObject)
    		{
 		   	$contact['id'] = $contactObject->getId();
@@ -42,7 +42,7 @@ class ContactService {
 		   	$contact['lastName'] = $contactObject->getLastName();
 		   			   	
 		   	// Get the contact title
-		   	$contactTitleObject = $em->getRepository('WebIlluminationAdminBundle:ContactTitle')->find($contactObject->getContactTitleId());
+		   	$contactTitleObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactTitle')->find($contactObject->getContactTitleId());
 		   	if ($contactTitleObject)
 		   	{
 		   		$contact['contactTitle'] = $contactTitleObject->getContactTitle();
@@ -50,7 +50,7 @@ class ContactService {
 		   		
 	   		// Get the addresses
 	   		$contact['contactAddresses'] = array();
-	   		$contactAddresses = $em->getRepository('WebIlluminationAdminBundle:ContactAddress')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
+	   		$contactAddresses = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactAddress')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
 	   		foreach ($contactAddresses as $contactAddressObject)
 	   		{
 	   			$contactAddress = array();
@@ -73,14 +73,14 @@ class ContactService {
 			   	$contactAddress['countryCode'] = $contactAddressObject->getCountryCode();
 		   	
 		   		// Get the contact address type
-			   	$contactAddressTypeObject = $em->getRepository('WebIlluminationAdminBundle:ContactAddressType')->find($contactAddressObject->getContactAddressTypeId());
+			   	$contactAddressTypeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactAddressType')->find($contactAddressObject->getContactAddressTypeId());
 			   	if ($contactAddressTypeObject)
 			   	{
 			   		$contactAddress['contactAddressType'] = $contactAddressTypeObject->getContactAddressType();
 			   	}
 			   	
 			   	// Get the contact title
-			   	$contactTitleObject = $em->getRepository('WebIlluminationAdminBundle:ContactTitle')->find($contactAddressObject->getContactTitleId());
+			   	$contactTitleObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactTitle')->find($contactAddressObject->getContactTitleId());
 			   	if ($contactTitleObject)
 			   	{
 			   		$contactAddress['contactTitle'] = $contactTitleObject->getContactTitle();
@@ -92,7 +92,7 @@ class ContactService {
 	   		
 	   		// Get the email addresses
 		   	$contact['contactEmailAddresses'] = array();
-	   		$emailAddresses = $em->getRepository('WebIlluminationAdminBundle:ContactEmailAddress')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
+	   		$emailAddresses = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactEmailAddress')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
 	   		foreach ($emailAddresses as $contactEmailAddressObject)
 	   		{
 	   			$contactEmailAddress = array();
@@ -103,7 +103,7 @@ class ContactService {
 			   	$contactEmailAddress['email'] = $contactEmailAddressObject->getEmail();
 			   	
 			   	// Get the contact email address type
-			   	$contactEmailAddressTypeObject = $em->getRepository('WebIlluminationAdminBundle:ContactEmailAddressType')->find($contactEmailAddressObject->getContactEmailAddressTypeId());
+			   	$contactEmailAddressTypeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactEmailAddressType')->find($contactEmailAddressObject->getContactEmailAddressTypeId());
 			   	if ($contactEmailAddressTypeObject)
 			   	{
 			   		$contactEmailAddress['contactEmailAddressType'] = $contactEmailAddressTypeObject->getContactEmailAddressType();
@@ -115,7 +115,7 @@ class ContactService {
 		   		
 		   	// Get the numbers
 		   	$contact['contactNumbers'] = array();
-		   	$numbers = $em->getRepository('WebIlluminationAdminBundle:ContactNumber')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
+		   	$numbers = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactNumber')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
 		   	foreach ($numbers as $contactNumberObject)
 		   	{
 		   		$contactNumber = array();
@@ -127,7 +127,7 @@ class ContactService {
 			   	$contactNumber['countryCode'] = $contactNumberObject->getCountryCode();
 			   	
 			   	// Get the contact number type
-			   	$contactNumberTypeObject = $em->getRepository('WebIlluminationAdminBundle:ContactNumberType')->find($contactNumberObject->getContactNumberTypeId());
+			   	$contactNumberTypeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactNumberType')->find($contactNumberObject->getContactNumberTypeId());
 			   	if ($contactNumberTypeObject)
 			   	{
 			   		$contactNumber['contactNumberType'] = $contactNumberTypeObject->getContactNumberType();
@@ -139,7 +139,7 @@ class ContactService {
 		   		
 		   	// Get the web addresses
 		   	$contact['contactWebAddresses'] = array();
-		   	$webAddresses = $em->getRepository('WebIlluminationAdminBundle:ContactWebAddress')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
+		   	$webAddresses = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactWebAddress')->findBy(array('contactId' => $id), array('displayOrder' => 'ASC'));
 		   	foreach ($webAddresses as $contactWebAddressObject)
 		   	{
 		   		$contactWebAddress = array();
@@ -150,7 +150,7 @@ class ContactService {
 			   	$contactWebAddress['url'] = $contactWebAddressObject->getUrl();
 			   	
 			   	// Get the contact web address type
-			   	$contactWebAddressTypeObject = $em->getRepository('WebIlluminationAdminBundle:ContactWebAddressType')->find($contactWebAddressObject->getContactWebAddressTypeId());
+			   	$contactWebAddressTypeObject = $em->getRepository('WebIllumination\SiteBundle\Entity\ContactWebAddressType')->find($contactWebAddressObject->getContactWebAddressTypeId());
 			   	if ($contactWebAddressTypeObject)
 			   	{
 			   		$contactWebAddress['contactWebAddressType'] = $contactWebAddressTypeObject->getContactWebAddressType();
@@ -177,7 +177,7 @@ class ContactService {
 	    $contacts = array();
 	   		
    		// Get the contacts
-   		$contactObjects = $em->getRepository('WebIlluminationAdminBundle:Contact')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('displayOrder' => 'ASC'));
+   		$contactObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Contact')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('displayOrder' => 'ASC'));
    		foreach ($contactObjects as $contactObject)
    		{
    			if ($contactObject)
@@ -206,7 +206,7 @@ class ContactService {
     	$contacts = array();
    		
    		// Get the contacts
-   		$contactObjects = $em->getRepository('WebIlluminationAdminBundle:Contact')->findBy(array(), array('firstName' => 'ASC', 'lastName' => 'ASC', 'organisationName' => 'ASC'));
+   		$contactObjects = $em->getRepository('WebIllumination\SiteBundle\Entity\Contact')->findBy(array(), array('firstName' => 'ASC', 'lastName' => 'ASC', 'organisationName' => 'ASC'));
    		foreach ($contactObjects as $contactObject)
    		{
    			$contact = array();

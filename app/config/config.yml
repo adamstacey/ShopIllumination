@@ -65,6 +65,12 @@ doctrine:
         query_cache_driver: apc
         result_cache_driver: apc
 
+# Doctrine Extensions Configuration
+stof_doctrine_extensions:
+    default_locale: "%locale%"
+    orm:
+        default: ~
+
 # Swiftmailer Configuration
 swiftmailer:
     transport:  "%mailer_transport%"
@@ -74,3 +80,19 @@ swiftmailer:
     spool:      { type: memory }
     port:       587
     encryption: tls
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/bin/wkhtmltopdf-i386
+        options:    []
+
+nelmio_solarium:
+    default_client: product
+    clients:
+        product:
+            host: "%solr_host%"
+            port: "%solr_port%"
+            path: "%solr_path%"
+            core: products
+            timeout: 5
