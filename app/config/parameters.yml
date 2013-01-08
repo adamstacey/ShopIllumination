@@ -18,4 +18,7 @@ parameters:
     locale:            en
     secret:            90f229762b755dda3c62e49b328f84cd9c126a22
 
-    cdn_host:         http://33.33.33.10
+    host:             http://www.kitchenappliancecentre.co.uk
+    ssl_host:         https://www.kitchenappliancecentre.co.uk
+    cdn_host:         http://cdn.kitchen-appliance-centre.co.uk
+    cdn_ssl_host:     https://www.kitchenappliancecentre.co.uk

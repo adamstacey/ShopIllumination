@@ -8,12 +8,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/craue/CraueFormFlowBundle",
-                "reference": "961a181c116085a3baa67c4270428e448ad15b94"
+                "reference": "80db9dd60a79bf223e69fcda9495d01fe83e6add"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/craue/CraueFormFlowBundle/archive/961a181c116085a3baa67c4270428e448ad15b94.zip",
-                "reference": "961a181c116085a3baa67c4270428e448ad15b94",
+                "url": "https://github.com/craue/CraueFormFlowBundle/archive/80db9dd60a79bf223e69fcda9495d01fe83e6add.zip",
+                "reference": "80db9dd60a79bf223e69fcda9495d01fe83e6add",
                 "shasum": ""
             },
             "require": {
@@ -21,7 +21,7 @@
                 "symfony/framework-bundle": ">=2.1-dev,<2.3-dev",
                 "symfony/form": ">=2.1-dev,<2.3-dev"
             },
-            "time": "2012-09-11 15:17:00",
+            "time": "2013-01-08 14:17:12",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -126,19 +126,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal",
-                "reference": "cb3ec49cb4401bd1c8be6ba9671f651802586eaf"
+                "reference": "4c33f633c48eeafe3408b308f6fc51743a21a3b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/dbal/archive/cb3ec49cb4401bd1c8be6ba9671f651802586eaf.zip",
-                "reference": "cb3ec49cb4401bd1c8be6ba9671f651802586eaf",
+                "url": "https://github.com/doctrine/dbal/archive/4c33f633c48eeafe3408b308f6fc51743a21a3b7.zip",
+                "reference": "4c33f633c48eeafe3408b308f6fc51743a21a3b7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "doctrine/common": "2.3.*"
             },
-            "time": "2012-12-23 20:28:39",
+            "time": "2013-01-07 20:03:43",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -151,7 +151,7 @@
                     "Doctrine\\DBAL": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -370,12 +370,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "019094655b6606852a3e3231de93425d9913bac4"
+                "reference": "f5bb8be884fab26f1bf72e7c55f97d226028b9d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/archive/019094655b6606852a3e3231de93425d9913bac4.zip",
-                "reference": "019094655b6606852a3e3231de93425d9913bac4",
+                "url": "https://github.com/doctrine/doctrine2/archive/f5bb8be884fab26f1bf72e7c55f97d226028b9d9.zip",
+                "reference": "f5bb8be884fab26f1bf72e7c55f97d226028b9d9",
                 "shasum": ""
             },
             "require": {
@@ -387,7 +387,7 @@
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "2012-12-24 10:18:12",
+            "time": "2013-01-07 20:05:04",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -404,7 +404,7 @@
                     "Doctrine\\ORM": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -487,12 +487,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle",
-                "reference": "db1ebdce24644a0c157a86064a867fe19aafb727"
+                "reference": "1ee25d970e3903e3b0c6729622bd40374248e72f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/db1ebdce24644a0c157a86064a867fe19aafb727.zip",
-                "reference": "db1ebdce24644a0c157a86064a867fe19aafb727",
+                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle/archive/1ee25d970e3903e3b0c6729622bd40374248e72f.zip",
+                "reference": "1ee25d970e3903e3b0c6729622bd40374248e72f",
                 "shasum": ""
             },
             "require": {
@@ -513,14 +513,14 @@
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/mongodb-odm-bundle": "*"
             },
-            "time": "2013-01-03 09:21:14",
+            "time": "2013-01-04 13:17:45",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.0.x-dev"
                 }
             },
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-0": {
                     "FOS\\UserBundle": ""
@@ -675,18 +675,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/jdorn/sql-formatter.git",
-                "reference": "9aac5ea51a1c13af3e67a7d7ba7e528f94c52485"
+                "reference": "7cc05be93fc352be9c551bf5a45c7b930f5d9e2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/jdorn/sql-formatter/archive/9aac5ea51a1c13af3e67a7d7ba7e528f94c52485.zip",
-                "reference": "9aac5ea51a1c13af3e67a7d7ba7e528f94c52485",
+                "url": "https://github.com/jdorn/sql-formatter/archive/7cc05be93fc352be9c551bf5a45c7b930f5d9e2a.zip",
+                "reference": "7cc05be93fc352be9c551bf5a45c7b930f5d9e2a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-12-27 16:16:30",
+            "time": "2012-12-29 19:41:32",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -983,18 +983,18 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/dancannon/knp-components",
-                "reference": "b3f3c9e115e87c592fc461686006be5879e6aed7"
+                "reference": "1fd31dc1381517e773aefbce0fa9ce9802e16e2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dancannon/knp-components/zipball/b3f3c9e115e87c592fc461686006be5879e6aed7",
-                "reference": "b3f3c9e115e87c592fc461686006be5879e6aed7",
+                "url": "https://api.github.com/repos/dancannon/knp-components/zipball/1fd31dc1381517e773aefbce0fa9ce9802e16e2f",
+                "reference": "1fd31dc1381517e773aefbce0fa9ce9802e16e2f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2012-12-27 21:27:09",
+            "time": "2012-12-28 16:45:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1265,12 +1265,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog",
-                "reference": "52b454f89041c41c548bc242482aaf9dc6fee5d8"
+                "reference": "1.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Seldaek/monolog/archive/52b454f89041c41c548bc242482aaf9dc6fee5d8.zip",
-                "reference": "52b454f89041c41c548bc242482aaf9dc6fee5d8",
+                "url": "https://github.com/Seldaek/monolog/zipball/1.2.1",
+                "reference": "1.2.1",
                 "shasum": ""
             },
             "require": {
@@ -1284,14 +1284,14 @@
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server"
             },
-            "time": "2012-12-21 09:35:52",
+            "time": "2012-08-29 04:53:20",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.3.x-dev"
                 }
             },
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Monolog": "src/"
@@ -1379,12 +1379,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioDistributionBundle",
-                "reference": "v2.1.5"
+                "reference": "781e1e585fc57cfaf37dc16275ebcaa19c8279b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioDistributionBundle/archive/v2.1.5.zip",
-                "reference": "v2.1.5",
+                "url": "https://github.com/sensio/SensioDistributionBundle/archive/781e1e585fc57cfaf37dc16275ebcaa19c8279b5.zip",
+                "reference": "781e1e585fc57cfaf37dc16275ebcaa19c8279b5",
                 "shasum": ""
             },
             "require": {
@@ -1426,12 +1426,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioFrameworkExtraBundle",
-                "reference": "v2.1.5"
+                "reference": "f050aa93cb1aa780f668020dddd6333b5c5d95c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioFrameworkExtraBundle/archive/v2.1.5.zip",
-                "reference": "v2.1.5",
+                "url": "https://github.com/sensio/SensioFrameworkExtraBundle/archive/f050aa93cb1aa780f668020dddd6333b5c5d95c3.zip",
+                "reference": "f050aa93cb1aa780f668020dddd6333b5c5d95c3",
                 "shasum": ""
             },
             "require": {
@@ -1474,12 +1474,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioGeneratorBundle",
-                "reference": "v2.1.5"
+                "reference": "74f519a1c4414d4a45dd12c9e86e29efb5a90b2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioGeneratorBundle/archive/v2.1.5.zip",
-                "reference": "v2.1.5",
+                "url": "https://github.com/sensio/SensioGeneratorBundle/archive/74f519a1c4414d4a45dd12c9e86e29efb5a90b2c.zip",
+                "reference": "74f519a1c4414d4a45dd12c9e86e29efb5a90b2c",
                 "shasum": ""
             },
             "require": {
@@ -1743,12 +1743,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle",
-                "reference": "v2.1.5"
+                "reference": "0e9e829acaff387adbf62862ebe3e07abedd3845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/MonologBundle/archive/v2.1.5.zip",
-                "reference": "v2.1.5",
+                "url": "https://github.com/symfony/MonologBundle/archive/0e9e829acaff387adbf62862ebe3e07abedd3845.zip",
+                "reference": "0e9e829acaff387adbf62862ebe3e07abedd3845",
                 "shasum": ""
             },
             "require": {
@@ -1803,12 +1803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle",
-                "reference": "v2.1.5"
+                "reference": "2bf9cdefd8102e6409ec0762652cf81cb3b4c21a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/SwiftmailerBundle/archive/v2.1.5.zip",
-                "reference": "v2.1.5",
+                "url": "https://github.com/symfony/SwiftmailerBundle/archive/2bf9cdefd8102e6409ec0762652cf81cb3b4c21a.zip",
+                "reference": "2bf9cdefd8102e6409ec0762652cf81cb3b4c21a",
                 "shasum": ""
             },
             "require": {
@@ -1858,12 +1858,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "a0ea84bbc307bc06c7198bb827a1a2b7d1915c7e"
+                "reference": "87160a70518d6db6af8f3968e8d45d38c72eef5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/a0ea84bbc307bc06c7198bb827a1a2b7d1915c7e.zip",
-                "reference": "a0ea84bbc307bc06c7198bb827a1a2b7d1915c7e",
+                "url": "https://github.com/symfony/symfony/archive/87160a70518d6db6af8f3968e8d45d38c72eef5b.zip",
+                "reference": "87160a70518d6db6af8f3968e8d45d38c72eef5b",
                 "shasum": ""
             },
             "require": {
@@ -1912,7 +1912,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": ">=1.0,<1.3-dev"
             },
-            "time": "2012-12-27 15:10:36",
+            "time": "2013-01-08 12:06:20",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -1995,18 +1995,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "1b1a6e7de018d300e6eb67727f3717c24f4540ba"
+                "reference": "d10ebfa3d4c16621732ebd8bcf65cd4cfdcefa26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/archive/1b1a6e7de018d300e6eb67727f3717c24f4540ba.zip",
-                "reference": "1b1a6e7de018d300e6eb67727f3717c24f4540ba",
+                "url": "https://github.com/fabpot/Twig/archive/d10ebfa3d4c16621732ebd8bcf65cd4cfdcefa26.zip",
+                "reference": "d10ebfa3d4c16621732ebd8bcf65cd4cfdcefa26",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-12-27 16:33:50",
+            "time": "2013-01-08 14:19:19",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2019,7 +2019,7 @@
                     "Twig_": "lib/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3"
             ],

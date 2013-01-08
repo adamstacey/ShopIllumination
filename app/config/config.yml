@@ -18,14 +18,14 @@ framework:
             cdn:
                 base_urls:
                     http: ["%cdn_host%"]
-                    ssl: ["%cdn_host%"]
+                    ssl: ["%cdn_ssl_host%"]
             nocdn:
                 base_urls:
-                    http: ["%cdn_host%"]
-                    ssl: ["%cdn_host%"]
+                    http: ["%host%"]
+                    ssl: ["%ssl_host%"]
         assets_base_urls:
             http: ["%cdn_host%"]
-            ssl: ["%cdn_host%"]
+            ssl: ["%cdn_ssl_host%"]
     default_locale:  "%locale%"
     trust_proxy_headers: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
     session: ~
