@@ -25,7 +25,7 @@ class SecurityController extends Controller
 		   	$password = trim($request->request->get('password'));
 		   	
 		   	// Find the user
-		  	$userObject = $em->getRepository('WebIlluminationAdminBundle:User')->findOneBy(array('emailAddress' => $emailAddress));
+		  	$userObject = $em->getRepository('WebIlluminationSiteBundle:User')->findOneBy(array('emailAddress' => $emailAddress));
 		  	if (!$userObject)
 		  	{
 		  		// Set error message

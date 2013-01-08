@@ -61,7 +61,7 @@ class Bug
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact")
-     * @ORM\JoinColumn(name="assinged_to_contact_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="assigned_to_contact_id", referencedColumnName="id")
      */
     private $assignedToContact;
     

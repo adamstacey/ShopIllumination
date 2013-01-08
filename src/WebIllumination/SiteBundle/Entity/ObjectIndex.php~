@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="object_indexes")
+ * @ORM\Table(name="object_index")
  * @ORM\HasLifecycleCallbacks()
  */
 class ObjectIndex

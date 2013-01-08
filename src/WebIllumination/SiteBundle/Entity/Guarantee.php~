@@ -29,6 +29,11 @@ class Guarantee
     private $objectType;
 
     /**
+     * @ORM\Column(name="display_order", type="integer", length=11)
+     */
+    private $displayOrder;
+
+    /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Guarantee\Type")
      * @ORM\JoinColumn(name="guarantee_type_id", referencedColumnName="id")
      */
@@ -198,5 +203,15 @@ class Guarantee
     public function getLength()
     {
         return $this->length;
+    }
+
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
+    }
+
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
     }
 }

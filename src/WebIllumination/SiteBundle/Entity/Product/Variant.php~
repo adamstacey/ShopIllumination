@@ -29,7 +29,7 @@ class Variant
     private $features;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="variant", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\VariantDescription", mappedBy="variant", cascade={"all"})
      */
     private $descriptions;
 
@@ -39,7 +39,7 @@ class Variant
     private $options;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Price", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
      */
     private $prices;
 
@@ -122,6 +122,7 @@ class Variant
      */
     public function __construct()
     {
+        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
@@ -468,6 +469,7 @@ class Variant
     public function addOption(\WebIllumination\SiteBundle\Entity\ProductToOption $options)
     {
         $this->options[] = $options;
+        $options->setVariant($this);
 
         return $this;
     }
@@ -501,6 +503,7 @@ class Variant
     public function addFeature(\WebIllumination\SiteBundle\Entity\ProductToFeature $features)
     {
         $this->features[] = $features;
+        $features->setVariant($this);
 
         return $this;
     }
@@ -534,6 +537,7 @@ class Variant
     public function addPrice(\WebIllumination\SiteBundle\Entity\Product\Price $prices)
     {
         $this->prices[] = $prices;
+        $prices->setVariant($this);
 
         return $this;
     }
@@ -584,12 +588,13 @@ class Variant
     /**
      * Add descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
      * @return Variant
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
     {
         $this->descriptions[] = $descriptions;
+        $descriptions->setVariant($this);
     
         return $this;
     }
@@ -597,9 +602,9 @@ class Variant
     /**
      * Remove descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
     {
         $this->descriptions->removeElement($descriptions);
     }
@@ -617,7 +622,7 @@ class Variant
     /**
      * Get description
      *
-     * @return Description
+     * @return VariantDescription
      */
     public function getDescription()
     {

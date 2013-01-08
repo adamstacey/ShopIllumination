@@ -24,11 +24,6 @@ class Description
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="descriptions")
-     */
-    private $variant;
-
-    /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale = "en_GB";

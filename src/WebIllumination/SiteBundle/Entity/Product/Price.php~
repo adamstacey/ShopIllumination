@@ -19,14 +19,14 @@ class Price
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="prices")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="prices")
      */
-    private $product;
+    private $variant;
     
     /**
-     * @ORM\Column(name="supplier_id", type="integer", length=11)
+     * @ORM\Column(name="supplier_id", type="integer", length=11, nullable=true)
      */
-    private $supplierId;
+    private $supplierId = 0;
     
     /**
      * @ORM\Column(name="cost_price", type="decimal", precision=12, scale=4)
@@ -46,12 +46,12 @@ class Price
     /**
      * @ORM\Column(name="currency_code", type="string", length=3)
      */
-    private $currencyCode;
+    private $currencyCode = 'GBP';
     
     /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
+     * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -395,12 +395,12 @@ class Price
     /**
      * Set product
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
      * @return Price
      */
-    public function setProduct(\WebIllumination\SiteBundle\Entity\Product $product = null)
+    public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {
-        $this->product = $product;
+        $this->variant = $variant;
     
         return $this;
     }
@@ -410,8 +410,8 @@ class Price
      *
      * @return \WebIllumination\SiteBundle\Entity\Product 
      */
-    public function getProduct()
+    public function getVariant()
     {
-        return $this->product;
+        return $this->variant;
     }
 }

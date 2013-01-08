@@ -279,4 +279,17 @@ class User implements UserInterface
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Set contacts
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Contact $contacts
+     * @return User
+     */
+    public function setContacts(\WebIllumination\SiteBundle\Entity\Contact $contacts = null)
+    {
+        $this->contacts = $contacts;
+    
+        return $this;
+    }
 }

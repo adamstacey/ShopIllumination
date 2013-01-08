@@ -2,9 +2,9 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     localhost
     database_port:     ~
-    database_name:     kacstaging
-    database_user:     kacstaging
-    database_password: kacstaging
+    database_name:     kac
+    database_user:     kac
+    database_password: D3rbysh1r3
 
     solr_host:         localhost
     solr_port:         8080

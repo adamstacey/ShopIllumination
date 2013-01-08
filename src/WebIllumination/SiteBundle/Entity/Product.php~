@@ -50,14 +50,19 @@ class Product
     private $type;
 
     /**
-     * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
-     */
-    private $price = 0;
-
-    /**
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status = 'd';
+
+    /**
+     * @ORM\Column(name="product_code", type="string", length=100)
+     */
+    private $productCode = '';
+
+    /**
+     * @ORM\Column(name="alternative_product_codes", type="text", nullable=true)
+     */
+    private $alternativeProductCodes = '';
 
     /**
      * @ORM\Column(name="checked", type="boolean")
@@ -157,7 +162,7 @@ class Product
     private $updatedAt;
 
     private $featureGroups = array();
-    private $productCode = '';
+    private $prices = array();
 
     /**
      * Get statusColour
@@ -701,6 +706,7 @@ class Product
     public function addDepartment(\WebIllumination\SiteBundle\Entity\ProductToDepartment $departments)
     {
         $this->departments[] = $departments;
+        $departments->setProduct($this);
 
         return $this;
     }
@@ -749,6 +755,8 @@ class Product
     public function addLink(\WebIllumination\SiteBundle\Entity\Product\Link $links)
     {
         $this->links[] = $links;
+        $links->setProduct($this);
+
 
         return $this;
     }
@@ -773,16 +781,6 @@ class Product
         return $this->links;
     }
 
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
     /**
      * Add variants
      *
@@ -792,6 +790,7 @@ class Product
     public function addVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variants)
     {
         $this->variants[] = $variants;
+        $variants->setProduct($this);
 
         return $this;
     }
@@ -825,6 +824,7 @@ class Product
     public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
     {
         $this->descriptions[] = $descriptions;
+        $descriptions->setProduct($this);
 
         return $this;
     }
@@ -894,7 +894,7 @@ class Product
         $this->featureGroups = $featureGroups;
     }
 
-    public function addFeatureGroup($featureGroup)
+    public function addFeatureGroup(ProductToFeature $featureGroup)
     {
         $this->featureGroups[] = $featureGroup;
     }
@@ -906,5 +906,39 @@ class Product
         {
             unset($this->featureGroups[$key]);
         }
+    }
+
+    public function getPrices()
+    {
+        return $this->prices;
+    }
+
+    public function setPrices($prices)
+    {
+        $this->prices = $prices;
+    }
+
+    public function addPrice($price)
+    {
+        $this->prices[] = $price;
+    }
+
+    public function removePrice($price)
+    {
+        $key = array_search($price, $this->prices);
+        if($key)
+        {
+            unset($this->prices[$key]);
+        }
+    }
+
+    public function getAlternativeProductCodes()
+    {
+        return $this->alternativeProductCodes;
+    }
+
+    public function setAlternativeProductCodes($alternativeProductCodes)
+    {
+        $this->alternativeProductCodes = $alternativeProductCodes;
     }
 }
