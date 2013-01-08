@@ -1,0 +1,33 @@
+{% block form_step %}
+<div class="portlet">
+    <header>
+        <h2>{{ flow.getCurrentStepDescription() }}</h2>
+    </header>
+    <section>
+        <form class="form " id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+            {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+            <div class="clearfix">
+                {{ form_errors(form) }}
+            </div>
+
+            <table class="data-table" id="product-variant-list" width="100%" data-prototype="{{ form_widget(form.variants.vars.prototype) | e }}">
+                <thead>
+                    <tr>
+                        <th>Product Code</th>
+                        <th>Features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in form.variants %}
+                        {{ form_widget(row) }}
+                    {% endfor %}
+                </tbody>
+                {% do form.variants.setRendered() %}
+            </table>
+
+            {{ form_rest(form) }}
+            {% include 'WebIlluminationAdminBundle:Product:stepControls.html.twig' %}
+        </form>
+    </section>
+</div>
+{% endblock %}

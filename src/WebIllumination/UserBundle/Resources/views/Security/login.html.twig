@@ -1,0 +1,69 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}Login | {{ parent() }}{% endblock %}
+{% block page_header %}Login{% endblock %}
+{% block slider %}
+    <div class="container_8 clearfix">
+        <header>
+            <div class="slider-gallery-container">
+                <div class="slider-gallery">
+                    <div class="slider-element">
+                        <img src="{{ asset('/bundles/webilluminationshop/images/headers/security-man.jpg') }}" alt="Man in black T-shirt with Security on the back" />
+                        <h3 class="right">Kitchen Appliance Centre Secure Login</h3>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+{% endblock %}
+
+{% block fos_user_content %}
+<form id="secure-login" class="form has-validation" action="{{ path("fos_user_security_check") }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+    <div class="clearfix">
+        {% if error %}
+            <div class="info-message ui-status-highlight">
+                <span class="info-message-icon ui-icon ui-icon-info"></span>
+                <p>{{ error|trans({}, 'FOSUserBundle') }}</p>
+                <div class="clear"></div>
+            </div>
+        {% else %}
+            <div class="info-message ui-status-highlight">
+                <span class="info-message-icon ui-icon ui-icon-info"></span>
+                <p>To login to Kitchen Appliance Centre please enter your email address and password.</p>
+                <div class="clear"></div>
+            </div>
+        {% endif %}
+
+        <div class="clearfix">
+            <label for="form-username" class="form-label"><em>*</em> Your Email Address<small>Enter a valid email address</small></label>
+            <div class="form-input no-margin-bottom">
+                <input class="full email" data-message="Enter a valid email address" type="email" id="form-username" name="_username" required="required" value="{{ last_username }}" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="form-password" class="form-label"><em>*</em> Your Password<small>Enter your password</small></label>
+            <div class="form-input no-margin-bottom">
+                <input class="full" data-message="Enter a password" type="password" id="form-password" name="_password" required="required" autocomplete="off" value="" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="remember_me" class="form-label"><em>*</em> Remember Me</label>
+            <div class="form-input no-margin-bottom">
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="form-input">
+                <a href="{{ path('fos_user_resetting_request') }}" class="action-forgotten-your-password">Have you forgotten your password?</a>
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="form-input buttons no-margin-bottom">
+                <button type="submit" name="_submit" id="_submit" class="button ui-button-green action-login" data-icon-primary="ui-icon-key">Login</button>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock fos_user_content %}

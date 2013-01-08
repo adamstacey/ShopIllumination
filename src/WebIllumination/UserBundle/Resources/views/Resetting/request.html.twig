@@ -1,0 +1,38 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}Forgotten your password? | {{ parent() }}{% endblock %}
+{% block page_header %}Forgotten your password?{% endblock %}
+
+{% block fos_user_content %}
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="form" id="form-request-password">
+        <div class="clearfix">
+            {% if invalid_username is defined %}
+                <div class="info-message ui-status-highlight">
+                    <span class="info-message-icon ui-icon ui-icon-info"></span>
+                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+                    <div class="clear"></div>
+                </div>
+            {% else %}
+                <div class="info-message ui-status-highlight">
+                    <span class="info-message-icon ui-icon ui-icon-info"></span>
+                    <p>If you have forgotten your password enter your email address and we will email you instructions on how to reset your password.</p>
+                    <div class="clear"></div>
+                </div>
+            {% endif %}
+            <div class="clearfix">
+                <label for="username" class="form-label">
+                    <em>*</em> Your Email Address<small>Enter a valid email address</small>
+                </label>
+                <div class="form-input">
+                    <input class="full email" required="required" data-message="Enter a valid email address" type="email" id="username" name="username"  />
+                </div>
+            </div>
+
+            <div class="clearfix">
+                <div class="form-input buttons no-margin-bottom">
+                    <button type="submit" class="button action-reset-password ui-button-green" data-icon-primary="ui-icon-key">Reset Password</button>
+                    <a href="{{ path('fos_user_security_login') }}" class="button action-secure-login ui-button-blue" data-icon-primary="ui-icon-key">Back to Login</a>
+                </div>
+            </div>
+    </form>
+{% endblock fos_user_content %}

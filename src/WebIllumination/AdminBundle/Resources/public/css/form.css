@@ -402,6 +402,11 @@ hr.inset
   margin: 0 0 0 210px;
   padding: 0 0 5px 0;
 }
+.form .form-input label {
+    float: none;
+    width: auto;
+    display: inline;
+}
 .form .form-input .info-message p {
   line-height: 18px;
 }

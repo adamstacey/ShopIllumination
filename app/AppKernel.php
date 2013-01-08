@@ -27,10 +27,15 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Nelmio\SolariumBundle\NelmioSolariumBundle(),
-            new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
+            new Craue\FormFlowBundle\CraueFormFlowBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+//            new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
             new WebIllumination\ShopBundle\WebIlluminationShopBundle(),
             new WebIllumination\SiteBundle\WebIlluminationSiteBundle(),
+            new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
+            new WebIllumination\UserBundle\WebIlluminationUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

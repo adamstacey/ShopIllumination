@@ -8,7 +8,7 @@ parameters:
 
     solr_host:         localhost
     solr_port:         8080
-    solr_path:          /solr3
+    solr_path:          /solr4
 
     mailer_transport:  smtp
     mailer_host:       mail.ridedirect.co.uk
@@ -17,3 +17,5 @@ parameters:
 
     locale:            en
     secret:            90f229762b755dda3c62e49b328f84cd9c126a22
+
+    cdn_host:         http://33.33.33.10

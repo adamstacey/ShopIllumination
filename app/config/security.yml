@@ -4,7 +4,7 @@ jms_security_extra:
 
 security:
     encoders:
-        WebIllumination\AdminBundle\Entity\User:
+        WebIllumination\SiteBundle\Entity\User:
             algorithm: sha512
             iterations: 100
             encode_as_base64: true
@@ -21,27 +21,27 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        
+
         admin_orders_view_order:
            pattern:  ^/admin/orders/viewOrder
            anonymous: ~
-        
+
         admin_orders_view_delivery_note:
            pattern:  ^/admin/orders/viewDeliveryNote
            anonymous: ~
-        
+
         admin_orders_view_invoice:
            pattern:  ^/admin/orders/viewInvoice
            anonymous: ~
-        
+
         admin_orders_view_copy_order:
            pattern:  ^/admin/orders/viewCopyOrder
            anonymous: ~
-           
+
         admin_orders_import_tracking:
            pattern:  ^/admin/orders/importTracking
            anonymous: ~
-                
+
         admin_security_login:
             pattern:  ^/admin/security/login
             anonymous: ~
@@ -65,3 +65,36 @@ security:
         - { path: ^/admin/security/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/.*, roles: ROLE_ADMIN, requires_channel: http }
         - { path: ^/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+security:
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+            logout:       true
+            anonymous:    true
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/orders/importTracking/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/orders/viewOrder/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/orders/viewDeliveryNote/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/orders/viewInvoice/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/orders/viewCopyOrder/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/.*, roles: ROLE_ADMIN, requires_channel: http }
+        - { path: ^/.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN

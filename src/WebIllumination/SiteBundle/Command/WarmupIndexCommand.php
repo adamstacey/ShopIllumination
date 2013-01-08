@@ -20,10 +20,11 @@ class WarmupIndexCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        gc_enable();
         // Load products
         $em = $this->getContainer()->get('doctrine')->getManager();
         $products = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findAll();
-        $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'));
+        $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
 
         //Clear product index
         $productIndexer->delete();
@@ -33,11 +34,13 @@ class WarmupIndexCommand extends ContainerAwareCommand
         {
 //            if($i >= 20) break;
             $productIndexer->index($product);
+            gc_collect_cycles();
             $i++;
         }
 
         $output->writeln("Product indexes created");
 
         $output->writeln('Finished!');
+        gc_disable();
     }
 }

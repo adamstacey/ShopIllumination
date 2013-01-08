@@ -28,7 +28,7 @@ class WebIlluminationAdminExtension extends Extension
 		// Load services
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        
+
         // Load twig extensions
         $definition = new Definition('WebIllumination\AdminBundle\Extensions\TwigExtensions');
         $definition->addTag('twig.extension');

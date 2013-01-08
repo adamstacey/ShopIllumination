@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -17,29 +17,33 @@ framework:
         packages:
             cdn:
                 base_urls:
-                    http: [http://staging.kitchenappliancecentre.co.uk]
-                    ssl: [http://staging.kitchenappliancecentre.co.uk]
+                    http: ["%cdn_host%"]
+                    ssl: ["%cdn_host%"]
             nocdn:
                 base_urls:
-                    http: [http://staging.kitchenappliancecentre.co.uk]
-                    ssl: [http://staging.kitchenappliancecentre.co.uk]
+                    http: ["%cdn_host%"]
+                    ssl: ["%cdn_host%"]
         assets_base_urls:
-            http: [http://staging.kitchenappliancecentre.co.uk]
-            ssl: [http://staging.kitchenappliancecentre.co.uk]
+            http: ["%cdn_host%"]
+            ssl: ["%cdn_host%"]
     default_locale:  "%locale%"
     trust_proxy_headers: false # Whether or not the Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
-    session:         ~
+    session: ~
 
 # Twig Configuration
 twig:
     cache:                "%kernel.cache_dir%/twig"
     debug:                "%kernel.debug%"
+    form:
+        resources:
+            - 'WebIlluminationAdminBundle::fields.html.twig'
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [WebIlluminationShopBundle,WebIlluminationAdminBundle]
+    bundles:        [WebIlluminationAdminBundle]
+#    bundles:        [WebIlluminationShopBundle,WebIlluminationAdminBundle]
     filters:
         cssrewrite: ~
         yui_css:
@@ -69,7 +73,8 @@ doctrine:
 stof_doctrine_extensions:
     default_locale: "%locale%"
     orm:
-        default: ~
+        default:
+          timestampable: true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -96,3 +101,13 @@ nelmio_solarium:
             path: "%solr_path%"
             core: products
             timeout: 5
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: WebIllumination\UserBundle\Entity\User
+    registration:
+        form:
+            type: webillumination_user_registration
+    service:
+        user_manager: webillumination.user_manager.default

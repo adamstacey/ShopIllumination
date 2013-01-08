@@ -1,0 +1,23 @@
+<div id="listing-settings">
+	<div class="fl">
+		<div class="listing-settings-title fl">Sort By</div>
+		<select name="sort_order" id="listing-sort-order" class="fl">
+			<option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
+			<option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
+			<option{% if app.request.get('sort_order') == 'list_price:asc' %} selected="selected"{% endif %} value="list_price:asc">Price: Lowest First</option>
+			<option{% if app.request.get('sort_order') == 'list_price:desc' %} selected="selected"{% endif %} value="list_price:desc">Price: Highest First</option>
+			<option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
+		</select>
+	</div>
+    <div class="fr">
+    	<div class="listing-settings-title fl">Per Page</div>
+        <select name="limit" class="fl" id="listing-max-results">
+			<option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
+			<option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
+			<option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
+			<option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
+			<option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+		</select>
+	</div>
+    <div class="clear"></div>
+</div>

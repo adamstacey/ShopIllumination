@@ -1,5 +1,5 @@
 # Enable multistage extension
-set :stages, ["staging", "production"]
+set :stages, ["dev", "staging", "production"]
 set :default_stage, "staging"
 set :stage_dir,     "app/config/deploy"
 require 'capistrano/ext/multistage'
@@ -7,11 +7,13 @@ require 'capistrano/ext/multistage'
 # Main deployment configuration
 set :keep_releases,  5
 ssh_options[:forward_agent] = true
-#set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
 
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]
 set :webserver_user,    "apache"
+set :web_user, "apache"
+set :web_group, "apache"
 set :permission_method, :chmod
 set :use_set_permissions, true
 set :use_sudo , false
@@ -45,7 +47,7 @@ namespace :deploy do
         absolute_link = latest_release + "/" + link
       end
 
-      try_sudo "chown apache:apache -R #{absolute_link}"
+      try_sudo "chown #{web_user}:#{web_group} -R #{absolute_link}"
     end
     capifony_puts_ok
   end

@@ -1,0 +1,202 @@
+<div id="listing-filter" class="no-padding-bottom listing-filter ui-helper-hidden">
+    <div class="separator">
+        <table width="100%">
+            <tr>
+                <td width="15%" class="label">
+                    <label>Status</label>
+                </td>
+                <td>
+                    <div class="filter-checkbox fl"><input{% if 'a' in app.request.get('filter[status]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[status][]" value="a" />Active</div>
+                    <div class="filter-checkbox fl"><input{% if 'd' in app.request.get('filter[status]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[status][]" value="d" />Disabled</div>
+                    <div class="filter-checkbox fl"><input{% if 'h' in app.request.get('filter[status]', null, true)%} checked="checked"{% endif %} type="checkbox" name="filter[status][]" value="h" />Hidden</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <h5 class="no-margin-top margin-bottom-5">Filter Prices<button class="fr ui-corner-none ui-corner-tr button ui-button-blue action-show-hide-filter-section" data-filter-section="prices" data-icon-primary="ui-icon-triangle-1-s" data-icon-only="true">Filter Prices</button></h5>
+    <div id="filter-section-prices" class="filter-section ui-helper-hidden">
+        <div class="separator">
+            <table width="100%">
+                <tr>
+                    <td class="label" width="10%"><label>Cost Price:</label></td>
+                    <td width="40%">
+                        <div class="range-slider-values">
+                            <span>&pound;</span>
+                            <input type="text" autocomplete="off" class="from-value" value="" />
+                            <span>&nbsp;-&nbsp;</span>
+                            <input type="text" autocomplete="off" class="to-value" value="" />
+                        </div>
+                        <div data-from="{{ filters.costPriceFrom|default("0") }}" data-to="{{ filters.costPriceTo|default("10000") }}" id="filter-cost-price" class="range-slider"></div>
+                    </td>
+                    <td class="label" width="10%"><label>RRP:</label></td>
+                    <td width="40%">
+                        <div class="range-slider-values">
+                            <span>&pound;</span>
+                            <input type="text" autocomplete="off" class="from-value" value="" />
+                            <span>&nbsp;-&nbsp;</span>
+                            <input type="text" autocomplete="off" class="to-value" value="" />
+                        </div>
+                        <div data-from="{{ filters.recommendedRetailPriceFrom|default("0") }}" data-to="{{ filters.recommendedRetailPriceTo|default("10000") }}" id="filter-recommended-retail-price" class="range-slider"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label" width="10%"><label>List Price:</label></td>
+                    <td width="40%">
+                        <div class="range-slider-values">
+                            <span>&pound;</span>
+                            <input type="text" autocomplete="off" class="from-value" value="" />
+                            <span>&nbsp;-&nbsp;</span>
+                            <input type="text" autocomplete="off" class="to-value" value="" />
+                        </div>
+                        <div data-from="{{ filters.listPriceFrom|default("0") }}" data-to="{{ filters.listPriceTo|default("10000") }}" id="filter-list-price" class="range-slider"></div>
+                    </td>
+                    <td class="label" width="10%"><label>Discount:</label></td>
+                    <td width="40%">
+                        <div class="range-slider-values">
+                            <span>&pound;</span>
+                            <input type="text" autocomplete="off" class="from-value" value="" />
+                            <span>&nbsp;-&nbsp;</span>
+                            <input type="text" autocomplete="off" class="to-value" value="" />
+                        </div>
+                        <div data-from="{{ filters.discountFrom|default("0") }}" data-to="{{ filters.discountTo|default("1000") }}" id="filter-discount" class="range-slider"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <h5 class="no-margin-top margin-bottom-5">Filter Flags<button class="fr ui-corner-none ui-corner-tr button ui-button-blue action-show-hide-filter-section" data-filter-section="flags" data-icon-primary="ui-icon-triangle-1-s" data-icon-only="true">Filter Flags</button></h5>
+    <div id="filter-section-flags" class="filter-section ui-helper-hidden">
+        <div class="separator">
+            <table width="100%">
+                <tr>
+                    <td class="label" width="10%"><label>Available for Purchase</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[available_for_purchase]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[available_for_purchase][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[available_for_purchase]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[available_for_purchase][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>Hide Price</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[hide_price]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[hide_price][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[hide_price]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[hide_price][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>Show Price Out of Hours</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[show_price_out_of_hours]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[show_price_out_of_hours][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[show_price_out_of_hours]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[show_price_out_of_hours][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>Available to Members</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[membership_discount_available]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[membership_discount_available][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[membership_discount_available]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[membership_discount_available][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>Feature Comparison</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[feature_comparison]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[feature_comparison][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[feature_comparison]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[feature_comparison][]" value="false" />No</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="separator">
+            <table width="100%">
+                <tr>
+                    <td class="label" width="10%"><label>Download</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[download]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[download][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[download]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[download][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>Special Offer</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[special_offer]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[special_offer][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[special_offer]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[special_offer][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>Recommend</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[recommended]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[recommended][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[recommended]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[recommended][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>Accessory</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[accessory]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[accessory][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[accessory]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[accessory][]" value="false" />No</div>
+                    </td>
+                    <td class="label" width="10%"><label>New</label></td>
+                    <td width="10%">
+                        <div class="filter-checkbox"><input{% if 'true' in app.request.get('filter[new]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[new][]" value="true" />Yes</div>
+                        <div class="filter-checkbox"><input{% if 'false' in app.request.get('filter[new]', null, true) %} checked="checked"{% endif %} type="checkbox" name="filter[new][]" value="false" />No</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+        <table width="100%">
+            <tr>
+                <td rowspan="2" class="label" width="10%"><label>Brand</label></td>
+                <td width="20%">
+                    <div class="position-relative">
+                        <input placeholder="Search for brand&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-brand-search" />
+                        <span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+                    </div>
+                </td>
+                <td rowspan="2" class="label" width="10%"><label>Department</label></td>
+                <td width="60%">
+                    <div class="position-relative">
+                        <input placeholder="Search for department&hellip;" type="text" autocomplete="off" class="embedded-icon full" id="filter-department-search" />
+                        <span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <div id="filter-brands" class="filter filter-scrollable ui-corner-all">
+                        <ul>
+                            {% for brand, count in facets.facet('brands') %}
+                            <li class="filter-checkbox">
+                                <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}"  />
+                                <label for="filter-brand-{{ loop.index }}">{{ brand }} ({{ count }})</label>
+                                <div class="clear"></div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+                <td width="60%">
+                    <div id="filter-departments" class="filter filter-scrollable ui-corner-all">
+                        {#<ul>#}
+                            {#{% for department in data.departments %}#}
+                            {#<li class="filter-checkbox">#}
+                                {#<input{% for selectedDepartment in filters.department|explode("|") %}{% if selectedDepartment == department.id %} checked="checked"{% endif %} name="department" type="checkbox" id="department-{{ department.id }}" value="{{ department.id }}" />#}
+                                {#<label for="department-{{ department.id }}">{% if department.level > 0 %}{% for level in 1..department.level %}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ department.name }} ({{ department.productCount }})</label>#}
+                                {#<div class="clear"></div>#}
+                            {#</li>#}
+                            {#{% endfor %}#}
+                        {#</ul>#}
+                        <ul>
+                            {% for department, count in facets.facet('departments') %}
+                                <li class="filter-checkbox">
+                                    <input{% if department in app.request.get('filter[department_path]', null, true) %} checked="checked"{% endif %} name="filter[department_path][]" type="checkbox" value="{{ department }}" id="filter-department-{{ loop.index }}" />
+                                    <label for="filter-department-{{ loop.index }}">
+                                        {% set department_path = department|split('|') %}
+                                        {% if (department_path|length - 1) > 0 %}
+                                            {% for i in 1..((department_path|length) - 1) %}
+                                                {{ '&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' }}
+                                            {% endfor %}
+                                        {% endif %}
+                                        {{ department_path[(department_path|length)-1] }}
+                                        ({{ count }})
+                                    </label>
+                                    <div class="clear"></div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="ac">
+        <button class="button bottom-button ui-button-green action-update-results" data-icon-primary="ui-icon-refresh">Update Your Results</button>
+        <button class="button bottom-button ui-button-red action-clear-filters" data-icon-primary="ui-icon-closethick">Clear Filters</button>
+    </div>
+</div>

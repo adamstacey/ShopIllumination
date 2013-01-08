@@ -362,17 +362,17 @@ class SystemController extends Controller
     // Main menu
 	public function mainMenuAction($locale = 'en')
     {
-   		// Get the services
-    	$brandService = $this->get('web_illumination_admin.brand_service');
-    	$departmentService = $this->get('web_illumination_admin.department_service');
-   		
-    	// Get a list of departments
-    	$brands = $brandService->getBrands($locale);
-   		
-		// Get a list of departments
-		$departments = $departmentService->getAllDepartments(0, '', '', '', '', '', '', false, false, false, false, 0, 0);
+//   		// Get the services
+//    	$brandService = $this->get('web_illumination_admin.brand_service');
+//    	$departmentService = $this->get('web_illumination_admin.department_service');
+//
+//    	// Get a list of departments
+//    	$brands = $brandService->getBrands($locale);
+//
+//		// Get a list of departments
+//		$departments = $departmentService->getAllDepartments(0, '', '', '', '', '', '', false, false, false, false, 0, 0);
     	
-        return $this->render('WebIlluminationShopBundle:System:mainMenu.html.twig', array('departments' => $departments, 'brands' => $brands));
+        return $this->render('WebIlluminationShopBundle:System:mainMenu.html.twig', array('departments' => array(), 'brands' => array()));
     }
     
     // Reset the product search
