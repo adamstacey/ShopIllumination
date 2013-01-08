@@ -19,7 +19,7 @@ class Contact
     private $id;
 
 	/**
-     * @ORM\OneToOne(targetEntity="WebIllumination\UserBundle\Entity\User", inversedBy="contact")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\UserBundle\Entity\User", inversedBy="contacts")
      */
     private $user;
     

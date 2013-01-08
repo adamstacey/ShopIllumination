@@ -99,4 +99,17 @@ class User extends BaseUser
     {
         return $this->contacts;
     }
+
+    /**
+     * Set contacts
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Contact $contacts
+     * @return User
+     */
+    public function setContacts(\WebIllumination\SiteBundle\Entity\Contact $contacts = null)
+    {
+        $this->contacts = $contacts;
+    
+        return $this;
+    }
 }

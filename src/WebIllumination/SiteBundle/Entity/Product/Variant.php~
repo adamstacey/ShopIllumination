@@ -29,7 +29,7 @@ class Variant
     private $features;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Description", mappedBy="variant", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\VariantDescription", mappedBy="variant", cascade={"all"})
      */
     private $descriptions;
 
@@ -588,12 +588,13 @@ class Variant
     /**
      * Add descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
      * @return Variant
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
     {
         $this->descriptions[] = $descriptions;
+        $descriptions->setVariant($this);
     
         return $this;
     }
@@ -601,9 +602,9 @@ class Variant
     /**
      * Remove descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Description $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\Description $descriptions)
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
     {
         $this->descriptions->removeElement($descriptions);
     }
@@ -621,7 +622,7 @@ class Variant
     /**
      * Get description
      *
-     * @return Description
+     * @return VariantDescription
      */
     public function getDescription()
     {
