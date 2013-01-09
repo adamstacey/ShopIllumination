@@ -34,7 +34,7 @@ class Variant
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToOption", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToOption", mappedBy="variant", cascade={"all"})
      */
     private $options;
 
