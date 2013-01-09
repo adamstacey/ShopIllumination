@@ -1,11 +1,11 @@
 <nav>
     <ul class="sf-menu clearfix">
     	{#{% if is_granted('ROLE_ADMIN') %}#}
-	        {#<li><a href="{{ path('admin_products') }}">Orders</a>#}
+	        {#<li><a href="{{ path('admin_products_index') }}">Orders</a>#}
 	        	{#<ul>#}
-	            	{#<li><a href="{{ path('admin_products') }}">Orders</a></li>#}
-	            	{#<li><a href="{{ path('admin_products_process_deliveries') }}">Process Deliveries</a></li>#}
-	            	{#<li><a href="{{ path('admin_products_import_tracking') }}">Import Courier Tracking</a></li>#}
+	            	{#<li><a href="{{ path('admin_products_index') }}">Orders</a></li>#}
+	            	{#<li><a href="{{ path('admin_products_index_process_deliveries') }}">Process Deliveries</a></li>#}
+	            	{#<li><a href="{{ path('admin_products_index_import_tracking') }}">Import Courier Tracking</a></li>#}
 	            {#</ul>#}
 	        {#</li>#}
 	        {#<li><a href="#">Catalogue</a>#}
@@ -14,7 +14,7 @@
 	            	{#<li><a href="{{ path('admin_departments') }}">Departments</a></li>#}
 	            	{#<!--<li><a href="{{ path('admin_product_options') }}">Product Options</a></li>-->#}
 	            	{#<!--<li><a href="{{ path('admin_product_features') }}">Product Features</a></li>-->#}
-	                {#<li><a href="{{ path('admin_products') }}">Products</a></li>#}
+	                {#<li><a href="{{ path('admin_products_index') }}">Products</a></li>#}
 	            {#</ul>#}
 	        {#</li>#}
 	        {#<li><a href="#">Marketing</a>#}
@@ -27,7 +27,7 @@
 	        {#<li><a href="#">Tools</a>#}
 	            {#<ul>#}
 	            	{#<li><a href="{{ path('system_build_url') }}">Build URL Tool</a></li>#}
-	            	{#<li><a href="{{ path('admin_products_price_import') }}">Import Product Prices</a></li>#}
+	            	{#<li><a href="{{ path('admin_products_index_price_import') }}">Import Product Prices</a></li>#}
 	            {#</ul>#}
 	        {#</li>#}
 	        {#<!--<li class="fr"><a href="#" class="arrow-down">Your Account</a>#}
@@ -38,7 +38,7 @@
 	            {#</ul>#}
 	        {#</li>-->#}
 	    {#{% else %} #}
-	    	{#<li><a href="{{ path('admin_products') }}">Control Panel</a></li>#}
+	    	{#<li><a href="{{ path('admin_products_index') }}">Control Panel</a></li>#}
 	    {#{% endif %}#}
     </ul>
 </nav>

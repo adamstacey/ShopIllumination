@@ -19,7 +19,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Contact", mappedBy="user", cascade={"persist", "remove"})
      */
     private $contacts;
 
