@@ -34,7 +34,7 @@
                     {% if not searching %}
                         <button id="filter-button" class="button ui-button-blue fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-s">Filter Results</button>
                     {% else %}
-                        <a href="{{ path('admin_products') }}" id="button-go-back" class="fr ui-corner-all button ui-button-blue icon-set-white portlet-header-button" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+                        <a href="{{ path('admin_products_index') }}" id="button-go-back" class="fr ui-corner-all button ui-button-blue icon-set-white portlet-header-button" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
                     {% endif %}
                     <h2 id="listing-count">Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
                 </header>
@@ -70,12 +70,12 @@
                                             <input data-id="{{ item.id }}" type="checkbox" class="action-select" id="listing-select-{{ item.id }}" value="1" />
                                         </td>
                                         <td width="50" class="al small white">
-                                            <a href="{{ path('admin_products_update', {'id': item.id}) }}">
+                                            <a href="{{ path('admin_products_edit', {'id': item.id}) }}">
                                                 <img src="{{ asset(item.thumbnail_path) }}" border="0" alt="{{ item.header }}" width="50" height="50">
                                             </a>
                                         </td>
                                         <td class="al small">
-                                            <a href="{{ path('admin_products_update', {'id': item.id}) }}" data-id="{{ item.id }}">{{ item.header }}</a>
+                                            <a href="{{ path('admin_products_edit', {'id': item.id}) }}" data-id="{{ item.id }}">{{ item.header }}</a>
                                             <br />
                                             <span class="small">
                                                 {{ item.department_path[0]|replace({'|': " > "}) }}
@@ -99,11 +99,11 @@
                                                 <option{% if item.status == 'd' %} selected="selected"{% endif %} value="d">Disabled</option>
                                             </select>
                                         </td>
-                                        <td width="1" class="buttons-container ac no-wrap">
+                                        <td width="68" class="buttons-container ac no-wrap">
                                             <img id="buttons-spacer" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="0" alt="" />
                                             <div class="clear"></div>
-                                            <button data-id="{{ item.id }}" class="ui-corner-none ui-corner-tr ui-corner-br button ui-button-red action-confirm-delete" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</button>
-                                            <a href="{{ path('admin_products_update', {'id': item.id}) }}" class="ui-corner-none ui-corner-tl ui-corner-bl button" data-icon-primary="ui-icon-pencil" data-icon-only="true">Update</a>
+                                            <a href="{{ path('admin_products_delete', {'id': item.id}) }}" class="ui-corner-right button ui-button-red action-confirm-delete" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</a>
+                                            <a href="{{ path('admin_products_edit', {'id': item.id}) }}" class="ui-corner-left button" data-icon-primary="ui-icon-pencil" data-icon-only="true">Update</a>
                                         </td>
                                     </tr>
                                     <tr class="ui-helper-hidden more-information" id="more-information-{{ item.id }}">

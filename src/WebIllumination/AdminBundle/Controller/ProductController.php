@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
@@ -21,7 +22,7 @@ use Solarium_Query_Select;
 class ProductController extends Controller
 {
     /**
-     * @Route("/", name="admin_products")
+     * @Route("/", name="admin_products_index")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -103,10 +104,10 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/add", name="admin_product_add")
+     * @Route("/new", name="admin_products_index_new")
      * @Template()
      */
-    public function addAction(Request $request)
+    public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -145,13 +146,12 @@ class ProductController extends Controller
                     $product->addVariant($variant);
                 }
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($product);
                 $em->flush();
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('admin_products'));
+                return $this->redirect($this->generateUrl('admin_products_index'));
             }
         }
 
@@ -162,33 +162,24 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/{id}/update", name="admin_products_update")
+     * @Route("/{id}/edit", name="admin_products_edit")
      * @Template()
      */
     public function editAction($id)
     {
+    }
+
+    /**
+     * @Route("/{id}/delete", name="admin_products_delete")
+     * @ParamConverter("product", class="WebIllumination\SiteBundle\Entity\Product")
+     * @Template()
+     */
+    public function deleteAction(Product $product)
+    {
         $em = $this->getDoctrine()->getManager();
 
-        // Get the filters session
-        $filters = $this->get('session')->get('filters');
-        // Get the settings session
-        $settings = $this->get('session')->get('settings');
-
-        // Fetch products
-        $products = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->findAll();
-        // Fetch brands
-        $brands = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->findAll();
-        // Fetch departments
-        $brands = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findAll();
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $products,
-            $this->get('request')->query->get('page', 1),
-            10
-        );
-
-        return array('filters' => $filters, 'settings' => $settings, 'pagination' => $paginator);
+        $em->remove($product);
+        $em->flush();
     }
 
     /**
