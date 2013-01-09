@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="brands")
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Brand
 {
@@ -86,6 +87,35 @@ class Brand
     private $updatedAt;
 
     /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function isDeleted()
+    {
+        return $this->getDeletedAt() !== null;
+    }
+
+    public function __toString()
+    {
+        if(count($this->descriptions) > 0)
+        {
+            return $this->descriptions[0]->getName();
+        } else {
+            return "";
+        }
+    }
+
+    /**
      * Get statusColour
      *
      * @return string
@@ -106,24 +136,6 @@ class Brand
                 break;
         }
         return '';
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function __toString()
-    {
-        if(count($this->descriptions) > 0)
-        {
-            return $this->descriptions[0]->getName();
-        } else {
-            return "";
-        }
     }
 
     /**
@@ -468,5 +480,15 @@ class Brand
         }
 
         return null;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 }

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="WebIllumination\SiteBundle\Repository\OrderRepository")
  * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Order
 {
@@ -339,6 +340,16 @@ class Order
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    public function isDeleted()
+    {
+        return $this->getDeletedAt() !== null;
+    }
     
     /**
      * Get statusColour
@@ -2065,5 +2076,15 @@ class Order
     public function getNotes()
     {
         return $this->notes;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 }

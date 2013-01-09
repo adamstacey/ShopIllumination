@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="contacts")
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Contact
 {
@@ -95,6 +96,12 @@ class Contact
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
     /**
      * Constructor
      */
@@ -104,6 +111,11 @@ class Contact
         $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
         $this->numbers = new \Doctrine\Common\Collections\ArrayCollection();
         $this->webAddresses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function isDeleted()
+    {
+        return $this->getDeletedAt() !== null;
     }
 
     /**
@@ -485,5 +497,15 @@ class Contact
     public function setUser($user)
     {
         $this->user = $user;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 }

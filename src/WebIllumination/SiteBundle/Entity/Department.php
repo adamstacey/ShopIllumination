@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity()
  * @ORM\Table(name="departments")
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Department
 {
@@ -106,6 +107,16 @@ class Department
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    public function isDeleted()
+    {
+        return $this->getDeletedAt() !== null;
+    }
     
     /**
      * Get statusColour
@@ -638,5 +649,15 @@ class Department
     public function getFeatures()
     {
         return $this->features;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 }

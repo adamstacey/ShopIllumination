@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="product_variants")
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Variant
 {
@@ -115,6 +116,11 @@ class Variant
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
     private $active;
 
     /**
@@ -126,6 +132,11 @@ class Variant
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function isDeleted()
+    {
+        return $this->getDeletedAt() !== null;
     }
 
     /**
@@ -642,5 +653,15 @@ class Variant
     public function setActive($active)
     {
         $this->active = $active;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
     }
 }
