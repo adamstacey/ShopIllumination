@@ -104,7 +104,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/new", name="admin_products_index_new")
+     * @Route("/new", name="admin_products_new")
      * @Template()
      */
     public function newAction(Request $request)
@@ -172,7 +172,6 @@ class ProductController extends Controller
     /**
      * @Route("/{id}/delete", name="admin_products_delete")
      * @ParamConverter("product", class="WebIllumination\SiteBundle\Entity\Product")
-     * @Template()
      */
     public function deleteAction(Product $product)
     {
@@ -180,6 +179,8 @@ class ProductController extends Controller
 
         $em->remove($product);
         $em->flush();
+
+        return $this->redirect('admin_products_index');
     }
 
     /**

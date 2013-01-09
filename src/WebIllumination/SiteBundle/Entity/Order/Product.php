@@ -19,9 +19,9 @@ class Product
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="products")
+     * @ORM\Column(name="order_id", type="integer", length=11)
      */
-    private $order;
+    private $orderId;
 
     /**
      * @ORM\Column(name="basket_item_id", type="string", length=255)
@@ -29,14 +29,69 @@ class Product
     private $basketItemId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product")
+     * @ORM\Column(name="product_id", type="integer", length=11)
+     */
+    private $productId;
+
+    /**
+     * @ORM\Column(name="product", type="string", length=255)
      */
     private $product;
+
+    /**
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+
+    /**
+     * @ORM\Column(name="header", type="string", length=255)
+     */
+    private $header;
+
+    /**
+     * @ORM\Column(name="product_code", type="string", length=255)
+     */
+    private $productCode;
+
+    /**
+     * @ORM\Column(name="brand", type="string", length=255)
+     */
+    private $brand;
+
+    /**
+     * @ORM\Column(name="short_description", type="string", length=255)
+     */
+    private $shortDescription;
 
     /**
      * @ORM\Column(name="quantity", type="integer", length=11)
      */
     private $quantity;
+
+    /**
+     * @ORM\Column(name="unit_cost", type="decimal", precision=12, scale=4)
+     */
+    private $unitCost;
+
+    /**
+     * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
+     */
+    private $recommendedRetailPrice;
+
+    /**
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
+     */
+    private $discount;
+
+    /**
+     * @ORM\Column(name="savings", type="decimal", precision=12, scale=4)
+     */
+    private $savings;
+
+    /**
+     * @ORM\Column(name="vat", type="decimal", precision=12, scale=4)
+     */
+    private $vat;
 
     /**
      * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4)
@@ -53,6 +108,16 @@ class Product
      */
     private $selectedOptionLabels;
 
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    }
+
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
@@ -64,221 +129,4 @@ class Product
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set basketItemId
-     *
-     * @param string $basketItemId
-     * @return Product
-     */
-    public function setBasketItemId($basketItemId)
-    {
-        $this->basketItemId = $basketItemId;
-    
-        return $this;
-    }
-
-    /**
-     * Get basketItemId
-     *
-     * @return string 
-     */
-    public function getBasketItemId()
-    {
-        return $this->basketItemId;
-    }
-
-    /**
-     * Set quantity
-     *
-     * @param integer $quantity
-     * @return Product
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-    
-        return $this;
-    }
-
-    /**
-     * Get quantity
-     *
-     * @return integer 
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * Set subTotal
-     *
-     * @param float $subTotal
-     * @return Product
-     */
-    public function setSubTotal($subTotal)
-    {
-        $this->subTotal = $subTotal;
-    
-        return $this;
-    }
-
-    /**
-     * Get subTotal
-     *
-     * @return float 
-     */
-    public function getSubTotal()
-    {
-        return $this->subTotal;
-    }
-
-    /**
-     * Set selectedOptions
-     *
-     * @param string $selectedOptions
-     * @return Product
-     */
-    public function setSelectedOptions($selectedOptions)
-    {
-        $this->selectedOptions = $selectedOptions;
-    
-        return $this;
-    }
-
-    /**
-     * Get selectedOptions
-     *
-     * @return string 
-     */
-    public function getSelectedOptions()
-    {
-        return $this->selectedOptions;
-    }
-
-    /**
-     * Set selectedOptionLabels
-     *
-     * @param string $selectedOptionLabels
-     * @return Product
-     */
-    public function setSelectedOptionLabels($selectedOptionLabels)
-    {
-        $this->selectedOptionLabels = $selectedOptionLabels;
-    
-        return $this;
-    }
-
-    /**
-     * Get selectedOptionLabels
-     *
-     * @return string 
-     */
-    public function getSelectedOptionLabels()
-    {
-        return $this->selectedOptionLabels;
-    }
-
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Product
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * Set updatedAt
-     *
-     * @param \DateTime $updatedAt
-     * @return Product
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
-    
-        return $this;
-    }
-
-    /**
-     * Get updatedAt
-     *
-     * @return \DateTime 
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * Set order
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Order $order
-     * @return Product
-     */
-    public function setOrder(\WebIllumination\SiteBundle\Entity\Order $order = null)
-    {
-        $this->order = $order;
-    
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Order 
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * Set product
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Order\Product $product
-     * @return Product
-     */
-    public function setProduct(\WebIllumination\SiteBundle\Entity\Order\Product $product = null)
-    {
-        $this->product = $product;
-    
-        return $this;
-    }
-
-    /**
-     * Get product
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Order\Product 
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
 }

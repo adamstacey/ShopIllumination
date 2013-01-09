@@ -64,15 +64,16 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
-        metadata_cache_driver: apc
-        query_cache_driver: apc
-        result_cache_driver: apc
-        filters:
-            softdeleteable:
-                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
-                enabled: true
-
+        entity_managers:
+            default:
+                auto_mapping: true
+                metadata_cache_driver: apc
+                query_cache_driver: apc
+                result_cache_driver: apc
+                filters:
+                    softdeleteable:
+                        class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                        enabled: true
 
 # Doctrine Extensions Configuration
 stof_doctrine_extensions:
@@ -80,6 +81,7 @@ stof_doctrine_extensions:
     orm:
         default:
           timestampable: true
+          softdeleteable: true
 
 # Swiftmailer Configuration
 swiftmailer:
