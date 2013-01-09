@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="WebIllumination\SiteBundle\Repository\OrderRepository")
  * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks()
- * @Gedmo\SoftDeleteable(fieldName="deletedAt")
+
  */
 class Order
 {

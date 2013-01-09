@@ -4,19 +4,19 @@
     // Behind the scenes method deals with browser
     // idiosyncrasies and such
     $.caretTo = function (el, index) {
-        if (el.createTextRange) { 
-            var range = el.createTextRange(); 
-            range.move("character", index); 
-            range.select(); 
-        } else if (el.selectionStart != null) { 
-            el.focus(); 
-            el.setSelectionRange(index, index); 
+        if (el.createTextRange) {
+            var range = el.createTextRange();
+            range.move("character", index);
+            range.select();
+        } else if (el.selectionStart != null) {
+            el.focus();
+            el.setSelectionRange(index, index);
         }
     };
-    
+
     // Another behind the scenes that collects the
     // current caret position for an element
-    
+
     // TODO: Get working with Opera
     $.caretPos = function (el) {
         if ("selection" in document) {
@@ -43,22 +43,22 @@
         if (typeof(index) === "undefined") {
             return $.caretPos(this.get(0));
         }
-        
+
         return this.queue(function (next) {
             if (isNaN(index)) {
                 var i = $(this).val().indexOf(index);
-                
+
                 if (offset === true) {
                     i += index.length;
                 } else if (typeof(offset) !== "undefined") {
                     i += offset;
                 }
-                
+
                 $.caretTo(this, i);
             } else {
                 $.caretTo(this, index);
             }
-            
+
             next();
         });
     };
@@ -80,7 +80,7 @@
 // Enables cross-browser* html5 placeholder for inputs, by first testing
 // for a native implementation before building one.
 //
-// USAGE: 
+// USAGE:
 //$('input[placeholder]').placeholder();
 
 // Return a helper with preserved width of cells
@@ -95,7 +95,7 @@ var fixWidthHelper = function(e, ui) {
     $.fn.placeholder = function (options) {
         return this.each(function () {
             if (!("placeholder" in document.createElement(this.tagName.toLowerCase()))) {
-                var $this = $(this), 
+                var $this = $(this),
                 placeholder = $this.attr('placeholder');
                 $this.val(placeholder).data('color', $this.css('color')).css('color', '#aaa');
                 $this
@@ -103,7 +103,7 @@ var fixWidthHelper = function(e, ui) {
                         if ($.trim($this.val()) === placeholder) {
                             $this.val('').css('color', $this.data('color'));
                         }
-                    }) 
+                    })
                 .blur(function () {
                         if (!$.trim($this.val())) {
                             $this.val(placeholder).data('color', $this.css('color')).css('color', '#aaa');
@@ -172,11 +172,7 @@ function checkMaximumCharcaters($object, $maximumCharacters)
 }
 
 $(window).load(function(){
-	$("#loading").fadeOut(function(){
-    	$(this).remove();
-    	$("body").removeAttr("style");
-    });
-    
+
 	var $actionButtonsWidth = 0;
 	if ($("td.buttons-container:eq(0) .button").length > 0)
 	{
@@ -188,9 +184,9 @@ $(window).load(function(){
 	{
 		$(".buttons-spacer").width($actionButtonsWidth).attr("width", $actionButtonsWidth);
 	}
-	
+
 	checkFloatingButtons();
-		
+
 	if ($("#update-listing-filter-empty") && $("#listing"))
 	{
 		if ($("#update-listing-filter-empty").val() < 1)
@@ -198,7 +194,7 @@ $(window).load(function(){
 			$("html, body").animate({scrollTop: $("#listing").offset().top - 20}, 'slow');
 		}
 	}
-	
+
 	if ($("#wrapper section.main-section nav ul li").length > 0)
 	{
 		var $minimumHeight = 20;
@@ -211,10 +207,10 @@ $(window).load(function(){
 		$("#wrapper section.main-section nav").css("min-height", $minimumHeight);
 		$("#wrapper section.main-section div.main-content").css("min-height", $("#wrapper section.main-section nav").outerHeight(true));
 	}
-	
+
 	$(".preview-list table tr:odd:not(.no-row-colour)").addClass("odd");
 	$("table.data-table > tbody > tr:odd:not(.no-row-colour)").addClass("odd");
-		
+
 	if ($(".sidebar-tabs").length > 0)
 	{
 		$(".sidebar-tabs").each(function() {
@@ -229,28 +225,28 @@ $(window).load(function(){
 			}
 		});
 	}
-	
+
 	if ($("a.auto-click").length > 0)
 	{
 		$("#ajax_loading").show();
 		window.setTimeout(function() {
 			$("a.auto-click")[0].click();
 			$("#ajax_loading").hide();
-		}, 5000);	
+		}, 5000);
 	}
-	
+
 	$("div.selector > select.ui-corner-none").each(function() {
 		$(this).parent().addClass("ui-corner-none").find("span").addClass("ui-corner-none");
 	});
-	
+
 });
 
 function resetFromValidation()
 {
 	$(".has-validation").validator({
-        position : 'center right', 
-        offset : [0, -250], 
-        messageClass : 'form-error', 
+        position : 'center right',
+        offset : [0, -250],
+        messageClass : 'form-error',
         errorInputEvent: 	'blur',
         inputEvent: 	'keyup',
         message : '<div><em/></div>'// em element is the arrow
@@ -304,7 +300,7 @@ function updateResults()
 				$("#"+$(this).attr("data-update-object")).val("|"+$checkBoxValues.join("|")+"|");
 			} else {
 				$("#"+$(this).attr("data-update-object")).val("");
-			}			
+			}
 		});
 	});
 	$("#update-listing-current-page").val("1");
@@ -338,15 +334,15 @@ function updateFlatSortableList($flatSortableListObjectName)
 
 // perform JavaScript after the document is scriptable.
 $(document).ready(function () {
-	
+
 	$("#ajax_loading").hide();
-	
+
 	if ($(".floating-buttons-toolbar"))
 	{
-		$("body").css("padding-bottom", $(".floating-buttons-toolbar").outerHeight(true)+"px");
+		$("footer").css("margin-bottom", $(".floating-buttons-toolbar").outerHeight(true)+"px");
 	}
-	
-	
+
+
 	$("nav li").each(function () {
 	    var $dataNotification = $(this).attr("data-notification");
 	    if (($(this).attr("data-notification") != "") && ($(this).attr("data-notification") != undefined))
@@ -354,7 +350,7 @@ $(document).ready(function () {
 	    	$(this).append('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
 	    }
     });
-	
+
 	$.waypoints.settings.scrollThrottle = 20;
 	if ($("#float-buttons"))
 	{
@@ -364,11 +360,11 @@ $(document).ready(function () {
 		      return $.waypoints("viewportHeight") - $(this).outerHeight();
 		}});
 	}
-	
+
 	$(".action-hide").live('click', function() {
 		$("#"+$(this).attr("data-object-to-hide")).hide();
 	});
-	
+
 	$(".form-element .info-message-icon, .form-element .info-message-icon-left, .form-element .info-message-icon-right").live('mouseenter', function() {
 		var $helpMessage = $(this).attr("data-help-container");
 		$("#form-help-"+$helpMessage).slideDown();
@@ -376,11 +372,11 @@ $(document).ready(function () {
 	$(".form-help").live('mouseleave', function() {
 		$(this).slideUp();
 	});
-	
+
 	$("form:not(.has-validation)").submit(function() {
 		$("#ajax_loading").show();
 	});
-	
+
 	if ($("#update-listing-pagination"))
 	{
 		var $pagination = parseInt($("#update-listing-pagination").val());
@@ -431,7 +427,7 @@ $(document).ready(function () {
 		$("#update-listing-current-page").val("1");
 		$("#form-update-listing").submit();
 	});
-	
+
 	$("select.filter-listing").live('change', function() {
 		$("#ajax_loading").show();
 		var $listingObjectName = $(this).attr("data-listing-object");
@@ -490,11 +486,11 @@ $(document).ready(function () {
 		checkFloatingButtons();
 		$("#ajax_loading").hide();
 	});
-	
+
 	$("select.quick-link").live('change', function(event) {
 		window.location = $(this).val();
 	});
-		
+
 	$(".quick-filter").live('keypress', function(event) {
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
@@ -558,13 +554,13 @@ $(document).ready(function () {
 		}
 		return true;
 	});
-	
+
 	$(".action-increase-quantity").live('click', function() {
 		var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
 		var $newQuantity = parseInt($quantityObject.val()) + 1;
 		$quantityObject.val($newQuantity).change();
 	});
-	
+
 	$(".action-decrease-quantity").live('click', function() {
 		var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
 		var $newQuantity = parseInt($quantityObject.val()) - 1;
@@ -574,7 +570,7 @@ $(document).ready(function () {
 		}
 		$quantityObject.val($newQuantity).change();
 	});
-	
+
 	$("button.apply-to-all").live('click', function() {
 		$("select.apply-to-all").each(function() {
 			if ($(this).val() != '')
@@ -593,7 +589,7 @@ $(document).ready(function () {
 			}
 		});
 	});
-	
+
 	$(".action-quick-search").live('click', function() {
 		$("#ajax_loading").show();
 		if ($("#form-quick-search").val())
@@ -626,10 +622,10 @@ $(document).ready(function () {
 		$("#listing-filter input[type='checkbox']").removeAttr("checked").parent().removeClass("checked");
 		updateResults();
 	});
-	
-	
-	
-	
+
+
+
+
 	$("#form-quick-search").live('keypress', function(event) {
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
@@ -654,7 +650,7 @@ $(document).ready(function () {
 			}
 		}
 	});
-	
+
 	$("a.extra-action, button.extra-action").live('click', function() {
 		$("#ajax_loading").show();
 		var $formAction = $(this).attr('data-form-action');
@@ -670,7 +666,7 @@ $(document).ready(function () {
 		$("#form-extra-action").val($(this).attr("data-extra-action"));
 		$("#form-update").submit();
 	});
-	
+
 	$("select.extra-action").live('change', function() {
 		$("#ajax_loading").show();
 		var $optionObject = $(this).find("option[value='"+$(this).val()+"']");
@@ -690,8 +686,8 @@ $(document).ready(function () {
 		$(this).find("option:eq(0)").attr("selected", "selected");
 		$("#form-update").submit();
 	});
-	
-	
+
+
 	$(".maximum-characters").each(function() {
 		var $object = $(this);
 		var $maximumCharacters = $(this).attr("data-maximum-characters");
@@ -704,7 +700,7 @@ $(document).ready(function () {
 		var $maximumCharactersObject = $("#"+$(this).attr("data-maximum-characters-object"));
 		$maximumCharactersObject.html(checkMaximumCharcaters($object, $maximumCharacters));
 	});
-	
+
 	$("#form-update table.data-table td input, #form-update table.data-table td textarea, #form-update table.data-table td select").live('change', function() {
 		if (!$(this).hasClass("action-select"))
 		{
@@ -723,7 +719,7 @@ $(document).ready(function () {
 			$("tr#item-"+$itemId+" td.select div.checker span").addClass("checked");
 		}
 	});
-	
+
 	$("#form-update table.data-table td input").live('keypress', function(event) {
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
@@ -731,7 +727,7 @@ $(document).ready(function () {
 			event.preventDefault();
 		}
 	});
-	
+
 	$(".flat-sortable-list img").live('mousedown', function(event) {
 		event.preventDefault();
 		return false;
@@ -742,7 +738,7 @@ $(document).ready(function () {
 			updateFlatSortableList(ui.item.attr("data-flat-sortable-list-object"));
 		}
    	}).disableSelection();
-	
+
 	$("input.free-text").live('keypress', function(event) {
 		var $flatSortableListObjectName = $(this).attr("data-flat-sortable-list-object")
 		var $keyCode = event.keyCode || event.which;
@@ -756,7 +752,7 @@ $(document).ready(function () {
 		var $flatSortableListObjectName = $(this).parent().attr("data-flat-sortable-list-object");
 		$(this).parent().remove();
 		updateFlatSortableList($flatSortableListObjectName);
-		
+
 	});
 	$(".flat-sortable-list-parts").live('change', function() {
 		var $freeTextObject = $("input.free-text[data-flat-sortable-list-object='"+$(this).attr("data-flat-sortable-list-object")+"']");
@@ -797,9 +793,9 @@ $(document).ready(function () {
 					$("#flat-sortable-list-"+$flatSortableListObjectFieldName+"-item-"+$nextItemNumber+" .button").each(function () {
 			            $(this).button({
 			            	icons: {
-			                	primary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-primary') : null, 
+			                	primary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-primary') : null,
 			                    secondary: $(this).attr('data-icon-primary') ? $(this).attr('data-icon-secondary') : null
-			                }, 
+			                },
 			                text: $(this).attr('data-icon-only') === 'true' ? false : true
 			            });
 			        });
@@ -808,7 +804,7 @@ $(document).ready(function () {
 			}
 		}
 	});
-	
+
 	$("#add .action-multiple-delete-add").live('click', function() {
 		if ($("#add .action-select-add:checked").length > 0)
 		{
@@ -825,8 +821,8 @@ $(document).ready(function () {
 		$("#data-add tr").removeClass("odd");
 		$("#data-add tr:odd").addClass("odd");
 	});
-	
-	
+
+
 	var fixHelper = function(e, ui) {
 		ui.children().each(function() {
 			$(this).width($(this).width());
@@ -863,18 +859,18 @@ $(document).ready(function () {
 			$("#ajax_loading").hide();
 		}
 	}).disableSelection();
-		
+
 	$(".update-filter").live('click', function() {
 		$("#ajax_loading").show();
 		$("#form-update-listing input[type='hidden']").val("");
 		$("#"+$(this).attr("data-update-object")).val("|"+$(this).attr("data-filter-value")+"|");
 		$("#update-listing-sort-order").val($("#listing-sort-order").val());
-		$("#update-listing-max-results").val(parseInt($("#listing-max-results").val()));		
+		$("#update-listing-max-results").val(parseInt($("#listing-max-results").val()));
 		$("#update-listing-current-page").val("1");
 		$("#update-listing-filter-empty").val("1");
 		$("#form-update-listing").submit();
 	});
-	
+
 	$(".tooltip-preview-left, .tooltip-preview-right").hoverIntent(function() {
 		$(".tooltip").hide();
 		var $thisObject = $(this);
@@ -959,27 +955,27 @@ $(document).ready(function () {
 	}, function() {
 		$(".tooltip").hide();
 	});
-	
+
 	$(".range-slider").each(function() {
 		var $object = $(this);
 		var $min = parseInt($object.attr('data-min'));
 		if ($min < 1)
-		{	
+		{
 			$min = 1;
 		}
 		var $fromValue = parseInt($object.attr('data-from-value'));
 		if ($fromValue < 1)
-		{	
+		{
 			$fromValue = $min;
 		}
 		var $max = parseInt($object.attr('data-max'));
 		if ($max < 1)
-		{	
+		{
 			$max = 10000;
 		}
 		var $toValue = parseInt($object.attr('data-to-value'));
 		if ($toValue < 1)
-		{	
+		{
 			$toValue = $max;
 		}
 		var $fromObject = $($object.attr('data-from-object'));
@@ -1081,7 +1077,7 @@ $(document).ready(function () {
 	$("#listing-filter input[type='checkbox']").live('click', function() {
 		updateResults();
 	});
-	
+
 	$(".action-update-your-results").live('click', function() {
 		updateResults();
 	});
@@ -1101,7 +1097,7 @@ $(document).ready(function () {
 		$("#listing-filter input[type='checkbox']").removeAttr("checked").parent().removeClass("checked");
 		updateResults();
 	});
-	
+
 	$(".action-show-hide-filter").live('click', function() {
 		$("#listing-statistics").hide();
 		if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
@@ -1174,38 +1170,7 @@ $(document).ready(function () {
 			}
 		}
 	});
-	
-	
 
-	$(".action-confirm-multiple-delete").live('click', function(event) {
-		event.preventDefault();
-		if ($("#confirm-multiple-delete"))
-		{
-			if ($("#form-save-required"))
-			{
-				if ($("#form-save-required").val() > 0)
-				{
-					$("#save-required-warning").show();
-					$("html, body").animate({scrollTop: $("#save-required-warning").offset().top - 20}, 'slow');
-				} else {
-					$("#confirm-multiple-delete").show();
-					$("html, body").animate({scrollTop: $("#confirm-multiple-delete").offset().top - 20}, 'slow');
-				}
-			} else {
-				$("#confirm-multiple-delete").show();
-				$("html, body").animate({scrollTop: $("#confirm-multiple-delete").offset().top - 20}, 'slow');
-			}
-		}
-	});
-	$(".action-cancel-multiple-delete").live('click', function() {
-		$("#form-delete").val("0");
-		$("#confirm-multiple-delete").hide();
-	});
-	$(".action-multiple-delete").live('click', function() {
-		$("#form-delete").val("1");
-		$("#form-update").submit();
-	});
-	
 	$(".action-add").live('click', function(event) {
 		if ($("#add"))
 		{
@@ -1238,7 +1203,7 @@ $(document).ready(function () {
         $("#new")[0].reset();
 		$("html, body").animate({scrollTop: 0}, 'slow');
 	});
-		
+
 	$("#button-add-another").live('click', function() {
 		$("#form-add-another").val("1");
 		return true;
@@ -1247,7 +1212,7 @@ $(document).ready(function () {
 		$("#form-add-another").val("0");
 		return true;
 	});
-	
+
 	$("#button-update-go-back").live('click', function() {
 		$("#form-go-back").val("1");
 		return true;
@@ -1256,7 +1221,7 @@ $(document).ready(function () {
 		$("#form-go-back").val("0");
 		return true;
 	});
-	
+
 	$("#add #button-listing-add-go-back").live('click', function() {
 		$("#form-go-back").val("1");
 		$("#form-update").submit();
@@ -1274,11 +1239,11 @@ $(document).ready(function () {
 		$("#form-update").submit();
 		return true;
 	});
-	
+
 	$("#add .action-add-another").live('click', function() {
 		addFormRow();
  	});
-	
+
 	$(".action-select-all").live('click', function() {
 		var $selectClass = "";
 		if ($(this).attr("data-select"))
@@ -1313,7 +1278,7 @@ $(document).ready(function () {
 			$(".action-select-all").parent().removeClass("checked");
     	}
     });
-    
+
     $(".action-select-all-add").live('click', function() {
 		if ($(".action-select-all-add").is(":checked"))
 		{
@@ -1343,26 +1308,26 @@ $(document).ready(function () {
 			$(".action-select-all-add").parent().removeClass("checked");
     	}
     });
-    
+
     $(".action-go-back").live('click', function() {
 		 window.history.back();
     });
-		
+
     if (typeof $("ul.sf-menu").superfish === 'function') {
         $("ul.sf-menu").supersubs({
-                minWidth : 15, // minimum width of sub-menus in em units 
-                maxWidth : 27, // maximum width of sub-menus in em units 
-                extraWidth : 1// extra width can ensure lines don't sometimes turn over 
-                // due to slight rounding differences and font-family 
-            }).superfish(); // call supersubs first, then superfish, so that subs are 
-        // not display:none when measuring. Call before initialising 
+                minWidth : 15, // minimum width of sub-menus in em units
+                maxWidth : 27, // maximum width of sub-menus in em units
+                extraWidth : 1// extra width can ensure lines don't sometimes turn over
+                // due to slight rounding differences and font-family
+            }).superfish(); // call supersubs first, then superfish, so that subs are
+        // not display:none when measuring. Call before initialising
         // containing tabs for same reason.
     }
-    
+
     $(".close-message").live('click', function() {
 		$(".message").fadeOut();
 	});
-    
+
     if (typeof prettyPrint === 'function') {
         prettyPrint();
         $('.prettyprint').after('<div class="clear"></div>').hover(function () {
@@ -1372,16 +1337,16 @@ $(document).ready(function () {
         }, function () {
         });
     }
-    
+
     if ($(".display").length > 0) {
         $('.display').dataTable({
                 "bJQueryUI" : true,
-                "bRetrieve": true, 
+                "bRetrieve": true,
                 "bDestroy": true,
                 "sPaginationType" : "full_numbers"
             });
     }
-    
+
     if ($(".basic-display").length > 0) {
         $('.basic-display').dataTable({
                 "bJQueryUI" : true,
@@ -1389,19 +1354,19 @@ $(document).ready(function () {
                 "bPaginate": false,
                 "bFilter": false,
                 "bInfo": false,
-                "bRetrieve": true, 
+                "bRetrieve": true,
                 "bDestroy": true
             }).fnDraw();
     }
-	
+
 	initGlobalFunctions();
-	
+
 	$(".action-image-popup").live('click', function() {
 		loadImagePopup($(this).attr("data-image-large-path"), $(this).attr("alt"), $(this).attr("data-image-size-width"), $(this).attr("data-image-size-height"));
 	});
-	
+
 	$.fx.speeds._default = 1000;
-				
+
 	$(".sidebar-tabs .ui-tabs-nav li a").click(function() {
 		if ($("#form-current-tab"))
 		{
@@ -1417,16 +1382,16 @@ function resetGlobalFunctions()
 
 function initGlobalFunctions()
 {
-        
+
     /**
      * Buttons
      */
     $('.button').each(function () {
             $(this).button({
                     icons : {
-                        primary : $(this).attr('data-icon-primary') ? $(this).attr('data-icon-primary') : null, 
+                        primary : $(this).attr('data-icon-primary') ? $(this).attr('data-icon-primary') : null,
                         secondary : $(this).attr('data-icon-primary') ? $(this).attr('data-icon-secondary') : null
-                    }, 
+                    },
                     text : $(this).attr('data-icon-only') === 'true' ? false : true
             });
             var $dataNotification = $(this).attr("data-notification");
@@ -1435,22 +1400,22 @@ function initGlobalFunctions()
 	    		$(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
 	    	}
         });
-    
-    
+
+
     /**
      * attach calendar to date inputs
      */
     $(":date").datepicker({
         dateFormat : 'dd/mm/yy'
     });
-        
+
     /**
      * Setup the Accordions
      */
     $(".accordion").accordion({
     	autoHeight: false
     });
-    
+
     /**
      * Setup the Tabs
      */
@@ -1459,44 +1424,44 @@ function initGlobalFunctions()
 	    	checkFloatingButtons();
     	}
     }).find('> .ui-tabs-nav').removeClass('ui-corner-all').addClass('ui-corner-top');
-    
-    $(".sidebar-tabs").tabs() 
-        .addClass('ui-tabs-vertical ui-helper-clearfix') 
-        .find('li').removeClass('ui-corner-top').addClass('ui-corner-left') 
-        .parents('.sidebar-tabs') 
-        .find('.ui-tabs-nav').removeClass('ui-corner-all').addClass('ui-corner-left') 
-        .parents('.sidebar-tabs') 
+
+    $(".sidebar-tabs").tabs()
+        .addClass('ui-tabs-vertical ui-helper-clearfix')
+        .find('li').removeClass('ui-corner-top').addClass('ui-corner-left')
+        .parents('.sidebar-tabs')
+        .find('.ui-tabs-nav').removeClass('ui-corner-all').addClass('ui-corner-left')
+        .parents('.sidebar-tabs')
         .find('.ui-tabs-panel').removeClass('ui-corner-bottom').addClass('ui-corner-right');
-    
+
     /**
      * Retrieve portlet state
      */
-    var collapsed = [], 
+    var collapsed = [],
     state = $.cookie && $.cookie('collapsedPortlets') ? $.cookie('collapsedPortlets') : '';
     collapsed = state.split(',');
-    
+
     /**
      * Setup Portlets
      */
     $('.portlet').each(function () {
-        var portlet = $(this), 
-        id = portlet.attr('id'), 
+        var portlet = $(this),
+        id = portlet.attr('id'),
         isCollapsed = $(this).hasClass('collapsible') && collapsed.includes(id);
-        portlet.addClass('ui-widget ui-widget-content ui-corner-all' + (isCollapsed ? ' collapsed' : '')) 
-        .find('> header:first') 
-        .addClass('ui-widget-header ui-corner-top') 
-        .parent() 
-        .find('> section:last') 
-        .addClass('ui-widget-content ui-corner-bottom') 
-        .parent() 
-        .filter('.collapsible') 
-        .find('> header:first') 
-        .append('<a href="#" class="portlet-collapse ui-corner-all" role="button"><span class="' + (isCollapsed ? 'ui-icon ui-icon-circle-plus' : 'ui-icon ui-icon-circle-minus') + '">Expand/Collapse</span></a>') 
+        portlet.addClass('ui-widget ui-widget-content ui-corner-all' + (isCollapsed ? ' collapsed' : ''))
+        .find('> header:first')
+        .addClass('ui-widget-header ui-corner-top')
+        .parent()
+        .find('> section:last')
+        .addClass('ui-widget-content ui-corner-bottom')
+        .parent()
+        .filter('.collapsible')
+        .find('> header:first')
+        .append('<a href="#" class="portlet-collapse ui-corner-all" role="button"><span class="' + (isCollapsed ? 'ui-icon ui-icon-circle-plus' : 'ui-icon ui-icon-circle-minus') + '">Expand/Collapse</span></a>')
         .find('.portlet-collapse').hover(function () {
                 $(this).addClass('ui-state-hover');
             }, function () {
                 $(this).removeClass('ui-state-hover');
-            }) 
+            })
         .click(function () {
             if (portlet.hasClass('collapsed')) {
                 $('span', this).removeClass('ui-icon-circle-plus').addClass('ui-icon-circle-minus');
@@ -1518,42 +1483,42 @@ function initGlobalFunctions()
             return false;
         });
     });
-    
+
     /**
      * Textbox Placeholder
      */
     $('input[placeholder]').placeholder();
-    
+
     /**
      * Toolbar Buttons
      */
     $(".buttonset input").addClass('no-uniform');
     $(".buttonset").addClass('ui-corner-all').buttonset();
-    
+
     /**
      * Skin select, file, checkbox and radio input elements
      */
     $(":checkbox:not(.no-uniform), :radio:not(.no-uniform), select:not(.no-uniform), :file:not(.no-uniform)").uniform();
-    
+
     /**
      * Skin Sliders
      */
     $(":range").each(function () {
-        var range = this, 
+        var range = this,
         opts = {
-            animate : true, 
-            value : $(this).val(), 
-            min : $(this).attr('min') ? parseInt($(this).attr('min'), 10) : 0, 
-            max : $(this).attr('max') ? parseInt($(this).attr('max'), 10) : 100, 
-            step : $(this).attr('step') ? parseInt($(this).attr('step'), 10) : 1, 
-            disabled : $(this).is(':disabled'), 
-            orientation : $(this).attr('data-orientation') === 'vertical' ? 'vertical' : 'horizontal', 
+            animate : true,
+            value : $(this).val(),
+            min : $(this).attr('min') ? parseInt($(this).attr('min'), 10) : 0,
+            max : $(this).attr('max') ? parseInt($(this).attr('max'), 10) : 100,
+            step : $(this).attr('step') ? parseInt($(this).attr('step'), 10) : 1,
+            disabled : $(this).is(':disabled'),
+            orientation : $(this).attr('data-orientation') === 'vertical' ? 'vertical' : 'horizontal',
             range : $(this).attr('data-range') === "true" ? true : ($(this).attr('data-range')in{
-                    min : 1, 
+                    min : 1,
                     max : 1
                 }
-                 ? $(this).attr('data-range') : false), 
-            values : $(this).attr('data-values') ? $(this).attr('data-values').split(/,/) : null, 
+                 ? $(this).attr('data-range') : false),
+            values : $(this).attr('data-values') ? $(this).attr('data-values').split(/,/) : null,
             slide : function (event, ui) {
                 $(range).val(ui.value);
                 if ($(range).attr('data-values')) {
@@ -1561,11 +1526,11 @@ function initGlobalFunctions()
                 }
                 $(range).change();
             }
-        }, 
+        },
         slider = $('<div class="slider"></div>').slider(opts);
         $(this).before(slider).hide();
     });
-    
+
     /**
      * setup progress bars
      */
@@ -1575,39 +1540,39 @@ function initGlobalFunctions()
                 value : val
             }).filter('[data-show-value=true]').find('div').append('<b>' + val + '%</b>');
     });
-    
+
     /**
      * add close buttons to closeable message boxes
      */
-    $(".message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>') 
-    .find('.message-close') 
+    $(".message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>')
+    .find('.message-close')
     .click(function () {
         $(this).parent().fadeOut();
     });
-    
+
     /**
      * html element for the help popup
      */
     $('body').append('<div class="apple_overlay black" id="overlay"><iframe class="contentWrap" style="width: 100%; height: 500px"></iframe></div>');
-    
+
     /**
      * this is the help popup
      */
     $("a.help[rel]").overlay({
-        
-        effect : 'apple', 
-        
+
+        effect : 'apple',
+
         onBeforeLoad : function () {
-            
+
             // grab wrapper element inside content
             var wrap = this.getOverlay().find(".contentWrap");
-            
+
             // load the page specified in the trigger
             wrap.attr('src', this.getTrigger().attr("href"));
         }
-        
+
     });
-    
+
     $("input.seo-url").live('keypress keyup focus', function() {
     	var $currentCaretPosition = $(this).caret();
     	$(this).val($(this).val().toLowerCase());
@@ -1651,8 +1616,8 @@ function initGlobalFunctions()
 		}
 		$(this).caret($currentCaretPosition);
 	});
-	
-    
+
+
     /**
      * Form Validators
      */
@@ -1660,25 +1625,25 @@ function initGlobalFunctions()
     $.tools.validator.fn("[type=time]", "Please supply a valid time.", function (input, value) {
         return(/^\d\d:\d\d$/).test(value);
     });
-    
+
     $.tools.validator.fn("[data-equals]", "The value you entered is not equal with the value entered in the $1 field.", function (input) {
-        var name = input.attr("data-equals"), 
+        var name = input.attr("data-equals"),
         field = this.getInputs().filter("[name=" + name + "]");
         return input.val() === field.val() ? true : [name];
     });
-    
+
     $.tools.validator.fn("[minlength]", function (input, value) {
         var min = input.attr("minlength");
-        
+
         return value.length >= min ? true : {
             en : "Please provide at least " + min + " character" + (min > 1 ? "s" : "") +"."
         };
     });
-    
+
     $.tools.validator.localizeFn("[type=time]", {
         en : 'Please supply a valid time.'
     });
-    
+
     $.tools.validator.localize("en", {
 		':email'  		: 'The email address you have entered is not valid.',
 		':number' 		: 'Please enter a number only.',
@@ -1687,14 +1652,14 @@ function initGlobalFunctions()
 		'[min]'	 		: 'The value you enter must not be less than $1.',
 		'[required]' 	: 'This field is required. Please enter a value.'
 });
-    
+
     /**
      * setup the validators
      */
     $("form.has-validation").validator({
-        position : 'center right', 
-        offset : [0, -250], 
-        messageClass : 'form-error', 
+        position : 'center right',
+        offset : [0, -250],
+        messageClass : 'form-error',
         errorInputEvent: 	'blur',
         inputEvent: 	'keyup',
         message : '<div><em/></div>'// em element is the arrow
@@ -1715,7 +1680,7 @@ function initGlobalFunctions()
 	    	return true;
 	    }
     });
-    
+
     /**
      * Animate search form in top-menu
      */
@@ -1733,7 +1698,7 @@ function initGlobalFunctions()
             }
         }, 500);
     });
-    
+
     /**
      * Fieldsets
      */
@@ -1742,7 +1707,7 @@ function initGlobalFunctions()
             marginLeft : (Math.round($(this).parent().width() / 2) - Math.round($(this).width() / 2)) + "px"
         });
     });
-    
+
     /**
      * Main Content Resized
      */
@@ -1754,7 +1719,7 @@ function initGlobalFunctions()
                 });
             });
     });
-    
+
     /**
      * Navigation
      */
@@ -1773,18 +1738,18 @@ function initGlobalFunctions()
 			}
 		}
     }
-    
+
     $('.main-section > nav a.chevron').click(function () {
         if ($(this).parent().toggleClass('collapsed').hasClass('collapsed')) {
             $('span', this).removeClass('ui-icon-circle-triangle-w').addClass('ui-icon-circle-triangle-e');
             $.cookie && $.cookie('menuCollapsed', '1', {
-                expires : adminCookieExpiry, 
+                expires : adminCookieExpiry,
                 path : "/"
             });
         } else {
             $('span', this).removeClass('ui-icon-circle-triangle-e').addClass('ui-icon-circle-triangle-w');
             $.cookie && $.cookie('menuCollapsed', '0', {
-                expires : adminCookieExpiry, 
+                expires : adminCookieExpiry,
                 path : "/"
             });
         }
@@ -1809,26 +1774,26 @@ function initGlobalFunctions()
 	    }
         return false;
     });
-    
+
     if ($(sortableName).sortable) {
         $(sortableName).sortable({
-            cursor : 'move', 
-            revert : 500, 
-            opacity : 0.7, 
-            appendTo : 'body', 
-            handle : 'header', 
-            items : '[draggable=true]', 
-            placeholder : 'portlet-placeholder grid_2', 
-            forcePlaceholderSize : true, 
+            cursor : 'move',
+            revert : 500,
+            opacity : 0.7,
+            appendTo : 'body',
+            handle : 'header',
+            items : '[draggable=true]',
+            placeholder : 'portlet-placeholder grid_2',
+            forcePlaceholderSize : true,
             update : function (event, ui) {
                 $.cookie && $.cookie(sortableCookie, $(this).sortable("toArray"), {
-                        expires : adminCookieExpiry, 
+                        expires : adminCookieExpiry,
                         path : "/"
                     });
             }
         }).disableSelection();
     }
-    
+
     $("textarea.tinymce-basic, textarea.tinymce-advanced").css("width", "100%");
     $("textarea.tinymce-basic").css("height", "100px");
     //$("textarea").autogrow();
@@ -1856,7 +1821,7 @@ function initGlobalFunctions()
 			script_url : '/bundles/webilluminationadmin/js/tinymce/tiny_mce.js',
 			theme : "advanced",
 			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist,spellchecker",
-	
+
 			theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect,|,spellchecker",
 			theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
 			theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
@@ -1868,7 +1833,7 @@ function initGlobalFunctions()
 			content_css : "/bundles/webilluminationadmin/css/content.css"
 		});
 	}
-	
+
 	$("input.show-tinymce").change(function(){
         if ($(this).val()==='1') {
             $($(this).attr("rel")).tinymce().show();
@@ -1876,17 +1841,17 @@ function initGlobalFunctions()
             $($(this).attr("rel")).tinymce().hide();
         }
     });
-    
+
     /**
      * restore the order of sortable widgets
      */
     $.cookie && restoreOrder(sortableName, sortableCookie);
-    
+
     /**
      * restore saved background
      */
     $.cookie && $.cookie('background') && changeBackground($.cookie('background'));
-    
+
     /**
      * restore saved css
      */
@@ -1922,29 +1887,29 @@ function restoreOrder(sortable, cookieName) {
     if (!list) {
         return;
     }
-    
+
     // fetch the saved cookie
     var cookie = $.cookie(cookieName);
     if (!cookie) {
         return;
     }
-    
+
     // create array from cookie
-    var IDs = cookie.split(","), 
-    
+    var IDs = cookie.split(","),
+
     // fetch current order
-    items = list.sortable("toArray"), 
-    
+    items = list.sortable("toArray"),
+
     // create associative array from current order
     current = [];
     for (var v = 0; v < items.length; v++) {
         current[items[v]] = items[v];
     }
-    
+
     for (var i = 0, n = IDs.length; i < n; i++) {
         // item id from saved order
         var itemID = IDs[i];
-        
+
         if (itemID in current) {
             // select the item according to the saved order and reappend it to the list
             $(sortable).append($(sortable).children("#" + itemID));
@@ -1954,7 +1919,7 @@ function restoreOrder(sortable, cookieName) {
 
 function saveCollapsed(collapsed) {
     $.cookie && $.cookie('collapsedPortlets', collapsed, {
-        expires : adminCookieExpiry, 
+        expires : adminCookieExpiry,
         path : "/"
     });
 }
@@ -1962,7 +1927,7 @@ function saveCollapsed(collapsed) {
 function changeBackground(newBackground) {
     $('body').removeClass($.cookie('background')).addClass(newBackground);
     $.cookie && $.cookie('background', newBackground, {
-        expires : adminCookieExpiry, 
+        expires : adminCookieExpiry,
         path : "/"
     });
 }
@@ -1970,7 +1935,7 @@ function changeBackground(newBackground) {
 function changeUicolor(newcss) {
     $('link.uicolor').attr('href', newcss);
     $.cookie && $.cookie('css', newcss, {
-        expires : adminCookieExpiry, 
+        expires : adminCookieExpiry,
         path : "/"
     });
 }
@@ -1978,18 +1943,18 @@ function changeUicolor(newcss) {
 /**
  * Custom jQuery Tools Overlay Effect, thanks to the great guys at flowplayer.org :)
  */
-// create custom animation algorithm for jQuery called "drop" 
+// create custom animation algorithm for jQuery called "drop"
 $.easing.drop = function (x, t, b, c, d) {
     return - c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;
 };
 
 // loading animation
 $.tools.overlay.addEffect("drop", function (css, done) {
-    
+
     // use Overlay API to gain access to crucial elements
-    var conf = this.getConf(), 
+    var conf = this.getConf(),
     overlay = this.getOverlay();
-    
+
     // determine initial position for the overlay
     if (conf.fixed) {
         css.position = 'fixed';
@@ -1998,22 +1963,22 @@ $.tools.overlay.addEffect("drop", function (css, done) {
         css.left += $(window).scrollLeft();
         css.position = 'absolute';
     }
-    
+
     // position the overlay and show it
     overlay.css(css).show();
-    
+
     // begin animating with our custom easing
     overlay.animate({
-            top : '+=55', 
-            opacity : 1, 
+            top : '+=55',
+            opacity : 1,
             width : '+=20'
         }, 400, 'drop', done);
-    
+
     /* closing animation */
 }, function (done) {
     this.getOverlay().animate({
-            top : '-=55', 
-            opacity : 0, 
+            top : '-=55',
+            opacity : 0,
             width : '-=20'
         }, 300, 'drop', function () {
             $(this).hide();

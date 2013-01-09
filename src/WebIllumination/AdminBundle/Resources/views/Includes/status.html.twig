@@ -1,11 +1,13 @@
 {% spaceless %}
+<span>
     {% if item.isDeleted %}
-        {{ 'red' }}
+        {{ 'Deleted' }}
     {% elseif item.status == 'a' %}
-        {{ 'green' }}
+        {{ 'Green' }}
     {% elseif item.status == 'h' %}
-        {{ 'amber' }}
+        {{ 'Amber' }}
     {% elseif item.status == 'd' %}
-        {{ 'red' }}
+        {{ 'Disabled' }}
     {% endif %}
+</span>
 {% endspaceless %}

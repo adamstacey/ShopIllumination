@@ -35,6 +35,8 @@ class ProductIndexer extends Indexer
         
         $document->setField('id', $product->getId());
         $document->setField('brand_id', $product->getBrand()->getId());
+        $document->setField('isGroup', $product->getType() === 'g');
+        $document->setField('isDeleted', $product->getDeletedAt() !== null);
 
         foreach($product->getDepartments() as $department)
         {
@@ -152,7 +154,7 @@ class ProductIndexer extends Indexer
     function delete($product = null)
     {
         $delete = $this->getSolarium()->createUpdate();
-        $delete->addDeleteQuery(null !== $product ? $product->getId() : '*:*');
+        $delete->addDeleteQuery(null !== $product ? 'id:'.$product->getId() : '*:*');
         $delete->addCommit();
 
         $this->getSolarium()->update($delete);

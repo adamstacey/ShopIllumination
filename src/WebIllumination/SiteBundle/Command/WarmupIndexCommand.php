@@ -28,19 +28,20 @@ class WarmupIndexCommand extends ContainerAwareCommand
 
         //Clear product index
         $productIndexer->delete();
+        unset($productIndexer);
 
-        $i = 0;
-        foreach($products as $product)
+        for($i = count($products) - 1; $i >= 0; $i--)
         {
-//            if($i >= 20) break;
+            $product = $products[$i];
+            unset($products[$i]);
+            $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
             $productIndexer->index($product);
+
             gc_collect_cycles();
-            $i++;
         }
 
         $output->writeln("Product indexes created");
 
         $output->writeln('Finished!');
-        gc_disable();
     }
 }

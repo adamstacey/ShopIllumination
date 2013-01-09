@@ -5,8 +5,10 @@ namespace WebIllumination\AdminBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
@@ -23,6 +25,7 @@ class ProductController extends Controller
 {
     /**
      * @Route("/", name="admin_products_index")
+     * @Method({"GET"})
      * @Template()
      */
     public function indexAction(Request $request)
@@ -104,6 +107,48 @@ class ProductController extends Controller
     }
 
     /**
+     * @Route("/", name="admin_products_index_post")
+     * @Method({"POST"})
+     */
+    public function indexPostAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        switch($request->request->get('_action'))
+        {
+            case 'update':
+                $status = $request->request->get('status');
+                foreach($request->request->get('_selected', array()) as $productId)
+                {
+                    $product = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($productId);
+                    if($product)
+                    {
+                        $product->setStatus($status[$productId]);
+                        $em->persist($product);
+                        $em->flush();
+                    }
+                }
+
+                break;
+            case 'delete':
+                die("Wut");
+                foreach($request->request->get('_selected', array()) as $productId)
+                {
+                    $product = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($productId);
+                    if($product)
+                    {
+                        $em->remove($product);
+                        $em->flush();
+                    }
+                }
+
+                break;
+        }
+
+        return $this->redirect($this->generateUrl('admin_products_index'));
+    }
+
+    /**
      * @Route("/new", name="admin_products_new")
      * @Template()
      */
@@ -171,16 +216,21 @@ class ProductController extends Controller
 
     /**
      * @Route("/{id}/delete", name="admin_products_delete")
-     * @ParamConverter("product", class="WebIllumination\SiteBundle\Entity\Product")
      */
-    public function deleteAction(Product $product)
+    public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($id);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
 
         $em->remove($product);
         $em->flush();
 
-        return $this->redirect('admin_products_index');
+        return $this->redirect($this->generateUrl('admin_products_index'));
     }
 
     /**

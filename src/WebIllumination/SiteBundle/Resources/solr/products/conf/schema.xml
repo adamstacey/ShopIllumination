@@ -488,6 +488,9 @@
         <field name="department_ids" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="product_group_id" type="string" indexed="true" stored="true" multiValued="false"/>
 
+        <field name="isGroup" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="isDeleted" type="boolean" indexed="true" stored="true" multiValued="false"/>
+
         <field name="url" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="thumbnail_path" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="large_image_path" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -538,6 +541,7 @@
         <field name="created_at" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="updated_at" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="indexed_at" type="date" indexed="true" stored="true" multiValued="false" default="NOW"/>
+        <field name="deleted_at" type="date" indexed="true" stored="true" multiValued="false" default="NOW"/>
 
         <field name="_version_" type="long" indexed="true"  stored="true"/>
 
