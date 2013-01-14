@@ -1,0 +1,3 @@
+<li{% if (app.request.attributes.get('_route') == 'admin_products_edit') %} class="current"{% endif %}>
+    <a class="navicon-set-white navicon-contact-card" href="{{ path('admin_products_edit', {'id': data.item.id}) }}">Overview</a>
+</li>

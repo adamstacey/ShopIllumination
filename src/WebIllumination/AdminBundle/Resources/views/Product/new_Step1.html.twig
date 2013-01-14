@@ -1,7 +1,7 @@
 {% block form_step %}
 <div class="portlet">
     <header>
-        <h2>{{ flow.getCurrentStepDescription() }}</h2>
+        <h2>Enter Product Details</h2>
     </header>
     <section>
         <form class="form " id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
@@ -9,29 +9,10 @@
             <div class="clearfix">
                 {{ form_errors(form) }}
             </div>
-            <div class="clearfix">
-                <div class="form-input" style="margin-left: 0;">
-                    <table class="sortable data-table" id="feature-groups-list" width="100%">
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Group</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in form.features %}
-                                <tr>
-                                    {{ form_widget(row) }}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                {% do form.features.setRendered() %}
-            </div>
+            {{ form_row(form.type, {'label': 'Type', 'help': ''}) }}
 
             {{ form_rest(form) }}
-            {% include 'WebIlluminationAdminBundle:Product:stepControls.html.twig' %}
+            {% include 'WebIlluminationAdminBundle:Product:newControls.html.twig' %}
         </form>
     </section>
 </div>
@@ -43,7 +24,7 @@
             $(this).parent().parent().remove();
         });
         jQuery('.add-row').click(function() {
-            var list = jQuery('#feature-groups-list');
+            var list = jQuery('#departments-list');
 
             var newItem = list.attr('data-prototype');
             newItem = newItem.replace(/__name__/g, count);
