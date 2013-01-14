@@ -14,7 +14,7 @@
             <div class="clearfix">
                 {{ form_label(form.departments, 'Departments', {'help': 'Select a department of the products. <br />The first department will be the products main department and the product will inherit its information from this product.'}) }}
                 <div class="form-input">
-                    <table class=" id="departments-list" width="100%">
+                    <table id="departments-list" width="100%">
                         {% for row in form.departments %}
                             <tr>
                                 {{ form_widget(row) }}
@@ -89,7 +89,7 @@
             {% endif %}
 
             {{ form_rest(form) }}
-            {% include 'WebIlluminationAdminBundle:Product:stepControls.html.twig' %}
+            {% include 'WebIlluminationAdminBundle:Product:newControls.html.twig' %}
         </form>
     </section>
 </div>

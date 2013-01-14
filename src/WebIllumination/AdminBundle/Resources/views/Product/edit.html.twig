@@ -1,0 +1,126 @@
+{# Forms #}
+{% extends 'WebIlluminationAdminBundle::admin.html.twig' %}
+{% block title %}{{ item.description.pageTitle }} | {{ parent() }}{% endblock %}
+{% block headerscripts %}
+    {{ parent() }}
+    {% javascripts '@WebIlluminationAdminBundle/Resources/public/js/tinymce/jquery.tinymce.js' output='js/tinymce.js' filter='yui_js' %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block leftmenu %}
+    {{ parent() }}
+    {% include 'WebIlluminationAdminBundle:Product:editLeftMenu.html.twig' %}
+{% endblock %}
+{% block header %}
+    {{ parent() }}
+    <h2>{{ item.description.pageTitle }}</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix add" id="add-product">
+        <div class="grid_6">
+            <div class="portlet">
+                <header>
+                    <h2>{{ item.description.pageTitle }}</h2>
+                </header>
+                <section>
+                    <form class="form" id="form-add" method="post" action="{{ path(app.request.attributes.get('_route'), {'id': item.product.id}) }}" {{ form_enctype(form) }}>
+                        <div class="clearfix">
+                            {{ form_errors(form) }}
+                        </div>
+                        {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
+                        {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
+                        <div class="clearfix">
+                            {{ form_label(form.departments, 'Departments', {'help': 'Select a department of the products. <br />The first department will be the products main department and the product will inherit its information from this product.'}) }}
+                            <div class="form-input">
+                                <table id="departments-list" width="100%">
+                                {% for row in form.departments %}
+                                    <tr>
+                                        {{ form_widget(row) }}
+                                    </tr>
+                                {% endfor %}
+                                </table>
+                            </div>
+                            {% do form.departments.setRendered() %}
+                        </div>
+
+                        <h3>Status</h3>
+                        {{ form_row(form.status, {'label': 'Status', 'help': 'Is the product available?'}) }}
+                        {{ form_row(form.availableForPurchase, {'label': 'Available for Purchase', 'help': 'Is the product available to purchase?'}) }}
+                        {{ form_row(form.featureComparison, {'label': 'Feature Comparison', 'help': 'Include in feature comparison?'}) }}
+                        {{ form_row(form.downloadable, {'label': 'Downloadable', 'help': 'Is the product a download?'}) }}
+                        {{ form_row(form.specialOffer, {'label': 'Special Offer', 'help': 'Is the product a special offer?'}) }}
+                        {{ form_row(form.recommended, {'label': 'Recommended', 'help': 'Do you want to recommend?'}) }}
+                        {{ form_row(form.accessory, {'label': 'Accessory', 'help': 'Is the product an accessory?'}) }}
+                        {{ form_row(form.new, {'label': 'New', 'help': 'Is the product new?'}) }}
+
+                        <h3>Prices</h3>
+                        {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': 'Hide price for this product?'}) }}
+                        {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': 'Show price out of hours?'}) }}
+                        {{ form_row(form.membershipCardDiscountAvailable, {'label': 'Membership Discount Available', 'help': 'Discount with membership card?'}) }}
+                        {{ form_row(form.maximumMembershipCardDiscount, {'label': 'Maximum Membership Discount', 'help': 'Maximum membership discount'}) }}
+
+                        {{ form_rest(form) }}
+                        <div class="clearfix">
+                            <div class="form-input buttons no-margin-bottom">
+                                <button type="submit" class="button ui-button-green">
+                                    Update
+                                </button>
+
+                                {% if renderBackButton %}
+                                    <a href="{{ path('admin_products_index') }}" lass="button ui-button-black">
+                                        Back
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <script type="text/javascript">
+                var count = '{{ form.featureGroups | length }}';
+
+                jQuery(document).ready(function() {
+                    jQuery('.delete-row').live('click', function() {
+                        $(this).parent().parent().remove();
+                    });
+                    jQuery('#add-description').click(function() {
+                        var list = jQuery("#description-list");
+
+                        var newItem = list.attr('data-prototype');
+                        newItem = newItem.replace(/__name__/g, count);
+                        count++;
+
+                        var newRow = jQuery('<tr></tr>').html(newItem);
+                        newRow.appendTo(list);
+                        $('select', newRow).uniform();
+                        $('.button', newRow).button({
+                            icons: {
+                                primary: 'ui-icon-circle-cross'
+                            },
+                            text: $(this).attr('data-icon-only') !== 'true'
+                        });
+
+                        $('textarea.tinymce-basic').tinymce({
+                            script_url : '/bundles/webilluminationadmin/js/tinymce/tiny_mce.js',
+                            theme : "advanced",
+                            plugins : "contextmenu,paste,fullscreen,xhtmlxtras,spellchecker",
+                            theme_advanced_buttons1 : "bold,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,outdent,indent,|,spellchecker",
+                            theme_advanced_buttons2 : "",
+                            theme_advanced_buttons3 : "",
+                            theme_advanced_buttons4 : "",
+                            theme_advanced_toolbar_location : "top",
+                            theme_advanced_toolbar_align : "left",
+                            theme_advanced_resizing : true,
+                            theme_advanced_resize_horizontal : false,
+                            theme_advanced_path : false,
+                            content_css : "/bundles/webilluminationadmin/css/content.css"
+                        });
+
+                        return false;
+                    });
+                })
+            </script>
+        </div>
+        <div class="clear"></div>
+    </section>
+{% endblock %}

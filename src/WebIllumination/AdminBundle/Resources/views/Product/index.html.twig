@@ -41,8 +41,8 @@
                 <section class="no-padding">
                     {% if not searching %}
                         <form id="form-filter" class="form" method="GET">
-                            {% include 'WebIlluminationAdminBundle:Product:listingFilter.html.twig' with {'pagination': pagination} %}
-                            {% include 'WebIlluminationAdminBundle:Product:listingSettings.html.twig' %}
+                            {% include 'WebIlluminationAdminBundle:Product:indexFilter.html.twig' with {'pagination': pagination} %}
+                            {% include 'WebIlluminationAdminBundle:Product:indexSettings.html.twig' %}
                         </form>
                     {% endif %}
                     <div id="listing-pagination-top" class="listing-pagination">

@@ -2,106 +2,112 @@
 
 namespace WebIllumination\ShopBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Solarium_Query_Select;
+use WebIllumination\SiteBundle\Entity\Product;
+use WebIllumination\SiteBundle\Entity\Product\Description;
+use WebIllumination\SiteBundle\Entity\Product\Variant;
+use WebIllumination\SiteBundle\Entity\ProductToDepartment;
+use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
+/**
+ * @Route("/department")
+ */
 class DepartmentsController extends Controller
 {
-	
-	// Index page
-	public function indexAction(Request $request, $id, $url, $brand, $group)
-    {    	
-    	// Get the services
-	    $systemService = $this->get('web_illumination_admin.system_service');
-	    $departmentService = $this->get('web_illumination_admin.department_service');
-	    
-	    // Initialise the session
-	    $systemService->initialiseSession();
-	    
-	    // Check if the page is being indexed by a search engine
-	    $noAjax = (isset($_GET['_escaped_fragment_'])?1:0);
-	    
-    	// Get the department
-    	$department = $departmentService->getDepartment($id, 'en', 'GBP');
-    	
-    	// Get the product listing settings
-    	$productListingSettings = $this->get('session')->get('productListingSettings');
-    	    	
-    	// Get the department listing
-    	$departmentListings = $this->get('session')->get('departmentListings');
-    	if ($group)
-    	{
-	    	if (isset($departmentListings[$group.'/'.$url]))
-	    	{
-	    		$departmentListing = $departmentListings[$group.'/'.$url];
-	    	} else {
-		    	$departmentListing = $departmentListings['index'];
-	    	}
-    	} elseif ($brand) {
-	    	if (isset($departmentListings[$brand.'/'.$url]))
-	    	{
-	    		$departmentListing = $departmentListings[$brand.'/'.$url];
-	    	} else {
-		    	$departmentListing = $departmentListings['index'];
-	    	}
-	    } else {
-		    if (isset($departmentListings[$url]))
-	    	{
-	    		$departmentListing = $departmentListings[$url];
-	    	} else {
-		    	$departmentListing = $departmentListings['index'];
-	    	}
-	    }
-	    
-	    // Check if we are on a brand department page
-	    if ($brand)
-	    {
-	    	$brandId = 0;
-			$brandRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('url' => $brand, 'locale' => 'en', 'objectType' => 'brand'));
-			if ($brandRoutingObject)
-			{
-    			$brandId = $brandRoutingObject->getObjectId();
-			}
-			$brandDescriptionObject = false;
-			if ($brandId > 0)
-			{
-    			$brandDescriptionObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $brandId));
-			}
-			$brandName = '';
-			if ($brandDescriptionObject)
-			{
-    			$brandName = $brandDescriptionObject->getBrand();
-			}
-			
-			// Update the department path URLs
-    		foreach ($department['departmentPaths'] as $key => $departmentPath)
-    		{
-	    		if ($brandName)
-	    		{
-		    		$department['departmentPaths'][$key]['department'] = $brandName.' '.$departmentPath['department'];
-	    		}
-	    		$department['departmentPaths'][$key]['routing'] = $systemService->getDepartmentUrl($departmentPath['routing'], false, $brand, $group);
-	    	}
-	    	
-	    	// Update the department
-	    	if ($brandName)
-	    	{
-	    		$department['pageTitle'] = $brandName.' '.$department['pageTitle'];
-	    		$department['header'] = $brandName.' '.$department['header'];
-	    	}
-	    } else {
-		    // Update the department path URLs
-    		foreach ($department['departmentPaths'] as $key => $departmentPath)
-    		{
-	    		$department['departmentPaths'][$key]['routing'] = $systemService->getDepartmentUrl($departmentPath['routing'], false, $brand, $group);
-	    	}
-	    }
-		
-		// Create response    	    	    	   		    
-    	$response = $this->render('WebIlluminationShopBundle:Departments:index.html.twig', array('noAjax' => $noAjax, 'url' => $url, 'brand' => $brand, 'group' => $group, 'department' => $department, 'productListingSettings' => $productListingSettings, 'departmentListing' => $departmentListing));
-		$response->headers->set('Connection', 'Keep-Alive');
-		return $response;
+    /**
+     * @Route("/{id}/{brandId}", name="admin_products_index", defaults={"brandId" = null})
+     * @Method({"GET"})
+     * @Template()
+     */
+	public function indexAction(Request $request, $id, $brandId=null)
+    {
+        /**
+         * Define variable types
+         * @var $department \WebIllumination\SiteBundle\Entity\Department
+         * @var $brand \WebIllumination\SiteBundle\Entity\Brand
+         * @var $departmentToFeature \WebIllumination\SiteBundle\Entity\DepartmentToFeature
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        // Fetch department
+        $department = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($id);
+        if(!$department) {
+            throw new NotFoundHttpException("Department not found");
+        }
+
+        // Build department path
+        $departmentPath = array();
+        $tempDepartment = $department;
+        while($tempDepartment->getParent() !== null) {
+            array_unshift($departmentPath, $tempDepartment);
+            $tempDepartment = $tempDepartment->getParent();
+        }
+
+        // If brand was specified fetch from the database
+        $brand = null;
+        if($brandId) {
+            $brand = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->find($brandId);
+            if(!$brand) {
+                throw new NotFoundHttpException("Brand not found");
+            }
+        }
+
+        // Fetch products from solr
+        /** @var $solarium \Solarium_Client */
+        $solarium = $this->get('solarium.client');
+
+        $select = $solarium->createSelect();
+        $helper = $select->getHelper();
+
+        $query = '*';
+
+        $filters = $request->query->get('filter', array());
+
+        //Facets
+        $facetSet = $select->getFacetSet();
+        $facetSet->createFacetField('brands')->setField('brand')->setSort('index');
+        $facetSet->createFacetField('departments')->setField('department_path')->setSort('index');
+        foreach($department->getFeatures() as $departmentToFeature)
+        {
+            $facetSet->createFacetField($departmentToFeature->getProductFeature()->getProductFeatureGroup())
+                ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup());
+        }
+
+        // Sort results (If the user has entered a query they cannot sort)
+        $sort = explode(':', $request->query->get('sort_order', 'header_sort:asc'));
+        if(count($sort) === 2 && in_array($sort[0], array('header_sort', 'list_price', 'created_at'))) {
+            $sortCol = $sort[0];
+            $sortDir = ($sort[1] == 'asc') ? Solarium_Query_Select::SORT_ASC : Solarium_Query_Select::SORT_DESC;
+
+            $select->addSort($helper->escapeTerm($sortCol), $sortDir);
+        }
+
+        $select->setQuery($query);
+
+        try {
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                array($solarium, $select),
+                $request->query->get('page', 1),
+                $request->query->get('limit', 20)
+            );
+            $pagination->setTemplate('WebIlluminationAdminBundle:Includes:pagination.html.twig');
+            $pagination->setSortableTemplate('WebIlluminationAdminBundle:Includes:sortable.html.twig');
+
+            $facets = $pagination->getCustomParameter('result')->getFacetSet();
+        } catch (\Solarium_Client_HttpException $e) {
+            throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
+        }
+
+        return array('pagination' => $pagination, 'facets' => $facets, 'department' => $department, 'department_path' => $departmentPath, 'brand' => $brand);
     }
 }

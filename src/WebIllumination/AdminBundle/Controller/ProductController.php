@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use WebIllumination\AdminBundle\Form\EditProductOverviewType;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
@@ -131,7 +132,6 @@ class ProductController extends Controller
 
                 break;
             case 'delete':
-                die("Wut");
                 foreach($request->request->get('_selected', array()) as $productId)
                 {
                     $product = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($productId);
@@ -208,10 +208,34 @@ class ProductController extends Controller
 
     /**
      * @Route("/{id}/edit", name="admin_products_edit")
-     * @Template()
+     * @Template("WebIlluminationAdminBundle:Product:edit.html.twig")
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($id);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+        $form = $this->createForm(new EditProductOverviewType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $em->persist($product);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('admin_products_index'));
+            }
+        }
+
+        return array(
+            'item' => $product,
+            'form' => $form->createView(),
+        );
     }
 
     /**

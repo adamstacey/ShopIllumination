@@ -15,6 +15,11 @@ web_illumination_admin:
     type:     annotation
     prefix:   /admin/
 
+web_illumination_shop:
+    resource: "@WebIlluminationShopBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
