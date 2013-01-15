@@ -1,6 +1,7 @@
 <?php
 
-namespace WebIllumination\ShopBundle\Controller;
+namespace WebIllumination\SiteBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,17 +19,17 @@ use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
 use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
-/**
- * @Route("/department")
- */
-class DepartmentsController extends Controller
+class ListingController extends Controller
 {
     /**
-     * @Route("/{id}/{brandId}", name="department_index", defaults={"brandId" = null})
+     * @Route("/products", name="listing_products")
+     * @Route("/department/{departmentId}", name="listing_department", defaults={"departmentId" = null})
+     * @Route("//brand/{brandId}", name="listing_brand", defaults={"brandId" = null})
+     * @Route("/department/{departmentId}/brand/{brandId}", name="listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
      * @Method({"GET"})
      * @Template()
      */
-	public function indexAction(Request $request, $id, $brandId=null)
+	public function indexAction(Request $request, $departmentId=null, $brandId=null)
     {
         /**
          * Define variable types
@@ -38,22 +39,27 @@ class DepartmentsController extends Controller
          */
         $em = $this->getDoctrine()->getManager();
 
-        // Fetch department
-        $department = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($id);
-        if(!$department) {
-            throw new NotFoundHttpException("Department not found");
-        }
-
-        // Build department path
+        // If department was specified fetch from the database
+        $department = null;
         $departmentPath = array();
-        $tempDepartment = $department;
-        while($tempDepartment->getParent() !== null) {
-            array_unshift($departmentPath, $tempDepartment);
-            $tempDepartment = $tempDepartment->getParent();
-        }
 
+        if($departmentId) {
+            $department = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($departmentId);
+            if(!$department) {
+                throw new NotFoundHttpException("Department not found");
+            }
+
+            // Build department path
+            $departmentPath = array();
+            $tempDepartment = $department;
+            while($tempDepartment->getParent() !== null) {
+                array_unshift($departmentPath, $tempDepartment);
+                $tempDepartment = $tempDepartment->getParent();
+            }
+        }
         // If brand was specified fetch from the database
         $brand = null;
+
         if($brandId) {
             $brand = $em->getRepository('WebIllumination\SiteBundle\Entity\Brand')->find($brandId);
             if(!$brand) {
@@ -74,7 +80,10 @@ class DepartmentsController extends Controller
 
         //Facets
         $facetSet = $select->getFacetSet();
-        $facetSet->createFacetField('brands')->setField('brand')->setSort('index');
+        // Do not include the brand filters if the user is on the brand listing
+        if($brand) {
+            $facetSet->createFacetField('brands')->setField('brand')->setSort('index');
+        }
         $facetSet->createFacetField('departments')->setField('department_path')->setSort('index');
         foreach($department->getFeatures() as $departmentToFeature)
         {
@@ -108,6 +117,12 @@ class DepartmentsController extends Controller
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
 
-        return array('pagination' => $pagination, 'facets' => $facets, 'department' => $department, 'department_path' => $departmentPath, 'brand' => $brand);
+        return array(
+            'pagination' => $pagination,
+            'facets' => $facets,
+            'department' => $department,
+            'department_path' => $departmentPath,
+            'brand' => $brand
+        );
     }
 }
