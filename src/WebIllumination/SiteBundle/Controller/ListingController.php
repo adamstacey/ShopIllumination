@@ -78,17 +78,29 @@ class ListingController extends Controller
 
         $filters = $request->query->get('filter', array());
 
+        // Filter queries
+        if($department) {
+            $select->createFilterQuery('department')->setQuery('department:'.$helper->escapePhrase($department->getDescription()->getName()));
+        }
+        if($brand) {
+            $select->createFilterQuery('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
+        }
+
         //Facets
         $facetSet = $select->getFacetSet();
+        $featureGroups = array();
         // Do not include the brand filters if the user is on the brand listing
-        if($brand) {
-            $facetSet->createFacetField('brands')->setField('brand')->setSort('index');
+        if(!$brand) {
+            $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1);
         }
-        $facetSet->createFacetField('departments')->setField('department_path')->setSort('index');
-        foreach($department->getFeatures() as $departmentToFeature)
-        {
-            $facetSet->createFacetField($departmentToFeature->getProductFeature()->getProductFeatureGroup())
-                ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup());
+        if($department) {
+            $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1);
+            foreach($department->getFeatures() as $departmentToFeature)
+            {
+                $featureGroups[] = $departmentToFeature->getProductFeature()->getProductFeatureGroup();
+                $facetSet->createFacetField($departmentToFeature->getProductFeature()->getProductFeatureGroup())
+                    ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup());
+            }
         }
 
         // Sort results (If the user has entered a query they cannot sort)
@@ -102,6 +114,7 @@ class ListingController extends Controller
 
         $select->setQuery($query);
 
+        // Setup paginator
         try {
             $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
@@ -120,6 +133,7 @@ class ListingController extends Controller
         return array(
             'pagination' => $pagination,
             'facets' => $facets,
+            'featureGroups' => $featureGroups,
             'department' => $department,
             'department_path' => $departmentPath,
             'brand' => $brand

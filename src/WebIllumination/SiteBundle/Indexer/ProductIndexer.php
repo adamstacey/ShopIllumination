@@ -98,7 +98,13 @@ class ProductIndexer extends Indexer
                 /** @var $feature ProductToFeature */
                 foreach ($variant->getFeatures() as $feature)
                 {
-                    $document->addField('attr_feature_'.$feature->getProductFeature()->getProductFeatureGroup(), $feature->getDefaultFeature()->getProductFeature());
+                    if($feature && $feature->getProductFeature() && $feature->getDefaultFeature())
+                    {
+                        $document->addField(
+                            $helper->escapeTerm(htmlentities('attr_feature_'.$feature->getProductFeature()->getProductFeatureGroup())),
+                            $feature->getDefaultFeature()->getProductFeature()
+                        );
+                    }
                 }
 
                 $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
@@ -116,9 +122,8 @@ class ProductIndexer extends Indexer
                 }
             }
 
-            $brandDescriptions = $product->getBrand()->getDescriptions();
-            $document->setField('brand', $brandDescriptions[0]->getName());
-            $document->setField('brand_logo', $brandDescriptions[0]->getLogoImage()->getOriginalPath());
+            $document->setField('brand', $product->getBrand()->getDescription()->getName());
+            $document->setField('brand_logo', $product->getBrand()->getDescription()->getLogoImage()->getOriginalPath());
 
             $document->setField('available_for_purchase', $product->getAvailableForPurchase());
             $document->setField('hide_price', $product->getHidePrice());
@@ -142,7 +147,6 @@ class ProductIndexer extends Indexer
             $update->addCommit();
             $this->getSolarium()->update($update);
         } catch (\Exception $e) {
-            \Doctrine\Common\Util\Debug::dump($e);
             die();
             echo "An error occured proccessing product ID " . $product->getId() . "\n";
         }

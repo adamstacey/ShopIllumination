@@ -25,22 +25,22 @@
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
         {% endstylesheets %}
         <!--[if IE]>
-            {% stylesheets '@WebIlluminationSiteBundle/Resources/public/css/ie.css' output='css/ie.css' filter='yui_css' %}
+            {% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie.css' output='css/ie.css' filter='yui_css' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
             {% endstylesheets %}
         <![endif]-->
         <!--[if gte IE 9]>
-            {% stylesheets '@WebIlluminationSiteBundle/Resources/public/css/ie9.css' output='css/ie9.css' filter='yui_css' %}
+            {% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie9.css' output='css/ie9.css' filter='yui_css' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
             {% endstylesheets %}
         <![endif]-->
         <!--[if IE 8]>
-            {% stylesheets '@WebIlluminationSiteBundle/Resources/public/css/ie8.css' output='css/ie8.css' filter='yui_css' %}
+            {% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie8.css' output='css/ie8.css' filter='yui_css' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
             {% endstylesheets %}
         <![endif]-->
         <!--[if IE 7]>
-            {% stylesheets '@WebIlluminationSiteBundle/Resources/public/css/ie7.css' output='css/ie7.css' filter='yui_css' %}
+            {% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie7.css' output='css/ie7.css' filter='yui_css' %}
                 <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
             {% endstylesheets %}
         <![endif]-->
@@ -114,13 +114,13 @@
         <img id="dialog-image-popup-image" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="" />
     </div>
 </div>
-{% include '::shopFooter.html.twig' %}
-{% include '::flashMessages.html.twig' %}
-{% include '::shopAjaxLoading.html.twig' %}
-{% include '::shopLargeImage.html.twig' %}
-{% include '::shopShoppingBasketPopup.html.twig' %}
-{% include '::shopCookiePolicy.html.twig' %}
+{#{% include '::shopFooter.html.twig' %}#}
+{#{% include '::flashMessages.html.twig' %}#}
+{#{% include '::shopAjaxLoading.html.twig' %}#}
+{#{% include '::shopLargeImage.html.twig' %}#}
+{#{% include '::shopShoppingBasketPopup.html.twig' %}#}
+{#{% include '::shopCookiePolicy.html.twig' %}#}
 {% block javascripts %}{% endblock %}
-{% include '::shopScript.js.twig' %}
+{#{% include '::shopScript.js.twig' %}#}
 </body>
 </html>

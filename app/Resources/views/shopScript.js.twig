@@ -10,7 +10,7 @@
 				$("#search-results-title").html('Search Results: "'+$("#quick_search").val()+'"');
 				$.ajax({
 					type: "GET",
-					url: "{{ path('products_ajax_get_product_search') }}",
+					url: "{#{{ path('products_ajax_get_product_search') }}#}",
 					data: {
 	   					search: $("#quick_search").val()
 	   				},
@@ -39,7 +39,7 @@
 			$("#basket-summary-content").show();
 			$.ajax({
 				type: "GET",
-				url: "{{ path('basket_ajax_get_basket_summary') }}",
+				url: "{#{{ path('basket_ajax_get_basket_summary') }}#}",
 				error: function(data) {
 	      			$("#basket-summary-content").html('<p>Your basket could not be loaded at this time.</p>');
 	      		},
@@ -113,7 +113,7 @@
 				$.ajax({
 	   				type: "GET",
 	   				dataType: "json",
-	   				url: "{{ path('basket_ajax_add_to_basket') }}",
+	   				url: "{#{{ path('basket_ajax_add_to_basket') }}#}",
 	   				data: {
 	   					productId: $(this).attr("data-product-id"),
 	   					quantity: $("#quantity-"+$(this).attr("data-product-id")).val(),

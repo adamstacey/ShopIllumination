@@ -3,7 +3,7 @@
 		$("#ajax-loading").show();
 		$.ajax({
 			type: "GET",
-			url: "{{ path('products_ajax_get_product_search') }}",
+			url: "{#{{ path('products_ajax_get_product_search') }}#}",
 			data: {
 					search: '{{ search }}'
 				},
