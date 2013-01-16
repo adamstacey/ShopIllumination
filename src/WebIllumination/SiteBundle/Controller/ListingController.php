@@ -52,7 +52,7 @@ class ListingController extends Controller
             // Build department path
             $departmentPath = array();
             $tempDepartment = $department;
-            while($tempDepartment->getParent() !== null) {
+            while($tempDepartment !== null) {
                 array_unshift($departmentPath, $tempDepartment);
                 $tempDepartment = $tempDepartment->getParent();
             }
@@ -80,7 +80,14 @@ class ListingController extends Controller
 
         // Filter queries
         if($department) {
-            $select->createFilterQuery('department')->setQuery('department:'.$helper->escapePhrase($department->getDescription()->getName()));
+            // Get path
+            $departmentFilterPath = "";
+            $currDepartment = $department;
+            do {
+                $departmentFilterPath = $currDepartment->__toString() . "|" . $departmentFilterPath;
+                $currDepartment = $currDepartment->getParent();
+            } while ($currDepartment !== null);
+            $select->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(rtrim($departmentFilterPath, "|")));
         }
         if($brand) {
             $select->createFilterQuery('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
@@ -89,17 +96,19 @@ class ListingController extends Controller
         //Facets
         $facetSet = $select->getFacetSet();
         $featureGroups = array();
+        $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1);
         // Do not include the brand filters if the user is on the brand listing
         if(!$brand) {
             $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1);
         }
         if($department) {
-            $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1);
             foreach($department->getFeatures() as $departmentToFeature)
             {
+                if($departmentToFeature->getDisplayOnFilter())
                 $featureGroups[] = $departmentToFeature->getProductFeature()->getProductFeatureGroup();
-                $facetSet->createFacetField($departmentToFeature->getProductFeature()->getProductFeatureGroup())
-                    ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup());
+                $facetSet->createFacetField($helper->escapeTerm('feature_'.str_replace(' ', '', $departmentToFeature->getProductFeature()->getProductFeatureGroup())))
+                    ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup())
+                    ->setMinCount(1);
             }
         }
 
@@ -122,8 +131,8 @@ class ListingController extends Controller
                 $request->query->get('page', 1),
                 $request->query->get('limit', 20)
             );
-            $pagination->setTemplate('WebIlluminationAdminBundle:Includes:pagination.html.twig');
-            $pagination->setSortableTemplate('WebIlluminationAdminBundle:Includes:sortable.html.twig');
+            $pagination->setTemplate('WebIlluminationSiteBundle:Includes:pagination.html.twig');
+            $pagination->setSortableTemplate('WebIlluminationSiteBundle:Includes:sortable.html.twig');
 
             $facets = $pagination->getCustomParameter('result')->getFacetSet();
         } catch (\Solarium_Client_HttpException $e) {

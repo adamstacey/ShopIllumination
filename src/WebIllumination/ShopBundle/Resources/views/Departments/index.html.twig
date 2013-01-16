@@ -164,90 +164,90 @@
 				</section>
 	        </div>
 	    </div>
-		{#<div class="grid_2 grid-filters">#}
-			{#<div class="portlet">#}
-				{#<header>#}
-	                {#<h2 class="ac">Refine Search By</h2>#}
-	            {#</header>#}
-				{#<section class="no-padding">#}
-					{#<div id="filters">#}
-						{#<input type="hidden" name="filter-group" id="filter-group" value="{{ departmentListing.group }}" />#}
-						{#<h5 id="filter-price-header" class="no-margin no-border-top">{% spaceless %}#}
-							{#Price#}
-							{#<button data-filter="price" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>#}
-							{#<button data-filter="price" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>#}
-						{#{% endspaceless %}</h5>#}
-						{#<div id="filter-price-container">#}
-							{#<div id="filter-price-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">#}
-								{#<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>#}
-								{#<p>Loading Price Range&hellip;</p>#}
-							{#</div>#}
-							{#<div id="filter-price" class="filter price-range-filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">#}
-								{#{% if noAjax > 0 %}#}
-									{#{% render "WebIlluminationShopBundle:Products:getProductListingPriceFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}#}
-								{#{% endif %}#}
-							{#</div>#}
-							{#<input type="hidden" name="filter-price-reset-from" id="filter-price-reset-from" value="{{ departmentListing.priceFrom }}" />#}
-							{#<input type="hidden" name="filter-price-reset-to" id="filter-price-reset-to" value="{{ departmentListing.priceTo }}" />#}
-						{#</div>#}
-						{#<h5 id="filter-department-header" class="no-margin">{% spaceless %}#}
-							{#Department#}
-							{#<button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>#}
-							{#<button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>#}
-						{#{% endspaceless %}</h5>#}
-						{#<div id="filter-department-container">#}
-							{#<div id="filter-department-loading" class="loading-container no-margin{% if noAjax > 0 %} ui-helper-hidden{% endif %}">#}
-								{#<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>#}
-								{#<p>Loading Available Departments&hellip;</p>#}
-							{#</div>#}
-							{#<div id="filter-department" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">#}
-								{#{% if noAjax > 0 %}#}
-									{#{% render "WebIlluminationShopBundle:Products:getProductListingDepartmentFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}#}
-								{#{% endif %}#}
-							{#</div>#}
-						{#</div>#}
-						{#{% if departmentListing.brandId > 0 %}#}
-							{#<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brandId }}" />#}
-						{#{% else %}#}
-							{#<h5 id="filter-brand-header" class="no-margin">{% spaceless %}#}
-								{#Brands#}
-								{#<button data-filter="brand" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>#}
-								{#<button data-filter="brand" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>#}
-							{#{% endspaceless %}</h5>#}
-							{#<div id="filter-brand-container">#}
-								{#<div id="filter-brand-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">#}
-									{#<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>#}
-									{#<p>Loading Available Brands&hellip;</p>#}
-								{#</div>#}
-								{#<div id="filter-brand" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">#}
-									{#{% if noAjax > 0 %}#}
-										{#{% render "WebIlluminationShopBundle:Products:getProductListingBrandFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}#}
-									{#{% endif %}#}
-								{#</div>#}
-								{#<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brands }}" />#}
-							{#</div>#}
-						{#{% endif %}#}
-						{#<h5 id="filter-feature-header" class="no-margin">{% spaceless %}#}
-							{#Features#}
-							{#<button data-filter="feature" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>#}
-							{#<button data-filter="feature" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>#}
-						{#{% endspaceless %}</h5>#}
-						{#<div id="filter-feature-container">#}
-							{#<div id="filter-feature-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">#}
-								{#<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>#}
-								{#<p>Loading Available Feature&hellip;</p>#}
-							{#</div>#}
-							{#<div id="filter-feature" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">#}
-								{#{% if noAjax > 0 %}#}
-									{#{% render "WebIlluminationShopBundle:Products:getProductListingFeatureFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}#}
-								{#{% endif %}#}
-							{#</div>#}
-							{#<input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />#}
-						{#</div>#}
-					{#</div>#}
-				{#</section>#}
-	        {#</div>#}
-	    {#</div>#}
+		<div class="grid_2 grid-filters">
+			<div class="portlet">
+				<header>
+	                <h2 class="ac">Refine Search By</h2>
+	            </header>
+				<section class="no-padding">
+					<div id="filters">
+						<input type="hidden" name="filter-group" id="filter-group" value="{{ departmentListing.group }}" />
+						<h5 id="filter-price-header" class="no-margin no-border-top">{% spaceless %}
+							Price
+							<button data-filter="price" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="price" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+						{% endspaceless %}</h5>
+						<div id="filter-price-container">
+							<div id="filter-price-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+								<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+								<p>Loading Price Range&hellip;</p>
+							</div>
+							<div id="filter-price" class="filter price-range-filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+								{% if noAjax > 0 %}
+									{% render "WebIlluminationShopBundle:Products:getProductListingPriceFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+								{% endif %}
+							</div>
+							<input type="hidden" name="filter-price-reset-from" id="filter-price-reset-from" value="{{ departmentListing.priceFrom }}" />
+							<input type="hidden" name="filter-price-reset-to" id="filter-price-reset-to" value="{{ departmentListing.priceTo }}" />
+						</div>
+						<h5 id="filter-department-header" class="no-margin">{% spaceless %}
+							Department
+							<button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+						{% endspaceless %}</h5>
+						<div id="filter-department-container">
+							<div id="filter-department-loading" class="loading-container no-margin{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+								<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+								<p>Loading Available Departments&hellip;</p>
+							</div>
+							<div id="filter-department" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+								{% if noAjax > 0 %}
+									{% render "WebIlluminationShopBundle:Products:getProductListingDepartmentFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+								{% endif %}
+							</div>
+						</div>
+						{% if departmentListing.brandId > 0 %}
+							<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brandId }}" />
+						{% else %}
+							<h5 id="filter-brand-header" class="no-margin">{% spaceless %}
+								Brands
+								<button data-filter="brand" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+								<button data-filter="brand" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+							{% endspaceless %}</h5>
+							<div id="filter-brand-container">
+								<div id="filter-brand-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+									<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+									<p>Loading Available Brands&hellip;</p>
+								</div>
+								<div id="filter-brand" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+									{% if noAjax > 0 %}
+										{% render "WebIlluminationShopBundle:Products:getProductListingBrandFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+									{% endif %}
+								</div>
+								<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brands }}" />
+							</div>
+						{% endif %}
+						<h5 id="filter-feature-header" class="no-margin">{% spaceless %}
+							Features
+							<button data-filter="feature" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="feature" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+						{% endspaceless %}</h5>
+						<div id="filter-feature-container">
+							<div id="filter-feature-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+								<p><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+								<p>Loading Available Feature&hellip;</p>
+							</div>
+							<div id="filter-feature" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+								{% if noAjax > 0 %}
+									{% render "WebIlluminationShopBundle:Products:getProductListingFeatureFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+								{% endif %}
+							</div>
+							<input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
+						</div>
+					</div>
+				</section>
+	        </div>
+	    </div>
 	   	<div class="clear"></div>
 	</section>
 {% endblock %}

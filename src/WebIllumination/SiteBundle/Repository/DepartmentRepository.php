@@ -7,6 +7,7 @@ class DepartmentRepository extends EntityRepository
 {
     public function findAllAsTree()
     {
+
         $departments = $this->getEntityManager()
             ->createQuery('
                 SELECT d, dd

@@ -1,0 +1,11 @@
+{% spaceless %}
+    {% if item.isDeleted %}
+        {{ 'red' }}
+    {% elseif item.status == 'a' %}
+        {{ 'green' }}
+    {% elseif item.status == 'h' %}
+        {{ 'amber' }}
+    {% elseif item.status == 'd' %}
+        {{ 'red' }}
+    {% endif %}
+{% endspaceless %}
