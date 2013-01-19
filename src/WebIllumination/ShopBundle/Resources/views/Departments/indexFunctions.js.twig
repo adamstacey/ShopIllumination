@@ -1,56 +1,9 @@
 {# Load the department #}
 function loadDepartment()
 {
-	$("#ajax-loading").show();
-	$productCountLoaded = false;
-	$productsLoaded = false;
-	$productPaginationLoaded = false;
-	$brandFilterLoaded = false;
-	$departmentFilterLoaded = false;
-	$priceFilterLoaded = false;
-	$priceFeatureLoaded = false;
-	loadProductListingCount();
-	loadProductListing();
-	loadProductListingPagination();
-	{% if departmentListing.brandId > 0 %}
-		$brandFilterLoaded = true;
-	{% else %}
-		if ($skipBrandFilter)
-		{
-			$brandFilterLoaded = true;
-			$skipBrandFilter = false;
-		} else {
-			loadProductListingBrandFilter();
-		}
-	{% endif %}
-	if ($skipDepartmentFilter)
-	{
-		$departmentFilterLoaded = true;
-		$skipDepartmentFilter = false;
-	} else {
-		loadProductListingDepartmentFilter();
-	}
-	if ($skipPriceFilter)
-	{
-		$priceFilterLoaded = true;
-		$skipPriceFilter = false;
-	} else {
-		loadProductListingPriceFilter();
-	}
-	if ($skipFeatureFilter)
-	{
-		$featureFilterLoaded = true;
-		$skipFeatureFilter = false;
-	} else {
-		loadProductListingFeatureFilter();
-	}
 }
 
 {# Check all elements have been loaded #}
 function checkDepartmentLoaded()
 {
-	if ($productCountLoaded && $productsLoaded && $productPaginationLoaded && $brandFilterLoaded && $departmentFilterLoaded && $priceFilterLoaded && $featureFilterLoaded)
-	{
-		$("#ajax-loading").hide();
-	}
 }

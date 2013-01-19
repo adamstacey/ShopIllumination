@@ -77,8 +77,32 @@ class ListingController extends Controller
         $query = '*';
 
         $filters = $request->query->get('filter', array());
+        $flags = array('brand', 'department_path');
 
-        // Filter queries
+        //Facets
+        $facetSet = $select->getFacetSet();
+        $featureGroups = array();
+        $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1)->setPrefix($request->query->get('filter[department_path]', '', true));
+        // Do not include the brand filters if the user is on the brand listing
+        if(!$brand) {
+            $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1)->addExclude('brand');
+        }
+        if($department) {
+            foreach($department->getFeatures() as $departmentToFeature)
+            {
+                if($departmentToFeature->getDisplayOnFilter())
+                {
+                    $flags[] = 'attr_feature_'.str_replace(' ', '', $departmentToFeature->getProductFeature()->getProductFeatureGroup());
+                    $featureGroups[] = $departmentToFeature->getProductFeature()->getProductFeatureGroup();
+                    $facetSet->createFacetField($helper->escapeTerm('feature_'.str_replace(' ', '', $departmentToFeature->getProductFeature()->getProductFeatureGroup())))
+                        ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup())
+                        ->setMinCount(1)
+                        ->addExclude('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup());
+                }
+            }
+        }
+
+        // Filtering
         if($department) {
             // Get path
             $departmentFilterPath = "";
@@ -90,25 +114,29 @@ class ListingController extends Controller
             $select->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(rtrim($departmentFilterPath, "|")));
         }
         if($brand) {
-            $select->createFilterQuery('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
+            $select->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
         }
 
-        //Facets
-        $facetSet = $select->getFacetSet();
-        $featureGroups = array();
-        $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1);
-        // Do not include the brand filters if the user is on the brand listing
-        if(!$brand) {
-            $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1);
-        }
-        if($department) {
-            foreach($department->getFeatures() as $departmentToFeature)
+        foreach($flags as $flag)
+        {
+            if(array_key_exists($flag, $filters))
             {
-                if($departmentToFeature->getDisplayOnFilter())
-                $featureGroups[] = $departmentToFeature->getProductFeature()->getProductFeatureGroup();
-                $facetSet->createFacetField($helper->escapeTerm('feature_'.str_replace(' ', '', $departmentToFeature->getProductFeature()->getProductFeatureGroup())))
-                    ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup())
-                    ->setMinCount(1);
+                $filter = $filters[$flag];
+                if(is_array($filter))
+                {
+                    array_walk($filter, function(&$item) use ($flag, $helper) {
+                        if(is_array($item) && count($item) == 2)
+                        {
+                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item[0]).' TO '.$helper->escapePhrase($item[1]);
+                        } else {
+                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
+                        }
+                    });
+                    $select->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
+                } else {
+                    $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
+                }
+
             }
         }
 

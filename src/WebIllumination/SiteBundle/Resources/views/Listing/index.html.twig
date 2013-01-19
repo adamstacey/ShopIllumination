@@ -68,7 +68,7 @@
 	                <h2 id="product-count">Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
 	            </header>
 				<section class="clearfix no-padding-right no-padding-bottom">
-                    <form id="form-filter" class="form" method="GET">
+                    <form id="form-settings" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.get('_route_params')) }}">
                         <div id="product-sorting">
                             <div class="fl">
                                 <div class="product-sorting-title fl">Sort By</div>
@@ -103,25 +103,6 @@
                                     <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
                                 </div>
                                 <div>
-                                    <div>
-                                        {% if product.brand_logo != '' %}
-                                            <a href="{#{{ path('page_request', {'url': product.brandUrl}) }}#}"><img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23"></a>
-                                        {% endif %}
-                                        <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
-                                        {% for productFeature in product.productFeatures|explode('|') %}
-                                            {% if 'COLOUR:' in productFeature|upper %}
-                                                <p class="colour">{% spaceless %}
-                                                        {% if product.url != '' %}
-                                                            <a href="{#{{ path('page_request', {'url': product.url}) }}#}">
-                                                        {% endif %}
-                                                        <strong>{{ productFeature|upper|replace({'COLOUR:': ''}) }}</strong>
-                                                        {% if product.url != '' %}
-                                                            </a>
-                                                        {% endif %}
-                                                    {% endspaceless %}</p>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
                                     <div class="product-options">
                                         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                             <p class="ar product-price">
@@ -174,13 +155,6 @@
                                                 <a href="{#{{ path('content_contact_us') }}#}" class="fr button ui-button-green">Contact Us to Buy</a>
                                             {% endif %}
                                         </div>
-                                        {% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') %}
-                                            {% if not group %}
-                                                {% if product.productGroupCode %}
-                                                    {#<!--<a href="{{ path('department_with_group', {'group': product.productGroupId, 'url': product.url}) }}" class="fr padding-right-5 small button ui-button-blue">View Other Colours or Options for this product</a>-->#}
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endif %}
                                         {% if product.cheaperAlternativePrice is defined %}
                                             {% if (product.cheaperAlternativePrice > 0) and (product.cheaperAlternativeUrl != '') %}
                                                 <a href="{#{{ path('page_request', {'url': product.cheaperAlternativeUrl}) }}#}" class="cheaper-alternative-listing">Cheaper Alternative <strong>&pound;{{ product.cheaperAlternativePrice|number_format(0) }}</strong></a>
@@ -226,108 +200,128 @@
 	                <h2 class="ac">Refine Search By</h2>
 	            </header>
 				<section class="no-padding">
-					<div id="filters">
-						{#<h5 id="filter-price-header" class="no-margin no-border-top">#}
-                            {#{% spaceless %}#}
-                                {#Price#}
-                                {#<button data-filter="price" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>#}
-                                {#<button data-filter="price" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>#}
-                            {#{% endspaceless %}#}
-                        {#</h5>#}
-						{#<div id="filter-price-container">#}
-                            {#<div class="range-slider-values">#}
-                                {#<span>&pound;</span>#}
-                                {#<input id="filter-price-from" type="text" value="" />#}
-                                {#<span>&nbsp;-&nbsp;</span>#}
-                                {#<input id="filter-price-to" type="text" value="" />#}
-                            {#</div>#}
-                            {#<div class="price-range" id="price-range-slider"></div>#}
-							{#</div>#}
-							{#<input type="hidden" name="filter-price-reset-from" id="filter-price-reset-from" value="{{ departmentListing.priceFrom }}" />#}
-							{#<input type="hidden" name="filter-price-reset-to" id="filter-price-reset-to" value="{{ departmentListing.priceTo }}" />#}
-						{#</div>#}
-
-                        <h5 id="filter-brand-header" class="no-margin">
-                            {% spaceless %}
-                                Department
-                                <button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                <button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
-                            {% endspaceless %}
-                        </h5>
-                        <div id="filter-department-container">
-                            <div id="filter-department" class="filter">
-                                <ul>
-                                    {% for department, count in facets.facet('departments') %}
-                                        {% set department_path = department|split('|') %}
-                                        <li>
-                                            <input{% if department in app.request.get('filter[department]', null, true) %} checked="checked"{% endif %} name="filter[department][]" type="checkbox" value="{{ department }}" id="filter-department-{{ loop.index }}" />
-                                            <label for="filter-department-{{ loop.index }}">
-                                                <span class="fr">({{ count }})</span>
-                                                {% if (department_path|length - 1) > 0 %}
-                                                    {% for i in 1..((department_path|length) - 1) %}
-                                                        {{ ' > ' }}
-                                                    {% endfor %}
-                                                {% endif %}
-                                                {{ department_path[(department_path|length)-1] }}
-                                            </label>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-
-						{% if brand is null %}
-							<h5 id="filter-brand-header" class="no-margin">
+                    <form id="form-filter" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.get('_route_params')) }}">
+                        <div id="filters">
+                            <h5 id="filter-price-header" class="no-margin no-border-top">
                                 {% spaceless %}
-                                    Brands
-                                    <button data-filter="brand" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                    <button data-filter="brand" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+                                    Price
+                                    <button data-filter="price" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+                                    <button data-filter="price" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
                                 {% endspaceless %}
                             </h5>
-							<div id="filter-brand-container">
-								<div id="filter-brand" class="filter">
+                            <div id="filter-price-container">
+                                <div class="range-slider-values">
+                                    <span>&pound;</span>
+                                    <input type="hidden" name="filter[low_cost]" id="filter-low-cost" value="{{ product.low_price }}" />
+                                    <span>&nbsp;-&nbsp;</span>
+                                    <input type="hidden" name="filter[high_cost" id="filter-high-cost" value="{{ product.high_price }}" />
+                                </div>
+                                <div class="price-range" id="price-range-slider"></div>
+                                </div>
+
+                            <h5 id="filter-brand-header" class="no-margin">
+                                {% spaceless %}
+                                    Department
+                                    <button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+                                    <button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+                                {% endspaceless %}
+                            </h5>
+                            <div id="filter-department-container">
+                                <div id="filter-department" class="filter">
                                     <ul>
-                                        {% for brand, count in facets.facet('brands') %}
+                                        {% for department, count in facets.facet('departments') %}
+                                            {% set department_path = department|split('|') %}
                                             <li>
-                                                <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
-                                                <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
+                                                <input{% if department == app.request.get('filter[department_path]', null, true) %} checked="checked"{% endif %} name="filter[department_path]" type="checkbox" value="{{ department }}" id="filter-department-{{ loop.index }}" />
+                                                <label for="filter-department-{{ loop.index }}">
+                                                    <span class="fr">({{ count }})</span>
+                                                    {% if (department_path|length - 1) > 0 %}
+                                                        {% for i in 1..((department_path|length) - 1) %}
+                                                            {{ ' > ' }}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    {{ department_path[(department_path|length)-1] }}
+                                                </label>
                                             </li>
                                         {% endfor %}
                                     </ul>
-								</div>
-							</div>
-						{% endif %}
-                        {% if featureGroups|length > 0 %}
-                            <h5 id="filter-feature-header" class="no-margin">
-                                {% spaceless %}
-                                    Features
-                                    <button data-filter="feature" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                    <button data-filter="feature" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
-                                {% endspaceless %}
-                            </h5>
-                            <div id="filter-feature-container">
-                                <div id="filter-feature" class="filter">
-                                    <ul>
-                                        {% for featureGroup in featureGroups %}
-                                            {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
-                                                <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
-                                                {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}
-                                                    <li>
-                                                        <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup }}][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ featureGroup }}-{{ loop.index }}" />
-                                                        <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ feature }}</label>
-                                                    </li>
-                                                {% endfor %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
                                 </div>
-                                <input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
                             </div>
-                        {% endif %}
-					</div>
-				</section>
-	        </div>
-	    </div>
+                            {#<div id="filter-department-container">#}
+                                {#<div id="filter-department" class="filter">#}
+                                    {#<ul>#}
+                                        {#{% for department, count in facets.facet('departments') %}#}
+                                            {#{% set department_path = department|split('|') %}#}
+                                            {#<li>#}
+                                                {#<input{% if department in app.request.get('filter[department_path]', null, true) %} checked="checked"{% endif %} name="filter[department_path][]" type="checkbox" value="{{ department }}" id="filter-department-{{ loop.index }}" />#}
+                                                {#<label for="filter-department-{{ loop.index }}">#}
+                                                    {#<span class="fr">({{ count }})</span>#}
+                                                    {#{% if (department_path|length - 1) > 0 %}#}
+                                                        {#{% for i in 1..((department_path|length) - 1) %}#}
+                                                            {#{{ ' > ' }}#}
+                                                        {#{% endfor %}#}
+                                                    {#{% endif %}#}
+                                                    {#{{ department_path[(department_path|length)-1] }}#}
+                                                {#</label>#}
+                                            {#</li>#}
+                                        {#{% endfor %}#}
+                                    {#</ul>#}
+                                {#</div>#}
+                            {#</div>#}
+
+                            {% if brand is null %}
+                                <h5 id="filter-brand-header" class="no-margin">
+                                    {% spaceless %}
+                                        Brands
+                                        <button data-filter="brand" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+                                        <button data-filter="brand" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+                                    {% endspaceless %}
+                                </h5>
+                                <div id="filter-brand-container">
+                                    <div id="filter-brand" class="filter">
+                                        <ul>
+                                            {% for brand, count in facets.facet('brands') %}
+                                                <li>
+                                                    <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
+                                                    <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if featureGroups|length > 0 %}
+                                <h5 id="filter-feature-header" class="no-margin">
+                                    {% spaceless %}
+                                        Features
+                                        <button data-filter="feature" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+                                        <button data-filter="feature" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+                                    {% endspaceless %}
+                                </h5>
+                                <div id="filter-feature-container">
+                                    <div id="filter-feature" class="filter">
+                                        <ul>
+                                            {% for featureGroup in featureGroups %}
+                                                {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
+                                                    <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
+                                                    {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}
+                                                        <li>
+                                                            <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup }}][]" type="checkbox" value="{{ feature }}" id="filter-{{ featureGroup }}-{{ loop.index }}" />
+                                                            <label for="filter-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ feature }}</label>
+                                                        </li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
+                                </div>
+                            {% endif %}
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
 	   	<div class="clear"></div>
 	</section>
 {% endblock %}
@@ -337,24 +331,13 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#filter-price-from").val("{{ prices.cheapestPrice }}");
-            $("#filter-price-to").val("{{ prices.mostExpensivePrice }}");
-            $("#price-range-slider").slider({
-                range: true,
-                min: {{ prices.cheapestPrice }},
-                max: {{ prices.mostExpensivePrice }},
-                values: [{{ prices.cheapestPrice }}, {{ prices.mostExpensivePrice }}],
-                slide: function(event, ui) {
-                    $("#filter-price-from").val(ui.values[0]);
-                    $("#filter-price-to").val(ui.values[1]);
-                },
-                change: function(event, ui) {
-                    $skipPriceFilter = true;
-                    loadDepartment();
-                }
+            $("#form-settings, #form-filter").find("input, select").live('change', function() {
+                 $(this).closest("form").submit();
             });
-            $("#filter-price-from, #filter-price-to").live('change', function() {
-                $("#price-range-slider").slider("option", "values", [parseInt($("#filter-price-from").val()), parseInt($("#filter-price-to").val())]);
+            $(".action-reset-filter").click(function() {
+                $("#filter-"+$(this).data('filter')).find("input, select").each(function() {
+                   $(this).reset();
+                });
             });
         });
     </script>
