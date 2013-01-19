@@ -252,48 +252,48 @@ $(document).ready(function () {
 		loadImagePopup($(this).attr("data-image-large-path"), $(this).attr("alt"), $(this).attr("data-image-size-width"), $(this).attr("data-image-size-height"));
 	});
 	
-	$(".action-delete-image").live('click', function() {
-		if (confirm('Are you sure you want to delete this image?'))
-		{
-			$("#ajax_loading").show();
-			var $parent_container = $(this).parent(".image-container");
-			$.ajax({
-					url: "/system/ajaxDeleteImage/"+$(this).attr("rel"),
-					success: function() {
-						$parent_container.fadeOut();
-						$("#ajax_loading").hide();
-					},
-					error: function() {
-						alert('Sorry, there was a problem deleting this image. Please try again.');
-						$("#ajax_loading").hide();
-					}
-			});
-		}
-	});
+//	$(".action-delete-image").live('click', function() {
+//		if (confirm('Are you sure you want to delete this image?'))
+//		{
+//			$("#ajax_loading").show();
+//			var $parent_container = $(this).parent(".image-container");
+//			$.ajax({
+//					url: "/system/ajaxDeleteImage/"+$(this).attr("rel"),
+//					success: function() {
+//						$parent_container.fadeOut();
+//						$("#ajax_loading").hide();
+//					},
+//					error: function() {
+//						alert('Sorry, there was a problem deleting this image. Please try again.');
+//						$("#ajax_loading").hide();
+//					}
+//			});
+//		}
+//	});
 	
-	$(".action-delete-multi-image").live('click', function() {
-		if (confirm('Are you sure you want to delete this image?'))
-		{
-			$("#ajax_loading").show();
-			var $selected_image = $(this).attr("rel");
-			$.ajax({
-					url: "/system/ajaxDeleteImage/"+$selected_image,
-					success: function() {
-						$("#image-f-"+$selected_image).fadeOut(function() {
-							$("#image-f-"+$selected_image).remove();
-						});
-						$("#image-i-"+$selected_image).fadeOut(function() {
-							$("#image-i-"+$selected_image).remove();
-						});
-						$("#ajax_loading").hide();
-					},
-					error: function() {
-						alert('Sorry, there was a problem deleting this image. Please try again.');
-						$("#ajax_loading").hide();
-					}
-			});
-		}
-	});
+//	$(".action-delete-multi-image").live('click', function() {
+//		if (confirm('Are you sure you want to delete this image?'))
+//		{
+//			$("#ajax_loading").show();
+//			var $selected_image = $(this).attr("rel");
+//			$.ajax({
+//					url: "/system/ajaxDeleteImage/"+$selected_image,
+//					success: function() {
+//						$("#image-f-"+$selected_image).fadeOut(function() {
+//							$("#image-f-"+$selected_image).remove();
+//						});
+//						$("#image-i-"+$selected_image).fadeOut(function() {
+//							$("#image-i-"+$selected_image).remove();
+//						});
+//						$("#ajax_loading").hide();
+//					},
+//					error: function() {
+//						alert('Sorry, there was a problem deleting this image. Please try again.');
+//						$("#ajax_loading").hide();
+//					}
+//			});
+//		}
+//	});
 	
 	$.fx.speeds._default = 1000;
 			
@@ -935,18 +935,18 @@ Array.prototype.remove = function (value) {
         this.splice(i, 1);
     }
 };
-function ajaxFlashMessage(type, message)
-{
-	if (type == 'success') {
-		$("#flash_messages").html('<div class="ui-widget message closeable"><div class="ui-state-success ui-corner-all"><p><span class="ui-icon ui-icon-circle-check"></span><strong>SUCCESS:</strong> '+message+'</p></div></div>');
-	} else if (type == 'error') {
-		$("#flash_messages").html('<div class="ui-widget message closeable"><div class="ui-state-error ui-corner-all"><p><span class="ui-icon ui-icon-alert"></span><strong>ERROR:</strong> '+message+'</p></div></div>');
-	} else {
-		$("#flash_messages").html('<div class="ui-widget message closeable"><div class="ui-state-highlight ui-corner-all"><p><span class="ui-icon ui-icon-info"></span><strong>NOTICE:</strong> '+message+'</p></div></div>');
-	}
-	$(".message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>').find(".message-close").click(function() {
-		$(this).parent().fadeOut(function() {
-        	$(this).remove();
-        });
-    });
-}
+//function ajaxFlashMessage(type, message)
+//{
+//	if (type == 'success') {
+//		$("#flash_messages").html('<div class="ui-widget message closeable"><div class="ui-state-success ui-corner-all"><p><span class="ui-icon ui-icon-circle-check"></span><strong>SUCCESS:</strong> '+message+'</p></div></div>');
+//	} else if (type == 'error') {
+//		$("#flash_messages").html('<div class="ui-widget message closeable"><div class="ui-state-error ui-corner-all"><p><span class="ui-icon ui-icon-alert"></span><strong>ERROR:</strong> '+message+'</p></div></div>');
+//	} else {
+//		$("#flash_messages").html('<div class="ui-widget message closeable"><div class="ui-state-highlight ui-corner-all"><p><span class="ui-icon ui-icon-info"></span><strong>NOTICE:</strong> '+message+'</p></div></div>');
+//	}
+//	$(".message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>').find(".message-close").click(function() {
+//		$(this).parent().fadeOut(function() {
+//        	$(this).remove();
+//        });
+//    });
+//}
