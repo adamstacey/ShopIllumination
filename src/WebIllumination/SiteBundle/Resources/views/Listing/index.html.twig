@@ -103,6 +103,7 @@
                                     <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
                                 </div>
                                 <div>
+                                    <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
                                     <div class="product-options">
                                         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                             <p class="ar product-price">
