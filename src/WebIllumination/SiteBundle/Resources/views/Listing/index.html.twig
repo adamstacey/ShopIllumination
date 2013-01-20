@@ -61,22 +61,22 @@
     </header>
 {% endblock %}
 {% block body %}
-	<section class="container_6 clearfix">
-		<div class="grid_4 grid-listings"> 
-			<div class="portlet">
-				<header>
-	                <h2 id="product-count">Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
-	            </header>
-				<section class="clearfix no-padding-right no-padding-bottom">
-                    <form id="form-settings" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.get('_route_params')) }}">
+    <form id="form-filter" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.query.all) }}">
+        <section class="container_6 clearfix">
+            <div class="grid_4 grid-listings">
+                <div class="portlet">
+                    <header>
+                        <h2 id="product-count">Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
+                    </header>
+                    <section class="clearfix no-padding-right no-padding-bottom">
                         <div id="product-sorting">
                             <div class="fl">
                                 <div class="product-sorting-title fl">Sort By</div>
                                 <select name="sort_order" id="listing-sort-order" class="fl">
                                     <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
                                     <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
-                                    <option{% if app.request.get('sort_order') == 'list_price:asc' %} selected="selected"{% endif %} value="list_price:asc">Price: Lowest First</option>
-                                    <option{% if app.request.get('sort_order') == 'list_price:desc' %} selected="selected"{% endif %} value="list_price:desc">Price: Highest First</option>
+                                    <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
+                                    <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
                                     <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
                                 </select>
                             </div>
@@ -92,116 +92,114 @@
                             </div>
                             <div class="clear"></div>
                         </div>
-                    </form>
-                    <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
-                        {{ knp_pagination_render(pagination) }}
-                    </div>
-					<div id="products">
-                        {% for product in pagination %}
-                            <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
-                                <div class="fl">
-                                    <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
-                                </div>
-                                <div>
-                                    <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
-                                    <div class="product-options">
-                                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                            <p class="ar product-price">
-                                                {% spaceless %}
-                                                    {% if product.hide_price == 0 %}
-                                                        {% if product.url != '' %}
-                                                            <a href="{#{{ path('page_request', {'url': url}) }}#}">
-                                                        {% endif %}
-                                                        {% if product.low_price == product.high_price %}
-                                                            <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                        <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+                        <div id="products">
+                            {% for product in pagination %}
+                                <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
+                                    <div class="fl">
+                                        <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
+                                    </div>
+                                    <div>
+                                        <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
+                                        <div class="product-options">
+                                            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                                <p class="ar product-price">
+                                                    {% spaceless %}
+                                                        {% if product.hide_price == 0 %}
+                                                            {% if product.url != '' %}
+                                                                <a href="{#{{ path('page_request', {'url': url}) }}#}">
+                                                            {% endif %}
+                                                            {% if product.low_price == product.high_price %}
+                                                                <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                            {% else %}
+                                                                <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                                <em> - </em>
+                                                                <span itemprop="price">&pound;{{ product.high_price|number_format(2) }}</span>
+                                                            {% endif %}
+                                                            {% if product.url != '' %}
+                                                                </a>
+                                                            {% endif %}
+                                                            <span class="product-tax"> (inc. VAT)</span>
                                                         {% else %}
-                                                            <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
-                                                            <em> - </em>
-                                                            <span itemprop="price">&pound;{{ product.high_price|number_format(2) }}</span>
+                                                            <a itemprop="price" href="{#{{ path('content_contact_us') }}#}">CONTACT US</a>
                                                         {% endif %}
-                                                        {% if product.url != '' %}
-                                                            </a>
-                                                        {% endif %}
-                                                        <span class="product-tax"> (inc. VAT)</span>
-                                                    {% else %}
-                                                        <a itemprop="price" href="{#{{ path('content_contact_us') }}#}">CONTACT US</a>
-                                                    {% endif %}
-                                                {% endspaceless %}
-                                            </p>
-                                        </div>
+                                                    {% endspaceless %}
+                                                </p>
+                                            </div>
 
-                                        <a href="{#{{ path('page_request', {'url': product.url}) }}#}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
-                                        <div class="buy-now">
-                                            {% if (product.availableForPurchase == 1) and (product.hidePrice == 0) %}
-                                                <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
-                                                    <tr>
-                                                        {% if product.productCode == '' %}
-                                                            <td class="out-of-stock">Out of Stock Until Further Notice</td>
-                                                        {% else %}
-                                                            <td class="no-padding no-border"><input id="quantity-{{ product.productId }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" /></td>
-                                                            <td class="no-padding no-border">
-                                                                <div class="quantity-buttons-container no-padding">
-                                                                    <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.productId }}">+</div>
-                                                                    <div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.productId }}">-</div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <button data-product-id="{{ product.productId }}" class="action-add-to-basket button margin-left-5 ui-button-green">Add to Basket</button>
-                                                            </td>
-                                                        {% endif %}
-                                                    </tr>
-                                                </table>
-                                                <input type="hidden" value="" id="selected-options-{{ product.productId }}">
-                                            {% else %}
-                                                <a href="{#{{ path('content_contact_us') }}#}" class="fr button ui-button-green">Contact Us to Buy</a>
+                                            <a href="{#{{ path('page_request', {'url': product.url}) }}#}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
+                                            <div class="buy-now">
+                                                {% if (product.availableForPurchase == 1) and (product.hidePrice == 0) %}
+                                                    <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
+                                                        <tr>
+                                                            {% if product.productCode == '' %}
+                                                                <td class="out-of-stock">Out of Stock Until Further Notice</td>
+                                                            {% else %}
+                                                                <td class="no-padding no-border"><input id="quantity-{{ product.productId }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" /></td>
+                                                                <td class="no-padding no-border">
+                                                                    <div class="quantity-buttons-container no-padding">
+                                                                        <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.productId }}">+</div>
+                                                                        <div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.productId }}">-</div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button data-product-id="{{ product.productId }}" class="action-add-to-basket button margin-left-5 ui-button-green">Add to Basket</button>
+                                                                </td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    </table>
+                                                    <input type="hidden" value="" id="selected-options-{{ product.productId }}">
+                                                {% else %}
+                                                    <a href="{#{{ path('content_contact_us') }}#}" class="fr button ui-button-green">Contact Us to Buy</a>
+                                                {% endif %}
+                                            </div>
+                                            {% if product.cheaperAlternativePrice is defined %}
+                                                {% if (product.cheaperAlternativePrice > 0) and (product.cheaperAlternativeUrl != '') %}
+                                                    <a href="{#{{ path('page_request', {'url': product.cheaperAlternativeUrl}) }}#}" class="cheaper-alternative-listing">Cheaper Alternative <strong>&pound;{{ product.cheaperAlternativePrice|number_format(0) }}</strong></a>
+                                                {% endif %}
                                             {% endif %}
                                         </div>
-                                        {% if product.cheaperAlternativePrice is defined %}
-                                            {% if (product.cheaperAlternativePrice > 0) and (product.cheaperAlternativeUrl != '') %}
-                                                <a href="{#{{ path('page_request', {'url': product.cheaperAlternativeUrl}) }}#}" class="cheaper-alternative-listing">Cheaper Alternative <strong>&pound;{{ product.cheaperAlternativePrice|number_format(0) }}</strong></a>
+                                        <div class="product-information">
+                                            {% if (product.description) %}
+                                                {{ product.description.description|raw }}
                                             {% endif %}
-                                        {% endif %}
-                                    </div>
-                                    <div class="product-information">
-                                        {% if (product.description) %}
-                                            {{ product.description.description|raw }}
-                                        {% endif %}
-                                    </div>
-                                    {% if '|1034|1122|69|' in product.departmentIds %}
-                                        <div class="small-floating-offer small-floating-offer-top-left">
-                                            <p class="small-floating-offer-title">40% OFF</p>
-                                            <p class="small-floating-offer-description">Stellar<br />Pans</p>
                                         </div>
-                                    {% endif %}
-                                    {% if product.brandId == '7' %}
-                                        <div class="medium-floating-offer medium-floating-offer-bottom-left">
-                                            <p class="medium-floating-offer-title">10% OFF</p>
-                                            <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
-                                        </div>
-                                    {% endif %}
+                                        {% if '|1034|1122|69|' in product.departmentIds %}
+                                            <div class="small-floating-offer small-floating-offer-top-left">
+                                                <p class="small-floating-offer-title">40% OFF</p>
+                                                <p class="small-floating-offer-description">Stellar<br />Pans</p>
+                                            </div>
+                                        {% endif %}
+                                        {% if product.brandId == '7' %}
+                                            <div class="medium-floating-offer medium-floating-offer-bottom-left">
+                                                <p class="medium-floating-offer-title">10% OFF</p>
+                                                <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
+                                            </div>
+                                        {% endif %}
+                                        <div class="clear"></div>
+                                    </div>
                                     <div class="clear"></div>
                                 </div>
-                                <div class="clear"></div>
-                            </div>
-                        {% else %}
-                            <p class="no-products">Sorry, there are currently no products in this department.</p>
-                        {% endfor %}
+                            {% else %}
+                                <p class="no-products">Sorry, there are currently no products in this department.</p>
+                            {% endfor %}
+                            <div class="clear"></div>
+                        </div>
+                        <div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
                         <div class="clear"></div>
-					</div>
-					<div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
-                        {{ knp_pagination_render(pagination) }}
-					</div>
-		        	<div class="clear"></div>
-				</section>
-	        </div>
-	    </div>
-		<div class="grid_2 grid-filters">
-			<div class="portlet">
-				<header>
-	                <h2 class="ac">Refine Search By</h2>
-	            </header>
-				<section class="no-padding">
-                    <form id="form-filter" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.get('_route_params')) }}">
+                    </section>
+                </div>
+            </div>
+            <div class="grid_2 grid-filters">
+                <div class="portlet">
+                    <header>
+                        <h2 class="ac">Refine Search By</h2>
+                    </header>
+                    <section class="no-padding">
                         <div id="filters">
                             <h5 id="filter-price-header" class="no-margin no-border-top">
                                 {% spaceless %}
@@ -211,14 +209,16 @@
                                 {% endspaceless %}
                             </h5>
                             <div id="filter-price-container">
-                                <div class="range-slider-values">
-                                    <span>&pound;</span>
-                                    <input type="hidden" name="filter[low_cost]" id="filter-low-cost" value="{{ product.low_price }}" />
-                                    <span>&nbsp;-&nbsp;</span>
-                                    <input type="hidden" name="filter[high_cost" id="filter-high-cost" value="{{ product.high_price }}" />
+                                <div id="filter-price" class="filter price-range-filter">
+                                    <div class="range-slider-values">
+                                        <span>&pound;</span>
+                                        <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}" />
+                                        <span>&nbsp;-&nbsp;</span>
+                                        <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}" />
+                                    </div>
+                                    <div class="price-range" id="price-range-slider"></div>
                                 </div>
-                                <div class="price-range" id="price-range-slider"></div>
-                                </div>
+                            </div>
 
                             {% if departments|length > 0 %}
                                 <h5 id="filter-brand-header" class="no-margin">
@@ -286,12 +286,12 @@
                                 </div>
                             {% endif %}
                         </div>
-                    </form>
-                </section>
+                    </section>
+                </div>
             </div>
-        </div>
-	   	<div class="clear"></div>
-	</section>
+            <div class="clear"></div>
+        </section>
+    </form>
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
@@ -314,6 +314,19 @@
                 $("#filter-"+$(this).data('filter')).find("input, select").each(function() {
                    $(this).reset();
                 });
+            });
+            $("#price-range-slider").slider({
+                range: true,
+                min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),
+                max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),
+                values: [parseInt({{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}, 10), parseInt({{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}, 10)],
+                slide: function(event, ui) {
+                    $("#filter-low-price").val(ui.values[0]);
+                    $("#filter-high-price").val(ui.values[1]);
+                },
+                change: function(event, ui) {
+                    $(this).closest("form").submit();
+                }
             });
         });
     </script>

@@ -92,9 +92,14 @@ class ListingController extends Controller
         $query = '*';
 
         $filters = $request->query->get('filter', array());
-        $flags = array('brand', 'department_path');
+        $flags = array('brand', 'department_path', 'low_price', 'high_price');
 
-        //Facets
+        // Stats
+        $stats = $select->getStats();
+        $stats->createField('low_price');
+        $stats->createField('high_price');
+
+        // Facets
         $facetSet = $select->getFacetSet();
         $featureGroups = array();
         $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1)->setPrefix($request->query->get('filter[department_path]', '', true));
@@ -140,16 +145,17 @@ class ListingController extends Controller
                 if(is_array($filter))
                 {
                     array_walk($filter, function(&$item) use ($flag, $helper) {
-                        if(is_array($item) && count($item) == 2)
-                        {
-                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item[0]).' TO '.$helper->escapePhrase($item[1]);
-                        } else {
-                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
-                        }
+                        $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
                     });
                     $select->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
                 } else {
-                    $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
+                    if($flag === 'low_price') {
+                        $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':['.$helper->escapeTerm($filter).' TO *]');
+                    } elseif($flag === 'high_price') {
+                        $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':[* TO '.$helper->escapeTerm($filter).']');
+                    } else {
+                        $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
+                    }
                 }
 
             }
@@ -157,7 +163,7 @@ class ListingController extends Controller
 
         // Sort results (If the user has entered a query they cannot sort)
         $sort = explode(':', $request->query->get('sort_order', 'header_sort:asc'));
-        if(count($sort) === 2 && in_array($sort[0], array('header_sort', 'list_price', 'created_at'))) {
+        if(count($sort) === 2 && in_array($sort[0], array('header_sort', 'low_price', 'high_price', 'created_at'))) {
             $sortCol = $sort[0];
             $sortDir = ($sort[1] == 'asc') ? Solarium_Query_Select::SORT_ASC : Solarium_Query_Select::SORT_DESC;
 
@@ -178,6 +184,7 @@ class ListingController extends Controller
             $pagination->setSortableTemplate('WebIlluminationSiteBundle:Includes:sortable.html.twig');
 
             $facets = $pagination->getCustomParameter('result')->getFacetSet();
+            $stats = $pagination->getCustomParameter('result')->getStats();
         } catch (\Solarium_Client_HttpException $e) {
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
@@ -185,6 +192,7 @@ class ListingController extends Controller
         return array(
             'pagination' => $pagination,
             'facets' => $facets,
+            'stats' => $stats,
             'featureGroups' => $featureGroups,
             'department' => $department,
             'departments' => $departments,
