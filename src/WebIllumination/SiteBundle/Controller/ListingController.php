@@ -37,14 +37,17 @@ class ListingController extends Controller
          * @var $brand \WebIllumination\SiteBundle\Entity\Brand
          * @var $departmentToFeature \WebIllumination\SiteBundle\Entity\DepartmentToFeature
          */
+
         $em = $this->getDoctrine()->getManager();
 
         // If department was specified fetch from the database
         $department = null;
+        $departments = array();
         $departmentPath = array();
 
         if($departmentId) {
             $department = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($departmentId);
+            $departments[] = $department;
             if(!$department) {
                 throw new NotFoundHttpException("Department not found");
             }
@@ -56,7 +59,19 @@ class ListingController extends Controller
                 array_unshift($departmentPath, $tempDepartment);
                 $tempDepartment = $tempDepartment->getParent();
             }
+        } else {
+//            $departments = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findBy(array('parent' => null));
+            $query = $em->createQuery('
+                SELECT d, dd, dc
+                FROM WebIllumination\SiteBundle\Entity\Department d
+                LEFT JOIN d.descriptions dd
+                LEFT JOIN d.children dc
+                WHERE d.status = :status
+                ORDER BY d.displayOrder ASC
+            ')->setParameter('status', 'a');
+            $departments = $query->getResult();
         }
+
         // If brand was specified fetch from the database
         $brand = null;
 
@@ -103,16 +118,6 @@ class ListingController extends Controller
         }
 
         // Filtering
-        if($department) {
-            // Get path
-            $departmentFilterPath = "";
-            $currDepartment = $department;
-            do {
-                $departmentFilterPath = $currDepartment->__toString() . "|" . $departmentFilterPath;
-                $currDepartment = $currDepartment->getParent();
-            } while ($currDepartment !== null);
-            $select->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(rtrim($departmentFilterPath, "|")));
-        }
         if($brand) {
             $select->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
         }
@@ -172,6 +177,7 @@ class ListingController extends Controller
             'facets' => $facets,
             'featureGroups' => $featureGroups,
             'department' => $department,
+            'departments' => $departments,
             'department_path' => $departmentPath,
             'brand' => $brand
         );

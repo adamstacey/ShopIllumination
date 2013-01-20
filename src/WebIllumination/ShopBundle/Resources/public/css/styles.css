@@ -3983,6 +3983,8 @@ input[type=date]:focus,
 .filter
 {
 	margin: 0;
+    padding-right: 2px;
+    overflow-x: hidden;
 }
 .filter label
 {
@@ -4070,6 +4072,16 @@ input[type=date]:focus,
 	width: 30px;
 	text-align: right;
 	color: #676767;
+}
+.jstree.filter ul li {
+    padding-left: 0;
+    margin-left: 5px;
+    border-bottom: none;
+}
+.jstree.filter > ul > li {
+    padding-left: 0;
+    margin-left: 0;
+    border-bottom: 1px dotted #c5d2d6;
 }
 .range-slider-values
 {

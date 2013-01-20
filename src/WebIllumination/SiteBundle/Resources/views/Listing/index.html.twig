@@ -220,55 +220,22 @@
                                 <div class="price-range" id="price-range-slider"></div>
                                 </div>
 
-                            <h5 id="filter-brand-header" class="no-margin">
-                                {% spaceless %}
-                                    Department
-                                    <button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                    <button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
-                                {% endspaceless %}
-                            </h5>
-                            <div id="filter-department-container">
-                                <div id="filter-department" class="filter">
-                                    <ul>
-                                        {% for department, count in facets.facet('departments') %}
-                                            {% set department_path = department|split('|') %}
-                                            <li>
-                                                <input{% if department == app.request.get('filter[department_path]', null, true) %} checked="checked"{% endif %} name="filter[department_path]" type="checkbox" value="{{ department }}" id="filter-department-{{ loop.index }}" />
-                                                <label for="filter-department-{{ loop.index }}">
-                                                    <span class="fr">({{ count }})</span>
-                                                    {% if (department_path|length - 1) > 0 %}
-                                                        {% for i in 1..((department_path|length) - 1) %}
-                                                            {{ ' > ' }}
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                    {{ department_path[(department_path|length)-1] }}
-                                                </label>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                            {% if departments|length > 0 %}
+                                <h5 id="filter-brand-header" class="no-margin">
+                                    {% spaceless %}
+                                        Department
+                                        <button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+                                        <button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+                                    {% endspaceless %}
+                                </h5>
+                                <div id="filter-department-container">
+                                    <div id="filter-department" class="filter">
+                                        <ul>
+                                            {% include 'WebIlluminationSiteBundle:Listing:Includes/departmentTree.html.twig' with {'rootDepartment': department, 'departments': departments, 'brand': brand} %}
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            {#<div id="filter-department-container">#}
-                                {#<div id="filter-department" class="filter">#}
-                                    {#<ul>#}
-                                        {#{% for department, count in facets.facet('departments') %}#}
-                                            {#{% set department_path = department|split('|') %}#}
-                                            {#<li>#}
-                                                {#<input{% if department in app.request.get('filter[department_path]', null, true) %} checked="checked"{% endif %} name="filter[department_path][]" type="checkbox" value="{{ department }}" id="filter-department-{{ loop.index }}" />#}
-                                                {#<label for="filter-department-{{ loop.index }}">#}
-                                                    {#<span class="fr">({{ count }})</span>#}
-                                                    {#{% if (department_path|length - 1) > 0 %}#}
-                                                        {#{% for i in 1..((department_path|length) - 1) %}#}
-                                                            {#{{ ' > ' }}#}
-                                                        {#{% endfor %}#}
-                                                    {#{% endif %}#}
-                                                    {#{{ department_path[(department_path|length)-1] }}#}
-                                                {#</label>#}
-                                            {#</li>#}
-                                        {#{% endfor %}#}
-                                    {#</ul>#}
-                                {#</div>#}
-                            {#</div>#}
+                            {% endif %}
 
                             {% if brand is null %}
                                 <h5 id="filter-brand-header" class="no-margin">
@@ -328,10 +295,18 @@
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
-	{% include 'WebIlluminationShopBundle:Departments:indexScript.js.twig' with {'noAjax': noAjax, 'url': url, 'brand': brand, 'group': group, 'departmentListing': departmentListing, 'department': department} %}
+	{% include 'WebIlluminationShopBundle:Departments:indexScript.js.twig' with {'noAjax': noAjax, 'url': url, 'brand': brand, 'group': group, 'departmentListing': departmentListing, 'department': department, 'level': 1} %}
 
     <script type="text/javascript">
         $(document).ready(function() {
+            $("#filter-department").jstree({
+                "plugins" : ["themes","html_data"],
+                "themes" : {
+                    "theme" : "default",
+                    "dots" : false,
+                    "icons" : false
+                }
+            });
             $("#form-settings, #form-filter").find("input, select").live('change', function() {
                  $(this).closest("form").submit();
             });

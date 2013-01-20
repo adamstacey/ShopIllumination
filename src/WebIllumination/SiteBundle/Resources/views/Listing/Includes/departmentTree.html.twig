@@ -1,0 +1,19 @@
+{% if level is not defined %}
+    {% set level = 1 %}
+{% endif %}
+{% for department in departments %}
+    {% if level > 1 or (rootDepartment is not null or (level == 1 and department.parent is null)) %}
+        <li>
+            {% if brand is null %}
+                <a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a>
+            {% else %}
+                <a href="{{ path('listing_department_brand', {'departmentId': department.id, 'brandId': brand.id}) }}">{{ department.description.header }}</a>
+            {% endif %}
+            {% if department.children|length > 0 %}
+                <ul>
+                    {% include _self with {'departments': department.children, 'brand': brand, 'level': level+1} %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}
