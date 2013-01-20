@@ -118,6 +118,16 @@ class ListingController extends Controller
         }
 
         // Filtering
+        if($department) {
+            // Get path
+            $departmentFilterPath = "";
+            $currDepartment = $department;
+            do {
+                $departmentFilterPath = $currDepartment->__toString() . "|" . $departmentFilterPath;
+                $currDepartment = $currDepartment->getParent();
+            } while ($currDepartment !== null);
+            $select->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(rtrim($departmentFilterPath, "|")));
+        }
         if($brand) {
             $select->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
         }

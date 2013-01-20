@@ -94,7 +94,7 @@
                         </div>
                     </form>
                     <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
-                        {{ pagination.render()|raw }}
+                        {{ knp_pagination_render(pagination) }}
                     </div>
 					<div id="products">
                         {% for product in pagination %}
@@ -189,7 +189,7 @@
                         <div class="clear"></div>
 					</div>
 					<div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
-                        {{ pagination.render()|raw }}
+                        {{ knp_pagination_render(pagination) }}
 					</div>
 		        	<div class="clear"></div>
 				</section>
