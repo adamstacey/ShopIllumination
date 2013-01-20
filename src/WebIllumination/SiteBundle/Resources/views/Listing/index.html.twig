@@ -317,8 +317,8 @@
             });
             $("#price-range-slider").slider({
                 range: true,
-                min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),
-                max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),
+                min: 0,
+                max: 9999,
                 values: [parseInt({{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}, 10), parseInt({{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}, 10)],
                 slide: function(event, ui) {
                     $("#filter-low-price").val(ui.values[0]);
