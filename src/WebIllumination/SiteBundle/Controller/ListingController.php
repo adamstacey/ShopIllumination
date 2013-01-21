@@ -43,33 +43,16 @@ class ListingController extends Controller
         // If department was specified fetch from the database
         $department = null;
         $departments = array();
-        $departmentPath = array();
 
         if($departmentId) {
-            $department = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->find($departmentId);
-            $departments[] = $department;
-            if(!$department) {
-                throw new NotFoundHttpException("Department not found");
-            }
-
-            // Build department path
-            $departmentPath = array();
-            $tempDepartment = $department;
-            while($tempDepartment !== null) {
-                array_unshift($departmentPath, $tempDepartment);
-                $tempDepartment = $tempDepartment->getParent();
+            try {
+                $department = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findActiveDepartment($departmentId);
+                $departments[] = $department;
+            } catch(NoResultException $e) {
+                throw new NotFoundHttpException("Product not found");
             }
         } else {
-//            $departments = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findBy(array('parent' => null));
-            $query = $em->createQuery('
-                SELECT d, dd, dc
-                FROM WebIllumination\SiteBundle\Entity\Department d
-                LEFT JOIN d.descriptions dd
-                LEFT JOIN d.children dc
-                WHERE d.status = :status
-                ORDER BY d.displayOrder ASC
-            ')->setParameter('status', 'a');
-            $departments = $query->getResult();
+            $departments = $em->getRepository('WebIllumination\SiteBundle\Entity\Department')->findActiveDepartments();
         }
 
         // If brand was specified fetch from the database
@@ -86,21 +69,36 @@ class ListingController extends Controller
         /** @var $solarium \Solarium_Client */
         $solarium = $this->get('solarium.client');
 
-        $select = $solarium->createSelect();
-        $helper = $select->getHelper();
+        $query = $solarium->createSelect();
+        $helper = $query->getHelper();
 
-        $query = '*';
+        if($request->query->get('q')) {
+            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
+
+            $dismax = $query->getDisMax();
+            $dismax->setQueryFields(array('product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
+            $dismax->setPhraseFields(array('short_description^30'));
+            $dismax->setQueryParser('edismax');
+
+            $query->setQuery($escapedQuery);
+        } else {
+            $query->setQuery('*');
+        }
+
+        // Sort results (If the user has entered a query they cannot sort)
+        $sort = explode(':', $request->query->get('sort_order', 'header_sort:asc'));
+        if(count($sort) === 2 && in_array($sort[0], array('header_sort', 'low_price', 'high_price', 'created_at'))) {
+            $sortCol = $sort[0];
+            $sortDir = ($sort[1] == 'asc') ? Solarium_Query_Select::SORT_ASC : Solarium_Query_Select::SORT_DESC;
+
+            $query->addSort($helper->escapeTerm($sortCol), $sortDir);
+        }
 
         $filters = $request->query->get('filter', array());
-        $flags = array('brand', 'department_path', 'low_price', 'high_price');
-
-        // Stats
-        $stats = $select->getStats();
-        $stats->createField('low_price');
-        $stats->createField('high_price');
+        $flags = array('brand', 'department_path');
 
         // Facets
-        $facetSet = $select->getFacetSet();
+        $facetSet = $query->getFacetSet();
         $featureGroups = array();
         $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1)->setPrefix($request->query->get('filter[department_path]', '', true));
         // Do not include the brand filters if the user is on the brand listing
@@ -131,10 +129,10 @@ class ListingController extends Controller
                 $departmentFilterPath = $currDepartment->__toString() . "|" . $departmentFilterPath;
                 $currDepartment = $currDepartment->getParent();
             } while ($currDepartment !== null);
-            $select->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(rtrim($departmentFilterPath, "|")));
+            $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(rtrim($departmentFilterPath, "|")));
         }
         if($brand) {
-            $select->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
+            $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
         }
 
         foreach($flags as $flag)
@@ -147,36 +145,36 @@ class ListingController extends Controller
                     array_walk($filter, function(&$item) use ($flag, $helper) {
                         $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
                     });
-                    $select->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
+                    $query->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
                 } else {
-                    if($flag === 'low_price') {
-                        $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':['.$helper->escapeTerm($filter).' TO *]');
-                    } elseif($flag === 'high_price') {
-                        $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':[* TO '.$helper->escapeTerm($filter).']');
-                    } else {
-                        $select->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
-                    }
+                    $query->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
                 }
 
             }
         }
 
-        // Sort results (If the user has entered a query they cannot sort)
-        $sort = explode(':', $request->query->get('sort_order', 'header_sort:asc'));
-        if(count($sort) === 2 && in_array($sort[0], array('header_sort', 'low_price', 'high_price', 'created_at'))) {
-            $sortCol = $sort[0];
-            $sortDir = ($sort[1] == 'asc') ? Solarium_Query_Select::SORT_ASC : Solarium_Query_Select::SORT_DESC;
+        // Create stats query, clone query so that
+        $statsQuery = clone $query;
+        $statsQuery->setRows(0);
 
-            $select->addSort($helper->escapeTerm($sortCol), $sortDir);
+        $stats = $statsQuery->getStats();
+        $stats->createField('low_price');
+        $stats->createField('high_price');
+
+
+        // Deal with price filtering separately
+        if(array_key_exists('low_price', $filters)) {
+            $query->createFilterQuery('low_price')->addTag('low_price')->setQuery($helper->escapeTerm('low_price').':['.$helper->escapeTerm($filters['low_price']).' TO *]');
+        }
+        if(array_key_exists('high_price', $filters)) {
+            $query->createFilterQuery('high_price')->addTag('high_price')->setQuery($helper->escapeTerm('high_price').':[* TO '.$helper->escapeTerm($filters['high_price']).']');
         }
 
-        $select->setQuery($query);
-
-        // Setup paginator
         try {
+            // Setup paginator
             $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
-                array($solarium, $select),
+                array($solarium, $query),
                 $request->query->get('page', 1),
                 $request->query->get('limit', 20)
             );
@@ -184,7 +182,7 @@ class ListingController extends Controller
             $pagination->setSortableTemplate('WebIlluminationSiteBundle:Includes:sortable.html.twig');
 
             $facets = $pagination->getCustomParameter('result')->getFacetSet();
-            $stats = $pagination->getCustomParameter('result')->getStats();
+            $stats = $solarium->select($statsQuery)->getStats();
         } catch (\Solarium_Client_HttpException $e) {
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
@@ -196,7 +194,6 @@ class ListingController extends Controller
             'featureGroups' => $featureGroups,
             'department' => $department,
             'departments' => $departments,
-            'department_path' => $departmentPath,
             'brand' => $brand
         );
     }

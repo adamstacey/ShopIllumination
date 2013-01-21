@@ -1,4 +1,5 @@
 {% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+
 {% if department is not null and brand is null %}
     {% set title = department.description.pageTitle %}
 {% elseif department is null and brand is not null %}
@@ -9,18 +10,20 @@
     {% set title = 'Products' %}
 {% endif %}
 {% block title %}{{ title }}{% endblock %}
+
 {% block metatags %}
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Expires" content="-1">
-	<meta name="description" content="{{ department.metaDescription }}">
-	<meta name="keywords" content="{{ department.metaKeywords }}">
-	<meta name="fragment" content="!">
-	{#{% if departmentListing.brandId > 0 %}#}
-		{#<link rel="canonical" href="{{ asset(path('department_with_brand_view_all', {'url': url, 'brand': departmentListing.brand}), 'nocdn') }}" />#}
-	{#{% else %}#}
-		{#<link rel="canonical" href="{{ asset(path('department_view_all', {'url': url}), 'nocdn') }}" />#}
-	{#{% endif %}#}
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    <meta name="description" content="{{ department.metaDescription }}">
+    <meta name="keywords" content="{{ department.metaKeywords }}">
+    <meta name="fragment" content="!">
+    {#{% if departmentListing.brandId > 0 %}#}
+    {#<link rel="canonical" href="{{ asset(path('department_with_brand_view_all', {'url': url, 'brand': departmentListing.brand}), 'nocdn') }}" />#}
+    {#{% else %}#}
+    {#<link rel="canonical" href="{{ asset(path('department_view_all', {'url': url}), 'nocdn') }}" />#}
+    {#{% endif %}#}
 {% endblock %}
+
 {% block header %}
     <header>
         {% if department is not null and brand is null %}
@@ -32,14 +35,20 @@
         {% else %}
             <h1>Products</h1>
         {% endif %}
-        {% if department_path|length > 1 %}
+
+        {% if app.request.query.get('q', '') is not empty %}
+            <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
+        {% endif %}
+
+        {% if department.parents|length > 0 %}
             <div class="breadcrumb-trail no-margin" itemprop="breadcrumb">
-                {% for path_item in department_path %}
-                        {#<a href="{{ path_item.routing }}">{{ path_item.description.header }}</a>{% if not loop.last %}&nbsp;&nbsp;&gt;&nbsp;&nbsp;{% endif %}#}
-                        <a href="{{ path('listing_department', {'departmentId': path_item.id}) }}">{{ path_item.description.header }}</a>{% if not loop.last %} > {% endif %}
+                {% for parent in department.parents %}
+                    <a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a> >
                 {% endfor %}
+                <a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a>
             </div>
         {% endif %}
+
         {% if department is not null and brand is null and brand.description.description%}
             <div class="department-description">
                 {{ department.description.description|raw }}
@@ -60,9 +69,11 @@
         {% endif %}
     </header>
 {% endblock %}
+
+
 {% block body %}
-    <form id="form-filter" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.query.all) }}">
-        <section class="container_6 clearfix">
+    <section class="container_6 clearfix">
+        <form id="form-filter" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)) }}">
             <div class="grid_4 grid-listings">
                 <div class="portlet">
                     <header>
@@ -194,6 +205,7 @@
                     </section>
                 </div>
             </div>
+
             <div class="grid_2 grid-filters">
                 <div class="portlet">
                     <header>
@@ -212,9 +224,9 @@
                                 <div id="filter-price" class="filter price-range-filter">
                                     <div class="range-slider-values">
                                         <span>&pound;</span>
-                                        <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}" />
+                                        <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0)|number_format(2), true) }}" />
                                         <span>&nbsp;-&nbsp;</span>
-                                        <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}" />
+                                        <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999)|number_format(2), true) }}" />
                                     </div>
                                     <div class="price-range" id="price-range-slider"></div>
                                 </div>
@@ -290,9 +302,10 @@
                 </div>
             </div>
             <div class="clear"></div>
-        </section>
-    </form>
+        </form>
+    </section>
 {% endblock %}
+
 {% block javascripts %}
 	{{ parent() }}
 	{% include 'WebIlluminationShopBundle:Departments:indexScript.js.twig' with {'noAjax': noAjax, 'url': url, 'brand': brand, 'group': group, 'departmentListing': departmentListing, 'department': department, 'level': 1} %}
@@ -317,8 +330,8 @@
             });
             $("#price-range-slider").slider({
                 range: true,
-                min: 0,
-                max: 9999,
+                min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),
+                max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),
                 values: [parseInt({{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}, 10), parseInt({{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}, 10)],
                 slide: function(event, ui) {
                     $("#filter-low-price").val(ui.values[0]);

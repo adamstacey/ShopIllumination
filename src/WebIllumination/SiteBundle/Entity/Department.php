@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="WebIllumination\SiteBundle\Repository\DepartmentRepository")
  * @ORM\Table(name="departments")
  * @ORM\HasLifecycleCallbacks()
 
@@ -181,6 +181,19 @@ class Department
     public function getLevel()
     {
         return count($this->getExplodedPath()) - 1;
+    }
+
+    public function getParents()
+    {
+        $parentDepartments = array();
+        $tempDepartment = $this->getParent();
+
+        while($tempDepartment !== null) {
+            array_unshift($parentDepartments, $tempDepartment);
+            $tempDepartment = $tempDepartment->getParent();
+        }
+
+        return $parentDepartments;
     }
 
     /**

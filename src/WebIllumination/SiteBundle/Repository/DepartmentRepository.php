@@ -5,6 +5,38 @@ use Doctrine\ORM\EntityRepository;
 
 class DepartmentRepository extends EntityRepository
 {
+    public function findActiveDepartment($id)
+    {
+        $query = $this->getEntityManager()->createQuery('
+                SELECT d, dd, dc, dp
+                FROM WebIllumination\SiteBundle\Entity\Department d
+                LEFT JOIN d.descriptions dd
+                LEFT JOIN d.children dc
+                LEFT JOIN d.parent dp
+                WHERE d.status = :status AND d.id = :id
+                ORDER BY d.displayOrder ASC
+            ')->setParameters(array(
+                'id'     => $id,
+                'status' => 'a'
+            ));
+
+        return $query->getSingleResult();
+    }
+
+    public function findActiveDepartments()
+    {
+        $query = $this->getEntityManager()->createQuery('
+                SELECT d, dd, dc
+                FROM WebIllumination\SiteBundle\Entity\Department d
+                LEFT JOIN d.descriptions dd
+                LEFT JOIN d.children dc
+                WHERE d.status = :status
+                ORDER BY d.displayOrder ASC
+            ')->setParameter('status', 'a');
+
+        return $query->getResult();
+    }
+
     public function findAllAsTree()
     {
 
