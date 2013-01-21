@@ -72,6 +72,7 @@ class ListingController extends Controller
         $query = $solarium->createSelect();
         $helper = $query->getHelper();
 
+        // Set query string
         if($request->query->get('q')) {
             $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
 
@@ -101,10 +102,11 @@ class ListingController extends Controller
         $facetSet = $query->getFacetSet();
         $featureGroups = array();
         $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1)->setPrefix($request->query->get('filter[department_path]', '', true));
-        // Do not include the brand filters if the user is on the brand listing
+        // Add brand facet if user is not on the brand listing
         if(!$brand) {
             $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1)->addExclude('brand');
         }
+        // Add feature facets if it should be displayed
         if($department) {
             foreach($department->getFeatures() as $departmentToFeature)
             {
@@ -143,11 +145,15 @@ class ListingController extends Controller
                 if(is_array($filter))
                 {
                     array_walk($filter, function(&$item) use ($flag, $helper) {
-                        $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
+                        if(!empty($item)) {
+                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
+                        }
                     });
                     $query->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
                 } else {
-                    $query->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
+                    if(!empty($filter)) {
+                        $query->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
+                    }
                 }
 
             }
@@ -164,10 +170,14 @@ class ListingController extends Controller
 
         // Deal with price filtering separately
         if(array_key_exists('low_price', $filters)) {
-            $query->createFilterQuery('low_price')->addTag('low_price')->setQuery($helper->escapeTerm('low_price').':['.$helper->escapeTerm($filters['low_price']).' TO *]');
+            if(!empty($filters['low_price'])) {
+                $query->createFilterQuery('low_price')->addTag('low_price')->setQuery($helper->escapeTerm('low_price').':['.$helper->escapeTerm($filters['low_price']).' TO *]');
+            }
         }
         if(array_key_exists('high_price', $filters)) {
-            $query->createFilterQuery('high_price')->addTag('high_price')->setQuery($helper->escapeTerm('high_price').':[* TO '.$helper->escapeTerm($filters['high_price']).']');
+            if(!empty($filters['low_price'])) {
+                $query->createFilterQuery('high_price')->addTag('high_price')->setQuery($helper->escapeTerm('high_price').':[* TO '.$helper->escapeTerm($filters['high_price']).']');
+            }
         }
 
         try {
