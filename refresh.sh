@@ -8,18 +8,7 @@ echo "OK!"
 echo "Clearing the production environment:"
 php app/console --env=prod --no-warmup cache:clear
 echo "OK!"
-echo "Clearing the APC cache:"
-curl http://kitchenappliancecentre.dev/clear-apc-cache.php
-echo " "
 echo "Resetting the permissions:"
-chmod -R 777 app/cache/
-chmod -R 777 app/logs/
-chmod -R 777 web/uploads/
-chmod -R 777 web/css/
-chmod -R 777 web/js/
-chmod -R 777 web/bundles/
-chmod -R 777 vendor/
-chmod -R 777 src/WebIllumination/ShopBundle/Resources/
-chmod -R 777 src/WebIllumination/AdminBundle/Resources/
-chown -R adamstacey *
+sudo chmod +a "_www allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 echo "OK!"
