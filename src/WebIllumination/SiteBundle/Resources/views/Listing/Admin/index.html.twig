@@ -1,0 +1,86 @@
+{% extends 'WebIlluminationSiteBundle:Listing:index.html.twig' %}
+
+{% block header %}
+    {{ parent() }}
+    <a href="#" class="fr button">Default Mode</a>
+    <div class="clear"></div>
+{% endblock %}
+
+{% block product_block %}
+    <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
+        <div class="fl">
+            <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
+        </div>
+        <div>
+            <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
+            <div class="product-options">
+                {% block product_prices %}
+                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                        <p class="ar product-price">
+                            {% spaceless %}
+                                {% if product.hide_price == 0 %}
+                                    {% if product.url != '' %}
+                                        <a href="{#{{ path('page_request', {'url': url}) }}#}">
+                                    {% endif %}
+                                    {% if product.low_price == product.high_price %}
+                                        <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                    {% else %}
+                                        <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                        <em> - </em>
+                                        <span itemprop="price">&pound;{{ product.high_price|number_format(2) }}</span>
+                                    {% endif %}
+                                    {% if product.url != '' %}
+                                        </a>
+                                    {% endif %}
+                                    <span class="product-tax"> (inc. VAT)</span>
+                                {% else %}
+                                    <a itemprop="price" href="{#{{ path('content_contact_us') }}#}">CONTACT US</a>
+                                {% endif %}
+                            {% endspaceless %}
+                        </p>
+                    </div>
+                {% endblock %}
+
+                {% block product_options %}
+
+                {% endblock %}
+
+                {% block product_features %}
+
+                {% endblock %}
+
+                {% block product_controls %}
+                    <a href="{#{{ path('products_edit', {'id': product.id}) }}#}" class="fr button ui-button-blue margin-bottom-5">Edit Product</a>
+                    <a href="{{ path('products_delete', {'id': product.id}) }}" class="button ui-button-red margin-bottom-5">Delete Product</a>
+                {% endblock %}
+            </div>
+
+            {% block product_description %}
+                <div class="product-information">
+                    {% if (product.description) %}
+                        {{ product.description.description|raw }}
+                    {% endif %}
+                </div>
+            {% endblock %}
+
+            {% block product_misc %}
+                {% if '|1034|1122|69|' in product.departmentIds %}
+                    <div class="small-floating-offer small-floating-offer-top-left">
+                        <p class="small-floating-offer-title">40% OFF</p>
+                        <p class="small-floating-offer-description">Stellar<br />Pans</p>
+                    </div>
+                {% endif %}
+                {% if product.brandId == '7' %}
+                    <div class="medium-floating-offer medium-floating-offer-bottom-left">
+                        <p class="medium-floating-offer-title">10% OFF</p>
+                        <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
+                    </div>
+                {% endif %}
+            {% endblock %}
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+{% endblock %}
+
+

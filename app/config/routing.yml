@@ -10,11 +10,6 @@ _welcome:
 #    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
 #    prefix:   /
 
-web_illumination_admin:
-    resource: "@WebIlluminationAdminBundle/Controller/"
-    type:     annotation
-    prefix:   /admin/
-
 web_illumination_shop:
     resource: "@WebIlluminationSiteBundle/Controller/"
     type:     annotation

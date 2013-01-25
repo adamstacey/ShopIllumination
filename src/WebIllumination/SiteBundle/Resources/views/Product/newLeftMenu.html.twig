@@ -1,0 +1,26 @@
+{% for stepDescription in flow.getStepDescriptions() %}
+    {% if loop.index == flow.getCurrentStep() %}
+        {% set step_class = 'navicon-set-white navicon-list' %}
+    {% elseif flow.hasSkipStep(loop.index) %}
+        {% set step_class =  'navicon-set-black navicon-list step_skipped' %}
+    {% elseif flow.isStepDone(loop.index) %}
+        {% set step_class =  'navicon-set-white navicon-list step_done' %}
+    {% else %}
+        {% set step_class =  'navicon-set-black navicon-list' %}
+    {% endif %}
+
+    <li {%- if loop.index == flow.getCurrentStep() -%}{{ ' class="flow_step_current"' }}{%- endif -%}>
+        {%- if flow.isAllowDynamicStepNavigation() and (loop.index != flow.getCurrentStep()) and flow.isStepDone(loop.index) and (not flow.hasSkipStep(loop.index)) -%}
+            <a class="{{ step_class }}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all
+            | merge(app.request.attributes.get('_route_params'))
+            | craue_addDynamicStepNavigationParameter(flow, loop.index)) }}">
+                {{- stepDescription | trans -}}
+            </a>
+        {%- else -%}
+            <span class="{{ step_class }}">{{- stepDescription | trans -}}</span>
+        {%- endif -%}
+        {% if not flow.hasSkipStep(loop.index) %}
+            <div class="button-notification">{{ loop.index }}</div>
+        {% endif %}
+    </li>
+{% endfor %}

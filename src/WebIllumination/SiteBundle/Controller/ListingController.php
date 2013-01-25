@@ -27,10 +27,14 @@ class ListingController extends Controller
      * @Route("//brand/{brandId}", name="listing_brand", defaults={"brandId" = null})
      * @Route("/department/{departmentId}/brand/{brandId}", name="listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
      * @Method({"GET"})
-     * @Template()
      */
-	public function indexAction(Request $request, $departmentId=null, $brandId=null)
+	public function indexAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
     {
+        // Ensure user has the correct permissions
+        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+            throw new AccessDeniedException();
+        }
+
         /**
          * Define variable types
          * @var $department \WebIllumination\SiteBundle\Entity\Department
@@ -197,7 +201,14 @@ class ListingController extends Controller
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
 
-        return array(
+        // Render template
+        if($admin) {
+            $template = 'WebIlluminationSiteBundle:Listing:Admin/index.html.twig';
+        } else {
+            $template = 'WebIlluminationSiteBundle:Listing:Public/index.html.twig';
+        }
+
+        return $this->render($template, array(
             'pagination' => $pagination,
             'facets' => $facets,
             'stats' => $stats,
@@ -205,6 +216,18 @@ class ListingController extends Controller
             'department' => $department,
             'departments' => $departments,
             'brand' => $brand
-        );
+        ));
+    }
+
+    /**
+     * @Route("/admin/products", name="admin_listing_products")
+     * @Route("/admin/department/{departmentId}", name="admin_listing_department", defaults={"departmentId" = null})
+     * @Route("/admin/brand/{brandId}", name="admin_listing_brand", defaults={"brandId" = null})
+     * @Route("/admin/department/{departmentId}/brand/{brandId}", name="admin_listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
+     * @Method({"GET"})
+     */
+    public function indexAdminAction(Request $request, $departmentId=null, $brandId=null)
+    {
+        return $this->indexAction($request, $departmentId, $brandId, true);
     }
 }
