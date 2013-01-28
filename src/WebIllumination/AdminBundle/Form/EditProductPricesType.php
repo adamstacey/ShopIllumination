@@ -1,29 +1,33 @@
 <?php
 
-namespace WebIllumination\SiteBundle\Form;
+namespace WebIllumination\AdminBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use WebIllumination\AdminBundle\Form\EventListener\AddFeaturesFieldSubscriber;
 
-class ProductDescriptionType extends AbstractType
+class EditProductPricesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description', 'textarea');
-        $builder->add('locale', 'locale');
+        $builder->add('prices', 'collection', array(
+            'type' => new ProductPriceType(),
+            'allow_add' => true,
+            'allow_delete' => true,
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WebIllumination\SiteBundle\Entity\Product\Description'
+            'data_class' => 'WebIllumination\SiteBundle\Entity\Product',
         ));
     }
 
     public function getName()
     {
-        return 'site_product_department';
+        return 'admin_edit_product_prices';
     }
 }

@@ -31,6 +31,6 @@ class ProductPriceType extends AbstractType
 
     public function getName()
     {
-        return 'admin_product_department';
+        return 'site_product_department';
     }
 }

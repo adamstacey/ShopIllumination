@@ -48,6 +48,6 @@ class ProductFeatureType extends AbstractType
 
     public function getName()
     {
-        return 'admin_product_feature';
+        return 'site_product_feature';
     }
 }

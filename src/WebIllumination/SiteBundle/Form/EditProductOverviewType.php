@@ -107,6 +107,6 @@ class EditProductOverviewType extends AbstractType
 
     public function getName()
     {
-        return 'admin_edit_product_overview';
+        return 'site_edit_product_overview';
     }
 }

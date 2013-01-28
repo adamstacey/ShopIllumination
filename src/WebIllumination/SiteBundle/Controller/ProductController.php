@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
+use WebIllumination\AdminBundle\Form\EditProductOverviewType;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
@@ -78,6 +79,36 @@ class ProductController extends Controller {
         return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
+        ));
+    }
+
+    /**
+     * @Route("/edit", name="products_edit")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($id);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        $form = $this->createForm(new EditProductOverviewType(), $product);
+        $form ->bind($request);
+
+        if($form->isValid()) {
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('listing_products'));
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
         ));
     }
 

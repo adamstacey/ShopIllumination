@@ -174,6 +174,6 @@ class NewProductType extends AbstractType
 
     public function getName()
     {
-        return 'admin_new_product';
+        return 'site_new_product';
     }
 }
