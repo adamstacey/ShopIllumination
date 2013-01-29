@@ -3,6 +3,7 @@ namespace WebIllumination\SiteBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\SerializerBundle\Annotation as Serializer;
 
 /**
  * @ORM\Entity
@@ -31,6 +32,7 @@ class Feature
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\FeatureGroup", inversedBy="features")
      * @ORM\JoinColumn(name="product_feature_group_id", referencedColumnName="id")
+     * @Serializer\Exclude
      */
     private $productFeatureGroup;
     
