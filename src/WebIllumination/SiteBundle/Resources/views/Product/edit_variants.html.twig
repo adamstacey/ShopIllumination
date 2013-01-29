@@ -1,0 +1,55 @@
+{# Forms #}
+{% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+
+{% block title %}Variants | {{ product.description.pageTitle }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>{{ product.description.header }}</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix add" id="add-product">
+        <div class="grid_6">
+            <div class="portlet">
+                <header>
+                    <h2>Variants</h2>
+                </header>
+                <section>
+                    {% for variant in product.variants %}
+                        <div class="listing-variant">
+                            <div class="product-options">
+                                {% block product_prices %}
+                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        <p class="ar product-price">
+                                            <span itemprop="price">&pound;{{ variant.prices[0].list_price|number_format(2) }}</span>
+                                        </p>
+                                    </div>
+                                {% endblock %}
+
+                                <ul>
+                                    {% for feature in variant.features %}
+                                        <li>{{ feature.productFeature }}: <strong>{{ feature.defaultFeature }}</strong></li>
+                                    {% endfor %}
+                                </ul>
+
+                                <a href="{{ path('products_delete', {'productId': variant.id}) }}" class="button ui-button-red margin-bottom-5">Delete</a>
+                                <a href="{{ path('products_edit', {'productId': variant.id}) }}" class="fr button ui-button-blue margin-bottom-5">Edit</a>
+                            </div>
+
+                            {% block product_description %}
+                                <div class="product-information">
+                                    {% if (variant.description) %}
+                                        {{ variant.description.description|raw }}
+                                    {% endif %}
+                                </div>
+                            {% endblock %}
+                        </div>
+                    {% endfor %}
+                </section>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </section>
+{% endblock %}

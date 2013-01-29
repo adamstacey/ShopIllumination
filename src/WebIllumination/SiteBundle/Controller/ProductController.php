@@ -20,12 +20,9 @@ use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
 use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
-/**
- * @Route("/products")
- */
 class ProductController extends Controller {
     /**
-     * @Route("/new", name="products_new")
+     * @Route("/admin/products/new", name="products_new")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function newAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
@@ -83,14 +80,15 @@ class ProductController extends Controller {
     }
 
     /**
-     * @Route("/edit", name="products_edit")
+     * @Route("/admin/products/{productId}/edit", name="products_edit")
+     * @Route("/admin/products/{productId}/edit/overview", name="products_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($id);
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
         if(!$product)
         {
             throw new NotFoundHttpException("Product not found");
@@ -113,14 +111,93 @@ class ProductController extends Controller {
     }
 
     /**
-     * @Route("/{id}/delete", name="products_delete")
+     * @Route("/admin/products/{productId}/edit/descriptions", name="products_edit_descriptions")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function deleteAction($id)
+    public function editDescriptionsAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($id);
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        $form = $this->createForm(new EditProductOverviewType(), $product);
+        $form ->bind($request);
+
+        if($form->isValid()) {
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('listing_products'));
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/edit/seo", name="products_edit_seo")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editSeoAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        $form = $this->createForm(new EditProductOverviewType(), $product);
+        $form ->bind($request);
+
+        if($form->isValid()) {
+            $em->persist($product);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('listing_products'));
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/edit/variants", name="products_edit_variants")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editVariantsAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Product:edit_variants.html.twig', array(
+            'product' => $product,
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/delete", name="products_delete")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function deleteAction($productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
         if(!$product)
         {
             throw new NotFoundHttpException("Product not found");
