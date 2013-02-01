@@ -1,0 +1,49 @@
+h1,
+.h1 {
+    @include fontSize($fontSizeExtraExtraLarge);
+    font-family: $complimentaryFontFamily;
+    letter-spacing: 1px;
+    font-weight: normal;
+    font-style: normal;
+    color: $colourGreyDark;
+    @include textShadow($colourWhite, 0, 1px);
+}
+
+h2,
+.h2 {
+    @include fontSize($fontSizeExtraLarge);
+    font-weight: normal;
+    font-style: normal;
+    color: $colourGreyDark;
+    @include textShadow($colourGreyExtraLight, 0, 1px);
+}
+
+h3,
+.h3 {
+    @include fontSize($fontSizeLarge);
+    font-weight: normal;
+    font-style: normal;
+    color: $primaryColour;
+}
+
+h4,
+.h4 {
+    @include fontSize($fontSizeLarge);
+    font-weight: normal;
+    font-style: normal;
+    color: $primaryColour;
+}
+
+h5,
+.h5 {
+    @include fontSize($fontSizeLarge);
+    font-weight: bold;
+    font-style: normal;
+}
+
+h6,
+.h6 {
+    @include fontSize($fontSizeLarge);
+    font-weight: normal;
+    font-style: italic;
+}

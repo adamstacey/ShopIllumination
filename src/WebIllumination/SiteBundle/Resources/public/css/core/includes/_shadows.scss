@@ -1,0 +1,41 @@
+@mixin textShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $opacity: 1) {
+  text-shadow: $horizontalLength $verticalLength $blurRadius $shadowColour;
+  text-shadow: $horizontalLength $verticalLength $blurRadius rgba($shadowColour, $opacity);
+  filter: dropshadow(color = $shadowColour, offx = $horizontalLength, offy = $verticalLength);
+}
+
+@mixin boxShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $spread: 0, $opacity: 1) {
+  -webkit-box-shadow: $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
+  -webkit-box-shadow: $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
+  -moz-box-shadow: $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
+  -moz-box-shadow: $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
+  box-shadow: $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
+  box-shadow: $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
+}
+
+@mixin boxGlow($shadowColour, $blurRadius: 0, $spread: 0, $opacity: 1) {
+  -webkit-box-shadow: 0 0 $blurRadius $spread $shadowColour;
+  -webkit-box-shadow: 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
+  -moz-box-shadow: 0 0 $blurRadius $spread $shadowColour;
+  -moz-box-shadow: 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
+  box-shadow: 0 0 $blurRadius $spread $shadowColour;
+  box-shadow: 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
+}
+
+@mixin boxInsetShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $spread: 0, $opacity: 1) {
+  -webkit-box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
+  -webkit-box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
+  -moz-box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
+  -moz-box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
+  box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
+  box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
+}
+
+@mixin boxInsetGlow($shadowColour, $blurRadius: 0, $spread: 0, $opacity: 1) {
+  -webkit-box-shadow: inset 0 0 $blurRadius $spread $shadowColour;
+  -webkit-box-shadow: inset 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
+  -moz-box-shadow: inset 0 0 $blurRadius $spread $shadowColour;
+  -moz-box-shadow: inset 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
+  box-shadow: inset 0 0 $blurRadius $spread $shadowColour;
+  box-shadow: inset 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
+}
