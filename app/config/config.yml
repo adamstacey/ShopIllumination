@@ -37,14 +37,23 @@ twig:
     form:
         resources:
             - 'WebIlluminationAdminBundle::fields.html.twig'
+    globals:
+        social_media_twitter_username:   "%social_media.twitter.username%"
+        social_media_facebook_username:  "%social_media.facebook.username%"
+        google_analytics_account_number: "%google.analytics.account_number%"
+        company_name:                    "%company.name%"
+        company_web_address:             "%company.web_address%"
+        company_url:                     "%company.url%"
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [WebIlluminationAdminBundle, WebIlluminationSiteBundle]
+    bundles:        [WebIlluminationSiteBundle]
 #    bundles:        [WebIlluminationShopBundle,WebIlluminationAdminBundle]
     filters:
+        sass: ~
+        compass: ~
         cssrewrite: ~
         yui_css:
             jar: %kernel.root_dir%/Resources/java/yuicompressor.jar

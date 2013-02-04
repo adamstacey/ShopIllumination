@@ -1,0 +1,31 @@
+#quick_search
+{
+	margin-top: 5px!important;
+	width: 200px;
+	filter: none!important;
+	background: transparent!important;
+}
+#wrapper > header .main-menu
+{
+	background: #336F0C!important;
+}
+.ui-widget-header
+{
+	background: #44494D!important;
+}
+.slider-products-container
+{
+	background: #FFF;
+}
+.ui-button-green
+{
+	background: #5AAB26!important;
+}
+.ui-button-orange
+{
+	background: #FF4F00!important;
+}
+.ui-button-red
+{
+	background: #CC0000!important;
+}

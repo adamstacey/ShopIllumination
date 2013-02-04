@@ -1,0 +1,28 @@
+@mixin opacity($opacity) {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity = #{$opacity})";
+    filter: alpha(opacity = #{$opacity});
+    -moz-opacity: #{$opacity / 100};
+    -khtml-opacity: #{$opacity / 100};
+    opacity: #{$opacity / 100};
+}
+
+@mixin hideYetClickable {
+    @include opacity(0);
+    border: none;
+    background: none;
+}
+
+@mixin inlineBlock {
+    display: -moz-inline-box;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+@mixin ellipsis {
+    display: block;
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}

@@ -1,0 +1,28 @@
+@import "../../../css/core/includes/base";
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input,
+textarea,
+select {
+    margin: 0;
+    padding: 0;
+}
+
+.form-element {
+    padding: 0 0 $spacingSmall 0;
+}
+
+.form-element label {
+    width: 100%;
+
+    display: block;
+
+    line-height: 27px;
+    text-align: right;
+    font-weight: bold;
+}
