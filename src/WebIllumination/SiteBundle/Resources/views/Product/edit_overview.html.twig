@@ -1,0 +1,63 @@
+{% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+
+{% block title %}Overview | {{ product.description.pageTitle }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>{{ product.description.header }}</h1>
+        <ul>
+            <li><a href="{{ path('products_edit_overview', {'productId': product.id}) }}">Overview</a></li>
+            <li><a href="{{ path('products_edit_descriptions', {'productId': product.id}) }}">Descriptions</a></li>
+            <li><a href="{{ path('products_edit_seo', {'productId': product.id}) }}">SEO</a></li>
+            <li><a href="{{ path('products_edit_variants', {'productId': product.id}) }}">Variants</a></li>
+        </ul>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': product.id}) }}" {{ form_enctype(form) }}>
+            <div class="widget-group clearfix">
+                <div class="widget widget-1-of-1">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>Overview</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-bottom">
+                            <fieldset>
+                                {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
+                                {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
+                                {{ form_row(form.departments, {'label': 'Department', 'help': 'Select the products departments.'}) }}
+                            </fieldset>
+                            <fieldset>
+                                <legend class="clearfix fill">Status</legend>
+                                {{ form_row(form.status, {'label': 'Status', 'help': 'Is the product available?'}) }}
+                                {{ form_row(form.availableForPurchase, {'label': 'Available for Purchase', 'help': 'Is the product available to purchase?'}) }}
+                                {{ form_row(form.featureComparison, {'label': 'Feature Comparison', 'help': 'Include in feature comparison?'}) }}
+                                {{ form_row(form.downloadable, {'label': 'Downloadable', 'help': 'Is the product a download?'}) }}
+                                {{ form_row(form.specialOffer, {'label': 'Special Offer', 'help': 'Is the product a special offer?'}) }}
+                                {{ form_row(form.recommended, {'label': 'Recommended', 'help': 'Do you want to recommend?'}) }}
+                                {{ form_row(form.accessory, {'label': 'Accessory', 'help': 'Is the product an accessory?'}) }}
+                                {{ form_row(form.new, {'label': 'New', 'help': 'Is the product new?'}) }}
+                            </fieldset>
+                            <fieldset>
+                                <legend class="clearfix fill">Price Settings</legend>
+                                {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': 'Hide price for this product?'}) }}
+                                {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': 'Show price out of hours?'}) }}
+                                {{ form_row(form.membershipCardDiscountAvailable, {'label': 'Membership Discount Available', 'help': 'Discount with membership card?'}) }}
+                                {{ form_row(form.maximumMembershipCardDiscount, {'label': 'Maximum Membership Discount', 'help': 'Maximum membership discount'}) }}
+                            </fieldset>
+
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">&nbsp;</div>
+                                <div class="widget widget-2-of-3">
+                                    <button class="button" data-icon-primary="medium-black-icon-1">Submit</button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+{% endblock %}

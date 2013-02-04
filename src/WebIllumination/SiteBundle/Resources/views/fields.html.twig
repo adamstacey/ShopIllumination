@@ -8,46 +8,49 @@
     </select>
 {% endblock %}
 
-{% block form_label %}
-    {% set label_attr = label_attr|merge({'class': label_attr['class'] ~ " form-label"}) %}
-    {% spaceless %}
-        {% if label is not sameas(false) %}
-            {% if not compound %}
-                {% set label_attr = label_attr|merge({'for': id}) %}
-            {% endif %}
-            {% if required %}
-                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-            {% endif %}
-            {% if label is empty %}
-                {% set label = name|humanize %}
-            {% endif %}
-            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-            {% if required %}
-                <em class="required" title="This field is required">*</em>
-            {% endif %}
-            {{ label|trans({}, translation_domain) }}
-            {% if help is defined %}
-                <small class="help">{{ help|raw }}</small>
-            {% endif %}
-            </label>
-        {% endif %}
-    {% endspaceless %}
-{% endblock form_label %}
+{#{% block form_label %}#}
+    {#{% set label_attr = label_attr|merge({'class': label_attr['class'] ~ " form-label"}) %}#}
+    {#{% spaceless %}#}
+        {#{% if label is not sameas(false) %}#}
+            {#{% if not compound %}#}
+                {#{% set label_attr = label_attr|merge({'for': id}) %}#}
+            {#{% endif %}#}
+            {#{% if required %}#}
+                {#{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}#}
+            {#{% endif %}#}
+            {#{% if label is empty %}#}
+                {#{% set label = name|humanize %}#}
+            {#{% endif %}#}
+            {#<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>#}
+            {#{% if required %}#}
+                {#<em class="required" title="This field is required">*</em>#}
+            {#{% endif %}#}
+            {#{{ label|trans({}, translation_domain) }}#}
+            {#{% if help is defined %}#}
+                {#<small class="help">{{ help|raw }}</small>#}
+            {#{% endif %}#}
+            {#</label>#}
+        {#{% endif %}#}
+    {#{% endspaceless %}#}
+{#{% endblock form_label %}#}
 
 {% block form_row %}
-    <div class="clearfix">
-        {{ form_label(form) }}
-        <div class="form-input">
-            <table width="100%">
-                <tr>
-                    <td>
-                        {{ form_widget(form) }}
-                    </td>
-                </tr>
-            </table>
+    {% spaceless %}
+        <div class="form-element widget-group clearfix">
+            <div class="widget widget-1-of-3">
+                {{ form_label(form) }}
+            </div>
+            <div class="widget widget-2-of-3">
+                {{ form_widget(form) }}
+            </div>
+            {% if errors %}
+            <div class="widget widget-3-of-3">
+                {{ form_errors(form) }}
+            </div>
+            {% endif %}
         </div>
-    </div>
-{% endblock %}
+    {% endspaceless %}
+{% endblock form_row %}
 
 {% block form_rows %}
     {% spaceless %}

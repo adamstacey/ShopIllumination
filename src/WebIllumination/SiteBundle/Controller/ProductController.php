@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
-use WebIllumination\AdminBundle\Form\EditProductOverviewType;
+use WebIllumination\SiteBundle\Form\EditProductOverviewType;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
@@ -84,7 +84,7 @@ class ProductController extends Controller {
      * @Route("/admin/products/{productId}/edit/overview", name="products_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function editAction(Request $request, $productId)
+    public function editOverviewAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -95,16 +95,18 @@ class ProductController extends Controller {
         }
 
         $form = $this->createForm(new EditProductOverviewType(), $product);
-        $form ->bind($request);
 
-        if($form->isValid()) {
-            $em->persist($product);
-            $em->flush();
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $em->persist($product);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl('listing_products'));
+            }
         }
 
-        return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
+        return $this->render('WebIlluminationSiteBundle:Product:edit_overview.html.twig', array(
             'product' => $product,
             'form' => $form->createView(),
         ));
@@ -125,13 +127,15 @@ class ProductController extends Controller {
         }
 
         $form = $this->createForm(new EditProductOverviewType(), $product);
-        $form ->bind($request);
 
-        if($form->isValid()) {
-            $em->persist($product);
-            $em->flush();
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $em->persist($product);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl('listing_products'));
+            }
         }
 
         return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
@@ -155,13 +159,15 @@ class ProductController extends Controller {
         }
 
         $form = $this->createForm(new EditProductOverviewType(), $product);
-        $form ->bind($request);
 
-        if($form->isValid()) {
-            $em->persist($product);
-            $em->flush();
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $em->persist($product);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl('listing_products'));
+            }
         }
 
         return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
