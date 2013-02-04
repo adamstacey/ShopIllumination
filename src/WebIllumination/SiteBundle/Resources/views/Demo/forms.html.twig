@@ -24,289 +24,251 @@
 {% endblock %}
 {% block body %}
     <header>
-        <h1>Grids &amp; Portlets</h1>
+        <h1>Forms</h1>
     </header>
     <section>
-        <h2>Grids</h2>
+        <h2>Forms</h2>
         <p>The grid system is percentage-based, so can be used in any container. This allows for very flexible
             layouts that can easily be nested.</p>
         <div class="widget-group clearfix">
-            <div class="widget widget-1-of-1">
+            <div class="widget widget-4-of-7">
                 <div class="ui-widget mbl">
                     <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 1</h2>
+                        <h2>Form</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                        <fieldset>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Textarea</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <textarea class="fill" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Text Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="text" value="John Smith" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix pbn">
+                                <div class="widget widget-1-of-3">
+                                    <label>Text Input (shorter)</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input size="8" type="text" value="NG16 2UZ" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="clearfix fill">Form Elements</legend>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Email Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="email" value="sales@kitchenappliancecentre.co.uk" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Search Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input placeholder="Search..." class="fill" type="search" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Telephone Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="tel" value="01159383111" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>URL Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="url" value="http://www.kitchenappliancecentre.co.uk" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Time Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="time" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Datetime Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="datetime" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Date Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="date" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Month Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="month" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Week Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="week" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Time Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="time" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Datetime-local Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="datetime-local" value="" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-element widget-group clearfix">
+                            <div class="widget widget-1-of-3">&nbsp;</div>
+                            <div class="widget widget-2-of-3">
+                                <button class="button" data-icon-primary="medium-black-icon-1">Test</button>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </div>
-        </div>
-        <div class="widget-group clearfix">
-            {% for i in 0..1 %}
-                <div class="widget widget-1-of-2">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>1 of 2</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                        </section>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="widget-group clearfix">
-            {% for i in 0..2 %}
-                <div class="widget widget-1-of-3">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>1 of 3</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                        </section>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="widget-group clearfix">
-            {% for i in 0..3 %}
-                <div class="widget widget-1-of-4">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>1 of 4</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all">
-                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                        </section>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="widget-group clearfix">
-            {% for i in 0..4 %}
-                <div class="widget widget-1-of-5">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>1 of 5</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all">
-                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                        </section>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="widget-group clearfix">
-            {% for i in 0..5 %}
-                <div class="widget widget-1-of-6">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>1 of 6</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all">
-                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est.</p>
-                        </section>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="widget-group clearfix">
-            {% for i in 0..6 %}
-                <div class="widget widget-1-of-7">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>1 of 7</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all">
-                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim.</p>
-                        </section>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="widget-group clearfix">
-            {% for i in 0..7 %}
-                <div class="widget widget-1-of-8">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>1 of 8</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all">
-                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt.</p>
-                        </section>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-        <p>You can mix up the grids with any number of different combinations that fit.</p>
-        <div class="widget-group clearfix">
-            <div class="widget widget-1-of-4">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 4</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-1-of-8">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 8</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-5-of-8">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>5 of 8</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix">
-            <div class="widget widget-2-of-7">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>2 of 7</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-5-of-7">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>5 of 7</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix">
-            <div class="widget widget-1-of-2">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 2</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-1-of-3">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 3</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-1-of-6">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 6</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est.</p>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <h2>Portlets</h2>
-        <p>Each widget in the grid system can make use of the portlet, which is basically a container with a header
-            . The widgets in a group can have a mixture of widgets where some make use of the portlet setup and
-            some that don't.</p>
-        <div class="widget-group clearfix">
-            <div class="widget widget-1-of-4">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 4</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-5-of-8">
+            <div class="widget widget-3-of-7">
                 <div class="ui-widget mbl">
                     <section class="ui-widget-content ui-corner-all">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-1-of-8">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>1 of 8</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt.</p>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix">
-            <div class="widget widget-2-of-7">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>2 of 7</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-5-of-7">
-                <div class="ui-widget mbl">
-                    <section class="ui-widget-content ui-corner-all">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix">
-            <div class="widget widget-1-of-2">
-                <div class="ui-widget mbl">
-                    <section class="ui-widget-content ui-corner-all">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-1-of-3">
-                <div class="ui-widget mbl">
-                    <section class="ui-widget-content ui-corner-all">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-1-of-6">
-                <div class="ui-widget mbl">
-                    <section class="ui-widget-content ui-corner-all">
-                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est.</p>
+                        <fieldset>
+                            <legend class="clearfix fill">More Form Elements</legend>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Number Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="number" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Range Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="range" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Color Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="color" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Password Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="password" value="1234567890" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Select</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select>
+                                        <option selected="selected" value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Multiple Select</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select id="" multiple="multiple" size="4">
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                        <option value="5">Option 5</option>
+                                        <option value="6">Option 6</option>
+                                        <option value="7">Option 7</option>
+                                        <option value="8">Option 8</option>
+                                        <option value="9">Option 9</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Date Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <label>
+                                        <input type="radio" name="radio" value="hi" /> Saying hi
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="radio" value="feedback" /> Sending feedback
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="radio" value="default" checked="CHECKED" /> Default Seleted Radio
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Month Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <label>
+                                        <input type="checkbox" id="contactBack" /> Please contact me back
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" checked="CHECKED" id="goodDay" /> Today is a good day
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>File Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="file" />
+                                </div>
+                            </div>
+                        </fieldset>
                     </section>
                 </div>
             </div>

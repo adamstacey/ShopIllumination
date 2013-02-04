@@ -13,6 +13,24 @@ select {
     padding: 0;
 }
 
+fieldset {
+    margin: 0 0 $spacingMedium;
+    padding: $spacingMedium;
+
+    background: $colourGreyLight;
+}
+
+fieldset legend {
+    margin: 0 0 $spacingMedium 0;
+    padding: 0 0 $spacingMedium 0;
+
+    float: left;
+
+    font-weight: bold;
+    border-bottom: 1px dotted $colourGrey;
+    @include fontSize($fontSizeLarge);
+}
+
 .form-element {
     padding: 0 0 $spacingSmall 0;
 }
