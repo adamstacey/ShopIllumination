@@ -4,7 +4,6 @@
     {% stylesheets
         '@WebIlluminationSiteBundle/Resources/public/css/components/forms/forms.scss'
         '@WebIlluminationSiteBundle/Resources/public/plugins/ui/css/ui.scss'
-        '@WebIlluminationSiteBundle/Resources/public/css/components/icons/icons.scss'
         output='css/components-compressed.css'
         filter='compass,yui_css'
     %}
@@ -45,13 +44,13 @@
         <h1>Grid System &amp; Portlets</h1>
     </header>
     <section>
-        <div class="widget-group clearfix">
+        {#<div class="widget-group clearfix">
             {% for i in 0..14 %}
                 {% for j in 1..100 %}
                     <button style="float: left;" class="button" data-icon-primary="black-{{ (i * 100) + 1 }}-{{ (i * 100) + 100 }}-icon-{{ (i * 100) + j }}" data-icon-only="true"></button>
                 {% endfor %}
             {% endfor %}
-        </div>
+        </div>#}
         <div class="widget-group clearfix">
             <div class="widget widget-4-of-7">
                 <div class="ui-widget mbl">
