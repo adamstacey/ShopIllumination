@@ -8,6 +8,7 @@ require 'capistrano/ext/multistage'
 set :keep_releases,  5
 ssh_options[:forward_agent] = true
 set :deploy_via, :remote_cache
+default_run_options[:pty] = true
 
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]

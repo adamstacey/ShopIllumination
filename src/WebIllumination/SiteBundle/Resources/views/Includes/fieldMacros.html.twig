@@ -20,7 +20,7 @@
     </td>
     <td>
         {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
-        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+        {{ form_widget(form.description, {'attr': {'rows': 5, 'cols': '80'} }) }}
     </td>
     <td class="ac" width="65">
         <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
@@ -32,7 +32,7 @@
     </td>
     <td>
         {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
-        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+        {{ form_widget(form.description, {'attr': {'rows': 80} }) }}
     </td>
     <td class="ac" width="65">
         <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
@@ -56,6 +56,19 @@
     <td class="padding-top-5 padding-bottom-5 ac" width="200">
         {{ form.get('value').productFeature }}
     </td>
+{% endmacro %}
+{% macro features_widget(form) %}
+    <tr>
+        <td>
+            {{ form_widget(form.productFeature, {'attr': {'class': 'feature-group'}}) }}
+        </td>
+        <td>
+            {{ form_widget(form.defaultFeature, {'attr': {'class': 'feature-group'}}) }}
+        </td>
+        <td>
+            <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+        </td>
+    </tr>
 {% endmacro %}
 {% macro product_variants_widget(form) %}
     <tr>

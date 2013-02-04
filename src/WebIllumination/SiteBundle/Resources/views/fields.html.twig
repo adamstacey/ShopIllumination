@@ -37,17 +37,12 @@
 {% block form_row %}
     {% spaceless %}
         <div class="form-element widget-group clearfix">
-            <div class="widget widget-1-of-3">
+            <div class="widget widget-1-of-4">
                 {{ form_label(form) }}
             </div>
-            <div class="widget widget-2-of-3">
+            <div class="widget widget-3-of-4">
                 {{ form_widget(form) }}
             </div>
-            {% if errors %}
-            <div class="widget widget-3-of-3">
-                {{ form_errors(form) }}
-            </div>
-            {% endif %}
         </div>
     {% endspaceless %}
 {% endblock form_row %}
@@ -89,6 +84,10 @@
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_descriptions_widget(form) }}
 {% endblock %}
+{% block _site_edit_product_description_descriptions_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.product_descriptions_widget(form) }}
+{% endblock %}
 {% block _admin_new_product_variants_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_variants_widget(form) }}
@@ -96,4 +95,8 @@
 {% block _admin_new_product_variants_entry_descriptions_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.variant_descriptions_widget(form) }}
+{% endblock %}
+{% block _site_edit_variant_features_features_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.features_widget(form) }}
 {% endblock %}

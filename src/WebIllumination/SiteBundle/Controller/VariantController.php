@@ -1,30 +1,27 @@
 <?php
 namespace WebIllumination\SiteBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Solarium_Query_Select;
-use WebIllumination\SiteBundle\Form\EditProductDescriptionsType;
-use WebIllumination\SiteBundle\Form\EditProductOverviewType;
-use WebIllumination\SiteBundle\Entity\Product;
-use WebIllumination\SiteBundle\Entity\Product\Description;
-use WebIllumination\SiteBundle\Entity\Product\Variant;
-use WebIllumination\SiteBundle\Entity\ProductToDepartment;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
-use WebIllumination\SiteBundle\Form\EditProductSeoType;
 
-class ProductController extends Controller {
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Solarium_Query_Select;
+use WebIllumination\SiteBundle\Entity\Product;
+use WebIllumination\SiteBundle\Entity\Product\Variant;
+use WebIllumination\SiteBundle\Form\EditVariantDescriptionsType;
+use WebIllumination\SiteBundle\Form\EditVariantFeaturesType;
+use WebIllumination\SiteBundle\Form\EditVariantOverviewType;
+
+class VariantController extends Controller {
     /**
-     * @Route("/admin/products/new", name="products_new")
+     * @Route("/admin/variants/new", name="variants_new")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function newAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
@@ -75,93 +72,113 @@ class ProductController extends Controller {
             }
         }
 
-        return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
+        return $this->render('WebIlluminationSiteBundle:Variant:new.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
         ));
     }
 
-    private function editAction(Request $request, $productId, $template, $formClass)
+    public function editAction(Request $request, $variantId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
-        if(!$product)
+        $variant = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Variant")->find($variantId);
+        if(!$variant)
         {
-            throw new NotFoundHttpException("Product not found");
+            throw new NotFoundHttpException("Variant not found");
         }
 
-        $form = $this->createForm($formClass, $product);
+        $form = $this->createForm($formClass, $variant);
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if($form->isValid()) {
-                $em->persist($product);
+                $em->persist($variant);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl('edit_product_variants'));
             }
         }
 
         return $this->render($template, array(
-            'product' => $product,
+            'variant' => $variant,
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * @Route("/admin/products/{productId}/edit", name="products_edit")
-     * @Route("/admin/products/{productId}/overview", name="products_edit_overview")
+     * @Route("/admin/variants/{variantId}/edit", name="variants_edit")
+     * @Route("/admin/variants/{variantId}/overview", name="variants_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function editOverviewAction(Request $request, $productId)
+    public function editOverviewAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
+        return $this->editAction($request, $variantId, 'WebIlluminationSiteBundle:Variant:edit_overview.html.twig', new EditVariantOverviewType());
     }
 
     /**
-     * @Route("/admin/products/{productId}/descriptions", name="products_edit_descriptions")
+     * @Route("/admin/variants/{variantId}/descriptions", name="variants_edit_descriptions")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function editDescriptionsAction(Request $request, $productId)
+    public function editDescriptionsAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_descriptions.html.twig', new EditProductDescriptionsType());
+        return $this->editAction($request, $variantId, 'WebIlluminationSiteBundle:Variant:edit_descriptions.html.twig', new EditVariantDescriptionsType());
     }
 
     /**
-     * @Route("/admin/products/{productId}/variants", name="products_edit_variants")
+     * @Route("/admin/variants/{variantId}/features", name="variants_edit_features")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function editVariantsAction(Request $request, $productId)
+    public function editFeaturesAction(Request $request, $variantId)
     {
+        /**
+         * @var $variant Variant
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
-        if(!$product)
+        $variant = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Variant")->find($variantId);
+        if(!$variant)
         {
-            throw new NotFoundHttpException("Product not found");
+            throw new NotFoundHttpException("Variant not found");
+        }
+        $form = $this->createForm(new EditVariantFeaturesType(), $variant, array(
+            'departmentId' => $variant->getProduct()->getDepartment()->getId(),
+        ));
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $em->persist($variant);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('edit_product_variants'));
+            }
         }
 
-        return $this->render('WebIlluminationSiteBundle:Product:edit_variants.html.twig', array(
-            'product' => $product,
+//        \Doctrine\Common\Util\Debug::dump($form->createView()->children['features']->vars['prototype']);die();
+
+        return $this->render('WebIlluminationSiteBundle:Variant:edit_features.html.twig', array(
+            'variant' => $variant,
+            'form' => $form->createView(),
         ));
     }
 
     /**
-     * @Route("/admin/products/{productId}/delete", name="products_delete")
+     * @Route("/admin/variants/{variantId}/delete", name="variants_delete")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function deleteAction($productId)
+    public function deleteAction($variantId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
-        if(!$product)
+        $variant = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Variant")->find($variantId);
+        if(!$variant)
         {
             throw new NotFoundHttpException("Product not found");
         }
 
-        $em->remove($product);
+        $em->remove($variant);
         $em->flush();
 
         return $this->redirect($this->generateUrl('listing_products'));

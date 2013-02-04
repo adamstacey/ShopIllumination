@@ -18,10 +18,10 @@ parameters:
     locale: en
     secret: 90f229762b755dda3c62e49b328f84cd9c126a22
 
-    host:         http://kitchenappliancecentre.dev
-    ssl_host:     http://kitchenappliancecentre.dev
-    cdn_host:     http://kitchenappliancecentre.dev
-    cdn_ssl_host: http://kitchenappliancecentre.dev
+    host:         http://33.33.33.10
+    ssl_host:     http://33.33.33.10
+    cdn_host:     http://33.33.33.10
+    cdn_ssl_host: http://33.33.33.10
 
     social_media.twitter.username:  appliancecentre
     social_media.facebook.username: kitchenappliancecentre
