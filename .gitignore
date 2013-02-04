@@ -8,6 +8,9 @@ Thumbs.db
 
 web/uploads/
 web/bundles/
+web/css/
+web/js/
+web/images/
 app/bootstrap.php.cache
 app/cache/*
 app/logs/*
