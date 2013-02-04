@@ -46,9 +46,10 @@
     </header>
     <section>
         <div class="widget-group clearfix">
-            {% for i in 1..1500 %}
-                <button style="float: left;" class="button" data-icon-primary="small-black-icon-{{ i }}"
-                        data-icon-only="true"></button>
+            {% for i in 0..14 %}
+                {% for j in 1..100 %}
+                    <button style="float: left;" class="button" data-icon-primary="black-{{ (i * 100) + 1 }}-{{ (i * 100) + 100 }}-icon-{{ (i * 100) + j }}" data-icon-only="true"></button>
+                {% endfor %}
             {% endfor %}
         </div>
         <div class="widget-group clearfix">

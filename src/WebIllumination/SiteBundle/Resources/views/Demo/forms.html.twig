@@ -1,0 +1,277 @@
+{% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+    '@WebIlluminationSiteBundle/Resources/public/css/components/forms/forms.scss'
+    '@WebIlluminationSiteBundle/Resources/public/plugins/ui/css/ui.scss'
+    '@WebIlluminationSiteBundle/Resources/public/css/components/icons/icons.scss'
+    output='css/components-compressed.css'
+    filter='compass,yui_css'
+    %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" xmlns="http://www.w3.org/1999/html"
+          xmlns="http://www.w3.org/1999/html"/>
+    {% endstylesheets %}
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    {% javascripts
+    '@WebIlluminationSiteBundle/Resources/public/plugins/ui/js/ui.js'
+    output='js/components-compressed.js'
+    filter='yui_js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block body %}
+    <header>
+        <h1>Forms</h1>
+    </header>
+    <section>
+        <h2>Forms</h2>
+        <p>The grid system is percentage-based, so can be used in any container. This allows for very flexible
+            layouts that can easily be nested.</p>
+        <div class="widget-group clearfix">
+            <div class="widget widget-4-of-7">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Form</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <fieldset>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Textarea</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <textarea class="fill" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Text Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="text" value="John Smith" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix pbn">
+                                <div class="widget widget-1-of-3">
+                                    <label>Text Input (shorter)</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input size="8" type="text" value="NG16 2UZ" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="clearfix fill">Form Elements</legend>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Email Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="email" value="sales@kitchenappliancecentre.co.uk" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Search Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input placeholder="Search..." class="fill" type="search" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Telephone Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="tel" value="01159383111" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>URL Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="url" value="http://www.kitchenappliancecentre.co.uk" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Time Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="time" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Datetime Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="datetime" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Date Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="date" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Month Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="month" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Week Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="week" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Time Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="time" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Datetime-local Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="datetime-local" value="" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-element widget-group clearfix">
+                            <div class="widget widget-1-of-3">&nbsp;</div>
+                            <div class="widget widget-2-of-3">
+                                <button class="button" data-icon-primary="medium-black-icon-1">Test</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-3-of-7">
+                <div class="ui-widget mbl">
+                    <section class="ui-widget-content ui-corner-all">
+                        <fieldset>
+                            <legend class="clearfix fill">More Form Elements</legend>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Number Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="number" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Range Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="range" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Color Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="color" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Password Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="password" value="1234567890" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Select</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select>
+                                        <option selected="selected" value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Multiple Select</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select id="" multiple="multiple" size="4">
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                        <option value="5">Option 5</option>
+                                        <option value="6">Option 6</option>
+                                        <option value="7">Option 7</option>
+                                        <option value="8">Option 8</option>
+                                        <option value="9">Option 9</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Date Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <label>
+                                        <input type="radio" name="radio" value="hi" /> Saying hi
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="radio" value="feedback" /> Sending feedback
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="radio" value="default" checked="CHECKED" /> Default Seleted Radio
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>Month Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <label>
+                                        <input type="checkbox" id="contactBack" /> Please contact me back
+                                    </label>
+                                    <label>
+                                        <input type="checkbox" checked="CHECKED" id="goodDay" /> Today is a good day
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label>File Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="file" />
+                                </div>
+                            </div>
+                        </fieldset>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

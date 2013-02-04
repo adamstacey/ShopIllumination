@@ -24,4 +24,14 @@ class DemoController extends Controller
     {
 
     }
+
+    /**
+     * @Route("/forms", name="demo_forms")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function formsAction(Request $request)
+    {
+
+    }
 }
