@@ -23,48 +23,26 @@
     {% endjavascripts %}
 {% endblock %}
 {% block body %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".tabs").tabs();
+        });
+    </script>
     <header>
         <h1>Forms</h1>
     </header>
     <section>
-        <h2>Forms</h2>
         <p>The grid system is percentage-based, so can be used in any container. This allows for very flexible
             layouts that can easily be nested.</p>
         <div class="widget-group clearfix">
             <div class="widget widget-4-of-7">
                 <div class="ui-widget mbl">
                     <header class="ui-widget-header ui-corner-top">
-                        <h2>Form</h2>
+                        <h2>Form Header</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
                         <fieldset>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Textarea</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <textarea class="fill" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Text Input</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <input class="fill" type="text" value="John Smith" />
-                                </div>
-                            </div>
-                            <div class="form-element widget-group clearfix pbn">
-                                <div class="widget widget-1-of-3">
-                                    <label>Text Input (shorter)</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <input size="8" type="text" value="NG16 2UZ" />
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend class="clearfix fill">Form Elements</legend>
+                            <legend class="clearfix fill">Input Types</legend>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
                                     <label>Email Input</label>
@@ -75,10 +53,18 @@
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
+                                    <label>Password Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input class="fill" type="password" value="1234567890" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
                                     <label>Search Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input placeholder="Search..." class="fill" type="search" value="" />
+                                    <input placeholder="Search..." results="5" class="fill" type="search" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
@@ -153,6 +139,14 @@
                                     <input type="datetime-local" value="" />
                                 </div>
                             </div>
+                            <div class="form-element widget-group clearfix pbn">
+                                <div class="widget widget-1-of-3">
+                                    <label>Number Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="number" value="" />
+                                </div>
+                            </div>
                         </fieldset>
                         <div class="form-element widget-group clearfix">
                             <div class="widget widget-1-of-3">&nbsp;</div>
@@ -165,41 +159,23 @@
             </div>
             <div class="widget widget-3-of-7">
                 <div class="ui-widget mbl">
-                    <section class="ui-widget-content ui-corner-all">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Form Header</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
                         <fieldset>
-                            <legend class="clearfix fill">More Form Elements</legend>
-                            <div class="form-element widget-group clearfix">
+                            <div class="form-element widget-group clearfix pbn">
                                 <div class="widget widget-1-of-3">
-                                    <label>Number Input</label>
+                                    <label>Textarea</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="number" value="" />
+                                    <textarea class="fill" rows="5"></textarea>
                                 </div>
                             </div>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Range Input</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <input type="range" value="" />
-                                </div>
-                            </div>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Color Input</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <input type="color" value="" />
-                                </div>
-                            </div>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Password Input</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <input class="fill" type="password" value="1234567890" />
-                                </div>
-                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend class="clearfix fill">Selecting Elements</legend>
+
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
                                     <label>Select</label>
@@ -271,6 +247,156 @@
                         </fieldset>
                     </section>
                 </div>
+            </div>
+        </div>
+        <div class="widget-group">
+            <div class="widget widget-1-of-1">
+                <header>
+                    <h2>Search Engine Optimisation (SEO)</h2>
+                </header>
+                <section>
+                    <form action="">
+                        <div class="tabs">
+                            <ul>
+                                <li><a href="#seo1">English</a></li>
+                                <li><a href="#seo2">French</a></li>
+                                <li><a href="#seo3">German</a></li>
+                            </ul>
+                            <div id="seo1">
+                                <section>
+                                    <fieldset>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="pageTitle1">Page Title</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <input id="pageTitle1" name="pageTitle[1]" class="fill" type="text" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="header1">Header</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <input id="header1" name="header[1]" class="fill" type="text" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="metaDescription1">Meta Description</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <textarea rows="5" id="metaDescription1" name="metaDescription[1]" class="fill"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="keywords1">Keywords</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <textarea rows="3" id="keywords1" name="keywords[1]" class="fill"></textarea>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-element widget-group clearfix">
+                                        <div class="widget widget-1-of-3">&nbsp;</div>
+                                        <div class="widget widget-2-of-3">
+                                            <button type="submit" class="button">Save</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div id="seo2">
+                                <section>
+                                    <fieldset>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="pageTitle2">Page Title</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <input id="pageTitle2" name="pageTitle[2]" class="fill" type="text" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="header2">Header</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <input id="header2" name="header[2]" class="fill" type="text" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="metaDescription2">Meta Description</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <textarea rows="5" id="metaDescription2" name="metaDescription[2]" class="fill"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="keywords2">Keywords</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <textarea rows="3" id="keywords2" name="keywords[2]" class="fill"></textarea>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-element widget-group clearfix">
+                                        <div class="widget widget-1-of-3">&nbsp;</div>
+                                        <div class="widget widget-2-of-3">
+                                            <button type="submit" class="button">Save</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div id="seo3">
+                                <section>
+                                    <fieldset>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="pageTitle3">Page Title</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <input id="pageTitle3" name="pageTitle[1]" class="fill" type="text" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="header3">Header</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <input id="header3" name="header[3]" class="fill" type="text" value="" />
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="metaDescription1">Meta Description</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <textarea rows="5" id="metaDescription3" name="metaDescription[3]" class="fill"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label for="keywords3">Keywords</label>
+                                            </div>
+                                            <div class="widget widget-2-of-3">
+                                                <textarea rows="3" id="keywords3" name="keywords[3]" class="fill"></textarea>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-element widget-group clearfix">
+                                        <div class="widget widget-1-of-3">&nbsp;</div>
+                                        <div class="widget widget-2-of-3">
+                                            <button type="submit" class="button">Save</button>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </form>
+                </section>
             </div>
         </div>
     </section>
