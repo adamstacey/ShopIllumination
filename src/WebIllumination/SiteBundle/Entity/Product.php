@@ -45,12 +45,6 @@ class Product
     private $variants;
 
     /**
-     * Product type ['s': Single product, 'g': Product group]
-     * @ORM\Column(name="type", type="string", length=1)
-     */
-    private $type;
-
-    /**
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status = 'd';
@@ -167,7 +161,7 @@ class Product
      */
     private $deletedAt;
 
-    private $featureGroups = array();
+    private $features = array();
     private $prices = array();
 
     /**
@@ -194,10 +188,11 @@ class Product
     public function __construct()
     {
         $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->links = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -875,16 +870,6 @@ class Product
         return null;
     }
 
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
     public function getProductCode()
     {
         return $this->productCode;
@@ -895,27 +880,27 @@ class Product
         $this->productCode = $productCode;
     }
 
-    public function getFeatureGroups()
+    public function getFeatures()
     {
-        return $this->featureGroups;
+        return $this->features;
     }
 
-    public function setFeatureGroups($featureGroups)
+    public function setFeatures($featureGroups)
     {
-        $this->featureGroups = $featureGroups;
+        $this->features = $featureGroups;
     }
 
     public function addFeatureGroup(ProductToFeature $featureGroup)
     {
-        $this->featureGroups[] = $featureGroup;
+        $this->features[] = $featureGroup;
     }
 
     public function removeFeatureGroup($featureGroup)
     {
-        $key = array_search($featureGroup, $this->featureGroups);
+        $key = array_search($featureGroup, $this->features);
         if($key)
         {
-            unset($this->featureGroups[$key]);
+            unset($this->features[$key]);
         }
     }
 

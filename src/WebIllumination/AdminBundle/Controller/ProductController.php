@@ -184,7 +184,7 @@ class ProductController extends Controller
                     {
                         $variant->addPrice($price);
                     }
-                    foreach($product->getFeatureGroups() as $productToFeature)
+                    foreach($product->getFeatures() as $productToFeature)
                     {
                         $variant->addFeature($productToFeature);
                     }

@@ -20,7 +20,6 @@ use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
 use WebIllumination\SiteBundle\Entity\ProductToFeature;
-use WebIllumination\SiteBundle\Form\EditProductSeoType;
 
 class ProductController extends Controller {
     /**
@@ -36,36 +35,20 @@ class ProductController extends Controller {
         /**
          * @var \Craue\FormFlowBundle\Form\FormFlow $flow
          */
-        $flow = $this->get('web_illumination_admin.form.flow.new_product');
+        $flow = $this->get('web_illumination_site.form.flow.new_product');
         $flow->bind($product);
 
         // Get current form step
         $form = $flow->createForm($product);
-
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
 
             if ($flow->nextStep())
             {
+//                \Doctrine\Common\Util\Debug::dump($flow->getCurrentStep());die();
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
-                if($product->getType() === 's')
-                {
-                    // Create variant for single product
-                    $variant = new Variant();
-                    $variant->setProductCode($product->getProductCode());
-                    foreach($product->getPrices() as $price)
-                    {
-                        $variant->addPrice($price);
-                    }
-                    foreach($product->getFeatureGroups() as $productToFeature)
-                    {
-                        $variant->addFeature($productToFeature);
-                    }
-                    $product->addVariant($variant);
-                }
-
                 $em->persist($product);
                 $em->flush();
 

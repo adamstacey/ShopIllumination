@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use WebIllumination\SiteBundle\Form\EventListener\AddFeaturesFieldSubscriber;
 
-class EditProductPricesType extends AbstractType
+class EditVariantPricesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,7 +22,7 @@ class EditProductPricesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WebIllumination\SiteBundle\Entity\Product',
+            'data_class' => 'WebIllumination\SiteBundle\Entity\Product\Variant',
         ));
     }
 

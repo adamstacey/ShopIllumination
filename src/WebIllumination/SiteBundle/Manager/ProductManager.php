@@ -4,6 +4,7 @@ namespace WebIllumination\SiteBundle\Manager;
 use WebIllumination\SiteBundle\Entity\Image;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
+use WebIllumination\SiteBundle\Entity\ProductToFeature;
 use WebIllumination\SiteBundle\Entity\Routing;
 
 class ProductManager extends Manager
@@ -24,6 +25,8 @@ class ProductManager extends Manager
         $product->addDescription(new Product\Description());
         $product->addDepartment(new ProductToDepartment());
         $product->addPrice(new Product\Price());
+
+        $product->addFeatureGroup(new ProductToFeature());
 
         return $product;
     }

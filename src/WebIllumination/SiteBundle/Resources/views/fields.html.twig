@@ -60,7 +60,7 @@
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_prices_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_variants_entry_prices_entry_widget %}
+{% block _site_new_product_variants_entry_prices_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_prices_widget(form) }}
 {% endblock %}
@@ -88,7 +88,7 @@
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_descriptions_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_variants_entry_widget %}
+{% block _site_new_product_variants_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_variants_widget(form) }}
 {% endblock %}
@@ -99,4 +99,12 @@
 {% block _site_edit_variant_features_features_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
+{% endblock %}
+{% block _site_new_product_features_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.features_widget(form) }}
+{% endblock %}
+{% block _site_edit_product_prices_prices_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.prices_widget(form) }}
 {% endblock %}

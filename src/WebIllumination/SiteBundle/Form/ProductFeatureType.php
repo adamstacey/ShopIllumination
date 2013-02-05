@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use WebIllumination\SiteBundle\Entity\Product\Feature;
+use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class ProductFeatureType extends AbstractType
 {
@@ -32,13 +34,14 @@ class ProductFeatureType extends AbstractType
                 $qb = $er->createQueryBuilder('fg');
                 $qb2 = $er->createQueryBuilder('fg2');
 
-                $qb->andWhere($qb->expr()->in('fg.id',
-                    $qb2->select('fg2.id')
-                        ->from('WebIllumination\SiteBundle\Entity\DepartmentToFeature', 'df')
-                        ->where($qb2->expr()->eq('df.department', $departmentId))
-                        ->andWhere('df.productFeature = fg2')
-                        ->getDQL()
-                ));
+                $qb2->select('fg2.id')
+                    ->from('WebIllumination\SiteBundle\Entity\DepartmentToFeature', 'df')
+                    ->where('df.productFeature = fg2');
+                if($departmentId) {
+                    $qb2->andWhere($qb2->expr()->eq('df.department', $departmentId));
+                }
+
+                $qb->andWhere($qb->expr()->in('fg.id', $qb2->getDQL()));
 
                 return $qb;
             },
@@ -51,11 +54,12 @@ class ProductFeatureType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function($event) use ($factory) {
             /**
              * @var $event FormEvent
+             * @var $data ProductToFeature
              */
             $data = $event->getData();
             $form = $event->getForm();
 
-            if ($data) {
+            if ($data && $data->getProductFeature() !== null) {
                 $form->remove('defaultFeature');
                 $form->add($factory->createNamed('defaultFeature', 'entity', null, array(
                     'required'  => false,

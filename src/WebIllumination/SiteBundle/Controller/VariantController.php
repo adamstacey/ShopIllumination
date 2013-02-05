@@ -16,8 +16,10 @@ use Solarium_Query_Select;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Form\EditVariantDescriptionsType;
+use WebIllumination\SiteBundle\Form\EditVariantDimensionsType;
 use WebIllumination\SiteBundle\Form\EditVariantFeaturesType;
 use WebIllumination\SiteBundle\Form\EditVariantOverviewType;
+use WebIllumination\SiteBundle\Form\EditVariantPricesType;
 
 class VariantController extends Controller {
     /**
@@ -47,21 +49,18 @@ class VariantController extends Controller {
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
-                if($product->getType() === 's')
+                // Create variant for single product
+                $variant = new Variant();
+                $variant->setProductCode($product->getProductCode());
+                foreach($product->getPrices() as $price)
                 {
-                    // Create variant for single product
-                    $variant = new Variant();
-                    $variant->setProductCode($product->getProductCode());
-                    foreach($product->getPrices() as $price)
-                    {
-                        $variant->addPrice($price);
-                    }
-                    foreach($product->getFeatureGroups() as $productToFeature)
-                    {
-                        $variant->addFeature($productToFeature);
-                    }
-                    $product->addVariant($variant);
+                    $variant->addPrice($price);
                 }
+                foreach($product->getFeatures() as $productToFeature)
+                {
+                    $variant->addFeature($productToFeature);
+                }
+                $product->addVariant($variant);
 
                 $em->persist($product);
                 $em->flush();
@@ -126,6 +125,24 @@ class VariantController extends Controller {
     }
 
     /**
+     * @Route("/admin/variants/{variantId}/dimensions", name="variants_edit_dimensions")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDimensionsAction(Request $request, $variantId)
+    {
+        return $this->editAction($request, $variantId, 'WebIlluminationSiteBundle:Variant:edit_dimensions.html.twig', new EditVariantDimensionsType());
+    }
+
+    /**
+     * @Route("/admin/variants/{variantId}/prices", name="variants_edit_prices")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editPricesAction(Request $request, $variantId)
+    {
+        return $this->editAction($request, $variantId, 'WebIlluminationSiteBundle:Variant:edit_prices.html.twig', new EditVariantPricesType());
+    }
+
+    /**
      * @Route("/admin/variants/{variantId}/features", name="variants_edit_features")
      * @Secure(roles="ROLE_ADMIN")
      */
@@ -143,7 +160,7 @@ class VariantController extends Controller {
             throw new NotFoundHttpException("Variant not found");
         }
         $form = $this->createForm(new EditVariantFeaturesType(), $variant, array(
-            'departmentId' => $variant->getProduct()->getDepartment()->getId(),
+            'departmentId' => $variant->getProduct()->getDepartment()->getDepartment()->getId()
         ));
 
         if ($request->isMethod('POST')) {

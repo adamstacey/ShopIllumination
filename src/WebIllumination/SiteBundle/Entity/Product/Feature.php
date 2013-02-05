@@ -60,7 +60,7 @@ class Feature
 
     public function __toString()
     {
-        return "(".$this->getProductFeatureGroup().") ".$this->getProductFeature();
+        return $this->getProductFeature();
     }
 
     /**
