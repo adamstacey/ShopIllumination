@@ -1,16 +1,4 @@
 {% extends 'WebIlluminationSiteBundle::base.html.twig' %}
-{% block stylesheets %}
-    {{ parent() }}
-    {% stylesheets
-        '@WebIlluminationSiteBundle/Resources/public/css/components/forms/forms.scss'
-        '@WebIlluminationSiteBundle/Resources/public/plugins/ui/css/ui.scss'
-        output='css/components-compressed.css'
-        filter='compass,yui_css'
-    %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" xmlns="http://www.w3.org/1999/html"
-          xmlns="http://www.w3.org/1999/html"/>
-    {% endstylesheets %}
-{% endblock %}
 {% block scripts %}
     {{ parent() }}
     {% javascripts
@@ -23,34 +11,43 @@
 {% endblock %}
 {% block body %}
     <script type="text/javascript">
-        $(document).ready(function() {
-            $(".button").each(function () {
-                $(this).button({
-                    icons : {
-                        primary : $(this).attr("data-icon-primary") ? $(this).attr("data-icon-primary") : null,
-                        secondary : $(this).attr("data-icon-secondary") ? $(this).attr("data-icon-secondary") : null
-                    },
-                    text : $(this).attr("data-icon-only") === "true" ? false : true
-                });
-                var $dataNotification = $(this).attr("data-notification");
-                if (($(this).attr("data-notification") != "") && ($(this).attr("data-notification") != undefined))
-                {
-                    $(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
-                }
-            });
-        });
+
     </script>
     <header>
         <h1>Grid System &amp; Portlets</h1>
     </header>
     <section>
-        {#<div class="widget-group clearfix">
-            {% for i in 0..14 %}
-                {% for j in 1..100 %}
-                    <button style="float: left;" class="button" data-icon-primary="black-{{ (i * 100) + 1 }}-{{ (i * 100) + 100 }}-icon-{{ (i * 100) + j }}" data-icon-only="true"></button>
-                {% endfor %}
-            {% endfor %}
-        </div>#}
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Standard Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 0..14 %}
+                            {% for j in 1..100 %}
+                                <button style="float: left;" class="button" data-icon-primary="black-{{ (i * 100) + 1 }}-{{ (i * 100) + 100 }}-icon-{{ (i * 100) + j }}" data-icon-only="true"></button>
+                            {% endfor %}
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Grey Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..22 %}
+                            <button style="float: left;" class="button button-grey" data-icon-primary="black-1-100-icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+
         <div class="widget-group clearfix">
             <div class="widget widget-4-of-7">
                 <div class="ui-widget mbl">
