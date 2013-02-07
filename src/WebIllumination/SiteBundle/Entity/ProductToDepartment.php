@@ -3,6 +3,7 @@ namespace WebIllumination\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -25,6 +26,7 @@ class ProductToDepartment
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      **/
     private $department;
 

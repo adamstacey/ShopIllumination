@@ -3,6 +3,7 @@ namespace WebIllumination\SiteBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -30,18 +31,24 @@ class Price
     
     /**
      * @ORM\Column(name="cost_price", type="decimal", precision=12, scale=4)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_prices"})
+     * @Assert\Min(limit="0", groups={"flow_site_new_product_step1", "site_edit_product_prices"})
      */
-    private $costPrice;
+    private $costPrice = 0;
     
     /**
      * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_prices"})
+     * @Assert\Min(limit="0", groups={"flow_site_new_product_step1", "site_edit_product_prices"})
      */
-    private $recommendedRetailPrice;
+    private $recommendedRetailPrice = 0;
     
     /**
      * @ORM\Column(name="list_price", type="decimal", precision=12, scale=4)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_prices"})
+     * @Assert\Min(limit="0", groups={"flow_site_new_product_step1", "site_edit_product_prices"})
      */
-    private $listPrice;
+    private $listPrice = 0;
     
     /**
      * @ORM\Column(name="currency_code", type="string", length=3)
@@ -50,6 +57,7 @@ class Price
     
     /**
      * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_prices"})
      */
     private $displayOrder = 1;
 

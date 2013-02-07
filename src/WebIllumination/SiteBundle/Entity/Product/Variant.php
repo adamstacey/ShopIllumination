@@ -3,6 +3,7 @@ namespace WebIllumination\SiteBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -25,14 +26,14 @@ class Variant
     private $product;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToFeature", mappedBy="variant", cascade={"all"})
-     */
-    private $features;
-
-    /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\VariantDescription", mappedBy="variant", cascade={"all"})
      */
     private $descriptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToFeature", mappedBy="variant", cascade={"all"})
+     */
+    private $features;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToOption", mappedBy="variant", cascade={"all"})
@@ -41,16 +42,21 @@ class Variant
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
+     * @Assert\Count(min="1", groups={"flow_site_new_product_step3"})
      */
     private $prices;
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"})
+     * @Assert\Choice(choices={"a", "h", "d"})
      */
     private $status = 'a';
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"})
+     * @Assert\Type(type="string", groups={"flow_site_new_product_step3", "site_edit_product_overview"})
      */
     private $productCode = '';
 
@@ -61,46 +67,55 @@ class Variant
 
     /**
      * @ORM\Column(name="mpn", type="string", length=100, nullable=true)
+     * @Assert\Type(type="string", groups={"site_edit_product_overview"})
      */
     private $mpn = '';
 
     /**
      * @ORM\Column(name="ean", type="string", length=14, nullable=true)
+     * @Assert\Type(type="string", groups={"site_edit_product_overview"})
      */
     private $ean = '';
 
     /**
      * @ORM\Column(name="upc", type="string", length=12, nullable=true)
+     * @Assert\Type(type="string", groups={"site_edit_product_overview"})
      */
     private $upc = '';
 
     /**
      * @ORM\Column(name="jan", type="string", length=13, nullable=true)
+     * @Assert\Type(type="string", groups={"site_edit_product_overview"})
      */
     private $jan = '';
 
     /**
      * @ORM\Column(name="isbn", type="string", length=13, nullable=true)
+     * @Assert\Type(type="string", groups={"site_edit_product_overview"})
      */
     private $isbn = '';
 
     /**
      * @ORM\Column(name="weight", type="decimal", precision=12, scale=2, nullable=true)
+     * @Assert\Type(type="float", groups={"site_edit_product_dimensions"})
      */
     private $weight = 0;
 
     /**
      * @ORM\Column(name="length", type="decimal", precision=12, scale=2, nullable=true)
+     * @Assert\Type(type="float", groups={"site_edit_product_dimensions"})
      */
     private $length = 0;
 
     /**
      * @ORM\Column(name="width", type="decimal", precision=12, scale=2, nullable=true)
+     * @Assert\Type(type="float", groups={"site_edit_product_dimensions"})
      */
     private $width = 0;
 
     /**
      * @ORM\Column(name="height", type="decimal", precision=12, scale=2, nullable=true)
+     * @Assert\Type(type="float", groups={"site_edit_product_dimensions"})
      */
     private $height = 0;
 
@@ -503,6 +518,14 @@ class Variant
     public function getOptions()
     {
         return $this->options;
+    }
+
+    public function setFeatures($features)
+    {
+        foreach($features as $feature)
+        {
+            $this->addFeature($feature);
+        }
     }
 
     /**

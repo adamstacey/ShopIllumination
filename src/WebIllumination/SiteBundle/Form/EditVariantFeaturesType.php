@@ -13,14 +13,6 @@ class EditVariantFeaturesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $featuresBuilder = $builder->create('features', 'collection', array(
-//            'compound' => true,
-//            'allow_add' => true,
-//            'allow_delete' => true,
-//        ));
-//        $subscriber = new AddFeaturesFieldSubscriber($featuresBuilder->getFormFactory());
-//        $featuresBuilder->addEventSubscriber($subscriber);
-//        $builder->add($featuresBuilder);
         $builder->add('features', 'collection', array(
             'type' => new ProductFeatureType($options['departmentId']),
             'allow_add' => true,

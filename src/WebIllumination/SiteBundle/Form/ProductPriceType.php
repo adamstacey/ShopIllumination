@@ -20,6 +20,7 @@ class ProductPriceType extends AbstractType
         $builder->add('listPrice', 'money', array(
             'currency' => false,
         ));
+        $builder->add('displayOrder', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -31,6 +32,6 @@ class ProductPriceType extends AbstractType
 
     public function getName()
     {
-        return 'site_product_department';
+        return 'site_product_price';
     }
 }

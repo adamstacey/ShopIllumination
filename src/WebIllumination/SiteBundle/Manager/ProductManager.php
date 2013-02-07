@@ -31,6 +31,23 @@ class ProductManager extends Manager
         return $product;
     }
 
+    /**
+     * Create a new product variant
+     * @param Product $product the parent product
+     * @return \WebIllumination\SiteBundle\Entity\Product\Variant
+     */
+    public function createVariant(Product $product)
+    {
+        $variant = new Product\Variant();
+
+        $variant->setProductCode($product->getProductCode());
+        $variant->setProduct($product);
+        $variant->addDescription(new Product\VariantDescription());
+        $variant->addPrice(new Product\Price());
+
+        return $variant;
+    }
+
     public function updateProductDescription(Product\Description $description)
     {
         if(!$description->getProduct()) return;

@@ -6,6 +6,12 @@
                     <h2>Features</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
+                    {% if form.errors %}
+                        <div class="message error">
+                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
                     <fieldset>
                         {{ form_errors(form) }}
                         <table class="data" id="feature-list" width="100%" data-prototype="{{ form_widget(form.features.vars.prototype) | e }}">

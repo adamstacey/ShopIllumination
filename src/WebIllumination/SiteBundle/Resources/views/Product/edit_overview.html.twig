@@ -23,6 +23,12 @@
                             <h2>Overview</h2>
                         </header>
                         <section class="ui-widget-content ui-corner-bottom">
+                            {% if form.errors %}
+                                <div class="message error">
+                                    <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
+                                    {{ form_errors(form) }}
+                                </div>
+                            {% endif %}
                             <fieldset>
                                 {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
                                 {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}

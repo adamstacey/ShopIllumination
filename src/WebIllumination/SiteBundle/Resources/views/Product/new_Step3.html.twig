@@ -6,12 +6,20 @@
                     <h2>Variants</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
+                    {% if form.errors %}
+                        <div class="message error">
+                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
                     <fieldset>
                         <table class="data-table" id="product-variant-list" width="100%" data-prototype="{{ form_widget(form.variants.vars.prototype) | e }}">
                             <thead>
                             <tr>
                                 <th>Product Code</th>
+                                <th>Status</th>
                                 <th>Features</th>
+                                <th>Prices</th>
                             </tr>
                             </thead>
                             <tbody>

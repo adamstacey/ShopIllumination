@@ -45,7 +45,6 @@ class ProductController extends Controller {
 
             if ($flow->nextStep())
             {
-//                \Doctrine\Common\Util\Debug::dump($flow->getCurrentStep());die();
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
@@ -54,9 +53,11 @@ class ProductController extends Controller {
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('listing_products_admin'));
+                return $this->redirect($this->generateUrl('admin_listing_products'));
             }
         }
+        
+//        \Doctrine\Common\Util\Debug::dump($form->getErrors());die();
 
         return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
@@ -64,7 +65,7 @@ class ProductController extends Controller {
         ));
     }
 
-    private function editAction(Request $request, $productId, $template, $formClass)
+    public function editAction(Request $request, $productId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
 

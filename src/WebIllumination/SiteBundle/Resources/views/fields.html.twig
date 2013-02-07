@@ -36,12 +36,13 @@
 
 {% block form_row %}
     {% spaceless %}
-        <div class="form-element widget-group clearfix">
-            <div class="widget widget-1-of-4">
+        <div class="form-element widget-group clearfix {% if form.errors %}error{% endif %}">
+            <div class="widget widget-1-of-3">
                 {{ form_label(form) }}
             </div>
-            <div class="widget widget-3-of-4">
+            <div class="widget widget-2-of-3">
                 {{ form_widget(form) }}
+                {{ form_errors(form) }}
             </div>
         </div>
     {% endspaceless %}
@@ -56,31 +57,31 @@
 {% endblock form_rows %}
 
 
-{% block _admin_new_product_prices_entry_widget %}
+{% block _site_new_product_prices_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_prices_widget(form) }}
+    {{ fields.prices_widget(form) }}
 {% endblock %}
 {% block _site_new_product_variants_entry_prices_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_prices_widget(form) }}
+    {{ fields.list_prices_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_featureGroups_entry_widget %}
+{% block _site_new_product_featureGroups_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_featureGroups_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_features_entry_widget %}
+{% block _site_new_product_features_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_features_widget(form) }}
+    {{ fields.features_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_departments_entry_widget %}
-    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_departments_widget(form) }}
-{% endblock %}
-{% block _admin_edit_product_overview_departments_entry_widget %}
+{% block _site_new_product_departments_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_departments_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_descriptions_entry_widget %}
+{% block _site_edit_product_overview_departments_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.product_departments_widget(form) }}
+{% endblock %}
+{% block _site_new_product_descriptions_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_descriptions_widget(form) }}
 {% endblock %}
@@ -92,7 +93,41 @@
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_variants_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_variants_entry_descriptions_entry_widget %}
+
+{% block _site_edit_product_prices_prices_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.prices_widget(form) }}
+{% endblock %}
+
+{# New variant fields #}
+{#{% block _site_new_variant_descriptions_entry_widget %}#}
+    {#{% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}#}
+    {#&#123;&#35;{{ fields.test(form) }}&#35;&#125;#}
+{#{% endblock %}#}
+{% block _site_new_variant_descriptions_entry_widget %}
+    <td>
+        {{ form_widget(form.locale) }}
+        {{ form_errors(form.locale) }}
+    </td>
+    <td>
+        {{ form_widget(form.description) }}
+        {{ form_errors(form.description) }}
+    </td>
+    <td class="ac" width="65">
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+{% endblock %}
+{% block _site_new_variant_prices_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.prices_widget(form) }}
+{% endblock %}
+{% block _site_new_variant_features_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.features_widget(form) }}
+{% endblock %}
+
+{# Edit variant fields #}
+{% block _site_new_product_variants_entry_descriptions_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.variant_descriptions_widget(form) }}
 {% endblock %}
@@ -100,11 +135,4 @@
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
 {% endblock %}
-{% block _site_new_product_features_entry_widget %}
-    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.features_widget(form) }}
-{% endblock %}
-{% block _site_edit_product_prices_prices_entry_widget %}
-    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.prices_widget(form) }}
-{% endblock %}
+

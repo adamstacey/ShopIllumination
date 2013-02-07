@@ -72,6 +72,8 @@ class NewProductFlow extends FormFlow
                 }
             }
 
+//            \Doctrine\Common\Util\Debug::dump($formData->getFeatures());die();
+
             // Create array containing each combination of the features
             foreach($featureGroups as $featureGroup)
             {

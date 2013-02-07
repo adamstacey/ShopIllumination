@@ -22,12 +22,20 @@ services:
           - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
           - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
           - { name: doctrine.event_listener, event: preRemove, method: preRemove}
+      class: WebIllumination\SiteBundle\EventListener\VariantListener
+      arguments: [@web_illumination_site.manager.product, @web_illumination_site.indexer.product]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: preRemove, method: preRemove}
 
   # Form Services
   web_illumination_site.form.new_product:
     class: WebIllumination\SiteBundle\Form\NewProductType
     tags:
-      - { name: form.type, alias: admin_new_product }
+      - { name: form.type, alias: site_new_product }
 
   web_illumination_site.form.flow.new_product:
     class: WebIllumination\SiteBundle\Form\NewProductFlow
@@ -35,3 +43,13 @@ services:
     scope: request
     calls:
       - [ setFormType, [@web_illumination_site.form.new_product]]
+  web_illumination_site.form.new_variant:
+    class: WebIllumination\SiteBundle\Form\NewVariantType
+    tags:
+      - { name: form.type, alias: site_new_variant }
+  web_illumination_site.form.flow.new_variant:
+    class: WebIllumination\SiteBundle\Form\NewVariantFlow
+    parent: craue.form.flow
+    scope: request
+    calls:
+      - [ setFormType, [@web_illumination_site.form.new_variant]]

@@ -3,6 +3,7 @@ namespace WebIllumination\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -193,7 +194,7 @@ class ProductToFeature
      * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature
      * @return ProductToFeature
      */
-    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature = null)
+    public function setProductFeature(Product\FeatureGroup $productFeature = null)
     {
         $this->productFeature = $productFeature;
     

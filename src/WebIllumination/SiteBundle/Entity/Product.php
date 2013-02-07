@@ -3,6 +3,7 @@ namespace WebIllumination\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -21,6 +22,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      */
     private $brand;
 
@@ -46,11 +48,15 @@ class Product
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
+     * @Assert\Choice(choices={"a", "h", "d"})
      */
     private $status = 'd';
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
+     *
      */
     private $productCode = '';
 
@@ -66,61 +72,73 @@ class Product
 
     /**
      * @ORM\Column(name="available_for_purchase", type="boolean")
+     *
      */
     private $availableForPurchase = false;
 
     /**
      * @ORM\Column(name="feature_comparison", type="boolean")
+     *
      */
     private $featureComparison = false;
 
     /**
      * @ORM\Column(name="downloadable", type="boolean")
+     *
      */
     private $downloadable = false;
 
     /**
      * @ORM\Column(name="special_offer", type="boolean")
+     *
      */
     private $specialOffer = false;
 
     /**
      * @ORM\Column(name="recommended", type="boolean")
+     *
      */
     private $recommended = false;
 
     /**
      * @ORM\Column(name="accessory", type="boolean")
+     *
      */
     private $accessory = false;
 
     /**
      * @ORM\Column(name="new", type="boolean")
+     *
      */
     private $new = false;
 
     /**
      * @ORM\Column(name="sample_request", type="boolean")
+     *
      */
     private $sampleRequest = false;
 
     /**
      * @ORM\Column(name="hide_price", type="boolean")
+     *
      */
     private $hidePrice = false;
 
     /**
      * @ORM\Column(name="show_price_out_of_hours", type="boolean")
+     *
      */
     private $showPriceOutOfHours = false;
 
     /**
      * @ORM\Column(name="membership_card_discount_available", type="boolean")
+     *
      */
     private $membershipCardDiscountAvailable = false;
 
     /**
      * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4, nullable=true)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      */
     private $maximumMembershipCardDiscount = 0;
 

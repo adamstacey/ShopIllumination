@@ -40,8 +40,8 @@
                                             {% endfor %}
                                         </ul>
 
-                                        <a href="{{ path('variants_delete', {'variantId': variant.id}) }}" class="button ui-button-red margin-bottom-5">Delete</a>
-                                        <a href="{{ path('variants_edit', {'variantId': variant.id}) }}" class="fr button ui-button-blue margin-bottom-5">Edit</a>
+                                        <a href="{{ path('variants_delete', {'productId': product.id, 'variantId': variant.id}) }}" class="button ui-button-red margin-bottom-5">Delete</a>
+                                        <a href="{{ path('variants_edit', {'productId': product.id, 'variantId': variant.id}) }}" class="fr button ui-button-blue margin-bottom-5">Edit</a>
                                     </div>
 
                                     {% block variant_description %}
@@ -57,6 +57,8 @@
                     </section>
                 </div>
             </div>
+
+            <a href="{{ path('variants_new', {'productId': product.id}) }}" class="button">New Variant</a>
         </div>
     </section>
 {% endblock %}

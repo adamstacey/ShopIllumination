@@ -1,23 +1,23 @@
 {% extends 'WebIlluminationSiteBundle::base.html.twig' %}
 
-{% block title %}Overview | {{ variant.description.pageTitle }}{% endblock %}
+{% block title %}Dimensions | {{ variant.description.pageTitle }}{% endblock %}
 
 {% block header %}
     <header>
         {{ parent() }}
         <h1>{{ variant.description.header }}</h1>
         <ul>
-            <li><a href="{{ path('variants_edit_overview', {'variantId': variant.id}) }}">Overview</a></li>
-            <li><a href="{{ path('variants_edit_descriptions', {'variantId': variant.id}) }}">Descriptions</a></li>
-            <li><a href="{{ path('variants_edit_features', {'variantId': variant.id}) }}">Features</a></li>
-            <li><a href="{{ path('variants_edit_dimensions', {'variantId': variant.id}) }}">Dimensions</a></li>
-            <li><a href="{{ path('variants_edit_prices', {'variantId': variant.id}) }}">Prices</a></li>
+            <li><a href="{{ path('variants_edit_overview', {'productId': variant.product.id, 'variantId': variant.id}) }}">Overview</a></li>
+            <li><a href="{{ path('variants_edit_descriptions', {'productId': variant.product.id, 'variantId': variant.id}) }}">Descriptions</a></li>
+            <li><a href="{{ path('variants_edit_features', {'productId': variant.product.id, 'variantId': variant.id}) }}">Features</a></li>
+            <li><a href="{{ path('variants_edit_dimensions', {'productId': variant.product.id, 'variantId': variant.id}) }}">Dimensions</a></li>
+            <li><a href="{{ path('variants_edit_prices', {'productId': variant.product.id, 'variantId': variant.id}) }}">Prices</a></li>
         </ul>
     </header>
 {% endblock %}
 {% block body %}
     <section>
-        <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'variantId': variant.id}) }}" {{ form_enctype(form) }}>
+        <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': variant.product.id, 'variantId': variant.id}) }}" {{ form_enctype(form) }}>
             <div class="widget-group clearfix">
                 <div class="widget widget-1-of-1">
                     <div class="ui-widget mbl">
@@ -25,6 +25,12 @@
                             <h2>Dimensions</h2>
                         </header>
                         <section class="ui-widget-content ui-corner-bottom">
+                            {% if form.errors %}
+                                <div class="message error">
+                                    <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
+                                    {{ form_errors(form) }}
+                                </div>
+                            {% endif %}
                             <fieldset>
                                 {{ form_row(form.weight, {'label': 'Weight', 'help': ''}) }}
                                 {{ form_row(form.length, {'label': 'Length', 'help': ''}) }}

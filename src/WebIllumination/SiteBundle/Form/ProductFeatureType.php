@@ -51,14 +51,13 @@ class ProductFeatureType extends AbstractType
             'empty_value' => 'Please select a group first.',
             'choices' => array(),
         ));
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function($event) use ($factory) {
+        $builder->addEventListener(FormEvents::SET_DATA, function($event) use ($factory) {
             /**
              * @var $event FormEvent
              * @var $data ProductToFeature
              */
             $data = $event->getData();
             $form = $event->getForm();
-
             if ($data && $data->getProductFeature() !== null) {
                 $form->remove('defaultFeature');
                 $form->add($factory->createNamed('defaultFeature', 'entity', null, array(
@@ -68,6 +67,30 @@ class ProductFeatureType extends AbstractType
                     'query_builder' => function(EntityRepository $er) use ($data) {
                         $qb = $er->createQueryBuilder('f');
                         $qb->add('where', $qb->expr()->eq('f.productFeatureGroup', $data->getProductFeature()->getId()));
+                        $qb->orderBy('f.productFeature');
+                        return $qb;
+                    },
+                )));
+            }
+        });
+        $builder->addEventListener(FormEvents::PRE_BIND, function($event) use ($factory) {
+            /**
+             * @var $event FormEvent
+             * @var $data ProductToFeature
+             */
+            $data = $event->getData();
+            $form = $event->getForm();
+
+            if ($data && isset($data['defaultFeature'])) {
+//                \Doctrine\Common\Util\Debug::dump($data);die();
+                $form->remove('defaultFeature');
+                $form->add($factory->createNamed('defaultFeature', 'entity', null, array(
+                    'required'  => false,
+                    'empty_value' => 'Select a feature.',
+                    'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
+                    'query_builder' => function(EntityRepository $er) use ($data) {
+                        $qb = $er->createQueryBuilder('f');
+                        $qb->add('where', $qb->expr()->eq('f.productFeatureGroup', $data['productFeature']));
                         $qb->orderBy('f.productFeature');
                         return $qb;
                     },

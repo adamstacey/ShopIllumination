@@ -3,6 +3,7 @@ namespace WebIllumination\SiteBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -25,6 +26,7 @@ class VariantDescription
 
     /**
      * @ORM\Column(name="locale", type="string", length=2)
+     * @Assert\Locale(groups={"flow_site_new_product_step3", "site_edit_product_description"})
      */
     private $locale = "en_GB";
 
@@ -45,6 +47,8 @@ class VariantDescription
 
     /**
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"})
+     * @Assert\Type(type="string", groups={"flow_site_new_product_step3", "site_edit_product_description"})
      */
     private $description;
 

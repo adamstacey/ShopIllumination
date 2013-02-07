@@ -23,23 +23,34 @@ use WebIllumination\SiteBundle\Form\EditVariantPricesType;
 
 class VariantController extends Controller {
     /**
-     * @Route("/admin/variants/new", name="variants_new")
+     * @Route("/admin/products/{productId}/variants/new", name="variants_new")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function newAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
+    public function newAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $this->getManager()->createProduct();
+        /**
+         * @var $product Product
+         */
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        $variant = $this->getManager()->createVariant($product);
 
         /**
          * @var \Craue\FormFlowBundle\Form\FormFlow $flow
          */
-        $flow = $this->get('web_illumination_admin.form.flow.new_product');
-        $flow->bind($product);
+        $flow = $this->get('web_illumination_site.form.flow.new_variant');
+        $flow->bind($variant);
 
         // Get current form step
-        $form = $flow->createForm($product);
+        $form = $flow->createForm($variant, array(
+            'departmentId' => $product->getDepartment()->getDepartment()->getId(),
+        ));
 
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
@@ -47,31 +58,26 @@ class VariantController extends Controller {
             if ($flow->nextStep())
             {
                 // Get next form step
-                $form = $flow->createForm($product);
+                $form = $flow->createForm($variant);
             } else {
-                // Create variant for single product
-                $variant = new Variant();
-                $variant->setProductCode($product->getProductCode());
-                foreach($product->getPrices() as $price)
+                // Add the variant to each feature
+                foreach($variant->getFeatures() as $feature)
                 {
-                    $variant->addPrice($price);
+                    $feature->setVariant($variant);
                 }
-                foreach($product->getFeatures() as $productToFeature)
-                {
-                    $variant->addFeature($productToFeature);
-                }
-                $product->addVariant($variant);
-
-                $em->persist($product);
+                $em->persist($variant);
                 $em->flush();
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('listing_products_admin'));
+                return $this->redirect($this->generateUrl('products_edit_variants', array(
+                    'productId' => $variant->getProduct()->getId()
+                )));
             }
         }
 
         return $this->render('WebIlluminationSiteBundle:Variant:new.html.twig', array(
+            'product' => $product,
             'form' => $form->createView(),
             'flow' => $flow,
         ));
@@ -106,8 +112,8 @@ class VariantController extends Controller {
     }
 
     /**
-     * @Route("/admin/variants/{variantId}/edit", name="variants_edit")
-     * @Route("/admin/variants/{variantId}/overview", name="variants_edit_overview")
+     * @Route("/admin/products/{productId}/variants/{variantId}/edit", name="variants_edit")
+     * @Route("/admin/products/{productId}/variants/{variantId}/overview", name="variants_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editOverviewAction(Request $request, $variantId)
@@ -116,7 +122,7 @@ class VariantController extends Controller {
     }
 
     /**
-     * @Route("/admin/variants/{variantId}/descriptions", name="variants_edit_descriptions")
+     * @Route("/admin/products/{productId}/variants/{variantId}/descriptions", name="variants_edit_descriptions")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editDescriptionsAction(Request $request, $variantId)
@@ -125,7 +131,7 @@ class VariantController extends Controller {
     }
 
     /**
-     * @Route("/admin/variants/{variantId}/dimensions", name="variants_edit_dimensions")
+     * @Route("/admin/products/{productId}/variants/{variantId}/dimensions", name="variants_edit_dimensions")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editDimensionsAction(Request $request, $variantId)
@@ -134,7 +140,7 @@ class VariantController extends Controller {
     }
 
     /**
-     * @Route("/admin/variants/{variantId}/prices", name="variants_edit_prices")
+     * @Route("/admin/products/{productId}/variants/{variantId}/prices", name="variants_edit_prices")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editPricesAction(Request $request, $variantId)
@@ -143,7 +149,7 @@ class VariantController extends Controller {
     }
 
     /**
-     * @Route("/admin/variants/{variantId}/features", name="variants_edit_features")
+     * @Route("/admin/products/{productId}/variants/{variantId}/features", name="variants_edit_features")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editFeaturesAction(Request $request, $variantId)
@@ -173,8 +179,6 @@ class VariantController extends Controller {
             }
         }
 
-//        \Doctrine\Common\Util\Debug::dump($form->createView()->children['features']->vars['prototype']);die();
-
         return $this->render('WebIlluminationSiteBundle:Variant:edit_features.html.twig', array(
             'variant' => $variant,
             'form' => $form->createView(),
@@ -182,7 +186,7 @@ class VariantController extends Controller {
     }
 
     /**
-     * @Route("/admin/variants/{variantId}/delete", name="variants_delete")
+     * @Route("/admin/products/{productId}/variants/{variantId}/delete", name="variants_delete")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function deleteAction($variantId)
