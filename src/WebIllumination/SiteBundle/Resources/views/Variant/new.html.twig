@@ -1,0 +1,32 @@
+{# Forms #}
+{% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+
+{% block title %}Add New Variant | {{ parent() }}{% endblock %}
+
+
+{#{% block leftmenu %}#}
+    {#{{ parent() }}#}
+    {#&#123;&#35;{% include 'WebIlluminationSiteBundle:Variant:newLeftMenu.html.twig' %}&#35;&#125;#}
+{#{% endblock %}#}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Add New Variant</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        {% if flow.getCurrentStep() == 1 %}
+            {% include 'WebIlluminationSiteBundle:Variant:new_Step1.html.twig' %}
+        {% elseif flow.getCurrentStep() == 2 %}
+            {% include 'WebIlluminationSiteBundle:Variant:new_Step2.html.twig' %}
+        {% elseif flow.getCurrentStep() == 3 %}
+            {% include 'WebIlluminationSiteBundle:Variant:new_Step3.html.twig' %}
+        {% elseif flow.getCurrentStep() == 4 %}
+            {% include 'WebIlluminationSiteBundle:Variant:new_Step4.html.twig' %}
+        {% elseif flow.getCurrentStep() == 5 %}
+            {% include 'WebIlluminationSiteBundle:Variant:new_Step5.html.twig' %}
+        {% endif %}
+    </section>
+{% endblock %}
