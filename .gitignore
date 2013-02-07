@@ -1,17 +1,21 @@
-# OS generated files #
-######################
+# OS generated files
 .DS_Store*
 ehthumbs.db
 Icon?
 Thumbs.db
 .idea
 
-web/uploads/
-web/bundles/
-app/bootstrap.php.cache
-app/cache/*
-app/logs/*
-build/
-vendor
-bin
+# Bootstrap
+app/bootstrap*
+
+# Symfony directories
+*/cache/*
+*/logs/*
+vendor/*
+bin/*
 composer.phar
+web/uploads/*
+web/bundles/*
+
+# Configuration files
+app/config/parameters.yml
