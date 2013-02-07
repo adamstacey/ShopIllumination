@@ -1,0 +1,79 @@
+.gradient-black {
+    @include highlightedVerticalGradientBlack;
+}
+
+.gradient-black-reversed {
+    @include highlightedVerticalGradientBlackReversed;
+}
+
+.gradient-grey {
+    @include highlightedVerticalGradientGrey;
+}
+
+.gradient-grey-reversed {
+    @include highlightedVerticalGradientGreyReversed;
+}
+
+.gradient-grey-light {
+    @include highlightedVerticalGradientGreyLight;
+}
+
+.gradient-grey-light-reversed {
+    @include highlightedVerticalGradientGreyLightReversed;
+}
+
+.gradient-dark-red {
+    @include highlightedVerticalGradientDarkRed;
+}
+
+.gradient-dark-red-reversed {
+    @include highlightedVerticalGradientDarkRedReversed;
+}
+
+.gradient-red {
+    @include highlightedVerticalGradientRed;
+}
+
+.gradient-red-reversed {
+    @include highlightedVerticalGradientRedReversed;
+}
+
+.gradient-orange {
+    @include highlightedVerticalGradientOrange;
+}
+
+.gradient-orange-reversed {
+    @include highlightedVerticalGradientOrangeReversed;
+}
+
+.gradient-yellow {
+    @include highlightedVerticalGradientYellow;
+}
+
+.gradient-yellow-reversed {
+    @include highlightedVerticalGradientYellowReversed;
+}
+
+.gradient-green {
+    @include highlightedVerticalGradientGreen;
+}
+
+.gradient-green-reversed {
+    @include highlightedVerticalGradientGreenReversed;
+}
+
+.gradient-turquoise {
+    @include highlightedVerticalGradientTurquoise;
+}
+
+.gradient-turquoise-reversed {
+    @include highlightedVerticalGradientTurquoiseReversed;
+}
+
+.gradient-blue {
+    @include highlightedVerticalGradientBlue;
+}
+
+.gradient-blue-reversed {
+    @include highlightedVerticalGradientBlueReversed;
+}
