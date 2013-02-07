@@ -34,4 +34,24 @@ class DemoController extends Controller
     {
 
     }
+
+    /**
+     * @Route("/icons", name="demo_icons")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function iconsAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/buttons", name="demo_buttons")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function buttonsAction(Request $request)
+    {
+
+    }
 }
