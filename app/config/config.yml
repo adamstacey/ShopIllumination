@@ -36,7 +36,7 @@ twig:
     debug:                "%kernel.debug%"
     form:
         resources:
-            - 'WebIlluminationAdminBundle::fields.html.twig'
+            - 'WebIlluminationSiteBundle::fields.html.twig'
     globals:
         social_media_twitter_username:   "%social_media.twitter.username%"
         social_media_facebook_username:  "%social_media.facebook.username%"

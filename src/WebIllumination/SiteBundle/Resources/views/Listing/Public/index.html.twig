@@ -3,7 +3,7 @@
 {% block header %}
     {{ parent() }}
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path(app.request.get('_route')~'_admin', app.request.get('_route_params')|merge(app.request.query.all)) }}" class="fr button">Admin Mode</a>
+        <a href="{{ path('admin_'~app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)) }}" class="fr button">Admin Mode</a>
     {% endif %}
     <div class="clear"></div>
 {% endblock %}

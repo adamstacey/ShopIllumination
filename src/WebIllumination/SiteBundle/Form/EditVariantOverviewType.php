@@ -26,7 +26,7 @@ class EditVariantOverviewType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WebIllumination\SiteBundle\Entity\Product',
+            'data_class' => 'WebIllumination\SiteBundle\Entity\Product\Variant',
         ));
     }
 

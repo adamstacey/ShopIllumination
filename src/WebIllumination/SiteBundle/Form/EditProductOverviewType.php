@@ -26,76 +26,22 @@ class EditProductOverviewType extends AbstractType
             'type' => new ProductDepartmentType(),
         ));
         $builder->add('status', 'choice', array(
-            'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
+            'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
+            'label'  => 'Due Date',
         ));
-        $builder->add('availableForPurchase', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('featureComparison', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('downloadable', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('specialOffer', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('recommended', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('accessory', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('new', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
+        $builder->add('availableForPurchase');
+        $builder->add('featureComparison');
+        $builder->add('downloadable');
+        $builder->add('specialOffer');
+        $builder->add('recommended');
+        $builder->add('accessory');
+        $builder->add('new');
 
         // Prices
-        $builder->add('hidePrice', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('showPriceOutOfHours', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('membershipCardDiscountAvailable', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
-        $builder->add('maximumMembershipCardDiscount', 'choice', array(
-            'choices' => array(true => 'Yes', false => 'No'),
-            'required' => false,
-            'expanded' => true,
-            'multiple' => false
-        ));
+        $builder->add('hidePrice');
+        $builder->add('showPriceOutOfHours');
+        $builder->add('membershipCardDiscountAvailable');
+        $builder->add('maximumMembershipCardDiscount');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

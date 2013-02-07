@@ -16,22 +16,13 @@
     </header>
 {% endblock %}
 {% block body %}
-    <section class="container_6 clearfix add" id="add-product">
-        <div class="grid_6">
-            {% if flow.getCurrentStep() == 1 %}
-                {% include 'WebIlluminationSiteBundle:Product:new_Step1.html.twig' %}
-            {% elseif flow.getCurrentStep() == 2 %}
-                {% include 'WebIlluminationSiteBundle:Product:new_Step2.html.twig' %}
-            {% elseif flow.getCurrentStep() == 3 %}
-                {% include 'WebIlluminationSiteBundle:Product:new_Step3.html.twig' %}
-            {% elseif flow.getCurrentStep() == 4 %}
-                {% include 'WebIlluminationSiteBundle:Product:new_Step4.html.twig' %}
-            {% elseif flow.getCurrentStep() == 5 %}
-                {% include 'WebIlluminationSiteBundle:Product:new_Step5.html.twig' %}
-            {% elseif flow.getCurrentStep() == 6 %}
-                {% include 'WebIlluminationSiteBundle:Product:new_Step6.html.twig' %}
-            {% endif %}
-        </div>
-        <div class="clear"></div>
+    <section>
+        {% if flow.getCurrentStep() == 1 %}
+            {% include 'WebIlluminationSiteBundle:Product:new_Step1.html.twig' %}
+        {% elseif flow.getCurrentStep() == 2 %}
+            {% include 'WebIlluminationSiteBundle:Product:new_Step2.html.twig' %}
+        {% elseif flow.getCurrentStep() == 3 %}
+            {% include 'WebIlluminationSiteBundle:Product:new_Step3.html.twig' %}
+        {% endif %}
     </section>
 {% endblock %}

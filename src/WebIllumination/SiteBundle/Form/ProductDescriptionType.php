@@ -14,7 +14,7 @@ class ProductDescriptionType extends AbstractType
         $builder->add('description', 'textarea');
         $builder->add('locale', 'locale');
     }
-
+    
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -24,6 +24,6 @@ class ProductDescriptionType extends AbstractType
 
     public function getName()
     {
-        return 'site_product_department';
+        return 'site_variant_department';
     }
 }

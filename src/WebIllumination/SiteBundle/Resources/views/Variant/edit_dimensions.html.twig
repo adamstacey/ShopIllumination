@@ -1,0 +1,47 @@
+{% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+
+{% block title %}Overview | {{ variant.description.pageTitle }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>{{ variant.description.header }}</h1>
+        <ul>
+            <li><a href="{{ path('variants_edit_overview', {'variantId': variant.id}) }}">Overview</a></li>
+            <li><a href="{{ path('variants_edit_descriptions', {'variantId': variant.id}) }}">Descriptions</a></li>
+            <li><a href="{{ path('variants_edit_features', {'variantId': variant.id}) }}">Features</a></li>
+            <li><a href="{{ path('variants_edit_dimensions', {'variantId': variant.id}) }}">Dimensions</a></li>
+            <li><a href="{{ path('variants_edit_prices', {'variantId': variant.id}) }}">Prices</a></li>
+        </ul>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'variantId': variant.id}) }}" {{ form_enctype(form) }}>
+            <div class="widget-group clearfix">
+                <div class="widget widget-1-of-1">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>Dimensions</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-bottom">
+                            <fieldset>
+                                {{ form_row(form.weight, {'label': 'Weight', 'help': ''}) }}
+                                {{ form_row(form.length, {'label': 'Length', 'help': ''}) }}
+                                {{ form_row(form.width, {'label': 'Width', 'help': ''}) }}
+                                {{ form_row(form.height, {'label': 'Height', 'help': ''}) }}
+                            </fieldset>
+
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">&nbsp;</div>
+                                <div class="widget widget-2-of-3">
+                                    <button class="button" data-icon-primary="medium-black-icon-1">Submit</button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+{% endblock %}

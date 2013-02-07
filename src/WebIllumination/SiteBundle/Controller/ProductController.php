@@ -13,19 +13,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
-use WebIllumination\AdminBundle\Form\EditProductOverviewType;
+use WebIllumination\SiteBundle\Form\EditProductDescriptionsType;
+use WebIllumination\SiteBundle\Form\EditProductOverviewType;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
 use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
-/**
- * @Route("/products")
- */
 class ProductController extends Controller {
     /**
-     * @Route("/new", name="products_new")
+     * @Route("/admin/products/new", name="products_new")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function newAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
@@ -37,36 +35,20 @@ class ProductController extends Controller {
         /**
          * @var \Craue\FormFlowBundle\Form\FormFlow $flow
          */
-        $flow = $this->get('web_illumination_admin.form.flow.new_product');
+        $flow = $this->get('web_illumination_site.form.flow.new_product');
         $flow->bind($product);
 
         // Get current form step
         $form = $flow->createForm($product);
-
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
 
             if ($flow->nextStep())
             {
+//                \Doctrine\Common\Util\Debug::dump($flow->getCurrentStep());die();
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
-                if($product->getType() === 's')
-                {
-                    // Create variant for single product
-                    $variant = new Variant();
-                    $variant->setProductCode($product->getProductCode());
-                    foreach($product->getPrices() as $price)
-                    {
-                        $variant->addPrice($price);
-                    }
-                    foreach($product->getFeatureGroups() as $productToFeature)
-                    {
-                        $variant->addFeature($productToFeature);
-                    }
-                    $product->addVariant($variant);
-                }
-
                 $em->persist($product);
                 $em->flush();
 
@@ -82,45 +64,81 @@ class ProductController extends Controller {
         ));
     }
 
-    /**
-     * @Route("/edit", name="products_edit")
-     * @Secure(roles="ROLE_ADMIN")
-     */
-    public function editAction(Request $request, $productId)
+    private function editAction(Request $request, $productId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($id);
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
         if(!$product)
         {
             throw new NotFoundHttpException("Product not found");
         }
 
-        $form = $this->createForm(new EditProductOverviewType(), $product);
-        $form ->bind($request);
+        $form = $this->createForm($formClass, $product);
 
-        if($form->isValid()) {
-            $em->persist($product);
-            $em->flush();
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $em->persist($product);
+                $em->flush();
 
-            return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl('listing_products'));
+            }
         }
 
-        return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
+        return $this->render($template, array(
             'product' => $product,
             'form' => $form->createView(),
         ));
     }
 
     /**
-     * @Route("/{id}/delete", name="products_delete")
+     * @Route("/admin/products/{productId}/edit", name="products_edit")
+     * @Route("/admin/products/{productId}/overview", name="products_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function deleteAction($id)
+    public function editOverviewAction(Request $request, $productId)
+    {
+        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/descriptions", name="products_edit_descriptions")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDescriptionsAction(Request $request, $productId)
+    {
+        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_descriptions.html.twig', new EditProductDescriptionsType());
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/variants", name="products_edit_variants")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editVariantsAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($id);
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Product:edit_variants.html.twig', array(
+            'product' => $product,
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/delete", name="products_delete")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function deleteAction($productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
         if(!$product)
         {
             throw new NotFoundHttpException("Product not found");

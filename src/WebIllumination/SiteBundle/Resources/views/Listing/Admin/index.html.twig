@@ -13,6 +13,30 @@
         </div>
         <div>
             <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
+
+            {% block product_information %}
+                <div class="product-information">
+                    <p class="product-code uppercase">
+                        {% spaceless %}
+                            {% if product.url != '' %}<a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': product.url}) }}">{% endif %}
+                            PRODUCT CODE: <strong>{{ product.product_code[0] }}</strong>
+                            {% if product.url != '' %}</a>{% endif %}
+                        {% endspaceless %}
+                    </p>
+                    {% if (product.productFeatures != '') or (product.tagline != '') %}
+                        {% if 'ENERGY RATING:' in product.tagline|upper %}
+                            <p class="energy-rating">{{ product.tagline|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
+                        {% endif %}
+                        <ul>
+                            {% if (product.tagline != '') and ('ENERGY RATING:' not in product.tagline|upper) %}
+                                <li>{{ product.tagline|raw }}</li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                    <div class="clear"></div>
+                </div>
+            {% endblock %}
+
             <div class="product-options">
                 {% block product_prices %}
                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -50,18 +74,10 @@
                 {% endblock %}
 
                 {% block product_controls %}
-                    <a href="{#{{ path('products_edit', {'id': product.id}) }}#}" class="fr button ui-button-blue margin-bottom-5">Edit Product</a>
-                    <a href="{{ path('products_delete', {'id': product.id}) }}" class="button ui-button-red margin-bottom-5">Delete Product</a>
+                    <a href="{{ path('products_delete', {'productId': product.id}) }}" class="button ui-button-red margin-bottom-5">Delete</a>
+                    <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button ui-button-blue margin-bottom-5">Edit</a>
                 {% endblock %}
             </div>
-
-            {% block product_description %}
-                <div class="product-information">
-                    {% if (product.description) %}
-                        {{ product.description.description|raw }}
-                    {% endif %}
-                </div>
-            {% endblock %}
 
             {% block product_misc %}
                 {% if '|1034|1122|69|' in product.departmentIds %}

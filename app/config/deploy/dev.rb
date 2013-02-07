@@ -1,3 +1,4 @@
+set :repository,  "git@github.com:adamstacey/KitchenApplianceCentre.git"
 set :domain, "webide.co"
 set :user, "root"
 set :deploy_to, "/var/www/vhosts/#{domain}"

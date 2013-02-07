@@ -121,7 +121,7 @@ class NewProductType extends AbstractType
 
                 break;
             case 3:
-                $builder->add('featureGroups', 'collection', array(
+                $builder->add('features', 'collection', array(
                     'type' => new ProductFeatureGroupType($options['department']),
                     'allow_add' => true,
                     'allow_delete' => true,
@@ -130,7 +130,7 @@ class NewProductType extends AbstractType
                 break;
             case 4:
                 $featuresBuilder = $builder->create('features', 'collection', array(
-                    'property_path' => 'featureGroups',
+                    'property_path' => 'features',
                     'compound' => true,
                 ));
                 $subscriber = new AddFeaturesFieldSubscriber($featuresBuilder->getFormFactory());
@@ -140,7 +140,7 @@ class NewProductType extends AbstractType
                 break;
             case 5:
                 $featuresBuilder = $builder->create('features', 'collection', array(
-                    'property_path' => 'featureGroups',
+                    'property_path' => 'features',
                     'compound' => true,
                 ));
                 $subscriber = new AddFeaturesFieldSubscriber($featuresBuilder->getFormFactory());

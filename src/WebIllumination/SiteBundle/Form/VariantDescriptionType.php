@@ -7,8 +7,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class VariantDescriptionType extends ProductDescriptionType
-{    public function setDefaultOptions(OptionsResolverInterface $resolver)
+class VariantDescriptionType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('description', 'textarea');
+        $builder->add('locale', 'locale');
+    }
+    
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => 'WebIllumination\SiteBundle\Entity\Product\VariantDescription'
@@ -17,6 +24,6 @@ class VariantDescriptionType extends ProductDescriptionType
 
     public function getName()
     {
-        return 'site_product_department';
+        return 'site_variant_department';
     }
 }

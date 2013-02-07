@@ -6,3 +6,12 @@
 %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 {% endstylesheets %}
+{% stylesheets
+    '@WebIlluminationSiteBundle/Resources/public/css/components/forms/forms.scss'
+    '@WebIlluminationSiteBundle/Resources/public/plugins/ui/css/ui.scss'
+    output='css/components-compressed.css'
+    filter='compass,yui_css'
+%}
+<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html"/>
+{% endstylesheets %}

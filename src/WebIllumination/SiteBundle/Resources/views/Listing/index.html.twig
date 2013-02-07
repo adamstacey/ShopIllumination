@@ -25,49 +25,47 @@
 {% endblock %}
 
 {% block header %}
-    <header>
-        {% if department is not null and brand is null %}
-            <h1>{{ department.description.header }}</h1>
-        {% elseif department is null and brand is not null %}
-            <h1>{{ brand.description.header }}</h1>
-        {% elseif department is not null and brand is not null %}
-            <h1>{{ brand.description.header }} {{ department.description.header }}</h1>
-        {% else %}
-            <h1>Products</h1>
-        {% endif %}
+    {% if department is not null and brand is null %}
+        <h1>{{ department.description.header }}</h1>
+    {% elseif department is null and brand is not null %}
+        <h1>{{ brand.description.header }}</h1>
+    {% elseif department is not null and brand is not null %}
+        <h1>{{ brand.description.header }} {{ department.description.header }}</h1>
+    {% else %}
+        <h1>Products</h1>
+    {% endif %}
 
-        {% if app.request.query.get('q', '') is not empty %}
-            <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
-        {% endif %}
+    {% if app.request.query.get('q', '') is not empty %}
+        <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
+    {% endif %}
 
-        {% if department.parents|length > 0 %}
-            <div class="breadcrumb-trail no-margin" itemprop="breadcrumb">
-                {% for parent in department.parents %}
-                    <a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a> >
-                {% endfor %}
-                <a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a>
-            </div>
-        {% endif %}
+    {% if department.parents|length > 0 %}
+        <div class="breadcrumb-trail no-margin" itemprop="breadcrumb">
+            {% for parent in department.parents %}
+                <a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a> >
+            {% endfor %}
+            <a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a>
+        </div>
+    {% endif %}
 
-        {% if department is not null and brand is null and brand.description.description%}
-            <div class="department-description">
-                {{ department.description.description|raw }}
-            </div>
-        {% elseif department is null and brand is not null and department.description.description %}
-            <div class="department-description">
+    {% if department is not null and brand is null and brand.description.description%}
+        <div class="department-description">
+            {{ department.description.description|raw }}
+        </div>
+    {% elseif department is null and brand is not null and department.description.description %}
+        <div class="department-description">
+            {{ brand.description.description|raw }}
+        </div>
+    {% elseif department is not null and brand is not null and (brand.description.description or department.description.description) %}
+        <div class="department-description">
+            {% if brand.description.description %}
                 {{ brand.description.description|raw }}
-            </div>
-        {% elseif department is not null and brand is not null and (brand.description.description or department.description.description) %}
-            <div class="department-description">
-                {% if brand.description.description %}
-                    {{ brand.description.description|raw }}
-                {% endif %}
-                {% if department.description.description %}
-                    {{ brand.description.description|raw }}
-                {% endif %}
-            </div>
-        {% endif %}
-    </header>
+            {% endif %}
+            {% if department.description.description %}
+                {{ brand.description.description|raw }}
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 
@@ -108,91 +106,121 @@
                         </div>
                         <div id="products">
                             {% for product in pagination %}
-                                <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
-                                    <div class="fl">
-                                        <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
-                                    </div>
-                                    <div>
-                                        <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
-                                        <div class="product-options">
-                                            <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                                <p class="ar product-price">
-                                                    {% spaceless %}
-                                                        {% if product.hide_price == 0 %}
-                                                            {% if product.url != '' %}
-                                                                <a href="{#{{ path('page_request', {'url': url}) }}#}">
-                                                            {% endif %}
-                                                            {% if product.low_price == product.high_price %}
-                                                                <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
-                                                            {% else %}
-                                                                <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
-                                                                <em> - </em>
-                                                                <span itemprop="price">&pound;{{ product.high_price|number_format(2) }}</span>
-                                                            {% endif %}
-                                                            {% if product.url != '' %}
-                                                                </a>
-                                                            {% endif %}
-                                                            <span class="product-tax"> (inc. VAT)</span>
-                                                        {% else %}
-                                                            <a itemprop="price" href="{#{{ path('content_contact_us') }}#}">CONTACT US</a>
+                                {% block product_block %}
+                                    <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
+                                        <div class="fl">
+                                            <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
+                                        </div>
+                                        <div>
+                                            <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
+
+                                            {% block product_information %}
+                                                <div class="product-information">
+                                                    <p class="product-code uppercase">
+                                                        {% spaceless %}
+                                                            {% if product.url != '' %}<a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': product.url}) }}">{% endif %}
+                                                            PRODUCT CODE: <strong>{{ product.product_code[0] }}</strong>
+                                                            {% if product.url != '' %}</a>{% endif %}
+                                                        {% endspaceless %}
+                                                    </p>
+                                                    {% if (product.productFeatures != '') or (product.tagline != '') %}
+                                                        {% if 'ENERGY RATING:' in product.tagline|upper %}
+                                                            <p class="energy-rating">{{ product.tagline|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
                                                         {% endif %}
-                                                    {% endspaceless %}
-                                                </p>
+                                                        <ul>
+                                                            {% if (product.tagline != '') and ('ENERGY RATING:' not in product.tagline|upper) %}
+                                                                <li>{{ product.tagline|raw }}</li>
+                                                            {% endif %}
+                                                        </ul>
+                                                    {% endif %}
+                                                    <div class="clear"></div>
+                                                </div>
+                                            {% endblock %}
+
+                                            <div class="product-options">
+                                                {% block product_prices %}
+                                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                                        <p class="ar product-price">
+                                                            {% spaceless %}
+                                                                {% if product.hide_price == 0 %}
+                                                                    {% if product.url != '' %}
+                                                                        <a href="{#{{ path('page_request', {'url': url}) }}#}">
+                                                                    {% endif %}
+                                                                    {% if product.low_price == product.high_price %}
+                                                                        <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                                    {% else %}
+                                                                        <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                                        <em> - </em>
+                                                                        <span itemprop="price">&pound;{{ product.high_price|number_format(2) }}</span>
+                                                                    {% endif %}
+                                                                    {% if product.url != '' %}
+                                                                        </a>
+                                                                    {% endif %}
+                                                                    <span class="product-tax"> (inc. VAT)</span>
+                                                                {% else %}
+                                                                    <a itemprop="price" href="{#{{ path('content_contact_us') }}#}">CONTACT US</a>
+                                                                {% endif %}
+                                                            {% endspaceless %}
+                                                        </p>
+                                                    </div>
+                                                {% endblock %}
+
+                                                {% block product_options %}
+
+                                                {% endblock %}
+
+                                                {% block product_features %}
+
+                                                {% endblock %}
+
+                                                {% block product_controls %}
+                                                    <a href="{#{{ path('page_request', {'url': product.url}) }}#}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
+                                                    <div class="buy-now">
+                                                        {% if (product.availableForPurchase == 1) and (product.hide_price == 0) %}
+                                                            <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
+                                                                <tr>
+                                                                    {% if product.productCode == '' %}
+                                                                        <td class="out-of-stock">Out of Stock Until Further Notice</td>
+                                                                    {% else %}
+                                                                        <td class="no-padding no-border"><input id="quantity-{{ product.id }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" />id
+                                                                        <td class="no-padding no-border">
+                                                                            <div class="quantity-buttons-container no-padding">
+                                                                                <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.id }}">+</div>
+                                                                                <div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.id }}">-</div>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button data-product-id="{{ product.id }}" class="action-add-to-basket button margin-left-5 ui-button-green">Add to Basket</button>
+                                                                        </td>
+                                                                    {% endif %}
+                                                                </tr>
+                                                            </table>
+                                                            <input type="hidden" value="" id="selected-options-{{ product.id }}">
+                                                        {% else %}
+                                                            <a href="{#{{ path('content_contact_us') }}#}" class="fr button ui-button-green">Contact Us to Buy</a>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endblock %}
                                             </div>
 
-                                            <a href="{#{{ path('page_request', {'url': product.url}) }}#}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
-                                            <div class="buy-now">
-                                                {% if (product.availableForPurchase == 1) and (product.hidePrice == 0) %}
-                                                    <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
-                                                        <tr>
-                                                            {% if product.productCode == '' %}
-                                                                <td class="out-of-stock">Out of Stock Until Further Notice</td>
-                                                            {% else %}
-                                                                <td class="no-padding no-border"><input id="quantity-{{ product.productId }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" /></td>
-                                                                <td class="no-padding no-border">
-                                                                    <div class="quantity-buttons-container no-padding">
-                                                                        <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.productId }}">+</div>
-                                                                        <div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.productId }}">-</div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <button data-product-id="{{ product.productId }}" class="action-add-to-basket button margin-left-5 ui-button-green">Add to Basket</button>
-                                                                </td>
-                                                            {% endif %}
-                                                        </tr>
-                                                    </table>
-                                                    <input type="hidden" value="" id="selected-options-{{ product.productId }}">
-                                                {% else %}
-                                                    <a href="{#{{ path('content_contact_us') }}#}" class="fr button ui-button-green">Contact Us to Buy</a>
+                                            {% block product_misc %}
+                                                {% if '|1034|1122|69|' in product.departmentIds %}
+                                                    <div class="small-floating-offer small-floating-offer-top-left">
+                                                        <p class="small-floating-offer-title">40% OFF</p>
+                                                        <p class="small-floating-offer-description">Stellar<br />Pans</p>
+                                                    </div>
                                                 {% endif %}
-                                            </div>
-                                            {% if product.cheaperAlternativePrice is defined %}
-                                                {% if (product.cheaperAlternativePrice > 0) and (product.cheaperAlternativeUrl != '') %}
-                                                    <a href="{#{{ path('page_request', {'url': product.cheaperAlternativeUrl}) }}#}" class="cheaper-alternative-listing">Cheaper Alternative <strong>&pound;{{ product.cheaperAlternativePrice|number_format(0) }}</strong></a>
+                                                {% if product.brandId == '7' %}
+                                                    <div class="medium-floating-offer medium-floating-offer-bottom-left">
+                                                        <p class="medium-floating-offer-title">10% OFF</p>
+                                                        <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
+                                                    </div>
                                                 {% endif %}
-                                            {% endif %}
+                                            {% endblock %}
                                         </div>
-                                        <div class="product-information">
-                                            {% if (product.description) %}
-                                                {{ product.description.description|raw }}
-                                            {% endif %}
-                                        </div>
-                                        {% if '|1034|1122|69|' in product.departmentIds %}
-                                            <div class="small-floating-offer small-floating-offer-top-left">
-                                                <p class="small-floating-offer-title">40% OFF</p>
-                                                <p class="small-floating-offer-description">Stellar<br />Pans</p>
-                                            </div>
-                                        {% endif %}
-                                        {% if product.brandId == '7' %}
-                                            <div class="medium-floating-offer medium-floating-offer-bottom-left">
-                                                <p class="medium-floating-offer-title">10% OFF</p>
-                                                <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
-                                            </div>
-                                        {% endif %}
                                         <div class="clear"></div>
                                     </div>
-                                    <div class="clear"></div>
-                                </div>
+                                {% endblock %}
                             {% else %}
                                 <p class="no-products">Sorry, there are currently no products in this department.</p>
                             {% endfor %}
@@ -326,7 +354,7 @@
             $(".action-reset-filter").click(function() {
                 // If the price filter is being reset then reset value to min/max
                 if($(this).data('filter') === "price") {
-                    var slider = $("#price-range-slider");
+                    var slider = $("#price-range-slider"),
                         lowField = $("#filter-low-price"),
                         highField = $("#filter-high-price");
 

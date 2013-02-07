@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-use WebIllumination\SiteBundle\Form\EventListener\AddFeaturesFieldSubscriber;
 
 class NewProductType extends AbstractType
 {
@@ -14,14 +13,6 @@ class NewProductType extends AbstractType
     {
         switch ($options['flowStep']) {
             case 1:
-                $builder->add('type', 'choice', array(
-                    'choices' => array(
-                        's' => 'Single Product',
-                        'g' => 'Product Group',
-                    )
-                ));
-                break;
-            case 2:
                 $builder->add('productCode');
 
                 $builder->add('brand', 'entity', array(
@@ -43,118 +34,57 @@ class NewProductType extends AbstractType
                 $builder->add('status', 'choice', array(
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
                 ));
-                $builder->add('availableForPurchase', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('availableForPurchase', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('featureComparison', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('featureComparison', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('downloadable', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('downloadable', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('specialOffer', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('specialOffer', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('recommended', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('recommended', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('accessory', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('accessory', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('new', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('new', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
 
                 // Prices
-                $builder->add('hidePrice', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('hidePrice', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('showPriceOutOfHours', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('showPriceOutOfHours', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('membershipCardDiscountAvailable', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
+                $builder->add('membershipCardDiscountAvailable', 'checkbox', array(
                     'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
                 ));
-                $builder->add('maximumMembershipCardDiscount', 'choice', array(
-                    'choices' => array(true => 'Yes', false => 'No'),
-                    'required' => false,
-                    'expanded' => true,
-                    'multiple' => false
-                ));
-                if($options['type'] === 's')
-                {
-                    $builder->add('prices', 'collection', array(
-                        'type' => new ProductPriceType(),
-                    ));
-                }
-
+                $builder->add('maximumMembershipCardDiscount');
 
                 break;
-            case 3:
-                $builder->add('featureGroups', 'collection', array(
-                    'type' => new ProductFeatureGroupType($options['department']),
+            case 2:
+                $builder->add('features', 'collection', array(
+                    'type' => new ProductFeatureType($options['departmentId']),
                     'allow_add' => true,
                     'allow_delete' => true,
                 ));
 
                 break;
-            case 4:
-                $featuresBuilder = $builder->create('features', 'collection', array(
-                    'property_path' => 'featureGroups',
-                    'compound' => true,
-                ));
-                $subscriber = new AddFeaturesFieldSubscriber($featuresBuilder->getFormFactory());
-                $featuresBuilder->addEventSubscriber($subscriber);
-                $builder->add($featuresBuilder);
-
-                break;
-            case 5:
-                $featuresBuilder = $builder->create('features', 'collection', array(
-                    'property_path' => 'featureGroups',
-                    'compound' => true,
-                ));
-                $subscriber = new AddFeaturesFieldSubscriber($featuresBuilder->getFormFactory());
-                $featuresBuilder->addEventSubscriber($subscriber);
-                $builder->add($featuresBuilder);
-
-                break;
-            case 6:
+            case 3:
                 $builder->add('variants', 'collection', array(
-                    'type' => new NewProductVariantType(),
+                    'type' => new ProductVariantType(),
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
                 ));
+
                 break;
         }
     }
@@ -168,7 +98,7 @@ class NewProductType extends AbstractType
             'type' => 's',
             'variants' => array(),
             'departments' => array(),
-            'department' => null,
+            'departmentId' => null,
         ));
     }
 

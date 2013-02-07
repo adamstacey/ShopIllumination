@@ -1,4 +1,4 @@
-{% macro product_prices_widget(form) %}
+{% macro prices_widget(form) %}
     <td class="padding-top-5 padding-bottom-5">
         {{ form_widget(form.costPrice) }}
     </td>
@@ -8,6 +8,7 @@
     <td class="padding-top-5 padding-bottom-5">
         {{ form_widget(form.listPrice) }}
     </td>
+    <td></td>
 {% endmacro %}
 {% macro product_departments_widget(form) %}
     <td class="padding-top-5 padding-bottom-5">
@@ -20,7 +21,7 @@
     </td>
     <td>
         {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
-        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+        {{ form_widget(form.description, {'attr': {'rows': 5, 'cols': '80'} }) }}
     </td>
     <td class="ac" width="65">
         <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
@@ -32,7 +33,7 @@
     </td>
     <td>
         {#{{ form_widget(form.description, {'attr': {'rows': 5, 'class': 'tinymce-basic'} }) }}#}
-        {{ form_widget(form.description, {'attr': {'rows': 5} }) }}
+        {{ form_widget(form.description, {'attr': {'rows': 80} }) }}
     </td>
     <td class="ac" width="65">
         <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
@@ -57,6 +58,17 @@
         {{ form.get('value').productFeature }}
     </td>
 {% endmacro %}
+{% macro features_widget(form) %}
+    <td>
+        {{ form_widget(form.productFeature, {'attr': {'class': 'feature-group'}}) }}
+    </td>
+    <td>
+        {{ form_widget(form.defaultFeature, {'attr': {'class': 'feature'}}) }}
+    </td>
+    <td>
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+    </td>
+{% endmacro %}
 {% macro product_variants_widget(form) %}
     <tr>
         <td class="ac padding-top-5 padding-bottom-5" width="175">
@@ -65,60 +77,9 @@
         <td class="padding-top-5 padding-bottom-5">
             <ul>
                 {% for feature in form.get('value').features %}
-                    <li>{{ feature }}</li>
+                    <li>({{ feature.productFeature }}) {{ feature.defaultFeature }}</li>
                 {% endfor %}
             </ul>
-        </td>
-    </tr>
-    <tr class="sub-row">
-        <td colspan="3">
-            <table width="100%">
-                <tr>
-                    <td>
-                        {{ form_label(form.prices, 'Descriptions', {'help': ''}) }}
-                        <table class="data-table" id="description-list" width="100%" data-prototype="{{ form_widget(form.descriptions.vars.prototype) | e }}">
-                            <thead>
-                            <tr>
-                                <th width="100">Locale</th>
-                                <th>Description</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for row in form.descriptions %}
-                                <tr>
-                                    {{ form_widget(row) }}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        <button type="button" id="add-description" class="fr small button icon-set-white ui-button-green add-row margin-top-5" data-icon-primary="ui-icon-circle-plus">Add Another</button>
-                        {% do form.descriptions.setRendered() %}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {{ form_label(form.prices, 'Price', {'help': ''}) }}
-                        <table class="data-table" id="price-list" width="100%">
-                            <thead>
-                            <tr>
-                                <th>Cost Price</th>
-                                <th>RRP</th>
-                                <th>List Price</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for row in form.prices %}
-                                <tr>
-                                    {{ form_widget(row) }}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        {% do form.prices.setRendered() %}
-                    </td>
-                </tr>
-            </table>
         </td>
     </tr>
 {% endmacro %}
