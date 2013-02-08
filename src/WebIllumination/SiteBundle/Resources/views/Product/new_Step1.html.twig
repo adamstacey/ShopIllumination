@@ -72,7 +72,7 @@
     </div>
 </form>
 <script type="text/javascript">
-    var count = '{{ form.featureGroups | length }}';
+    var count = {{ form.features | length }};
 
     jQuery(document).ready(function() {
         jQuery('.delete-row').on('click', function() {

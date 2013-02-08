@@ -28,6 +28,7 @@ class ProductListener
 
                 $this->manager->updateProductDescription($description);
             }
+
             foreach($entity->getVariants() as $variant)
             {
                 foreach($variant->getDescriptions() as $description)
