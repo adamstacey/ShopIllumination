@@ -20,6 +20,8 @@ use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
 use WebIllumination\SiteBundle\Entity\ProductToFeature;
+use WebIllumination\SiteBundle\Manager\ProductManager;
+use WebIllumination\SiteBundle\Manager\SeoManager;
 
 class ProductController extends Controller {
     /**
@@ -40,6 +42,7 @@ class ProductController extends Controller {
 
         // Get current form step
         $form = $flow->createForm($product);
+
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
 
@@ -48,6 +51,21 @@ class ProductController extends Controller {
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
+                // Update descriptions TODO: move to listener
+                $manager = $this->container->get('web_illumination_site.manager.product');
+                foreach($product->getDescriptions() as $description)
+                {
+                    $manager->updateProductDescription($description);
+                }
+
+                foreach($product->getVariants() as $variant)
+                {
+                    foreach($variant->getDescriptions() as $description)
+                    {
+                        $manager->updateVariantDescription($description);
+                    }
+                }
+
                 $em->persist($product);
                 $em->flush();
 
@@ -56,8 +74,6 @@ class ProductController extends Controller {
                 return $this->redirect($this->generateUrl('admin_listing_products'));
             }
         }
-        
-//        \Doctrine\Common\Util\Debug::dump($form->getErrors());die();
 
         return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
