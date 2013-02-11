@@ -44,6 +44,7 @@
                                 </div>
                                 <div class="widget widget-2-of-3">
                                     <input class="fill" type="email" value="sales@kitchenappliancecentre.co.uk" />
+                                    <small>Enter a valid email address.</small>
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
@@ -76,6 +77,7 @@
                                 </div>
                                 <div class="widget widget-2-of-3">
                                     <input class="fill" type="url" value="http://www.kitchenappliancecentre.co.uk" />
+                                    <small>Enter a valid URL.</small>
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
@@ -143,11 +145,9 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <div class="form-element widget-group clearfix">
-                            <div class="widget widget-1-of-3">&nbsp;</div>
-                            <div class="widget widget-2-of-3">
-                                <button class="button" data-icon-primary="medium-black-icon-1">Test</button>
-                            </div>
+                        <div class="button-group clearfix">
+                            <button class="button button-small fl">Back</button>
+                            <button class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Continue</button>
                         </div>
                     </section>
                 </div>
@@ -161,22 +161,21 @@
                         <fieldset>
                             <div class="form-element widget-group clearfix pbn">
                                 <div class="widget widget-1-of-3">
-                                    <label>Textarea</label>
+                                    <label for="formTextarea">Textarea</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <textarea class="fill" rows="5"></textarea>
+                                    <textarea id="formTextarea" name="textarea" class="fill" rows="5"></textarea>
                                 </div>
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend class="clearfix fill">Selecting Elements</legend>
-
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Select</label>
+                                    <label for="formSelect1">Select</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <select>
+                                    <select id="formSelect1" name="select1" class="fill">
                                         <option selected="selected" value="1">Option 1</option>
                                         <option value="2">Option 2</option>
                                         <option value="3">Option 3</option>
@@ -186,10 +185,36 @@
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Multiple Select</label>
+                                    <label for="formSelect2">Select</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <select id="" multiple="multiple" size="4">
+                                    <select id="formSelect2" name="select2">
+                                        <option selected="selected" value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label for="formSelect3">Select 3</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select id="formSelect3" name="select3">
+                                        <option selected="selected" value="1">Option 1</option>
+                                        <option value="2">Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label for="formMultipleSelect">Multiple Select</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select multiple="multiple" id="formMultipleSelect" name="multipleSelect" size="4">
                                         <option value="1">Option 1</option>
                                         <option value="2">Option 2</option>
                                         <option value="3">Option 3</option>
@@ -204,42 +229,46 @@
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Date Input</label>
+                                    <label>Radio</label>
                                 </div>
-                                <div class="widget widget-2-of-3">
-                                    <label>
-                                        <input type="radio" name="radio" value="hi" /> Saying hi
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="radio" value="feedback" /> Sending feedback
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="radio" value="default" checked="CHECKED" /> Default Seleted Radio
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Month Input</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <label>
-                                        <input type="checkbox" id="contactBack" /> Please contact me back
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" checked="CHECKED" id="goodDay" /> Today is a good day
-                                    </label>
+                                <div class="widget radio-group widget-2-of-3">
+                                    <div class="clearfix">
+                                        <input type="radio" id="formRadio1" name="radio" value="1" checked="checked" /><label for="formRadio1">Radio option 1</label>
+                                    </div>
+                                    <div class="clearfix">
+                                        <input type="radio" id="formRadio2" name="radio" value="2" /><label for="formRadio2">Radio option 2</label>
+                                    </div>
+                                    <div class="clearfix">
+                                        <input type="radio" id="formRadio3" name="radio" value="3" /><label for="formRadio3">Radio option 3</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>File Input</label>
+                                    <label>Checkbox</label>
+                                </div>
+                                <div class="widget checker-group widget-2-of-3">
+                                    <div class="clearfix">
+                                        <input type="checkbox" id="formCheckbox1" name="checkbox1" value="1" /><label for="formCheckbox1">Checkbox option 1</label>
+                                    </div>
+                                    <div class="clearfix">
+                                        <input type="checkbox" id="formCheckbox2" name="checkbox2" value="2" checked="checked" /><label for="formCheckbox2">Checkbox option 2</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix pbn">
+                                <div class="widget widget-1-of-3">
+                                    <label for="formFile">File</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="file" />
+                                    <input type="file" id="formFile" name="file" class="fill" />
                                 </div>
                             </div>
                         </fieldset>
+                        <div class="button-group clearfix">
+                            <button class="button button-small fl">Back</button>
+                            <button class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save</button>
+                        </div>
                     </section>
                 </div>
             </div>
