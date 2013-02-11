@@ -498,13 +498,15 @@
                         divClass: options.fileClass,
                         spanClass: options.fileButtonClass,
                         spanHtml: options.fileButtonHtml,
-                        spanWrap: "after"
+                        spanWrap: "before"
                     });
                     $div = ds.div;
                     $button = ds.span;
                     $filename = $("<span />").html(options.fileDefaultHtml);
                     $filename.addClass(options.filenameClass);
-                    $filename = divSpanWrap($el, $filename, "after");
+                    $filename = divSpanWrap($el, $filename, "before");
+
+                    $div.addClass($el.attr("class"));
 
                     // Set the size
                     if (!attrOrProp($el, "size")) {
@@ -524,7 +526,10 @@
                     bindMany($el, options, {
                         click: function () {
                             $el.trigger("change");
-                            setTimeout(filenameUpdate, 0);
+                            filenameUpdate();
+                        },
+                        change: function() {
+                            filenameUpdate();
                         }
                     });
 
@@ -617,7 +622,12 @@
 
                     if (options.selectAutoWidth) {
                         sizingInvisible($el, function () {
-                            origElemWidth = $el.width();
+                            if (($el.width() + 40) > $el.parent().width())
+                            {
+                                origElemWidth = $el.parent().width() - 40;
+                            } else {
+                                origElemWidth = $el.width();
+                            }
                         });
                     }
 
@@ -629,7 +639,9 @@
                     $div = ds.div;
                     $span = ds.span;
 
-                    if (options.selectAutoWidth) {
+                    if ($el.hasClass("fill")) {
+                        $div.addClass("fill");
+                    } else {
                         // Use the width of the select and adjust the
                         // span and div accordingly
                         sizingInvisible($el, function () {
@@ -638,9 +650,6 @@
                             $div.width(origElemWidth + spanPad);
                             $span.width(origElemWidth);
                         });
-                    } else {
-                        // Force the select to fill the size of the div
-                        $div.addClass('fixedWidth');
                     }
 
                     // Take care of events
@@ -740,9 +749,9 @@
             disabledClass: "disabled",
             eventNamespace: ".uniform",
             fileButtonClass: "action",
-            fileButtonHtml: "Choose File",
+            fileButtonHtml: "Select",
             fileClass: "uploader",
-            fileDefaultHtml: "No file selected",
+            fileDefaultHtml: "Select a file...",
             filenameClass: "filename",
             focusClass: "focus",
             hoverClass: "hover",
