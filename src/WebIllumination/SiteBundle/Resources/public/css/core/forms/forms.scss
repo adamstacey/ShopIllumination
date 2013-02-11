@@ -9,12 +9,21 @@ textarea,
 select {
     margin: 0;
     padding: 0;
+    max-width: 100%;
+}
+
+option {
+    max-width: 100%;
+
+    @include ellipsis;
 }
 
 fieldset {
     margin: 0 0 $spacingMedium;
     padding: $spacingMedium;
+    width: 100%;
 
+    @include borderBox;
     background: $colourGreyExtraLight;
 }
 
@@ -34,414 +43,20 @@ fieldset legend {
 }
 
 .form-element label {
-    width: 100%;
-
     display: block;
 
-    line-height: 37px;
+    line-height: 40px;
     text-align: right;
     font-weight: bold;
 }
 
-$sprite: "#{$pluginsPath}/uniform/images/sprite.png";
-$spriteRetina: "#{$pluginsPath}/uniform/images/sprite-retina.png";
-$spriteSize: 493px;
-$checkboxHeight: 19px;
-$checkboxWidth: 19px;
-$inputPadding: 5px;
-$inputBackground: "#{$pluginsPath}/uniform/images/bg-input.png";
-$inputBackgroundRetina: "#{$pluginsPath}/uniform/images/bg-input-retina.png";
-$inputBackgroundFocus: "#{$pluginsPath}/uniform/images/bg-input-focus.png";
-$inputBackgroundFocusRetina: "#{$pluginsPath}/uniform/images/bg-input-focus-retina.png";
-$inputBackgroundSize: 1px !default;
-$radioHeight: 18px;
-$radioWidth: 18px;
-$selectFixedWidth: 190px;
-$selectHeight: 26px;
-$selectMarginLeft: 10px;
-$selectMarginRight: 25px;
-$selectSelectHeight: 22px;
-$selectSelectTop: 2px;
-$uploadActionWidth: 85px;
-$uploadFilenameMarginTop: 2px;
-$uploadFilenameMarginBottom: 2px;
-$uploadFilenameMarginLeft: 2px;
-$uploadFilenameWidth: 82px;
-$uploadFilenamePadding: 0 10px;
-$uploadHeight: 28px;
-$uploadWidth: 190px;
-$checkboxVerticalOffset: (-10 * $selectHeight);
-$radioVerticalOffset: ($checkboxVerticalOffset - $checkboxHeight);
-$uploadVerticalOffset: ($radioVerticalOffset - $radioHeight);
-
-div.selector,
-div.selector span,
-div.checker span,
-div.radio span,
-div.uploader,
-div.uploader span.action {
-    @include verticalGradientGreyExtraLightToWhite;
-    -webkit-font-smoothing: antialiased;
-}
-
-.selector,
-.checker,
-.radio,
-.uploader {
-    @include inlineBlock;
-    vertical-align: middle;
-}
-
-.selector select:focus,
-.radio input:focus,
-.checker input:focus,
-.uploader input:focus {
-    outline: 0;
-}
-
-.selector,
-.radio,
-.checker,
-.uploader,
-.selector *,
-.radio *,
-.checker *,
-.uploader * {
-    margin: 0;
-    padding: 0;
-}
-
-.highContrastDetect {
-    width: 0;
-    height: 0;
-
-    @include verticalGradientGreyExtraLightToWhite;
-}
-
-div.checker input,
-input.search,
-input.search:active  {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
-
-div.selector {
-    height: $selectHeight;
-    padding: 0 0 0 $selectMarginLeft;
-
-    position: relative;
-    overflow: hidden;
-
-    background-position: 0 (-5 * $selectHeight);
-    line-height: $selectHeight;
-}
-
-div.selector.fixedWidth {
-    width: $selectFixedWidth;
-}
-
-div.selector span {
-    width: 100%;
-    height: $selectHeight;
-    padding-right: $selectMarginRight;
+.form-element small {
+    padding: $spacingExtraSmall 11px $spacingSmall 11px;
 
     display: block;
 
-    @include ellipsis;
-    background-position: right 0;
-    line-height: $selectHeight;
-    cursor: pointer;
-}
-
-div.selector.fixedWidth span {
-    width: ($selectFixedWidth - $selectMarginLeft - $selectMarginRight);
-}
-
-div.selector select {
-    width: 100%;
-    height: $selectSelectHeight;
-
-    position: absolute;
-    top: $selectSelectTop;
-    left: 0;
-
-    @include hideYetClickable;
-}
-
-div.selector:active,
-div.selector.active {
-    background-position: 0 (-6 * $selectHeight);
-}
-
-div.selector:active span,
-div.selector.active span {
-    background-position: right (-1 * $selectHeight);
-}
-
-div.selector.focus,
-div.selector.hover,
-div.selector:hover {
-    background-position: 0 (-7 * $selectHeight);
-}
-
-div.selector.focus span,
-div.selector.hover span,
-div.selector:hover span {
-    background-position: right (-2 * $selectHeight);
-}
-
-div.selector.focus:active,
-div.selector.focus.active,
-div.selector:hover:active,
-div.selector.active:hover {
-    background-position: 0 (-8 * $selectHeight);
-}
-
-div.selector.focus:active span,
-div.selector:hover:active span,
-div.selector.active:hover span,
-div.selector.focus.active span {
-    background-position: right (-3 * $selectHeight);
-}
-
-div.selector.disabled,
-div.selector.disabled:active,
-div.selector.disabled.active {
-    background-position: 0 (-9 * $selectHeight);
-}
-
-div.selector.disabled span,
-div.selector.disabled:active span,
-div.selector.disabled.active span {
-    background-position: right (-4 * $selectHeight);
-}
-
-div.checker,
-div.checker span,
-div.checker input {
-    width: $checkboxWidth;
-    height: $checkboxHeight;
-}
-
-div.checker {
-    position: relative;
-}
-
-div.checker span {
-    @include inlineBlock;
-    text-align: center;
-    background-position: 0 $checkboxVerticalOffset;
-}
-
-div.checker input {
-    @include hideYetClickable;
-    @include inlineBlock;
-}
-
-div.checker:active span,
-div.checker.active span {
-    background-position: (-1 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker.focus span,
-div.checker:hover span {
-    background-position: (-2 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker.focus:active span,
-div.checker:active:hover span,
-div.checker.active:hover span,
-div.checker.focus.active span {
-    background-position: (-3 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker span.checked {
-    background-position: (-4 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker:active span.checked,
-div.checker.active span.checked {
-    background-position: (-5 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker.focus span.checked,
-div.checker:hover span.checked {
-    background-position: (-6 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker.focus:active span.checked,
-div.checker:hover:active span.checked,
-div.checker.active:hover span.checked,
-div.checker.active.focus span.checked {
-    background-position: (-7 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker.disabled span,
-div.checker.disabled:active span,
-div.checker.disabled.active span {
-    background-position: (-8 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.checker.disabled span.checked,
-div.checker.disabled:active span.checked,
-div.checker.disabled.active span.checked {
-    background-position: (-9 * $checkboxWidth) $checkboxVerticalOffset;
-}
-
-div.radio,
-div.radio span,
-div.radio input {
-    width: $radioWidth;
-    height: $radioHeight;
-}
-
-div.radio {
-    position: relative;
-}
-
-div.radio span {
-    @include inlineBlock;
-    text-align: center;
-    background-position: 0 $radioVerticalOffset;
-}
-
-div.radio input {
-    @include hideYetClickable;
-    @include inlineBlock;
-    text-align: center;
-}
-
-div.radio:active span,
-div.radio.active span {
-    background-position: (-1 * $radioWidth)-18px $radioVerticalOffset;
-}
-
-div.radio.focus span,
-div.radio:hover span {
-    background-position: (-2 * $radioWidth)-36px $radioVerticalOffset;
-}
-
-div.radio.focus:active span,
-div.radio:active:hover span,
-div.radio.active:hover span,
-div.radio.active.focus span {
-    background-position: (-3 * $radioWidth) $radioVerticalOffset;
-}
-
-div.radio span.checked {
-    background-position: (-4 * $radioWidth) $radioVerticalOffset;
-}
-
-div.radio:active span.checked,
-div.radio.active span.checked {
-    background-position: (-5 * $radioWidth) $radioVerticalOffset;
-}
-
-div.radio.focus span.checked,
-div.radio:hover span.checked {
-    background-position: (-6 * $radioWidth) $radioVerticalOffset;
-}
-
-div.radio.focus:active span.checked,
-div.radio:hover:active span.checked,
-div.radio.focus.active span.checked,
-div.radio.active:hover span.checked {
-    background-position: (-7 * $radioWidth) $radioVerticalOffset;
-}
-
-div.radio.disabled span,
-div.radio.disabled:active span,
-div.radio.disabled.active span {
-    background-position: (-8 * $radioWidth) $radioVerticalOffset;
-}
-
-div.radio.disabled span.checked,
-div.radio.disabled:active span.checked,
-div.radio.disabled.active span.checked {
-    background-position: (-9 * $radioWidth) $radioVerticalOffset;
-}
-
-div.uploader {
-    width: $uploadWidth;
-    height: $uploadHeight;
-
-    position: relative;
-    overflow: hidden;
-
-    background-position: 0 $uploadVerticalOffset;
-    cursor: pointer;
-}
-
-div.uploader span.action {
-    width: $uploadActionWidth;
-    height: $uploadHeight;
-
-    display: inline;
-    overflow: hidden;
-    float: left;
-
-    background-position: right ($uploadVerticalOffset + (-4 * $uploadHeight));
-    line-height: $uploadHeight;
-    text-align: center;
-    cursor: pointer;
-}
-
-div.uploader span.filename {
-    width: $uploadFilenameWidth;
-    height: ($uploadHeight - $uploadFilenameMarginTop - $uploadFilenameMarginBottom);
-    margin: $uploadFilenameMarginTop 0 $uploadFilenameMarginBottom $uploadFilenameMarginLeft;
-    padding: $uploadFilenamePadding;
-
-    float: left;
-
-    @include ellipsis;
-    cursor: default;
-    line-height: ($uploadHeight - $uploadFilenameMarginTop - $uploadFilenameMarginBottom);
-}
-
-div.uploader input {
-    width: 100%;
-    height: 100%;
-
-    position: absolute;
-    top: 0;
-    right: 0;
-    float: right;
-
-    @include hideYetClickable;
-    cursor: default;
-}
-
-div.uploader.focus,
-div.uploader.hover,
-div.uploader:hover {
-    background-position: 0 ($uploadVerticalOffset + (-2 * $uploadHeight));
-}
-
-div.uploader.focus span.action,
-div.uploader.hover span.action,
-div.uploader:hover span.action {
-    background-position: right ($uploadVerticalOffset + (-5 * $uploadHeight));
-}
-
-div.uploader.active span.action,
-div.uploader:active span.action {
-    background-position: right ($uploadVerticalOffset + (-6 * $uploadHeight));
-}
-
-div.uploader.focus.active span.action,
-div.uploader:focus.active span.action,
-div.uploader.focus:active span.action,
-div.uploader:focus:active span.action {
-    background-position: right ($uploadVerticalOffset + (-7 * $uploadHeight));
-}
-
-div.uploader.disabled {
-    background-position: 0 ($uploadVerticalOffset + (-1 * $uploadHeight));
-}
-
-div.uploader.disabled span.action {
-    background-position: right ($uploadVerticalOffset + (-3 * $uploadHeight));
+    color: $colourGrey;
+    @include fontSize($fontSizeSmall);
 }
 
 input.text,
@@ -474,7 +89,7 @@ select.uniform-multiselect,
 select[multiple="multiple"],
 textarea,
 textarea.uniform {
-    padding: $spacingMedium;
+    padding: 8px $spacingMedium;
 
     outline: 0;
 
@@ -485,6 +100,7 @@ textarea.uniform {
     @include transitionAll(0.3s, ease-in-out);
     font-weight: normal;
     color: $textColour;
+    line-height: 22px;
     border: 1px solid $colourGreyLight;
 }
 
@@ -519,6 +135,7 @@ select[multiple="multiple"]:focus,
 textarea:focus,
 textarea.uniform:focus {
     @include boxGlow($primaryColour, 10px, 0, 1);
+    color: $colourBlack;
 }
 
 input.search::-webkit-search-decoration,
@@ -532,42 +149,245 @@ input[type="search"]::-webkit-search-results-decoration {
     display: none;
 }
 
-div.selector {
-    @include fontSize($fontSizeMedium);
+input.search,
+input[type="search"] {
+    -webkit-appearance: textfield;
 }
 
-div.selector select {
-    @include fontSize($fontSizeMedium);
+.selector,
+.checker,
+.radio,
+.uploader {
+    @include inlineBlock;
+    vertical-align: middle;
 }
 
-div.selector span {
-    color: $textColour;
-    @include textShadow($colourWhite, 0, 1px);
+.selector select:focus,
+.radio input:focus,
+.checker input:focus,
+.uploader input:focus {
+    outline: 0;
 }
 
-div.selector.disabled span {
-    color: $colourGreyExtraLight;
+.selector,
+.radio,
+.checker,
+.uploader,
+.selector *,
+.radio *,
+.checker *,
+.uploader * {
+    margin: 0;
+    padding: 0;
+}
+
+div.radio-group,
+div.checker-group {
+    margin: $spacingMedium 0 $spacingSmall 0;
+}
+
+div.radio-group label,
+div.checker-group label {
+    float: left;
+
+    line-height: 20px;
+    font-weight: normal;
+    text-align: left;
 }
 
 div.checker {
-    margin-right: 5px;
+    margin: 0 $spacingMedium $spacingSmall 0;
+    width: 18px;
+    height: 18px;
+
+    position: relative;
+    float: left;
+
+    @include equalBorderRadius($radiusSize);
+    @include verticalGradientGreyExtraLightToWhite;
+    @include transitionAll(0.3s, ease-in-out);
+    border: 1px solid $colourGreyLight;
+    cursor: pointer;
+}
+
+div.checker span {
+    width: 18px;
+    height: 18px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include inlineBlock;
+    text-align: center;
+    cursor: pointer;
+    background: none;
+}
+
+div.checker span.checked {
+    background: transparent url("#{$cssPath}/core/resources/images/icons/check.png") center center no-repeat;
+}
+
+div.checker input {
+    width: 18px;
+    height: 18px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include hideYetClickable;
+    @include inlineBlock;
+    text-align: center;
+    cursor: pointer;
+}
+
+div.checker:focus,
+div.checker:active,
+div.checker:hover,
+div.checker.focus,
+div.checker.active,
+div.checker.focus.active  {
+    @include boxGlow($primaryColour, 10px);
 }
 
 div.radio {
-    margin-right: 3px;
+    margin: 0 $spacingMedium $spacingSmall 0;
+    width: 18px;
+    height: 18px;
+
+    position: relative;
+    float: left;
+
+    @include equalBorderRadius(10px);
+    @include verticalGradientGreyExtraLightToWhite;
+    @include transitionAll(0.3s, ease-in-out);
+    border: 1px solid $colourGreyLight;
+    cursor: pointer;
 }
 
-div.uploader span.action {
-    @include textShadow($colourWhite, 0, 1px);
-    background-color: $colourWhite;
-    @include fontSize($fontSizeSmall);
-    font-weight: bold;
+div.radio span {
+    width: 18px;
+    height: 18px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include inlineBlock;
+    text-align: center;
+    cursor: pointer;
+}
+
+div.radio span.checked {
+    width: 8px;
+    height: 8px;
+
+    top: 4px;
+    left: 4px;
+
+    @include equalBorderRadius(4px);
+    @include highlightedVerticalGradientBlack;
+    @include boxGlow($colourBlack, 5px, 0, 0.5);
+    border: 1px solid $colourBlack;
+}
+
+div.radio input {
+    width: 18px;
+    height: 18px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include hideYetClickable;
+    @include inlineBlock;
+    text-align: center;
+    cursor: pointer;
+}
+
+div.radio:focus,
+div.radio:active,
+div.radio:hover,
+div.radio.focus,
+div.radio.active,
+div.radio.focus.active  {
+    @include boxGlow($primaryColour, 10px);
+}
+
+div.uploader {
+    padding: 0;
+
+    outline: 0;
+    position: relative;
+    overflow: hidden;
+
+    @include equalBorderRadius($radiusSize);
+    @include verticalGradientGreyExtraLightToWhite;
+    @include transitionAll(0.3s, ease-in-out);
+
+    border: 1px solid $colourGreyLight;
+    cursor: pointer;
 }
 
 div.uploader span.filename {
+    padding: 8px $spacingMedium;
+    width: 60%;
+
+    @include ellipsis;
+    @include fontSize($fontSizeMedium);
+    @include borderBox;
+    font-family: $primaryFontFamily;
+    font-weight: normal;
     color: $textColour;
-    border-right: 1px solid $colourGreyLight;
-    @include fontSize($fontSizeSmall);
+    line-height: 22px;
+    cursor: pointer;
+}
+
+div.uploader span.action {
+    padding: 4px 13px;
+    width: 40%;
+
+    position: absolute;
+    top: -1px;
+    right: -1px;
+
+    @include ellipsis;
+    @include borderBox;
+    line-height: 32px;
+    text-align: center;
+    overflow: visible;
+    @include highlightedVerticalGradientGreyLight;
+    @include transitionAll(0.3s, ease-in-out);
+    @include boxGlow($colourGreyLight, 5px);
+    @include borderRadius(0, $radiusSize, $radiusSize, 0);
+    border-left: 1px solid $colourGreyLight;
+    border-left: 2px solid $colourGreyLight;
+    color: $textColour;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+div.uploader input {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    float: right;
+
+    @include hideYetClickable;
+    cursor: pointer;
+}
+
+div.uploader:focus,
+div.uploader:active,
+div.uploader:hover,
+div.uploader.focus,
+div.uploader.active,
+div.uploader.focus.active  {
+    @include boxGlow($primaryColour, 10px);
 }
 
 div.uploader.disabled span.action {
@@ -575,6 +395,93 @@ div.uploader.disabled span.action {
 }
 
 div.uploader.disabled span.filename {
-    border-color: $colourGreyLight;
+    color: $colourGreyExtraLight;
+}
+
+div.selector {
+    padding: 0;
+
+    outline: 0;
+    position: relative;
+    overflow: hidden;
+
+    @include equalBorderRadius($radiusSize);
+    @include verticalGradientGreyExtraLightToWhite;
+    @include transitionAll(0.3s, ease-in-out);
+    border: 1px solid $colourGreyLight;
+    cursor: pointer;
+}
+
+div.selector span {
+    padding: 8px 30px 8px $spacingMedium;
+
+    display: block;
+
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeMedium);
+    color: $textColour;
+    font-weight: normal;
+    line-height: 22px;
+    cursor: pointer;
+    @include ellipsis;
+    background: transparent url("#{$cssPath}/core/resources/images/icons/select.png") center right no-repeat;
+}
+
+div.selector.disabled span {
+    color: $colourGreyExtraLight;
+}
+
+div.selector select {
+    width: 100%;
+    height: 38px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    @include fontSize($fontSizeMedium);
+    cursor: pointer;
+    @include hideYetClickable;
+}
+
+div.selector:active,
+div.selector.active {
+    @include boxGlow($primaryColour, 10px, 0, 1);
+}
+
+div.selector:active span,
+div.selector.active span {
+    color: $colourBlack;
+}
+
+div.selector.focus,
+div.selector.hover,
+div.selector:hover {
+    @include boxGlow($primaryColour, 10px, 0, 1);
+}
+
+div.selector.focus span,
+div.selector.hover span,
+div.selector:hover span {
+    color: $colourBlack;
+}
+
+div.selector.focus:active,
+div.selector.focus.active,
+div.selector:hover:active,
+div.selector.active:hover {
+    @include boxGlow($primaryColour, 10px, 0, 1);
+}
+
+div.selector.focus:active span,
+div.selector:hover:active span,
+div.selector.active:hover span,
+div.selector.focus.active span {
+    color: $colourBlack;
+}
+
+div.selector.disabled span,
+div.selector.disabled:active span,
+div.selector.disabled.active span {
     color: $colourGreyExtraLight;
 }
