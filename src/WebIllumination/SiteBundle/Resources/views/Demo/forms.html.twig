@@ -19,9 +19,7 @@
         <h1>Forms</h1>
     </header>
     <section>
-        <p>The grid system is percentage-based, so can be used in any container. This allows for very flexible
-            layouts that can easily be nested.</p>
-        <div class="message error">
+        <div class="message information">
             <p>You have <strong>3</strong> errors. Please fix the following errors before continuing:</p>
             <ul>
                 <li>Enter a valid email address.</li>
@@ -38,110 +36,111 @@
                     <section class="ui-widget-content ui-corner-bottom">
                         <fieldset>
                             <legend class="clearfix fill">Input Types</legend>
+                            <div class="clear"></div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Email Input</label>
+                                    <label for="formEmail"><span class="required">*</span> Email Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="email" value="sales@kitchenappliancecentre.co.uk" />
+                                    <input type="email" id="formEmail" name="email" class="fill" value="sales@kitchenappliancecentre.co.uk" />
                                     <small>Enter a valid email address.</small>
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Password Input</label>
+                                    <label for="formPassword"><span class="required">*</span> Password Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="password" value="1234567890" />
+                                    <input type="password" id="formPassword" name="password" class="fill" value="1234567890" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Search Input</label>
+                                    <label for="formSearch">Search Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input placeholder="Search..." results="5" class="fill" type="search" value="" />
+                                    <input type="search" id="formSearch" name="search" placeholder="Search..." results="5" class="fill" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Telephone Input</label>
+                                    <label for="formTel"><span class="required">*</span> Telephone Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="tel" value="01159383111" />
+                                    <input type="tel" id="formTel" name="tel" class="fill" value="01159383111" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>URL Input</label>
+                                    <label for="formUrl"><span class="required">*</span> URL Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="url" value="http://www.kitchenappliancecentre.co.uk" />
+                                    <input type="url" id="formUrl" name="url" class="fill" value="http://www.kitchenappliancecentre.co.uk" />
                                     <small>Enter a valid URL.</small>
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Time Input</label>
+                                    <label for="formTime">Time Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="time" value="" />
+                                    <input type="time" id="formTime" name="time" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Datetime Input</label>
+                                    <label for="formDatetime">Datetime Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="datetime" value="" />
+                                    <input type="datetime" id="formDatetime" name="datetime" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Date Input</label>
+                                    <label for="formDate">Date Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="date" value="" />
+                                    <input type="date" id="formDate" name="date" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Month Input</label>
+                                    <label for="formMonth">Month Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="month" value="" />
+                                    <input type="month" id="formMonth" name="month" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Week Input</label>
+                                    <label id="formWeek">Week Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="week" value="" />
+                                    <input type="week" id="formWeek" name="week" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Time Input</label>
+                                    <label for="formTime">Time Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="time" value="" />
+                                    <input type="time" id="formTime" name="time" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Datetime-local Input</label>
+                                    <label for="formDatetimeLocal">Datetime-local Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="datetime-local" value="" />
+                                    <input type="datetime-local" id="formDatetimeLocal" name="datetimeLocal" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix pbn">
                                 <div class="widget widget-1-of-3">
-                                    <label>Number Input</label>
+                                    <label for="formNumber">Number Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="number" value="" />
+                                    <input type="number" id="formNumber" name="number" value="" />
                                 </div>
                             </div>
                         </fieldset>
@@ -170,6 +169,7 @@
                         </fieldset>
                         <fieldset>
                             <legend class="clearfix fill">Selecting Elements</legend>
+                            <div class="clear"></div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
                                     <label for="formSelect1">Select</label>
@@ -276,155 +276,163 @@
 
 
 
+        <div class="message error">
+            <p>You have <strong>3</strong> errors. Please fix the following errors before continuing:</p>
+            <ul>
+                <li>Enter a valid email address.</li>
+                <li>Enter a valid telephone address.</li>
+                <li>Enter a name.</li>
+            </ul>
+        </div>
         <div class="widget-group clearfix">
             <div class="widget widget-4-of-7">
                 <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Form Validation</h2>
+                    <header class="ui-widget-header ui-corner-top error">
+                        <h2>Form Header</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
                         <fieldset>
                             <legend class="clearfix fill">Input Types</legend>
-                            <div class="form-element error widget-group clearfix">
+                            <div class="clear"></div>
+                            <div class="form-element form-element-error widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Email Input</label>
+                                    <label for="formErrorEmail"><span class="required">*</span> Email Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="email" value="sales@kitchenappliancecentre.co.uk" />
-                                    <span>Enter a valid email address!</span>
+                                    <input type="email" id="formErrorEmail" name="email" class="fill" value="sales@kitchenappliancecentre.co.uk" />
+                                    <small>Enter a valid email address.</small>
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Password Input</label>
+                                    <label for="formErrorPassword"><span class="required">*</span> Password Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="password" value="1234567890" />
+                                    <input type="password" id="formErrorPassword" name="password" class="fill" value="1234567890" />
+                                </div>
+                            </div>
+                            <div class="form-element form-element-error widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label for="formErrorSearch">Search Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="search" id="formErrorSearch" name="search" placeholder="Search..." results="5" class="fill" value="" />
+                                </div>
+                            </div>
+                            <div class="form-element form-element-error widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label for="formErrorTel"><span class="required">*</span> Telephone Input</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="tel" id="formErrorTel" name="tel" class="fill" value="01159383111" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Search Input</label>
+                                    <label for="formErrorUrl"><span class="required">*</span> URL Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input placeholder="Search..." results="5" class="fill" type="search" value="" />
+                                    <input type="url" id="formErrorUrl" name="url" class="fill" value="http://www.kitchenappliancecentre.co.uk" />
+                                    <small>Enter a valid URL.</small>
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Telephone Input</label>
+                                    <label for="formErrorTime">Time Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="tel" value="01159383111" />
+                                    <input type="time" id="formErrorTime" name="time" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>URL Input</label>
+                                    <label for="formErrorDatetime">Datetime Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input class="fill" type="url" value="http://www.kitchenappliancecentre.co.uk" />
+                                    <input type="datetime" id="formErrorDatetime" name="datetime" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Time Input</label>
+                                    <label for="formErrorDate">Date Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="time" value="" />
+                                    <input type="date" id="formErrorDate" name="date" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Datetime Input</label>
+                                    <label for="formErrorMonth">Month Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="datetime" value="" />
+                                    <input type="month" id="formErrorMonth" name="month" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Date Input</label>
+                                    <label id="formErrorWeek">Week Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="date" value="" />
+                                    <input type="week" id="formErrorWeek" name="week" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Month Input</label>
+                                    <label for="formErrorTime">Time Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="month" value="" />
+                                    <input type="time" id="formErrorTime" name="time" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Week Input</label>
+                                    <label for="formErrorDatetimeLocal">Datetime-local Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="week" value="" />
-                                </div>
-                            </div>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Time Input</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <input type="time" value="" />
-                                </div>
-                            </div>
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">
-                                    <label>Datetime-local Input</label>
-                                </div>
-                                <div class="widget widget-2-of-3">
-                                    <input type="datetime-local" value="" />
+                                    <input type="datetime-local" id="formErrorDatetimeLocal" name="datetimeLocal" value="" />
                                 </div>
                             </div>
                             <div class="form-element widget-group clearfix pbn">
                                 <div class="widget widget-1-of-3">
-                                    <label>Number Input</label>
+                                    <label for="formErrorNumber">Number Input</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="number" value="" />
+                                    <input type="number" id="formErrorNumber" name="number" value="" />
                                 </div>
                             </div>
                         </fieldset>
-                        <div class="form-element widget-group clearfix">
-                            <div class="widget widget-1-of-3">&nbsp;</div>
-                            <div class="widget widget-2-of-3">
-                                <button class="button" data-icon-primary="medium-black-icon-1">Test</button>
-                            </div>
+                        <div class="button-group clearfix">
+                            <button class="button button-small fl">Back</button>
+                            <button class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Continue</button>
                         </div>
                     </section>
                 </div>
             </div>
             <div class="widget widget-3-of-7">
                 <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
+                    <header class="ui-widget-header ui-corner-top error">
                         <h2>Form Header</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
                         <fieldset>
-                            <div class="form-element widget-group clearfix pbn">
+                            <div class="form-element form-element-error widget-group clearfix pbn">
                                 <div class="widget widget-1-of-3">
-                                    <label>Textarea</label>
+                                    <label for="formErrorTextarea">Textarea</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <textarea class="fill" rows="5"></textarea>
+                                    <textarea id="formErrorTextarea" name="textarea" class="fill" rows="5"></textarea>
                                 </div>
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend class="clearfix fill">Selecting Elements</legend>
-
-                            <div class="form-element widget-group clearfix">
+                            <div class="clear"></div>
+                            <div class="form-element form-element-error widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Select</label>
+                                    <label for="formErrorSelect1">Select</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <select>
+                                    <select id="formErrorSelect1" name="select1" class="fill">
                                         <option selected="selected" value="1">Option 1</option>
                                         <option value="2">Option 2</option>
                                         <option value="3">Option 3</option>
@@ -432,12 +440,38 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-element widget-group clearfix">
+                            <div class="form-element form-element-error widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Multiple Select</label>
+                                    <label for="formErrorSelect2">Select</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <select id="" multiple="multiple" size="4">
+                                    <select id="formErrorSelect2" name="select2">
+                                        <option selected="selected" value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element form-element-error widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label for="formErrorSelect3">Select 3</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select id="formErrorSelect3" name="select3">
+                                        <option selected="selected" value="1">Option 1</option>
+                                        <option value="2">Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2 Option 2</option>
+                                        <option value="3">Option 3</option>
+                                        <option value="4">Option 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element form-element-error widget-group clearfix">
+                                <div class="widget widget-1-of-3">
+                                    <label for="formErrorMultipleSelect">Multiple Select</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select multiple="multiple" id="formErrorMultipleSelect" name="multipleSelect" size="4">
                                         <option value="1">Option 1</option>
                                         <option value="2">Option 2</option>
                                         <option value="3">Option 3</option>
@@ -450,44 +484,48 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-element widget-group clearfix">
+                            <div class="form-element form-element-error widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Date Input</label>
+                                    <label>Radio</label>
                                 </div>
-                                <div class="widget widget-2-of-3">
-                                    <label>
-                                        <input type="radio" name="radio" value="hi" /> Saying hi
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="radio" value="feedback" /> Sending feedback
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="radio" value="default" checked="CHECKED" /> Default Seleted Radio
-                                    </label>
+                                <div class="widget radio-group widget-2-of-3">
+                                    <div class="clearfix">
+                                        <input type="radio" id="formErrorRadio1" name="radio" value="1" checked="checked" /><label for="formErrorRadio1">Radio option 1</label>
+                                    </div>
+                                    <div class="clearfix">
+                                        <input type="radio" id="formErrorRadio2" name="radio" value="2" /><label for="formErrorRadio2">Radio option 2</label>
+                                    </div>
+                                    <div class="clearfix">
+                                        <input type="radio" id="formErrorRadio3" name="radio" value="3" /><label for="formErrorRadio3">Radio option 3</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-element widget-group clearfix">
+                            <div class="form-element form-element-error widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label>Month Input</label>
+                                    <label>Checkbox</label>
                                 </div>
-                                <div class="widget widget-2-of-3">
-                                    <label>
-                                        <input type="checkbox" id="contactBack" /> Please contact me back
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" checked="CHECKED" id="goodDay" /> Today is a good day
-                                    </label>
+                                <div class="widget checker-group widget-2-of-3">
+                                    <div class="clearfix">
+                                        <input type="checkbox" id="formErrorCheckbox1" name="checkbox1" value="1" /><label for="formErrorCheckbox1">Checkbox option 1</label>
+                                    </div>
+                                    <div class="clearfix">
+                                        <input type="checkbox" id="formErrorCheckbox2" name="checkbox2" value="2" checked="checked" /><label for="formErrorCheckbox2">Checkbox option 2</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-element widget-group clearfix">
+                            <div class="form-element form-element-error widget-group clearfix pbn">
                                 <div class="widget widget-1-of-3">
-                                    <label>File Input</label>
+                                    <label for="formErrorFile">File</label>
                                 </div>
                                 <div class="widget widget-2-of-3">
-                                    <input type="file" />
+                                    <input type="file" id="formErrorFile" name="file" class="fill" />
                                 </div>
                             </div>
                         </fieldset>
+                        <div class="button-group clearfix">
+                            <button class="button button-small fl">Back</button>
+                            <button class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save</button>
+                        </div>
                     </section>
                 </div>
             </div>
