@@ -18,6 +18,11 @@ option {
     @include ellipsis;
 }
 
+.required {
+    color: $colourRed;
+    font-weight: bold;
+}
+
 fieldset {
     margin: 0 0 $spacingMedium;
     padding: $spacingMedium;
@@ -484,4 +489,60 @@ div.selector.disabled span,
 div.selector.disabled:active span,
 div.selector.disabled.active span {
     color: $colourGreyExtraLight;
+}
+
+header.error {
+    @include highlightedVerticalGradientDarkRed;
+}
+
+.form-element-error {
+    padding: $spacingSmall 0 $spacingSmall 20px !important;
+    margin: 0 -10px $spacingSmall -30px !important;
+
+    background: $colourRedExtraExtraLight url("#{$cssPath}/core/resources/images/icons/warning.png") 6px 13px no-repeat;
+    @include borderRadius($radiusSize, 0, 0, $radiusSize);
+    @include boxGlow($colourRed, 5px, 0, 0.5);
+}
+
+.form-element-error label {
+    color: $colourRed;
+}
+
+.form-element-error small {
+    color: $colourRed;
+    text-transform: uppercase;
+}
+
+.form-element-error input,
+.form-element-error textarea,
+.form-element-error .selector,
+.form-element-error .uniform-multiselect,
+.form-element-error .radio,
+.form-element-error .checker,
+.form-element-error .uploader {
+    border: 1px solid $colourRedLight;
+}
+
+.form-element-error input:focus,
+.form-element-error textarea:focus,
+.form-element-error .selector:focus,
+.form-element-error .uniform-multiselect:focus,
+.form-element-error .radio:focus,
+.form-element-error .checker:focus,
+.form-element-error .uploader:focus,
+.form-element-error input:active,
+.form-element-error textarea:active,
+.form-element-error .selector:active,
+.form-element-error .uniform-multiselect:active,
+.form-element-error .radio:active,
+.form-element-error .checker:active,
+.form-element-error .uploader:active,
+.form-element-error input:hover,
+.form-element-error textarea:hover,
+.form-element-error .selector:hover,
+.form-element-error .uniform-multiselect:hover,
+.form-element-error .radio:hover,
+.form-element-error .checker:hover,
+.form-element-error .uploader:hover {
+    @include noBoxShadow;
 }
