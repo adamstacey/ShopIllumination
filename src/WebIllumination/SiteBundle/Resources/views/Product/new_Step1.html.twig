@@ -2,10 +2,7 @@
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
-                <header class="ui-widget-header ui-corner-top">
-                    <h2>Overview</h2>
-                </header>
-                <section class="ui-widget-content ui-corner-bottom">
+                <section class="ui-widget-content ui-corner-all">
                     {% if form.errors %}
                         <div class="message error">
                             <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
@@ -13,7 +10,6 @@
                         </div>
                     {% endif %}
                     <fieldset>
-                        {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
                         {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
                         {{ form_row(form.departments, {'label': 'Department', 'help': 'Select the products departments.'}) }}
                     </fieldset>
