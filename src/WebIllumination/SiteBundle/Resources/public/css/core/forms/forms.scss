@@ -497,7 +497,7 @@ header.error {
 
 .form-element-error {
     padding: $spacingSmall 0 $spacingSmall 20px !important;
-    margin: 0 -10px $spacingSmall -30px !important;
+    margin: 5px -10px 10px -30px !important;
 
     background: $colourRedExtraExtraLight url("#{$cssPath}/core/resources/images/icons/warning.png") 6px 13px no-repeat;
     @include borderRadius($radiusSize, 0, 0, $radiusSize);
@@ -513,6 +513,19 @@ header.error {
     text-transform: uppercase;
 }
 
+.form-element-error small ul {
+    margin: 0;
+    padding: 0;
+}
+
+.form-element-error small ul li {
+    list-style: none;
+    background: transparent url("#{$cssPath}/core/resources/images/icons/error_small.png") top left no-repeat;
+    line-height: 12px;
+    padding: 0 0 0 17px;
+    margin: 2px 0 0 0;
+}
+
 .form-element-error input,
 .form-element-error textarea,
 .form-element-error .selector,
@@ -520,7 +533,7 @@ header.error {
 .form-element-error .radio,
 .form-element-error .checker,
 .form-element-error .uploader {
-    border: 1px solid $colourRedLight;
+    border: 1px solid $colourRedExtraLight;
 }
 
 .form-element-error input:focus,
