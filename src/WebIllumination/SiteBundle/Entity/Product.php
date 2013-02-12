@@ -22,7 +22,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a brand.")
      */
     private $brand;
 
@@ -33,6 +33,7 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"persist", "remove"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
      */
     private $departments;
 
@@ -48,14 +49,14 @@ class Product
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a status.")
      * @Assert\Choice(choices={"a", "h", "d"})
      */
     private $status = 'd';
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Enter a product code.")
      *
      */
     private $productCode = '';

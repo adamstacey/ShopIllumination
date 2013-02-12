@@ -13,8 +13,6 @@ class NewProductType extends AbstractType
     {
         switch ($options['flowStep']) {
             case 1:
-                $builder->add('productCode');
-
                 $builder->add('brand', 'entity', array(
                     'class' => 'WebIllumination\SiteBundle\Entity\Brand',
                     'query_builder' => function(EntityRepository $er) {
@@ -22,9 +20,12 @@ class NewProductType extends AbstractType
                             ->addSelect('bd')
                             ->leftJoin('b.descriptions', 'bd');
                     },
+                    'empty_value' => '- Select a Brand -',
                 ), array());
                 $builder->add('departments', 'collection', array(
                     'type' => new ProductDepartmentType(),
+                    'required' => true,
+                    'allow_add' => true,
                 ));
                 $builder->add('descriptions', 'collection', array(
                     'type' => new ProductDescriptionType(),

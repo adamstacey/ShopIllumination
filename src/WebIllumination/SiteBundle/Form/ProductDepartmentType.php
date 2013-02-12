@@ -20,8 +20,23 @@ class ProductDepartmentType extends AbstractType
                     ->leftJoin('d.descriptions', 'dd')
                     ->orderBy('d.displayOrder', 'ASC');
             },
+            'required' => true,
+            'empty_value' => '- Select a Department -',
         ), array());
         $builder->add('displayOrder', 'hidden');
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        $collectionConstraint = new Collection(array(
+            'department' => array(
+                new NotBlank(array('message' => 'Select a department.')),
+            ),
+        ));
+
+        return array(
+            'validation_constraint' => $collectionConstraint,
+        );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
