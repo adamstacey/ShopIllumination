@@ -25,7 +25,7 @@ class NewProductType extends AbstractType
                 $builder->add('departments', 'collection', array(
                     'type' => new ProductDepartmentType(),
                     'required' => true,
-                    'allow_add' => true,
+                    'error_bubbling' => true,
                 ));
                 $builder->add('descriptions', 'collection', array(
                     'type' => new ProductDescriptionType(),

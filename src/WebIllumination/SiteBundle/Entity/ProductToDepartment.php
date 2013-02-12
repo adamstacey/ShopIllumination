@@ -21,13 +21,13 @@ class ProductToDepartment
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="departments")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      **/
     private $product;
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      **/
     private $department;
 
