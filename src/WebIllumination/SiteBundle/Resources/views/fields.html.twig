@@ -1,48 +1,47 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block department_widget %}
-    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <select id="{{ id }}" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
         {% for group_label, choice in choices %}
             <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|raw }}</option>
         {% endfor %}
     </select>
 {% endblock %}
 
-{#{% block form_label %}#}
-    {#{% set label_attr = label_attr|merge({'class': label_attr['class'] ~ " form-label"}) %}#}
-    {#{% spaceless %}#}
-        {#{% if label is not sameas(false) %}#}
-            {#{% if not compound %}#}
-                {#{% set label_attr = label_attr|merge({'for': id}) %}#}
-            {#{% endif %}#}
-            {#{% if required %}#}
-                {#{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}#}
-            {#{% endif %}#}
-            {#{% if label is empty %}#}
-                {#{% set label = name|humanize %}#}
-            {#{% endif %}#}
-            {#<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>#}
-            {#{% if required %}#}
-                {#<em class="required" title="This field is required">*</em>#}
-            {#{% endif %}#}
-            {#{{ label|trans({}, translation_domain) }}#}
-            {#{% if help is defined %}#}
-                {#<small class="help">{{ help|raw }}</small>#}
-            {#{% endif %}#}
-            {#</label>#}
-        {#{% endif %}#}
-    {#{% endspaceless %}#}
-{#{% endblock form_label %}#}
+{% block form_label %}
+    {% spaceless %}
+        {% if label is not sameas(false) %}
+            {% if not compound %}
+                {% set label_attr = label_attr|merge({'for': id}) %}
+            {% endif %}
+            {% if label is empty %}
+                {% set label = name|humanize %}
+            {% endif %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {% if required %}
+                <em class="required" title="This field is required">*</em>
+            {% endif %}
+            {{ label|trans({}, translation_domain) }}
+            </label>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_label %}
 
 {% block form_row %}
     {% spaceless %}
-        <div class="form-element widget-group clearfix {% if form.errors %}error{% endif %}">
+        <div class="form-element{% if errors %} form-element-error{% endif %} widget-group clearfix">
             <div class="widget widget-1-of-3">
                 {{ form_label(form) }}
             </div>
             <div class="widget widget-2-of-3">
                 {{ form_widget(form) }}
-                {{ form_errors(form) }}
+                {% if errors %}
+                    <small>{{ form_errors(form) }}</small>
+                {% else %}
+                    {% if help is defined %}
+                        <small>{{ help }}</small>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     {% endspaceless %}
