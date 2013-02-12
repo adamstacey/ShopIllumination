@@ -26,19 +26,6 @@ class ProductDepartmentType extends AbstractType
         $builder->add('displayOrder', 'hidden');
     }
 
-    public function getDefaultOptions(array $options)
-    {
-        $collectionConstraint = new Collection(array(
-            'department' => array(
-                new NotBlank(array('message' => 'Select a department.')),
-            ),
-        ));
-
-        return array(
-            'validation_constraint' => $collectionConstraint,
-        );
-    }
-
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(

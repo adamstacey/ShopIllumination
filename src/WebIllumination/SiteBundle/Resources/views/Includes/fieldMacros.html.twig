@@ -44,8 +44,10 @@
 {% endmacro %}
 {% macro product_departments_widget(form) %}
     <td class="padding-top-5 padding-bottom-5">
-        {{ form_widget(form) }}
-        {{ form_errors(form) }}
+        {{ form_widget(form.department) }}
+        {{ form_errors(form.department) }}
+        {{ form_widget(form.displayOrder) }}
+        {{ form_errors(form.displayOrder) }}
     </td>
 {% endmacro %}
 {% macro product_descriptions_widget(form) %}
