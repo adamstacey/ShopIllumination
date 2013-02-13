@@ -45,7 +45,7 @@
 {% macro product_departments_row(form) %}
     {{ form_widget(form.department) }}
     {{ form_widget(form.displayOrder) }}
-    {% if form.isValid is sameas(false) %}
+    {% if form.vars.valid is sameas(false) %}
         <small>
             {{ form_errors(form.department) }}
             {{ form_errors(form.displayOrder) }}

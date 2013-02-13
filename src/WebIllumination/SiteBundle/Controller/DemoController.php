@@ -54,4 +54,13 @@ class DemoController extends Controller
     {
 
     }
+
+    /**
+     * @Route("/upload", name="demo_upload")
+     * @Template()
+     */
+    public function uploadAction(Request $request)
+    {
+
+    }
 }
