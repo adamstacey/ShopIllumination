@@ -43,22 +43,18 @@
     </div>
 {% endmacro %}
 {% macro product_departments_row(form) %}
-    <div class="form-element{% if form.department.vars.errors|length %} form-element-error{% endif %} widget-group clearfix">
-        <div class="widget widget-1-of-3">
-            {{ form_label(form.department) }}
-        </div>
-        <div class="widget widget-2-of-3">
-            {{ form_widget(form.department) }}
-            {{ form_widget(form.displayOrder) }}
-            {% if form.department.vars.errors|length %}
-                <small>{{ form_errors(form.department) }}</small>
-            {% else %}
-                {% if form.department.vars.help is defined %}
-                    <small>{{ form.department.vars.help }}</small>
-                {% endif %}
-            {% endif %}
-        </div>
-    </div>
+    {{ form_widget(form.department) }}
+    {{ form_widget(form.displayOrder) }}
+    {% if errors %}
+        <small>
+            {{ form_errors(form.department) }}
+            {{ form_errors(form.displayOrder) }}
+        </small>
+    {% else %}
+        {% if help is defined %}
+            <small>{{ help }}</small>
+        {% endif %}
+    {% endif %}
 {% endmacro %}
 {% macro product_descriptions_widget(form) %}
     <td>
