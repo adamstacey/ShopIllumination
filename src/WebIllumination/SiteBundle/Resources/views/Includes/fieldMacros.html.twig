@@ -51,8 +51,8 @@
             {{ form_errors(form.displayOrder) }}
         </small>
     {% else %}
-        {% if help is defined %}
-            <small>{{ help }}</small>
+        {% if form.department.vars.help is defined %}
+            <small>{{ form.department.vars.help }}</small>
         {% endif %}
     {% endif %}
 {% endmacro %}

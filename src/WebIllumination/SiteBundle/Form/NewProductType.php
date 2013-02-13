@@ -27,13 +27,13 @@ class NewProductType extends AbstractType
                     'required' => true,
                     'error_bubbling' => true,
                 ));
+                $builder->add('status', 'choice', array(
+                    'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
+                ));
                 $builder->add('descriptions', 'collection', array(
                     'type' => new ProductDescriptionType(),
                     'allow_add' => true,
                     'allow_delete' => true,
-                ));
-                $builder->add('status', 'choice', array(
-                    'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
                 ));
                 $builder->add('availableForPurchase', 'checkbox', array(
                     'required' => false,
