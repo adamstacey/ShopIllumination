@@ -45,7 +45,7 @@
 {% macro product_departments_row(form) %}
     {{ form_widget(form.department) }}
     {{ form_widget(form.displayOrder) }}
-    {% if errors %}
+    {% if form.department.vars.errors or form.displayOrder.vars.errors %}
         <small>
             {{ form_errors(form.department) }}
             {{ form_errors(form.displayOrder) }}
