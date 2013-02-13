@@ -125,7 +125,8 @@
     {{ fields.features_widget(form) }}
 {% endblock %}
 {% block _site_new_product_departments_row %}
-    <div class="form-element{% if form.isValid == false %} form-element-error{% endif %} widget-group clearfix">
+    {{ form.isValid|dump }}
+    <div class="form-element{% if form.isValid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
         <div class="widget widget-1-of-3">
             {{ form_label(form) }}
         </div>
