@@ -66,7 +66,7 @@
         {{ form_errors(form.description) }}
     </td>
     <td class="ac" width="65">
-        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
     </td>
 {% endmacro %}
 {% macro variants_description_widget(form) %}
@@ -79,7 +79,7 @@
         {{ form_errors(form.description) }}
     </td>
     <td class="ac" width="65">
-        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
     </td>
 {% endmacro %}
 {% macro product_featureGroups_widget(form) %}
@@ -88,7 +88,7 @@
         {{ form_errors(form) }}
     </td>
     <td class="ac" width="65">
-        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
     </td>
     <td class="ac" width="20">
         <img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
@@ -113,7 +113,7 @@
         {{ form_errors(form.defaultFeature) }}
     </td>
     <td>
-        <button type="button" class="fr small button icon-set-white ui-button-red delete-row" data-icon-primary="ui-icon-circle-cross">Delete</button>
+        <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
     </td>
 {% endmacro %}
 {% macro product_variants_widget(form) %}
@@ -133,6 +133,9 @@
         </td>
         <td class="ac padding-top-5 padding-bottom-5" width="225">
             {{ form_widget(form.prices) }}
+        </td>
+        <td>
+            <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
         </td>
     </tr>
 {% endmacro %}

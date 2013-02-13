@@ -115,7 +115,6 @@ class NewProductFlow extends FormFlow
                     $variant->addFeature($productToFeature);
                 }
                 $variant->setProduct($formData);
-                $variant->setProductCode($formData->getProductCode());
                 $variant->addPrice(new Price());
                 foreach($formData->getDescriptions() as $description)
                 {
