@@ -153,14 +153,8 @@
             $(function () {
                 'use strict';
 
-                var $el = $('#fileupload'),
-                    uploaderTemplate = _.template($('#file-uploader-template').html());
+                var $el = $('#fileupload');
 
-                $el.html(uploaderTemplate({}));
-
-                var fileTemplate = _.template($('#file-uploader-file-template').html()),
-                    editor = $el.find('[data-files="1"]'),
-                    thumbnails = $el.find('[data-thumbnails="1"]');
                 $el.fileupload({
                     url: '{{ path('api_images_post') }}'
                 });
