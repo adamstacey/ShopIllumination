@@ -74,13 +74,13 @@
     {% import "WebIlluminationAdminBundle:Includes:fields.html.twig" as fields %}
     {{ fields.product_features_widget(form) }}
 {% endblock %}
-{% block _admin_new_product_departments_entry_widget %}
+{% block _admin_new_product_departments_entry_row %}
     {% import "WebIlluminationAdminBundle:Includes:fields.html.twig" as fields %}
-    {{ fields.product_departments_widget(form) }}
+    {{ fields.product_departments_row(form) }}
 {% endblock %}
-{% block _admin_edit_product_overview_departments_entry_widget %}
+{% block _admin_edit_product_overview_departments_entry_row %}
     {% import "WebIlluminationAdminBundle:Includes:fields.html.twig" as fields %}
-    {{ fields.product_departments_widget(form) }}
+    {{ fields.product_departments_row(form) }}
 {% endblock %}
 {% block _admin_new_product_descriptions_entry_widget %}
     {% import "WebIlluminationAdminBundle:Includes:fields.html.twig" as fields %}

@@ -1,7 +1,7 @@
 {% extends 'form_div_layout.html.twig' %}
 
 {% block department_widget %}
-    <select id="{{ id }}" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
         {% for group_label, choice in choices %}
             <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|raw }}</option>
         {% endfor %}
@@ -74,11 +74,11 @@
 {% endblock %}
 {% block _site_new_product_departments_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_departments_widget(form) }}
+    {{ fields.product_departments_row(form) }}
 {% endblock %}
 {% block _site_edit_product_overview_departments_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_departments_widget(form) }}
+    {{ fields.product_departments_row(form) }}
 {% endblock %}
 {% block _site_new_product_descriptions_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
