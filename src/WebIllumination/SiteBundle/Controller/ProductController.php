@@ -66,6 +66,8 @@ class ProductController extends Controller {
                     }
                 }
 
+                \Doctrine\Common\Util\Debug::dump($product->getVariants());
+                die();
                 $em->persist($product);
                 $em->flush();
 

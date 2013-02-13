@@ -55,9 +55,7 @@ class Product
     private $status = 'd';
 
     /**
-     * @ORM\Column(name="product_code", type="string", length=100)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Enter a product code.")
-     *
+     * @ORM\Column(name="product_code", type="string", length=100, nullable=true)
      */
     private $productCode = '';
 

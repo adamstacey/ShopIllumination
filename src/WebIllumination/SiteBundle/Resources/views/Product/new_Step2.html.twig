@@ -71,7 +71,6 @@
             });
         });
         $(document).on('change', '.feature-group', function() {
-            console.log(":(");
             var groupId = $(this).val(),
                     that = this;
             $.getJSON('{{ path('api_features', {'groupId': '-1'}) }}'.replace(/-1/, groupId), function(data) {

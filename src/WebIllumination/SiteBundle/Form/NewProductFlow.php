@@ -87,7 +87,7 @@ class NewProductFlow extends FormFlow
                     $count = count($options['variants']);
                     for($i=0;$i<$count;$i++)
                     {
-                        if($featureGroup->getDefaultFeature())
+                        if($featureGroup)
                         {
                             $variant = array_pop($options['variants']);
 
