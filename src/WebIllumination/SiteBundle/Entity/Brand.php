@@ -440,7 +440,7 @@ class Brand
      * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
      * @return Brand
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
+    public function addDescription(Brand\Description $descriptions)
     {
         $this->descriptions[] = $descriptions;
     
@@ -452,7 +452,7 @@ class Brand
      *
      * @param \WebIllumination\SiteBundle\Entity\Brand\Description $descriptions
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Brand\Description $descriptions)
+    public function removeDescription(Brand\Description $descriptions)
     {
         $this->descriptions->removeElement($descriptions);
     }

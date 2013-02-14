@@ -3,6 +3,8 @@ namespace WebIllumination\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -19,17 +21,17 @@ class Image
     private $id;
    
     /**
-     * @ORM\Column(name="object_id", type="integer", length=11)
+     * @ORM\Column(name="object_id", type="integer", length=11, nullable=true)
      */
     private $objectId;
     
      /**
-     * @ORM\Column(name="object_type", type="string", length=100)
+     * @ORM\Column(name="object_type", type="string", length=100, nullable=true)
      */
     private $objectType;
     
      /**
-     * @ORM\Column(name="image_type", type="string", length=100)
+     * @ORM\Column(name="image_type", type="string", length=100, nullable=true)
      */
     private $imageType;
     
@@ -39,29 +41,29 @@ class Image
     private $locale = "en_GB";
 	
 	/**
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
     
     /**
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
     
     /**
-     * @ORM\Column(name="alignment", type="string", length=10)
+     * @ORM\Column(name="alignment", type="string", length=10, nullable=true)
      */
     private $alignment;
     
     /**
-     * @ORM\Column(name="link", type="string", length=255)
+     * @ORM\Column(name="link", type="string", length=255, nullable=true)
      */
     private $link;
     
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 0;
 
     /**
      * @ORM\Column(name="original_path", type="string", length=255, nullable=true)
@@ -69,19 +71,9 @@ class Image
     private $originalPath;
     
     /**
-     * @ORM\Column(name="thumbnail_path", type="string", length=255, nullable=true)
+     * @ORM\Column(name="public_path", type="string", length=255, nullable=true, nullable=true)
      */
-    private $thumbnailPath;
-    
-    /**
-     * @ORM\Column(name="medium_path", type="string", length=255, nullable=true)
-     */
-    private $mediumPath;
-    
-    /**
-     * @ORM\Column(name="large_path", type="string", length=255, nullable=true)
-     */
-    private $largePath;
+    private $publicPath;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -94,6 +86,14 @@ class Image
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * @var UploadedFile
+     * @Assert\NotNull
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file = null;
+    private $filesForRemoval = array();
 
     /**
      * Get thumbnailWidth
@@ -412,72 +412,26 @@ class Image
     }
 
     /**
-     * Set thumbnailPath
+     * Set pubpic path
      *
-     * @param string $thumbnailPath
+     * @param string $publicPath
      * @return Image
      */
-    public function setThumbnailPath($thumbnailPath)
+    public function setPublicPath($publicPath)
     {
-        $this->thumbnailPath = $thumbnailPath;
+        $this->publicPath = $publicPath;
     
         return $this;
     }
 
     /**
-     * Get thumbnailPath
+     * Get public path
      *
      * @return string 
      */
-    public function getThumbnailPath()
+    public function getPublicPath()
     {
-        return $this->thumbnailPath;
-    }
-
-    /**
-     * Set mediumPath
-     *
-     * @param string $mediumPath
-     * @return Image
-     */
-    public function setMediumPath($mediumPath)
-    {
-        $this->mediumPath = $mediumPath;
-    
-        return $this;
-    }
-
-    /**
-     * Get mediumPath
-     *
-     * @return string 
-     */
-    public function getMediumPath()
-    {
-        return $this->mediumPath;
-    }
-
-    /**
-     * Set largePath
-     *
-     * @param string $largePath
-     * @return Image
-     */
-    public function setLargePath($largePath)
-    {
-        $this->largePath = $largePath;
-    
-        return $this;
-    }
-
-    /**
-     * Get largePath
-     *
-     * @return string 
-     */
-    public function getLargePath()
-    {
-        return $this->largePath;
+        return $this->publicPath;
     }
 
     /**
@@ -524,5 +478,69 @@ class Image
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\File\UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    public function preUpload()
+    {
+        if (null !== $this->file) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->originalPath = $this->getUploadDir() . '/' . $filename.'.'.$this->file->guessExtension();
+        }
+    }
+
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        // you must throw an exception here if the file cannot be moved
+        // so that the entity is not persisted to the database
+        // which the UploadedFile move() method does
+        $this->file->move($this->getUploadPath() . $this->getUploadDir(), basename($this->originalPath));
+
+        $this->file = null;
+    }
+
+    public function storeFilenameForRemove()
+    {
+        $this->filesForRemoval = array();
+        $this->filesForRemoval[] = $this->getUploadPath() . '/' . $this->getOriginalPath();
+        $this->filesForRemoval[] = $this->getUploadPath() . '/' . $this->getPublicPath();
+    }
+
+    public function removeUpload()
+    {
+        foreach($this->filesForRemoval as $fileForRemoval) {
+            unlink($fileForRemoval);
+        }
+    }
+
+    public function getUploadPath()
+    {
+        return __DIR__.'/../../../../web';
+    }
+
+    public function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return '/uploads/images';
     }
 }

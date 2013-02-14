@@ -37,34 +37,30 @@
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
                         <fieldset>
-                            <form id="fileupload" action="" method="POST" enctype="multipart/form-data" novalidate="novalidate">
+                            <div class="fileupload">
                                 <!-- Redirect browsers with JavaScript disabled to the origin page -->
                                 <noscript><input type="hidden" name="redirect" value="http://blueimp.github.com/jQuery-File-Upload/"></noscript>
                                 <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-                                <div class="row fileupload-buttonbar">
-                                    <div class="span7">
+                                <div class="widget-group clearfix">
+                                    <div class="widget widget-5-of-8 fileupload-buttonbar">
                                         <!-- The fileinput-button span is used to style the file input field as button -->
-                                        <span class="btn btn-success fileinput-button">
+                                        <span class="button fileinput-button">
                                             <i class="icon-plus icon-white"></i>
                                             <span>Add files...</span>
-                                            <input class="no-uniform" type="file" name="files[]" multiple>
+                                            <input class="no-uniform" type="file" name="file" multiple>
                                         </span>
-                                        <button type="submit" class="btn btn-primary start">
-                                            <i class="icon-upload icon-white"></i>
+                                        <button type="submit" class="button start">
                                             <span>Start upload</span>
                                         </button>
-                                        <button type="reset" class="btn btn-warning cancel">
-                                            <i class="icon-ban-circle icon-white"></i>
+                                        <button type="reset" class="button cancel">
                                             <span>Cancel upload</span>
                                         </button>
-                                        <button type="button" class="btn btn-danger delete">
-                                            <i class="icon-trash icon-white"></i>
+                                        <button type="button" class="button delete">
                                             <span>Delete</span>
                                         </button>
                                         <input type="checkbox" class="toggle">
                                     </div>
-                                    <!-- The global progress information -->
-                                    <div class="span5 fileupload-progress fade">
+                                    <div class="widget widget-3-of-8 fileupload-progress">
                                         <!-- The global progress bar -->
                                         <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                                             <div class="bar" style="width:0%;"></div>
@@ -78,11 +74,53 @@
                                 <br>
                                 <!-- The table listing the files available for upload/download -->
                                 <table role="presentation" class="table table-striped">
-                                    <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
+                                    <tbody class="files">
 
                                     </tbody>
                                 </table>
-                            </form>
+                            </div>
+                            <div class="fileupload">
+                                <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                                <noscript><input type="hidden" name="redirect" value="http://blueimp.github.com/jQuery-File-Upload/"></noscript>
+                                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                                <div class="widget-group clearfix">
+                                    <div class="widget widget-5-of-8 fileupload-buttonbar">
+                                        <!-- The fileinput-button span is used to style the file input field as button -->
+                                        <span class="button fileinput-button">
+                                            <i class="icon-plus icon-white"></i>
+                                            <span>Add files...</span>
+                                            <input class="no-uniform" type="file" name="file" multiple>
+                                        </span>
+                                        <button type="submit" class="button start">
+                                            <span>Start upload</span>
+                                        </button>
+                                        <button type="reset" class="button cancel">
+                                            <span>Cancel upload</span>
+                                        </button>
+                                        <button type="button" class="button delete">
+                                            <span>Delete</span>
+                                        </button>
+                                        <input type="checkbox" class="toggle">
+                                    </div>
+                                    <div class="widget widget-3-of-8 fileupload-progress">
+                                        <!-- The global progress bar -->
+                                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="bar" style="width:0%;"></div>
+                                        </div>
+                                        <!-- The extended global progress information -->
+                                        <div class="progress-extended">&nbsp;</div>
+                                    </div>
+                                </div>
+                                <!-- The loading indicator is shown during file processing -->
+                                <div class="fileupload-loading"></div>
+                                <br>
+                                <!-- The table listing the files available for upload/download -->
+                                <table role="presentation" class="table table-striped">
+                                    <tbody class="files">
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </fieldset>
                     </section>
                 </div>
@@ -102,7 +140,7 @@
                     <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
                 </td>
                 <td class="start">{% if (!o.options.autoUpload) { %}
-                    <button class="btn btn-primary">
+                    <button class="button">
                         <i class="icon-upload icon-white"></i>
                         <span>Start</span>
                     </button>
@@ -111,7 +149,7 @@
                 <td colspan="2"></td>
                 {% } %}
                 <td class="cancel">{% if (!i) { %}
-                    <button class="btn btn-warning">
+                    <button class="button">
                         <i class="icon-ban-circle icon-white"></i>
                         <span>Cancel</span>
                     </button>
@@ -139,7 +177,7 @@
                 <td colspan="2"></td>
                 {% } %}
                 <td class="delete">
-                    <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                    <button class="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
                     <i class="icon-trash icon-white"></i>
                     <span>Delete</span>
                     </button>
@@ -153,10 +191,14 @@
             $(function () {
                 'use strict';
 
-                var $el = $('#fileupload');
-
-                $el.fileupload({
-                    url: '{{ path('api_images_post') }}'
+                $('.fileupload').each(function () {
+                    $(this).fileupload({
+                        url: '{{ path('api_images_post_image') }}',
+                        dropZone: $(this)
+                    });
+                });
+                $(document).bind('drop dragover', function (e) {
+                    e.preventDefault();
                 });
             });
 

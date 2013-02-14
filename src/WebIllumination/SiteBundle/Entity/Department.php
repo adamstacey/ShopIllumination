@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\HasLifecycleCallbacks()
 
  */
-class Department
+class Department implements DescribableInterface
 {
     /**
      * @ORM\Id

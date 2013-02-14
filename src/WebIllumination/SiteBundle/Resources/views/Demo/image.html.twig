@@ -1,0 +1,47 @@
+{# Forms #}
+{% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+
+{% block title %}Add New Product | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+    '@WebIlluminationSiteBundle/Resources/public/plugins/upload/css/jquery.fileupload-ui.css'
+    output='css/upload-compressed.css'
+    filter='yui_css'
+    %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+
+{#{% block leftmenu %}#}
+    {#{{ parent() }}#}
+    {#&#123;&#35;{% include 'WebIlluminationSiteBundle:Product:newLeftMenu.html.twig' %}&#35;&#125;#}
+{#{% endblock %}#}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Add New Product</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Upload</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <fieldset>
+                            <img src="{{ image.originalPath | apply_filter('product_thumbnail') }}" />
+                        </fieldset>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

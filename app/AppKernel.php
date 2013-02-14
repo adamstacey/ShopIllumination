@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Nelmio\SolariumBundle\NelmioSolariumBundle(),
             new Craue\FormFlowBundle\CraueFormFlowBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
 //            new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
             new WebIllumination\ShopBundle\WebIlluminationShopBundle(),
             new WebIllumination\SiteBundle\WebIlluminationSiteBundle(),

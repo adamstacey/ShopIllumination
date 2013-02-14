@@ -63,4 +63,23 @@ class DemoController extends Controller
     {
 
     }
+
+    /**
+     * @Route("/image/{id}", name="demo_upload")
+     * @Template()
+     */
+    public function imageAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($id);
+        if(!$image)
+        {
+            throw new NotFoundHttpException("Image not found");
+        }
+
+        return array(
+            'image' => $image,
+        );
+    }
 }
