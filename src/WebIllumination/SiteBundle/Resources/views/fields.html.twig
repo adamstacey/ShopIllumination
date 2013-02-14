@@ -47,6 +47,21 @@
     {% endspaceless %}
 {% endblock form_row %}
 
+{% block checkbox_row %}
+    {% spaceless %}
+        <div class="clearfix{% if errors %} error{% endif %}">
+            {{ form_widget(form) }}{{ form_label(form) }}
+            {% if help %}
+                <small>{{ help }}</small>
+            {% endif %}
+            {% if errors %}
+                <div class="clear"></div>
+                <small>{{ form_errors(form) }}</small>
+            {% endif %}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
 {% block form_rows %}
     {% spaceless %}
         {% for child in form %}
@@ -72,11 +87,11 @@
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
 {% endblock %}
-{% block _site_new_product_departments_entry_widget %}
+{% block _site_new_product_departments_row %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_departments_row(form) }}
 {% endblock %}
-{% block _site_edit_product_overview_departments_entry_widget %}
+{% block _site_edit_product_overview_departments_row %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_departments_row(form) }}
 {% endblock %}
@@ -123,18 +138,6 @@
 {% block _site_new_variant_features_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
-{% endblock %}
-{% block _site_new_product_departments_row %}
-    {{ form.isValid|dump }}
-    <div class="form-element{% if form.isValid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
-        <div class="widget widget-1-of-3">
-            {{ form_label(form) }}
-        </div>
-        <div class="widget widget-2-of-3">
-            {{ form_widget(form) }}
-            {{ form_errors(form) }}
-        </div>
-    </div>
 {% endblock %}
 
 {# Edit variant fields #}
