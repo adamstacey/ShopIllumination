@@ -137,7 +137,6 @@ class Product implements DescribableInterface
 
     /**
      * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4, nullable=true)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      */
     private $maximumMembershipCardDiscount = 0;
 

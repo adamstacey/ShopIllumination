@@ -43,19 +43,27 @@
     </div>
 {% endmacro %}
 {% macro product_departments_row(form) %}
-    <div class="form-element{% if form.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
-        <div class="widget widget-1-of-3">
-            {{ form_label(form, 'Department') }}
+    {% if form|length == 1 %}
+        <div class="form-element{% if form.0.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
+            <div class="widget widget-1-of-3">
+                {{ form_label(form.0.department, 'Main Department') }}
+            </div>
+            <div class="widget widget-2-of-3">
+                {{ form_widget(form.0.department) }}
+                {{ form_widget(form.0.displayOrder) }}
+                {% if form.0.vars.valid is sameas(false) %}
+                    <small>
+                        {{ form_errors(form.0.department) }}
+                        {{ form_errors(form.0.displayOrder) }}
+                    </small>
+                {% else %}
+                    <small>Select a main department.</small>
+                {% endif %}
+            </div>
         </div>
-        <div class="widget widget-2-of-3">
-            {{ form_widget(form) }}
-            {% if errors %}
-                <small>{{ form_errors(form) }}</small>
-            {% else %}
-                <small>{{ help }}</small>
-            {% endif %}
-        </div>
-    </div>
+    {% else %}
+        {# TODO: Add a row of tables to handle each row with add ability. #}
+    {% endif %}
 {% endmacro %}
 {% macro product_descriptions_widget(form) %}
     <td>
@@ -117,7 +125,7 @@
         <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
     </td>
 {% endmacro %}
-{% macro product_variants_overview_widget(form) %}
+{% macro product_variants_widget(form) %}
     <tr>
         <td class="ac padding-top-5 padding-bottom-5" width="175">
             {{ form_widget(form.productCode) }}
@@ -132,22 +140,11 @@
                 {% endfor %}
             </ul>
         </td>
+        <td class="ac padding-top-5 padding-bottom-5" width="225">
+            {{ form_widget(form.prices) }}
+        </td>
         <td>
             <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
         </td>
     </tr>
-{% endmacro %}
-{% macro product_variants_images_widget(form) %}
-    <tr>
-        <td class="padding-top-5 padding-bottom-5">
-            <ul>
-                {% for feature in form.get('value').features %}
-                    <li>({{ feature.productFeature }}) {{ feature.defaultFeature }}</li>
-                {% endfor %}
-            </ul>
-        </td>
-    </tr>
-{% endmacro %}
-{% macro product_variants_prices_widget(form) %}
-    {{ form_widget(form.prices) }}
 {% endmacro %}

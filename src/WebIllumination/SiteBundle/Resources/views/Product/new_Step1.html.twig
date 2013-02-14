@@ -3,112 +3,47 @@
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <section class="ui-widget-content ui-corner-all">
-                    {% if form.errors %}
-                        <div class="message error">
-                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
-                            {{ form_errors(form) }}
+                    {% if form.vars.valid is sameas(false) %}
+                        <div class="message message-error">
+                            <span class="ui-button-icon-primary ui-icon icon-white icon-850"></span>
+                            <p>There was a problem saving. Please, check the information below and try again.</p>
                         </div>
                     {% endif %}
                     <fieldset>
                         {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
-                        {{ form_row(form.departments, {'label': 'Department', 'help': 'Select the products departments.'}) }}
+                        {{ form_row(form.departments) }}
                         {{ form_row(form.status, {'label': 'Status', 'help': 'Is the product available?'}) }}
+                        <div class="form-element{% if errors %} form-element-error{% endif %} widget-group clearfix">
+                            <div class="widget widget-1-of-3">
+                                <label>Listing Options</label>
+                            </div>
+                            <div class="widget checker-group widget-2-of-3">
+                                {{ form_row(form.availableForPurchase, {'label': 'Available', 'help': 'Is the product available to purchase?'}) }}
+                                {{ form_row(form.featureComparison, {'label': 'Feature Comparison', 'help': 'Include in feature comparison?'}) }}
+                                {{ form_row(form.downloadable, {'label': 'Downloadable', 'help': 'Is the product a download?'}) }}
+                                {{ form_row(form.specialOffer, {'label': 'Special Offer', 'help': 'Is the product a special offer?'}) }}
+                                {{ form_row(form.recommended, {'label': 'Recommended', 'help': 'Do you want to recommend?'}) }}
+                                {{ form_row(form.accessory, {'label': 'Accessory', 'help': 'Is the product an accessory?'}) }}
+                                {{ form_row(form.new, {'label': 'New', 'help': 'Is the product new?'}) }}
+                            </div>
+                        </div>
+                        <div class="form-element{% if errors %} form-element-error{% endif %} widget-group clearfix">
+                            <div class="widget widget-1-of-3">
+                                <label>Price Options</label>
+                            </div>
+                            <div class="widget checker-group widget-2-of-3">
+                                {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': 'Hide price for this product?'}) }}
+                                {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': 'Show price out of hours?'}) }}
+                            </div>
+                        </div>
                     </fieldset>
-                    <fieldset>
-                        <legend class="clearfix fill">Descriptions</legend>
-                        <table class="data-table" id="description-list" width="100%" data-prototype="{{ form_widget(form.descriptions.vars.prototype) | e }}">
-                            <thead>
-                            <tr>
-                                <th>Locale</th>
-                                <th>Description</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for row in form.descriptions %}
-                                <tr>
-                                    {{ form_widget(row) }}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                        <button type="button" id="add-description" class="fr small button icon-set-white ui-button-green add-row margin-top-5" data-icon-primary="ui-icon-circle-plus">Add Another</button>
-                        {% do form.descriptions.setRendered() %}
-                    </fieldset>
-                    <fieldset>
-                        <legend class="clearfix fill">Status</legend>
-
-                        {{ form_row(form.availableForPurchase, {'label': 'Available for Purchase', 'help': 'Is the product available to purchase?'}) }}
-                        {{ form_row(form.featureComparison, {'label': 'Feature Comparison', 'help': 'Include in feature comparison?'}) }}
-                        {{ form_row(form.downloadable, {'label': 'Downloadable', 'help': 'Is the product a download?'}) }}
-                        {{ form_row(form.specialOffer, {'label': 'Special Offer', 'help': 'Is the product a special offer?'}) }}
-                        {{ form_row(form.recommended, {'label': 'Recommended', 'help': 'Do you want to recommend?'}) }}
-                        {{ form_row(form.accessory, {'label': 'Accessory', 'help': 'Is the product an accessory?'}) }}
-                        {{ form_row(form.new, {'label': 'New', 'help': 'Is the product new?'}) }}
-                    </fieldset>
-                    <fieldset>
-                        <legend class="clearfix fill">Price Settings</legend>
-                        {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': 'Hide price for this product?'}) }}
-                        {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': 'Show price out of hours?'}) }}
-                        {{ form_row(form.membershipCardDiscountAvailable, {'label': 'Membership Discount Available', 'help': 'Discount with membership card?'}) }}
-                        {{ form_row(form.maximumMembershipCardDiscount, {'label': 'Maximum Membership Discount', 'help': 'Maximum membership discount'}) }}
-                    </fieldset>
-
                     {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
-
-                    <div class="form-element widget-group clearfix">
-                        <div class="widget widget-1-of-3">&nbsp;</div>
-                        <div class="widget widget-2-of-3">
-                            {% include 'WebIlluminationAdminBundle:Product:newControls.html.twig' %}
-                        </div>
+                    <div class="button-group clearfix">
+                        {% include 'WebIlluminationSiteBundle:Product:newControls.html.twig' %}
                     </div>
                 </section>
             </div>
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    var count = {{ form.features | length }};
-
-    jQuery(document).ready(function() {
-        $(document).on('click', '.delete-row', function() {
-            $(this).parent().parent().remove();
-        });
-        jQuery('#add-description').click(function() {
-            var list = jQuery("#description-list");
-
-            var newItem = list.attr('data-prototype');
-            newItem = newItem.replace(/__name__/g, count);
-            count++;
-
-            var newRow = jQuery('<tr></tr>').html(newItem);
-            newRow.appendTo(list);
-            $('select', newRow).uniform();
-            $('.button', newRow).button({
-                icons: {
-                    primary: 'ui-icon-circle-cross'
-                },
-                text: $(this).attr('data-icon-only') !== 'true'
-            });
-
-            $('textarea.tinymce-basic').tinymce({
-                script_url : '/bundles/webilluminationadmin/js/tinymce/tiny_mce.js',
-                theme : "advanced",
-                plugins : "contextmenu,paste,fullscreen,xhtmlxtras,spellchecker",
-                theme_advanced_buttons1 : "bold,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,outdent,indent,|,spellchecker",
-                theme_advanced_buttons2 : "",
-                theme_advanced_buttons3 : "",
-                theme_advanced_buttons4 : "",
-                theme_advanced_toolbar_location : "top",
-                theme_advanced_toolbar_align : "left",
-                theme_advanced_resizing : true,
-                theme_advanced_resize_horizontal : false,
-                theme_advanced_path : false,
-                content_css : "/bundles/webilluminationadmin/css/content.css"
-            });
-
-            return false;
-        });
-    })
-</script>
