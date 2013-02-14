@@ -3,19 +3,6 @@
 
 {% block title %}Add New Product | {{ parent() }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    {% stylesheets
-    '@WebIlluminationSiteBundle/Resources/public/plugins/upload/css/jquery.fileupload-ui.css'
-    output='css/upload-compressed.css'
-    filter='yui_css'
-    %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-    {% endstylesheets %}
-{% endblock %}
-
-
 {#{% block leftmenu %}#}
     {#{{ parent() }}#}
     {#&#123;&#35;{% include 'WebIlluminationSiteBundle:Product:newLeftMenu.html.twig' %}&#35;&#125;#}

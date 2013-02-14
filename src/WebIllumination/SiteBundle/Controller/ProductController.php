@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
+use WebIllumination\SiteBundle\Entity\Image;
 use WebIllumination\SiteBundle\Form\EditProductDescriptionsType;
 use WebIllumination\SiteBundle\Form\EditProductOverviewType;
 use WebIllumination\SiteBundle\Entity\Product;
@@ -69,11 +70,46 @@ class ProductController extends Controller {
                 $em->persist($product);
                 $em->flush();
 
+                /**
+                 * Link image to variant
+                 * @var $variant Variant
+                 */
+                foreach($product->getVariants() as $variant)
+                {
+                    $i = 0;
+
+                    // Link each image to the variant
+                    foreach(explode(',', $variant->getImages()) as $imageId)
+                    {
+                        /**
+                         * @var $image Image
+                         */
+                        $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
+                        if($image)
+                        {
+                            $image->setObjectId($variant->getId());
+                            $image->setObjectType('variant');
+                            $image->setImageType('variant');
+
+                            $image->setTitle($variant->getDescription()->getHeader());
+                            $image->setDisplayOrder($i);
+
+                            $i++;
+
+                            $em->persist($image);
+                        }
+                    }
+                }
+
+                $em->flush();
+
                 $flow->reset();
 
                 return $this->redirect($this->generateUrl('admin_listing_products'));
             }
         }
+
+        \Doctrine\Common\Util\Debug::dump($form->createView()->get('value'), 3);die();
 
         return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),

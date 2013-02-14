@@ -113,6 +113,67 @@
     {{ fields.prices_widget(form) }}
 {% endblock %}
 
+{# New product fields #}
+{% block _site_new_product_variants_overview_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.product_variants_overview_widget(form) }}
+{% endblock %}
+{#{% block _site_new_product_variants_images_entry_widget %}#}
+    {#{% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}#}
+    {#{{ fields.product_variants_images_widget(form) }}#}
+{#{% endblock %}#}
+{% block _site_new_product_variants_prices_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.product_variants_prices_widget(form) }}
+{% endblock %}
+{% block _site_new_product_variants_prices_entry_variants_prices_price_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.prices_widget(form) }}
+{% endblock %}
+{% block _site_new_product_variants_images_entry_images_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    <tr class="fileupload">
+        <td class="padding-top-5 padding-bottom-5">
+            <div class="fileupload-buttonbar">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <span class="button fileinput-button">
+                    <i class="icon-plus icon-white"></i>
+                    <span>Add files...</span>
+                    <input class="no-uniform" type="file" name="file" multiple>
+                </span>
+                <button type="submit" class="button start">
+                    <span>Start upload</span>
+                </button>
+                <button type="reset" class="button cancel">
+                    <span>Cancel upload</span>
+                </button>
+                <button type="button" class="button delete">
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" class="toggle">
+            </div>
+            <div class="fileupload-progress">
+                <!-- The global progress bar -->
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="bar" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress information -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+            <!-- The loading indicator is shown during file processing -->
+            <div class="fileupload-loading"></div>
+            <br>
+            <!-- The table listing the files available for upload/download -->
+            <table role="presentation" class="table table-striped">
+                <tbody class="files">
+
+                </tbody>
+            </table>
+            {{ form_widget(form) }}
+        </td>
+    </tr>
+{% endblock %}
+
 {# New variant fields #}
 {#{% block _site_new_variant_descriptions_entry_widget %}#}
     {#{% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}#}

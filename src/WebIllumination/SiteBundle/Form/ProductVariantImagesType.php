@@ -11,11 +11,7 @@ class ProductVariantImagesType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('images', 'collection', array(
-            'type' => 'hidden',
-            'allow_add' => true,
-            'allow_delete' => true,
-        ));
+        $builder->add('images', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

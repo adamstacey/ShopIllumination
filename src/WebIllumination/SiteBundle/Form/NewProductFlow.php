@@ -25,7 +25,7 @@ class NewProductFlow extends FormFlow
 {
 
 
-    protected $maxSteps = 3;
+    protected $maxSteps = 5;
     protected $allowDynamicStepNavigation = true;
 
     protected function loadStepDescriptions() {
@@ -33,7 +33,8 @@ class NewProductFlow extends FormFlow
             'Enter Product Details',
             'Select Features',
             'Edit Product Variations - Overview',
-
+            'Edit Product Variations - Images',
+            'Edit Product Variations - Prices',
         );
     }
 
@@ -126,7 +127,6 @@ class NewProductFlow extends FormFlow
                 }
                 $formData->addVariant($variant);
             }
-
         }
 
         return $options;

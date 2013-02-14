@@ -96,82 +96,6 @@ class Image
     private $filesForRemoval = array();
 
     /**
-     * Get thumbnailWidth
-     *
-     * @return string 
-     */
-    public function getThumbnailWidth()
-    {
-    	list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->thumbnailPath);
-        return $width;
-    }
-    
-    /**
-     * Get thumbnailHeight
-     *
-     * @return string 
-     */
-    public function getThumbnailHeight()
-    {
-    	list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->thumbnailPath);
-        return $height;
-    }
-    
-    /**
-     * Get mediumWidth
-     *
-     * @return string 
-     */
-    public function getMediumWidth()
-    {
-    	list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->mediumPath);
-        return $width;
-    }
-    
-    /**
-     * Get mediumHeight
-     *
-     * @return string 
-     */
-    public function getMediumHeight()
-    {
-    	list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->mediumPath);
-        return $height;
-    }
-    
-    /**
-     * Get largeWidth
-     *
-     * @return string 
-     */
-    public function getLargeWidth()
-    {
-    	if (file_exists(__DIR__.'/../../../../web'.$this->largePath))
-    	{
-    		list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->largePath);
-    	} else {
-    		$width = 0;
-    	}
-        return $width;
-    }
-    
-    /**
-     * Get largeHeight
-     *
-     * @return string 
-     */
-    public function getLargeHeight()
-    {
-    	if (file_exists(__DIR__.'/../../../../web'.$this->largePath))
-    	{
-    		list($width, $height) = getimagesize(__DIR__.'/../../../../web'.$this->largePath);
-    	} else {
-    		$height = 0;
-    	}
-        return $height;
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -522,7 +446,9 @@ class Image
     {
         $this->filesForRemoval = array();
         $this->filesForRemoval[] = $this->getUploadPath() . '/' . $this->getOriginalPath();
-        $this->filesForRemoval[] = $this->getUploadPath() . '/' . $this->getPublicPath();
+        if($this->getPublicPath() !== null && $this->getPublicPath() !== "") {
+            $this->filesForRemoval[] = $this->getUploadPath() . '/' . $this->getPublicPath();
+        }
     }
 
     public function removeUpload()

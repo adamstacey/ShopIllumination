@@ -148,3 +148,77 @@
         </td>
     </tr>
 {% endmacro %}
+{% macro product_variants_images_widget(form) %}
+    <tr>
+        <td class="padding-top-5 padding-bottom-5">
+            <ul>
+                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                <div class="widget-group clearfix">
+                    <div class="widget widget-5-of-8 fileupload-buttonbar">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="button fileinput-button">
+                            <i class="icon-plus icon-white"></i>
+                            <span>Add files...</span>
+                            <input class="no-uniform" type="file" name="file" multiple>
+                        </span>
+                        <button type="submit" class="button start">
+                            <span>Start upload</span>
+                        </button>
+                        <button type="reset" class="button cancel">
+                            <span>Cancel upload</span>
+                        </button>
+                        <button type="button" class="button delete">
+                            <span>Delete</span>
+                        </button>
+                        <input type="checkbox" class="toggle">
+                    </div>
+                    <div class="widget widget-3-of-8 fileupload-progress">
+                        <!-- The global progress bar -->
+                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                            <div class="bar" style="width:0%;"></div>
+                        </div>
+                        <!-- The extended global progress information -->
+                        <div class="progress-extended">&nbsp;</div>
+                    </div>
+                </div>
+                <!-- The loading indicator is shown during file processing -->
+                <div class="fileupload-loading"></div>
+                <br>
+                <!-- The table listing the files available for upload/download -->
+                <table role="presentation" class="table table-striped">
+                    <tbody class="files">
+
+                    </tbody>
+                </table>
+            </ul>
+        </td>
+    </tr>
+{% endmacro %}
+{% macro product_variants_overview_widget(form) %}
+    <tr>
+        <td class="ac padding-top-5 padding-bottom-5" width="175">
+            {{ form_widget(form.productCode) }}
+        </td>
+        <td class="ac padding-top-5 padding-bottom-5" width="175">
+            {{ form_widget(form.status) }}
+        </td>
+        <td class="padding-top-5 padding-bottom-5">
+            <ul>
+                {% for feature in form.get('value').features %}
+                    <li>({{ feature.productFeature }}) {{ feature.defaultFeature }}</li>
+                {% endfor %}
+            </ul>
+        </td>
+        <td>
+            <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
+        </td>
+    </tr>
+{% endmacro %}
+{% macro product_variants_images_widget(form) %}
+    {{ form_widget(form.images) }}
+{% endmacro %}
+{% macro product_variants_prices_widget(form) %}
+    <tr>
+        {{ form_widget(form.prices) }}
+    </tr>
+{% endmacro %}

@@ -72,7 +72,6 @@ class NewProductType extends AbstractType
                     'block_name' => 'variants_overview',
                     'type' => new ProductVariantOverviewType(),
                     'required'  => false,
-                    'allow_add' => true,
                     'allow_delete' => true,
                 ));
 
@@ -82,7 +81,6 @@ class NewProductType extends AbstractType
                     'block_name' => 'variants_images',
                     'type' => new ProductVariantImagesType(),
                     'required'  => false,
-                    'allow_add' => true,
                     'allow_delete' => true,
                 ));
 
@@ -92,7 +90,6 @@ class NewProductType extends AbstractType
                     'block_name' => 'variants_prices',
                     'type' => new ProductVariantPricesType(),
                     'required'  => false,
-                    'allow_add' => true,
                     'allow_delete' => true,
                 ));
 

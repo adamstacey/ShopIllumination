@@ -114,8 +114,7 @@ class ProductIndexer extends Indexer
                 $document->addField('search_words', $searchWord);
             }
             if (count($images) > 0) {
-                $document->setField("thumbnail_path", $images[0]->getThumbnailPath());
-                $document->setField("large_image_path", $images[0]->getOriginalPath());
+                $document->setField("image_path", $images[0]->getPublicPath());
                 foreach ($images as $image) {
                     $document->addField("image_paths", $image->getOriginalPath());
                 }
@@ -146,7 +145,6 @@ class ProductIndexer extends Indexer
             $update->addCommit();
             $this->getSolarium()->update($update);
         } catch (\Exception $e) {
-            die();
             echo "An error occured proccessing product ID " . $product->getId() . "\n";
         }
     }
