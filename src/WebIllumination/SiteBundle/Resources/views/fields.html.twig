@@ -72,9 +72,12 @@
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
 {% endblock %}
+{#{% block _site_new_product_departments_entry_widget  %}#}
+    {#{% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}#}
+    {#{{ fields.product_departments_row(form) }}#}
+{#{% endblock %}#}
 {% block _site_new_product_departments_entry_widget %}
-    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_departments_row(form) }}
+    {{ form_widget(form) }}
 {% endblock %}
 {% block _site_edit_product_overview_departments_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
@@ -123,17 +126,6 @@
 {% block _site_new_variant_features_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
-{% endblock %}
-{% block _site_new_product_departments_row %}
-    <div class="form-element{% if form.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
-        <div class="widget widget-1-of-3">
-            {{ form_label(form) }}
-        </div>
-        <div class="widget widget-2-of-3">
-            {{ form_widget(form) }}
-            {{ form_errors(form) }}
-        </div>
-    </div>
 {% endblock %}
 
 {# Edit variant fields #}

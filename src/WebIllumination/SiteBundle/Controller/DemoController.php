@@ -65,7 +65,7 @@ class DemoController extends Controller
     }
 
     /**
-     * @Route("/image/{id}", name="demo_upload")
+     * @Route("/image/{id}", name="demo_view_image")
      * @Template()
      */
     public function imageAction(Request $request, $id)

@@ -32,7 +32,8 @@ class NewProductFlow extends FormFlow
         return array(
             'Enter Product Details',
             'Select Features',
-            'Edit Product Variations',
+            'Edit Product Variations - Overview',
+
         );
     }
 

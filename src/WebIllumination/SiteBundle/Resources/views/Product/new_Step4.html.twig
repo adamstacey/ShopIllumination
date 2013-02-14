@@ -13,31 +13,15 @@
                         </div>
                     {% endif %}
                     <fieldset>
-                        <div class="form-element widget-group clearfix">
-                            <div class="widget widget-1-of-5">
-                                <label for="formProductCode">Base Product Code</label>
-                            </div>
-                            <div class="widget widget-3-of-5">
-                                <input type="text" id="formProductCode" name="productCode" class="fill" value="">
-                            </div>
-                            <div class="widget widget-1-of-5">
-                                <button id="applyProductCode" class="button">Apply</button>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
                         <table class="data-table" id="product-variant-list" width="100%" data-prototype="{{ form_widget(form.variants.vars.prototype) | e }}">
                             <thead>
                             <tr>
-                                <th>Product Code</th>
-                                <th>Status</th>
-                                <th>Features</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for row in form.variants %}
-                                {{ form_widget(row) }}
+                                {#{{ form_widget(row) }}#}
                             {% endfor %}
                             </tbody>
                             {% do form.variants.setRendered() %}
@@ -58,24 +42,3 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    var count = {{ form.features | length }};
-
-    $(document).ready(function() {
-        $('.delete-row').on('click', function() {
-            $(this).parent().parent().remove();
-        });
-        $('#applyProductCode').click(function(e) {
-            var val = $('#formProductCode').val();
-            // Update the value of each product code field with the new value
-            $("#product-variant-list").find("tr td:nth-child(1) input").each(function(key, input) {
-                // If the field has already been filled in then do not edit it
-                if(!$(input).val()) {
-                    $(input).val(val);
-                }
-            });
-
-            e.preventDefault();
-        })
-    })
-</script>

@@ -72,7 +72,7 @@
     var count = {{ form.features | length }};
 
     jQuery(document).ready(function() {
-        jQuery('.delete-row').on('click', function() {
+        $(document).on('click', '.delete-row', function() {
             $(this).parent().parent().remove();
         });
         jQuery('#add-description').click(function() {

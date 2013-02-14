@@ -22,7 +22,7 @@ class ProductManager extends Manager
     {
         $product = new Product();
 
-        $product->addDescription(new Product\Description());
+//        $product->addDescription(new Product\Description());
         $product->addDepartment(new ProductToDepartment());
         $product->addPrice(new Product\Price());
 
@@ -42,7 +42,7 @@ class ProductManager extends Manager
 
         $variant->setProductCode($product->getProductCode());
         $variant->setProduct($product);
-        $variant->addDescription(new Product\VariantDescription());
+//        $variant->addDescription(new Product\VariantDescription());
         $variant->addPrice(new Product\Price());
 
         return $variant;
