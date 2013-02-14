@@ -200,6 +200,14 @@ div.checker-group label {
     text-align: left;
 }
 
+div.radio-group small,
+div.checker-group small {
+    padding: 0 $spacingMedium;
+    float: left;
+
+    line-height: 20px;
+}
+
 div.checker {
     margin: 0 $spacingMedium $spacingSmall 0;
     width: 18px;
@@ -504,21 +512,25 @@ header.error {
     @include boxGlow($colourRed, 3px, 0, 0.5);
 }
 
-.form-element-error label {
+.form-element-error label,
+.error label {
     color: $colourRed;
 }
 
-.form-element-error small {
+.form-element-error small,
+.error small {
     color: $colourRed;
     text-transform: uppercase;
 }
 
-.form-element-error small ul {
+.form-element-error small ul,
+.error small ul {
     margin: 0;
     padding: 0;
 }
 
-.form-element-error small ul li {
+.form-element-error small ul li,
+.error small ul li {
     list-style: none;
     background: transparent url("#{$cssPath}/core/resources/images/icons/error_small.png") top left no-repeat;
     line-height: 12px;
@@ -532,7 +544,14 @@ header.error {
 .form-element-error .uniform-multiselect,
 .form-element-error .radio,
 .form-element-error .checker,
-.form-element-error .uploader {
+.form-element-error .uploader,
+.error input,
+.error textarea,
+.error .selector,
+.error .uniform-multiselect,
+.error .radio,
+.error .checker,
+.error .uploader {
     border: 1px solid $colourRedExtraLight;
 }
 
@@ -556,6 +575,27 @@ header.error {
 .form-element-error .uniform-multiselect:hover,
 .form-element-error .radio:hover,
 .form-element-error .checker:hover,
-.form-element-error .uploader:hover {
+.form-element-error .uploader:hover,
+.error input:focus,
+.error textarea:focus,
+.error .selector:focus,
+.error .uniform-multiselect:focus,
+.error .radio:focus,
+.error .checker:focus,
+.error .uploader:focus,
+.error input:active,
+.error textarea:active,
+.error .selector:active,
+.error .uniform-multiselect:active,
+.error .radio:active,
+.error .checker:active,
+.error .uploader:active,
+.error input:hover,
+.error textarea:hover,
+.error .selector:hover,
+.error .uniform-multiselect:hover,
+.error .radio:hover,
+.error .checker:hover,
+.error .uploader:hover {
     @include noBoxShadow;
 }
