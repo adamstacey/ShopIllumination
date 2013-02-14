@@ -30,11 +30,6 @@ class NewProductType extends AbstractType
                 $builder->add('status', 'choice', array(
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
                 ));
-                $builder->add('descriptions', 'collection', array(
-                    'type' => new ProductDescriptionType(),
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                ));
                 $builder->add('availableForPurchase', 'checkbox', array(
                     'required' => false,
                 ));
@@ -56,18 +51,12 @@ class NewProductType extends AbstractType
                 $builder->add('new', 'checkbox', array(
                     'required' => false,
                 ));
-
-                // Prices
                 $builder->add('hidePrice', 'checkbox', array(
                     'required' => false,
                 ));
                 $builder->add('showPriceOutOfHours', 'checkbox', array(
                     'required' => false,
                 ));
-                $builder->add('membershipCardDiscountAvailable', 'checkbox', array(
-                    'required' => false,
-                ));
-                $builder->add('maximumMembershipCardDiscount');
 
                 break;
             case 2:
