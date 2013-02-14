@@ -1,6 +1,53 @@
 {
-    "hash": "3f41e679a3d38d31e2db9cc1a9482080",
+    "hash": "06815ba4ae841555cc1b215e948b6a8b",
     "packages": [
+        {
+            "name": "avalanche123/imagine-bundle",
+            "version": "v2.1",
+            "target-dir": "Avalanche/Bundle/ImagineBundle",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/avalanche123/AvalancheImagineBundle.git",
+                "reference": "v2.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/avalanche123/AvalancheImagineBundle/archive/v2.1.zip",
+                "reference": "v2.1",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*",
+                "imagine/imagine": "v0.3.0"
+            },
+            "suggest": {
+                "symfony/twig-bundle": "2.*"
+            },
+            "time": "2012-11-15 18:54:56",
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Avalanche\\Bundle\\ImagineBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image manipulation using Imagine and Twig Filters.",
+            "homepage": "https://github.com/avalanche123/AvalancheImagineBundle",
+            "keywords": [
+                "image manipulation",
+                "imagine"
+            ]
+        },
         {
             "name": "craue/formflow-bundle",
             "version": "dev-master",
@@ -479,12 +526,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle",
-                "reference": "df0cab6237206a53030b6970a5b5580d4b8fa483"
+                "reference": "f31a1fcc88b589f106d1a038c06dc946f33f5d0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/df0cab6237206a53030b6970a5b5580d4b8fa483",
-                "reference": "df0cab6237206a53030b6970a5b5580d4b8fa483",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/f31a1fcc88b589f106d1a038c06dc946f33f5d0c",
+                "reference": "f31a1fcc88b589f106d1a038c06dc946f33f5d0c",
                 "shasum": ""
             },
             "require": {
@@ -505,7 +552,7 @@
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/mongodb-odm-bundle": "*"
             },
-            "time": "2013-01-31 20:47:01",
+            "time": "2013-02-12 09:03:30",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -548,12 +595,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "b7299a90214255a0b0029b7e5fe6e62a929f3e69"
+                "reference": "b2806e409f21132e814203e36810b7112453a858"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/b7299a90214255a0b0029b7e5fe6e62a929f3e69",
-                "reference": "b7299a90214255a0b0029b7e5fe6e62a929f3e69",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/b2806e409f21132e814203e36810b7112453a858",
+                "reference": "b2806e409f21132e814203e36810b7112453a858",
                 "shasum": ""
             },
             "require": {
@@ -561,19 +608,19 @@
                 "doctrine/common": ">=2.2,<2.5-dev"
             },
             "require-dev": {
-                "doctrine/mongodb": ">=1.0.0-BETA1",
-                "doctrine/mongodb-odm": ">=1.0.0-BETA6",
                 "doctrine/orm": ">=2.2",
                 "doctrine/dbal": ">=2.2",
-                "symfony/yaml": "2.*"
+                "symfony/yaml": "2.*",
+                "doctrine/mongodb": "1.0.1",
+                "doctrine/mongodb-odm": "1.0.0-BETA7"
             },
             "suggest": {
-                "doctrine/orm": ">=2.2",
-                "doctrine/dbal": ">=2.2",
-                "doctrine/mongodb": ">=1.0.0",
-                "doctrine/mongodb-odm": ">=1.0.0-BETA7"
+                "doctrine/mongodb-odm": ">=1.0.0-BETA7",
+                "doctrine/mongodb": ">=1.0.1",
+                "doctrine/orm": ">=2.3.2",
+                "doctrine/dbal": ">=2.3.2"
             },
-            "time": "2013-01-31 12:40:49",
+            "time": "2013-02-13 19:35:33",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -591,8 +638,16 @@
             ],
             "authors": [
                 {
+                    "name": "David Buchmann",
+                    "email": "david@liip.ch"
+                },
+                {
                     "name": "Gediminas Morkevicius",
                     "email": "gediminas.morkevicius@gmail.com"
+                },
+                {
+                    "name": "Gustavo Falco",
+                    "email": "comfortablynumb84@gmail.com"
                 }
             ],
             "description": "Doctrine2 behavioral extensions",
@@ -608,7 +663,9 @@
                 "translatable",
                 "nestedset",
                 "sortable",
-                "timestampable"
+                "timestampable",
+                "Blameable",
+                "uploadable"
             ]
         },
         {
@@ -659,23 +716,70 @@
             ]
         },
         {
+            "name": "imagine/Imagine",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avalanche123/Imagine",
+                "reference": "v0.3.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/avalanche123/Imagine/zipball/v0.3.0",
+                "reference": "v0.3.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "sami/sami": "dev-master"
+            },
+            "time": "2012-07-28 17:35:18",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Imagine": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image processing for PHP 5.3",
+            "homepage": "http://imagine.readthedocs.org/",
+            "keywords": [
+                "image manipulation",
+                "image processing",
+                "drawing",
+                "graphics"
+            ]
+        },
+        {
             "name": "jdorn/sql-formatter",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git://github.com/jdorn/sql-formatter.git",
-                "reference": "da55bd76098f872b44343ba456db868cbcac8776"
+                "reference": "7a92826fe2734518e9cd6ebcf1ba052e58351c34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/jdorn/sql-formatter/archive/da55bd76098f872b44343ba456db868cbcac8776.zip",
-                "reference": "da55bd76098f872b44343ba456db868cbcac8776",
+                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/7a92826fe2734518e9cd6ebcf1ba052e58351c34",
+                "reference": "7a92826fe2734518e9cd6ebcf1ba052e58351c34",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2013-01-18 07:52:11",
+            "time": "2013-02-11 00:21:20",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1027,18 +1131,26 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/dancannon/knp-components",
-                "reference": "1fd31dc1381517e773aefbce0fa9ce9802e16e2f"
+                "reference": "8e9d03a64235fbf07bd1088f22f9798802120ef2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dancannon/knp-components/zipball/1fd31dc1381517e773aefbce0fa9ce9802e16e2f",
-                "reference": "1fd31dc1381517e773aefbce0fa9ce9802e16e2f",
+                "url": "https://api.github.com/repos/dancannon/knp-components/zipball/8e9d03a64235fbf07bd1088f22f9798802120ef2",
+                "reference": "8e9d03a64235fbf07bd1088f22f9798802120ef2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "time": "2012-12-28 16:45:00",
+            "suggest": {
+                "doctrine/orm": "to allow usage pagination with Doctrine ORM",
+                "doctrine/common": "to allow usage pagination with Doctrine ArrayCollection",
+                "doctrine/mongodb-odm": "to allow usage pagination with Doctrine ODM MongoDB",
+                "ruflin/Elastica": "to allow usage pagination with ElasticSearch Client",
+                "propel/propel1": "to allow usage pagination with Propel ORM",
+                "solarium/solarium": "to allow usage pagination with Solarium Client"
+            },
+            "time": "2013-02-07 14:50:52",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1067,10 +1179,10 @@
             "homepage": "http://github.com/KnpLabs/knp-components",
             "keywords": [
                 "components",
+                "paginator",
                 "pager",
                 "knp",
-                "knplabs",
-                "paginator"
+                "knplabs"
             ],
             "support": {
                 "source": "https://github.com/dancannon/knp-components/tree/master"
@@ -1083,12 +1195,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle",
-                "reference": "v2.3"
+                "reference": "9784c6610db43afcc058f847ad757e50d26d8cf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/KnpLabs/KnpPaginatorBundle/archive/v2.3.zip",
-                "reference": "v2.3",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/9784c6610db43afcc058f847ad757e50d26d8cf4",
+                "reference": "9784c6610db43afcc058f847ad757e50d26d8cf4",
                 "shasum": ""
             },
             "require": {
@@ -1097,7 +1209,7 @@
                 "knplabs/knp-components": ">=1.1,<2.0",
                 "twig/twig": ">=1.5,<2.0"
             },
-            "time": "2013-01-18 17:41:27",
+            "time": "2013-02-07 20:21:12",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1141,12 +1253,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/KnpLabs/snappy.git",
-                "reference": "59fcf36fe11962a29c994f882f82dee8c8a99f54"
+                "reference": "39c64d910d25823b82ac426eb12a6275a66a75d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/59fcf36fe11962a29c994f882f82dee8c8a99f54",
-                "reference": "59fcf36fe11962a29c994f882f82dee8c8a99f54",
+                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/39c64d910d25823b82ac426eb12a6275a66a75d0",
+                "reference": "39c64d910d25823b82ac426eb12a6275a66a75d0",
                 "shasum": ""
             },
             "require": {
@@ -1154,10 +1266,10 @@
             },
             "suggest": {
                 "symfony/process": "Process Component of Symfony2.",
-                "google/wkhtmltopdf-amd64": "Provide wkhtmltopdf-amd64 binary as composer dependencies",
-                "google/wkhtmltopdf-i386": "Provide wkhtmltopdf-i386 binary as composer dependencies"
+                "google/wkhtmltopdf-amd64": "Provide wkhtmltopdf-amd64 binary, use version `0.11.0-RC1` as dependency",
+                "google/wkhtmltopdf-i386": "Provide wkhtmltopdf-i386 binary, use version `0.11.0-RC1` as dependency"
             },
-            "time": "2013-02-04 08:57:24",
+            "time": "2013-02-14 10:09:15",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -1185,7 +1297,8 @@
                 "knplabs",
                 "pdf",
                 "thumbnail",
-                "snapshot"
+                "snapshot",
+                "wkhtmltopdf"
             ]
         },
         {
@@ -1245,12 +1358,12 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/kriswallsmith/assetic.git",
-                "reference": "faf3b245977d8bc06c9da4710dbcad37756993a9"
+                "reference": "504c9e8a6357583c20c9d9967ec2febea3157324"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/faf3b245977d8bc06c9da4710dbcad37756993a9",
-                "reference": "faf3b245977d8bc06c9da4710dbcad37756993a9",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/504c9e8a6357583c20c9d9967ec2febea3157324",
+                "reference": "504c9e8a6357583c20c9d9967ec2febea3157324",
                 "shasum": ""
             },
             "require": {
@@ -1266,7 +1379,8 @@
                 "cssmin/cssmin": "*",
                 "mrclay/minify": "*",
                 "kamicane/packager": "*",
-                "joliclic/javascript-packer": "*"
+                "joliclic/javascript-packer": "*",
+                "phpunit/phpunit": "3.7.*"
             },
             "suggest": {
                 "twig/twig": "Assetic provides the integration with the Twig templating engine",
@@ -1275,7 +1389,7 @@
                 "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
                 "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin"
             },
-            "time": "2013-01-31 17:45:10",
+            "time": "2013-02-11 18:18:06",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1427,18 +1541,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioDistributionBundle",
-                "reference": "66545ed7d60342dd1ffdcebd72fe43b11941fef9"
+                "reference": "615f76309dae8c45c72b69578b034713c09767d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/66545ed7d60342dd1ffdcebd72fe43b11941fef9",
-                "reference": "66545ed7d60342dd1ffdcebd72fe43b11941fef9",
+                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/615f76309dae8c45c72b69578b034713c09767d1",
+                "reference": "615f76309dae8c45c72b69578b034713c09767d1",
                 "shasum": ""
             },
             "require": {
                 "symfony/framework-bundle": "2.1.*"
             },
-            "time": "2013-01-31 08:08:03",
+            "time": "2013-02-04 19:54:42",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1563,22 +1677,22 @@
         },
         {
             "name": "solarium/solarium",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/basdenooijer/solarium",
-                "reference": "2.4.0"
+                "reference": "2.4.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/basdenooijer/solarium/zipball/2.4.0",
-                "reference": "2.4.0",
+                "url": "https://api.github.com/repos/basdenooijer/solarium/zipball/2.4.1",
+                "reference": "2.4.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0"
             },
-            "time": "2012-04-16 04:31:52",
+            "time": "2013-02-11 13:12:43",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -1721,12 +1835,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/AsseticBundle",
-                "reference": "e2984f645ad9b5fb3b6d398d0c65e59c745a110c"
+                "reference": "v2.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/e2984f645ad9b5fb3b6d398d0c65e59c745a110c",
-                "reference": "e2984f645ad9b5fb3b6d398d0c65e59c745a110c",
+                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/v2.1.1",
+                "reference": "v2.1.1",
                 "shasum": ""
             },
             "require": {
@@ -1897,12 +2011,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "0c3d0db5decd9d12352a592811092ba62dc56211"
+                "reference": "7d143aac423111b271b1f6aeff069a1015bc087b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/0c3d0db5decd9d12352a592811092ba62dc56211",
-                "reference": "0c3d0db5decd9d12352a592811092ba62dc56211",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/7d143aac423111b271b1f6aeff069a1015bc087b",
+                "reference": "7d143aac423111b271b1f6aeff069a1015bc087b",
                 "shasum": ""
             },
             "require": {
@@ -1951,7 +2065,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": ">=1.0,<1.3-dev"
             },
-            "time": "2013-02-01 21:52:20",
+            "time": "2013-02-14 11:20:33",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -2032,18 +2146,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "c6445fb5cd6823f7bd65108a717064957b6eafd5"
+                "reference": "72c8bb73e90cf6d2e992b01ab508f7fc13e38c8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/c6445fb5cd6823f7bd65108a717064957b6eafd5",
-                "reference": "c6445fb5cd6823f7bd65108a717064957b6eafd5",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/72c8bb73e90cf6d2e992b01ab508f7fc13e38c8f",
+                "reference": "72c8bb73e90cf6d2e992b01ab508f7fc13e38c8f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2013-02-01 09:44:45",
+            "time": "2013-02-09 18:37:02",
             "type": "library",
             "extra": {
                 "branch-alias": {

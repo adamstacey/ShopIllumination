@@ -4,13 +4,14 @@ namespace WebIllumination\SiteBundle\Entity\Product;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use WebIllumination\SiteBundle\Entity\DescriptionInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="product_variant_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
-class VariantDescription
+class VariantDescription implements DescriptionInterface
 {
     /**
      * @ORM\Id

@@ -64,7 +64,7 @@ class VariantListener
         }
     }
 
-    public function preRemove(LifecycleEventArgs $args)
+    public function postRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
 

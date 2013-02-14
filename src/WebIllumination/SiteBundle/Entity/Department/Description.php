@@ -3,13 +3,14 @@ namespace WebIllumination\SiteBundle\Entity\Department;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use WebIllumination\SiteBundle\Entity\DescriptionInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="department_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
-class Description
+class Description implements DescriptionInterface
 {
     /**
      * @ORM\Id

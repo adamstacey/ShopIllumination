@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
 
  */
-class Product
+class Product implements DescribableInterface
 {
     /**
      * @ORM\Id

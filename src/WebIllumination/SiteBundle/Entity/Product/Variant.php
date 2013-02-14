@@ -4,6 +4,7 @@ namespace WebIllumination\SiteBundle\Entity\Product;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use WebIllumination\SiteBundle\Entity\DescribableInterface;
 
 /**
  * @ORM\Entity
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks()
 
  */
-class Variant
+class Variant implements DescribableInterface
 {
     /**
      * @ORM\Id

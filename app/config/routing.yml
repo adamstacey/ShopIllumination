@@ -33,3 +33,7 @@ fos_user_profile:
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /account
+
+_imagine:
+    resource: .
+    type:     imagine
