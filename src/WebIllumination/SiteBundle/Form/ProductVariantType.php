@@ -11,9 +11,14 @@ class ProductVariantType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('productCode', 'text');
+        $builder->add('productCode', 'text', array(
+            'attr' => array(
+                'size' => 10,
+            ),
+        ));
         $builder->add('status', 'choice', array(
-            'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
+            'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
+
         ));
         $builder->add('prices', 'collection', array(
             'type' => new ProductPriceType(),
