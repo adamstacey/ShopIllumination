@@ -23,16 +23,16 @@ use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class NewProductFlow extends FormFlow
 {
-
-
-    protected $maxSteps = 3;
+    protected $maxSteps = 5;
     protected $allowDynamicStepNavigation = true;
 
     protected function loadStepDescriptions() {
         return array(
-            'Enter Product Details',
-            'Select Features',
-            'Edit Product Variations',
+            '1. Product Information',
+            '2. Build Combinations',
+            '3. Prices',
+            '4. Features',
+            '5. Images',
         );
     }
 
@@ -48,16 +48,17 @@ class NewProductFlow extends FormFlow
 
         $options['cascade_validation'] = true;
 
-        if($step > 1)
+        if ($step > 1)
         {
             $departments = $formData->getDepartments();
-            if(count($departments) > 0 && $departments[0]->getDepartment() !== null) {
+            if (count($departments) > 0 && $departments[0]->getDepartment() !== null) {
                 $options['departmentId'] = $departments[0]->getDepartment()->getId();
             } else {
                 $options['departmentId'] = null;
             }
         }
-        if($step > 2)
+
+        if ($step > 2)
         {
             // Generate variations
             $options['variants'] = array();
@@ -72,6 +73,8 @@ class NewProductFlow extends FormFlow
                 }
             }
 
+
+
             // Create array containing each combination of the features
             foreach($featureGroups as $featureGroup)
             {
@@ -85,7 +88,7 @@ class NewProductFlow extends FormFlow
                 } else {
                     // Create new variations based on the previous variation with the extra features
                     $count = count($options['variants']);
-                    for($i=0;$i<$count;$i++)
+                    for($i = 0; $i < $count; $i++)
                     {
                         if($featureGroup)
                         {
@@ -105,28 +108,34 @@ class NewProductFlow extends FormFlow
             // Create the variant entities
             foreach($options['variants'] as $variantFeatures)
             {
-                $variant = new Variant();
-                foreach($variantFeatures as $feature)
+                if ($formData->getProductCode())
                 {
-                    $productToFeature = new ProductToFeature();
-                    $productToFeature->setVariant($variant);
-                    $productToFeature->setProductFeature($feature->getProductFeatureGroup());
-                    $productToFeature->setDefaultFeature($feature);
-                    $variant->addFeature($productToFeature);
+                    $variant = new Variant();
+                    foreach($variantFeatures as $feature)
+                    {
+                        $productToFeature = new ProductToFeature();
+                        $productToFeature->setVariant($variant);
+                        $productToFeature->setProductFeature($feature->getProductFeatureGroup());
+                        $productToFeature->setDefaultFeature($feature);
+                        $variant->addFeature($productToFeature);
+                    }
+
+                    $variant->setProduct($formData);
+                    $variant->addPrice(new Price());
+                    foreach($formData->getDescriptions() as $description)
+                    {
+                        $variantDescription = new VariantDescription();
+                        $variantDescription->setLocale($description->getLocale());
+                        $variantDescription->setDescription($description->getDescription());
+                        $variant->addDescription($variantDescription);
+                    }
+                    $formData->addVariant($variant);
                 }
-                $variant->setProduct($formData);
-                $variant->addPrice(new Price());
-                foreach($formData->getDescriptions() as $description)
-                {
-                    $variantDescription = new VariantDescription();
-                    $variantDescription->setLocale($description->getLocale());
-                    $variantDescription->setDescription($description->getDescription());
-                    $variant->addDescription($variantDescription);
-                }
-                $formData->addVariant($variant);
             }
 
         }
+
+
 
         return $options;
     }
