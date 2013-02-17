@@ -3,12 +3,6 @@
 
 {% block title %}Add New Product | {{ parent() }}{% endblock %}
 
-
-{#{% block leftmenu %}#}
-    {#{{ parent() }}#}
-    {#&#123;&#35;{% include 'WebIlluminationSiteBundle:Product:newLeftMenu.html.twig' %}&#35;&#125;#}
-{#{% endblock %}#}
-
 {% block header %}
     <header>
         {{ parent() }}
@@ -17,12 +11,19 @@
 {% endblock %}
 {% block body %}
     <section>
-        {% if flow.getCurrentStep() == 1 %}
-            {% include 'WebIlluminationSiteBundle:Product:new_Step1.html.twig' %}
-        {% elseif flow.getCurrentStep() == 2 %}
-            {% include 'WebIlluminationSiteBundle:Product:new_Step2.html.twig' %}
-        {% elseif flow.getCurrentStep() == 3 %}
-            {% include 'WebIlluminationSiteBundle:Product:new_Step3.html.twig' %}
-        {% endif %}
+        <div class="widget-group clearfix">
+            <div class="widget widget-2-of-7">
+                {% include 'WebIlluminationSiteBundle:Product:newLeftMenu.html.twig' %}
+            </div>
+            <div class="widget widget-5-of-7">
+                {% if flow.getCurrentStep() == 1 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step1.html.twig' %}
+                {% elseif flow.getCurrentStep() == 2 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step2.html.twig' %}
+                {% elseif flow.getCurrentStep() == 3 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step3.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
     </section>
 {% endblock %}
