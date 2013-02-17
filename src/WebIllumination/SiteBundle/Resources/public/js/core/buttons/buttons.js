@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    $(".button").each(function () {
+function generateButtons($object) {
+    $object.find(".button").each(function () {
         $(this).button({
             icons : {
                 primary : $(this).attr("data-icon-primary") ? $(this).attr("data-icon-primary") : null,
@@ -13,4 +13,8 @@ $(document).ready(function() {
             $(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
         }
     });
+}
+
+$(document).ready(function() {
+    generateButtons($(document));
 });
