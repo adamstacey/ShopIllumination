@@ -10,8 +10,14 @@
 
 .message .ui-icon {
     position: absolute;
-    top: 5px;
+    top: 50%;
+    margin-top: -16px;
     left: 5px;
+}
+
+.message .icon-top {
+    top: 10px;
+    margin: 0;
 }
 
 .message p {
@@ -19,7 +25,7 @@
     margin: 0;
 
     @include fontSize($fontSizeMedium);
-    line-height: 22px;
+    line-height: 17px;
 }
 
 .message ul {
@@ -34,10 +40,10 @@
     @include fontSize($fontSizeMedium);
 }
 
-.message-information {
-    border: 1px solid $colourTurquoise;
-    @include highlightedVerticalGradientTurquoise;
-    @include boxGlow($colourTurquoise, 5px, 0, 0.5);
+.message-help {
+    border: 1px solid $helpBorderColour;
+    background: $helpBackgroundColour;
+    @include boxGlow($colourGrey, 5px, 0, 0.5);
 }
 
 .message-error {
@@ -46,10 +52,16 @@
     @include boxGlow($colourRed, 5px, 0, 0.5);
 }
 
-.message-notice {
+.message-warning {
     border: 1px solid $colourOrange;
     @include highlightedVerticalGradientOrange;
     @include boxGlow($colourOrange, 5px, 0, 0.5);
+}
+
+.message-notice {
+    border: 1px solid $colourTurquoise;
+    @include highlightedVerticalGradientTurquoise;
+    @include boxGlow($colourTurquoise, 5px, 0, 0.5);
 }
 
 .message-success {
@@ -58,15 +70,21 @@
     @include boxGlow($colourGreen, 5px, 0, 0.5);
 }
 
-.message-information p,
-.message-information ul,
-.message-information ul li,
+.message-help p,
+.message-help ul,
+.message-help ul li {
+    color: $colourGreyDark;
+}
+
 .message-error p,
 .message-error ul,
 .message-error ul li,
 .message-success p,
 .message-success ul,
 .message-success ul li,
+.message-warning p,
+.message-warning ul,
+.message-warning ul li,
 .message-notice p,
 .message-notice ul,
 .message-notice ul li {
