@@ -1,46 +1,29 @@
 {% macro prices_widget(form) %}
-    <td class="padding-top-5 padding-bottom-5">
+    <td>
         {{ form_widget(form.costPrice) }}
         {{ form_errors(form.costPrice) }}
     </td>
-    <td class="padding-top-5 padding-bottom-5">
+    <td>
         {{ form_widget(form.recommendedRetailPrice) }}
         {{ form_errors(form.recommendedRetailPrice) }}
     </td>
-    <td class="padding-top-5 padding-bottom-5">
+    <td>
         {{ form_widget(form.listPrice) }}
         {{ form_errors(form.listPrice) }}
     </td>
     <td></td>
 {% endmacro %}
 {% macro list_prices_widget(form) %}
-    <div class="form-element widget-group clearfix {% if form.errors %}error{% endif %}">
-        <div class="widget widget-1-of-3">
-            {{ form_label(form.costPrice, 'Cost Price') }}
-        </div>
-        <div class="widget widget-2-of-3">
-            {{ form_widget(form.costPrice) }}
-            {{ form_errors(form.costPrice) }}
-        </div>
-    </div>
-    <div class="form-element widget-group clearfix {% if form.errors %}error{% endif %}">
-        <div class="widget widget-1-of-3">
-            {{ form_label(form.recommendedRetailPrice, 'RRP') }}
-        </div>
-        <div class="widget widget-2-of-3">
-            {{ form_widget(form.recommendedRetailPrice) }}
-            {{ form_errors(form.recommendedRetailPrice) }}
-        </div>
-    </div>
-    <div class="form-element widget-group clearfix {% if form.errors %}error{% endif %}">
-        <div class="widget widget-1-of-3">
-            {{ form_label(form.listPrice, 'List Price') }}
-        </div>
-        <div class="widget widget-2-of-3">
-            {{ form_widget(form.listPrice) }}
-            {{ form_errors(form.listPrice) }}
-        </div>
-    </div>
+    <td{% if form.costPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.costPrice) }}
+        {{ form_errors(form.costPrice) }}
+    </td>
+    <td{% if form.recommendedRetailPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.recommendedRetailPrice) }}
+    </td>
+    <td{% if form.listPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.listPrice) }}
+    </td>
 {% endmacro %}
 {% macro product_departments_row(form) %}
     {% if form|length == 1 %}
@@ -114,37 +97,36 @@
 {% endmacro %}
 {% macro features_widget(form) %}
     <td>
-        {{ form_widget(form.productFeature, {'attr': {'class': 'feature-group'}}) }}
+        {{ form_widget(form.productFeature, {'attr': {'class': 'feature-group fill'}}) }}
         {{ form_errors(form.productFeature) }}
     </td>
     <td>
-        {{ form_widget(form.defaultFeature, {'attr': {'class': 'feature'}}) }}
+        {{ form_widget(form.defaultFeature, {'attr': {'class': 'feature fill'}}) }}
         {{ form_errors(form.defaultFeature) }}
     </td>
-    <td>
-        <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
+    <td width="1">
+        {{ form_widget(form.displayOrder) }}
+        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productFeatureList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
     </td>
 {% endmacro %}
 {% macro product_variants_widget(form) %}
     <tr>
-        <td class="ac padding-top-5 padding-bottom-5" width="175">
-            {{ form_widget(form.productCode) }}
-        </td>
-        <td class="ac padding-top-5 padding-bottom-5" width="175">
-            {{ form_widget(form.status) }}
-        </td>
-        <td class="padding-top-5 padding-bottom-5">
+        <td class="fill">
             <ul>
                 {% for feature in form.get('value').features %}
-                    <li>({{ feature.productFeature }}) {{ feature.defaultFeature }}</li>
+                    <li>{{ feature.productFeature }}: <strong>{{ feature.defaultFeature }}</strong></li>
                 {% endfor %}
             </ul>
         </td>
-        <td class="ac padding-top-5 padding-bottom-5" width="225">
-            {{ form_widget(form.prices) }}
+        <td{% if form.productCode.vars.valid is sameas(false) %} class="error"{% endif %}>
+            {{ form_widget(form.productCode) }}
         </td>
-        <td>
-            <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
+        {{ form_widget(form.prices) }}
+        <td width="1">
+            <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productVariantList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
         </td>
+    </tr>
+    <tr>
+
     </tr>
 {% endmacro %}
