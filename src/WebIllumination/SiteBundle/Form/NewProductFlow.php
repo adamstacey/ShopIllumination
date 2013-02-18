@@ -58,7 +58,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step > 2)
+        if ($step == 3)
         {
             // Generate variations
             $options['variants'] = array();
