@@ -178,18 +178,21 @@
 {% endmacro %}
 {% macro product_variants_overview_widget(form) %}
     <tr>
-        <td class="ac padding-top-5 padding-bottom-5" width="175">
-            {{ form_widget(form.productCode) }}
-        </td>
-        <td class="ac padding-top-5 padding-bottom-5" width="175">
-            {{ form_widget(form.status) }}
-        </td>
         <td class="padding-top-5 padding-bottom-5">
             <ul>
                 {% for feature in form.get('value').features %}
                     <li>({{ feature.productFeature }}) {{ feature.defaultFeature }}</li>
                 {% endfor %}
             </ul>
+        </td>
+        <td class="ac padding-top-5 padding-bottom-5" width="175">
+            {{ form_widget(form.productCode) }}
+        </td>
+        <td class="ac padding-top-5 padding-bottom-5" width="175">
+            {{ form_widget(form.status) }}
+        </td>
+        <td class="ac padding-top-5 padding-bottom-5" width="225">
+            {{ form_widget(form.prices) }}
         </td>
         <td>
             <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>

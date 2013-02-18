@@ -18,7 +18,9 @@ class ProductVariantOverviewType extends AbstractType
         ));
         $builder->add('status', 'choice', array(
             'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
-
+        ));
+        $builder->add('prices', 'collection', array(
+            'type' => new ProductPriceType(),
         ));
     }
 

@@ -80,8 +80,8 @@ class NewProductType extends AbstractType
                 break;
             case 4:
                 $builder->add('variants', 'collection', array(
-                    'block_name' => 'variants_images',
-                    'type' => new ProductVariantImagesType(),
+                    'block_name' => 'variants_features',
+                    'type' => new ProductVariantFeaturesType($options['departmentId']),
                     'required'  => false,
                     'allow_delete' => true,
                 ));
@@ -89,8 +89,8 @@ class NewProductType extends AbstractType
                 break;
             case 5:
                 $builder->add('variants', 'collection', array(
-                    'block_name' => 'variants_prices',
-                    'type' => new ProductVariantPricesType(),
+                    'block_name' => 'variants_images',
+                    'type' => new ProductVariantImagesType(),
                     'required'  => false,
                     'allow_delete' => true,
                 ));
