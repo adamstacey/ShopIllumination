@@ -27,7 +27,7 @@ class ProductFeatureType extends AbstractType
 
         $builder->add('productFeature', 'entity', array(
             'required'  => false,
-            'empty_value' => 'Select a group.',
+            'empty_value' => '- Select a Group -',
             'class' => 'WebIllumination\SiteBundle\Entity\Product\FeatureGroup',
             'data_class' => null,
             'query_builder' => function(EntityRepository $er) use ($departmentId) {
@@ -46,11 +46,13 @@ class ProductFeatureType extends AbstractType
                 return $qb;
             },
         ));
+
         $builder->add('defaultFeature', 'choice', array(
             'required' => false,
-            'empty_value' => 'Please select a group first.',
+            'empty_value' => '- Select a Group First -',
             'choices' => array(),
         ));
+
         $builder->addEventListener(FormEvents::SET_DATA, function($event) use ($factory) {
             /**
              * @var $event FormEvent
@@ -82,7 +84,6 @@ class ProductFeatureType extends AbstractType
             $form = $event->getForm();
 
             if ($data && isset($data['defaultFeature'])) {
-//                \Doctrine\Common\Util\Debug::dump($data);die();
                 $form->remove('defaultFeature');
                 $form->add($factory->createNamed('defaultFeature', 'entity', null, array(
                     'required'  => false,

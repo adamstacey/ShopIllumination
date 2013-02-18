@@ -13,12 +13,21 @@ class ProductPriceType extends AbstractType
     {
         $builder->add('costPrice', 'money', array(
             'currency' => false,
+            'attr' => array(
+                'size' => 6,
+            ),
         ));
         $builder->add('recommendedRetailPrice', 'money', array(
             'currency' => false,
+            'attr' => array(
+                'size' => 6,
+            ),
         ));
         $builder->add('listPrice', 'money', array(
             'currency' => false,
+            'attr' => array(
+                'size' => 6,
+            ),
         ));
         $builder->add('displayOrder', 'hidden');
     }

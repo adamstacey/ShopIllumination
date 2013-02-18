@@ -109,8 +109,6 @@ class ProductController extends Controller {
             }
         }
 
-        \Doctrine\Common\Util\Debug::dump($form->createView()->get('value'), 3);die();
-
         return $this->render('WebIlluminationSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,

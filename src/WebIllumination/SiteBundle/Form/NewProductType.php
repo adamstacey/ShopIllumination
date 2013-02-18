@@ -4,8 +4,11 @@ namespace WebIllumination\SiteBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use WebIllumination\SiteBundle\Entity\Product;
 
 class NewProductType extends AbstractType
 {
@@ -25,7 +28,6 @@ class NewProductType extends AbstractType
                 $builder->add('departments', 'collection', array(
                     'type' => new ProductDepartmentType(),
                     'required' => true,
-                    'error_bubbling' => true,
                 ));
                 $builder->add('status', 'choice', array(
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')

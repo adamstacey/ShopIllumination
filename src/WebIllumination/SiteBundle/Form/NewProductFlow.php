@@ -23,18 +23,16 @@ use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class NewProductFlow extends FormFlow
 {
-
-
     protected $maxSteps = 5;
     protected $allowDynamicStepNavigation = true;
 
     protected function loadStepDescriptions() {
         return array(
-            'Enter Product Details',
-            'Select Features',
-            'Edit Product Variations - Overview',
-            'Edit Product Variations - Images',
-            'Edit Product Variations - Prices',
+            '1. Product Information',
+            '2. Build Combinations',
+            '3. Prices',
+            '4. Features',
+            '5. Images',
         );
     }
 
@@ -50,16 +48,17 @@ class NewProductFlow extends FormFlow
 
         $options['cascade_validation'] = true;
 
-        if($step > 1)
+        if ($step > 1)
         {
             $departments = $formData->getDepartments();
-            if(count($departments) > 0 && $departments[0]->getDepartment() !== null) {
+            if (count($departments) > 0 && $departments[0]->getDepartment() !== null) {
                 $options['departmentId'] = $departments[0]->getDepartment()->getId();
             } else {
                 $options['departmentId'] = null;
             }
         }
-        if($step > 2)
+
+        if ($step == 3)
         {
             // Generate variations
             $options['variants'] = array();
@@ -74,6 +73,8 @@ class NewProductFlow extends FormFlow
                 }
             }
 
+
+
             // Create array containing each combination of the features
             foreach($featureGroups as $featureGroup)
             {
@@ -87,7 +88,7 @@ class NewProductFlow extends FormFlow
                 } else {
                     // Create new variations based on the previous variation with the extra features
                     $count = count($options['variants']);
-                    for($i=0;$i<$count;$i++)
+                    for($i = 0; $i < $count; $i++)
                     {
                         if($featureGroup)
                         {
@@ -116,6 +117,7 @@ class NewProductFlow extends FormFlow
                     $productToFeature->setDefaultFeature($feature);
                     $variant->addFeature($productToFeature);
                 }
+
                 $variant->setProduct($formData);
                 $variant->addPrice(new Price());
                 foreach($formData->getDescriptions() as $description)
@@ -127,7 +129,10 @@ class NewProductFlow extends FormFlow
                 }
                 $formData->addVariant($variant);
             }
+
         }
+
+
 
         return $options;
     }

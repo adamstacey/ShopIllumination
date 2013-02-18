@@ -3,12 +3,6 @@
 
 {% block title %}Add New Product | {{ parent() }}{% endblock %}
 
-
-{#{% block leftmenu %}#}
-    {#{{ parent() }}#}
-    {#&#123;&#35;{% include 'WebIlluminationSiteBundle:Product:newLeftMenu.html.twig' %}&#35;&#125;#}
-{#{% endblock %}#}
-
 {% block header %}
     <header>
         {{ parent() }}
@@ -17,94 +11,23 @@
 {% endblock %}
 {% block body %}
     <section>
-        {% if flow.getCurrentStep() == 1 %}
-            {% include 'WebIlluminationSiteBundle:Product:new_Step1.html.twig' %}
-        {% elseif flow.getCurrentStep() == 2 %}
-            {% include 'WebIlluminationSiteBundle:Product:new_Step2.html.twig' %}
-        {% elseif flow.getCurrentStep() == 3 %}
-            <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
-                <div class="widget-group clearfix">
-                    <div class="widget widget-1-of-1">
-                        <div class="ui-widget mbl">
-                            <header class="ui-widget-header ui-corner-top">
-                                <h2>Variants</h2>
-                            </header>
-                            <section class="ui-widget-content ui-corner-bottom">
-                                {% if form.errors %}
-                                    <div class="message error">
-                                        <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
-                                        {{ form_errors(form) }}
-                                    </div>
-                                {% endif %}
-                                <fieldset>
-                                    <div class="form-element widget-group clearfix">
-                                        <div class="widget widget-1-of-5">
-                                            <label for="formProductCode">Base Product Code</label>
-                                        </div>
-                                        <div class="widget widget-3-of-5">
-                                            <input type="text" id="formProductCode" name="productCode" class="fill" value="">
-                                        </div>
-                                        <div class="widget widget-1-of-5">
-                                            <button id="applyProductCode" class="button">Apply</button>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <table class="data-table" id="product-variant-list" width="100%">
-                                        <thead>
-                                        <tr>
-                                            <th>Product Code</th>
-                                            <th>Status</th>
-                                            <th>Features</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for row in form.variants %}
-                                                {{ form_widget(row) }}
-                                            {% endfor %}
-                                        </tbody>
-                                        {% do form.variants.setRendered() %}
-                                    </table>
-                                </fieldset>
-
-                                {{ form_rest(form) }}
-                                {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
-
-                                <div class="form-element widget-group clearfix">
-                                    <div class="widget widget-1-of-3">&nbsp;</div>
-                                    <div class="widget widget-2-of-3">
-                                        {% include 'WebIlluminationSiteBundle:Product:newControls.html.twig' %}
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $('.delete-row').on('click', function() {
-                        $(this).parent().parent().remove();
-                    });
-                    $('#applyProductCode').click(function(e) {
-                        var val = $('#formProductCode').val();
-                        // Update the value of each product code field with the new value
-                        $("#product-variant-list").find("tr td:nth-child(1) input").each(function(key, input) {
-                            // If the field has already been filled in then do not edit it
-                            if(!$(input).val()) {
-                                $(input).val(val);
-                            }
-                        });
-
-                        e.preventDefault();
-                    })
-                })
-            </script>
-        {% elseif flow.getCurrentStep() == 4 %}
-            {% include 'WebIlluminationSiteBundle:Product:new_Step4.html.twig' %}
-        {% elseif flow.getCurrentStep() == 5 %}
-            {% include 'WebIlluminationSiteBundle:Product:new_Step5.html.twig' %}
-        {% endif %}
+        <div class="widget-group clearfix">
+            <div class="widget widget-2-of-7">
+                {% include 'WebIlluminationSiteBundle:Product:newLeftMenu.html.twig' %}
+            </div>
+            <div class="widget widget-5-of-7">
+                {% if flow.getCurrentStep() == 1 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step1.html.twig' %}
+                {% elseif flow.getCurrentStep() == 2 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step2.html.twig' %}
+                {% elseif flow.getCurrentStep() == 3 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step3.html.twig' %}
+                {% elseif flow.getCurrentStep() == 4 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step4.html.twig' %}
+                {% elseif flow.getCurrentStep() == 5 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step5.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
     </section>
 {% endblock %}

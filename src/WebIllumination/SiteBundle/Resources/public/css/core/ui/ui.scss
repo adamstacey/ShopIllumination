@@ -844,8 +844,16 @@ body .ui-tooltip {
 }
 
 .ui-widget-header {
+    position: relative;
+
     @include verticalGradientGreyToGreyDark;
     @include boxInsetShadow($colourWhite, 0, 1px, 0, 0, 0.7);
+}
+
+.ui-widget-header .ui-icon {
+    position: absolute;
+    top: 3px;
+    right: $spacingMedium;
 }
 
 .ui-widget-header h2 {

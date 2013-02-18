@@ -57,6 +57,7 @@ class DemoController extends Controller
 
     /**
      * @Route("/upload", name="demo_upload")
+     * @Method({"GET"})
      * @Template()
      */
     public function uploadAction(Request $request)
@@ -65,7 +66,8 @@ class DemoController extends Controller
     }
 
     /**
-     * @Route("/image/{id}", name="demo_view_image")
+     * @Route("/image/{id}", name="demo_image")
+     * @Method({"GET"})
      * @Template()
      */
     public function imageAction(Request $request, $id)

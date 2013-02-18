@@ -49,7 +49,7 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"})
+     * @Assert\NotBlank(groups={"site_edit_product_overview"})
      * @Assert\Choice(choices={"a", "h", "d"})
      */
     private $status = 'a';

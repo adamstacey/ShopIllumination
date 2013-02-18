@@ -1,58 +1,47 @@
-<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <h2>Variants</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-700"></span>
+                    <h2>3. Prices</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
-                    {% if form.errors %}
-                        <div class="message error">
-                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
-                            {{ form_errors(form) }}
-                        </div>
-                    {% endif %}
+                    {% include 'WebIlluminationSiteBundle:Product:newErrors.html.twig' %}
                     <fieldset>
                         <div class="form-element widget-group clearfix">
-                            <div class="widget widget-1-of-5">
-                                <label for="formProductCode">Base Product Code</label>
+                            <div class="widget widget-1-of-3">
+                                <label for="formProductCode">Apply Base Product Code</label>
                             </div>
-                            <div class="widget widget-3-of-5">
-                                <input type="text" id="formProductCode" name="productCode" class="fill" value="">
-                            </div>
-                            <div class="widget widget-1-of-5">
-                                <button id="applyProductCode" class="button">Apply</button>
+                            <div class="widget widget-2-of-3">
+                                <input type="text" id="formProductCode" name="productCode" class="fl" size="15" value="" />
+                                <button type="button" class="actionApplyProductCode fl button icon-grey mls" data-icon-secondary="icon-465">Apply</button>
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset>
-                        <table class="data-table" id="product-variant-list" width="100%">
+                    <fieldset class="pbm">
+                        <table class="form-table" id="productVariantList">
                             <thead>
-                            <tr>
-                                <th>Product Code</th>
-                                <th>Status</th>
-                                <th>Features</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th>Combination</th>
+                                    <th>Product Code</th>
+                                    <th>Cost Price</th>
+                                    <th>RRP</th>
+                                    <th>List Price</th>
+                                    <th>&nbsp;</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            {#{% for row in form.variants %}#}
-                                {#{{ form_widget(row) }}#}
-                            {#{% endfor %}#}
+                                {% for variant in form.variants %}
+                                    {{ form_widget(variant) }}
+                                {% endfor %}
                             </tbody>
-                            {#{% do form.variants.setRendered() %}#}
+                            {% do form.variants.setRendered() %}
                         </table>
                     </fieldset>
-
                     {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
-
-                    <div class="form-element widget-group clearfix">
-                        <div class="widget widget-1-of-3">&nbsp;</div>
-                        <div class="widget widget-2-of-3">
-                            {% include 'WebIlluminationSiteBundle:Product:newControls.html.twig' %}
-                        </div>
-                    </div>
+                    {% include 'WebIlluminationSiteBundle:Product:newControls.html.twig' %}
                 </section>
             </div>
         </div>
@@ -60,20 +49,13 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.delete-row').on('click', function() {
-            $(this).parent().parent().remove();
-        });
-        $('#applyProductCode').click(function(e) {
-            var val = $('#formProductCode').val();
-            // Update the value of each product code field with the new value
-            $("#product-variant-list").find("tr td:nth-child(1) input").each(function(key, input) {
-                // If the field has already been filled in then do not edit it
-                if(!$(input).val()) {
-                    $(input).val(val);
+        $(".actionApplyProductCode").click(function() {
+            var $productCode = $("#formProductCode").val();
+            $("#productVariantList").find("tr input:nth-child(1)").each(function() {
+                if (!$(this).val()) {
+                    $(this).val($productCode);
                 }
             });
-
-            e.preventDefault();
         })
     })
 </script>
