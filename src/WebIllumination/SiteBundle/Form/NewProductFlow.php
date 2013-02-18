@@ -108,29 +108,26 @@ class NewProductFlow extends FormFlow
             // Create the variant entities
             foreach($options['variants'] as $variantFeatures)
             {
-                if ($formData->getProductCode())
+                $variant = new Variant();
+                foreach($variantFeatures as $feature)
                 {
-                    $variant = new Variant();
-                    foreach($variantFeatures as $feature)
-                    {
-                        $productToFeature = new ProductToFeature();
-                        $productToFeature->setVariant($variant);
-                        $productToFeature->setProductFeature($feature->getProductFeatureGroup());
-                        $productToFeature->setDefaultFeature($feature);
-                        $variant->addFeature($productToFeature);
-                    }
-
-                    $variant->setProduct($formData);
-                    $variant->addPrice(new Price());
-                    foreach($formData->getDescriptions() as $description)
-                    {
-                        $variantDescription = new VariantDescription();
-                        $variantDescription->setLocale($description->getLocale());
-                        $variantDescription->setDescription($description->getDescription());
-                        $variant->addDescription($variantDescription);
-                    }
-                    $formData->addVariant($variant);
+                    $productToFeature = new ProductToFeature();
+                    $productToFeature->setVariant($variant);
+                    $productToFeature->setProductFeature($feature->getProductFeatureGroup());
+                    $productToFeature->setDefaultFeature($feature);
+                    $variant->addFeature($productToFeature);
                 }
+
+                $variant->setProduct($formData);
+                $variant->addPrice(new Price());
+                foreach($formData->getDescriptions() as $description)
+                {
+                    $variantDescription = new VariantDescription();
+                    $variantDescription->setLocale($description->getLocale());
+                    $variantDescription->setDescription($description->getDescription());
+                    $variant->addDescription($variantDescription);
+                }
+                $formData->addVariant($variant);
             }
 
         }
