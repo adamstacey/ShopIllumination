@@ -22,6 +22,10 @@
                     {% include 'WebIlluminationSiteBundle:Product:new_Step2.html.twig' %}
                 {% elseif flow.getCurrentStep() == 3 %}
                     {% include 'WebIlluminationSiteBundle:Product:new_Step3.html.twig' %}
+                {% elseif flow.getCurrentStep() == 4 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step4.html.twig' %}
+                {% elseif flow.getCurrentStep() == 5 %}
+                    {% include 'WebIlluminationSiteBundle:Product:new_Step5.html.twig' %}
                 {% endif %}
             </div>
         </div>

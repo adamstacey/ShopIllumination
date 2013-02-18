@@ -137,7 +137,7 @@ class Variant implements DescribableInterface
      */
     private $deletedAt;
 
-    private $active;
+    private $images = array();
 
     /**
      * Constructor
@@ -669,16 +669,6 @@ class Variant implements DescribableInterface
         return null;
     }
 
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
     public function getDeletedAt()
     {
         return $this->deletedAt;
@@ -687,5 +677,15 @@ class Variant implements DescribableInterface
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    public function setImages($images)
+    {
+        $this->images = $images;
     }
 }

@@ -88,7 +88,7 @@ class ImageApiController extends Controller
                 'id' => $image->getId(),
                 'name' => $file->getClientOriginalName(),
                 'size' => $file->getSize(),
-                'url' => $image->getOriginalPath(),
+                'url' => $image->getUploadDir() . $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
                 'delete_type' => 'DELETE',
             );

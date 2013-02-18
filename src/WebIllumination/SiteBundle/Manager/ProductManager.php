@@ -139,11 +139,8 @@ class ProductManager extends Manager
             $image->setImageType('product');
             $image->setObjectId($product->getId());
             $image->setDisplayOrder(1);
-            $image->setOriginalPath('/uploads/images/product/product/no-image-large.jpg');
-            $image->setThumbnailPath('/uploads/images/product/product/no-image-thumbnail.jpg');
-            $image->setMediumPath('/uploads/images/product/product/no-image-medium.jpg');
-            $image->setLargePath('/uploads/images/product/product/no-image-large.jpg');
-
+            $image->setOriginalPath('/uploads/images/product/product/no-image.jpg');
+            $image->setPublicPath('/uploads/images/product/product/no-image.jpg');
             $em->persist($image);
             $em->flush();
         }

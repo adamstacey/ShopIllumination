@@ -84,7 +84,6 @@ class ProductFeatureType extends AbstractType
             $form = $event->getForm();
 
             if ($data && isset($data['defaultFeature'])) {
-//                \Doctrine\Common\Util\Debug::dump($data);die();
                 $form->remove('defaultFeature');
                 $form->add($factory->createNamed('defaultFeature', 'entity', null, array(
                     'required'  => false,

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductVariantType extends AbstractType
+class ProductVariantOverviewType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -20,14 +20,6 @@ class ProductVariantType extends AbstractType
             'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
 
         ));
-        $builder->add('prices', 'collection', array(
-            'type' => new ProductPriceType(),
-        ));
-        $builder->add('descriptions', 'collection', array(
-            'type' => new VariantDescriptionType(),
-            'allow_add' => true,
-            'allow_delete' => true,
-        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -39,6 +31,6 @@ class ProductVariantType extends AbstractType
 
     public function getName()
     {
-        return 'site_product_variant';
+        return 'site_product_variant_overview';
     }
 }

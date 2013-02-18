@@ -1,0 +1,138 @@
+<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Variants</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom">
+                    {% if form.errors %}
+                        <div class="message error">
+                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
+                    <fieldset>
+                        <table class="data-table" id="product-variant-list" width="100%">
+                            <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in form.variants %}
+                                {{ form_widget(row) }}
+                            {% endfor %}
+                            </tbody>
+                            {% do form.variants.setRendered() %}
+                        </table>
+                    </fieldset>
+
+                    {{ form_rest(form) }}
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+
+                    <div class="form-element widget-group clearfix">
+                        <div class="widget widget-1-of-3">&nbsp;</div>
+                        <div class="widget widget-2-of-3">
+                            {% include 'WebIlluminationSiteBundle:Product:newControls.html.twig' %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% raw %}
+<script id="template-upload" type="text/x-template">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td class="preview"><span class="fade"></span></td>
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+        {% if (file.error) { %}
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+        {% } else if (o.files.valid && !i) { %}
+        <td>
+            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+        </td>
+        <td class="start">{% if (!o.options.autoUpload) { %}
+            <button class="button">
+                <i class="icon-upload icon-white"></i>
+                <span>Start</span>
+            </button>
+            {% } %}</td>
+        {% } else { %}
+        <td colspan="2"></td>
+        {% } %}
+        <td class="cancel">{% if (!i) { %}
+            <button class="button">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>Cancel</span>
+            </button>
+            {% } %}</td>
+    </tr>
+    {% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-template">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        {% if (file.error) { %}
+        <td></td>
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+        {% } else { %}
+        <td class="preview">{% if (file.thumbnail_url) { %}
+            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+            {% } %}</td>
+        <td class="name">
+            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+        </td>
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+        <td colspan="2"></td>
+        {% } %}
+        <td class="delete">
+            <button class="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+            <i class="icon-trash icon-white"></i>
+            <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1">
+        </td>
+    </tr>
+    {% } %}
+</script>
+{% endraw %}
+<script>
+    $(function () {
+        'use strict';
+
+        $('.fileupload').each(function () {
+            var that = this;
+            $(this).fileupload({
+                url: '{{ path('api_images_post_image') }}',
+                dropZone: $(this),
+                formData: []
+            }).bind('fileuploaddone', function (e, data) {
+                        var images = $(that).find('input[type=hidden]').val();
+
+                        $.each(data.result.files, function (index, file) {
+                            if (images === "") {
+                                images = [];
+                            } else {
+                                images = images.split(',');
+                            }
+
+                            images.push(file.id);
+                        });
+
+                        $(that).find('input[type=hidden]').val(images.join(','));
+                    });
+        });
+        $(document).bind('drop dragover', function (e) {
+            e.preventDefault();
+        });
+    });
+
+</script>

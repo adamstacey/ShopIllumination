@@ -6,3 +6,10 @@
 %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 {% endstylesheets %}
+{% stylesheets
+    '@WebIlluminationSiteBundle/Resources/public/plugins/upload/css/jquery.fileupload-ui.css'
+    output='css/plugins-compressed.css'
+    filter='yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}

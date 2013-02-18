@@ -51,7 +51,7 @@ class VariantDescription implements DescriptionInterface
      * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"})
      * @Assert\Type(type="string", groups={"flow_site_new_product_step3", "site_edit_product_description"})
      */
-    private $description;
+    private $description = "";
 
     /**
      * @ORM\Column(name="short_description", type="text")

@@ -52,7 +52,7 @@ class Description implements DescriptionInterface
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_description"})
      * @Assert\Type(type="string", groups={"flow_site_new_product_step1", "site_edit_product_description"})
      */
-    private $description;
+    private $description = "";
 
     /**
      * @ORM\Column(name="short_description", type="text")
