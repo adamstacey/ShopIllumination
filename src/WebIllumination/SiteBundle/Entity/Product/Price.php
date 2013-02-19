@@ -31,8 +31,8 @@ class Price
     
     /**
      * @ORM\Column(name="cost_price", type="decimal", precision=12, scale=4)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_prices"})
-     * @Assert\Min(limit="0", groups={"flow_site_new_product_step3", "site_edit_product_prices"})
+     * @Assert\NotBlank(groups={"site_edit_product_prices"})
+     * @Assert\Min(limit="0", groups={"site_edit_product_prices"})
      */
     private $costPrice = 0;
     
