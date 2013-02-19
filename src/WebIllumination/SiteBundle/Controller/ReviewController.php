@@ -10,9 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @Route("/api")
+ * @Route("/review")
  */
-class ApiController extends Controller
+class ReviewController extends Controller
 {
     /**
      * @Route("/features/{groupId}.{_format}", name="api_features", defaults={"_format":"json"}, requirements={"_format":"json|xml"})

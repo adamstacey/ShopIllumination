@@ -13,18 +13,6 @@
     </td>
     <td></td>
 {% endmacro %}
-{% macro list_prices_widget(form) %}
-    <td{% if form.costPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
-        {{ form_widget(form.costPrice) }}
-        {{ form_errors(form.costPrice) }}
-    </td>
-    <td{% if form.recommendedRetailPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
-        {{ form_widget(form.recommendedRetailPrice) }}
-    </td>
-    <td{% if form.listPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
-        {{ form_widget(form.listPrice) }}
-    </td>
-{% endmacro %}
 {% macro product_departments_row(form) %}
     {% if form|length == 1 %}
         <div class="form-element{% if form.0.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
@@ -109,7 +97,7 @@
         <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productFeatureList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
     </td>
 {% endmacro %}
-{% macro product_variants_widget(form) %}
+{% macro product_variants_overview_widget(form) %}
     <tr>
         <td class="fill">
             <ul>
@@ -125,9 +113,6 @@
         <td width="1">
             <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productVariantList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
         </td>
-    </tr>
-    <tr>
-
     </tr>
 {% endmacro %}
 {% macro product_variants_images_widget(form) %}
@@ -176,26 +161,6 @@
         </td>
     </tr>
 {% endmacro %}
-{% macro product_variants_overview_widget(form) %}
-    <tr>
-        <td class="ac padding-top-5 padding-bottom-5" width="175">
-            {{ form_widget(form.productCode) }}
-        </td>
-        <td class="ac padding-top-5 padding-bottom-5" width="175">
-            {{ form_widget(form.status) }}
-        </td>
-        <td class="padding-top-5 padding-bottom-5">
-            <ul>
-                {% for feature in form.get('value').features %}
-                    <li>({{ feature.productFeature }}) {{ feature.defaultFeature }}</li>
-                {% endfor %}
-            </ul>
-        </td>
-        <td>
-            <button type="button" class="fr small button icon-set-white ui-button-red delete-row">Delete</button>
-        </td>
-    </tr>
-{% endmacro %}
 {% macro product_variants_images_widget(form) %}
     {{ form_widget(form.images) }}
 {% endmacro %}
@@ -203,4 +168,16 @@
     <tr>
         {{ form_widget(form.prices) }}
     </tr>
+{% endmacro %}
+
+{% macro list_prices_widget(form) %}
+    <td{% if form.costPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.costPrice) }}
+    </td>
+    <td{% if form.recommendedRetailPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.recommendedRetailPrice) }}
+    </td>
+    <td{% if form.listPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.listPrice) }}
+    </td>
 {% endmacro %}

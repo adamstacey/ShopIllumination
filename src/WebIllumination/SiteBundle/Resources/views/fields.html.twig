@@ -71,44 +71,53 @@
 {% endblock form_rows %}
 
 
+
+
+
 {% block _site_new_product_prices_entry_widget %}
+    <div>***_site_new_product_prices_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.prices_widget(form) }}
 {% endblock %}
-{% block _site_new_product_variants_entry_prices_entry_widget %}
-    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.list_prices_widget(form) }}
-{% endblock %}
+
 {% block _site_new_product_featureGroups_entry_widget %}
+    <div>***_site_new_product_featureGroups_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_featureGroups_widget(form) }}
 {% endblock %}
 {% block _site_new_product_features_entry_widget %}
+    <div>***_site_new_product_features_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
 {% endblock %}
 {% block _site_new_product_departments_row %}
+    <div>***_site_new_product_departments_row***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_departments_row(form) }}
 {% endblock %}
 {% block _site_edit_product_overview_departments_row %}
+    <div>***_site_edit_product_overview_departments_row***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_departments_row(form) }}
 {% endblock %}
 {% block _site_new_product_descriptions_entry_widget %}
+    <div>***_site_new_product_descriptions_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_descriptions_widget(form) }}
 {% endblock %}
 {% block _site_edit_product_description_descriptions_entry_widget %}
+    <div>***_site_edit_product_description_descriptions_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_descriptions_widget(form) }}
 {% endblock %}
 {% block _site_new_product_variants_entry_widget %}
+    <div>***_site_new_product_variants_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_variants_widget(form) }}
 {% endblock %}
 
 {% block _site_edit_product_prices_prices_entry_widget %}
+    <div>***_site_edit_product_prices_prices_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.prices_widget(form) }}
 {% endblock %}
@@ -123,14 +132,17 @@
     {#{{ fields.product_variants_images_widget(form) }}#}
 {#{% endblock %}#}
 {% block _site_new_product_variants_prices_entry_widget %}
+    <div>***_site_new_product_prices_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_variants_prices_widget(form) }}
+    {{ fields._site_new_product_prices_entry_widget(form) }}
 {% endblock %}
 {% block _site_new_product_variants_prices_entry_variants_prices_price_entry_widget %}
+    <div>***_site_new_product_variants_prices_entry_variants_prices_price_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.prices_widget(form) }}
 {% endblock %}
 {% block _site_new_product_variants_images_entry_images_widget %}
+    <div>***_site_new_product_variants_images_entry_images_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     <tr class="fileupload">
         <td class="padding-top-5 padding-bottom-5">
@@ -180,6 +192,7 @@
     {#&#123;&#35;{{ fields.test(form) }}&#35;&#125;#}
 {#{% endblock %}#}
 {% block _site_new_variant_descriptions_entry_widget %}
+    <div>***_site_new_variant_descriptions_entry_widget***</div>
     <td>
         {{ form_widget(form.locale) }}
         {{ form_errors(form.locale) }}
@@ -193,21 +206,28 @@
     </td>
 {% endblock %}
 {% block _site_new_variant_prices_entry_widget %}
+    <div>***_site_new_variant_prices_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.prices_widget(form) }}
 {% endblock %}
 {% block _site_new_variant_features_entry_widget %}
+    <div>***_site_new_variant_features_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
 {% endblock %}
 
 {# Edit variant fields #}
 {% block _site_new_product_variants_entry_descriptions_entry_widget %}
-    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.variant_descriptions_widget(form) }}
+    {#{% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}#}
+    {#{{ fields.variant_descriptions_widget(form) }}#}
 {% endblock %}
 {% block _site_edit_variant_features_features_entry_widget %}
+    <div>***_site_edit_variant_features_features_entry_widget***</div>
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.features_widget(form) }}
 {% endblock %}
-
+{% block _site_new_product_variants_entry_prices_entry_widget %}
+    <div>***_site_new_product_variants_entry_prices_entry_widget***</div>
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.list_prices_widget(form) }}
+{% endblock %}
