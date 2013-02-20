@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_to_option")
+ * @ORM\Table(name="product_variant_to_option")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductToOption
+class VariantToOption
 {
     /**
      * @ORM\Id
@@ -30,12 +30,12 @@ class ProductToOption
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\OptionGroup")
-     * @ORM\JoinColumn(name="product_group_option_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="group_option_id", referencedColumnName="id")
      **/
     private $optionGroup;
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Option")
-     * @ORM\JoinColumn(name="product_option_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
      **/
     private $option;
     

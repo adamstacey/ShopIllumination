@@ -17,9 +17,9 @@ use Craue\FormFlowBundle\Form\FormFlow;
 use WebIllumination\SiteBundle\Entity\Product\Feature;
 use WebIllumination\SiteBundle\Entity\Product\Price;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
-use WebIllumination\SiteBundle\Entity\Product\VariantDescription;
+use WebIllumination\SiteBundle\Entity\Product\Variant\Description;
 use WebIllumination\SiteBundle\Entity\Product;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
+use WebIllumination\SiteBundle\Entity\Product\VariantToFeature;
 
 class NewProductFlow extends FormFlow
 {

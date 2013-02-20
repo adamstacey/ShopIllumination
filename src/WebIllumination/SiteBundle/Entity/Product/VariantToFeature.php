@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="product_to_feature")
+ * @ORM\Table(name="product_variant_to_feature")
  * @ORM\HasLifecycleCallbacks()
  */
-class ProductToFeature
+class VariantToFeature
 {
     /**
      * @ORM\Id
@@ -31,15 +31,15 @@ class ProductToFeature
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\FeatureGroup")
-     * @ORM\JoinColumn(name="product_feature_group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="feature_group_id", referencedColumnName="id")
      **/
-    private $productFeature;
+    private $featureGroup;
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
-     * @ORM\JoinColumn(name="product_feature_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="feature_id", referencedColumnName="id")
      **/
-    private $defaultFeature;
+    private $feature;
         
     /**
      * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
