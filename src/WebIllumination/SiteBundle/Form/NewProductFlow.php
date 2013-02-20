@@ -67,21 +67,19 @@ class NewProductFlow extends FormFlow
             $featureGroups = array();
             foreach($formData->getFeatures() as $featureGroup)
             {
-                if($featureGroup->getDefaultFeature())
+                if ($featureGroup->getDefaultFeature())
                 {
                     $featureGroups[$featureGroup->getProductFeature()->getId()][] = $featureGroup->getDefaultFeature();
                 }
             }
 
-
-
             // Create array containing each combination of the features
             foreach($featureGroups as $featureGroup)
             {
                 // If variations is empty create the first variations
-                if(empty($options['variants']))
+                if (empty($options['variants']))
                 {
-                    foreach($featureGroup as $feature)
+                    foreach($featureGroup as $featureGroupId => $feature)
                     {
                         $options['variants'][] = array($feature);
                     }
@@ -105,34 +103,65 @@ class NewProductFlow extends FormFlow
                 }
             }
 
+            // Build the existing combinations to check
+            $existingCombinations = array();
+            foreach ($formData->getVariants() as $existingVariant)
+            {
+                $existingCombination = array();
+                foreach ($existingVariant->getFeatures() as $variantFeatureGroup)
+                {
+                    $existingCombination[] = array('featureGroupId' => $variantFeatureGroup->getProductFeature()->getId(), 'featureId' => $variantFeatureGroup->getDefaultFeature()->getId());
+                }
+                $existingCombinations[] = $existingCombination;
+            }
+
             // Create the variant entities
             foreach($options['variants'] as $variantFeatures)
             {
-                $variant = new Variant();
-                foreach($variantFeatures as $feature)
+                // Build the combinations to check
+                $combination = array();
+                foreach ($variantFeatures as $feature)
                 {
-                    $productToFeature = new ProductToFeature();
-                    $productToFeature->setVariant($variant);
-                    $productToFeature->setProductFeature($feature->getProductFeatureGroup());
-                    $productToFeature->setDefaultFeature($feature);
-                    $variant->addFeature($productToFeature);
+                    $combination[] = array('featureGroupId' => $feature->getProductFeatureGroup()->getId(), 'featureId' => $feature->getId());
                 }
 
-                $variant->setProduct($formData);
-                $variant->addPrice(new Price());
-                foreach($formData->getDescriptions() as $description)
+                // Check if the combinations exist already
+                $variantExists = false;
+                foreach ($existingCombinations as $existingCombination)
                 {
-                    $variantDescription = new VariantDescription();
-                    $variantDescription->setLocale($description->getLocale());
-                    $variantDescription->setDescription($description->getDescription());
-                    $variant->addDescription($variantDescription);
+                    if ($existingCombination === $combination)
+                    {
+                        $variantExists = true;
+                    }
                 }
-                $formData->addVariant($variant);
+
+                if (!$variantExists)
+                {
+                    error_log('Adding new variant!');
+                    $variant = new Variant();
+                    foreach($variantFeatures as $feature)
+                    {
+                        $productToFeature = new ProductToFeature();
+                        $productToFeature->setVariant($variant);
+                        $productToFeature->setProductFeature($feature->getProductFeatureGroup());
+                        $productToFeature->setDefaultFeature($feature);
+                        $variant->addFeature($productToFeature);
+                    }
+
+                    $variant->setProduct($formData);
+                    $variant->addPrice(new Price());
+                    foreach($formData->getDescriptions() as $description)
+                    {
+                        $variantDescription = new VariantDescription();
+                        $variantDescription->setLocale($description->getLocale());
+                        $variantDescription->setDescription($description->getDescription());
+                        $variant->addDescription($variantDescription);
+                    }
+                    $formData->addVariant($variant);
+                }
             }
 
         }
-
-
 
         return $options;
     }
