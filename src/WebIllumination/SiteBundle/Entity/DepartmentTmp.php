@@ -7,16 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="WebIllumination\SiteBundle\Repository\DepartmentRepository")
- * @ORM\Table(name="departments")
+ * @ORM\Table(name="departments_tmp")
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\Tree(type="nested")
  */
-class Department implements DescribableInterface
+class DepartmentTmp implements DescribableInterface
 {
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -111,25 +110,23 @@ class Department implements DescribableInterface
 
     /**
      * @Gedmo\TreeParent
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\DepartmentTmp", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Department", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\DepartmentTmp", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
 
     /**
-     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
-     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
@@ -241,6 +238,11 @@ class Department implements DescribableInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 
     /**
@@ -525,7 +527,7 @@ class Department implements DescribableInterface
      * @param \WebIllumination\SiteBundle\Entity\Department $parent
      * @return Department
      */
-    public function setParent(\WebIllumination\SiteBundle\Entity\Department $parent = null)
+    public function setParent(\WebIllumination\SiteBundle\Entity\DepartmentTmp $parent = null)
     {
         $this->parent = $parent;
     
@@ -548,7 +550,7 @@ class Department implements DescribableInterface
      * @param \WebIllumination\SiteBundle\Entity\Department $children
      * @return Department
      */
-    public function addChildren(\WebIllumination\SiteBundle\Entity\Department $children)
+    public function addChildren(\WebIllumination\SiteBundle\Entity\DepartmentTmp $children)
     {
         $children->setParent($this);
         $this->children[] = $children;
@@ -561,7 +563,7 @@ class Department implements DescribableInterface
      *
      * @param \WebIllumination\SiteBundle\Entity\Department $children
      */
-    public function removeChildren(\WebIllumination\SiteBundle\Entity\Department $children)
+    public function removeChildren(\WebIllumination\SiteBundle\Entity\DepartmentTmp $children)
     {
         $this->children->removeElement($children);
     }

@@ -80,12 +80,20 @@ doctrine:
                 metadata_cache_driver: apc
                 query_cache_driver: apc
                 result_cache_driver: apc
+                mappings:
+                    gedmo_tree:
+                        type: annotation
+                        prefix: Gedmo\Tree\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                        alias: GedmoTree # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
 
 # Doctrine Extensions Configuration
 stof_doctrine_extensions:
     default_locale: "%locale%"
     orm:
         default:
+            tree: true
             timestampable: true
             uploadable: true
     uploadable:
