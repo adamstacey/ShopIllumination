@@ -35,9 +35,9 @@ class FeatureGroup
     private $filter;
     
     /**
-     * @ORM\Column(name="product_feature_group", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $productFeatureGroup;
+    private $name;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)

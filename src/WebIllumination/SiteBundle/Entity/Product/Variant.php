@@ -27,17 +27,17 @@ class Variant implements DescribableInterface
     private $product;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\VariantDescription", mappedBy="variant", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant\Description", mappedBy="variant", cascade={"all"})
      */
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToFeature", mappedBy="variant", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
      */
     private $features;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToOption", mappedBy="variant", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\VariantToOption", mappedBy="variant", cascade={"all"})
      */
     private $options;
 

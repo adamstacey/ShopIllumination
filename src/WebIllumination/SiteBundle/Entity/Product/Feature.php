@@ -32,15 +32,15 @@ class Feature
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\FeatureGroup", inversedBy="features")
-     * @ORM\JoinColumn(name="product_feature_group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="feature_group_id", referencedColumnName="id")
      * @Serializer\Exclude
      */
-    private $productFeatureGroup;
+    private $featureGroup;
     
     /**
-     * @ORM\Column(name="product_feature", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $productFeature;
+    private $name;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
