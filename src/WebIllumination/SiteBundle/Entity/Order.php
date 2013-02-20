@@ -35,7 +35,7 @@ class Order
     private $donations;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Order\Product", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product", mappedBy="order")
      */
     private $products;
 

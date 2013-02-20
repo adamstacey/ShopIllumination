@@ -2,8 +2,9 @@
 namespace WebIllumination\SiteBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
-class DepartmentRepository extends EntityRepository
+class DepartmentRepository extends NestedTreeRepository
 {
     public function findActiveDepartment($id)
     {

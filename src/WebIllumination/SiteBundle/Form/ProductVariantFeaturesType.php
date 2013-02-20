@@ -6,14 +6,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductVariantPricesType extends AbstractType
+class ProductVariantFeaturesType extends AbstractType
 {
+    private $departmentId;
+
+    public function __construct($departmentId)
+    {
+        $this->departmentId = $departmentId;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('prices', 'collection', array(
-            'type' => new ProductPriceType(),
-            'block_name' => 'variants_prices_price',
+        $builder->add('features', 'collection', array(
+            'type' => new ProductFeatureType($this->departmentId),
+            'allow_add' => true,
+            'allow_delete' => true,
         ));
     }
 
@@ -26,6 +33,6 @@ class ProductVariantPricesType extends AbstractType
 
     public function getName()
     {
-        return 'site_product_variant_prices';
+        return 'site_product_variant_images';
     }
 }
