@@ -21,7 +21,8 @@ class NewProductType extends AbstractType
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('b')
                             ->addSelect('bd')
-                            ->leftJoin('b.descriptions', 'bd');
+                            ->leftJoin('b.descriptions', 'bd')
+                            ->orderBy('bd.name');
                     },
                     'empty_value' => '- Select a Brand -',
                 ), array());
