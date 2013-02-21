@@ -11,7 +11,7 @@ use WebIllumination\SiteBundle\Entity\DescriptionInterface;
  * @ORM\Table(name="product_variant_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
-class VariantDescription implements DescriptionInterface
+class Description implements DescriptionInterface
 {
     /**
      * @ORM\Id

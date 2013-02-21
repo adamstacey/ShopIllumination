@@ -234,4 +234,50 @@ class Feature
     {
         return $this->productFeatureGroup;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Feature
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set featureGroup
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup
+     * @return Feature
+     */
+    public function setFeatureGroup(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup = null)
+    {
+        $this->featureGroup = $featureGroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get featureGroup
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
+     */
+    public function getFeatureGroup()
+    {
+        return $this->featureGroup;
+    }
 }

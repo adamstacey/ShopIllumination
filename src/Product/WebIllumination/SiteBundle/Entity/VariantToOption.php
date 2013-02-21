@@ -1,75 +1,69 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Product;
 
-use Gedmo\Mapping\Annotation as Gedmo;
+namespace WebIllumination\SiteBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="product_variant_to_option")
- * @ORM\HasLifecycleCallbacks()
+ * VariantToOption
  */
 class VariantToOption
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length=11)
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
     private $id;
-    
+
     /**
-     * @ORM\Column(name="active", type="boolean")
+     * @var boolean
      */
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Variant", inversedBy="options")
-     */
-    private $variant;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\OptionGroup")
-     * @ORM\JoinColumn(name="group_option_id", referencedColumnName="id")
-     **/
-    private $optionGroup;
-    /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Option")
-     * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
-     **/
-    private $option;
-    
-    /**
-     * @ORM\Column(name="price", type="decimal", precision=12, scale=4)
+     * @var float
      */
     private $price;
-    
+
     /**
-     * @ORM\Column(name="price_type", type="string", length=1)
+     * @var string
      */
     private $priceType;
-    
+
     /**
-     * @ORM\Column(name="price_use", type="string", length=1)
+     * @var string
      */
     private $priceUse;
-        
+
     /**
-     * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
+     * @var integer
      */
     private $displayOrder;
 
     /**
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime")
+     * @var \DateTime
      */
     private $createdAt;
 
     /**
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @var \DateTime
      */
     private $updatedAt;
+
+    /**
+     * @var \WebIllumination\SiteBundle\Entity\Product\Variant
+     */
+    private $variant;
+
+    /**
+     * @var \WebIllumination\SiteBundle\Entity\Product\OptionGroup
+     */
+    private $optionGroup;
+
+    /**
+     * @var \WebIllumination\SiteBundle\Entity\Product\Option
+     */
+    private $option;
+
 
     /**
      * Get id
@@ -85,7 +79,7 @@ class VariantToOption
      * Set active
      *
      * @param boolean $active
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setActive($active)
     {
@@ -108,7 +102,7 @@ class VariantToOption
      * Set price
      *
      * @param float $price
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setPrice($price)
     {
@@ -131,7 +125,7 @@ class VariantToOption
      * Set priceType
      *
      * @param string $priceType
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setPriceType($priceType)
     {
@@ -154,7 +148,7 @@ class VariantToOption
      * Set priceUse
      *
      * @param string $priceUse
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setPriceUse($priceUse)
     {
@@ -177,7 +171,7 @@ class VariantToOption
      * Set displayOrder
      *
      * @param integer $displayOrder
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setDisplayOrder($displayOrder)
     {
@@ -200,7 +194,7 @@ class VariantToOption
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setCreatedAt($createdAt)
     {
@@ -223,7 +217,7 @@ class VariantToOption
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -243,10 +237,10 @@ class VariantToOption
     }
 
     /**
-     * Set product
+     * Set variant
      *
      * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {
@@ -256,32 +250,58 @@ class VariantToOption
     }
 
     /**
-     * Get product
+     * Get variant
      *
-     * @return \WebIllumination\SiteBundle\Entity\Product\Variant
+     * @return \WebIllumination\SiteBundle\Entity\Product\Variant 
      */
     public function getVariant()
     {
         return $this->variant;
     }
 
+    /**
+     * Set optionGroup
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\OptionGroup $optionGroup
+     * @return VariantToOption
+     */
+    public function setOptionGroup(\WebIllumination\SiteBundle\Entity\Product\OptionGroup $optionGroup = null)
+    {
+        $this->optionGroup = $optionGroup;
+    
+        return $this;
+    }
+
+    /**
+     * Get optionGroup
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\OptionGroup 
+     */
     public function getOptionGroup()
     {
         return $this->optionGroup;
     }
 
-    public function setOptionGroup($optionGroup)
+    /**
+     * Set option
+     *
+     * @param \WebIllumination\SiteBundle\Entity\Product\Option $option
+     * @return VariantToOption
+     */
+    public function setOption(\WebIllumination\SiteBundle\Entity\Product\Option $option = null)
     {
-        $this->optionGroup = $optionGroup;
+        $this->option = $option;
+    
+        return $this;
     }
 
+    /**
+     * Get option
+     *
+     * @return \WebIllumination\SiteBundle\Entity\Product\Option 
+     */
     public function getOption()
     {
         return $this->option;
-    }
-
-    public function setOption($option)
-    {
-        $this->option = $option;
     }
 }

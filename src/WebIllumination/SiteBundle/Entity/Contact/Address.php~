@@ -25,7 +25,7 @@ class Address
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\AddressType")
-     * @ORM\JoinColumn(name="contact_address_type_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      */
     private $type;
         
@@ -46,10 +46,10 @@ class Address
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\Title")
-     * @ORM\JoinColumn(name="contact_title_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="title_id", referencedColumnName="id")
      */
     private $contactTitle;
-    
+
     /**
      * @ORM\Column(name="first_name", type="string", length=255)
      */

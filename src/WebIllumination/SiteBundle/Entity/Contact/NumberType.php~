@@ -19,9 +19,9 @@ class NumberType
     private $id;    
     
     /**
-     * @ORM\Column(name="contact_number_type", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $contactNumberType;
+    private $name;
     
     /**
      * @ORM\Column(name="description", type="text")
@@ -178,5 +178,28 @@ class NumberType
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return NumberType
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

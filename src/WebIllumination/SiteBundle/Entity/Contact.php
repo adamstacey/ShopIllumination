@@ -46,7 +46,7 @@ class Contact
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\Title")
-     * @ORM\JoinColumn(name="contact_title_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=true)
      */
     private $contactTitle;
 

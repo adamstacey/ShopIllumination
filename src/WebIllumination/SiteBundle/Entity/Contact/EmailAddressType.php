@@ -19,9 +19,9 @@ class EmailAddressType
     private $id;    
     
     /**
-     * @ORM\Column(name="contact_email_address_type", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $contactEmailAddressType;
+    private $name;
     
     /**
      * @ORM\Column(name="description", type="text")
@@ -178,5 +178,28 @@ class EmailAddressType
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return EmailAddressType
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
