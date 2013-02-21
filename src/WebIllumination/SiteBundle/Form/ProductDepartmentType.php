@@ -18,7 +18,9 @@ class ProductDepartmentType extends AbstractType
                 return $er->createQueryBuilder('d')
                     ->addSelect('dd')
                     ->leftJoin('d.descriptions', 'dd')
-                    ->orderBy('d.displayOrder', 'ASC');
+                    ->where('d.root != d.id')
+                    ->orderBy('d.root', 'ASC')
+                    ->addOrderBy('d.lft', 'ASC');
             },
             'required' => true,
             'empty_value' => '- Select a Department -',
