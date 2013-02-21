@@ -177,7 +177,7 @@ class Department implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return str_repeat("> ", $this->getLevel()).$this->getName();
+            return html_entity_decode(str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $this->getLevel()).$this->getName());
         } else {
             return "";
         }
