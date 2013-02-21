@@ -633,7 +633,7 @@
 
                     ds = divSpan($el, options, {
                         divClass: options.selectClass,
-                        spanHtml: ($el.find(":selected:first") || $el.find("option:first")).html(),
+                        spanHtml: $.trim(($el.find(":selected:first") || $el.find("option:first")).text()),
                         spanWrap: "before"
                     });
                     $div = ds.div;
@@ -656,13 +656,13 @@
                     bindUi($el, $div, options);
                     bindMany($el, options, {
                         change: function () {
-                            $span.html($el.find(":selected").html());
+                            $span.html($.trim($el.find(":selected").text()));
                             $div.removeClass(options.activeClass);
                         },
                         "click touchend": function () {
                             // IE7 and IE8 may not update the value right
                             // until after click event - issue #238
-                            var selHtml = $el.find(":selected").html();
+                            var selHtml = $.trim($el.find(":selected").text());
 
                             if ($span.html() !== selHtml) {
                                 // Change was detected
@@ -671,7 +671,7 @@
                             }
                         },
                         keyup: function () {
-                            $span.html($el.find(":selected").html());
+                            $span.html($.trim($el.find(":selected").text()));
                         }
                     });
                     noSelect($span, options);
@@ -693,7 +693,7 @@
                                 classClearStandard($div, options);
 
                                 // Reset current selected text
-                                $span.html($el.find(":selected").html());
+                                $span.html($.trim($el.find(":selected").text()));
                                 classUpdateDisabled($div, $el, options);
                             }
                         }
