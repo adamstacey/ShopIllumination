@@ -23,7 +23,7 @@ class ApiController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $features = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Feature")->findBy(array(
-            'productFeatureGroup' => $groupId,
+            'featureGroup' => $groupId,
         ));
 
         $serializer = $this->get('serializer');

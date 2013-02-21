@@ -1,10 +1,14 @@
 <?php
 namespace WebIllumination\SiteBundle\Manager;
 
-use WebIllumination\SiteBundle\Entity\Image;
+use WebIllumination\SiteBundle\Entity\Product\Variant\Description as VariantDescription;
+use WebIllumination\SiteBundle\Entity\Product\Description as ProductDescription;
+use WebIllumination\SiteBundle\Entity\Product\Price;
+use WebIllumination\SiteBundle\Entity\Product\VariantToFeature;
+use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
+use WebIllumination\SiteBundle\Entity\Image;
 use WebIllumination\SiteBundle\Entity\Routing;
 
 class ProductManager extends Manager
@@ -22,11 +26,11 @@ class ProductManager extends Manager
     {
         $product = new Product();
 
-        $product->addDescription(new Product\Description());
+        $product->addDescription(new ProductDescription());
         $product->addDepartment(new ProductToDepartment());
-        $product->addPrice(new Product\Price());
+        $product->addPrice(new Price());
 
-        $product->addFeatureGroup(new ProductToFeature());
+        $product->addFeatureGroup(new VariantToFeature());
 
         return $product;
     }
@@ -38,17 +42,17 @@ class ProductManager extends Manager
      */
     public function createVariant(Product $product)
     {
-        $variant = new Product\Variant();
+        $variant = new Variant();
 
         $variant->setProductCode($product->getProductCode());
         $variant->setProduct($product);
-        $variant->addDescription(new Product\VariantDescription());
+        $variant->addDescription(new VariantDescription());
         $variant->addPrice(new Product\Price());
 
         return $variant;
     }
 
-    public function updateProductDescription(Product\Description $description)
+    public function updateProductDescription(ProductDescription $description)
     {
         if(!$description->getProduct()) return;
 
@@ -83,7 +87,7 @@ class ProductManager extends Manager
         }
     }
 
-    public function updateVariantDescription(Product\VariantDescription $description)
+    public function updateVariantDescription(VariantDescription $description)
     {
         if(!$description->getVariant()) return;
 

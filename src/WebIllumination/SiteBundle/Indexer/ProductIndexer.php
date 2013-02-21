@@ -2,7 +2,7 @@
 namespace WebIllumination\SiteBundle\Indexer;
 
 use WebIllumination\SiteBundle\Entity\Product;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
+use WebIllumination\SiteBundle\Entity\Product\VariantToFeature;
 
 class ProductIndexer extends Indexer
 {
@@ -94,14 +94,14 @@ class ProductIndexer extends Indexer
                 }
 
                 // Add all features
-                /** @var $feature ProductToFeature */
+                /** @var $feature VariantToFeature */
                 foreach ($variant->getFeatures() as $feature)
                 {
-                    if($feature && $feature->getProductFeature() && $feature->getDefaultFeature())
+                    if($feature && $feature->getFeatureGroup() && $feature->getFeature())
                     {
                         $document->addField(
-                            $helper->escapeTerm(htmlentities('attr_feature_'.$feature->getProductFeature()->getProductFeatureGroup())),
-                            $feature->getDefaultFeature()->getProductFeature()
+                            $helper->escapeTerm(htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())),
+                            $feature->getFeature()->getName()
                         );
                     }
                 }

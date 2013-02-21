@@ -20,7 +20,7 @@ class FeatureGroup
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature", mappedBy="productFeatureGroup")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature", mappedBy="featureGroup")
      */
     private $features;
     
@@ -65,7 +65,7 @@ class FeatureGroup
 
     public function __toString()
     {
-        return $this->getProductFeatureGroup();
+        return $this->getName();
     }
     
     /**
@@ -122,29 +122,6 @@ class FeatureGroup
     public function getFilter()
     {
         return $this->filter;
-    }
-
-    /**
-     * Set productFeatureGroup
-     *
-     * @param string $productFeatureGroup
-     * @return FeatureGroup
-     */
-    public function setProductFeatureGroup($productFeatureGroup)
-    {
-        $this->productFeatureGroup = $productFeatureGroup;
-    
-        return $this;
-    }
-
-    /**
-     * Get productFeatureGroup
-     *
-     * @return string 
-     */
-    public function getProductFeatureGroup()
-    {
-        return $this->productFeatureGroup;
     }
 
     /**

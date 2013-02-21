@@ -906,7 +906,7 @@ class Product implements DescribableInterface
         $this->features = $featureGroups;
     }
 
-    public function addFeatureGroup(ProductToFeature $featureGroup)
+    public function addFeatureGroup(Product\VariantToFeature $featureGroup)
     {
         $this->features[] = $featureGroup;
     }

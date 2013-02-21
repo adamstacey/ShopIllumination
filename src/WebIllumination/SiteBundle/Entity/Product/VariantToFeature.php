@@ -77,7 +77,7 @@ class VariantToFeature
      * Set active
      *
      * @param boolean $active
-     * @return ProductToFeature
+     * @return VariantToFeature
      */
     public function setActive($active)
     {
@@ -100,7 +100,7 @@ class VariantToFeature
      * Set displayOrder
      *
      * @param integer $displayOrder
-     * @return ProductToFeature
+     * @return VariantToFeature
      */
     public function setDisplayOrder($displayOrder)
     {
@@ -123,7 +123,7 @@ class VariantToFeature
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return ProductToFeature
+     * @return VariantToFeature
      */
     public function setCreatedAt($createdAt)
     {
@@ -146,7 +146,7 @@ class VariantToFeature
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return ProductToFeature
+     * @return VariantToFeature
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -169,7 +169,7 @@ class VariantToFeature
      * Set variant
      *
      * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
-     * @return ProductToFeature
+     * @return VariantToFeature
      */
     public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {
@@ -186,52 +186,6 @@ class VariantToFeature
     public function getVariant()
     {
         return $this->variant;
-    }
-
-    /**
-     * Set productFeature
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature
-     * @return ProductToFeature
-     */
-    public function setProductFeature(Product\FeatureGroup $productFeature = null)
-    {
-        $this->productFeature = $productFeature;
-    
-        return $this;
-    }
-
-    /**
-     * Get productFeature
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
-     */
-    public function getProductFeature()
-    {
-        return $this->productFeature;
-    }
-
-    /**
-     * Set defaultFeature
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature
-     * @return ProductToFeature
-     */
-    public function setDefaultFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature = null)
-    {
-        $this->defaultFeature = $defaultFeature;
-    
-        return $this;
-    }
-
-    /**
-     * Get defaultFeature
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
-     */
-    public function getDefaultFeature()
-    {
-        return $this->defaultFeature;
     }
 
     /**

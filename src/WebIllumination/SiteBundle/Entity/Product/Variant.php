@@ -490,10 +490,10 @@ class Variant implements DescribableInterface
     /**
      * Add options
      *
-     * @param \WebIllumination\SiteBundle\Entity\ProductToOption $options
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantToOption $options
      * @return Variant
      */
-    public function addOption(\WebIllumination\SiteBundle\Entity\ProductToOption $options)
+    public function addOption(\WebIllumination\SiteBundle\Entity\Product\VariantToOption $options)
     {
         $this->options[] = $options;
         $options->setVariant($this);
@@ -504,9 +504,9 @@ class Variant implements DescribableInterface
     /**
      * Remove options
      *
-     * @param \WebIllumination\SiteBundle\Entity\ProductToOption $options
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantToOption $options
      */
-    public function removeOption(\WebIllumination\SiteBundle\Entity\ProductToOption $options)
+    public function removeOption(\WebIllumination\SiteBundle\Entity\Product\VariantToOption $options)
     {
         $this->options->removeElement($options);
     }
@@ -532,10 +532,10 @@ class Variant implements DescribableInterface
     /**
      * Add features
      *
-     * @param \WebIllumination\SiteBundle\Entity\ProductToFeature $features
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantToFeature $features
      * @return Variant
      */
-    public function addFeature(\WebIllumination\SiteBundle\Entity\ProductToFeature $features)
+    public function addFeature(\WebIllumination\SiteBundle\Entity\Product\VariantToFeature $features)
     {
         $this->features[] = $features;
         $features->setVariant($this);
@@ -546,9 +546,9 @@ class Variant implements DescribableInterface
     /**
      * Remove features
      *
-     * @param \WebIllumination\SiteBundle\Entity\ProductToFeature $features
+     * @param \WebIllumination\SiteBundle\Entity\Product\VariantToFeature $features
      */
-    public function removeFeature(\WebIllumination\SiteBundle\Entity\ProductToFeature $features)
+    public function removeFeature(\WebIllumination\SiteBundle\Entity\Product\VariantToFeature $features)
     {
         $this->features->removeElement($features);
     }
@@ -623,10 +623,10 @@ class Variant implements DescribableInterface
     /**
      * Add descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant\Description $descriptions
      * @return Variant
      */
-    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
+    public function addDescription(\WebIllumination\SiteBundle\Entity\Product\Variant\Description $descriptions)
     {
         $this->descriptions[] = $descriptions;
         $descriptions->setVariant($this);
@@ -637,9 +637,9 @@ class Variant implements DescribableInterface
     /**
      * Remove descriptions
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant\Description $descriptions
      */
-    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\VariantDescription $descriptions)
+    public function removeDescription(\WebIllumination\SiteBundle\Entity\Product\Variant\Description $descriptions)
     {
         $this->descriptions->removeElement($descriptions);
     }

@@ -14,12 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use Craue\FormFlowBundle\Form\FormFlow;
-use WebIllumination\SiteBundle\Entity\Product\Feature;
-use WebIllumination\SiteBundle\Entity\Product\Price;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
+use WebIllumination\SiteBundle\Entity\Product\VariantToFeature;
+use WebIllumination\SiteBundle\Entity\Product\Price;
 use WebIllumination\SiteBundle\Entity\Product\Variant\Description;
 use WebIllumination\SiteBundle\Entity\Product;
-use WebIllumination\SiteBundle\Entity\Product\VariantToFeature;
 
 class NewProductFlow extends FormFlow
 {
@@ -65,34 +64,34 @@ class NewProductFlow extends FormFlow
 
             // Sort features into groups
             $featureGroups = array();
-            foreach($formData->getFeatures() as $featureGroup)
+            foreach ($formData->getFeatures() as $featureGroup)
             {
-                if ($featureGroup->getDefaultFeature())
+                if ($featureGroup->getFeature())
                 {
-                    $featureGroups[$featureGroup->getProductFeature()->getId()][] = $featureGroup->getDefaultFeature();
+                    $featureGroups[$featureGroup->getFeatureGroup()->getId()][] = $featureGroup->getFeature();
                 }
             }
 
             // Create array containing each combination of the features
-            foreach($featureGroups as $featureGroup)
+            foreach ($featureGroups as $featureGroup)
             {
                 // If variations is empty create the first variations
                 if (empty($options['variants']))
                 {
-                    foreach($featureGroup as $featureGroupId => $feature)
+                    foreach ($featureGroup as $featureGroupId => $feature)
                     {
                         $options['variants'][] = array($feature);
                     }
                 } else {
                     // Create new variations based on the previous variation with the extra features
                     $count = count($options['variants']);
-                    for($i = 0; $i < $count; $i++)
+                    for ($i = 0; $i < $count; $i++)
                     {
-                        if($featureGroup)
+                        if ($featureGroup)
                         {
                             $variant = array_pop($options['variants']);
 
-                            foreach($featureGroup as $feature)
+                            foreach ($featureGroup as $feature)
                             {
                                 $variantTmp = $variant;
                                 $variantTmp[] = $feature;
@@ -110,7 +109,7 @@ class NewProductFlow extends FormFlow
                 $existingCombination = array();
                 foreach ($existingVariant->getFeatures() as $variantFeatureGroup)
                 {
-                    $existingCombination[] = array('featureGroupId' => $variantFeatureGroup->getProductFeature()->getId(), 'featureId' => $variantFeatureGroup->getDefaultFeature()->getId());
+                    $existingCombination[] = array('featureGroupId' => $variantFeatureGroup->getFeatureGroup()->getId(), 'featureId' => $variantFeatureGroup->getFeature()->getId());
                 }
                 $existingCombinations[] = $existingCombination;
             }
@@ -122,7 +121,7 @@ class NewProductFlow extends FormFlow
                 $combination = array();
                 foreach ($variantFeatures as $feature)
                 {
-                    $combination[] = array('featureGroupId' => $feature->getProductFeatureGroup()->getId(), 'featureId' => $feature->getId());
+                    $combination[] = array('featureGroupId' => $feature->getFeatureGroup()->getId(), 'featureId' => $feature->getId());
                 }
 
                 // Check if the combinations exist already
@@ -137,22 +136,21 @@ class NewProductFlow extends FormFlow
 
                 if (!$variantExists)
                 {
-                    error_log('Adding new variant!');
                     $variant = new Variant();
                     foreach($variantFeatures as $feature)
                     {
-                        $productToFeature = new ProductToFeature();
-                        $productToFeature->setVariant($variant);
-                        $productToFeature->setProductFeature($feature->getProductFeatureGroup());
-                        $productToFeature->setDefaultFeature($feature);
-                        $variant->addFeature($productToFeature);
+                        $variantToFeature = new VariantToFeature();
+                        $variantToFeature->setVariant($variant);
+                        $variantToFeature->setFeatureGroup($feature->getFeatureGroup());
+                        $variantToFeature->setFeature($feature);
+                        $variant->addFeature($variantToFeature);
                     }
 
                     $variant->setProduct($formData);
                     $variant->addPrice(new Price());
                     foreach($formData->getDescriptions() as $description)
                     {
-                        $variantDescription = new VariantDescription();
+                        $variantDescription = new Description();
                         $variantDescription->setLocale($description->getLocale());
                         $variantDescription->setDescription($description->getDescription());
                         $variant->addDescription($variantDescription);

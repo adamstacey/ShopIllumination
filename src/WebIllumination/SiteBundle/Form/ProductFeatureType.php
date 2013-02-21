@@ -9,7 +9,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use WebIllumination\SiteBundle\Entity\Product\Feature;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class ProductFeatureType extends AbstractType
 {
@@ -25,7 +24,7 @@ class ProductFeatureType extends AbstractType
         $departmentId = $this->departmentId;
         $factory = $builder->getFormFactory();
 
-        $builder->add('productFeature', 'entity', array(
+        $builder->add('feature', 'entity', array(
             'required'  => false,
             'empty_value' => '- Select a Group -',
             'class' => 'WebIllumination\SiteBundle\Entity\Product\FeatureGroup',
@@ -56,20 +55,20 @@ class ProductFeatureType extends AbstractType
         $builder->addEventListener(FormEvents::SET_DATA, function($event) use ($factory) {
             /**
              * @var $event FormEvent
-             * @var $data ProductToFeature
+             * @var $data VariantToFeature
              */
             $data = $event->getData();
             $form = $event->getForm();
-            if ($data && $data->getProductFeature() !== null) {
-                $form->remove('defaultFeature');
-                $form->add($factory->createNamed('defaultFeature', 'entity', null, array(
+            if ($data && $data->getFeature() !== null) {
+                $form->remove('feature');
+                $form->add($factory->createNamed('feature', 'entity', null, array(
                     'required'  => false,
                     'empty_value' => 'Select a feature.',
                     'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
                     'query_builder' => function(EntityRepository $er) use ($data) {
                         $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.productFeatureGroup', $data->getProductFeature()->getId()));
-                        $qb->orderBy('f.productFeature');
+                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data->getFeature()->getId()));
+                        $qb->orderBy('f.feature');
                         return $qb;
                     },
                 )));
@@ -78,21 +77,21 @@ class ProductFeatureType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_BIND, function($event) use ($factory) {
             /**
              * @var $event FormEvent
-             * @var $data ProductToFeature
+             * @var $data VariantToFeature
              */
             $data = $event->getData();
             $form = $event->getForm();
 
-            if ($data && isset($data['defaultFeature'])) {
-                $form->remove('defaultFeature');
-                $form->add($factory->createNamed('defaultFeature', 'entity', null, array(
+            if ($data && isset($data['feature'])) {
+                $form->remove('feature');
+                $form->add($factory->createNamed('feature', 'entity', null, array(
                     'required'  => false,
                     'empty_value' => 'Select a feature.',
                     'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
                     'query_builder' => function(EntityRepository $er) use ($data) {
                         $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.productFeatureGroup', $data['productFeature']));
-                        $qb->orderBy('f.productFeature');
+                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data['feature']));
+                        $qb->orderBy('f.feature');
                         return $qb;
                     },
                 )));
@@ -104,12 +103,12 @@ class ProductFeatureType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'WebIllumination\SiteBundle\Entity\ProductToFeature'
+            'data_class' => 'WebIllumination\SiteBundle\Entity\Product\VariantToFeature'
         ));
     }
 
     public function getName()
     {
-        return 'site_product_feature';
+        return 'site_variant_feature';
     }
 }

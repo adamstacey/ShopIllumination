@@ -30,9 +30,10 @@ class VariantToOption
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\OptionGroup")
-     * @ORM\JoinColumn(name="group_option_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="option_group_id", referencedColumnName="id")
      **/
     private $optionGroup;
+
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Option")
      * @ORM\JoinColumn(name="option_id", referencedColumnName="id")
@@ -85,7 +86,7 @@ class VariantToOption
      * Set active
      *
      * @param boolean $active
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setActive($active)
     {
@@ -108,7 +109,7 @@ class VariantToOption
      * Set price
      *
      * @param float $price
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setPrice($price)
     {
@@ -131,7 +132,7 @@ class VariantToOption
      * Set priceType
      *
      * @param string $priceType
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setPriceType($priceType)
     {
@@ -154,7 +155,7 @@ class VariantToOption
      * Set priceUse
      *
      * @param string $priceUse
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setPriceUse($priceUse)
     {
@@ -177,7 +178,7 @@ class VariantToOption
      * Set displayOrder
      *
      * @param integer $displayOrder
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setDisplayOrder($displayOrder)
     {
@@ -200,7 +201,7 @@ class VariantToOption
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setCreatedAt($createdAt)
     {
@@ -223,7 +224,7 @@ class VariantToOption
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -246,7 +247,7 @@ class VariantToOption
      * Set product
      *
      * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
-     * @return ProductToOption
+     * @return VariantToOption
      */
     public function setVariant(\WebIllumination\SiteBundle\Entity\Product\Variant $variant = null)
     {

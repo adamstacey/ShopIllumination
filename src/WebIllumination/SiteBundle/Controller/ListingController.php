@@ -17,7 +17,6 @@ use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class ListingController extends Controller
 {
@@ -116,12 +115,12 @@ class ListingController extends Controller
             {
                 if($departmentToFeature->getDisplayOnFilter())
                 {
-                    $flags[] = 'attr_feature_'.str_replace(' ', '', $departmentToFeature->getProductFeature()->getProductFeatureGroup());
-                    $featureGroups[] = $departmentToFeature->getProductFeature()->getProductFeatureGroup();
-                    $facetSet->createFacetField($helper->escapeTerm('feature_'.str_replace(' ', '', $departmentToFeature->getProductFeature()->getProductFeatureGroup())))
-                        ->setField('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup())
+                    $flags[] = 'attr_feature_'.str_replace(' ', '', $departmentToFeature->getFeatureGroup()->getName());
+                    $featureGroups[] = $departmentToFeature->getFeatureGroup()->getName();
+                    $facetSet->createFacetField($helper->escapeTerm('feature_'.str_replace(' ', '', $departmentToFeature->getFeatureGroup()->getName())))
+                        ->setField('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName())
                         ->setMinCount(1)
-                        ->addExclude('attr_feature_'.$departmentToFeature->getProductFeature()->getProductFeatureGroup());
+                        ->addExclude('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName());
                 }
             }
         }

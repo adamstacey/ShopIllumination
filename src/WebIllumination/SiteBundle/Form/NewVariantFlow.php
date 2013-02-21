@@ -19,7 +19,6 @@ use WebIllumination\SiteBundle\Entity\Product\Price;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\Product\VariantDescription;
 use WebIllumination\SiteBundle\Entity\Product;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
 
 class NewVariantFlow extends FormFlow
 {

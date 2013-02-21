@@ -30,15 +30,15 @@ class DepartmentToFeature
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\FeatureGroup")
-     * @ORM\JoinColumn(name="product_feature_group_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="feature_group_id", referencedColumnName="id")
      **/
-    private $productFeature;
+    private $featureGroup;
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product\Feature")
-     * @ORM\JoinColumn(name="product_feature_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="feature_id", referencedColumnName="id")
      **/
-    private $defaultFeature;
+    private $feature;
         
     /**
      * @ORM\Column(name="display_on_filter", type="boolean")
@@ -74,9 +74,9 @@ class DepartmentToFeature
 
     public function __toString()
     {
-        if($this->getProductFeature())
+        if ($this->getFeatureGroup())
         {
-            return $this->getProductFeature()->__toString();
+            return $this->getFeatureGroup()->__toString();
         } else {
             return " -- ";
         }
@@ -277,48 +277,48 @@ class DepartmentToFeature
     }
 
     /**
-     * Set productFeature
+     * Set featureGroup
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature
+     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup
      * @return DepartmentToFeature
      */
-    public function setProductFeature(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeature = null)
+    public function setFeatureGroup(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup = null)
     {
-        $this->productFeature = $productFeature;
+        $this->featureGroup = $featureGroup;
     
         return $this;
     }
 
     /**
-     * Get productFeature
+     * Get featureGroup
      *
      * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
      */
-    public function getProductFeature()
+    public function getFeatureGroup()
     {
-        return $this->productFeature;
+        return $this->featureGroup;
     }
 
     /**
-     * Set defaultFeature
+     * Set feature
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature
+     * @param \WebIllumination\SiteBundle\Entity\Product\Feature $feature
      * @return DepartmentToFeature
      */
-    public function setDefaultFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $defaultFeature = null)
+    public function setFeature(\WebIllumination\SiteBundle\Entity\Product\Feature $feature = null)
     {
-        $this->defaultFeature = $defaultFeature;
+        $this->feature = $feature;
     
         return $this;
     }
 
     /**
-     * Get defaultFeature
+     * Get feature
      *
      * @return \WebIllumination\SiteBundle\Entity\Product\Feature 
      */
-    public function getDefaultFeature()
+    public function getFeature()
     {
-        return $this->defaultFeature;
+        return $this->feature;
     }
 }

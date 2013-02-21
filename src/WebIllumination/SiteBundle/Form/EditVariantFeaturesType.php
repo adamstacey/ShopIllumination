@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
 use WebIllumination\SiteBundle\Form\EventListener\AddFeaturesFieldSubscriber;
 
 class EditVariantFeaturesType extends AbstractType

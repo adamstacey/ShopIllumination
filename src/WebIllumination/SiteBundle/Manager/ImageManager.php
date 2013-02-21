@@ -6,7 +6,6 @@ use WebIllumination\SiteBundle\Entity\DescribableInterface;
 use WebIllumination\SiteBundle\Entity\Image;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
 use WebIllumination\SiteBundle\Entity\Routing;
 
 class ImageManager extends Manager

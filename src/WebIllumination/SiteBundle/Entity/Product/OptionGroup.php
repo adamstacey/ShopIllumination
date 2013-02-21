@@ -20,7 +20,7 @@ class OptionGroup
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Option", mappedBy="productOptionGroup")
+     * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Option", mappedBy="optionGroup")
      */
     private $options;
     
@@ -30,9 +30,9 @@ class OptionGroup
     private $active;
     
     /**
-     * @ORM\Column(name="product_option_group", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $productOptionGroup;
+    private $name;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
@@ -92,26 +92,26 @@ class OptionGroup
     }
 
     /**
-     * Set productOptionGroup
+     * Set name
      *
-     * @param string $productOptionGroup
+     * @param string $name
      * @return OptionGroup
      */
-    public function setProductOptionGroup($productOptionGroup)
+    public function setName($name)
     {
-        $this->productOptionGroup = $productOptionGroup;
+        $this->name = $name;
     
         return $this;
     }
 
     /**
-     * Get productOptionGroup
+     * Get name
      *
      * @return string 
      */
-    public function getProductOptionGroup()
+    public function getName()
     {
-        return $this->productOptionGroup;
+        return $this->name;
     }
 
     /**

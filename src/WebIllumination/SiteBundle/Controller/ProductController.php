@@ -20,7 +20,6 @@ use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
 use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Entity\ProductToDepartment;
-use WebIllumination\SiteBundle\Entity\ProductToFeature;
 use WebIllumination\SiteBundle\Manager\ProductManager;
 use WebIllumination\SiteBundle\Manager\SeoManager;
 

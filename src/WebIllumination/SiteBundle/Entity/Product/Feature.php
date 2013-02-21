@@ -61,7 +61,7 @@ class Feature
 
     public function __toString()
     {
-        return $this->getProductFeature();
+        return $this->getFeature();
     }
 
     /**
@@ -118,29 +118,6 @@ class Feature
     public function getFilter()
     {
         return $this->filter;
-    }
-
-    /**
-     * Set productFeature
-     *
-     * @param string $productFeature
-     * @return Feature
-     */
-    public function setProductFeature($productFeature)
-    {
-        $this->productFeature = $productFeature;
-    
-        return $this;
-    }
-
-    /**
-     * Get productFeature
-     *
-     * @return string 
-     */
-    public function getProductFeature()
-    {
-        return $this->productFeature;
     }
 
     /**
@@ -213,26 +190,26 @@ class Feature
     }
 
     /**
-     * Set productFeatureGroup
+     * Set featureGroup
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeatureGroup
+     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup
      * @return Feature
      */
-    public function setProductFeatureGroup(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $productFeatureGroup = null)
+    public function setFeatureGroup(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup = null)
     {
-        $this->productFeatureGroup = $productFeatureGroup;
+        $this->featureGroup = $featureGroup;
     
         return $this;
     }
 
     /**
-     * Get productFeatureGroup
+     * Get featureGroup
      *
      * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
      */
-    public function getProductFeatureGroup()
+    public function getFeatureGroup()
     {
-        return $this->productFeatureGroup;
+        return $this->featureGroup;
     }
 
     /**
@@ -258,26 +235,4 @@ class Feature
         return $this->name;
     }
 
-    /**
-     * Set featureGroup
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup
-     * @return Feature
-     */
-    public function setFeatureGroup(\WebIllumination\SiteBundle\Entity\Product\FeatureGroup $featureGroup = null)
-    {
-        $this->featureGroup = $featureGroup;
-    
-        return $this;
-    }
-
-    /**
-     * Get featureGroup
-     *
-     * @return \WebIllumination\SiteBundle\Entity\Product\FeatureGroup 
-     */
-    public function getFeatureGroup()
-    {
-        return $this->featureGroup;
-    }
 }
