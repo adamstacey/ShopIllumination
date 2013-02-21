@@ -30,7 +30,7 @@ class FixDepartmentCommand extends ContainerAwareCommand
          */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        $em->getConnection()->exec("ALTER TABLE departments ADD lft INT NOT NULL, ADD lvl INT NOT NULL, ADD rgt INT NOT NULL, ADD root INT DEFAULT NULL");
+        //$em->getConnection()->exec("ALTER TABLE departments ADD lft INT NOT NULL, ADD lvl INT NOT NULL, ADD rgt INT NOT NULL, ADD root INT DEFAULT NULL");
         $em->getConnection()->exec("DROP TABLE IF EXISTS departments_tmp");
         $em->getConnection()->exec("CREATE TABLE departments_tmp LIKE departments;");
         $em->getConnection()->exec("ALTER TABLE  `departments_tmp` CHANGE  `id`  `id` INT( 11 ) NOT NULL");
