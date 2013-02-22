@@ -24,15 +24,15 @@
 {% endmacro %}
 
 {% macro table_features_widget(form) %}
-    <td{% if form.productFeature.vars.valid is sameas(false) %} class="error"{% endif %}>
-        {{ form_widget(form.productFeature, {'attr': {'class': 'feature-group fill'}}) }}
+    <td{% if form.featureGroup.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.featureGroup, {'attr': {'class': 'feature-group fill'}}) }}
     </td>
-    <td{% if form.defaultFeature.vars.valid is sameas(false) %} class="error"{% endif %}>
-        {{ form_widget(form.defaultFeature, {'attr': {'class': 'feature fill'}}) }}
+    <td{% if form.feature.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.feature, {'attr': {'class': 'feature fill'}}) }}
     </td>
     <td width="1">
         {{ form_widget(form.displayOrder) }}
-        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productFeatureList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="featureList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
     </td>
 {% endmacro %}
 
@@ -41,7 +41,7 @@
         <td class="fill">
             <ul>
                 {% for feature in form.get('value').features %}
-                    <li>{{ feature.productFeature }}: <strong>{{ feature.defaultFeature }}</strong></li>
+                    <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
                 {% endfor %}
             </ul>
         </td>
