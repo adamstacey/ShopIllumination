@@ -14,7 +14,7 @@
                     </div>
                     {% include 'WebIlluminationSiteBundle:Product:newErrors.html.twig' %}
                     <fieldset class="pbm">
-                        <table class="form-table" id="productFeatureList" data-prototype="{{ form_widget(form.features.vars.prototype) | e }}">
+                        <table class="form-table" id="featureList" data-prototype="{{ form_widget(form.features.vars.prototype) | e }}">
                             <thead>
                                 <tr>
                                     <th>Group</th>
@@ -41,13 +41,13 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $(document).on('change', '.feature-group', function() {
-            var $groupId = $(this).val();
+            var $featureGroupId = $(this).val();
             var $selectObject = $(this).closest("tr").find(".feature");
             $selectObject.prev("span").html("Loading Features...");
-            $.getJSON('{{ path('api_features', {'groupId': '-1'}) }}'.replace(/-1/, $groupId), function(data) {
+            $.getJSON('{{ path('api_features', {'featureGroupId': '-1'}) }}'.replace(/-1/, $featureGroupId), function(data) {
                 $selectObject.val([]).empty();
                 for (var $feature = 0; $feature < data.features.length; $feature++) {
-                    var $option = $('<option/>', { value: data.features[$feature]['id'] }).text(data.features[$feature]['product_feature']).prop('selected', $feature == 0);
+                    var $option = $('<option/>', { value: data.features[$feature]['id'] }).text(data.features[$feature]['name']).prop('selected', $feature == 0);
                     $option.appendTo($selectObject);
                 }
                 $.uniform.update($selectObject);
