@@ -15,16 +15,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ApiController extends Controller
 {
     /**
-     * @Route("/features/{groupId}.{_format}", name="api_features", defaults={"_format":"json"}, requirements={"_format":"json|xml"})
+     * @Route("/features/{featureGroupId}.{_format}", name="api_features", defaults={"_format":"json"}, requirements={"_format":"json|xml"})
      * @Method({"GET"})
      */
-    public function getFeaturesAction(Request $request, $groupId, $_format)
+    public function getFeaturesAction(Request $request, $featureGroupId, $_format)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $features = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Feature")->findBy(array(
-            'featureGroup' => $groupId,
-        ));
+        $features = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Feature")->findBy(array('featureGroup' => $featureGroupId), array('name' => 'ASC'));
 
         $serializer = $this->get('serializer');
         $data = $serializer->serialize(array(
