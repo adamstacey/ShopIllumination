@@ -23,6 +23,9 @@ class ProductDepartmentType extends AbstractType
                     ->addOrderBy('d.lft', 'ASC');
             },
             'required' => true,
+            'attr' => array(
+                'class' => 'fill',
+            ),
             'empty_value' => '- Select a Department -',
         ), array());
         $builder->add('displayOrder', 'hidden');
