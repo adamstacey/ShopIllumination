@@ -24,7 +24,7 @@ class ProductFeatureType extends AbstractType
         $departmentId = $this->departmentId;
         $factory = $builder->getFormFactory();
 
-        $builder->add('feature', 'entity', array(
+        $builder->add('featureGroup', 'entity', array(
             'required'  => false,
             'empty_value' => '- Select a Group -',
             'class' => 'WebIllumination\SiteBundle\Entity\Product\FeatureGroup',
@@ -35,7 +35,7 @@ class ProductFeatureType extends AbstractType
 
                 $qb2->select('fg2.id')
                     ->from('WebIllumination\SiteBundle\Entity\DepartmentToFeature', 'df')
-                    ->where('df.productFeature = fg2');
+                    ->where('df.featureGroup = fg2');
                 if($departmentId) {
                     $qb2->andWhere($qb2->expr()->eq('df.department', $departmentId));
                 }
@@ -46,7 +46,7 @@ class ProductFeatureType extends AbstractType
             },
         ));
 
-        $builder->add('defaultFeature', 'choice', array(
+        $builder->add('feature', 'choice', array(
             'required' => false,
             'empty_value' => '- Select a Group First -',
             'choices' => array(),
@@ -63,12 +63,12 @@ class ProductFeatureType extends AbstractType
                 $form->remove('feature');
                 $form->add($factory->createNamed('feature', 'entity', null, array(
                     'required'  => false,
-                    'empty_value' => 'Select a feature.',
+                    'empty_value' => '- Select a Feature -',
                     'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
                     'query_builder' => function(EntityRepository $er) use ($data) {
                         $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data->getFeature()->getId()));
-                        $qb->orderBy('f.feature');
+                        $qb->add('where', $qb->expr()->eq('f.id', $data->getFeature()->getId()));
+                        $qb->orderBy('f.name');
                         return $qb;
                     },
                 )));
@@ -86,12 +86,12 @@ class ProductFeatureType extends AbstractType
                 $form->remove('feature');
                 $form->add($factory->createNamed('feature', 'entity', null, array(
                     'required'  => false,
-                    'empty_value' => 'Select a feature.',
+                    'empty_value' => '- Select a Feature -',
                     'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
                     'query_builder' => function(EntityRepository $er) use ($data) {
                         $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data['feature']));
-                        $qb->orderBy('f.feature');
+                        $qb->add('where', $qb->expr()->eq('f.id', $data['feature']));
+                        $qb->orderBy('f.name');
                         return $qb;
                     },
                 )));
