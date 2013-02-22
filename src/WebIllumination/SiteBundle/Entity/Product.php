@@ -52,7 +52,7 @@ class Product implements DescribableInterface
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a status.")
      * @Assert\Choice(choices={"a", "h", "d"})
      */
-    private $status = 'd';
+    private $status = 'a';
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100, nullable=true)
