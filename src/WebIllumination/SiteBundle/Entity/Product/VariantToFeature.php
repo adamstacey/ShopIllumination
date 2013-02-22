@@ -60,7 +60,7 @@ class VariantToFeature
 
     public function __toString()
     {
-        return $this->getDefaultFeature()->__toString();
+        return $this->getFeature()->__toString();
     }
 
     /**
