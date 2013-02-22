@@ -61,7 +61,7 @@ class Feature
 
     public function __toString()
     {
-        return $this->getFeature();
+        return $this->getName();
     }
 
     /**
