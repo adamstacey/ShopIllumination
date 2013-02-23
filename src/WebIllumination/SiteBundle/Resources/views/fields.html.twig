@@ -68,6 +68,15 @@
     {{ fields.product_departments_row(form) }}
 {% endblock %}
 
+{# This block needs to be in this file so that it has access to the widget attributes block #}
+{% block _site_new_product_departments_entry_department_widget %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% for group_label, choice in choices %}
+            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|raw }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
 {% block _site_new_product_features_entry_widget %}
     {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.table_features_widget(form) }}

@@ -44,3 +44,14 @@
         </div>
     </div>
 </form>
+<script>
+    $(document).ready(function() {
+        $("#site_new_product_brand").select2();
+        $(".select_department").select2({
+            matcher: function(term, text) {
+                return text.replace(/^[\s&nbsp;]+/,'').toUpperCase().indexOf(term.toUpperCase())>=0;
+            }
+        });
+    })
+</script>
+</script>

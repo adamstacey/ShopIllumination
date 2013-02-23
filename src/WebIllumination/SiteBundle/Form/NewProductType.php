@@ -24,6 +24,9 @@ class NewProductType extends AbstractType
                             ->leftJoin('b.descriptions', 'bd')
                             ->orderBy('bd.name');
                     },
+                    'attr' => array(
+                        'class' => 'fill no-uniform',
+                    ),
                     'empty_value' => '- Select a Brand -',
                 ), array());
                 $builder->add('departments', 'collection', array(

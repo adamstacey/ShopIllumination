@@ -177,7 +177,14 @@ class Department implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return html_entity_decode(str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $this->getLevel()).$this->getName());
+            $indentation = "";
+            $level = $this->getLvl() != 0 ? $this->getLvl() - 1 : $this->getLvl();
+            if($level > 0) {
+                for($i=0;$i<$level; $i++) {
+                    $indentation .= "&nbsp;&nbsp;";
+                }
+            }
+            return $indentation . $this->getName();
         } else {
             return "";
         }
