@@ -23,6 +23,14 @@
     {% endif %}
 {% endmacro %}
 
+{% macro product_departments_widget(choices) %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% for group_label, choice in choices %}
+            <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice.label|raw }}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}
+
 {% macro table_features_widget(form) %}
     <td{% if form.featureGroup.vars.valid is sameas(false) %} class="error"{% endif %}>
         {{ form_widget(form.featureGroup, {'attr': {'class': 'feature-group fill'}}) }}

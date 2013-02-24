@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use WebIllumination\SiteBundle\Repository\DepartmentRepository;
 
 class ProductDepartmentType extends AbstractType
 {
@@ -14,17 +15,19 @@ class ProductDepartmentType extends AbstractType
         $builder->add('department', 'entity', array(
             'property' => 'indentedName',
             'class' => 'WebIllumination\SiteBundle\Entity\Department',
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('d')
-                    ->addSelect('dd')
-                    ->leftJoin('d.descriptions', 'dd')
-                    ->where('d.root != d.id')
-                    ->orderBy('d.root', 'ASC')
-                    ->addOrderBy('d.lft', 'ASC');
+            'query_builder' => function(DepartmentRepository $er) {
+                $rootNodes = $er->getRootNodes();
+                if(count($rootNodes) != 1) {
+                    return new $er->createQueryBuilder('d');
+                } else {
+                    return $er->childrenQueryBuilder($rootNodes[0])
+                        ->addSelect('d')
+                        ->leftJoin('node.descriptions', 'd');
+                }
             },
             'required' => true,
             'attr' => array(
-                'class' => 'fill',
+                'class' => 'select_department fill no-uniform',
             ),
             'empty_value' => '- Select a Department -',
         ), array());
