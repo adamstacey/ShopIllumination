@@ -8,22 +8,22 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'WebIlluminationSiteBundle:Product:newErrors.html.twig' %}
-                    <fieldset>
-                        <table class="data-table" id="product-variant-list" width="100%">
-                            <thead>
-                            <tr>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for row in form.variants %}
-                                {{ form_widget(row) }}
-                            {% endfor %}
-                            </tbody>
-                            {% do form.variants.setRendered() %}
-                        </table>
-                    </fieldset>
-
+                    {% for variant in form.variants %}
+                        <fieldset>
+                            <legend class="fill">Features for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</legend>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{ form_widget(variant) }}
+                                </tbody>
+                                {% do form.variants.setRendered() %}
+                            </table>
+                        </fieldset>
+                    {% endfor %}
                     {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'WebIlluminationSiteBundle:Product:newControls.html.twig' %}
