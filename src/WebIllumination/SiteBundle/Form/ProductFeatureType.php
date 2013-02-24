@@ -59,7 +59,7 @@ class ProductFeatureType extends AbstractType
              */
             $data = $event->getData();
             $form = $event->getForm();
-            if ($data && $data->getFeature() !== null) {
+            if ($data && $data->getFeatureGroup() !== null) {
                 $form->remove('feature');
                 $form->add($factory->createNamed('feature', 'entity', null, array(
                     'required'  => false,
@@ -67,7 +67,7 @@ class ProductFeatureType extends AbstractType
                     'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
                     'query_builder' => function(EntityRepository $er) use ($data) {
                         $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.id', $data->getFeature()->getId()));
+                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data->getFeatureGroup()->getId()));
                         $qb->orderBy('f.name');
                         return $qb;
                     },
@@ -82,7 +82,7 @@ class ProductFeatureType extends AbstractType
             $data = $event->getData();
             $form = $event->getForm();
 
-            if ($data && isset($data['feature'])) {
+            if ($data && isset($data['featureGroup'])) {
                 $form->remove('feature');
                 $form->add($factory->createNamed('feature', 'entity', null, array(
                     'required'  => false,
@@ -90,7 +90,7 @@ class ProductFeatureType extends AbstractType
                     'class' => 'WebIllumination\SiteBundle\Entity\Product\Feature',
                     'query_builder' => function(EntityRepository $er) use ($data) {
                         $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.id', $data['feature']));
+                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data['featureGroup']));
                         $qb->orderBy('f.name');
                         return $qb;
                     },

@@ -85,7 +85,7 @@ class NewProductType extends AbstractType
             case 4:
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_features',
-                    'type' => new ProductFeatureType($options['departmentId']),
+                    'type' => new ProductVariantFeaturesType($options['departmentId']),
                     'required'  => false,
                     'allow_delete' => true,
                 ));

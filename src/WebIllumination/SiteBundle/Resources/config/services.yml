@@ -1,4 +1,10 @@
 services:
+  # Twig Extensions
+  web_illumination_site.twig.currency_extension:
+    class: WebIllumination\SiteBundle\Twig\CurrencyExtension
+    tags:
+      - { name: twig.extension }
+
   # Managers
   web_illumination_site.manager.product:
     class: WebIllumination\SiteBundle\Manager\ProductManager
