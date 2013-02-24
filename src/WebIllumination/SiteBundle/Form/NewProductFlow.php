@@ -161,6 +161,43 @@ class NewProductFlow extends FormFlow
 
         }
 
+        if ($step == 4)
+        {
+            // Get the department features
+            $departmentFeatures = $formData->getDepartment()->getDepartment()->getFeatures();
+
+            // Go through the variants
+            foreach ($formData->getVariants() as $variant)
+            {
+                // Go through all the default features of the main department
+                foreach ($departmentFeatures as $departmentToFeature)
+                {
+                    // Check if the feature was already added as part of generating the combinations
+                    $featureExists = false;
+                    foreach ($variant->getFeatures() as $variantToFeature)
+                    {
+                        if ($variantToFeature->getFeatureGroup()->getId() == $departmentToFeature->getFeatureGroup()->getId())
+                        {
+                            $featureExists = true;
+                        }
+                    }
+
+                    // If the feature does not exist add it to the variant
+                    if (!$featureExists)
+                    {
+                        $variantToFeature = new VariantToFeature();
+                        $variantToFeature->setVariant($variant);
+                        $variantToFeature->setFeatureGroup($departmentToFeature->getFeatureGroup());
+                        if ($departmentToFeature->getFeature())
+                        {
+                            $variantToFeature->setFeature($departmentToFeature->getFeature());
+                        }
+                        $variant->addFeature($variantToFeature);
+                    }
+                }
+            }
+        }
+
         return $options;
     }
 }
