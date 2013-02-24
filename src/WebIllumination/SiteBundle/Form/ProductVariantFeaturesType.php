@@ -19,8 +19,8 @@ class ProductVariantFeaturesType extends AbstractType
     {
         $builder->add('features', 'collection', array(
             'type' => new ProductFeatureType($this->departmentId),
-            'allow_add' => true,
-            'allow_delete' => true,
+            'allow_add' => false,
+            'allow_delete' => false,
         ));
     }
 
