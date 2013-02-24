@@ -21,8 +21,8 @@ class UserManager extends BaseUserManager
         $user = new $class;
 
         // Add blank contact to user
-        $contact = new Contact();
-        $user->setContact($contact);
+//        $contact = new Contact();
+//        $user->setContact($contact);
 
         return $user;
     }
