@@ -66,7 +66,7 @@ class NewProductFlow extends FormFlow
             $featureGroups = array();
             foreach ($formData->getFeatures() as $featureGroup)
             {
-                if ($featureGroup->getFeature())
+                if ($featureGroup->getFeature() && $featureGroup->getFeatureGroup())
                 {
                     $featureGroups[$featureGroup->getFeatureGroup()->getId()][] = $featureGroup->getFeature();
                 }
