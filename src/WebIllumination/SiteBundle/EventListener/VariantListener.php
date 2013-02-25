@@ -50,6 +50,7 @@ class VariantListener
 
         if($entity instanceof Variant)
         {
+            $this->manager->addBlankImage($entity);
             $this->indexer->index($entity->getProduct());
         }
     }

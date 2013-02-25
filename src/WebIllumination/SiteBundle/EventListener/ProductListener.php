@@ -66,7 +66,6 @@ class ProductListener
 
         if($entity instanceof Product)
         {
-            $this->manager->addBlankImage($entity);
             $this->manager->addRoute($entity);
 
             $this->indexer->index($entity);

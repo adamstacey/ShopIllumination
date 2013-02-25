@@ -1,6 +1,7 @@
 <?php
 namespace WebIllumination\SiteBundle\Manager;
 
+use Doctrine\ORM\EntityManager;
 use WebIllumination\SiteBundle\Entity\Product\Variant\Description as VariantDescription;
 use WebIllumination\SiteBundle\Entity\Product\Description as ProductDescription;
 use WebIllumination\SiteBundle\Entity\Product\Price;
@@ -123,28 +124,35 @@ class ProductManager extends Manager
     }
 
     /**
-     * Add a blank image to the product. If the product already has an image then no image is added
+     * Add a blank image to the variant. If the variant already has an image then no image is added
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product $product
+     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
      */
-    public function addBlankImage(Product $product)
+    public function addBlankImage(Variant $variant)
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->doctrine->getManager();
 
-        if($product->getDescription() || count($em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findAll()) === 0)
+        if(count($em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array(
+            'objectType' => 'variant',
+            'imageType' => 'variant',
+            'objectId' => $variant->getId()
+        ))) === 0)
         {
             $image = new Image();
             $image->setLocale('en');
-            $image->setTitle($product->getDescription()->getHeader());
+            $image->setTitle($variant->getDescription()->getHeader());
             $image->setAlignment('');
             $image->setDescription('');
             $image->setLink('');
-            $image->setObjectType('product');
-            $image->setImageType('product');
-            $image->setObjectId($product->getId());
+            $image->setObjectType('variant');
+            $image->setImageType('variant');
+            $image->setObjectId($variant->getId());
             $image->setDisplayOrder(1);
-            $image->setOriginalPath('/uploads/images/product/product/no-image.jpg');
-            $image->setPublicPath('/uploads/images/product/product/no-image.jpg');
+            $image->setOriginalPath('/images/no-image.jpg');
+            $image->setPublicPath('/images/no-image.jpg');
             $em->persist($image);
             $em->flush();
         }

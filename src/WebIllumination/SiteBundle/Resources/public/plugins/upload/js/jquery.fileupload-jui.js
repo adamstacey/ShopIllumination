@@ -69,23 +69,11 @@
             var node = this._super(func, files),
                 showIconText = $(window).width() > 480;
             node.find('.progress').empty().progressbar();
-            node.find('.start button').button({
-                icons: {primary: 'ui-icon-circle-arrow-e'},
-                text: showIconText
-            });
-            node.find('.cancel button').button({
-                icons: {primary: 'ui-icon-cancel'},
-                text: showIconText
-            });
             return node;
         },
         _renderDownload: function (func, files) {
             var node = this._super(func, files),
                 showIconText = $(window).width() > 480;
-            node.find('.delete button').button({
-                icons: {primary: 'ui-icon-trash'},
-                text: showIconText
-            });
             return node;
         },
         _transition: function (node) {
@@ -109,12 +97,6 @@
                         .button({icons: {primary: 'ui-icon-plusthick'}})
                         .append(input);
                 })
-                .end().find('.start')
-                .button({icons: {primary: 'ui-icon-circle-arrow-e'}})
-                .end().find('.cancel')
-                .button({icons: {primary: 'ui-icon-cancel'}})
-                .end().find('.delete')
-                .button({icons: {primary: 'ui-icon-trash'}})
                 .end().find('.progress').empty().progressbar();
         },
         _destroy: function () {

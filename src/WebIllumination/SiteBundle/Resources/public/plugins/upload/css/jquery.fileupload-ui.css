@@ -11,10 +11,10 @@
  */
 
 .fileinput-button {
-  position: relative;
-  overflow: hidden;
-  float: left;
-  margin-right: 5px;
+    padding: 1px;
+}
+.files thead .button {
+    padding: 1px;
 }
 .fileinput-button input {
   position: absolute;
@@ -32,12 +32,18 @@
 .fileupload-buttonbar .toggle {
   margin-bottom: 5px;
 }
+.files th {
+    padding: 5px;
+}
 .files .progress {
   width: 200px;
 }
 .files .progress,
 .fileupload-buttonbar .progress {
   height: 20px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .files .ui-progressbar-value,
 .fileupload-buttonbar .ui-progressbar-value {
@@ -58,6 +64,10 @@
 .fileupload-processing .fileupload-loading {
   display: block;
 }
+.files tr.start, .files tr.cancel, .files tr.delete {
+    width: 60px;
+}
+
 
 /* Fix for IE 6: */
 * html .fileinput-button {
@@ -95,12 +105,5 @@
   }
   .files .delete {
     width: 60px;
-  }
-}
-
-/* Fix for Webkit (Safari, Chrome) */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-  .fileinput-button {
-    margin-top: 2px;
   }
 }

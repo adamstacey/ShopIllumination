@@ -2,6 +2,7 @@
 
 namespace WebIllumination\SiteBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Gedmo\Exception\UploadableMaxSizeException;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -53,6 +54,41 @@ class ImageApiController extends Controller
     }
 
     /**
+     * @Route("/multiple/{ids}.{format}", name="api_images_get_multiple", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Method({"GET"})
+     */
+    public function getMultipleAction(Request $request, $ids, $format)
+    {
+        $filesArray = array();
+        $em = $this->getDoctrine()->getManager();
+        $images = $em->createQuery("SELECT i FROM WebIllumination\SiteBundle\Entity\Image i WHERE i.id IN (?1)")
+            ->setParameter(1, explode(',', $ids))
+            ->execute();
+
+        /**
+         * @var $image Image
+         */
+        foreach($images as $image) {
+            $filesArray[] = array(
+                'id' => $image->getId(),
+                'name' => basename($image->getPublicPath() == null ? $image->getOriginalPath() : $image->getPublicPath()),
+                'url' => $image->getOriginalPath(),
+                'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
+                'delete_type' => 'DELETE',
+            );
+        }
+
+        $serializer = $this->get('serializer');
+        $json = $serializer->serialize(array(
+            'files' => $filesArray,
+        ), $format);
+
+        $response = new Response($json);
+        $response->headers->set('Content-Type', 'application/'.$format);
+        return $response;
+    }
+
+    /**
      * @Route("/.{format}", name="api_images_post_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"POST"})
      */
@@ -88,7 +124,7 @@ class ImageApiController extends Controller
                 'id' => $image->getId(),
                 'name' => $file->getClientOriginalName(),
                 'size' => $file->getSize(),
-                'url' => $image->getUploadDir() . $image->getOriginalPath(),
+                'url' => $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
                 'delete_type' => 'DELETE',
             );

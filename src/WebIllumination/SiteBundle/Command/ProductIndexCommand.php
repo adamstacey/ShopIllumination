@@ -24,6 +24,15 @@ class ProductIndexCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         // Load products
         $em = $this->getContainer()->get('doctrine')->getManager();
+
+        $images = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array(
+            'objectType' => 'variant',
+            'imageType' => 'variant',
+            'objectId' => 5586
+        ));
+        \Doctrine\Common\Util\Debug::dump(count($images));
+
+        die();
         $product = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($id);
         $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
 

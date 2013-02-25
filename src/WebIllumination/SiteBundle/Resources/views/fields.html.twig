@@ -92,6 +92,11 @@
     {{ fields.table_prices_widget(form) }}
 {% endblock %}
 
+{% block _site_new_product_variants_images_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.product_variants_images_widget(form) }}
+{% endblock %}
+
 {#{% block department_widget %}#}
     {#<select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>#}
         {#{% for group_label, choice in choices %}#}
