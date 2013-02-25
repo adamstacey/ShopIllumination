@@ -76,26 +76,45 @@ class ProductController extends Controller {
                 foreach($product->getVariants() as $variant)
                 {
                     $i = 0;
+                    $imageIds = explode(',', $variant->getImages());
 
-                    // Link each image to the variant
-                    foreach(explode(',', $variant->getImages()) as $imageId)
-                    {
-                        /**
-                         * @var $image Image
-                         */
-                        $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
-                        if($image)
+                    // If no images were added add a blank image
+                    if(count($imageIds) == 0) {
+                        $image = new Image();
+                        $image->setLocale('en');
+                        $image->setTitle($variant->getDescription()->getHeader());
+                        $image->setAlignment('');
+                        $image->setDescription('');
+                        $image->setLink('');
+                        $image->setObjectType('variant');
+                        $image->setImageType('variant');
+                        $image->setObjectId($variant->getId());
+                        $image->setDisplayOrder(1);
+                        $image->setOriginalPath('/images/no-image.jpg');
+                        $image->setPublicPath('/images/no-image.jpg');
+                        $em->persist($image);
+                    } else {
+                        // Link each image to the variant
+                        foreach($imageIds as $imageId)
                         {
-                            $image->setObjectId($variant->getId());
-                            $image->setObjectType('variant');
-                            $image->setImageType('variant');
+                            /**
+                             * @var $image Image
+                             */
+                            $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
+                            if($image)
+                            {
+                                $image->setObjectId($variant->getId());
+                                $image->setObjectType('variant');
+                                $image->setImageType('variant');
 
-                            $image->setTitle($variant->getDescription()->getHeader());
-                            $image->setDisplayOrder($i);
+                                $image->setTitle($variant->getDescription()->getHeader());
+                                $image->setDisplayOrder($i);
+                                $image->setPublicPath(/*Set this field to a blank value so it can be changed in the listener*/"");
 
-                            $i++;
+                                $i++;
 
-                            $em->persist($image);
+                                $em->persist($image);
+                            }
                         }
                     }
                 }

@@ -1,11 +1,14 @@
 <?php
 namespace WebIllumination\SiteBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use WebIllumination\SiteBundle\EventListener\ImageListener;
 use WebIllumination\SiteBundle\Indexer\ProductIndexer;
 
 class ProductIndexCommand extends ContainerAwareCommand
@@ -24,15 +27,7 @@ class ProductIndexCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         // Load products
         $em = $this->getContainer()->get('doctrine')->getManager();
-
-        $images = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array(
-            'objectType' => 'variant',
-            'imageType' => 'variant',
-            'objectId' => 5586
-        ));
-        \Doctrine\Common\Util\Debug::dump(count($images));
-
-        die();
+        
         $product = $em->getRepository('WebIllumination\SiteBundle\Entity\Product')->find($id);
         $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
 
