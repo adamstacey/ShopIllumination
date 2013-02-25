@@ -124,41 +124,6 @@ class ProductManager extends Manager
     }
 
     /**
-     * Add a blank image to the variant. If the variant already has an image then no image is added
-     *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Variant $variant
-     */
-    public function addBlankImage(Variant $variant)
-    {
-        /**
-         * @var $em EntityManager
-         */
-        $em = $this->doctrine->getManager();
-
-        if(count($em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array(
-            'objectType' => 'variant',
-            'imageType' => 'variant',
-            'objectId' => $variant->getId()
-        ))) === 0)
-        {
-            $image = new Image();
-            $image->setLocale('en');
-            $image->setTitle($variant->getDescription()->getHeader());
-            $image->setAlignment('');
-            $image->setDescription('');
-            $image->setLink('');
-            $image->setObjectType('variant');
-            $image->setImageType('variant');
-            $image->setObjectId($variant->getId());
-            $image->setDisplayOrder(1);
-            $image->setOriginalPath('/images/no-image.jpg');
-            $image->setPublicPath('/images/no-image.jpg');
-            $em->persist($image);
-            $em->flush();
-        }
-    }
-
-    /**
      * Add a new route to the routing table. If the URL already exists in the table it is not added
      *
      * @param \WebIllumination\SiteBundle\Entity\Product $product

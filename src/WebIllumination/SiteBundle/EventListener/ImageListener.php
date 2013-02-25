@@ -2,6 +2,7 @@
 namespace WebIllumination\SiteBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use WebIllumination\SiteBundle\Entity\Image;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Manager\ImageManager;
@@ -26,7 +27,7 @@ class ImageListener
         }
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
 
@@ -36,6 +37,7 @@ class ImageListener
             $object= $this->manager->getObject($entity);
             if ($object) {
                 $this->manager->process($entity, $object);
+                $args->setNewValue('publicPath', $entity->getPublicPath());
             }
         }
     }
@@ -47,10 +49,6 @@ class ImageListener
         if($entity instanceof Image)
         {
             $entity->upload();
-            $object= $this->manager->getObject($entity);
-            if ($object) {
-                $this->manager->process($entity, $object);
-            }
         }
     }
 
