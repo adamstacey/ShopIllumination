@@ -101,6 +101,7 @@ button.ui-button::-moz-focus-inner {
 
 .button-dark-red .ui-button-text {
     color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
 }
 
 .button-red {
@@ -115,6 +116,7 @@ button.ui-button::-moz-focus-inner {
 
 .button-red .ui-button-text {
     color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
 }
 
 .button-orange {
@@ -129,6 +131,7 @@ button.ui-button::-moz-focus-inner {
 
 .button-orange .ui-button-text {
     color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
 }
 
 .button-yellow {
@@ -142,7 +145,8 @@ button.ui-button::-moz-focus-inner {
 }
 
 .button-yellow .ui-button-text {
-    color: $textColour;
+    color: $colourBlack;
+    @include textShadow($colourYellow, 0, 1px);
 }
 
 .button-green {
@@ -157,6 +161,7 @@ button.ui-button::-moz-focus-inner {
 
 .button-green .ui-button-text {
     color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
 }
 
 .button-turquoise {
@@ -171,6 +176,7 @@ button.ui-button::-moz-focus-inner {
 
 .button-turquoise .ui-button-text {
     color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
 }
 
 .button-blue {
@@ -185,6 +191,7 @@ button.ui-button::-moz-focus-inner {
 
 .button-blue .ui-button-text {
     color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
 }
 
 .button-black {
@@ -199,6 +206,7 @@ button.ui-button::-moz-focus-inner {
 
 .button-black .ui-button-text {
     color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
 }
 
 .button-notification {
