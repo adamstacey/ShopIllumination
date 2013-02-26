@@ -1,14 +1,4 @@
 {% extends 'WebIlluminationSiteBundle::base.html.twig' %}
-{% block scripts %}
-    {{ parent() }}
-    {% javascripts
-        '@WebIlluminationSiteBundle/Resources/public/plugins/ui/js/ui.js'
-        output='js/components-compressed.js'
-        filter='yui_js'
-    %}
-        <script src="{{ asset_url }}" type="text/javascript"></script>
-    {% endjavascripts %}
-{% endblock %}
 {% block body %}
     <header>
         <h1>Icons</h1>
