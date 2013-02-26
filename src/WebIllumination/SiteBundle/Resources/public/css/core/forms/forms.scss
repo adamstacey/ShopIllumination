@@ -437,7 +437,7 @@ div.selector span {
     line-height: 22px;
     cursor: pointer;
     @include ellipsis;
-    background: transparent url("#{$cssPath}/core/resources/images/icons/select.png") center right no-repeat;
+    background: transparent url("#{$cssPath}/core/resources/images/icons/select.png") no-repeat center right;
 }
 
 div.selector.disabled span {
@@ -602,25 +602,26 @@ header.error {
 
 table.form-table {
     width: 100%;
+
     border-collapse: collapse;
     border: 0 none;
-    border-radius: 4px 4px 0 0;
+    @include borderRadius($radiusSize, $radiusSize, 0, 0);
 }
 
 table.form-table th {
     border-collapse: collapse;
-    border: 1px solid #6c8087;
-    padding: 10px 5px;
+    border: 1px solid $colourGrey;
+    padding: $spacingMedium $spacingSmall;
     text-align: left;
-    color: #000;
-    background: -webkit-linear-gradient(top,#fff,#c5d2d6 5%,#6c8087 100%);
+    color: $colourBlack;
+    @include highlightedVerticalGradientGrey;
 }
 
 table.form-table td {
     border-collapse: collapse;
     padding: 5px;
-    border: 1px solid #c5d2d6;
-    background: #FFF;
+    border: 1px solid $colourGreyLight;
+    background: $colourWhite;
     vertical-align: middle;
 }
 
@@ -635,4 +636,480 @@ table.form-table ul li {
     list-style: none;
     font-size: 10px;
     line-height: 14px;
+}
+
+.select2-container {
+    position: relative;
+    display: inline-block;
+    zoom: 1;
+
+    *display: inline;
+    vertical-align: top;
+}
+
+.select2-container,
+.select2-drop,
+.select2-search,
+.select2-search input {
+    @include borderBox;
+}
+
+.select2-container .select2-choice {
+    padding: 8px $spacingMedium;
+
+    display: block;
+    overflow: hidden;
+    position: relative;
+
+    outline: 0;
+    white-space: nowrap;
+    text-decoration: none;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: $primaryFontFamily;
+    @include equalBorderRadius($radiusSize);
+    @include fontSize($fontSizeMedium);
+    @include verticalGradientGreyExtraLightToWhite;
+    @include transitionAll(0.3s, ease-in-out);
+    font-weight: normal;
+    color: $textColour;
+    line-height: 22px;
+    border: 1px solid $colourGreyLight;
+}
+
+.select2-container.select2-drop-above .select2-choice {
+    border-bottom-color: $colourGreyLight;
+    @include borderRadius(0, 0, $radiusSize, $radiusSize);
+    @include verticalGradientGreyExtraLightToWhite;
+}
+
+.select2-container .select2-choice span {
+    margin-right: 26px;
+
+    @include ellipsis;
+}
+
+.select2-container .select2-choice abbr {
+    width: 12px;
+    height: 12px;
+
+    display: block;
+    position: absolute;
+    right: 26px;
+    top: 8px;
+
+    font-size: 1px;
+    text-decoration: none;
+
+    border: 0;
+    background: transparent url("#{$cssPath}/core/resources/images/icons/select.png") no-repeat center right;
+    cursor: pointer;
+    outline: 0;
+}
+.select2-container .select2-choice abbr:hover {
+    cursor: pointer;
+}
+
+.select2-drop-mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9998;
+    opacity: 0;
+}
+
+.select2-drop {
+    width: 100%;
+    margin-top: -1px;
+
+    position: absolute;
+    z-index: 9999;
+    top: 100%;
+
+    background: $colourWhite;
+    color: $textColour;
+    border: 1px solid $colourGreyLight;
+    border-top: 0;
+    @include borderRadius(0, 0, $radiusSize, $radiusSize);
+    @include boxShadow($colourBlack, 0, 5px, 5px, 0, 0.2);
+}
+
+.select2-drop.select2-drop-above {
+    margin-top: 1px;
+
+    border-top: 1px solid $colourGreyLight;
+    border-bottom: 0;
+    @include borderRadius($radiusSize, $radiusSize, 0, 0);
+    @include boxShadow($colourBlack, 0, -5px, 5px, 0, 0.2);
+}
+
+.select2-container .select2-choice div {
+    width: 20px;
+    height: 100%;
+
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    @include borderRadius(0, $radiusSize, $radiusSize, 0);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}
+
+.select2-container .select2-choice div b {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    background: transparent url("#{$cssPath}/core/resources/images/icons/select.png") no-repeat center right;
+}
+
+.select2-search {
+    width: 100%;
+    min-height: 26px;
+    margin: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    display: inline-block;
+    position: relative;
+    z-index: 10000;
+
+    white-space: nowrap;
+}
+
+.select2-search-hidden {
+    display: block;
+    position: absolute;
+    left: -10000px;
+}
+
+.select2-search input {
+    width: 100%;
+    height: auto !important;
+    min-height: 26px;
+    padding: 4px 20px 4px 5px;
+    margin: 0;
+
+    outline: 0;
+
+    font-family: $primaryFontFamily;
+    @include equalBorderRadius($radiusSize);
+    @include fontSize($fontSizeMedium);
+    background: $colourWhite url("#{$cssPath}/core/resources/images/icons/search.png") no-repeat center right;
+    font-weight: normal;
+    color: $textColour;
+    line-height: 22px;
+    @include transitionNone;
+    border: 1px solid $colourGreyLight;
+}
+
+.select2-drop.select2-drop-above .select2-search input {
+    margin-top: 4px;
+}
+
+.select2-search input.select2-active {
+    background: $colourWhite url("#{$cssPath}/core/resources/images/loaders/loader.gif") no-repeat center 5px;
+}
+
+.select2-container-active .select2-choice,
+.select2-container-active .select2-choices {
+    outline: none;
+
+    border: 1px solid $colourGreyLight;
+    @include boxGlow($primaryColour, 10px, 0, 1);
+}
+
+.select2-dropdown-open .select2-choice {
+    border-bottom-color: transparent;
+    @include borderRadius($radiusSize, $radiusSize, 0, 0);
+    background-color: $colourWhite;
+}
+
+.select2-results {
+    max-height: 200px;
+    padding: 0 0 0 4px;
+    margin: 4px 4px 4px 0;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.select2-results ul.select2-result-sub {
+    margin: 0;
+}
+
+.select2-results ul.select2-result-sub > li .select2-result-label {
+    padding-left: 20px;
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 40px;
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 60px;
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 80px;
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 100px;
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 110px;
+}
+
+.select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
+    padding-left: 120px;
+}
+
+.select2-results li {
+    list-style: none;
+    display: list-item;
+    background-image: none;
+}
+
+.select2-results li.select2-result-with-children > .select2-result-label {
+    font-weight: bold;
+}
+
+.select2-results .select2-result-label {
+    padding: 3px 7px 4px;
+    margin: 0;
+
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.select2-results .select2-highlighted {
+    background: $primaryColour;
+    color: $colourWhite;
+}
+
+.select2-results li em {
+    background: $colourWhite;
+    font-style: normal;
+}
+
+.select2-results .select2-highlighted em {
+    background: transparent;
+}
+
+.select2-results .select2-highlighted ul {
+    background: $colourWhite;
+    color: $textColour;
+}
+
+.select2-results .select2-no-results,
+.select2-results .select2-searching,
+.select2-results .select2-selection-limit {
+    background: $colourWhite;
+    display: list-item;
+}
+
+.select2-results .select2-disabled.select2-highlighted {
+    color: $textColour;
+    background: $colourWhite;
+    display: list-item;
+    cursor: default;
+}
+
+.select2-results .select2-disabled {
+    background: $colourWhite;
+    display: list-item;
+    cursor: default;
+}
+
+.select2-results .select2-selected {
+    display: none;
+}
+
+.select2-more-results.select2-active {
+    background: $colourWhite url("#{$cssPath}/core/resources/images/loaders/loader.gif") no-repeat center 5px;
+}
+
+.select2-more-results {
+    background: $colourWhite;
+    display: list-item;
+}
+
+.select2-container.select2-container-disabled .select2-choice {
+    background-color: $colourWhite;
+    background-image: none;
+    border: 1px solid $colourGreyLight;
+    cursor: default;
+}
+
+.select2-container.select2-container-disabled .select2-choice div {
+    background-color: $colourWhite;
+    background-image: none;
+    border-left: 0;
+}
+
+.select2-container.select2-container-disabled .select2-choice abbr {
+    display: none
+}
+
+.select2-container-multi .select2-choices {
+    height: auto !important;
+    height: 1%;
+    margin: 0;
+    padding: 0;
+
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid $colourGreyLight;
+    cursor: text;
+    background-color: $colourWhite;
+}
+
+.select2-locked {
+    padding: 3px 5px 3px 5px !important;
+}
+
+.select2-container-multi .select2-choices {
+    min-height: 26px;
+}
+
+.select2-container-multi.select2-container-active .select2-choices {
+    @include boxGlow($primaryColour, 10px, 0, 1);
+    color: $colourBlack;
+}
+
+.select2-container-multi .select2-choices li {
+    float: left;
+
+    list-style: none;
+}
+
+.select2-container-multi .select2-choices .select2-search-field {
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+    padding: 5px;
+    margin: 1px 0;
+
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeMedium);
+    color: $textColour;
+    outline: 0;
+    border: 0;
+    @include noBoxShadow;
+    background: transparent !important;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input.select2-active {
+    background: $colourWhite url("#{$cssPath}/core/resources/images/loaders/loader.gif") no-repeat center 5px !important;
+}
+
+.select2-default {
+    color: $textColour !important;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+    padding: 3px 5px 3px 18px;
+    margin: 3px 0 3px 5px;
+    position: relative;
+
+    line-height: 13px;
+    color: $textColour;
+    cursor: default;
+    border: 1px solid $colourGreyLight;
+    @include equalBorderRadius($radiusSize);
+    @include boxGlow($primaryColour, 10px, 0, 1);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: $colourWhite;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice span {
+    cursor: default;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice-focus {
+    background: $colourGreyLight;
+}
+
+.select2-search-choice-close {
+    width: 12px;
+    height: 13px;
+
+    display: block;
+    position: absolute;
+    right: 3px;
+    top: 4px;
+
+    font-size: 1px;
+    outline: none;
+    background: transparent url("#{$cssPath}/core/resources/images/icons/error_small.png") no-repeat center 5px;
+}
+
+.select2-container-multi .select2-search-choice-close {
+    left: 3px;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
+    background-position: right -11px;
+}
+.select2-container-multi .select2-choices .select2-search-choice-focus .select2-search-choice-close {
+    background-position: right -11px;
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices{
+    background-color: $colourGreyLight;
+    background-image: none;
+    border: 1px solid $colourGrey;
+    cursor: default;
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice {
+    padding: 3px 5px 3px 5px;
+
+    border: 1px solid $colourGreyLight;
+    background-image: none;
+    background-color: $colourWhite;
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {
+    display: none;
+}
+
+.select2-result-selectable .select2-match,
+.select2-result-unselectable .select2-match {
+    text-decoration: underline;
+}
+
+.select2-offscreen {
+    position: absolute;
+    left: -10000px;
 }
