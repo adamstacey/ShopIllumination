@@ -545,7 +545,7 @@ header.error {
 .form-element-error .radio,
 .form-element-error .checker,
 .form-element-error .uploader,
-.form-element-error .select2-container,
+.form-element-error .select2-choice,
 .error input,
 .error textarea,
 .error .selector,
@@ -553,7 +553,7 @@ header.error {
 .error .radio,
 .error .checker,
 .error .uploader,
-.error .select2-container {
+.error .select2-choice {
     border: 1px solid $colourRedExtraLight;
 }
 
