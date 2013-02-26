@@ -27,7 +27,7 @@ class ProductDepartmentType extends AbstractType
             },
             'required' => true,
             'attr' => array(
-                'class' => 'select_department fill no-uniform',
+                'class' => 'select-department fill no-uniform',
             ),
             'empty_value' => '- Select a Department -',
         ), array());
