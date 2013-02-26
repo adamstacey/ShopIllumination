@@ -175,10 +175,19 @@
     border: 1px dotted $colourBlack;
 }
 
+.ui-accordion {
+    padding: $spacingMedium;
+}
+
+.accordion-item {
+    @include boxGlow($colourGreyDark, 10px, 0, 0.5);
+    @include equalBorderRadius($radiusSize);
+}
+
 .ui-accordion .ui-accordion-header {
     min-height: 0;
     margin-top: $spacingExtraSmall;
-    padding: $spacingMedium;
+    padding: $spacingLarge;
 
     position: relative;
     display: block;
@@ -186,8 +195,8 @@
     cursor: pointer;
 }
 
-.ui-accordion .ui-accordion-icons {
-    padding-left: $spacingExtraLarge;
+.ui-accordion h3.ui-state-active {
+    border-bottom: 3px solid $primaryColour;
 }
 
 .ui-accordion .ui-accordion-noicons {
@@ -200,17 +209,20 @@
 
 .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
     position: absolute;
-    left: $spacingSmall;
+    right: $spacingMedium;
     top: 50%;
-    margin-top: -8px;
+    margin-top: -16px;
 }
 
 .ui-accordion .ui-accordion-content {
-    padding: $spacingExtraLarge;
+    padding: $spacingLarge $spacingLarge $spacingSmall $spacingLarge;
     border-top: 0;
     overflow: auto;
 }
 
+.ui-accordion .ui-accordion-content ul {
+    margin-left: $spacingLarge;
+}
 .ui-autocomplete {
     position: absolute;
     top: 0;
@@ -755,8 +767,8 @@
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
-    margin-bottom: -1px;
-    padding-bottom: 1px;
+    margin-top: -1px;
+    border-bottom: 3px solid $primaryColour;
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active a,
@@ -873,25 +885,25 @@ body .ui-tooltip {
 /* Interaction states
 ----------------------------------*/
 .ui-state-default {
-    border: 1px solid $colourGrey;
-    @include verticalGradientGreyLightToGrey;
+    @include highlightedVerticalGradientGrey;
     font-weight: bold;
-    color: $textColour;
+    color: $colourGreyDark;
+    @include textShadow($colourGreyLight, 0, 1px);
 }
 
 .ui-state-default a,
 .ui-state-default a:link,
 .ui-state-default a:visited {
-    color: $textColour;
+    color: $colourGreyDark;
+    @include textShadow($colourGreyLight, 0, 1px);
     text-decoration: none;
 }
 
 .ui-state-hover,
 .ui-state-focus {
-    border: 1px solid $colourGrey;
-    @include verticalGradientGreyLightToWhite;
     font-weight: bold;
     color: $colourBlack;
+    @include textShadow($colourGreyLight, 0, 1px);
 }
 
 .ui-state-hover a,
@@ -899,20 +911,22 @@ body .ui-tooltip {
 .ui-state-hover a:link,
 .ui-state-hover a:visited {
     color: $colourBlack;
+    @include textShadow($colourGreyLight, 0, 1px);
     text-decoration: none;
 }
 
 .ui-state-active {
-    border: 1px solid $colourWhite;
-    background: $colourWhite;
+    @include highlightedVerticalGradientGreyLight;
     font-weight: bold;
-    color: $primaryColour;
+    color: $colourBlack;
+    @include textShadow($colourWhite, 0, 1px);
 }
 
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
-    color: $primaryColour;
+    color: $colourBlack;
+    @include textShadow($colourWhite, 0, 1px);
     text-decoration: none;
 }
 
