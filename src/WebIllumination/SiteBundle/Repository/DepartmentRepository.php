@@ -40,7 +40,6 @@ class DepartmentRepository extends NestedTreeRepository
 
     public function findAllAsTree()
     {
-
         $departments = $this->getEntityManager()
             ->createQuery('
                 SELECT d, dd
