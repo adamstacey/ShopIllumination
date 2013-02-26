@@ -4,6 +4,7 @@
     -moz-transition: $property $duration $type;
     -ms-transition: $property $duration $type;
     -o-transition: $property $duration $type;
+    transition: $property $duration $type;
 }
 
 @mixin transitionAll($duration, $type)
@@ -12,4 +13,14 @@
     -moz-transition: all $duration $type;
     -ms-transition: all $duration $type;
     -o-transition: all $duration $type;
+    transition: all $duration $type;
+}
+
+@mixin transitionNone
+{
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: color 0 ease-in;
+    transition: none;
 }
