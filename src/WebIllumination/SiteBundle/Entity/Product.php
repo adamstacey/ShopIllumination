@@ -780,7 +780,6 @@ class Product implements DescribableInterface
      */
     public function addLink(\WebIllumination\SiteBundle\Entity\Product\Link $link)
     {
-        die("Test");
         $link->setProduct($this);
         $this->links[] = $link;
 
@@ -815,7 +814,6 @@ class Product implements DescribableInterface
      */
     public function setLinks($links)
     {
-        die("2");
         $this->links = $links;
 
         return $this;
