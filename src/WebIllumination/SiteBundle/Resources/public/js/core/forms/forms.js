@@ -98,6 +98,13 @@ $(document).ready(function() {
         $newRow.appendTo($tableObject.find("tbody"));
         generateFormElements($newRow);
         generateButtons($newRow);
+
+        // Fire event on the table when the row has been added
+        $tableObject.trigger("rowadded", {
+            'index': $rowCount,
+            'row': $newRow
+        });
+
         return false;
     });
 
@@ -105,6 +112,9 @@ $(document).ready(function() {
         var $tableObject = $("#"+$(this).attr("data-table-object"));
         if ($tableObject.find("tbody tr").length > 1) {
             $(this).closest("tr").remove();
+
+            // Trigger an event on the table when the row is deleted
+            $tableObject.trigger("rowdeleted");
         }
     });
 

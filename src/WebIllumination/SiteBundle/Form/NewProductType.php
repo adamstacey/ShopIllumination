@@ -99,6 +99,13 @@ class NewProductType extends AbstractType
                     'allow_delete' => true,
                 ));
                 break;
+            case 6:
+                $builder->add('links', 'collection', array(
+                    'type' => new ProductLinkType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
+                break;
         }
     }
 

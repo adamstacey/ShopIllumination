@@ -22,7 +22,7 @@ use WebIllumination\SiteBundle\Entity\Product;
 
 class NewProductFlow extends FormFlow
 {
-    protected $maxSteps = 5;
+    protected $maxSteps = 6;
     protected $allowDynamicStepNavigation = true;
 
     protected function loadStepDescriptions() {
@@ -32,6 +32,7 @@ class NewProductFlow extends FormFlow
             '3. Prices',
             '4. Features',
             '5. Images',
+            '6. Links'
         );
     }
 

@@ -136,3 +136,5 @@ fos_user:
             type: webillumination_user_registration
     service:
         user_manager: webillumination.user_manager.default
+
+gregwar_form: ~

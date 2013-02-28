@@ -18,17 +18,13 @@
         <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': product.id}) }}" {{ form_enctype(form) }}>
             <div class="widget-group clearfix">
                 <div class="widget widget-1-of-1">
-                    <div class="ui-widget mbl">
+                    <div class="ui-widget">
                         <header class="ui-widget-header ui-corner-top">
-                            <h2>Overview</h2>
+                            <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                            <h2>1. Product Information</h2>
                         </header>
-                        <section class="ui-widget-content ui-corner-bottom">
-                            {% if form.errors %}
-                                <div class="message error">
-                                    <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
-                                    {{ form_errors(form) }}
-                                </div>
-                            {% endif %}
+                        <section class="ui-widget-content ui-corner-all">
+                            {% include 'WebIlluminationSiteBundle:Product:newErrors.html.twig' %}
                             <fieldset>
                                 {{ form_row(form.productCode, {'label': 'Product Code', 'help': ''}) }}
                                 {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}

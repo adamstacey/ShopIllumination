@@ -97,6 +97,10 @@
     {{ fields.product_variants_images_widget(form) }}
 {% endblock %}
 
+{% block _site_new_product_links_entry_widget %}
+    {% import "WebIlluminationSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.table_links_widget(form) }}
+{% endblock %}
 {#{% block _site_new_product_variants_features_entry_widget %}#}
     {#<tr><td>xxx</td></tr>#}
 {#{% endblock %}#}

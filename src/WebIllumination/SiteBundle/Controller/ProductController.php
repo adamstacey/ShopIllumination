@@ -66,6 +66,10 @@ class ProductController extends Controller {
                     }
                 }
 
+                foreach($product->getLinks() as $link) {
+                    $link->setProduct($product);
+                }
+
                 $em->persist($product);
                 $em->flush();
 
