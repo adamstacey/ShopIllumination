@@ -183,6 +183,7 @@ class Product implements DescribableInterface
 
     private $features = array();
     private $prices = array();
+    private $images = array();
 
     /**
      * Get statusColour
@@ -978,5 +979,15 @@ class Product implements DescribableInterface
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    public function setImages($images)
+    {
+        $this->images = $images;
     }
 }
