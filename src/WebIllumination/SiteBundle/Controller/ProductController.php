@@ -94,7 +94,7 @@ class ProductController extends Controller {
         ));
     }
 
-    public function editAction(Request $request, $productId, $template, $formClass)
+    public function baseEditAction(Request $request, $productId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -124,12 +124,21 @@ class ProductController extends Controller {
 
     /**
      * @Route("/admin/products/{productId}/edit", name="products_edit")
+     */
+    public function editAction($productId)
+    {
+        return $this->redirect($this->generateUrl('products_edit_overview', array(
+            'productId' => $productId
+        )));
+    }
+
+    /**
      * @Route("/admin/products/{productId}/overview", name="products_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editOverviewAction(Request $request, $productId)
     {
-        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
+        return $this->baseEditAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
     }
 
     /**
@@ -138,7 +147,7 @@ class ProductController extends Controller {
      */
     public function editDescriptionsAction(Request $request, $productId)
     {
-        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_descriptions.html.twig', new EditProductDescriptionsType());
+        return $this->baseEditAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_descriptions.html.twig', new EditProductDescriptionsType());
     }
 
     /**

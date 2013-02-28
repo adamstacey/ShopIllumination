@@ -12,8 +12,6 @@ class EditProductOverviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('productCode');
-
         $builder->add('brand', 'entity', array(
             'class' => 'WebIllumination\SiteBundle\Entity\Brand',
             'query_builder' => function(EntityRepository $er) {
@@ -40,8 +38,6 @@ class EditProductOverviewType extends AbstractType
         // Prices
         $builder->add('hidePrice');
         $builder->add('showPriceOutOfHours');
-        $builder->add('membershipCardDiscountAvailable');
-        $builder->add('maximumMembershipCardDiscount');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
