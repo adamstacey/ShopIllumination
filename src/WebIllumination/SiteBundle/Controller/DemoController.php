@@ -36,6 +36,16 @@ class DemoController extends Controller
     }
 
     /**
+     * @Route("/worktops", name="demo_worktops")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function worktopsAction(Request $request)
+    {
+
+    }
+
+    /**
      * @Route("/icons", name="demo_icons")
      * @Method({"GET"})
      * @Template()
