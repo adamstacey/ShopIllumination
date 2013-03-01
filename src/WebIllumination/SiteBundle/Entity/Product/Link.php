@@ -22,7 +22,7 @@ class Link
     /**
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    private $active = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Product", inversedBy="links")
@@ -43,7 +43,7 @@ class Link
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @Gedmo\Timestampable(on="create")

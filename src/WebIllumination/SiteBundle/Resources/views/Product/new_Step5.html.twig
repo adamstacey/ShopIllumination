@@ -8,9 +8,29 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'WebIlluminationSiteBundle:Product:newErrors.html.twig' %}
+
+                    <fieldset class="fileupload">
+                        <legend class="fill">Images for the product group</legend>
+                        <table class="form-table files">
+                            <thead>
+                            <tr>
+                                <th colspan="4">
+                                    <button type="button" class="button fileinput-button button-small mrm fl">
+                                        Add files
+                                        <input class="no-uniform" type="file" name="file" multiple>
+                                    </button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        {{ form_widget(form.images) }}
+                        {% do form.images.setRendered() %}
+                    </fieldset>
                     {% for variant in form.variants %}
                         <fieldset class="fileupload">
-                            <legend class="fill">Features for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</legend>
+                            <legend class="fill">Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</legend>
                             <table class="form-table files">
                                 <thead>
                                     <tr>

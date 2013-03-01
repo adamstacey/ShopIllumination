@@ -66,57 +66,18 @@ class ProductController extends Controller {
                     }
                 }
 
+                foreach($product->getLinks() as $link) {
+                    $link->setProduct($product);
+                }
+
                 $em->persist($product);
                 $em->flush();
 
-                /**
-                 * Link image to variant
-                 * @var $variant Variant
-                 */
+                // Link images
+                $this->persistImages($product, 'product');
                 foreach($product->getVariants() as $variant)
                 {
-                    $i = 0;
-                    $imageIds = explode(',', $variant->getImages());
-
-                    // If no images were added add a blank image
-                    if(count($imageIds) == 0) {
-                        $image = new Image();
-                        $image->setLocale('en');
-                        $image->setTitle($variant->getDescription()->getHeader());
-                        $image->setAlignment('');
-                        $image->setDescription('');
-                        $image->setLink('');
-                        $image->setObjectType('variant');
-                        $image->setImageType('variant');
-                        $image->setObjectId($variant->getId());
-                        $image->setDisplayOrder(1);
-                        $image->setOriginalPath('/images/no-image.jpg');
-                        $image->setPublicPath('/images/no-image.jpg');
-                        $em->persist($image);
-                    } else {
-                        // Link each image to the variant
-                        foreach($imageIds as $imageId)
-                        {
-                            /**
-                             * @var $image Image
-                             */
-                            $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
-                            if($image)
-                            {
-                                $image->setObjectId($variant->getId());
-                                $image->setObjectType('variant');
-                                $image->setImageType('variant');
-
-                                $image->setTitle($variant->getDescription()->getHeader());
-                                $image->setDisplayOrder($i);
-                                $image->setPublicPath(/*Set this field to a blank value so it can be changed in the listener*/"");
-
-                                $i++;
-
-                                $em->persist($image);
-                            }
-                        }
-                    }
+                    $this->persistImages($variant, 'variant');
                 }
 
                 $em->flush();
@@ -133,7 +94,7 @@ class ProductController extends Controller {
         ));
     }
 
-    public function editAction(Request $request, $productId, $template, $formClass)
+    public function baseEditAction(Request $request, $productId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -163,12 +124,21 @@ class ProductController extends Controller {
 
     /**
      * @Route("/admin/products/{productId}/edit", name="products_edit")
+     */
+    public function editAction($productId)
+    {
+        return $this->redirect($this->generateUrl('products_edit_overview', array(
+            'productId' => $productId
+        )));
+    }
+
+    /**
      * @Route("/admin/products/{productId}/overview", name="products_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editOverviewAction(Request $request, $productId)
     {
-        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
+        return $this->baseEditAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
     }
 
     /**
@@ -177,7 +147,7 @@ class ProductController extends Controller {
      */
     public function editDescriptionsAction(Request $request, $productId)
     {
-        return $this->editAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_descriptions.html.twig', new EditProductDescriptionsType());
+        return $this->baseEditAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_descriptions.html.twig', new EditProductDescriptionsType());
     }
 
     /**
@@ -217,6 +187,52 @@ class ProductController extends Controller {
         $em->flush();
 
         return $this->redirect($this->generateUrl('listing_products'));
+    }
+
+    private function persistImages($entity, $entityType) {
+        $em = $this->getDoctrine()->getManager();
+        $i = 0;
+        $imageIds = explode(',', $entity->getImages());
+
+        // If no images were added add a blank image
+        if(count($imageIds) == 0) {
+            $image = new Image();
+            $image->setLocale('en');
+            $image->setTitle($entity->getDescription()->getHeader());
+            $image->setAlignment('');
+            $image->setDescription('');
+            $image->setLink('');
+            $image->setObjectType($entityType);
+            $image->setImageType($entityType);
+            $image->setObjectId($entity->getId());
+            $image->setDisplayOrder(1);
+            $image->setOriginalPath('/images/no-image.jpg');
+            $image->setPublicPath('/images/no-image.jpg');
+            $em->persist($image);
+        } else {
+            // Link each image to the variant
+            foreach($imageIds as $imageId)
+            {
+                /**
+                 * @var $image Image
+                 */
+                $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
+                if($image)
+                {
+                    $image->setObjectId($entity->getId());
+                    $image->setObjectType($entityType);
+                    $image->setImageType($entityType);
+
+                    $image->setTitle($entity->getDescription()->getHeader());
+                    $image->setDisplayOrder($i);
+                    $image->setPublicPath(/*Set this field to a blank value so it can be changed in the listener*/"");
+
+                    $i++;
+
+                    $em->persist($image);
+                }
+            }
+        }
     }
 
     /**

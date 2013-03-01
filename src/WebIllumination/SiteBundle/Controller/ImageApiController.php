@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use WebIllumination\SiteBundle\Entity\Image;
 use WebIllumination\SiteBundle\Manager\ImageManager;
@@ -24,6 +25,7 @@ class ImageApiController extends Controller
     /**
      * @Route("/.{format}", name="api_images_get", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"GET"})
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function getAction(Request $request, $id, $format)
     {
@@ -40,6 +42,7 @@ class ImageApiController extends Controller
     /**
      * @Route("/{id}.{format}", name="api_images_get_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"GET"})
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function getImageAction(Request $request, $id, $format)
     {
@@ -56,6 +59,7 @@ class ImageApiController extends Controller
     /**
      * @Route("/multiple/{ids}.{format}", name="api_images_get_multiple", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"GET"})
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function getMultipleAction(Request $request, $ids, $format)
     {
@@ -91,6 +95,7 @@ class ImageApiController extends Controller
     /**
      * @Route("/.{format}", name="api_images_post_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"POST"})
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function postAction(Request $request, $format)
     {
@@ -150,6 +155,7 @@ class ImageApiController extends Controller
     /**
      * @Route("/{id}.{format}", name="api_images_delete_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"DELETE"})
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function deleteImageAction(Request $request, $id, $format)
     {

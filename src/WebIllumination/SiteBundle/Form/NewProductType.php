@@ -92,10 +92,18 @@ class NewProductType extends AbstractType
 
                 break;
             case 5:
+                $builder->add('images', 'hidden');
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_images',
                     'type' => new ProductVariantImagesType(),
                     'required'  => false,
+                    'allow_delete' => true,
+                ));
+                break;
+            case 6:
+                $builder->add('links', 'collection', array(
+                    'type' => new ProductLinkType(),
+                    'allow_add' => true,
                     'allow_delete' => true,
                 ));
                 break;

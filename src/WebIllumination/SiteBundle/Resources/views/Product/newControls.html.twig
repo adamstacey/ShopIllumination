@@ -15,5 +15,7 @@
 
     {% if flow.getCurrentStep() == 2 %}
         <button type="button" data-table-object="featureList" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Feature</button>
+    {% elseif flow.getCurrentStep() == 6 %}
+        <button type="button" data-table-object="linkList" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Link</button>
     {% endif %}
 </div>

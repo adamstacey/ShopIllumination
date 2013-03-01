@@ -4,6 +4,7 @@ namespace WebIllumination\SiteBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\SerializerBundle\Annotation as Serializer;
 
 /**
  * @ORM\Entity
@@ -23,6 +24,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand")
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a brand.")
+     * @Serializer\Exclude()
      */
     private $brand;
 
@@ -34,11 +36,13 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"persist", "remove"})
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
+     * @Serializer\Exclude()
      */
     private $departments;
 
     /**
      * @ORM\OneToMany(targetEntity="WebIllumination\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
+     * @Serializer\Exclude()
      */
     private $links;
 
@@ -179,6 +183,7 @@ class Product implements DescribableInterface
 
     private $features = array();
     private $prices = array();
+    private $images = array();
 
     /**
      * Get statusColour
@@ -771,13 +776,13 @@ class Product implements DescribableInterface
     /**
      * Add links
      *
-     * @param \WebIllumination\SiteBundle\Entity\Product\Link $links
+     * @param \WebIllumination\SiteBundle\Entity\Product\Link $link
      * @return Product
      */
-    public function addLink(\WebIllumination\SiteBundle\Entity\Product\Link $links)
+    public function addLink(\WebIllumination\SiteBundle\Entity\Product\Link $link)
     {
-        $this->links[] = $links;
-        $links->setProduct($this);
+        $link->setProduct($this);
+        $this->links[] = $link;
 
 
         return $this;
@@ -801,6 +806,18 @@ class Product implements DescribableInterface
     public function getLinks()
     {
         return $this->links;
+    }
+
+    /**
+     * Set links
+     *
+     * @param \Doctrine\Common\Collections\Collection $links
+     */
+    public function setLinks($links)
+    {
+        $this->links = $links;
+
+        return $this;
     }
 
     /**
@@ -962,5 +979,15 @@ class Product implements DescribableInterface
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    public function setImages($images)
+    {
+        $this->images = $images;
     }
 }
