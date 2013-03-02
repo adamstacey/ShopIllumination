@@ -1,0 +1,487 @@
+.etalage {
+    display: none;
+    margin-bottom: 50px;
+}
+
+.etalage .etalage_thumb,
+.etalage .etalage_zoom_area,
+.etalage_zoom_area {
+    padding: $spacingMedium;
+
+    background: $colourWhite url("#{$cssPath}/core/resources/images/loaders/loader.gif") center no-repeat;
+    border: 1px solid $colourGreyExtraLight;
+    @include boxGlow($colourGreyExtraLight, 10px, 0, 1);
+}
+
+.etalage .etalage_small_thumbs li {
+    background: $colourWhite;
+    border: 1px solid $colourGreyExtraLight;
+    margin: $spacingMedium;
+    padding: $spacingExtraSmall;
+    cursor: pointer;
+}
+
+.etalage ul li.etalage_smallthumb_active {
+    border: 1px solid $primaryColour;
+}
+
+.etalage .etalage_magnifier {
+    background: $colourWhite;
+    border: 1px solid $colourGreyExtraLight;
+    cursor: pointer;
+}
+
+.etalage .etalage_icon {
+    background: transparent url("#{$cssPath}/core/resources/images/icons/zoom.png") no-repeat;
+    width: 20px;
+    height: 20px;
+}
+
+.etalage .etalage_description {
+    background: $colourWhite;
+    font-style: italic;
+    margin: $spacingMedium;
+    padding: $spacingMedium;
+}
+
+.etalage,
+.etalage_thumb,
+.etalage_thumb_image,
+.etalage_source_image,
+.etalage_zoom_preview,
+.etalage_icon,
+.etalage_hint {
+    display: none;
+}
+
+.etalage,
+.etalage ul,
+.etalage li,
+.etalage img,
+.etalage_hint,
+.etalage_icon,
+.etalage_description {
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    list-style: none;
+}
+
+.etalage,
+.etalage_magnifier div,
+.etalage_magnifier div img,
+.etalage_small_thumbs ul,
+ul .etalage_small_thumbs li,
+.etalage_zoom_area div,
+.etalage_zoom_img {
+    position: relative;
+}
+
+.etalage img,
+.etalage li {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    user-drag: none;
+}
+
+.etalage,
+.etalage_small_thumbs li {
+    float: left;
+}
+
+.etalage_right {
+    float: right;
+}
+
+.etalage li {
+    position: absolute;
+}
+
+.etalage img {
+    vertical-align: bottom;
+    max-width: none;
+}
+
+.etalage_magnifier {
+    cursor: default;
+}
+
+.etalage_magnifier div {
+    overflow: hidden;
+}
+.etalage_small_thumbs {
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+
+.etalage_magnifier div img {
+    display: none;
+}
+
+.etalage_icon,
+.etalage_hint {
+    cursor: default;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.etalage_small_thumbs li.vertical {
+    float: none;
+}
+
+.etalage_zoom_area {
+    z-index: 996;
+}
+
+.etalage_zoom_area div {
+    overflow: hidden;
+    z-index: 997;
+}
+
+.etalage_zoom_preview {
+    position: absolute;
+    z-index: 998;
+}
+
+.etalage_zoom_img,
+.etalage_hint {
+    z-index: 999;
+}
+
+.etalage {
+    direction: ltr;
+}
+
+div.etalage_description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
+
+div.etalage_description.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.jquery-lightbox-overlay {
+    background: $colourBlack;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.jquery-lightbox {
+    padding: 17px 0;
+
+    position: relative;
+
+    @include boxGlow($colourBlack, 10px, 0, 1);
+}
+
+.jquery-lightbox-border-top-left,
+.jquery-lightbox-border-top-right,
+.jquery-lightbox-border-bottom-left,
+.jquery-lightbox-border-bottom-right {
+    height: 18px;
+    width: 12%;
+
+    position: absolute;
+
+    z-index: 7000;
+}
+
+.jquery-lightbox-border-top-left {
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat 0 0;
+    top: 0;
+    left: 0;
+}
+
+.jquery-lightbox-border-top-right {
+    top: 0;
+    right: 0;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat right 0;
+}
+
+.jquery-lightbox-border-top-middle {
+    height: 7px;
+    width: 78%;
+
+    position: absolute;
+    top: 0;
+    left: 12%;
+
+    background: $colourWhite;
+    z-index: 7000;
+    overflow: hidden;
+}
+
+.jquery-lightbox-border-bottom-left {
+    bottom: 0;
+    left: 0;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat 0 bottom;
+}
+
+.jquery-lightbox-border-bottom-right {
+    bottom: 0;
+    right: 0;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat right bottom;
+}
+
+.jquery-lightbox-border-bottom-middle {
+    height: 7px;
+    width: 78%;
+
+    position: absolute;
+    bottom: 0;
+    left: 12%;
+
+    z-index: 7000;
+    overflow: hidden;
+    background: $colourWhite;
+}
+
+.jquery-lightbox-title {
+    padding: 5px 8px;
+    margin: 3px;
+
+    position: absolute;
+    bottom: 0;
+
+    background: $colourWhite;
+    color: $colourWhite;
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeSmall);
+    line-height: 14px;
+    z-index: 7000;
+    opacity: 0.9;
+}
+
+.jquery-lightbox-html {
+    padding: 0px 15px;
+    position: relative;
+
+    border: 0;
+    border-left: 7px solid $colourWhite;
+    border-right: 7px solid $colourWhite;
+    z-index: 7000;
+    vertical-align: top;
+}
+
+.jquery-lightbox-html embed,
+.jquery-lightbox-html object,
+.jquery-lightbox-html iframe {
+    vertical-align: top;
+    display: block;
+}
+
+.jquery-lightbox-background {
+    padding: 0;
+
+    position: absolute;
+    top: 7px;
+    left: 7px;
+
+    float: left;
+
+    z-index: 6999;
+}
+
+.jquery-lightbox-background img {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    display: block;
+    position: relative;
+
+    border: 0;
+}
+
+.jquery-lightbox-mode-image .jquery-lightbox-html {
+    padding: 0;
+
+    z-index: 6998;
+}
+
+.jquery-lightbox-mode-html .jquery-lightbox-background {
+    background: $colourWhite;
+}
+
+.jquery-lightbox-mode-html .jquery-lightbox-html {
+    overflow: auto;
+}
+
+.jquery-lightbox-loading,
+.jquery-lightbox-mode-html .jquery-lightbox-loading {
+    background: $colourWhite url("#{$cssPath}/core/resources/images/loaders/loader.gif") center no-repeat;
+}
+
+.jquery-lightbox-button-close {
+    width: 29px;
+    height: 29px;
+
+    position: absolute;
+    top: 12px;
+    right: -26px;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -190px -115px;
+}
+
+.jquery-lightbox-button-close:hover {
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -220px -115px;
+}
+
+.jquery-lightbox-button-close span,
+.jquery-lightbox-buttons span {
+    display: none;
+}
+
+.jquery-lightbox-mode-image .jquery-lightbox-button-close {
+    right: 14px;
+
+    z-index: 7002;
+}
+
+.jquery-lightbox-buttons {
+    height: 39px;
+
+    position: absolute;
+    top: 7px;
+    left: 7px;
+
+    z-index: 7001;
+    display: none;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-buttons-init,
+.jquery-lightbox-buttons .jquery-lightbox-buttons-end {
+    width: 5px;
+    height: 39px;
+
+    float: left;
+
+    display: inline;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-buttons-init {
+    margin: 7px 0 0 7px;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -151px -153px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-buttons-end {
+    margin: 7px 0 0 0;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -244px -153px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-left {
+    width: 24px;
+    height: 39px;
+    margin: 7px 0 0 0;
+
+    float: left;
+    display: inline;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -156px -153px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-left:hover {
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -156px -194px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-right {
+    height: 39px;
+    width: 24px;
+    margin: 7px 0 0 0;
+
+    float: left;
+    display: inline;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -220px -153px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-right:hover {
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -220px -194px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-max {
+    width: 36px;
+    height: 39px;
+    margin: 7px 0 0 0;
+
+    float: left;
+    display: inline;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -182px -153px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-max:hover {
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -182px -194px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-min {
+    margin: 7px 0 0 0;
+    width: 36px;
+    height: 39px;
+
+    float: left;
+    display: inline;
+
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -162px -235px;
+}
+
+.jquery-lightbox-buttons .jquery-lightbox-button-min:hover {
+    background: url("#{$cssPath}/core/resources/images/icons/lightbox.png") no-repeat -207px -235px;
+}
+
+.jquery-lightbox-buttons-custom {
+    height: 39px;
+    margin: 7px 0 0 0;
+
+    float: left;
+    display: inline;
+
+    background: $colourWhite;
+    line-height: 39px;
+    @include fontSize($fontSizeExtraSmall);
+}
+
+.jquery-lightbox-buttons-custom a {
+    padding: 0 3px;
+
+    display:inline;
+
+    color: $colourWhite;
+    @include fontSize($fontSizeExtraSmall);
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+.jquery-lightbox-mode-image .jquery-lightbox-button-close,
+.jquery-lightbox-mode-image .jquery-lightbox-buttons {
+    opacity: 0.8;
+}
+
+.jquery-lightbox-mode-image:hover .jquery-lightbox-buttons,
+.jquery-lightbox-mode-image:hover .jquery-lightbox-button-close {
+    opacity: 1;
+}
+
+.jquery-lightbox-navigator {
+    display: none;
+}
+
+.jquery-lightbox-hide {
+    display: none;
+}
