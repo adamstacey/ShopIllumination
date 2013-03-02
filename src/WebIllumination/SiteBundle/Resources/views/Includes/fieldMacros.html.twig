@@ -40,7 +40,7 @@
     </td>
     <td width="1">
         {{ form_widget(form.displayOrder) }}
-        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="featureList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="feature-list" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
     </td>
 {% endmacro %}
 
@@ -73,9 +73,20 @@
                 {{ form_widget(child.listPrice) }}
             </td>
         {% endfor %}
-    {% else %}
-        {# TODO: Add ability for multiple prices. #}
     {% endif %}
+{% endmacro %}
+
+{% macro table_prices_row(form) %}
+    <td{% if form.recommendedRetailPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.recommendedRetailPrice) }}
+    </td>
+    <td{% if form.listPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.listPrice) }}
+    </td>
+    <td>
+        {{ form_widget(form.displayOrder) }}
+        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="price-list" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+    </td>
 {% endmacro %}
 
 {% macro table_links_widget(form) %}
@@ -87,7 +98,7 @@
     </td>
     <td width="1">
         {{ form_widget(form.displayOrder) }}
-        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="linkList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="link-list" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
     </td>
 {% endmacro %}
 

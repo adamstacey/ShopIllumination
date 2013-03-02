@@ -14,7 +14,7 @@
                     </div>
                     {% include 'WebIlluminationSiteBundle:Product:newErrors.html.twig' %}
                     <fieldset class="pbm">
-                        <table class="form-table" id="linkList" data-prototype="{{ form_widget(form.links.vars.prototype) | e }}">
+                        <table class="form-table" id="link-list" data-prototype="{{ form_widget(form.links.vars.prototype) | e }}">
                             <thead>
                             <tr>
                                 <th>Product</th>
@@ -44,7 +44,7 @@
 
     $(document).ready(function() {
         generateSelectBox($(".linked-product"));
-        $("#linkList").on('rowadded', function() {
+        $("#link-list").on('rowadded', function() {
             generateSelectBox($(".linked-product"));
         });
     });
@@ -76,7 +76,7 @@
                 // using its formatResult renderer - that way the movie name is shown preselected
                 var id=$(element).val();
                 if (id!=="") {
-                    $.ajax(listUrl.replace(/-1/, id), {
+                    $.ajax(itemUrl.replace(/-1/, id), {
                         dataType: "json"
                     }).done(function(data) { callback(data); });
                 }
