@@ -1,0 +1,302 @@
+.clear {
+    width: 0;
+    height: 0;
+
+    clear: both;
+    display: block;
+
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.clearfix:after {
+    height: 0;
+
+    clear: both;
+    display: block;
+
+    visibility: hidden;
+
+    content: " ";
+    
+    font-size: 0;
+}
+
+* html .clearfix {
+    zoom: 1;
+}
+
+*:first-child + html .clearfix {
+    zoom: 1;
+}
+
+.fill {
+    width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+dl,
+p,
+blockquote,
+pre {
+    margin: 0 0 $spacingMedium 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+img {
+    padding-bottom: $spacingNone;
+}
+
+table h1,
+table h2,
+table h3,
+table h4,
+table h5,
+table h6,
+table p,
+table ul,
+table ol,
+table dl {
+    padding: $spacingNone;
+}
+
+.ban {
+  border: 0 none !important;
+}
+
+.btn {
+  border-top: 0 none !important;
+}
+
+.brn {
+  border-right: 0 none !important;
+}
+
+.bbn {
+  border-bottom: 0 none !important;
+}
+
+.bln {
+  border-left: 0 none !important;
+}
+
+.ptn,
+.pvn,
+.pan {
+    padding-top: $spacingNone !important;
+}
+
+.pts,
+.pvs,
+.pas {
+    padding-top: $spacingSmall !important;
+}
+
+.ptm,
+.pvm,
+.pam {
+    padding-top: $spacingMedium !important;
+}
+
+.ptl,
+.pvl,
+.pal {
+    padding-top: $spacingExtraLarge !important;
+}
+
+.prn,
+.phn,
+.pan {
+    padding-right: $spacingNone !important
+}
+
+.prs,
+.phs,
+.pas {
+    padding-right: $spacingSmall !important
+}
+
+.prm,
+.phm,
+.pam {
+    padding-right: $spacingMedium !important
+}
+
+.prl,
+.phl,
+.pal {
+    padding-right: $spacingExtraLarge !important
+}
+
+.pbn,
+.pvn,
+.pan {
+	padding-bottom: $spacingNone !important
+}
+
+.pbs,
+.pvs,
+.pas {
+	padding-bottom: $spacingSmall !important
+}
+
+.pbm,
+.pvm,
+.pam {
+	padding-bottom: $spacingMedium !important
+}
+
+.pbl,
+.pvl,
+.pal {
+	padding-bottom: $spacingExtraLarge !important
+}
+
+.pln,
+.phn,
+.pan {
+	padding-left: $spacingNone !important
+}
+
+.pls,
+.phs,
+.pas {
+	padding-left: $spacingSmall !important
+}
+
+.plm,
+.phm,
+.pam {
+	padding-left: $spacingMedium !important
+}
+
+.pll,
+.phl,
+.pal {
+	padding-left: $spacingExtraLarge !important
+}
+
+.mtn,
+.mvn,
+.man {
+	margin-top: $spacingNone !important
+}
+
+.mts,
+.mvs,
+.mas {
+	margin-top: $spacingSmall !important
+}
+
+.mtm,
+.mvm,
+.mam {
+	margin-top: $spacingMedium !important
+}
+
+.mtl,
+.mvl,
+.mal {
+	margin-top: $spacingExtraLarge !important
+}
+
+.mrn,
+.mhn,
+.man {
+	margin-right: $spacingNone !important
+}
+
+.mrs, .mhs,
+.mas {
+	margin-right: $spacingSmall !important
+}
+
+.mrm,
+.mhm,
+.mam {
+	margin-right: $spacingMedium !important
+}
+
+.mrl,
+.mhl,
+.mal {
+	margin-right: $spacingExtraLarge !important
+}
+
+.mbn,
+.mvn,
+.man {
+	margin-bottom: $spacingNone !important
+}  
+
+.mbs,
+.mvs,
+.mas {
+	margin-bottom: $spacingSmall !important
+}
+
+.mbm,
+.mvm,
+.mam {
+	margin-bottom: $spacingMedium !important
+}
+
+.mbl,
+.mvl,
+.mal {
+	margin-bottom: $spacingExtraLarge !important
+}
+
+.mln,
+.mhn,
+.man {
+	margin-left: $spacingNone !important
+}
+
+.mls,
+.mhs,
+.mas {
+	margin-left: $spacingSmall !important
+}
+
+.mlm,
+.mhm,
+.mam {
+	margin-left: $spacingMedium !important
+}
+
+.mll,
+.mhl,
+.mal {
+	margin-left: $spacingExtraLarge !important
+}
+
+.mra,
+.mha {
+	margin-right: auto !important
+}
+
+.mla,
+.mha {
+	margin-left: auto !important
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}

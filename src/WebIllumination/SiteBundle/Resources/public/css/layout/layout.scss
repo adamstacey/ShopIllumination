@@ -1,0 +1,57 @@
+$containerWidth: 980px;
+
+html {
+    background: $backgroundColour;
+    font-size: 62.5%;
+}
+
+body {
+    background: $backgroundColour;
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeMedium);
+    color: $textColour;
+}
+
+.document {
+    position: relative;
+
+    background: $colourWhite;
+}
+
+.container {
+    width: $containerWidth;
+    margin: 0 auto;
+}
+
+.header {
+    padding: $spacingMedium 0;
+
+    border-top: 1px solid $colourBlack;
+    @include verticalGradientGreyToGreyDark;
+    @include boxInsetShadow($colourBlack, 0, 1px, 5px);
+}
+
+.logo {
+    float: left;
+}
+
+.search-container {
+    padding: $spacingSmall;
+    margin: 20px 40px 0 40px;
+
+    float: left;
+
+    @include equalBorderRadius($radiusSize);
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
+    @include verticalGradientGreyExtraLightToWhite;
+}
+
+.content {
+    min-height: 300px;
+    padding: $spacingExtraLarge;
+
+    background: $colourGreyLight;
+    border-left: 1px solid $colourGrey;
+    border-right: 1px solid $colourGrey;
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
+}

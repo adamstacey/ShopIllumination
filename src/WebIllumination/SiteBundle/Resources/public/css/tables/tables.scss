@@ -1,0 +1,89 @@
+table.data-table {
+    width: 100%;
+
+    border-collapse: collapse;
+    border: 0 none;
+    @include borderRadius($radiusSize, $radiusSize, 0, 0);
+}
+
+table.data-table th {
+    border-collapse: collapse;
+    border: 1px solid $colourGrey;
+    padding: $spacingMedium $spacingSmall;
+    text-align: left;
+    color: $colourBlack;
+    @include highlightedVerticalGradientGrey;
+}
+
+table.data-table td {
+    border-collapse: collapse;
+    padding: $spacingMedium;
+    border: 1px solid $colourGreyLight;
+    vertical-align: middle;
+}
+
+table.data-table ul {
+    margin: 0;
+    padding: 0;
+}
+
+table.data-table ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 10px;
+    line-height: 14px;
+}
+
+table.data-table tr.odd {
+    background: $colourGreyExtraExtraLight;
+}
+
+table.data-table tr.even {
+    background: $colourWhite;
+}
+
+table.data-table td.nowrap {
+    white-space: nowrap !important;
+}
+
+table.data-table td.image {
+    padding: 0;
+    background: $colourWhite;
+}
+
+.tac,
+table .tac,
+table tr .tac {
+    text-align: center;
+}
+
+.tal,
+table .tal,
+table tr .tal {
+    text-align: left;
+}
+
+.tar,
+table .tar,
+table tr .tar {
+    text-align: right;
+}
+
+.vat,
+table .vat,
+table tr .vat {
+    vertical-align: top;
+}
+
+.vab,
+table .vab,
+table tr .vab {
+    vertical-align: bottom;
+}
+
+.vam,
+table .vam,
+table tr .vam {
+    vertical-align: middle;
+}

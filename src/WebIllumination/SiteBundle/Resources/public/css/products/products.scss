@@ -1,0 +1,71 @@
+@import "compass";
+@import "../includes/base";
+
+.product .price {
+    text-align: right;
+    color: $colourRed;
+}
+
+.product .price span {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 100%;
+}
+
+.product .price .currency-prefix {
+    @include fontSize($fontSizeLarge);
+}
+
+.product .price .currency-sign {
+    font-family: $impactFontFamily;
+    @include fontSize(24);
+    padding-top: 2px;
+}
+
+.product .price .currency-integer {
+    font-family: $impactFontFamily;
+    @include fontSize(32);
+}
+
+.product .price .currency-decimal {
+    font-family: $impactFontFamily;
+    @include fontSize(18);
+    padding-top: 2px;
+}
+
+.product .price .currency-tax {
+    @include fontSize($fontSizeExtraExtraSmall);
+    color: $colourGrey;
+}
+
+table.data-table .price .currency-prefix {
+    @include fontSize(12);
+}
+
+table.data-table .price .currency-sign {
+    @include fontSize(20);
+}
+
+table.data-table .price .currency-integer {
+    @include fontSize(28);
+}
+
+table.data-table .price .currency-decimal {
+    @include fontSize(14);
+}
+
+table.data-table .price .currency-tax {
+    @include fontSize(10);
+}
+
+.product .logo {
+    margin: 0 $spacingMedium $spacingMedium 0;
+
+    @include boxGlow($colourGreyLight, 10px, 0, 1);
+}
+
+.product .summary {
+    @include fontSize(13);
+    color: $textColour;
+    line-height: 150%;
+}

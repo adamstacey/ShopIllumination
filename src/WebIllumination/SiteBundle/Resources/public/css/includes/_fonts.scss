@@ -1,0 +1,33 @@
+$primaryFontFamily: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+
+$complimentaryFontName: "Stag Medium";
+$complimentaryFontFilename: "stag-medium";
+$complimentaryFontWeight: normal;
+$complimentaryFontStyle: normal;
+$complimentaryFontFamily: $complimentaryFontName, "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+
+@font-face {
+  font-family: $complimentaryFontName;
+  src: url("#{$cssPath}/resources/fonts/#{$complimentaryFontFilename}.eot");
+  src: local("☺"), url("#{$cssPath}/resources/fonts/#{$complimentaryFontFilename}.woff") format("woff"), url("#{$cssPath}/resources/fonts/#{$complimentaryFontFilename}.ttf") format("truetype"), url("#{$cssPath}/resources/fonts/#{$complimentaryFontFilename}.svg") format("svg");
+  font-weight: $complimentaryFontWeight;
+  font-style: $complimentaryFontStyle;
+}
+
+$impactFontFamily: "Arial Black", Arial, Verdana, sans-serif;
+
+$codeFontFamily: Monaco, 'Panic Sans', 'Lucida Console', 'Courier New', Courier, monospace, sans-serif;
+
+$fontSizeExtraExtraSmall: 9;
+$fontSizeExtraSmall: 10;
+$fontSizeSmall: 11;
+$fontSizeMedium: 12;
+$fontSizeLarge: 14;
+$fontSizeExtraLarge: 18;
+$fontSizeExtraExtraLarge: 24;
+$fontSizeExtraExtraExtraLarge: 36;
+
+@mixin fontSize($fontSize) {
+    font-size: #{$fontSize}px;
+    font-size: #{$fontSize / 10}rem;
+}

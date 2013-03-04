@@ -1,0 +1,123 @@
+.widget-group {
+    margin: 0 -#{$spacingMedium};
+    *overflow: visible;
+    *zoom: 1;
+}
+
+.widget {
+    padding: 0 $spacingMedium;
+
+    float: left;
+
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.widget-1-of-1 {
+    float: none;
+}
+
+.widget-1-of-2 {
+    width: 50%;
+}
+
+.widget-1-of-3 {
+    width: 33.33333%;
+}
+
+.widget-2-of-3 {
+    width: 66.66666%;
+}
+
+.widget-1-of-4 {
+    width: 25%;
+}
+
+.widget-3-of-4 {
+    width: 75%;
+}
+
+.widget-1-of-5 {
+    width: 20%;
+}
+
+.widget-2-of-5 {
+    width: 40%;
+}
+
+.widget-3-of-5 {
+    width: 60%;
+}
+
+.widget-4-of-5 {
+    width: 80%;
+}
+
+.widget-1-of-6 {
+    width: 16.6666666%;
+}
+
+.widget-5-of-6 {
+    width: 83.3333333%;
+}
+
+.widget-1-of-7 {
+    width: 14.2857143%;
+}
+
+.widget-2-of-7 {
+    width: 28.5714286%;
+}
+
+.widget-3-of-7 {
+    width: 42.8571429%;
+}
+
+.widget-4-of-7 {
+    width: 57.1428572%;
+}
+
+.widget-5-of-7 {
+    width: 71.4285715%;
+}
+
+.widget-6-of-7 {
+    width: 85.7142858%;
+}
+
+.widget-1-of-8 {
+    width: 12.5%;
+}
+
+.widget-3-of-8 {
+    width: 37.5%;
+}
+
+.widget-5-of-8 {
+    width: 62.5%;
+}
+
+.widget-7-of-8 {
+    width: 87.5%;
+}
+
+.border-top-separator {
+    border-top: 1px solid $colourGreyExtraLight;
+    @include boxShadow($colourGreyLight, 0, -10px, 10px, -10px, 1);
+}
+
+.border-right-separator {
+    border-right: 1px solid $colourGreyExtraLight;
+    @include boxShadow($colourGreyLight, 10px, 0, 10px, -10px, 1);
+}
+
+.border-bottom-separator {
+    border-bottom: 1px solid $colourGreyExtraLight;
+    @include boxShadow($colourGreyLight, 0, 10px, 10px, -10px, 1);
+}
+
+.border-left-separator {
+    border-left: 1px solid $colourGreyExtraLight;
+    @include boxShadow($colourGreyLight, -10px, 0, 10px, -10px, 1);
+}

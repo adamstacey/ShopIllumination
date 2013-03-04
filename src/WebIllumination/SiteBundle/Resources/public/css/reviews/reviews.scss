@@ -1,0 +1,157 @@
+@import "compass";
+@import "../includes/base";
+
+.review-summary {
+    color: $colourBlack;
+    @include fontSize($fontSizeSmall);
+    line-height: 120%;
+}
+
+.review-summary a {
+    color: $colourGrey;
+    @include fontSize($fontSizeSmall);
+}
+
+.review-rating-large {
+    width: 200px;
+    height: 30px;
+    margin: 0 0 $spacingMedium 0;
+
+    display: block;
+
+    overflow: hidden;
+    background-image: url("#{$cssPath}/resources/images/icons/ratings_sprite_large.png");
+    background-position: -0px -0px;
+}
+
+.review-rating-medium {
+    width: 120px;
+    height: 20px;
+    margin: 0 0 $spacingMedium 0;
+
+    display: block;
+
+    overflow: hidden;
+    background-image: url("#{$cssPath}/resources/images/icons/ratings_sprite_medium.png");
+    background-position: -0px -0px;
+}
+
+.review-rating-small {
+    width: 80px;
+    height: 15px;
+    margin: 0 0 $spacingSmall 0;
+
+    display: block;
+
+    overflow: hidden;
+    background-image: url("#{$cssPath}/resources/images/icons/ratings_sprite_small.png");
+    background-position: -0px -0px;
+}
+
+.review-rating-large-1 {
+    background-position: -0px -30px;
+}
+
+.review-rating-large-1-5 {
+    background-position: -0px -60px;
+}
+
+.review-rating-large-2 {
+    background-position: -0px -90px;
+}
+
+.review-rating-large-2-5 {
+    background-position: -0px -120px;
+}
+
+.review-rating-large-3 {
+    background-position: -0px -150px;
+}
+
+.review-rating-large-3-5 {
+    background-position: -0px -180px;
+}
+
+.review-rating-large-4 {
+    background-position: -0px -210px;
+}
+
+.review-rating-large-4-5 {
+    background-position: -0px -240px;
+}
+
+.review-rating-large-5 {
+    background-position: -0px -270px;
+}
+
+.review-rating-medium-1 {
+    background-position: -0px -20px;
+}
+
+.review-rating-medium-1-5 {
+    background-position: -0px -40px;
+}
+
+.review-rating-medium-2 {
+    background-position: -0px -60px;
+}
+
+.review-rating-medium-2-5 {
+    background-position: -0px -80px;
+}
+
+.review-rating-medium-3 {
+    background-position: -0px -100px;
+}
+
+.review-rating-medium-3-5 {
+    background-position: -0px -120px;
+}
+
+.review-rating-medium-4 {
+    background-position: -0px -140px;
+}
+
+.review-rating-medium-4-5 {
+    background-position: -0px -160px;
+}
+
+.review-rating-medium-5 {
+    background-position: -0px -180px;
+}
+
+.review-rating-small-1 {
+    background-position: -0px -15px;
+}
+
+.review-rating-small-1-5 {
+    background-position: -0px -30px;
+}
+
+.review-rating-small-2 {
+    background-position: -0px -45px;
+}
+
+.review-rating-small-2-5 {
+    background-position: -0px -60px;
+}
+
+.review-rating-small-3 {
+    background-position: -0px -75px;
+}
+
+.review-rating-small-3-5 {
+    background-position: -0px -90px;
+}
+
+.review-rating-small-4 {
+    background-position: -0px -105px;
+}
+
+.review-rating-small-4-5 {
+    background-position: -0px -120px;
+}
+
+.review-rating-small-5 {
+    background-position: -0px -135px;
+}

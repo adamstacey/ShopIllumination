@@ -1,0 +1,237 @@
+.ui-button {
+    display: inline-block;
+    position: relative;
+    padding: 3px;
+    line-height: normal;
+    margin: 0;
+    cursor: pointer;
+    text-align: center;
+    overflow: visible;
+    @include verticalGradientGreyLightToWhite;
+}
+
+.ui-button,
+.ui-button:link,
+.ui-button:visited,
+.ui-button:hover,
+.ui-button:active {
+    text-decoration: none;
+}
+
+.ui-icon,
+.ui-button-text {
+    display: block;
+    float: left;
+}
+
+.ui-button-text {
+    padding: 0 $spacingMedium;
+
+    line-height: 32px;
+}
+
+.button-small .ui-button-text {
+    padding: $spacingSmall;
+
+    line-height: 100%;
+}
+
+.ui-button-icon-only .ui-button-text,
+.ui-button-icons-only .ui-button-text {
+    display: none;
+}
+
+input.ui-button {
+    padding: $spacingMedium;
+}
+
+.ui-buttonset {
+    margin-right: $spacingMedium;
+}
+
+.ui-buttonset .ui-button {
+    margin-left: 0;
+    margin-right: $spacingMedium;
+}
+
+input.ui-button::-moz-focus-inner,
+button.ui-button::-moz-focus-inner {
+    padding: 0;
+
+    border: 0;
+}
+
+.button,
+.ui-button {
+    @include highlightedVerticalGradientGreyLight;
+    @include transitionAll(0.3s, ease-in-out);
+    @include boxGlow($colourGreyLight, 5px);
+    border: 1px solid $colourGreyLight;
+}
+
+.button:hover,
+.ui-button:hover {
+    @include highlightedVerticalGradientGreyLightReversed;
+    @include boxGlow($primaryColour, 10px);
+}
+
+.button-grey {
+    @include highlightedVerticalGradientGrey;
+    @include boxGlow($colourGrey, 5px);
+    border: 1px solid $colourGrey;
+}
+
+.button-green .ui-button-text {
+  color: $colourWhite;
+  @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-grey:hover {
+    @include highlightedVerticalGradientGreyReversed;
+}
+
+.button-grey .ui-button-text {
+    color: $textColour;
+}
+
+.button-dark-red {
+    @include highlightedVerticalGradientDarkRed;
+    @include boxGlow($colourDarkRed, 5px);
+    border: 1px solid $colourDarkRed;
+}
+
+.button-dark-red:hover {
+    @include highlightedVerticalGradientDarkRedReversed;
+}
+
+.button-dark-red .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-red {
+    @include highlightedVerticalGradientRed;
+    @include boxGlow($colourRed, 5px);
+    border: 1px solid $colourRed;
+}
+
+.button-red:hover {
+    @include highlightedVerticalGradientRedReversed;
+}
+
+.button-red .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-orange {
+    @include highlightedVerticalGradientOrange;
+    @include boxGlow($colourOrange, 5px);
+    border: 1px solid $colourOrange;
+}
+
+.button-orange:hover {
+    @include highlightedVerticalGradientOrangeReversed;
+}
+
+.button-orange .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-yellow {
+    @include highlightedVerticalGradientYellow;
+    @include boxGlow($colourYellow, 5px);
+    border: 1px solid $colourYellow;
+}
+
+.button-yellow:hover {
+    @include highlightedVerticalGradientYellowReversed;
+}
+
+.button-yellow .ui-button-text {
+    color: $colourBlack;
+    @include textShadow($colourYellow, 0, 1px);
+}
+
+.button-green {
+    @include highlightedVerticalGradientGreen;
+    @include boxGlow($colourGreen, 5px);
+    border: 1px solid $colourGreen;
+}
+
+.button-green:hover {
+    @include highlightedVerticalGradientGreenReversed;
+}
+
+.button-green .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-turquoise {
+    @include highlightedVerticalGradientTurquoise;
+    @include boxGlow($colourTurquoise, 5px);
+    border: 1px solid $colourTurquoise;
+}
+
+.button-turquoise:hover {
+    @include highlightedVerticalGradientTurquoiseReversed;
+}
+
+.button-turquoise .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-blue {
+    @include highlightedVerticalGradientBlue;
+    @include boxGlow($colourBlue, 5px);
+    border: 1px solid $colourBlue;
+}
+
+.button-blue:hover {
+    @include highlightedVerticalGradientBlueReversed;
+}
+
+.button-blue .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-black {
+    @include highlightedVerticalGradientBlack;
+    @include boxGlow($colourBlack, 5px);
+    border: 1px solid $colourBlack;
+}
+
+.button-black:hover {
+    @include highlightedVerticalGradientBlackReversed;
+}
+
+.button-black .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
+.button-notification {
+    margin: 0px;
+    padding: 1px;
+    height: 12px;
+    min-width: 12px;
+
+    display: block;
+    position: absolute;
+    top: -8px;
+    right: -2px;
+
+    @include highlightedVerticalGradientDarkRed;
+    @include boxGlow($colourBlack, 5px, 0, 0.5);
+    @include equalBorderRadius(8px);
+    @include fontSize($fontSizeExtraExtraSmall);
+    border: 1px solid $colourWhite;
+    font-weight: normal;
+    color: $colourWhite;
+    text-align: center;
+    line-height: 12px;
+}
