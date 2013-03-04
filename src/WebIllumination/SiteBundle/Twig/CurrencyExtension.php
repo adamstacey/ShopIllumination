@@ -18,7 +18,7 @@ class CurrencyExtension extends \Twig_Extension
             default:
                 if ($style)
                 {
-                    $currency = '<span style="currency-sign">£</span><span class="currency-integer">'.number_format($price, 2, '</span>.<span class="currency-decimal">', ',').'</span>';
+                    $currency = '<span class="currency-sign">£</span><span class="currency-integer">'.number_format($price, 2, '</span><span class="currency-decimal">.', ',').'</span>';
                     if ($taxMessage != '')
                     {
                         $currency .= '<span class="currency-tax">'.$taxMessage.'</span>';
