@@ -54,7 +54,9 @@ assetic:
 #    bundles:        [WebIlluminationShopBundle,WebIlluminationAdminBundle]
     filters:
         sass: ~
-        compass: ~
+        compass:
+            plugins:
+                - 'rgbapng'
         cssrewrite: ~
         yui_css:
             jar: %kernel.root_dir%/Resources/java/yuicompressor.jar
