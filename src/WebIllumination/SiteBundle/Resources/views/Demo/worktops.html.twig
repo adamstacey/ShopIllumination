@@ -1,9 +1,18 @@
 {% extends 'WebIlluminationSiteBundle::base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets
+        '@WebIlluminationSiteBundle/Resources/public/css/products/products.scss'
+        '@WebIlluminationSiteBundle/Resources/public/css/reviews/reviews.scss'
+        output='css/components-compressed.css'
+        filter='compass,yui_css'
+    %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 {% block body %}
-    <header>
-        <h1>Maia Worktops in Vulcano</h1>
-    </header>
-    <section>
+    <section class="product">
+        <iframe width="853" height="480" src="http://www.youtube-nocookie.com/embed/ipISv-DlBkU?rel=0" frameborder="0" allowfullscreen></iframe>
         <div class="widget-group clearfix mbm">
             <div class="widget widget-1-of-1">
                 <ul class="breadcrumbs" itemprop="breadcrumb">
@@ -18,25 +27,139 @@
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
                     <section class="ui-widget-content ui-corner-all clearfix">
-                        <div class="widget-group clearfix">
-                            <div class="widget widget-1-of-4">
-                                <ul class="etalage">
-                                    <li>
-                                        <img class="etalage_source_image" src="http://www.maiaworksurfaces.co.uk/wp-content/uploads/2013/01/vulcano1-406x406.jpg" />
-                                    </li>
-                                    <li>
-                                        <img class="etalage_source_image" src="http://www.maiaworksurfaces.co.uk/wp-content/uploads/2013/01/lava-406x406.jpg" />
-                                    </li>
-                                    <li>
-                                        <img class="etalage_source_image" src="http://www.maiaworksurfaces.co.uk/wp-content/uploads/2013/01/sandstone-406x406.jpg" />
-                                    </li>
-                                    <li>
-                                        <img class="etalage_source_image" src="http://www.maiaworksurfaces.co.uk/wp-content/uploads/2013/01/meteorite-406x406.jpg" />
-                                    </li>
-                                </ul>
+                        <div class="slider-wrapper">
+                            <div class="slider nivoSlider">
+                                <img src="/uploads/images/product/maia-vulcano-gallery-1.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-1.jpg" alt="Maia Worktops in Vulcano" />
+                                <img src="/uploads/images/product/maia-vulcano-gallery-2.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-2.jpg" alt="Maia Worktops in Vulcano" />
+                                <img src="/uploads/images/product/maia-vulcano-gallery-3.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-3.jpg" alt="Maia Worktops in Vulcano" />
+                                <img src="/uploads/images/product/maia-vulcano-gallery-4.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-4.jpg" alt="Maia Worktops in Vulcano" />
+                                <img src="/uploads/images/product/maia-vulcano-gallery-5.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-5.jpg" alt="Maia Worktops in Vulcano" />
+                                <img src="/uploads/images/product/maia-vulcano-gallery-6.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-6.jpg" alt="Maia Worktops in Vulcano" />
+                                <img src="/uploads/images/product/maia-vulcano-gallery-7.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-7.jpg" alt="Maia Worktops in Vulcano" />
                             </div>
-                            <div class="widget widget-3-of-4">
-                                <p>Vulcano is the most popular colour in the maia range. Its sophisticated black background is interspersed with contrasting white flecks and subtle hints of yellow.</p>
+                            <h1>Maia Worktops in Vulcano</h1>
+                        </div>
+                        <div class="widget-group clearfix">
+                            <div class="widget widget-1-of-1 border-bottom-separator pbl mbl">
+                                <div class="widget-group clearfix">
+                                    <div class="widget widget-2-of-7">
+                                        <ul class="etalage etalage-inset">
+                                            <li><img class="etalage_source_image" src="/uploads/images/product/maia-vulcano-1.jpg" alt="Maia Worktops in Vulcano" /></li>
+                                        </ul>
+                                    </div>
+                                    <div class="widget widget-5-of-7">
+                                        <div class="widget-group clearfix">
+                                            <div class="widget widget-3-of-4 border-right-separator">
+                                                <div class="widget-group clearfix">
+                                                    <div class="widget widget-1-of-3"><img class="logo" src="/uploads/images/product/maia-logo.jpg" alt="Maia Worktops" /></div>
+                                                    <div class="widget widget-2-of-3 clearfix">
+                                                        <div class="review-rating-small review-rating-small-4-5 fr"></div>
+                                                        <div class="clear"></div>
+                                                        <div class="fr review-summary"><strong>4.7</strong> out of <strong>5</strong> Customer Rating</div>
+                                                        <div class="clear"></div>
+                                                        <div class="fr review-summary"><a href="#">Read Reviews</a> (7) | <a href="#">Read Questions</a> (2)</div>
+                                                    </div>
+                                                </div>
+                                                <p class="summary man">Vulcano is the most popular colour in the maia range. Its sophisticated black background is interspersed with contrasting white flecks and subtle hints of yellow.</p>
+                                            </div>
+                                            <div class="widget widget-1-of-4">
+                                                <div class="price">
+                                                    <span class="currency-prefix">from only</span>
+                                                </div>
+                                                <div class="price">
+                                                    {% set fromPrice = 265 %}
+                                                    {{ fromPrice|currency('GBP', true, true, '')|raw }}
+                                                </div>
+                                                <div class="price pbm">
+                                                    <span class="currency-tax">(inc. VAT)</span>
+                                                </div>
+                                                <button class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget widget-1-of-1">
+                                <section>
+                                    <div class="tabs">
+                                        <ul>
+                                            <li><a href="#overview">Overview</a></li>
+                                            <li><a href="#technicalSpecification">Technical Specification</a></li>
+                                            <li><a href="#reviews">Reviews</a></li>
+                                            <li><a href="#questionsAndAnswers">Questions &amp; Answers</a></li>
+                                        </ul>
+                                        <div id="overview">
+                                            <section>
+                                                <p class="summary">Compliment your kitchen with this Maia solid surface worktop, with seamless joints, square front profile this worktop in Vulcano will look stunning in your kitchen.</p>
+                                                <p class="summary">The Maia solid surface worktop is heat and stain resistant, with one of the best benefits being that scratches can easily be sanded and polished away. Giving you the perfect finish for years to come.</p>
+                                                <p class="summary mbn">This solid surface worktop can be fitted using standard joinery tools.</p>
+                                            </section>
+                                        </div>
+                                        <div id="technicalSpecification">
+                                            <section>
+                                                <table class="data-table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th colspan="2">Product Feature</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr class="odd">
+                                                        <td width="1" class="nowrap tar">Profile</td>
+                                                        <td><strong>Square</strong></td>
+                                                    </tr>
+                                                    <tr class="even">
+                                                        <td width="1" class="nowrap tar">Pre-edged Sides</td>
+                                                        <td><strong>1 Long &amp; 2 Short</strong></td>
+                                                    </tr>
+                                                    <tr class="odd">
+                                                        <td width="1" class="nowrap tar">Material Finish</td>
+                                                        <td><strong>Solid Surface</strong></td>
+                                                    </tr>
+                                                    <tr class="even">
+                                                        <td width="1" class="nowrap tar">Depth</td>
+                                                        <td><strong>600mm</strong></td>
+                                                    </tr>
+                                                    <tr class="odd">
+                                                        <td width="1" class="nowrap tar">Length</td>
+                                                        <td><strong>1800mm</strong></td>
+                                                    </tr>
+                                                    <tr class="even">
+                                                        <td width="1" class="nowrap tar">Extra Edging per Unit</td>
+                                                        <td><strong>120cm Included</strong></td>
+                                                    </tr>
+                                                    <tr class="odd">
+                                                        <td width="1" class="nowrap tar">Colour</td>
+                                                        <td><strong>Vulcano</strong></td>
+                                                    </tr>
+                                                    <tr class="even">
+                                                        <td width="1" class="nowrap tar">Finish Group</td>
+                                                        <td><strong>Semi Gloss</strong></td>
+                                                    </tr>
+                                                    <tr class="odd">
+                                                        <td width="1" class="nowrap tar">Item</td>
+                                                        <td><strong>Worktop</strong></td>
+                                                    </tr>
+                                                    <tr class="even">
+                                                        <td width="1" class="nowrap tar">Worktop</td>
+                                                        <td><strong>Solid Surface</strong></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </section>
+                                        </div>
+                                        <div id="reviews">
+                                            <section>
+                                                <p>&nbsp;</p>
+                                            </section>
+                                        </div>
+                                        <div id="questionsAndAnswers">
+                                            <section>
+                                                <p>&nbsp;</p>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
                         </div>
                     </section>
@@ -50,178 +173,18 @@
                         <h2>Worktop Thickness</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <fieldset>
-                            <legend class="clearfix fill">Selecting Elements</legend>
-                            <div class="clear"></div>
+                        <fieldset class="man">
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
                                     <label for="formSelect1">Worktop Thickness</label>
                                 </div>
                                 <div class="widget radio-group widget-2-of-3">
-                                    <div class="clearfix">
-                                        <input type="radio" id="formRadio1" name="radio" value="1" checked="checked" /><label for="formRadio1">28mm</label>
-                                    </div>
-                                    <div class="clearfix">
-                                        <input type="radio" id="formRadio2" name="radio" value="2" /><label for="formRadio2">42mm</label>
-                                    </div>
-                                    <div class="clearfix">
-                                        <input type="radio" id="formRadio3" name="radio" value="3" /><label for="formRadio3">54mm</label>
-                                    </div>
+                                    <input type="radio" id="formRadio1" name="radio" value="1" checked="checked" /><label for="formRadio1">28mm</label>
+                                    <input type="radio" id="formRadio2" name="radio" value="2" /><label for="formRadio2">42mm</label>
+                                    <input type="radio" id="formRadio3" name="radio" value="3" /><label for="formRadio3">54mm</label>
                                 </div>
                             </div>
                         </fieldset>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Black Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-black icon-white" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-black icon-white" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-black icon-white" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-black icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-black icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-black">Text Only</button>
-                        <button class="button button-black icon-white" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-black icon-white" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Grey Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-grey icon-black" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-grey icon-black" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-grey icon-black" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-grey icon-black" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-grey icon-black" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-grey">Text Only</button>
-                        <button class="button button-grey icon-black" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-grey icon-black" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Dark Red Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-dark-red icon-white" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-dark-red icon-white" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-dark-red icon-white" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-dark-red icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-dark-red icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-dark-red">Text Only</button>
-                        <button class="button button-dark-red icon-white" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-dark-red icon-white" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Red Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-red icon-white" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-red icon-white" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-red icon-white" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-red icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-red icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-red">Text Only</button>
-                        <button class="button button-red icon-white" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-red icon-white" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Orange Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-orange icon-white" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-orange icon-white" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-orange icon-white" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-orange icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-orange icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-orange">Text Only</button>
-                        <button class="button button-orange icon-white" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-orange icon-white" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Yellow Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-yellow icon-black" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-yellow icon-black" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-yellow icon-black" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-yellow icon-black" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-yellow icon-black" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-yellow">Text Only</button>
-                        <button class="button button-yellow icon-black" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-yellow icon-black" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Green Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-green icon-white" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-green icon-white" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-green icon-white" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-green icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-green icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-green">Text Only</button>
-                        <button class="button button-green icon-white" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-green icon-white" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Turquoise Buttons</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-turquoise icon-white" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-turquoise icon-white" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-turquoise icon-white" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-turquoise icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-turquoise icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-turquoise">Text Only</button>
-                        <button class="button button-turquoise icon-white" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-turquoise icon-white" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
                     </section>
                 </div>
             </div>
@@ -230,17 +193,51 @@
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
                     <header class="ui-widget-header ui-corner-top">
-                        <h2>Blue Buttons</h2>
+                        <h2>Worktops</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <button class="button button-blue icon-white" data-icon-primary="icon-15" data-icon-only="true">Icon Only</button>
-                        <button class="button button-blue icon-white" data-icon-primary="icon-15">Icon &amp; Text</button>
-                        <button class="button button-blue icon-white" data-icon-secondary="icon-471">Icon &amp; Text</button>
-                        <button class="button button-blue icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465">2 Icons &amp; Text</button>
-                        <button class="button button-blue icon-white" data-icon-primary="icon-15" data-icon-secondary="icon-465" data-icon-only="true">2 Icons Only</button>
-                        <button class="button button-blue">Text Only</button>
-                        <button class="button button-blue icon-white" data-icon-primary="icon-700" data-icon-only="true" data-notification="7">Icon Only with Notification</button>
-                        <button class="button button-blue icon-white" data-icon-primary="icon-981" data-notification="3">Icon &amp; Text with Notification</button>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Worktop</th>
+                                    <th colspan="2">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd">
+                                    <td rowspan="4" width="1" class="image"><img width="150" src="/uploads/images/product/maia-diagram-worktops-square-corner-thumbnail.jpg" alt="Maia Worktops in Vulcano" /></td>
+                                    <td>1800mm &times; 600mm Worktop</td>
+                                    <td width="1" class="nowrap price">{{ 265|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                </tr>
+                                <tr class="even">
+                                    <td>1800mm &times; 650mm Worktop</td>
+                                    <td width="1" class="nowrap price">{{ 290|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td>3600mm &times; 600mm Worktop</td>
+                                    <td width="1" class="nowrap price">{{ 440|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                </tr>
+                                <tr class="even">
+                                    <td>3600mm &times; 600mm Worktop</td>
+                                    <td width="1" class="nowrap price">{{ 489|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td rowspan="2" width="1" class="image"><img width="150" src="/uploads/images/product/maia-diagram-breakfast-bars-square-corner-thumbnail.jpg" alt="Maia Worktops in Vulcano" /></td>
+                                    <td>1800mm &times; 900mm Standard Breakfast Bar</td>
+                                    <td width="1" class="nowrap price">{{ 265|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                </tr>
+                                <tr class="even">
+                                    <td>3600mm &times; 900mm Standard Breakfast Bar</td>
+                                    <td width="1" class="nowrap price">{{ 290|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </section>
                 </div>
             </div>
