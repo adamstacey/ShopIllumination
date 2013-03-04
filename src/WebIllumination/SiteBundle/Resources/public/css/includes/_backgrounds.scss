@@ -1,3 +1,5 @@
+@import "rgbapng";
+
 @mixin verticalGradient($topColour, $bottomColour) {
     $experimental-support-for-svg: true;
     background: $topColour;
@@ -143,4 +145,8 @@
 
 @mixin highlightedVerticalGradientBlueReversed {
     @include highlightedVerticalGradientReversed($colourBlueExtraLight, $colourBlueLight, $colourBlue);
+}
+
+@mixin alphaBackground($colour, $opacity: 1) {
+    @include rgba-background-inline(rgba($colour, $opacity));
 }
