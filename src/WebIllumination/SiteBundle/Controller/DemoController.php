@@ -46,6 +46,16 @@ class DemoController extends Controller
     }
 
     /**
+     * @Route("/product", name="demo_product")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function productAction(Request $request)
+    {
+
+    }
+
+    /**
      * @Route("/icons", name="demo_icons")
      * @Method({"GET"})
      * @Template()
