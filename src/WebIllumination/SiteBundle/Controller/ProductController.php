@@ -1,6 +1,7 @@
 <?php
 namespace WebIllumination\SiteBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
 use WebIllumination\SiteBundle\Entity\Image;
 use WebIllumination\SiteBundle\Form\EditProductDescriptionsType;
+use WebIllumination\SiteBundle\Form\EditProductImagesType;
+use WebIllumination\SiteBundle\Form\EditProductLinksType;
 use WebIllumination\SiteBundle\Form\EditProductOverviewType;
 use WebIllumination\SiteBundle\Entity\Product;
 use WebIllumination\SiteBundle\Entity\Product\Description;
@@ -109,10 +112,12 @@ class ProductController extends Controller {
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if($form->isValid()) {
+
                 $em->persist($product);
                 $em->flush();
-
-                return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
             }
         }
 
@@ -142,12 +147,104 @@ class ProductController extends Controller {
     }
 
     /**
-     * @Route("/admin/products/{productId}/descriptions", name="products_edit_descriptions")
+     * @Route("/admin/products/{productId}/images", name="products_edit_images")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function editDescriptionsAction(Request $request, $productId)
+    public function editImagesAction(Request $request, $productId)
     {
-        return $this->baseEditAction($request, $productId, 'WebIlluminationSiteBundle:Product:edit_descriptions.html.twig', new EditProductDescriptionsType());
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        // Fetch the products images
+        $images = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->findBy(array(
+            'objectId' => $product->getId(),
+            'objectType' => 'product',
+        ));
+        $product->setImages(join(',', array_map(function($image) {
+            return $image->getId();
+        }, $images)));
+
+
+        $form = $this->createForm(new EditProductImagesType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $this->persistImages($product, 'product');
+
+                $em->persist($product);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
+            }
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Product:edit_images.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/links", name="products_edit_links")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editLinksAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $originalLinks = array();
+
+        $product = $em->getRepository("WebIllumination\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        foreach($product->getLinks() as $link)
+        {
+            $originalLinks[] = $link;
+        }
+
+        $form = $this->createForm(new EditProductLinksType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                // Remove all links from the to delete array that have not been deleted
+                foreach($product->getLinks() as $link) {
+                    foreach ($originalLinks as $key => $toDel) {
+                        if ($toDel->getId() === $link->getId()) {
+                            unset($originalLinks[$key]);
+                        }
+                    }
+
+                    $link->setProduct($product);
+                }
+
+                foreach ($originalLinks as $link) {
+                    $em->remove($link);
+                }
+
+                $em->persist($product);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
+            }
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Product:edit_links.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -190,9 +287,36 @@ class ProductController extends Controller {
     }
 
     private function persistImages($entity, $entityType) {
+        /**
+         * @var $em EntityManager
+         * @var $image Image
+         */
         $em = $this->getDoctrine()->getManager();
         $i = 0;
         $imageIds = explode(',', $entity->getImages());
+        $imageIds = array_diff(explode(',', $entity->getImages()), array(''));
+
+        // Get any images already linked to the entity
+        $existingImages = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->findBy(array(
+            'objectId' => $entity->getId(),
+            'objectType' => $entityType,
+        ));
+
+        // Delete any old images that no longer exist
+        foreach($existingImages as $existingImage) {
+            $found = false;
+            foreach($imageIds as $imageId) {
+                if($existingImage->getId() == $imageId) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if(!$found) {
+                $em->remove($existingImage);
+                $em->flush();
+            }
+        }
 
         // If no images were added add a blank image
         if(count($imageIds) == 0) {
@@ -213,9 +337,6 @@ class ProductController extends Controller {
             // Link each image to the variant
             foreach($imageIds as $imageId)
             {
-                /**
-                 * @var $image Image
-                 */
                 $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
                 if($image)
                 {

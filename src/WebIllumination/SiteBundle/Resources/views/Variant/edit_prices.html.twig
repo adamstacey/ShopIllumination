@@ -2,66 +2,59 @@
 
 {% block title %}Prices | {{ variant.description.pageTitle }}{% endblock %}
 
-{% block header %}
-    <header>
-        {{ parent() }}
-        <h1>{{ variant.description.header }}</h1>
-        <ul>
-            <li><a href="{{ path('variants_edit_overview', {'productId': variant.product.id, 'variantId': variant.id}) }}">Overview</a></li>
-            <li><a href="{{ path('variants_edit_descriptions', {'productId': variant.product.id, 'variantId': variant.id}) }}">Descriptions</a></li>
-            <li><a href="{{ path('variants_edit_features', {'productId': variant.product.id, 'variantId': variant.id}) }}">Features</a></li>
-            <li><a href="{{ path('variants_edit_dimensions', {'productId': variant.product.id, 'variantId': variant.id}) }}">Dimensions</a></li>
-            <li><a href="{{ path('variants_edit_prices', {'productId': variant.product.id, 'variantId': variant.id}) }}">Prices</a></li>
-        </ul>
-    </header>
-{% endblock %}
 {% block body %}
-    <section>
-        <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': variant.product.id, 'variantId': variant.id}) }}" {{ form_enctype(form) }}>
-            <div class="widget-group clearfix">
-                <div class="widget widget-1-of-1">
-                    <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>Prices</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-bottom">
-                            {% if form.errors %}
-                                <div class="message error">
-                                    <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
-                                    {{ form_errors(form) }}
-                                </div>
-                            {% endif %}
-                            <fieldset>
-                                <table class="data" id="prices-list" width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th>Cost Price</th>
-                                        <th>RRP</th>
-                                        <th>List Price</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for row in form.prices %}
-                                        <tr>
-                                            {{ form_widget(row) }}
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                                {% do form.prices.setRendered() %}
-                            </fieldset>
+    <div class="widget-group clearfix">
+        <div class="widget widget-2-of-7">
+            {% include 'WebIlluminationSiteBundle:Variant:editLeftMenu.html.twig' %}
+        </div>
+        <div class="widget widget-5-of-7">
+            <section>
+                <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': variant.product.id, 'variantId': variant.id}) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                    <h2>Prices</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-all">
+                                    {% if form.errors %}
+                                        <div class="message error">
+                                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
+                                            {{ form_errors(form) }}
+                                        </div>
+                                    {% endif %}
+                                    <fieldset class="pbm">
+                                        <table class="form-table" id="price-list" width="100%" data-prototype="{{ form_widget(form.prices.vars.prototype) | e }}">
+                                            <thead>
+                                            <tr>
+                                                <th>RRP</th>
+                                                <th>List Price</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for row in form.prices %}
+                                                <tr>
+                                                    {{ form_widget(row) }}
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% do form.prices.setRendered() %}
+                                    </fieldset>
+                                    {{ form_rest(form) }}
 
-                            <div class="form-element widget-group clearfix">
-                                <div class="widget widget-1-of-3">&nbsp;</div>
-                                <div class="widget widget-2-of-3">
-                                    <button class="button" data-icon-primary="medium-black-icon-1">Submit</button>
-                                </div>
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Save</button>
+                                        <button type="button" data-table-object="price-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Price</button>
+                                    </div>
+                                </section>
                             </div>
-                        </section>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </form>
-    </section>
+                </form>
+            </section>
+        </div>
+    </div>
 {% endblock %}

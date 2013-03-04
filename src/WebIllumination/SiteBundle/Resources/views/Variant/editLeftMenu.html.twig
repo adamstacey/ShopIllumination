@@ -1,0 +1,66 @@
+{% import _self as helpers %}
+
+{% if loop.index == flow.getCurrentStep() %}
+    {% set statusIconColour = 'icon-white' %}
+    {% set buttonColour = ' button-turquoise' %}
+    {% set iconColour = 'turquoise' %}
+{% else %}
+    {% set statusIconColour = 'icon-red' %}
+    {% set buttonColour = 'button-white' %}
+    {% set iconColour = 'grey' %}
+{% endif %}
+
+{% macro getRowColour(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        turquoise
+    {% else %}
+        grey
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro getButtonClass(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        button-turquoise
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+<div class="ui-widget mbl">
+    <header class="ui-widget-header ui-corner-top">
+    </header>
+    <section class="ui-widget-content ui-corner-bottom">
+        <nav class="left-menu">
+            <ul class="clearfix">
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-276"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('variants_edit_overview', {'productId':variant.product.id, 'variantId': variant.id}) }}">
+                        Product Information
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-398"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('variants_edit_features', {'productId': variant.product.id, 'variantId': variant.id}) }}">
+                        Features
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-1305"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('variants_edit_prices', {'productId': variant.product.id, 'variantId': variant.id}) }}">
+                        Prices
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-1305"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('variants_edit_prices', {'productId': variant.product.id, 'variantId': variant.id}) }}">
+                        Images
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-398"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('variants_edit_dimensions', {'productId': variant.product.id, 'variantId': variant.id}) }}">
+                        Dimensions
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+</div>
