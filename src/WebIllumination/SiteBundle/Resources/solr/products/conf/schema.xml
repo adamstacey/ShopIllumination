@@ -492,9 +492,8 @@
         <field name="isDeleted" type="boolean" indexed="true" stored="true" multiValued="false"/>
 
         <field name="url" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="thumbnail_path" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="large_image_path" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="image_paths" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="image_path" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="variant_image_paths" type="string" indexed="true" stored="true" multiValued="true"/>
 
         <field name="status" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="locale" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -534,9 +533,6 @@
 
         <field name="low_price" type="float" indexed="true" stored="true" multiValued="false"/>
         <field name="high_price" type="float" indexed="true" stored="true" multiValued="false"/>
-        <!--<field name="cost_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
-        <!--<field name="rrp" type="currency" indexed="true" stored="true" multiValued="false"/>-->
-        <!--<field name="list_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
 
         <field name="created_at" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="updated_at" type="date" indexed="true" stored="true" multiValued="false"/>

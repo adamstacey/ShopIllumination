@@ -41,7 +41,7 @@ class ProductIndexer extends Indexer
             foreach ($product->getDepartments() as $department) {
                 $document->addField('department_ids', $department->getDepartment()->getId());
                 $departmentDescriptions = $department->getDepartment()->getDescriptions();
-                $document->setField('department', count($departmentDescriptions) > 0 ? $departmentDescriptions[0]->getName() : "");
+                $document->addField('department', count($departmentDescriptions) > 0 ? $departmentDescriptions[0]->getName() : "");
 
                 // Get path
                 $departmentNamesPath = "";
@@ -50,7 +50,7 @@ class ProductIndexer extends Indexer
                     $departmentNamesPath = $currDepartment->__toString() . "|" . $departmentNamesPath;
                     $currDepartment = $currDepartment->getParent();
                 } while ($currDepartment !== null);
-                $document->addField("department_path", rtrim($departmentNamesPath, "|"));
+                $document->addField("department_path", ltrim(rtrim($departmentNamesPath, "|"), "|"));
             }
 
             $document->setField('status', $product->getStatus());
@@ -106,18 +106,28 @@ class ProductIndexer extends Indexer
                     }
                 }
 
+                // Add the image for the variant
+                $variantImages = $em->getRepository('WebIllumination\SiteBundle\Entity\Image')->findBy(array(
+                    'objectId' => $variant->getId(),
+                    'objectType' => 'variant',
+                    'imageType' => 'variant',
+                ));
+
+                if(count($variantImages) > 0) {
+                    $document->setField("variant_image_paths", $variantImages[0]->getPublicPath());
+                }
+
                 $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
                 $document->setField('high_price', $highestPrice === -1 ? 0 : $highestPrice);
             }
 
+            // Add the image for the variant
+            if(count($images) > 0) {
+                $document->setField("image_path", $images[0]->getPublicPath());
+            }
+
             foreach (explode(',', $descriptions[0]->getSearchWords()) as $searchWord) {
                 $document->addField('search_words', $searchWord);
-            }
-            if (count($images) > 0) {
-                $document->setField("image_path", $images[0]->getPublicPath());
-                foreach ($images as $image) {
-                    $document->addField("image_paths", $image->getOriginalPath());
-                }
             }
 
             $document->setField('brand', $product->getBrand()->getDescription()->getName());
@@ -145,6 +155,7 @@ class ProductIndexer extends Indexer
             $update->addCommit();
             $this->getSolarium()->update($update);
         } catch (\Exception $e) {
+            \Doctrine\Common\Util\Debug::dump($e->getMessage());
             echo "An error occured proccessing product ID " . $product->getId() . "\n";
         }
     }
