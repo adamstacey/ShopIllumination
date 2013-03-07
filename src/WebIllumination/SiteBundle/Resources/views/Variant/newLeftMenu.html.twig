@@ -1,0 +1,57 @@
+<div class="ui-widget mbl">
+    <header class="ui-widget-header ui-corner-top">
+        <h2>Steps</h2>
+    </header>
+    <section class="ui-widget-content ui-corner-bottom">
+        <nav class="left-menu">
+            <ul class="clearfix">
+                {% for stepDescription in flow.getStepDescriptions() %}
+                    {% if loop.index == flow.getCurrentStep() %}
+                        {% set statusIcon = 'icon-471' %}
+                        {% set statusIconColour = 'icon-white' %}
+                        {% set buttonColour = ' button-turquoise' %}
+                        {% set iconColour = 'turquoise' %}
+                    {% else %}
+                        {% if flow.isStepDone(loop.index) %}
+                            {% set statusIcon = 'icon-1119' %}
+                            {% set statusIconColour = 'icon-white' %}
+                            {% set buttonColour = ' button-green' %}
+                            {% set iconColour = 'green' %}
+                        {% else %}
+                            {% set statusIcon = 'icon-1116' %}
+                            {% set statusIconColour = 'icon-red' %}
+                            {% set buttonColour = '' %}
+                            {% set iconColour = 'grey' %}
+                        {% endif %}
+                    {% endif %}
+
+                    <li class="clearfix {{ iconColour }}{% if loop.last %} mbn{% endif %}">
+                        {% if loop.index == 1 %}
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-276"></span>
+                        {% elseif loop.index == 2 %}
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-398"></span>
+                        {% elseif loop.index == 3 %}
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-700"></span>
+                        {% elseif loop.index == 4 %}
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-69"></span>
+                        {% elseif loop.index == 5 %}
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-1305"></span>
+                        {% else %}
+                            <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-276"></span>
+                        {% endif %}
+
+                        {% if flow.isAllowDynamicStepNavigation() and (loop.index != flow.getCurrentStep()) and flow.isStepDone(loop.index) and (not flow.hasSkipStep(loop.index)) %}
+                            <a data-icon-secondary="{{ statusIcon }}" class="fl ui-button button{{ buttonColour }} {{ statusIconColour }}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge(app.request.attributes.get('_route_params')) | craue_addDynamicStepNavigationParameter(flow, loop.index)) }}">
+                                {{ stepDescription|raw }}
+                            </a>
+                        {% else %}
+                            <button data-icon-secondary="{{ statusIcon }}" class="fl ui-button button{{ buttonColour }} {{ statusIconColour }}">
+                                {{ stepDescription|raw }}
+                            </button>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </section>
+</div>

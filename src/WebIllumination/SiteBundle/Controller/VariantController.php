@@ -68,6 +68,10 @@ class VariantController extends Controller {
                 $em->persist($variant);
                 $em->flush();
 
+                $this->getImageManager()->persistImages($variant, 'variant');
+
+                $em->flush();
+
                 $flow->reset();
 
                 return $this->redirect($this->generateUrl('products_edit_variants', array(
@@ -213,5 +217,15 @@ class VariantController extends Controller {
     private function getManager()
     {
         return $this->get('web_illumination_site.manager.product');
+    }
+
+    /**
+     * Fetch project manager from container
+     *
+     * @return \WebIllumination\SiteBundle\Manager\ImageManager
+     */
+    private function getImageManager()
+    {
+        return $this->get('web_illumination_site.manager.image');
     }
 }

@@ -77,10 +77,10 @@ class ProductController extends Controller {
                 $em->flush();
 
                 // Link images
-                $this->persistImages($product, 'product');
+                $this->getImageManager()->persistImages($product, 'product');
                 foreach($product->getVariants() as $variant)
                 {
-                    $this->persistImages($variant, 'variant');
+                    $this->getImageManager()->persistImages($variant, 'variant');
                 }
 
                 $em->flush();
@@ -175,7 +175,7 @@ class ProductController extends Controller {
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if($form->isValid()) {
-                $this->persistImages($product, 'product');
+                $this->getImageManager()->persistImages($product, 'product');
 
                 $em->persist($product);
                 $em->flush();
@@ -286,76 +286,6 @@ class ProductController extends Controller {
         return $this->redirect($this->generateUrl('listing_products'));
     }
 
-    private function persistImages($entity, $entityType) {
-        /**
-         * @var $em EntityManager
-         * @var $image Image
-         */
-        $em = $this->getDoctrine()->getManager();
-        $i = 0;
-        $imageIds = explode(',', $entity->getImages());
-        $imageIds = array_diff(explode(',', $entity->getImages()), array(''));
-
-        // Get any images already linked to the entity
-        $existingImages = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->findBy(array(
-            'objectId' => $entity->getId(),
-            'objectType' => $entityType,
-        ));
-
-        // Delete any old images that no longer exist
-        foreach($existingImages as $existingImage) {
-            $found = false;
-            foreach($imageIds as $imageId) {
-                if($existingImage->getId() == $imageId) {
-                    $found = true;
-                    break;
-                }
-            }
-
-            if(!$found) {
-                $em->remove($existingImage);
-                $em->flush();
-            }
-        }
-
-        // If no images were added add a blank image
-        if(count($imageIds) == 0) {
-            $image = new Image();
-            $image->setLocale('en');
-            $image->setTitle($entity->getDescription()->getHeader());
-            $image->setAlignment('');
-            $image->setDescription('');
-            $image->setLink('');
-            $image->setObjectType($entityType);
-            $image->setImageType($entityType);
-            $image->setObjectId($entity->getId());
-            $image->setDisplayOrder(1);
-            $image->setOriginalPath('/images/no-image.jpg');
-            $image->setPublicPath('/images/no-image.jpg');
-            $em->persist($image);
-        } else {
-            // Link each image to the variant
-            foreach($imageIds as $imageId)
-            {
-                $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
-                if($image)
-                {
-                    $image->setObjectId($entity->getId());
-                    $image->setObjectType($entityType);
-                    $image->setImageType($entityType);
-
-                    $image->setTitle($entity->getDescription()->getHeader());
-                    $image->setDisplayOrder($i);
-                    $image->setPublicPath(/*Set this field to a blank value so it can be changed in the listener*/"");
-
-                    $i++;
-
-                    $em->persist($image);
-                }
-            }
-        }
-    }
-
     /**
      * Fetch project manager from container
      *
@@ -364,5 +294,15 @@ class ProductController extends Controller {
     private function getManager()
     {
         return $this->get('web_illumination_site.manager.product');
+    }
+
+    /**
+     * Fetch project manager from container
+     *
+     * @return \WebIllumination\SiteBundle\Manager\ImageManager
+     */
+    private function getImageManager()
+    {
+        return $this->get('web_illumination_site.manager.image');
     }
 }

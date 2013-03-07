@@ -30,10 +30,10 @@ class NewVariantFlow extends FormFlow
     protected function loadStepDescriptions() {
         return array(
             'Enter Variant Details',
-            'Enter Descriptions',
             'Enter Dimensions',
             'Enter Prices',
             'Choose features',
+            'Images',
         );
     }
 
