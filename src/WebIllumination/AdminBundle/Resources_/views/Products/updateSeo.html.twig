@@ -1,0 +1,53 @@
+<section id="seo" class="form ui-helper-hidden">
+	<h2>Search Engine Optimisation (SEO)</h2>
+	<div id="seo-confirm-leave" class="ui-widget message ui-helper-hidden">
+	    <div class="ui-state-error ui-corner-all">
+	    	<span class="ui-icon ui-icon-help"></span>
+	        <p><strong>WARNING:</strong> You are about to leave this section and you have made changes without updating. Do you want to update before you leave?</p>
+	        <p>
+	        	<button class="button action-update-seo-section ui-button-green" data-icon-primary="ui-icon-check">Update</button>
+	        	<button class="button ui-button-red action-leave-seo" data-icon-primary="ui-icon-closethick">Continue Without Updating</button>
+	        	<input type="hidden" value="-1" id="seo-tab-to-redirect-to" />
+	        	<input type="hidden" value="0" id="seo-requires-update" />
+	        </p>
+	    </div>
+	    <div class="spacer"></div>
+	</div>
+	<div class="ui-widget info-message">
+		<div class="ui-state-highlight ui-corner-all">
+			<span class="info-message-icon ui-icon ui-icon-info"></span>
+			<p>Search engine optimisation (SEO) is critical to the success of your site. It is strongly recommended that all the information in this section is completed.</p>
+		</div>
+	</div>
+    <div class="clearfix">
+        <label for="form-page-title" class="form-label">Page Title<small><span class="red">VERY IMPORTANT</span><br />Title used by the Browser</small></label>
+        <div class="form-input"><textarea class="maximum-characters" data-maximum-characters="70" data-maximum-characters-object="form-page-title-maximum-characters" id="form-page-title" name="page-title" rows="2">{{ data.product.pageTitle }}</textarea><p class="maximum-characters-message" id="form-page-title-maximum-characters"></p></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-header" class="form-label">Header<small><span class="red">VERY IMPORTANT</span><br />Main header on the page</small></label>
+        <div class="form-input"><textarea id="form-header" name="header" rows="2">{{ data.product.header }}</textarea></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-meta-description" class="form-label">Meta Description<small><span class="red">VERY IMPORTANT</span><br />Your "Advert" in organic search results. Need to include keywords but primarily needs to entice people to click through by using a call to action with benefits (e.g. lowest price, in stock, free delivery, etc).</small></label>
+        <div class="form-input"><textarea class="maximum-characters" data-maximum-characters="160" data-maximum-characters-object="form-meta-description-maximum-characters" id="form-meta-description" name="meta-description" rows="7">{{ data.product.metaDescription }}</textarea><p class="maximum-characters-message" id="form-meta-description-maximum-characters"></p></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-search-words" class="form-label">Search Words<small>Alternative words this product can be found by, separated by a comma</small></label>
+        <div class="form-input"><textarea id="form-search-words" name="search-words" rows="2" class="items">{{ data.product.searchWords }}</textarea></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-alternative-product-codes" class="form-label">Alternative Product Codes<small>Alternative product codes to search by, separated by a comma</small></label>
+        <div class="form-input"><textarea id="form-alternative-product-codes" name="alternative-product-codes" rows="2" class="items">{{ data.product.alternativeProductCodes }}</textarea></div>
+    </div>
+    <div class="clearfix">
+    	<label for="form-url" class="form-label">Internal Web Address<small>Use 7 keywords maximum. Focus on the brand and departments.</small></label>
+        <div class="form-input"><textarea class="seo-url" id="form-url" name="url" rows="2">{{ data.product.url }}</textarea></div>
+    </div>
+    <div class="clearfix">
+        <div class="form-input buttons no-margin-bottom">
+        	<input type="hidden" id="form-meta-keywords" name="meta-keywords" class="items" value="{{ data.product.metaKeywords }}" />
+        	<button class="button ui-button-green action-update-seo-product-section" data-icon-primary="ui-icon-check">Update</button>
+        	<button class="button ui-button-blue action-reset-seo" data-icon-primary="ui-icon-refresh">Reset Seo</button>
+        </div>
+    </div>
+</section>

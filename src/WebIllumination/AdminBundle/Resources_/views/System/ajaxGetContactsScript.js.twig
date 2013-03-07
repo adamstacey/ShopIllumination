@@ -1,0 +1,1831 @@
+<script type="text/javascript" defer="defer">
+	{% include 'WebIlluminationAdminBundle:System:ajaxGetContactsFunctions.js.twig' with {'objectId': objectId, 'objectType': objectType, 'contacts': contacts, 'contactTitles': contactTitles} %}
+	$(document).ready(function() {
+		{# Load the contact numbers #}
+		$(".contact-numbers-loading").each(function() {
+			$contactId = $(this).attr("data-contact-id");
+			loadContactNumbers($contactId, 0);
+		});
+		
+		{# Load the contact addresses #}
+		$(".contact-addresses-loading").each(function() {
+			$contactId = $(this).attr("data-contact-id");
+			loadContactAddresses($contactId, 0);
+		});
+		
+		{# Load the contact web addresses #}
+		$(".contact-web-addresses-loading").each(function() {
+			$contactId = $(this).attr("data-contact-id");
+			loadContactWebAddresses($contactId, 0);
+		});
+		
+		{# Load the contact email addresses #}
+		$(".contact-email-addresses-loading").each(function() {
+			$contactId = $(this).attr("data-contact-id");
+			loadContactEmailAddresses($contactId, 0);
+		});
+		
+		{# Update display name #}
+		$(".contact-organisation-name, .contact-first-name, .contact-last-name").live('keyup', function() {
+			var $elementIndex = $(this).attr("data-index");
+			var $displayName = '';
+			var $firstName = $("#form-contact-first-name-"+$elementIndex).val();
+			var $lastName = $("#form-contact-last-name-"+$elementIndex).val();
+			var $organisationName = $("#form-contact-organisation-name-"+$elementIndex).val();
+			if ($organisationName != '')
+			{
+				$displayName = $organisationName;
+				if (($firstName != '') || ($lastName != ''))
+				{
+					$displayName = $displayName + ' (' + $.trim($firstName + ' ' + $lastName) + ')';
+				}
+			} else {
+				$displayName = $.trim($firstName + ' ' + $lastName);
+			}
+			$("#form-contact-display-name-"+$elementIndex).val($displayName);
+		});
+		
+		{# Select and unselect all rows #}
+		$(".action-unselect-all-contacts").hide();
+		$(".action-select-all-contacts").live('click', function() {
+			$("li.contact-container td.delete div.checker span").addClass("checked");
+			$("li.contact-container").addClass("ui-state-highlight");
+			$("input.contact-select").attr("checked", "checked");
+			$(".action-confirm-delete-contacts").fadeIn();
+			$(".action-select-all-contacts").hide();
+			$(".action-unselect-all-contacts").fadeIn();
+		});
+		$(".action-unselect-all-contacts").live('click', function() {
+			$("li.contact-container td.delete div.checker span").removeClass("checked");
+			$("li.contact-container").removeClass("ui-state-highlight");
+			$("input.contact-select").attr("checked", "");
+			$(".action-confirm-delete-contacts").hide();
+			$(".action-unselect-all-contacts").hide();
+			$(".action-select-all-contacts").fadeIn();
+		});
+		
+		{# Select rows for selection #}
+		$(".action-confirm-delete-contacts").hide();
+		$("input.contact-select").live('change', function() {
+			if ($(this).is(":checked"))
+			{
+				$("#contact-"+$(this).attr("data-index")).addClass("ui-state-highlight");
+			} else {
+				$("#contact-"+$(this).attr("data-index")).removeClass("ui-state-highlight");
+			}
+			if ($("li.contact-container:visible .contact-select:checked").length < $("li.contact-container:visible .contact-select").length)
+			{
+				$(".action-select-all-contacts").fadeIn();
+			} else {
+				$(".action-select-all-contacts").hide();
+			}
+			if ($("li.contact-container:visible .contact-select:checked").length > 0)
+			{
+				$(".action-confirm-delete-contacts").fadeIn();
+				$(".action-unselect-all-contacts").fadeIn();
+			} else {
+				$(".action-confirm-delete-contacts").hide();
+				$(".action-unselect-all-contacts").hide();
+			}
+		});
+		
+		{# Add a new contact #}
+		$(".action-add-new-contact").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			loadNewContact();
+		});
+		
+		{# Detect any changes #}
+		$(".contact-display-name, .contact-organisation-name, .contact-contact-title-id, .contact-first-name, .contact-middle-name, .contact-last-name").live('change', function() {
+			$("#form-contact-requires-update-"+$(this).closest("li.contact-container").attr("data-index")).val("1");
+		});
+		
+		{# Dragabble sorting #}
+		$("#form-contacts-container").sortable({
+			placeholder: "highlighted-sortable",
+			toleranceElement: '> div',
+			update: function(event, ui) {
+				reOrderContacts();
+			}
+		});
+		
+		{# Accordion menus #}
+		$(".contact-container .accordion").accordion({
+	    	autoHeight: false,
+	    	collapsible: true,
+	    	active: false
+	    });
+		
+		{# Update contacts and leave #}
+		$(".action-update-contacts-and-leave").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			updateContacts();
+		});
+					
+		{# Update contacts #}
+		$(".action-update-contacts").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$("#contacts-tab-to-redirect-to").val("-1");
+			updateContacts();
+		});
+		
+		{# Confirm delete of a contact #}
+		$(".action-confirm-delete-contact").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");
+			if ($("#form-contact-id-"+$elementIndex).val() == "0")
+			{
+				$("#contact-"+$elementIndex).fadeOut(function() {
+        			$("#contact-"+$elementIndex).remove();
+        			if ($("li.contact-container").length < 1)
+        			{
+						$(".action-confirm-delete-contacts").hide();
+						$(".action-unselect-all-contacts").hide();
+						$(".action-select-all-contacts").fadeIn();
+        				loadNewContact();
+        			} else {
+        				reOrderContacts();
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$("#contact-confirm-delete-button").attr("data-index", $elementIndex);
+				$("#contact-cancel-delete-button").attr("data-index", $elementIndex);
+				$("#contact-confirm-delete").fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-confirm-delete").offset().top - 10},'slow');
+				$("#contact-"+$elementIndex).addClass("ui-state-error");
+				$("#contact-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+				$("#contact-"+$elementIndex+" input.contact-select").attr("checked", "checked");
+				$("#ajax_loading").hide();
+			}
+		});
+		
+		{# Cancel delete of a contact #}
+		$(".action-cancel-delete-contact").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");
+			$("#contact-"+$elementIndex).removeClass("ui-state-error");
+			$("#contact-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+			$("#contact-"+$elementIndex+" input.contact-select").attr("checked", "");
+			$("#contact-confirm-delete").hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete a contact #}
+		$(".action-delete-contact").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");
+			if ($("#form-contact-id-"+$elementIndex).val() == "0")
+			{
+				$("#contact-"+$elementIndex).fadeOut(function() {
+        			$("#contact-"+$elementIndex).remove();
+        			if ($("li.contact-container").length < 1)
+        			{
+        				$(".action-confirm-delete-contacts").hide();
+						$(".action-unselect-all-contacts").hide();
+						$(".action-select-all-contacts").fadeIn();
+        				loadNewContact();
+        			} else {
+        				reOrderContacts();
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$.ajax({
+			    	url: "{{ path('system_ajax_delete_contact') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-contact-id-"+$elementIndex).val(),
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			      		$("#contact-error-message-text").html('Sorry, there was a problem deleting your contact. Please try again.');
+			      		$("#contact-error-message").fadeIn();
+			      		$("#contact-confirm-delete").hide();
+			        	$("#ajax_loading").hide();
+			        	$("html, body").animate({scrollTop: $("#contacts").offset().top + 35},'slow');
+			      	},
+			      	success: function(data) {
+			        	if (data.response == 'success')
+			        	{
+			        		$("#contact-"+data.elementIndex).fadeOut(function() {
+			        			$("#contact-"+data.elementIndex).remove();
+			        			if ($("li.contact-container:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contacts").hide();
+									$(".action-unselect-all-contacts").hide();
+									$(".action-select-all-contacts").fadeIn();
+			        				loadNewContact();
+			        			} else {
+			        				reOrderContacts();
+			        			}
+			        		});
+			        	} else {
+			        		$("#contact-error-message-text").html('Sorry, there was a problem deleting your contact. Please try again.');
+			        		$("#contact-error-message").fadeIn();
+			        		$("html, body").animate({scrollTop: $("#contacts").offset().top + 35},'slow');
+			        	}
+			        	$("#contact-confirm-delete").hide();
+			        	$("#ajax_loading").hide();
+			      	}
+			   	});
+			}
+		});
+		
+		{# Confirm deleting of contacts #}
+		$(".action-confirm-delete-contacts").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$deletesNeedingConfirmation = 0;
+			$("li.contact-container:visible input.contact-select:checked").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				if ($("#form-contact-id-"+$elementIndex).val() == "0")
+				{
+					$("#contact-"+$elementIndex).fadeOut(function() {
+	        			$("#contact-"+$elementIndex).remove();
+	        			if ($("li.contact-container").length < 1)
+		    			{
+		    				$(".action-confirm-delete-contacts").hide();
+							$(".action-unselect-all-contacts").hide();
+							$(".action-select-all-contacts").fadeIn();
+		    				loadNewContact();
+		    			} else {
+		    				reOrderContacts();
+		    			}
+	        		});
+				} else {
+					$deletesNeedingConfirmation++;
+				}
+			});
+			if ($deletesNeedingConfirmation > 0)
+			{
+				$("#contact-confirm-deletes").fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-confirm-deletes").offset().top - 10},'slow');
+			}
+			$("#ajax_loading").hide();
+		});
+		
+		{# Cancel deleting of contacts #}
+		$(".action-cancel-delete-contacts").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-confirm-deletes").hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete contacts #}
+		$(".action-delete-contacts").live('click', function() {
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$errorOccurred = false;
+			$numberOfElementsToDelete = $("li.contact-container:visible input.contact-select:checked").length;
+			$numberOfElementsProcessed = 0;
+			if ($numberOfElementsToDelete > 0)
+			{
+				$("li.contact-container:visible input.contact-select:checked").each(function(index) {
+					$elementIndex = $(this).attr("data-index");				
+					$.ajax({
+				    	url: "{{ path('system_ajax_delete_contact') }}",
+				      	type: "GET",
+				      	dataType: "json",
+				      	data: {
+				      		id: $("#form-contact-id-"+$elementIndex).val(),
+				      		elementIndex: $elementIndex
+				      	},
+				      	error: function(data) {
+				      		$errorOccurred = true;
+				      		$numberOfElementsProcessed++;
+				      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#contact-error-message-text").html('Sorry, there were problems deleting your selected contacts. Please try again.');
+				        			$("#contact-error-message").fadeIn();
+				        			$("html, body").animate({scrollTop: $("#contacts").offset().top + 35},'slow');
+				        		}
+				        		if ($("li.contact-container:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contacts").hide();
+									$(".action-unselect-all-contacts").hide();
+									$(".action-select-all-contacts").fadeIn();
+			        				loadNewContact();
+			        			} else {
+				        			reOrderContacts();
+				        		}
+				        		$("#contact-confirm-deletes").hide();
+				        		if ($("li.contact-container:visible input.contact-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-contacts").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+				      	},
+				      	success: function(data) {
+				        	if (data.response == 'success')
+				        	{
+				        		$("#contact-"+data.elementIndex).fadeOut(function() {
+				        			$("#contact-"+data.elementIndex).remove();
+				        			$numberOfElementsProcessed++;
+				        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+						        	{
+						        		if ($errorOccurred)
+						        		{
+						        			$("#contact-error-message-text").html('Sorry, there were problems deleting your selected contacts. Please try again.');
+						        			$("#contact-error-message").fadeIn();
+						        			$("html, body").animate({scrollTop: $("#contacts").offset().top + 35},'slow');
+						        		}
+						        		if ($("li.contact-container:visible").length < 1)
+					        			{
+					        				$(".action-confirm-delete-contacts").hide();
+											$(".action-unselect-all-contacts").hide();
+											$(".action-select-all-contacts").fadeIn();
+					        				loadNewContact();
+					        			} else {
+						        			reOrderContacts();
+						        		}
+						        		$("#contact-confirm-deletes").hide();
+						        		if ($("li.contact-container:visible input.contact-select:checked").length < 1)
+						        		{
+						        			$(".action-confirm-delete-contacts").fadeOut();
+						        		}
+						        		$("#ajax_loading").hide();
+						        	}
+				        		});
+				        	} else {
+				        		$errorOccurred = true;
+				        		$numberOfElementsProcessed++;
+				        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+					        	{
+					        		if ($errorOccurred)
+					        		{
+					        			$("#contact-error-message-text").html('Sorry, there were problems deleting your selected contacts. Please try again.');
+					        			$("#contact-error-message").fadeIn();
+					        			$("html, body").animate({scrollTop: $("#contacts").offset().top + 35},'slow');
+					        		}
+					        		if ($("li.contact-container:visible").length < 1)
+				        			{
+				        				$(".action-confirm-delete-contacts").hide();
+										$(".action-unselect-all-contacts").hide();
+										$(".action-select-all-contacts").fadeIn();
+				        				loadNewContact();
+				        			} else {
+					        			reOrderContacts();
+					        		}
+					        		$("#contact-confirm-deletes").hide();
+					        		if ($("li.contact-container:visible input.contact-select:checked").length < 1)
+					        		{
+					        			$(".action-confirm-delete-contacts").fadeOut();
+					        		}
+					        		$("#ajax_loading").hide();
+					        	}
+				        	}
+				      	}
+				   	});
+				});
+			}
+		});
+		
+		$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+			if ($("input.contact-requires-update[value='1']").length > 0)
+			{
+				$("#contacts .message").hide();
+				$(".form-error").remove();
+				$("#contact-leave-contacts-button").attr("data-tab-index", ui.index);
+				$("#contacts-tab-to-redirect-to").val(ui.index);
+				$("#contact-confirm-leave").fadeIn();
+				$("html, body").animate({scrollTop: $("#contacts").offset().top + 35},'slow');
+				return false;
+			}
+			return true;
+		});
+		
+		$(".action-leave-contacts").live('click', function() {
+			$("input.contact-requires-update").val("0");
+			$("input.contact-id[value='0']").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				$("#contact-"+$elementIndex).remove();
+			});
+			$("#contacts .message").hide();
+			$(".form-error").remove();
+			$(".sidebar-tabs").tabs("select", parseInt($(this).attr("data-tab-index")));
+			$("html, body").animate({scrollTop: $("#contacts").offset().top + 35},'slow');
+		});
+		
+		{###################}
+		{# CONTACT NUMBERS #}
+		{###################}
+
+		{# Select and unselect all rows #}
+		$(".action-select-all-contact-numbers").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("li.contact-number-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").addClass("checked");
+			$("li.contact-number-container[data-contact-id='"+$contactId+"']").addClass("ui-state-highlight");
+			$("input.contact-number-select[data-contact-id='"+$contactId+"']").attr("checked", "checked");
+			$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+			$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		$(".action-unselect-all-contact-numbers").live('click', function() {
+			$("li.contact-number-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").removeClass("checked");
+			$("li.contact-number-container[data-contact-id='"+$contactId+"']").removeClass("ui-state-highlight");
+			$("input.contact-number-select[data-contact-id='"+$contactId+"']").attr("checked", "");
+			$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+			$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		
+		{# Select rows for selection #}
+		$("input.contact-number-select").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			if ($(this).is(":checked"))
+			{
+				$("#contact-number-"+$contactId+"-"+$elementIndex).addClass("ui-state-highlight");
+			} else {
+				$("#contact-number-"+$contactId+"-"+$elementIndex).removeClass("ui-state-highlight");
+			}
+			if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible .contact-number-select:checked").length < $("li.contact-container[data-contact-id='"+$contactId+"']:visible .contact-number-select").length)
+			{
+				$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+			}
+			if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible .contact-number-select:checked").length > 0)
+			{
+				$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+				$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+				$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+			}
+		});
+		
+		{# Add a new contact number #}
+		$(".action-add-new-contact-number").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			loadNewContactNumber($contactId);
+		});
+		
+		{# Detect any changes #}
+		$(".contact-number-field").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#form-contact-number-requires-update-"+$contactId+"-"+$elementIndex).val("1");
+			$("#form-contact-requires-update-"+$(this).closest("li.contact-container").attr("data-index")).val("1");
+		});
+		
+		{# Update contact numbers #}
+		$(".action-update-contact-numbers").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			updateContactNumbers($contactId);
+		});
+		
+		{# Confirm delete of a contact number #}
+		$(".action-confirm-delete-contact-number").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-number-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-number-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-number-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactNumber($contactId);
+        			} else {
+        				reOrderContactNumbers($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$("#contact-number-confirm-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-number-cancel-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-number-confirm-delete-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-number-confirm-delete-"+$contactId).offset().top - 10},'slow');
+				$("#contact-number-"+$contactId+"-"+$elementIndex).addClass("ui-state-error");
+				$("#contact-number-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+				$("#contact-number-"+$contactId+"-"+$elementIndex+" input.contact-number-select").attr("checked", "checked");
+				$("#ajax_loading").hide();
+			}
+		});
+		
+		{# Cancel delete of a contact #}
+		$(".action-cancel-delete-contact-number").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-number-"+$contactId+"-"+$elementIndex).removeClass("ui-state-error");
+			$("##contact-number-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+			$("##contact-number-"+$contactId+"-"+$elementIndex+" input.contact-number-select").attr("checked", "");
+			$("#contact-number-confirm-delete-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete a contact #}
+		$(".action-delete-contact-number").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-number-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-number-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-number-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactNumber($contactId);
+        			} else {
+        				reOrderContactNumbers($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$.ajax({
+			    	url: "{{ path('system_ajax_delete_contact_number') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-contact-number-id-"+$contactId+"-"+$elementIndex).val(),
+			      		contactId: $contactId,
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			      		$("#contact-number-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact number. Please try again.');
+			      		$("#contact-number-error-message-"+$contactId).fadeIn();
+			      		$("#contact-number-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			        	$("html, body").animate({scrollTop: $("#ajax-contact-numbers-"+$contactId).offset().top + 35},'slow');
+			      	},
+			      	success: function(data) {
+			        	if (data.response == 'success')
+			        	{
+			        		$("#contact-number-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+			        			$("#contact-number-"+data.contactId+"-"+data.elementIndex).remove();
+			        			if ($("li.contact-number-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-numbers[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-unselect-all-contact-numbers[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-select-all-contact-numbers[data-contact-id='"+data.contactId+"']").fadeIn();
+			        				loadNewContactNumber(data.contactId);
+			        			} else {
+			        				reOrderContactNumbers(data.contactId);
+			        			}
+			        		});
+			        	} else {
+			        		$("#contact-number-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact number. Please try again.');
+			        		$("#contact-number-error-message-"+$contactId).fadeIn();
+			        		$("html, body").animate({scrollTop: $("#ajax-contact-numbers-"+$contactId).offset().top + 35},'slow');
+			        	}
+			        	$("#contact-number-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			      	}
+			   	});
+			}
+		});
+		
+		{# Confirm deleting of contacts #}
+		$(".action-confirm-delete-contact-numbers").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$deletesNeedingConfirmation = 0;
+			$("li.contact-number-container[data-contact-id='"+$contactId+"']:visible input.contact-number-select:checked").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				if ($("#form-contact-number-id-"+$contactId+"-"+$elementIndex).val() == "0")
+				{
+					$("#contact-number-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+	        			$("#contact-number-"+$contactId+"-"+$elementIndex).remove();
+	        			if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+	        			{
+							$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+							$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+							$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+	        				loadNewContactNumber($contactId);
+	        			} else {
+	        				reOrderContactNumbers($contactId);
+	        			}
+	        			$("#ajax_loading").hide();
+	        		});
+				} else {
+					$deletesNeedingConfirmation++;
+				}
+			});
+			if ($deletesNeedingConfirmation > 0)
+			{
+				$("#contact-number-confirm-deletes-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-number-confirm-deletes-"+$contactId).offset().top - 10},'slow');
+			}
+			$("#ajax_loading").hide();
+		});
+		
+		{# Cancel deleting of contacts #}
+		$(".action-cancel-delete-contact-numbers").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-number-confirm-deletes-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete contact numbers #}
+		$(".action-delete-contact-numbers").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-numbers-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$errorOccurred = false;
+			$numberOfElementsToDelete = $("li.contact-number-container[data-contact-id='"+$contactId+"']:visible input.contact-number-select:checked").length;
+			$numberOfElementsProcessed = 0;
+			if ($numberOfElementsToDelete > 0)
+			{
+				$("li.contact-number-container[data-contact-id='"+$contactId+"']:visible input.contact-number-select:checked").each(function(index) {
+					$elementIndex = $(this).attr("data-index");				
+					$.ajax({
+				    	url: "{{ path('system_ajax_delete_contact_number') }}",
+				      	type: "GET",
+				      	dataType: "json",
+				      	data: {
+				      		id: $("#form-contact-number-id-"+$contactId+"-"+$elementIndex).val(),
+			      			contactId: $contactId,
+			      			elementIndex: $elementIndex
+				      	},
+				      	error: function(data) {
+				      		$errorOccurred = true;
+				      		$numberOfElementsProcessed++;
+				      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#contact-number-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact numbers. Please try again.');
+					        		$("#contact-number-error-message-"+$contactId).fadeIn();
+					        		$("html, body").animate({scrollTop: $("#ajax-contact-numbers-"+$contactId).offset().top + 35},'slow');
+				        		}
+				        		if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+									$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+									$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+			        				loadNewContactNumber($contactId);
+			        			} else {
+				        			reOrderContactNumbers($contactId);
+				        		}
+				        		$("#contact-number-confirm-deletes-"+$contactId).hide();
+				        		if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible input.contact-number-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+				      	},
+				      	success: function(data) {
+				        	if (data.response == 'success')
+				        	{
+				        		$("#contact-number-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+				        			$("#contact-number-"+data.contactId+"-"+data.elementIndex).remove();
+				        			$numberOfElementsProcessed++;
+				        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+						        	{
+						        		if ($errorOccurred)
+						        		{
+						        			$("#contact-number-error-message-text-"+data.contactId).html('Sorry, there were problems deleting your selected contact numbers. Please try again.');
+					        				$("#contact-number-error-message-"+data.contactId).fadeIn();
+					        				$("html, body").animate({scrollTop: $("#ajax-contact-numbers-"+data.contactId).offset().top + 35},'slow');
+						        		}
+						        		if ($("li.contact-number-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+					        			{
+					        				$(".action-confirm-delete-contact-numbers[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-unselect-all-contact-numbers[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-select-all-contact-numbers[data-contact-id='"+data.contactId+"']").fadeIn();
+					        				loadNewContactNumber(data.contactId);
+					        			} else {
+						        			reOrderContactNumbers(data.contactId);
+						        		}
+						        		$("#contact-number-confirm-deletes-"+data.contactId).hide();
+						        		if ($("li.contact-number-container[data-contact-id='"+data.contactId+"']:visible input.contact-number-select:checked").length < 1)
+						        		{
+						        			$(".action-confirm-delete-contact-numbers[data-contact-id='"+data.contactId+"']").fadeOut();
+						        		}
+						        		$("#ajax_loading").hide();
+						        	}
+				        		});
+				        	} else {
+				        		$errorOccurred = true;
+				        		$numberOfElementsProcessed++;
+				        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+					        	{
+					        		if ($errorOccurred)
+					        		{
+					        			$("#contact-number-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact numbers. Please try again.');
+					        			$("#contact-number-error-message-"+$contactId).fadeIn();
+					        			$("html, body").animate({scrollTop: $("#ajax-contact-numbers-"+$contactId).offset().top + 35},'slow');
+					        		}
+					        		if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+				        			{
+				        				$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+										$(".action-unselect-all-contact-numbers[data-contact-id='"+$contactId+"']").hide();
+										$(".action-select-all-contact-numbers[data-contact-id='"+$contactId+"']").fadeIn();
+				        				loadNewContactNumber($contactId);
+				        			} else {
+					        			reOrderContactNumbers($contactId);
+					        		}
+					        		$("#contact-number-confirm-deletes-"+$contactId).hide();
+					        		if ($("li.contact-number-container[data-contact-id='"+$contactId+"']:visible input.contact-number-select:checked").length < 1)
+					        		{
+					        			$(".action-confirm-delete-contact-numbers[data-contact-id='"+$contactId+"']").fadeOut();
+					        		}
+					        		$("#ajax_loading").hide();
+					        	}
+				        	}
+				        	$("#contact-number-confirm-delete-"+$contactId).hide();
+				        	$("#ajax_loading").hide();
+				      	}
+				   	});
+				});
+			}
+		});
+		
+		{#####################}
+		{# CONTACT ADDRESSES #}
+		{#####################}
+
+		{# Select and unselect all rows #}
+		$(".action-select-all-contact-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("li.contact-address-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").addClass("checked");
+			$("li.contact-address-container[data-contact-id='"+$contactId+"']").addClass("ui-state-highlight");
+			$("input.contact-address-select[data-contact-id='"+$contactId+"']").attr("checked", "checked");
+			$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		$(".action-unselect-all-contact-addresses").live('click', function() {
+			$("li.contact-address-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").removeClass("checked");
+			$("li.contact-address-container[data-contact-id='"+$contactId+"']").removeClass("ui-state-highlight");
+			$("input.contact-address-select[data-contact-id='"+$contactId+"']").attr("checked", "");
+			$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		
+		{# Select rows for selection #}
+		$("input.contact-address-select").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			if ($(this).is(":checked"))
+			{
+				$("#contact-address-"+$contactId+"-"+$elementIndex).addClass("ui-state-highlight");
+			} else {
+				$("#contact-address-"+$contactId+"-"+$elementIndex).removeClass("ui-state-highlight");
+			}
+			if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible .contact-address-select:checked").length < $("li.contact-container[data-contact-id='"+$contactId+"']:visible .contact-address-select").length)
+			{
+				$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+			}
+			if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible .contact-address-select:checked").length > 0)
+			{
+				$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+				$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+				$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+			}
+		});
+		
+		{# Add a new contact address #}
+		$(".action-add-new-contact-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			loadNewContactAddress($contactId);
+		});
+		
+		{# Detect any changes #}
+		$(".contact-address-field").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#form-contact-address-requires-update-"+$contactId+"-"+$elementIndex).val("1");
+			$("#form-contact-requires-update-"+$(this).closest("li.contact-container").attr("data-index")).val("1");
+		});
+		
+		{# Update contact addresses #}
+		$(".action-update-contact-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			updateContactAddresses($contactId);
+		});
+		
+		{# Confirm delete of a contact address #}
+		$(".action-confirm-delete-contact-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-address-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactAddress($contactId);
+        			} else {
+        				reOrderContactAddresses($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$("#contact-address-confirm-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-address-cancel-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-address-confirm-delete-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-address-confirm-delete-"+$contactId).offset().top - 10},'slow');
+				$("#contact-address-"+$contactId+"-"+$elementIndex).addClass("ui-state-error");
+				$("#contact-address-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+				$("#contact-address-"+$contactId+"-"+$elementIndex+" input.contact-address-select").attr("checked", "checked");
+				$("#ajax_loading").hide();
+			}
+		});
+		
+		{# Cancel delete of a contact #}
+		$(".action-cancel-delete-contact-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-address-"+$contactId+"-"+$elementIndex).removeClass("ui-state-error");
+			$("##contact-address-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+			$("##contact-address-"+$contactId+"-"+$elementIndex+" input.contact-address-select").attr("checked", "");
+			$("#contact-address-confirm-delete-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete a contact #}
+		$(".action-delete-contact-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-address-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactAddress($contactId);
+        			} else {
+        				reOrderContactAddresses($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$.ajax({
+			    	url: "{{ path('system_ajax_delete_contact_address') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-contact-address-id-"+$contactId+"-"+$elementIndex).val(),
+			      		contactId: $contactId,
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			      		$("#contact-address-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact address. Please try again.');
+			      		$("#contact-address-error-message-"+$contactId).fadeIn();
+			      		$("#contact-address-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			        	$("html, body").animate({scrollTop: $("#ajax-contact-addresses-"+$contactId).offset().top + 35},'slow');
+			      	},
+			      	success: function(data) {
+			        	if (data.response == 'success')
+			        	{
+			        		$("#contact-address-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+			        			$("#contact-address-"+data.contactId+"-"+data.elementIndex).remove();
+			        			if ($("li.contact-address-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-addresses[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-unselect-all-contact-addresses[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-select-all-contact-addresses[data-contact-id='"+data.contactId+"']").fadeIn();
+			        				loadNewContactAddress(data.contactId);
+			        			} else {
+			        				reOrderContactAddresses(data.contactId);
+			        			}
+			        		});
+			        	} else {
+			        		$("#contact-address-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact address. Please try again.');
+			        		$("#contact-address-error-message-"+$contactId).fadeIn();
+			        		$("html, body").animate({scrollTop: $("#ajax-contact-addresses-"+$contactId).offset().top + 35},'slow');
+			        	}
+			        	$("#contact-address-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			      	}
+			   	});
+			}
+		});
+		
+		{# Confirm deleting of contacts #}
+		$(".action-confirm-delete-contact-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$deletesNeedingConfirmation = 0;
+			$("li.contact-address-container[data-contact-id='"+$contactId+"']:visible input.contact-address-select:checked").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				if ($("#form-contact-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+				{
+					$("#contact-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+	        			$("#contact-address-"+$contactId+"-"+$elementIndex).remove();
+	        			if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+	        			{
+							$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+							$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+							$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+	        				loadNewContactAddress($contactId);
+	        			} else {
+	        				reOrderContactAddresses($contactId);
+	        			}
+	        			$("#ajax_loading").hide();
+	        		});
+				} else {
+					$deletesNeedingConfirmation++;
+				}
+			});
+			if ($deletesNeedingConfirmation > 0)
+			{
+				$("#contact-address-confirm-deletes-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-address-confirm-deletes-"+$contactId).offset().top - 10},'slow');
+			}
+			$("#ajax_loading").hide();
+		});
+		
+		{# Cancel deleting of contacts #}
+		$(".action-cancel-delete-contact-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-address-confirm-deletes-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete contact addresses #}
+		$(".action-delete-contact-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$errorOccurred = false;
+			$numberOfElementsToDelete = $("li.contact-address-container[data-contact-id='"+$contactId+"']:visible input.contact-address-select:checked").length;
+			$numberOfElementsProcessed = 0;
+			if ($numberOfElementsToDelete > 0)
+			{
+				$("li.contact-address-container[data-contact-id='"+$contactId+"']:visible input.contact-address-select:checked").each(function(index) {
+					$elementIndex = $(this).attr("data-index");				
+					$.ajax({
+				    	url: "{{ path('system_ajax_delete_contact_address') }}",
+				      	type: "GET",
+				      	dataType: "json",
+				      	data: {
+				      		id: $("#form-contact-address-id-"+$contactId+"-"+$elementIndex).val(),
+			      			contactId: $contactId,
+			      			elementIndex: $elementIndex
+				      	},
+				      	error: function(data) {
+				      		$errorOccurred = true;
+				      		$numberOfElementsProcessed++;
+				      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#contact-address-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact addresses. Please try again.');
+					        		$("#contact-address-error-message-"+$contactId).fadeIn();
+					        		$("html, body").animate({scrollTop: $("#ajax-contact-addresses-"+$contactId).offset().top + 35},'slow');
+				        		}
+				        		if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+									$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+									$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			        				loadNewContactAddress($contactId);
+			        			} else {
+				        			reOrderContactAddresses($contactId);
+				        		}
+				        		$("#contact-address-confirm-deletes-"+$contactId).hide();
+				        		if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible input.contact-address-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+				      	},
+				      	success: function(data) {
+				        	if (data.response == 'success')
+				        	{
+				        		$("#contact-address-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+				        			$("#contact-address-"+data.contactId+"-"+data.elementIndex).remove();
+				        			$numberOfElementsProcessed++;
+				        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+						        	{
+						        		if ($errorOccurred)
+						        		{
+						        			$("#contact-address-error-message-text-"+data.contactId).html('Sorry, there were problems deleting your selected contact addresses. Please try again.');
+					        				$("#contact-address-error-message-"+data.contactId).fadeIn();
+					        				$("html, body").animate({scrollTop: $("#ajax-contact-addresses-"+data.contactId).offset().top + 35},'slow');
+						        		}
+						        		if ($("li.contact-address-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+					        			{
+					        				$(".action-confirm-delete-contact-addresses[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-unselect-all-contact-addresses[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-select-all-contact-addresses[data-contact-id='"+data.contactId+"']").fadeIn();
+					        				loadNewContactAddress(data.contactId);
+					        			} else {
+						        			reOrderContactAddresses(data.contactId);
+						        		}
+						        		$("#contact-address-confirm-deletes-"+data.contactId).hide();
+						        		if ($("li.contact-address-container[data-contact-id='"+data.contactId+"']:visible input.contact-address-select:checked").length < 1)
+						        		{
+						        			$(".action-confirm-delete-contact-addresses[data-contact-id='"+data.contactId+"']").fadeOut();
+						        		}
+						        		$("#ajax_loading").hide();
+						        	}
+				        		});
+				        	} else {
+				        		$errorOccurred = true;
+				        		$numberOfElementsProcessed++;
+				        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+					        	{
+					        		if ($errorOccurred)
+					        		{
+					        			$("#contact-address-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact addresses. Please try again.');
+					        			$("#contact-address-error-message-"+$contactId).fadeIn();
+					        			$("html, body").animate({scrollTop: $("#ajax-contact-addresses-"+$contactId).offset().top + 35},'slow');
+					        		}
+					        		if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+				        			{
+				        				$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+										$(".action-unselect-all-contact-addresses[data-contact-id='"+$contactId+"']").hide();
+										$(".action-select-all-contact-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+				        				loadNewContactAddress($contactId);
+				        			} else {
+					        			reOrderContactAddresses($contactId);
+					        		}
+					        		$("#contact-address-confirm-deletes-"+$contactId).hide();
+					        		if ($("li.contact-address-container[data-contact-id='"+$contactId+"']:visible input.contact-address-select:checked").length < 1)
+					        		{
+					        			$(".action-confirm-delete-contact-addresses[data-contact-id='"+$contactId+"']").fadeOut();
+					        		}
+					        		$("#ajax_loading").hide();
+					        	}
+				        	}
+				        	$("#contact-address-confirm-delete-"+$contactId).hide();
+				        	$("#ajax_loading").hide();
+				      	}
+				   	});
+				});
+			}
+		});
+		
+		{###########################}
+		{# CONTACT EMAIL ADDRESSES #}
+		{###########################}
+
+		{# Select and unselect all rows #}
+		$(".action-select-all-contact-email-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("li.contact-email-address-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").addClass("checked");
+			$("li.contact-email-address-container[data-contact-id='"+$contactId+"']").addClass("ui-state-highlight");
+			$("input.contact-email-address-select[data-contact-id='"+$contactId+"']").attr("checked", "checked");
+			$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		$(".action-unselect-all-contact-email-addresses").live('click', function() {
+			$("li.contact-email-address-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").removeClass("checked");
+			$("li.contact-email-address-container[data-contact-id='"+$contactId+"']").removeClass("ui-state-highlight");
+			$("input.contact-email-address-select[data-contact-id='"+$contactId+"']").attr("checked", "");
+			$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		
+		{# Select rows for selection #}
+		$("input.contact-email-address-select").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			if ($(this).is(":checked"))
+			{
+				$("#contact-email-address-"+$contactId+"-"+$elementIndex).addClass("ui-state-highlight");
+			} else {
+				$("#contact-email-address-"+$contactId+"-"+$elementIndex).removeClass("ui-state-highlight");
+			}
+			if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible .contact-email-address-select:checked").length < $("li.contact-container[data-contact-id='"+$contactId+"']:visible .contact-email-address-select").length)
+			{
+				$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+			}
+			if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible .contact-email-address-select:checked").length > 0)
+			{
+				$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+				$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+				$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+			}
+		});
+		
+		{# Add a new contact email address #}
+		$(".action-add-new-contact-email-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			loadNewContactEmailAddress($contactId);
+		});
+		
+		{# Detect any changes #}
+		$(".contact-email-address-field").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#form-contact-email-address-requires-update-"+$contactId+"-"+$elementIndex).val("1");
+			$("#form-contact-requires-update-"+$(this).closest("li.contact-container").attr("data-index")).val("1");
+		});
+		
+		{# Update contact email addresses #}
+		$(".action-update-contact-email-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			updateContactEmailAddresses($contactId);
+		});
+		
+		{# Confirm delete of a contact email address #}
+		$(".action-confirm-delete-contact-email-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-email-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-email-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-email-address-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactEmailAddress($contactId);
+        			} else {
+        				reOrderContactEmailAddresses($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$("#contact-email-address-confirm-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-email-address-cancel-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-email-address-confirm-delete-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-email-address-confirm-delete-"+$contactId).offset().top - 10},'slow');
+				$("#contact-email-address-"+$contactId+"-"+$elementIndex).addClass("ui-state-error");
+				$("#contact-email-address-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+				$("#contact-email-address-"+$contactId+"-"+$elementIndex+" input.contact-email-address-select").attr("checked", "checked");
+				$("#ajax_loading").hide();
+			}
+		});
+		
+		{# Cancel delete of a contact #}
+		$(".action-cancel-delete-contact-email-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-email-address-"+$contactId+"-"+$elementIndex).removeClass("ui-state-error");
+			$("##contact-email-address-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+			$("##contact-email-address-"+$contactId+"-"+$elementIndex+" input.contact-email-address-select").attr("checked", "");
+			$("#contact-email-address-confirm-delete-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete a contact #}
+		$(".action-delete-contact-email-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-email-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-email-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-email-address-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactEmailAddress($contactId);
+        			} else {
+        				reOrderContactEmailAddresses($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$.ajax({
+			    	url: "{{ path('system_ajax_delete_contact_email_address') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-contact-email-address-id-"+$contactId+"-"+$elementIndex).val(),
+			      		contactId: $contactId,
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			      		$("#contact-email-address-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact email address. Please try again.');
+			      		$("#contact-email-address-error-message-"+$contactId).fadeIn();
+			      		$("#contact-email-address-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			        	$("html, body").animate({scrollTop: $("#ajax-contact-email-addresses-"+$contactId).offset().top + 35},'slow');
+			      	},
+			      	success: function(data) {
+			        	if (data.response == 'success')
+			        	{
+			        		$("#contact-email-address-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+			        			$("#contact-email-address-"+data.contactId+"-"+data.elementIndex).remove();
+			        			if ($("li.contact-email-address-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-unselect-all-contact-email-addresses[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-select-all-contact-email-addresses[data-contact-id='"+data.contactId+"']").fadeIn();
+			        				loadNewContactEmailAddress(data.contactId);
+			        			} else {
+			        				reOrderContactEmailAddresses(data.contactId);
+			        			}
+			        		});
+			        	} else {
+			        		$("#contact-email-address-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact email address. Please try again.');
+			        		$("#contact-email-address-error-message-"+$contactId).fadeIn();
+			        		$("html, body").animate({scrollTop: $("#ajax-contact-email-addresses-"+$contactId).offset().top + 35},'slow');
+			        	}
+			        	$("#contact-email-address-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			      	}
+			   	});
+			}
+		});
+		
+		{# Confirm deleting of contacts #}
+		$(".action-confirm-delete-contact-email-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$deletesNeedingConfirmation = 0;
+			$("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible input.contact-email-address-select:checked").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				if ($("#form-contact-email-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+				{
+					$("#contact-email-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+	        			$("#contact-email-address-"+$contactId+"-"+$elementIndex).remove();
+	        			if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+	        			{
+							$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+							$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+							$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+	        				loadNewContactEmailAddress($contactId);
+	        			} else {
+	        				reOrderContactEmailAddresses($contactId);
+	        			}
+	        			$("#ajax_loading").hide();
+	        		});
+				} else {
+					$deletesNeedingConfirmation++;
+				}
+			});
+			if ($deletesNeedingConfirmation > 0)
+			{
+				$("#contact-email-address-confirm-deletes-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-email-address-confirm-deletes-"+$contactId).offset().top - 10},'slow');
+			}
+			$("#ajax_loading").hide();
+		});
+		
+		{# Cancel deleting of contact email addreses #}
+		$(".action-cancel-delete-contact-email-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-email-address-confirm-deletes-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete contact email addresses #}
+		$(".action-delete-contact-email-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-email-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$errorOccurred = false;
+			$numberOfElementsToDelete = $("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible input.contact-email-address-select:checked").length;
+			$numberOfElementsProcessed = 0;
+			if ($numberOfElementsToDelete > 0)
+			{
+				$("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible input.contact-email-address-select:checked").each(function(index) {
+					$elementIndex = $(this).attr("data-index");				
+					$.ajax({
+				    	url: "{{ path('system_ajax_delete_contact_email_address') }}",
+				      	type: "GET",
+				      	dataType: "json",
+				      	data: {
+				      		id: $("#form-contact-email-address-id-"+$contactId+"-"+$elementIndex).val(),
+			      			contactId: $contactId,
+			      			elementIndex: $elementIndex
+				      	},
+				      	error: function(data) {
+				      		$errorOccurred = true;
+				      		$numberOfElementsProcessed++;
+				      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#contact-email-address-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact email addresses. Please try again.');
+					        		$("#contact-email-address-error-message-"+$contactId).fadeIn();
+					        		$("html, body").animate({scrollTop: $("#ajax-contact-email-addresses-"+$contactId).offset().top + 35},'slow');
+				        		}
+				        		if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+									$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+									$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			        				loadNewContactEmailAddress($contactId);
+			        			} else {
+				        			reOrderContactEmailAddresses($contactId);
+				        		}
+				        		$("#contact-email-address-confirm-deletes-"+$contactId).hide();
+				        		if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible input.contact-email-address-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+				      	},
+				      	success: function(data) {
+				        	if (data.response == 'success')
+				        	{
+				        		$("#contact-email-address-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+				        			$("#contact-email-address-"+data.contactId+"-"+data.elementIndex).remove();
+				        			$numberOfElementsProcessed++;
+				        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+						        	{
+						        		if ($errorOccurred)
+						        		{
+						        			$("#contact-email-address-error-message-text-"+data.contactId).html('Sorry, there were problems deleting your selected contact email addresses. Please try again.');
+					        				$("#contact-email-address-error-message-"+data.contactId).fadeIn();
+					        				$("html, body").animate({scrollTop: $("#ajax-contact-email-addresses-"+data.contactId).offset().top + 35},'slow');
+						        		}
+						        		if ($("li.contact-email-address-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+					        			{
+					        				$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-unselect-all-contact-email-addresses[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-select-all-contact-email-addresses[data-contact-id='"+data.contactId+"']").fadeIn();
+					        				loadNewContactEmailAddress(data.contactId);
+					        			} else {
+						        			reOrderContactEmailAddresses(data.contactId);
+						        		}
+						        		$("#contact-email-address-confirm-deletes-"+data.contactId).hide();
+						        		if ($("li.contact-email-address-container[data-contact-id='"+data.contactId+"']:visible input.contact-email-address-select:checked").length < 1)
+						        		{
+						        			$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+data.contactId+"']").fadeOut();
+						        		}
+						        		$("#ajax_loading").hide();
+						        	}
+				        		});
+				        	} else {
+				        		$errorOccurred = true;
+				        		$numberOfElementsProcessed++;
+				        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+					        	{
+					        		if ($errorOccurred)
+					        		{
+					        			$("#contact-email-address-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact email addresses. Please try again.');
+					        			$("#contact-email-address-error-message-"+$contactId).fadeIn();
+					        			$("html, body").animate({scrollTop: $("#ajax-contact-email-addresses-"+$contactId).offset().top + 35},'slow');
+					        		}
+					        		if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+				        			{
+				        				$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+										$(".action-unselect-all-contact-email-addresses[data-contact-id='"+$contactId+"']").hide();
+										$(".action-select-all-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+				        				loadNewContactEmailAddress($contactId);
+				        			} else {
+					        			reOrderContactEmailAddresses($contactId);
+					        		}
+					        		$("#contact-email-address-confirm-deletes-"+$contactId).hide();
+					        		if ($("li.contact-email-address-container[data-contact-id='"+$contactId+"']:visible input.contact-email-address-select:checked").length < 1)
+					        		{
+					        			$(".action-confirm-delete-contact-email-addresses[data-contact-id='"+$contactId+"']").fadeOut();
+					        		}
+					        		$("#ajax_loading").hide();
+					        	}
+				        	}
+				        	$("#contact-email-address-confirm-delete-"+$contactId).hide();
+				        	$("#ajax_loading").hide();
+				      	}
+				   	});
+				});
+			}
+		});
+		
+		{#########################}
+		{# CONTACT WEB ADDRESSES #}
+		{#########################}
+
+		{# Select and unselect all rows #}
+		$(".action-select-all-contact-web-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("li.contact-web-address-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").addClass("checked");
+			$("li.contact-web-address-container[data-contact-id='"+$contactId+"']").addClass("ui-state-highlight");
+			$("input.contact-web-address-select[data-contact-id='"+$contactId+"']").attr("checked", "checked");
+			$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		$(".action-unselect-all-contact-web-addresses").live('click', function() {
+			$("li.contact-web-address-container[data-contact-id='"+$contactId+"'] td.delete div.checker span").removeClass("checked");
+			$("li.contact-web-address-container[data-contact-id='"+$contactId+"']").removeClass("ui-state-highlight");
+			$("input.contact-web-address-select[data-contact-id='"+$contactId+"']").attr("checked", "");
+			$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+			$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+		});
+		
+		{# Select rows for selection #}
+		$("input.contact-web-address-select").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			if ($(this).is(":checked"))
+			{
+				$("#contact-web-address-"+$contactId+"-"+$elementIndex).addClass("ui-state-highlight");
+			} else {
+				$("#contact-web-address-"+$contactId+"-"+$elementIndex).removeClass("ui-state-highlight");
+			}
+			if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible .contact-web-address-select:checked").length < $("li.contact-container[data-contact-id='"+$contactId+"']:visible .contact-web-address-select").length)
+			{
+				$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+			}
+			if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible .contact-web-address-select:checked").length > 0)
+			{
+				$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+				$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			} else {
+				$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+				$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+			}
+		});
+		
+		{# Add a new contact web address #}
+		$(".action-add-new-contact-web-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			loadNewContactWebAddress($contactId);
+		});
+		
+		{# Detect any changes #}
+		$(".contact-web-address-field").live('change', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#form-contact-web-address-requires-update-"+$contactId+"-"+$elementIndex).val("1");
+			$("#form-contact-requires-update-"+$(this).closest("li.contact-container").attr("data-index")).val("1");
+		});
+		
+		{# Update contact web addresses #}
+		$(".action-update-contact-web-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			updateContactWebAddresses($contactId);
+		});
+		
+		{# Confirm delete of a contact web address #}
+		$(".action-confirm-delete-contact-web-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-web-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-web-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-web-address-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactWebAddress($contactId);
+        			} else {
+        				reOrderContactWebAddresses($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$("#contact-web-address-confirm-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-web-address-cancel-delete-button-"+$contactId).attr("data-contact-id", $contactId).attr("data-index", $elementIndex);
+				$("#contact-web-address-confirm-delete-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-web-address-confirm-delete-"+$contactId).offset().top - 10},'slow');
+				$("#contact-web-address-"+$contactId+"-"+$elementIndex).addClass("ui-state-error");
+				$("#contact-web-address-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+				$("#contact-web-address-"+$contactId+"-"+$elementIndex+" input.contact-web-address-select").attr("checked", "checked");
+				$("#ajax_loading").hide();
+			}
+		});
+		
+		{# Cancel delete of a contact #}
+		$(".action-cancel-delete-contact-web-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-web-address-"+$contactId+"-"+$elementIndex).removeClass("ui-state-error");
+			$("##contact-web-address-"+$contactId+"-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+			$("##contact-web-address-"+$contactId+"-"+$elementIndex+" input.contact-web-address-select").attr("checked", "");
+			$("#contact-web-address-confirm-delete-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete a contact #}
+		$(".action-delete-contact-web-address").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			if ($("#form-contact-web-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+			{
+				$("#contact-web-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+        			$("#contact-web-address-"+$contactId+"-"+$elementIndex).remove();
+        			if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+        			{
+						$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+						$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+        				loadNewContactWebAddress($contactId);
+        			} else {
+        				reOrderContactWebAddresses($contactId);
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$.ajax({
+			    	url: "{{ path('system_ajax_delete_contact_web_address') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-contact-web-address-id-"+$contactId+"-"+$elementIndex).val(),
+			      		contactId: $contactId,
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			      		$("#contact-web-address-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact web address. Please try again.');
+			      		$("#contact-web-address-error-message-"+$contactId).fadeIn();
+			      		$("#contact-web-address-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			        	$("html, body").animate({scrollTop: $("#ajax-contact-web-addresses-"+$contactId).offset().top + 35},'slow');
+			      	},
+			      	success: function(data) {
+			        	if (data.response == 'success')
+			        	{
+			        		$("#contact-web-address-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+			        			$("#contact-web-address-"+data.contactId+"-"+data.elementIndex).remove();
+			        			if ($("li.contact-web-address-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-unselect-all-contact-web-addresses[data-contact-id='"+data.contactId+"']").hide();
+									$(".action-select-all-contact-web-addresses[data-contact-id='"+data.contactId+"']").fadeIn();
+			        				loadNewContactWebAddress(data.contactId);
+			        			} else {
+			        				reOrderContactWebAddresses(data.contactId);
+			        			}
+			        		});
+			        	} else {
+			        		$("#contact-web-address-error-message-text-"+$contactId).html('Sorry, there was a problem deleting your contact web address. Please try again.');
+			        		$("#contact-web-address-error-message-"+$contactId).fadeIn();
+			        		$("html, body").animate({scrollTop: $("#ajax-contact-web-addresses-"+$contactId).offset().top + 35},'slow');
+			        	}
+			        	$("#contact-web-address-confirm-delete-"+$contactId).hide();
+			        	$("#ajax_loading").hide();
+			      	}
+			   	});
+			}
+		});
+		
+		{# Confirm deleting of contacts #}
+		$(".action-confirm-delete-contact-web-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$deletesNeedingConfirmation = 0;
+			$("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible input.contact-web-address-select:checked").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				if ($("#form-contact-web-address-id-"+$contactId+"-"+$elementIndex).val() == "0")
+				{
+					$("#contact-web-address-"+$contactId+"-"+$elementIndex).fadeOut(function() {
+	        			$("#contact-web-address-"+$contactId+"-"+$elementIndex).remove();
+	        			if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+	        			{
+							$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+							$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+							$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+	        				loadNewContactWebAddress($contactId);
+	        			} else {
+	        				reOrderContactWebAddresses($contactId);
+	        			}
+	        			$("#ajax_loading").hide();
+	        		});
+				} else {
+					$deletesNeedingConfirmation++;
+				}
+			});
+			if ($deletesNeedingConfirmation > 0)
+			{
+				$("#contact-web-address-confirm-deletes-"+$contactId).fadeIn();
+				$("html, body").animate({scrollTop: $("#contact-web-address-confirm-deletes-"+$contactId).offset().top - 10},'slow');
+			}
+			$("#ajax_loading").hide();
+		});
+		
+		{# Cancel deleting of contact web addreses #}
+		$(".action-cancel-delete-contact-web-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$elementIndex = $(this).attr("data-index");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#contact-web-address-confirm-deletes-"+$contactId).hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete contact web addresses #}
+		$(".action-delete-contact-web-addresses").live('click', function() {
+			$contactId = $(this).attr("data-contact-id");
+			$("#ajax-contact-web-addresses-"+$contactId+" .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$errorOccurred = false;
+			$numberOfElementsToDelete = $("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible input.contact-web-address-select:checked").length;
+			$numberOfElementsProcessed = 0;
+			if ($numberOfElementsToDelete > 0)
+			{
+				$("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible input.contact-web-address-select:checked").each(function(index) {
+					$elementIndex = $(this).attr("data-index");				
+					$.ajax({
+				    	url: "{{ path('system_ajax_delete_contact_web_address') }}",
+				      	type: "GET",
+				      	dataType: "json",
+				      	data: {
+				      		id: $("#form-contact-web-address-id-"+$contactId+"-"+$elementIndex).val(),
+			      			contactId: $contactId,
+			      			elementIndex: $elementIndex
+				      	},
+				      	error: function(data) {
+				      		$errorOccurred = true;
+				      		$numberOfElementsProcessed++;
+				      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#contact-web-address-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact web addresses. Please try again.');
+					        		$("#contact-web-address-error-message-"+$contactId).fadeIn();
+					        		$("html, body").animate({scrollTop: $("#ajax-contact-web-addresses-"+$contactId).offset().top + 35},'slow');
+				        		}
+				        		if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+									$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+									$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+			        				loadNewContactWebAddress($contactId);
+			        			} else {
+				        			reOrderContactWebAddresses($contactId);
+				        		}
+				        		$("#contact-web-address-confirm-deletes-"+$contactId).hide();
+				        		if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible input.contact-web-address-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+				      	},
+				      	success: function(data) {
+				        	if (data.response == 'success')
+				        	{
+				        		$("#contact-web-address-"+data.contactId+"-"+data.elementIndex).fadeOut(function() {
+				        			$("#contact-web-address-"+data.contactId+"-"+data.elementIndex).remove();
+				        			$numberOfElementsProcessed++;
+				        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+						        	{
+						        		if ($errorOccurred)
+						        		{
+						        			$("#contact-web-address-error-message-text-"+data.contactId).html('Sorry, there were problems deleting your selected contact web addresses. Please try again.');
+					        				$("#contact-web-address-error-message-"+data.contactId).fadeIn();
+					        				$("html, body").animate({scrollTop: $("#ajax-contact-web-addresses-"+data.contactId).offset().top + 35},'slow');
+						        		}
+						        		if ($("li.contact-web-address-container[data-contact-id='"+data.contactId+"']:visible").length < 1)
+					        			{
+					        				$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-unselect-all-contact-web-addresses[data-contact-id='"+data.contactId+"']").hide();
+											$(".action-select-all-contact-web-addresses[data-contact-id='"+data.contactId+"']").fadeIn();
+					        				loadNewContactWebAddress(data.contactId);
+					        			} else {
+						        			reOrderContactWebAddresses(data.contactId);
+						        		}
+						        		$("#contact-web-address-confirm-deletes-"+data.contactId).hide();
+						        		if ($("li.contact-web-address-container[data-contact-id='"+data.contactId+"']:visible input.contact-web-address-select:checked").length < 1)
+						        		{
+						        			$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+data.contactId+"']").fadeOut();
+						        		}
+						        		$("#ajax_loading").hide();
+						        	}
+				        		});
+				        	} else {
+				        		$errorOccurred = true;
+				        		$numberOfElementsProcessed++;
+				        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+					        	{
+					        		if ($errorOccurred)
+					        		{
+					        			$("#contact-web-address-error-message-text-"+$contactId).html('Sorry, there were problems deleting your selected contact web addresses. Please try again.');
+					        			$("#contact-web-address-error-message-"+$contactId).fadeIn();
+					        			$("html, body").animate({scrollTop: $("#ajax-contact-web-addresses-"+$contactId).offset().top + 35},'slow');
+					        		}
+					        		if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible").length < 1)
+				        			{
+				        				$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+										$(".action-unselect-all-contact-web-addresses[data-contact-id='"+$contactId+"']").hide();
+										$(".action-select-all-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeIn();
+				        				loadNewContactWebAddress($contactId);
+				        			} else {
+					        			reOrderContactWebAddresses($contactId);
+					        		}
+					        		$("#contact-web-address-confirm-deletes-"+$contactId).hide();
+					        		if ($("li.contact-web-address-container[data-contact-id='"+$contactId+"']:visible input.contact-web-address-select:checked").length < 1)
+					        		{
+					        			$(".action-confirm-delete-contact-web-addresses[data-contact-id='"+$contactId+"']").fadeOut();
+					        		}
+					        		$("#ajax_loading").hide();
+					        	}
+				        	}
+				        	$("#contact-web-address-confirm-delete-"+$contactId).hide();
+				        	$("#ajax_loading").hide();
+				      	}
+				   	});
+				});
+			}
+		});
+	});
+</script>

@@ -1,0 +1,93 @@
+<div id="basket-contents" class="clearfix">
+	{% if (basket.products|length > 0) or (basket.discounts.membershipCardNumber != '') %}
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			{% for product in basket.products %}
+				<tr>
+					<td class="product-page-title" colspan="6">
+						<a href="{{ path('page_request', {'url': product.url}) }}">{{ product.header }}</a>
+						{% if product.selectedOptionLabels|length > 0 %}
+							<br />
+							{% for selectedOptionLabel in product.selectedOptionLabels %}
+								{{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+							{% endfor %}
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td class="ac">{{ product.quantity }}</td>
+					<td class="ac">&times;</td>
+					<td class="ac"><strong>{{ product.productCode }}</strong></td>
+					<td class="ac">{% if product.recommendedRetailPrice > product.unitCost %}<span class="red strikethrough">&pound;{{ product.recommendedRetailPrice|number_format(2) }}</span><br /><span class="green"><strong>&pound;{{ product.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ product.unitCost|number_format(2) }}{% endif %}</td>
+					<td class="ac">=</td>
+					<td class="ar">&pound;{{ product.subTotal|number_format(2) }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>Sorry, you haven't added anything to your basket.</p>
+	{% endif %}
+</div>
+<div id="basket-totals" class="clearfix">
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td class="al"><strong>Subtotal before Delivery (inc. VAT):</strong></td>
+			<td width="1" class="price ar"><strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></td>
+		</tr>
+		{% if basket.delivery.service != '' %}
+			<tr>
+				<td class="al"><strong>Delivery Charge (inc. VAT):</strong></td>
+				<td width="1" class="price ar">&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="no-padding padding-left-30">
+					<div id="delivery-options-loading" class="ac ui-helper-hidden clearfix">
+						<img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+						<p>Loading your delivery options&hellip;</p>
+						<div class="clear"></div>
+					</div>					
+					<div id="delivery-options" class="clearfix">
+						{% for deliveryOption in basket.delivery.deliveryOptions %}
+							<div data-delivery-option="{{ loop.index }}" class="delivery-option{% if loop.first %} no-margin-top{% endif %}">
+								<span data-delivery-option="{{ loop.index }}" class="fr action-show-delivery-option-description ui-button-icon-primary ui-icon ui-icon-help"></span>
+								<label>
+									<input{% if basket.delivery.service == deliveryOption.service %} checked="checked"{% endif %} type="radio" name="delivery-option" value="{{ deliveryOption.service }}" />
+									<span class="delivery-service">{{ deliveryOption.service|replace({'FREE DELIVERY': '<span class="free"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}{% if deliveryOption.price != 0 %} - <span class="delivery-price">&pound;{{ deliveryOption.price|number_format(2) }}</span>{% endif %}</span>
+									{% if deliveryOption.surcharge > 0 %}
+										<br /><span class="delivery-surcharge">{{ deliveryOption.surchargeDescription|raw }}</span>
+									{% endif %}
+									{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}
+										<br />
+										<span class="delivery-timeframes"><em>({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days)</em></span>
+									{% endif %}
+								</label>
+							</div>
+							<div data-delivery-option="{{ loop.index }}" class="ui-helper-hidden delivery-option-description{% if loop.last %} no-margin-bottom{% endif %}">{{ deliveryOption.description|raw }}</div>
+						{% else %}
+							<div class="delivery-option no-margin-top"><label><span class="no-padding delivery-service"><strong>There are no delivery options available.</strong></span></label></div>
+						{% endfor %}
+					</div>
+				</td>
+			</tr>
+		{% endif %}
+		{% if basket.totals.discount > 0 %}
+			<tr>
+				<td class="al"><strong>You Save:</strong></td>
+				<td width="1" class="discount ar">&pound;{{ basket.totals.discount|number_format(2) }}</td>
+			</tr>
+		{% endif %}
+		{% if basket.discounts|length > 0 %}
+			{% for discount in basket.discounts %}
+				{% if discount.discount > 0 %}
+					<tr>
+						<td class="al discount-description">{{ discount.description }}:</td>
+						<td width="1" class="small green ar discount-price">&pound;{{ discount.discount|number_format(2) }}</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+		<tr>
+			<td class="al uppercase font-size-13"><strong>Total to Pay (inc. VAT):</strong></td>
+			<td width="1" class="price ar font-size-13"><strong>&pound;{{ basket.totals.total|number_format(2) }}</strong></td>
+		</tr>
+	</table>
+</div>

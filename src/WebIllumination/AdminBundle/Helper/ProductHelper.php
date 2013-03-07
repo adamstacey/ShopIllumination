@@ -1,0 +1,72 @@
+<?php
+namespace WebIllumination\AdminBundle\Helper;
+
+use KAC\SiteBundle\Entity\Product;
+
+class ProductHelper
+{
+    public function toIndexArray(Product $product)
+    {
+        return array(
+            'id' => $product->getId(),
+            'productId' => $product->getId(),
+            'productGroupId' => $product->getId(),
+            'brandId' => $product->getId(),
+            'status' => $product->getStatus(),
+            'checked' => $product->getChecked(),
+            'availableForPurchase' => $product->getAvailableForPurchase(),
+            'product' => $product->getDescription() != null ? $product->getDescription()->getName() : "",
+            'prefix' => $product->getDescription() != null ? $product->getDescription()->getPrefix() : "",
+            'tagline' => $product->getDescription() != null ? $product->getDescription()->getTagline() : "",
+            'header' => $product->getDescription() != null ? $product->getDescription()->getHeader() : "",
+            'pageTitle' => $product->getDescription() != null ? $product->getDescription()->getHeader() : "",
+            'productCode' => $product->getDescription() != null ? $product->getDescription()->getHeader() : "",
+            'productGroupCode' => $product->getDescription() != null ? $product->getDescription()->getHeader() : "",
+            'shortDescription' => $product->getDescription() != null ? $product->getDescription()->getHeader() : "",
+            'description' => $product->getDescription() != null ? $product->getDescription()->getHeader() : "",
+            'searchWords' => $product->getDescription() != null ? $product->getDescription()->getHeader() : "",
+            'additionalProductColoursCount' => 0,
+            'additionalProductsCount' => 0,
+            'alternativeProductCodes' => 0,
+            'cheaperAlternativeUrl' => 0,
+            'cheaperAlternativePrice' => 0,
+            'specialOffer' => $product->getSpecialOffer(),
+            'accessory' => $product->getAccessory(),
+            'new' => $product->getNew(),
+            'hidePrice' => $product->getHidePrice(),
+            'showPriceOutOfHours' => $product->getShowPriceOutOfHours(),
+            'membershipCardDiscountAvailable' => $product->getMembershipCardDiscountAvailable(),
+            'maximumMembershipCardDiscount' => $product->getMaximumMembershipCardDiscount(),
+            'deliveryBand' => 0,
+            'inheritedDeliveryBand' => 0,
+            'deliveryCost' => 0,
+            'weight' => 0,
+            'brand' => "",
+            'brandLogoThumbnailPath' => "",
+            'brandUrl' => "",
+            'guarantees' => "",
+            'departmentIds' => "",
+            'departments' => "",
+            'departmentPaths' => "",
+            'googleDepartment' => "",
+            'ebayDepartment' => "",
+            'amazonDepartment' => "",
+            'productOptions' => "",
+            'originalPath' => "",
+            'thumbnailPath' => "",
+            'mediumPath' => "",
+            'largePath' => "",
+            'costPrice' => 0,
+            'recommendedRetailPrice' => 0,
+            'listPrice' => 0,
+            'membershipCardPrice' => 0,
+            'discount' => 0,
+            'savings' => 0,
+            'currencyCode' => "GBP",
+            'url' => $product->getDescription() != null ? $product->getDescription()->getLocale() : "",
+            'locale' => $product,
+            'createdAt' => $product->getCreatedAt(),
+            'updatedAt' => $product->getUpdatedAt(),
+        );
+    }
+}

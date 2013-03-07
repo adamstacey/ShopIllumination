@@ -1,0 +1,212 @@
+<script defer="defer" type="text/javascript">
+
+	{% include 'WebIlluminationShopBundle:Users:userFunctions.js.twig' %}
+	
+	$(document).ready(function() {
+		{# Set the minimum heights of the side bar sections #}
+		var $minimumSectionHeight = 0;
+		$(".sidebar-tabs > ul > li").each(function() {
+			$minimumSectionHeight = $minimumSectionHeight + $(this).outerHeight(true);
+		});
+		$(".sidebar-tabs section").each(function() {
+			$(this).css("min-height", $minimumSectionHeight+"px");
+		});
+		
+		{# Reset form errors on tab select #}
+		$(".sidebar-tabs").tabs({
+			select: function(event, ui) {
+				$(".form-error").hide();
+		   	}
+		});
+                        		
+		{# Update the postcode #}
+		$("#form-billing-country-code").live('change', function() {
+			if ($(this).val() == 'IE')
+			{
+				$("#billing-post-zip-code-container").hide();
+				$("#same-address-billing").hide();
+				$("#form-billing-post-zip-code").val('000');
+				$("#republic-of-ireland-billing-address-message").fadeIn();
+				$("#form-same-billing-address").attr("checked", "checked");
+				$("#uniform-form-same-billing-address > span").addClass("checked");
+				copyBillingAddressToDeliveryAddress();
+				$("#delivery-address").hide();
+			} else if ($(this).val() == 'GB') {
+				$("#republic-of-ireland-billing-address-message").hide();
+				$("#form-billing-post-zip-code").val("");
+				$("#form-same-billing-address").attr("checked", "");
+				$("#uniform-form-same-billing-address > span").removeClass("checked");
+				$("#billing-post-zip-code-container").fadeIn();
+				$("#same-address-billing").fadeIn();
+				resetDeliveryAddress();
+				$("#delivery-address").show();
+			}
+		});
+		$("#form-delivery-country-code").live('change', function() {
+			if ($(this).val() == 'IE')
+			{
+				$("#delivery-post-zip-code-container").hide();
+				$("#same-address-delivery").hide();
+				$("#form-delivery-post-zip-code").val('000');
+				$("#republic-of-ireland-delivery-address-message").fadeIn();
+				$("#form-same-delivery-address").attr("checked", "checked");
+				$("#uniform-form-same-delivery-address > span").addClass("checked");
+				copyDeliveryAddressToBillingAddress();
+				$("#delivery-address").hide();
+			} else if ($(this).val() == 'GB') {
+				$("#republic-of-ireland-delivery-address-message").hide();
+				$("#form-delivery-post-zip-code").val("");
+				$("#form-same-delivery-address").attr("checked", "");
+				$("#uniform-form-delivery-billing-address > span").removeClass("checked");
+				$("#delivery-post-zip-code-container").fadeIn();
+				$("#same-address-delivery").fadeIn();
+				if ($("#form-billing-country-code").val() == 'IE')
+				{
+					resetBillingAddress();
+					$("#delivery-address").show();
+				}
+			}
+		});
+		
+		{# Use the billing address for the delivery address #}
+		$("#form-same-delivery-address").live('change', function() {
+			if ($("#form-same-delivery-address").is(":checked"))
+			{
+				$("#form-use-billing-address").attr("checked", "checked");
+				$("#uniform-form-use-billing-address > span").addClass("checked");
+				copyBillingAddressToDeliveryAddress();
+				$("#delivery-address").hide();
+			} else {
+				$("#form-use-billing-address").attr("checked", "");
+				$("#uniform-form-use-billing-address > span").removeClass("checked");
+				$("#delivery-address").show();
+			}
+		});
+		$("#form-use-billing-address").live('change', function() {
+			if ($("#form-use-billing-address").is(":checked"))
+			{
+				$("#form-same-delivery-address").attr("checked", "checked");
+				$("#uniform-form-same-delivery-address > span").addClass("checked");
+				copyBillingAddressToDeliveryAddress();
+				$("#delivery-address").hide();
+			} else {
+				$("#form-same-delivery-address").attr("checked", "");
+				$("#uniform-form-same-delivery-address > span").removeClass("checked");
+				resetDeliveryAddress();
+				$("#delivery-address").show();
+			}
+		});
+						
+		{# Save my details #}
+		$(".action-save-my-details").live('click', function() {
+			var saveMyDetailsValidator = $("#my-details :input").validator({
+    			position : 'center right', 
+    			offset : [0, -250], 
+    			messageClass : 'form-error', 
+        		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
+			});
+			if (saveMyDetailsValidator.data("validator").checkValidity())
+			{
+				$.ajax({
+	   				type: "POST",
+	   				dataType: "json",
+	   				url: "{{ path('users_ajax_save_user') }}",
+	   				beforeSend: function() {
+						$("#ajax-loading").show();
+					},
+	   				data: {
+	   					firstName: $("#form-first-name").val(),
+	   					lastName: $("#form-last-name").val(),
+	   					organisationName: $("#form-organisation-name").val(),
+	   					telephoneDaytime: $("#form-telephone-daytime").val(),
+	   					telephoneEvening: $("#form-telephone-evening").val(),
+	   					mobile: $("#form-mobile").val(),
+	   					emailAddress: $("#form-email-address").val(),
+	   					password: $("#form-password").val()
+	   				},
+	   				error: function(data) {
+			      		$("#message-error-text").html('Sorry, there was a problem saving your details. Please try again.');
+						$("#message-error").slideDown(function() {
+							setTimeout("resetMessages()", 5000);
+							$("#ajax-loading").hide();
+						});
+			      	},
+	   				success: function(data) {
+	   					$("#message-success-text").html('Your details were successfully saved.');
+						$("#message-success").slideDown(function() {
+							setTimeout("resetMessages()", 5000);
+							$("#ajax-loading").hide();
+						});
+	   				}
+	 			});
+			}
+		});
+		
+		{# Save my addresses #}
+		$(".action-save-my-addresses").live('click', function() {
+			if ($("#form-same-delivery-address").is(":checked"))
+			{
+				$("#form-delivery-first-name").val($("#form-billing-first-name").val());
+				$("#form-delivery-last-name").val($("#form-billing-last-name").val());
+				$("#form-delivery-organisation-name").val($("#form-billing-organisation-name").val());
+				$("#form-delivery-country-code").val($("#form-billing-country-code").val());
+				$("#form-delivery-address-line-1").val($("#form-billing-address-line-1").val());
+				$("#form-delivery-address-line-2").val($("#form-billing-address-line-2").val());
+				$("#form-delivery-town-city").val($("#form-billing-town-city").val());
+				$("#form-delivery-county-state").val($("#form-billing-county-state").val());
+				$("#form-delivery-post-zip-code").val($("#form-billing-post-zip-code").val());
+			}
+			var saveMyAddressesValidator = $("#my-addresses :input").validator({
+    			position : 'center right', 
+    			offset : [0, -250], 
+    			messageClass : 'form-error', 
+        		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
+			});
+			if (saveMyAddressesValidator.data("validator").checkValidity())
+			{
+				$.ajax({
+	   				type: "POST",
+	   				dataType: "json",
+	   				url: "{{ path('users_ajax_save_contact_addresses') }}",
+	   				beforeSend: function() {
+						$("#ajax-loading").show();
+					},
+	   				data: {
+	   					billingFirstName: $("#form-billing-first-name").val(),
+	   					billingLastName: $("#form-billing-last-name").val(),
+	   					billingOrganisationName: $("#form-billing-organisation-name").val(),
+	   					billingCountryCode: $("#form-billing-country-code").val(),
+	   					billingAddressLine1: $("#form-billing-address-line-1").val(),
+	   					billingAddressLine2: $("#form-billing-address-line-2").val(),
+	   					billingTownCity: $("#form-billing-town-city").val(),
+	   					billingCountyState: $("#form-billing-county-state").val(),
+	   					billingPostZipCode: $("#form-billing-post-zip-code").val(),
+	   					deliveryFirstName: $("#form-delivery-first-name").val(),
+	   					deliveryLastName: $("#form-delivery-last-name").val(),
+	   					deliveryOrganisationName: $("#form-delivery-organisation-name").val(),
+	   					deliveryCountryCode: $("#form-delivery-country-code").val(),
+	   					deliveryAddressLine1: $("#form-delivery-address-line-1").val(),
+	   					deliveryAddressLine2: $("#form-delivery-address-line-2").val(),
+	   					deliveryTownCity: $("#form-delivery-town-city").val(),
+	   					deliveryCountyState: $("#form-delivery-county-state").val(),
+	   					deliveryPostZipCode: $("#form-delivery-post-zip-code").val()
+	   				},
+	   				error: function(data) {
+			      		$("#message-error-text").html('Sorry, there was a problem saving your addresses. Please try again.');
+						$("#message-error").slideDown(function() {
+							setTimeout("resetMessages()", 5000);
+							$("#ajax-loading").hide();
+						});
+			      	},
+	   				success: function(data) {
+						$("#message-success-text").html('Your addresses were successfully saved.');
+						$("#message-success").slideDown(function() {
+							setTimeout("resetMessages()", 5000);
+							$("#ajax-loading").hide();
+						});
+	   				}
+	 			});
+			}
+		});		
+	});	
+</script>

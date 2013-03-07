@@ -101,7 +101,7 @@ function loadListingCount()
 	$.ajax({
 		type: "POST",
 		dataType: "json",
-		{#url: "{{ path('admin_products_index_ajax_get_listing_count') }}",#}
+		{#url: "{{ path('admin_listing_products_ajax_get_listing_count') }}",#}
 		data: {
 			status: $("#filter-status").val(),
 			availableForPurchase: $("#filter-available-for-purchase").val(),
@@ -164,7 +164,7 @@ function loadListing()
 {
 	$.ajax({
 		type: "POST",
-		{#url: "{{ path('admin_products_index_ajax_get_listing') }}",#}
+		{#url: "{{ path('admin_listing_products_ajax_get_listing') }}",#}
 		data: {
 			status: $("#filter-status").val(),
 			availableForPurchase: $("#filter-available-for-purchase").val(),
@@ -226,7 +226,7 @@ function loadListingPagination()
 	$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
 	$.ajax({
 		type: "POST",
-		{#url: "{{ path('admin_products_index_ajax_get_listing_pagination') }}",#}
+		{#url: "{{ path('admin_listing_products_ajax_get_listing_pagination') }}",#}
 		data: {
 				status: $("#filter-status").val(),
 			availableForPurchase: $("#filter-available-for-purchase").val(),

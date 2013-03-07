@@ -10,6 +10,10 @@ _welcome:
 #    resource: "@KACAdminBundle/Resources/config/routing.yml"
 #    prefix:   /
 
+WebIlluminationAdminBundle:
+    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
 kac_shop:
     resource: "@KACSiteBundle/Controller/"
     type:     annotation

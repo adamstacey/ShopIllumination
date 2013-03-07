@@ -1,0 +1,25 @@
+<div id="listing-settings">
+	<div class="fl">
+		<div class="listing-settings-title fl">Sort By</div>
+		<select id="form-sort-order" class="fl">
+			<option{% if settings.admin.voucherCodes.listingSortOrder == 'code:ASC' %} selected="selected"{% endif %} value="code:ASC">Voucher Code: Alphabetically (A-Z)</option>
+			<option{% if settings.admin.voucherCodes.listingSortOrder == 'code:DESC' %} selected="selected"{% endif %} value="code:DESC">Voucher Code: Alphabetically (Z-A)</option>
+			<option{% if settings.admin.voucherCodes.listingSortOrder == 'minimumOrderValue:DESC' %} selected="selected"{% endif %} value="minimumOrderValue:DESC">Minimum Order Value: Highest First</option>
+			<option{% if settings.admin.voucherCodes.listingSortOrder == 'minimumOrderValue:ASC' %} selected="selected"{% endif %} value="minimumOrderValue:ASC">Minimum Order Value: Lowest First</option>
+			<option{% if settings.admin.voucherCodes.listingSortOrder == 'expiryDate:DESC' %} selected="selected"{% endif %} value="createdAt:DESC">Expiry Date</option>
+			<option{% if settings.admin.voucherCodes.listingSortOrder == 'validFromDate:DESC' %} selected="selected"{% endif %} value="createdAt:DESC">Valid From Date</option>
+		</select>
+	</div>
+    <div class="fr">
+    	<div class="listing-settings-title fl">Per Page</div>
+        <select class="fl" id="form-max-results">
+			<option{% if settings.admin.voucherCodes.listingMaxResults == '10' %} selected="selected"{% endif %} value="10">10</option>
+			<option{% if settings.admin.voucherCodes.listingMaxResults == '20' %} selected="selected"{% endif %} value="20">20</option>
+			<option{% if settings.admin.voucherCodes.listingMaxResults == '50' %} selected="selected"{% endif %} value="50">50</option>
+			<option{% if settings.admin.voucherCodes.listingMaxResults == '100' %} selected="selected"{% endif %} value="100">100</option>
+			<option{% if settings.admin.voucherCodes.listingMaxResults == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+		</select>
+		<input type="hidden" id="form-current-page" value="1" />
+	</div>
+    <div class="clear"></div>
+</div>

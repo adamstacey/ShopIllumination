@@ -1,0 +1,9 @@
+{% extends ':Old:print.html.twig' %}
+{% block title %}Kitchen Appliance Centre Order: {{ order.orderNumber }}{% endblock %}
+{% block body %}
+	{% include 'WebIlluminationAdminBundle:Orders:order.html.twig' with {'order': order} %}
+	{% if (order.deliveryType == 'Royal Mail 1st Class') or (order.deliveryType == 'Royal Mail Economy') %}
+		<div style="page-break-before: always;"></div>
+		{% include 'WebIlluminationAdminBundle:Orders:deliveryNote.html.twig' with {'order': order} %}
+	{% endif %}
+{% endblock %}

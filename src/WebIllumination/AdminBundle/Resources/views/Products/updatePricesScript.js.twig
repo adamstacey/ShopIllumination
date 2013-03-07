@@ -1,0 +1,661 @@
+{# Load the prices #}
+loadPrices();
+
+{# Show prices out of hours #}
+$("input[name=hide-price]").change(function() {
+    if ($(this).val() === '1') {
+        $("#show-price-out-of-hours-container").fadeIn();
+    } else {
+        $("#show-price-out-of-hours-container").fadeOut();
+    }
+});
+
+{# Show maximum membership card discount #}
+$("input[name=membership-card-discount-available]").change(function() {
+    if ($(this).val() === '1') {
+        $("#maximum-membership-card-discount-container").fadeIn();
+    } else {
+        $("#maximum-membership-card-discount-container").fadeOut();
+    }
+});
+
+{# Update the price settings #}
+$(".action-update-price-settings-section").live('click', function() {
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_price_settings_section') }}",
+		beforeSend: function() {
+			$("#flash_messages .message").hide();
+			$("#ajax_loading").show();
+		},
+		data: {
+			id: {{ data.product.id }},
+			hidePrice: $("input[name='hide-price']:checked").val(),
+			showPriceOutOfHours: $("input[name='show-price-out-of-hours']:checked").val(),
+			membershipCardDiscountAvailable: $("input[name='membership-card-discount-available']:checked").val(),
+			maximumMembershipCardDiscount: $("#form-maximum-membership-card-discount").val()
+		},
+		error: function(data) {
+			loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+			finishInteractions();
+	    },
+		success: function(data) {
+			if (data.response == 'success')
+			{
+				loadNotificationMessage("message-success", "The {{ settings.singleItemDescription }} was updated.");
+			} else {
+				loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+			}
+			finishInteractions();
+		}
+	});
+});
+
+{# Select and unselect all rows #}
+$(".action-unselect-all-prices").hide();
+$(".action-select-all-prices").live('click', function() {
+	$("li.price-container td.delete div.checker span").addClass("checked");
+	$("li.price-container").addClass("ui-state-highlight");
+	$("input.price-select").attr("checked", "checked");
+	$(".action-confirm-delete-prices").fadeIn();
+	$(".action-select-all-prices").hide();
+	$(".action-unselect-all-prices").fadeIn();
+});
+$(".action-unselect-all-prices").live('click', function() {
+	$("li.price-container td.delete div.checker span").removeClass("checked");
+	$("li.price-container").removeClass("ui-state-highlight");
+	$("input.price-select").attr("checked", "");
+	$(".action-confirm-delete-prices").hide();
+	$(".action-unselect-all-prices").hide();
+	$(".action-select-all-prices").fadeIn();
+});
+
+{# Select rows for selection #}
+$(".action-confirm-delete-prices").hide();
+$("input.price-select").live('change', function() {
+	if ($(this).is(":checked"))
+	{
+		$("#price-"+$(this).attr("data-index")).addClass("ui-state-highlight");
+	} else {
+		$("#price-"+$(this).attr("data-index")).removeClass("ui-state-highlight");
+	}
+	if ($("li.price-container:visible .price-select:checked").length < $("li.price-container:visible .price-select").length)
+	{
+		$(".action-select-all-prices").fadeIn();
+	} else {
+		$(".action-select-all-prices").hide();
+	}
+	if ($("li.price-container:visible .price-select:checked").length > 0)
+	{
+		$(".action-confirm-delete-prices").fadeIn();
+		$(".action-unselect-all-prices").fadeIn();
+	} else {
+		$(".action-confirm-delete-prices").hide();
+		$(".action-unselect-all-prices").hide();
+	}
+});
+
+{# Add a new price #}
+$(".action-add-new-price").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	loadNewPrice();
+});
+
+{# Detect any changes #}
+$(".price-cost-price, .price-recommended-retail-price, .price-list-price").live('change', function() {
+	$("#form-price-requires-update-"+$(this).closest("li.price-container").attr("data-index")).val("1");
+});
+
+{# Update prices and leave #}
+$(".action-update-prices-and-leave").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	updatePrices();
+});
+			
+{# Update prices #}
+$(".action-update-prices").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$("#prices-tab-to-redirect-to").val("-1");
+	updatePrices();
+});
+
+{# Confirm delete of a price #}
+$(".action-confirm-delete-price").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$elementIndex = $(this).attr("data-index");
+	if ($("#form-price-id-"+$elementIndex).val() == "0")
+	{
+		$("#price-"+$elementIndex).fadeOut(function() {
+			$("#price-"+$elementIndex).remove();
+			if ($("li.price-container").length < 1)
+			{
+				$(".action-confirm-delete-prices").hide();
+				$(".action-unselect-all-prices").hide();
+				$(".action-select-all-prices").fadeIn();
+				loadNewPrice();
+			} else {
+				reOrderPrices();
+			}
+			$("#ajax_loading").hide();
+		});
+	} else {
+		$("#price-confirm-delete-button").attr("data-index", $elementIndex);
+		$("#price-cancel-delete-button").attr("data-index", $elementIndex);
+		$("#price-confirm-delete").fadeIn();
+		$("html, body").animate({scrollTop: $("#price-confirm-delete").offset().top - 10},'slow');
+		$("#price-"+$elementIndex).addClass("ui-state-error");
+		$("#price-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+		$("#price-"+$elementIndex+" input.price-select").attr("checked", "checked");
+		$("#ajax_loading").hide();
+	}
+});
+
+{# Cancel delete of a price #}
+$(".action-cancel-delete-price").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$elementIndex = $(this).attr("data-index");
+	$("#price-"+$elementIndex).removeClass("ui-state-error");
+	$("#price-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+	$("#price-"+$elementIndex+" input.price-select").attr("checked", "");
+	$("#price-confirm-delete").hide();
+	$("#ajax_loading").hide();
+});
+
+{# Delete a price #}
+$(".action-delete-price").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$elementIndex = $(this).attr("data-index");				
+	$.ajax({
+    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_delete_price') }}",
+      	type: "GET",
+      	dataType: "json",
+      	data: {
+      		id: $("#form-price-id-"+$elementIndex).val(),
+      		elementIndex: $elementIndex
+      	},
+      	error: function(data) {
+      		$("#price-error-message-text").html('Sorry, there was a problem deleting your price. Please try again.');
+      		$("#price-error-message").fadeIn();
+      		$("#price-confirm-delete").hide();
+        	$("#ajax_loading").hide();
+        	$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+      	},
+      	success: function(data) {
+        	if (data.response == 'success')
+        	{
+        		$("#price-"+data.elementIndex).fadeOut(function() {
+        			$("#price-"+data.elementIndex).remove();
+        			if ($("li.price-container").length < 1)
+        			{
+        				$(".action-confirm-delete-prices").hide();
+						$(".action-unselect-all-prices").hide();
+						$(".action-select-all-prices").fadeIn();
+        				loadNewPrice();
+        			} else {
+        				reOrderPrices();
+        			}
+        		});
+        	} else {
+        		$("#price-error-message-text").html('Sorry, there was a problem deleting your price. Please try again.');
+        		$("#price-error-message").fadeIn();
+        		$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+        	}
+        	$("#price-confirm-delete").hide();
+        	$("#ajax_loading").hide();
+      	}
+   	});
+});
+
+{# Confirm deleting of prices #}
+$(".action-confirm-delete-prices").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$deletesNeedingConfirmation = 0;
+	$("li.price-container:visible input.price-select:checked").each(function(index) {
+		$elementIndex = $(this).attr("data-index");
+		if ($("#form-price-id-"+$elementIndex).val() == "0")
+		{
+			$("#price-"+$elementIndex).fadeOut(function() {
+    			$("#price-"+$elementIndex).remove();
+    			if ($("li.price-container:visible").length < 1)
+    			{
+    				$(".action-confirm-delete-prices").hide();
+					$(".action-unselect-all-prices").hide();
+					$(".action-select-all-prices").fadeIn();
+    				loadNewPrice();
+    			} else {
+    				reOrderPrices();
+    			}
+    			$("#ajax_loading").hide();
+    		});
+		} else {
+			$deletesNeedingConfirmation++;
+		}
+	});
+	if ($deletesNeedingConfirmation > 0)
+	{
+		$("#price-confirm-deletes").fadeIn();
+		$("html, body").animate({scrollTop: $("#price-confirm-deletes").offset().top - 10},'slow');
+	}
+	$("#ajax_loading").hide();
+});
+
+{# Cancel deleting of prices #}
+$(".action-cancel-delete-prices").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$("#price-confirm-deletes").hide();
+	$("#ajax_loading").hide();
+});
+
+{# Delete prices #}
+$(".action-delete-prices").live('click', function() {
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$("#ajax_loading").show();
+	$errorOccurred = false;
+	$numberOfElementsToDelete = $("li.price-container:visible input.price-select:checked").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToDelete > 0)
+	{
+		$("li.price-container:visible input.price-select:checked").each(function(index) {
+			$elementIndex = $(this).attr("data-index");				
+			$.ajax({
+		    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_delete_price') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $("#form-price-id-"+$elementIndex).val(),
+		      		elementIndex: $elementIndex
+		      	},
+		      	error: function(data) {
+		      		$errorOccurred = true;
+		      		$numberOfElementsProcessed++;
+		      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+		        	{
+		        		if ($errorOccurred)
+		        		{
+		        			$("#price-error-message-text").html('Sorry, there were problems deleting your selected prices. Please try again.');
+		        			$("#price-error-message").fadeIn();
+		        			$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+		        		}
+		        		if ($("li.price-container:visible").length < 1)
+	        			{
+	        				$(".action-confirm-delete-prices").hide();
+							$(".action-unselect-all-prices").hide();
+							$(".action-select-all-prices").fadeIn();
+	        				loadNewPrice();
+	        			} else {
+		        			reOrderPrices();
+		        		}
+		        		$("#price-confirm-deletes").hide();
+		        		if ($("li.price-container:visible input.price-select:checked").length < 1)
+		        		{
+		        			$(".action-confirm-delete-prices").fadeOut();
+		        		}
+		        		$("#ajax_loading").hide();
+		        	}
+		      	},
+		      	success: function(data) {
+		        	if (data.response == 'success')
+		        	{
+		        		$("#price-"+data.elementIndex).fadeOut(function() {
+		        			$("#price-"+data.elementIndex).remove();
+		        			$numberOfElementsProcessed++;
+		        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#price-error-message-text").html('Sorry, there were problems deleting your selected prices. Please try again.');
+				        			$("#price-error-message").fadeIn();
+				        			$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+				        		}
+				        		if ($("li.price-container:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-prices").hide();
+									$(".action-unselect-all-prices").hide();
+									$(".action-select-all-prices").fadeIn();
+			        				loadNewPrice();
+			        			} else {
+				        			reOrderPrices();
+				        		}
+				        		$("#price-confirm-deletes").hide();
+				        		if ($("li.price-container:visible input.price-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-prices").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+		        		});
+		        	} else {
+		        		$errorOccurred = true;
+		        		$numberOfElementsProcessed++;
+		        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred)
+			        		{
+			        			$("#price-error-message-text").html('Sorry, there were problems deleting your selected prices. Please try again.');
+			        			$("#price-error-message").fadeIn();
+			        			$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+			        		}
+			        		if ($("li.price-container:visible").length < 1)
+		        			{
+		        				$(".action-confirm-delete-prices").hide();
+								$(".action-unselect-all-prices").hide();
+								$(".action-select-all-prices").fadeIn();
+		        				loadNewPrice();
+		        			} else {
+			        			reOrderPrices();
+			        		}
+			        		$("#price-confirm-deletes").hide();
+			        		if ($("li.price-container:visible input.price-select:checked").length < 1)
+			        		{
+			        			$(".action-confirm-delete-prices").fadeOut();
+			        		}
+			        		$("#ajax_loading").hide();
+			        	}
+		        	}
+		      	}
+		   	});
+		});
+	}
+});
+
+$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+	if ($("input.price-requires-update[value='1']").length > 0)
+	{
+		$("#prices .message").hide();
+		$(".form-error").remove();
+		$("#price-leave-prices-button").attr("data-tab-index", ui.index);
+		$("#prices-tab-to-redirect-to").val(ui.index);
+		$("#price-confirm-leave").fadeIn();
+		$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+		return false;
+	}
+	return true;
+});
+
+$(".action-leave-prices").live('click', function() {
+	$("input.price-requires-update").val("0");
+	$("input.price-id[value='0']").each(function(index) {
+		$elementIndex = $(this).attr("data-index");
+		$("#price-"+$elementIndex).remove();
+	});
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$(".sidebar-tabs").tabs("select", parseInt($(this).attr("data-tab-index")));
+	$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+});
+
+{# Update prices #}
+$(".price-cost-price").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $costPrice = parseFloat($(this).val());
+	if (isNaN($costPrice)) { $costPrice = 0; }
+	var $costPriceExcludingVat = (Math.round(($costPrice / 1.2) * 10000) / 10000);
+	var $listPrice = parseFloat($("#form-price-list-price-"+$elementIndex).val());
+	if (isNaN($listPrice)) { $listPrice = 0; }
+	var $profit = (Math.round(($listPrice - $costPrice) * 10000) / 10000);
+	if ($profit < 0) { $profit = 0; }
+	var $profitExcludingVat = (Math.round(($profit / 1.2) * 10000) / 10000);
+	var $markupPercentage = 100;
+	if ($costPrice > 0)
+	{
+		$markupPercentage = (Math.round((($profit / $costPrice) * 100) * 10000) / 10000);
+	} else {
+		$markupPercentage = 0;
+	}
+	if ($listPrice > 0)
+	{
+		var $profitPercentage = (Math.round(((1 - ($costPrice / $listPrice)) * 100) * 10000) / 10000);
+	} else {
+		var $profitPercentage = 0;	
+	}
+	$("#form-price-cost-price-excluding-vat-"+$elementIndex).val(Number($costPriceExcludingVat + '').toFixed(4));
+	$("#form-price-profit-"+$elementIndex).val(Number($profit + '').toFixed(4));
+	$("#form-price-profit-excluding-vat-"+$elementIndex).val(Number($profitExcludingVat + '').toFixed(4));
+	$("#form-price-markup-percentage-"+$elementIndex).val(Number($markupPercentage + '').toFixed(4));
+	$("#form-price-profit-percentage-"+$elementIndex).val(Number($profitPercentage + '').toFixed(4));
+	updateProfitStatuses();
+});
+$(".price-cost-price").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});
+$(".price-cost-price-excluding-vat").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $costPriceExcludingVat = parseFloat($(this).val());
+	if (isNaN($costPriceExcludingVat)) { $costPriceExcludingVat = 0; }
+	var $costPrice = (Math.round(($costPriceExcludingVat * 1.2) * 10000) / 10000);
+	var $listPrice = parseFloat($("#form-price-list-price-"+$elementIndex).val());
+	if (isNaN($listPrice)) { $listPrice = 0; }
+	var $profit = (Math.round(($listPrice - $costPrice) * 10000) / 10000);
+	var $profitExcludingVat = (Math.round(($profit / 1.2) * 10000) / 10000);
+	var $markupPercentage = 100;
+	if ($costPrice > 0)
+	{
+		$markupPercentage = (Math.round((($profit / $costPrice) * 100) * 10000) / 10000);
+	} else {
+		$markupPercentage = 0;
+	}
+	if ($listPrice > 0)
+	{
+		var $profitPercentage = (Math.round(((1 - ($costPrice / $listPrice)) * 100) * 10000) / 10000);
+	} else {
+		var $profitPercentage = 0;	
+	}
+	$("#form-price-cost-price-excluding-vat-"+$elementIndex).val(Number($costPriceExcludingVat + '').toFixed(4));
+	$("#form-price-profit-"+$elementIndex).val(Number($profit + '').toFixed(4));
+	$("#form-price-profit-excluding-vat-"+$elementIndex).val(Number($profitExcludingVat + '').toFixed(4));
+	$("#form-price-markup-percentage-"+$elementIndex).val(Number($markupPercentage + '').toFixed(4));
+	$("#form-price-profit-percentage-"+$elementIndex).val(Number($profitPercentage + '').toFixed(4));
+	updateProfitStatuses();
+});
+$(".price-cost-price-excluding-vat").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});
+$(".price-recommended-retail-price").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $recommendedRetailPrice = parseFloat($(this).val());
+	if (isNaN($recommendedRetailPrice)) { $recommendedRetailPrice = 0; }
+	var $recommendedRetailPriceExcludingVat = (Math.round(($recommendedRetailPrice / 1.2) * 10000) / 10000);
+	$("#form-price-recommended-retail-price-excluding-vat-"+$elementIndex).val(Number($recommendedRetailPriceExcludingVat + '').toFixed(4));
+	if ($("#reset-rrp-price").is(":checked"))
+	{
+		$("#form-price-list-price-"+$elementIndex).val(Number($recommendedRetailPrice + '').toFixed(4));
+		$("#form-price-list-price-excluding-vat-"+$elementIndex).val(Number($recommendedRetailPriceExcludingVat + '').toFixed(4));
+	}
+});
+$(".price-recommended-retail-price").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});
+$(".price-recommended-retail-price-excluding-vat").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $recommendedRetailPriceExcludingVat = parseFloat($(this).val());
+	if (isNaN($recommendedRetailPriceExcludingVat)) { $recommendedRetailPriceExcludingVat = 0; }
+	var $recommendedRetailPrice = (Math.round(($recommendedRetailPriceExcludingVat * 1.2) * 10000) / 10000);
+	$("#form-price-recommended-retail-price-"+$elementIndex).val(Number($recommendedRetailPrice + '').toFixed(4));
+	if ($("#reset-rrp-price").is(":checked"))
+	{
+		$("#form-price-list-price-"+$elementIndex).val(Number($recommendedRetailPrice + '').toFixed(4));
+		$("#form-price-list-price-excluding-vat-"+$elementIndex).val(Number($recommendedRetailPriceExcludingVat + '').toFixed(4));
+	}
+});
+$(".price-recommended-retail-price-excluding-vat").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});
+$(".price-markup-percentage").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $costPrice = parseFloat($("#form-price-cost-price-"+$elementIndex).val());
+	if (isNaN($costPrice)) { $costPrice = 0; }
+	if ($costPrice > 0)
+	{
+		var $markupPercentage = parseFloat($(this).val());
+		var $profit = (Math.round(($costPrice * ($markupPercentage / 100)) * 10000) / 10000);
+		var $profitExcludingVat = (Math.round(($profit / 1.2) * 10000) / 10000);
+		var $listPrice = (Math.round(($costPrice + $profit) * 10000) / 10000);
+		var $listPriceExcludingVat = (Math.round(($listPrice / 1.2) * 10000) / 10000);
+		var $profitPercentage = (Math.round(((1 - ($costPrice / $listPrice)) * 100) * 10000) / 10000);
+		$("#form-price-profit-"+$elementIndex).val(Number($profit + '').toFixed(4));
+		$("#form-price-profit-excluding-vat-"+$elementIndex).val(Number($profitExcludingVat + '').toFixed(4));
+		$("#form-price-list-price-"+$elementIndex).val(Number($listPrice + '').toFixed(4));
+		$("#form-price-list-price-excluding-vat-"+$elementIndex).val(Number($listPriceExcludingVat + '').toFixed(4));
+		$("#form-price-profit-percentage-"+$elementIndex).val(Number($profitPercentage + '').toFixed(4));
+	}
+	updateProfitStatuses();
+});
+$(".price-markup-percentage").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});
+$(".price-profit-percentage").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $costPrice = parseFloat($("#form-price-cost-price-"+$elementIndex).val());
+	if (isNaN($costPrice)) { $costPrice = 0; }
+	if ($costPrice > 0)
+	{
+		var $profitPercentage = parseFloat($(this).val());
+		var $listPrice = (Math.round(($costPrice / (1 - ($profitPercentage / 100))) * 10000) / 10000);
+		var $listPriceExcludingVat = (Math.round(($listPrice / 1.2) * 10000) / 10000);
+		var $profit = (Math.round(($listPrice - $costPrice) * 10000) / 10000);
+		var $profitExcludingVat = (Math.round(($profit / 1.2) * 10000) / 10000);				
+		var $markupPercentage = 100;
+		if ($costPrice > 0)
+		{
+			$markupPercentage = (Math.round((($profit / $costPrice) * 100) * 10000) / 10000);
+		}
+		$("#form-price-profit-"+$elementIndex).val(Number($profit + '').toFixed(4));
+		$("#form-price-profit-excluding-vat-"+$elementIndex).val(Number($profitExcludingVat + '').toFixed(4));
+		$("#form-price-list-price-"+$elementIndex).val(Number($listPrice + '').toFixed(4));
+		$("#form-price-list-price-excluding-vat-"+$elementIndex).val(Number($listPriceExcludingVat + '').toFixed(4));
+		$("#form-price-markup-percentage-"+$elementIndex).val(Number($markupPercentage + '').toFixed(4));
+	}
+	updateProfitStatuses();
+});
+$(".price-profit-percentage").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});
+$(".price-list-price").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $listPrice = parseFloat($(this).val());
+	if (isNaN($listPrice)) { $listPrice = 0; }
+	var $listPriceExcludingVat = (Math.round(($listPrice / 1.2) * 10000) / 10000);
+	var $costPrice = parseFloat($("#form-price-cost-price-"+$elementIndex).val());
+	if (isNaN($costPrice)) { $costPrice = 0; }
+	var $profit = (Math.round(($listPrice - $costPrice) * 10000) / 10000);
+	var $profitExcludingVat = (Math.round(($profit / 1.2) * 10000) / 10000);
+	var $markupPercentage = 100;
+	if ($costPrice > 0)
+	{
+		$markupPercentage = (Math.round((($profit / $costPrice) * 100) * 10000) / 10000);
+	} else {
+		$markupPercentage = 0;
+	}
+	if ($listPrice > 0)
+	{
+		var $profitPercentage = (Math.round(((1 - ($costPrice / $listPrice)) * 100) * 10000) / 10000);
+	} else {
+		var $profitPercentage = 0;	
+	}
+	$("#form-price-list-price-excluding-vat-"+$elementIndex).val(Number($listPriceExcludingVat + '').toFixed(4));
+	$("#form-price-profit-"+$elementIndex).val(Number($profit + '').toFixed(4));
+	$("#form-price-profit-excluding-vat-"+$elementIndex).val(Number($profitExcludingVat + '').toFixed(4));
+	$("#form-price-markup-percentage-"+$elementIndex).val(Number($markupPercentage + '').toFixed(4));
+	$("#form-price-profit-percentage-"+$elementIndex).val(Number($profitPercentage + '').toFixed(4));
+	if ($("#reset-rrp-price").is(":checked"))
+	{
+		$("#form-price-recommended-retail-price-"+$elementIndex).val(Number($listPrice + '').toFixed(4));
+		$("#form-price-recommended-retail-price-excluding-vat-"+$elementIndex).val(Number($listPriceExcludingVat + '').toFixed(4));
+	}
+	updateProfitStatuses();
+});
+$(".price-list-price").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});
+$(".price-list-price-excluding-vat").live('keyup', function() {
+	var $elementIndex = $(this).attr("data-index");
+	var $listPriceExcludingVat = parseFloat($(this).val());
+	if (isNaN($listPriceExcludingVat)) { $listPriceExcludingVat = 0; }
+	var $listPrice = (Math.round(($listPriceExcludingVat * 1.2) * 10000) / 10000);
+	var $costPrice = parseFloat($("#form-price-cost-price-"+$elementIndex).val());
+	if (isNaN($costPrice)) { $costPrice = 0; }
+	var $profit = (Math.round(($listPrice - $costPrice) * 10000) / 10000)
+	var $profitExcludingVat = (Math.round(($profit / 1.2) * 10000) / 10000);
+	var $markupPercentage = 100;
+	if ($costPrice > 0)
+	{
+		$markupPercentage = (Math.round((($profit / $costPrice) * 100) * 10000) / 10000);
+	} else {
+		$markupPercentage = 0;
+	}
+	if ($listPrice > 0)
+	{
+		var $profitPercentage = (Math.round(((1 - ($costPrice / $listPrice)) * 100) * 10000) / 10000);
+	} else {
+		var $profitPercentage = 0;	
+	}
+	$("#form-price-list-price-excluding-vat-"+$elementIndex).val(Number($listPriceExcludingVat + '').toFixed(4));
+	$("#form-price-profit-"+$elementIndex).val(Number($profit + '').toFixed(4));
+	$("#form-price-profit-excluding-vat-"+$elementIndex).val(Number($profitExcludingVat + '').toFixed(4));
+	$("#form-price-markup-percentage-"+$elementIndex).val(Number($markupPercentage + '').toFixed(4));
+	$("#form-price-profit-percentage-"+$elementIndex).val(Number($profitPercentage + '').toFixed(4));
+	if ($("#reset-rrp-price").is(":checked"))
+	{
+		$("#form-price-recommended-retail-price-"+$elementIndex).val(Number($listPrice + '').toFixed(4));
+		$("#form-price-recommended-retail-price-excluding-vat-"+$elementIndex).val(Number($listPriceExcludingVat + '').toFixed(4));
+	}
+	updateProfitStatuses();
+});
+$(".price-list-price-excluding-vat").live('blur', function() {
+	if (isNaN($(this).val()))
+	{
+		$(this).val(Number(0).toFixed(4));
+	} else {
+		$(this).val(Number($(this).val() + '').toFixed(4));
+	}
+});

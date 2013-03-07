@@ -1,0 +1,46 @@
+<section id="redirects">
+	<div id="ajax-redirects">
+		<div id="redirect-loading-error" class="ui-widget message margin-bottom-5 ui-helper-hidden">
+		    <div class="ui-state-error no-margin-top ui-corner-all"> 
+		        <p class="small-message">
+		            <span class="ui-icon ui-icon-alert"></span>
+		            <strong>ERROR:</strong> Sorry, there was a problem loading the redirects. Please contact support and advise.
+		        </p>
+		    </div>
+		</div>
+		<div id="redirects-loading" class="ac">
+			<p>Loading data, please wait&hellip;</p>
+			<p><img alt="Loading" width="16" height="16" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-loader-eeeeee.gif') }}" /></p>
+		</div>
+	</div>
+    <script type="text/javascript" defer="defer">
+		$(document).ready(function() {
+			{# Load #}
+			$.ajax({
+   				type: "POST",
+   				url: "{{ path('system_ajax_redirects') }}",
+   				data: {
+   					object_id: {{ brand_description.brandId }},
+   					object_type: 'brand'
+   				},
+   				error: function(data) {
+		      		$("#redirects-loading").hide();
+		      		$("#redirect-loading-error").fadeIn();
+		      	},
+   				success: function(data) {
+   					$("#ajax-redirects").html(data);
+   					$("#ajax-redirects :checkbox:not(.no-uniform), #ajax-redirects :radio:not(.no-uniform), #ajax-redirects select:not(.no-uniform), #ajax-redirects :file:not(.no-uniform)").uniform();
+	  				$("#ajax-redirects .button").each(function () {
+			            $(this).button({
+			            	icons: {
+			                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+			                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+			                }, 
+			               	text: $(this).attr('data-icon-only') === 'true'?false:true
+			        	});
+			        });
+   				}
+ 			});
+		});
+	</script>
+</section>

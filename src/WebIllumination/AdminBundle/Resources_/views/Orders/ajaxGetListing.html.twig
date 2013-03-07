@@ -1,0 +1,79 @@
+<table class="data-table" id="data" width="100%">
+	<thead>
+		<tr>
+			<th width="19" class="ac"><input type="checkbox" class="action-select-all" value="1" /></th>
+			<th class="ac">No.</th>
+			<th class="ac">Status</th>
+			<th class="ac">Total</th>
+			<th width="82" colspan="2" class="ac">Payment</th>
+			<th class="ac">Customer</th>
+			<th class="ac">Date</th>
+			<th class="ac">&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for item in items %}	
+			<tr class="item {{ item.statusColour }}" id="item-{{ item.id }}">
+				<td width="19" class="ac select"><input data-id="{{ item.id }}" type="checkbox" class="action-select" id="listing-select-{{ item.id }}" value="1" autocomplete="off" /></td>
+				<td class="ac small"><a href="Javascript:void(0);" data-id="{{ item.id }}" class="action-view-order-items">{{ item.id }}</a></td>
+				<td class="ac {{ item.statusColour }}">
+					<select id="form-item-status-{{ item.id }}" data-id="{{ item.id }}" class="action-order-status">
+						<option{% if item.status == 'Open Payment' %} selected="selected"{% endif %} value="Open Payment">Open Payment</option>
+						<option{% if item.status == 'Payment Failed' %} selected="selected"{% endif %} value="Payment Failed">Payment Failed</option>
+						<option{% if item.status == 'Cancelled' %} selected="selected"{% endif %} value="Cancelled">Cancelled</option>
+						<option{% if item.status == 'Payment Received' %} selected="selected"{% endif %} value="Payment Received">Payment Received</option>
+						<option{% if item.status == 'Processing Your Order' %} selected="selected"{% endif %} value="Processing Your Order">Processing Your Order</option>
+						<option{% if item.status == 'Back Ordered' %} selected="selected"{% endif %} value="Back Ordered">Back Ordered</option>
+						<option{% if item.status == 'Part Delivered' %} selected="selected"{% endif %} value="Part Delivered">Part Delivered</option>
+						<option{% if item.status == 'Order Ready for Collection' %} selected="selected"{% endif %} value="Order Ready for Collection">Order Ready for Collection</option>
+						<option{% if item.status == 'Order with Delivery Company' %} selected="selected"{% endif %} value="Order with Delivery Company">Order with Delivery Company</option>
+						<option{% if item.status == 'Order Completed' %} selected="selected"{% endif %} value="Order Completed">Order Completed</option>
+					</select>
+				</td>
+				<td class="ac small">&pound;{{ item.total|number_format(2)|default('0.00') }}</td>
+				<td width="22" class="ac small"><img data-id="{{ item.id }}" class="no-border action-view-payment-information" src="{{ asset(item.paymentResponseFraudIcon) }}" border="0" alt="Fraud Status" /></td>
+				<td width="60" class="ac small">{% if item.paymentType == "" %}&nbsp;-&nbsp;{% else %}<img data-id="{{ item.id }}" class="no-border action-view-payment-information" src="{{ asset(item.paymentTypeLogo) }}" border="0" alt="{{ item.paymentType }}" />{% endif %}</td>
+				<td class="ac small"><a href="Javascript:void(0);" data-id="{{ item.id }}" class="action-view-customer">{{ item.firstName }} {{ item.lastName }}</a></td>
+				<td class="ac small">{{ item.createdAt|date("d/m/Y h:iA") }}</td>
+				<td width="1" class="buttons-container ac no-wrap">
+					<img id="buttons-spacer" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="0" alt="" />
+					<div class="clear"></div>
+					<button data-id="{{ item.id }}" class="ui-corner-none ui-corner-tr ui-corner-br{% if (item.statusColour == 'green') or (item.statusColour == 'orange') or (item.statusColour == 'blue') or (item.statusColour == 'grey') %} action-view-documents{% if item.orderPrinted > 0 %} ui-button-green{% else %} ui-button-yellow{% endif %}{% else %} disabled{% endif %} button" data-icon-primary="ui-icon-document" data-icon-only="true">Documents</button>
+					<button data-id="{{ item.id }}" class="ui-corner-none action-view-notes button" data-icon-primary="ui-icon-comment"{% if item.notesCount > 0 %} data-notification="{{ item.notesCount }}"{% endif %} data-icon-only="true">Notes</button>
+					<button data-id="{{ item.id }}" class="ui-corner-none action-view-order-items button" data-icon-primary="ui-icon-cart" data-notification="{{ item.items }}" data-icon-only="true">Order Items</button>
+					<button data-id="{{ item.id }}" class="ui-corner-none action-view-discounts button{% if (item.discountsCount > 0) or (item.membershipCardNumber > 0) %} ui-button-green{% endif %}" data-icon-primary="ui-icon-tag" data-icon-only="true">Discounts</button>
+					<button data-id="{{ item.id }}" class="ui-corner-none action-view-customer button" data-icon-primary="ui-icon-contact" data-icon-only="true">Customer</button>
+					<button data-id="{{ item.id }}" class="ui-corner-none action-view-delivery-information button{% if item.deliveryType == 'Collection' %} ui-button-yellow{% endif %}" data-icon-primary="ui-icon-clipboard" data-icon-only="true">Delivery Information</button>
+					<button data-id="{{ item.id }}" class="ui-corner-none ui-corner-tl ui-corner-bl action-view-payment-information button" data-icon-primary="ui-icon-calculator" data-icon-only="true">Payment Information</button>
+				</td>
+			</tr>
+			<tr class="ui-helper-hidden more-information" id="more-information-{{ item.id }}">
+				<td colspan="9" class="no-padding">
+					<div class="more-information-container">
+						<button class="action-close-more-information button ui-button-red ui-corner-none ui-corner-bl ui-corner-br fr" data-icon-primary="ui-icon-closethick" data-icon-only="true">Close</button>
+						{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':listingPaymentInformation.html.twig' with {'settings': settings, 'item': item} %}
+						{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':listingDeliveryInformation.html.twig' with {'settings': settings, 'item': item} %}
+						{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':listingCustomer.html.twig' with {'settings': settings, 'item': item} %}
+						{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':listingDiscounts.html.twig' with {'settings': settings, 'item': item} %}
+						{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':listingOrderItems.html.twig' with {'settings': settings, 'item': item} %}
+						{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':listingNotes.html.twig' with {'settings': settings, 'item': item} %}
+						{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':listingDocuments.html.twig' with {'settings': settings, 'item': item} %}
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(document).ready(function() {
+		{# Initialise Unifrom #}
+		initialiseUniform("data");
+	    
+	    {# Set the widths of the action buttons #}
+		var $actionButtonsWidth = 0;
+		$("td.buttons-container:eq(0) .button").each(function() {
+			$actionButtonsWidth = $actionButtonsWidth + $(this).outerWidth(true) + 2;
+		});
+		$("#buttons-spacer").width($actionButtonsWidth).attr("width", $actionButtonsWidth);
+	});
+</script>

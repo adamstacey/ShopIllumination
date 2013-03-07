@@ -209,7 +209,7 @@
 						var $id = $(this).attr("data-id");
 						$.ajax({
 							type: "GET",
-							{#url: "{{ path('admin_products_index_ajax_update') }}",#}
+							{#url: "{{ path('admin_listing_products_ajax_update') }}",#}
 							data: {
 								id: $id,
 		      					status: $("#listing-status-"+$id).val()
@@ -256,7 +256,7 @@
         $(".action-delete").live('click', function() {
         	var $id = $(this).attr("data-id");
 			$.ajax({
-		    	{#url: "{{ path('admin_products_index_ajax_delete') }}",#}
+		    	{#url: "{{ path('admin_listing_products_ajax_delete') }}",#}
 		      	type: "GET",
 		      	dataType: "json",
 		      	data: {
@@ -313,7 +313,7 @@
 						var $id = $(this).attr("data-id");
 						$.ajax({
 							type: "GET",
-							{#url: "{{ path('admin_products_index_ajax_delete') }}",#}
+							{#url: "{{ path('admin_listing_products_ajax_delete') }}",#}
 							data: {
 								id: $id
 							},

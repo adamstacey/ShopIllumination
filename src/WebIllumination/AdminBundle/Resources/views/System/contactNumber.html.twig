@@ -1,0 +1,33 @@
+<li class="contact-number-container" data-contact-id="{{ contactId }}" data-index="{{ index }}" id="contact-number-{{ contactId }}-{{ index }}">
+	<div>
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td width="9">
+						<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+					</td>
+					<td width="1" class="delete">
+						<input data-contact-id="{{ contactId }}" data-index="{{ index }}" type="checkbox" class="contact-number-field contact-number-select" id="form-contact-number-select-{{ contactId }}-{{ index }}" value="1" />
+					</td>
+					<td width="210">
+						<select data-contact-id="{{ contactId }}" data-index="{{ index }}" autocomplete="off" class="contact-number-field contact-number-contact-number-type-id full" id="form-contact-number-contact-number-type-id-{{ contactId }}-{{ index }}">
+			        		<option value="">- Select Number Type -</option>
+			        		{% for contactNumberType in contactNumberTypes %}
+		                		<option value="{{ contactNumberType.id }}"{% if data.contactNumberTypeId is defined %}{% if contactNumberType.id == data.contactNumberTypeId %} selected="selected"{% endif %}{% endif %}>{{ contactNumberType.contactNumberType|raw }}</option>
+		            		{% endfor %}
+			        	</select>
+					</td>
+					<td>
+			        	<input data-contact-id="{{ contactId }}" data-index="{{ index }}" type="text" class="contact-number-field contact-number-number full integer" placeholder="Number" id="form-contact-number-number-{{ contactId }}-{{ index }}" value="{% if data.number is defined %}{{ data.number }}{% endif %}" />
+					</td>
+					<td width="1">
+						<input type="hidden" class="contact-number-display-order" id="form-contact-number-display-order-{{ contactId }}-{{ index }}" value="{{ index }}" />
+						<input type="hidden" data-contact-id="{{ contactId }}" data-index="{{ index }}" class="contact-number-requires-update" id="form-contact-number-requires-update-{{ contactId }}-{{ index }}" value="0" />
+						<input type="hidden" data-contact-id="{{ contactId }}" data-index="{{ index }}" class="contact-number-id" id="form-contact-number-id-{{ contactId }}-{{ index }}" value="{% if data.id is defined %}{{ data.id }}{% else %}0{% endif %}" />
+						<button data-contact-id="{{ contactId }}" data-index="{{ index }}" class="button ui-button-red action-confirm-delete-contact-number" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</li>

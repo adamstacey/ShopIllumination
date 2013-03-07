@@ -1,0 +1,107 @@
+<script type="text/javascript" defer="defer">
+	
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':indexFunctions.js.twig' with {'data': data} %}
+	
+	$(document).ready(function() {
+		
+		$(".listing-status").live('change', function() {
+			var $itemId = $(this).attr("data-id");
+			var $status = $(this).val();
+			var $statusColour = '';
+			switch ($status)
+			{
+				case 'Open Payment':
+					$statusColour = 'red';
+					break;
+				case 'Payment Failed':
+					$statusColour = 'dark-red';
+					break;
+				case 'Cancelled':
+					$statusColour = 'black';
+					break;
+				case 'Payment Received':
+					$statusColour = 'green';
+					break;
+				case 'Processing Your Order':
+					$statusColour = 'orange';
+					break;
+				case 'Back Ordered':
+					$statusColour = 'yellow';
+					break;
+				case 'Part Delivered':
+					$statusColour = 'turquoise';
+					break;
+				case 'Order Ready for Collection':
+				case 'Order with Delivery Company':
+					$statusColour = 'blue';
+					break;
+				case 'Order Completed':
+					$statusColour = 'grey';
+					break;
+			}			
+			$(this).parent().parent().removeClass("red dark-red black green yellow orange turquoise blue grey").addClass($statusColour);
+			$("#listing-select-"+$itemId).attr("checked", "checked");
+			$("#uniform-listing-select-"+$itemId+" span").addClass("checked");
+			$("tr#item-"+$itemId).addClass("selected");
+		});
+		
+		$(".action-view-new-orders").live('click', function() {
+			$("#ajax_loading").show();
+			$("#update-listing-search").val("");
+			$("#filter-date-from").val("");
+			$("#filter-date-from-formatted").val("");
+			$("#filter-date-to").val("");
+			$("#filter-date-to-formatted").val("");
+			if ($(".filter-text-box").length > 0)
+			{
+				$(".filter-text-box").each(function() {
+					$(this).val("");
+				});
+			}
+			$("#listing-filter input[type='checkbox']").removeAttr("checked").parent().removeClass("checked");
+			$("input[data-filter-value='Payment Received']").attr("checked", "checked").parent().addClass("checked");
+			updateResults();
+		});
+		
+        $("button.action-show-hide-statistics").live('click', function() {
+        	if ($("#listing-statistics").html() == '')
+        	{
+	        	$.ajax({
+					type: "GET",
+					url: "{{ path('admin_orders_ajax_get_statistics') }}",
+					beforeSend: function() {
+						$("#ajax_loading").show();
+					},
+					error: function() {
+						$("#listing-filter").hide();
+						if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
+						{
+							$("#filter-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+						}
+						if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
+						{
+							$("#filter-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
+						}
+						$("#listing-statistics-loading").hide();
+						$("#listing-statistics").hide();
+						if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
+						{
+							$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+						}
+						if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-arrow-up"))
+						{
+							$("#statistics-button > span.ui-button-icon-primary").removeClass("ui-icon-arrow-up").addClass("ui-icon-arrow-down");
+						}
+						$("#ajax_loading").hide();
+					},
+					success: function(data) {
+						$("#listing-statistics").html(data);
+						$("#listing-statistics").show();
+						$("#listing-statistics-loading").hide();
+						$("#ajax_loading").hide();
+					}
+				});
+			}
+		});	
+	});
+</script>

@@ -1,0 +1,363 @@
+<script type="text/javascript" defer="defer">
+	$(document).ready(function() {
+		{# Set the form widths #}
+		$(".selector, .uploader").addClass("full");
+		
+		{# Update the closeable messages #}
+		$(".message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>').find('.message-close').click(function () {
+	    	$(this).parent().fadeOut();
+	    });
+		
+		{# Select and unselect all rows #}
+		$(".action-unselect-all-files").hide();
+		$(".action-select-all-files").live('click', function() {
+			$("li.file-container td.delete div.checker span").addClass("checked");
+			$("li.file-container").addClass("ui-state-highlight");
+			$("input.file-select").attr("checked", "checked");
+			$(".action-confirm-delete-files").fadeIn();
+			$(".action-select-all-files").hide();
+			$(".action-unselect-all-files").fadeIn();
+		});
+		$(".action-unselect-all-files").live('click', function() {
+			$("li.file-container td.delete div.checker span").removeClass("checked");
+			$("li.file-container").removeClass("ui-state-highlight");
+			$("input.file-select").attr("checked", "");
+			$(".action-confirm-delete-files").hide();
+			$(".action-unselect-all-files").hide();
+			$(".action-select-all-files").fadeIn();
+		});
+		
+		{# Select rows for selection #}
+		$(".action-confirm-delete-files").hide();
+		$("input.file-select").live('change', function() {
+			if ($(this).is(":checked"))
+			{
+				$("#file-"+$(this).attr("data-index")).addClass("ui-state-highlight");
+			} else {
+				$("#file-"+$(this).attr("data-index")).removeClass("ui-state-highlight");
+			}
+			if ($("li.file-container:visible .file-select:checked").length < $("li.file-container:visible .file-select").length)
+			{
+				$(".action-select-all-files").fadeIn();
+			} else {
+				$(".action-select-all-files").hide();
+			}
+			if ($("li.file-container:visible .file-select:checked").length > 0)
+			{
+				$(".action-confirm-delete-files").fadeIn();
+				$(".action-unselect-all-files").fadeIn();
+			} else {
+				$(".action-confirm-delete-files").hide();
+				$(".action-unselect-all-files").hide();
+			}
+		});
+		
+		{# Add a new file #}
+		$(".action-add-new-file").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			loadNewFile();
+		});
+		
+		{# Detect any changes #}
+		$(".file-display-name, .file-file").live('change', function() {
+			$("#form-file-requires-update-"+$(this).closest("li.file-container").attr("data-index")).val("1");
+		});
+		
+		{# Dragabble sorting #}
+		$("#form-files-container").sortable({
+			placeholder: "highlighted-sortable",
+			toleranceElement: '> div',
+			update: function(event, ui) {
+				reOrderFiles();
+			}
+		});
+		
+		{# Update files and leave #}
+		$(".action-update-files-and-leave").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			updateFiles();
+		});
+		
+		{# Update files #}
+		$(".action-update-files").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$("#files-tab-to-redirect-to").val("-1");
+			updateFiles();
+		});
+		
+		{# Confirm delete of an file #}
+		$(".action-confirm-delete-file").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");
+			if ($("#form-file-id-"+$elementIndex).val() == "0")
+			{
+				$("#file-"+$elementIndex).fadeOut(function() {
+        			$("#file-"+$elementIndex).remove();
+        			if ($("li.file-container").length < 1)
+        			{
+        				$(".action-confirm-delete-files").hide();
+						$(".action-unselect-all-files").hide();
+						$(".action-select-all-files").fadeIn();
+        				loadNewFile();
+        			} else {
+        				reOrderFiles();
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$("#file-confirm-delete-button").attr("data-index", $elementIndex);
+				$("#file-cancel-delete-button").attr("data-index", $elementIndex);
+				$("#file-confirm-delete").fadeIn();
+				$("html, body").animate({scrollTop: $("#file-confirm-delete").offset().top - 10},'slow');
+				$("#file-"+$elementIndex).addClass("ui-state-error");
+				$("#file-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+				$("#file-"+$elementIndex+" input.file-select").attr("checked", "checked");
+				$("#ajax_loading").hide();
+			}
+		});
+		
+		{# Cancel delete of an file #}
+		$(".action-cancel-delete-file").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");
+			$("#file-"+$elementIndex).removeClass("ui-state-error");
+			$("#file-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+			$("#file-"+$elementIndex+" input.file-select").attr("checked", "");
+			$("#file-confirm-delete").hide();
+			$("#ajax_loading").hide();
+		});
+		
+		$(".action-delete-file").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");				
+			$.ajax({
+		    	url: "{{ path('system_ajax_delete_file') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $("#form-file-id-"+$elementIndex).val(),
+		      		elementIndex: $elementIndex
+		      	},
+		      	error: function(data) {
+		      		$("#file-error-message-text").html('Sorry, there was a problem deleting the file. Please try again.');
+		      		$("#file-error-message").fadeIn();
+		      		$("#fileg-confirm-delete").hide();
+		      		$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+		        	$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		        	if (data.response == 'success')
+		        	{
+		        		$("#file-"+data.elementIndex).fadeOut(function() {
+		        			$("#file-"+data.elementIndex).remove();
+		        			if ($("li.file-container").length < 1)
+		        			{
+		        				$(".action-confirm-delete-files").hide();
+								$(".action-unselect-all-files").hide();
+								$(".action-select-all-files").fadeIn();
+		        				loadNewFile();
+		        			} else {
+		        				reOrderFiles();
+		        			}
+		        		});
+		        	} else {
+		        		$("#file-error-message-text").html('Sorry, there was a problem deleting the file. Please try again.');
+		        		$("#file-error-message").fadeIn();
+		        		$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+		        	}
+		        	$("#file-confirm-delete").hide();
+		        	$("#ajax_loading").hide();
+		      	}
+		   	});
+		});
+		
+		{# Confirm deleting of guarantees #}
+		$(".action-confirm-delete-files").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$deletesNeedingConfirmation = 0;
+			$("li.file-container:visible input.file-select:checked").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				if ($("#form-file-id-"+$elementIndex).val() == "0")
+				{
+					$("#file-"+$elementIndex).fadeOut(function() {
+	        			$("#file-"+$elementIndex).remove();
+	        			if ($("li.file-container").length < 1)
+	        			{
+	        				$(".action-confirm-delete-files").hide();
+							$(".action-unselect-all-files").hide();
+							$(".action-select-all-files").fadeIn();
+	        				loadNewFile();
+	        			} else {
+	        				reOrderFiles();
+	        			}
+	        			$("#ajax_loading").hide();
+	        		});
+				} else {
+					$deletesNeedingConfirmation++;
+				}
+			});
+			if ($deletesNeedingConfirmation > 0)
+			{
+				$("#file-confirm-deletes").fadeIn();
+				$("html, body").animate({scrollTop: $("#file-confirm-deletes").offset().top - 10},'slow');
+			}
+			$("#ajax_loading").hide();
+		});
+		
+		{# Cancel deleting of files #}
+		$(".action-cancel-delete-files").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#file-confirm-deletes").hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete files #}
+		$(".action-delete-files").live('click', function() {
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$errorOccurred = false;
+			$numberOfElementsToDelete = $("li.file-container:visible input.file-select:checked").length;
+			$numberOfElementsProcessed = 0;
+			if ($numberOfElementsToDelete > 0)
+			{
+				$("li.file-container:visible input.file-select:checked").each(function(index) {
+					$elementIndex = $(this).attr("data-index");				
+					$.ajax({
+				    	url: "{{ path('system_ajax_delete_file') }}",
+				      	type: "GET",
+				      	dataType: "json",
+				      	data: {
+				      		id: $("#form-file-id-"+$elementIndex).val(),
+				      		elementIndex: $elementIndex
+				      	},
+				      	error: function(data) {
+				      		$errorOccurred = true;
+				      		$numberOfElementsProcessed++;
+				      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		file
+				        		if ($("li.file-container:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-files").hide();
+									$(".action-unselect-all-files").hide();
+									$(".action-select-all-files").fadeIn();
+			        				loadNewFile();
+			        			} else {
+				        			reOrderFiles();
+				        		}
+				        		$("#file-confirm-deletes").hide();
+				        		if ($("li.file-container:visible input.file-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-files").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+				      	},
+				      	success: function(data) {
+				        	if (data.response == 'success')
+				        	{
+				        		$("#file-"+data.elementIndex).fadeOut(function() {
+				        			$("#file-"+data.elementIndex).remove();
+				        			$numberOfElementsProcessed++;
+				        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+						        	{
+						        		if ($errorOccurred)
+						        		{
+						        			$("#file-error-message-text").html('Sorry, there were problems deleting the selected files. Please try again.');
+						        			$("#file-error-message").fadeIn();
+						        			$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+						        		}
+						        		if ($("li.file-container:visible").length < 1)
+					        			{
+					        				$(".action-confirm-delete-files").hide();
+											$(".action-unselect-all-files").hide();
+											$(".action-select-all-files").fadeIn();
+					        				loadNewFilee();
+					        			} else {
+						        			reOrderFiles();
+						        		}
+						        		$("#file-confirm-deletes").hide();
+						        		if ($("li.file-container:visible input.file-select:checked").length < 1)
+						        		{
+						        			$(".action-confirm-delete-files").fadeOut();
+						        		}
+						        		$("#ajax_loading").hide();
+						        	}
+				        		});
+				        	} else {
+				        		$errorOccurred = true;
+				        		$numberOfElementsProcessed++;
+				        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+					        	{
+					        		if ($errorOccurred)
+					        		{
+					        			$("#imafilege-error-message-text").html('Sorry, there were problems deleting the selected files. Please try again.');
+					        			$("#file-error-message").fadeIn();
+					        			$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+					        		}
+					        		if ($("li.file-container:visible").length < 1)
+				        			{
+				        				$(".action-confirm-delete-files").hide();
+										$(".action-unselect-all-files").hide();
+										$(".action-select-all-files").fadeIn();
+				        				loadNewFile();
+				        			} else {
+					        			reOrderFiles();
+					        		}
+					        		$("#file-confirm-deletes").hide();
+					        		if ($("li.file-container:visible input.file-select:checked").length < 1)
+					        		{
+					        			$(".action-confirm-delete-files").fadeOut();
+					        		}
+					        		$("#ajax_loading").hide();
+					        	}
+				        	}
+				      	}
+				   	});
+				});
+			}
+		});
+		
+		$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+			if ($("input.file-requires-update[value='1']").length > 0)
+			{
+				$("#files .message").hide();
+				$(".form-error").remove();
+				$("#file-leave-files-button").attr("data-tab-index", ui.index);
+				$("#files-tab-to-redirect-to").val(ui.index);
+				$("#file-confirm-leave").fadeIn();
+				$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+				return false;
+			}
+			return true;
+		});
+		
+		$(".action-leave-files").live('click', function() {
+			$("input.file-requires-update").val("0");
+			$("input.file-id[value='0']").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				$("#file-"+$elementIndex).remove();
+			});
+			$("#files .message").hide();
+			$(".form-error").remove();
+			$(".sidebar-tabs").tabs("select", parseInt($(this).attr("data-tab-index")));
+			$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+		});					
+	});
+	{% include 'WebIlluminationAdminBundle:System:ajaxGetFilesFunctions.js.twig' with {'objectId': objectId, 'objectType': objectType, 'files': files} %}
+</script>

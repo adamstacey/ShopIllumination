@@ -1,0 +1,62 @@
+<script type="text/javascript" defer="defer">
+	$(document).ready(function() {
+		
+		{# Setup the brand list #}
+		var brands = [
+			{% for brand in data.brands %}
+				{
+					value: "{{ brand.id }}",
+					label: "{{ brand.brand }}"
+				}{% if not loop.last %},{% endif %}
+			{% endfor %}
+		];
+		
+		{# Setup the department list #}
+		var departments = [
+			{% for department in data.departments %}
+				{
+					value: "{{ department.id }}",
+					label: "{{ department.department }}"
+				}{% if not loop.last %},{% endif %}
+			{% endfor %}
+		];
+		
+		{# Setup the searches #}
+		$("#search-brand").autocomplete({
+			source: brands,
+			focus: function(event, ui) {
+				$("#form-brand-id").val(ui.item.label);
+				$("#uniform-form-brand-id span").html($("#form-brand-id option[value='"+ui.item.value+"']").text());
+				$("#form-brand-id option").removeAttr("selected");
+				$("#form-brand-id option[value='"+ui.item.value+"']").attr("selected", "selected");
+				return false;
+			},
+			select: function(event, ui) {
+				$("#search-brand").val("");
+				return false;
+			}
+		});
+		$("#search-department").autocomplete({
+			source: departments,
+			focus: function(event, ui) {
+				$("#form-department-id").val(ui.item.label);
+				$("#uniform-form-department-id span").html($("#form-department-id option[value='"+ui.item.value+"']").text());
+				$("#form-department-id option").removeAttr("selected");
+				$("#form-department-id option[value='"+ui.item.value+"']").attr("selected", "selected");
+				return false;
+			},
+			select: function(event, ui) {
+				$("#search-department").val("");
+				return false;
+			}
+		});
+		
+		{# Validate form #}
+		$("#form-add").validator({
+			position : 'bottom left', 
+			offset : [0, 0], 
+			messageClass : 'form-error', 
+    		message : '<div><em/></div>'
+		});
+	});
+</script>

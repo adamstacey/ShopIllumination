@@ -1,0 +1,200 @@
+<div class="ui-widget info-message">
+	<div class="ui-state-highlight ui-corner-all">
+		<span class="info-message-icon ui-icon ui-icon-info"></span>
+		<p>Please update the features available below.</p>
+	</div>
+</div>
+<div id="feature-success-message" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-success ui-corner-all">
+    	<span class="ui-icon ui-icon-circle-check"></span>
+        <p><strong>SUCCESS:</strong> <span id="feature-success-message-text"></span></p>
+    </div>
+</div>
+<div id="feature-error-message" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-alert"></span>
+        <p><strong>ERROR:</strong> <span id="feature-error-message-text"></span></p>
+    </div>
+</div>
+<div id="feature-confirm-leave" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> You are about to leave this section and you have made changes without updating. Do you want to update before you leave?</p>
+        <p>
+        	<button class="button action-save-features-and-leave ui-button-green" data-icon-primary="ui-icon-check">Save</button>
+        	<button data-tab-index="" id="feature-leave-features-button" class="button ui-button-red action-leave-features" data-icon-primary="ui-icon-closethick">Continue Without Updating</button>
+        </p>
+    </div>
+</div>
+<div id="feature-confirm-delete" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all"> 
+        <span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the highlighted feature?</p>
+        <p>
+        	<button data-index="" id="feature-confirm-delete-button" class="button ui-button-red action-delete-feature" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-index="" id="feature-cancel-delete-button" class="button ui-button-blue action-cancel-delete-feature">Cancel</button>
+        </p>
+    </div>
+</div>
+<div id="feature-confirm-deletes" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the selected features?</p>
+        <p>
+        	<button data-feature-group-id="" id="feature-confirm-deletes-button" class="button ui-button-red action-delete-features" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button id="feature-cancel-deletes-button" class="button ui-button-blue action-cancel-delete-features">Cancel</button>
+        </p>
+    </div>
+</div>
+<div id="feature-group-confirm-delete" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all"> 
+        <span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the highlighted feature group?</p>
+        <p>
+        	<button data-index="" id="feature-group-confirm-delete-button" class="button ui-button-red action-delete-feature-group" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-index="" id="feature-group-cancel-delete-button" class="button ui-button-blue action-cancel-delete-feature-group">Cancel</button>
+        </p>
+    </div>
+</div>
+<div id="feature-group-confirm-deletes" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the selected feature groups?</p>
+        <p>
+        	<button id="feature-group-confirm-deletes-button" class="button ui-button-red action-delete-feature-groups" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button id="feature-group-cancel-deletes-button" class="button ui-button-blue action-cancel-delete-feature-groups">Cancel</button>
+        </p>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="form-input-long">
+		<div class="features-container">
+			<input type="hidden" id="feature-group-count" value="{% if features|length > 1 %}{{ features|length }}{% else %}1{% endif %}" />
+			{% if features|length > 0 %}
+				<ul class="list-fields" id="product-feature-groups-container">
+					{% for productFeatureGroup, productFeatures in features %}	
+						<li class="product-feature-group-container" data-index="{{ loop.index }}" id="feature-group-{{ loop.index }}">
+							<table width="100%">
+								<tbody>
+									<tr>
+										<td width="9">
+											<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+										</td>
+										<td width="1" class="select delete">
+											<input type="hidden" class="feature-group-id" id="form-feature-group-id-{{ loop.index }}" value="{{ productFeatures.0.productFeatureGroupId }}" />
+											<input data-index="{{ loop.index }}" type="checkbox" class="feature-group-select" id="form-feature-group-select-{{ loop.index }}" value="1" />
+										</td>
+										<td class="al">
+											<h3 class="no-margin no-padding no-border">{{ productFeatureGroup }}</h3>
+										</td>
+										<td width="164">
+											<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" data-index="{{ loop.index }}" class="button ui-button-red action-confirm-delete-feature-group" data-icon-primary="ui-icon-closethick">Delete Feature Group</button>
+										</td>
+										<td width="90" class="ar no-padding-right">
+											<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" id="show-hide-features-button-{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-blue action-show-hide-features" data-icon-primary="ui-icon-triangle-1-s">Features</button>
+										</td>
+										<td width="5" class="no-padding">&nbsp;</td>
+									</tr>
+									<tr style="width: 100%;" id="product-features-{{ productFeatures.0.productFeatureGroupId }}" class="ui-helper-hidden">
+										<td colspan="2">&nbsp;</td>
+										<td colspan="4" class="al no-padding-top no-padding-bottom">
+											<div id="feature-confirm-delete-{{ productFeatures.0.productFeatureGroupId }}" class="ui-widget message ui-helper-hidden">
+											    <div class="ui-state-error ui-corner-all"> 
+											        <span class="ui-icon ui-icon-help"></span>
+											        <p><strong>WARNING:</strong> Are you sure you want to delete the highlighted feature?</p>
+											        <p>
+											        	<button data-index="" id="feature-confirm-delete-button-{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-red action-delete-feature" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+											        	<button data-index="" id="feature-cancel-delete-button-{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-blue action-cancel-delete-feature">Cancel</button>
+											        </p>
+											    </div>
+											</div>
+											<input type="hidden" id="feature-count-{{ productFeatures.0.productFeatureGroupId }}" value="{% if productFeatures|length > 1 %}{{ productFeatures|length }}{% else %}1{% endif %}" />
+											<ul class="list-fields product-features-container" id="product-features-container-{{ productFeatures.0.productFeatureGroupId }}">
+												{% for productFeature in productFeatures %}
+													<li class="product-feature-container" data-index="{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" id="feature-{{ productFeature.productFeatureGroupId }}-{{ loop.index }}">
+														<table width="100%">
+															<tbody>
+																<tr>
+																	<td width="9">
+																		<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+																	</td>
+																	<td width="1" class="select delete">
+																		<input data-feature-group-id="{{ productFeature.productFeatureGroupId }}" data-index="{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" type="checkbox" class="feature-select feature-select-{{ productFeature.productFeatureGroupId }}" id="form-feature-select-{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" value="1" />
+																	</td>
+																	<td class="al no-padding-left no-padding-top no-padding-bottom">
+																		<select id="form-feature-product-feature-id-{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" class="full feature-product-feature-id">
+																			<option value="">- Please Select -</option>
+																			{% for productFeatureObject in productFeatureObjects %}
+																				{% if productFeatureObject.productFeatureGroupId == productFeature.productFeatureGroupId %}
+																					<option{% if productFeatureObject.id == productFeature.productFeatureId %} selected="selected"{% endif %} value="{{ productFeatureObject.id }}">{{ productFeatureObject.productFeature }}</option>
+																				{% endif %}
+																			{% endfor %}
+																		</select>
+																	</td>
+																	<td width="1">
+																		<input type="hidden" class="feature-id" id="form-feature-id-{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" value="{{ productFeature.id }}" />
+																		<input type="hidden" class="feature-product-feature-group-id" id="form-feature-product-feature-group-id-{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" value="{{ productFeature.productFeatureGroupId }}" />
+																		<input type="hidden" class="feature-display-order" id="form-feature-display-order-{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" value="" />
+																		<input type="hidden" data-index="{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" class="feature-requires-update" id="form-feature-requires-update-{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" value="0" />
+																		<button data-feature-group-id="{{ productFeature.productFeatureGroupId }}" data-index="{{ productFeature.productFeatureGroupId }}-{{ loop.index }}" class="button ui-button-red action-confirm-delete-feature" data-icon-only="true" data-icon-primary="ui-icon-closethick">Delete</button>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</li>
+												{% endfor %}
+											</ul>
+											<div class="clearfix">
+											    <div class="form-input-long buttons margin-bottom-5">
+											    	<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-green action-update-features" data-icon-primary="ui-icon-check">Update</button>
+											    	<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-red action-confirm-delete-features ui-helper-hidden" data-icon-primary="ui-icon-closethick">Delete</button>
+											    	<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-blue action-add-feature" data-icon-primary="ui-icon-plusthick">Add</button>
+											    	<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-blue action-select-all-features" data-icon-primary="ui-icon-radio-on">Select All</button>
+											    	<button data-feature-group-id="{{ productFeatures.0.productFeatureGroupId }}" class="button ui-button-blue action-unselect-all-features ui-helper-hidden" data-icon-primary="ui-icon-bullet">Unselect All</button>
+											    </div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+				        </li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p class="no-margin">There are currently no features setup for this product. Please add an feature group below.</p>
+			{% endif %}
+			<div class="spacer"></div>
+			<h3>Add New Feature Group</h3>
+			<table width="100%">
+				<tbody>
+					<tr>
+						<td class="al no-padding-left no-padding-top no-padding-bottom">
+							{% if productFeatureGroupObjects|length > 0 %}
+								<select id="form-feature-product-feature-group-id" class="full feature-product-feature-group-id">
+									<option value="">- Please Select -</option>
+									{% for productFeatureGroupObject in productFeatureGroupObjects %}
+										<option value="{{ productFeatureGroupObject.id }}">{{ productFeatureGroupObject.productFeatureGroup }}</option>
+									{% endfor %}
+								</select>
+							{% else %}
+								No feature groups found.
+							{% endif %}
+						</td>
+						<td width="10">&nbsp;</td>
+						<td width="150">
+							<button class="button ui-button-blue action-add-feature-group" data-icon-primary="ui-icon-plusthick">Add Feature Group</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div id="feature-group-buttons" class="clearfix ui-helper-hidden">
+    <div class="form-input-long buttons no-margin-bottom">
+    	<button class="button ui-button-red action-confirm-delete-feature-groups ui-helper-hidden" data-icon-primary="ui-icon-closethick">Delete Selected Feature Groups</button>
+    	<button class="button ui-button-blue action-select-all-feature-groups" data-icon-primary="ui-icon-radio-on">Select All</button>
+    	<button class="button ui-button-blue action-unselect-all-feature-groups ui-helper-hidden" data-icon-primary="ui-icon-bullet">Unselect All</button>
+    	<input type="hidden" value="-1" id="features-tab-to-redirect-to" />
+    </div>
+</div>

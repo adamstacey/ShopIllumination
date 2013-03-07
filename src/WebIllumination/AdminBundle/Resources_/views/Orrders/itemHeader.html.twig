@@ -1,0 +1,12 @@
+{% if data.item is defined %}
+	{% if data.mode == 'update' %}
+		<a href="{{ path('admin_'~data.settings.multiplePath) }}" id="button-go-back" class="fr button icon-set-white ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+		<h2 class="no-margin-bottom">Order {{ data.item.id }} - {{ data.item.firstName }} {{ data.item.lastName }} - &pound;{{ data.item.total|number_format(2) }}</h2>
+		<p class="no-margin">{{ data.item.createdAt|date("d/m/Y h:iA") }}</p>
+	{% else %}
+		<a href="{{ path('admin_'~data.settings.multiplePath) }}" id="button-go-back" class="fr button icon-set-white ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+    	<h2>Add an {{ data.settings.singleTitle }}</h2>
+	{% endif %}
+{% endif %}
+{# include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemToolbar.html.twig' with {'data': data} #}
+{% include 'WebIlluminationAdminBundle:Orrders:itemToolbar.html.twig' with {'data': data} %}

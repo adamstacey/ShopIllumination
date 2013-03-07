@@ -1,0 +1,6 @@
+<li class="{% if (app.request.attributes.get('_route') == 'brands') %}current{% endif %}"><a href="{{ path('admin_brands') }}" class="navicon-box">Brands</a></li>
+<li class="{% if (app.request.attributes.get('_route') == 'products') %}current{% endif %}"><a href="{{ path('admin_listing_products') }}" class="navicon-barcode">Products</a></li>
+<li class="{% if (app.request.attributes.get('_route') == 'product_categories') %}current{% endif %}"><a href="{{ path('admin_listing_products') }}" class="navicon-cabinet">Categories</a></li>
+<li class="{% if (app.request.attributes.get('_route') == 'product_groups') %}current{% endif %}"><a href="{{ path('admin_listing_products') }}" class="navicon-menu">Groups</a></li>
+<li class="{% if (app.request.attributes.get('_route') == 'product_features') %}current{% endif %}"><a href="{{ path('admin_listing_products') }}" class="navicon-notepad">Features</a></li>
+<li class="{% if (app.request.attributes.get('_route') == 'product_options') %}current{% endif %}"><a href="{{ path('admin_listing_products') }}" class="navicon-pulldown">Options</a></li>

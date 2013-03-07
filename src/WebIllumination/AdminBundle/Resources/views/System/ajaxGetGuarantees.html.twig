@@ -1,0 +1,73 @@
+<div class="ui-widget info-message">
+	<div class="ui-state-highlight ui-corner-all">
+		<span class="info-message-icon ui-icon ui-icon-info"></span>
+		<p>Providing guarantee information promotes trust as the customer will feel confident that any problems will be covered by a manufacturers guarantee.</p>
+	</div>
+</div>
+<div id="guarantee-success-message" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-success ui-corner-all">
+    	<span class="ui-icon ui-icon-circle-check"></span>
+        <p><strong>SUCCESS:</strong> <span id="guarantee-success-message-text"></span></p>
+    </div>
+</div>
+<div id="guarantee-error-message" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-alert"></span>
+        <p><strong>ERROR:</strong> <span id="guarantee-error-message-text"></span></p>
+    </div>
+</div>
+<div id="guarantee-confirm-leave" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> You are about to leave this section and you have made changes without saving. Do you want to update before you leave?</p>
+        <p>
+        	<button class="button action-update-guarantees-and-leave ui-button-green" data-icon-primary="ui-icon-check">Update</button>
+        	<button data-tab-index="" id="guarantee-leave-guarantees-button" class="button ui-button-red action-leave-guarantees" data-icon-primary="ui-icon-closethick">Continue Without Updating</button>
+        </p>
+    </div>
+</div>
+<div id="guarantee-confirm-delete" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all"> 
+        <span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the highlighted guarantee?</p>
+        <p>
+        	<button data-index="" id="guarantee-confirm-delete-button" class="button ui-button-red action-delete-guarantee" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-index="" id="guarantee-cancel-delete-button" class="button ui-button-blue action-cancel-delete-guarantee">Cancel</button>
+        </p>
+    </div>
+</div>
+<div id="guarantee-confirm-deletes" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the selected guarantees?</p>
+        <p>
+        	<button data-index="" id="guarantee-confirm-deletes-button" class="button ui-button-red action-delete-guarantees" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-index="" id="guarantee-cancel-deletes-button" class="button ui-button-blue action-cancel-delete-guarantees">Cancel</button>
+        </p>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="form-input-long">
+		<div class="guarantees-container">
+			<input type="hidden" id="guarantee-count" value="{% if guarantees|length > 1 %}{{ guarantees|length }}{% else %}1{% endif %}" />
+			<ul class="list-fields" id="form-guarantees-container">
+				{% for guarantee in guarantees %}	
+					{% include 'WebIlluminationAdminBundle:System:guarantee.html.twig' with {'index': loop.index, 'data': guarantee, 'guaranteeTypes': guaranteeTypes, 'guaranteeLengths': guaranteeLengths} %}
+			    {% else %}
+			    	{% include 'WebIlluminationAdminBundle:System:guarantee.html.twig' with {'index': "1", 'guaranteeTypes': guaranteeTypes, 'guaranteeLengths': guaranteeLengths} %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="clearfix">
+    <div class="form-input-long buttons no-margin-bottom">
+    	<button class="button ui-button-green action-update-guarantees" data-icon-primary="ui-icon-check">Update</button>
+    	<button class="button ui-button-red action-confirm-delete-guarantees ui-helper-hidden" data-icon-primary="ui-icon-closethick">Delete</button>
+    	<button class="button ui-button-blue action-add-new-guarantee" data-icon-primary="ui-icon-plusthick">Add</button>
+    	<button class="button ui-button-blue action-select-all-guarantees" data-icon-primary="ui-icon-radio-on">Select All</button>
+    	<button class="button ui-button-blue action-unselect-all-guarantees ui-helper-hidden" data-icon-primary="ui-icon-bullet">Unselect All</button>
+    	<input type="hidden" value="-1" id="guarantees-tab-to-redirect-to" />
+    </div>
+</div>
+{% include 'WebIlluminationAdminBundle:System:ajaxGetGuaranteesScript.js.twig' with {'objectId': objectId, 'objectType': objectType, 'guarantees': guarantees, 'guaranteeTypes': guaranteeTypes, 'guaranteeLengths': guaranteeLengths} %}

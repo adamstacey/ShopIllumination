@@ -1,0 +1,1460 @@
+<script type="text/javascript">
+	    	
+	window.onload = function () {
+				
+		// Setup canvas
+		var canvas = Raphael("designer_design_{{ id }}", {{ design_data.canvas_width - design_data.canvas_margin_left - design_data.canvas_margin_right - 2 }}, {{ design_data.canvas_height - design_data.canvas_margin_top - design_data.canvas_margin_bottom - 2 }});	
+								
+		// Event layer
+		var event_layer = canvas.rect(0, 0, {{ design_data.canvas_width - design_data.canvas_margin_left - design_data.canvas_margin_right - 2 }}, {{ design_data.canvas_height - design_data.canvas_margin_top - design_data.canvas_margin_bottom - 2 }});
+		event_layer.attr({"fill": "#FFFFFF", "fill-opacity": 0, "stroke": "#FFFFFF", "stroke-width": 0, "stroke-opacity": 0});
+		event_layer.node.onclick = function () {
+			deselectElements();
+		}
+		
+		// Designer elements
+		var elements = new Array();
+		var element_count = 0;
+		var page_count = 1;
+		var selected_page = 1;
+		var selected_element = -1;
+		var action_timer = "";
+		var line_drawing = false;
+		var drawing_started = false;
+		var selected_line_colour = "";
+		var selected_line_size = "";
+		var temporary_layer = "";
+				
+		// Font style
+		$(".designer-font-style-{{ id }}").click(function() {
+			if ($(this).hasClass("active"))
+			{
+				$(this).removeClass("active");
+				$(this).attr("src", "/bundles/webilluminationadmin/images/designer/toolbar/"+$(this).attr("rel")+".png");
+			} else {
+				$(this).addClass("active");
+				$(this).attr("src", "/bundles/webilluminationadmin/images/designer/toolbar/"+$(this).attr("rel")+"-active.png");
+			}
+			if (selected_element >= 0)
+			{
+				updateText(elements, element_count, canvas);
+			}
+		});
+		
+		// Change text
+		$("#designer_text_{{ id }}").change(function() {
+			if (selected_element >= 0)
+			{
+				updateText(elements, element_count, canvas);
+			}
+		});
+		
+		// Colour picker
+		$("#designer_image_border_colour_{{ id }}").ColorPicker({
+			color: "#000000",
+			onShow: function (colpkr) {
+				$(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function (colpkr) {
+				$(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				$("#designer_image_border_colour_{{ id }}").css("background-color", "#"+hex);
+				if (selected_element >= 0)
+				{
+					elements[selected_element]['stroke'] = "#"+hex;
+					elements[selected_element]['border'].attr({"stroke": elements[selected_element]['stroke']});
+					$("#save_element_"+selected_element+"_stroke_{{ id }}").val(elements[selected_element]['stroke']);
+				}
+			}
+		});
+		$("#designer_text_colour_{{ id }}").ColorPicker({
+			color: "#000000",
+			onShow: function (colpkr) {
+				$(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function (colpkr) {
+				$(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				$("#designer_text_colour_{{ id }}").css("background-color", "#"+hex);
+				if (selected_element >= 0)
+				{
+					elements[selected_element]['fill'] = "#"+hex;
+					elements[selected_element]['element'].attr({"fill": elements[selected_element]['fill']});
+					elements[selected_element]['underline'].attr({"stroke": elements[selected_element]['fill']});
+					$("#save_element_"+selected_element+"_fill_{{ id }}").val(elements[selected_element]['fill']);
+				}
+			}
+		});
+		$("#designer_shape_fill_colour_{{ id }}").ColorPicker({
+			color: "#000000",
+			onShow: function (colpkr) {
+				$(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function (colpkr) {
+				$(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				$("#designer_shape_fill_colour_{{ id }}").css("background-color", "#"+hex);
+				if (selected_element >= 0)
+				{
+					elements[selected_element]['fill'] = "#"+hex;
+					elements[selected_element]['element'].attr({"fill": elements[selected_element]['fill']});
+					$("#save_element_"+selected_element+"_fill_{{ id }}").val(elements[selected_element]['fill']);
+				}
+			}
+		});
+		$("#designer_shape_border_colour_{{ id }}").ColorPicker({
+			color: "#000000",
+			onShow: function (colpkr) {
+				$(colpkr).fadeIn(500);
+				return false;
+			},
+			onHide: function (colpkr) {
+				$(colpkr).fadeOut(500);
+				return false;
+			},
+			onChange: function (hsb, hex, rgb) {
+				$("#designer_shape_border_colour_{{ id }}").css("background-color", "#"+hex);
+				if (selected_element >= 0)
+				{
+					elements[selected_element]['stroke'] = "#"+hex;
+					elements[selected_element]['element'].attr({"stroke": elements[selected_element]['stroke']});
+					$("#save_element_"+selected_element+"_stroke_{{ id }}").val(elements[selected_element]['stroke']);
+				}
+			}
+		});
+		
+		// Hide colour pickers
+		$(".colorpicker_submit").click(function() {
+			$(".colorpicker").fadeOut(500);
+		})
+			
+		// Load toolbars
+		$(".designer-main-toolbar-icon, .designer-main-toolbar-icon-selected").click(function() {
+			if (($(this).attr("rel") != "designer_toolbar_delete_{{ id }}") && ($(this).attr("rel") != "designer_toolbar_create_proof_{{ id }}") && ($(this).attr("rel") != "designer_toolbar_sizes_{{ id }}"))
+			{
+				$(".designer-main-toolbar-icon-selected").removeClass("designer-main-toolbar-icon-selected").addClass("designer-main-toolbar-icon");
+				$(this).removeClass("designer-main-toolbar-icon").addClass("designer-main-toolbar-icon-selected");
+				$(".designer-toolbar").hide();
+				$("#"+$(this).attr("rel")).show();
+			}
+		});
+				
+		// Deselect all elements
+		function deselectElements()
+		{
+			if (!line_drawing)
+			{
+				selected_element = -1;
+				for (array_count = 0; array_count < element_count; array_count++)
+				{
+					elements[array_count]['overlay'].animate({"stroke-opacity": 0, "fill-opacity": 0, "opacity": 0});
+					elements[array_count]['selected'] = false;
+				}
+				
+				// Images
+				$("#designer_image_stroke_width_{{ id }} option").removeAttr("selected");
+				$("#designer_image_stroke_width_{{ id }} option[value='0']").attr("selected", "selected");
+				$("#designer_image_border_colour_{{ id }}").css("background-color", "#000000");
+				
+				// Shapes
+				$("#designer_shape_fill_colour_{{ id }}").css("background-color", "#FFFFFF");
+				$("#designer_shape_stroke_width_{{ id }} option").removeAttr("selected");
+				$("#designer_shape_stroke_width_{{ id }} option[value='1']").attr("selected", "selected");
+				$("#designer_shape_border_colour_{{ id }}").css("background-color", "#000000");
+				
+				// Text
+				$("#designer_text_{{ id }}").val("");
+				$("#designer_text_font_{{ id }} option").removeAttr("selected");
+				$("#designer_text_font_{{ id }} option[value='arial']").attr("selected", "selected");
+				$("#designer_text_size_{{ id }} option").removeAttr("selected");
+				$("#designer_text_size_{{ id }} option[value='10	']").attr("selected", "selected");
+				$("#designer_text_colour_{{ id }}").css("background-color", "#000000");
+				$(".designer-font-style-{{ id }}").removeClass("active");
+				$(".designer-bold-{{ id }}").attr("src", "/bundles/webilluminationadmin/images/designer/toolbar/bold.png");
+				$(".designer-italic-{{ id }}").attr("src", "/bundles/webilluminationadmin/images/designer/toolbar/italic.png");
+				$(".designer-underline-{{ id }}").attr("src", "/bundles/webilluminationadmin/images/designer/toolbar/underline.png");
+			}
+			
+		}
+		
+		// Create a form element for saving
+		function addHiddenFormElements(elements, element_id)
+		{
+			var form = $("#save_form");
+			form.append('<fieldset id="save_element_group_'+element_id+'_{{ id }}">');
+			form.append('<input id="save_element_id_'+element_id+'_{{ id }}" name="save_element_ids[]" type="hidden" value="'+element_id+'" />');
+			form.append('<input id="save_element_'+element_id+'_page_{{ id }}" name="save_element_'+element_id+'_page" type="hidden" value="'+elements[element_id]['page']+'" />');
+			form.append('<input id="save_element_'+element_id+'_type_{{ id }}" name="save_element_'+element_id+'_type" type="hidden" value="'+elements[element_id]['type']+'" />');
+			form.append('<input id="save_element_'+element_id+'_width_{{ id }}" name="save_element_'+element_id+'_width" type="hidden" value="'+elements[element_id]['width']+'" />');
+			form.append('<input id="save_element_'+element_id+'_height_{{ id }}" name="save_element_'+element_id+'_height" type="hidden" value="'+elements[element_id]['height']+'" />');
+			form.append('<input id="save_element_'+element_id+'_x_{{ id }}" name="save_element_'+element_id+'_x" type="hidden" value="'+elements[element_id]['x']+'" />');
+			form.append('<input id="save_element_'+element_id+'_y_{{ id }}" name="save_element_'+element_id+'_y" type="hidden" value="'+elements[element_id]['y']+'" />');
+			form.append('<input id="save_element_'+element_id+'_startx_{{ id }}" name="save_element_'+element_id+'_startx" type="hidden" value="'+elements[element_id]['startx']+'" />');
+			form.append('<input id="save_element_'+element_id+'_starty_{{ id }}" name="save_element_'+element_id+'_starty" type="hidden" value="'+elements[element_id]['starty']+'" />');
+			form.append('<input id="save_element_'+element_id+'_endx_{{ id }}" name="save_element_'+element_id+'_endx" type="hidden" value="'+elements[element_id]['endx']+'" />');
+			form.append('<input id="save_element_'+element_id+'_endy_{{ id }}" name="save_element_'+element_id+'_endy" type="hidden" value="'+elements[element_id]['endy']+'" />');
+			form.append('<input id="save_element_'+element_id+'_horizontal_scale_{{ id }}" name="save_element_'+element_id+'_horizontal_scale" type="hidden" value="'+elements[element_id]['horizontal_scale']+'" />');
+			form.append('<input id="save_element_'+element_id+'_vertical_scale_{{ id }}" name="save_element_'+element_id+'_vertical_scale" type="hidden" value="'+elements[element_id]['vertical_scale']+'" />');
+			form.append('<input id="save_element_'+element_id+'_rotate_{{ id }}" name="save_element_'+element_id+'_rotate" type="hidden" value="'+elements[element_id]['rotate']+'" />');
+			form.append('<input id="save_element_'+element_id+'_fill_{{ id }}" name="save_element_'+element_id+'_fill" type="hidden" value="'+elements[element_id]['fill']+'" />');
+			form.append('<input id="save_element_'+element_id+'_stroke_{{ id }}" name="save_element_'+element_id+'_stroke" type="hidden" value="'+elements[element_id]['stroke']+'" />');
+			form.append('<input id="save_element_'+element_id+'_strokewidth_{{ id }}" name="save_element_'+element_id+'_strokewidth" type="hidden" value="'+elements[element_id]['strokewidth']+'" />');
+			form.append('<input id="save_element_'+element_id+'_text_{{ id }}" name="save_element_'+element_id+'_text" type="hidden" value="'+elements[element_id]['text']+'" />');
+			form.append('<input id="save_element_'+element_id+'_bold_{{ id }}" name="save_element_'+element_id+'_text" type="hidden" value="'+elements[element_id]['bold']+'" />');
+			form.append('<input id="save_element_'+element_id+'_italic_{{ id }}" name="save_element_'+element_id+'_italic" type="hidden" value="'+elements[element_id]['italic']+'" />');
+			form.append('<input id="save_element_'+element_id+'_underline_{{ id }}" name="save_element_'+element_id+'_underline" type="hidden" value="'+elements[element_id]['underline']+'" />');
+			form.append('<input id="save_element_'+element_id+'_path_{{ id }}" name="save_element_'+element_id+'_path" type="hidden" value="'+elements[element_id]['path']+'" />');
+			form.append('<input id="save_element_'+element_id+'_fontfamily_{{ id }}" name="save_element_'+element_id+'_fontfamily" type="hidden" value="'+elements[element_id]['fontfamily']+'" />');
+			form.append('<input id="save_element_'+element_id+'_fontsize_{{ id }}" name="save_element_'+element_id+'_fontsize" type="hidden" value="'+elements[element_id]['fontsize']+'" />');
+			form.append('<input id="save_element_'+element_id+'_image_{{ id }}" name="save_element_'+element_id+'_image" type="hidden" value="'+elements[element_id]['image']+'" />');
+			form.append('</fieldset>')
+		}
+		
+		// Add an image
+		function addImage(image_array, image_id, image_canvas, image_src, image_width, image_height)
+		{
+			// Initialise elements
+			image_array[image_id] = new Array();
+			image_array[image_id]['type'] = "image";
+			image_array[image_id]['width'] = image_width;
+			image_array[image_id]['height'] = image_height;
+			image_array[image_id]['x'] = 10;
+			image_array[image_id]['y'] = 10;
+			image_array[image_id]['startx'] = 10;
+			image_array[image_id]['starty'] = 10;
+			image_array[image_id]['endx'] = 10;
+			image_array[image_id]['endy'] = 10;
+			image_array[image_id]['horizontal_scale'] = 1;
+			image_array[image_id]['vertical_scale'] = 1;
+			image_array[image_id]['rotate'] = 0;
+			image_array[image_id]['fill'] = false;
+			image_array[image_id]['stroke'] = "#000000";
+			image_array[image_id]['strokewidth'] = 0;
+			image_array[image_id]['text'] = '';
+			image_array[image_id]['bold'] = false;
+			image_array[image_id]['italic'] = false;
+			image_array[image_id]['underline'] = false;
+			image_array[image_id]['path'] = '';
+			image_array[image_id]['fontfamily'] = false;
+			image_array[image_id]['fontsize'] = false;
+			image_array[image_id]['image'] = image_src;
+			image_array[image_id]['selected'] = false;
+			image_array[image_id]['movable'] = false;
+			
+			// Move
+			image_array[image_id]['move'] = function (e)
+			{
+				if ($.browser.mozilla) { e.preventDefault(); }
+				image_array[image_id]['movable'] = this;
+				this.pos_x = e.clientX;
+				this.pos_y = e.clientY;
+				this.animate({"fill-opacity": .2}, 500);
+			}
+			
+			// Create element
+			image_array[image_id]['element'] = image_canvas.image(image_src, 0, 0, image_width, image_height);
+			image_array[image_id]['element'].node.id = "design_image";
+			image_array[image_id]['border'] = image_canvas.rect(0, 0, image_width, image_height);
+			image_array[image_id]['border'].attr({"stroke": image_array[image_id]['stroke'], "stroke-width": image_array[image_id]['strokewidth'], "stroke-opacity": 1});
+			image_array[image_id]['overlay'] = image_canvas.rect(0, 0, image_width, image_height);
+			image_array[image_id]['overlay'].attr({"fill": "#FFFFFF", "fill-opacity": 0, "stroke": "#39F", "stroke-width": 1, "stroke-opacity": 0, "opacity": 0});
+			image_array[image_id]['overlay'].node.style.cursor = "move";
+			image_array[image_id]['overlay'].mousedown(image_array[image_id]['move']);
+			
+			
+			// Select element
+			image_array[image_id]['overlay'].node.onclick = function ()
+			{
+				deselectElements();
+				image_array[image_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+				image_array[image_id]['selected'] = true;
+				selected_element = image_id;
+				$("#image_stroke_width option").removeAttr("selected");
+				$("#image_stroke_width option[value='"+image_array[image_id]['strokewidth']+"']").attr("selected", "selected");
+				$("#image_border_colour").css("background-color", image_array[image_id]['stroke']);
+				$(".main-toolbar-icon-selected").removeClass("main-toolbar-icon-selected").addClass("main-toolbar-icon");
+				$(".main-toolbar-icon[rel='toolbar_picture']").removeClass("main-toolbar-icon").addClass("main-toolbar-icon-selected");
+				$(".toolbar").hide();
+				$("#toolbar_standard").show();
+				$("#toolbar_picture").show();
+			}
+			
+			// Create group
+			image_array[image_id]['group'] = image_canvas.set();
+			image_array[image_id]['group'].push(image_array[image_id]['element']);
+			image_array[image_id]['group'].push(image_array[image_id]['border']);
+			image_array[image_id]['group'].push(image_array[image_id]['overlay']);
+			
+			// Initialise element on canvas
+			deselectElements();
+			image_array[image_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+			image_array[image_id]['selected'] = true;
+			selected_element = image_id;
+			$("#image_stroke_width option").removeAttr("selected");
+			$("#image_stroke_width option[value='"+image_array[image_id]['strokewidth']+"']").attr("selected", "selected");
+			$("#image_border_colour").css("background-color", image_array[image_id]['stroke']);
+			$(".main-toolbar-icon-selected").removeClass("main-toolbar-icon-selected").addClass("main-toolbar-icon");
+			$(".main-toolbar-icon[rel='toolbar_picture']").removeClass("main-toolbar-icon").addClass("main-toolbar-icon-selected");
+			$(".toolbar").hide();
+			$("#toolbar_standard").show();
+			$("#toolbar_picture").show();
+		}
+		
+		// 	
+		function addText(text_array, text_id, text_canvas, x, y)
+		{
+			// Initialise elements
+			text_array[text_id] = new Array();
+			text_array[text_id]['type'] = "text";
+			text_array[text_id]['width'] = false;
+			text_array[text_id]['height'] = false;
+			text_array[text_id]['x'] = x;
+			text_array[text_id]['y'] = y;
+			text_array[text_id]['startx'] = 10;
+			text_array[text_id]['starty'] = 10;
+			text_array[text_id]['endx'] = 10;
+			text_array[text_id]['endy'] = 10;
+			text_array[text_id]['horizontal_scale'] = 1;
+			text_array[text_id]['vertical_scale'] = 1;
+			text_array[text_id]['rotate'] = 0;
+			text_array[text_id]['fill'] = $('#text_colour').css("background-color");
+			text_array[text_id]['stroke'] = '#000000';
+			text_array[text_id]['strokewidth'] = 0;
+			text_array[text_id]['text'] = $("#text").val();
+			text_array[text_id]['bold'] = false;
+			text_array[text_id]['italic'] = false;
+			text_array[text_id]['underline'] = false;
+			var selected_font_family = $("#text_font option:selected").val();
+			if ($(".bold").hasClass("active") && ($(".bold").is(":visible") == true))
+			{
+				selected_font_family  = selected_font_family + "-bold";
+				text_array[text_id]['bold'] = true;
+			}
+			if ($(".italic").hasClass("active") && ($(".italic").is(":visible") == true))
+			{
+				selected_font_family  = selected_font_family + "-italic";
+				text_array[text_id]['italic'] = true;
+			}
+			if ($(".underline").hasClass("active") && ($(".underline").is(":visible") == true))
+			{
+				text_array[text_id]['underline'] = true;
+			}
+			text_array[text_id]['path'] = '';
+			text_array[text_id]['fontfamily'] = selected_font_family;
+			text_array[text_id]['fontsize'] = $("#text_size option:selected").val();
+			text_array[text_id]['image'] = '';
+			text_array[text_id]['selected'] = false;
+			text_array[text_id]['movable'] = false;
+							
+			// Move
+			text_array[text_id]['move'] = function (e)
+			{
+				if ($.browser.mozilla) { e.preventDefault(); }
+				text_array[text_id]['movable'] = this;
+				this.pos_x = e.clientX;
+				this.pos_y = e.clientY;
+				this.animate({"fill-opacity": .2}, 500);
+			}
+			
+			// Create element
+			//text_array[text_id]['element'] =  text_canvas.text(text_array[text_id]['x'], text_array[text_id]['Y'], text_array[text_id]['text']);
+			text_array[text_id]['element'] =  text_canvas.print(text_array[text_id]['x'], text_array[text_id]['y'], text_array[text_id]['text'], canvas.getFont(text_array[text_id]['fontfamily'], 900), parseInt(text_array[text_id]['fontsize'])).attr("fill", text_array[text_id]['fill']);
+			// Get the first letter path
+			text_array[text_id]['element'][0].node.id = "text_"+text_id+"_0";
+			var text_path = $("#text_"+text_id+"_0").attr("d");
+			
+			// Get the rest of the letters
+			for (var letter_count = 1; letter_count < text_array[text_id]['element'].length; letter_count++)
+			{
+				text_array[text_id]['element'][letter_count].node.id = "text_"+text_id+"_"+letter_count;
+				text_path = text_path.toString() + "|" + $("#text_"+text_id+"_"+letter_count).attr("d");
+			}
+			text_array[text_id]['path'] = text_path;
+			text_array[text_id]['width'] = text_array[text_id]['element'].getBBox().width;
+			text_array[text_id]['height'] = text_array[text_id]['element'].getBBox().height;
+			text_array[text_id]['overlay'] = text_canvas.rect(text_array[text_id]['element'].getBBox().x, text_array[text_id]['element'].getBBox().y, text_array[text_id]['width'], text_array[text_id]['height']);
+			text_array[text_id]['overlay'].attr({"fill": "#FFFFFF", "fill-opacity": 0, "stroke": "#39F", "stroke-width": 1, "stroke-opacity": 0, "opacity": 0});
+			text_array[text_id]['overlay'].node.style.cursor = "move";
+			text_array[text_id]['overlay'].mousedown(text_array[text_id]['move']);
+			
+			// Select element
+			text_array[text_id]['overlay'].node.onclick = function ()
+			{
+				deselectElements();
+				$("#text").val(text_array[text_id]['text']);
+				$('#text_colour').css('background-color', text_array[text_id]['fill']);
+				$("#text_font option[value='"+text_array[text_id]['fontfamily'].replace("-bold", "").replace("-italic", "")+"']").attr('selected', 'selected');
+				$("#text_size option[value='"+text_array[text_id]['fontsize']+"']").attr('selected', 'selected');
+				text_array[text_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+				text_array[text_id]['selected'] = true;
+				selected_element = text_id;
+				$(".main-toolbar-icon-selected").removeClass("main-toolbar-icon-selected").addClass("main-toolbar-icon");
+				$(".main-toolbar-icon[rel='toolbar_text_box']").removeClass("main-toolbar-icon").addClass("main-toolbar-icon-selected");
+				$(".toolbar").hide();
+				$("#toolbar_standard").show();
+				$("#toolbar_text_box").show();
+				if (text_array[text_id]['bold'])
+				{
+					$(".bold").addClass("active");
+					$(".bold").attr("src", "/images/toolbar/bold-active.png");
+				}
+				if (text_array[text_id]['italic'])
+				{
+					$(".italic").addClass("active");
+					$(".italic").attr("src", "/images/toolbar/italic-active.png");
+				}
+				if (text_array[text_id]['underline'])
+				{
+					$(".underline").addClass("active");
+					$(".underline").attr("src", "/images/toolbar/underline-active.png");
+				}
+			}
+			
+			// Create group
+			text_array[text_id]['group'] = text_canvas.set();
+			text_array[text_id]['group'].push(text_array[text_id]['element']);
+			text_array[text_id]['group'].push(text_array[text_id]['overlay']);
+			if ($(".underline").hasClass("active") && ($(".underline").is(":visible") == true))
+			{
+				text_array[text_id]['underline'] = text_canvas.path("M"+(text_array[text_id]['element'].getBBox().x)+" "+(text_array[text_id]['element'].getBBox().y + text_array[text_id]['element'].getBBox().height)+"L"+(text_array[text_id]['element'].getBBox().x + text_array[text_id]['element'].getBBox().width)+" "+(text_array[text_id]['element'].getBBox().y + text_array[text_id]['element'].getBBox().height)+"");
+				text_array[text_id]['underline'].attr("stroke", text_array[text_id]['fill']);
+				text_array[text_id]['group'].push(text_array[text_id]['underline']);
+			}
+			
+			// Initialise element on canvas
+			deselectElements();
+			$("#text").val(text_array[text_id]['text']);
+			$('#text_colour').css('background-color', text_array[text_id]['fill']);
+			$("#text_font option[value='"+text_array[text_id]['fontfamily'].replace("-bold", "").replace("-italic", "")+"']").attr('selected', 'selected');
+			$("#text_size option[value='"+text_array[text_id]['fontsize']+"']").attr('selected', 'selected');
+			text_array[text_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+			text_array[text_id]['selected'] = true;
+			selected_element = text_id;
+			$(".main-toolbar-icon-selected").removeClass("main-toolbar-icon-selected").addClass("main-toolbar-icon");
+			$(".main-toolbar-icon[rel='toolbar_text_box']").removeClass("main-toolbar-icon").addClass("main-toolbar-icon-selected");
+			$(".toolbar").hide();
+			$("#toolbar_standard").show();
+			$("#toolbar_text_box").show();
+			if (text_array[text_id]['bold'])
+			{
+				$(".bold").addClass("active");
+				$(".bold").attr("src", "/images/toolbar/bold-active.png");
+			}
+			if (text_array[text_id]['italic'])
+			{
+				$(".italic").addClass("active");
+				$(".italic").attr("src", "/images/toolbar/italic-active.png");
+			}
+			if (text_array[text_id]['underline'])
+			{
+				$(".underline").addClass("active");
+				$(".underline").attr("src", "/images/toolbar/underline-active.png");
+			}
+		}
+		
+		function updateText(text_array, text_id, text_canvas)
+		{
+			var existing_text_id = selected_element;
+			var existing_x = elements[selected_element]['x'];
+			var existing_y = elements[selected_element]['y'];
+			addText(text_array, text_id, text_canvas, existing_x, existing_y);
+    		addHiddenFormElements(elements, element_count);
+			element_count++;
+			if (existing_text_id >= 0)
+			{
+				text_array[existing_text_id]['group'].remove();
+				$("#save_element_group_"+existing_text_id).remove();
+				$("#save_element_id_"+existing_text_id).remove();
+			}
+		}
+		
+		// Add ellipse
+		function addEllipse(ellipse_array, ellipse_id, ellipse_canvas, x, y)
+		{
+			// Initialise elements
+			ellipse_array[ellipse_id] = new Array();
+			ellipse_array[ellipse_id]['type'] = "ellipse";
+			ellipse_array[ellipse_id]['width'] = 50;
+			ellipse_array[ellipse_id]['height'] = 50;
+			ellipse_array[ellipse_id]['x'] = x;
+			ellipse_array[ellipse_id]['y'] = y;
+			ellipse_array[ellipse_id]['startx'] = 10;
+			ellipse_array[ellipse_id]['starty'] = 10;
+			ellipse_array[ellipse_id]['endx'] = 10;
+			ellipse_array[ellipse_id]['endy'] = 10;
+			ellipse_array[ellipse_id]['horizontal_scale'] = 1;
+			ellipse_array[ellipse_id]['vertical_scale'] = 1;
+			ellipse_array[ellipse_id]['rotate'] = 0;
+			ellipse_array[ellipse_id]['fill'] = $("#shape_fill_colour").css("background-color");
+			ellipse_array[ellipse_id]['stroke'] = $("#shape_border_colour").css("background-color");
+			ellipse_array[ellipse_id]['strokewidth'] = $("#shape_stroke_width").val();
+			ellipse_array[ellipse_id]['text'] = '';
+			ellipse_array[ellipse_id]['bold'] = false;
+			ellipse_array[ellipse_id]['italic'] = false;
+			ellipse_array[ellipse_id]['underline'] = false;
+			ellipse_array[ellipse_id]['path'] = '';
+			ellipse_array[ellipse_id]['fontfamily'] = false;
+			ellipse_array[ellipse_id]['fontsize'] = false;
+			ellipse_array[ellipse_id]['image'] = '';
+			ellipse_array[ellipse_id]['selected'] = false;
+			ellipse_array[ellipse_id]['movable'] = false;
+							
+			// Move
+			ellipse_array[ellipse_id]['move'] = function (e)
+			{
+				if ($.browser.mozilla) { e.preventDefault(); }
+				ellipse_array[ellipse_id]['movable'] = this;
+				this.pos_x = e.clientX;
+				this.pos_y = e.clientY;
+				this.animate({"fill-opacity": .2}, 500);
+			}
+			
+			// Create element
+			ellipse_array[ellipse_id]['element'] = ellipse_canvas.ellipse(ellipse_array[ellipse_id]['x'], ellipse_array[ellipse_id]['y'], ellipse_array[ellipse_id]['width'], ellipse_array[ellipse_id]['height']);
+			ellipse_array[ellipse_id]['element'].attr({"stroke-width": ellipse_array[ellipse_id]['strokewidth'], "stroke-opacity": 1, "stroke": ellipse_array[ellipse_id]['stroke'], "fill": ellipse_array[ellipse_id]['fill']});
+			ellipse_array[ellipse_id]['width'] = ellipse_array[ellipse_id]['element'].getBBox().width;
+			ellipse_array[ellipse_id]['height'] = ellipse_array[ellipse_id]['element'].getBBox().height;
+			ellipse_array[ellipse_id]['overlay'] = ellipse_canvas.rect(ellipse_array[ellipse_id]['element'].getBBox().x, ellipse_array[ellipse_id]['element'].getBBox().y, ellipse_array[ellipse_id]['width'], ellipse_array[ellipse_id]['height']);
+			ellipse_array[ellipse_id]['overlay'].attr({"fill": "#FFFFFF", "fill-opacity": 0, "stroke": "#39F", "stroke-width": 1, "stroke-opacity": 0, "opacity": 0});
+			ellipse_array[ellipse_id]['overlay'].node.style.cursor = "move";
+			ellipse_array[ellipse_id]['overlay'].mousedown(ellipse_array[ellipse_id]['move']);
+			
+			// Select element
+			ellipse_array[ellipse_id]['overlay'].node.onclick = function ()
+			{
+				deselectElements();
+				ellipse_array[ellipse_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+				ellipse_array[ellipse_id]['selected'] = true;
+				selected_element = ellipse_id;
+				
+				$("#shape_fill_colour").css("background-color", ellipse_array[ellipse_id]['fill']);
+				$("#shape_stroke_width option").removeAttr("selected");
+				$("#shape_stroke_width option[value='"+ellipse_array[ellipse_id]['strokewidth']+"']").attr("selected", "selected");
+				$("#shape_border_colour").css("background-color", ellipse_array[ellipse_id]['stroke']);
+				$(".main-toolbar-icon-selected").removeClass("main-toolbar-icon-selected").addClass("main-toolbar-icon");
+				$(".main-toolbar-icon[rel='toolbar_shape']").removeClass("main-toolbar-icon").addClass("main-toolbar-icon-selected");
+				$(".toolbar").hide();
+				$("#toolbar_standard").show();
+				$("#toolbar_shape").show();
+			}
+			
+			// Create group
+			ellipse_array[ellipse_id]['group'] = ellipse_canvas.set();
+			ellipse_array[ellipse_id]['group'].push(ellipse_array[ellipse_id]['element']);
+			ellipse_array[ellipse_id]['group'].push(ellipse_array[ellipse_id]['overlay']);
+			
+			// Initialise element on canvas
+			deselectElements();
+			ellipse_array[ellipse_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+			ellipse_array[ellipse_id]['selected'] = true;
+			selected_element = ellipse_id;
+			$("#shape_fill_colour").css("background-color", ellipse_array[ellipse_id]['fill']);
+			$("#shape_stroke_width option").removeAttr("selected");
+			$("#shape_stroke_width option[value='"+ellipse_array[ellipse_id]['strokewidth']+"']").attr("selected", "selected");
+			$("#shape_border_colour").css("background-color", ellipse_array[ellipse_id]['stroke']);
+			$(".main-toolbar-icon-selected").removeClass("main-toolbar-icon-selected").addClass("main-toolbar-icon");
+			$(".main-toolbar-icon[rel='toolbar_shape']").removeClass("main-toolbar-icon").addClass("main-toolbar-icon-selected");
+			$(".toolbar").hide();
+			$("#toolbar_standard").show();
+			$("#toolbar_shape").show();
+		}
+		
+		// Add rectangle
+		function addRectangle(rectangle_array, rectangle_id, rectangle_canvas, x, y)
+		{
+			// Initialise elements
+			rectangle_array[rectangle_id] = new Array();
+			rectangle_array[rectangle_id]['type'] = "rectangle";
+			rectangle_array[rectangle_id]['width'] = 100;
+			rectangle_array[rectangle_id]['height'] = 100;
+			rectangle_array[rectangle_id]['x'] = x;
+			rectangle_array[rectangle_id]['y'] = y;
+			rectangle_array[rectangle_id]['startx'] = 10;
+			rectangle_array[rectangle_id]['starty'] = 10;
+			rectangle_array[rectangle_id]['endx'] = 10;
+			rectangle_array[rectangle_id]['endy'] = 10;
+			rectangle_array[rectangle_id]['horizontal_scale'] = 1;
+			rectangle_array[rectangle_id]['vertical_scale'] = 1;
+			rectangle_array[rectangle_id]['rotate'] = 0;
+			rectangle_array[rectangle_id]['fill'] = $("#shape_fill_colour").css("background-color");
+			rectangle_array[rectangle_id]['stroke'] = $("#shape_border_colour").css("background-color");
+			rectangle_array[rectangle_id]['strokewidth'] = $("#shape_stroke_width").val();
+			rectangle_array[rectangle_id]['text'] = '';
+			rectangle_array[rectangle_id]['bold'] = false;
+			rectangle_array[rectangle_id]['italic'] = false;
+			rectangle_array[rectangle_id]['underline'] = false;
+			rectangle_array[rectangle_id]['path'] = '';
+			rectangle_array[rectangle_id]['fontfamily'] = false;
+			rectangle_array[rectangle_id]['fontsize'] = false;
+			rectangle_array[rectangle_id]['image'] = '';
+			rectangle_array[rectangle_id]['selected'] = false;
+			rectangle_array[rectangle_id]['movable'] = false;
+							
+			// Move
+			rectangle_array[rectangle_id]['move'] = function (e)
+			{
+				if ($.browser.mozilla) { e.preventDefault(); }
+				rectangle_array[rectangle_id]['movable'] = this;
+				this.pos_x = e.clientX;
+				this.pos_y = e.clientY;
+				this.animate({"fill-opacity": .2}, 500);
+			}
+			
+			// Create element
+			rectangle_array[rectangle_id]['element'] = rectangle_canvas.rect(rectangle_array[rectangle_id]['x'], rectangle_array[rectangle_id]['y'], rectangle_array[rectangle_id]['width'], rectangle_array[rectangle_id]['height']);
+			rectangle_array[rectangle_id]['element'].attr({"stroke-width": rectangle_array[rectangle_id]['strokewidth'], "stroke-opacity": 1, "stroke": rectangle_array[rectangle_id]['stroke'], "fill": rectangle_array[rectangle_id]['fill']});
+			rectangle_array[rectangle_id]['width'] = rectangle_array[rectangle_id]['element'].getBBox().width;
+			rectangle_array[rectangle_id]['height'] = rectangle_array[rectangle_id]['element'].getBBox().height;
+			rectangle_array[rectangle_id]['overlay'] = rectangle_canvas.rect(rectangle_array[rectangle_id]['element'].getBBox().x, rectangle_array[rectangle_id]['element'].getBBox().y, rectangle_array[rectangle_id]['width'], rectangle_array[rectangle_id]['height']);
+			rectangle_array[rectangle_id]['overlay'].attr({"fill": "#FFFFFF", "fill-opacity": 0, "stroke": "#39F", "stroke-width": 1, "stroke-opacity": 0, "opacity": 0});
+			rectangle_array[rectangle_id]['overlay'].node.style.cursor = "move";
+			rectangle_array[rectangle_id]['overlay'].mousedown(rectangle_array[rectangle_id]['move']);
+			
+			// Select element
+			rectangle_array[rectangle_id]['overlay'].node.onclick = function ()
+			{
+				deselectElements();
+				rectangle_array[rectangle_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+				rectangle_array[rectangle_id]['selected'] = true;
+				selected_element = rectangle_id;
+				
+				$("#shape_fill_colour").css("background-color", rectangle_array[rectangle_id]['fill']);
+				$("#shape_stroke_width option").removeAttr("selected");
+				$("#shape_stroke_width option[value='"+rectangle_array[rectangle_id]['strokewidth']+"']").attr("selected", "selected");
+				$("#shape_border_colour").css("background-color", rectangle_array[rectangle_id]['stroke']);
+				$(".main-toolbar-icon-selected").removeClass("main-toolbar-icon-selected").addClass("main-toolbar-icon");
+				$(".main-toolbar-icon[rel='toolbar_shape']").removeClass("main-toolbar-icon").addClass("main-toolbar-icon-selected");
+				$(".toolbar").hide();
+				$("#toolbar_standard").show();
+				$("#toolbar_shape").show();
+			}
+			
+			// Create group
+			rectangle_array[rectangle_id]['group'] = rectangle_canvas.set();
+			rectangle_array[rectangle_id]['group'].push(rectangle_array[rectangle_id]['element']);
+			rectangle_array[rectangle_id]['group'].push(rectangle_array[rectangle_id]['overlay']);
+			
+			// Initialise element on canvas
+			deselectElements();
+			rectangle_array[rectangle_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+			rectangle_array[rectangle_id]['selected'] = true;
+			selected_element = rectangle_id;
+			
+		}
+		
+		// Add a line
+		function addLine(line_array, line_id, line_canvas, strokewidth, stroke)
+		{
+			line_array[line_id] = new Array();
+			line_array[line_id]['selected'] = false;
+			line_array[line_id]['type'] = "line";
+			line_array[line_id]['rotate'] = 0;
+			line_array[line_id]['width'] = 0;
+			line_array[line_id]['height'] = 0;
+			line_array[line_id]['x'] = 0;
+			line_array[line_id]['y'] = 0;
+			line_array[line_id]['startx'] = 10;
+			line_array[line_id]['starty'] = 10;
+			line_array[line_id]['endx'] = 10;
+			line_array[line_id]['endy'] = 10;
+			line_array[line_id]['horizontal_scale'] = 1;
+			line_array[line_id]['vertical_scale'] = 1;
+			line_array[line_id]['rotate'] = 0;
+			line_array[line_id]['fill'] = false;
+			line_array[line_id]['stroke'] = stroke;
+			line_array[line_id]['strokewidth'] = strokewidth;
+			line_array[line_id]['text'] = '';
+			line_array[line_id]['bold'] = false;
+			line_array[line_id]['italic'] = false;
+			line_array[line_id]['underline'] = false;
+			line_array[line_id]['path'] = '';
+			line_array[line_id]['fontfamily'] = false;
+			line_array[line_id]['fontsize'] = false;
+			line_array[line_id]['image'] = '';
+			line_array[line_id]['movable'] = false;
+			line_array[line_id]['move'] = function (e)
+			{
+				if ($.browser['mozilla']) { e.preventDefault(); }
+				line_array[line_id]['movable'] = this;
+				this.pos_x = e.clientX;
+				this.pos_y = e.clientY;
+				this.animate({"fill-opacity": .2}, 500);
+			}
+			line_array[line_id]['element'] = line_canvas.path({"stroke": line_array[line_id]['fill'], "stroke-width": line_array[line_id]['strokewidth']});
+			line_array[line_id]['overlay'] = line_canvas.rect(0, 0, 0, 0);
+			line_array[line_id]['overlay'].attr({"fill": "#FFFFFF", "fill-opacity": 0, "stroke": "#39F", "stroke-width": 1, "stroke-opacity": 0, "opacity": 0});
+			line_array[line_id]['overlay'].node.style.cursor = "move";
+			line_array[line_id]['overlay'].mousedown(line_array[line_id]['move']);
+			line_array[line_id]['overlay'].node.onclick = function ()
+			{
+				deselectElements();
+				line_array[line_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+				line_array[line_id]['selected'] = true;
+				$('#line_colour').css('background-color', line_array[line_id]['fill']);
+				$('#line_colour').val(line_array[line_id]['fill']);
+				$("#line_size option[value='"+line_array[line_id]['strokewidth']+"']").attr('selected', 'selected');
+				selected_element = line_id;
+			}
+			deselectElements();
+			line_array[line_id]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+			line_array[line_id]['selected'] = true;
+			$('#line_colour').css('background-color', line_array[line_id]['fill']);
+			$('#line_colour').val(line_array[line_id]['fill']);
+			$("#line_size option[value='"+line_array[line_id]['strokewidth']+"']").attr('selected', 'selected');
+			selected_element = line_id;
+		}
+		
+		// Mouse down
+		document.onmousedown = function (e)
+		{
+			e = e || window.event;
+			if ($.browser.mozilla) { e.preventDefault(); }
+			if (line_drawing)
+			{
+				
+				addLine(elements, element_count, canvas, 2, "#000000");
+				
+				if ($.browser.mozilla)
+				{
+					elements[element_count]['element'].moveTo(e.layerX, e.layerY);
+					elements[element_count]['startx'] = e.layerX;
+					elements[element_count]['starty'] = e.layerY;
+				} else {
+					elements[element_count]['element'].moveTo(e.offsetX, e.offsetY);
+					elements[element_count]['startx'] = e.offsetX;
+					elements[element_count]['starty'] = e.offsetY;
+				}
+				drawing_started = true;
+				
+				// Add the hidden form elements for saving
+				 addHiddenFormElements(elements, element_count);
+								
+				// Next element
+				element_count++;
+			}
+		};
+		
+		// Mouse move
+		document.onmousemove = function (e)
+		{
+			e = e || window.event;
+			if ($.browser.mozilla) { e.preventDefault(); }
+			for (array_count = 0; array_count < element_count; array_count++)
+			{
+				if (line_drawing)
+				{
+					if (drawing_started)
+					{
+						elements[selected_element]['element'].remove();
+						elements[selected_element]['element'] = canvas.path({"stroke": elements[selected_element]['fill'], "stroke-width": elements[selected_element]['strokewidth']});
+						elements[selected_element]['element'].moveTo(elements[selected_element]['startx'], elements[selected_element]['starty']);
+			      
+						//var absolute_top = $("#designer-canvas").position().top + 20 - $(window).scrollTop() + $("#designer").position().top + $("div.central-column").position().top;
+						//var absolute_left = $("#designer-canvas").position().left + 211 - $(window).scrollLeft() + $("#designer").position().left + $("div.central-column").position().left;
+						var move_x = e.clientX - absolute_left;
+						var move_y = e.clientY - absolute_top;
+						
+						elements[selected_element]['element'].lineTo(move_x, move_y);
+						elements[selected_element]['endx'] = move_x;
+						elements[selected_element]['endy'] = move_y;
+							
+						$("#save_element_"+selected_element+"_endx").val(elements[selected_element]['endx']);
+						$("#save_element_"+selected_element+"_endy").val(elements[selected_element]['endy']);
+					}
+				} else {
+					for (array_count = 0; array_count < element_count; array_count++)
+					{
+						if (elements[array_count]['movable'])
+						{
+							elements[array_count]['group'].translate(Math.round(e.clientX - elements[array_count]['movable'].pos_x), Math.round(e.clientY - elements[array_count]['movable'].pos_y));
+							if (elements[array_count]['type'] == "ellipse")
+							{
+								elements[array_count]['x'] = elements[array_count]['element'].attr("cx");
+								elements[array_count]['y'] = elements[array_count]['element'].attr("cy");
+							} else if (elements[array_count]['type'] == "text") {
+								elements[array_count]['x'] = elements[array_count]['element'].getBBox().x;
+								elements[array_count]['y'] = elements[array_count]['element'].getBBox().y;
+							} else {
+								elements[array_count]['x'] = elements[array_count]['element'].attr("x");
+								elements[array_count]['y'] = elements[array_count]['element'].attr("y");
+							}
+							$("#save_element_"+array_count+"_x").val(elements[array_count]['x']);
+							$("#save_element_"+array_count+"_y").val(elements[array_count]['y']);
+							elements[array_count]['movable'].pos_x = Math.round(e.clientX);
+							elements[array_count]['movable'].pos_y = Math.round(e.clientY);
+							if (elements[array_count]['type'] == "ellipse")
+							{
+								var central_x = elements[array_count]['x'];
+								var central_y = elements[array_count]['y'];
+							} else {
+								var central_x = (elements[array_count]['element'].getBBox().width / 2) + elements[array_count]['x'];
+								var central_y = (elements[array_count]['element'].getBBox().height / 2) + elements[array_count]['y'];
+							}
+							elements[array_count]['group'].attr("rotation", elements[array_count]['rotate']);
+							elements[array_count]['group'].rotate(elements[array_count]['rotate'], central_x, central_y);
+							$("#save_element_"+array_count+"_rotate").val(elements[array_count]['rotate']);
+							if (elements[array_count]['type'] == "text")
+							{
+								var text_path = $("#text_"+array_count+"_0").attr("d");
+								for (var letter_count = 1; letter_count < elements[array_count]['element'].length; letter_count++)
+								{
+									text_path = text_path.toString() + "|" + $("#text_"+array_count+"_"+letter_count).attr("d");
+								}
+								elements[array_count]['path'] = text_path;
+								$("#save_element_"+array_count+"_path").val(elements[array_count]['path']);
+							}
+						}
+					}
+				}
+			}	
+		};
+		
+		// Mouse up
+		document.onmouseup = function ()
+		{
+			if (line_drawing)
+			{
+				elements[selected_element]['group'] = canvas.set();
+				elements[selected_element]['group'].push(elements[selected_element]['element']);
+				elements[selected_element]['group'].push(elements[selected_element]['overlay']);
+				elements[selected_element]['fill'] = selected_line_colour;
+				elements[selected_element]['strokewidth'] = selected_line_size;
+				elements[selected_element]['element'].node.id = "element_"+selected_element;
+				elements[selected_element]['element'].toFront();
+				elements[selected_element]['overlay'].toFront();
+				elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+				elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+				$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+				elements[selected_element]['overlay'].attr({"x": elements[selected_element]['element'].getBBox().x - 5, "y": elements[selected_element]['element'].getBBox().y - 5, "width": elements[selected_element]['element'].getBBox().width + 10, "height": elements[selected_element]['element'].getBBox().height + 10});
+				elements[array_count]['group'].translate(1, 1);
+				elements[array_count]['group'].translate(-1, -1);
+				elements[array_count]['x'] = Math.round(elements[array_count]['overlay'].attr("x"));
+				elements[array_count]['y'] = Math.round(elements[array_count]['overlay'].attr("y"));
+				elements[array_count]['group'].attr("x", elements[array_count]['x']);
+				elements[array_count]['group'].attr("y", elements[array_count]['y']);
+				$("#save_element_"+array_count+"_x").val(elements[array_count]['x']);
+				$("#save_element_"+array_count+"_y").val(elements[array_count]['y']);
+				elements[selected_element]['overlay'].animate({"stroke-opacity": 1, "fill-opacity": 0, "opacity": 1});
+				elements[selected_element]['selected'] = true;
+				line_drawing = false;
+				drawing_started = false;
+				temporary_layer.remove();
+			} else {
+				for (array_count = 0; array_count < element_count; array_count++)
+				{
+					elements[array_count]['movable'] && elements[array_count]['movable'].animate({"fill-opacity": 0}, 500);
+					elements[array_count]['movable'] = false;
+				}
+			}	
+			
+		};
+		
+		// Delete a element
+		function deleteElement(element_array, element_id)
+		{
+			if (element_id >= 0)
+			{
+				element_array[element_id]['group'].remove();
+				$("#save_element_group_"+element_id).remove();
+				$("#save_element_id_"+element_id).remove();
+				deselectElements();
+			}
+		}
+		
+		// Focus text boxes
+    	$("#text, #canvas_width, #canvas_height, #canvas_margin_top, #canvas_margin_right, #canvas_margin_bottom, #canvas_margin_left").click(function() {
+    		$(this).select();
+    	});
+    	
+    	// Change canvas size
+    	$("#canvas_width, #canvas_height, #canvas_margin_top, #canvas_margin_right, #canvas_margin_bottom, #canvas_margin_left").change(function() {
+    		var canvas_margin_top = parseInt($("#canvas_margin_top").val());
+    		var canvas_margin_right = parseInt($("#canvas_margin_right").val());
+    		var canvas_margin_bottom = parseInt($("#canvas_margin_bottom").val());
+    		var canvas_margin_left = parseInt($("#canvas_margin_left").val());
+    		var canvas_width = parseInt($("#canvas_width").val());
+    		if ((canvas_width < ((canvas_margin_left * 2) + (canvas_margin_right * 2))) || isNaN(canvas_width))
+    		{
+    			canvas_width = (canvas_margin_left * 2) + (canvas_margin_right * 2);
+    			$("#canvas_width").val(canvas_width.toString());
+    		}
+    		var canvas_height = parseInt($("#canvas_height").val());
+    		if ((canvas_height < ((canvas_margin_top * 2) + (canvas_margin_bottom * 2))) || isNaN(canvas_height))
+    		{
+    			canvas_height = (canvas_margin_top * 2) + (canvas_margin_bottom * 2);
+    			$("#canvas_height").val(canvas_height.toString());
+    		}
+    		$("#card").css("width", canvas_width.toString()+"px");
+    		$("#card").css("height", canvas_height.toString()+"px");
+    		var card_width = (canvas_width - canvas_margin_right - canvas_margin_left - 2);
+    		var card_height = (canvas_height - canvas_margin_top - canvas_margin_bottom - 2);
+    		$("#design").css("width", card_width.toString()+"px");
+    		$("#design").css("height", card_height.toString()+"px");
+    		$("#design").css("margin", canvas_margin_top.toString()+"px "+canvas_margin_right.toString()+"px "+canvas_margin_bottom.toString()+"px "+canvas_margin_left.toString()+"px ");
+    		canvas.setSize(card_width, card_height);
+    		$("#canvas_width_hidden").val(canvas_width.toString());
+    		$("#canvas_height_hidden").val(canvas_height.toString());
+    		$("#canvas_margin_top_hidden").val(canvas_margin_top.toString());
+    		$("#canvas_margin_right_hidden").val(canvas_margin_right.toString());
+    		$("#canvas_margin_bottom_hidden").val(canvas_margin_bottom.toString());
+    		$("#canvas_margin_left_hidden").val(canvas_margin_left.toString());
+    	});
+    	
+    	// Add text
+    	$("#add_text").click(function() {
+    		addText(elements, element_count, canvas, 50, 50);
+   			addHiddenFormElements(elements, element_count);
+			element_count++;
+    	});
+    	
+    	// Add ellipse
+    	$(".ellipse").click(function() {
+    		addEllipse(elements, element_count, canvas, 100, 100);
+    		addHiddenFormElements(elements, element_count);
+			element_count++;
+    	});
+    	
+    	// Add rectangle
+    	$(".rectangle").click(function() {
+    		addRectangle(elements, element_count, canvas, 100, 100);
+    		addHiddenFormElements(elements, element_count);
+			element_count++;
+    	});
+    	
+    	// Add line
+		$(".line").click(function() {
+			line_drawing = true;
+			selected_line_colour = $("#shape_border_colour").val();
+			selected_line_size = $("#shape_stroke_width").css("background-color");
+			deselectElements();
+			temporary_layer = canvas.rect(0, 0, 458, 558);
+			temporary_layer.attr({"fill": "#FFFFFF", "opacity": 0});
+			$('#shape_border_colour').css('background-color', selected_line_colour);
+			$("#shape_stroke_width option[value='"+selected_line_size+"']").attr("selected", "selected");
+		});
+		
+		// Enlarge
+		$(".enlarge").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] + 0.01;
+				elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] + 0.01;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+				$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+				if (elements[selected_element]['type'] == 'ellipse')
+				{
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+				} else {
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				}
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+				$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+			}
+		});
+		$(".enlarge").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] + 0.05;
+					elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] + 0.05;
+					elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+					elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+					elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+					$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+					$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+					$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+					$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+					if (elements[selected_element]['type'] == 'ellipse')
+					{
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+					} else {
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+					}
+					$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+					$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+				}, 200);
+			}
+		});
+		$(".enlarge").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Reduce
+		$(".reduce").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] - 0.01;
+				elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] - 0.01;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+				$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+				if (elements[selected_element]['type'] == 'ellipse')
+				{
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+				} else {
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				}
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+				$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+			}
+		});
+		$(".reduce").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] - 0.05;
+					elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] - 0.05;
+					elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+					elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+					elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+					$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+					$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+					$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+					$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+					if (elements[selected_element]['type'] == 'ellipse')
+					{
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+					} else {
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+					}
+					$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+					$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+				}, 200); 																	
+			}
+		});
+		$(".reduce").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Stretch horizontal
+		$(".stretch-horizontal").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] + 0.02;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				if (elements[selected_element]['type'] == 'ellipse')
+				{
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+				} else {
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+				}
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+			}
+		});
+		$(".stretch-horizontal").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] + 0.1;
+					elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+					elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+					$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+					$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+					if (elements[selected_element]['type'] == 'ellipse')
+					{
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+					} else {
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+					}
+					$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+				}, 200);
+			}
+		});
+		$(".stretch-horizontal").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Shrink horizontal
+		$(".shrink-horizontal").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] - 0.02;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				if (elements[selected_element]['type'] == 'ellipse')
+				{
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+				} else {
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+				}
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+			}
+		});
+		$(".shrink-horizontal").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] - 0.1;
+					elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+					elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+					$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+					$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+					if (elements[selected_element]['type'] == 'ellipse')
+					{
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x + (elements[selected_element]['width'] / 2);
+					} else {
+						elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+					}
+					$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+				}, 200);
+			}
+		});
+		$(".shrink-horizontal").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Stretch vertical
+		$(".stretch-vertical").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] + 0.02;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+				$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+				if (elements[selected_element]['type'] == 'ellipse')
+				{
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+				} else {
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				}
+				$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+			}
+		});
+		$(".stretch-vertical").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] + 0.1;
+					elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+					elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+					$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+					$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+					if (elements[selected_element]['type'] == 'ellipse')
+					{
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+					} else {
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+					}
+					$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+				}, 200);
+			}
+		});
+		$(".stretch-vertical").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Shrink vertical
+		$(".shrink-vertical").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] - 0.02;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+				$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+				if (elements[selected_element]['type'] == 'ellipse')
+				{
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+				} else {
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				}
+				$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+			}
+		});
+		$(".shrink-vertical").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] - 0.1;
+					elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+					elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+					$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+					$("#save_element_"+selected_element+"_height").val(elements[selected_element]['height']);
+					if (elements[selected_element]['type'] == 'ellipse')
+					{
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y + (elements[selected_element]['height'] / 2);
+					} else {
+						elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+					}
+					$("#save_element_"+selected_element+"_y").val(elements[selected_element]['y']);
+				}, 200);
+			}
+		});
+		$(".shrink-vertical").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Rotate right
+		$(".rotate-right").click(function() {
+			if (selected_element >= 0)
+			{
+				var central_x = (elements[selected_element]['element'].getBBox().width / 2) + elements[selected_element]['element'].getBBox().x;
+				var central_y = (elements[selected_element]['element'].getBBox().height / 2) + elements[selected_element]['element'].getBBox().y;
+				elements[selected_element]['group'].attr("rotation", elements[selected_element]['rotate'] + 1);
+				elements[selected_element]['group'].rotate(elements[selected_element]['rotate'] + 1, central_x, central_y);
+				elements[selected_element]['rotate'] = elements[selected_element]['rotate'] + 1;
+				$("#save_element_"+selected_element+"_rotate").val(elements[selected_element]['rotate']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+				elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+			}
+		});
+		$(".rotate-right").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					var central_x = (elements[selected_element]['element'].getBBox().width / 2) + elements[selected_element]['element'].getBBox().x;
+					var central_y = (elements[selected_element]['element'].getBBox().height / 2) + elements[selected_element]['element'].getBBox().y;
+					elements[selected_element]['group'].attr("rotation", elements[selected_element]['rotate'] + 5);
+					elements[selected_element]['group'].rotate(elements[selected_element]['rotate'] + 5, central_x, central_y);
+					elements[selected_element]['rotate'] = elements[selected_element]['rotate'] + 5;
+					$("#save_element_"+selected_element+"_rotate").val(elements[selected_element]['rotate']);
+					elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+					elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+					$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+					$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+				}, 200); 		
+			}
+		});
+		$(".rotate-right").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Rotate left
+		$(".rotate-left").click(function() {
+			if (selected_element >= 0)
+			{
+				var central_x = (elements[selected_element]['element'].getBBox().width / 2) + elements[selected_element]['element'].getBBox().x;
+				var central_y = (elements[selected_element]['element'].getBBox().height / 2) + elements[selected_element]['element'].getBBox().y;
+				elements[selected_element]['group'].attr("rotation", elements[selected_element]['rotate'] - 1);
+				elements[selected_element]['group'].rotate(elements[selected_element]['rotate'] - 1, central_x, central_y);
+				elements[selected_element]['rotate'] = elements[selected_element]['rotate'] - 1;
+				$("#save_element_"+selected_element+"_rotate").val(elements[selected_element]['rotate']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+				elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+			}
+		});
+		$(".rotate-left").mousedown(function() {
+			if (selected_element >= 0)
+			{
+				action_timer = setInterval(function() {
+					var central_x = (elements[selected_element]['element'].getBBox().width / 2) + elements[selected_element]['element'].getBBox().x;
+					var central_y = (elements[selected_element]['element'].getBBox().height / 2) + elements[selected_element]['element'].getBBox().y;
+					elements[selected_element]['group'].attr("rotation", elements[selected_element]['rotate'] - 5);
+					elements[selected_element]['group'].rotate(elements[selected_element]['rotate'] - 5, central_x, central_y);
+					elements[selected_element]['rotate'] = elements[selected_element]['rotate'] - 5;
+					$("#save_element_"+selected_element+"_rotate").val(elements[selected_element]['rotate']);
+					elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+					elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+					elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+					elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+					$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+					$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+					
+				}, 200);
+			}
+		});
+		$(".rotate-left").mouseup(function() {
+			if (selected_element >= 0)
+			{
+				clearInterval(action_timer);
+			}
+		});
+		
+		// Rotate right 90
+		$(".rotate-right-90").click(function() {
+			if (selected_element >= 0)
+			{
+				var central_x = (elements[selected_element]['element'].getBBox().width / 2) + elements[selected_element]['element'].getBBox().x;
+				var central_y = (elements[selected_element]['element'].getBBox().height / 2) + elements[selected_element]['element'].getBBox().y;
+				elements[selected_element]['group'].attr("rotation", elements[selected_element]['rotate'] + 90);
+				elements[selected_element]['group'].rotate(elements[selected_element]['rotate'] + 90, central_x, central_y);
+				elements[selected_element]['rotate'] = elements[selected_element]['rotate'] + 90;
+				$("#save_element_"+selected_element+"_rotate").val(elements[selected_element]['rotate']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+				elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+			}
+		});
+		
+		// Rotate left 90
+		$(".rotate-left-90").click(function() {
+			if (selected_element >= 0)
+			{
+				var central_x = (elements[selected_element]['element'].getBBox().width / 2) + elements[selected_element]['element'].getBBox().x;
+				var central_y = (elements[selected_element]['element'].getBBox().height / 2) + elements[selected_element]['element'].getBBox().y;
+				elements[selected_element]['group'].attr("rotation", elements[selected_element]['rotate'] - 90);
+				elements[selected_element]['group'].rotate(elements[selected_element]['rotate'] - 90, central_x, central_y);
+				elements[selected_element]['rotate'] = elements[selected_element]['rotate'] - 90;
+				$("#save_element_"+selected_element+"_rotate").val(elements[selected_element]['rotate']);
+				elements[selected_element]['width'] = elements[selected_element]['element'].getBBox().width;
+				elements[selected_element]['height'] = elements[selected_element]['element'].getBBox().height;
+				elements[selected_element]['x'] = elements[selected_element]['element'].getBBox().x;
+				elements[selected_element]['y'] = elements[selected_element]['element'].getBBox().y;
+				$("#save_element_"+selected_element+"_width").val(elements[selected_element]['width']);
+				$("#save_element_"+selected_element+"_x").val(elements[selected_element]['x']);
+			}
+		});
+		
+		// Flip horizontal
+		$(".flip-horizontal").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['horizontal_scale'] = elements[selected_element]['horizontal_scale'] * -1;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				$("#save_element_"+selected_element+"_horizontal_scale").val(elements[selected_element]['horizontal_scale']);
+			}
+		});
+		
+		// Flip vertical
+		$(".flip-vertical").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['vertical_scale'] = elements[selected_element]['vertical_scale'] * -1;
+				elements[selected_element]['group'].scale(elements[selected_element]['horizontal_scale'], elements[selected_element]['vertical_scale']);
+				$("#save_element_"+selected_element+"_vertical_scale").val(elements[selected_element]['vertical_scale']);
+			}
+		});
+		
+		// Bring to front
+		$(".bring-to-front").click(function() {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['group'].toFront();
+			}
+		});
+		
+		// Send to back
+		$(".send-to-back").click(function() {
+			if (selected_element >= 0)
+			{
+				for (array_count = 0; array_count < element_count; array_count++)
+				{
+					if (array_count != selected_element)
+					{
+						elements[array_count]['group'].toFront();
+					}
+				}																 
+			}
+		});
+		
+		// Change stroke width
+		$("#image_stroke_width").change(function () {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['strokewidth'] = $(this).val();
+				elements[selected_element]['border'].attr({"stroke-width": elements[selected_element]['strokewidth']});
+				$("#save_element_"+selected_element+"_strokewidth").val(elements[selected_element]['strokewidth']);
+			}
+		});
+		$("#shape_stroke_width").change(function () {
+			if (selected_element >= 0)
+			{
+				elements[selected_element]['strokewidth'] = $(this).val();
+				elements[selected_element]['element'].attr({"stroke-width": elements[selected_element]['strokewidth']});
+				$("#save_element_"+selected_element+"_strokewidth").val(elements[selected_element]['strokewidth']);
+			}
+		});
+		
+		// Change text size
+		$("#text_size").change(function () {
+			if (selected_element >= 0)
+			{
+				updateText(elements, element_count, canvas);
+			}
+		});
+		
+		// Change text font
+		$("#text_font").change(function () {
+			// Reset font styles
+			$(".bold").show();
+			$(".italic").show();
+			// Hide italics
+			if (($(this).val() == 'comic-sans-ms') || ($(this).val() == 'tahoma'))
+			{
+				$(".italic").hide();	
+			}
+			if (selected_element >= 0)
+			{
+				updateText(elements, element_count, canvas);
+			}
+		});
+		
+		// Delete an element
+		$(".delete").click(function() {
+			if (selected_element >= 0)
+			{																 
+				deleteElement(elements, selected_element);
+				$("#save_element_group_"+selected_element).remove();
+			}
+		});
+	
+	};
+	
+</script>

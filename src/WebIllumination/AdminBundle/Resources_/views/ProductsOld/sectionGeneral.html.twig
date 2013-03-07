@@ -1,0 +1,63 @@
+<section id="general">
+	<div class="clearfix">
+        <label for="form-status" class="form-label"><em>*</em> Status<small>Is the product available?</small></label>
+        <div class="form-input status" id="form-status"><label><input type="radio" name="status" id="form-status-a" value="a"{% if product.status == 'a' %} checked="checked"{% endif %} /> Active</label> <label><input type="radio" name="status" id="form-status-h" value="h"{% if product.status == 'h' %} checked="checked"{% endif %} /> Hidden</label> <label><input type="radio" name="status" id="form-status-d" value="d"{% if product.status == 'd' %} checked="checked"{% endif %} /> Disabled</label></div>
+    </div>
+	<div class="clearfix">
+        <label for="form-name" class="form-label"><em>*</em> Name<small>Enter the product name</small></label>
+        <div class="form-input"><input type="text" id="form-name" name="name" required="required" value="{{ product_description.name }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-brand-id" class="form-label"><em>*</em> Brand<small>Select a brand of the product</small></label>
+        <div class="form-input">
+        	<select id="form-brand-id" name="brand-id" required="required">
+            	<option value="">Please Select</option>
+        		{% for brand in brands %}
+			        <option value="{{ brand.brandId }}"{% if product.brandId == brand.brandId %} selected="selected"{% endif %}>{{ brand.name }}</option>
+			    {% endfor %}
+        	</select>
+        </div>
+    </div>
+    <div class="clearfix">
+        <label for="form-product-code" class="form-label"><em>*</em> Product Code<small>Enter your own unique product code</small></label>
+        <div class="form-input"><input type="text" id="form-product-code" name="product-code" class="uppercase" required="required" value="{{ product.productCode }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-feature-comparison" class="form-label">Feature Comparison<small>Include in feature comparison?</small></label>
+        <div class="form-input" id="form-feature-comparison"><label><input type="radio" name="feature-comparison" id="form-feature-comparison-1" value="1"{% if product.featureComparison == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="feature-comparison" id="form-feature-comparison-0" value="0"{% if product.featureComparison == 0 %} checked="checked"{% endif %} /> No</label></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-downloadable" class="form-label">Downloadable<small>Is the product a download?</small></label>
+        <div class="form-input" id="form-downloadable"><label><input type="radio" name="downloadable" id="form-downloadable-1" value="1"{% if product.downloadable == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="downloadable" id="form-downloadable-0" value="0"{% if product.downloadable == 0 %} checked="checked"{% endif %} /> No</label></div>
+    </div>
+    <div class="clearfix">
+        <div class="form-input buttons no-margin-bottom">
+    		<button class="button ui-button-default">Save</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+		$(document).ready(function() {
+		
+			{# Status colours #}
+			{% if product.status == 'a' %}
+				$("#form-status, #tab-general").addClass("ui-status-success");
+			{% elseif product.status == 'h' %}
+				$("#form-status, #tab-general").addClass("ui-status-highlight");
+			{% else %}
+				$("#form-status, #tab-general").addClass("ui-status-error");
+			{% endif %}
+			$("input[name='status']").change(function() {
+				$("#form-status, #tab-general").removeClass("ui-status-success").removeClass("ui-status-highlight").removeClass("ui-status-error");
+				if ($("#form-status-a").is(":checked"))
+				{
+					$("#form-status, #tab-general").addClass("ui-status-success");
+				} else if ($("#form-status-h").is(":checked")) {
+					$("#form-status, #tab-general").addClass("ui-status-highlight");
+				} else {
+					$("#form-status, #tab-general").addClass("ui-status-error");
+				}
+			});
+			
+		});
+	</script>
+</section>

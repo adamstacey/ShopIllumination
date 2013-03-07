@@ -1,0 +1,92 @@
+<section id="general" class="form">
+	<h2>General</h2>
+	<div id="general-confirm-leave" class="ui-widget message ui-helper-hidden">
+	    <div class="ui-state-error ui-corner-all">
+	    	<span class="ui-icon ui-icon-help"></span>
+	        <p><strong>WARNING:</strong> You are about to leave this section and you have made changes without updating. Do you want to update before you leave?</p>
+	        <p>
+	        	<button class="button action-update-general-section ui-button-green" data-icon-primary="ui-icon-check">Update</button>
+	        	<button class="button ui-button-red action-leave-general" data-icon-primary="ui-icon-closethick">Continue Without Updating</button>
+	        	<input type="hidden" value="-1" id="general-tab-to-redirect-to" />
+	        	<input type="hidden" value="0" id="general-requires-update" />
+	        </p>
+	    </div>
+	    <div class="spacer"></div>
+	</div>
+	<div class="clearfix">
+        <label for="form-status" class="form-label"><em>*</em> Status<small>Is the brand available?</small></label>
+        <div class="form-input status" id="form-status"><label><input type="radio" name="status" id="form-status-a" value="a"{% if data.brand.status == 'a' %} checked="checked"{% endif %} /> Active</label> <label><input type="radio" name="status" id="form-status-h" value="h"{% if data.brand.status == 'h' %} checked="checked"{% endif %} /> Hidden</label> <label><input type="radio" name="status" id="form-status-d" value="d"{% if data.brand.status == 'd' %} checked="checked"{% endif %} /> Disabled</label></div>
+    </div>
+	<div class="clearfix">
+        <label for="form-brand" class="form-label"><em>*</em> Name<small>Enter the brand name</small></label>
+        <div class="form-input"><input type="text" id="form-brand" required="required" data-message="Please enter the name of the brand." value="{{ data.brand.brand }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-brand" class="form-label">Logo<small>Upload a logo</small></label>
+        <div class="form-input">
+        	<div id="logo-image-confirm-delete" class="ui-widget message ui-helper-hidden">
+			    <div class="ui-state-error ui-corner-all"> 
+			        <span class="ui-icon ui-icon-help"></span>
+			        <p><strong>WARNING:</strong> Are you sure you want to delete the logo?</p>
+			        <p>
+			        	<button data-id="{{ data.brand.logoImageId }}" id="logo-image-confirm-delete-button" class="button ui-button-red action-delete-logo-image" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+			        	<button id="image-cancel-delete-button" class="button ui-button-blue action-cancel-delete-logo-image">Cancel</button>
+			        </p>
+			    </div>
+			</div>
+        	<div class="images-container">
+				<ul class="list-fields">
+					<li>
+			        	<table width="100%">
+							<tbody>
+								<tr>
+									<td>
+										<div class="image-file-upload" id="logo-image-file-upload"></div>
+										<div class="image-file-uploading ui-helper-hidden" id="logo-image-file-uploading">
+											<img class="fl" alt="Loading" width="16" height="11" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-file-loader.gif') }}" />
+											<p>Please wait, uploading file&hellip;</p>
+										</div>
+										<div id="logo-image-upload-success" class="ui-widget image-upload-success image-upload-message ui-helper-hidden">
+										    <div class="ui-state-success no-margin ui-corner-all"> 
+										        <p class="no-margin">
+										            <span class="ui-icon ui-icon-circle-check"></span>
+										            <span class="image-upload-success-text" id="logo-image-upload-success-text"></span>
+										            <img class="fr action-cancel-logo-image-upload" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+										        </p>
+										    </div>
+										</div>
+										<div id="logo-image-upload-error" class="ui-widget image-upload-error image-upload-message ui-helper-hidden">
+										    <div class="ui-state-error no-margin ui-corner-all"> 
+										        <p class="no-margin">
+										            <span class="ui-icon ui-icon-alert"></span>
+										            <span class="image-upload-error-text" id="logo-image-upload-error-text"></span>
+										            <img class="fr action-cancel-logo-image-upload" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+										        </p>
+										    </div>
+										</div>
+										<input type="hidden" id="form-logo-image-file" class="image-file" />		
+									</td>
+									<td class="ac" width="1">
+							        	{% if data.brand.logo.thumbnailPath is defined %}
+									    	<img id="form-logo-image-preview" alt="{{ data.brand.logo.title }}" class="thumbnail action-image-popup"{% if data.brand.logo.largePath is defined %} data-image-size-width="{{ data.brand.logo.largeWidth }}" data-image-size-height="{{ data.brand.logo.largeHeight }}" data-image-large-path="{{ data.brand.logo.largePath }}?version={{ "now"|date('dmYHis') }}"{% endif %} src="{{ asset(data.brand.logo.thumbnailPath) }}" height="24" border="0" />
+							        	{% else %}
+							        		<img id="form-logo-image-preview" height="30" src="{{ asset('bundles/webilluminationadmin/images/no-image-available.png') }}" border="0" alt="No Image Available" />
+							        	{% endif %}
+									</td>
+									<td id="delete-logo-image-container" class="ac{% if data.brand.logoImageId == 0 %} ui-helper-hidden{% endif %}" width="1">
+										<button class="button ui-button-red action-confirm-delete-logo-image" data-icon-primary="ui-icon-closethick">Delete</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</li>
+				</ul>
+			</div>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="form-input buttons no-margin-bottom">
+    		<button class="button ui-button-green action-update-general-section" data-icon-primary="ui-icon-check">Update</button>
+        </div>
+    </div>
+</section>

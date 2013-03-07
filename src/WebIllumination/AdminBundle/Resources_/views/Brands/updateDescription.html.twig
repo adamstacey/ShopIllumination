@@ -1,0 +1,98 @@
+<section id="description" class="form ui-helper-hidden">
+	<h2>Description</h2>
+	<div id="description-confirm-leave" class="ui-widget message ui-helper-hidden">
+	    <div class="ui-state-error ui-corner-all">
+	    	<span class="ui-icon ui-icon-help"></span>
+	        <p><strong>WARNING:</strong> You are about to leave this section and you have made changes without updating. Do you want to update before you leave?</p>
+	        <p>
+	        	<button class="button action-update-description-section ui-button-green" data-icon-primary="ui-icon-check">Update</button>
+	        	<button class="button ui-button-red action-leave-description" data-icon-primary="ui-icon-closethick">Continue Without Updating</button>
+	        	<input type="hidden" value="-1" id="description-tab-to-redirect-to" />
+	        	<input type="hidden" value="0" id="description-requires-update" />
+	        </p>
+	    </div>
+	    <div class="spacer"></div>
+	</div>
+	<div class="ui-widget info-message">
+		<div class="ui-state-highlight ui-corner-all">
+			<span class="info-message-icon ui-icon ui-icon-info"></span>
+			<p>The description is what sells the brand and it is important that you explain how a potential customer will benefit from buying products from this brand.</p>
+		</div>
+	</div>
+    <div class="accordion clearfix">
+        <header class="current"><a href="#">Description</a></header>
+        <section>
+            <div class="clearfix">
+		        <div class="form-input-long">
+		        	<div class="ac">
+		                <div class="buttonset no-margin-right">
+		                    <input type="radio" class="show-tinymce" rel="#form-description" name="tinymce-description" value="1" id="tinymce-description-1" checked="checked" /><label for="tinymce-description-1">Visual</label>
+		                    <input type="radio" class="show-tinymce" rel="#form-description" name="tinymce-description" value="0" id="tinymce-description-0" /><label for="tinymce-description-0">HTML</label>
+		                    <hr class="inset" />
+		                </div>
+		                <div class="leading">
+		                    <textarea id="form-description" name="description" rows="3" class="tinymce-basic">{{ data.brand.description }}</textarea>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+        </section>
+        <header><a href="#">About</a></header>
+        <section>
+            <div class="clearfix">
+		        <div class="form-input-long">
+		        	<div class="ac">
+		                <div class="buttonset no-margin-right">
+		                    <input type="radio" class="show-tinymce" rel="#form-about" name="tinymce-about" value="1" id="tinymce-about-1" checked="checked" /><label for="tinymce-about-1">Visual</label>
+		                    <input type="radio" class="show-tinymce" rel="#form-about" name="tinymce-about" value="0" id="tinymce-about-0" /><label for="tinymce-about-0">HTML</label>
+		                    <hr class="inset" />
+		                </div>
+		                <div class="leading">
+		                    <textarea id="form-about" name="about" rows="3" class="tinymce-basic">{{ data.brand.about }}</textarea>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+        </section>
+        <header><a href="#">History</a></header>
+        <section>
+            <div class="clearfix">
+		        <div class="form-input-long">
+		        	<div class="ac">
+		                <div class="buttonset no-margin-right">
+		                    <input type="radio" class="show-tinymce" rel="#form-history" name="tinymce-history" value="1" id="tinymce-history-1" checked="checked" /><label for="tinymce-history-1">Visual</label>
+		                    <input type="radio" class="show-tinymce" rel="#form-history" name="tinymce-history" value="0" id="tinymce-history-0" /><label for="tinymce-history-0">HTML</label>
+		                    <hr class="inset" />
+		                </div>
+		                <div class="leading">
+		                    <textarea id="form-history" name="history" rows="3" class="tinymce-basic">{{ data.brand.history }}</textarea>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+        </section>
+        <header><a href="#">More Information</a></header>
+        <section>
+            <div class="clearfix">
+		        <div class="form-input-long">
+		        	<div class="ac">
+		                <div class="buttonset no-margin-right">
+		                    <input type="radio" class="show-tinymce" rel="#form-more-information" name="tinymce-more-information" value="1" id="tinymce-more-information-1" checked="checked" /><label for="tinymce-more-information-1">Visual</label>
+		                    <input type="radio" class="show-tinymce" rel="#form-more-information" name="tinymce-more-information" value="0" id="tinymce-more-information-0" /><label for="tinymce-more-information-0">HTML</label>
+		                    <hr class="inset" />
+		                </div>
+		                <div class="leading">
+		                    <textarea id="form-more-information" name="more-information" rows="3" class="tinymce-basic">{{ data.brand.moreInformation }}</textarea>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+        </section>
+        <div class="clear"></div>
+    </div>
+    <div class="clearfix">
+        <div class="form-input-long buttons no-margin-bottom">
+        	<button class="button ui-button-green action-update-description-section" data-icon-primary="ui-icon-check">Update</button>
+        </div>
+    </div>
+</section>

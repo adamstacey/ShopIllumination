@@ -1,0 +1,180 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}{{ product_description.name }}  | {{ parent() }}{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/tinymce/jquery.tinymce.js' output='js/tinymce.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %} 
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/data-table.js' output='js/data-table.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart','table']}]}"></script>
+{% endblock %}
+{% block leftmenu %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:Products:leftMenu.html.twig' %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	<h2>{{ product_description.name }}</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+    	<div class="grid_4"> 
+			<div class="portlet">
+				<header>
+	                <h2>Actions</h2>
+                </header>
+				<section>
+                    {% for product_warning in product_warnings %}
+        				<div class="product-warning ui-status-{{ product_warning.status }}{% if loop.last %} no-margin-bottom{% endif %}">
+	        				<span class="product-warning-icon ui-icon ui-icon-{{ product_warning.icon }}"></span>
+        					<button class="button action-fix" rel="{{ product_warning.section }}" data-icon-primary="ui-icon-wrench">&nbsp;&nbsp;Fix This!</button>
+        					<p>{{ product_warning.message|raw }}</p>
+        					<div class="clear"></div>
+        				</div>
+				    {% else %}
+				        <div class="product-warning ui-status-success no-margin-bottom">
+	        				<span class="product-warning-icon ui-icon ui-icon-circle-check"></span>
+        					<p>Your product is up-to-date.<br />There are no actions required for this product at this time.</p>
+        					<div class="clear"></div>
+        				</div>
+				    {% endfor %}
+	            </section>
+	        </div>
+	    </div>
+        <div class="grid_2">
+            <div class="portlet">
+                <header>
+                    <h2>Product Preview</h2>
+                </header>
+                <section>
+                	
+                </scetion>
+            </div>
+        </div>
+	   	<div class="clear"></div>
+    	<form action="{{ path('products_edit', { 'id': product.id }) }}" method="post" class="form has-validation">
+	        <div class="grid_6 leading">
+	            <div class="portlet">
+	                <header>
+	                    <h2>Product Information</h2>
+	                </header>
+	                <section>
+	                    <div class="sidebar-tabs" style="min-height: 400px">
+	                        <ul>
+	                            <li id="tab-general"><a href="#general">General</a></li>
+	                            <li id="tab-unique-product-identifiers"><a href="#unique-product-identifiers">Unique Product Identifiers</a></li>
+	                            <li id="tab-description"><a href="#description">Description</a></li>
+	                            <li id="tab-pricing"><a href="#pricing">Pricing</a></li>
+	                            <li id="tab-guarantee"><a href="#guarantee">Guarantee</a></li>
+	                            <li id="tab-seo"><a href="#seo">SEO</a></li>
+	                            <li id="tab-images"><a href="#images">Images</a></li>
+	                            <li id="tab-features"><a href="#features">Features</a></li>
+	                            <li id="tab-options"><a href="#options">Options</a></li>
+	                            <li id="tab-attachments"><a href="#attachments">Attachments</a></li>
+	                            <li id="tab-dimensions"><a href="#dimensions">Package Dimensions</a></li>
+	                        </ul>
+	                        {% include 'WebIlluminationAdminBundle:Products:sectionGeneral.html.twig' with {'product': product, 'product_description': product_description, 'brands': brands} %}
+	                        {% include 'WebIlluminationAdminBundle:Products:sectionUniqueProductIdentifiers.html.twig' with {'product': product, 'product_search': product_search} %}
+	                        {% include 'WebIlluminationAdminBundle:Products:sectionDimensions.html.twig' with {'product': product} %}
+	                        {% include 'WebIlluminationAdminBundle:Products:sectionDescription.html.twig' with {'product_description': product_description} %}
+	                        {% include 'WebIlluminationAdminBundle:Products:sectionPricing.html.twig' with {'product': product} %}
+	                        {% include 'WebIlluminationAdminBundle:Products:sectionGuarantee.html.twig' with {'product_description': product_description, 'guarantees': guarantees} %} 
+	                        {% include 'WebIlluminationAdminBundle:Products:sectionSeo.html.twig' with {'product': product, 'product_description': product_description, 'web_address': web_address} %}
+	                        {% include 'WebIlluminationAdminBundle:Brands:sectionImages.html.twig' with {'product': product, 'images': images} %}
+	                        <section id="features">
+	                        	<p>There are currently no features setup yet.</p>
+	                        </section>
+	                        <section id="options">
+	                        	<p>There are currently no options setup yet.</p>
+	                        </section>
+	                        <section id="attachments">
+	                        	<div id="gallery-image-container-0">
+		                            <div class="clearfix">
+				                        <label for="form-gallery-image-1" class="form-label">Attachment<small>Format: pdf, doc, els, ppt</small></label>
+				                        <div class="form-input"><input type="file" id="form-gallery-image-1" /></div>
+				                    </div>
+				                    <div class="clearfix">
+				                        <label for="logo-alt-text" class="form-label">Description<small>A description of the image</small></label>
+				                        <div class="form-input"><input type="text" id="form-logo-alt-text" name="logo-alt-text" /></div>
+				                    </div>
+				            	</div>
+	                        </section>
+	                    </div>
+	                </section>
+	            </div>
+	        </div>
+	    </form>
+	    <div class="clear"></div>
+	    {#}
+	    <div class="grid_6 leading">
+            <div class="portlet">
+                <header>
+                    <h2>Design Tool</h2>
+                </header>
+                <section>
+                    <div class="tabs" style="min-height: 150px">
+                        <ul>
+                        	<li id="tab-design-page-1"><a href="#design-page-1">Page 1</a></li>
+                            <li id="tab-design-page-2"><a href="#design-page-2">Page 2</a></li>
+                            <li id="tab-design-page-3"><a href="#design-page-3">Page 3</a></li>
+                        </ul>
+                        <section id="design-page-1">
+                        	{% include 'WebIlluminationAdminBundle:Designer:index.html.twig' with {'id': 1, 'design_data': design_data} %}
+                        </section>
+                        <section id="design-page-2">
+                            <p>A list of statistics will go here.</p>
+                        </section>
+                        <section id="design-page-3">
+                            <p>A list of trends will go here.</p>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="clear"></div>
+        {#}
+        <div class="grid_6 leading">
+            <div class="portlet">
+                <header>
+                    <h2>Statistics</h2>
+                </header>
+                <section>
+                    <div class="sidebar-tabs" style="min-height: 150px">
+                        <ul>
+                        	<li id="tab-statistics-visits"><a href="#statistics-visits">Visits</a></li>
+                            <li id="tab-statistics-referrers"><a href="#statistics-referrers">Referrers</a></li>
+                        	<li id="tab-competitors"><a href="#competitors">Competitors</a></li>
+                            <li id="tab-trends"><a href="#trends">Trends</a></li>
+                        </ul>
+                        {% include 'WebIlluminationAdminBundle:Products:sectionStatisticsVisits.html.twig' with {'product': product} %}
+                        {% include 'WebIlluminationAdminBundle:Products:sectionStatisticsReferrers.html.twig' with {'product': product} %}
+                        {% include 'WebIlluminationAdminBundle:Products:sectionCompetitors.html.twig' with {'product': product, 'product_search': product_search} %}
+                        <section id="statistics">
+                            <p>A list of statistics will go here.</p>
+                        </section>
+                        <section id="trends">
+                            <p>A list of trends will go here.</p>
+                        </section>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="clear"></div>
+        {% include 'WebIlluminationAdminBundle:Products:sectionHistory.html.twig' %}
+	</section>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		
+			{# Exaggerate the animations #}
+			$.fx.speeds._default = 1000;
+			
+			{# Action fix #}
+			$(".action-fix").click(function() {
+				$(".sidebar-tabs").tabs("select", $(this).attr("rel"));
+			});
+		    
+		});
+	</script>
+{% endblock %}

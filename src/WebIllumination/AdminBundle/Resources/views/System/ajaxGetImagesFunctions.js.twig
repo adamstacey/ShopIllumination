@@ -1,0 +1,181 @@
+{# Function to update all images #}
+function updateImages()
+{
+	$errorOccurred = false;
+	$numberOfElementsToProcess = $("input.image-requires-update[value='1']").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToProcess > 0)
+	{
+		$("#ajax_loading").show();
+		var imagesValidator = $("#images :input").validator({
+			position : 'bottom left', 
+			offset : [0, 0], 
+			messageClass : 'form-error', 
+    		message : '<div><em/></div>'
+		});
+		if (imagesValidator.data("validator").checkValidity())
+		{
+			$("input.image-requires-update[value='1']").each(function(index) {
+				$elementIndex = String($(this).attr("data-index"));
+				$.ajax({
+			    	url: "{{ path('system_ajax_update_image') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-image-id-"+$elementIndex).val(),
+			      		file: $("#form-image-file-"+$elementIndex).val(),
+			      		objectId: '{{ objectId }}',
+			      		objectType: '{{ objectType }}',
+			      		imageType: '{{ imageType }}',
+			      		locale: 'en',
+			      		title: $("#form-image-title-"+$elementIndex).val(),
+			      		alignment: $("#form-image-alignment-"+$elementIndex).val(),
+			      		description: $("#form-image-description-"+$elementIndex).val(),
+			      		link: $("#form-image-link-"+$elementIndex).val(),
+			      		displayOrder: $("#form-image-display-order-"+$elementIndex).val(),
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			        	$errorOccurred = true;
+			        	$("#image-"+$elementIndex).addClass("ui-state-highlight");
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#image-error-message-text").html('Problems occurred while trying to update your images. Please check and try again.');
+								$("#image-error-message").fadeIn();
+							} else {
+								$("#image-success-message-text").html('Your images were successfully updated.');
+								$("#image-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#images-tab-to-redirect-to").val() > -1)
+							{
+								$("#images .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#images-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	},
+			      	success: function(data) {
+		      			if (data.response == 'success')
+		      			{
+		      				$("#image-"+data.elementIndex).removeClass("ui-state-highlight");
+		      				$("#form-image-preview-"+data.elementIndex).attr("alt", data.title);
+		      				$("#form-image-preview-"+data.elementIndex).attr("data-image-size-width", data.largeWidth);
+		      				$("#form-image-preview-"+data.elementIndex).attr("data-image-size-height", data.largeHeight);
+		      				$("#form-image-preview-"+data.elementIndex).attr("data-image-large-path", data.large);
+		      				$("#form-image-preview-"+data.elementIndex).attr("src", data.thumbnail);
+		      				$("#form-image-preview-"+data.elementIndex).addClass("action-image-popup");
+		      				$("#form-image-preview-"+data.elementIndex).addClass("thumbnail");
+		      				$("#form-image-id-"+data.elementIndex).val(data.id);
+		      				$("#form-image-requires-update-"+data.elementIndex).val("0");
+		      				$("#image-upload-error-"+data.elementIndex+", #image-upload-success-"+data.elementIndex+", #image-file-uploading-"+data.elementIndex).hide();
+							$("#image-file-upload-"+data.elementIndex+" .qq-upload-list").html("");
+							$("#image-file-upload-"+data.elementIndex+" span.filename").html("No file selected");
+							$("#form-image-file-"+data.elementIndex).val("");
+							$("#image-file-upload-"+data.elementIndex).fadeIn();
+		      			} else {
+		      				$("#image-"+data.elementIndex).addClass("ui-state-highlight");
+		      				$errorOccurred = true;
+		      			}
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#image-error-message-text").html('Problems occurred while trying to update your images. Please check and try again.');
+								$("#image-error-message").fadeIn();
+							} else {
+								$("#image-success-message-text").html('Your images were successfully updated.');
+								$("#image-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#images-tab-to-redirect-to").val() > -1)
+							{
+								$("#images .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#images-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	}
+			   	});
+			});
+		} else {
+			$("#image-error-message-text").html('Sorry, there was a problem saving. Please ensure all images have been filled in and are valid. Please correct the highlighted images and try again.');
+        	$("#image-error-message").fadeIn();
+        	$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+        	$("#ajax_loading").hide();
+		}
+	}
+}
+
+{# Function to load new image #}
+function loadNewImage()
+{
+	$("#ajax_loading").show();
+	$nextElement = parseInt($("#image-count").val()) + 1;
+	$("#image-count").val($nextElement);
+	$.ajax({
+    	url: "{{ path('system_ajax_add_image') }}",
+      	type: "GET",
+      	data: {
+      		id: $nextElement,
+      		objectId: '{{ objectId }}',
+      		objectType: '{{ objectType }}'
+      	},
+      	error: function(data) {
+        	$("#image-error-message-text").html('Sorry, there was an error adding a new image. Please try again.');
+			$("#image-error-message").fadeIn();
+      	},
+      	success: function(data) {
+  			$("#form-images-container").append(data);
+			$("#image-"+$nextElement.toString()+" :checkbox:not(.no-uniform), #image-"+$nextElement.toString()+" :radio:not(.no-uniform), #image-"+$nextElement.toString()+" select:not(.no-uniform)").uniform();
+			$("#image-"+$nextElement.toString()).fadeIn();
+			$("#image-"+$nextElement+" .button").each(function () {
+	            $(this).button({
+	            	icons: {
+	                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+	                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+	        	});
+	        });
+	        reOrderImages();
+	        $(".selector, .uploader").addClass("full");
+	        $("html, body").animate({scrollTop: $("#image-"+$nextElement).offset().top - 100},'slow');
+	        $("#ajax_loading").hide();
+      	}
+   	});
+}
+
+{# Function to re-order the image indexes #}
+function reOrderImages()
+{
+	$("#images .message").hide();
+	$(".form-error").remove();
+	$imageCount = 1;
+	$numberOfElementsToProcess = $("li.image-container:visible").length;
+	$numberOfElementsProcessed = 0;
+	$("li.image-container:visible").each(function(index) {
+		$row = $(this);
+		if ($row.find("input.image-display-order").val() != $imageCount)
+		{
+			if ($row.find("input.image-id").val() > 0)
+			{
+				$row.find("input.image-requires-update").val("1");
+			}
+		}
+		$row.find("input.image-display-order").val($imageCount);
+	    $imageCount++;
+	    $numberOfElementsProcessed++;
+	    if ($numberOfElementsProcessed == $numberOfElementsToProcess)
+	    {
+	    	updateImages();
+	    }
+	});
+	$("li.image-container:hidden").each(function(index) {
+		$(this).remove();
+	});
+}

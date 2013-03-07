@@ -1,0 +1,313 @@
+{# Reset filters #}
+function resetFilters()
+{
+	$("#listing-filter input, #listing-filter textarea, #listing-filter select").val("");
+	$("#listing-filter input[type='radio'], #listing-filter input[type='checkbox']").removeAttr("checkbox");
+	$("#listing-filter div.checker span, #listing-filter div.radio span").removeClass("checked");
+	$("#listing-filter select option").removeAttr("selected");
+	$("#listing-filter select").each(function() {
+		var $selectObject = $(this);
+		$selectObject.val($("options:first", $selectObject).val());
+	});
+	$(".range-slider").each(function() {
+		var $sliderObject = $(this);
+		var $fromObject = $sliderObject.prev().find(".from-value");
+		var $toObject = $sliderObject.prev().find(".to-value");
+		$fromObject.val($sliderObject.attr("data-from"));
+		$toObject.val($sliderObject.attr("data-to"));
+		$sliderObject.slider("option", "values", [parseInt($fromObject.val()), parseInt($toObject.val())]);
+	});
+	$(".filter-section").slideUp();
+	$(".filter-scrollable").animate({scrollTop: 0}, 'slow');
+	$("#listing-current-page").val('1');
+}
+
+{# Quick search #}
+function quickSearch()
+{
+	resetFilters();
+	$quickSearch = $("#form-quick-search").val();
+	if (!isNaN(parseFloat($quickSearch)) && isFinite($quickSearch))
+	{
+		$("#form-order-number").val($quickSearch);
+	} else if ($quickSearch.indexOf('@') > -1) {
+		$("#form-email-address").val($quickSearch);
+	} else {
+		$("#form-customer").val($quickSearch);
+	}
+	$("#form-current-page").val('1');
+	loadResults();
+}
+
+{# Load the customer notes #}
+function loadCustomerNotes($id)
+{
+	$("#customer-notes-"+$id).hide().html("");
+	$("#customer-notes-loading-"+$id).show();
+	$.ajax({
+		type: "GET",
+		url: "{{ path(settings.multipleItemsPath~'_ajax_get_customer_notes') }}",
+		data: {
+			id: $id
+		},
+		error: function(data) {
+			$("#customer-notes-loading-"+$id).hide();
+			$("#customer-notes-"+$id).html('<p class="ac">There are no customer notes for this {{ settings.multipleItemsDescription }}.</p>').show();
+  		},
+		success: function(data) {
+			$("#customer-notes-loading-"+$id).hide();
+			$("#customer-notes-"+$id).html(data).show();
+		}
+	});
+}
+
+{# Load the staff notes #}
+function loadStaffNotes($id)
+{
+	$("#staff-notes-"+$id).hide().html("");
+	$("#staff-notes-loading-"+$id).show();
+	$.ajax({
+		type: "GET",
+		url: "{{ path(settings.multipleItemsPath~'_ajax_get_staff_notes') }}",
+		data: {
+			id: $id
+		},
+		error: function(data) {
+			$("#staff-notes-loading-"+$id).hide();
+			$("#staff-notes-"+$id).html('<p class="ac">There are no staff notes for this {{ settings.singleItemDescription }}.</p>').show();
+  		},
+		success: function(data) {
+			$("#staff-notes-loading-"+$id).hide();
+			$("#staff-notes-"+$id).html(data).show();
+		}
+	});
+}
+		
+{# Load the results #}
+function loadResults()
+{
+	$("#ajax_loading").show();
+	$listingCountLoaded = false;
+	$listingLoaded = false;
+	$listingPaginationLoaded = false;
+	loadListingCount();
+	loadListing();
+	loadListingPagination();
+}
+
+{# Check all elements have been loaded #}
+function checkResultsLoaded()
+{
+	if ($listingCountLoaded && $listingLoaded && $listingPaginationLoaded)
+	{
+		$("#ajax_loading").hide();
+	}
+}
+
+{# Load listing count #}
+function loadListingCount()
+{
+	$("#listing-count").html('<img src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /> Loading&hellip;');
+	$.ajax({
+		type: "GET",
+		dataType: "json",
+		url: "{{ path(settings.multipleItemsPath~'_ajax_get_listing_count') }}",
+		data: {
+			orderId: $("#form-order-number").val(),
+			customer: $("#form-customer").val(),
+    		emailAddress: $("#form-email-address").val(),
+			status: $("#form-statuses").val(),
+			paymentType: $("#form-payment-types").val(),
+			deliveryType: $("#form-delivery-types").val(),
+    		totalFrom: $("#total-range").slider("values", 0),
+			totalTo: $("#total-range").slider("values", 1),
+			dateFrom: $("#form-date-from-formatted").val(),
+			dateTo: $("#form-date-to-formatted").val()
+		},
+		error: function(data) {
+			$("#listing-count").html('No {{ settings.multipleItemsTitle }} Found');
+			$listingCountLoaded = true;
+			checkResultsLoaded();
+      	},
+		success: function(data) {
+			if (data.response == 'success')
+	    	{
+    			var $listingCount = parseInt(data.listingCount);
+    			if (($listingCount > 1) || ($listingCount < 1))
+    			{
+    				if ($listingCount < 1)
+        			{
+	    				$("#listing-count").html('No {{ settings.multipleItemsTitle }} Found');
+    				} else {
+        				$("#listing-count").html('Found '+$listingCount+' {{ settings.multipleItemsTitle }} | Total: &pound;'+data.listingStatistics.total+' | Average {{ settings.singleItemTitle }} Value: &pound;'+data.listingStatistics.averageOrderValue);
+        			}
+        		} else {
+	    			$("#listing-count").html('Found 1 {{ settings.singleItemTitle }} | Total: &pound;'+data.listingStatistics.total+' | Average {{ settings.singleItemTitle }} Value: &pound;'+data.listingStatistics.averageOrderValue);
+    			}	
+        	} else {
+	    		$("#listing-count").html('No {{ settings.multipleItemsTitle }} Found');
+    		}
+    		$listingCountLoaded = true;
+        	checkResultsLoaded();
+		}
+	});
+}
+
+{# Load listing #}
+function loadListing()
+{
+	if ($("#listing").height() > 0)
+	{
+		$("#listing-loading").height($("#listing").height() - 12);
+	}
+	$("#listing-loading").show();
+	$("#listing").hide().html("");
+	$.ajax({
+		type: "GET",
+		url: "{{ path(settings.multipleItemsPath~'_ajax_get_listing') }}",
+		data: {
+			orderId: $("#form-order-number").val(),
+    		customer: $("#form-customer").val(),
+    		emailAddress: $("#form-email-address").val(),
+    		status: $("#form-statuses").val(),
+    		paymentType: $("#form-payment-types").val(),
+    		deliveryType: $("#form-delivery-types").val(),
+    		totalFrom: $("#total-range").slider("values", 0),
+    		totalTo: $("#total-range").slider("values", 1),
+    		dateFrom: $("#form-date-from-formatted").val(),
+    		dateTo: $("#form-date-to-formatted").val(),
+    		sortOrder: $("#form-sort-order").val(),
+    		page: $("#form-current-page").val(),
+				maxResults: $("#form-max-results").val()
+			},
+		error: function(data) {
+			$("#listing-loading").hide();
+			$("#listing").html('<p class="ac">Sorry, no results were found.</p>').show();
+			$listingLoaded = true;
+			checkResultsLoaded();
+  		},
+		success: function(data) {
+			$("#listing-loading").hide();
+			$("#listing").html(data).show();
+    		$listingLoaded = true;
+    		checkResultsLoaded();
+		}
+	});
+}
+
+{# Load product listing pagination #}
+function loadListingPagination()
+{
+	$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+	$.ajax({
+		type: "GET",
+		url: "{{ path(settings.multipleItemsPath~'_ajax_get_listing_pagination') }}",
+		data: {
+			orderId: $("#form-order-number").val(),
+    		customer: $("#form-customer").val(),
+    		emailAddress: $("#form-email-address").val(),
+    		status: $("#form-statuses").val(),
+    		paymentType: $("#form-payment-types").val(),
+    		deliveryType: $("#form-delivery-types").val(),
+    		totalFrom: $("#total-range").slider("values", 0),
+    		totalTo: $("#total-range").slider("values", 1),
+    		dateFrom: $("#form-date-from-formatted").val(),
+    		dateTo: $("#form-date-to-formatted").val(),
+    		page: $("#form-current-page").val(),
+				maxResults: $("#form-max-results").val()
+			},
+		error: function(data) {
+			$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+			$listingPaginationLoaded = true;
+			checkResultsLoaded();
+      	},
+		success: function(data) {
+			$("#listing-pagination-top, #listing-pagination-bottom").html(data).show();
+        	$listingPaginationLoaded = true;
+        	checkResultsLoaded();
+		}
+	});
+}
+
+{# Show the more information #}
+function showMoreInformation($id, $moreInformation, $button)
+{
+	$(".form-error").hide();
+	$("tr#item-"+$id+" .button").removeClass("ui-button-blue");
+	if ($("#"+$moreInformation+"-"+$id).is(":hidden"))
+	{
+		$("#more-information-"+$id+" .more-information-detail").hide();
+		$("#more-information-"+$id).show();
+		$("#"+$moreInformation+"-"+$id).show();
+		$("#more-information-"+$id+" td, #item-"+$id+" td").expose({
+			color: "#042F4F",
+			loadSpeed: 2000,
+			opacity: "0.6",
+			onClose: function() {
+				$(".form-error").hide();
+				$(".more-information, .more-information-detail").hide();
+				$("#more-information-"+$id).hide();
+				$("#"+$id+" td").removeAttr("style");
+				$("#more-information-"+$id+" .more-information-detail").hide();
+				$("tr#item-"+$id+" button").removeClass("ui-button-blue");
+			}
+		});
+		if (!$button.hasClass("ui-button-red"))
+		{
+			$button.addClass("ui-button-blue");
+		}
+	} else {
+		$.mask.close();
+		$("#more-information-"+$id).hide();
+		$("#more-information-"+$id+" .more-information-detail").hide();
+	}
+	$("html, body").animate({scrollTop: $button.offset().top - 50},'slow');
+}
+
+{# Load notification message #}
+function loadNotificationMessage($container, $message, $type)
+{
+	$("#"+$container+" .message-text").html($message);
+	$("#"+$container).show();
+	$("html, body").animate({scrollTop: $("#"+$container).offset().top - 50},'slow');
+	$("#ajax_loading").hide();
+}
+
+{# Reset interactions #}
+function resetInteractions()
+{
+	$("#flash_messages .message").hide();
+	$(".form-error").hide();
+	$("input, select, textarea").removeClass("invalid");
+	$.mask.close();
+	$("tr.item td").removeAttr("style");
+	$("tr.item button").removeClass("ui-button-blue");
+	$(".more-information .more-information-detail, .more-information").hide();
+	$("#ajax_loading").hide();
+}
+
+{# Initialise Uniform for form items presented via AJAX #}
+function initialiseUniform($objectId)
+{
+	$("#"+$objectId+" :checkbox:not(.no-uniform), #"+$objectId+" :radio:not(.no-uniform), #"+$objectId+" select:not(.no-uniform), #"+$objectId+" :file:not(.no-uniform)").uniform();
+	$("#"+$objectId+" .button").each(function () {
+        $(this).button({
+        	icons: {
+            	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+            }, 
+           	text: $(this).attr('data-icon-only') === 'true'?false:true
+    	});
+    	var $dataNotification = $(this).attr("data-notification");
+    	if (($(this).attr("data-notification") != "") && ($(this).attr("data-notification") != undefined))
+    	{
+    		$(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
+    	}
+    });
+    $("#"+$objectId+" .selector, #"+$objectId+" .uploader").addClass("full");
+    $("#"+$objectId+" .message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>').find('.message-close').click(function () {
+    	$(this).parent().hide();
+    });
+    
+    return false;
+}

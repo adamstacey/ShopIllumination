@@ -1,0 +1,331 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}{{ data.item.name }} - Templates | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
+{% endblock %}
+{% block body %}
+	<section class="container_6 clearfix">
+    	<div class="grid_6">
+        	<div class="portlet">
+            	<header>
+            		<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr extra-action" data-extra-action="updateProductsFromTemplates" data-icon-primary="ui-icon-refresh">Update Products from Templates</button>
+           			<h2>Product Templates</h2>
+                </header>
+                <section>
+                	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
+                		{% if data.productsUpdated %}
+	                    	{% if data.productUpdates|length > 0 %}
+	                    		<div id="product-updates">
+									<div class="success-message">
+										<span class="ui-icon ui-icon-circle-check"></span>
+										<p>The products for this department have been updated:</p>
+										<div class="clear"></div>
+									</div>
+									<div class="update-list">
+										<button type="button" data-object-to-hide="product-updates" class="fr small action-hide button ui-corner-none ui-button-red icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button>
+										<h5>Product Updates</h5>
+										<div class="scrollable">
+											{% for productUpdate in data.productUpdates %}
+												{{ productUpdate|raw }}
+											{% endfor %}
+										</div>
+									</div>
+	                    		</div>
+							{% endif %}
+						{% endif %}
+                    	<div class="info-message">
+							<span class="ui-icon ui-icon-info"></span>
+							<p>The product templates allow you to build page title, header and meta description templates for the products in this department. These templates ensure the SEO for the products are relevant, consistent and more importantly set. The template is followed for all new products added to this department.</p>
+							<p>Any updates you make to the templates automatically update the products unless the products are manually overridden.</p>
+							<div class="clear"></div>
+						</div>
+						<div class="form-element clearfix no-margin-top margin-bottom-15">
+                			<span data-help-container="get-templates-from-department" class="info-message-icon ui-icon ui-icon-help"></span>
+					        <label for="form-parent-id" class="form-label">Get from Department</label>
+					        <div class="form-input">
+					        	<table width="100%" class="no-padding">
+									<tr>
+										<td>
+											<select id="form-get-templates-from-department" class="extra-action no-margin full">
+												<option value="">- Select Department -</option>
+												{% for department in data.departments %}
+													<option value="getTemplatesFromDepartment|{{ department.id }}">{% if department.level > 0 %}{% for level in 1..department.level %}&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}{{ department.name }}</option>
+												{% endfor %}
+											</select>
+										</td>
+										<td width="10">&nbsp;</td>
+										<td width="200">
+											<div class="position-relative margin-left-10">
+												<input placeholder="Find a department&hellip;" type="text" id="search-department" class="embedded-icon no-margin full" value="" />
+												<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+											</div>
+										</td>
+									</tr>
+								</table>
+					        </div>
+					    </div>
+					    <div id="form-help-get-templates-from-department" class="form-help ui-helper-hidden">
+					    	<p>If you want to copy the templates used by another department find and select the department you want to copy the templates from.</p>
+					    </div>
+                        <div class="clearfix">
+                            <div class="form-element clearfix">
+						    	<span data-help-container="page-title-template" class="info-message-icon-right ui-icon ui-icon-help"></span>
+						        <label for="form-page-title-template" class="al form-label full">Page Title Text in Browser Template</label>
+						        <div class="clear"></div>
+						        <div class="form-input no-margin">
+						        	<div class="margin-top-5 margin-bottom-5">
+							        	<table width="100%">
+											<tr>
+												<td>
+													<select data-flat-sortable-list-object="page-title-template" class="flat-sortable-list-parts no-margin full">
+														<option value="">- Add New Part -</option>
+														<option value="freeText">Free Text</option>
+														{% if 'brand' not in data.item.pageTitleTemplate %}<option value="brand">Brand</option>{% endif %}
+														{% if 'productCode' not in data.item.pageTitleTemplate %}<option value="productCode">Product Code</option>{% endif %}
+														{% if 'department' not in data.item.pageTitleTemplate %}<option value="department">Department</option>{% endif %}
+														{% if 'productExtraKeyword' not in data.item.pageTitleTemplate %}<option value="productExtraKeyword">Product Extra Keyword</option>{% endif %}
+														{% if 'keyMessage' not in data.item.pageTitleTemplate %}<option value="keyMessage">Key Message</option>{% endif %}
+														<optgroup label="Symbols">
+															<option value="freeText">×</option>
+															<option value="freeText">⌀</option>
+															<option value="freeText">°</option>
+															<option value="freeText">²</option>
+															<option value="freeText">³</option>
+														</optgroup>
+														{% if data.productFeatureGroups|length > 0 %}
+															<optgroup label="Feature Groups">
+															{% for productFeatureGroup in data.productFeatureGroups %}
+																{% if 'productFeatureGroup|'~productFeatureGroup.id not in data.item.pageTitleTemplate %}<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>{% endif %}
+															{% endfor %}
+															</optgroup>
+														{% endif %}
+													</select>
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="200">
+													<input class="full free-text" disabled="disabled" placeholder="Enter free text&hellip;" type="text" data-flat-sortable-list-object="page-title-template" value="" />
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="1">
+													<button type="button" data-flat-sortable-list-object="page-title-template" class="button action-add-flat-sortable-list-item ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-plus">Add</button>
+												</td>
+											</tr>
+										</table>
+						        	</div>
+						        	<div class="clear"></div>
+						        	<div class="flat-sortable-list">
+						        		<ul id="flat-sortable-list-page-title-template">
+						        			{% if data.pageTitleTemplate %}
+						        				{{ data.pageTitleTemplate|raw }}
+						        			{% else %}
+							        			<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-page-title-item-1" data-value="brand">Brand<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>
+							        			<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-page-title-item-2" data-value="productCode">Product Code<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>
+							        			<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-page-title-item-3" data-value="department">Department<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>
+							        			<li data-flat-sortable-list-object="page-title-template" id="flat-sortable-list-page-title-item-4" data-value="extraProductKeyword">Extra Product Keyword<button type="button" class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</button></li>
+							        		{% endif %}
+						        		</ul>
+						        		<div class="clear"></div>
+						        	</div>
+						        	<input class="flat-sortable-list-values" type="hidden" data-flat-sortable-list-object="page-title-template" id="form-page-title-template" name="page-title-template" value="{{ data.item.pageTitleTemplate }}" />
+						        </div>
+						        <div class="preview-list">
+						        	<h5>Previews</h5>
+						        	{% if data.pageTitleTemplateProductPreviews|length > 0 %}
+							        	<div class="scrollable">
+							        		<table width="100%">
+							        			{% for pageTitleTemplateProductPreview in data.pageTitleTemplateProductPreviews %}
+									        		{% if pageTitleTemplateProductPreview != '' %}
+									        			<tr>
+									        				<td>{{ pageTitleTemplateProductPreview }}</td>
+									        			</tr>
+													{% endif %}
+												{% endfor %}
+							        		</table>								        	
+							        	</div>
+							        {% else %}
+							        	{% if data.pageTitleTemplate %}
+								        	<p>Please add one or more template parts and press "Update" to see a preview of what the Page Title will look like.</p>
+								        {% else %}
+								        	<p>Press "Update" to see a preview of what the Page Title will look like.</p>
+								        {% endif %}
+							        {% endif %}
+						        </div>
+						    </div>
+						    <div id="form-help-page-title-template" class="form-help ui-helper-hidden">
+						    	<p>The page title template is the template used by the products that are directly within this department to automatically generate the page title. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead.</p>
+						    </div>
+						    <div class="form-element clearfix">
+						    	<span data-help-container="header-template" class="info-message-icon-right ui-icon ui-icon-help"></span>
+						        <label for="form-header-template" class="al form-label full">Product Listing Text Header Template</label>
+						        <div class="form-input no-margin">
+						        	<div class="margin-top-5 margin-bottom-5">
+							        	<table width="100%">
+											<tr>
+												<td>
+													<select data-flat-sortable-list-object="header-template" class="flat-sortable-list-parts no-margin full">
+														<option value="">- Add New Part -</option>
+														<option value="freeText">Free Text</option>
+														{% if 'brand' not in data.item.headerTemplate %}<option value="brand">Brand</option>{% endif %}
+														{% if 'productCode' not in data.item.headerTemplate %}<option value="productCode">Product Code</option>{% endif %}
+														{% if 'department' not in data.item.headerTemplate %}<option value="department">Department</option>{% endif %}
+														{% if 'productExtraKeyword' not in data.item.headerTemplate %}<option value="productExtraKeyword">Product Extra Keyword</option>{% endif %}
+														{% if 'keyMessage' not in data.item.headerTemplate %}<option value="keyMessage">Key Message</option>{% endif %}
+														<optgroup label="Symbols">
+															<option value="freeText">×</option>
+															<option value="freeText">⌀</option>
+															<option value="freeText">°</option>
+															<option value="freeText">²</option>
+															<option value="freeText">³</option>
+														</optgroup>
+														{% if data.productFeatureGroups|length > 0 %}
+															<optgroup label="Feature Groups">
+															{% for productFeatureGroup in data.productFeatureGroups %}
+																{% if 'productFeatureGroup|'~productFeatureGroup.id not in data.item.headerTemplate %}<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>{% endif %}
+															{% endfor %}
+															</optgroup>
+														{% endif %}
+													</select>
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="200">
+													<input class="full free-text" disabled="disabled" placeholder="Enter free text&hellip;" type="text" data-flat-sortable-list-object="header-template" value="" />
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="1">
+													<button type="button" data-flat-sortable-list-object="header-template" class="button action-add-flat-sortable-list-item ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-plus">Add</button>
+												</td>
+											</tr>
+										</table>
+						        	</div>
+						        	<div class="flat-sortable-list">
+						        		<ul id="flat-sortable-list-header-template">
+						        			{% if data.headerTemplate %}
+						        				{{ data.headerTemplate|raw }}
+							        		{% endif %}
+						        		</ul>
+						        		<div class="clear"></div>
+						        	</div>
+						        	<input class="flat-sortable-list-values" type="hidden" data-flat-sortable-list-object="header-template" id="form-header-template" name="header-template" value="{{ data.item.headerTemplate }}" />
+						        </div>
+							    <div class="preview-list">
+							    	<h5>Previews</h5>
+							    	{% if data.headerTemplateProductPreviews|length > 0 %}
+							        	<div class="scrollable">
+							        		<table width="100%">
+							        			{% for headerTemplateProductPreview in data.headerTemplateProductPreviews %}
+									        		{% if headerTemplateProductPreview != '' %}
+									        			<tr>
+									        				<td>{{ headerTemplateProductPreview }}</td>
+									        			</tr>
+													{% endif %}
+												{% endfor %}
+							        		</table>								        	
+							        	</div>
+							        {% else %}
+								        <p>Please add one or more template parts and press "Update" to see a preview of what the Header will look like.</p>
+							        {% endif %}
+							    </div>
+						    </div>
+						    <div id="form-help-header-template" class="form-help ui-helper-hidden">
+						    	<p>The header template is the template used by the products that are directly within this department to automatically generate the header text that is displayed on the product listings. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead.</p>
+						    </div>
+						    <div class="form-element clearfix">
+						    	<span data-help-container="meta-description-template" class="info-message-icon-right ui-icon ui-icon-help"></span>
+						        <label for="form-meta-description-template" class="al form-label full">Meta Description Text Template</label>
+						        <div class="form-input no-margin">
+						        	<div class="margin-top-5 margin-bottom-5">
+							        	<table width="100%">
+											<tr>
+												<td>
+													<select data-flat-sortable-list-object="meta-description-template" class="flat-sortable-list-parts no-margin full">
+														<option value="">- Add New Part -</option>
+														<option value="freeText">Free Text</option>
+														{% if 'brand' not in data.item.metaDescriptionTemplate %}<option value="brand">Brand</option>{% endif %}
+														{% if 'productCode' not in data.item.metaDescriptionTemplate %}<option value="productCode">Product Code</option>{% endif %}
+														{% if 'department' not in data.item.metaDescriptionTemplate %}<option value="department">Department</option>{% endif %}
+														{% if 'productExtraKeyword' not in data.item.metaDescriptionTemplate %}<option value="productExtraKeyword">Product Extra Keyword</option>{% endif %}
+														{% if 'keyMessage' not in data.item.metaDescriptionTemplate %}<option value="keyMessage">Key Message</option>{% endif %}
+														<optgroup label="Symbols">
+															<option value="freeText">×</option>
+															<option value="freeText">⌀</option>
+															<option value="freeText">°</option>
+															<option value="freeText">²</option>
+															<option value="freeText">³</option>
+														</optgroup>
+														{% if data.productFeatureGroups|length > 0 %}
+															<optgroup label="Feature Groups">
+															{% for productFeatureGroup in data.productFeatureGroups %}
+																{% if 'productFeatureGroup|'~productFeatureGroup.id not in data.item.metaDescriptionTemplate %}<option value="productFeatureGroup|{{ productFeatureGroup.id }}">Feature Group: {{ productFeatureGroup.productFeatureGroup }}</option>{% endif %}
+															{% endfor %}
+															</optgroup>
+														{% endif %}
+													</select>
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="200">
+													<input class="full free-text" disabled="disabled" placeholder="Enter free text&hellip;" type="text" data-flat-sortable-list-object="meta-description-template" value="" />
+												</td>
+												<td width="10">&nbsp;</td>
+												<td width="1">
+													<button type="button" data-flat-sortable-list-object="meta-description-template" class="button action-add-flat-sortable-list-item ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-plus">Add</button>
+												</td>
+											</tr>
+										</table>
+						        	</div>
+						        	<div class="flat-sortable-list">
+						        		<ul id="flat-sortable-list-meta-description-template">
+						        			{% if data.metaDescriptionTemplate %}
+						        				{{ data.metaDescriptionTemplate|raw }}
+							        		{% endif %}
+						        		</ul>
+						        		<div class="clear"></div>
+						        	</div>
+						        	<input class="flat-sortable-list-values" type="hidden" data-flat-sortable-list-object="meta-description-template" id="form-meta-description-template" name="meta-description-template" value="{{ data.item.metaDescriptionTemplate }}" />
+						        </div>
+							    <div class="preview-list">
+							     	<h5>Previews</h5>
+							     	{% if data.metaDescriptionTemplateProductPreviews|length > 0 %}
+							        	<div class="scrollable">
+							        		<table width="100%">
+							        			{% for metaDescriptionTemplateProductPreview in data.metaDescriptionTemplateProductPreviews %}
+									        		{% if metaDescriptionTemplateProductPreview != '' %}
+									        			<tr>
+									        				<td>{{ metaDescriptionTemplateProductPreview }}</td>
+									        			</tr>
+													{% endif %}
+												{% endfor %}
+							        		</table>								        	
+							        	</div>
+							        {% else %}
+								        <p>Please add one or more template parts and press "Update" to see a preview of what the Meta Description will look like.</p>
+							        {% endif %}
+							    </div>
+						    </div>
+						    <div id="form-help-meta-description-template" class="form-help ui-helper-hidden">
+						    	<p>The meta description template is the template used by the products that are directly within this department to automatically generate the meta description. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead.</p>
+						    </div>
+                        </div>
+					    <div id="float-buttons" class="clearfix">
+					        <div id="float-buttons-content" class="float-buttons clearfix buttons">
+					        	<input type="hidden" value="" id="form-extra-action" name="extra-action" />
+				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
+				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>			        		
+				        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
+				        		<button id="button-update" type="submit" class="fr button ui-corner-left ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update</button>
+						    </div>
+						</div>						
+					</form>
+                </section>
+            </div>
+        </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} %}
+{% endblock %}

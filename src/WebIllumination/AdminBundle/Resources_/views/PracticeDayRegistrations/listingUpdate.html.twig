@@ -1,0 +1,92 @@
+<div class="ui-helper-hidden more-information-detail form" id="practice-day-registration-practice-day-registration-{{ practiceDayRegistration.id }}">
+	<div id="practice-day-registration-error-message-{{ practiceDayRegistration.id }}" class="ui-helper-hidden ui-widget message closeable">
+	    <div class="ui-state-error ui-corner-all no-margin">
+	    	<span class="ui-icon ui-icon-alert"></span>
+	        <p><strong>ERROR:</strong> <span id="practice-day-registration-error-message-text-{{ practiceDayRegistration.id }}"></span></p>
+	    </div>
+	</div>
+	<div class="separator">
+		<table width="100%">
+			<tr>
+				<td width="25%" class="label"><label for="practice-day-registration-vip-{{ practiceDayRegistration.id }}"><span class="required">*</span> VIP</label></td>
+				<td width="10%">
+					<div class="filter-checkbox"><input type="radio" class="practice-day-registration-vip-{{ practiceDayRegistration.id }}" name="practice-day-registration-vip" value="1"{% if practiceDayRegistration.vip == 1 %} checked="checked"{% endif %} />Yes</div>
+				</td>
+				<td width="10%">
+					<div class="filter-checkbox"><input type="radio" class="practice-day-registration-vip-{{ practiceDayRegistration.id }}" name="practice-day-registration-vip" value="0"{% if practiceDayRegistration.vip == 0 %} checked="checked"{% endif %} />No</div>
+				</td>
+				<td>&nbsp;</td>
+			</tr>
+		</table>
+		<table width="100%">
+			<tr>
+				<td width="25%" class="label"><label for="practice-day-registration-name-{{ practiceDayRegistration.id }}"><span class="required">*</span> Name</label></td>
+				<td width="25%" class="no-padding">
+					<input type="text" id="practice-day-registration-name-{{ practiceDayRegistration.id }}" data-message="Please enter a name." required="required" class="no-margin full" value="{{ practiceDayRegistration.name }}" />
+				</td>
+				<td width="10%" class="label"><label for="practice-day-registration-membership-number-{{ practiceDayRegistration.id }}"><span class="required">*</span> Membership Number</label></td>
+				<td width="15%" class="no-padding">
+					<input type="text" id="practice-day-registration-membership-number-{{ practiceDayRegistration.id }}" data-message="Please enter a membership number." required="required" class="no-margin integer full" value="{{ practiceDayRegistration.membershipNumber }}" />
+				</td>
+				<td width="10%" class="label"><label for="practice-day-registration-age-{{ practiceDayRegistration.id }}"><span class="required">*</span> Age</label></td>
+				<td width="15%" class="no-padding">
+					<select id="practice-day-registration-age-{{ practiceDayRegistration.id }}" data-message="Please select an age range." required="required" class="no-margin integer full">
+						<option value="">- Please Select -</option>
+						<option{% if practiceDayRegistration.age == 'Adult (18+)' %} selected="selected"{% endif %} value="Adult (18+)">Adult (18+)</option>
+						<option{% if practiceDayRegistration.age == 'Youth (17 or under)' %} selected="selected"{% endif %} value="Youth (17 or under)">Youth (17 or under)</option>
+						<option{% if practiceDayRegistration.age == 'Kid (6 and over)' %} selected="selected"{% endif %} value="Kid (6 and over)">Kid (6 and over)</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<table width="100%">
+			<tr>
+				<td width="25%" class="label"><label for="practice-day-registration-email-address-{{ practiceDayRegistration.id }}"><span class="required">*</span> Email Address</label></td>
+				<td width="25%" class="no-padding">
+					<input type="email" id="practice-day-registration-email-address-{{ practiceDayRegistration.id }}" data-message="Please enter a valid email address." required="required" class="no-margin lowercase full" value="{{ practiceDayRegistration.emailAddress }}" />
+				</td>
+				<td width="10%" class="label"><label for="practice-day-registration-contact-number-{{ practiceDayRegistration.id }}"><span class="required">*</span> Contact Number</label></td>
+				<td width="15%" class="no-padding">
+					<input type="text" id="practice-day-registration-contact-number-{{ practiceDayRegistration.id }}" data-message="Please enter a contact number." required="required" class="no-margin full" value="{{ practiceDayRegistration.contactNumber }}" />
+				</td>
+				<td width="10%" class="label"><label for="practice-day-registration-post-zip-code-{{ practiceDayRegistration.id }}"><span class="required">*</span> Post Code</label></td>
+				<td width="15%" class="no-padding">
+					<input type="text" id="practice-day-registration-post-zip-code-{{ practiceDayRegistration.id }}" data-message="Please enter a valid post code." required="required" class="no-margin full" value="{{ practiceDayRegistration.postZipCode }}" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="separator">
+		<table width="100%">
+			<tr>
+				<td width="25%" class="label"><label for="practice-day-registration-bike-{{ practiceDayRegistration.id }}"><span class="required">*</span> Bike Make, Model and CC</label></td>
+				<td width="50%" class="no-padding">
+					<input type="text" id="practice-day-registration-bike-{{ practiceDayRegistration.id }}" data-message="Please enter your bike make, model and CC." required="required" class="no-margin full" value="{{ practiceDayRegistration.bike }}" />
+				</td>
+				<td width="10%" class="label"><label for="practice-day-registration-day-{{ practiceDayRegistration.id }}"><span class="required">*</span> Day</label></td>
+				<td width="15%">
+					<select id="practice-day-registration-day-{{ practiceDayRegistration.id }}" data-message="Please select a day." required="required" class="no-margin integer full">
+						<option value="">- Please Select -</option>
+						<option{% if practiceDayRegistration.day == 'Saturday 3rd' %} selected="selected"{% endif %} value="Saturday 3rd">Saturday 3rd</option>
+						<option{% if practiceDayRegistration.day == 'Sunday 4th' %} selected="selected"{% endif %} value="Sunday 4th">Sunday 4th</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<table width="100%">
+			<tr>
+				<td width="25%" class="label"><label for="practice-day-registration-notes-{{ practiceDayRegistration.id }}">Notes</label></td>
+				<td width="75%" class="no-padding">
+					<textarea id="practice-day-registration-notes-{{ practiceDayRegistration.id }}" class="no-margin full">{{ practiceDayRegistration.notes }}</textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="buttons">
+		<button data-id="{{ practiceDayRegistration.id }}" class="action-save-practice-day-registration button ui-button-green" data-icon-primary="ui-icon-check">Save Practice Day Registration</button>
+		<div class="clear"></div>
+	</div>
+</div>
+

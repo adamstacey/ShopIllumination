@@ -1,0 +1,40 @@
+{% extends ':Old:email.html.twig' %}
+{% block title %}Your Ride Direct Privilege Card: {{ membershipNumber }}{% endblock %}
+{% block body %}
+	<table cellspacing="0" border="0" style="background-color: #DDDDDD;" cellpadding="0" width="100%">
+		<tr>
+			<td valign="top" style="padding: 10px;">
+				<table cellspacing="0" border="0" align="center" style="background: #FFFFFF; border: 1px solid #CCCCCC;" cellpadding="0" width="800">
+					<tr>
+						<td valign="top">
+							<table cellspacing="0" border="0" cellpadding="0" width="800">
+								<tr>
+									<td valign="top" style="padding: 20px;" width="760">
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">Hello {{ firstName }},</p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">Thank you for ordering The Ride Direct Privilege Card.</p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;"><strong>You will shortly receive your shiny new Ride Direct Privilege card in the post!</strong></p>
+										<p style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; margin: 0; line-height: 120%;">In the mean time please take a note of your privilege card number below:</p>
+										<p style="font-family: 'Arial Black', Arial; text-align: center; font-size: 48px; color: #5FA729; padding: 0 0 10px 0; margin: 0; line-height: 120%;">{{ membershipNumber }}</p>
+										<h3 style="border-bottom: 1px dotted #676767; line-height: 100%; color: #000; font-size: 14px; font-family: Arial; padding: 20px 0px 5px 0px; margin: 0px 0px 10px 0px;">What benefits do I receive with my card?</h3>
+										<ul>
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">10% Ongoing Discount Off Parts, Gear and Accessories (Off RRP price)</li>
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">Big Discounts Off New Kawasaki Motocross and Enduro Bikes</li>
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">Kawasaki Test Days</li>
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">Savings at <a style="font-family: Arial; font-size: 12px; color: #5FA729;" href="http://www.stalkermx.com/">Stalker MX Practice Track</a></li>
+											{#<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">Discount Off <a style="font-family: Arial; font-size: 12px; color: #5FA729;" href="http://www.themotocrossschool.com/">Paul Malin Motocross Training School</a></li>#}
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">Monthly Exclusive Members Online Offers</li>
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">Free Stickers</li>
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">&pound;50 Online Discount Vouchers</li>
+											<li style="font-family: Arial; font-size: 11px; color: #000000; padding: 0 0 10px 0; line-height: 120%;">More Members Benefit's and Savings Coming Soon...</li>
+										</ul>
+										{% include ':Old:emailFooter.html.twig' %}
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+{% endblock %}

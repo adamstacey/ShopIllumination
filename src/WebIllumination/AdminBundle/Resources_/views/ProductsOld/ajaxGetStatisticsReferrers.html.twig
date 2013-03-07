@@ -1,0 +1,127 @@
+<div id="chart-yesterday-referrers" class="fl"></div>
+<div id="chart-week-to-date-referrers" class="fl"></div>
+<div id="chart-month-to-date-referrers" class="fl"></div>
+<div id="chart-year-to-date-referrers" class="fl"></div>
+<div class="clear"></div>
+
+{#}
+<table class="basic-display" id="data-statistics">
+	<thead>
+		<tr>
+			<th align="left">Statistics</th>
+			<th>Yesterday</th>
+			<th>This Week</th>
+			<th>This Month</th>
+			<th>This Year</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="gradeU">
+			<td>&nbsp;&nbsp;-&nbsp;&nbsp;Organic Search Traffic</td>
+			<td class="center">{{ ((statistics.medium.yesterday.organic / statistics.visits.yesterday.visits) * 100)|number_format(1) }}% ({{ statistics.medium.yesterday.organic }}</td>
+			<td class="center">{{ ((statistics.medium.week_to_date.organic / statistics.visits.week_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.week_to_date.organic }})</td>
+			<td class="center">{{ ((statistics.medium.month_to_date.organic / statistics.visits.month_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.month_to_date.organic }})</td>
+			<td class="center">{{ ((statistics.medium.year_to_date.organic / statistics.visits.year_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.year_to_date.organic }})</td>
+		</tr>
+		<tr class="gradeU">
+			<td>&nbsp;&nbsp;-&nbsp;&nbsp;Referral Traffic</td>
+			<td class="center">{{ ((statistics.medium.yesterday.referral / statistics.visits.yesterday.visits) * 100)|number_format(1) }}% ({{ statistics.medium.yesterday.referral }})</td>
+			<td class="center">{{ ((statistics.medium.week_to_date.referral / statistics.visits.week_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.week_to_date.referral }})</td>
+			<td class="center">{{ ((statistics.medium.month_to_date.referral / statistics.visits.month_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.month_to_date.referral }})</td>
+			<td class="center">{{ ((statistics.medium.year_to_date.referral / statistics.visits.year_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.year_to_date.referral }})</td>
+		</tr>
+		<tr class="gradeU">
+			<td>&nbsp;&nbsp;-&nbsp;&nbsp;Paid Traffic</td>
+			<td class="center">{{ ((statistics.medium.yesterday.cpc / statistics.visits.yesterday.visits) * 100)|number_format(1) }}% ({{ statistics.medium.yesterday.cpc }})</td>
+			<td class="center">{{ ((statistics.medium.week_to_date.cpc / statistics.visits.week_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.week_to_date.cpc }})</td>
+			<td class="center">{{ ((statistics.medium.month_to_date.cpc / statistics.visits.month_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.month_to_date.cpc }})</td>
+			<td class="center">{{ ((statistics.medium.year_to_date.cpc / statistics.visits.year_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.year_to_date.cpc }})</td>
+		</tr>
+		<tr class="gradeU">
+			<td>&nbsp;&nbsp;-&nbsp;&nbsp;Direct Traffic</td>
+			<td class="center">{{ ((statistics.medium.yesterday.direct / statistics.visits.yesterday.visits) * 100)|number_format(1) }}% ({{ statistics.medium.yesterday.direct }})</td>
+			<td class="center">{{ ((statistics.medium.week_to_date.direct / statistics.visits.week_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.week_to_date.direct }})</td>
+			<td class="center">{{ ((statistics.medium.month_to_date.direct / statistics.visits.month_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.month_to_date.direct }})</td>
+			<td class="center">{{ ((statistics.medium.year_to_date.direct / statistics.visits.year_to_date.visits) * 100)|number_format(1) }}% ({{ statistics.medium.year_to_date.direct }})</td>
+		</tr>
+	</tbody>
+</table>
+{#}
+<script defer="defer" type="text/javascript">
+	
+	{# Load the charts #}
+	google.load("visualization", "1", {"packages": ["corechart"], "callback": loadCharts});
+	
+	function loadCharts()
+	{
+		drawYesterdayReferrersChart();
+		drawWeekToDateReferrersChart();
+  		drawMonthToDateReferrersChart();
+  		drawYearToDateReferrersChart();
+	}
+	
+		function drawYesterdayReferrersChart()
+		{
+		var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Referrer');
+		data.addColumn('number', 'Visits');
+        data.addRows({{ statistics.source.yesterday|length }});
+        
+        {% for referrer in statistics.source.yesterday %}
+        	data.setValue({{ loop.index0 }}, 0, '{{ referrer.source }}');
+			data.setValue({{ loop.index0 }}, 1, {{ referrer.visits }});
+		{% endfor %}
+
+		var chart = new google.visualization.PieChart(document.getElementById('chart-yesterday-referrers'));
+        chart.draw(data, {width: 310, height: 200, is3D: true, sliceVisibilityThreshold: 1/50, pieSliceText: 'none', title: 'Referrers for Yesterday'});
+		}
+		
+		function drawWeekToDateReferrersChart()
+		{
+		var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Referrer');
+		data.addColumn('number', 'Visits');
+        data.addRows({{ statistics.source.week_to_date|length }});
+        
+        {% for referrer in statistics.source.week_to_date %}
+        	data.setValue({{ loop.index0 }}, 0, '{{ referrer.source }}');
+			data.setValue({{ loop.index0 }}, 1, {{ referrer.visits }});
+		{% endfor %}
+
+		var chart = new google.visualization.PieChart(document.getElementById('chart-week-to-date-referrers'));
+        chart.draw(data, {width: 310, height: 200, is3D: true, sliceVisibilityThreshold: 1/50, pieSliceText: 'none', title: 'Referrers for the Week to Date'});
+		}
+		
+		function drawMonthToDateReferrersChart()
+		{
+		var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Referrer');
+		data.addColumn('number', 'Visits');
+        data.addRows({{ statistics.source.month_to_date|length }});
+        
+        {% for referrer in statistics.source.month_to_date %}
+        	data.setValue({{ loop.index0 }}, 0, '{{ referrer.source }}');
+			data.setValue({{ loop.index0 }}, 1, {{ referrer.visits }});
+		{% endfor %}
+
+		var chart = new google.visualization.PieChart(document.getElementById('chart-month-to-date-referrers'));
+        chart.draw(data, {width: 310, height: 200, is3D: true, sliceVisibilityThreshold: 1/50, pieSliceText: 'none', title: 'Referrers for the Month to Date'});
+		}
+		
+		function drawYearToDateReferrersChart()
+		{
+		var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Referrer');
+		data.addColumn('number', 'Visits');
+        data.addRows({{ statistics.source.year_to_date|length }});
+        
+        {% for referrer in statistics.source.year_to_date %}
+        	data.setValue({{ loop.index0 }}, 0, '{{ referrer.source }}');
+			data.setValue({{ loop.index0 }}, 1, {{ referrer.visits }});
+		{% endfor %}
+
+		var chart = new google.visualization.PieChart(document.getElementById('chart-year-to-date-referrers'));
+        chart.draw(data, {width: 310, height: 200, is3D: true, sliceVisibilityThreshold: 1/50, pieSliceText: 'none', title: 'Referrers for the Year to Date'});
+		}
+		
+</script>

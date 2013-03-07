@@ -1,0 +1,31 @@
+<div id="membership-card-add" class="form no-padding-bottom listing-filter ui-helper-hidden">
+	<h4>Add New Membership Card</h4>
+	<h5 class="no-margin-top">Membership Card</h5>
+	<table width="100%">
+		<tr>
+			<td width="25%" class="label"><label for="membership-card-membership-number"><span class="required">*</span> Membership Number:</label></td>
+			<td width="75%" class="no-padding">
+				<input type="text" id="membership-card-membership-number" data-message="Please enter a membership number." required="required" class="no-margin integer full" value="" />
+			</td>
+		</tr>
+	</table>
+	<h5>Availability</h5>
+	<table width="100%">
+		<tr>
+			<td width="25%" class="label"><label for="membership-card-valid-from-date"><span class="required">*</span> Valid From Date:</label></td>
+			<td width="25%" class="no-padding">
+				<input type="text" id="membership-card-valid-from-date" data-message="Please enter the date you want the membership card to be available from." required="required" class="no-margin full" value="{{ validFromDate|date("d/m/Y") }}" />
+				<input type="hidden" id="membership-card-valid-from-date-formatted" value="{{ validFromDate|date("Y-m-d") }}" />
+			</td>
+			<td width="25%" class="label"><label for="membership-card-expiry-date"><span class="required">*</span> Expiry Date:</label></td>
+			<td width="25%" class="no-padding">
+				<input type="text" id="membership-card-expiry-date" data-message="Please enter the date you want the membership card to expire." required="required" class="no-margin full" value="{{ expiryDate|date("d/m/Y") }}" />
+				<input type="hidden" id="membership-card-expiry-date-formatted" value="{{ expiryDate|date("Y-m-d") }}" />
+			</td>
+		</tr>
+	</table>
+	<div class="ac">
+		<button class="button bottom-button ui-button-green action-add-membership-card" data-icon-primary="ui-icon-tag">Add New Membership Card</button>
+		<button class="button bottom-button ui-button-blue action-cancel-add-membership-card">Cancel</button>
+	</div>
+</div>

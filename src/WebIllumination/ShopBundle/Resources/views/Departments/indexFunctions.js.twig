@@ -1,0 +1,417 @@
+{# Load the department #}
+function loadDepartment()
+{
+	$("#ajax-loading").show();
+	$productCountLoaded = false;
+	$productsLoaded = false;
+	$productPaginationLoaded = false;
+	$brandFilterLoaded = false;
+	$departmentFilterLoaded = false;
+	$priceFilterLoaded = false;
+	$priceFeatureLoaded = false;
+	loadProductListingCount();
+	loadProductListing();
+	loadProductListingPagination();
+	{% if departmentListing.brandId > 0 %}
+		$brandFilterLoaded = true;
+	{% else %}
+		if ($skipBrandFilter)
+		{
+			$brandFilterLoaded = true;
+			$skipBrandFilter = false;
+		} else {
+			loadProductListingBrandFilter();
+		}
+	{% endif %}
+	if ($skipDepartmentFilter)
+	{
+		$departmentFilterLoaded = true;
+		$skipDepartmentFilter = false;
+	} else {
+		loadProductListingDepartmentFilter();
+	}
+	if ($skipPriceFilter)
+	{
+		$priceFilterLoaded = true;
+		$skipPriceFilter = false;
+	} else {
+		loadProductListingPriceFilter();
+	}
+	if ($skipFeatureFilter)
+	{
+		$featureFilterLoaded = true;
+		$skipFeatureFilter = false;
+	} else {
+		loadProductListingFeatureFilter();
+	}
+}
+
+{# Check all elements have been loaded #}
+function checkDepartmentLoaded()
+{
+	if ($productCountLoaded && $productsLoaded && $productPaginationLoaded && $brandFilterLoaded && $departmentFilterLoaded && $priceFilterLoaded && $featureFilterLoaded)
+	{
+		$("#ajax-loading").hide();
+	}
+}
+
+{# Load product listing count #}
+function loadProductListingCount()
+{
+	$("#product-count").html('<img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /> Loading&hellip;');
+	$.ajax({
+		cache: false,
+		type: "GET",
+		dataType: "json",
+		url: "{{ path('products_ajax_get_product_listing_count') }}",
+		data: {
+			url: "{{ url }}",
+			departmentBrand: "{{ brand }}",
+			departmentGroup: "{{ group }}",
+			departmentId: {{ department.id }},
+			brands: $("#filter-brands").val(),
+			group: $("#filter-group").val(),
+			features: $("#filter-features").val(),
+			priceFrom: $("#filter-price-from").val(),
+			priceTo: $("#filter-price-to").val()
+		},
+		error: function(data) {
+			$("#product-count").html('No Products Found');
+			$productCountLoaded = true;
+			checkDepartmentLoaded();
+  		},
+		success: function(data) {
+			if (data.response == 'success')
+    		{
+    			var $productCount = parseInt(data.productCount);
+    			if (($productCount > 1) || ($productCount < 1))
+    			{
+    				if ($productCount < 1)
+    				{
+    					$("#product-count").html('No Products Found');
+    				} else {
+        				$("#product-count").html('Found '+$productCount+' Products');
+        			}
+    			} else {
+    				$("#product-count").html('Found 1 Product');
+    			}
+        	} else {
+	    		$("#product-count").html('No Products Found');
+    		}
+    		$productCountLoaded = true;
+    		checkDepartmentLoaded();
+		}
+	});
+}
+
+{# Load product listing #}
+function loadProductListing()
+{
+	if ($("#products").height() > 0)
+	{
+		$("#products-loading").height($("#products").height());
+	}
+	$("#products-loading").show();
+	$("#products").hide().html("");
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url: "{{ path('products_ajax_get_product_listing') }}",
+		data: {
+			url: "{{ url }}",
+			departmentBrand: "{{ brand }}",
+			departmentGroup: "{{ group }}",
+			departmentId: {{ department.id }},
+			sortOrder: $("#sort-order").val(),
+			brands: $("#filter-brands").val(),
+			group: $("#filter-group").val(),
+			features: $("#filter-features").val(),
+			priceFrom: $("#filter-price-from").val(),
+			priceTo: $("#filter-price-to").val(),
+			page: $("#current-page").val(),
+			maxResults: $("#results-per-page").val()
+		},
+		error: function(data) {
+			$("#products-loading").hide();
+			$("#products").html('<p class="no-results">Sorry, no products match your criteria.</p>').fadeIn();
+			$productsLoaded = true;
+			checkDepartmentLoaded();
+      	},
+		success: function(data) {
+			$("#products-loading").hide();
+			$("#products").html(data).fadeIn();
+			if ($("#products div.product").length < 1)
+			{
+				$("#products").html('<p class="no-results">Sorry, no products match your criteria.</p>').fadeIn();
+			}
+    	   	$productsLoaded = true;
+        	checkDepartmentLoaded();
+		}
+	});
+}
+
+{# Load product listing pagination #}
+function loadProductListingPagination()
+{
+	$("#product-pagination-top, #product-pagination-bottom").hide().html("");
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url: "{{ path('products_ajax_get_product_listing_pagination') }}",
+		data: {
+			url: "{{ url }}",
+			departmentBrand: "{{ brand }}",
+			departmentGroup: "{{ group }}",
+			brandId: {{ departmentListing.brandId }},
+			departmentId: {{ department.id }},
+			page: $("#current-page").val(),
+			maxResults: $("#results-per-page").val(),
+			brands: $("#filter-brands").val(),
+			group: $("#filter-group").val(),
+			features: $("#filter-features").val(),
+			priceFrom: $("#filter-price-from").val(),
+			priceTo: $("#filter-price-to").val()
+		},
+		error: function(data) {
+			$("#product-pagination-top, #product-pagination-bottom").hide().html("");
+			$productPaginationLoaded = true;
+			checkDepartmentLoaded();
+      	},
+		success: function(data) {
+			if (data != "")
+			{
+				$("#product-pagination-top, #product-pagination-bottom").html(data).fadeIn();
+			} else {
+				$("#product-pagination-top, #product-pagination-bottom").hide().html("");
+			}
+        	$productPaginationLoaded = true;
+        	checkDepartmentLoaded();
+		}
+	});
+}
+
+{# Load product listing brand filter #}
+function loadProductListingBrandFilter()
+{
+	if ($("#filter-brand").height() > 0)
+	{
+		if ($("#filter-brand").height() > $("#filter-brand-loading").height())
+		{
+			$("#filter-brand-loading").height($("#filter-brand").height());
+		}
+	}
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url: "{{ path('products_ajax_get_product_listing_brand_filter') }}",
+		beforeSend: function() {
+			$("#filter-brand-container").show();
+			$("#filter-brand-loading").show();
+			$("#filter-brand").html("").hide();
+		},
+		data: {
+			url: "{{ url }}",
+			departmentBrand: "{{ brand }}",
+			departmentGroup: "{{ group }}",
+			departmentId: {{ department.id }},
+			brands: $("#filter-brands").val(),
+			group: $("#filter-group").val(),
+			features: $("#filter-features").val(),
+			priceFrom: $("#filter-price-from").val(),
+			priceTo: $("#filter-price-to").val()
+		},
+		error: function(data) {
+			$("#filter-brand-container").hide();
+			$("#filter-brand-header").hide();
+			$("button[data-filter='brand'] .ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+			$("#filter-brand-loading").hide();
+			$("#filter-brand").html('<p class="no-results">Sorry, no brands are available.</p>').fadeIn();
+			$brandFilterLoaded = true;
+			$skipBrandFilter = false;
+			checkDepartmentLoaded();
+  		},
+		success: function(data) {
+			$("#filter-brand-loading").hide();
+			$("#filter-brand").html(data).fadeIn();
+			if ($("#filter-brand ul li").length < 1)
+			{
+				$("#filter-brand-container").hide();
+				$("#filter-brand-header").hide();
+				$("button[data-filter='brand'] .ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+				$("#filter-brand-loading").hide();
+				$("#filter-brand").html('<p class="no-results">Sorry, no brands are available.</p>').fadeIn();
+			}
+    		$brandFilterLoaded = true;
+    		$skipBrandFilter = false;
+    		checkDepartmentLoaded();
+		}
+	});
+}
+
+{# Load product listing department filter #}
+function loadProductListingDepartmentFilter()
+{
+	if ($("#filter-department").height() > 0)
+	{
+		if ($("#filter-department").height() > $("#filter-department-loading").height())
+		{
+			$("#filter-department-loading").height($("#filter-department").height());
+		}
+	}
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url: "{{ path('products_ajax_get_product_listing_department_filter') }}",
+		beforeSend: function() {
+			$("#filter-department-container").show();
+			$("#filter-department-loading").show();
+			$("#filter-department").html("").hide();
+		},
+		data: {
+			url: "{{ url }}",
+			departmentBrand: "{{ brand }}",
+			departmentGroup: "{{ group }}",
+			departmentId: {{ department.id }},
+			brands: $("#filter-brands").val(),
+			group: $("#filter-group").val(),
+			features: $("#filter-features").val(),
+			priceFrom: $("#filter-price-from").val(),
+			priceTo: $("#filter-price-to").val()
+		},
+		error: function(data) {
+			$("#filter-department-container").hide();
+			$("#filter-department-header").hide();
+			$("button[data-filter='department'] .ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+			$("#filter-department-loading").hide();
+			$("#filter-department").html('<p class="no-results">Sorry, no departments are available.</p>').fadeIn();
+			$departmentFilterLoaded = true;
+			$skipDepartmentFilter = false;
+			checkDepartmentLoaded();
+      	},
+		success: function(data) {
+			$("#filter-department-loading").hide();
+			$("#filter-department").html(data).fadeIn();
+			$("#filter-department-"+$("#filter-departments").val()).attr("checked", "checked");
+			$("#uniform-filter-department-"+$("#filter-departments").val()+" span").addClass("checked");
+			if ($("#filter-department ul li").length < 1)
+			{
+				$("#filter-department-container").hide();
+				$("#filter-department-header").hide();
+				$("button[data-filter='department'] .ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+				$("#filter-department-loading").hide();
+				$("#filter-department").html('<p class="no-results">Sorry, no departments are available.</p>').fadeIn();
+			}
+        	$departmentFilterLoaded = true;
+        	$skipDepartmentFilter = false;
+        	checkDepartmentLoaded();
+		}
+	});
+}
+
+{# Load product listing price filter #}
+function loadProductListingPriceFilter()
+{
+	if ($("#filter-price").height() > 0)
+	{
+		if ($("#filter-price").height() > $("#filter-price-loading").height())
+		{
+			$("#filter-price-loading").height($("#filter-price").height());
+		}
+	}
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url: "{{ path('products_ajax_get_product_listing_price_filter') }}",
+		beforeSend: function() {
+			$("#filter-price-container").show();
+			$("#filter-price-loading").show();
+			$("#filter-price").html("").hide();
+		},
+		data: {
+			url: "{{ url }}",
+			departmentBrand: "{{ brand }}",
+			departmentGroup: "{{ group }}",
+			departmentId: {{ department.id }},
+			brands: $("#filter-brands").val(),
+			group: $("#filter-group").val(),
+			features: $("#filter-features").val(),
+			priceFrom: $("#filter-price-from").val(),
+			priceTo: $("#filter-price-to").val()
+		},
+		error: function(data) {
+			$("#filter-price-container").hide();
+			$("#filter-price-header").hide();
+			$("button[data-filter='price'] .ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+			$("#filter-price-loading").hide();
+			$("#filter-price").html('<p class="no-results">Sorry, no prices are available.</p>').fadeIn();
+			$priceFilterLoaded = true;
+			$skipPriceFilter = false;
+			checkDepartmentLoaded();
+      	},
+		success: function(data) {
+			$("#filter-price-loading").hide();
+			$("#filter-price").html(data).fadeIn();
+        	$priceFilterLoaded = true;
+        	$skipPriceFilter = false;
+        	checkDepartmentLoaded();
+		}
+	});
+}
+
+{# Load product listing feature filter #}
+function loadProductListingFeatureFilter()
+{
+	if ($("#filter-feature").height() > 0)
+	{
+		if ($("#filter-feature").height() > $("#filter-feature-loading").height())
+		{
+			$("#filter-feature-loading").height($("#filter-feature").height());
+		}
+	}
+	$.ajax({
+		cache: false,
+		type: "GET",
+		url: "{{ path('products_ajax_get_product_listing_feature_filter') }}",
+		beforeSend: function() {
+			$("#filter-feature-container").show();
+			$("#filter-feature-loading").show();
+			$("#filter-feature").html("").hide();
+		},
+		data: {
+			url: "{{ url }}",
+			departmentBrand: "{{ brand }}",
+			departmentGroup: "{{ group }}",
+			departmentId: {{ department.id }},
+			brands: $("#filter-brands").val(),
+			group: $("#filter-group").val(),
+			features: $("#filter-features").val(),
+			priceFrom: $("#filter-price-from").val(),
+			priceTo: $("#filter-price-to").val()
+		},
+		error: function(data) {
+			$("#filter-feature-container").hide();
+			$("#filter-feature-header").hide();
+			$("button[data-filter='feature'] .ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+			$("#filter-feature-loading").hide();
+			$("#filter-feature").html('<p class="no-results">Sorry, no features are available.</p>').fadeIn();
+			$featureFilterLoaded = true;
+			$skipFeatureFilter = false;
+			checkDepartmentLoaded();
+  		},
+		success: function(data) {
+			$("#filter-feature-loading").hide();
+			$("#filter-feature").html(data).fadeIn();
+			if ($("#filter-feature ul li").length < 1)
+			{
+				$("#filter-feature-container").hide();
+				$("#filter-feature-header").hide();
+				$("button[data-filter='feature'] .ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+				$("#filter-feature-loading").hide();
+				$("#filter-feature").html('<p class="no-results">Sorry, no features are available.</p>').fadeIn();
+			}
+    		$featureFilterLoaded = true;
+    		$skipFeatureFilter = false;
+    		checkDepartmentLoaded();
+		}
+	});
+}

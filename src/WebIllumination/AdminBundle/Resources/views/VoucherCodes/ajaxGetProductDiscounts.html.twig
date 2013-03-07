@@ -1,0 +1,34 @@
+<div id="product-discounts-container-{{ voucherCode.id }}" class="clearfix separator">
+	{% if productDiscounts|length > 0 %}
+		<table class="sub-data-table" width="100%">
+			<tr>
+				<th class="al">Product</th>
+				<th class="ac">Discount ({{ voucherCode.discountTypeSymbol }})</th>
+				<th class="ac" width="28">&nbsp;</th>
+			</tr>
+			{% for productDiscount in productDiscounts %}
+				<tr id="product-discount-{{ productDiscount.productId }}">
+					<td class="al">{{ productDiscount.product }}</td>
+					<td class="ac">{{ productDiscount.discount|number_format(2) }}</td>
+					<td class="ac" width="28"><button data-voucher-code-id="{{ voucherCode.id }}" data-product-id="{{ productDiscount.productId }}" class="button ui-button-red action-confirm-delete-product-discount" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</button></td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p class="ac">There are no product discounts setup.</p>
+	{% endif %}
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#product-discounts-container-{{ voucherCode.id }} :checkbox:not(.no-uniform), #product-discounts-container-{{ voucherCode.id }} :radio:not(.no-uniform), #product-discounts-container-{{ voucherCode.id }} select:not(.no-uniform), #product-discounts-container-{{ voucherCode.id }} :file:not(.no-uniform)").uniform();
+			$("#product-discounts-container-{{ voucherCode.id }} .button").each(function () {
+            $(this).button({
+            	icons: {
+                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+                }, 
+               	text: $(this).attr('data-icon-only') === 'true'?false:true
+        	});
+        });
+	});
+</script>

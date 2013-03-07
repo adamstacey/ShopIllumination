@@ -1,0 +1,23 @@
+<div id="listing-settings">
+	<div class="fl">
+		<div class="listing-settings-title fl">Sort By</div>
+		<select id="form-sort-order" class="fl">
+			<option{% if settings.admin.membershipCards.listingSortOrder == 'membershipNumber:ASC' %} selected="selected"{% endif %} value="membershipNumber:ASC">Membership Number: Lowest First</option>
+			<option{% if settings.admin.membershipCards.listingSortOrder == 'membershipNumber:DESC' %} selected="selected"{% endif %} value="membershipNumber:DESC">Membership Number: Highest First</option>
+			<option{% if settings.admin.membershipCards.listingSortOrder == 'expiryDate:DESC' %} selected="selected"{% endif %} value="createdAt:DESC">Expiry Date</option>
+			<option{% if settings.admin.membershipCards.listingSortOrder == 'validFromDate:DESC' %} selected="selected"{% endif %} value="createdAt:DESC">Valid From Date</option>
+		</select>
+	</div>
+    <div class="fr">
+    	<div class="listing-settings-title fl">Per Page</div>
+        <select class="fl" id="form-max-results">
+			<option{% if settings.admin.membershipCards.listingMaxResults == '10' %} selected="selected"{% endif %} value="10">10</option>
+			<option{% if settings.admin.membershipCards.listingMaxResults == '20' %} selected="selected"{% endif %} value="20">20</option>
+			<option{% if settings.admin.membershipCards.listingMaxResults == '50' %} selected="selected"{% endif %} value="50">50</option>
+			<option{% if settings.admin.membershipCards.listingMaxResults == '100' %} selected="selected"{% endif %} value="100">100</option>
+			<option{% if settings.admin.membershipCards.listingMaxResults == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+		</select>
+		<input type="hidden" id="form-current-page" value="1" />
+	</div>
+    <div class="clear"></div>
+</div>

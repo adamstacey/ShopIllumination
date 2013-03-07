@@ -1,0 +1,1079 @@
+<script type="text/javascript" defer="defer">
+	{# Check all elements are loaded #}
+	var $listingCountLoaded = false;
+	var $listingLoaded = false;
+	var $listingPaginationLoaded = false;
+	
+	{# Setup the brand list #}
+	var brands = [
+		{% for brand in brands %}
+			{
+				value: "{{ brand.id }}",
+				label: "{{ brand.brand }}"
+			}{% if not loop.last %},{% endif %}
+		{% endfor %}
+	];
+	
+	{# Setup the department list #}
+	var departments = [
+		{% for department in departments %}
+			{
+				value: "{{ department.id }}",
+				label: "{{ department.name }}"
+			}{% if not loop.last %},{% endif %}
+		{% endfor %}
+	];
+	
+	{# Setup the product list #}
+	var products = [
+		{% for product in products %}
+			{
+				value: "{{ product.productId }}",
+				label: "{{ product.header }}"
+			}{% if not loop.last %},{% endif %}
+		{% endfor %}
+	];
+	
+	$(document).ready(function() {
+		
+		{# Show the add voucher code #}
+		$(".action-view-add-voucher-code").live('click', function() {
+			$("#voucher-code-add").slideDown(function() {
+				$("html, body").animate({scrollTop: $("#voucher-code-add").offset().top - 50},'slow');
+			});
+		});
+		
+		{# Hide the add voucher code #}
+		$(".action-cancel-add-voucher-code").live('click', function() {
+			$(".form-error").hide();
+			$("input, textarea, select").removeClass("invalid");
+			$("#voucher-code-add").slideUp(function() {
+				$("#voucher-code-code").val("");
+				$("#voucher-code-description").val("");
+				$("#voucher-code-minimum-order-value").val("0.00");
+				$("#voucher-code-discount-type option").removeAttr("selected");
+				$("#voucher-code-discount-type option:first").attr("selected", "selected");
+				$("#uniform-voucher-code-discount-type span").html($("#voucher-code-discount-type option:first").text());
+				$("#voucher-code-discount-use option").removeAttr("selected");
+				$("#voucher-code-discount-use option:first").attr("selected", "selected");
+				$("#uniform-voucher-code-discount-use span").html($("#voucher-code-discount-use option:first").text());
+				$("#voucher-code-discount-use").val("0");
+				$("#voucher-code-number-of-uses").val("0");
+				$("#voucher-code-valid-from-date").val("{{ validFromDate|date("d/m/Y") }}");
+				$("#voucher-code-expiry-date").val("{{ expiryDate|date("d/m/Y") }}");
+				$("#voucher-code-valid-from-date-formatted").val("{{ validFromDate|date("Y-m-d") }}");
+				$("#voucher-code-expiry-date-formatted").val("{{ expiryDate|date("Y-m-d") }}");
+				$("#voucher-code-discount-use-container").hide();
+			});
+		});
+		
+		{# Add the voucher code #}
+        $(".action-add-voucher-code").live('click', function() {
+        	var addVoucherCodeValidator = $("#voucher-code-add :input").validator({
+    			position : 'bottom left', 
+    			offset : [0, 0], 
+    			messageClass : 'form-error', 
+        		message : '<div><em/></div>'
+			});
+			if (addVoucherCodeValidator.data("validator").checkValidity())
+			{			
+	        	$("#ajax_loading").show();
+	        	$("#flash_messages .message").hide();
+	        	$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: "{{ path('admin_voucher_codes_ajax_add_voucher_code') }}",
+					data: {
+						code: $("#voucher-code-code").val(),
+						description: $("#voucher-code-description").val(),
+						minimumOrderValue: $("#voucher-code-minimum-order-value").val(),
+						discountType: $("#voucher-code-discount-type").val(),
+						discountUse: $("#voucher-code-discount-use").val(),
+						numberOfUses: $("#voucher-code-number-of-uses").val(),
+						validFromDate: $("#voucher-code-valid-from-date-formatted").val(),
+						expiryDate: $("#voucher-code-expiry-date-formatted").val()
+					},
+					error: function(data) {
+						$("#message-error-text").html('Sorry, there was a problem adding the voucher code. Make sure you have filled in all fields and try again.');
+			      		$("#message-error").fadeIn();
+			      		$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+						$("#ajax_loading").hide();
+			      	},
+					success: function(data) {
+						if (data.response == 'error')
+						{
+							$("#message-error-text").html('Sorry, there was a problem adding the voucher code. Make sure you have filled in all fields and try again.');
+			      			$("#message-error").fadeIn();
+			      			$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+							$("#ajax_loading").hide();
+						} else {
+							$("#voucher-code-add").slideUp(function() {
+								$("#voucher-code-code").val("");
+								$("#voucher-code-description").val("");
+								$("#voucher-code-minimum-order-value").val("0.00");
+								$("#voucher-code-discount-type option").removeAttr("selected");
+								$("#voucher-code-discount-type option:first").attr("selected", "selected");
+								$("#uniform-voucher-code-discount-type span").html($("#voucher-code-discount-type option:first").text());
+								$("#voucher-code-discount-use option").removeAttr("selected");
+								$("#voucher-code-discount-use option:first").attr("selected", "selected");
+								$("#uniform-voucher-code-discount-use span").html($("#voucher-code-discount-use option:first").text());
+								$("#voucher-code-discount-use").val("0");
+								$("#voucher-code-number-of-uses").val("0");
+								$("#voucher-code-valid-from-date").val("{{ validFromDate|date("d/m/Y") }}");
+								$("#voucher-code-expiry-date").val("{{ expiryDate|date("d/m/Y") }}");
+								$("#voucher-code-valid-from-date-formatted").val("{{ validFromDate|date("Y-m-d") }}");
+								$("#voucher-code-expiry-date-formatted").val("{{ expiryDate|date("Y-m-d") }}");
+								$("#voucher-code-discount-use-container").hide();
+							});
+				      		loadResults();
+    						$("#message-success-text").html('The voucher code was successfully added.');
+				      		$("#message-success").fadeIn();
+    						$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+							$("#ajax_loading").hide();
+						}
+					}
+				});
+			}
+        });
+		
+        {# Show the voucher code #}
+        $(".action-view-voucher-code").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'voucher-code', $("tr#voucher-code-"+$(this).attr("data-id")+" button.action-view-voucher-code"));
+        });
+        
+        {# Save the voucher code #}
+        $(".action-save-voucher-code").live('click', function() {
+        	var $id = $(this).attr("data-id");
+        	var saveVoucherCodeValidator = $("#voucher-code-voucher-code-"+$id+" :input").validator({
+    			position : 'bottom left', 
+    			offset : [0, 0], 
+    			messageClass : 'form-error', 
+        		message : '<div><em/></div>'
+			});
+			if (saveVoucherCodeValidator.data("validator").checkValidity())
+			{			
+	        	$("#ajax_loading").show();
+	        	$("#flash_messages .message").hide();
+	        	$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: "{{ path('admin_voucher_codes_ajax_save_voucher_code') }}",
+					data: {
+						id: $id,
+						code: $("#voucher-code-code-"+$id).val(),
+						description: $("#voucher-code-description-"+$id).val(),
+						minimumOrderValue: $("#voucher-code-minimum-order-value-"+$id).val(),
+						discountType: $("#voucher-code-discount-type-"+$id).val(),
+						discountUse: $("#voucher-code-discount-use-"+$id).val(),
+						numberOfUses: $("#voucher-code-number-of-uses-"+$id).val(),
+						validFromDate: $("#voucher-code-valid-from-date-formatted-"+$id).val(),
+						expiryDate: $("#voucher-code-expiry-date-formatted-"+$id).val()
+					},
+					error: function(data) {
+						$("#voucher-code-error-message-text-"+$id).html('Sorry, there was a problem saving the voucher code. Make sure you have filled in all fields and try again.');
+			      		$("#voucher-code-error-message-"+$id).fadeIn();
+						$("#ajax_loading").hide();
+			      	},
+					success: function(data) {
+						if (data.response == 'error')
+						{
+							$("#voucher-code-error-message-text-"+$id).html('Sorry, there was a problem saving the voucher code. Make sure you have filled in all fields and try again.');
+				      		$("#voucher-code-error-message-"+$id).fadeIn();
+							$("#ajax_loading").hide();
+						} else {
+				      		loadResults();
+				      		$.mask.close();
+    						$("#more-information-"+$id).hide();
+    						$("#more-information-"+$id+" .more-information-detail").hide();
+    						$("#message-success-text").html('The voucher code was successfully saved.');
+				      		$("#message-success").fadeIn();
+    						$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+							$("#ajax_loading").hide();
+						}
+					}
+				});
+			}
+        });		
+        
+        {# Show the discounts #}
+        $(".action-view-discounts").live('click', function() {
+        	var $id = $(this).attr("data-id");
+        	loadBrandDiscounts($id);
+        	loadDepartmentDiscounts($id);
+        	loadProductDiscounts($id);
+        	showMoreInformation($(this).attr("data-id"), 'discounts', $("tr#voucher-code-"+$id+" button.action-view-discounts"));
+        });
+        
+        {# Save the discount #}
+        $(".action-save-discount").live('click', function() {
+        	$("#ajax_loading").show();
+        	var $id = $(this).attr("data-id");
+        	$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: "{{ path('admin_voucher_codes_ajax_save_discount') }}",
+				data: {
+					id: $id,
+		    		discount: $("#discounts-discount-"+$id).val()
+				},
+				error: function(data) {
+					$("#discounts-error-message-text-"+$id).html('Sorry, there was a problem saving the discount. Make sure you have filled in all fields and try again.');
+		      		$("#discounts-error-message-"+$id).fadeIn();
+					$("#ajax_loading").hide();
+		      	},
+				success: function(data) {
+					if (data.response == 'error')
+					{
+						$("#discounts-error-message-text-"+$id).html('Sorry, there was a problem saving the discount. Make sure you have filled in all fields and try again.');
+			      		$("#discounts-error-message-"+$id).fadeIn();
+						$("#ajax_loading").hide();
+					} else {
+						$("#discounts-success-message-text-"+$id).html('The discount was successfully saved.');
+			      		$("#discounts-success-message-"+$id).fadeIn();
+						$("#ajax_loading").hide();
+					}
+				}
+			});
+        });
+        
+        {# Add a brand discount #}
+        $(".action-view-add-brand-discount").live('click', function() {
+        	$addBrandDiscountObject = $("#add-brand-discount-"+$(this).attr("data-id"));
+        	if ($addBrandDiscountObject.is(":hidden"))
+        	{
+        		$addBrandDiscountObject.slideDown();
+        		$(this).find("span.ui-icon").removeClass("ui-icon-plusthick").addClass("ui-icon-minusthick");
+        	} else {
+        		$addBrandDiscountObject.slideUp();
+        		$(this).find("span.ui-icon").removeClass("ui-icon-minusthick").addClass("ui-icon-plusthick");
+        	}
+        });
+        $(".action-add-brand-discount").live('click', function() {
+        	$("#ajax_loading").show();
+        	var $voucherCodeId = $(this).attr("data-id");
+        	$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: "{{ path('admin_voucher_codes_ajax_add_brand_discount') }}",
+				data: {
+					id: $voucherCodeId,
+	    			brandId: $("#discounts-brand-id-"+$voucherCodeId).val(),
+		    		discount: $("#discounts-brand-discount-"+$voucherCodeId).val()
+				},
+				error: function(data) {
+					$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem adding the brand discount. Make sure you have filled in all fields and try again.');
+		      		$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+					$("#ajax_loading").hide();
+		      	},
+				success: function(data) {
+					if (data.response == 'error')
+					{
+						$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem adding the brand discount. Make sure you have filled in all fields and try again.');
+			      		$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+						$("#ajax_loading").hide();
+					} else {
+						loadBrandDiscounts($voucherCodeId);
+						$("#discounts-success-message-text-"+$voucherCodeId).html('The brand discount was successfully added.');
+			      		$("#discounts-success-message-"+$voucherCodeId).fadeIn();
+						$("#discounts-brand-id-"+$voucherCodeId).val($("options:first", $("#discounts-brand-id-"+$voucherCodeId)).val());
+			      		$("#discounts-brand-discount-"+$voucherCodeId).val("0.00");
+			      		$("#add-brand-discount-"+$voucherCodeId).slideUp();
+	        			$("#voucher-code-discounts-"+$voucherCodeId+" button.action-view-add-brand-discount span.ui-icon").removeClass("ui-icon-minusthick").addClass("ui-icon-plusthick");
+						$("#ajax_loading").hide();
+					}
+				}
+			});
+        });
+        
+        {# Delete a brand discount #}
+        $(".action-confirm-delete-brand-discount").live('click', function() {
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $brandId = $(this).attr("data-brand-id");
+        	$("#brand-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", $voucherCodeId).attr("data-brand-id", $brandId);
+        	$("#brand-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", $voucherCodeId).attr("data-brand-id", $brandId);
+        	$("tr#more-information-"+$voucherCodeId+" .selected").removeClass("selected");
+        	$("#brand-discount-"+$brandId).addClass("selected");
+        	$("#brand-discount-confirm-delete-"+$voucherCodeId).fadeIn();
+        	$("html, body").animate({scrollTop: $("#brand-discount-confirm-delete-"+$voucherCodeId).offset().top - 50},'slow');
+        });
+        $(".action-cancel-delete-brand-discount").live('click', function() {
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $brandId = $(this).attr("data-brand-id");
+        	$("#brand-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-brand-id", "");
+        	$("#brand-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-brand-id", "");
+        	$("#brand-discount-"+$brandId).removeClass("selected");
+        	$("#brand-discount-confirm-delete-"+$voucherCodeId).hide();
+        	$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+        });
+        $(".action-delete-brand-discount").live('click', function() {
+        	$("#ajax_loading").show();
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $brandId = $(this).attr("data-brand-id");
+        	$("#brand-discount-confirm-delete-"+$voucherCodeId).hide();
+        	$("#brand-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-brand-id", "");
+        	$("#brand-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-brand-id", "");
+			$.ajax({
+		    	url: "{{ path('admin_voucher_codes_ajax_delete_brand_discount') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $voucherCodeId,
+		      		brandId: $brandId
+		      	},
+		      	error: function(data) {
+		      		$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem deleting the brand discount. Please try again.');
+			      	$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+			      	$("#brand-discount-confirm-delete-"+$voucherCodeId).hide();
+			      	$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		      		loadBrandDiscounts($voucherCodeId);
+					$("#discounts-success-message-text-"+$voucherCodeId).html('The brand discount was successfully deleted.');
+		      		$("#discounts-success-message-"+$voucherCodeId).fadeIn();
+        			$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	}
+		   	});
+        });
+        
+        {# Add a department discount #}
+        $(".action-view-add-department-discount").live('click', function() {
+        	$addDepartmentDiscountObject = $("#add-department-discount-"+$(this).attr("data-id"));
+        	if ($addDepartmentDiscountObject.is(":hidden"))
+        	{
+        		$addDepartmentDiscountObject.slideDown();
+        		$(this).find("span.ui-icon").removeClass("ui-icon-plusthick").addClass("ui-icon-minusthick");
+        	} else {
+        		$addDepartmentDiscountObject.slideUp();
+        		$(this).find("span.ui-icon").removeClass("ui-icon-minusthick").addClass("ui-icon-plusthick");
+        	}
+        });
+        $(".action-add-department-discount").live('click', function() {
+        	$("#ajax_loading").show();
+        	var $voucherCodeId = $(this).attr("data-id");
+        	$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: "{{ path('admin_voucher_codes_ajax_add_department_discount') }}",
+				data: {
+					id: $voucherCodeId,
+	    			departmentId: $("#discounts-department-id-"+$voucherCodeId).val(),
+		    		discount: $("#discounts-department-discount-"+$voucherCodeId).val()
+				},
+				error: function(data) {
+					$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem adding the department discount. Make sure you have filled in all fields and try again.');
+		      		$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+					$("#ajax_loading").hide();
+		      	},
+				success: function(data) {
+					if (data.response == 'error')
+					{
+						$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem adding the department discount. Make sure you have filled in all fields and try again.');
+			      		$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+						$("#ajax_loading").hide();
+					} else {
+						loadDepartmentDiscounts($voucherCodeId);
+						$("#discounts-success-message-text-"+$voucherCodeId).html('The department discount was successfully added.');
+			      		$("#discounts-success-message-"+$voucherCodeId).fadeIn();
+						$("#discounts-department-id-"+$voucherCodeId).val($("options:first", $("#discounts-department-id-"+$voucherCodeId)).val());
+			      		$("#discounts-department-discount-"+$voucherCodeId).val("0.00");
+			      		$("#add-department-discount-"+$voucherCodeId).slideUp();
+	        			$("#voucher-code-discounts-"+$voucherCodeId+" button.action-view-add-department-discount span.ui-icon").removeClass("ui-icon-minusthick").addClass("ui-icon-plusthick");
+						$("#ajax_loading").hide();
+					}
+				}
+			});
+        });
+        
+        {# Delete a department discount #}
+        $(".action-confirm-delete-department-discount").live('click', function() {
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $departmentId = $(this).attr("data-department-id");
+        	$("#department-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", $voucherCodeId).attr("data-department-id", $departmentId);
+        	$("#department-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", $voucherCodeId).attr("data-department-id", $departmentId);
+        	$("tr#more-information-"+$voucherCodeId+" .selected").removeClass("selected");
+        	$("#department-discount-"+$departmentId).addClass("selected");
+        	$("#department-discount-confirm-delete-"+$voucherCodeId).fadeIn();
+        	$("html, body").animate({scrollTop: $("#department-discount-confirm-delete-"+$voucherCodeId).offset().top - 50},'slow');
+        });
+        $(".action-cancel-delete-department-discount").live('click', function() {
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $departmentId = $(this).attr("data-department-id");
+        	$("#department-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-department-id", "");
+        	$("#department-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-department-id", "");
+        	$("#department-discount-"+$departmentId).removeClass("selected");
+        	$("#department-discount-confirm-delete-"+$voucherCodeId).hide();
+        	$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+        });
+        $(".action-delete-department-discount").live('click', function() {
+        	$("#ajax_loading").show();
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $departmentId = $(this).attr("data-department-id");
+        	$("#department-discount-confirm-delete-"+$voucherCodeId).hide();
+        	$("#department-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-department-id", "");
+        	$("#department-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-department-id", "");
+			$.ajax({
+		    	url: "{{ path('admin_voucher_codes_ajax_delete_department_discount') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $voucherCodeId,
+		      		departmentId: $departmentId
+		      	},
+		      	error: function(data) {
+		      		$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem deleting the department discount. Please try again.');
+			      	$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+			      	$("#department-discount-confirm-delete-"+$voucherCodeId).hide();
+			      	$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		      		loadDepartmentDiscounts($voucherCodeId);
+					$("#discounts-success-message-text-"+$voucherCodeId).html('The department discount was successfully deleted.');
+		      		$("#discounts-success-message-"+$voucherCodeId).fadeIn();
+        			$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	}
+		   	});
+        });
+        
+        {# Add a product discount #}
+        $(".action-view-add-product-discount").live('click', function() {
+        	$addProductDiscountObject = $("#add-product-discount-"+$(this).attr("data-id"));
+        	if ($addProductDiscountObject.is(":hidden"))
+        	{
+        		$addProductDiscountObject.slideDown();
+        		$(this).find("span.ui-icon").removeClass("ui-icon-plusthick").addClass("ui-icon-minusthick");
+        	} else {
+        		$addProductDiscountObject.slideUp();
+        		$(this).find("span.ui-icon").removeClass("ui-icon-minusthick").addClass("ui-icon-plusthick");
+        	}
+        });
+        $(".action-add-product-discount").live('click', function() {
+        	$("#ajax_loading").show();
+        	var $voucherCodeId = $(this).attr("data-id");
+        	$.ajax({
+				type: "GET",
+				dataType: "json",
+				url: "{{ path('admin_voucher_codes_ajax_add_product_discount') }}",
+				data: {
+					id: $voucherCodeId,
+	    			productId: $("#discounts-product-id-"+$voucherCodeId).val(),
+		    		discount: $("#discounts-product-discount-"+$voucherCodeId).val()
+				},
+				error: function(data) {
+					$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem adding the product discount. Make sure you have filled in all fields and try again.');
+		      		$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+					$("#ajax_loading").hide();
+		      	},
+				success: function(data) {
+					if (data.response == 'error')
+					{
+						$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem adding the product discount. Make sure you have filled in all fields and try again.');
+			      		$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+						$("#ajax_loading").hide();
+					} else {
+						loadProductDiscounts($voucherCodeId);
+						$("#discounts-success-message-text-"+$voucherCodeId).html('The product discount was successfully added.');
+			      		$("#discounts-success-message-"+$voucherCodeId).fadeIn();
+						$("#discounts-product-id-"+$voucherCodeId).val($("options:first", $("#discounts-product-id-"+$voucherCodeId)).val());
+			      		$("#discounts-product-discount-"+$voucherCodeId).val("0.00");
+			      		$("#add-product-discount-"+$voucherCodeId).slideUp();
+	        			$("#voucher-code-discounts-"+$voucherCodeId+" button.action-view-add-product-discount span.ui-icon").removeClass("ui-icon-minusthick").addClass("ui-icon-plusthick");
+						$("#ajax_loading").hide();
+					}
+				}
+			});
+        });
+        
+        {# Delete a product discount #}
+        $(".action-confirm-delete-product-discount").live('click', function() {
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $productId = $(this).attr("data-product-id");
+        	$("#product-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", $voucherCodeId).attr("data-product-id", $productId);
+        	$("#product-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", $voucherCodeId).attr("data-product-id", $productId);
+        	$("tr#more-information-"+$voucherCodeId+" .selected").removeClass("selected");
+        	$("#product-discount-"+$productId).addClass("selected");
+        	$("#product-discount-confirm-delete-"+$voucherCodeId).fadeIn();
+        	$("html, body").animate({scrollTop: $("#product-discount-confirm-delete-"+$voucherCodeId).offset().top - 50},'slow');
+        });
+        $(".action-cancel-delete-product-discount").live('click', function() {
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $productId = $(this).attr("data-product-id");
+        	$("#product-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-product-id", "");
+        	$("#product-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-product-id", "");
+        	$("#product-discount-"+$productId).removeClass("selected");
+        	$("#product-discount-confirm-delete-"+$voucherCodeId).hide();
+        	$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+        });
+        $(".action-delete-product-discount").live('click', function() {
+        	$("#ajax_loading").show();
+        	var $voucherCodeId = $(this).attr("data-voucher-code-id");
+        	var $productId = $(this).attr("data-product-id");
+        	$("#product-discount-confirm-delete-"+$voucherCodeId).hide();
+        	$("#product-discount-confirm-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-product-id", "");
+        	$("#product-discount-cancel-delete-button-"+$voucherCodeId).attr("data-voucher-code-id", "").attr("data-product-id", "");
+			$.ajax({
+		    	url: "{{ path('admin_voucher_codes_ajax_delete_product_discount') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $voucherCodeId,
+		      		productId: $productId
+		      	},
+		      	error: function(data) {
+		      		$("#discounts-error-message-text-"+$voucherCodeId).html('Sorry, there was a problem deleting the product discount. Please try again.');
+			      	$("#discounts-error-message-"+$voucherCodeId).fadeIn();
+			      	$("#product-discount-confirm-delete-"+$voucherCodeId).hide();
+			      	$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		      		loadProductDiscounts($voucherCodeId);
+					$("#discounts-success-message-text-"+$voucherCodeId).html('The product discount was successfully deleted.');
+		      		$("#discounts-success-message-"+$voucherCodeId).fadeIn();
+        			$("html, body").animate({scrollTop: $("tr#voucher-code-"+$voucherCodeId+" button.action-view-discounts").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	}
+		   	});
+        });
+        
+        {# Show the report #}
+        $(".action-view-report").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'customer', $("tr#voucher-code-"+$(this).attr("data-id")+" button.action-view-report"));
+        });
+                
+        {# Confirm the voucher code deletion #}
+        $(".action-confirm-delete-voucher-code").live('click', function() {
+        	showMoreInformation($(this).attr("data-id"), 'confirm-delete', $("tr#voucher-code-"+$(this).attr("data-id")+" button.action-confirm-delete-voucher-code"));
+        });
+        $(".action-confirm-delete-voucher-codes").live('click', function() {
+        	if ($(".action-select:checked").length > 0)
+			{
+	    		$("#voucher-code-confirm-delete-voucher-codes").fadeIn();
+	    		$("html, body").animate({scrollTop: $("#voucher-code-confirm-delete-voucher-codes").offset().top - 50},'slow');
+	    	}
+        });
+        $(".action-cancel-delete-voucher-codes").live('click', function() {
+        	$("#voucher-code-confirm-delete-voucher-codes").fadeOut();
+        });
+        $(".action-delete-voucher-codes").live('click', function() {
+        	$("#flash_messages .message").hide();
+        	if ($(".action-select:checked").length > 0)
+			{
+	        	$("#ajax_loading").show();
+	        	$("#order-confirm-delete-orders").hide();
+				var $numberOfOrdersToDelete = $(".action-select:checked").length;
+				var $numberOfOrdersDeleted = 0;
+				if ($numberOfOrdersToDelete > 0)
+				{
+					$(".action-select:checked").each(function() {
+						var $id = $(this).attr("data-id");
+						$.ajax({
+							type: "GET",
+							url: "{{ path('orders_ajax_delete_order') }}",
+							data: {
+								id: $id
+							},
+							error: function(data) {
+								$numberOfOrdersDeleted = $numberOfOrdersDeleted + 1;
+								$("#message-error-text").html('Sorry, there was a problem deleting the selected orders. Please try again.');
+						      	$("#message-error").fadeIn();
+						      	if ($numberOfOrdersDeleted >= $numberOfOrdersToDelete)
+						      	{
+						      		$("html, body").animate({scrollTop: $("#flash_messages").offset().top - 50},'slow');
+									$("#ajax_loading").hide();
+									$("#form-current-page").val('1');
+									loadResults();
+								}
+				      		},
+							success: function(data) {
+								$numberOfOrdersDeleted = $numberOfOrdersDeleted + 1;
+								$("#message-success-text").html('The orders were successfully deleted.');
+						      	$("#message-success").fadeIn();
+								if ($numberOfOrdersDeleted >= $numberOfOrdersToDelete)
+						      	{
+						      		$("html, body").animate({scrollTop: $("#flash_messages").offset().top - 50},'slow');
+									$("#ajax_loading").hide();
+									$("#form-current-page").val('1');
+									loadResults();
+								}
+							}
+						});
+					});
+				} else {
+					$("#flash_messages .message").hide();
+					$("#message-error-text").html('Sorry, you did not select any orders to delete.');
+			      	$("#message-error").fadeIn();
+			      	$("html, bo dy").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+				}
+			}
+        });
+        $(".action-delete-voucher-code").live('click', function() {
+        	$("#flash_messages .message").hide();
+        	$("#ajax_loading").show();
+        	var $id = $(this).attr("data-id");
+			$.ajax({
+		    	url: "{{ path('orders_ajax_delete_order') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $id
+		      	},
+		      	error: function(data) {
+		      		$("#message-error-text").html('Sorry, there was a problem deleting the order. Please try again.');
+			      	$("#message-error").fadeIn();
+			      	$("html, body").animate({scrollTop: $("#message-error").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		      		$("#form-current-page").val('1');
+		      		$(".more-information, .more-information-detail").hide();
+					$("tr.order td").removeAttr("style");
+					$("tr.order button").removeClass("ui-button-blue");
+					$.mask.close();
+					loadResults();
+					$("#message-success-text").html('The order has been successfully deleted.');
+			      	$("#message-success").fadeIn();
+			      	$("html, body").animate({scrollTop: $("#message-success").offset().top - 50},'slow');
+					$("#ajax_loading").hide();
+		      	}
+		   	});
+        });
+        
+    
+		{# Update check boxes #}
+		$(".voucher-code-active").live('click', function() {
+			var $actives = new Array();
+			$(".voucher-code-active:checked").each(function(index) {
+				$actives[$actives.length] = $(this).attr("data-active");
+			});
+			$("#form-actives").val($actives.join("|"));
+			loadResults();
+		});
+		$(".voucher-code-discount-type").live('click', function() {
+			var $discountTypes = new Array();
+			$(".voucher-code-discount-type:checked").each(function(index) {
+				$discountTypes[$discountTypes.length] = $(this).attr("data-discount-type");
+			});
+			$("#form-discount-types").val($discountTypes.join("|"));
+			loadResults();
+		});
+		$(".voucher-code-discount-use").live('click', function() {
+			var $discountUses = new Array();
+			$(".voucher-code-discount-use:checked").each(function(index) {
+				$discountUses[$discountUses.length] = $(this).attr("data-discount-use");
+			});
+			$("#form-discount-uses").val($discountUses.join("|"));
+			loadResults();
+		});
+		
+		{# Select voucher codes #}
+		$(".action-select-all").live('click', function() {
+			if ($(".action-select-all").is(":checked"))
+			{
+				$(".action-select").attr("checked", "checked");
+				$(".action-select").parent().addClass("checked");
+				$("tr.voucher-code").addClass("selected");
+			} else {
+				$(".action-select").attr("checked", false);
+				$(".action-select").parent().removeClass("checked");
+				$("tr.voucher-code").removeClass("selected");
+			}
+		});
+        $(".action-select").live('click', function() {
+        	var $id = $(this).attr("data-id");
+        	if ($(this).is(":checked"))
+        	{
+        		$("#voucher-code-"+$id).addClass("selected");
+        	} else {
+        		$("#voucher-code-"+$id).removeClass("selected");
+        	}
+        });
+		$(".action-order-status").live('change', function() {
+			var $id = $(this).attr("data-id");
+			$("#voucher-code-id-"+$id).attr("checked", "checked");
+			$("#voucher-code-id-"+$id).parent().addClass("checked");
+			$("tr#voucher-code-"+$id).addClass("selected");
+		});
+				
+		{# Close the more information panels #}
+		$(".action-close-more-information").live('click', function() {
+			$(".more-information, .more-information-detail").hide();
+			$("tr.voucher-code td").removeAttr("style");
+			$("tr.voucher-code button").removeClass("ui-button-blue");
+			$.mask.close();
+		});
+		
+		{# Setup date pickers #}
+		$("#form-valid-from-date-from").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-valid-from-date-from-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#form-valid-from-date-to").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-valid-from-date-to-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#form-expiry-date-from").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-expiry-date-from-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#form-expiry-date-to").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#form-expiry-date-to-formatted",
+			altFormat: "yy-mm-dd",
+			onSelect: function(dateText, inst) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#voucher-code-valid-from-date").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#voucher-code-valid-from-date-formatted",
+			altFormat: "yy-mm-dd"
+		});
+		$("#voucher-code-expiry-date").datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "dd/mm/yy",
+			altField: "#voucher-code-expiry-date-formatted",
+			altFormat: "yy-mm-dd"
+		});
+		
+		{# Check for number of uses #}
+		$("#voucher-code-discount-use").live('change', function() {
+			if ($(this).val() == 'f')
+			{
+				$("#voucher-code-discount-use-container").fadeIn();
+			} else {
+				$("#voucher-code-discount-use-container").fadeOut();
+			}
+		});
+	
+		{# Setup total range #}
+		$("#minimum-order-value-range").slider({
+			range: true,
+			min: 0,
+			max: 5000,
+			values: [0, 5000],
+			slide: function(event, ui) {
+				$("#minimum-order-value-range-amount").html("&pound;"+ui.values[0]+" - &pound;"+ui.values[1]);
+			},
+			change: function(event, ui) {
+				$("#form-current-page").val('1');
+				loadResults();
+			}
+		});
+		$("#minimum-order-value-range-amount").html("&pound;"+$("#minimum-order-value-range").slider("values", 0)+" - &pound;"+$("#minimum-order-value-range").slider("values", 1));
+		
+		{# Show/Hide filters #}
+		$(".action-filter-results").live('click', function() {
+			if ($("#listing-filter").is(":hidden"))
+			{
+				$("#listing-filter").slideDown();
+				$("#filter-results-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-s").addClass("ui-icon-triangle-1-n");
+			} else {
+				$("#listing-filter").slideUp();
+				$("#filter-results-button > span.ui-button-icon-primary").removeClass("ui-icon-triangle-1-n").addClass("ui-icon-triangle-1-s");
+			}
+		});
+					
+		{# Update filters #}
+		$(".action-update-your-results").live('click', function() {
+			$("#form-current-page").val('1');
+			loadResults();
+		});
+		$("#form-voucher-code, #form-actives, #form-discount-types, #form-discount-uses, #form-valid-from-date-from-formatted, #form-valid-from-date-to-formatted, #form-expiry-date-from-formatted, #form-expiry-date-to-formatted").live('change', function() {
+			$("#form-current-page").val('1');
+			loadResults();
+		});
+		
+		$("#form-current-page").val('1');
+		loadResults();
+		
+		$("#form-sort-order, #form-max-results").live('change', function() {
+			$("#form-current-page").val('1');
+			loadResults();
+		});
+		
+		{# Change the page number #}
+		$(".page, .page-navigation").live('click', function() {
+			$("#form-current-page").val($(this).attr("data-page"));
+			loadResults();
+		});
+	});
+	
+	{# Load the brand discounts #}
+	function loadBrandDiscounts($id)
+	{
+		$("#brand-discounts-"+$id).hide().html("");
+    	$("#brand-discounts-loading-"+$id).show();
+    	$.ajax({
+			type: "GET",
+			url: "{{ path('admin_voucher_codes_ajax_get_brand_discounts') }}",
+			data: {
+				id: $id
+			},
+			error: function(data) {
+				$("#brand-discounts-loading-"+$id).hide();
+				$("#brand-discounts-"+$id).html('<p class="ac">There are no brand discounts setup.</p>').fadeIn();
+      		},
+			success: function(data) {
+				$("#brand-discounts-loading-"+$id).hide();
+				$("#brand-discounts-"+$id).html(data).fadeIn();
+			}
+		});
+	}
+	
+	{# Load the department discounts #}
+	function loadDepartmentDiscounts($id)
+	{
+		$("#department-discounts-"+$id).hide().html("");
+    	$("#department-discounts-loading-"+$id).show();
+    	$.ajax({
+			type: "GET",
+			url: "{{ path('admin_voucher_codes_ajax_get_department_discounts') }}",
+			data: {
+				id: $id
+			},
+			error: function(data) {
+				$("#department-discounts-loading-"+$id).hide();
+				$("#department-discounts-"+$id).html('<p class="ac">There are no department discounts setup.</p>').fadeIn();
+      		},
+			success: function(data) {
+				$("#department-discounts-loading-"+$id).hide();
+				$("#department-discounts-"+$id).html(data).fadeIn();
+			}
+		});
+	}
+	
+	{# Load the product discounts #}
+	function loadProductDiscounts($id)
+	{
+		$("#product-discounts-"+$id).hide().html("");
+    	$("#product-discounts-loading-"+$id).show();
+    	$.ajax({
+			type: "GET",
+			url: "{{ path('admin_voucher_codes_ajax_get_product_discounts') }}",
+			data: {
+				id: $id
+			},
+			error: function(data) {
+				$("#product-discounts-loading-"+$id).hide();
+				$("#product-discounts-"+$id).html('<p class="ac">There are no product discounts setup.</p>').fadeIn();
+      		},
+			success: function(data) {
+				$("#product-discounts-loading-"+$id).hide();
+				$("#product-discounts-"+$id).html(data).fadeIn();
+			}
+		});
+	}
+		
+	{# Show the more information #}
+	function showMoreInformation($id, $moreInformation, $button)
+	{
+		$(".form-error").hide();
+    	$("tr#voucher-code-"+$id+" button").removeClass("ui-button-blue");
+    	if ($("#voucher-code-"+$moreInformation+"-"+$id).is(":hidden"))
+    	{
+    		$("#more-information-"+$id+" .more-information-detail").hide();
+    		$("#more-information-"+$id).show();
+    		$("#voucher-code-"+$moreInformation+"-"+$id).fadeIn();
+    		$("#more-information-"+$id+" td, #voucher-code-"+$id+" td").expose({
+    			color: "#042F4F",
+    			loadSpeed: 2000,
+    			opacity: "0.6",
+    			onClose: function() {
+    				$(".form-error").hide();
+    				$(".more-information, .more-information-detail").fadeOut();
+    				$("#more-information-"+$id).fadeOut();
+    				$("#voucher-code-"+$id+" td").removeAttr("style");
+    				$("#more-information-"+$id+" .more-information-detail").fadeOut();
+    				$("tr#voucher-code-"+$id+" button").removeClass("ui-button-blue");
+    			}
+    		});
+    		if (!$button.hasClass("ui-button-red"))
+    		{
+    			$button.addClass("ui-button-blue");
+    		}
+    	} else {
+    		$.mask.close();
+    		$("#more-information-"+$id).fadeOut();
+    		$("#more-information-"+$id+" .more-information-detail").fadeOut();
+    	}
+    	$("html, body").animate({scrollTop: $button.offset().top - 50},'slow');
+	}
+	
+	{# Load the results #}
+	function loadResults()
+	{
+		$("#ajax_loading").show();
+		$listingCountLoaded = false;
+		$listingLoaded = false;
+		$listingPaginationLoaded = false;
+		loadListingCount();
+		loadListing();
+		loadListingPagination();
+	}
+	
+	{# Check all elements have been loaded #}
+	function checkResultsLoaded()
+	{
+		if ($listingCountLoaded && $listingLoaded && $listingPaginationLoaded)
+		{
+			$("#ajax_loading").hide();
+		}
+	}
+	
+	{# Load listing count #}
+	function loadListingCount()
+	{
+		$("#listing-count").html('<img src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /> Loading&hellip;');
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			url: "{{ path('admin_voucher_codes_ajax_get_listing_count') }}",
+			data: {
+				voucherCode: $("#form-voucher-code").val(),
+	    		active: $("#form-actives").val(),
+	    		discountType: $("#form-form-discount-types").val(),
+	    		discountUse: $("#form-discount-uses").val(),
+	    		minimumOrderValueFrom: $("#minimum-order-value-range").slider("values", 0),
+    			minimumOrderValueTo: $("#minimum-order-value-range").slider("values", 1),
+    			validFromDateFrom: $("#form-valid-from-date-from-formatted").val(),
+    			validFromDateTo: $("#form-valid-from-date-to-formatted").val(),
+    			expiryDateFrom: $("#form-expiry-date-from-formatted").val(),
+    			expiryDateTo: $("#form-expiry-date-to-formatted").val()
+			},
+			error: function(data) {
+				$("#listing-count").html('No Voucher Codes Found');
+				$listingCountLoaded = true;
+				checkResultsLoaded();
+	      	},
+			success: function(data) {
+				if (data.response == 'success')
+    	    	{
+        			var $listingCount = parseInt(data.listingCount);
+        			if (($listingCount > 1) || ($listingCount < 1))
+        			{
+        				if ($listingCount < 1)
+	        			{
+    	    				$("#listing-count").html('No Voucher Codes Found');
+        				} else {
+	        				$("#listing-count").html('Found '+$listingCount+' Voucher Codes');
+	        			}
+	        		} else {
+    	    			$("#listing-count").html('Found 1 Voucher Code');
+        			}	
+	        	} else {
+    	    		$("#listing-count").html('No Voucher Codes Found');
+        		}
+        		$listingCountLoaded = true;
+	        	checkResultsLoaded();
+			}
+		});
+	}
+	
+	{# Load listing #}
+	function loadListing()
+	{
+		if ($("#listing").height() > 0)
+		{
+			$("#listing-loading").height($("#listing").height() - 12);
+		}
+		$("#listing-loading").show();
+		$("#listing").hide().html("");
+		$.ajax({
+			type: "GET",
+			url: "{{ path('admin_voucher_codes_ajax_get_listing') }}",
+			data: {
+				voucherCode: $("#form-voucher-code").val(),
+	    		active: $("#form-actives").val(),
+	    		discountType: $("#form-form-discount-types").val(),
+	    		discountUse: $("#form-discount-uses").val(),
+	    		minimumOrderValueFrom: $("#minimum-order-value-range").slider("values", 0),
+    			minimumOrderValueTo: $("#minimum-order-value-range").slider("values", 1),
+    			validFromDateFrom: $("#form-valid-from-date-from-formatted").val(),
+    			validFromDateTo: $("#form-valid-from-date-to-formatted").val(),
+    			expiryDateFrom: $("#form-expiry-date-from-formatted").val(),
+    			expiryDateTo: $("#form-expiry-date-to-formatted").val(),
+	    		sortOrder: $("#form-sort-order").val(),
+	    		page: $("#form-current-page").val(),
+   				maxResults: $("#form-max-results").val()
+   			},
+			error: function(data) {
+				$("#listing-loading").hide();
+				$("#listing").html('<p class="ac">Sorry, no results were found.</p>').fadeIn();
+				$listingLoaded = true;
+				checkResultsLoaded();
+      		},
+			success: function(data) {
+				$("#listing-loading").hide();
+				$("#listing").html(data).fadeIn();
+        		$listingLoaded = true;
+        		checkResultsLoaded();
+			}
+		});
+	}
+	
+	{# Load product listing pagination #}
+	function loadListingPagination()
+	{
+		$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+		$.ajax({
+			type: "GET",
+			url: "{{ path('admin_voucher_codes_ajax_get_listing_pagination') }}",
+			data: {
+   				voucherCode: $("#form-voucher-code").val(),
+	    		active: $("#form-actives").val(),
+	    		discountType: $("#form-form-discount-types").val(),
+	    		discountUse: $("#form-discount-uses").val(),
+	    		minimumOrderValueFrom: $("#minimum-order-value-range").slider("values", 0),
+    			minimumOrderValueTo: $("#minimum-order-value-range").slider("values", 1),
+    			validFromDateFrom: $("#form-valid-from-date-from-formatted").val(),
+    			validFromDateTo: $("#form-valid-from-date-to-formatted").val(),
+    			expiryDateFrom: $("#form-expiry-date-from-formatted").val(),
+    			expiryDateTo: $("#form-expiry-date-to-formatted").val(),
+	    		page: $("#form-current-page").val(),
+   				maxResults: $("#form-max-results").val()
+   			},
+			error: function(data) {
+				$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+				$listingPaginationLoaded = true;
+				checkResultsLoaded();
+	      	},
+			success: function(data) {
+				$("#listing-pagination-top, #listing-pagination-bottom").html(data).fadeIn();
+	        	$listingPaginationLoaded = true;
+	        	checkResultsLoaded();
+			}
+		});
+	}
+</script>

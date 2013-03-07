@@ -1,0 +1,17 @@
+<div class="ui-helper-hidden more-information-detail" id="discounts-{{ item.id }}">
+	<h5 class="no-margin-top">Discounts</h5>
+	<table width="100%">
+		<tr>
+			<td class="label" width="25%"><label>Discount Received:</label></td>
+			<td width="25%">&pound;{{ item.discount|number_format(2)|default('0.00') }}</td>
+			<td class="label" width="25%"><label>Savings:</label></td>
+			<td width="25%">&nbsp;</td>
+		</tr>
+		<tr>
+			<td class="label" width="25%"><label>Membership Card Number:</label></td>
+			<td width="25%">{{ item.membershipCardNumber|default('-') }}</td>
+			<td class="label" width="25%"><label>Possible Discount:</label></td>
+			<td width="25%">&pound;{{ item.possibleDiscount|number_format(2) }}</td>
+		</tr>
+	</table>
+</div>

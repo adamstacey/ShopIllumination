@@ -1,0 +1,157 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}{{ data.item.name }} - Search Engine Optimisation (SEO) | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
+{% endblock %}
+{% block body %}
+	<section class="container_6 clearfix">
+    	<div class="grid_6">
+    		<div class="info-message">
+				<span class="info-message-icon ui-icon ui-icon-info"></span>
+				<p>Search engine optimisation (SEO) is critical to the success of your site. It is strongly recommended that all the information in this section is completed.</p>
+				<div class="clear"></div>
+			</div>
+        	<div class="portlet">
+            	<header>
+           			<h2>Search Engine Optimisation (SEO)</h2>
+                </header>
+                <section>
+                	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
+                		<div class="form-element clearfix no-margin-top">
+                			<span data-help-container="page-title" class="info-message-icon-left ui-icon ui-icon-help"></span>
+					        <label for="form-page-title" class="form-label"><em>*</em> <span class="important">Page Title</span></label>
+					        <div class="form-input">
+					        	<textarea class="maximum-characters" data-maximum-characters="70" data-maximum-characters-object="form-page-title-maximum-characters" id="form-page-title" name="page-title" rows="2" required="required" data-message="Enter page title">{{ data.item.pageTitle|default('') }}</textarea>
+					        	<p class="maximum-characters-message" id="form-page-title-maximum-characters"></p>
+					        </div>
+					    </div>
+					    <div id="form-help-page-title" class="form-help ui-helper-hidden">
+					    	<p><span class="important">Very Important:</span> The page title is the title used in the Browser window and more importantly the title in search engine results pages (SERPs). This should be more specific than the header.</p>
+					    </div>
+					    <div class="form-element clearfix">
+                			<span data-help-container="header" class="info-message-icon-left ui-icon ui-icon-help"></span>
+					        <label for="form-header" class="form-label"><em>*</em> <span class="important">Header</span></label>
+					        <div class="form-input"><textarea id="form-header" name="header" rows="1" required="required" data-message="Enter header">{{ data.item.header|default('') }}</textarea></div>
+					    </div>
+					    <div id="form-help-header" class="form-help ui-helper-hidden">
+					    	<p><span class="important">Very Important:</span> The header is the main header used in listings and on the pages in the site. This should exclude specifics and be more general than the page title.</p>
+					    </div>
+					    <div class="form-element clearfix">
+                			<span data-help-container="meta-description" class="info-message-icon-left ui-icon ui-icon-help"></span>
+					        <label for="form-meta-description" class="form-label"><em>*</em> <span class="important">Meta Description</span></label>
+					        <div class="form-input">
+					        	<textarea class="maximum-characters" data-maximum-characters="160" data-maximum-characters-object="form-meta-description-maximum-characters" id="form-meta-description" name="meta-description" rows="2" required="required" data-message="Enter meta description">{{ data.item.metaDescription|default('') }}</textarea>
+					        	<p class="maximum-characters-message" id="form-meta-description-maximum-characters"></p>
+					        </div>
+					    </div>
+					    <div id="form-help-meta-description" class="form-help ui-helper-hidden">
+					    	<p><span class="important">Very Important:</span> Your "Advert" in organic search results. You need to include keywords, but primarily the meta description needs to entice people to click through by using a call to action with benefits (e.g. lowest price, in stock, free delivery, etc).</p>
+					    </div>
+					    <div class="form-element clearfix">
+                			<span data-help-container="search-words" class="info-message-icon-left ui-icon ui-icon-help"></span>
+					        <label for="form-meta-description" class="form-label">Search Words</label>
+					        <div class="form-input"><textarea id="form-search-words" name="search-words" rows="2">{{ data.item.searchWords|default('') }}</textarea></div>
+					    </div>
+					    <div id="form-help-search-words" class="form-help ui-helper-hidden">
+					    	<p>Enter any alternative words to be found by (separated by a comma). This could be slight differences in wording or phrasing and should include all keywords used in the page title.</p>
+					    </div>
+					    <div class="form-element clearfix">
+                			<span data-help-container="google-department" class="info-message-icon-left ui-icon ui-icon-help"></span>
+					        <label for="form-google-department" class="form-label"><em>*</em> Google Department</label>
+					        <div class="form-input">
+					        	<table width="100%">
+									<tr>
+										<td>
+											<select id="form-google-department" name="google-department" class="no-margin full" required="required" data-message="Please select a Google department.">
+												<option value="">- Please Select -</option>
+												{% for googleDepartment in data.taxonomy.google %}
+													<option value="{{ googleDepartment.name }}"{% if data.item.googleDepartment == googleDepartment.name %} selected="selected"{% endif %}>{{ googleDepartment.name }}</option>
+												{% endfor %}
+											</select>
+										</td>
+										<td width="10">&nbsp;</td>
+										<td width="200">
+											<div class="position-relative">
+												<input placeholder="Find&hellip;" type="text" id="search-google-department" class="embedded-icon no-margin full" value="" />
+												<span class="icon-embedded ui-button-icon-primary ui-icon ui-icon-search no-margin"></span>
+											</div>
+										</td>
+									</tr>
+								</table>
+					        </div>
+					    </div>
+					    <div id="form-help-google-department" class="form-help ui-helper-hidden">
+					    	<p>Select the equivalent Google department that matches this department. This is very important as Google require this for the Google products feed.</p>
+					    </div>
+					    <div class="form-element clearfix">
+					    	<span data-help-container="url" class="info-message-icon-left ui-icon ui-icon-help"></span>
+					        <label for="form-url" class="form-label"><em>*</em> Internal Web Address</label>
+					        <div class="form-input"><input type="text" class="seo-url" id="form-url" name="url" value="{{ data.item.url|default('') }}" required="required" data-message="Enter the URL" /></div>
+					    </div>
+					    <div id="form-help-url" class="form-help ui-helper-hidden">
+					    	<p>The internal web address is automatically generated and is kept up-to-date by the rules setup in the system. However, you can make any changes to enhance the internal web address here.</p>
+					    </div>
+					    {% if data.brandToDepartments|length > 0 %}
+					    	<h3>Brands</h3>
+						    <div class="sidebar-tabs">
+	                            <ul>
+	                            	{% for brand in data.brands %}
+	                                	<li><a href="#tab-brand-{{ brand.brandId }}">{{ brand.brand }}</a></li>
+	                                {% endfor %}
+	                                <div class="clear"></div>
+	                            </ul>
+	                            {% for brandToDepartment in data.brandToDepartments %}
+	                            	<section id="tab-brand-{{ brandToDepartment.brandId }}">
+		                            	 <div class="form-element clearfix no-margin-top">
+									        <label for="form-page-title-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Page Title</span></label>
+									        <div class="form-input">
+									        	<textarea class="maximum-characters" data-maximum-characters="70" data-maximum-characters-object="form-page-title-maximum-characters-{{ brandToDepartment.brandId }}" id="form-page-title-{{ brandToDepartment.brandId }}" name="brand-to-department-page-title[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.pageTitle|default('') }}</textarea>
+									        	<p class="maximum-characters-message" id="form-page-title-maximum-characters-{{ brandToDepartment.brandId }}"></p>
+									        </div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-header-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Header</span></label>
+									        <div class="form-input"><textarea id="form-header-{{ brandToDepartment.brandId }}" name="brand-to-department-header[{{ brandToDepartment.brandId }}]" rows="1">{{ brandToDepartment.header|default('') }}</textarea></div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-meta-description-{{ brandToDepartment.brandId }}" class="form-label"><span class="important">Meta Description</span></label>
+									        <div class="form-input">
+									        	<textarea class="maximum-characters" data-maximum-characters="160" data-maximum-characters-object="form-meta-description-maximum-characters-{{ brandToDepartment.brandId }}" id="form-meta-description-{{ brandToDepartment.brandId }}" name="brand-to-department-meta-description[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.metaDescription|default('') }}</textarea>
+									        	<p class="maximum-characters-message" id="form-meta-description-maximum-characters-{{ brandToDepartment.brandId }}"></p>
+									        </div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-search-words-{{ brandToDepartment.brandId }}" class="form-label">Search Words</label>
+									        <div class="form-input"><textarea id="form-search-words-{{ brandToDepartment.brandId }}" name="brand-to-department-search-words[{{ brandToDepartment.brandId }}]" rows="2">{{ brandToDepartment.searchWords|default('') }}</textarea></div>
+									    </div>
+									    <div class="form-element clearfix">
+									        <label for="form-url-{{ brandToDepartment.brandId }}" class="form-label">Internal Web Address</label>
+									        <div class="form-input"><input type="text" class="seo-url" id="form-url-{{ brandToDepartment.brandId }}" name="brand-to-department-url[{{ brandToDepartment.brandId }}]" value="{{ attribute(data.brandToDepartmentsRouting, brandToDepartment.id)|default('') }}" /></div>
+									    </div>
+		                            </section>
+	                            {% endfor %}
+	                        </div>
+	                    {% endif %}
+					    <div id="float-buttons" class="clearfix">
+					        <div id="float-buttons-content" class="float-buttons clearfix buttons">
+				        		<input type="hidden" value="0" id="form-go-back" name="go-back" />
+				        		<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>			        		
+				        		<button id="button-update-go-back" type="submit" class="fr button ui-corner-none ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
+				        		<button id="button-update" type="submit" class="fr button ui-corner-left ui-button-green icon-set-white" data-icon-primary="ui-icon-circle-tick">Update</button>
+						    </div>
+						</div>
+					</form>
+                </section>
+            </div>
+        </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} %}
+{% endblock %}

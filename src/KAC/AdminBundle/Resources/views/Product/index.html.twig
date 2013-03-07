@@ -34,7 +34,7 @@
                     {% if not searching %}
                         <button id="filter-button" class="button ui-button-blue fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-s">Filter Results</button>
                     {% else %}
-                        <a href="{{ path('admin_products_index') }}" id="button-go-back" class="fr ui-corner-all button ui-button-blue icon-set-white portlet-header-button" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+                        <a href="{{ path('admin_listing_products') }}" id="button-go-back" class="fr ui-corner-all button ui-button-blue icon-set-white portlet-header-button" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
                     {% endif %}
                     <h2 id="listing-count">Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
                 </header>

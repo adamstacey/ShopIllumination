@@ -1,0 +1,754 @@
+# Bugs
+admin_bugs:
+    pattern:   /admin/bugs
+    defaults:  { _controller: WebIlluminationAdminBundle:Bugs:index }
+admin_bugs_update_listing:
+    pattern:   /admin/bugs/updateListing
+    defaults:  { _controller: WebIlluminationAdminBundle:Bugs:updateListing }
+admin_bugs_add:
+    pattern:   /admin/bugs/add
+    defaults:  { _controller: WebIlluminationAdminBundle:Bugs:add }
+admin_bugs_update:
+    pattern:   /admin/bugs/update/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Bugs:update, id: 0 }
+admin_bugs_delete:
+    pattern:   /admin/bugs/delete/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Bugs:delete, id: 0 }
+    
+# Orders
+admin_orders:
+    pattern:   /admin/orrders
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:index }
+admin_orders_update_listing:
+    pattern:   /admin/orrders/updateListing
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateListing }
+admin_orders_process_deliveries:
+    pattern:   /admin/orrders/processDeliveries
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:processDeliveries }
+admin_orders_import_tracking:
+    pattern:   /admin/orrders/importTracking
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:importTracking }
+admin_orders_add:
+    pattern:   /admin/orrders/add
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:add }
+admin_orders_update:
+    pattern:   /admin/orrders/update/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:update, id: 0 }
+admin_orders_update_payment:
+    pattern:   /admin/orrders/updatePayment/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updatePayment, id: 0 }
+admin_orders_update_delivery:
+    pattern:   /admin/orrders/updateDelivery/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateDelivery, id: 0 }
+admin_orders_update_products:
+    pattern:   /admin/orrders/updateProducts/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateProducts, id: 0 }
+admin_orders_update_notes:
+    pattern:   /admin/orrders/updateNotes/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:updateNotes, id: 0 }
+admin_orders_delete:
+    pattern:   /admin/orrders/delete/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Orrders:delete, id: 0 }
+admin_orders_view_copy_order:
+    pattern:  /admin/orrders/viewCopyOrder/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewCopyOrder, id: 0 }
+admin_orders_view_delivery_note:
+    pattern:  /admin/orrders/viewDeliveryNote/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewDeliveryNote, id: 0 }
+admin_orders_view_invoice:
+    pattern:  /admin/orrders/viewInvoice/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewInvoice, id: 0 }
+admin_orders_view_order:
+    pattern:  /admin/orrders/viewOrder/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orrders:viewOrder, id: 0 }
+
+    
+# Departments
+admin_departments:
+    pattern:   /admin/departments/department/{parentId}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:index, parentId: 0 }
+admin_departments_update_listing:
+    pattern:   /admin/departments/updateListing/department/{parentId}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateListing, parentId: 0 }
+admin_departments_add:
+    pattern:   /admin/departments/add/department/{parentId}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:add, parentId: 0 }
+admin_departments_update:
+    pattern:   /admin/departments/update/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:update, id: 0 }
+admin_departments_update_templates:
+    pattern:   /admin/departments/updateTemplates/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateTemplates, id: 0 }
+admin_departments_update_pricing:
+    pattern:   /admin/departments/updatePricing/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updatePricing, id: 0 }
+admin_departments_update_product_features:
+    pattern:   /admin/departments/updateProductFeatures/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateProductFeatures, id: 0 }
+admin_departments_update_delivery:
+    pattern:   /admin/departments/updateDelivery/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateDelivery, id: 0 }
+admin_departments_update_rules:
+    pattern:   /admin/departments/updateRules/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateRules, id: 0 }
+admin_departments_update_images:
+    pattern:   /admin/departments/updateImages/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateImges, id: 0 }
+admin_departments_update_guarantees:
+    pattern:   /admin/departments/updateGuarantees/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateGuarantees, id: 0 }
+admin_departments_update_redirects:
+    pattern:   /admin/departments/updateRedirects/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateRedirects, id: 0 }
+admin_departments_update_search_engine_optimisation:
+    pattern:   /admin/departments/updateSearchEngineOptimisation/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:updateSearchEngineOptimisation, id: 0 }
+admin_departments_delete:
+    pattern:   /admin/departments/delete/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Departments:delete, id: 0 }
+    
+# Prroducts
+admin_prroducts:
+    pattern:   /admin/prroducts
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:index }
+admin_prroducts_update_listing:
+    pattern:   /admin/prroducts/updateListing
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateListing }
+admin_prroducts_add:
+    pattern:   /admin/prroducts/add/department/{parentId}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:add, parentId: 0 }
+admin_prroducts_update:
+    pattern:   /admin/prroducts/update/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:update, id: 0 }
+admin_prroducts_update_settings:
+    pattern:   /admin/prroducts/updateSettings/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateSettings, id: 0 }
+admin_prroducts_update_product_features:
+    pattern:   /admin/prroducts/updateProductFeatures/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateProductFeatures, id: 0 }
+admin_prroducts_update_delivery:
+    pattern:   /admin/prroducts/updateDelivery/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateDelivery, id: 0 }
+admin_prroducts_update_rules:
+    pattern:   /admin/prroducts/updateRules/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateRules, id: 0 }
+admin_prroducts_update_images:
+    pattern:   /admin/prroducts/updateImages/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateImges, id: 0 }
+admin_prroducts_update_guarantees:
+    pattern:   /admin/prroducts/updateGuarantees/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateGuarantees, id: 0 }
+admin_prroducts_update_redirects:
+    pattern:   /admin/prroducts/updateRedirects/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateRedirects, id: 0 }
+admin_prroducts_update_search_engine_optimisation:
+    pattern:   /admin/prroducts/updateSearchEngineOptimisation/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:updateSearchEngineOptimisation, id: 0 }
+admin_prroducts_delete:
+    pattern:   /admin/prroducts/delete/{id}
+    defaults:  { _controller: WebIlluminationAdminBundle:Prroducts:delete, id: 0 }
+    
+# Security
+admin_security:
+    pattern:   /admin/security/
+    defaults:  { _controller: WebIlluminationAdminBundle:Security:index }
+admin_security_login:
+    pattern:   /admin/security/login
+    defaults:  { _controller: WebIlluminationAdminBundle:Security:login }
+admin_security_logout:
+    pattern:   /admin/security/logout
+    defaults:  { _controller: WebIlluminationAdminBundle:Security:logout }
+
+# System
+system_crawl_errors:
+    pattern:  /admin/system/crawlErrors
+    defaults: { _controller: WebIlluminationAdminBundle:System:crawlErrors }
+system_build_url:
+    pattern:  /admin/system/buildUrl
+    defaults: { _controller: WebIlluminationAdminBundle:System:buildUrl }
+system_ajax_get_url:
+    pattern:  /admin/system/ajaxGetUrl
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetUrl }    
+system_ajax_upload_file:
+    pattern:  /admin/system/ajaxUploadFile
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUploadFile }
+system_ajax_get_images:
+    pattern:  /admin/system/ajaxGetImages
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetImages }
+system_ajax_add_image:
+    pattern:  /admin/system/ajaxAddImage
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddImage }
+system_ajax_update_image:
+    pattern:  /admin/system/ajaxUpdateImage
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateImage } 
+system_ajax_delete_image:
+    pattern:  /admin/system/ajaxDeleteImage
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteImage }
+system_ajax_get_files:
+    pattern:  /admin/system/ajaxGetFiles
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetFiles }
+system_ajax_add_file:
+    pattern:  /admin/system/ajaxAddFile
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddFile }
+system_ajax_update_file:
+    pattern:  /admin/system/ajaxUpdateFile
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateFile } 
+system_ajax_delete_file:
+    pattern:  /admin/system/ajaxDeleteFile
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteFile }
+system_ajax_get_redirects:
+    pattern:  /admin/system/ajaxGetRedirects
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetRedirects }
+system_ajax_add_redirect:
+    pattern:  /admin/system/ajaxAddRedirect
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddRedirect }
+system_ajax_update_redirect:
+    pattern:  /admin/system/ajaxUpdateRedirect
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateRedirect }
+system_ajax_delete_redirect:
+    pattern:  /admin/system/ajaxDeleteRedirect
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteRedirect }
+system_ajax_get_guarantees:
+    pattern:  /admin/system/ajaxGetGuarantees
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetGuarantees }
+system_ajax_add_guarantee:
+    pattern:  /admin/system/ajaxAddGuarantee
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddGuarantee }
+system_ajax_update_guarantee:
+    pattern:  /admin/system/ajaxUpdateGuarantee
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateGuarantee }
+system_ajax_delete_guarantee:
+    pattern:  /admin/system/ajaxDeleteGuarantee
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteGuarantee }
+system_ajax_get_contacts:
+    pattern:  /admin/system/ajaxGetContacts
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetContacts }
+system_ajax_add_contact:
+    pattern:  /admin/system/ajaxAddContact
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddContact }
+system_ajax_update_contact:
+    pattern:  /admin/system/ajaxUpdateContact
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateContact }
+system_ajax_delete_contact:
+    pattern:  /admin/system/ajaxDeleteContact
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteContact }
+system_ajax_get_contact_numbers:
+    pattern:  /admin/system/ajaxGetContactNumbers
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetContactNumbers }
+system_ajax_add_contact_number:
+    pattern:  /admin/system/ajaxAddContactNumber
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddContactNumber }
+system_ajax_update_contact_number:
+    pattern:  /admin/system/ajaxUpdateContactNumber
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateContactNumber }
+system_ajax_delete_contact_number:
+    pattern:  /admin/system/ajaxDeleteContactNumber
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteContactNumber }
+system_ajax_get_contact_addresses:
+    pattern:  /admin/system/ajaxGetContactAddresses
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetContactAddresses }
+system_ajax_add_contact_address:
+    pattern:  /admin/system/ajaxAddContactAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddContactAddress }
+system_ajax_update_contact_address:
+    pattern:  /admin/system/ajaxUpdateContactAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateContactAddress }
+system_ajax_delete_contact_address:
+    pattern:  /admin/system/ajaxDeleteContactAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteContactAddress }
+system_ajax_get_contact_web_addresses:
+    pattern:  /admin/system/ajaxGetContactWebAddresses
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetContactWebAddresses }
+system_ajax_add_contact_web_address:
+    pattern:  /admin/system/ajaxAddContactWebAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddContactWebAddress }
+system_ajax_update_contact_web_address:
+    pattern:  /admin/system/ajaxUpdateContactWebAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateContactWebAddress }
+system_ajax_delete_contact_web_address:
+    pattern:  /admin/system/ajaxDeleteContactWebAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteContactWebAddress }
+system_ajax_get_contact_email_addresses:
+    pattern:  /admin/system/ajaxGetContactEmailAddresses
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxGetContactEmailAddresses }
+system_ajax_add_contact_email_address:
+    pattern:  /admin/system/ajaxAddContactEmailAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxAddContactEmailAddress }
+system_ajax_update_contact_email_address:
+    pattern:  /admin/system/ajaxUpdateContactEmailAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxUpdateContactEmailAddress }
+system_ajax_delete_contact_email_address:
+    pattern:  /admin/system/ajaxDeleteContactEmailAddress
+    defaults: { _controller: WebIlluminationAdminBundle:System:ajaxDeleteContactEmailAddress }
+
+# Orders
+orders:
+    pattern:  /admin/orders
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:index }
+orders_ajax_get_listing:
+    pattern:  /admin/orders/ajaxGetListing
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxGetListing }
+orders_ajax_get_listing_count:
+    pattern:  /admin/orders/ajaxGetListingCount
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxGetListingCount }
+orders_ajax_get_listing_pagination:
+    pattern:  /admin/orders/ajaxGetListingPagination
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxGetListingPagination }
+orders_ajax_get_order_information:
+    pattern:  /admin/orders/ajaxGetOrderInformation
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxGetOrderInformation }
+orders_ajax_get_customer_notes:
+    pattern:  /admin/orders/ajaxGetCustomerNotes
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxGetCustomerNotes }
+orders_ajax_get_staff_notes:
+    pattern:  /admin/orders/ajaxGetStaffNotes
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxGetStaffNotes }
+orders_ajax_add_customer_note:
+    pattern:  /admin/orders/ajaxAddCustomerNote
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxAddCustomerNote }
+orders_ajax_add_staff_note:
+    pattern:  /admin/orders/ajaxAddStaffNote
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxAddStaffNote }
+orders_ajax_delete_note:
+    pattern:  /admin/orders/ajaxDeleteNote
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxDeleteNote }
+orders_ajax_delete_order:
+    pattern:  /admin/orders/ajaxDeleteOrder
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxDeleteOrder }
+orders_ajax_update_order_status:
+    pattern:  /admin/orders/ajaxUpdateOrderStatus
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxUpdateOrderStatus }
+orders_ajax_update_print_flags:
+    pattern:  /admin/orders/ajaxUpdatePrintFlags
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxUpdatePrintFlags }
+orders_regenerate_all_order_documents:
+    pattern:  /admin/orders/regenerateAllOrderDocuments
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:regenerateAllOrderDocuments }
+orders_ajax_send_invoice:
+    pattern:  /admin/orders/ajaxSendInvoice
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxSendInvoice }
+orders_ajax_bulk_print_invoices:
+    pattern:  /admin/orders/ajaxBulkPrintInvoices
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxBulkPrintInvoices }
+orders_ajax_bulk_print_orders:
+    pattern:  /admin/orders/ajaxBulkPrintOrders
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxBulkPrintOrders }
+orders_ajax_bulk_print_delivery_notes:
+    pattern:  /admin/orders/ajaxBulkPrintDeliveryNotes
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxBulkPrintDeliveryNotes }
+orders_ajax_bulk_print_invoices_and_delivery_notes:
+    pattern:  /admin/orders/ajaxBulkPrintInvoicesAndDeliveryNotes
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:ajaxBulkPrintInvoicesAndDeliveryNotes } 
+orders_view_delivery_note:
+    pattern:  /admin/orders/viewDeliveryNote/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewDeliveryNote, id: 0 }
+orders_view_delivery_notes:
+    pattern:  /admin/orders/viewDeliveryNotes/{ids}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewDeliveryNotes, ids: 0 }
+orders_view_invoice:
+    pattern:  /admin/orders/viewInvoice/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewInvoice, id: 0 }
+orders_view_invoices:
+    pattern:  /admin/orders/viewInvoices/{ids}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewInvoices, ids: 0 }
+orders_view_order:
+    pattern:  /admin/orders/viewOrder/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewOrder, id: 0 }
+orders_view_orders:
+    pattern:  /admin/orders/viewOrders/{ids}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewOrders, ids: 0 }
+orders_view_invoice_and_delivery_note:
+    pattern:  /admin/orders/viewInvoiceAndDeliveryNote/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewInvoiceAndDeliveryNote, id: 0 }
+orders_view_invoices_and_delivery_notes:
+    pattern:  /admin/orders/viewInvoicesAndDeliveryNotes/{ids}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewInvoicesAndDeliveryNotes, ids: 0 }
+orders_view_copy_order:
+    pattern:  /admin/orders/viewCopyOrder/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:viewCopyOrder, id: 0 }
+orders_edit:
+    pattern:  /admin/orders/edit/{id}/{current_tab}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:edit, id: 0, current_tab: "general" }
+orders_delete:
+    pattern:  /admin/orders/delete/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Orders:delete, id: 0 }
+
+# Voucher Codes
+admin_voucher_codes:
+    pattern:  /admin/voucherCodes
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:index }
+admin_voucher_codes_ajax_get_listing:
+    pattern:  /admin/voucherCodes/ajaxGetListing
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxGetListing }
+admin_voucher_codes_ajax_get_listing_count:
+    pattern:  /admin/voucherCodes/ajaxGetListingCount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxGetListingCount }
+admin_voucher_codes_ajax_get_listing_pagination:
+    pattern:  /admin/voucherCodes/ajaxGetListingPagination
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxGetListingPagination }
+admin_voucher_codes_ajax_add_voucher_code:
+    pattern:  /admin/voucherCodes/ajaxAddVoucherCode
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxAddVoucherCode }
+admin_voucher_codes_ajax_save_voucher_code:
+    pattern:  /admin/voucherCodes/ajaxSaveVoucherCode
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxSaveVoucherCode }
+admin_voucher_codes_ajax_save_discount:
+    pattern:  /admin/voucherCodes/ajaxSaveDiscount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxSaveDiscount }
+admin_voucher_codes_ajax_get_brand_discounts:
+    pattern:  /admin/voucherCodes/ajaxGetBrandDiscounts
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxGetBrandDiscounts }
+admin_voucher_codes_ajax_add_brand_discount:
+    pattern:  /admin/voucherCodes/ajaxAddBrandDiscount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxAddBrandDiscount }
+admin_voucher_codes_ajax_delete_brand_discount:
+    pattern:  /admin/voucherCodes/ajaxDeleteBrandDiscount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxDeleteBrandDiscount }
+admin_voucher_codes_ajax_get_department_discounts:
+    pattern:  /admin/voucherCodes/ajaxGetDepartmentDiscounts
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxGetDepartmentDiscounts }
+admin_voucher_codes_ajax_add_department_discount:
+    pattern:  /admin/voucherCodes/ajaxAddDepartmentDiscount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxAddDepartmentDiscount }
+admin_voucher_codes_ajax_delete_department_discount:
+    pattern:  /admin/voucherCodes/ajaxDeleteDepartmentDiscount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxDeleteDepartmentDiscount }
+admin_voucher_codes_ajax_get_product_discounts:
+    pattern:  /admin/voucherCodes/ajaxGetProductDiscounts
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxGetProductDiscounts }
+admin_voucher_codes_ajax_add_product_discount:
+    pattern:  /admin/voucherCodes/ajaxAddProductDiscount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxAddProductDiscount }
+admin_voucher_codes_ajax_delete_product_discount:
+    pattern:  /admin/voucherCodes/ajaxDeleteProductDiscount
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxDeleteProductDiscount }
+admin_voucher_codes_ajax_update_voucher_code:
+    pattern:  /admin/voucherCodes/ajaxUpdateVoucherCode
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:ajaxUpdateVoucherCode }
+admin_voucher_codes_delete:
+    pattern:  /admin/voucherCodes/delete/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:VoucherCodes:delete, id: 0 }
+    
+# Membership Cards
+admin_membership_cards:
+    pattern:  /admin/membershipCards
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:index }
+admin_membership_cards_ajax_get_listing:
+    pattern:  /admin/membershipCards/ajaxGetListing
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxGetListing }
+admin_membership_cards_ajax_get_listing_count:
+    pattern:  /admin/membershipCards/ajaxGetListingCount
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxGetListingCount }
+admin_membership_cards_ajax_get_listing_pagination:
+    pattern:  /admin/membershipCards/ajaxGetListingPagination
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxGetListingPagination }
+admin_membership_cards_ajax_add_membership_card:
+    pattern:  /admin/membershipCards/ajaxAddMembershipCard
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxAddMembershipCard }
+admin_membership_cards_ajax_delete_membership_card:
+    pattern:  /admin/membershipCards/ajaxDeleteMembershipCard
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxDeleteMembershipCard }
+admin_membership_cards_ajax_save_membership_card:
+    pattern:  /admin/membershipCards/ajaxSaveMembershipCard
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxSaveMembershipCard }
+admin_membership_cards_ajax_save_user:
+    pattern:  /admin/membershipCards/ajaxSaveUser
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxSaveUser }
+admin_membership_cards_ajax_release_user:
+    pattern:  /admin/membershipCards/ajaxReleaseUser
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxReleaseUser }
+admin_membership_cards_ajax_get_customer:
+    pattern:  /admin/membershipCards/ajaxGetCustomer
+    defaults: { _controller: WebIlluminationAdminBundle:MembershipCards:ajaxGetCustomer }
+    
+# Practice Day Registrations
+admin_practice_day_registrations:
+    pattern:  /admin/practiceDayRegistrations
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:index }
+admin_practice_day_registrations_ajax_get_listing:
+    pattern:  /admin/practiceDayRegistrations/ajaxGetListing
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:ajaxGetListing }
+admin_practice_day_registrations_ajax_get_listing_count:
+    pattern:  /admin/practiceDayRegistrations/ajaxGetListingCount
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:ajaxGetListingCount }
+admin_practice_day_registrations_ajax_get_listing_pagination:
+    pattern:  /admin/practiceDayRegistrations/ajaxGetListingPagination
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:ajaxGetListingPagination }
+admin_practice_day_registrations_ajax_add_practice_day_registration:
+    pattern:  /admin/practiceDayRegistrations/ajaxAddPracticeDayRegistration
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:ajaxAddPracticeDayRegistration }
+admin_practice_day_registrations_ajax_delete_practice_day_registration:
+    pattern:  /admin/practiceDayRegistrations/ajaxDeletePracticeDayRegistration
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:ajaxDeletePracticeDayRegistration }
+admin_practice_day_registrations_ajax_save_practice_day_registration:
+    pattern:  /admin/practiceDayRegistrations/ajaxSavePracticeDayRegistration
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:ajaxSavePracticeDayRegistration }
+admin_practice_day_registrations_test:
+    pattern:  /admin/practiceDayRegistrations/test
+    defaults: { _controller: WebIlluminationAdminBundle:PracticeDayRegistrations:test }
+
+# Product Options
+admin_product_options:
+    pattern:  /admin/productOptions
+    defaults: { _controller: WebIlluminationAdminBundle:ProductOptions:index }
+    
+# Product Features
+admin_product_features:
+    pattern:  /admin/productFeatures
+    defaults: { _controller: WebIlluminationAdminBundle:ProductFeatures:index }
+    
+# Links
+admin_links:
+    pattern:  /admin/links
+    defaults: { _controller: WebIlluminationAdminBundle:Links:index }
+
+# Brands
+admin_brands:
+    pattern:  /admin/brands
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:index }
+admin_brands_add:
+    pattern:  /admin/brands/add
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:add }
+admin_brands_update:
+    pattern:  /admin/brands/update/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:update, id: 0 }
+admin_brands_delete:
+    pattern:  /admin/brands/delete/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:delete, id: 0 }
+admin_brands_ajax_delete:
+    pattern:  /admin/brands/ajaxDelete
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxDelete }
+admin_brands_ajax_get_listing:
+    pattern:  /admin/brands/ajaxGetListing
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxGetListing }
+admin_brands_ajax_get_listing_count:
+    pattern:  /admin/brands/ajaxGetListingCount
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxGetListingCount }
+admin_brands_ajax_get_listing_pagination:
+    pattern:  /admin/brands/ajaxGetListingPagination
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxGetListingPagination }
+admin_brands_ajax_update:
+    pattern:  /admin/brands/ajaxUpdate
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxUpdate }
+admin_brands_ajax_update_general_section:
+    pattern:  /admin/brands/ajaxUpdateGeneralSection
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxUpdateGeneralSection }
+admin_brands_ajax_delete_logo_image:
+    pattern:  /admin/brands/ajaxDeleteLogoImage
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxDeleteLogoImage }
+admin_brands_ajax_update_description_section:
+    pattern:  /admin/brands/ajaxUpdateDescriptionSection
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxUpdateDescriptionSection }
+admin_brands_ajax_get_description:
+    pattern:  /admin/brands/ajaxGetDescription
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxGetDescription }
+admin_brands_ajax_get_short_description:
+    pattern:  /admin/brands/ajaxGetShortDescription
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxGetShortDescription }
+admin_brands_ajax_update_price_settings_section:
+    pattern:  /admin/brands/ajaxUpdatePriceSettingsSection
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxUpdatePriceSettingsSection }
+admin_brands_ajax_update_seo_section:
+    pattern:  /admin/brands/ajaxUpdateSeoSection
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxUpdateSeoSection }
+admin_brands_ajax_reset_seo:
+    pattern:  /admin/brands/ajaxResetSeo
+    defaults: { _controller: WebIlluminationAdminBundle:Brands:ajaxResetSeo }
+
+# Departments
+#admin_departments:
+#    pattern:  /admin/departments
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:index }
+#admin_departments_add:
+#    pattern:  /admin/departments/add
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:add }
+#admin_departments_update:
+#    pattern:  /admin/departments/update/{id}
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:update, id: 0 }
+#admin_departments_delete:
+#    pattern:  /admin/departments/delete/{id}
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:delete, id: 0 }
+#admin_departments_ajax_delete:
+#    pattern:  /admin/departments/ajaxDelete
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxDelete }
+#admin_departments_ajax_get_listing:
+#    pattern:  /admin/departments/ajaxGetListing
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxGetListing }
+#admin_departments_ajax_get_listing_count:
+#    pattern:  /admin/departments/ajaxGetListingCount
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxGetListingCount }
+#admin_departments_ajax_get_listing_pagination:
+#    pattern:  /admin/departments/ajaxGetListingPagination
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxGetListingPagination }
+#admin_departments_ajax_update:
+#    pattern:  /admin/departments/ajaxUpdate
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxUpdate }
+#admin_departments_ajax_update_general_section:
+#    pattern:  /admin/departments/ajaxUpdateGeneralSection
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxUpdateGeneralSection }
+#admin_departments_ajax_update_description_section:
+#    pattern:  /admin/departments/ajaxUpdateDescriptionSection
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxUpdateDescriptionSection }
+#admin_departments_ajax_get_description:
+#    pattern:  /admin/departments/ajaxGetDescription
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxGetDescription }
+#admin_departments_ajax_get_short_description:
+#    pattern:  /admin/departments/ajaxGetShortDescription
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxGetShortDescription }
+#admin_departments_ajax_update_price_settings_section:
+#    pattern:  /admin/departments/ajaxUpdatePriceSettingsSection
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxUpdatePriceSettingsSection }
+#admin_departments_ajax_update_seo_section:
+#    pattern:  /admin/departments/ajaxUpdateSeoSection
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxUpdateSeoSection }
+#admin_departments_ajax_reset_seo:
+#    pattern:  /admin/departments/ajaxResetSeo
+#    defaults: { _controller: WebIlluminationAdminBundle:Departments:ajaxResetSeo }
+
+# Products
+admin_products:
+    pattern:  /admin/products
+    defaults: { _controller: WebIlluminationAdminBundle:Products:index }
+admin_rebuild_product_headers:
+    pattern:  /admin/products/rebuildProductHeaders
+    defaults: { _controller: WebIlluminationAdminBundle:Products:rebuildProductHeaders }
+admin_products_add:
+    pattern:  /admin/products/add
+    defaults: { _controller: WebIlluminationAdminBundle:Products:add }
+admin_products_update:
+    pattern:  /admin/products/update/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Products:update, id: 0 }
+admin_products_delete:
+    pattern:  /admin/products/delete/{id}
+    defaults: { _controller: WebIlluminationAdminBundle:Products:delete, id: 0 }
+admin_products_ajax_delete:
+    pattern:  /admin/products/ajaxDelete
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDelete }
+admin_products_ajax_get_listing:
+    pattern:  /admin/products/ajaxGetListing
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetListing }
+admin_products_ajax_get_listing_count:
+    pattern:  /admin/products/ajaxGetListingCount
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetListingCount }
+admin_products_ajax_get_listing_pagination:
+    pattern:  /admin/products/ajaxGetListingPagination
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetListingPagination }
+admin_products_ajax_update:
+    pattern:  /admin/products/ajaxUpdate
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdate }
+admin_products_ajax_update_general_section:
+    pattern:  /admin/products/ajaxUpdateGeneralSection
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateGeneralSection }
+admin_products_ajax_update_description_section:
+    pattern:  /admin/products/ajaxUpdateDescriptionSection
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateDescriptionSection }
+admin_products_ajax_get_description:
+    pattern:  /admin/products/ajaxGetDescription
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetDescription }
+admin_products_ajax_get_short_description:
+    pattern:  /admin/products/ajaxGetShortDescription
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetShortDescription }
+admin_products_ajax_get_prices:
+    pattern:  /admin/products/ajaxGetPrices
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetPrices }
+admin_products_ajax_add_price:
+    pattern:  /admin/products/ajaxAddPrice
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxAddPrice }
+admin_products_ajax_update_price:
+    pattern:  /admin/products/ajaxUpdatePrice
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdatePrice }
+admin_products_ajax_delete_price:
+    pattern:  /admin/products/ajaxDeletePrice
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDeletePrice }
+admin_products_ajax_update_price_settings_section:
+    pattern:  /admin/products/ajaxUpdatePriceSettingsSection
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdatePriceSettingsSection }
+admin_products_ajax_get_options:
+    pattern:  /admin/products/ajaxGetOptions
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetOptions }
+admin_products_ajax_add_option_group:
+    pattern:  /admin/products/ajaxAddOptionGroup
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxAddOptionGroup }
+admin_products_ajax_delete_option_group:
+    pattern:  /admin/products/ajaxDeleteOptionGroup
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDeleteOptionGroup }
+admin_products_ajax_add_option:
+    pattern:  /admin/products/ajaxAddOption
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxAddOption }
+admin_products_ajax_update_option:
+    pattern:  /admin/products/ajaxUpdateOption
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateOption }
+admin_products_ajax_delete_option:
+    pattern:  /admin/products/ajaxDeleteOption
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDeleteOption }
+admin_products_ajax_get_features:
+    pattern:  /admin/products/ajaxGetFeatures
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetFeatures }
+admin_products_ajax_add_feature_group:
+    pattern:  /admin/products/ajaxAddFeatureGroup
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxAddFeatureGroup }
+admin_products_ajax_delete_feature_group:
+    pattern:  /admin/products/ajaxDeleteFeatureGroup
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDeleteFeatureGroup }
+admin_products_ajax_add_feature:
+    pattern:  /admin/products/ajaxAddFeature
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxAddFeature }
+admin_products_ajax_update_feature:
+    pattern:  /admin/products/ajaxUpdateFeature
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateFeature }
+admin_products_ajax_delete_feature:
+    pattern:  /admin/products/ajaxDeleteFeature
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDeleteFeature }
+admin_products_ajax_get_related_products:
+    pattern:  /admin/products/ajaxGetRelatedProducts
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetRelatedProducts }
+admin_products_ajax_add_related_product:
+    pattern:  /admin/products/ajaxAddRelatedProduct
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxAddRelatedProduct }
+admin_products_ajax_update_related_product:
+    pattern:  /admin/products/ajaxUpdateRelatedProduct
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateRelatedProduct }
+admin_products_ajax_delete_related_product:
+    pattern:  /admin/products/ajaxDeleteRelatedProduct
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDeleteRelatedProduct }
+admin_products_ajax_get_cheaper_alternatives:
+    pattern:  /admin/products/ajaxGetCheaperAlternatives
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxGetCheaperAlternatives }
+admin_products_ajax_add_cheaper_alternative:
+    pattern:  /admin/products/ajaxAddCheaperAlternative
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxAddCheaperAlternative }
+admin_products_ajax_update_cheaper_alternative:
+    pattern:  /admin/products/ajaxUpdateCheaperAlternative
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateCheaperAlternative }
+admin_products_ajax_delete_cheaper_alternative:
+    pattern:  /admin/products/ajaxDeleteCheaperAlternative
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxDeleteCheaperAlternative }
+admin_products_ajax_update_unique_product_identifiers_section:
+    pattern:  /admin/products/ajaxUpdateUniqueProductIdentifiersSection
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateUniqueProductIdentifiersSection }
+admin_products_ajax_update_package_dimensions_section:
+    pattern:  /admin/products/ajaxUpdatePackageDimensionsSection
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdatePackageDimensionsSection }
+admin_products_ajax_update_seo_section:
+    pattern:  /admin/products/ajaxUpdateSeoSection
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxUpdateSeoSection }
+admin_products_ajax_reset_seo:
+    pattern:  /admin/products/ajaxResetSeo
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxResetSeo }
+admin_products_ajax_rebuild_product:
+    pattern:  /admin/products/ajaxRebuildProduct
+    defaults: { _controller: WebIlluminationAdminBundle:Products:ajaxRebuildProduct }
+admin_products_price_import:
+    pattern:  /admin/products/priceImport
+    defaults: { _controller: WebIlluminationAdminBundle:Products:priceImport }
+    
+# Data
+data:
+    pattern:  /admin/data
+    defaults: { _controller: WebIlluminationAdminBundle:Data:legacyImport }
+data_legacy_import:
+    pattern:  /admin/data/legacyImport
+    defaults: { _controller: WebIlluminationAdminBundle:Data:legacyImport }
+data_ajax_load_legacy_import_data:
+    pattern:  /admin/data/ajaxLoadLegacyImportData
+    defaults: { _controller: WebIlluminationAdminBundle:Data:ajaxLoadLegacyImportData }

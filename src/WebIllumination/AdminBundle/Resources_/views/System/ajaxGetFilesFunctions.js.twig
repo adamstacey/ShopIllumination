@@ -1,0 +1,180 @@
+{# Function to update all files #}
+function updateFiles()
+{
+	$errorOccurred = false;
+	$numberOfElementsToProcess = $("input.file-requires-update[value='1']").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToProcess > 0)
+	{
+		$("#ajax_loading").show();
+		var filesValidator = $("#files :input").validator({
+			position : 'bottom left', 
+			offset : [0, 0], 
+			messageClass : 'form-error', 
+    		message : '<div><em/></div>'
+		});
+		if (filesValidator.data("validator").checkValidity())
+		{
+			$("input.file-requires-update[value='1']").each(function(index) {
+				$elementIndex = String($(this).attr("data-index"));
+				$.ajax({
+			    	url: "{{ path('system_ajax_update_file') }}",
+			      	type: "GET",
+			      	dataType: "json",
+			      	data: {
+			      		id: $("#form-file-id-"+$elementIndex).val(),
+			      		file: $("#form-file-file-"+$elementIndex).val(),
+			      		objectId: '{{ objectId }}',
+			      		objectType: '{{ objectType }}',
+			      		locale: 'en',
+			      		displayName: $("#form-file-display-name-"+$elementIndex).val(),
+			      		displayOrder: $("#form-file-display-order-"+$elementIndex).val(),
+			      		elementIndex: $elementIndex
+			      	},
+			      	error: function(data) {
+			        	$errorOccurred = true;
+			        	$("#file-"+$elementIndex).addClass("ui-state-highlight");
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#file-error-message-text").html('There was a problem trying to update the files. Make sure all fields are filled in and valid.');
+								$("#file-error-message").fadeIn();
+							} else {
+								$("#file-success-message-text").html('Your files were successfully updated.');
+								$("#file-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#files-tab-to-redirect-to").val() > -1)
+							{
+								$("#files .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#files-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	},
+			      	success: function(data) {
+		      			if (data.response == 'success')
+		      			{
+		      				$("#file-"+data.elementIndex).removeClass("ui-state-highlight");
+		      				$("#file-view-"+data.elementIndex).html('<a target="_blank" href="'+data.path+'" class="button ui-button-blue" data-icon-primary="ui-icon-document">View</a>');
+		      				$("#file-view-"+data.elementIndex+" .button").each(function () {
+						        $(this).button({
+						        	icons: {
+						            	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+						                secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+						            }, 
+						           	text: $(this).attr('data-icon-only') === 'true'?false:true
+						    	});
+						    });
+		      				$("#form-file-id-"+data.elementIndex).val(data.id);
+		      				$("#form-file-requires-update-"+data.elementIndex).val("0");
+		      				$("#file-upload-error-"+data.elementIndex+", #file-upload-success-"+data.elementIndex+", #file-file-uploading-"+data.elementIndex).hide();
+							$("#file-file-upload-"+data.elementIndex+" .qq-upload-list").html("");
+							$("#file-file-upload-"+data.elementIndex+" span.filename").html("No file selected");
+							$("#form-file-file-"+data.elementIndex).val("");
+							$("#file-file-upload-"+data.elementIndex).fadeIn();
+		      			} else {
+		      				$("#file-"+data.elementIndex).addClass("ui-state-highlight");
+		      				$errorOccurred = true;
+		      			}
+			        	$numberOfElementsProcessed++;
+			        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+			        	{
+			        		if ($errorOccurred == true)
+							{
+								$("#file-error-message-text").html('There was a problem trying to update the files. Make sure all fields are filled in and valid.');
+								$("#file-error-message").fadeIn();
+							} else {
+								$("#file-success-message-text").html('Your files were successfully updated.');
+								$("#file-success-message").fadeIn();
+							}
+							$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+							$("#ajax_loading").hide();
+							if ($("#files-tab-to-redirect-to").val() > -1)
+							{
+								$("#files .message").hide();
+								$(".sidebar-tabs").tabs("select", parseInt($("#files-tab-to-redirect-to").val()));
+							}
+			        	}
+			      	}
+			   	});
+			});
+		} else {
+			$("#file-error-message-text").html('There was a problem trying to update the files. Make sure all fields are filled in and valid.');
+        	$("#file-error-message").fadeIn();
+        	$("html, body").animate({scrollTop: $("#files").offset().top + 35},'slow');
+        	$("#ajax_loading").hide();
+		}
+	}
+}
+
+{# Function to load new file #}
+function loadNewFile()
+{
+	$("#ajax_loading").show();
+	$nextElement = parseInt($("#file-count").val()) + 1;
+	$("#file-count").val($nextElement);
+	$.ajax({
+    	url: "{{ path('system_ajax_add_file') }}",
+      	type: "GET",
+      	data: {
+      		id: $nextElement,
+      		objectId: '{{ objectId }}',
+      		objectType: '{{ objectType }}'
+      	},
+      	error: function(data) {
+        	$("#file-error-message-text").html('Sorry, there was an error adding a new file. Please try again.');
+			$("#file-error-message").fadeIn();
+      	},
+      	success: function(data) {
+  			$("#form-files-container").append(data);
+				$("#file-"+$nextElement.toString()+" :checkbox:not(.no-uniform), #file-"+$nextElement.toString()+" :radio:not(.no-uniform), #file-"+$nextElement.toString()+" select:not(.no-uniform)").uniform();
+				$("#file-"+$nextElement.toString()).fadeIn();
+				$("#file-"+$nextElement+" .button").each(function () {
+	            $(this).button({
+	            	icons: {
+	                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+	                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+	        	});
+	        });
+	        reOrderFiles();
+	        $(".selector, .uploader").addClass("full");
+	        $("html, body").animate({scrollTop: $("#file-"+$nextElement).offset().top - 100},'slow');
+	        $("#ajax_loading").hide();
+      	}
+   	});
+}
+
+{# Function to re-order the file indexes #}
+function reOrderFiles()
+{
+	$("#files .message").hide();
+	$(".form-error").remove();
+	$fileCount = 1;
+	$numberOfElementsToProcess = $("li.file-container:visible").length;
+	$numberOfElementsProcessed = 0;
+	$("li.file-container:visible").each(function(index) {
+		$row = $(this);
+		if ($row.find("input.file-display-order").val() != $fileCount)
+		{
+			if ($row.find("input.file-id").val() > 0)
+			{
+				$row.find("input.file-requires-update").val("1");
+			}
+		}
+		$row.find("input.file-display-order").val($fileCount);
+	    $fileCount++;
+	    $numberOfElementsProcessed++;
+	    if ($numberOfElementsProcessed == $numberOfElementsToProcess)
+	    {
+	    	updateFiles();
+	    }
+	});
+	$("li.file-container:hidden").each(function(index) {
+		$(this).remove();
+	});
+}

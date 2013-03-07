@@ -1,0 +1,103 @@
+<li class="file-container" data-index="{{ index }}" id="file-{{ index }}">
+	<div>
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td width="9" rowspan="2" class="ac">
+						<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+					</td>
+					<td width="1" rowspan="2" class="ac select delete">
+						<input data-index="{{ index }}" type="checkbox" class="file-select" id="form-file-select-{{ index }}" value="1" />
+					</td>
+					<td class="no-padding-bottom">
+						<input type="text" class="file-display-name full" id="form-file-display-name-{{ index }}" placeholder="Enter a title" value="{% if data.displayName is defined %}{{ data.displayName }}{% endif %}" />
+					</td>
+					<td width="1" rowspan="2" class="ac">
+						<div id="file-view-{{ index }}">{% if data.path is defined %}{% if data.path != '' %}<a target="_blank" href="{{ asset(data.path) }}" class="button ui-button-blue" data-icon-primary="ui-icon-document">View</a>{% endif %}{% endif %}</div>
+					</td>
+					<td width="1" rowspan="2" class="ac">
+						<input type="hidden" class="file-display-order" id="form-file-display-order-{{ index }}" value="{{ index }}" />
+						<input type="hidden" data-index="{{ index }}" class="file-requires-update" id="form-file-requires-update-{{ index }}" value="0" />
+						<input type="hidden" class="file-id" id="form-file-id-{{ index }}" value="{% if data.id is defined %}{{ data.id }}{% else %}0{% endif %}" />
+						<a href="Javascript:void(0);" data-index="{{ index }}" class="button ui-button-red action-confirm-delete-file" data-icon-primary="ui-icon-closethick">Delete</a>
+					</td>
+				</tr>
+				<tr>
+					<td class="no-padding-top">
+						<div class="file-file-upload" id="file-file-upload-{{ index }}"></div>
+						<div class="file-file-uploading ui-helper-hidden" id="file-file-uploading-{{ index }}">
+							<img class="fl" alt="Loading" width="16" height="11" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-file-loader.gif') }}" />
+							<p>Please wait, uploading file&hellip;</p>
+						</div>
+						<div id="file-upload-success-{{ index }}" class="ui-widget file-upload-success file-upload-message ui-helper-hidden">
+						    <div class="ui-state-success no-margin ui-corner-all"> 
+						        <p class="no-margin">
+						            <span class="ui-icon ui-icon-circle-check"></span>
+						            <span class="file-upload-success-text" id="file-upload-success-text-{{ index }}"></span>
+						            <img class="fr action-cancel-file-upload action-cancel-file-upload-{{ index }}" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+						        </p>
+						    </div>
+						</div>
+						<div id="file-upload-error-{{ index }}" class="ui-widget file-upload-error file-upload-message ui-helper-hidden">
+						    <div class="ui-state-error no-margin ui-corner-all"> 
+						        <p class="no-margin">
+						            <span class="ui-icon ui-icon-alert"></span>
+						            <span class="file-upload-error-text" id="file-upload-error-text-{{ index }}"></span>
+						            <img class="fr action-cancel-file-upload action-cancel-file-upload-{{ index }}" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+						        </p>
+						    </div>
+						</div>
+						<input type="hidden" id="form-file-file-{{ index }}" class="file-file" />		
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				{# Cancel file upload #}
+				$(".action-cancel-file-upload-{{ index }}").live('click', function() {
+					$("#file-upload-error-{{ index }}, #file-upload-success-{{ index }}, #file-file-uploading-{{ index }}").hide();
+					$("#file-file-upload-{{ index }} .qq-upload-list").html("");
+					$("#file-file-upload-{{ index }} span.filename").html("No file selected");
+					$("#form-file-file-{{ index }}").val("");
+					$("#file-file-upload-{{ index }}").fadeIn();
+				});
+				
+				{# File uploader #}
+				var fileUploader{{ index }} = new qq.FileUploader({
+				    element: document.getElementById('file-file-upload-{{ index }}'),
+				    action: '{{ path('system_ajax_upload_file') }}',
+				    onSubmit: function(id, fileName) {
+				    	$("#form-file-file-{{ index }}").val("");
+				    	$("#file-file-upload-{{ index }}").hide();
+				    	var fileExtensions = fileName.toLowerCase().split(".");
+	        			var fileExtension = fileExtensions[(fileExtensions.length - 1)];
+	        			if ((fileExtension == 'pdf') || (fileExtension == 'doc') || (fileExtension == 'docx') || (fileExtension == 'xls') || (fileExtension == 'xlsx') || (fileExtension == 'ppt') || (fileExtension == 'pptx'))
+						{
+	        				$("#file-file-uploading-{{ index }}").fadeIn();
+	        			} else {
+	        				$("#file-upload-error-text-{{ index }}").html("pdf, doc, xls and ppt files only.");
+	        				$("#file-upload-error-{{ index }}").fadeIn();
+	        				return false;
+					    }
+				    },
+	        		onComplete: function(id, fileName, responseJSON) {
+	        			$("#file-file-upload-{{ index }}, #file-file-uploading-{{ index }}, #file-upload-error-{{ index }}, #file-upload-success-{{ index }}").hide();
+	        			if (responseJSON.response == 'success')
+	        			{
+	        				$("#form-file-requires-update-{{ index }}").val("1");
+	        				$("#file-upload-success-text-{{ index }}").html("File Uploaded: "+responseJSON.fileSize);
+	        				$("#form-file-file-{{ index }}").val(responseJSON.fileName);
+	        				$("#file-upload-success-{{ index }}").fadeIn();
+	        			} else {
+	        				$("#file-upload-error-text-{{ index }}").html(responseJSON.message);
+	        				$("#file-upload-error-{{ index }}").fadeIn();
+	        			}
+	        		}
+				});
+				
+				$("#file-file-upload-{{ index }} :file:not(.no-uniform)").uniform();
+			});
+		</script>
+	</div>
+</li>

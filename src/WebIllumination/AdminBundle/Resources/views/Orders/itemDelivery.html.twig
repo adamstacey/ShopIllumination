@@ -1,0 +1,238 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}Order {{ data.item.id }} - Delivery | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+    {% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} %}
+{% endblock %}
+{% block header %}
+    {{ parent() }}
+    {% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
+{% endblock %}
+{% block body %}
+	<section class="container_6 clearfix">
+    	<div class="grid_6">
+        	<div class="portlet">
+            	<header>
+           			<h2>Delivery</h2>
+                </header>
+                <section>
+                    <form class="form has-validation" id="form-{{ data.mode }}" method="post" action="{{ data.formAction }}">
+                        <div class="form-element clearfix padding-bottom-5">
+                            <table class="data-table" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td class="label">Estimated {% if data.item.deliveryType == 'Collection' %}Collection{% else %}Delivery{% endif %}</td>
+                                    <td>Estimated {% if data.item.deliveryType == 'Collection' %}collection available{% else %}Delivery{% endif %} between <strong class="important">{{ data.item.estimatedDeliveryDaysStart }}</strong> and <strong class="important">{{ data.item.estimatedDeliveryDaysEnd }}</strong> subject to availability.</td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Delivery Type</td>
+                                    <td{% if data.item.deliveryType == 'Collection' %} class="gradient-background-red"{% endif %}>{% if data.item.deliveryType == 'Collection' %}<strong>COLLECTION</strong>{% else %}{{ data.item.deliveryType }}{% endif %}</td>
+                                </tr>
+                                {% if data.item.deliveryType != 'Collection' %}
+                                    <tr>
+                                        <td class="label">Delivery Charge</td>
+                                        <td{% if data.item.deliveryCharge == 0 %} class="gradient-background-green"{% endif %}>{% if data.item.deliveryCharge > 0 %}&pound;{{ data.item.deliveryCharge|number_format(2) }}{% else %}FREE{% endif %}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Courier</td>
+                                        <td>{{ data.item.courier|default('Not Assigned Yet') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">No. of Packages</td>
+                                        <td>{{ (data.item.numberOfPackages > 0?item.numberOfPackages:'1') }}</td>
+                                    </tr>
+                                    {% if data.item.trackingNumber != '' %}
+                                        <tr>
+                                            <td class="label">Tracking Number</td>
+                                            <td>{{ data.item.trackingNumber|default('-') }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td class="label">Courier labels printed?</td>
+                                        <td class="gradient-background-{{ (data.item.labelsPrinted > 0?'green':'orange') }}">{{ (data.item.labelsPrinted > 0?'YES':'NO') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label">Deliver To</td>
+                                        <td>{% spaceless %}
+                                            {{ data.item.deliveryFirstName|upper }} {{ data.item.deliveryLastName|upper }}<br />
+                                            {% if data.item.deliveryOrganisationName != '' %}
+                                                {{ data.item.deliveryOrganisationName|upper }}<br />
+                                            {% endif %}
+                                            {{ data.item.deliveryAddressLine1|upper }}<br />
+                                            {% if data.item.deliveryAddressLine2 != '' %}
+                                                {{ data.item.deliveryAddressLine2|upper }}<br />
+                                            {% endif %}
+                                            {{ data.item.deliveryTownCity|upper }}<br />
+                                            {% if data.item.deliveryCountyState != '' %}
+                                                {{ data.item.deliveryCountyState|upper }}<br />
+                                            {% endif %}
+                                            {{ data.item.deliveryPostZipCode|upper }}
+                                        {% endspaceless %}</td>
+                                    </tr>
+                                {% endif %}
+                            </table>
+                        </div>
+
+                        <h3>Edit Delivery</h3>
+                        <div id="delivery-address-container" class="form-element clearfix">
+                            <label for="form-name" class="form-label">
+                                <em>*</em> Delivery Address
+                                <div class="padding-left-5 fr">
+                                    <button type="button" class="fr action-clear-delivery-address full button icon-set-white ui-button-red ui-corner-all ar" data-icon-primary="ui-icon-circle-cross">Clear Address</button>
+                                    <textarea id="delivery-address-preview" rows="9" class="full ac margin-top-5"></textarea>
+                                </div>
+                            </label>
+                            <div class="form-input">
+                                <table class="no-padding" width="100%">
+                                    <tr>
+                                        <td width="50%"><input class="ui-corner-tl" placeholder="First Name *" type="text" id="form-delivery-first-name" name="delivery-first-name" value="{{ data.item.deliveryFirstName|default('') }}" required="required" data-message="Enter the first name" /></td>
+                                        <td width="50%"><input class="ui-corner-tr" placeholder="Last Name *" type="text" id="form-delivery-last-name" name="delivery-last-name" value="{{ data.item.deliveryLastName|default('') }}" required="required" data-message="Enter the last name" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" placeholder="Company" type="text" id="form-delivery-organisation-name" name="delivery-organisation-name" value="{{ data.item.deliveryOrganisationName|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <select class="ui-corner-none" id="form-delivery-country-code" name="delivery-country-code" required="required" data-message="Select a Country">
+                                                <option{% if data.item is defined %}{% if data.item.deliveryCountryCode == 'GB' %} selected="selected"{% endif %}{% else %} selected="selected"{% endif %} value="GB">United Kingdom</option>
+                                                <option{% if data.item is defined %}{% if data.item.deliveryCountryCode == 'IE' %} selected="selected"{% endif %}{% endif %} value="IE">Republic of Ireland</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" required="required" data-message="Enter an address" placeholder="Address Line 1 *" type="text" id="form-delivery-address-line-1" name="delivery-address-line-1" value="{{ data.item.deliveryAddressLine1|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" placeholder="Address Line 2" type="text" id="form-delivery-address-line-2" name="delivery-address-line-2" value="{{ data.item.deliveryAddressLine2|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" required="required" data-message="Enter a town or city" placeholder="Town/City *" type="text" id="form-delivery-town-city" name="delivery-town-city" value="{{ data.item.deliveryTownCity|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-none" placeholder="County" type="text" id="form-delivery-county-state" name="delivery-county-state" value="{{ data.item.deliveryCountyState|default('') }}" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><input class="ui-corner-bottom" required="required" data-message="Enter a post code" placeholder="Post Code *" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" value="{{ data.item.deliveryPostZipCode|upper|default('') }}" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="form-element clearfix">
+                            <label class="form-label"><em>*</em> Courier</label>
+                            <div class="form-input">
+                                {% if 'Royal Mail' in data.item.deliveryType %}
+                                    <table class="no-border">
+                                        <tr class="no-row-colour">
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-royal-mail" value="Royal Mail" checked="checked" /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-royal-mail"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/royal-mail-small.png') }}" border="0" alt="Royal Mail" /></label></td>
+                                        </tr>
+                                    </table>
+                                    {% elseif 'Parcel' in data.item.deliveryType %}
+                                    <table class="no-border">
+                                        <tr class="no-row-colour">
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-dpd" value="DPD"{% if (item.courier == 'DPD') or (item.courier == '') %} checked="checked"{% endif %} /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-dpd"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/dpd-small.png') }}" border="0" alt="DPD" /></label></td>
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-parcelforce" value="Parcelforce"{% if data.item.courier == 'Parcelforce' %} checked="checked"{% endif %} /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-parcelforce"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/parcelforce-small.png') }}" border="0" alt="Parcelforce" /></label></td>
+                                        </tr>
+                                    </table>
+                                    {% elseif 'Pallet' in data.item.deliveryType %}
+                                    <table class="no-border">
+                                        <tr class="no-row-colour">
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-palletways" value="Palletways" checked="checked" /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-palletways"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/palletways-small.png') }}" border="0" alt="Palletways" /></label></td>
+                                        </tr>
+                                    </table>
+                                    {% elseif 'Home Delivery' in data.item.deliveryType %}
+                                    <table class="no-border">
+                                        <tr class="no-row-colour">
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-ghd" value="GHD Transport" checked="checked" /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-ghd">G H D Transport</label></td>
+                                        </tr>
+                                    </table>
+                                {% else %}
+                                    <table class="no-border">
+                                        <tr class="no-row-colour">
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-royal-mail" value="Royal Mail"{% if data.item.courier == 'Royal Mail' %} checked="checked"{% endif %} /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-royal-mail"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/royal-mail-small.png') }}" border="0" alt="Royal Mail" /></label></td>
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-dpd" value="DPD"{% if (item.courier == 'DPD') or (item.courier == '') %} checked="checked"{% endif %} /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-dpd"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/dpd-small.png') }}" border="0" alt="DPD" /></label></td>
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-parcelforce" value="Parcelforce"{% if data.item.courier == 'Parcelforce' %} checked="checked"{% endif %} /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-parcelforce"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/parcelforce-small.png') }}" border="0" alt="Parcelforce" /></label></td>
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-palletways" value="Palletways"{% if data.item.courier == 'Palletways' %} checked="checked"{% endif %} /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-palletways"><img class="pointer border" src="{{ asset('bundles/webilluminationadmin/images/logos/palletways-small.png') }}" border="0" alt="Palletways" /></label></td>
+                                            <td><input data-id="{{ data.item.id }}" type="radio" name="courier" id="listing-courier-ghd" value="GHD Transport"{% if data.item.courier == 'GHD Transport' %} checked="checked"{% endif %} /></td>
+                                            <td class="no-wrap"><label class="pointer" for="listing-courier-ghd">GHD Transport</label></td>
+                                        </tr>
+                                    </table>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-element clearfix no-margin-top">
+                            <label class="form-label"><em>*</em> Packages</label>
+                            <div class="form-input">
+                                <table class="no-border" align="center">
+                                    <tr>
+                                        <td class="no-padding"><input name="number-of-packages" id="listing-number-of-packages" data-id="{{ data.item.id }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="{{ (item.numberOfPackages > 0?item.numberOfPackages:'1') }}" /></td>
+                                        <td class="no-padding">
+                                            <div class="quantity-buttons-container no-padding">
+                                                <div class="ui-corner-tr action-increase-quantity" data-id="{{ data.item.id }}" data-quantity-object="listing-number-of-packages">+</div>
+                                                <div class="ui-corner-br action-decrease-quantity" data-id="{{ data.item.id }}" data-quantity-object="listing-number-of-packages">-</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-element clearfix no-margin-top">
+                            <label class="form-label"><em>*</em> Tracking Number</label>
+                            <div class="form-input">
+                                {% if ('Royal Mail' in data.item.deliveryType) or ('Parcel' in data.item.deliveryType) %}
+                                    <input placeholder="Enter tracking number..." type="text" name="tracking-number" id="listing-tracking-number" data-id="{{ data.item.id }}" value="{{ data.item.trackingNumber|default('') }}" class="uppercase full" />
+                                    {% elseif 'Pallet' in data.item.deliveryType %}
+                                    <table class="no-border" width="100%">
+                                        <tr class="no-row-colour">
+                                            <td width="19"><input class="delivery-service" data-id="{{ data.item.id }}" type="radio" name="delivery-service" id="listing-delivery-service" value="Economy" checked="checked" /></td>
+                                            <td width="50%" class="no-wrap"><label class="pointer full ac" for="listing-delivery-service">Economy</label></td>
+                                            <td width="19"><input class="delivery-service" data-id="{{ data.item.id }}" type="radio" name="delivery-service" id="listing-delivery-service" value="Arranged" /></td>
+                                            <td width="50%" class="no-wrap"><label class="pointer full ac" for="listing-delivery-service">Arranged</label></td>
+                                        </tr>
+                                    </table>
+                                    <table id="listing-delivery-dates" class="no-border ui-helper-hidden" width="100%">
+                                        <tr class="no-row-colour">
+                                            <td width="50%"><input placeholder="DATE FROM..." type="text" name="delivery-date-from" id="listing-delivery-date-from" data-id="{{ data.item.id }}" value="" class="date-picker ac" /></td>
+                                            <td width="50%"><input placeholder="DATE TO..." type="text" name="delivery-date-to" id="listing-delivery-date-to" data-id="{{ data.item.id }}" value="" class="date-picker ac" /></td>
+                                        </tr>
+                                    </table>
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-element clearfix no-margin-top">
+                            <label class="form-label"><em>*</em> Review</label>
+                            <div class="form-input">
+                                <input type="checkbox" name="send-review-request" id="listing-send-review-request" value="1"{% if data.item.sendReviewRequest > 0 %} checked="checked" {% endif %} />
+                            </div>
+                        </div>
+                        <div id="float-buttons" class="clearfix">
+                            <div id="float-buttons-content" class="float-buttons clearfix buttons">
+                                <input type="hidden" value="" id="form-extra-action" name="extra-action" />
+                                <input type="hidden" value="0" id="form-delete" name="delete" />
+                                <input type="hidden" value="0" id="form-go-back" name="go-back" />
+                                <a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr ui-corner-right button ui-button-black icon-set-white" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+                                <button id="button-update-go-back" type="submit" class="fr button ui-corner-none icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update &amp; Go Back</button>
+                                <button id="button-update" type="submit" class="fr button ui-corner-left icon-set-white ui-button-green" data-icon-primary="ui-icon-circle-tick">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} %}
+    {% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':processDeliveriesScript.js.twig' with {'data': data} %}
+{% endblock %}
