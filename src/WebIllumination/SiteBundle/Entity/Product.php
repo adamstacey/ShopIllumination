@@ -165,6 +165,11 @@ class Product implements DescribableInterface
     private $lastChecked;
 
     /**
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    private $template;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -989,5 +994,28 @@ class Product implements DescribableInterface
     public function setImages($images)
     {
         $this->images = $images;
+    }
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return Product
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string 
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }
