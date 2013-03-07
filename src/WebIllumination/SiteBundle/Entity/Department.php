@@ -79,7 +79,12 @@ class Department implements DescribableInterface
      * @ORM\Column(name="check_delivery_band", type="boolean")
      */
     private $checkDeliveryBand;
-    
+
+    /**
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    private $template;
+
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
@@ -745,5 +750,28 @@ class Department implements DescribableInterface
     public function setRoot($root)
     {
         $this->root = $root;
+    }
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return Department
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string 
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }
