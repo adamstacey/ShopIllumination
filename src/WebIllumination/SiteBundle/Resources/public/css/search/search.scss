@@ -1,0 +1,57 @@
+.search-container {
+    padding: 0;
+    margin: 20px 0 0 50px;
+    width: 350px;
+
+    float: left;
+    position: relative;
+
+    @include equalBorderRadius($radiusSize);
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
+    @include verticalGradientGreyExtraLightToWhite;
+}
+
+.search-container .icon-grey {
+    position: absolute;
+    top: 3px;
+    left: 5px;
+}
+
+.search-container input,
+.search-container input:hover,
+.search-container input:focus{
+    padding-left: 50px;
+    padding-right: 65px;
+    width: 100%;
+
+    @include borderBox;
+    @include fontSize($fontSizeLarge);
+    background: none;
+    border: 0 none;
+    @include noBoxShadow;
+}
+
+.search-container .icon-dark-red {
+    position: absolute;
+    top: 3px;
+    right: 70px;
+
+    display: none;
+
+    cursor: pointer;
+}
+
+.search-container .button,
+.search-container .button:hover {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+
+    @include borderRadius(0, $radiusSize, $radiusSize, 0);
+    border-left-width: 3px;
+    @include noBoxShadow;
+}
+
+.search-container .button .ui-button-text {
+    padding: 0 $spacingSmall;
+}
