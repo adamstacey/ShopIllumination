@@ -18,6 +18,7 @@ use WebIllumination\SiteBundle\Entity\Product\Variant;
 use WebIllumination\SiteBundle\Form\EditVariantDescriptionsType;
 use WebIllumination\SiteBundle\Form\EditVariantDimensionsType;
 use WebIllumination\SiteBundle\Form\EditVariantFeaturesType;
+use WebIllumination\SiteBundle\Form\EditVariantImagesType;
 use WebIllumination\SiteBundle\Form\EditVariantOverviewType;
 use WebIllumination\SiteBundle\Form\EditVariantPricesType;
 
@@ -68,6 +69,10 @@ class VariantController extends Controller {
                 $em->persist($variant);
                 $em->flush();
 
+                $this->getImageManager()->persistImages($variant, 'variant');
+
+                $em->flush();
+
                 $flow->reset();
 
                 return $this->redirect($this->generateUrl('products_edit_variants', array(
@@ -101,7 +106,10 @@ class VariantController extends Controller {
                 $em->persist($variant);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('edit_product_variants'));
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $variant->getProduct()->getId(),
+                    'variantId' => $variant->getId(),
+                )));
             }
         }
 
@@ -145,7 +153,54 @@ class VariantController extends Controller {
      */
     public function editPricesAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $variantId, 'WebIlluminationSiteBundle:Variant:edit_prices.html.twig', new EditVariantPricesType());
+        $em = $this->getDoctrine()->getManager();
+        $originalPrices = array();
+
+        $variant = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Variant")->find($variantId);
+        if(!$variant)
+        {
+            throw new NotFoundHttpException("Variant not found");
+        }
+
+        foreach($variant->getPrices() as $price)
+        {
+            $originalPrices[] = $price;
+        }
+
+        $form = $this->createForm(new EditVariantPricesType(), $variant);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                // Remove all links from the to delete array that have not been deleted
+                foreach($variant->getPrices() as $price) {
+                    foreach ($originalPrices as $key => $toDel) {
+                        if ($toDel->getId() === $price->getId()) {
+                            unset($originalPrices[$key]);
+                        }
+                    }
+
+                    $price->setVariant($variant);
+                }
+
+                foreach ($originalPrices as $price) {
+                    $em->remove($price);
+                }
+
+                $em->persist($variant);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $variant->getProduct()->getId(),
+                    'variantId' => $variant->getId(),
+                )));
+            }
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Variant:edit_prices.html.twig', array(
+            'variant' => $variant,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -154,17 +209,20 @@ class VariantController extends Controller {
      */
     public function editFeaturesAction(Request $request, $variantId)
     {
-        /**
-         * @var $variant Variant
-         * @var $em EntityManager
-         */
         $em = $this->getDoctrine()->getManager();
+        $originalFeatures = array();
 
         $variant = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Variant")->find($variantId);
         if(!$variant)
         {
             throw new NotFoundHttpException("Variant not found");
         }
+
+        foreach($variant->getFeatures() as $feature)
+        {
+            $originalFeatures[] = $feature;
+        }
+
         $form = $this->createForm(new EditVariantFeaturesType(), $variant, array(
             'departmentId' => $variant->getProduct()->getDepartment()->getDepartment()->getId()
         ));
@@ -172,14 +230,79 @@ class VariantController extends Controller {
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if($form->isValid()) {
+                // Remove all links from the to delete array that have not been deleted
+                foreach($variant->getFeatures() as $feature) {
+                    foreach ($originalFeatures as $key => $toDel) {
+                        if ($toDel->getId() === $feature->getId()) {
+                            unset($originalFeatures[$key]);
+                        }
+                    }
+
+                    $feature->setVariant($variant);
+                }
+
+                foreach ($originalFeatures as $feature) {
+                    $em->remove($feature);
+                }
+
                 $em->persist($variant);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('edit_product_variants'));
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $variant->getProduct()->getId(),
+                    'variantId' => $variant->getId(),
+                )));
             }
         }
 
         return $this->render('WebIlluminationSiteBundle:Variant:edit_features.html.twig', array(
+            'variant' => $variant,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/variants/{variantId}/images", name="variants_edit_images")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editImagesAction(Request $request, $variantId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $variant = $em->getRepository("WebIllumination\SiteBundle\Entity\Product\Variant")->find($variantId);
+        if(!$variant)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        // Fetch the products images
+        $images = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->findBy(array(
+            'objectId' => $variant->getId(),
+            'objectType' => 'variant',
+        ));
+        $variant->setImages(join(',', array_map(function($image) {
+            return $image->getId();
+        }, $images)));
+
+
+        $form = $this->createForm(new EditVariantImagesType(), $variant);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $this->getImageManager()->persistImages($variant, 'variant');
+
+                $em->persist($variant);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $variant->getProduct()->getId(),
+                    'variantId' => $variant->getId(),
+                )));
+            }
+        }
+
+        return $this->render('WebIlluminationSiteBundle:Variant:edit_images.html.twig', array(
             'variant' => $variant,
             'form' => $form->createView(),
         ));
@@ -202,7 +325,7 @@ class VariantController extends Controller {
         $em->remove($variant);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('listing_products'));
+        return $this->redirect($this->generateUrl('products_edit_variants'));
     }
 
     /**
@@ -213,5 +336,15 @@ class VariantController extends Controller {
     private function getManager()
     {
         return $this->get('web_illumination_site.manager.product');
+    }
+
+    /**
+     * Fetch project manager from container
+     *
+     * @return \WebIllumination\SiteBundle\Manager\ImageManager
+     */
+    private function getImageManager()
+    {
+        return $this->get('web_illumination_site.manager.image');
     }
 }

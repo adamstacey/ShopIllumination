@@ -1,6 +1,7 @@
 <?php
 namespace WebIllumination\SiteBundle\Manager;
 
+use Doctrine\ORM\EntityManager;
 use Imagine\Imagick\Imagine;
 use WebIllumination\SiteBundle\Entity\DescribableInterface;
 use WebIllumination\SiteBundle\Entity\Image;
@@ -96,5 +97,75 @@ class ImageManager extends Manager
         }
 
         return $filename;
+    }
+
+    public  function persistImages($entity, $entityType) {
+        /**
+         * @var $em EntityManager
+         * @var $image Image
+         */
+        $em = $this->doctrine->getManager();
+        $i = 0;
+        $imageIds = explode(',', $entity->getImages());
+        $imageIds = array_diff(explode(',', $entity->getImages()), array(''));
+
+        // Get any images already linked to the entity
+        $existingImages = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->findBy(array(
+            'objectId' => $entity->getId(),
+            'objectType' => $entityType,
+        ));
+
+        // Delete any old images that no longer exist
+        foreach($existingImages as $existingImage) {
+            $found = false;
+            foreach($imageIds as $imageId) {
+                if($existingImage->getId() == $imageId) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if(!$found) {
+                $em->remove($existingImage);
+                $em->flush();
+            }
+        }
+
+        // If no images were added add a blank image
+        if(count($imageIds) == 0) {
+            $image = new Image();
+            $image->setLocale('en');
+            $image->setTitle($entity->getDescription()->getHeader());
+            $image->setAlignment('');
+            $image->setDescription('');
+            $image->setLink('');
+            $image->setObjectType($entityType);
+            $image->setImageType($entityType);
+            $image->setObjectId($entity->getId());
+            $image->setDisplayOrder(1);
+            $image->setOriginalPath('/images/no-image.jpg');
+            $image->setPublicPath('/images/no-image.jpg');
+            $em->persist($image);
+        } else {
+            // Link each image to the variant
+            foreach($imageIds as $imageId)
+            {
+                $image = $em->getRepository("WebIllumination\SiteBundle\Entity\Image")->find($imageId);
+                if($image)
+                {
+                    $image->setObjectId($entity->getId());
+                    $image->setObjectType($entityType);
+                    $image->setImageType($entityType);
+
+                    $image->setTitle($entity->getDescription()->getHeader());
+                    $image->setDisplayOrder($i);
+                    $image->setPublicPath(/*Set this field to a blank value so it can be changed in the listener*/"");
+
+                    $i++;
+
+                    $em->persist($image);
+                }
+            }
+        }
     }
 }

@@ -1,49 +1,138 @@
-<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge ({'productId': product.id, }) | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge ({'productId': product.id, }) | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <h2>Prices</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
+                    <h2>4. Images</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
-                    {% if form.errors %}
-                        <div class="message error">
-                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
-                            {{ form_errors(form) }}
-                        </div>
-                    {% endif %}
-                    <fieldset>
-                        <table class="data" id="prices-list" width="100%">
+                    {% include 'WebIlluminationSiteBundle:Variant:newErrors.html.twig' %}
+
+                    <fieldset class="fileupload">
+                        <legend class="fill">Images for the product variant</legend>
+                        <table class="form-table files">
                             <thead>
                             <tr>
-                                <th>Cost Price</th>
-                                <th>RRP</th>
-                                <th>List Price</th>
-                                <th></th>
+                                <th colspan="4">
+                                    <button type="button" class="button fileinput-button button-small mrm fl">
+                                        Add files
+                                        <input class="no-uniform" type="file" name="file" multiple>
+                                    </button>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for row in form.prices %}
-                                <tr>
-                                    {{ form_widget(row) }}
-                                </tr>
-                            {% endfor %}
                             </tbody>
                         </table>
-                        {% do form.prices.setRendered() %}
+                        {{ form_widget(form.images) }}
+                        {% do form.images.setRendered() %}
                     </fieldset>
 
                     {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
-
-                    <div class="form-element widget-group clearfix">
-                        <div class="widget widget-1-of-3">&nbsp;</div>
-                        <div class="widget widget-2-of-3">
-                            {% include 'WebIlluminationAdminBundle:Product:newControls.html.twig' %}
-                        </div>
-                    </div>
+                    {% include 'WebIlluminationSiteBundle:Variant:newControls.html.twig' %}
                 </section>
             </div>
         </div>
     </div>
 </form>
+
+{% raw %}
+<script id="template-upload" type="text/x-template">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload">
+        <td class="name"><span>{%=file.name%}</span></td>
+        {% if (file.error) { %}
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+        {% } else if (o.files.valid && !i) { %}
+        <td>
+            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+        </td>
+        <td class="start">
+            {% if (!o.options.autoUpload) { %}
+            <button type="button" class="button button-small mrm fl">Start</button>
+            {% } %}
+        </td>
+        {% } else { %}
+        <td colspan="2"></td>
+        {% } %}
+        <td class="cancel">
+            {% if (!i) { %}
+            <button type="button" class="button button-small mrm fl">Cancel</button>
+            {% } %}
+        </td>
+    </tr>
+    {% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-template">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download">
+        {% if (file.error) { %}
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+        {% } else { %}
+        <td class="name">
+            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
+        </td>
+        <td></td>
+        {% } %}
+        <td class="delete" colspan="2">
+            <button type="button"  data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red button-small mrm fl">Delete</button>
+        </td>
+    </tr>
+    {% } %}
+</script>
+{% endraw %}
+<script>
+    $(function () {
+        'use strict';
+
+        $('.fileupload').each(function () {
+            var that = this;
+
+            $(this).fileupload({
+                url: '{{ path('api_images_post_image') }}',
+                dropZone: $(this),
+                formData: []
+            }).bind('fileuploadadded', function (e, data) {
+                        generateButtons($(that));
+                        return true;
+                    }).bind('fileuploaddcompleted', function (e, data) {
+                        generateButtons($(that));
+                        return true;
+                    }).bind('fileuploaddone', function (e, data) {
+                        var images = $(that).find('input[type=hidden]').val();
+
+                        $.each(data.result.files, function (index, file) {
+                            if (images === "") {
+                                images = [];
+                            } else {
+                                images = images.split(',');
+                            }
+
+                            images.push(file.id);
+                        });
+
+                        $(that).find('input[type=hidden]').val(images.join(','));
+                    });
+
+            // On page load fetch the info for any existing files
+            var imageIds = $(that).find('input[type=hidden]').val();
+            var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
+                var template = tmpl("template-download");
+                var result = template({
+                    files: data.files,
+                    formatFileSize: this._formatFileSize,
+                    options: this.options
+                });
+                $(that).find('.files tbody').append(result);
+            });
+        });
+        $(document).bind('drop dragover', function (e) {
+            e.preventDefault();
+        });
+    });
+
+</script>

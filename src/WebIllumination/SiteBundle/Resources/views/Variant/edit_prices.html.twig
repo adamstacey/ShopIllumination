@@ -15,17 +15,13 @@
                             <div class="ui-widget">
                                 <header class="ui-widget-header ui-corner-top">
                                     <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
-                                    <h2>Prices</h2>
+                                    <h2>Price</h2>
                                 </header>
                                 <section class="ui-widget-content ui-corner-all">
-                                    {% if form.errors %}
-                                        <div class="message error">
-                                            <p>You have <strong>{{ form.errors|length }}</strong> errors. Please fix the following errors before continuing:</p>
-                                            {{ form_errors(form) }}
-                                        </div>
-                                    {% endif %}
+                                    {% include 'WebIlluminationSiteBundle:Variant:newErrors.html.twig' %}
+
                                     <fieldset class="pbm">
-                                        <table class="form-table" id="price-list" width="100%" data-prototype="{{ form_widget(form.prices.vars.prototype) | e }}">
+                                        <table class="data-table" id="price-list" data-prototype="{{ form_widget(form.prices.vars.prototype) | e }}">
                                             <thead>
                                             <tr>
                                                 <th>RRP</th>
@@ -41,13 +37,13 @@
                                             {% endfor %}
                                             </tbody>
                                         </table>
-                                        {% do form.prices.setRendered() %}
                                     </fieldset>
-                                    {{ form_rest(form) }}
 
+
+                                    {{ form_rest(form) }}
                                     <div class="clearfix">
-                                        <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Save</button>
-                                        <button type="button" data-table-object="price-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Price</button>
+                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Variant</button>                                        <button type="button" data-table-object="price-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Price</button>
+
                                     </div>
                                 </section>
                             </div>
