@@ -3,17 +3,28 @@
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-700"></span>
-                    <h2>2. Dimensions</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
+                    <h2>2. Features</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'WebIlluminationSiteBundle:Variant:newErrors.html.twig' %}
 
-                    <fieldset>
-                        {{ form_row(form.weight, {'label': 'Weight', 'help': ''}) }}
-                        {{ form_row(form.length, {'label': 'Length', 'help': ''}) }}
-                        {{ form_row(form.width, {'label': 'Width', 'help': ''}) }}
-                        {{ form_row(form.height, {'label': 'Height', 'help': ''}) }}
+                    <fieldset class="pbm">
+                        <table class="form-table" id="feature-list" data-prototype="{{ form_widget(form.features.vars.prototype) | e }}">
+                            <thead>
+                            <tr>
+                                <th>Group</th>
+                                <th>Feature</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for feature in form.features %}
+                                <tr>{{ form_widget(feature) }}</tr>
+                            {% endfor %}
+                            </tbody>
+                            {% do form.features.setRendered() %}
+                        </table>
                     </fieldset>
 
                     {{ form_rest(form) }}
@@ -24,3 +35,20 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('change', '.feature-group', function() {
+            var $featureGroupId = $(this).val();
+            var $selectObject = $(this).closest("tr").find(".feature");
+            $selectObject.prev("span").html("Loading Features...");
+            $.getJSON('{{ path('api_features', {'featureGroupId': '-1'}) }}'.replace(/-1/, $featureGroupId), function(data) {
+                $selectObject.val([]).empty();
+                for (var $feature = 0; $feature < data.features.length; $feature++) {
+                    var $option = $('<option/>', { value: data.features[$feature]['id'] }).text(data.features[$feature]['name']).prop('selected', $feature == 0);
+                    $option.appendTo($selectObject);
+                }
+                $.uniform.update($selectObject);
+            });
+        });
+    })
+</script>

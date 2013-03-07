@@ -25,10 +25,11 @@ class NewVariantType extends AbstractType
 
                 break;
             case 2:
-                $builder->add('weight', 'text');
-                $builder->add('length', 'text');
-                $builder->add('width', 'text');
-                $builder->add('height', 'text');
+                $builder->add('features', 'collection', array(
+                    'type' => new ProductFeatureType($options['departmentId']),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
 
                 break;
             case 3:
@@ -40,15 +41,14 @@ class NewVariantType extends AbstractType
 
                 break;
             case 4:
-                $builder->add('features', 'collection', array(
-                    'type' => new ProductFeatureType($options['departmentId']),
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                ));
+                $builder->add('images', 'hidden');
 
                 break;
             case 5:
-                $builder->add('images', 'hidden');
+                $builder->add('weight', 'text');
+                $builder->add('length', 'text');
+                $builder->add('width', 'text');
+                $builder->add('height', 'text');
 
                 break;
         }
