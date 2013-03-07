@@ -1,0 +1,302 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block scripts %}
+    {{ parent() }}
+    {% javascripts
+    '@KACSiteBundle/Resources/public/plugins/ui/js/ui.js'
+    output='js/components-compressed.js'
+    filter='yui_js'
+    %}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block body %}
+    <header>
+        <h1>Grids &amp; Portlets</h1>
+    </header>
+    <section>
+        <h2>Grids</h2>
+        <p>The grid system is percentage-based, so can be used in any container. This allows for very flexible
+            layouts that can easily be nested.</p>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 1</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            {% for i in 0..1 %}
+                <div class="widget widget-1-of-2">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>1 of 2</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="widget-group clearfix">
+            {% for i in 0..2 %}
+                <div class="widget widget-1-of-3">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>1 of 3</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="widget-group clearfix">
+            {% for i in 0..3 %}
+                <div class="widget widget-1-of-4">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>1 of 4</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="widget-group clearfix">
+            {% for i in 0..4 %}
+                <div class="widget widget-1-of-5">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>1 of 5</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="widget-group clearfix">
+            {% for i in 0..5 %}
+                <div class="widget widget-1-of-6">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>1 of 6</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est.</p>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="widget-group clearfix">
+            {% for i in 0..6 %}
+                <div class="widget widget-1-of-7">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>1 of 7</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim.</p>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="widget-group clearfix">
+            {% for i in 0..7 %}
+                <div class="widget widget-1-of-8">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>1 of 8</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt.</p>
+                        </section>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <p>You can mix up the grids with any number of different combinations that fit.</p>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-4">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 4</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-8">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 8</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-5-of-8">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>5 of 8</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-2-of-7">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>2 of 7</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-5-of-7">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>5 of 7</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-2">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 2</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-3">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 3</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-6">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 6</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <h2>Portlets</h2>
+        <p>Each widget in the grid system can make use of the portlet, which is basically a container with a header
+            . The widgets in a group can have a mixture of widgets where some make use of the portlet setup and
+            some that don't.</p>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-4">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 4</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-5-of-8">
+                <div class="ui-widget mbl">
+                    <section class="ui-widget-content ui-corner-all">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-8">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>1 of 8</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-2-of-7">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>2 of 7</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-5-of-7">
+                <div class="ui-widget mbl">
+                    <section class="ui-widget-content ui-corner-all">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-2">
+                <div class="ui-widget mbl">
+                    <section class="ui-widget-content ui-corner-all">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nunc odio, euismod luctus suscipit nec, suscipit at lacus. Curabitur eu tempus libero. Vivamus sagittis ligula ut mauris viverra et bibendum odio tristique. Suspendisse malesuada ultrices egestas.</p>
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-3">
+                <div class="ui-widget mbl">
+                    <section class="ui-widget-content ui-corner-all">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est. Suspendisse fermentum dui quis sem consequat sed sollicitudin turpis posuere.</p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-6">
+                <div class="ui-widget mbl">
+                    <section class="ui-widget-content ui-corner-all">
+                        <p class="mbn">Vestibulum mattis eros ut mauris adipiscing tincidunt. In ligula enim, egestas nec varius ultricies, rhoncus vel enim. Pellentesque turpis erat, faucibus in bibendum sit amet, pretium vel est.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

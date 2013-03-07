@@ -11,63 +11,63 @@
         {% endblock %}
         {% block stylesheets %}
 	        {% stylesheets
-	        	'@WebIlluminationShopBundle/Resources/public/css/reset.css' 
-	        	'@WebIlluminationShopBundle/Resources/public/css/grid.css' 
-	        	'@WebIlluminationShopBundle/Resources/public/css/ui.css' 
-				'@WebIlluminationShopBundle/Resources/public/css/portlet.css' 
-				'@WebIlluminationShopBundle/Resources/public/css/uniform.css' 
-				'@WebIlluminationShopBundle/Resources/public/css/slider.css' 
-				'@WebIlluminationShopBundle/Resources/public/css/form.css' 
-				'@WebIlluminationShopBundle/Resources/public/css/styles.css' 
+	        	'@KACShopBundle/Resources/public/css/reset.css'
+	        	'@KACShopBundle/Resources/public/css/grid.css'
+	        	'@KACShopBundle/Resources/public/css/ui.css'
+				'@KACShopBundle/Resources/public/css/portlet.css'
+				'@KACShopBundle/Resources/public/css/uniform.css'
+				'@KACShopBundle/Resources/public/css/slider.css'
+				'@KACShopBundle/Resources/public/css/form.css'
+				'@KACShopBundle/Resources/public/css/styles.css'
 	        	output='css/shop-compressed.css' filter='yui_css' %}
 				<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 			{% endstylesheets %}
 			<!--[if IE]>
-				{% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie.css' output='css/ie.css' filter='yui_css' %}
+				{% stylesheets '@KACShopBundle/Resources/public/css/ie.css' output='css/ie.css' filter='yui_css' %}
 					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 				{% endstylesheets %} 
 			<![endif]-->
 			<!--[if gte IE 9]>
-				{% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie9.css' output='css/ie9.css' filter='yui_css' %}
+				{% stylesheets '@KACShopBundle/Resources/public/css/ie9.css' output='css/ie9.css' filter='yui_css' %}
 					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 				{% endstylesheets %} 
 			<![endif]-->
 			<!--[if IE 8]>
-				{% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie8.css' output='css/ie8.css' filter='yui_css' %}
+				{% stylesheets '@KACShopBundle/Resources/public/css/ie8.css' output='css/ie8.css' filter='yui_css' %}
 					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 				{% endstylesheets %} 
 			<![endif]-->
 			<!--[if IE 7]>
-				{% stylesheets '@WebIlluminationShopBundle/Resources/public/css/ie7.css' output='css/ie7.css' filter='yui_css' %}
+				{% stylesheets '@KACShopBundle/Resources/public/css/ie7.css' output='css/ie7.css' filter='yui_css' %}
 					<link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 				{% endstylesheets %} 
 			<![endif]-->
 		{% endblock %}
         {% block headerscripts %}
 			<!--[if lt IE 9]>
-				{% javascripts '@WebIlluminationShopBundle/Resources/public/js/html5.js' output='js/shop-html5.js' filter='yui_js' %}
+				{% javascripts '@KACShopBundle/Resources/public/js/html5.js' output='js/shop-html5.js' filter='yui_js' %}
 					<script src="{{ asset_url }}" type="text/javascript"></script>
 				{% endjavascripts %} 
 			<![endif]-->
         	{% javascripts
-	        	'@WebIlluminationShopBundle/Resources/public/js/jquery.js' 
-	        	'@WebIlluminationShopBundle/Resources/public/js/ui.js' 
-	        	'@WebIlluminationShopBundle/Resources/public/js/tools.js' 
-	        	'@WebIlluminationShopBundle/Resources/public/js/overlay.js' 
-	        	'@WebIlluminationShopBundle/Resources/public/js/uniform.js' 
-				'@WebIlluminationShopBundle/Resources/public/js/slider.js' 
-				'@WebIlluminationShopBundle/Resources/public/js/cookies.js' 
-				'@WebIlluminationShopBundle/Resources/public/js/global.js' 
+	        	'@KACShopBundle/Resources/public/js/jquery.js'
+	        	'@KACShopBundle/Resources/public/js/ui.js'
+	        	'@KACShopBundle/Resources/public/js/tools.js'
+	        	'@KACShopBundle/Resources/public/js/overlay.js'
+	        	'@KACShopBundle/Resources/public/js/uniform.js'
+				'@KACShopBundle/Resources/public/js/slider.js'
+				'@KACShopBundle/Resources/public/js/cookies.js'
+				'@KACShopBundle/Resources/public/js/global.js'
 	        	output='js/shop-compressed.js' filter='yui_js' %}
 	        	<script src="{{ asset_url }}" type="text/javascript"></script>
 			{% endjavascripts %}
 			<!--[if lt IE 9]>
-				{% javascripts '@WebIlluminationShopBundle/Resources/public/js/selectivizr.js' output='js/shop-selectivizr.js' filter='yui_js' %}
+				{% javascripts '@KACShopBundle/Resources/public/js/selectivizr.js' output='js/shop-selectivizr.js' filter='yui_js' %}
 					<script src="{{ asset_url }}" type="text/javascript"></script>
 				{% endjavascripts %} 
 			<![endif]-->
 			<!--[if lt IE 8]>
-				{% javascripts '@WebIlluminationShopBundle/Resources/public/js/ie.js' output='js/shop-ie.js' filter='yui_js' %}
+				{% javascripts '@KACShopBundle/Resources/public/js/ie.js' output='js/shop-ie.js' filter='yui_js' %}
 					<script src="{{ asset_url }}" type="text/javascript"></script>
 				{% endjavascripts %} 
 			<![endif]-->
@@ -110,7 +110,7 @@
 		</div>
 		<div id="dialog-image-popup" title="Detailed View" class="ui-helper-hidden">
 			<div class="ac">
-				<img id="dialog-image-popup-image" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="" />
+				<img id="dialog-image-popup-image" src="{{ asset('bundles/kacshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="" />
 			</div>
 		</div>
         {% include '::shopFooter.html.twig' %}

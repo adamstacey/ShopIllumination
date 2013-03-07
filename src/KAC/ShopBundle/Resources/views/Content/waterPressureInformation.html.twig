@@ -1,0 +1,49 @@
+{% extends '::shop.html.twig' %}
+{% block title %}What is my water pressure?{% endblock %}
+{% block metatags %}
+	<meta name="description" content="We have put together an extensive video library to help you work with our products. As well as installation guides there are a number of videos that demonstrate in more detail the products and their uses and benefits.">
+	<meta name="keywords" content="kitchen appliance centre, video, products, demonstration, demo, guide, installation guide">
+{% endblock %}
+{% block slider %}
+	<div class="container_8 clearfix">
+		<header>
+			<div class="slider-gallery-container">
+				<div class="slider-gallery">
+					<div class="slider-element">
+						<img src="{{ asset('/bundles/kacshop/images/headers/water-pressure-guage.png') }}" alt="A water pressure guage" />
+						<h3 class="right">What is my water pressure?</h3>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+{% endblock %}
+{% block body %}
+	<header>
+		<h1>Water Pressure</h1>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_6"> 
+			<div class="portlet">
+				<header>
+	                <h2>What is my water pressure?</h2>
+	            </header>
+				<section>
+					<div class="clearfix">
+						<img class="fr margin-left-20 margin-bottom-20" src="{{ asset('/bundles/kacshop/images/water-pressure-diagram.png') }}" alt="Water pressure diagram" />
+						<p class="no-margin-top">The amount of water available to the tap is important when choosing which product to buy. The cold water supply is at mains pressure so is generally not of importance; the tap however will require the correct amount of hot water pressure to perform satisfactorily. Water pressure can be measured in three common units, bar, psi and Head (m). 1 bar = 10 metres Head = 14.5 psi.</p>
+						<h5>Hot Water Pressure</h5>
+						<p>Domestic hot water systems generally fall into two categories pressurised and un-pressurised. Pressurised water heaters (instantaneous gas water heaters or modern combination boilers) deliver a continuous large volume of hot water. For Combination boilers or instantaneous water heating systems the boiler output is typically around 20 psi = 1.8 bar = 18m head. This means most taps should give good flow rates with these types of system.</p>
+						<p>Un-pressurised water heating systems found in older houses generally have a cold water storage tank in the loft and a heater tank on the first floor. The vertical distance between the header tank and the tap outlet gives an approximate calculation of the available hot water pressure. In general terms most single storey houses or bungalows with un-pressurised systems do not suit "high" pressure taps such as single lever mixers for example.</p>
+						<p>For this reason abode's range includes several "low" pressure mixertaps. Alternatively a booster pump can be fitted to increase the available water pressure, allowing a wider choice of models.</p>
+						<h5>Cold Water Pressure</h5>
+						<p>Cold water pressure is rarely an issue as it is normally provided from the municipal high pressure supply.</p>
+						<p>If you live in on the higher floors of a tall building or draw your cold water from a private supply you should check the available cold water pressure. Use the stated minimum water pressure in these cases for both the hot and cold supplies.</p>
+						<p class="no-margin-bottom">The diagram shows a simplified un-pressurised system, for example if the vertical distance was 5m this would roughly equate to 0.5 bar maximum available pressure. Note: if the route the pipes take is not direct, has lots of bends or long horizontal runs the available water pressure will be reduced.</p>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	   	<div class="clear"></div>
+	</section>
+{% endblock %}

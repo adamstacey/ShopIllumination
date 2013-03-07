@@ -1,9 +1,0 @@
-services:
-    webillumination.registration.form.type:
-        class: WebIllumination\UserBundle\Form\Type\RegistrationFormType
-        arguments: [%fos_user.model.user.class%]
-        tags:
-            - { name: form.type, alias: webillumination_user_registration }
-    webillumination.user_manager.default:
-        class: WebIllumination\UserBundle\Entity\UserManager
-        arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]

@@ -1,0 +1,318 @@
+# Data
+data_google_products:
+    pattern:  /data/google-products.xml
+    defaults: { _controller: KACShopBundle:Data:googleProducts }
+    requirements:
+        _scheme:  http
+data_sitemap:
+    pattern:  /sitemap.xml
+    defaults: { _controller: KACShopBundle:Data:xmlSitemap }
+    requirements:
+        _scheme:  http
+    
+# Content
+content_cookie_policy:
+    pattern:  /cookie-policy.html
+    defaults: { _controller: KACShopBundle:Content:cookiePolicy }
+content_the_shop:
+    pattern:  /visit-the-kitchen-appliance-centre-showroom-in-nottingham.html
+    defaults: { _controller: KACShopBundle:Content:theShop }
+content_contact_us:
+    pattern:  /contact-kitchen-appliance-centre.html
+    defaults: { _controller: KACShopBundle:Content:contactUs }
+    requirements:
+        _scheme:  https
+content_contact_us_enquiry_sent:
+    pattern:  /email-enquiry-sent.html
+    defaults: { _controller: KACShopBundle:Content:contactUs }
+    requirements:
+        _scheme:  https
+content_link_to_us:
+    pattern:  /link-to-kitchen-appliance-centre.html
+    defaults: { _controller: KACShopBundle:Content:linkToUs }
+    requirements:
+        _scheme:  https
+content_how_to_find_us:
+    pattern:  /how-to-find-kitchen-appliance-centre-in-nottingham.html
+    defaults: { _controller: KACShopBundle:Content:howToFindUs }
+    requirements:
+        _scheme:  https
+content_returns:
+    pattern:  /returns-policy.html
+    defaults: { _controller: KACShopBundle:Content:returns }
+content_useful_links:
+    pattern:  /useful-links.html
+    defaults: { _controller: KACShopBundle:Content:usefulLinks }
+content_installation_guides:
+    pattern:  /installation-guides.html
+    defaults: { _controller: KACShopBundle:Content:installationGuides }
+content_water_pressure_information:
+    pattern:  /what-is-my-water-pressure.html
+    defaults: { _controller: KACShopBundle:Content:waterPressureInformation }
+content_privacy_policy:
+    pattern:  /privacy-policy.html
+    defaults: { _controller: KACShopBundle:Content:privacyPolicy }
+content_terms_and_conditions:
+    pattern:  /terms-and-conditions.html
+    defaults: { _controller: KACShopBundle:Content:termsAndConditions }
+content_delivery:
+    pattern:  /delivery.html
+    defaults: { _controller: KACShopBundle:Content:delivery }
+content_security:
+    pattern:  /security.html
+    defaults: { _controller: KACShopBundle:Content:security }
+    requirements:
+        _scheme:  https
+content_fraud_prevention:
+    pattern:  /fraud-prevention.html
+    defaults: { _controller: KACShopBundle:Content:fraudPrevention }
+content_privilege_card:
+    pattern:  /ride-direct-privilege-discount-card.html
+    defaults: { _controller: KACShopBundle:Content:privilegeCard }
+content_privilege_card_redirect:
+    pattern:  /ride-direct-privilege-card.html
+    defaults: { _controller: KACShopBundle:Content:privilegeCard }
+content_gift_vouchers:
+    pattern:  /kitchen-appliance-centre-gift-vouchers.html
+    defaults: { _controller: KACShopBundle:Content:giftVouchers }
+
+# Products
+products_test:
+    pattern:  /products/test
+    defaults: { _controller: KACShopBundle:Products:test }
+products_get_product_listing:
+    pattern:  /products/getProductListing
+    defaults: { _controller: KACShopBundle:Products:getProductListing }
+products_ajax_get_product_listing:
+    pattern:  /products/ajaxGetProductListing
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductListing }
+products_ajax_get_product_listing_count:
+    pattern:  /products/ajaxGetProductListingCount
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductListingCount }
+products_ajax_get_product_listing_pagination:
+    pattern:  /products/ajaxGetProductListingPagination
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductListingPagination }
+products_ajax_get_product_listing_brand_filter:
+    pattern:  /products/ajaxGetProductListingBrandFilter
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductListingBrandFilter }
+products_ajax_get_product_listing_department_filter:
+    pattern:  /products/ajaxGetProductListingDepartmentFilter
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductListingDepartmentFilter }
+products_ajax_get_product_listing_feature_filter:
+    pattern:  /products/ajaxGetProductListingFeatureFilter
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductListingFeatureFilter }
+products_ajax_get_product_listing_price_filter:
+    pattern:  /products/ajaxGetProductListingPriceFilter
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductListingPriceFilter }
+products_ajax_get_product_price:
+    pattern:  /products/ajaxGetProductPrice
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductPrice }
+products_ajax_get_product_search:
+    pattern:  /products/ajaxGetProductSearch
+    defaults: { _controller: KACShopBundle:Products:ajaxGetProductSearch }
+products_product_search:
+    pattern:  /products/search/{search}.html
+    defaults: { _controller: KACShopBundle:Products:productSearch }
+    requirements:
+        search: ".+"
+
+# Checkout
+checkout_secure_checkout:
+    pattern:  /secure-checkout.html
+    defaults: { _controller: KACShopBundle:Checkout:index }
+    requirements:
+        _scheme:  https
+checkout_ajax_check_email_address:
+    pattern:  /checkout/ajaxCheckEmailAddress
+    defaults: { _controller: KACShopBundle:Checkout:ajaxCheckEmailAddress }
+checkout_ajax_create_user:
+    pattern:  /checkout/ajaxCreateUser
+    defaults: { _controller: KACShopBundle:Checkout:ajaxCreateUser }
+checkout_ajax_save_order:
+    pattern:  /checkout/ajaxSaveOrder
+    defaults: { _controller: KACShopBundle:Checkout:ajaxSaveOrder }
+checkout_ajax_get_order_information:
+    pattern:  /checkout/ajaxGetOrderInformation
+    defaults: { _controller: KACShopBundle:Checkout:ajaxGetOrderInformation }
+checkout_ajax_get_delivery_options:
+    pattern:  /checkout/ajaxGetDeliveryOptions
+    defaults: { _controller: KACShopBundle:Checkout:ajaxGetDeliveryOptions }
+checkout_ajax_add_notes:
+    pattern:  /checkout/ajaxAddNotes
+    defaults: { _controller: KACShopBundle:Checkout:ajaxAddNotes }
+checkout_order_placed:
+    pattern:  /{paymentType}/order-placed.html
+    defaults: { _controller: KACShopBundle:Checkout:orderPlaced }
+    requirements:
+        _scheme:  https
+checkout_order_failed:
+    pattern:  /{paymentType}/order-failed.html
+    defaults: { _controller: KACShopBundle:Checkout:orderFailed }
+    requirements:
+        _scheme:  https
+    
+# Basket
+basket_your_basket:
+    pattern:  /your-basket.html
+    defaults: { _controller: KACShopBundle:Basket:index }
+    requirements:
+        _scheme:  https
+basket_ajax_get_basket_summary:
+    pattern:  /basket/ajaxGetBasketSummary
+    defaults: { _controller: KACShopBundle:Basket:ajaxGetBasketSummary }
+basket_ajax_get_basket_contents:
+    pattern:  /basket/ajaxGetBasketContents
+    defaults: { _controller: KACShopBundle:Basket:ajaxGetBasketContents }
+basket_ajax_get_basket_totals:
+    pattern:  /basket/ajaxGetBasketTotals
+    defaults: { _controller: KACShopBundle:Basket:ajaxGetBasketTotals }
+basket_ajax_get_membership_card_discount:
+    pattern:  /basket/ajaxGetMembershipCardDiscount
+    defaults: { _controller: KACShopBundle:Basket:ajaxGetMembershipCardDiscount }
+basket_ajax_get_basket_delivery_options:
+    pattern:  /basket/ajaxGetBasketDeliveryOptions
+    defaults: { _controller: KACShopBundle:Basket:ajaxGetBasketDeliveryOptions }
+basket_ajax_update_delivery_options:
+    pattern:  /basket/ajaxUpdateDeliveryOptions
+    defaults: { _controller: KACShopBundle:Basket:ajaxUpdateDeliveryOptions }
+basket_ajax_add_to_basket:
+    pattern:  /basket/ajaxAddToBasket
+    defaults: { _controller: KACShopBundle:Basket:ajaxAddToBasket }
+basket_ajax_update_basket_item:
+    pattern:  /basket/ajaxUpdateBasketItem
+    defaults: { _controller: KACShopBundle:Basket:ajaxUpdateBasketItem }
+basket_ajax_delete_basket_item:
+    pattern:  /basket/ajaxDeleteBasketItem
+    defaults: { _controller: KACShopBundle:Basket:ajaxDeleteBasketItem }
+basket_ajax_clear_basket:
+    pattern:  /basket/ajaxClearBasket
+    defaults: { _controller: KACShopBundle:Basket:ajaxClearBasket }
+basket_ajax_add_membership_card_to_basket:
+    pattern:  /basket/ajaxAddMembershipCardToBasket
+    defaults: { _controller: KACShopBundle:Basket:ajaxAddMembershipCardToBasket }
+basket_ajax_delete_membership_card:
+    pattern:  /basket/ajaxDeleteMembershipCard
+    defaults: { _controller: KACShopBundle:Basket:ajaxDeleteMembershipCard }
+basket_ajax_redeem_membership_card_number:
+    pattern:  /basket/ajaxRedeemMembershipCardNumber
+    defaults: { _controller: KACShopBundle:Basket:ajaxRedeemMembershipCardNumber }
+basket_ajax_redeem_voucher_code:
+    pattern:  /basket/ajaxRedeemVoucherCode
+    defaults: { _controller: KACShopBundle:Basket:ajaxRedeemVoucherCode }
+basket_ajax_make_donation:
+    pattern:  /basket/ajaxMakeDonation
+    defaults: { _controller: KACShopBundle:Basket:ajaxMakeDonation }
+basket_ajax_delete_membership_card_number:
+    pattern:  /basket/ajaxDeleteMembershipCardNumber
+    defaults: { _controller: KACShopBundle:Basket:ajaxDeleteMembershipCardNumber }
+basket_ajax_delete_voucher_code:
+    pattern:  /basket/ajaxDeleteVoucherCode
+    defaults: { _controller: KACShopBundle:Basket:ajaxDeleteVoucherCode }
+    
+# Security
+security_login:
+    pattern:  /secure-login.html
+    defaults: { _controller: KACShopBundle:Security:login }
+    requirements:
+        _scheme:  https
+security_ajax_login:
+    pattern:  /security/ajaxLogin
+    defaults: { _controller: KACShopBundle:Security:ajaxLogin }
+security_ajax_forgotten_your_password:
+    pattern:  /security/ajaxForgottenYourPassword
+    defaults: { _controller: KACShopBundle:Security:ajaxForgottenYourPassword }
+security_reset_password:
+    pattern:  /security/resetPassword/{userKey}
+    defaults: { _controller: KACShopBundle:Security:resetPassword }
+    requirements:
+        _scheme:  https
+security_logout:
+    pattern:  /securely-logout.html
+    defaults: { _controller: KACShopBundle:Security:logout }
+    requirements:
+        _scheme:  https
+
+# Users
+users_register:
+    pattern:  /register.html
+    defaults: { _controller: KACShopBundle:Users:register }
+    requirements:
+        _scheme:  https
+users_ajax_check_email_address:
+    pattern:  /users/ajaxCheckEmailAddress
+    defaults: { _controller: KACShopBundle:Users:ajaxCheckEmailAddress }
+users_ajax_create_user:
+    pattern:  /users/ajaxCreateUser
+    defaults: { _controller: KACShopBundle:Users:ajaxCreateUser }
+users_user:
+    pattern:  /my-account.html
+    defaults: { _controller: KACShopBundle:Users:user }
+    requirements:
+        _scheme:  https
+users_ajax_save_user:
+    pattern:  /users/ajaxSaveUser
+    defaults: { _controller: KACShopBundle:Users:ajaxSaveUser }
+users_ajax_save_contact_addresses:
+    pattern:  /users/ajaxSaveContactAddresses
+    defaults: { _controller: KACShopBundle:Users:ajaxSaveContactAddresses }
+
+# System
+homepage:
+    pattern:  /
+    defaults: { _controller: KACShopBundle:System:index }
+    requirements:
+        _scheme:  http
+shop_homepage:
+    pattern:  /
+    defaults: { _controller: KACShopBundle:System:index }
+    requirements:
+        _scheme:  http
+department_with_brand_view_all:
+    pattern:  /all/brand/{brand}/{url}.html
+    defaults: { _controller: KACShopBundle:System:pageRequest, results: 99999999, page: 1 }
+    requirements:
+        url: ".+"
+        _scheme:  http
+        _format:  html
+department_with_brand:
+    pattern:  /brand/{brand}/{url}.html
+    defaults: { _controller: KACShopBundle:System:pageRequest }
+    requirements:
+        url: ".+"
+        _scheme:  http
+        _format:  html
+department_with_group_view_all:
+    pattern:  /all/group/{group}/{url}.html
+    defaults: { _controller: KACShopBundle:System:pageRequest, results: 99999999, page: 1 }
+    requirements:
+        url: ".+"
+        _scheme:  http
+        _format:  html
+department_with_group:
+    pattern:  /group/{group}/{url}.html
+    defaults: { _controller: KACShopBundle:System:pageRequest }
+    requirements:
+        url: ".+"
+        _scheme:  http
+        _format:  html
+department_view_all:
+    pattern:  /all/{url}.html
+    defaults: { _controller: KACShopBundle:System:pageRequest, results: 99999999, page: 1 }
+    requirements:
+        url: ".+"
+        _scheme:  http
+        _format:  html
+department_with_filters:
+    pattern:  /results/{results}/page/{page}/sort/{sort}/order/{order}/group/{group}/brand/{brand}/brandId/{brandId}/priceFrom/{priceFrom}/priceTo/{priceTo}/brands/{brands}/options/{options}/features/{features}/{url}.html
+    defaults: { _controller: KACShopBundle:System:pageRequest, results: 0, page: 0, sort: 0, order: 0, group: 0, brand: 0, brandId: 0, priceFrom: 0, priceTo: 0, brands: 0, options: 0, features: 0 }
+    requirements:
+        url: ".+"
+        _scheme:  http
+        _format:  html
+page_request:
+    pattern:  /{url}.html
+    defaults: { _controller: KACShopBundle:System:pageRequest }
+    requirements:
+        url: ".+"
+        _scheme:  http
+        _format:  html

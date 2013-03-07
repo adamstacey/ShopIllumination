@@ -1,0 +1,257 @@
+{% extends '::shop.html.twig' %}
+{% block title %}{{ department.pageTitle }}{% endblock %}
+{% block metatags %}
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="-1">
+	<meta name="description" content="{{ department.metaDescription }}">
+	<meta name="keywords" content="{{ department.metaKeywords }}">
+	<meta name="fragment" content="!">
+	{% if departmentListing.brandId > 0 %}
+		<link rel="canonical" href="{{ asset(path('department_with_brand_view_all', {'url': url, 'brand': departmentListing.brand}), 'nocdn') }}" />
+	{% else %}
+		<link rel="canonical" href="{{ asset(path('department_view_all', {'url': url}), 'nocdn') }}" />
+	{% endif %}
+{% endblock %}
+{% block body %}
+	<header>
+		<h1>{{ department.description.header }}</h1>
+		{% if department_path|length > 1 %}
+			<div class="breadcrumb-trail no-margin" itemprop="breadcrumb">
+				{% for path_item in department_path %}
+					<a href="{{ path_item.routing }}">{{ path_item.description.header }}</a>{% if not loop.last %}&nbsp;&nbsp;&gt;&nbsp;&nbsp;{% endif %}
+				{% endfor %}
+			</div>
+		{% endif %}
+		{% if department.description %}
+			<div class="department-description">
+				{{ department.description.description|raw }}
+			</div>
+		{% endif %}
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_4 grid-listings"> 
+			<div class="portlet">
+				<header>
+	                <h2 id="product-count">Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
+	            </header>
+				<section class="clearfix no-padding-right no-padding-bottom">
+					<div id="product-sorting">
+						<div class="fl">
+							<div class="buttonset-title fl">Sort By</div>
+							<select name="sort-order" id="sort-order">
+								<option{% if productListingSettings.sortOrder == 'listPrice:ASC' %} selected="selected"{% endif %} value="listPrice:ASC">Price: Lowest First</option>
+								<option{% if productListingSettings.sortOrder == 'listPrice:DESC' %} selected="selected"{% endif %} value="listPrice:DESC">Price: Highest First</option>
+								<option{% if productListingSettings.sortOrder == 'savings:DESC' %} selected="selected"{% endif %} value="savings:DESC">Special Offers: Biggest Savings First</option>
+								<option{% if productListingSettings.sortOrder == 'discount:DESC' %} selected="selected"{% endif %} value="discount:DESC">Special Offers: Biggest Discounts First</option>
+								<option{% if productListingSettings.sortOrder == 'product:ASC' %} selected="selected"{% endif %} value="product:ASC">Alphabetically: A-Z</option>
+								<option{% if productListingSettings.sortOrder == 'product:DESC' %} selected="selected"{% endif %} value="product:DESC">Alphabetically: Z-A</option>
+								<option{% if productListingSettings.sortOrder == 'createdAt:DESC' %} selected="selected"{% endif %} value="createdAt:DESC">Latest</option>
+							</select>
+						</div>
+                        <div class="fr">
+                        	<div class="buttonset-title fl">Per Page</div>
+	                        <select class="fl" id="results-per-page">
+								<option{% if productListingSettings.maxResults == '10' %} selected="selected"{% endif %} value="10">10</option>
+								<option{% if productListingSettings.maxResults == '20' %} selected="selected"{% endif %} value="20">20</option>
+								<option{% if productListingSettings.maxResults == '50' %} selected="selected"{% endif %} value="50">50</option>
+								<option{% if productListingSettings.maxResults == '100' %} selected="selected"{% endif %} value="100">100</option>
+								<option{% if productListingSettings.maxResults == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+							</select>
+							<input type="hidden" name="form-current-page" id="current-page" value="{{ departmentListing.page }}" />
+						</div>
+                        <div class="clear"></div>
+					</div>
+					<div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
+                        {{ pagination.render()|raw }}
+					</div>
+					<div id="products">
+                        {% for product in pagination %}
+                            <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
+                                <div class="fl">
+                                    <a href="{{ path('page_request', {'url': product.url}) }}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
+                                </div>
+                                <div>
+                                    <div>
+                                        {% if product.brand_logo != '' %}
+                                            <a href="{{ path('page_request', {'url': product.brandUrl}) }}"><img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23"></a>
+                                        {% endif %}
+                                        <h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
+                                        {% for productFeature in product.productFeatures|explode('|') %}
+                                            {% if 'COLOUR:' in productFeature|upper %}
+                                                <p class="colour">{% spaceless %}
+                                                        {% if product.url != '' %}
+                                                            <a href="{{ path('page_request', {'url': product.url}) }}">
+                                                        {% endif %}
+                                                        <strong>{{ productFeature|upper|replace({'COLOUR:': ''}) }}</strong>
+                                                        {% if product.url != '' %}
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endspaceless %}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="product-options">
+                                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                            <p class="ar product-price">
+                                                {% spaceless %}
+                                                    {% if product.hide_price == 0 %}
+                                                        {% if product.url != '' %}
+                                                            <a href="{{ path('page_request', {'url': url}) }}">
+                                                        {% endif %}
+                                                        {% if product.low_price == product.high_price %}
+                                                            <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                        {% else %}
+                                                            <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                            <em> - </em>
+                                                            <span itemprop="price">&pound;{{ product.high_price|number_format(2) }}</span>
+                                                        {% endif %}
+                                                        {% if product.url != '' %}
+                                                            </a>
+                                                        {% endif %}
+                                                        <span class="product-tax"> (inc. VAT)</span>
+                                                    {% else %}
+                                                        <a itemprop="price" href="{{ path('content_contact_us') }}">CONTACT US</a>
+                                                    {% endif %}
+                                                {% endspaceless %}
+                                            </p>
+                                        </div>
+
+                                        <a href="{{ path('page_request', {'url': product.url}) }}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
+                                        {% include 'KACShopBundle:Products:buyNow.html.twig' with {'product': product} %}
+                                        {% if (app.request.attributes.get('_route') == 'products_ajax_get_product_listing') %}
+                                            {% if not group %}
+                                                {% if product.productGroupCode %}
+                                                    <!--<a href="{{ path('department_with_group', {'group': product.productGroupId, 'url': product.url}) }}" class="fr padding-right-5 small button ui-button-blue">View Other Colours or Options for this product</a>-->
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if product.cheaperAlternativePrice is defined %}
+                                            {% if (product.cheaperAlternativePrice > 0) and (product.cheaperAlternativeUrl != '') %}
+                                                <a href="{{ path('page_request', {'url': product.cheaperAlternativeUrl}) }}" class="cheaper-alternative-listing">Cheaper Alternative <strong>&pound;{{ product.cheaperAlternativePrice|number_format(0) }}</strong></a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="product-information">
+                                        {% if (product.description) %}
+                                            {{ product.description.description|raw }}
+                                        {% endif %}
+                                    </div>
+                                    {% if '|1034|1122|69|' in product.departmentIds %}
+                                        <div class="small-floating-offer small-floating-offer-top-left">
+                                            <p class="small-floating-offer-title">40% OFF</p>
+                                            <p class="small-floating-offer-description">Stellar<br />Pans</p>
+                                        </div>
+                                    {% endif %}
+                                    {% if product.brandId == '7' %}
+                                        <div class="medium-floating-offer medium-floating-offer-bottom-left">
+                                            <p class="medium-floating-offer-title">10% OFF</p>
+                                            <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
+                                        </div>
+                                    {% endif %}
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        {% else %}
+                            <p class="no-products">Sorry, there are currently no products in this department.</p>
+                        {% endfor %}
+                        <div class="clear"></div>
+					</div>
+					<div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
+                        {{ pagination.render()|raw }}
+					</div>
+		        	<div class="clear"></div>
+				</section>
+	        </div>
+	    </div>
+		<div class="grid_2 grid-filters">
+			<div class="portlet">
+				<header>
+	                <h2 class="ac">Refine Search By</h2>
+	            </header>
+				<section class="no-padding">
+					<div id="filters">
+						<input type="hidden" name="filter-group" id="filter-group" value="{{ departmentListing.group }}" />
+						<h5 id="filter-price-header" class="no-margin no-border-top">{% spaceless %}
+							Price
+							<button data-filter="price" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="price" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+						{% endspaceless %}</h5>
+						<div id="filter-price-container">
+							<div id="filter-price-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+								<p><img src="{{ asset('bundles/kacshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+								<p>Loading Price Range&hellip;</p>
+							</div>
+							<div id="filter-price" class="filter price-range-filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+								{% if noAjax > 0 %}
+									{% render "KACShopBundle:Products:getProductListingPriceFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+								{% endif %}
+							</div>
+							<input type="hidden" name="filter-price-reset-from" id="filter-price-reset-from" value="{{ departmentListing.priceFrom }}" />
+							<input type="hidden" name="filter-price-reset-to" id="filter-price-reset-to" value="{{ departmentListing.priceTo }}" />
+						</div>
+						<h5 id="filter-department-header" class="no-margin">{% spaceless %}
+							Department
+							<button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+						{% endspaceless %}</h5>
+						<div id="filter-department-container">
+							<div id="filter-department-loading" class="loading-container no-margin{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+								<p><img src="{{ asset('bundles/kacshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+								<p>Loading Available Departments&hellip;</p>
+							</div>
+							<div id="filter-department" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+								{% if noAjax > 0 %}
+									{% render "KACShopBundle:Products:getProductListingDepartmentFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+								{% endif %}
+							</div>
+						</div>
+						{% if departmentListing.brandId > 0 %}
+							<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brandId }}" />
+						{% else %}
+							<h5 id="filter-brand-header" class="no-margin">{% spaceless %}
+								Brands
+								<button data-filter="brand" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+								<button data-filter="brand" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+							{% endspaceless %}</h5>
+							<div id="filter-brand-container">
+								<div id="filter-brand-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+									<p><img src="{{ asset('bundles/kacshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+									<p>Loading Available Brands&hellip;</p>
+								</div>
+								<div id="filter-brand" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+									{% if noAjax > 0 %}
+										{% render "KACShopBundle:Products:getProductListingBrandFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+									{% endif %}
+								</div>
+								<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brands }}" />
+							</div>
+						{% endif %}
+						<h5 id="filter-feature-header" class="no-margin">{% spaceless %}
+							Features
+							<button data-filter="feature" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
+							<button data-filter="feature" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
+						{% endspaceless %}</h5>
+						<div id="filter-feature-container">
+							<div id="filter-feature-loading" class="loading-container{% if noAjax > 0 %} ui-helper-hidden{% endif %}">
+								<p><img src="{{ asset('bundles/kacshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+								<p>Loading Available Feature&hellip;</p>
+							</div>
+							<div id="filter-feature" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
+								{% if noAjax > 0 %}
+									{% render "KACShopBundle:Products:getProductListingFeatureFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+								{% endif %}
+							</div>
+							<input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
+						</div>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	   	<div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'KACShopBundle:Departments:indexScript.js.twig' with {'noAjax': noAjax, 'url': url, 'brand': brand, 'group': group, 'departmentListing': departmentListing, 'department': department} %}
+{% endblock %}

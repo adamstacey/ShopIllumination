@@ -1,0 +1,100 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                    <h2>2. Product Links</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon icon-top icon-yellow icon-762"></span>
+                        <p>TODO.</p>
+                        <p>TODO.</p>
+                    </div>
+                    {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
+                    <fieldset class="pbm">
+                        <table class="form-table" id="link-list" data-prototype="{{ form_widget(form.links.vars.prototype) | e }}">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Link Type</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for link in form.links %}
+                                <tr>{{ form_widget(link) }}</tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% do form.links.setRendered() %}
+                    </fieldset>
+                    {{ form_rest(form) }}
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Product:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    var listUrl = "{{ path('api_products_get') }}",
+        itemUrl = "{{ path('api_products_get_product', {'id': -1}) }}";
+
+    $(document).ready(function() {
+        generateSelectBox($(".linked-product"));
+        $("#link-list").on('rowadded', function() {
+            generateSelectBox($(".linked-product"));
+        });
+    });
+
+    function generateSelectBox($el) {
+        $el.select2({
+            placeholder: "Search for a product",
+            minimumInputLength: 1,
+            quietMillis: 100,
+            ajax: {
+                url: listUrl,
+                dataType: 'json',
+                data: function (term, page) {
+                    return {
+                        q: term, // search term
+                        page: page
+                    };
+                },
+                results: function (data, page) { // parse the results into the format expected by Select2.
+                    var more = (page * 10) < data.total; // whether or not there are more results available
+
+                    // notice we return the value of more so Select2 knows if more results can be loaded
+                    return {results: data.products, more: more};
+                }
+            },
+            initSelection: function(element, callback) {
+                // the input tag has a value attribute preloaded that points to a preselected movie's id
+                // this function resolves that id attribute to an object that select2 can render
+                // using its formatResult renderer - that way the movie name is shown preselected
+                var id=$(element).val();
+                if (id!=="") {
+                    $.ajax(itemUrl.replace(/-1/, id), {
+                        dataType: "json"
+                    }).done(function(data) { callback(data); });
+                }
+            },
+            formatResult: function(product) {
+                if(product.descriptions.length > 0) {
+                    return product.descriptions[0].name;
+                }
+
+                return "";
+            },
+            formatSelection: function(product) {
+                if(product.descriptions.length > 0) {
+                    return product.descriptions[0].name;
+                }
+
+                return "";
+            }
+        })
+    }
+</script>

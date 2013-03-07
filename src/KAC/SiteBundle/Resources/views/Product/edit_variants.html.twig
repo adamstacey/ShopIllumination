@@ -1,0 +1,64 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Product Combinations | {{ product.description.pageTitle }}{% endblock %}
+
+{% block body %}
+    <div class="widget-group clearfix">
+        <div class="widget widget-2-of-7">
+            {% include 'KACSiteBundle:Product:editLeftMenu.html.twig' %}
+        </div>
+        <div class="widget widget-5-of-7">
+            <section>
+                <div class="widget-group clearfix">
+                    <div class="widget widget-1-of-1">
+                        <div class="ui-widget">
+                            <header class="ui-widget-header ui-corner-top">
+                                <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                <h2>1. Product Combinations</h2>
+                            </header>
+                            <section class="ui-widget-content ui-corner-all">
+                                <div id="variant-listing">
+                                    {% for variant in product.variants %}
+                                        <div class="variant-item">
+                                            <div class="variant-options">
+                                                {% block variant_prices %}
+                                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                                        <p class="ar product-price">
+                                                            <span itemprop="price">&pound;{{ variant.prices[0].list_price|number_format(2) }}</span>
+                                                        </p>
+                                                    </div>
+                                                {% endblock %}
+
+                                                <ul>
+                                                    {% for feature in variant.features %}
+                                                        <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
+                                                    {% endfor %}
+                                                </ul>
+
+                                                <a href="{{ path('variants_delete', {'productId': product.id, 'variantId': variant.id}) }}" class="button ui-button-red margin-bottom-5">Delete</a>
+                                                <a href="{{ path('variants_edit', {'productId': product.id, 'variantId': variant.id}) }}" class="fr button ui-button-blue margin-bottom-5">Edit</a>
+                                            </div>
+
+                                            {% block variant_description %}
+                                                <div class="variant-information">
+                                                    {% if (variant.description) %}
+                                                        {{ variant.description.description|raw }}
+                                                    {% endif %}
+                                                </div>
+                                            {% endblock %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="clearfix">
+
+                                    <a href="{{ path('variants_new', {'productId': product.id}) }}" class="button">New Variant</a>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

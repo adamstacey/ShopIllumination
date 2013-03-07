@@ -1,0 +1,7 @@
+{% for product in products %}
+	{% include 'KACShopBundle:Products:productListing.html.twig' with {'product': product} %}
+{% else %}
+	<p class="no-padding-top no-margin-top">Sorry, no products were found using the search <strong>"{{ search }}"</strong>. Please try using the menu above to find what you are looking for or try another search.</p>
+	<p class="padding-bottom-15">If you have any further problems please <a href="{{ path('content_contact_us') }}">contact us</a>.</p>
+{% endfor %}
+<div class="clear"></div>

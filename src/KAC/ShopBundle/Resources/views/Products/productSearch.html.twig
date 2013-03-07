@@ -1,0 +1,38 @@
+{% extends '::shop.html.twig' %}
+{% block title %}Search Results for {{ search }} | {{ parent() }}{% endblock %}
+{% block metatags %}
+	<meta name="fragment" content="!">
+{% endblock %}
+{% block body %}
+	<div itemscope itemtype="http://schema.org/Product">
+		<header>
+			<h1 itemprop="name" class="uppercase">Search Results for {{ search }}</h1>
+		</header>
+		<section class="container_6 clearfix" id="product-info">
+			<div class="grid_6"> 
+				<div class="portlet">
+					<header>
+						<h2>Search Results</h2>
+					</header>
+					<section class="no-padding-bottom no-padding-right">
+						<div id="product-search-results">
+							{% if noAjax > 0 %}
+								{% render "KACShopBundle:Products:getProductSearch" with {'search': search} %}
+							{% else %}
+								<div class="loading-container">
+									<p><img src="{{ asset('bundles/kacshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>
+									<p>Loading Search Results&hellip;</p>
+								</div>
+							{% endif %}
+						</div>							
+					</section>
+		        </div>
+		    </div>
+		   	<div class="clear"></div>
+		</section>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'KACShopBundle:Products:productSearchScript.js.twig' with {'search': search} %}
+{% endblock %}

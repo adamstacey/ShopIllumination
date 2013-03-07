@@ -37,7 +37,7 @@ twig:
     debug:                "%kernel.debug%"
     form:
         resources:
-            - 'WebIlluminationSiteBundle::fields.html.twig'
+            - 'KACSiteBundle::fields.html.twig'
     globals:
         social_media_twitter_username:   "%social_media.twitter.username%"
         social_media_facebook_username:  "%social_media.facebook.username%"
@@ -50,8 +50,8 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [WebIlluminationSiteBundle]
-#    bundles:        [WebIlluminationShopBundle,WebIlluminationAdminBundle]
+    bundles:        [KACSiteBundle]
+#    bundles:        [KACShopBundle,KACAdminBundle]
     filters:
         sass: ~
         compass:
@@ -132,11 +132,11 @@ nelmio_solarium:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: WebIllumination\UserBundle\Entity\User
+    user_class: KAC\UserBundle\Entity\User
     registration:
         form:
-            type: webillumination_user_registration
+            type: kac_user_registration
     service:
-        user_manager: webillumination.user_manager.default
+        user_manager: kac.user_manager.default
 
 gregwar_form: ~

@@ -1,6 +1,6 @@
 #_welcome:
 #    pattern:  /
-#    defaults: { _controller: WebIlluminationShopBundle:System:index }
+#    defaults: { _controller: KACShopBundle:System:index }
 
 _wdt:
     resource: "@WebProfilerBundle/Resources/config/routing/wdt.xml"

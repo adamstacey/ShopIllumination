@@ -1,0 +1,15 @@
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/reset.scss'
+    '@KACSiteBundle/Resources/public/css/core.scss'
+    output='css/core-compressed.css'
+    filter='compass,yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets
+    '@KACSiteBundle/Resources/public/plugins/upload/css/jquery.fileupload-ui.css'
+    output='css/plugins-compressed.css'
+    filter='yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}

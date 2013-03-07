@@ -1,0 +1,35 @@
+{# Forms #}
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Add New Product | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Add New Product</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-2-of-7">
+                {% include 'KACSiteBundle:Product:newLeftMenu.html.twig' %}
+            </div>
+            <div class="widget widget-5-of-7">
+                {% if flow.getCurrentStep() == 1 %}
+                    {% include 'KACSiteBundle:Product:new_Step1.html.twig' %}
+                {% elseif flow.getCurrentStep() == 2 %}
+                    {% include 'KACSiteBundle:Product:new_Step2.html.twig' %}
+                {% elseif flow.getCurrentStep() == 3 %}
+                    {% include 'KACSiteBundle:Product:new_Step3.html.twig' %}
+                {% elseif flow.getCurrentStep() == 4 %}
+                    {% include 'KACSiteBundle:Product:new_Step4.html.twig' %}
+                {% elseif flow.getCurrentStep() == 5 %}
+                    {% include 'KACSiteBundle:Product:new_Step5.html.twig' %}
+                {% elseif flow.getCurrentStep() == 6 %}
+                    {% include 'KACSiteBundle:Product:new_Step6.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

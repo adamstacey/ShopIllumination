@@ -4,7 +4,7 @@ jms_security_extra:
 
 security:
     encoders:
-        WebIllumination\SiteBundle\Entity\User:
+        KAC\SiteBundle\Entity\User:
             algorithm: sha512
             iterations: 100
             encode_as_base64: true
@@ -15,7 +15,7 @@ security:
 
     providers:
         admin:
-            entity: { class: WebIllumination\SiteBundle\Entity\User, property: emailAddress }
+            entity: { class: KAC\SiteBundle\Entity\User, property: emailAddress }
 
     firewalls:
         dev:

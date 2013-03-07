@@ -1,0 +1,319 @@
+{# Reset filters #}
+function resetFilters()
+{
+	$("#listing-filter input, #listing-filter textarea, #listing-filter select").val("");
+	$("#listing-filter input[type='radio'], #listing-filter input[type='checkbox']").removeAttr("checkbox");
+	$("#listing-filter div.checker span, #listing-filter div.radio span").removeClass("checked");
+	$("#listing-filter select option").removeAttr("selected");
+	$("#listing-filter select").each(function() {
+		var $selectObject = $(this);
+		$selectObject.val($("options:first", $selectObject).val());
+	});
+	$(".range-slider").each(function() {
+		var $sliderObject = $(this);
+		var $fromObject = $sliderObject.prev().find(".from-value");
+		var $toObject = $sliderObject.prev().find(".to-value");
+		$fromObject.val($sliderObject.attr("data-from"));
+		$toObject.val($sliderObject.attr("data-to"));
+		$sliderObject.slider("option", "values", [parseInt($fromObject.val()), parseInt($toObject.val())]);
+	});
+	$(".filter-section").slideUp();
+	$(".filter-scrollable").animate({scrollTop: 0}, 'slow');
+	$("#listing-current-page").val('1');
+}
+
+{# Quick search #}
+function quickSearch()
+{
+	$ignoreFilterChange = true;
+	resetFilters();
+	$quickSearch = $("#form-quick-search").val();
+	if ($quickSearch.indexOf(' ') > -1) {
+		$("#filter-name").val($quickSearch);
+	} else {
+		$("#filter-product-code").val($quickSearch);
+	}
+	$("#listing-current-page").val('1');
+	loadResults();
+}
+
+{# Show the more information #}
+function showMoreInformation($id, $moreInformation, $button)
+{
+	$(".form-error").hide();
+	$("tr#item-"+$id+" .button").removeClass("ui-button-blue");
+	if ($("#"+$moreInformation+"-"+$id).is(":hidden"))
+	{
+		$("#more-information-"+$id+" .more-information-detail").hide();
+		$("#more-information-"+$id).show();
+		$("#"+$moreInformation+"-"+$id).fadeIn();
+		$("#more-information-"+$id+" td, #item-"+$id+" td").expose({
+			color: "#042F4F",
+			loadSpeed: 2000,
+			opacity: "0.6",
+			onClose: function() {
+				$(".form-error").hide();
+				$(".more-information, .more-information-detail").fadeOut();
+				$("#more-information-"+$id).fadeOut();
+				$("#"+$id+" td").removeAttr("style");
+				$("#more-information-"+$id+" .more-information-detail").fadeOut();
+				$("tr#item-"+$id+" button").removeClass("ui-button-blue");
+			}
+		});
+		if (!$button.hasClass("ui-button-red"))
+		{
+			$button.addClass("ui-button-blue");
+		}
+	} else {
+		$.mask.close();
+		$("#more-information-"+$id).fadeOut();
+		$("#more-information-"+$id+" .more-information-detail").fadeOut();
+	}
+	$("html, body").animate({scrollTop: $button.offset().top - 50},'slow');
+}
+
+{# Load the results #}
+function loadResults()
+{
+	$("#ajax_loading").show();
+	$ignoreFilterChange = false;
+	$listingCountLoaded = false;
+	$listingLoaded = false;
+	$listingPaginationLoaded = false;
+	loadListingCount();
+	loadListing();
+	loadListingPagination();
+}
+
+{# Check all elements have been loaded #}
+function checkResultsLoaded()
+{
+	if ($listingCountLoaded && $listingLoaded && $listingPaginationLoaded)
+	{
+		$("#ajax_loading").hide();
+	}
+}
+
+{# Load listing count #}
+function loadListingCount()
+{
+	$("#listing-count").html('<img src="{{ asset('bundles/kacadmin/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /> Loading&hellip;');
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		{#url: "{{ path('admin_products_index_ajax_get_listing_count') }}",#}
+		data: {
+			status: $("#filter-status").val(),
+			availableForPurchase: $("#filter-available-for-purchase").val(),
+			hidePrice: $("#filter-hide-price").val(),
+			showPriceOutOfHours: $("#filter-show-price-out-of-hours").val(),
+			membershipCardDiscountAvailable: $("#filter-membership-card-discount-available").val(),
+			featureComparison: $("#filter-feature-comparison").val(),
+			downloadable: $("#filter-downloadable").val(),
+			specialOffer: $("#filter-special-offer").val(),
+			recommended: $("#filter-recommended").val(),
+			accessory: $("#filter-accessory").val(),
+			new: $("#filter-new").val(),
+    		productCode: $("#filter-product-code").val(),
+    		name: $("#filter-name").val(),
+    		description: $("#filter-description").val(),
+    		costPriceFrom: $("#filter-cost-price").prev().find(".from-value").val(),
+    		costPriceTo: $("#filter-cost-price").prev().find(".to-value").val(),
+    		recommendedRetailPriceFrom: $("#filter-recommended-retail-price").prev().find(".from-value").val(),
+    		recommendedRetailPriceTo: $("#filter-recommended-retail-price").prev().find(".to-value").val(),
+    		listPriceFrom: $("#lfilter-ist-price").prev().find(".from-value").val(),
+    		listPriceTo: $("#filter-list-price").prev().find(".to-value").val(),
+    		discountFrom: $("#filter-discount").prev().find(".from-value").val(),
+    		discountTo: $("#filter-discount").prev().find(".to-value").val(),
+    		brand: $("#filter-brand").val(),
+    		department: $("#filter-department").val()
+		},
+		error: function(data) {
+			$("#listing-count").html('No {{ settings.multipleItemsTitle }} Found');
+			$listingCountLoaded = true;
+			checkResultsLoaded();
+      	},
+		success: function(data) {
+			if (data.response == 'success')
+	    	{
+    			var $listingCount = parseInt(data.listingCount);
+    			if (($listingCount > 1) || ($listingCount < 1))
+    			{
+    				if ($listingCount < 1)
+        			{
+	    				$("#listing-count").html('No {{ settings.multipleItemsTitle }} Found');
+    				} else {
+        				$("#listing-count").html('Found '+$listingCount+' {{ settings.multipleItemsTitle }}');
+        			}
+        		} else {
+	    			$("#listing-count").html('Found 1 {{ settings.singleItemTitle }}');
+    			}	
+        	} else {
+	    		$("#listing-count").html('No {{ settings.multipleItemsTitle }} Found');
+    		}
+    		$listingCountLoaded = true;
+        	checkResultsLoaded();
+		}
+	});
+	
+	return false;
+}
+
+{# Load listing #}
+function loadListing()
+{
+	$.ajax({
+		type: "POST",
+		{#url: "{{ path('admin_products_index_ajax_get_listing') }}",#}
+		data: {
+			status: $("#filter-status").val(),
+			availableForPurchase: $("#filter-available-for-purchase").val(),
+			hidePrice: $("#filter-hide-price").val(),
+			showPriceOutOfHours: $("#filter-show-price-out-of-hours").val(),
+			membershipCardDiscountAvailable: $("#filter-membership-card-discount-available").val(),
+			featureComparison: $("#filter-feature-comparison").val(),
+			downloadable: $("#filter-downloadable").val(),
+			specialOffer: $("#filter-special-offer").val(),
+			recommended: $("#filter-recommended").val(),
+			accessory: $("#filter-accessory").val(),
+			new: $("#filter-new").val(),
+    		productCode: $("#filter-product-code").val(),
+    		name: $("#filter-name").val(),
+    		description: $("#filter-description").val(),
+    		costPriceFrom: $("#filter-cost-price").prev().find(".from-value").val(),
+    		costPriceTo: $("#filter-cost-price").prev().find(".to-value").val(),
+    		recommendedRetailPriceFrom: $("#filter-recommended-retail-price").prev().find(".from-value").val(),
+    		recommendedRetailPriceTo: $("#filter-recommended-retail-price").prev().find(".to-value").val(),
+    		listPriceFrom: $("#lfilter-ist-price").prev().find(".from-value").val(),
+    		listPriceTo: $("#filter-list-price").prev().find(".to-value").val(),
+    		discountFrom: $("#filter-discount").prev().find(".from-value").val(),
+    		discountTo: $("#filter-discount").prev().find(".to-value").val(),
+    		brand: $("#filter-brand").val(),
+    		department: $("#filter-department").val(),
+    		sortOrder: $("#listing-sort-order").val(),
+    		page: $("#listing-current-page").val(),
+				maxResults: $("#listing-max-results").val()
+			},
+			beforeSend: function() {
+				if ($("#listing").height() > 0)
+			{
+				$("#listing-loading").height($("#listing").height() - 12);
+			}
+			$("#listing-loading").show();
+			$("#listing").hide().html("");
+			
+			},
+		error: function(data) {
+			$("#listing").html('<p class="ac">Sorry, no results were found.</p>').fadeIn();
+			$listingLoaded = true;
+			checkResultsLoaded();
+			$("#listing-loading").hide();
+  		},
+		success: function(data) {
+			$("#listing").html(data).fadeIn();
+    		$listingLoaded = true;
+    		checkResultsLoaded();
+    		$("#listing-loading").hide();
+		}
+	});
+	
+	return false;
+}
+
+{# Load product listing pagination #}
+function loadListingPagination()
+{
+	$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+	$.ajax({
+		type: "POST",
+		{#url: "{{ path('admin_products_index_ajax_get_listing_pagination') }}",#}
+		data: {
+				status: $("#filter-status").val(),
+			availableForPurchase: $("#filter-available-for-purchase").val(),
+			hidePrice: $("#filter-hide-price").val(),
+			showPriceOutOfHours: $("#filter-show-price-out-of-hours").val(),
+			membershipCardDiscountAvailable: $("#filter-membership-card-discount-available").val(),
+			featureComparison: $("#filter-feature-comparison").val(),
+			downloadable: $("#filter-downloadable").val(),
+			specialOffer: $("#filter-special-offer").val(),
+			recommended: $("#filter-recommended").val(),
+			accessory: $("#filter-accessory").val(),
+			new: $("#filter-new").val(),
+    		productCode: $("#filter-product-code").val(),
+    		name: $("#filter-name").val(),
+    		description: $("#filter-description").val(),
+    		costPriceFrom: $("#filter-cost-price").prev().find(".from-value").val(),
+    		costPriceTo: $("#filter-cost-price").prev().find(".to-value").val(),
+    		recommendedRetailPriceFrom: $("#filter-recommended-retail-price").prev().find(".from-value").val(),
+    		recommendedRetailPriceTo: $("#filter-recommended-retail-price").prev().find(".to-value").val(),
+    		listPriceFrom: $("#lfilter-ist-price").prev().find(".from-value").val(),
+    		listPriceTo: $("#filter-list-price").prev().find(".to-value").val(),
+    		discountFrom: $("#filter-discount").prev().find(".from-value").val(),
+    		discountTo: $("#filter-discount").prev().find(".to-value").val(),
+    		brand: $("#filter-brand").val(),
+    		department: $("#filter-department").val(),
+    		page: $("#listing-current-page").val(),
+				maxResults: $("#listing-max-results").val()
+			},
+		error: function(data) {
+			$("#listing-pagination-top, #listing-pagination-bottom").hide().html("");
+			$listingPaginationLoaded = true;
+			checkResultsLoaded();
+      	},
+		success: function(data) {
+			$("#listing-pagination-top, #listing-pagination-bottom").html(data).fadeIn();
+        	$listingPaginationLoaded = true;
+        	checkResultsLoaded();
+		}
+	});
+	
+	return false;
+}
+
+{# Load notification message #}
+function loadNotificationMessage($container, $message, $type)
+{
+	$("#"+$container+" .message-text").html($message);
+	$("#"+$container).fadeIn();
+	$("html, body").animate({scrollTop: $("#"+$container).offset().top - 50},'slow');
+	$("#ajax_loading").hide();
+}
+
+{# Reset interactions #}
+function resetInteractions()
+{
+	$("#flash_messages .message").hide();
+	$(".form-error").hide();
+	$("input, select, textarea").removeClass("invalid");
+	$.mask.close();
+	$("tr.item td").removeAttr("style");
+	$("tr.item button").removeClass("ui-button-blue");
+	$(".more-information .more-information-detail, .more-information").fadeOut();
+	$("#ajax_loading").hide();
+}
+
+{# Initialise Uniform for form items presented via AJAX #}
+function initialiseUniform($objectId)
+{
+	$("#"+$objectId+" :checkbox:not(.no-uniform), #"+$objectId+" :radio:not(.no-uniform), #"+$objectId+" select:not(.no-uniform), #"+$objectId+" :file:not(.no-uniform)").uniform();
+	$("#"+$objectId+" .button").each(function () {
+        $(this).button({
+        	icons: {
+            	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+            }, 
+           	text: $(this).attr('data-icon-only') === 'true'?false:true
+    	});
+    	var $dataNotification = $(this).attr("data-notification");
+    	if (($(this).attr("data-notification") != "") && ($(this).attr("data-notification") != undefined))
+    	{
+    		$(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
+    	}
+    });
+    $("#"+$objectId+" .selector, #"+$objectId+" .uploader").addClass("full");
+    $("#"+$objectId+" .message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>').find('.message-close').click(function () {
+    	$(this).parent().fadeOut();
+    });
+    
+    return false;
+}

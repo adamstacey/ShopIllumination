@@ -1,0 +1,75 @@
+services:
+  # Twig Extensions
+  kac_site.twig.currency_extension:
+    class: KAC\SiteBundle\Twig\CurrencyExtension
+    tags:
+      - { name: twig.extension }
+
+  # Managers
+  kac_site.manager.product:
+    class: KAC\SiteBundle\Manager\ProductManager
+    arguments: [@doctrine, @kac_site.manager.seo]
+  kac_site.manager.image:
+    class: KAC\SiteBundle\Manager\ImageManager
+    arguments: [@doctrine]
+  kac_site.manager.seo:
+    class: KAC\SiteBundle\Manager\SeoManager
+    arguments: [@doctrine]
+
+  # Indexers
+  kac_site.indexer.product:
+    class: KAC\SiteBundle\Indexer\ProductIndexer
+    arguments: [@solarium.client.product, @doctrine]
+
+  # Listeners
+  kac_site.listener.product:
+      class: KAC\SiteBundle\EventListener\ProductListener
+      arguments: [@kac_site.manager.product, @kac_site.indexer.product]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+  kac_site.listener.variant:
+      class: KAC\SiteBundle\EventListener\VariantListener
+      arguments: [@kac_site.manager.product, @kac_site.indexer.product]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+  kac_site.listener.image:
+      class: KAC\SiteBundle\EventListener\ImageListener
+      arguments: [@kac_site.manager.image]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: preRemove, method: preRemove}
+          - { name: doctrine.event_listener, event: postRemove, method: preRemove}
+
+  # Form Services
+  kac_site.form.new_product:
+    class: KAC\SiteBundle\Form\NewProductType
+    tags:
+      - { name: form.type, alias: site_new_product }
+
+  kac_site.form.flow.new_product:
+    class: KAC\SiteBundle\Form\NewProductFlow
+    parent: craue.form.flow
+    scope: request
+    calls:
+      - [ setFormType, [@kac_site.form.new_product]]
+  kac_site.form.new_variant:
+    class: KAC\SiteBundle\Form\NewVariantType
+    tags:
+      - { name: form.type, alias: site_new_variant }
+  kac_site.form.flow.new_variant:
+    class: KAC\SiteBundle\Form\NewVariantFlow
+    parent: craue.form.flow
+    scope: request
+    calls:
+      - [ setFormType, [@kac_site.form.new_variant]]

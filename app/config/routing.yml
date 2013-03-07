@@ -1,17 +1,17 @@
 _welcome:
     pattern:  /
-    defaults: { _controller: WebIlluminationSiteBundle:Content:index }
+    defaults: { _controller: KACSiteBundle:Content:index }
 
-#WebIlluminationShopBundle:
-#    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
+#KACShopBundle:
+#    resource: "@KACShopBundle/Resources/config/routing.yml"
 #    prefix:   /
 #
-#WebIlluminationAdminBundle:
-#    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
+#KACAdminBundle:
+#    resource: "@KACAdminBundle/Resources/config/routing.yml"
 #    prefix:   /
 
-web_illumination_shop:
-    resource: "@WebIlluminationSiteBundle/Controller/"
+kac_shop:
+    resource: "@KACSiteBundle/Controller/"
     type:     annotation
     prefix:   /
 

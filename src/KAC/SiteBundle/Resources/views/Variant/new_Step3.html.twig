@@ -1,0 +1,38 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge ({'productId': product.id, }) | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-700"></span>
+                    <h2>3. Prices</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom">
+                    {% include 'KACSiteBundle:Variant:newErrors.html.twig' %}
+
+                    <fieldset class="pbm">
+                        <table class="data-table" id="price-list" data-prototype="{{ form_widget(form.prices.vars.prototype) | e }}">
+                            <thead>
+                                <tr>
+                                    <th>RRP</th>
+                                    <th>List Price</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for row in form.prices %}
+                                <tr>
+                                    {{ form_widget(row) }}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </fieldset>
+
+                    {{ form_rest(form) }}
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Variant:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>

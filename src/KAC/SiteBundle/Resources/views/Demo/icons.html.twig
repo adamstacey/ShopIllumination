@@ -1,0 +1,289 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block body %}
+    <header>
+        <h1>Icons</h1>
+    </header>
+    <section>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Black Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        <p>All icons are controlled by colour class and number. Hover over any icon to get the class name you will need in order to use the icon.</p>
+                        {% for i in 1..1400 %}
+                            <span title="ui-icon icon-black icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-black icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Black Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-black" title="icon-black icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Grey Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-grey icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-grey icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Grey Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-grey" title="icon-grey icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>White Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom gradient-black clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-white icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-white icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>White Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button button-black icon-white" title="icon-white icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Dark Red Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-dark-red icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-dark-red icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Dark Red Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-dark-red" title="icon-dark-red icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Red Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-red icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-red icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Red Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-red" title="icon-red icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Orange Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-orange icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-orange icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Orange Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-orange" title="icon-orange icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Yellow Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-yellow icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-yellow icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Yellow Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-yellow" title="icon-yellow icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Green Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-green icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-green icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Green Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-green" title="icon-green icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Turquoise Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-turquoise icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-turquoise icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Turquoise Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-turquoise" title="icon-turquoise icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Blue Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..30 %}
+                            <span title="icon-blue icon-{{ i }}" class="fl ui-button-icon-primary ui-icon icon-blue icon-{{ i }}"></span>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Blue Button Icons</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        {% for i in 1..23 %}
+                            <button class="button icon-blue" title="icon-blue icon-{{ i }}" data-icon-primary="icon-{{ i }}" data-icon-only="true"></button>
+                        {% endfor %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

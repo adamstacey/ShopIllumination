@@ -1,0 +1,57 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                    <h2>2. Build Combinations</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon icon-top icon-yellow icon-762"></span>
+                        <p>Here you need to select the features that will be used to build the product combinations that make up the product you are adding.</p>
+                        <p>This is NOT where you are setting the product features and in most cases will simply be what features are different across the combinations.</p>
+                    </div>
+                    {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
+                    <fieldset class="pbm">
+                        <table class="form-table" id="feature-list" data-prototype="{{ form_widget(form.features.vars.prototype) | e }}">
+                            <thead>
+                                <tr>
+                                    <th>Group</th>
+                                    <th>Feature</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for feature in form.features %}
+                                    <tr>{{ form_widget(feature) }}</tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% do form.features.setRendered() %}
+                    </fieldset>
+                    {{ form_rest(form) }}
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Product:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('change', '.feature-group', function() {
+            var $featureGroupId = $(this).val();
+            var $selectObject = $(this).closest("tr").find(".feature");
+            $selectObject.prev("span").html("Loading Features...");
+            $.getJSON('{{ path('api_features', {'featureGroupId': '-1'}) }}'.replace(/-1/, $featureGroupId), function(data) {
+                $selectObject.val([]).empty();
+                for (var $feature = 0; $feature < data.features.length; $feature++) {
+                    var $option = $('<option/>', { value: data.features[$feature]['id'] }).text(data.features[$feature]['name']).prop('selected', $feature == 0);
+                    $option.appendTo($selectObject);
+                }
+                $.uniform.update($selectObject);
+            });
+        });
+    })
+</script>

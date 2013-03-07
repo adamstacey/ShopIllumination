@@ -1,0 +1,9 @@
+services:
+    kac.registration.form.type:
+        class: KAC\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: kac_user_registration }
+    kac.user_manager.default:
+        class: KAC\UserBundle\Entity\UserManager
+        arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @fos_user.entity_manager, %fos_user.model.user.class%]

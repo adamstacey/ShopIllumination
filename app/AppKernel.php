@@ -34,11 +34,11 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new Gregwar\FormBundle\GregwarFormBundle(),
-//            new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
-            new WebIllumination\ShopBundle\WebIlluminationShopBundle(),
-            new WebIllumination\SiteBundle\WebIlluminationSiteBundle(),
-            new WebIllumination\AdminBundle\WebIlluminationAdminBundle(),
-            new WebIllumination\UserBundle\WebIlluminationUserBundle(),
+//            new KAC\AdminBundle\KACAdminBundle(),
+            new KAC\ShopBundle\KACShopBundle(),
+            new KAC\SiteBundle\KACSiteBundle(),
+            new KAC\AdminBundle\KACAdminBundle(),
+            new KAC\UserBundle\KACUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
