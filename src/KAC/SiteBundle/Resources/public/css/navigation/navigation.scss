@@ -12,7 +12,7 @@ a:focus {
 }
 
 .top-menu {
-  border-top: 5px solid $primaryColour;
+  border-top: 3px solid $primaryColour;
   @include verticalGradientWhiteToGreyLight;
 }
 
@@ -44,19 +44,47 @@ nav.left-menu ul li {
 
     position: relative;
 
-    box-sizing: border-box;
+    @include borderBox;
     list-style: none;
-    border: 1px solid #c5d2d6;
-    border-radius: 4px;
+    border: 1px solid $colourGreyLight;
+    @include equalBorderRadius($radiusSize);
     overflow: hidden;
 }
 
-nav.left-menu ul li.turquoise {
-    border: 1px solid #007398;
+nav.left-menu ul li.black {
+    border: 1px solid $colourBlack;
+}
+
+nav.left-menu ul li.grey {
+    border: 1px solid $colourGrey;
+}
+
+nav.left-menu ul li.red {
+    border: 1px solid $colourRed;
+}
+
+nav.left-menu ul li.dark-red {
+    border: 1px solid $colourDarkRed;
+}
+
+nav.left-menu ul li.orange {
+    border: 1px solid $colourOrange;
+}
+
+nav.left-menu ul li.yellow {
+    border: 1px solid $colourYellow;
 }
 
 nav.left-menu ul li.green {
-    border: 1px solid #137f13;
+    border: 1px solid $colourGreen;
+}
+
+nav.left-menu ul li.turquoise {
+    border: 1px solid $colourTurquoise;
+}
+
+nav.left-menu ul li.blue {
+    border: 1px solid $colourBlue;
 }
 
 nav.left-menu ul li .nav-icon {
@@ -69,23 +97,115 @@ nav.left-menu .button {
     margin: 0;
     width: 100%;
 
-    box-shadow: none;
+    @include noBoxShadow;
     border: 0 none;
-    border-radius: 0;
-    border-left: 2px solid #c5d2d6;
-    box-sizing: border-box;
+    @include equalBorderRadius(0);
+    border-left: 2px solid $colourGreyLight;
+    @include borderBox;
 }
 
-nav.left-menu li.turquoise .button {
-    border-left: 2px solid #007398;
+nav.left-menu li.black .button {
+    border-left: 2px solid $colourBlack;
+}
+
+nav.left-menu li.grey .button {
+    border-left: 2px solid $colourGrey;
+}
+
+nav.left-menu li.red .button {
+    border-left: 2px solid $colourRed;
+}
+
+nav.left-menu li.dark-red .button {
+    border-left: 2px solid $colourDarkRed;
+}
+
+nav.left-menu li.orange .button {
+    border-left: 2px solid $colourOrange;
+}
+
+nav.left-menu li.yellow .button {
+    border-left: 2px solid $colourYellow;
 }
 
 nav.left-menu li.green .button {
-    border-left: 2px solid #137f13;
+    border-left: 2px solid $colourGreen;
+}
+
+nav.left-menu li.turquoise .button {
+    border-left: 2px solid $colourTurquoise;
+}
+
+nav.left-menu li.blue .button {
+    border-left: 2px solid $colourBlue;
 }
 
 nav.left-menu .button .ui-button-icon-secondary {
     position: absolute;
     top: 3px;
     right: 5px;
+}
+
+.main-menu {
+    height: 40px;
+    @include highlightedVerticalGradientTurquoise;
+}
+
+.main-menu nav {
+    position: relative;
+}
+
+.main-menu nav ul {
+    margin: 0;
+    padding: 0;
+
+    border-left: 1px solid $colourTurquoiseLight;
+}
+
+.main-menu nav ul li {
+    margin: 0;
+    padding: 0;
+
+    float: left;
+
+    list-style: none;
+}
+
+.main-menu nav > ul > li > a {
+    padding: 0 7px;
+    height: 40px;
+
+    display: table-cell;
+
+    @include textShadow($colourGreyDark, 0, 1px, 0, 1);
+    text-align: center;
+    font-weight: normal;
+    text-decoration: none;
+    @include fontSize($fontSizeMedium);
+    color: $colourWhite;
+    vertical-align: middle;
+    border-right: 1px solid $colourTurquoiseLight;
+    line-height: 16px;
+}
+
+.main-menu nav > ul > li > a:hover {
+    @include boxInsetShadow($colourGreyDark, 0, -5px, 20px, 0, 1);
+}
+
+.main-menu nav > ul > li > a.highlighted {
+    color: $colourYellow;
+}
+
+.main-menu nav > .button {
+    position: absolute;
+    bottom: 0;
+    right: 1px;
+    border: 0 none;
+
+    @include borderRadius($radiusSize, $radiusSize, 0, 0);
+    @include boxShadow($colourGreyDark, 0, -2px, 5px, 0, 1);
+}
+
+.main-menu nav > .button .ui-button-text {
+    line-height: 26px;
 }
