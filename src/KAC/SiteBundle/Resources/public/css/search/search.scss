@@ -1,6 +1,6 @@
 .search-container {
     padding: 0;
-    margin: 20px 0 0 50px;
+    margin: 12px 0 0 50px;
     width: 350px;
 
     float: left;
@@ -9,6 +9,11 @@
     @include equalBorderRadius($radiusSize);
     @include boxGlow($colourBlack, 5px, 0, 0.7);
     @include verticalGradientGreyExtraLightToWhite;
+}
+
+.search-container:hover,
+.search-container:focus {
+    @include boxGlow($colourYellow, 10px, 5px, 1);
 }
 
 .search-container .icon-grey {
@@ -25,7 +30,7 @@
     width: 100%;
 
     @include borderBox;
-    @include fontSize($fontSizeLarge);
+    @include fontSize(13);
     background: none;
     border: 0 none;
     @include noBoxShadow;
@@ -44,11 +49,12 @@
 .search-container .button,
 .search-container .button:hover {
     position: absolute;
-    top: -1px;
-    right: -1px;
+    top: 0;
+    right: -2px;
 
     @include borderRadius(0, $radiusSize, $radiusSize, 0);
-    border-left-width: 3px;
+    border: 0 none;
+    border-left: 2px solid $colourTurquoise;
     @include noBoxShadow;
 }
 
