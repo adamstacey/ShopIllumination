@@ -1,0 +1,10 @@
+<div class="main-menu">
+    <nav class="container clearfix">
+        <a class="ui-button button button-turquoise uppercase" href="#">Brands</a>
+        <ul class="clearfix">
+            {% for department in departments %}
+                <li class=""><a{% if loop.last %} class="highlighted"{% endif %} href="#">{{ department.menuTitle|raw }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
