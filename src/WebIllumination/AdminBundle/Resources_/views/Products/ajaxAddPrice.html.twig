@@ -1,0 +1,68 @@
+<li class="price-container" data-index="{{ id }}" id="price-{{ id }}">
+	<table width="100%">
+		<tbody>
+			<tr>
+				<td width="9" rowspan="4">
+					<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+				</td>
+				<td width="1" rowspan="4" class="select delete">
+					<input data-index="{{ id }}" type="checkbox" class="price-select" id="form-price-select-{{ id }}" value="1" />
+				</td>
+				<td class="ac no-padding-bottom"><label for="form-price-cost-price-{{ id }}">Cost (inc. VAT)</label></td>
+				<td class="ac no-padding-bottom"><label for="form-price-recommended-retail-price-{{ id }}">RRP (inc. VAT)</label></td>
+				<td class="ac no-padding-bottom"><label for="form-price-markup-percentage-{{ id }}">Markup (%)</label></td>
+				<td class="ac no-padding-bottom"><label for="form-price-list-price-{{ id }}">Price (inc. VAT)</label></td>
+				<td class="ac no-padding-bottom"><label for="form-price-profit-{{ id }}">Profit (inc. VAT)</label></td>
+				<td width="1" rowspan="4">
+					<input type="hidden" class="price-supplier-id" id="form-price-supplier-id-{{ id }}" value="0" />
+					<input type="hidden" class="price-currency-code" id="form-price-currency-code-{{ id }}" value="GBP" />
+					<input type="hidden" class="price-display-order" id="form-price-display-order-{{ id }}" value="{{ id }}" />
+					<input type="hidden" data-index="{{ id }}" class="price-requires-update" id="form-price-requires-update-{{ id }}" value="0" />
+					<input type="hidden" data-index="{{ id }}" class="price-id" id="form-price-id-{{ id }}" value="0" />
+					<button data-index="{{ id }}" class="button ui-button-red action-confirm-delete-price" data-icon-primary="ui-icon-closethick">Delete</button>
+				</td>
+			</tr>
+			<tr>									
+				<td class="ac no-padding-bottom no-padding-top">
+					<input data-index="{{ id }}" type="text" required="required" data-message="Please enter a cost price." class="ac price-cost-price full" id="form-price-cost-price-{{ id }}" placeholder="Cost (inc. VAT)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-bottom no-padding-top">
+					<input data-index="{{ id }}" type="text" required="required" data-message="Please enter a recommended retail price." class="ac price-recommended-retail-price full" id="form-price-recommended-retail-price-{{ id }}" placeholder="RRP (inc. VAT)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-bottom no-padding-top">
+					<input data-index="{{ id }}" type="text" class="ac price-markup-percentage full ui-state-error" id="form-price-markup-percentage-{{ id }}" placeholder="Markup (%)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-bottom no-padding-top">
+					<input data-index="{{ id }}" type="text" required="required" data-message="Please enter a list price." class="ac price-list-price full" id="form-price-list-price-{{ id }}" placeholder="Price (inc. VAT)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-bottom no-padding-top">
+					<input data-index="{{ id }}" type="text" class="ac price-profit full" id="form-price-profit-{{ id }}" placeholder="Profit (inc. VAT)" value="0.0000" />
+				</td>
+			</tr>
+			<tr>
+				<td class="ac no-padding-bottom no-padding-top"><label for="form-price-cost-price-excluding-vat-{{ id }}">Cost (ex. VAT)</label></td>
+				<td class="ac no-padding-bottom no-padding-top"><label for="form-price-recommended-retail-price-excluding-vat-{{ id }}">RRP (ex. VAT)</label></td>
+				<td class="ac no-padding-bottom no-padding-top"><label for="form-price-profit-percentage-{{ id }}">Profit (%)</label></td>
+				<td class="ac no-padding-bottom no-padding-top"><label for="form-price-list-price-excluding-vat-{{ id }}">Price (ex. VAT)</label></td>
+				<td class="ac no-padding-bottom no-padding-top"><label for="form-price-profit-excluding-vat-{{ id }}">Profit (ex. VAT)</label></td>
+			</tr>
+			<tr>									
+				<td class="ac no-padding-top">
+					<input data-index="{{ id }}" type="text" class="ac price-cost-price-excluding-vat full" id="form-price-cost-price-excluding-vat-{{ id }}" placeholder="Cost (ex. VAT)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-top">
+					<input data-index="{{ id }}" type="text" class="ac price-recommended-retail-price-excluding-vat full" id="form-price-recommended-retail-price-excluding-vat-{{ id }}" placeholder="RRP (ex. VAT)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-top">
+					<input data-index="{{ id }}" type="text" class="ac price-profit-percentage full ui-state-error" id="form-price-profit-percentage-{{ id }}" placeholder="Profit (%)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-top">
+					<input data-index="{{ id }}" type="text" class="ac price-list-price-excluding-vat full" id="form-price-list-price-excluding-vat-{{ id }}" placeholder="Price (ex. VAT)" value="0.0000" />
+				</td>
+				<td class="ac no-padding-top">
+					<input data-index="{{ id }}" type="text" class="ac price-profit-excluding-vat full" id="form-price-profit-excluding-vat-{{ id }}" placeholder="Profit (ex. VAT)" value="0.0000" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</li>

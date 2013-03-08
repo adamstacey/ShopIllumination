@@ -1,0 +1,134 @@
+<li class="contact-container" data-index="{{ index }}" id="contact-{{ index }}">
+	<div>
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td rowspan="2" width="9">
+						<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+					</td>
+					<td rowspan="2" width="1" class="delete">
+						<input data-index="{{ index }}" type="checkbox" class="contact-select" id="form-contact-select-{{ index }}" value="1" />
+					</td>
+					<td colspan="2" class="no-padding-bottom">
+			        	<input type="text" class="contact-display-name strong full" placeholder="Nickname" id="form-contact-display-name-{{ index }}" value="{% if data.displayName is defined %}{{ data.displayName }}{% endif %}" />
+					</td>
+					<td colspan="2" class="no-padding-bottom">
+			        	<input data-index="{{ index }}" type="text" class="contact-organisation-name full" placeholder="Company" id="form-contact-organisation-name-{{ index }}" value="{% if data.organisationName is defined %}{{ data.organisationName }}{% endif %}" />
+					</td>
+					<td rowspan="2" width="1">
+						<input type="hidden" class="contact-display-order" id="form-contact-display-order-{{ index }}" value="{{ index }}" />
+						<input type="hidden" data-index="{{ index }}" class="contact-requires-update" id="form-contact-requires-update-{{ index }}" value="0" />
+						<input type="hidden" data-index="{{ index }}" class="contact-id" id="form-contact-id-{{ index }}" value="{% if data.id is defined %}{{ data.id }}{% else %}0{% endif %}" />
+						<button data-index="{{ index }}" class="button ui-button-red action-confirm-delete-contact" data-icon-primary="ui-icon-closethick">Delete</button>
+					</td>
+				</tr>
+				<tr>
+					<td width="80" class="no-padding-top">
+						<select autocomplete="off" class="contact-contact-title-id full" id="form-contact-contact-title-id-{{ index }}">
+			        		<option value="0">No Title</option>
+			        		{% for contactTitle in contactTitles %}
+		                		<option value="{{ contactTitle.id }}"{% if data.contactTitleId is defined %}{% if contactTitle.id == data.contactTitleId %} selected="selected"{% endif %}{% endif %}>{{ contactTitle.contactTitle|raw }}</option>
+		            		{% endfor %}
+			        	</select>
+					</td>
+					<td width="120" class="no-padding-top">
+			        	<input data-index="{{ index }}" type="text" class="contact-first-name full" placeholder="First Name" id="form-contact-first-name-{{ index }}" value="{% if data.firstName is defined %}{{ data.firstName }}{% endif %}" />
+					</td>
+					<td class="no-padding-top">
+			        	<input type="text" class="contact-middle-name full" placeholder="Middle Names" id="form-contact-middle-name-{{ index }}" value="{% if data.middleName is defined %}{{ data.middleName }}{% endif %}" />
+					</td>
+					<td width="120" class="no-padding-top">
+			        	<input data-index="{{ index }}" type="text" class="contact-last-name full" placeholder="Last Name" id="form-contact-last-name-{{ index }}" value="{% if data.lastName is defined %}{{ data.lastName }}{% endif %}" />
+					</td>
+				</tr>
+				<tr>
+					<td class="no-padding-top" colspan="2">&nbsp;</td>
+					<td class="no-padding-top" colspan="5">
+						<div class="accordion clearfix">
+							<header><a href="#">Contact Numbers</a></header>
+					        <section>
+					        	<div class="contact-numbers clearfix">
+					        		{% if data.id is defined %}
+										<div id="contact-number-loading-error-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-widget message margin-bottom-5 ui-helper-hidden">
+										    <div class="ui-state-error no-margin-top ui-corner-all">
+										    	<span class="ui-icon ui-icon-alert"></span>
+										        <p class="no-margin"><strong>ERROR:</strong> Sorry, there was a problem loading the contact numbers.</p>
+										    </div>
+										</div>
+										<div class="contact-numbers-loading" data-contact-id="{% if data.id is defined %}{{ data.id }}{% endif %}" id="ajax-contact-numbers-loading-{% if data.id is defined %}{{ data.id }}{% else %}{{ index}}{% endif %}" class="ac">
+											<p class="ac">Loading contact numbers, please wait&hellip;</p>
+											<p class="ac"><img class="inline" alt="Loading" width="16" height="16" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-loader-eeeeee.gif') }}" /></p>
+										</div>
+										<div id="ajax-contact-numbers-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-helper-hidden"></div>
+									{% else %}
+										<p class="ac">You need to save this contact before you can start adding contact numbers. Please click the "Update" button below to save the contact first.</p>
+									{% endif %}
+								</div>
+					        </section>
+					        <header><a href="#">Addresses</a></header>
+					        <section>
+					            <div class="contact-addresses clearfix">
+					            	{% if data.id is defined %}
+										<div id="contact-address-loading-error-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-widget message margin-bottom-5 ui-helper-hidden">
+										    <div class="ui-state-error no-margin-top ui-corner-all">
+										    	<span class="ui-icon ui-icon-alert"></span>
+										        <p class="no-margin"><strong>ERROR:</strong> Sorry, there was a problem loading the contact addresses.</p>
+										    </div>
+										</div>
+										<div class="contact-addresses-loading" data-contact-id="{% if data.id is defined %}{{ data.id }}{% endif %}" id="ajax-contact-addresses-loading-{% if data.id is defined %}{{ data.id }}{% else %}{{ index}}{% endif %}" class="ac">
+											<p class="ac">Loading contact addresses, please wait&hellip;</p>
+											<p class="ac"><img class="inline" alt="Loading" width="16" height="16" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-loader-eeeeee.gif') }}" /></p>
+										</div>
+										<div id="ajax-contact-addresses-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-helper-hidden"></div>
+									{% else %}
+										<p class="ac">You need to save this contact before you can start adding contact numbers. Please click the "Update" button below to save the contact first.</p>
+									{% endif %}
+								</div>
+					        </section>
+					        <header><a href="#">Email Addresses</a></header>
+					        <section>
+					            <div class="contact-email-addresses clearfix">
+					            	{% if data.id is defined %}
+										<div id="contact-email-address-loading-error-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-widget message margin-bottom-5 ui-helper-hidden">
+										    <div class="ui-state-error no-margin-top ui-corner-all">
+										    	<span class="ui-icon ui-icon-alert"></span>
+										        <p class="no-margin"><strong>ERROR:</strong> Sorry, there was a problem loading the contact email-addresses.</p>
+										    </div>
+										</div>
+										<div class="contact-email-addresses-loading" data-contact-id="{% if data.id is defined %}{{ data.id }}{% endif %}" id="ajax-contact-email-addresses-loading-{% if data.id is defined %}{{ data.id }}{% else %}{{ index}}{% endif %}" class="ac">
+											<p class="ac">Loading contact email-addresses, please wait&hellip;</p>
+											<p class="ac"><img class="inline" alt="Loading" width="16" height="16" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-loader-eeeeee.gif') }}" /></p>
+										</div>
+										<div id="ajax-contact-email-addresses-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-helper-hidden"></div>
+									{% else %}
+										<p class="ac">You need to save this contact before you can start adding contact numbers. Please click the "Update" button below to save the contact first.</p>
+									{% endif %}
+								</div>
+					        </section>
+					        <header><a href="#">Web Addresses</a></header>
+					        <section>
+					            <div class="contact-web-addresses clearfix">
+					            	{% if data.id is defined %}
+										<div id="contact-web-address-loading-error-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-widget message margin-bottom-5 ui-helper-hidden">
+										    <div class="ui-state-error no-margin-top ui-corner-all">
+										    	<span class="ui-icon ui-icon-alert"></span>
+										        <p class="no-margin"><strong>ERROR:</strong> Sorry, there was a problem loading the contact web-addresses.</p>
+										    </div>
+										</div>
+										<div class="contact-web-addresses-loading" data-contact-id="{% if data.id is defined %}{{ data.id }}{% endif %}" id="ajax-contact-web-addresses-loading-{% if data.id is defined %}{{ data.id }}{% else %}{{ index}}{% endif %}" class="ac">
+											<p class="ac">Loading contact web-addresses, please wait&hellip;</p>
+											<p class="ac"><img class="inline" alt="Loading" width="16" height="16" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-loader-eeeeee.gif') }}" /></p>
+										</div>
+										<div id="ajax-contact-web-addresses-{% if data.id is defined %}{{ data.id }}{% endif %}" class="ui-helper-hidden"></div>
+									{% else %}
+										<p class="ac">You need to save this contact before you can start adding contact numbers. Please click the "Update" button below to save the contact first.</p>
+									{% endif %}									
+								</div>
+					        </section>
+						</td>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</li>

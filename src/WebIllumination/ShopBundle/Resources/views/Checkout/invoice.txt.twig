@@ -1,0 +1,18 @@
+{% extends ':Old:email.txt.twig' %}
+{% block body %}
+Hello {{ order.firstName }},
+
+Thank you for ordering from Kitchen Appliance Centre.
+
+A copy of your invoice has been attached.
+
+Please take a quick look and check the details. If anything's wrong, please call us on 01159 385 111.
+
+The attachment is in PDF format and can be opened using Adobe Reader. You can download a free copy of Adobe Reader by visiting http://get.adobe.com/reader/.
+
+We'll let you know what's happening with your order by email.
+
+{% if order.deliveryType == 'Collection' %}PLEASE NOTE: YOU HAVE CHOSEN TO COLLECT YOUR ORDER. WE WILL CONTACT YOU AS SOON AS YOUR ORDER IS READY FOR COLLECTION.{% endif %}
+
+{% include ':Old:emailFooter.txt.twig' %}
+{% endblock %}

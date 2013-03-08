@@ -1,0 +1,12 @@
+{% extends ':Old:email.txt.twig' %}
+{% block body %}
+An enquiry has been sent from the Kitchen Appliance Centre site. The details of the enquiry are below:
+
+Name: {{ name }}
+Email Address: {{ emailAddress }}
+Contact Number: {{ contactNumber }}
+Message:
+{{ message }}
+
+{% include ':Old:emailFooter.txt.twig' %}
+{% endblock %}

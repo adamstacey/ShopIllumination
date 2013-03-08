@@ -1,0 +1,86 @@
+<div id="listing-filter" class="no-padding-bottom listing-filter ui-helper-hidden">
+	<div class="separator">
+		<table width="100%">
+			<tr>
+				<td class="label" width="12%"><label for="form-order-number">Order No:</label></td>
+				<td width="14%"><input type="text" id="form-order-number" value="" /></td>
+				<td class="label" width="15%"><label for="form-customer">Customer:</label></td>
+				<td width="22%"><input type="text" id="form-customer" value="" /></td>
+				<td class="label" width="15%"><label for="form-email-address">Email Address:</label></td>
+				<td width="22%"><input type="text" id="form-email-address" value="" /></td>
+			</tr>
+		</table>
+	</div>
+	<div class="separator">
+		<table width="100%">
+			<tr>
+				<td class="label" width="12%"><label for="form-order-number">Order Total:</label></td>
+				<td width="89%">
+					<p class="no-margin price-range ac" id="total-range-amount"></p>
+					<div id="total-range" class="price-range-slider"></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="separator">
+		<table width="100%">
+			<tr>
+				<td class="label" width="32%"><label for="form-status">Order Status:</label></td>
+				<td width="1%"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="24" alt="" /></td>
+				<td class="label" width="32%"><label for="form-payment-type">Payment Type:</label></td>
+				<td width="1%"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="24" alt="" /></td>
+				<td class="label" width="34%"><label for="form-delivery-type">Delivery Type:</label></td>
+			</tr>
+			<tr>
+				<td width="32%" class="vat">
+					<div class="filter-checkbox"><input data-status="Open Payment" type="checkbox" class="order-status" value="1" />Open Payment</div>
+					<div class="filter-checkbox"><input data-status="Payment Failed" type="checkbox" class="order-status" value="1" />Payment Failed</div>
+					<div class="filter-checkbox"><input data-status="Cancelled" type="checkbox" class="order-status" value="1" />Cancelled</div>
+					<div class="filter-checkbox"><input data-status="Payment Received" type="checkbox" class="order-status" value="1" />Payment Received</div>
+					<div class="filter-checkbox"><input data-status="Processing Your Order" type="checkbox" class="order-status" value="1" />Processing Your Order</div>
+					<div class="filter-checkbox"><input data-status="Back Ordered" type="checkbox" class="order-status" value="1" />Back Ordered</div>
+					<div class="filter-checkbox"><input data-status="Part Delivered" type="checkbox" class="order-status" value="1" />Part Delivered</div>
+					<div class="filter-checkbox"><input data-status="Order Ready for Collection" type="checkbox" class="order-status" value="1" />Order Ready for Collection</div>
+					<div class="filter-checkbox"><input data-status="Order with Delivery Company" type="checkbox" class="order-status" value="1" />Order with Delivery Company</div>
+					<div class="filter-checkbox no-margin-bottom"><input data-status="Order Completed" type="checkbox" class="order-status" value="1" />Order Completed</div>
+					<input type="hidden" id="form-statuses" value="" />
+				</td>
+				<td width="1%"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="20" alt="" /></td>
+				<td width="32%" class="vat">
+					<div class="filter-checkbox"><input data-payment-type="Google Wallet" type="checkbox" class="order-payment-type" value="1" />Google Wallet</div>
+					<div class="filter-checkbox"><input data-payment-type="PayPal" type="checkbox" class="order-payment-type" value="1" />PayPal</div>
+					<div class="filter-checkbox"><input data-payment-type="PayPal through SagePay" type="checkbox" class="order-payment-type" value="1" />PayPal through SagePay</div>
+					<div class="filter-checkbox no-margin-bottom"><input data-payment-type="SagePay" type="checkbox" class="order-payment-type" value="1" />SagePay</div>
+					<input type="hidden" id="form-payment-types" value="" />
+				</td>
+				<td width="1%"><img class="fl" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="20" alt="" /></td>
+				<td width="34%" class="vat">
+					<div class="filter-checkbox"><input data-delivery-type="Royal Mail 1st Class" type="checkbox" class="order-delivery-type" value="1" />Royal Mail 1st Class</div>
+					<div class="filter-checkbox"><input data-delivery-type="Royal Mail Economy" type="checkbox" class="order-delivery-type" value="1" />Royal Mail Economy</div>
+					<div class="filter-checkbox"><input data-delivery-type="FREE DELIVERY Parcel Express" type="checkbox" class="order-delivery-type" value="1" />FREE DELIVERY Parcel Express</div>
+					<div class="filter-checkbox"><input data-delivery-type="Parcel Delivery Express" type="checkbox" class="order-delivery-type" value="1" />Parcel Delivery Express</div>
+					<div class="filter-checkbox"><input data-delivery-type="Parcel Delivery Economy" type="checkbox" class="order-delivery-type" value="1" />Parcel Delivery Economy</div>
+					<div class="filter-checkbox"><input data-delivery-type="FREE DELIVERY Pallet Express" type="checkbox" class="order-delivery-type" value="1" />FREE DELIVERY Pallet Express</div>
+					<div class="filter-checkbox"><input data-delivery-type="Pallet Delivery Express" type="checkbox" class="order-delivery-type" value="1" />Pallet Delivery Express</div>
+					<div class="filter-checkbox"><input data-delivery-type="Pallet Delivery Economy" type="checkbox" class="order-delivery-type" value="1" />Pallet Delivery Economy</div>
+					<div class="filter-checkbox no-margin-bottom"><input data-delivery-type="Home Delivery Service" type="checkbox" class="order-delivery-type" value="1" />Home Delivery Service</div>
+					<input type="hidden" id="form-delivery-types" value="" />
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<table width="100%">
+			<tr>
+				<td class="label" width="20%"><label for="form-date-from">Date From:</label></td>
+				<td width="30%"><input type="text" id="form-date-from" value="" /><input type="hidden" id="form-date-from-formatted" value="" /></td>
+				<td class="label" width="20%"><label for="form-date-to">Date To:</label></td>
+				<td width="30%"><input type="text" id="form-date-to" value="" /><input type="hidden" id="form-date-to-formatted" value="" /></td>
+			</tr>
+		</table>
+	</div>
+	<div class="ac">
+		<button class="button bottom-button ui-button-green action-update-your-results" data-icon-primary="ui-icon-refresh">Update Your Results</button>
+		<button class="button bottom-button ui-button-red action-clear-filters" data-icon-primary="ui-icon-closethick">Clear Filters</button>
+	</div>
+</div>

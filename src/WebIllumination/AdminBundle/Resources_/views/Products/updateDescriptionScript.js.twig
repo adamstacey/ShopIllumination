@@ -1,0 +1,138 @@
+{# Save the description section #}
+$(".action-update-description-section").live('click', function() {
+	var updateDescriptionValidator = $("#description :input").validator({
+		position : 'bottom left', 
+		offset : [0, 0], 
+		messageClass : 'form-error', 
+   		message : '<div><em/></div>'
+	});
+	if (updateDescriptionValidator.data("validator").checkValidity())
+	{
+    	$("#ajax_loading").show();
+    	$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_description_section') }}",
+			beforeSend: function() {
+				resetInteractions();
+				$("#ajax_loading").show();
+			},
+			data: {
+				id: {{ data.product.id }},
+				description: $("#form-description").val(),
+    			shortDescription: $("#form-short-description").val()
+			},
+			error: function(data) {
+				loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+				finishInteractions();
+		    },
+			success: function(data) {
+				if (data.response == 'success')
+				{
+					$("#form-short-description").val(data.shortDescription);
+					loadNotificationMessage("message-success", "The {{ settings.singleItemDescription }} was successfully updated.");
+				} else {
+					loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+				}
+				finishInteractions();
+				if ($("#description-tab-to-redirect-to").val() > -1)
+				{
+					$("#description-requires-update").val(0);
+					$("#description-confirm-leave").hide();
+					$(".sidebar-tabs").tabs("select", parseInt($("#description-tab-to-redirect-to").val()));
+					$("#description-tab-to-redirect-to").val(-1);
+				} else {
+					$("#description-requires-update").val(0);
+					$("#description-tab-to-redirect-to").val(-1);
+				}
+			}
+		});
+	}
+});
+
+{# Check the description #}
+$(".action-check-description").live('click', function() {
+	resetInteractions();
+	if ($("#form-short-description").val() != "")
+	{
+		var editor = tinyMCE.get("form-description");
+		if (editor.getContent() != "")
+		{
+			$("#description-confirm-overwrite-button").removeClass("action-get-description action-get-short-description").addClass("action-get-description");
+			$("#description-confirm-overwrite").fadeIn();
+			$("html, body").animate({scrollTop: $("#description-confirm-overwrite").offset().top - 50}, 'slow');
+		} else {
+			getDescription();
+		}
+	}
+});
+
+{# Check the short description #}
+$(".action-check-short-description").live('click', function() {
+	resetInteractions();
+	var editor = tinyMCE.get("form-description");
+	if (editor.getContent() != "")
+	{	
+		if ($('#form-short-description').val() != "")
+		{
+			$("#description-confirm-overwrite-button").removeClass("action-get-description action-get-short-description").addClass("action-get-short-description");
+			$("#description-confirm-overwrite").fadeIn();
+			$("html, body").animate({scrollTop: $("#description-confirm-overwrite").offset().top - 50}, 'slow');
+		} else {
+			getShortDescription();
+		}
+	}
+});
+
+{# Cancel the description overwrite #}
+$(".action-cancel-description-overwrite").live('click', function() {
+	resetInteractions();
+});
+
+{# Get the description #}
+$(".action-get-description").live('click', function() {
+	resetInteractions();
+	getDescription();
+});
+
+{# Get the short description #}
+$(".action-get-short-description").live('click', function() {
+	resetInteractions();
+	getShortDescription();
+});
+
+{# Detect if an update is required #}
+$("#description input, #description select, #description textarea").live("change", function() {
+	$("#description-requires-update").val(1);
+});
+
+{# Check if section needs updating #}
+$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+	var editor = tinyMCE.get("form-description");
+	if (editor)
+	{
+		if (editor.isDirty())
+		{
+			$("#description-requires-update").val(1);
+		}
+	}
+	if ($("#description-requires-update").val() > 0)
+	{
+		$("#description-tab-to-redirect-to").val(ui.index);
+		$("#description-confirm-leave").fadeIn();
+		$("html, body").animate({scrollTop: $("#description").offset().top + 35},'slow');
+		return false;
+	}
+	return true;
+});
+
+{# Leave section without saving #}
+$(".action-leave-description").live('click', function() {
+	var editor = tinyMCE.get("form-description");
+	editor.isNotDirty = 1;
+	$("#description-requires-update").val(0);
+	$(".sidebar-tabs").tabs("select", parseInt($("#description-tab-to-redirect-to").val()));
+	$("#description-tab-to-redirect-to").val(-1);
+	$("#description-confirm-leave").hide();
+	$("html, body").animate({scrollTop: $("#description").offset().top + 35},'slow');
+});

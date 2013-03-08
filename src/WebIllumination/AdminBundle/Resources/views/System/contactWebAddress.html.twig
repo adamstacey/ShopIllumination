@@ -1,0 +1,33 @@
+<li class="contact-web-address-container" data-contact-id="{{ contactId }}" data-index="{{ index }}" id="contact-web-address-{{ contactId }}-{{ index }}">
+	<div>
+		<table width="100%">
+			<tbody>
+				<tr>
+					<td width="9">
+						<img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" />
+					</td>
+					<td width="1" class="delete">
+						<input data-contact-id="{{ contactId }}" data-index="{{ index }}" type="checkbox" class="contact-web-address-field contact-web-address-select" id="form-contact-web-address-select-{{ contactId }}-{{ index }}" value="1" />
+					</td>
+					<td width="210">
+						<select data-contact-id="{{ contactId }}" data-index="{{ index }}" autocomplete="off" class="contact-web-address-field contact-web-address-contact-web-address-type-id full" id="form-contact-web-address-contact-web-address-type-id-{{ contactId }}-{{ index }}">
+			        		<option value="">- Select Web Address Type -</option>
+			        		{% for contactWebAddressType in contactWebAddressTypes %}
+		                		<option value="{{ contactWebAddressType.id }}"{% if data.contactWebAddressTypeId is defined %}{% if contactWebAddressType.id == data.contactWebAddressTypeId %} selected="selected"{% endif %}{% endif %}>{{ contactWebAddressType.contactWebAddressType|raw }}</option>
+		            		{% endfor %}
+			        	</select>
+					</td>
+					<td>
+			        	<input data-contact-id="{{ contactId }}" data-index="{{ index }}" type="url" class="url contact-web-address-field contact-web-address-url full" placeholder="Web Address" id="form-contact-web-address-url-{{ contactId }}-{{ index }}" value="{% if data.url is defined %}{{ data.url }}{% endif %}" />
+					</td>
+					<td width="1">
+						<input type="hidden" class="contact-web-address-display-order" id="form-contact-web-address-display-order-{{ contactId }}-{{ index }}" value="{{ index }}" />
+						<input type="hidden" data-contact-id="{{ contactId }}" data-index="{{ index }}" class="contact-web-address-requires-update" id="form-contact-web-address-requires-update-{{ contactId }}-{{ index }}" value="0" />
+						<input type="hidden" data-contact-id="{{ contactId }}" data-index="{{ index }}" class="contact-web-address-id" id="form-contact-web-address-id-{{ contactId }}-{{ index }}" value="{% if data.id is defined %}{{ data.id }}{% else %}0{% endif %}" />
+						<button data-contact-id="{{ contactId }}" data-index="{{ index }}" class="button ui-button-red action-confirm-delete-contact-web-address" data-icon-primary="ui-icon-closethick" data-icon-only="true">Delete</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</li>

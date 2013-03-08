@@ -1,0 +1,92 @@
+<table width="100%">
+	<tr>
+		<td class="label" width="20%"><label>Name:</label></td>
+		<td width="20%">{{ contact.displayName }}</td>
+		<td rowspan="5" class="label" width="10%"><label>Billing<br />Address</label></td>
+		<td rowspan="5" width="20%" class="uppercase">{% spaceless %}
+			{% for address in contact.contactAddresses %}
+				{% if address.contactAddressTypeId == 4 %}
+					{{ address.displayName }}<br />
+					{% if address.organisationName != '' %}
+						{{ address.organisationName }}<br />
+					{% endif %}
+					{{ address.addressLine1 }}<br />
+					{% if address.addressLine2 != '' %}
+						{{ address.addressLine2 }}<br />
+					{% endif %}
+					{{ address.townCity }}<br />
+					{% if address.countyState != '' %}
+						{{ address.countyState }}<br />
+					{% endif %}
+					{{ address.postZipCode }}
+				{% endif %}
+			{% else %}
+				-
+			{% endfor %}
+		{% endspaceless %}</td>
+		<td rowspan="5" class="label" width="10%"><label>Delivery<br />Address</label></td>
+		<td rowspan="5" width="20%" class="uppercase">{% spaceless %}
+			{% for address in contact.contactAddresses %}
+				{% if address.contactAddressTypeId == 5 %}
+					{{ address.displayName }}<br />
+					{% if address.organisationName != '' %}
+						{{ address.organisationName }}<br />
+					{% endif %}
+					{{ address.addressLine1 }}<br />
+					{% if address.addressLine2 != '' %}
+						{{ address.addressLine2 }}<br />
+					{% endif %}
+					{{ address.townCity }}<br />
+					{% if address.countyState != '' %}
+						{{ address.countyState }}<br />
+					{% endif %}
+					{{ address.postZipCode }}
+				{% endif %}
+			{% else %}
+				-
+			{% endfor %}
+		{% endspaceless %}</td>
+	</tr>
+	<tr>
+		<td class="label" width="20%"><label>Email Address:</label></td>
+		<td width="20%">{% spaceless %}
+			{% for emailAddresses in contact.contactEmailAddresses %}
+				{% if emailAddresses.contactEmailAddressTypeId == 5 %}
+					<a class="lowercase" href="mailto:{{ emailAddresses.email }}">{{ emailAddresses.displayName }}</a>
+				{% endif %}
+			{% else %}
+				-
+			{% endfor %}
+		{% endspaceless %}</td>
+	</tr>
+	<tr>
+		<td class="label" width="20%"><label>Telephone (Daytime):</label></td>
+		<td width="20%">{% spaceless %}
+			{% for number in contact.contactNumbers %}
+				{% if number.contactNumberTypeId == 5 %}{{ number.number|default('-') }}{% endif %}
+			{% else %}
+				-
+			{% endfor %}
+		{% endspaceless %}</td>
+	</tr>
+	<tr>
+		<td class="label" width="20%"><label>Telephone (Evening):</label></td>
+		<td width="20%">{% spaceless %}
+			{% for number in contact.contactNumbers %}
+				{% if number.contactNumberTypeId == 6 %}{{ number.number|default('-') }}{% endif %}
+			{% else %}
+				-
+			{% endfor %}
+		{% endspaceless %}</td>
+	</tr>
+	<tr>
+		<td class="label" width="20%"><label>Mobile:</label></td>
+		<td width="20%">{% spaceless %}
+			{% for number in contact.contactNumbers %}
+				{% if number.contactNumberTypeId == 2 %}{{ number.number|default('-') }}{% endif %}
+			{% else %}
+				-
+			{% endfor %}
+		{% endspaceless %}</td>
+	</tr>
+</table>

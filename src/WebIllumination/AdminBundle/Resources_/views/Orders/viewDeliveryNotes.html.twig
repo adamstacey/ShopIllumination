@@ -1,0 +1,8 @@
+{% extends ':Old:print.html.twig' %}
+{% block title %}Kitchen Appliance Centre{% endblock %}
+{% block body %}
+	{% for order in orders %}
+		{% include 'WebIlluminationAdminBundle:Orders:deliveryNote.html.twig' with {'order': order} %}
+		<div style="page-break-before: always;"></div>
+	{% endfor %}
+{% endblock %}

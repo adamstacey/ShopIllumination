@@ -1,0 +1,69 @@
+<script type="text/javascript" defer="defer">
+	
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':indexFunctions.js.twig' with {'data': data} %}	
+	
+	$(document).ready(function() {
+		{# Update the colours of the priorities #}
+		$(".listing-priority").live('change', function() {
+			var $itemId = $(this).attr("data-id");
+			var $priority = $(this).val();
+			var $priorityColour = '';
+			switch ($priority)
+			{
+				case '1':
+					$priorityColour = 'grey';
+					break;
+				case '2':
+					$priorityColour = 'yellow';
+					break;
+				case '3':
+					$priorityColour = 'orange';
+					break;
+				case '4':
+					$priorityColour = 'red';
+					break;
+			}
+			$(this).parent().parent().removeClass("grey yellow orange red").addClass($priorityColour);
+			$("#listing-select-"+$itemId).attr("checked", "checked");
+			$("#uniform-listing-select-"+$itemId+" span").addClass("checked");
+			$("tr#item-"+$itemId).addClass("selected");
+		});
+		
+		{# Update the colours of the status #}
+		$(".listing-status").live('change', function() {
+			var $itemId = $(this).attr("data-id");
+			var $status = $(this).val();
+			var $statusColour = '';
+			switch ($status)
+			{
+				case '1':
+					$statusColour = 'red';
+					break;
+				case '2':
+					$statusColour = 'blue';
+					break;
+				case '3':
+					$statusColour = 'orange';
+					break;
+				case '4':
+					$statusColour = 'yellow';
+					break;
+				case '5':
+					$statusColour = 'grey';
+					break;
+			}
+			$(this).parent().parent().removeClass("grey yellow orange blue red").addClass($statusColour);
+			$("#listing-select-"+$itemId).attr("checked", "checked");
+			$("#uniform-listing-select-"+$itemId+" span").addClass("checked");
+			$("tr#item-"+$itemId).addClass("selected");
+		});
+		
+		{# Update the contacts #}
+		$(".listing-owner-contact-id, .listing-assigned-to-contact-id").live('change', function() {
+			var $itemId = $(this).attr("data-id");
+			$("#listing-select-"+$itemId).attr("checked", "checked");
+			$("#uniform-listing-select-"+$itemId+" span").addClass("checked");
+			$("tr#item-"+$itemId).addClass("selected");
+		});
+	});
+</script>

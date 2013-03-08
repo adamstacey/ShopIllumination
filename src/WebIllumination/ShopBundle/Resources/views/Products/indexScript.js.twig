@@ -1,0 +1,84 @@
+<script type="text/javascript" defer="defer">
+	
+	{% include 'WebIlluminationShopBundle:Products:indexFunctions.js.twig' with {'product': product} %}
+	
+	$(document).ready(function() {
+		{# Update the selected options #}
+		updateSelectedOptions();
+		$(".product-option-group").live('change', function() {
+			updateSelectedOptions();
+		});
+		
+		{# Show and hide the delivery option description #}
+		$(".action-show-delivery-option-description").live('mouseenter', function() {
+			var $deliveryOption = $(this).attr("data-delivery-option");
+			$(".delivery-option-description[data-delivery-option='"+$deliveryOption+"']").slideDown();
+		});
+		$(".delivery-option").live('mouseleave', function() {
+			var $deliveryOption = $(this).attr("data-delivery-option");
+			$(".delivery-option-description[data-delivery-option='"+$deliveryOption+"']").slideUp();
+		});
+		
+		{# Setup the minimum height of the side bar #}
+		$(".sidebar-tabs").each(function() {
+			var $minimumSideBarHeight = 3;
+			$(this).find("li").each(function() {
+				$minimumSideBarHeight = $minimumSideBarHeight + $(this).outerHeight(true);
+			});
+			$(".sidebar-tabs").css("min-height", $minimumSideBarHeight);
+		});
+		
+		{# Thumbnail #}
+		$(".product-thumbnail").live('hover', function() {
+			$(".product-thumbnail").removeClass("selected");
+			$(this).addClass("selected");
+			$("#product-image").attr("src", $(this).attr("data-medium-path"));
+			$("#product-image").attr("alt", $(this).attr("alt"));
+			$("#product-image").attr("width", $(this).attr("data-medium-width"));
+			$("#product-image").attr("height", $(this).attr("data-medium-height"));
+			$("#product-image").attr("data-large-path", $(this).attr("data-large-path"));
+			$("#product-image").attr("data-large-width", $(this).attr("data-large-width"));
+			$("#product-image").attr("data-large-height", $(this).attr("data-large-height"));
+		});
+		
+		{# Large image popup #}
+		$("#product-info img.product-image[rel], #product-info img.product-thumbnail[rel], #product-info button.action-larger-view[rel]").overlay({
+			closeOnClick: true,
+			closeOnEsc: true,
+			onBeforeLoad: function() {
+				var largeImageWidth = parseInt($("#product-image").attr("data-large-width"));
+				var largeImageHeight = parseInt($("#product-image").attr("data-large-height"));
+				var largeImageLeft = (600 - largeImageWidth) / 2;
+				var largeImageTop = (400 - largeImageHeight) / 2;
+				$("#large-image").attr("src", $("#product-image").attr("data-large-path"));
+				$("#large-image").attr("alt", $("#product-image").attr("alt"));
+				$("#large-image-title").html($("#product-image").attr("alt"));
+				$("#large-image").attr("width", largeImageWidth);
+				$("#large-image").attr("height", largeImageHeight);
+				$("#large-image").css("left", largeImageLeft);
+				$("#large-image").css("top", largeImageTop);
+				$("#large-image").draggable();
+			}
+		});
+		
+		{# Increase quantity #}
+		$(".action-increase-quantity").live('click', function() {
+			var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+			var $newQuantity = parseInt($quantityObject.val()) + 1;
+			$quantityObject.val($newQuantity);
+		});
+		
+		{# Decrease quantity #}
+		$(".action-decrease-quantity").live('click', function() {
+			var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+			var $newQuantity = parseInt($quantityObject.val()) - 1;
+			if ($newQuantity < 1)
+			{
+				$newQuantity = 1;
+			}
+			$quantityObject.val($newQuantity);
+		});
+		
+		$("#buy-now").fadeIn();
+	});
+</script>

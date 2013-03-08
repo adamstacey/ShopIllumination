@@ -1,0 +1,9 @@
+<div class="ui-helper-hidden more-information-detail" id="documents-{{ item.id }}">
+	<div>
+		<a data-id="{{ item.id }}" href="/uploads/documents/order/order-{{ item.id }}.pdf" target="_blank" class="ui-corner-none ui-corner-tr ui-corner-br button ui-button-{{ (item.orderPrinted == 1?'green':'red') }} action-print-order" data-icon-primary="ui-icon-print">Order</a>
+		<a data-id="{{ item.id }}" href="/uploads/documents/order/delivery-note-{{ item.id }}.pdf" target="_blank" class="ui-corner-none button ui-button-{{ (item.deliveryNotePrinted == 1?'green':'red') }} action-print-delivery-note" data-icon-primary="ui-icon-print">Delivery Note</a>
+		<a href="/uploads/documents/order/invoice-{{ item.id }}.pdf" target="_blank" class="ui-corner-none button" data-icon-primary="ui-icon-print">Customer Invoice</a>
+		<a href="/uploads/documents/order/copy-order-{{ item.id }}.pdf" target="_blank" class="ui-corner-none button" data-icon-primary="ui-icon-print">Copy Order</a>
+		<button data-id="{{ item.id }}" class="ui-corner-none ui-corner-tl ui-corner-bl button action-send-invoice" data-icon-primary="ui-icon-mail-closed">Email Invoice to Customer</button>
+	</div>
+</div>

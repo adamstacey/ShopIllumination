@@ -1,0 +1,43 @@
+<section id="competitors">
+	<h2>Competitiors</h2>
+    <div class="info-message ui-status-highlight">
+		<span class="info-message-icon ui-icon ui-icon-info"></span>
+		<p>In order to be able to review the price of your product it is important to keep on top of your competitors. Below is a list of all your competitors for this product and what price your competitors are selling for.</p>
+		<div class="clear"></div>
+	</div>
+	{% if product_search|length > 0 %}
+		<table class="display" id="data-competitors"> 
+		    <thead> 
+		        <tr> 
+		            <th class="left">Competitor</th> 
+		            <th>Price</th> 
+		            <th>&nbsp;</th> 
+		        </tr> 
+		    </thead> 
+		    <tbody>
+		    	{% for competitor in product_search %}
+		    		{% if competitor.product.inventories.0.price is defined %}
+			    		<tr{% if competitor.product.author.accountId == 4162886 %} class="gradeA"{% endif %}>
+			    			<td>{% if competitor.product.author.name is defined %}{{ competitor.product.author.name }}{% else %}Unknown{% endif %}<br />(<em>{{ competitor.product.title }}</em>)</td>
+			    			<td class="center">&pound;{{ competitor.product.inventories.0.price|number_format(2) }}</td>
+			    			<td class="center"><a href="{{ competitor.product.link }}" target="_blank" class="button">Preview</a></td>
+			    		</tr>
+		    		{% endif %}
+				{% endfor %}
+		    </tbody> 
+		</table>
+	{% else %}
+	    <div class="product-warning ui-status-error no-margin-bottom">
+			<span class="product-warning-icon ui-icon ui-icon-circle-close"></span>
+			<p>Sorry, we could not find any competitors on the Internet that match the product code for this product.</p>
+			<div class="clear"></div>
+		</div>
+	{% endif %}	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			{% if product_search|length > 0 %}
+				$('#data-competitors').dataTable().fnSort([[1,'asc']]);
+			{% endif %}
+		});
+	</script>
+</section>

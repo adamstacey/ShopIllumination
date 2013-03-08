@@ -1,0 +1,8 @@
+<div class="toolbar-buttons">    		
+	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.departmentId}) }}" class="fl small button ui-button-grey icon-set-black ui-corner-left" data-icon-primary="ui-icon-tree-directory">View {{ data.settings.multipleTitle }} ({{ data.item.departmentCount }})</a>
+	<a href="{{ path('admin_'~data.settings.multiplePath~'_add', {'parentId': data.item.parentId}) }}" class="fl small button ui-button-grey icon-set-black ui-corner-none" data-icon-primary="ui-icon-circle-plus">Add a {{ data.settings.singleTitle }}</a>
+	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.departmentId}) }}" class="fl small button ui-button-grey icon-set-black ui-corner-none " data-icon-primary="ui-icon-shopping-basket">View Products ({{ data.item.productCount }})</a>
+	<a href="{{ path('admin_'~data.settings.multiplePath~'_add', {'parentId': data.item.parentId}) }}" class="fl small button ui-button-grey icon-set-black ui-corner-none" data-icon-primary="ui-icon-circle-plus">Add Product</a>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>

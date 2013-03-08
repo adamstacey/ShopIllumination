@@ -1,0 +1,39 @@
+{# Load the redirects #}	
+function loadRedirects()
+{
+	$.ajax({
+		type: "GET",
+		url: "{{ path('system_ajax_get_redirects') }}",
+		beforeSend: function() {
+			$("#ajax-redirects-loading").show();
+		},
+		data: {
+			objectId: {{ data.department.id }},
+			objectType: 'department'
+		},
+		error: function(data) {
+  			$("#ajax-redirects-loading").hide();
+      		$("#redirect-loading-error").fadeIn();
+      		$redirectsLoaded = true;
+	        checkDataLoaded();
+	  	},
+		success: function(data) {
+			$("#ajax-redirects").html(data);
+			$("#ajax-redirects :checkbox:not(.no-uniform), #ajax-redirects :radio:not(.no-uniform), #ajax-redirects select:not(.no-uniform), #ajax-redirects :file:not(.no-uniform)").uniform();
+			$("#ajax-redirects .button").each(function () {
+    	        $(this).button({
+        	    	icons: {
+            	    	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                	    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+    	    	});
+        	});
+	        $("#ajax-redirects .selector").addClass("full");
+	        $("#ajax-redirects").fadeIn();
+	        $redirectsLoaded = true;
+	        checkDataLoaded();
+    	    $("#ajax-redirects-loading").hide();
+		}
+	});
+}

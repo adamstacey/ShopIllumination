@@ -1,0 +1,11 @@
+{% for product in products %}
+	{% include 'WebIlluminationShopBundle:Products:productListing.html.twig' with {'noAjax': noAjax, 'url': url, 'product': product, 'group': group} %}
+{% else %}
+	<p class="no-products">Sorry, there are currently no products in this department.</p>
+{% endfor %}
+{% if group %}
+	<div class="ac">
+		<a href="{{ path('page_request', {'url': url}) }}" class="fr margin-top-5 padding-left-5 padding-right-5 button ui-button-blue small">View All Options</a>
+	</div>
+{% endif %}
+<div class="clear"></div>

@@ -1,0 +1,76 @@
+{# Show prices out of hours #}
+$("input[name=hide-prices]").change(function() {
+    if ($(this).val() === '1') {
+        $("#show-prices-out-of-hours-container").fadeIn();
+    } else {
+        $("#show-prices-out-of-hours-container").fadeOut();
+    }
+});
+
+{# Show maximum membership card discount #}
+$("input[name=membership-card-discount-available]").change(function() {
+    if ($(this).val() === '1') {
+        $("#maximum-membership-card-discount-container").fadeIn();
+    } else {
+        $("#maximum-membership-card-discount-container").fadeOut();
+    }
+});
+
+{# Update the price settings #}
+$(".action-update-price-settings-section").live('click', function() {
+	$.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_price_settings_section') }}",
+		beforeSend: function() {
+			$("#flash_messages .message").hide();
+			$("#ajax_loading").show();
+		},
+		data: {
+			id: {{ data.department.id }},
+			hidePrices: $("input[name='hide-prices']:checked").val(),
+			showPricesOutOfHours: $("input[name='show-prices-out-of-hours']:checked").val(),
+			membershipCardDiscountAvailable: $("input[name='membership-card-discount-available']:checked").val(),
+			maximumMembershipCardDiscount: $("#form-maximum-membership-card-discount").val()
+		},
+		error: function(data) {
+			loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+			finishInteractions();
+	    },
+		success: function(data) {
+			if (data.response == 'success')
+			{
+				loadNotificationMessage("message-success", "The {{ settings.singleItemDescription }} was updated.");
+			} else {
+				loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+			}
+			finishInteractions();
+		}
+	});
+});
+
+$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+	if ($("input.price-requires-update[value='1']").length > 0)
+	{
+		$("#prices .message").hide();
+		$(".form-error").remove();
+		$("#price-leave-prices-button").attr("data-tab-index", ui.index);
+		$("#prices-tab-to-redirect-to").val(ui.index);
+		$("#price-confirm-leave").fadeIn();
+		$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+		return false;
+	}
+	return true;
+});
+
+$(".action-leave-prices").live('click', function() {
+	$("input.price-requires-update").val("0");
+	$("input.price-id[value='0']").each(function(index) {
+		$elementIndex = $(this).attr("data-index");
+		$("#price-"+$elementIndex).remove();
+	});
+	$("#prices .message").hide();
+	$(".form-error").remove();
+	$(".sidebar-tabs").tabs("select", parseInt($(this).attr("data-tab-index")));
+	$("html, body").animate({scrollTop: $("#prices").offset().top + 35},'slow');
+});

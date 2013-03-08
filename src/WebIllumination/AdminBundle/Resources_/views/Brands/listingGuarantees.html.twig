@@ -1,0 +1,18 @@
+<div class="ui-helper-hidden more-information-detail" id="guarantees-{{ item.id }}">
+	<h5 class="no-margin-top">Guarantees</h5>
+	{% if item.guarantees|length > 0 %}
+		<div class="padding-5">
+			{% for guarantee in item.guarantees %}
+				<div class="brand-guarantee">
+					<div class="brand-guarantee-year-number">{{ guarantee.guaranteeLength|raw }}</div>
+					<div class="brand-guarantee-years">{{ guarantee.guaranteeTitle|raw }}</div>
+					<div class="brand-guarantee-description-background"></div>
+					<div class="brand-guarantee-description">{{ guarantee.guaranteeType|raw }}</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p class="padding-top-5">There are currently no standard guarantees setup for <strong>{{ item.brand }}</strong>.</p>
+	{% endif %}
+	</div>
+</div>

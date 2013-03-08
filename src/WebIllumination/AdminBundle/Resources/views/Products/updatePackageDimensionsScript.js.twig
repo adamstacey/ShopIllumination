@@ -1,0 +1,107 @@
+{# Dialog: Unit Converter #}
+$("#dialog-unit-converter").dialog({
+	autoOpen: false,
+	modal: true,
+	width: 700,
+	show: "fade",
+	hide: "fade",
+	buttons: [{
+		text: "Save",
+		click: function() {
+			$("#form-weight").val(parseFloat($("#form-weight-conversion").val()) * parseFloat($("#form-weight-unit").val()));
+			$("#form-length").val(parseFloat($("#form-length-conversion").val()) * parseFloat($("#form-length-unit").val()));
+			$("#form-width").val(parseFloat($("#form-width-conversion").val()) * parseFloat($("#form-width-unit").val()));
+			$("#form-height").val(parseFloat($("#form-height-conversion").val()) * parseFloat($("#form-height-unit").val()));
+			$(this).dialog("close");
+		}
+	}]
+}).parents('.ui-dialog').find(".ui-dialog-titlebar-close").after('<div/>');
+
+{# Action: Unit Converter #}
+$(".action-unit-converter").live('click', function() {
+	$("#form-weight-conversion").val($("#form-weight").val());
+	$("#form-length-conversion").val($("#form-length").val());
+	$("#form-width-conversion").val($("#form-width").val());
+	$("#form-height-conversion").val($("#form-height").val());
+	$("#dialog-unit-converter").dialog("open");
+	return false;
+});
+
+{# Update the section #}
+$(".action-update-package-dimensions-section").live('click', function() {
+	var updatePackageDimesnionsValidator = $("#general :input").validator({
+		position : 'bottom left', 
+		offset : [0, 0], 
+		messageClass : 'form-error', 
+		message : '<div><em/></div>'
+	});
+	if (updatePackageDimesnionsValidator.data("validator").checkValidity())
+	{
+    	$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_package_dimensions_section') }}",
+			beforeSend: function() {
+				resetInteractions();
+				$("#ajax_loading").show();
+			},
+			data: {
+				id: {{ data.product.id }},
+    			weight: $("#form-weight").val(),
+    			length: $("#form-length").val(),
+	    		width: $("#form-width").val(),
+	    		height: $("#form-height").val()
+			},
+			error: function(data) {
+				loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+				finishInteractions();
+	      	},
+			success: function(data) {
+				if (data.response == 'success')
+				{
+					loadNotificationMessage("message-success", "The {{ settings.singleItemDescription }} was successfully updated.");
+					if (data.resetSeo == true)
+					{
+						resetSeo();
+					}
+				} else {
+					loadNotificationMessage("message-error", "Sorry, there was a problem saving the {{ settings.singleItemDescription }}. Please try again.");
+				}
+				finishInteractions();
+				if ($("#package-dimensions-tab-to-redirect-to").val() > -1)
+				{
+					$("#package-dimensions-requires-update").val(0);
+					$("#package-dimensions-confirm-leave").hide();
+					$(".sidebar-tabs").tabs("select", parseInt($("#package-dimensions-tab-to-redirect-to").val()));
+					$("#package-dimensions-tab-to-redirect-to").val(-1);
+				}
+			}
+		});
+	}
+});
+
+{# Detect if an update is required #}
+$("#package-dimensions input, #package-dimensions select, #package-dimensions textarea").live("change", function() {
+	$("#package-dimensions-requires-update").val(1);
+});
+
+{# Check if section needs updating #}
+$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+	if ($("#package-dimensions-requires-update").val() > 0)
+	{
+		$("#package-dimensions-tab-to-redirect-to").val(ui.index);
+		$("#package-dimensions-confirm-leave").fadeIn();
+		$("html, body").animate({scrollTop: $("#package-dimensions").offset().top + 35},'slow');
+		return false;
+	}
+	return true;
+});
+
+{# Leave section without saving #}
+$(".action-leave-package-dimensions").live('click', function() {
+	$("#package-dimensions-requires-update").val(0);
+	$(".sidebar-tabs").tabs("select", parseInt($("#package-dimensions-tab-to-redirect-to").val()));
+	$("#package-dimensions-tab-to-redirect-to").val(-1);
+	$("#package-dimensions-confirm-leave").hide();
+	$("html, body").animate({scrollTop: $("#package-dimensions").offset().top + 35},'slow');
+});

@@ -1,0 +1,70 @@
+<section id="seo">
+	<div class="info-message ui-status-highlight">
+		<span class="info-message-icon ui-icon ui-icon-info"></span>
+		<p>Search engine optimisation (SEO) is critical to the success of your site. It is strongly recommended that all the information in this section is completed.</p>
+		<div class="clear"></div>
+	</div>
+    <div class="clearfix">
+    	<label for="form-url" class="form-label">URL<small>The internal web address</small></label>
+        <div class="form-input"><input class="seo-url" type="text" id="form-url" name="url" value="{{ web_address.url }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-page-title" class="form-label">Page Title<small>Title used by the Browser</small></label>
+        <div class="form-input"><input type="text" id="form-page-title" name="page-title" value="{{ product_description.pageTitle }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-header" class="form-label">Header<small>Main header on the page</small></label>
+        <div class="form-input"><input type="text" id="form-header" name="header" value="{{ product_description.header }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-meta-description" class="form-label">Meta Description<small>Description used by search engines</small></label>
+        <div class="form-input"><textarea id="form-meta-description" name="meta-description" rows="3">{{ product_description.metaDescription }}</textarea></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-meta-keywords" class="form-label">Meta Keywords<small>Keywords used by some search engines, separated by a comma</small></label>
+        <div class="form-input"><textarea id="form-meta-keywords" name="meta-keywords" rows="2" class="items">{{ product_description.metaKeywords }}</textarea></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-search-words" class="form-label">Search Words<small>Alternative words visitors can find this product by, separated by a comma</small></label>
+        <div class="form-input"><textarea id="form-search-words" name="search-words" rows="2" class="items">{{ product_description.searchWords }}</textarea></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-alternative-product-codes" class="form-label">Alternative Product Codes<small>Alternative product codes visitors might search for, separated by a comma</small></label>
+        <div class="form-input"><textarea id="form-alternative-product-codes" name="alternative-product-codes" rows="2" class="items">{{ product.alternativeProductCodes }}</textarea></div>
+    </div>
+    <div class="clearfix">
+        <div class="form-input buttons no-margin-bottom">
+        	<button class="button ui-button-default">Save</button>
+        	<a class="button action-reset-seo" href="Javascript:void(0);">Reset SEO</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+		$(document).ready(function() {
+		
+			{# Action: Reset SEO #}
+			$(".action-reset-seo").click('click', function() {
+				if (confirm('Are you sure you want to reset the SEO for this product ("{{ product_description.name }}")?'))
+				{
+					window.location = '{{ path('products_reset_seo', { 'id': product.id }) }}';
+				}
+			});
+			
+			{# Update the description tab #}
+			{% if ((web_address.url == "") or (product_description.pageTitle == "") or (product_description.header == "") or (product_description.metaDescription == "") or (product_description.metaKeywords == "") or (product_description.searchWords == "") or (product.alternativeProductCodes == "")) %}
+				$("#tab-seo").addClass("ui-status-error");
+			{% else %}
+				$("#tab-seo").addClass("ui-status-success");
+			{% endif %}
+			$("#form-url, #form-page-title, #form-header, #form-meta-description, #form-meta-keywords, #form-search-words, #form-alternative-product-codes").change(function() {
+				$("#tab-seo").removeClass("ui-status-success").removeClass("ui-status-highlight").removeClass("ui-status-error");
+				if (($("#form-url").val() == "") || ($("#form-page-title").val() == "") || ($("#form-header").val() == "") || ($("#form-meta-description").val() == "") || ($("#form-meta-keywords").val() == "") || ($("#form-search-words").val() == "") || ($("#form-alternative-product-codes").val() == ""))
+				{
+					$("#tab-seo").addClass("ui-status-error");
+				} else {
+					$("#tab-seo").addClass("ui-status-success");
+				}
+			});
+			
+		});
+	</script>
+</section>

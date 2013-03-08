@@ -1,0 +1,233 @@
+{# Load the options #}	
+function loadOptions()
+{
+	$.ajax({
+		type: "GET",
+		url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_get_options') }}",
+		beforeSend: function() {
+			$("#ajax-options-loading").show();
+		},
+		data: {
+			productId: {{ data.product.id }}
+		},
+		error: function(data) {
+  			$("#ajax-options-loading").hide();
+      		$("#option-loading-error").fadeIn();
+	  	},
+		success: function(data) {
+			$("#ajax-options").html(data);
+			$("#ajax-options :checkbox:not(.no-uniform), #ajax-options :radio:not(.no-uniform), #ajax-options select:not(.no-uniform), #ajax-options :file:not(.no-uniform)").uniform();
+			$("#ajax-options .button").each(function () {
+    	        $(this).button({
+        	    	icons: {
+            	    	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                	    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+    	    	});
+        	});
+	        $("#ajax-options .selector").addClass("full");
+	        $("#ajax-options").fadeIn();
+	        $(".action-unselect-all-options, .action-confirm-delete-options, .action-confirm-delete-option-groups, .action-unselect-all-option-groups").hide();
+	        if ($("li.product-option-group-container").length > 0)
+	        {
+	        	$("#option-group-buttons").fadeIn();
+	        }
+	        $optionsLoaded = true;
+	        checkDataLoaded();
+    	    $("#ajax-options-loading").hide();
+    	    $("#product-option-groups-container, .product-options-container").sortable({
+				placeholder: "highlighted-sortable",
+				update: function(event, ui) {
+					reOrderOptions(true);
+				}
+			});
+		}
+	});
+}
+
+{# Function to update all options #}
+function updateOptions()
+{
+	$errorOccurred = false;
+	$numberOfElementsToProcess = $("input.option-requires-update[value='1']").length;
+	$numberOfElementsProcessed = 0;
+	if ($numberOfElementsToProcess > 0)
+	{
+		$("#ajax_loading").show();
+		$("input.option-requires-update[value='1']").each(function(index) {
+			$elementIndex = String($(this).attr("data-index"));
+			$.ajax({
+		    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_update_option') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $("#form-option-id-"+$elementIndex).val(),
+		      		productId: '{{ data.product.id }}',
+		      		productOptionGroupId: $("#form-option-product-option-group-id-"+$elementIndex).val(),
+		      		productOptionId: $("#form-option-product-option-id-"+$elementIndex).val(),
+		      		productOption: $("#form-option-product-option-"+$elementIndex).val(),
+		      		price: $("#form-option-price-"+$elementIndex).val(),
+		      		priceType: $("#form-option-price-type-"+$elementIndex).val(),
+		      		priceUse: $("#form-option-price-use-"+$elementIndex).val(),
+		      		displayOrder: $("#form-option-display-order-"+$elementIndex).val(),
+		      		elementIndex: $elementIndex
+		      	},
+		      	error: function(data) {
+		        	$errorOccurred = true;
+		        	$("#option-"+$elementIndex).addClass("ui-state-error");
+		        	$numberOfElementsProcessed++;
+		        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+		        	{
+		        		if ($errorOccurred == true)
+						{
+							$("#option-error-message-text").html('Problems occurred while trying to update the options. Make sure all fields are filled in.');
+							$("#option-error-message").fadeIn();
+						} else {
+							$("#option-success-message-text").html('Your options were successfully updated.');
+							$("#option-success-message").fadeIn();
+						}
+						$("html, body").animate({scrollTop: $("#options").offset().top + 35},'slow');
+						$.ajax({
+					    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_rebuild_product') }}",
+					      	type: "GET",
+					      	data: {
+					      		productId: '{{ data.product.id }}',
+					      	}
+					   	});
+						$("#ajax_loading").hide();
+						if ($("#options-tab-to-redirect-to").val() > -1)
+						{
+							$("#options .message").hide();
+							$(".sidebar-tabs").tabs("select", parseInt($("#options-tab-to-redirect-to").val()));
+						}
+		        	}
+		      	},
+		      	success: function(data) {
+	      			if (data.response == 'success')
+	      			{
+	      				$("#option-"+data.elementIndex).removeClass("ui-state-error ui-state-highlight");
+	      				$("#form-option-id-"+data.elementIndex).val(data.id);
+	      				$("#form-option-requires-update-"+data.elementIndex).val("0");
+	      			} else {
+	      				$("#option-"+data.elementIndex).addClass("ui-state-error");
+	      				$errorOccurred = true;
+	      			}
+		        	$numberOfElementsProcessed++;
+		        	if ($numberOfElementsToProcess == $numberOfElementsProcessed)
+		        	{
+		        		if ($errorOccurred == true)
+						{
+							$("#option-error-message-text").html('Problems occurred while trying to update the options. Make sure all fields are filled in.');
+							$("#option-error-message").fadeIn();
+						} else {
+							$("#option-success-message-text").html('Your options were successfully updated.');
+							$("#option-success-message").fadeIn();
+						}
+						$("html, body").animate({scrollTop: $("#options").offset().top + 35},'slow');
+						$.ajax({
+					    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_rebuild_product') }}",
+					      	type: "GET",
+					      	data: {
+					      		productId: '{{ data.product.id }}'
+					      	}
+					   	});
+						$("#ajax_loading").hide();
+						if ($("#options-tab-to-redirect-to").val() > -1)
+						{
+							$("#options .message").hide();
+							$(".sidebar-tabs").tabs("select", parseInt($("#options-tab-to-redirect-to").val()));
+						}
+		        	}
+		      	}
+		   	});
+		});
+	}
+}
+
+{# Function to load new option #}
+function loadNewOption($optionGroupId)
+{
+	$("#ajax_loading").show();
+	$nextElement = parseInt($("#option-count-"+$optionGroupId).val()) + 1;
+	$("#option-count-"+$optionGroupId).val($nextElement);
+	$.ajax({
+    	url: "{{ path('admin_'~settings.multipleItemsPath~'_ajax_add_option') }}",
+      	type: "GET",
+      	data: {
+      		id: $nextElement,
+      		optionGroupId: $optionGroupId,
+      		productId: '{{ data.product.id }}'
+      	},
+      	error: function(data) {
+        	$("#option-error-message-text").html('Sorry, there was an error adding the option. Please try again.');
+			$("#option-error-message").fadeIn();
+			$("html, body").animate({scrollTop: $("#option-error-message").offset().top - 100},'slow');
+			$("#ajax_loading").hide();
+      	},
+      	success: function(data) {
+  			$("#product-options-container-"+$optionGroupId).append(data);
+				$("#option-"+$optionGroupId.toString()+"-"+$nextElement.toString()+" :checkbox:not(.no-uniform), #option-"+$optionGroupId.toString()+"-"+$nextElement.toString()+" :radio:not(.no-uniform), #option-"+$optionGroupId.toString()+"-"+$nextElement.toString()+" select:not(.no-uniform), #option-"+$optionGroupId.toString()+"-"+$nextElement.toString()+" :file:not(.no-uniform)").uniform();
+				$("#option-"+$optionGroupId.toString()+"-"+$nextElement.toString()).fadeIn();
+				$("#option-"+$optionGroupId.toString()+"-"+$nextElement.toString()+" .button").each(function () {
+	            $(this).button({
+	            	icons: {
+	                	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+	                    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+	        	});
+	        });
+	        reOrderOptions(false);
+	        $(".selector, .uploader").removeClass("full").addClass("full");
+	        $("html, body").animate({scrollTop: $("#option-"+$optionGroupId.toString()+"-"+$nextElement.toString()).offset().top - 100},'slow');
+	        $("#ajax_loading").hide();
+      	}
+   	});
+}
+	
+{# Function to build the option indexes #}
+function buildOptionsIndex()
+{
+	$("#options .message").hide();
+	$(".form-error").remove();
+	$optionCount = 1;
+	$("li.product-option-container").each(function(index) {
+		$row = $(this);
+		$row.find("input.option-display-order").val($optionCount);
+	    $optionCount++;
+	});
+}
+
+{# Function to re-order the option indexes #}
+function reOrderOptions($updateOptions)
+{
+	$("#options .message").hide();
+	$(".form-error").remove();
+	$optionCount = 1;
+	$numberOfElementsToProcess = $("li.product-option-container:visible").length;
+	$numberOfElementsProcessed = 0;
+	$("li.product-option-container:visible").each(function(index) {
+		$row = $(this);
+		if ($row.find("input.option-display-order").val() != $optionCount)
+		{
+			if ($row.find("input.option-id").val() > 0)
+			{
+				$row.find("input.option-requires-update").val("1");
+			}
+		}
+		$row.find("input.option-display-order").val($optionCount);
+	    $optionCount++;
+	    $numberOfElementsProcessed++;
+	    if ($numberOfElementsProcessed == $numberOfElementsToProcess)
+	    {
+	    	if ($updateOptions)
+	    	{
+	    		updateOptions();
+	    	}
+	    }
+	});
+	$("li.product-option-container:hidden").each(function(index) {
+		$(this).remove();
+	});
+}

@@ -1,0 +1,53 @@
+{% extends ':Old:shop.html.twig' %}
+{% block title %}Making Online Shopping Safe - Fraud Prevention{% endblock %}
+{% block metatags %}
+	<meta name="description" content="Kitchen Appliance Centre are committed to making sure your online experience is as safe as possible whilst at the same time minimising credit and debit card fraud.">
+	<meta name="keywords" content="kitchen appliance centre, security, trust, customer service, card details, fraud, 3d secure, online shopping, safe">
+{% endblock %}
+{% block slider %}
+	<div class="container_8 clearfix">
+		<header>
+			<div class="slider-gallery-container">
+				<div class="slider-gallery">
+					<div class="slider-element">
+						<img src="{{ asset('/bundles/webilluminationshop/images/headers/pile-of-credit-cards.jpg') }}" alt="A pile of credit cards" />
+						<h3 class="right">Preventing Fraud</h3>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+{% endblock %}
+{% block body %}
+	<header>
+		<h1>Making Online Shopping Safe</h1>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_6"> 
+			<div class="portlet">
+				<header>
+	                <h2>Fraud Prevention and 3D Secure</h2>
+	            </header>
+				<section>
+					<div class="clearfix">
+						<p class="no-margin-top">We are committed to making sure your online experience is as safe as possible whilst at the same time minimising credit and debit card fraud.</p>
+						<p>To do this we have implemented the following:</p>
+						<ul>
+							<li>When confirming your order, only the last four digits from your credit card will be revealed.</li>
+    						<li>The entire credit card number will only be transmitted to the appropriate credit card company during order processing.</li>
+    						<li>Our customer's security is of highest priority and we have invested in 3D Secure to give complete peace of mind.</li>
+							<li>3D Secure is the latest fraud prevention initiatives from Visa and MasterCard known as Verified by Visa and MasterCard Secure Code respectively.</li>
+							<li>3D Secure is a new security measure now required by most banks. This extra step to complete your order protects your card from fraudulent use online. When you click on the 'Confirm' button you will see a window open up entitled 3DSecure Authentication. The onscreen instructions will take you through what you need to do.</li>
+							<li>When submitting your card details, depending on the card type you have entered for your payment, you will be redirected to a secure Visa or MasterCard page with one of the above logos. These pages are on your bank's secure servers and at no stage will we be able to see or access this information.</li>
+							<li>If you have already registered your card for 3D Secure, you will be asked to enter your 3D Secure password.</li>
+							<li>If you have not registered your card before, you will have the option to do so, there and then. If you have not registered your card and do not wish to do so you may have the option to bypass the process depending on your card type and your bank. Some banks are forcing mandatory sign up to the scheme to upgrade your security to the highest level with immediate effect.</li>
+							<li>We highly recommend that you sign up to this new security initiative - it is for your protection when shopping online and will soon become the standard in online shopping for all websites.</li>
+							<li>If you have any questions regarding 3D Secure please <a href="{{ path('content_contact_us') }}">contact us</a>. Your bank/card provider will also be happy to provide you with information regarding 3D Secure.</li>
+						</ul>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	   	<div class="clear"></div>
+	</section>
+{% endblock %}

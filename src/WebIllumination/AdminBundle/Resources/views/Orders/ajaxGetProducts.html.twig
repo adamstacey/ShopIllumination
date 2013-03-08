@@ -1,0 +1,64 @@
+<h3>Items Ordered</h3>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td width="1" class="ac label" colspan="2">Quantity</td>
+		<td class="al label">Product</td>
+		<td class="ac label" width="1">Code</td>
+		<td class="ac label" width="1" colspan="3">Price</td>
+	</tr>
+	{% for product in data.products %}
+		<tr>
+			<td class="ac{% if product.quantity > 1 %} gradient-background-red{% endif %}" width="1">{{ product.quantity }}</td>
+			<td class="ac" width="1">&times;</td>
+			<td class="al">{{ product.header }}</td>
+			<td class="ac" width="1">{{ product.productCode }}</td>
+			<td class="ac" width="1">&pound;{{ product.unitCost|number_format(2) }}</td>
+			<td class="ac" width="1">=</td>
+			<td class="ac" width="1"><strong>&pound;{{ product.subTotal|number_format(2) }}</strong></td>
+		</tr>
+	{% else %}
+		<tr>
+			<td colspan="7">Sorry, there are no products.</td>
+		</tr>
+	{% endfor %}
+</table>
+<table class="margin-top-10" width="100%" cellspacing="0" border="0" cellpadding="0">
+	<tr>
+		<td class="ar label">Subtotal before Delivery Charges (inc. VAT):</td>
+		<td width="1">&pound;{{ data.item.subTotal|number_format(2) }}</td>
+	</tr>
+	<tr>
+		<td class="ar label">Delivery Charge (inc. VAT):</td>
+		{% if data.item.deliveryType == 'Collection' %}
+			<td width="1" class="gradient-background-red">COLLECTION</td>
+		{% else %}
+			{% if data.item.deliveryCharge == 0 %}
+				<td width="1" class="gradient-background-green">FREE</td>
+			{% else %}
+				<td width="1">&pound;{{ data.item.deliveryCharge|number_format(2) }}</td>
+			{% endif %}
+		{% endif %}
+	</tr>
+	{% for donation in data.donations %}
+		{% if donation.donation > 0 %}
+			<tr>
+				<td class="ar label"><img class="margin-right-10" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" height="10" />{{ donation.description }}:</td>
+				<td width="1" class="gradient-background-green">&pound;{{ donation.donation|number_format(2) }}</td>
+			</tr>
+		{% endif %}
+	{% endfor %}
+	{% if data.item.discount > 0 %}
+		<tr>
+			<td class="ar label">Discount:</td>
+			<td width="1" class="gradient-background-green">&pound;{{ data.item.discount|number_format(2) }}</td>
+		</tr>
+	{% endif %}
+	<tr>
+		<td class="ar label">VAT (20%):</td>
+		<td width="1">&pound;{{ data.item.vat|number_format(2) }}</td>
+	</tr>
+	<tr>
+		<td class="ar label">Total Paid (inc. VAT):</td>
+		<td width="1"><strong>&pound;{{ data.item.total|number_format(2) }}</strong></td>
+	</tr>
+</table>

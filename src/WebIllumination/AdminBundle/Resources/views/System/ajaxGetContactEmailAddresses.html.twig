@@ -1,0 +1,55 @@
+<div id="contact-email-address-success-message-{{ contactId }}" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-success ui-corner-all">
+    	<span class="ui-icon ui-icon-circle-check"></span>
+        <p><strong>SUCCESS:</strong> <span id="contact-email-address-success-message-text-{{ contactId }}"></span></p>
+    </div>
+</div>
+<div id="contact-email-address-error-message-{{ contactId }}" class="ui-widget message closeable ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-alert"></span>
+        <p><strong>ERROR:</strong> <span id="contact-email-address-error-message-text-{{ contactId }}"></span></p>
+    </div>
+</div>
+<div id="contact-email-address-confirm-delete-{{ contactId }}" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all"> 
+        <span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the highlighted contact email address?</p>
+        <p>
+        	<button data-contact-id="{{ contactId }}" data-index="" id="contact-email-address-confirm-delete-button-{{ contactId }}" class="button ui-button-red action-delete-contact-email-address" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-contact-id="{{ contactId }}" data-index="" id="contact-email-address-cancel-delete-button-{{ contactId }}" class="button ui-button-blue action-cancel-delete-contact-email-address">Cancel</button>
+        </p>
+    </div>
+</div>
+<div id="contact-email-address-confirm-deletes-{{ contactId }}" class="ui-widget message ui-helper-hidden">
+    <div class="ui-state-error ui-corner-all">
+    	<span class="ui-icon ui-icon-help"></span>
+        <p><strong>WARNING:</strong> Are you sure you want to delete the selected contact email addresses?</p>
+        <p>
+        	<button data-contact-id="{{ contactId }}" id="contact-email-address-confirm-deletes-button-{{ contactId }}" class="button ui-button-red action-delete-contact-email-addresses" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+        	<button data-contact-id="{{ contactId }}" id="contact-email-address-cancel-deletes-button-{{ contactId }}" class="button ui-button-blue action-cancel-delete-contact-email-addresses">Cancel</button>
+        </p>
+    </div>
+</div>
+<div class="clearfix">
+    <div class="form-input-long">
+		<div class="contact-email-addresses-container">
+			<input type="hidden" id="contact-email-address-count-{{ contactId }}" value="{% if contactEmailAddresses|length > 1 %}{{ contactEmailAddresses|length }}{% else %}1{% endif %}" />
+			<ul class="list-fields contact-email-addresses-container" id="form-contact-email-addresses-container-{{ contactId }}">
+				{% for contactEmailAddress in contactEmailAddresses %}
+					{% include 'WebIlluminationAdminBundle:System:contactEmailAddress.html.twig' with {'contactId': contactId, 'index': loop.index, 'data': contactEmailAddress, 'contactEmailAddressTypes': contactEmailAddressTypes} %}
+			    {% else %}
+			    	{% include 'WebIlluminationAdminBundle:System:contactEmailAddress.html.twig' with {'contactId': contactId, 'index': "1", 'contactEmailAddressTypes': contactEmailAddressTypes} %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="clearfix">
+    <div class="form-input-long buttons no-margin-bottom">
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-green action-update-contact-email-addresses" data-icon-primary="ui-icon-check">Update</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-red action-confirm-delete-contact-email-addresses ui-helper-hidden" data-icon-primary="ui-icon-closethick">Delete</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-blue action-add-new-contact-email-address" data-icon-primary="ui-icon-plusthick">Add</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-blue action-select-all-contact-email-addresses" data-icon-primary="ui-icon-radio-on">Select All</button>
+    	<button data-contact-id="{{ contactId }}" class="button ui-button-blue action-unselect-all-contact-email-addresses ui-helper-hidden" data-icon-primary="ui-icon-bullet">Unselect All</button>
+    </div>
+</div>

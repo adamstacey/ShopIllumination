@@ -1,0 +1,40 @@
+{# Load the files #}	
+function loadFiles()
+{
+	$.ajax({
+		type: "GET",
+		url: "{{ path('system_ajax_get_files') }}",
+		beforeSend: function() {
+			$filesLoaded = false;
+			$("#ajax-images-loading").show();
+		},
+		data: {
+			objectId: {{ data.brand.id }},
+			objectType: 'brand'
+		},
+		error: function(data) {
+  			$("#ajax-files-loading").hide();
+      		$("#file-loading-error").fadeIn();
+      		$filesLoaded = true;
+	        checkDataLoaded();
+	  	},
+		success: function(data) {
+			$("#ajax-files").html(data);
+			$("#ajax-files :checkbox:not(.no-uniform), #ajax-files :radio:not(.no-uniform), #ajax-files select:not(.no-uniform)").uniform();
+			$("#ajax-files .button").each(function () {
+    	        $(this).button({
+        	    	icons: {
+            	    	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                	    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+    	    	});
+        	});
+	        $("#ajax-files .selector, #ajax-files .uploader").addClass("full");
+	        $("#ajax-files").fadeIn();
+	        $filesLoaded = true;
+	        checkDataLoaded();
+    	    $("#ajax-files-loading").hide();
+		}
+	});
+}

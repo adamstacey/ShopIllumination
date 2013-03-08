@@ -1,0 +1,6 @@
+{% if basket.discounts.membershipCardNumber == 0 %}
+	{% if basket.discounts.possibleDiscount > 0 %}
+		<p class="basket-message"><strong>SAVE NOW:</strong> You could save &pound;{{ basket.discounts.possibleDiscount|number_format(2) }} on your order with a Privilege card!</p>
+	{% endif %}					
+	<h2 class="basket-privilege-card action-add-membership-card-to-basket"><img class="fl" src="{{ asset('/bundles/webilluminationshop/images/icons/privilege-card.png') }}" width="48" height="30" border="0" alt="Privilege Card" /><strong>Get Up to 10% off</strong> Click here to add our privilege card for only &pound;1</h2>
+{% endif %}

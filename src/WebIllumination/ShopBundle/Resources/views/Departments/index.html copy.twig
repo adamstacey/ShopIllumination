@@ -1,0 +1,64 @@
+{% extends ':Old:shop.html.twig' %}
+{% block title %}{{ department.pageTitle }} | {{ parent() }}{% endblock %}
+{% block body %}
+	<header>
+		<h2>{{ department.header }}</h2>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_2"> 
+			<div class="portlet">
+				<header>
+	                <h2>Refine Your Search</h2>
+	            </header>
+				<section>
+					<p class="no-padding no-margin">No features available.</p>
+				</section>
+	        </div>
+	    </div>
+		<div class="grid_4"> 
+			<div class="portlet">
+				<header>
+	                <h2 id="products-found"><img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /> Loading Products&hellip; (0%)</h2>
+	            </header>
+				<section class="no-padding-right no-padding-bottom">
+					{% for product in department.products %}
+						<div class="product ui-helper-hidden" data-product-id="{{ product }}" id="product-{{ product }}"></div>
+			        {% else %}
+			        	<p class="no-padding-top no-margin-top">No products have been found.</p>
+			        {% endfor %}
+		        	<div class="clear"></div>
+				</section>
+	        </div>
+	    </div>
+	   	<div class="clear"></div>
+	</section>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var $totalProducts = {{ department.products|length }};
+			var $totalProductsLoaded = 0;
+			var $totalProductErrors = 0;
+			$(".product").each(function(index) {
+				var $productId = $(this).attr("data-product-id");
+				$("#product-"+$productId).load("{{ path('products_ajax_get_product_listing') }}", { id: $productId }, function(response, status, xhr) {
+					if (status == "error")
+					{
+						$totalProductErrors++;
+					} else {
+						$totalProductsLoaded++;
+					}
+					var $loadedPercentage = Math.ceil(($totalProductsLoaded / $totalProducts) * 100);
+					$("#products-found").html('<img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /> Loading Products&hellip; ('+$loadedPercentage+'%)');
+					if (($totalProductsLoaded + $totalProductErrors) == $totalProducts)
+					{
+						if (($totalProductsLoaded > 1) || ($totalProductsLoaded < 1))
+						{
+							$("#products-found").html('Found '+$totalProductsLoaded+' Products');
+						} else {
+							$("#products-found").html('Found '+$totalProductsLoaded+' Product');
+						}
+					}
+				});			
+			});
+		});
+	</script>
+{% endblock %}

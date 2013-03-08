@@ -1,0 +1,368 @@
+<script type="text/javascript" defer="defer">
+	$(document).ready(function() {
+		{# Set the form widths #}
+		$(".selector, .uploader").addClass("full");
+		
+		{# Update the closeable messages #}
+		$(".message.closeable").prepend('<span class="message-close ui-icon ui-icon-circle-close"></span>').find('.message-close').click(function () {
+	    	$(this).parent().fadeOut();
+	    });
+		
+		{# Select and unselect all rows #}
+		$(".action-unselect-all-images").hide();
+		$(".action-select-all-images").live('click', function() {
+			$("li.image-container td.delete div.checker span").addClass("checked");
+			$("li.image-container").addClass("ui-state-highlight");
+			$("input.image-select").attr("checked", "checked");
+			$(".action-confirm-delete-images").fadeIn();
+			$(".action-select-all-images").hide();
+			$(".action-unselect-all-images").fadeIn();
+		});
+		$(".action-unselect-all-images").live('click', function() {
+			$("li.image-container td.delete div.checker span").removeClass("checked");
+			$("li.image-container").removeClass("ui-state-highlight");
+			$("input.image-select").attr("checked", "");
+			$(".action-confirm-delete-images").hide();
+			$(".action-unselect-all-images").hide();
+			$(".action-select-all-images").fadeIn();
+		});
+		
+		{# Select rows for selection #}
+		$(".action-confirm-delete-images").hide();
+		$("input.image-select").live('change', function() {
+			if ($(this).is(":checked"))
+			{
+				$("#image-"+$(this).attr("data-index")).addClass("ui-state-highlight");
+			} else {
+				$("#image-"+$(this).attr("data-index")).removeClass("ui-state-highlight");
+			}
+			if ($("li.image-container:visible .image-select:checked").length < $("li.image-container:visible .image-select").length)
+			{
+				$(".action-select-all-images").fadeIn();
+			} else {
+				$(".action-select-all-images").hide();
+			}
+			if ($("li.image-container:visible .image-select:checked").length > 0)
+			{
+				$(".action-confirm-delete-images").fadeIn();
+				$(".action-unselect-all-images").fadeIn();
+			} else {
+				$(".action-confirm-delete-images").hide();
+				$(".action-unselect-all-images").hide();
+			}
+		});
+		
+		{# Add a new image #}
+		$(".action-add-new-image").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			loadNewImage();
+		});
+		
+		{# Detect any changes #}
+		$(".image-title, .image-description, .image-link, .image-alignment").live('change', function() {
+			$("#form-image-requires-update-"+$(this).closest("li.image-container").attr("data-index")).val("1");
+		});
+		
+		{# Dragabble sorting #}
+		$("#form-images-container").sortable({
+			placeholder: "highlighted-sortable",
+			toleranceElement: '> div',
+			update: function(event, ui) {
+				reOrderImages();
+			}
+		});
+		
+		{# Update images and leave #}
+		$(".action-update-images-and-leave").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			updateImages();
+		});
+		
+		{# Update images #}
+		$(".action-update-images").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$("#images-tab-to-redirect-to").val("-1");
+			updateImages();
+		});
+		
+		{# Confirm delete of an image #}
+		$(".action-confirm-delete-image").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");
+			if ($("#form-image-id-"+$elementIndex).val() == "0")
+			{
+				$("#image-"+$elementIndex).fadeOut(function() {
+        			$("#image-"+$elementIndex).remove();
+        			if ($("li.image-container").length < 1)
+        			{
+        				$(".action-confirm-delete-images").hide();
+						$(".action-unselect-all-images").hide();
+						$(".action-select-all-images").fadeIn();
+        				loadNewImage();
+        			} else {
+        				reOrderImages();
+        			}
+        			$("#ajax_loading").hide();
+        		});
+			} else {
+				$("#image-confirm-delete-button").attr("data-index", $elementIndex);
+				$("#image-cancel-delete-button").attr("data-index", $elementIndex);
+				$("#image-confirm-delete").fadeIn();
+				$("html, body").animate({scrollTop: $("#image-confirm-delete").offset().top - 10},'slow');
+				$("#image-"+$elementIndex).addClass("ui-state-error");
+				$("#image-"+$elementIndex+" td.delete div.checker span").addClass("checked");
+				$("#image-"+$elementIndex+" input.image-select").attr("checked", "checked");
+				$("#ajax_loading").hide();
+			}
+		});
+		
+		{# Cancel delete of an image #}
+		$(".action-cancel-delete-image").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");
+			$("#image-"+$elementIndex).removeClass("ui-state-error");
+			$("#image-"+$elementIndex+" td.delete div.checker span").removeClass("checked");
+			$("#image-"+$elementIndex+" input.image-select").attr("checked", "");
+			$("#image-confirm-delete").hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete an image #}
+		$(".action-delete-image").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$elementIndex = $(this).attr("data-index");				
+			$.ajax({
+		    	url: "{{ path('system_ajax_delete_image') }}",
+		      	type: "GET",
+		      	dataType: "json",
+		      	data: {
+		      		id: $("#form-image-id-"+$elementIndex).val(),
+		      		elementIndex: $elementIndex
+		      	},
+		      	error: function(data) {
+		      		$("#image-error-message-text").html('Sorry, there was a problem deleting your image. Please try again.');
+		      		$("#image-error-message").fadeIn();
+		      		$("#image-confirm-delete").hide();
+		      		$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+		        	$("#ajax_loading").hide();
+		      	},
+		      	success: function(data) {
+		        	if (data.response == 'success')
+		        	{
+		        		$("#image-"+data.elementIndex).fadeOut(function() {
+		        			$("#image-"+data.elementIndex).remove();
+		        			if ($("li.image-container").length < 1)
+		        			{
+		        				$(".action-confirm-delete-images").hide();
+								$(".action-unselect-all-images").hide();
+								$(".action-select-all-images").fadeIn();
+		        				loadNewImage();
+		        			} else {
+		        				reOrderImages();
+		        			}
+		        		});
+		        	} else {
+		        		$("#image-error-message-text").html('Sorry, there was a problem deleting your image. Please try again.');
+		        		$("#image-error-message").fadeIn();
+		        		$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+		        	}
+		        	$("#image-confirm-delete").hide();
+		        	$("#ajax_loading").hide();
+		      	}
+		   	});
+		});
+		
+		{# Confirm deleting of images #}
+		$(".action-confirm-delete-images").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$deletesNeedingConfirmation = 0;
+			$("li.image-container:visible input.image-select:checked").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				if ($("#form-image-id-"+$elementIndex).val() == "0")
+				{
+					$("#image-"+$elementIndex).fadeOut(function() {
+	        			$("#image-"+$elementIndex).remove();
+	        			if ($("li.image-container").length < 1)
+	        			{
+	        				$(".action-confirm-delete-images").hide();
+							$(".action-unselect-all-images").hide();
+							$(".action-select-all-images").fadeIn();
+	        				loadNewImage();
+	        			} else {
+	        				reOrderImages();
+	        			}
+	        			$("#ajax_loading").hide();
+	        		});
+				} else {
+					$deletesNeedingConfirmation++;
+				}
+			});
+			if ($deletesNeedingConfirmation > 0)
+			{
+				$("#image-confirm-deletes").fadeIn();
+				$("html, body").animate({scrollTop: $("#image-confirm-deletes").offset().top - 10},'slow');
+			}
+			$("#ajax_loading").hide();
+		});
+		
+		{# Cancel deleting of images #}
+		$(".action-cancel-delete-images").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$("#image-confirm-deletes").hide();
+			$("#ajax_loading").hide();
+		});
+		
+		{# Delete images #}
+		$(".action-delete-images").live('click', function() {
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$("#ajax_loading").show();
+			$errorOccurred = false;
+			$numberOfElementsToDelete = $("li.image-container:visible input.image-select:checked").length;
+			$numberOfElementsProcessed = 0;
+			if ($numberOfElementsToDelete > 0)
+			{
+				$("li.image-container:visible input.image-select:checked").each(function(index) {
+					$elementIndex = $(this).attr("data-index");				
+					$.ajax({
+				    	url: "{{ path('system_ajax_delete_image') }}",
+				      	type: "GET",
+				      	dataType: "json",
+				      	data: {
+				      		id: $("#form-image-id-"+$elementIndex).val(),
+				      		elementIndex: $elementIndex
+				      	},
+				      	error: function(data) {
+				      		$errorOccurred = true;
+				      		$numberOfElementsProcessed++;
+				      		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+				        	{
+				        		if ($errorOccurred)
+				        		{
+				        			$("#image-error-message-text").html('Sorry, there were problems deleting your selected images. Please try again.');
+				        			$("#image-error-message").fadeIn();
+				        			$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+				        		}
+				        		if ($("li.image-container:visible").length < 1)
+			        			{
+			        				$(".action-confirm-delete-images").hide();
+									$(".action-unselect-all-images").hide();
+									$(".action-select-all-images").fadeIn();
+			        				loadNewImage();
+			        			} else {
+				        			reOrderImages();
+				        		}
+				        		$("#image-confirm-deletes").hide();
+				        		if ($("li.image-container:visible input.image-select:checked").length < 1)
+				        		{
+				        			$(".action-confirm-delete-images").fadeOut();
+				        		}
+				        		$("#ajax_loading").hide();
+				        	}
+				      	},
+				      	success: function(data) {
+				        	if (data.response == 'success')
+				        	{
+				        		$("#image-"+data.elementIndex).fadeOut(function() {
+				        			$("#image-"+data.elementIndex).remove();
+				        			$numberOfElementsProcessed++;
+				        			if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+						        	{
+						        		if ($errorOccurred)
+						        		{
+						        			$("#image-error-message-text").html('Sorry, there were problems deleting your selected images. Please try again.');
+						        			$("#image-error-message").fadeIn();
+						        			$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+						        		}
+						        		if ($("li.image-container:visible").length < 1)
+					        			{
+					        				$(".action-confirm-delete-images").hide();
+											$(".action-unselect-all-images").hide();
+											$(".action-select-all-images").fadeIn();
+					        				loadNewImage();
+					        			} else {
+						        			reOrderImages();
+						        		}
+						        		$("#image-confirm-deletes").hide();
+						        		if ($("li.image-container:visible input.image-select:checked").length < 1)
+						        		{
+						        			$(".action-confirm-delete-images").fadeOut();
+						        		}
+						        		$("#ajax_loading").hide();
+						        	}
+				        		});
+				        	} else {
+				        		$errorOccurred = true;
+				        		$numberOfElementsProcessed++;
+				        		if ($numberOfElementsToDelete == $numberOfElementsProcessed)
+					        	{
+					        		if ($errorOccurred)
+					        		{
+					        			$("#image-error-message-text").html('Sorry, there were problems deleting your selected images. Please try again.');
+					        			$("#image-error-message").fadeIn();
+					        			$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+					        		}
+					        		if ($("li.image-container:visible").length < 1)
+				        			{
+				        				$(".action-confirm-delete-images").hide();
+										$(".action-unselect-all-images").hide();
+										$(".action-select-all-images").fadeIn();
+				        				loadNewImage();
+				        			} else {
+					        			reOrderImages();
+					        		}
+					        		$("#image-confirm-deletes").hide();
+					        		if ($("li.image-container:visible input.image-select:checked").length < 1)
+					        		{
+					        			$(".action-confirm-delete-images").fadeOut();
+					        		}
+					        		$("#ajax_loading").hide();
+					        	}
+				        	}
+				      	}
+				   	});
+				});
+			}
+		});
+		
+		$(".sidebar-tabs").bind("tabsselect", function(event, ui) {
+			if ($("input.image-requires-update[value='1']").length > 0)
+			{
+				$("#images .message").hide();
+				$(".form-error").remove();
+				$("#image-leave-images-button").attr("data-tab-index", ui.index);
+				$("#images-tab-to-redirect-to").val(ui.index);
+				$("#image-confirm-leave").fadeIn();
+				$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+				return false;
+			}
+			return true;
+		});
+		
+		$(".action-leave-images").live('click', function() {
+			$("input.image-requires-update").val("0");
+			$("input.image-id[value='0']").each(function(index) {
+				$elementIndex = $(this).attr("data-index");
+				$("#image-"+$elementIndex).remove();
+			});
+			$("#images .message").hide();
+			$(".form-error").remove();
+			$(".sidebar-tabs").tabs("select", parseInt($(this).attr("data-tab-index")));
+			$("html, body").animate({scrollTop: $("#images").offset().top + 35},'slow');
+		});					
+	});
+	{% include 'WebIlluminationAdminBundle:System:ajaxGetImagesFunctions.js.twig' with {'objectId': objectId, 'objectType': objectType, 'imageType': imageType, 'images': images} %}
+</script>

@@ -25,7 +25,7 @@ use Solarium_Query_Select;
 class ProductController extends Controller
 {
     /**
-     * @Route("/", name="admin_products_index")
+     * @Route("/", name="admin_listing_products")
      * @Method({"GET"})
      * @Template()
      */
@@ -108,7 +108,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/", name="admin_products_index_post")
+     * @Route("/", name="admin_listing_products_post")
      * @Method({"POST"})
      */
     public function indexPostAction(Request $request)
@@ -145,7 +145,7 @@ class ProductController extends Controller
                 break;
         }
 
-        return $this->redirect($this->generateUrl('admin_products_index'));
+        return $this->redirect($this->generateUrl('admin_listing_products'));
     }
 
     /**
@@ -196,7 +196,7 @@ class ProductController extends Controller
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('admin_products_index'));
+                return $this->redirect($this->generateUrl('admin_listing_products'));
             }
         }
 
@@ -228,7 +228,7 @@ class ProductController extends Controller
                 $em->persist($product);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('admin_products_index'));
+                return $this->redirect($this->generateUrl('admin_listing_products'));
             }
         }
 
@@ -254,7 +254,7 @@ class ProductController extends Controller
         $em->remove($product);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('admin_products_index'));
+        return $this->redirect($this->generateUrl('admin_listing_products'));
     }
 
     /**

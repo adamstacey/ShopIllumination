@@ -1,0 +1,157 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}Order {{ data.item.id }} - Notes | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} %}
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemHeader.html.twig' with {'data': data} %}
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+    	<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
+	    	<div class="grid_6">
+				<div id="confirm-multiple-delete" class="info-message ui-helper-hidden">
+	    			<div class="fr no-margin no-padding">
+			        	<button class="fl button ui-corner-left ui-button-black action-cancel-multiple-delete">Cancel</button>
+			        	<button class="fl button ui-corner-right icon-set-white ui-button-red action-multiple-delete" data-icon-primary="ui-icon-circle-cross">Confirm Delete</button>
+			        </div>
+					<span class="info-message-icon ui-icon ui-icon-help"></span>
+					<p><strong class="important">WARNING:</strong> Are you sure you want to delete the selected notes below?</p>
+					<div class="clear"></div>
+				</div>
+				<div class="info-message">
+					<span class="info-message-icon ui-icon ui-icon-info"></span>
+					<p><strong class="important">PLEASE NOTE:</strong> If you want to add a note that the customer will <strong>NOT</strong> be able to view ensure you set the type of note to "Staff".</p>
+					<div class="clear"></div>
+				</div>
+				<div id="add" class="portlet margin-bottom-15 ui-helper-hidden">
+					<header>
+	           			<h2>Add a Note</h2>
+	                </header>
+					<section class="no-padding">
+						<div id="listing" class="position-relative">
+							<table class="data-table" id="data-add" width="100%">
+								<thead>
+									<tr>
+										<th width="19" class="ac"><input type="checkbox" class="action-select-all-add" value="1" /></th>
+										<th width="90" class="ac">Type</th>
+										<th class="ac">Notify?</th>
+										<th class="al">Note</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="add-row" class="blue item-add ui-helper-hidden">
+										<td width="19" class="ac select-add vat">
+											<input type="checkbox" class="no-uniform action-select-add" data-id="listing-add-select" id="listing-add-select-1" data-name="add-select" name="add-select[1]" value="1" />
+											<input type="hidden" data-id="listing-add-item" id="listing-add-item-1" data-name="add-item" name="add-item[1]" value="1" />
+										</td>
+										<td width="90" class="ac vat blue">
+											<select data-id="listing-add-note-type" id="listing-add-note-type-1" data-name="add-note-type" name="add-note-type[1]" class="add-note-type no-uniform full">
+												<option value="staff" selected="selected">Staff</option>
+												<option value="customer">Customer</option>
+											</select>
+										</td>
+										<td width="19" class="ac vat">
+											<div class="ui-helper-hidden">
+												<input type="checkbox" class="no-uniform" data-id="listing-add-notified" id="listing-add-notified-1" data-name="add-notified" name="add-notified[1]" value="1" />
+											</div>
+										</td>
+										<td class="al vat">
+											<textarea data-add-required="required" data-message="Enter a note" rows="3" class="no-uniform full" data-id="listing-add-note" id="listing-add-note-1" data-name="add-note" name="add-note[1]"></textarea>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+			        	<div class="clear"></div>
+		        		<div class="clearfix padding-10">
+		        			<button type="button" class="fr small button icon-set-white ui-corner-right ui-button-black action-close-add" data-icon-primary="ui-icon-arrow-up">Close</button>
+		        			<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-red action-multiple-delete-add" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+			        		<button type="button" class="fr small button icon-set-white ui-corner-none ui-button-green action-add-another" data-icon-primary="ui-icon-circle-plus">Add Another</button>
+			        		<button id="button-listing-add-go-back" type="button" class="fr small button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Save &amp; Go Back</button>
+			        		<button id="button-listing-add" type="button" class="fr small button icon-set-white ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Save</button>
+						</div>
+					</section>
+		        </div>
+	    		<div class="portlet">
+					<header>
+						<button type="button" class="portlet-header-button button ui-button-grey icon-set-black fr action-add" data-icon-primary="ui-icon-circle-plus">Add a Note</button>
+	           			<h2 id="listing-title-notes">Notes ({{ data.items|length }})</h2>
+	                </header>
+					<section class="no-padding">
+						<div id="listing" class="position-relative">
+							<div class="listing-settings">
+								<div class="fr filter-listing-container">
+									<div class="listing-settings-title fl">Note Type</div>
+									<select class="filter-listing full fl" data-filter="note-type" data-listing-title="Notes" data-listing-object="notes">
+						        		<option value="">All Note Types</option>
+						        		<option value="staff">Staff</option>
+						        		<option value="customer">Customer</option>
+						        	</select>
+								</div>
+							    <div class="clear"></div>
+							</div>
+							{% if data.items|length > 0 %}
+								<table class="data-table" id="listing-notes" width="100%">
+									<thead>
+										<tr>
+											<th width="19" class="ac"><input type="checkbox" class="action-select-all-add" value="1" /></th>
+											<th width="1" class="ar">&nbsp;</th>
+											<th width="1" class="ac">Type</th>
+                                            <th width="1" class="ac">Notified?</th>
+											<th class="ac">Creator</th>
+											<th class="ac">Date</th>
+											<th class="al">Note</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for item in data.items %}
+                                            <tr class="item{% if item.noteType == 'staff' %} blue{% endif %}" id="item-{{ item.id }}" data-note-type="{{ item.noteType }}">
+                                                <td width="19" class="ac select">
+                                                    <input data-id="{{ item.id }}" type="checkbox" class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" />
+                                                </td>
+                                                <td width="1" class="ar small">{{ loop.index }}</td>
+                                                <td width="90" class="ac filterable small{% if item.noteType == 'staff' %} blue{% endif %}">
+                                                    <select data-id="listing-note-type" id="listing-note-type-{{ item.id }}" data-name="listing-note-type" name="listing-note-type[{{ item.id }}]"  class="listing-note-type uniform full">
+                                                        <option value="staff" {% if item.noteType == 'staff' %}selected="selected"{%  endif  %}>Staff</option>
+                                                        <option value="customer" {% if item.noteType == 'customer' %}selected="selected"{%  endif  %}>Customer</option>
+                                                    </select>
+                                                </td>
+                                                <td width="1" class="ac small{% if item.noteType == 'customer' %} gradient-background-{{ (item.notified > 0?'orange':'green') }}{% endif %}">{% if item.noteType == 'customer' %}{{ (item.notified > 0?'YES':'NO') }}{% else %}-{% endif %}</td>
+                                                <td class="ac"><strong>{{ item.creator }}</strong></td>
+                                                <td class="ac">{{ item.createdAt|date("d/m/Y h:iA") }}</td>
+                                                <td class="al">
+                                                    <textarea data-add-required="required" data-message="Enter a note" rows="3" class="no-uniform full" data-id="listing-note" id="listing-note-{{ item.id }}" data-name="listing-note" name="listing-note[{{ item.id }}]">{{ item.note|raw|nl2br }}</textarea>
+                                                </td>
+                                            </tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							{% else %}
+								<p class="no-results">Sorry, no notes were found.</p>
+							{% endif %}
+						</div>
+			        	<div class="clear"></div>
+		        		<div id="float-buttons" class="clearfix padding-15">
+					        <div id="float-buttons-content" class="float-buttons clearfix buttons no-margin">
+                                <input type="hidden" value="" id="form-extra-action" name="extra-action" />
+                                <input type="hidden" value="0" id="form-delete" name="delete" />
+                                <input type="hidden" value="0" id="form-go-back" name="go-back" />
+                                <input type="hidden" value="0" id="form-save-required" />
+                                <a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.item.parentId}) }}" id="button-go-back" class="fr icon-set-white ui-corner-right button ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
+                                <button class="fr button icon-set-white ui-corner-none ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-circle-cross">Delete Selected</button>
+                                <button id="button-update-go-back" type="submit" class="fr button icon-set-white ui-corner-none ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected &amp; Go Back</button>
+                                <button id="button-update" type="submit" class="fr button icon-set-white ui-corner-left ui-button-green" data-icon-primary="ui-icon-circle-tick">Update Selected</button>
+                            </div>
+						</div>
+					</section>
+		        </div>
+			</div>
+		</form>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemScript.js.twig' with {'data': data} %}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}{{ data.product.pageTitle }}  | {{ parent() }}{% endblock %}
+{% block headerscripts %}
+	{{ parent() }}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/tinymce/jquery.tinymce.js' output='js/tinymce.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/file-upload.js' output='js/file-upload.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+	{#<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart','table']}]}"></script>#}
+{% endblock %}
+{% block leftmenu %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:Brands:leftMenu.html.twig' %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	<a href="{{ path('admin_'~settings.multipleItemsPath) }}" class="button ui-button-blue fr" data-icon-primary="ui-icon-triangle-1-w">Back</a>
+	<h2>{{ data.product.header }}</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+        <div class="grid_6">
+            <div class="portlet">
+                <header>
+                    <h2>Product Information</h2>
+                </header>
+                <section>
+                    <div class="sidebar-tabs">
+                        <ul>
+                            <li id="tab-general"><a href="#general">General</a></li>
+                            <li id="tab-description"><a href="#description">Description</a></li>
+                            <li id="tab-images"><a href="#images">Images</a></li>
+                            <li id="tab-prices"><a href="#prices">Prices</a></li>
+                            <li id="tab-options"><a href="#options">Options</a></li>
+                            <li id="tab-features"><a href="#features">Features</a></li>
+                            <li id="tab-related-products"><a href="#related-products">Related Products</a></li>
+                            <li id="tab-cheaper-alternatives"><a href="#cheaper-alternatives">Cheaper Alternatives</a></li>
+                            <li id="tab-unique-product-identifiers"><a href="#unique-product-identifiers">Unique Product Identifiers</a></li>
+                            <li id="tab-files"><a href="#files">Files</a></li>
+                            <li id="tab-package-dimensions"><a href="#package-dimensions">Package Dimensions</a></li>
+                            <li id="tab-guarantees"><a href="#guarantees">Guarantees</a></li>
+                            <li id="tab-redirects"><a href="#redirects">Redirects</a></li>
+                            <li id="tab-seo"><a href="#seo">SEO</a></li>
+                        </ul> 
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateGeneral.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateDescription.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateImages.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updatePrices.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateOptions.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateFeatures.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateRelatedProducts.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateCheaperAlternatives.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateUniqueProductIdentifiers.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateFiles.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updatePackageDimensions.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateSeo.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateGuarantees.html.twig' with {'settings': settings, 'data': data} %}
+                        {% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateRedirects.html.twig' with {'settings': settings, 'data': data} %}
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~settings.multipleItemsModel~':updateScript.js.twig' with {'settings': settings, 'data': data} %}
+{% endblock %}

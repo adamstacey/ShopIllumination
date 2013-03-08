@@ -1,0 +1,162 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}{{ data.item.name }} - Redirects | {{ parent() }}{% endblock %}
+{% block leftmenu %}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':itemLeftMenu.html.twig' with {'data': data} %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	<a href="{{ path('admin_'~data.settings.multiplePath) }}" id="button-go-back" class="fr button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+	<h2>{{ data.item.name }}</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix no-padding-top">
+    	<div class="grid_6">
+    		<div id="confirm-multiple-delete" class="info-message ui-helper-hidden">
+    			<div class="fr no-margin no-padding">
+		        	<button class="fl button ui-corner-none ui-corner-tl ui-corner-bl ui-button-blue action-cancel-multiple-delete">Cancel</button>
+		        	<button class="fl button ui-corner-none ui-corner-tr ui-corner-br ui-button-red action-multiple-delete" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+		        </div>
+				<span class="info-message-icon ui-icon ui-icon-help"></span>
+				<p><strong>WARNING:</strong> Are you sure you want to delete the selected redirects below?</p>
+				<div class="clear"></div>
+			</div>
+			<div class="info-message">
+				<span class="info-message-icon ui-icon ui-icon-info"></span>
+				<p>The Internet is an ever-changing place and information is continually changing. It is important to make sure that when you update any information you also update the web address. Redirects ensure search engines and existing links are still found without affecting your search engine performance.</p>
+				<div class="clear"></div>
+			</div>
+    		<div class="portlet">
+				<header>
+           			<h2>Redirects</h2>
+                </header>
+				<section>
+					<form class="form has-validation" id="form-update" method="post" action="{{ data.formAction }}">
+						<div id="listing" class="position-relative">
+							{% if data.items|length > 0 %}
+								<table class="data-table sortable" id="data" width="100%">
+									<thead>
+										<tr>
+											<th>&nbsp;</th>
+											<th width="19" class="ac"><input type="checkbox" class="action-select-all" value="1" /></th>
+											<th class="al">Redirect</th>
+											<th class="ac">Code</th>
+											<th width="1" class="ac">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for item in data.items %}
+											<tr class="item {{ item.statusColour }}" id="item-{{ item.departmentId }}">
+												<td width="17" class="ac"><img class="draggable" width="9" height="17" src="{{ asset('bundles/webilluminationadmin/images/icons/draggable.png') }}" border="0" alt="Drag to re-order" /></td>
+												<td width="19" class="ac select"><input data-id="{{ item.departmentId }}" type="checkbox" class="action-select" name="select[{{ item.id }}]" id="listing-select-{{ item.id }}" value="1" /></td>
+												<td class="al small">
+													<a class="tooltip-preview-left" data-tooltip-id="#tooltip-description-{{ item.departmentId }}" href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}"><strong>{{ item.name }}</strong></a>
+												</td>
+												<td width="1" class="ac {{ item.statusColour }}">
+													<select name="status[{{ item.departmentId }}]" id="listing-status-{{ item.departmentId }}" data-id="{{ item.departmentId }}" class="listing-status full">
+														<option{% if item.status == 'a' %} selected="selected"{% endif %} value="a">Active</option>
+														<option{% if item.status == 'h' %} selected="selected"{% endif %} value="h">Hidden</option>
+														<option{% if item.status == 'd' %} selected="selected"{% endif %} value="d">Disabled</option>
+													</select>
+												</td>
+												<td width="1" class="buttons-container ac no-wrap">
+													<input type="hidden" class="listing-display-order" name="display-order[{{ item.departmentId }}]" id="display-order-{{ item.departmentId }}" data-id="{{ item.departmentId }}" value="{{ item.displayOrder }}" />
+													<img id="buttons-spacer" src="{{ asset('bundles/webilluminationadmin/images/blank.gif') }}" border="0" width="0" height="0" alt="" />
+													<div class="clear"></div>
+													<a href="{{ path('admin_'~data.settings.multiplePath~'_update', {'id': item.departmentId}) }}" class="button ui-button-blue ui-corner-none ui-corner-tr ui-corner-br" data-icon-primary="ui-icon-pencil" data-icon-only="true">Update</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button ui-button-blue ui-corner-none"{% if item.productCount > 0 %} data-notification="{{ item.productCount }}"{% endif %} data-icon-primary="ui-icon-cart" data-icon-only="true">Products</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': item.departmentId}) }}" class="button ui-button-blue ui-corner-none tooltip-preview-right"{% if item.departmentCount > 0 %} data-notification="{{ item.departmentCount }}"{% endif %} data-icon-primary="ui-icon-folder-{% if item.departmentCount > 0 %}open{% else %}collapsed{% endif %}" data-tooltip-id="#tooltip-departments-{{ item.departmentId }}" data-icon-only="true">Departments</a>
+													<a href="{{ path('admin_'~data.settings.multiplePath~'_update_search_engine_optimisation', {'id': item.departmentId}) }}" class="button ui-button-blue ui-corner-none ui-corner-tl ui-corner-bl tooltip-preview-right" data-tooltip-id="#tooltip-seo-{{ item.departmentId }}" data-icon-primary="ui-icon-search" data-icon-only="true">Search Engine Optimisation (SEO)</a>
+												</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+								{% for item in data.items %}
+									{% if item.shortDescription != '' %}
+										<div id="tooltip-description-{{ item.departmentId }}" class="tooltip">
+											<p class="no-margin">{{ item.shortDescription|raw }}</p>
+										</div>
+									{% endif %}
+									<div id="tooltip-seo-{{ item.departmentId }}" class="tooltip">
+										<h3>Search Engine Optimisation (SEO)</h3>
+										<table cellpadding="0" cellspacing="0" border="0">
+											<tr>
+												<td class="label">Page Title</td>
+												<td>{{ item.pageTitle }}</td>
+											</tr>
+											<tr>
+												<td class="label">Meta Description</td>
+												<td>{{ item.metaDescription }}</td>
+											</tr>
+											<tr>
+												<td class="label">Meta Keywords</td>
+												<td>{{ item.metaKeywords }}</td>
+											</tr>
+											{% if item.googleDepartment %}
+												<tr>
+													<td class="label">Google Department</td>
+													<td>{{ item.googleDepartment }}</td>
+												</tr>
+											{% endif %}
+											{% if item.ebayDepartment %}
+												<tr>
+													<td class="label">eBay Department</td>
+													<td>{{ item.ebayDepartment }}</td>
+												</tr>
+											{% endif %}
+											{% if item.amazonDepartment %}
+												<tr>
+													<td class="label">Amazon Department</td>
+													<td>{{ item.amazonDepartment }}</td>
+												</tr>
+											{% endif %}
+											<tr>
+												<td class="label">Web Address</td>
+												<td>/{{ item.url }}.html</td>
+											</tr>
+										</table>
+									</div>
+									{% if item.departmentCount > 0 %}
+										<div id="tooltip-departments-{{ item.departmentId }}" class="tooltip">
+											<h3>Departments</h3>
+											<ul>
+												{% for department in item.departments|explode('|') %}
+													{% if department != '' %}
+														<li>{{ department }}</li>
+													{% endif %}
+												{% endfor %}
+											</ul>
+											</table>
+										</div>
+									{% endif %}
+								{% endfor %}
+							{% else %}
+								<p class="no-results">Sorry, no {{ data.settings.multipleDescription }} were found.</p>
+							{% endif %}
+						</div>
+			        	<div class="clear"></div>
+			        	<div class="padding-15 padding-top-5">
+				        	<div id="float-buttons" class="clearfix">
+						        <div id="float-buttons-content" class="float-buttons clearfix buttons">
+						        	<input type="hidden" value="0" id="form-delete" name="delete" />
+						        	{% if data.parentId > 0 %}
+							        	<a href="{{ path('admin_'~data.settings.multiplePath, {'parentId': data.department.parentId}) }}" id="button-go-back" class="fr ui-corner-none ui-corner-tr ui-corner-br button ui-button-blue" data-icon-primary="ui-icon-triangle-1-w">Go Back</a>
+							        {% endif %}
+							        {% if data.items|length > 0 %}
+							        	<button class="fr button ui-corner-none{% if data.parentId == 0 %} ui-corner-tr ui-corner-br{% endif %} ui-button-red action-confirm-multiple-delete" data-icon-primary="ui-icon-closethick">Delete Selected {{ data.settings.multipleTitle }}</button>
+							        	<button type="submit" class="fr button ui-corner-none ui-button-green" data-icon-primary="ui-icon-check">Update Selected {{ data.settings.multipleTitle }}</button>
+						        	{% endif %}
+						        	<a href="{{ path('admin_'~data.settings.multiplePath~'_add', {'parentId': data.parentId}) }}" class="fr button ui-corner-none ui-corner-tl ui-corner-bl ui-button-green" data-icon-primary="ui-icon-plusthick">Add a {{ data.settings.singleTitle }}</a>
+							    </div>
+							</div>
+			        	</div>
+					</form>
+				</section>
+	        </div>
+		</div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:'~data.settings.multipleModel~':indexScript.js.twig' with {'data': data} %}
+{% endblock %}

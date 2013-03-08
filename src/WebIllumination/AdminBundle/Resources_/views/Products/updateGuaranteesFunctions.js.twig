@@ -1,0 +1,37 @@
+{# Load the guarantees #}	
+function loadGuarantees()
+{
+	$.ajax({
+		type: "GET",
+		url: "{{ path('system_ajax_get_guarantees') }}",
+		beforeSend: function() {
+			$("#ajax-guarantees-loading").show();
+		},
+		data: {
+			objectId: {{ data.product.id }},
+			objectType: 'product'
+		},
+		error: function(data) {
+  			$("#ajax-guarantees-loading").hide();
+      		$("#guarantee-loading-error").fadeIn();
+	  	},
+		success: function(data) {
+			$("#ajax-guarantees").html(data);
+			$("#ajax-guarantees :checkbox:not(.no-uniform), #ajax-guarantees :radio:not(.no-uniform), #ajax-guarantees select:not(.no-uniform), #ajax-guarantees :file:not(.no-uniform)").uniform();
+			$("#ajax-guarantees .button").each(function () {
+    	        $(this).button({
+        	    	icons: {
+            	    	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
+                	    secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
+	                }, 
+	               	text: $(this).attr('data-icon-only') === 'true'?false:true
+    	    	});
+        	});
+	        $("#ajax-guarantees .selector").addClass("full");
+	        $("#ajax-guarantees").fadeIn();
+	        $guaranteesLoaded = true;
+	        checkDataLoaded();
+    	    $("#ajax-guarantees-loading").hide();
+		}
+	});
+}

@@ -1,0 +1,132 @@
+<h3>Payment Information</h3>
+<table class="margin-bottom-10" cellpadding="0" cellspacing="0" border="0" width="100%">
+	{% if data.item.paymentType != '' %}
+		<tr>
+			<td class="label">Payment Type</td>
+			<td>{% if data.item.paymentType == '' %}&nbsp;-&nbsp;{% else %}<img class="no-border" src="{{ asset(data.item.paymentTypeLogo) }}" border="0" alt="{{ data.item.paymentType }}" />{% endif %}</td>
+		</tr>
+	{% endif %}
+	<tr>
+		<td class="label">Total Amount</td>
+		<td>&pound;{{ data.item.total|number_format(2)|default('0.00') }}</td>
+	</tr>
+	{% if data.item.paymentResponse != '' %}
+		<tr>
+			<td class="label">Transaction Status</td>
+			<td{% if data.item.paymentResponse.Status is defined %} class="gradient-background-{% if data.item.paymentResponse.Status|upper == 'SUCCESS' %}green{% else %}red{% endif %}"{% endif %}>{{ (data.item.paymentResponse.Status is defined?item.paymentResponse.Status|default('-'):'-') }}</td>
+		</tr>
+		{% if data.item.paymentResponse.TxAuthNo is defined %}
+			<tr>
+				<td class="label">Authorisation Code</td>
+				<td>{{ data.item.paymentResponse.TxAuthNo|default('-') }}</td>
+			</tr>
+		{% endif %}
+		{% if data.item.paymentResponse.StatusDetail is defined %}
+			<tr>
+				<td class="label">Status Information</td>
+				<td>{{ data.item.paymentResponse.StatusDetail|default('-') }}</td>
+			</tr>
+		{% endif %}
+		{% if data.item.paymentResponse.VPSTxId is defined %}
+			<tr>
+				<td class="label">Unique Transaction ID</td>
+				<td>{{ data.item.paymentResponse.VPSTxId|default('-') }}</td>
+			</tr>
+		{% endif %}
+	{% else %}
+		<tr>
+			<td class="label">Transaction Status</td>
+			<td class="gradient-background-red">NO PAYMENT TAKEN</td>
+		</tr>
+	{% endif %}
+</table>
+<h3>Standard Fraud Checks</h3>
+<table{% if (data.item.paymentType == 'PayPal through SagePay') or (data.item.paymentType == 'SagePay') %} class="margin-bottom-10"{% endif %} cellpadding="0" cellspacing="0" border="0" width="100%">
+	<tr>
+		<td class="label">Has customer ordered before?</td>
+		<td class="ac gradient-background-{{ (data.item.fraudCheckCustomerOrdered == 1?'green':'orange') }}">{{ (data.item.fraudCheckCustomerOrdered == 1?'YES':'NO') }}</td>
+	</tr>
+	<tr>
+		<td class="label">Is the billing and delivery address the same?</td>
+		<td class="ac gradient-background-{{ (data.item.fraudCheckAddressMatch == 1?'green':'orange') }}">{{ (data.item.fraudCheckAddressMatch == 1?'YES':'NO') }}</td>
+	</tr>
+	<tr>
+		<td class="label">Name found on a different order?</td>
+		<td class="ac gradient-background-{{ (data.item.fraudCheckNameUsedOnDifferentOrder == 1?'red':'green') }}">{{ (data.item.fraudCheckNameUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+	</tr>
+	<tr>
+		<td class="label">Postcode found on a different order?</td>
+		<td class="ac gradient-background-{{ (data.item.fraudCheckPostZipCodeUsedOnDifferentOrder == 1?'red':'green') }}">{{ (data.item.fraudCheckPostZipCodeUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+	</tr>
+	<tr>
+		<td class="label">Telephone found on a different order?</td>
+		<td class="ac gradient-background-{{ (data.item.fraudCheckTelephoneUsedOnDifferentOrder == 1?'red':'green') }}">{{ (data.item.fraudCheckTelephoneUsedOnDifferentOrder == 1?'YES':'NO') }}</td>
+	</tr>
+</table>
+{% if data.item.paymentType == 'PayPal through SagePay' %}
+	{% if (data.item.paymentResponse.AddressStatus is defined) or (data.item.paymentResponse.PayerStatus is defined) %}
+		<h3>PayPal Fraud Checks</h3>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{% if data.item.paymentResponse.AddressStatus is defined %}
+				<tr>
+					<td class="label">Address Status</td>
+					<td class="gradient-background-{% if data.item.paymentResponse.AddressStatus == 'CONFIRMED' %}green{% elseif data.item.paymentResponse.AddressStatus == 'UNCONFIRMED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.AddressStatus|default('-') }}</td>
+				</tr>
+			{% endif %}
+			{% if data.item.paymentResponse.PayerStatus is defined %}
+				<tr>
+					<td class="label">Payer Status</td>
+					<td class="gradient-background-{% if data.item.paymentResponse.PayerStatus == 'VERIFIED' %}green{% else %}red{% endif %}">{{ data.item.paymentResponse.PayerStatus|default('-') }}</td>
+				</tr>
+			{% endif %}
+		</table>
+	{% endif %}
+{% elseif data.item.paymentType == 'SagePay' %}
+	{% if (data.item.paymentResponse.CardType is defined) or (data.item.paymentResponse.Last4Digits is defined) or (data.item.paymentResponse.AddressResult is defined) or (data.item.paymentResponse.PostCodeResult is defined) or (data.item.paymentResponse.AVSCV2 is defined) or (data.item.paymentResponse.CV2Result is defined) or (data.item.paymentResponse['3DSecureStatus'] is defined) %}
+		<h3>SagePay Fraud Checks</h3>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{% if data.item.paymentResponse.CardType is defined %}
+				<tr>
+					<td class="label">Card Type</td>
+					<td>{{ data.item.paymentResponse.CardType|default('-') }}</td>
+				</tr>
+			{% endif %}
+			{% if data.item.paymentResponse.Last4Digits is defined %}
+				<tr>
+					<td class="label">Card Number</td>
+					<td>{% if data.item.paymentResponse.Last4Digits > 0 %}**** **** **** {{ data.item.paymentResponse.Last4Digits|default('-') }}{% else %}-{% endif %}</td>
+				</tr>
+			{% endif %}
+			{% if data.item.paymentResponse.AddressResult is defined %}
+				<tr>
+					<td class="label">Address Check</td>
+					<td class="gradient-background-{% if data.item.paymentResponse.AddressResult == 'MATCHED' %}green{% elseif data.item.paymentResponse.AddressResult == 'NOTMATCHED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.AddressResult|default('-') }}</td>
+				</tr>
+			{% endif %}
+			{% if data.item.paymentResponse.PostCodeResult is defined %}
+				<tr>
+					<td class="label">Postcode Check</td>
+					<td class="gradient-background-{% if data.item.paymentResponse.PostCodeResult == 'MATCHED' %}green{% elseif data.item.paymentResponse.PostCodeResult == 'NOTMATCHED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.PostCodeResult|default('-') }}</td>
+				</tr>
+			{% endif %}
+			{% if data.item.paymentResponse.AVSCV2 is defined %}
+				<tr>
+					<td class="label">AVS/CV2 Check</td>
+					<td class="gradient-background-{% if data.item.paymentResponse.AVSCV2 == 'ALL MATCH' %}green{% elseif data.item.paymentResponse.AVSCV2 == 'NO DATA MATCHES' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.AVSCV2|default('-') }}</td>
+				</tr>
+			{% endif %}
+			{% if data.item.paymentResponse.CV2Result is defined %}
+				<tr>
+					<td class="label">CV2 Result</td>
+					<td class="gradient-background-{% if data.item.paymentResponse.CV2Result == 'MATCHED' %}green{% elseif data.item.paymentResponse.CV2Result == 'NOTMATCHED' %}red{% else %}orange{% endif %}">{{ data.item.paymentResponse.CV2Result|default('-') }}</td>
+				</tr>
+			{% endif %}
+			{% if data.item.paymentResponse['3DSecureStatus'] is defined %}
+				<tr>
+					<td class="label">3D Secure Status</td>
+					<td class="gradient-background-{% if data.item.paymentResponse['3DSecureStatus'] == 'OK' %}green{% else %}red{% endif %}">{{ data.item.paymentResponse['3DSecureStatus']|default('-') }}</td>
+				</tr>
+			{% endif %}
+		</table>
+	{% endif %}
+{% endif %}

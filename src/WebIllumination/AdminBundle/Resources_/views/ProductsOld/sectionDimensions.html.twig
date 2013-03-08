@@ -1,0 +1,142 @@
+<section id="dimensions">
+	<div class="info-message ui-status-highlight">
+		<span class="info-message-icon ui-icon ui-icon-info"></span>
+		<p>In order to calculate the most accurate costings and timings for deliveries it is important to include the latest dimensions of a product.</p>
+		<div class="clear"></div>
+	</div>
+    <div class="clearfix">
+        <label for="form-weight" class="form-label">Weight<small>Enter a weight (kg)</small></label>
+        <div class="form-input"><input type="text" id="form-weight" class="decimal" name="weight" value="{{ product.weight }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-length" class="form-label">Length<small>Enter the boxed length of the product (mm)</small></label>
+        <div class="form-input"><input type="text" id="form-length" class="decimal" name="length" value="{{ product.length }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-width" class="form-label">Width<small>Enter the boxed width of the product (mm)</small></label>
+        <div class="form-input"><input type="text" id="form-width" class="decimal" name="width" value="{{ product.width }}" /></div>
+    </div>
+    <div class="clearfix">
+        <label for="form-height" class="form-label">Height<small>Enter the boxed height of the product (mm)</small></label>
+        <div class="form-input"><input type="text" id="form-height" class="decimal" name="height" value="{{ product.height }}" /></div>
+    </div>
+    <div class="clearfix">
+        <div class="form-input buttons no-margin-bottom">
+    		<button class="button ui-button-default">Save</button>
+    		<a class="button action-unit-converter" href="Javascript:void(0);">Unit Converter</a>
+        </div>
+    </div>
+    {# Dialog: Unit Converter #}
+	<div id="dialog-unit-converter" title="Unit Converter" class="form ui-helper-hidden">
+		<p>Enter the values you would like converting and click the "Save" button.</p>
+        <div class="clearfix">
+            <label for="form-weight-conversion" class="form-label">Weight<small>Enter a weight</small></label>
+            <div class="form-input">
+            	<input type="text" id="form-weight-conversion" class="decimal" name="weight" value="{{ product.weight }}" />
+            	<select id="form-weight-unit">
+            		<option value="0.45359">Pounds (lbs)</option>
+            		<option value="0.028349">Ounces (oz)</option>
+            		<option value="0.001">Grams (g)</option>
+            		<option value="0.000001">Milligrams (mg)</option>
+            		<option value="0.0002">Carat</option>
+            		<option value="6.35">Stone</option>
+            	</select>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="form-length-conversion" class="form-label">Length<small>Enter the boxed length of the product</small></label>
+            <div class="form-input">
+            	<input type="text" id="form-length-conversion" class="decimal" name="length" value="{{ product.length }}" />
+            	<select id="form-length-unit">
+            		<option value="10">Centimetres (cm)</option>
+            		<option value="1000">Metres (m)</option>
+            		<option value="25.4">Inches (in)</option>
+            		<option value="304.8">Foot (ft)</option>
+            		<option value="914.4">Yard (yd)</option>
+            	</select>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="form-width-conversion" class="form-label">Width<small>Enter the boxed width of the product</small></label>
+            <div class="form-input">
+            	<input type="text" id="form-width-conversion" class="decimal" name="width" value="{{ product.width }}" />
+            	<select id="form-width-unit">
+            		<option value="10">Centimetres (cm)</option>
+            		<option value="1000">Metres (m)</option>
+            		<option value="25.4">Inches (in)</option>
+            		<option value="304.8">Foot (ft)</option>
+            		<option value="914.4">Yard (yd)</option>
+            	</select>
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="form-height-conversion" class="form-label">Height<small>Enter the boxed height of the product</small></label>
+            <div class="form-input">
+            	<input type="text" id="form-height-conversion" class="decimal" name="height" value="{{ product.height }}" />
+            	<select id="form-height-unit">
+            		<option value="10">Centimetres (cm)</option>
+            		<option value="1000">Metres (m)</option>
+            		<option value="25.4">Inches (in)</option>
+            		<option value="304.8">Foot (ft)</option>
+            		<option value="914.4">Yard (yd)</option>
+            	</select>
+            </div>
+        </div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+		
+			{# Dialog: Unit Converter #}
+			$("#dialog-unit-converter").dialog({
+				autoOpen: false,
+				modal: true,
+				width: 700,
+				show: "fade",
+				hide: "fade",
+				buttons: [
+    				{
+        				text: "Save",
+        				click: function() {
+        					$("#form-weight").val(parseFloat($("#form-weight-conversion").val()) * parseFloat($("#form-weight-unit").val()));
+							$("#form-length").val(parseFloat($("#form-length-conversion").val()) * parseFloat($("#form-length-unit").val()));
+							$("#form-width").val(parseFloat($("#form-width-conversion").val()) * parseFloat($("#form-width-unit").val()));
+							$("#form-height").val(parseFloat($("#form-height-conversion").val()) * parseFloat($("#form-height-unit").val()));
+        					$(this).dialog("close");
+        				}
+    				}
+				]
+			}).parents('.ui-dialog').find(".ui-dialog-titlebar-close").after('<div/>');
+			
+			{# Action: Unit Converter #}
+			$(".action-unit-converter").live('click', function() {
+				$("#form-weight-conversion").val($("#form-weight").val());
+				$("#form-length-conversion").val($("#form-length").val());
+				$("#form-width-conversion").val($("#form-width").val());
+				$("#form-height-conversion").val($("#form-height").val());
+				$("#dialog-unit-converter").dialog("open");
+				return false;
+			});
+						
+			{# Update the dimensions tab #}
+			{% if ((product.weight <= 0) and (product.length <= 0) and (product.width <= 0) and (product.height <= 0)) %}
+				$("#tab-dimensions").addClass("ui-status-error");
+			{% elseif ((product.weight > 0) and (product.length <= 0) and (product.width <= 0) and (product.height <= 0)) %}
+				$("#tab-dimensions").addClass("ui-status-highlight");
+			{% else %}
+				$("#tab-dimensions").addClass("ui-status-success");
+			{% endif %}
+			$("#form-weight, #form-length, #form-width, #form-height").change(function() {
+				$("#tab-dimensions").removeClass("ui-status-success").removeClass("ui-status-highlight").removeClass("ui-status-error");
+				if ((parseFloat($("#form-weight").val()) <= 0) && (parseFloat($("#form-length").val()) <= 0) && (parseFloat($("#form-width").val()) <= 0) && (parseFloat($("#form-height").val()) <= 0))
+				{
+					$("#tab-dimensions").addClass("ui-status-error");
+				} else if ((parseFloat($("#form-weight").val()) <= 0) && (parseFloat($("#form-length").val()) <= 0) && (parseFloat($("#form-width").val()) <= 0) && (parseFloat($("#form-height").val()) <= 0)) {
+					$("#tab-dimensions").addClass("ui-status-highlight");
+				} else {
+					$("#tab-dimensions").addClass("ui-status-success");
+				}
+			});
+			
+		});
+	</script>
+</section>

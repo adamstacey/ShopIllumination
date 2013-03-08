@@ -1,0 +1,169 @@
+{% extends ':Old:admin.html.twig' %}
+{% block title %}Import Product Prices | {{ parent() }}{% endblock %}
+{% block headerscripts %}
+	{{ parent() }}
+	{% javascripts '@WebIlluminationAdminBundle/Resources/public/js/file-upload.js' output='js/file-upload.js' filter='yui_js' %}
+		<script src="{{ asset_url }}" type="text/javascript"></script>
+	{% endjavascripts %}
+{% endblock %}
+{% block leftmenu %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:Brands:leftMenu.html.twig' %}  
+{% endblock %}
+{% block header %}
+	{{ parent() }}
+	<h2>Import Product Prices</h2>
+{% endblock %}
+{% block body %}
+    <section class="container_6 clearfix">
+        <div class="grid_6">
+            <div class="portlet">
+                <header>
+                    <h2>Upload Price Import File</h2>
+                </header>
+                <section>
+                	<form class="form has-validation" id="form-import-price" method="post" action="{{ path('admin_products_price_import') }}">
+                		<div class="clearfix">
+					        <label for="form-action" class="form-label"><em>*</em> Action<small>Select the action of the import</small></label>
+					        <div class="form-input">
+						        <select id="form-action" name="action">
+							        <option{% if data.action == 'check' %} selected="selected"{% endif %} value="check">Check Prices</option>
+							        <option{% if data.action == 'update' %} selected="selected"{% endif %} value="update">Update Prices</option>
+						        </select>
+					        </div>
+					    </div>
+					    <div class="clearfix">
+					    	<label for="form-header" class="form-label"><em>*</em> Header?<small>Does the import file have a header?</small></label>
+					    	<div class="form-input" id="form-header"><label><input type="radio" name="header" id="form-header-1" value="1"{% if data.header == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="header" id="form-header-0" value="0"{% if data.header == 0 %} checked="checked"{% endif %} /> No</label></div>
+					    </div>
+					    <div class="clearfix">
+					    	<label for="form-reset-recommended-retail-price" class="form-label"><em>*</em> Reset RRP?<small>Do you want to reset the RRP?</small></label>
+					    	<div class="form-input" id="form-reset-recommended-retail-price"><label><input type="radio" name="reset-recommended-retail-price" id="form-reset-recommended-retail-price-1" value="1"{% if data.resetRecommendedRetailPrice == 1 %} checked="checked"{% endif %} /> Yes</label> <label><input type="radio" name="reset-recommended-retail-price" id="form-reset-recommended-retail-price-0" value="0"{% if data.resetRecommendedRetailPrice == 0 %} checked="checked"{% endif %} /> No</label></div>
+					    </div>
+						<div class="clearfix">
+					        <label for="form-import-price-file" class="form-label"><em>*</em> Import File<small>Upload a CSV or TXT file</small></label>
+					        <div class="form-input">
+					        	<table width="100%">
+									<tbody>
+										<tr>
+											<td>
+												<div class="file-upload" id="import-file-upload"></div>
+												<div class="file-uploading ui-helper-hidden" id="import-file-uploading">
+													<img class="fl" alt="Loading" width="16" height="11" src="{{ asset('bundles/webilluminationadmin/images/loaders/ajax-file-loader.gif') }}" />
+													<p>Please wait, uploading file&hellip;</p>
+												</div>
+												<div id="import-file-upload-success" class="ui-widget file-upload-success file-upload-message ui-helper-hidden">
+												    <div class="ui-state-success no-margin ui-corner-all"> 
+												        <p class="no-margin">
+												            <span class="ui-icon ui-icon-circle-check"></span>
+												            <span class="file-upload-success-text" id="import-file-upload-success-text"></span>
+												            <img class="fr action-cancel-import-file-upload" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+												        </p>
+												    </div>
+												</div>
+												<div id="import-file-upload-error" class="ui-widget file-upload-error file-upload-message ui-helper-hidden">
+												    <div class="ui-state-error no-margin ui-corner-all"> 
+												        <p class="no-margin">
+												            <span class="ui-icon ui-icon-alert"></span>
+												            <span class="file-upload-error-text" id="import-file-upload-error-text"></span>
+												            <img class="fr action-cancel-import-file-upload" alt="Cancel" width="14" height="14" src="{{ asset('bundles/webilluminationadmin/images/icons/close-small.png') }}" />
+												        </p>
+												    </div>
+												</div>
+												<input type="hidden" id="form-import-file" name="import-file" class="file" value="{{ data.importFile|default('') }}" />		
+											</td>
+										</tr>
+									</tbody>
+								</table>
+					        </div>
+					    </div>
+					    <div class="clearfix">
+					        <div class="form-input buttons no-margin-bottom">
+					    		<button type="submit" class="button ui-button-green" data-icon-primary="ui-icon-check">{% if data.action == 'update' %}Update{% else %}Check{% endif %} Prices</button>
+					        </div>
+					    </div>
+					</form>
+                </section>
+            </div>
+        </div>
+	    <div class="clear"></div>
+	    {% if (data.priceIssuesFound is defined) and (data.noUpdatesRequired is defined) and (data.pricesUpdated is defined) %}
+		    <div class="grid_6 leading">
+		    	<fieldset class="fieldset-buttons ui-corner-all">
+		    		<legend class="buttonset-legend">
+	                    <span id="dashboardview-filter" class="buttonset">
+	                        <input type="radio" name="import-results" id="form-import-results" value="" checked="checked" /><label for="form-import-results">Import Results</label>
+	                    </span>
+	                </legend>
+		            <ul class="isotope-widgets isotope-container">
+		                <li class="dash-order">
+		                    <a class="button-red ui-corner-all" href="#priceIssuesFound">
+		                        <strong>{{ data.priceIssuesFound|length }}/{{ data.totalImports }}</strong>
+		                        <span>Price Issues Found</span>
+		                    </a>
+		                </li>
+		                <li class="dash-order">
+		                    <a class="button-orange ui-corner-all" href="#noUpdatesRequired">
+		                        <strong>{{ data.noUpdatesRequired|length }}/{{ data.totalImports }}</strong>
+		                        <span>No Updates Required</span>
+		                    </a>
+		                </li>
+		                <li class="dash-order">
+		                    <a class="button-green ui-corner-all" href="#pricesUpdated">
+		                        <strong>{{ data.pricesUpdated|length }}/{{ data.totalImports }}</strong>
+		                        <span>Prices Updated</span>
+		                    </a>
+		                </li>
+		            </ul>
+		            <div class="clear"></div>
+		            <a name="priceIssuesFound"></a>
+		            <h2 class="separator red">Price Issues Found</h2>
+		            {% if data.priceIssuesFound|length > 0 %}
+		            	<ul>
+			            	{% for priceIssueFound in data.priceIssuesFound %}
+			            		<li class="red"><strong>Product Not Found:</strong> {{ priceIssueFound.productCode }} (&pound;{{ priceIssueFound.newPrice|number_format(2) }})</li>
+			            	{% endfor %}
+		            	</ul>
+		            {% else %}
+		            	<ul>
+			            	<li>No price issues were found.</li>
+		            	</ul>
+		            {% endif %}
+		            <div class="spacer"></div>
+		            <a name="noUpdatesRequired"></a>
+		            <h2 class="separator orange">No Updates Required</h2>
+		            {% if data.noUpdatesRequired|length > 0 %}
+		            	<ul>
+			            	{% for noUpdateRequired in data.noUpdatesRequired %}
+			            		<li class="orange"><strong>{{ noUpdateRequired.pageTitle }}</strong><br />No update required as prices have not changed (Existing Price: &pound;{{ noUpdateRequired.existingPrice|number_format(2) }}, New Price: &pound;{{ noUpdateRequired.newPrice|number_format(2) }})</li>
+			            	{% endfor %}
+		            	</ul>
+		            {% else %}
+		            	<ul>
+			            	<li>There were no prices found that did not require updating or action.</li>
+		            	</ul>
+		            {% endif %}
+		            <div class="spacer"></div>
+		            <a name="pricesUpdated"></a>
+		            <h2 class="separator">Prices Updated</h2>
+		            {% if data.pricesUpdated|length > 0 %}
+		            	<ul>
+			            	{% for priceUpdated in data.pricesUpdated %}
+			            		<li><strong>{{ priceUpdated.pageTitle }}</strong><br />Prices have been updated from &pound;{{ priceUpdated.existingPrice|number_format(2) }} to &pound;{{ priceUpdated.newPrice|number_format(2) }}.</li>
+			            	{% endfor %}
+		            	</ul>
+		            {% else %}
+		            	<ul>
+			            	<li>There were no prices that required updating.</li>
+		            	</ul>
+		            {% endif %}
+		            <div class="spacer"></div>
+		        </fieldset>
+		    </div>
+		{% endif %}
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationAdminBundle:Products:priceImportScript.js.twig' with {'data': data} %}
+{% endblock %}

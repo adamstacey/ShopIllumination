@@ -1,0 +1,57 @@
+<div class="ui-helper-hidden more-information-detail" id="customer-{{ item.id }}">
+	<h5 class="no-margin-top">Customer</h5>
+	<table width="100%">
+		<tr>
+			<td class="label" width="20%"><label>Name:</label></td>
+			<td width="20%">{{ item.firstName }} {{ item.lastName }}</td>
+			<td rowspan="5" class="label" width="10%"><label>Billing<br />Address</label></td>
+			<td rowspan="5" width="20%" class="uppercase">{% spaceless %}
+				{{ item.billingFirstName }} {{ item.billingLastName }}<br />
+				{% if item.billingOrganisationName != '' %}
+					{{ item.billingOrganisationName }}<br />
+				{% endif %}
+				{{ item.billingAddressLine1 }}<br />
+				{% if item.billingAddressLine2 != '' %}
+					{{ item.billingAddressLine2 }}<br />
+				{% endif %}
+				{{ item.billingTownCity }}<br />
+				{% if item.billingCountyState != '' %}
+					{{ item.billingCountyState }}<br />
+				{% endif %}
+				{{ item.billingPostZipCode }}
+			{% endspaceless %}</td>
+			<td rowspan="5" class="label" width="10%"><label>Delivery<br />Address</label></td>
+			<td rowspan="5" width="20%" class="uppercase">{% spaceless %}
+				{{ item.deliveryFirstName }} {{ item.deliveryLastName }}<br />
+				{% if item.deliveryOrganisationName != '' %}
+					{{ item.deliveryOrganisationName }}<br />
+				{% endif %}
+				{{ item.deliveryAddressLine1 }}<br />
+				{% if item.deliveryAddressLine2 != '' %}
+					{{ item.deliveryAddressLine2 }}<br />
+				{% endif %}
+				{{ item.deliveryTownCity }}<br />
+				{% if item.deliveryCountyState != '' %}
+					{{ item.deliveryCountyState }}<br />
+				{% endif %}
+				{{ item.deliveryPostZipCode }}
+			{% endspaceless %}</td>
+		</tr>
+		<tr>
+			<td class="label" width="20%"><label>Email Address:</label></td>
+			<td width="20%"><a class="lowercase" href="mailto:{{ item.emailAddress }}">{{ item.emailAddress }}</a></td>
+		</tr>
+		<tr>
+			<td class="label" width="20%"><label>Telephone (Daytime):</label></td>
+			<td width="20%">{{ item.telephoneDaytime|default('-') }}</td>
+		</tr>
+		<tr>
+			<td class="label" width="20%"><label>Telephone (Evening):</label></td>
+			<td width="20%">{{ item.telephoneEvening|default('-') }}</td>
+		</tr>
+		<tr>
+			<td class="label" width="20%"><label>Mobile:</label></td>
+			<td width="20%">{{ item.mobile|default('-') }}</td>
+		</tr>
+	</table>
+</div>
