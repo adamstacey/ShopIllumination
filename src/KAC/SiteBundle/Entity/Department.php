@@ -753,6 +753,54 @@ class Department implements DescribableInterface
     }
 
     /**
+     * Get menuTitle
+     *
+     * @return string
+     */
+    public function getMenuTitle()
+    {
+        $menuTitle = '';
+        if ($this->getDescription())
+        {
+            $menuTitle = $this->getDescription()->getMenuTitle();
+        }
+
+        if (strpos($menuTitle, ' & ') !== false)
+        {
+            $menuTitleParts = explode(' & ', $menuTitle);
+            if (strlen($menuTitleParts[0]) > strlen($menuTitleParts[1]))
+            {
+                $menuTitle = $menuTitleParts[0].'<br />& '.$menuTitleParts[1];
+            } else {
+                $menuTitle = $menuTitleParts[0].' &<br />'.$menuTitleParts[1];
+            }
+            if (sizeof($menuTitleParts) > 2)
+            {
+                for ($menuTitlePartCount = 2; $menuTitlePartCount < sizeof($menuTitleParts); $menuTitlePartCount++)
+                {
+                    $menuTitle .= ' & '.$menuTitleParts[$menuTitlePartCount];
+                }
+            }
+        } else {
+            $menuTitleParts = explode(' ', $menuTitle);
+            $numberOfSpaces = substr_count($menuTitle, ' ');
+            $spaceToBreak = ceil($numberOfSpaces / 2);
+            $menuTitle = $menuTitleParts[0];
+            for ($menuTitlePartCount = 1; $menuTitlePartCount < sizeof($menuTitleParts); $menuTitlePartCount++)
+            {
+                if ($menuTitlePartCount == $spaceToBreak)
+                {
+                    $menuTitle .= '<br />'.$menuTitleParts[$menuTitlePartCount];
+                } else {
+                    $menuTitle .= ' '.$menuTitleParts[$menuTitlePartCount];
+                }
+            }
+        }
+
+        return $menuTitle;
+    }
+
+    /**
      * Set template
      *
      * @param string $template
