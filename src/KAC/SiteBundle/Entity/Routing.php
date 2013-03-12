@@ -8,6 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="routing")
  * @ORM\HasLifecycleCallbacks()
+ *
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="object_type", type="string")
+ * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\ProductRouting", "department" = "KAC\SiteBundle\Entity\Department\DepartmentRouting", "brand" = "KAC\SiteBundle\Entity\Brand\BrandRouting"})
+ * @ORM\Table(name="routing")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Routing
 {
@@ -22,12 +29,7 @@ class Routing
      * @ORM\Column(name="object_id", type="integer", length=11)
      */
     private $objectId;
-    
-    /**
-     * @ORM\Column(name="object_type", type="string", length=100)
-     */
-    private $objectType;
-    
+        
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
