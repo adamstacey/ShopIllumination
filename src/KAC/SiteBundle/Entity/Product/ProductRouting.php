@@ -11,7 +11,7 @@ use KAC\SiteBundle\Entity\Routing;
 class ProductRouting extends Routing
 {
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="routings")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
      */
     protected $product;
