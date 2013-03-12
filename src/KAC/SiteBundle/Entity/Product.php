@@ -52,6 +52,11 @@ class Product implements DescribableInterface
     private $variants;
 
     /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\ProductRouting", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $routings;
+
+    /**
      * @ORM\Column(name="status", type="string", length=1)
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a status.")
      * @Assert\Choice(choices={"a", "h", "d"})
@@ -219,6 +224,7 @@ class Product implements DescribableInterface
         $this->links = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function __toString()
@@ -1017,5 +1023,68 @@ class Product implements DescribableInterface
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * Get routing
+     *
+     * @return \KAC\SiteBundle\Entity\Brand\BrandRouting
+     */
+    public function getRouting()
+    {
+        if (count($this->routings) > 0)
+        {
+            return $this->routings[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        if ($this->getRouting())
+        {
+            return $this->getRouting()->getUrl();
+        }
+
+        return null;
+    }
+
+    /**
+     * Add routings
+     *
+     * @param \KAC\SiteBundle\Entity\Product\ProductRouting $routings
+     * @return Product
+     */
+    public function addRouting(\KAC\SiteBundle\Entity\Product\ProductRouting $routings)
+    {
+        $this->routings[] = $routings;
+    
+        return $this;
+    }
+
+    /**
+     * Remove routings
+     *
+     * @param \KAC\SiteBundle\Entity\Product\ProductRouting $routings
+     */
+    public function removeRouting(\KAC\SiteBundle\Entity\Product\ProductRouting $routings)
+    {
+        $this->routings->removeElement($routings);
+    }
+
+    /**
+     * Get routings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutings()
+    {
+        return $this->routings;
     }
 }
