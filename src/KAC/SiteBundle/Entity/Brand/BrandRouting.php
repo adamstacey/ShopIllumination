@@ -11,7 +11,7 @@ use KAC\SiteBundle\Entity\Routing;
 class BrandRouting extends Routing
 {
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Brand")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Brand", inversedBy="routings")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
      */
     protected $brand;
