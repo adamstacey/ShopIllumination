@@ -34,7 +34,12 @@ class Department implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\DepartmentToFeature", mappedBy="department", cascade={"all"})
      **/
     private $features;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\DepartmentRouting", mappedBy="department", cascade={"all"})
+     */
+    private $routings;
+
     /**
      * @ORM\Column(name="status", type="string", length=1)
      */
@@ -243,6 +248,7 @@ class Department implements DescribableInterface
         $this->brands = new \Doctrine\Common\Collections\ArrayCollection();
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -821,5 +827,68 @@ class Department implements DescribableInterface
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * Get routing
+     *
+     * @return \KAC\SiteBundle\Entity\Brand\BrandRouting
+     */
+    public function getRouting()
+    {
+        if (count($this->routings) > 0)
+        {
+            return $this->routings[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        if ($this->getRouting())
+        {
+            return $this->getRouting()->getUrl();
+        }
+
+        return null;
+    }
+
+    /**
+     * Add routings
+     *
+     * @param \KAC\SiteBundle\Entity\Department\DepartmentRouting $routings
+     * @return Department
+     */
+    public function addRouting(\KAC\SiteBundle\Entity\Department\DepartmentRouting $routings)
+    {
+        $this->routings[] = $routings;
+    
+        return $this;
+    }
+
+    /**
+     * Remove routings
+     *
+     * @param \KAC\SiteBundle\Entity\Department\DepartmentRouting $routings
+     */
+    public function removeRouting(\KAC\SiteBundle\Entity\Department\DepartmentRouting $routings)
+    {
+        $this->routings->removeElement($routings);
+    }
+
+    /**
+     * Get routings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutings()
+    {
+        return $this->routings;
     }
 }
