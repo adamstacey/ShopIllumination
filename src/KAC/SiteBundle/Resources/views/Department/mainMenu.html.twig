@@ -3,7 +3,7 @@
         <a class="ui-button button button-turquoise uppercase" href="#">Brands</a>
         <ul class="clearfix">
             {% for department in departments %}
-                <li class=""><a{% if loop.last %} class="highlighted"{% endif %} href="#{{ department.url }}">{{ department.menuTitle|raw }}</a></li>
+                <li class=""><a{% if loop.last %} class="highlighted"{% endif %} href="{{ path('routing', {'url': department.url}) }}">{{ department.menuTitle|raw }}</a></li>
             {% endfor %}
         </ul>
         {% for department in departments %}
