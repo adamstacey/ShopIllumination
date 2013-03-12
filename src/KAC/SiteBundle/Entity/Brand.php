@@ -30,6 +30,11 @@ class Brand
     private $departments;
 
     /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\BrandRouting", mappedBy="brand", cascade={"all"})
+     */
+    private $routings;
+
+    /**
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status = 'a';
@@ -98,6 +103,7 @@ class Brand
     {
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function isDeleted()
@@ -490,5 +496,68 @@ class Brand
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    /**
+     * Get routing
+     *
+     * @return \KAC\SiteBundle\Entity\Brand\BrandRouting 
+     */
+    public function getRouting()
+    {
+        if (count($this->routings) > 0)
+        {
+            return $this->routings[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        if ($this->getRouting())
+        {
+            return $this->getRouting()->getUrl();
+        }
+
+        return null;
+    }
+
+    /**
+     * Add routings
+     *
+     * @param \KAC\SiteBundle\Entity\Brand\BrandRouting $routings
+     * @return Brand
+     */
+    public function addRouting(\KAC\SiteBundle\Entity\Brand\BrandRouting $routings)
+    {
+        $this->routings[] = $routings;
+    
+        return $this;
+    }
+
+    /**
+     * Remove routings
+     *
+     * @param \KAC\SiteBundle\Entity\Brand\BrandRouting $routings
+     */
+    public function removeRouting(\KAC\SiteBundle\Entity\Brand\BrandRouting $routings)
+    {
+        $this->routings->removeElement($routings);
+    }
+
+    /**
+     * Get routings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutings()
+    {
+        return $this->routings;
     }
 }
