@@ -11,7 +11,7 @@ use KAC\SiteBundle\Entity\Routing;
 class DepartmentRouting extends Routing
 {
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department", inversedBy="routings")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
      */
     protected $department;
