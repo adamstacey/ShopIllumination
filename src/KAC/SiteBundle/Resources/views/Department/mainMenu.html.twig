@@ -3,8 +3,28 @@
         <a class="ui-button button button-turquoise uppercase" href="#">Brands</a>
         <ul class="clearfix">
             {% for department in departments %}
-                <li class=""><a{% if loop.last %} class="highlighted"{% endif %} href="#">{{ department.menuTitle|raw }}</a></li>
+                <li class=""><a{% if loop.last %} class="highlighted"{% endif %} href="#{{ department.url }}">{{ department.menuTitle|raw }}</a></li>
             {% endfor %}
         </ul>
+        {% for department in departments %}
+                <div id="sub-department-{{ department.id }}" class="sub-departments">
+                    {% for subDepartment in department.children %}
+                        <div class="sub-department{% if ((loop.index % 4) == 0) %} sub-department-last{% endif %}">
+                            <h4><a href="#">{{ subDepartment.menuTitle|raw }}</a></h4>
+                            {% if subDepartment.children is defined %}
+                                <ul>
+                                    {% for subSubDepartment in subDepartment.children %}
+                                        <li><a href="#">{{ subSubDepartment.menuTitle|raw }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                        {% if ((loop.index % 4) == 0) %}
+                            <div class="clear"></div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="clear"></div>
+                </div>
+        {% endfor %}
     </nav>
 </div>
