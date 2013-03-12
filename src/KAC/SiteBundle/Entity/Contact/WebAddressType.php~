@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Contact;
+namespace KAC\SiteBundle\Entity\Contact;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;

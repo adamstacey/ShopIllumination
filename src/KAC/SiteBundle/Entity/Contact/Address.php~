@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Contact;
+namespace KAC\SiteBundle\Entity\Contact;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,12 +19,12 @@ class Address
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", inversedBy="addresses")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact", inversedBy="addresses")
      */
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\AddressType")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\AddressType")
      * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
      */
     private $type;
@@ -45,7 +45,7 @@ class Address
     private $organisationName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\Title")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Title")
      * @ORM\JoinColumn(name="title_id", referencedColumnName="id")
      */
     private $contactTitle;
@@ -470,10 +470,10 @@ class Address
     /**
      * Set contact
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact $contact
+     * @param \KAC\SiteBundle\Entity\Contact $contact
      * @return Address
      */
-    public function setContact(\WebIllumination\SiteBundle\Entity\Contact $contact = null)
+    public function setContact(\KAC\SiteBundle\Entity\Contact $contact = null)
     {
         $this->contact = $contact;
     
@@ -483,7 +483,7 @@ class Address
     /**
      * Get contact
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact 
+     * @return \KAC\SiteBundle\Entity\Contact
      */
     public function getContact()
     {
@@ -493,10 +493,10 @@ class Address
     /**
      * Set type
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact\AddressType $type
+     * @param \KAC\SiteBundle\Entity\Contact\AddressType $type
      * @return Address
      */
-    public function setType(\WebIllumination\SiteBundle\Entity\Contact\AddressType $type = null)
+    public function setType(\KAC\SiteBundle\Entity\Contact\AddressType $type = null)
     {
         $this->type = $type;
     
@@ -506,7 +506,7 @@ class Address
     /**
      * Get type
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact\AddressType 
+     * @return \KAC\SiteBundle\Entity\Contact\AddressType
      */
     public function getType()
     {
@@ -516,10 +516,10 @@ class Address
     /**
      * Set contactTitle
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact\Title $contactTitle
+     * @param \KAC\SiteBundle\Entity\Contact\Title $contactTitle
      * @return Address
      */
-    public function setContactTitle(\WebIllumination\SiteBundle\Entity\Contact\Title $contactTitle = null)
+    public function setContactTitle(\KAC\SiteBundle\Entity\Contact\Title $contactTitle = null)
     {
         $this->contactTitle = $contactTitle;
     
@@ -529,7 +529,7 @@ class Address
     /**
      * Get contactTitle
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact\Title 
+     * @return \KAC\SiteBundle\Entity\Contact\Title
      */
     public function getContactTitle()
     {

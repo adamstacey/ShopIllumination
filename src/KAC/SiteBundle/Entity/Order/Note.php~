@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Order;
+namespace KAC\SiteBundle\Entity\Order;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,7 +24,7 @@ class Note
     private $creator;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Order", inversedBy="notes")
      */
     private $order;
 
@@ -206,10 +206,10 @@ class Note
     /**
      * Set order
      *
-     * @param \WebIllumination\SiteBundle\Entity\Order $order
+     * @param \KAC\SiteBundle\Entity\Order $order
      * @return Note
      */
-    public function setOrder(\WebIllumination\SiteBundle\Entity\Order $order = null)
+    public function setOrder(\KAC\SiteBundle\Entity\Order $order = null)
     {
         $this->order = $order;
     
@@ -219,7 +219,7 @@ class Note
     /**
      * Get order
      *
-     * @return \WebIllumination\SiteBundle\Entity\Order 
+     * @return \KAC\SiteBundle\Entity\Order
      */
     public function getOrder()
     {

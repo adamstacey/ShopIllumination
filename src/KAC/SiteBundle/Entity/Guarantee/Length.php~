@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Guarantee;
+namespace KAC\SiteBundle\Entity\Guarantee;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;

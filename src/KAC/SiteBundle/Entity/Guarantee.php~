@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity;
+namespace KAC\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,13 +34,13 @@ class Guarantee
     private $displayOrder;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Guarantee\Type")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Guarantee\Type")
      * @ORM\JoinColumn(name="guarantee_type_id", referencedColumnName="id")
      */
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Guarantee\Length")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Guarantee\Length")
      * @ORM\JoinColumn(name="guarantee_length_id", referencedColumnName="id")
      */
     private $length;
@@ -162,10 +162,10 @@ class Guarantee
     /**
      * Set type
      *
-     * @param \WebIllumination\SiteBundle\Entity\Guarantee\Type $type
+     * @param \KAC\SiteBundle\Entity\Guarantee\Type $type
      * @return Guarantee
      */
-    public function setType(\WebIllumination\SiteBundle\Entity\Guarantee\Type $type = null)
+    public function setType(\KAC\SiteBundle\Entity\Guarantee\Type $type = null)
     {
         $this->type = $type;
     
@@ -175,7 +175,7 @@ class Guarantee
     /**
      * Get type
      *
-     * @return \WebIllumination\SiteBundle\Entity\Guarantee\Type 
+     * @return \KAC\SiteBundle\Entity\Guarantee\Type
      */
     public function getType()
     {
@@ -185,10 +185,10 @@ class Guarantee
     /**
      * Set length
      *
-     * @param \WebIllumination\SiteBundle\Entity\Guarantee\Length $length
+     * @param \KAC\SiteBundle\Entity\Guarantee\Length $length
      * @return Guarantee
      */
-    public function setLength(\WebIllumination\SiteBundle\Entity\Guarantee\Length $length = null)
+    public function setLength(\KAC\SiteBundle\Entity\Guarantee\Length $length = null)
     {
         $this->length = $length;
     
@@ -198,7 +198,7 @@ class Guarantee
     /**
      * Get length
      *
-     * @return \WebIllumination\SiteBundle\Entity\Guarantee\Length 
+     * @return \KAC\SiteBundle\Entity\Guarantee\Length
      */
     public function getLength()
     {

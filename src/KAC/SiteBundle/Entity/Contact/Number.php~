@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Contact;
+namespace KAC\SiteBundle\Entity\Contact;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,12 +19,12 @@ class Number
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", inversedBy="numbers")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact", inversedBy="numbers")
      */
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\NumberType")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\NumberType")
      * @ORM\JoinColumn(name="contact_number_type_id", referencedColumnName="id")
      */
     private $type;
@@ -212,10 +212,10 @@ class Number
     /**
      * Set contact
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact $contact
+     * @param \KAC\SiteBundle\Entity\Contact $contact
      * @return Number
      */
-    public function setContact(\WebIllumination\SiteBundle\Entity\Contact $contact = null)
+    public function setContact(\KAC\SiteBundle\Entity\Contact $contact = null)
     {
         $this->contact = $contact;
     
@@ -225,7 +225,7 @@ class Number
     /**
      * Get contact
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact 
+     * @return \KAC\SiteBundle\Entity\Contact
      */
     public function getContact()
     {
@@ -235,10 +235,10 @@ class Number
     /**
      * Set type
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact\NumberType $type
+     * @param \KAC\SiteBundle\Entity\Contact\NumberType $type
      * @return Number
      */
-    public function setType(\WebIllumination\SiteBundle\Entity\Contact\NumberType $type = null)
+    public function setType(\KAC\SiteBundle\Entity\Contact\NumberType $type = null)
     {
         $this->type = $type;
     
@@ -248,7 +248,7 @@ class Number
     /**
      * Get type
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact\NumberType 
+     * @return \KAC\SiteBundle\Entity\Contact\NumberType
      */
     public function getType()
     {

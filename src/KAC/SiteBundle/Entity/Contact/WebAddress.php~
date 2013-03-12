@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Contact;
+namespace KAC\SiteBundle\Entity\Contact;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,12 +19,12 @@ class WebAddress
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact", inversedBy="webAddresses")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact", inversedBy="webAddresses")
      */
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact\WebAddressType")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\WebAddressType")
      * @ORM\JoinColumn(name="contact_web_address_type_id", referencedColumnName="id")
      */
     private $type;
@@ -184,10 +184,10 @@ class WebAddress
     /**
      * Set contact
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact $contact
+     * @param \KAC\SiteBundle\Entity\Contact $contact
      * @return WebAddress
      */
-    public function setContact(\WebIllumination\SiteBundle\Entity\Contact $contact = null)
+    public function setContact(\KAC\SiteBundle\Entity\Contact $contact = null)
     {
         $this->contact = $contact;
     
@@ -197,7 +197,7 @@ class WebAddress
     /**
      * Get contact
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact 
+     * @return \KAC\SiteBundle\Entity\Contact
      */
     public function getContact()
     {
@@ -207,10 +207,10 @@ class WebAddress
     /**
      * Set type
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact\WebAddressType $type
+     * @param \KAC\SiteBundle\Entity\Contact\WebAddressType $type
      * @return WebAddress
      */
-    public function setType(\WebIllumination\SiteBundle\Entity\Contact\WebAddressType $type = null)
+    public function setType(\KAC\SiteBundle\Entity\Contact\WebAddressType $type = null)
     {
         $this->type = $type;
     
@@ -220,7 +220,7 @@ class WebAddress
     /**
      * Get type
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact\WebAddressType 
+     * @return \KAC\SiteBundle\Entity\Contact\WebAddressType
      */
     public function getType()
     {

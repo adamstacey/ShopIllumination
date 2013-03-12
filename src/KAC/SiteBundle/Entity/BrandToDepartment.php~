@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity;
+namespace KAC\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,12 +19,12 @@ class BrandToDepartment
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Brand", inversedBy="departments")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Brand", inversedBy="departments")
      */
     private $brand;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Department", inversedBy="brands")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department", inversedBy="brands")
      */
     private $department;
 

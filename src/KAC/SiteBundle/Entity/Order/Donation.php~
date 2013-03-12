@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity\Order;
+namespace KAC\SiteBundle\Entity\Order;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,7 +19,7 @@ class Donation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Order", inversedBy="donations")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Order", inversedBy="donations")
      */
     private $order;
 
@@ -150,10 +150,10 @@ class Donation
     /**
      * Set order
      *
-     * @param \WebIllumination\SiteBundle\Entity\Order $order
+     * @param \KAC\SiteBundle\Entity\Order $order
      * @return Donation
      */
-    public function setOrder(\WebIllumination\SiteBundle\Entity\Order $order = null)
+    public function setOrder(\KAC\SiteBundle\Entity\Order $order = null)
     {
         $this->order = $order;
     
@@ -163,7 +163,7 @@ class Donation
     /**
      * Get orderId
      *
-     * @return \WebIllumination\SiteBundle\Entity\Order 
+     * @return \KAC\SiteBundle\Entity\Order
      */
     public function getOrder()
     {

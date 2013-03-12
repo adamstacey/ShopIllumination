@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity;
+namespace KAC\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -95,7 +95,7 @@ class MembershipCard
      */
     public function getActiveIcon()
     {
-        return 'bundles/webilluminationadmin/images/icons/'.$this->getActiveColour().'-light-icon.png';
+        return 'bundles/kacadmin/images/icons/'.$this->getActiveColour().'-light-icon.png';
     }
 
     /**

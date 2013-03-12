@@ -1,5 +1,5 @@
 <?php
-namespace WebIllumination\SiteBundle\Entity;
+namespace KAC\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -54,13 +54,13 @@ class Bug
     private $priority;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact")
      * @ORM\JoinColumn(name="owner_contact_id", referencedColumnName="id")
      */
     private $ownerContact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="WebIllumination\SiteBundle\Entity\Contact")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact")
      * @ORM\JoinColumn(name="assigned_to_contact_id", referencedColumnName="id")
      */
     private $assignedToContact;
@@ -413,10 +413,10 @@ class Bug
     /**
      * Set ownerContact
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact $ownerContact
+     * @param \KAC\SiteBundle\Entity\Contact $ownerContact
      * @return Bug
      */
-    public function setOwnerContact(\WebIllumination\SiteBundle\Entity\Contact $ownerContact = null)
+    public function setOwnerContact(\KAC\SiteBundle\Entity\Contact $ownerContact = null)
     {
         $this->ownerContact = $ownerContact;
     
@@ -426,7 +426,7 @@ class Bug
     /**
      * Get ownerContact
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact 
+     * @return \KAC\SiteBundle\Entity\Contact
      */
     public function getOwnerContact()
     {
@@ -436,10 +436,10 @@ class Bug
     /**
      * Set assignedToContact
      *
-     * @param \WebIllumination\SiteBundle\Entity\Contact $assignedToContact
+     * @param \KAC\SiteBundle\Entity\Contact $assignedToContact
      * @return Bug
      */
-    public function setAssignedToContact(\WebIllumination\SiteBundle\Entity\Contact $assignedToContact = null)
+    public function setAssignedToContact(\KAC\SiteBundle\Entity\Contact $assignedToContact = null)
     {
         $this->assignedToContact = $assignedToContact;
     
@@ -449,7 +449,7 @@ class Bug
     /**
      * Get assignedToContact
      *
-     * @return \WebIllumination\SiteBundle\Entity\Contact 
+     * @return \KAC\SiteBundle\Entity\Contact
      */
     public function getAssignedToContact()
     {
