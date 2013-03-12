@@ -86,29 +86,6 @@ class Routing
     }
 
     /**
-     * Set objectType
-     *
-     * @param string $objectType
-     * @return Routing
-     */
-    public function setObjectType($objectType)
-    {
-        $this->objectType = $objectType;
-    
-        return $this;
-    }
-
-    /**
-     * Get objectType
-     *
-     * @return string 
-     */
-    public function getObjectType()
-    {
-        return $this->objectType;
-    }
-
-    /**
      * Set locale
      *
      * @param string $locale
