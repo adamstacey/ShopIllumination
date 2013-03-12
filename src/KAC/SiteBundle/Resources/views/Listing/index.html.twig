@@ -71,7 +71,7 @@
 
 {% block body %}
     <section class="container_6 clearfix">
-        <form id="form-filter" class="form" method="GET" action="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)) }}">
+        <form id="form-filter" class="form" method="GET" action="{#{{ path(app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}#}">
             <div class="grid_4 grid-listings">
                 <div class="portlet">
                     <header>
