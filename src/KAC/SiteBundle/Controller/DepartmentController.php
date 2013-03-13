@@ -23,7 +23,7 @@ class DepartmentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1), array('displayOrder' => 'ASC'));
+        $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
 
         return array('departments' => $departments);
     }
