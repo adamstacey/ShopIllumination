@@ -9,6 +9,9 @@ services:
   kac_site.manager.product:
     class: KAC\SiteBundle\Manager\ProductManager
     arguments: [@doctrine, @kac_site.manager.seo]
+  kac_site.manager.department:
+      class: KAC\SiteBundle\Manager\DepartmentManager
+      arguments: [@doctrine, @kac_site.manager.seo]
   kac_site.manager.image:
     class: KAC\SiteBundle\Manager\ImageManager
     arguments: [@doctrine]
@@ -52,11 +55,20 @@ services:
           - { name: doctrine.event_listener, event: postRemove, method: preRemove}
 
   # Form Services
+  kac_site.form.new_department:
+     class: KAC\SiteBundle\Form\NewDepartmentType
+     tags:
+       - { name: form.type, alias: site_new_department }
+  kac_site.form.flow.new_department:
+      class: KAC\SiteBundle\Form\NewDepartmentFlow
+      parent: craue.form.flow
+      scope: request
+      calls:
+        - [ setFormType, [@kac_site.form.new_department]]
   kac_site.form.new_product:
     class: KAC\SiteBundle\Form\NewProductType
     tags:
       - { name: form.type, alias: site_new_product }
-
   kac_site.form.flow.new_product:
     class: KAC\SiteBundle\Form\NewProductFlow
     parent: craue.form.flow
