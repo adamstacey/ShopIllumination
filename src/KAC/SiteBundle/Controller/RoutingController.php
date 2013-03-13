@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RoutingController extends Controller
 {
     /**
-     * @Route("/{url}", name = "routing", requirements = {"url": ".+"})
+     * @Route("/{url}.html", name = "routing", requirements = {"url": ".+"})
      * @Method({"GET"})
      */
     public function routingAction(Request $request, $url)
