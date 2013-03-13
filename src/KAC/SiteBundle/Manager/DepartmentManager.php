@@ -4,11 +4,7 @@ namespace KAC\SiteBundle\Manager;
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Department\Description as DepartmentDescription;
 use KAC\SiteBundle\Entity\Department\Routing as DepartmentRouting;
-use KAC\SiteBundle\Entity\Product\VariantToFeature;
-use KAC\SiteBundle\Entity\Product\Variant;
 use KAC\SiteBundle\Entity\Department;
-use KAC\SiteBundle\Entity\ProductToDepartment;
-use KAC\SiteBundle\Entity\Image;
 use KAC\SiteBundle\Entity\Routing;
 
 class DepartmentManager extends Manager
@@ -25,123 +21,16 @@ class DepartmentManager extends Manager
     public function createDepartment()
     {
         $department = new Department();
+        $department->addDescription(new DepartmentDescription());
+        $department->addRouting(new DepartmentRouting());
 
-        $product->addDescription(new ProductDescription());
-        $product->addDepartment(new ProductToDepartment());
-        $product->addPrice(new Price());
-
-        $product->addFeatureGroup(new VariantToFeature());
-
-        return $product;
+        return $department;
     }
 
-    /**
-     * Create a new product variant
-     * @param Product $product the parent product
-     * @return \KAC\SiteBundle\Entity\Product\Variant
-     */
-    public function createVariant(Product $product)
+    public function updateDescription(DepartmentDescription $description)
     {
-        $variant = new Variant();
+        if(!$description->getDepartment()) return;
 
-        $variant->setProductCode($product->getProductCode());
-        $variant->setProduct($product);
-        $variant->addDescription(new VariantDescription());
-        $variant->addPrice(new Product\Price());
-
-        return $variant;
-    }
-
-    public function updateProductDescription(ProductDescription $description)
-    {
-        if(!$description->getProduct()) return;
-
-        /* @var \KAC\SiteBundle\Entity\Department $department*/
-        $brand = $description->getProduct()->getBrand();
-        $department = $description->getProduct()->getDepartment()->getDepartment();
-
-        if($brand && $department)
-        {
-            $pageTitle = $description->getProduct()->getProductCode();
-            $header = $description->getProduct()->getProductCode();
-            $metaKeywords = $description->getProduct()->getProductCode();
-
-            if ($brand->getDescription())
-            {
-                $pageTitle = $brand->getDescription()->getName().' '.$pageTitle;
-                $header = $brand->getDescription()->getName().' '.$header;
-                $metaKeywords .= ' '.$brand->getDescription()->getName();
-            }
-            if ($department->getDescription())
-            {
-                $pageTitle .= ' '.$department->getDescription()->getName();
-                $header .= ' '.$department->getDescription()->getName();
-                $metaKeywords .= ' '.$department->getDescription()->getName();
-            }
-
-            $description->setName($pageTitle);
-            $description->setPageTitle($pageTitle);
-            $description->setHeader($header);
-            $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
-            $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
-        }
-    }
-
-    public function updateVariantDescription(VariantDescription $description)
-    {
-        if(!$description->getVariant()) return;
-
-        /* @var \KAC\SiteBundle\Entity\Department $department*/
-        $brand = $description->getVariant()->getProduct()->getBrand();
-        $department = $description->getVariant()->getProduct()->getDepartment()->getDepartment();
-
-        if($brand && $department)
-        {
-            $pageTitle = $description->getVariant()->getProductCode();
-            $header = $description->getVariant()->getProductCode();
-            $metaKeywords = $description->getVariant()->getProductCode();
-
-            if ($brand->getDescription())
-            {
-                $pageTitle = $brand->getDescription()->getName().' '.$pageTitle;
-                $header = $brand->getDescription()->getName().' '.$header;
-                $metaKeywords .= ' '.$brand->getDescription()->getName();
-            }
-            if ($department->getDescription())
-            {
-                $pageTitle .= ' '.$department->getDescription()->getName();
-                $header .= ' '.$department->getDescription()->getName();
-                $metaKeywords .= ' '.$department->getDescription()->getName();
-            }
-
-            $description->setName($pageTitle);
-            $description->setPageTitle($pageTitle);
-            $description->setHeader($header);
-            $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
-            $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
-        }
-    }
-
-    /**
-     * Add a new route to the routing table. If the URL already exists in the table it is not added
-     *
-     * @param \KAC\SiteBundle\Entity\Product $product
-     */
-    public function addRoute(Product $product)
-    {
-        $em = $this->doctrine->getManager();
-        $url = $this->seoManager->createUrl($product->getDescription()->getPageTitle(), '');
-
-        if(count($em->getRepository('KAC\SiteBundle\Entity\Routing')->findBy(array('url' => $url))) === 0)
-        {
-            $route = new Routing();
-            $route->setObjectId($product->getId());
-            $route->setObjectType('product');
-            $route->setLocale('en');
-            $route->setUrl($url);
-
-            $em->persist($route);
-            $em->flush();
-        }
+        // TODO: Write update stuff
     }
 }
