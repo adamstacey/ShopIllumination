@@ -2,13 +2,24 @@
 
 namespace KAC\SiteBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Solarium_Query_Select;
+use KAC\SiteBundle\Entity\Image;
+use KAC\SiteBundle\Entity\Department;
+use KAC\SiteBundle\Entity\Department\Description;
+use KAC\SiteBundle\Manager\DepartmentManager;
+use KAC\SiteBundle\Manager\SeoManager;
 
 /**
  * @Route("/")
@@ -43,7 +54,7 @@ class DepartmentController extends Controller
                 $form = $flow->createForm($department);
             } else {
                 // Update descriptions TODO: move to listener
-                $manager = $this->container->get('kac_site.manager.product');
+                $manager = $this->container->get('kac_site.manager.department');
                 foreach ($department->getDescriptions() as $description)
                 {
                     $manager->updateDescription($description);
