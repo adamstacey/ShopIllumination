@@ -4,7 +4,7 @@
             <div class="ui-widget">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
-                    <h2>1. Product Information</h2>
+                    <h2>1. Overview</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-all">
                     {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
@@ -46,14 +46,17 @@
 </form>
 <script>
     $(document).ready(function() {
-        $("#site_new_product_brand").select2();
         $("select.select-department").prepend('<option value="">- Select a Department -</option>');
         $("select.select-department:selected").removeAttr("selected");
         $("select.select-department :nth-child(1)").attr("selected", "selected");
         $("select.select-department").select2({
             matcher: function(term, text) {
-                return text.replace(/^[\s&nbsp;]+/,'').toUpperCase().indexOf(term.toUpperCase())>=0;
+                return text.replace(/^[\s&nbsp;]+/,'').toUpperCase().indexOf(term.toUpperCase()) >= 0;
             }
         });
+        $(".select2-highlighted").each(function() {
+            $(this).removeClass("select2-highlighted");
+        });
+        $(".select-department > .select2-choice > span").html("- Select a Department -");
     })
 </script>
