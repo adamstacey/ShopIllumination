@@ -3,28 +3,42 @@
         <a class="ui-button button button-turquoise uppercase" href="#">Brands</a>
         <ul class="clearfix">
             {% for department in departments %}
-                <li class=""><a{% if loop.last %} class="highlighted"{% endif %} href="{{ path('routing', {'url': department.url}) }}">{{ department.menuTitle|raw }}</a></li>
+                <li><a{% if loop.last %} class="highlighted"{% endif %} data-main-menu-group="{{ department.id }}" href="{{ path('routing', {'url': department.url}) }}">{{ department.menuTitle|raw }}</a></li>
             {% endfor %}
         </ul>
         {% for department in departments %}
-                <div id="sub-department-{{ department.id }}" class="sub-departments">
-                    {% for subDepartment in department.children %}
-                        <div class="sub-department{% if ((loop.index % 4) == 0) %} sub-department-last{% endif %}">
-                            <h4><a href="#">{{ subDepartment.menuTitle|raw }}</a></h4>
+            <div id="mainMenuGroup{{ department.id }}" class="main-menu-group">
+                {% for subDepartment in department.children %}
+                    {% if department.children|length < 4 %}
+                        {% if department.children|length == 1 %}
+                            {% set widgetGroupSize = '1-of-4' %}
+                        {% elseif department.children|length == 2 %}
+                            {% set widgetGroupSize = '1-of-2' %}
+                        {% elseif department.children|length == 3 %}
+                            {% set widgetGroupSize = '3-of-4' %}
+                        {% else %}
+                            {% set widgetGroupSize = '1-of-1' %}
+                        {% endif %}
+                    {% else %}
+                        {% set widgetGroupSize = '1-of-1' %}
+                    {% endif %}
+                    {% if (loop.index % 4) == 1 %}<div class="widget-group widget-{{ widgetGroupSize }} clearfix">{% endif %}
+                        <div class="widget widget-1-of-4">
+                            <h4><a href="{{ path('routing', {'url': subDepartment.url}) }}">{{ subDepartment.name|raw }}</a></h4>
                             {% if subDepartment.children is defined %}
                                 <ul>
                                     {% for subSubDepartment in subDepartment.children %}
-                                        <li><a href="#">{{ subSubDepartment.menuTitle|raw }}</a></li>
+                                        <li><a href="{{ path('routing', {'url': subSubDepartment.url}) }}">{{ subSubDepartment.name|raw }}</a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('routing', {'url': subDepartment.url}) }}">{{ subDepartment.name|raw }}</a></li>
                                     {% endfor %}
                                 </ul>
                             {% endif %}
                         </div>
-                        {% if ((loop.index % 4) == 0) %}
-                            <div class="clear"></div>
-                        {% endif %}
-                    {% endfor %}
-                    <div class="clear"></div>
-                </div>
+                    {% if (loop.index % 4) == 0 %}</div>{% endif %}
+                {% endfor %}
+                {% if (department.children|length % 4) != 0 %}</div>{% endif %}
+            </div>
         {% endfor %}
     </nav>
 </div>
