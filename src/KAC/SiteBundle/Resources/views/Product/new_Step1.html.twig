@@ -46,6 +46,7 @@
 </form>
 <script>
     $(document).ready(function() {
+        $("#site_new_product_brand").select2();
         $("select.select-department").prepend('<option value="">- Select a Department -</option>');
         $("select.select-department:selected").removeAttr("selected");
         $("select.select-department :nth-child(1)").attr("selected", "selected");
