@@ -37,7 +37,10 @@ class NewDepartmentType extends AbstractType
                 $builder->add('status', 'choice', array(
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
                 ));
-
+                $builder->add('descriptions', 'collection', array(
+                    'type' => new DepartmentDescriptionOverviewType(),
+                    'required' => true,
+                ));
                 break;
         }
     }
@@ -47,11 +50,8 @@ class NewDepartmentType extends AbstractType
         $resolver->setDefaults(array(
             'flowStep' => 1,
             'data_class' => 'KAC\SiteBundle\Entity\Department',
-
             'type' => 's',
-            'variants' => array(),
-            'departments' => array(),
-            'departmentId' => null,
+            'descriptions' => array(),
         ));
     }
 
