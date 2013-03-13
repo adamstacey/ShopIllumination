@@ -82,6 +82,14 @@
     @include highlightedVerticalGradientReversed($colourWhite, $colourGreyLight, $colourGrey);
 }
 
+@mixin highlightedVerticalGradientGreyDark {
+    @include highlightedVerticalGradient($colourGreyLight, $colourGrey, $colourGreyDark);
+}
+
+@mixin highlightedVerticalGradientGreyDarkReversed {
+    @include highlightedVerticalGradientReversed($colourGreyLight, $colourGrey, $colourGreyDark);
+}
+
 @mixin highlightedVerticalGradientGreyLight {
 
     @include highlightedVerticalGradient($colourWhite, $colourGreyExtraLight, $colourGreyLight);
