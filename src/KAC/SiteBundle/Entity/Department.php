@@ -185,16 +185,15 @@ class Department implements DescribableInterface
 
     public function getIndentedName()
     {
-        if(count($this->descriptions) > 0)
+        if (count($this->descriptions) > 0)
         {
             $indentation = "";
-            $level = $this->getLvl() != 0 ? $this->getLvl() - 1 : $this->getLvl();
-            if($level > 0) {
-                for($i=0;$i<$level; $i++) {
-                    $indentation .= "&nbsp;&nbsp;";
-                }
+            $level = ($this->getLvl() != 0?$this->getLvl() - 1:$this->getLvl());
+            if ($level > 0)
+            {
+                $indentation = str_repeat("&nbsp;&nbsp;", $level);
             }
-            return $indentation . $this->getName();
+            return html_entity_decode($indentation).$this->getName();
         } else {
             return "";
         }
