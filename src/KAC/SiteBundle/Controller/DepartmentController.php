@@ -16,23 +16,23 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DepartmentController extends Controller
 {
     /**
-     * @Route("/admin/products/new", name="products_new")
+     * @Route("/admin/departments/new", name="departments_new")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function newAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
+    public function newAction(Request $request, $departmentId = null, $brandId = null, $admin = false)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $this->getManager()->createProduct();
+        $department = $this->getManager()->createDepartment();
 
         /**
          * @var \Craue\FormFlowBundle\Form\FormFlow $flow
          */
-        $flow = $this->get('kac_site.form.flow.new_product');
-        $flow->bind($product);
+        $flow = $this->get('kac_site.form.flow.new_department');
+        $flow->bind($department);
 
         // Get current form step
-        $form = $flow->createForm($product);
+        $form = $flow->createForm($department);
 
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
@@ -40,37 +40,17 @@ class DepartmentController extends Controller
             if ($flow->nextStep())
             {
                 // Get next form step
-                $form = $flow->createForm($product);
+                $form = $flow->createForm($department);
             } else {
                 // Update descriptions TODO: move to listener
                 $manager = $this->container->get('kac_site.manager.product');
-                foreach($product->getDescriptions() as $description)
+                foreach ($department->getDescriptions() as $description)
                 {
-                    $manager->updateProductDescription($description);
+                    $manager->updateDescription($description);
                 }
 
-                foreach($product->getVariants() as $variant)
-                {
-                    foreach($variant->getDescriptions() as $description)
-                    {
-                        $manager->updateVariantDescription($description);
-                    }
-                }
-
-                foreach($product->getLinks() as $link) {
-                    $link->setProduct($product);
-                }
-
-                $em->persist($product);
-                $em->flush();
-
-                // Link images
-                $this->getImageManager()->persistImages($product, 'product');
-                foreach($product->getVariants() as $variant)
-                {
-                    $this->getImageManager()->persistImages($variant, 'variant');
-                }
-
+                // Update the database
+                $em->persist($department);
                 $em->flush();
 
                 $flow->reset();
@@ -79,7 +59,7 @@ class DepartmentController extends Controller
             }
         }
 
-        return $this->render('KACSiteBundle:Product:new.html.twig', array(
+        return $this->render('KACSiteBundle:Department:new.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
         ));
