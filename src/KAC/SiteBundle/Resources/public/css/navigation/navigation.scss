@@ -155,14 +155,14 @@ nav.left-menu .button .ui-button-icon-secondary {
     position: relative;
 }
 
-.main-menu nav ul {
+.main-menu > nav > ul {
     margin: 0;
     padding: 0;
 
     border-left: 1px solid $colourTurquoiseLight;
 }
 
-.main-menu nav ul li {
+.main-menu > nav > ul > li {
     margin: 0;
     padding: 0;
 
@@ -208,4 +208,77 @@ nav.left-menu .button .ui-button-icon-secondary {
 
 .main-menu nav > .button .ui-button-text {
     line-height: 26px;
+}
+
+.main-menu .main-menu-group {
+    position: relative;
+
+    display: none;
+
+    border: 1px solid $colourGreyDark;
+    border-top: 3px solid $colourGreyDark;
+    z-index: 1;
+}
+
+.main-menu .widget-group {
+    width: 100%;
+    margin: 0;
+
+    @include alphaBackground($colourBlack, 0.7);
+    border-top: 1px solid $colourGreyDark;
+}
+
+.main-menu .widget-group > .widget {
+    padding: 0;
+
+    border-right: 1px solid $colourGreyDark;
+    @include borderBox;
+}
+
+.main-menu .widget-group > .widget:last-child {
+    border-right: 0 none;
+}
+
+.main-menu .widget h4 {
+    margin: 0;
+}
+
+.main-menu .widget h4 a {
+    height: 30px;
+
+    display: block;
+    @include highlightedVerticalGradientGreyDark;
+    line-height: 30px;
+    padding: 0 $spacingMedium;
+    @include fontSize(13);
+    color: $colourWhite;
+    @include textShadow($colourBlack, 1px, 0, 0, 1);
+    text-decoration: none;
+}
+
+.main-menu .widget h4 a:hover {
+    @include boxInsetShadow($colourGreyDark, 0, -5px, 20px, 0, 1);
+}
+
+.main-menu .widget ul,
+.main-menu .widget ul li {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.main-menu .widget ul li a {
+    height: 25px;
+
+    display: block;
+    @include highlightedVerticalGradientGreyLight;
+    line-height: 25px;
+    padding: 0 $spacingMedium;
+    @include fontSize(11);
+    color: $textColour;
+    text-decoration: none;
+}
+
+.main-menu .widget ul li a:hover {
+    @include boxInsetShadow($colourGreyDark, 0, 0, 10px, 0, 1);
 }
