@@ -9,9 +9,7 @@
                 <section class="ui-widget-content ui-corner-all">
                     {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
                     <fieldset>
-                        {% autoescape false %}
-                            {{ form_row(form.parent, {'label': 'Parent Department', 'help': 'Select a parent department'}) }}
-                        {% endautoescape %}
+                        {{ form_row(form.parent, {'label': 'Department', 'help': 'Select the department you want this department to fall under'}) }}
                         {{ form_row(form.status, {'label': 'Status', 'help': 'Is the department available?'}) }}
                     </fieldset>
                     {{ form_rest(form) }}
