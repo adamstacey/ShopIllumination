@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="object_type", type="string")
- * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\ProductRouting", "department" = "KAC\SiteBundle\Entity\Department\DepartmentRouting", "brand" = "KAC\SiteBundle\Entity\Brand\BrandRouting"})
+ * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Routing", "department" = "KAC\SiteBundle\Entity\Department\Routing", "brand" = "KAC\SiteBundle\Entity\Brand\Routing"})
  * @ORM\Table(name="routing")
  * @ORM\HasLifecycleCallbacks()
  */
