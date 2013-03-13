@@ -27,7 +27,7 @@ class NewProductFlow extends FormFlow
 
     protected function loadStepDescriptions() {
         return array(
-            '1. Product Information',
+            '1. Overview',
             '2. Build Combinations',
             '3. Prices',
             '4. Features',
