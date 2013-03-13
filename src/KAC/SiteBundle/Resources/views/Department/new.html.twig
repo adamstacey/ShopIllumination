@@ -1,0 +1,25 @@
+{# Forms #}
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Add New Department | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Add New Department</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-2-of-7">
+                {% include 'KACSiteBundle:Department:newLeftMenu.html.twig' %}
+            </div>
+            <div class="widget widget-5-of-7">
+                {% if flow.getCurrentStep() == 1 %}
+                    {% include 'KACSiteBundle:Department:new_Step1.html.twig' %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
