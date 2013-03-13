@@ -14,11 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use Craue\FormFlowBundle\Form\FormFlow;
-use KAC\SiteBundle\Entity\Product\Variant;
-use KAC\SiteBundle\Entity\Product\VariantToFeature;
-use KAC\SiteBundle\Entity\Product\Price;
-use KAC\SiteBundle\Entity\Product\Variant\Description;
-use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Entity\Department;
 
 class NewDepartmentFlow extends FormFlow
 {
@@ -47,6 +43,16 @@ class NewDepartmentFlow extends FormFlow
         $options = parent::getFormOptions($formData, $step, $options);
 
         $options['cascade_validation'] = true;
+
+        if ($step > 1)
+        {
+            $departments = $formData->getDepartments();
+            if (count($departments) > 0 && $departments[0]->getDepartment() !== null) {
+                $options['departmentId'] = $departments[0]->getDepartment()->getId();
+            } else {
+                $options['departmentId'] = null;
+            }
+        }
 
         return $options;
     }
