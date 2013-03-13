@@ -3,12 +3,12 @@ namespace KAC\SiteBundle\Entity\Department;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use KAC\SiteBundle\Entity\Routing;
+use \KAC\SiteBundle\Entity\Routing as SiteRouting;
 
 /**
  * @ORM\Entity
  */
-class DepartmentRouting extends Routing
+class Routing extends SiteRouting
 {
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department", inversedBy="routings")
@@ -20,7 +20,7 @@ class DepartmentRouting extends Routing
      * Set department
      *
      * @param \KAC\SiteBundle\Entity\Department $department
-     * @return DepartmentRouting
+     * @return Routing
      */
     public function setDepartment(\KAC\SiteBundle\Entity\Department $department = null)
     {

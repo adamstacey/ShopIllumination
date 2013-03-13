@@ -3,12 +3,12 @@ namespace KAC\SiteBundle\Entity\Product;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use KAC\SiteBundle\Entity\Routing;
+use \KAC\SiteBundle\Entity\Routing as SiteRouting;
 
 /**
  * @ORM\Entity
  */
-class ProductRouting extends Routing
+class Routing extends SiteRouting
 {
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="routings")
@@ -20,7 +20,7 @@ class ProductRouting extends Routing
      * Set product
      *
      * @param \KAC\SiteBundle\Entity\Product $product
-     * @return ProductRouting
+     * @return Routing
      */
     public function setProduct(\KAC\SiteBundle\Entity\Product $product = null)
     {
