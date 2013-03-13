@@ -36,7 +36,7 @@ class Department implements DescribableInterface
     private $features;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\DepartmentRouting", mappedBy="department", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Routing", mappedBy="department", cascade={"all"})
      */
     private $routings;
 
@@ -832,7 +832,7 @@ class Department implements DescribableInterface
     /**
      * Get routing
      *
-     * @return \KAC\SiteBundle\Entity\Brand\BrandRouting
+     * @return \KAC\SiteBundle\Entity\Department\Routing
      */
     public function getRouting()
     {
@@ -862,10 +862,10 @@ class Department implements DescribableInterface
     /**
      * Add routings
      *
-     * @param \KAC\SiteBundle\Entity\Department\DepartmentRouting $routings
+     * @param \KAC\SiteBundle\Entity\Department\Routing $routings
      * @return Department
      */
-    public function addRouting(\KAC\SiteBundle\Entity\Department\DepartmentRouting $routings)
+    public function addRouting(Routing $routings)
     {
         $this->routings[] = $routings;
     
@@ -875,9 +875,9 @@ class Department implements DescribableInterface
     /**
      * Remove routings
      *
-     * @param \KAC\SiteBundle\Entity\Department\DepartmentRouting $routings
+     * @param \KAC\SiteBundle\Entity\Department\Routing $routings
      */
-    public function removeRouting(\KAC\SiteBundle\Entity\Department\DepartmentRouting $routings)
+    public function removeRouting(\KAC\SiteBundle\Entity\Department\Routing $routings)
     {
         $this->routings->removeElement($routings);
     }

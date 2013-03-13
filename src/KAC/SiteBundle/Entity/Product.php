@@ -52,7 +52,7 @@ class Product implements DescribableInterface
     private $variants;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\ProductRouting", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Routing", mappedBy="product", cascade={"persist", "remove"})
      */
     private $routings;
 
@@ -1028,7 +1028,7 @@ class Product implements DescribableInterface
     /**
      * Get routing
      *
-     * @return \KAC\SiteBundle\Entity\Brand\BrandRouting
+     * @return \KAC\SiteBundle\Entity\Product\Routing
      */
     public function getRouting()
     {
@@ -1058,10 +1058,10 @@ class Product implements DescribableInterface
     /**
      * Add routings
      *
-     * @param \KAC\SiteBundle\Entity\Product\ProductRouting $routings
+     * @param \KAC\SiteBundle\Entity\Product\Routing $routings
      * @return Product
      */
-    public function addRouting(\KAC\SiteBundle\Entity\Product\ProductRouting $routings)
+    public function addRouting(\KAC\SiteBundle\Entity\Product\Routing $routings)
     {
         $this->routings[] = $routings;
     
@@ -1071,9 +1071,9 @@ class Product implements DescribableInterface
     /**
      * Remove routings
      *
-     * @param \KAC\SiteBundle\Entity\Product\ProductRouting $routings
+     * @param \KAC\SiteBundle\Entity\Product\Routing $routings
      */
-    public function removeRouting(\KAC\SiteBundle\Entity\Product\ProductRouting $routings)
+    public function removeRouting(\KAC\SiteBundle\Entity\Product\Routing $routings)
     {
         $this->routings->removeElement($routings);
     }

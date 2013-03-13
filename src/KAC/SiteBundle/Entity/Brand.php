@@ -30,7 +30,7 @@ class Brand
     private $departments;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\BrandRouting", mappedBy="brand", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Routing", mappedBy="brand", cascade={"all"})
      */
     private $routings;
 
@@ -501,13 +501,13 @@ class Brand
     /**
      * Get routing
      *
-     * @return \KAC\SiteBundle\Entity\Brand\BrandRouting 
+     * @return \KAC\SiteBundle\Entity\Brand\Routing
      */
     public function getRouting()
     {
         if (count($this->routings) > 0)
-        {
             return $this->routings[0];
+        {
         }
 
         return null;
@@ -531,10 +531,10 @@ class Brand
     /**
      * Add routings
      *
-     * @param \KAC\SiteBundle\Entity\Brand\BrandRouting $routings
+     * @param \KAC\SiteBundle\Entity\Brand\Routing $routings
      * @return Brand
      */
-    public function addRouting(\KAC\SiteBundle\Entity\Brand\BrandRouting $routings)
+    public function addRouting(\KAC\SiteBundle\Entity\Brand\Routing $routings)
     {
         $this->routings[] = $routings;
     
@@ -544,9 +544,9 @@ class Brand
     /**
      * Remove routings
      *
-     * @param \KAC\SiteBundle\Entity\Brand\BrandRouting $routings
+     * @param \KAC\SiteBundle\Entity\Brand\Routing $routings
      */
-    public function removeRouting(\KAC\SiteBundle\Entity\Brand\BrandRouting $routings)
+    public function removeRouting(\KAC\SiteBundle\Entity\Brand\Routing $routings)
     {
         $this->routings->removeElement($routings);
     }
