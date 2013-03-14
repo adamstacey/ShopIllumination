@@ -140,3 +140,17 @@ fos_user:
         user_manager: kac.user_manager.default
 
 gregwar_form: ~
+
+trsteel_ckeditor:
+    class: Trsteel\CkeditorBundle\Form\Type\CkeditorType
+    transformers: ['strip_js', 'strip_css', 'strip_comments']
+    force_paste_as_plaintext: true
+    toolbar: ['font', 'lists', 'history', 'source']
+    toolbar_groups:
+        font: ['Bold','Italic','Underline']
+        lists: ['NumberedList','BulletedList','Outdent','Indent']
+        history: ['Undo','Redo']
+        source: ['Source']
+    ui_color: '#c5d2d6'
+    startup_outline_blocks: false
+    language: 'en-gb'
