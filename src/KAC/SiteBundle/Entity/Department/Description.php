@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Entity\Department;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use KAC\SiteBundle\Entity\DescriptionInterface;
 
 /**
@@ -30,72 +31,73 @@ class Description implements DescriptionInterface
     private $locale = "en_GB";
     
     /**
-     * @ORM\Column(name="delivery_band_notes", type="text")
+     * @ORM\Column(name="delivery_band_notes", type="text", nullable=true)
      */
     private $deliveryBandNotes;
     
     /**
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank(groups={"flow_site_new_department_step1"}, message="Enter a name.")
      */
     private $name;
     
     /**
-     * @ORM\Column(name="google_department", type="text")
+     * @ORM\Column(name="google_department", type="text", nullable=true)
      */
     private $googleDepartment;
     
     /**
-     * @ORM\Column(name="ebay_department", type="text")
+     * @ORM\Column(name="ebay_department", type="text", nullable=true)
      */
     private $ebayDepartment;
     
     /**
-     * @ORM\Column(name="amazon_department", type="text")
+     * @ORM\Column(name="amazon_department", type="text", nullable=true)
      */
     private $amazonDepartment;
     
     /**
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
         
     /**
-     * @ORM\Column(name="menu_title", type="string", length=255)
+     * @ORM\Column(name="menu_title", type="string", length=255, nullable=true)
      */
     private $menuTitle;
     
     /**
-     * @ORM\Column(name="page_title", type="string", length=255)
+     * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
      */
     private $pageTitle;
     
     /**
-     * @ORM\Column(name="page_title_template", type="text")
+     * @ORM\Column(name="page_title_template", type="text", nullable=true)
      */
     private $pageTitleTemplate;
     
     /**
-     * @ORM\Column(name="header", type="string", length=255)
+     * @ORM\Column(name="header", type="string", length=255, nullable=true)
      */
     private $header;
     
     /**
-     * @ORM\Column(name="header_template", type="text")
+     * @ORM\Column(name="header_template", type="text", nullable=true)
      */
     private $headerTemplate;
     
     /**
-     * @ORM\Column(name="meta_description", type="text")
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
     private $metaDescription;
     
     /**
-     * @ORM\Column(name="meta_description_template", type="text")
+     * @ORM\Column(name="meta_description_template", type="text", nullable=true)
      */
     private $metaDescriptionTemplate;
     
     /**
-     * @ORM\Column(name="meta_keywords", type="text")
+     * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      */
     private $metaKeywords;
 
