@@ -11,6 +11,7 @@
                     <fieldset>
                         {{ form_row(form.parent, {'label': 'Department', 'help': 'Select the department you want this department to fall under'}) }}
                         {{ form_row(form.status, {'label': 'Status', 'help': 'Is the department available?'}) }}
+                        {{ form_row(form.descriptions) }}
                     </fieldset>
                     {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
