@@ -115,7 +115,6 @@ class NewProductType extends AbstractType
         $resolver->setDefaults(array(
             'flowStep' => 1,
             'data_class' => 'KAC\SiteBundle\Entity\Product',
-
             'type' => 's',
             'variants' => array(),
             'departments' => array(),
