@@ -18,7 +18,7 @@ use KAC\SiteBundle\Entity\Department;
 
 class NewDepartmentFlow extends FormFlow
 {
-    protected $maxSteps = 6;
+    protected $maxSteps = 1;
     protected $allowDynamicStepNavigation = true;
 
     protected function loadStepDescriptions() {
