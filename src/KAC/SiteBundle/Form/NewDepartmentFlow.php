@@ -44,16 +44,6 @@ class NewDepartmentFlow extends FormFlow
 
         $options['cascade_validation'] = true;
 
-        if ($step > 1)
-        {
-            $departments = $formData->getDepartments();
-            if (count($departments) > 0 && $departments[0]->getDepartment() !== null) {
-                $options['departmentId'] = $departments[0]->getDepartment()->getId();
-            } else {
-                $options['departmentId'] = null;
-            }
-        }
-
         return $options;
     }
 }
