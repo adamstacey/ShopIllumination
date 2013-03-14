@@ -23,7 +23,7 @@
 </form>
 <script>
     $(document).ready(function() {
-        $("select.select-department").prepend('<option value="">- Select a Department -</option>');
+        $("select.select-department").prepend('<option value="0">- Top Level -</option>');
         $("select.select-department:selected").removeAttr("selected");
         $("select.select-department :nth-child(1)").attr("selected", "selected");
         $("select.select-department").select2({
@@ -34,6 +34,6 @@
         $(".select2-highlighted").each(function() {
             $(this).removeClass("select2-highlighted");
         });
-        $(".select-department > .select2-choice > span").html("- Select a Department -");
+        $(".select-department > .select2-choice > span").html("- Top Level -");
     })
 </script>
