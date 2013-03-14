@@ -30,7 +30,8 @@
         "friendsofsymfony/user-bundle": "*",
         "jms/serializer-bundle": ">=0.9.0,<1.1.0-dev",
         "avalanche123/imagine-bundle": "v2.1",
-        "gregwar/form-bundle": "dev-master"
+        "gregwar/form-bundle": "dev-master",
+        "Trsteel/ckeditor-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
