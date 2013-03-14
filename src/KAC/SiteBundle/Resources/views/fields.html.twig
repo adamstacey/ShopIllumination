@@ -62,7 +62,44 @@
     {% endspaceless %}
 {% endblock form_rows %}
 
+{% block collection_row %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
+            <p>Table will go here!</p>
+            {# TODO: ADD TABLE DATA TO HANDLE THIS FOR MULTIPLE ADDITION DECIDED BY WHETHER allow_add is set to true #}
+        {% else %}
+            {% for row in form %}
+                {% for child in row %}
+                    <div class="form-element{% if child.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
+                        <div class="widget widget-1-of-3">
+                            {{ form_label(child) }}
+                        </div>
+                        <div class="widget widget-2-of-3">
+                            {{ form_widget(child) }}
+                            {% if child.vars.valid is sameas(false) %}
+                                <small>
+                                    {{ form_errors(child) }}
+                                </small>
+                            {% else %}
+                                {% if child.vars.attr.help is defined %}
+                                    <small>{{ child.vars.attr.help }}</small>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock collection_row %}
+
 {# CONFIRMED BLOCKS IN USE IN ORDER THEY ARE USED #}
+{% block _site_new_department_single_collection_row %}
+    {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
+    {{ fields.single_collection_row(form) }}
+{% endblock %}
+
 {% block _site_new_product_departments_row %}
     {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_departments_row(form) }}
