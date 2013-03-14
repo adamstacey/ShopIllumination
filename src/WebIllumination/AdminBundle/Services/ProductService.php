@@ -125,7 +125,6 @@ class ProductService {
         // Get the services
         $doctrineService = $this->container->get('doctrine');
 
-        // Get the entity manager
         /**
          * Get entity manager
          * @var EntityManager $em
@@ -160,18 +159,26 @@ class ProductService {
         // Get the services
         $doctrineService = $this->container->get('doctrine');
 
-        // Get the entity manager
+        /**
+         * Get entity manager
+         * @var EntityManager $em
+         */
         $em = $doctrineService->getEntityManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
 
         // Build the query
-        $qb->select('pi');
-        $qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
-        $qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
-        $qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
-        $qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
+        $qb->select("p")
+            ->from("KAC\SiteBundle\Entity\Product", "p")
+            ->join("p.descriptions", "pd")
+            ->join("p.variants", "v")
+            ->join("v.prices", "vp")
+            ->where($qb->expr()->eq('p.status', $qb->expr()->literal('a')))
+            ->andWhere($qb->expr()->eq('pd.locale', $qb->expr()->literal($locale)))
+            ->andWhere($qb->expr()->eq('vp.currencyCode', $qb->expr()->literal($currencyCode)))
+            ->setFirstResult(0)
+            ->setMaxResults(30);
         $query = $qb->getQuery();
 
         // Get the products
@@ -668,11 +675,11 @@ class ProductService {
             ->join("d.description", "dd")
             ->join("d.routing", "dr")
             ->where("v.id = ?1")
-            ->where("vd.locale = ?2")
-            ->where("bd.locale = ?2")
-            ->where("dd.locale = ?2")
-            ->where("vd.locale = ?2")
-            ->where("vp.prices = ?3")
+            ->andWhere("vd.locale = ?2")
+            ->andWhere("bd.locale = ?2")
+            ->andWhere("dd.locale = ?2")
+            ->andWhere("vd.locale = ?2")
+            ->andWhere("vp.prices = ?3")
             ->setParameter(1, $id)
             ->setParameter(1, $locale)
             ->setParameter(1, $currencyCode);
@@ -692,47 +699,47 @@ class ProductService {
         $variantDescriptionObjects = $variantObject->getDescriptions();
         $variantDescriptionObject = $variantDescriptionObjects[0];
 
-//        $product['id'] = $variantObject->getId();
-//        $product['productId'] = $variantObject->getId();
-//        $product['productGroupId'] = $variantObject->getProduct()->getId();
-//        $product['availableForPurchase'] = $variantObject->getProduct()->getAvailableForPurchase();
-//        $product['status'] = $variantObject->getStatus();
-//        $product['product'] = $variantDescriptionObject->getProduct();
-//        $product['prefix'] = $variantDescriptionObject->getPrefix();
-//        $product['tagline'] = $variantDescriptionObject->getTagline();
-//        $product['productCode'] = $variantObject->getProductCode();
-//        $product['productGroupCode'] = $variantObject->getProductCode();
-//        $product['alternativeProductCodes'] = $variantObject->getAlternativeProductCodes();
-//        $product['description'] = $variantDescriptionObject->getDescription();
-//        $product['shortDescription'] = $variantDescriptionObject->getShortDescription();
-//        $product['pageTitle'] = $variantDescriptionObject->getPageTitle();
-//        $product['header'] = $variantDescriptionObject->getHeader();
-//        $product['metaDescription'] = $variantDescriptionObject->getMetaDescription();
-//        $product['metaKeywords'] = $variantDescriptionObject->getMetaKeywords();
-//        $product['searchWords'] = $variantDescriptionObject->getSearchWords();
-//        $product['deliveryBand'] = $variantObject->getProduct()->getDeliveryBand();
-//        $product['inheritedDeliveryBand'] = $variantObject->getProduct()->getInheritedDeliveryBand();
-//        $product['deliveryCost'] = $variantObject->getProduct()->getDeliveryCost();
-//        $product['weight'] = $variantObject->getWeight();
-//        $product['length'] = $variantObject->getLength();
-//        $product['width'] = $variantObject->getWidth();
-//        $product['height'] = $variantObject->getHeight();
-//        $product['mpn'] = $variantObject->getMpn();
-//        $product['ean'] = $variantObject->getEan();
-//        $product['upc'] = $variantObject->getUpc();
-//        $product['jan'] = $variantObject->getJan();
-//        $product['isbn'] = $variantObject->getIsbn();
-//        $product['featureComparison'] = $variantObject->getProduct()->getFeatureComparison();
-//        $product['downloadable'] = $variantObject->getProduct()->getDownloadable();
-//        $product['specialOffer'] = $variantObject->getProduct()->getSpecialOffer();
-//        $product['recommended'] = $variantObject->getProduct()->getRecommended();
-//        $product['accessory'] = $variantObject->getProduct()->getAccessory();
-//        $product['new'] = $variantObject->getProduct()->getNew();
-//        $product['hidePrice'] = $variantObject->getProduct()->getHidePrice();
-//        $product['showPriceOutOfHours'] = $variantObject->getProduct()->getShowPriceOutOfHours();
-//        $product['membershipCardDiscountAvailable'] = $variantObject->getProduct()->getMembershipCardDiscountAvailable();
-//        $product['maximumMembershipCardDiscount'] = $variantObject->getProduct()->getMaximumMembershipCardDiscount();
-//        $product['updatedAt'] = $variantObject->getUpdatedAt();
+        $product['id'] = $variantObject->getId();
+        $product['productId'] = $variantObject->getId();
+        $product['productGroupId'] = $variantObject->getProduct()->getId();
+        $product['availableForPurchase'] = $variantObject->getProduct()->getAvailableForPurchase();
+        $product['status'] = $variantObject->getStatus();
+        $product['product'] = $variantDescriptionObject->getProduct();
+        $product['prefix'] = $variantDescriptionObject->getPrefix();
+        $product['tagline'] = $variantDescriptionObject->getTagline();
+        $product['productCode'] = $variantObject->getProductCode();
+        $product['productGroupCode'] = $variantObject->getProductCode();
+        $product['alternativeProductCodes'] = $variantObject->getAlternativeProductCodes();
+        $product['description'] = $variantDescriptionObject->getDescription();
+        $product['shortDescription'] = $variantDescriptionObject->getShortDescription();
+        $product['pageTitle'] = $variantDescriptionObject->getPageTitle();
+        $product['header'] = $variantDescriptionObject->getHeader();
+        $product['metaDescription'] = $variantDescriptionObject->getMetaDescription();
+        $product['metaKeywords'] = $variantDescriptionObject->getMetaKeywords();
+        $product['searchWords'] = $variantDescriptionObject->getSearchWords();
+        $product['deliveryBand'] = $variantObject->getProduct()->getDeliveryBand();
+        $product['inheritedDeliveryBand'] = $variantObject->getProduct()->getInheritedDeliveryBand();
+        $product['deliveryCost'] = $variantObject->getProduct()->getDeliveryCost();
+        $product['weight'] = $variantObject->getWeight();
+        $product['length'] = $variantObject->getLength();
+        $product['width'] = $variantObject->getWidth();
+        $product['height'] = $variantObject->getHeight();
+        $product['mpn'] = $variantObject->getMpn();
+        $product['ean'] = $variantObject->getEan();
+        $product['upc'] = $variantObject->getUpc();
+        $product['jan'] = $variantObject->getJan();
+        $product['isbn'] = $variantObject->getIsbn();
+        $product['featureComparison'] = $variantObject->getProduct()->getFeatureComparison();
+        $product['downloadable'] = $variantObject->getProduct()->getDownloadable();
+        $product['specialOffer'] = $variantObject->getProduct()->getSpecialOffer();
+        $product['recommended'] = $variantObject->getProduct()->getRecommended();
+        $product['accessory'] = $variantObject->getProduct()->getAccessory();
+        $product['new'] = $variantObject->getProduct()->getNew();
+        $product['hidePrice'] = $variantObject->getProduct()->getHidePrice();
+        $product['showPriceOutOfHours'] = $variantObject->getProduct()->getShowPriceOutOfHours();
+        $product['membershipCardDiscountAvailable'] = $variantObject->getProduct()->getMembershipCardDiscountAvailable();
+        $product['maximumMembershipCardDiscount'] = $variantObject->getProduct()->getMaximumMembershipCardDiscount();
+        $product['updatedAt'] = $variantObject->getUpdatedAt();
 
         $product['url'] = $variantObject->getProduct()->getRouting()->getUrl();
 
