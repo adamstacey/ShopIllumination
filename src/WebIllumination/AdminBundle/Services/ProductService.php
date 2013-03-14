@@ -119,57 +119,6 @@ class ProductService {
         return true;
     }
 
-    // Get product search
-    public function getProductSearch($search, $locale = 'en', $currencyCode = 'GBP')
-    {
-        if (strlen($search) >= 3)
-        {
-            // Get the services
-            $doctrineService = $this->container->get('doctrine');
-
-            // Split the keywords
-            $search = explode(' ', $search);
-
-            // Get the entity manager
-            $em = $doctrineService->getEntityManager();
-
-            // Get the query builder
-            $qb = $em->createQueryBuilder();
-
-            // Build the query
-            $qb->select('pi');
-            $qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
-            $qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
-            foreach ($search as $keyword)
-            {
-                $qb->andWhere($qb->expr()->orx(
-                    $qb->expr()->like('pi.searchWords', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.alternativeProductCodes', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.brand', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.departments', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.productOptions', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.productFeatures', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.product', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.header', $qb->expr()->literal('%'.$keyword.'%')),
-                    $qb->expr()->like('pi.productCode', $qb->expr()->literal('%'.$keyword.'%'))
-                ));
-            }
-            $qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
-            $qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
-            $qb->addOrderBy('pi.accessory', 'ASC');
-            $qb->addOrderBy('pi.listPrice', 'ASC');
-            $qb->setFirstResult(0);
-            $qb->setMaxResults(90);
-
-            $query = $qb->getQuery();
-
-            $products = $query->getResult();
-            return $products;
-        }
-
-        return false;
-    }
-
     // Get special offers
     public function getSpecialOffers($locale = 'en', $currencyCode = 'GBP')
     {
@@ -177,21 +126,28 @@ class ProductService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
+        /**
+         * Get entity manager
+         * @var EntityManager $em
+         */
         $em = $doctrineService->getEntityManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
 
         // Build the query
-        $qb->select('pi');
-        $qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
-        $qb->where($qb->expr()->eq('pi.status', $qb->expr()->literal('a')));
-        $qb->andWhere($qb->expr()->lt('pi.listPrice', 'pi.recommendedRetailPrice'));
-        $qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
-        $qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
-        $qb->addOrderBy('pi.listPrice', 'DESC');
-        $qb->setFirstResult(0);
-        $qb->setMaxResults(30);
+        $qb->select("p")
+            ->from("KAC\SiteBundle\Entity\Product", "p")
+            ->join("p.descriptions", "pd")
+            ->join("p.variants", "v")
+            ->join("v.prices", "vp")
+            ->where($qb->expr()->eq('p.status', $qb->expr()->literal('a')))
+            ->andWhere($qb->expr()->lt('vp.listPrice', 'vp.recommendedRetailPrice'))
+            ->andWhere($qb->expr()->eq('pd.locale', $qb->expr()->literal($locale)))
+            ->andWhere($qb->expr()->eq('vp.currencyCode', $qb->expr()->literal($currencyCode)))
+            ->addOrderBy('vp.listPrice', 'DESC')
+            ->setFirstResult(0)
+            ->setMaxResults(30);
         $query = $qb->getQuery();
 
         $products = $query->getResult();
@@ -1410,12 +1366,7 @@ class ProductService {
                 $brand['id'] = $product->getBrandId();
                 $brand['brand'] = $product->getBrand();
                 $brand['productCount'] = 1;
-                if (in_array($product->getBrandId(), $selectedBrands))
-                {
-                    $brand['selected'] = true;
-                } else {
-                    $brand['selected'] = false;
-                }
+                $brand['selected'] = false;
                 $brands[$product->getBrandId()] = $brand;
             }
         }
