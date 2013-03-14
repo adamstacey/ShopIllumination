@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -42,8 +43,9 @@ class Department implements DescribableInterface
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
+     * @Assert\Choice(choices={"a", "h", "d"})
      */
-    private $status;
+    private $status = 'a';
     
     /**
      * @ORM\Column(name="department_path", type="text")
@@ -53,47 +55,47 @@ class Department implements DescribableInterface
     /**
      * @ORM\Column(name="hide_prices", type="boolean")
      */
-    private $hidePrices;
+    private $hidePrices = false;
     
     /**
      * @ORM\Column(name="show_prices_out_of_hours", type="boolean")
      */
-    private $showPricesOutOfHours;
+    private $showPricesOutOfHours = false;
     
     /**
      * @ORM\Column(name="membership_card_discount_available", type="boolean")
      */
-    private $membershipCardDiscountAvailable;
+    private $membershipCardDiscountAvailable = false;
     
     /**
      * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
      */
-    private $maximumMembershipCardDiscount;
+    private $maximumMembershipCardDiscount = 0.0000;
     
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
-    private $deliveryBand;
+    private $deliveryBand = 0.000;
     
     /**
      * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
-    private $inheritedDeliveryBand;
+    private $inheritedDeliveryBand = 0.0000;
     
     /**
      * @ORM\Column(name="check_delivery_band", type="boolean")
      */
-    private $checkDeliveryBand;
+    private $checkDeliveryBand = false;
 
     /**
      * @ORM\Column(name="template", type="string", length=255)
      */
-    private $template;
+    private $template = 'standard';
 
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = '1';
 
     /**
      * @Gedmo\TreeLeft
