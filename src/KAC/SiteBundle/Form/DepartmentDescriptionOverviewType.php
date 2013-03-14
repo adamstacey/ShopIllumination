@@ -18,8 +18,7 @@ class DepartmentDescriptionOverviewType extends AbstractType
                 'help' => 'Enter the name of the department',
             ),
         ));
-        $builder->add('description', 'textarea', array(
-            'required'  => true,
+        $builder->add('description', 'ckeditor', array(
             'label' =>'Description',
             'attr' => array(
                 'class' => 'fill',
