@@ -2,6 +2,7 @@
 
 namespace WebIllumination\AdminBundle\Services;
 
+use KAC\SiteBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Request;
 
 class BasketService {
@@ -1036,7 +1037,7 @@ class BasketService {
 		$productService = $this->container->get('web_illumination_admin.product_service');
 
 		// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $this->container->get('doctrine')->getManager();
 		
 		// Setup totals
 		$items = 0;
@@ -1092,23 +1093,28 @@ class BasketService {
     		// Check if there are any stellar pan set discounts available
     		foreach ($basket['products'] as $product)
 			{
-				$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
-				if ($productIndexObject)
+                /**
+                 * @var Product $productEntity
+                 */
+                $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+				if ($productEntity)
 				{
 					// Check for Stellar Pans
-					if (strpos($productIndexObject->getDepartmentIds(), '|1034|1122|69|') !== false)
-					{
-						$stellarPanSetDiscountsAvailable += $product['quantity'];
-					}
+                    foreach($productEntity->getDepartments() as $department) {
+                        if ($department->getId() == 69)
+                        {
+                            $stellarPanSetDiscountsAvailable += $product['quantity'];
+                        }
+                    }
 					
 					// Check for CDA products
-					if ($productIndexObject->getBrandId() == '7')
+					if ($productEntity->getBrand()->getId() == '7')
 					{
 						$numberOfCdaAppliances += $product['quantity'];
 					}
 					
 					// Check for Movember products
-					if (($productIndexObject->getProductCode() == 'KHCH') || ($productIndexObject->getProductCode() == 'EVOLUTION200') || ($productIndexObject->getProductCode() == 'SE80050SS') || ($productIndexObject->getProductCode() == 'C95030') || ($productIndexObject->getProductCode() == '119.0179.532') || ($productIndexObject->getProductCode() == 'PH01SS') || ($productIndexObject->getProductCode() == 'FWC302SS'))
+					if (($productEntity->getProductCode() == 'KHCH') || ($productEntity->getProductCode() == 'EVOLUTION200') || ($productEntity->getProductCode() == 'SE80050SS') || ($productEntity->getProductCode() == 'C95030') || ($productEntity->getProductCode() == '119.0179.532') || ($productEntity->getProductCode() == 'PH01SS') || ($productEntity->getProductCode() == 'FWC302SS'))
 					{
 						$basket['donations']['company']['description'] = 'Movember Donation from Kitchen Appliance Centre';
 						$basket['donations']['company']['donation'] = $product['quantity'];
@@ -1124,36 +1130,51 @@ class BasketService {
 				uasort($basket['products'], array($this, "sortBasketProductsByPrice"));
 				foreach ($basket['products'] as $product)
 				{
-					$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
+                    /**
+                     * @var Product $productEntity
+                     */
+                    $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find(array('productId' => $product['productId']));
 					if ($stellarPanSetDiscountsAvailable > 0)
 					{
 						if (($product['productCode'] == 'S7C1D') || ($product['productCode'] == 'S7A1D'))
 						{
 							if ($product['quantity'] == 1)
 							{
-								$panDiscount = $productIndexObject->getListPrice() * 0.4;
-								$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice() - $panDiscount;
-								$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-								$totalDiscount += $panDiscount;
-								$totalPanDiscount += $panDiscount;
-								$stellarPanSetDiscountsAvailable--;
+                                $prices = $productEntity->getPrices();
+                                if(count($prices) > 0) {
+                                    $price = $prices[0];
+                                    $panDiscount = $price->getListPrice() * 0.4;
+                                    $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $panDiscount;
+                                    $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                    $totalDiscount += $panDiscount;
+                                    $totalPanDiscount += $panDiscount;
+                                    $stellarPanSetDiscountsAvailable--;
+                                }
 							} else {
 								if ($stellarPanSetDiscountsAvailable >= $product['quantity'])
 								{
-									$panDiscount = $productIndexObject->getListPrice() * 0.4;
-									$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice() - $panDiscount;
-									$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-									$totalDiscount += ($panDiscount * $product['quantity']);
-									$totalPanDiscount += ($panDiscount * $product['quantity']);
-									$stellarPanSetDiscountsAvailable -= $product['quantity'];
+                                    $prices = $productEntity->getPrices();
+                                    if(count($prices) > 0) {
+                                        $price = $prices[0];
+                                        $panDiscount = $price->getListPrice() * 0.4;
+                                        $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $panDiscount;
+                                        $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                        $totalDiscount += ($panDiscount * $product['quantity']);
+                                        $totalPanDiscount += ($panDiscount * $product['quantity']);
+                                        $stellarPanSetDiscountsAvailable -= $product['quantity'];
+                                    }
 								} else {
-									$panDiscount = ($productIndexObject->getListPrice() * 0.4) * $stellarPanSetDiscountsAvailable;
-									$totalSubTotal = ($productIndexObject->getListPrice() * $product['quantity']) - $panDiscount;
-									$basket['products'][$product['basketItemId']]['unitCost'] = $totalSubTotal / $product['quantity'];
-									$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-									$totalDiscount += $panDiscount;
-									$totalPanDiscount += $panDiscount;
-									$stellarPanSetDiscountsAvailable = 0;
+                                    $prices = $productEntity->getPrices();
+                                    if(count($prices) > 0) {
+                                        $price = $prices[0];
+                                        $panDiscount = ($price->getListPrice() * 0.4) * $stellarPanSetDiscountsAvailable;
+                                        $totalSubTotal = ($price->getListPrice() * $product['quantity']) - $panDiscount;
+                                        $basket['products'][$product['basketItemId']]['unitCost'] = $totalSubTotal / $product['quantity'];
+                                        $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                        $totalDiscount += $panDiscount;
+                                        $totalPanDiscount += $panDiscount;
+                                        $stellarPanSetDiscountsAvailable = 0;
+                                    }
 								}
 							}
 						}
@@ -1176,27 +1197,34 @@ class BasketService {
 			$totalCdaDiscount = 0;	
 			foreach ($basket['products'] as $product)
 			{
-	 			$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
-	 			if ($productIndexObject)
+                /**
+                 * @var Product $productEntity
+                 */
+                $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find(array('productId' => $product['productId']));
+	 			if ($productEntity)
 	 			{
-					if ($productIndexObject->getBrandId() == '7')
+					if ($productEntity->getBrand()->getId() == '7')
 					{
-						if ($numberOfCdaAppliances >= 3)
-						{
-							$cdaDiscount = $productIndexObject->getListPrice() * 0.1;
-							if ($productIndexObject->getListPrice() < $productIndexObject->getRecommendedRetailPrice())
-							{
-								$basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $productIndexObject->getListPrice();
-							}
-							$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice() - $cdaDiscount;
-							$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-							$totalDiscount += ($cdaDiscount * $product['quantity']);
-							$totalCdaDiscount += ($cdaDiscount * $product['quantity']);
-						} else {
-							$basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $productIndexObject->getRecommendedRetailPrice();
-							$basket['products'][$product['basketItemId']]['unitCost'] = $productIndexObject->getListPrice();
-							$basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-						}
+                        $prices = $productEntity->getPrices();
+                        if(count($prices) > 0) {
+                            $price = $prices[0];
+                            if ($numberOfCdaAppliances >= 3)
+                            {
+                                $cdaDiscount = $price->getListPrice() * 0.1;
+                                if ($price->getListPrice() < $price->getRecommendedRetailPrice())
+                                {
+                                    $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getListPrice();
+                                }
+                                $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $cdaDiscount;
+                                $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                $totalDiscount += ($cdaDiscount * $product['quantity']);
+                                $totalCdaDiscount += ($cdaDiscount * $product['quantity']);
+                            } else {
+                                $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getRecommendedRetailPrice();
+                                $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice();
+                                $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                            }
+                        }
 					}
 				}
 			}
@@ -1214,7 +1242,6 @@ class BasketService {
 			// Update the basket
 			foreach ($basket['products'] as $product)
 			{
-				$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $product['productId']));
 				$items += $product['quantity'];
 				$recommendedRetailPrice += ($product['recommendedRetailPrice'] * $product['quantity']);
 				$subTotal += ($product['unitCost'] * $product['quantity']);
@@ -1230,277 +1257,7 @@ class BasketService {
 					}
 				}
 			}
-		}
-				
-		/*
-		// Get the voucher code discount
-		if ($voucherCodeObject)
-		{
-			// Make sure the discount is valid
-			$voucherCodeValid = true;
-			
-			if ($voucherCodeObject->getActive() < 1)
-			{
-				$voucherCodeValid = false;
-				$messages['error'][] = 'The voucher code <strong>"'.$voucherCodeObject->getCode().'"</strong> is not currently available.';
-			}
-			
-			// Check the subtotal meets the minimum order value
-			if ($voucherCodeValid)
-			{
-				if ($subTotal < $voucherCodeObject->getMinimumOrderValue())
-				{
-					$voucherCodeValid = false;
-					$messages['notice'][] = 'To use the voucher code <strong>"'.$voucherCodeObject->getCode().'"</strong> you need to spend <strong>&pound;'.number_format($voucherCodeObject->getMinimumOrderValue(), 2).'</strong> or more. In order to use this voucher you will need to spend a further &pound;'.number_format(($voucherCodeObject->getMinimumOrderValue() - $subTotal), 2).'</strong>.';
-				}
-			}
-			
-			// Check the availability of the voucher code
-			if ($voucherCodeValid)
-			{
-				if ((time() < $voucherCodeObject->getValidFromDate()->getTimestamp()) || (time() > $voucherCodeObject->getExpiryDate()->getTimestamp()))
-				{
-					$voucherCodeValid = false;
-					if (time() < $voucherCodeObject->getValidFromDate()->getTimestamp())
-					{
-						$messages['error'][] = 'The voucher code <strong>"'.$voucherCodeObject->getCode().'"</strong> is not yet available. It will be available on <strong>'.date("l jS F Y", $voucherCodeObject->getValidFromDate()->getTimestamp()).'</strong>.';
-					} elseif (time() > $voucherCodeObject->getExpiryDate()->getTimestamp()) {
-						$messages['error'][] = 'The voucher code <strong>"'.$voucherCodeObject->getCode().'"</strong> has now expired. It expired on <strong>'.date("l jS F Y", $voucherCodeObject->getExpiryDate()->getTimestamp()).'</strong>.';
-					}
-				}
-			}
-			
-			// Check if the voucher has a fixed number of uses and that the uses are not used up
-			if ($voucherCodeValid)
-			{
-				if ($voucherCodeObject->getDiscountUse() == 'f')
-				{
-					if ($voucherCodeObject->getNumberUsed() >= $voucherCodeObject->getNumberOfUses())
-					{
-						$voucherCodeValid = false;
-						$messages['error'][] = 'The voucher code <strong>"'.$voucherCodeObject->getCode().'"</strong> has now been redeemed the maximum number of times. It was only available for the first <strong>'.$voucherCodeObject->getNumberOfUses().'</strong> customers.';
-					}
-				} elseif ($voucherCodeObject->getDiscountUse() == 's') {
-					if ($voucherCodeObject->getNumberUsed() > 0)
-					{
-						$voucherCodeValid = false;
-						$messages['error'][] = 'The voucher code <strong>"'.$voucherCodeObject->getCode().'"</strong> has already been redeemed and was only available for a single customer.';
-					}
-				}
-			}
-			
-			// Get the discount from a voucher code
-			if ($voucherCodeValid)
-			{
-				// Get the brand discounts
-				$brandDiscounts = array();
-				if ($voucherCodeObject->getBrands())
-				{
-					foreach (explode('|', $voucherCodeObject->getBrands()) as $brandDiscount)
-					{
-						$brandDiscountData = explode(':', $brandDiscount);
-						if (sizeof($brandDiscountData) == 2)
-						{
-							$brandDiscounts[$brandDiscountData[0]] = $brandDiscountData[1];
-						}
-					}
-				}
-				
-				// Get the department discounts
-				$departmentDiscounts = array();
-				if ($voucherCodeObject->getDepartments())
-				{
-					foreach (explode('|', $voucherCodeObject->getDepartments()) as $departmentDiscount)
-					{
-						$departmentDiscountData = explode(':', $departmentDiscount);
-						if (sizeof($departmentDiscountData) == 2)
-						{
-							$departmentDiscounts[$departmentDiscountData[0]] = $departmentDiscountData[1];
-						}
-					}
-				}
-				
-				// Get the product discounts
-				$productDiscounts = array();
-				if ($voucherCodeObject->getProducts())
-				{
-					foreach (explode('|', $voucherCodeObject->getProducts()) as $productDiscount)
-					{
-						$productDiscountData = explode(':', $productDiscount);
-						if (sizeof($productDiscountData) == 2)
-						{
-							$productDiscounts[$productDiscountData[0]] = $productDiscountData[1];
-						}
-					}
-				}
-				
-				// Get the discount for each product
-				$noDiscountAppliedToProducts = true;
-				foreach ($basket['products'] as $basketProduct)
-				{
-					$product = $productService->getProduct($basketProduct['productId']);
-					if ($product)
-					{
-						$noDiscountAppliedToProduct = true;
-						if (isset($productDiscounts[$product['id']]))
-						{
-							// Check if there is a discount for the product
-							if ($voucherCodeObject->getDiscountType() == 'a')
-							{
-								// Fixed amount off
-								$voucherCodeDiscount += ($productDiscounts[$product['id']] * $basketProduct['quantity']);
-								$noDiscountAppliedToProduct = false;
-							} elseif ($voucherCodeObject->getDiscountType() == 'p') {
-								// Percentage off
-								$voucherCodeDiscount += (($basketProduct['unitCost'] * ($productDiscounts[$product['id']] / 100)) * $basketProduct['quantity']);
-								$noDiscountAppliedToProduct = false;
-							} elseif ($voucherCodeObject->getDiscountType() == 'r') {
-								// Replace value
-								$voucherCodeDiscount += (($basketProduct['unitCost'] - $productDiscounts[$product['id']]) * $basketProduct['quantity']);
-								$noDiscountAppliedToProduct = false;
-							}
-						} else {
-							// Check if there is a discount for the brand and the department
-							$brandDiscount = 0;
-							$departmentDiscount = 0;
-							
-							// Calculate the brand discount
-							if (isset($brandDiscounts[$product['brand']['id']]))
-							{
-								if ($voucherCodeObject->getDiscountType() == 'a')
-								{
-									// Fixed amount off
-									$brandDiscount = ($brandDiscounts[$product['brand']['id']] * $basketProduct['quantity']);
-									$noDiscountAppliedToProduct = false;
-								} elseif ($voucherCodeObject->getDiscountType() == 'p') {
-									// Percentage off
-									$brandDiscount = (($basketProduct['unitCost'] * ($brandDiscounts[$product['brand']['id']] / 100)) * $basketProduct['quantity']);
-									$noDiscountAppliedToProduct = false;
-								} elseif ($voucherCodeObject->getDiscountType() == 'r') {
-									// Replace value
-									$brandDiscount = (($basketProduct['unitCost'] - $brandDiscounts[$product['brand']['id']]) * $basketProduct['quantity']);
-									$noDiscountAppliedToProduct = false;
-								}
-							}
-							
-							// Calculate the best department discount
-							foreach ($product['departments'] as $department)
-							{
-								foreach (explode('|', $department['pathIds']) as $departmentPathId)
-								{
-									if (isset($departmentDiscounts[$departmentPathId]))
-									{
-										$departmentDiscountToCheck = 0;
-										if ($voucherCodeObject->getDiscountType() == 'a')
-										{
-											// Fixed amount off
-											$departmentDiscountToCheck = ($departmentDiscounts[$departmentPathId] * $basketProduct['quantity']);
-											$noDiscountAppliedToProduct = false;
-										} elseif ($voucherCodeObject->getDiscountType() == 'p') {
-											// Percentage off
-											$departmentDiscountToCheck = (($basketProduct['unitCost'] * ($departmentDiscounts[$departmentPathId] / 100)) * $basketProduct['quantity']);
-											$noDiscountAppliedToProduct = false;
-										} elseif ($voucherCodeObject->getDiscountType() == 'r') {
-											// Replace value
-											$departmentDiscountToCheck = (($basketProduct['unitCost'] - $departmentDiscounts[$departmentPathId]) * $basketProduct['quantity']);
-											$noDiscountAppliedToProduct = false;
-										}
-										if ($departmentDiscountToCheck > $departmentDiscount)
-										{
-											$departmentDiscount = $departmentDiscountToCheck;
-										}
-									}
-								}
-							}
-							
-							// Check for the best discount between thr brand and department
-							if ($brandDiscount > $departmentDiscount)
-							{
-								$voucherCodeDiscount += $brandDiscount;
-							} else {
-								$voucherCodeDiscount += $departmentDiscount;
-							}
-						}
-						
-						// If no discount has been applied to the product check if there is a percentage discount applied on the order and apply it
-						if ($noDiscountAppliedToProduct)
-						{
-							if (($voucherCodeObject->getDiscountType() == 'p') && ($voucherCodeObject->getDiscount() > 0))
-							{
-								$voucherCodeDiscount += (($basketProduct['unitCost'] * ($voucherCodeObject->getDiscount() / 100)) * $basketProduct['quantity']);
-								$noDiscountAppliedToProducts = false;
-							}
-						} else {
-							$noDiscountAppliedToProducts = false;
-						}
-					}
-				}
-				
-				// If no discount has been applied to the products check to see if there is a fixed amount off or a replace value for the order
-				if ($noDiscountAppliedToProducts)
-				{
-					if ((($voucherCodeObject->getDiscountType() == 'a') || ($voucherCodeObject->getDiscountType() == 'r')) && ($voucherCodeObject->getDiscount() > 0))
-					{
-						if ($voucherCodeObject->getDiscountType() == 'a')
-						{
-							// Fixed amount off
-							$voucherCodeDiscount += $voucherCodeObject->getDiscount();
-						} elseif ($voucherCodeObject->getDiscountType() == 'r') {
-							// Replace value
-							$voucherCodeDiscount += ($subTotal - $voucherCodeObject->getDiscount());
-						}
-					}
-				}
-			}
-		}
-		
-		// Work out which discount is the best for the customer
-		if (($membershipCardDiscount > 0) && ($voucherCodeDiscount > 0))
-		{
-			if ($membershipCardDiscount > $voucherCodeDiscount)
-			{
-				$discount += $membershipCardDiscount;
-				$messages['success'][] = 'You have used a voucher code (<strong>"'.$voucherCodeObject->getCode().'"</strong>) and have a registered membership card (<strong>"'.$membershipCardObject->getMembershipNumber().'"</strong>). We can only offer one discount per order and have worked out that you get more discount on this order with your membership card (<strong>&pound;'.number_format($membershipCardDiscount, 2).' off</strong>) than the voucher code (<strong>&pound;'.number_format($voucherCodeDiscount, 2).' off</strong>).';
-			} else {
-				$discount += $voucherCodeDiscount;
-				if ($membershipCardObject)
-				{
-					$messages['success'][] = 'You have used a voucher code (<strong>"'.$voucherCodeObject->getCode().'"</strong>) and have a registered membership card (<strong>"'.$membershipCardObject->getMembershipNumber().'"</strong>). We can only offer one discount per order and have worked out that you get the same or more discount on this order with the voucher code (<strong>&pound;'.number_format($voucherCodeDiscount, 2).' off</strong>) than your membership card (<strong>&pound;'.number_format($membershipCardDiscount, 2).' off</strong>).';
-				} else {
-					$messages['success'][] = 'You have used a voucher code (<strong>"'.$voucherCodeObject->getCode().'"</strong>) and have a purchased a membership card. We can only offer one discount per order and have worked out that you get the same or more discount on this order with the voucher code (<strong>&pound;'.number_format($voucherCodeDiscount, 2).' off</strong>) than your membership card (<strong>&pound;'.number_format($membershipCardDiscount, 2).' off</strong>).';
-				}
-			}
-		} elseif ($membershipCardDiscount > 0) {
-			$discount += $membershipCardDiscount;
-			if ($basket['discounts']['membershipCardNumber'] == 1)
-			{
-				$messages['success'][] = 'Your new membership card discount has been successfully applied to your order.';
-			} else {
-				$messages['success'][] = 'Your membership card (<strong>"'.$basket['discounts']['membershipCardNumber'].'"</strong>) discount has been successfully applied to your order.';
-			}
-		} elseif ($voucherCodeDiscount > 0) {
-			$discount += $voucherCodeDiscount;
-			$message['success'][] = 'The voucher code (<strong>"'.$basket['discounts']['voucherCode'].'"</strong>) has been successfully redeemed and applied to your order.';
-		}
-				
-		// Update the totals with the membership card purchase		
-		if ($basket['discounts']['membershipCardNumber'] == 1)
-		{
-			$items++;
-			$recommendedRetailPrice += 10;
-			$subTotal += 1;
-			
-			// Calculate any discounts based on any voucher codes
-			if ($voucherCodeObject)
-			{
-				if ($voucherCodeObject->getDiscountType() == 'm')
-				{
-					$messages['success'][] = 'The voucher code (<strong>"'.$voucherCodeObject->getCode().'"</strong>) has entitled you to a free membership card.';
-					$discount += 1;
-				}
-			}
-		}
-		*/
+        }
 		
 		// Calculate the savings
 		$savings = $recommendedRetailPrice - $subTotal;
