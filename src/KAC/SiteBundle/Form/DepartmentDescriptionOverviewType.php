@@ -10,9 +10,22 @@ class DepartmentDescriptionOverviewType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text');
-        $builder->add('description', 'textarea');
-        $builder->add('locale', 'locale');
+        $builder->add('name', 'text', array(
+            'required'  => true,
+            'label' => 'Name',
+            'attr' => array(
+                'class' => 'fill',
+                'help' => 'Enter the name of the department',
+            ),
+        ));
+        $builder->add('description', 'textarea', array(
+            'required'  => true,
+            'label' =>'Description',
+            'attr' => array(
+                'class' => 'fill',
+                'help' => 'Enter a detailed description about the department',
+            ),
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
