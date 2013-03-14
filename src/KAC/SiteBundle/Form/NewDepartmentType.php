@@ -39,7 +39,6 @@ class NewDepartmentType extends AbstractType
                 ));
                 $builder->add('descriptions', 'collection', array(
                     'type' => new DepartmentDescriptionOverviewType(),
-                    'required' => true,
                 ));
                 break;
         }
