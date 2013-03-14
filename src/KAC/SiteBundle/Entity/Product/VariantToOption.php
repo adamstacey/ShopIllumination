@@ -266,6 +266,9 @@ class VariantToOption
         return $this->variant;
     }
 
+    /**
+     * @return \KAC\SiteBundle\Entity\Product\OptionGroup
+     */
     public function getOptionGroup()
     {
         return $this->optionGroup;
@@ -276,6 +279,9 @@ class VariantToOption
         $this->optionGroup = $optionGroup;
     }
 
+    /**
+     * @return \KAC\SiteBundle\Entity\Product\Option
+     */
     public function getOption()
     {
         return $this->option;
