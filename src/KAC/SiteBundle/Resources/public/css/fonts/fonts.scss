@@ -1,3 +1,8 @@
 .uppercase {
     text-transform: uppercase;
 }
+
+.important {
+    color: $colourRed;
+    font-weight: bold;
+}
