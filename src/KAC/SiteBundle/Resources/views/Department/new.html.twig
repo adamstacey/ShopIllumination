@@ -18,6 +18,8 @@
             <div class="widget widget-5-of-7">
                 {% if flow.getCurrentStep() == 1 %}
                     {% include 'KACSiteBundle:Department:new_Step1.html.twig' %}
+                {% elseif flow.getCurrentStep() == 2 %}
+                    {% include 'KACSiteBundle:Department:new_Step2.html.twig' %}
                 {% endif %}
             </div>
         </div>
