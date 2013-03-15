@@ -83,7 +83,7 @@
                                 </small>
                             {% else %}
                                 {% if child.vars.attr.help is defined %}
-                                    <small>{{ child.vars.attr.help }}</small>
+                                    <small>{{ child.vars.attr.help|raw }}</small>
                                 {% endif %}
                             {% endif %}
                         </div>
