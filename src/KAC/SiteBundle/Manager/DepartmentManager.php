@@ -30,6 +30,8 @@ class DepartmentManager extends Manager
     public function updateDepartmentPath(Department $department)
     {
         $departmentPath = array();
+
+        // Get the ids of parent departments
         $parentDepartments = $department->getParents();
         $parentDepartments = array_reverse($parentDepartments);
         foreach ($parentDepartments as $parentDepartment)
@@ -39,6 +41,7 @@ class DepartmentManager extends Manager
         $departmentPath[] = $department->getId();
         $departmentPath = implode('|', $departmentPath);
 
+        // Update the department path
         $department->setDepartmentPath($departmentPath);
     }
 
