@@ -65,6 +65,7 @@ services:
       scope: request
       calls:
         - [ setFormType, [@kac_site.form.new_department]]
+      arguments: [@doctrine, @kac_site.manager.seo]
   kac_site.form.new_product:
     class: KAC\SiteBundle\Form\NewProductType
     tags:
