@@ -38,4 +38,9 @@ class Routing extends SiteRouting
     {
         return $this->brand;
     }
+
+    public function getObjectType()
+    {
+        return 'brand';
+    }
 }

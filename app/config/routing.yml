@@ -14,6 +14,10 @@ WebIlluminationAdminBundle:
     resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
     prefix:   /
 
+WebIlluminationShopBundle:
+    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
+    prefix:   /
+
 kac_shop:
     resource: "@KACSiteBundle/Controller/"
     type:     annotation

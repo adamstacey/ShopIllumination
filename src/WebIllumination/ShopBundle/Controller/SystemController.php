@@ -12,7 +12,6 @@ class SystemController extends Controller
 	// Page request
 	public function pageRequestAction(Request $request, $url, $results = 0, $page = 0, $sort = 0, $order = 0, $brand = 0, $brandId = 0, $group = 0, $priceFrom = 0, $priceTo = 0, $brands = 0, $options = 0, $features = 0)
     {
-        die("Help");
     	// Get the services
 	    $systemService = $this->get('web_illumination_admin.system_service');
 	    $seoService = $this->get('web_illumination_admin.seo_service');
@@ -239,7 +238,8 @@ class SystemController extends Controller
 	   					$systemService->updateDepartmentListing($url);
    					}
    					$this->resetProductSearch();
-   					return $this->forward('WebIlluminationShopBundle:Departments:index', array('id' => $routingObject->getObjectId(), 'url' => $url, 'brand' => $brand, 'group' => $group));
+//   					return $this->forward('WebIlluminationShopBundle:Departments:index', array('id' => $routingObject->getObjectId(), 'url' => $url, 'brand' => $brand, 'group' => $group));
+   					return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'brandId' => $brand));
    					break;
    				case 'product':
    					// Check the status of the product
@@ -250,8 +250,8 @@ class SystemController extends Controller
 	   					{
 		   					return $this->forward('WebIlluminationShopBundle:Products:index', array('id' => $routingObject->getObjectId()));		
 	   					} else {
-	   						$productToDepartmentObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findOneBy(array('productId' => $routingObject->getObjectId(), 'displayOrder' => '1'));
-	   						$departmentRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $productToDepartmentObject->getDepartmentId(), 'objectType' => 'department', 'locale' => 'en'));
+	   						$productToDepartmentObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findOneBy(array('productId' => $routingObject->getObjectId(), 'displayOrder' => '1'));
+	   						$departmentRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $productToDepartmentObject->getDepartmentId(), 'objectType' => 'department', 'locale' => 'en'));
 	   						if ($productToDepartmentObject && $departmentRoutingObject)
 	   						{
 		   						return $this->forward('WebIlluminationShopBundle:Departments:index', array('id' => $productToDepartmentObject->getDepartmentId(), 'url' => $departmentRoutingObject->getUrl(), 'brand' => 0, 'group' => 0));
@@ -308,7 +308,7 @@ class SystemController extends Controller
 	    $systemService->initialiseSession();
 	    
 	    // Check to see if product exists
-	    $routingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => 'en'));
+	    $routingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => 'en'));
 	    if ($routingObject)
 	    {
 	    	return $this->redirect($this->get('router')->generate('page_request', array('url' => $routingObject->getUrl())), 301);

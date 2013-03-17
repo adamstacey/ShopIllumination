@@ -167,8 +167,4 @@ $(document).ready(function() {
         $(this).val($(this).val().replace(/[^0-9.]/g,''));
         $(this).caret($currentCaretPosition);
     });
-
-    if (typeof CKEDITOR != 'undefined') {
-        //$("textarea.editor-basic").ckeditor();
-    }
 });
