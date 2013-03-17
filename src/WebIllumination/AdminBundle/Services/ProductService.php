@@ -1072,6 +1072,25 @@ class ProductService {
         }
     }
 
+    public function getProductListingCount()
+    {
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        /**
+         * Get entity manager
+         * @var EntityManager $em
+         */
+        $em = $doctrineService->getManager();
+
+        $query = $em->createQueryBuilder()
+            ->select('COUNT(p)')
+            ->from('KAC\SiteBundle\Entity\Product', 'p')
+            ->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
+
     // Get the root upload directory
     public function getUploadRootDir()
     {
