@@ -251,28 +251,30 @@ class ProductService {
         $product = array();
 
         $query = $em->createQueryBuilder()
-            ->select("p, v, vp, vd, b, bd, br, d, dd, dr")
+            ->select("p, pd, v, vp, vd, b, bd, br, d, pd, d, dd, dr")
             ->from("KAC\SiteBundle\Entity\Product", "p")
-            ->join("p", "p")
+            ->join("p.variants", "v")
+            ->join("p.descriptions", "vpd")
             ->join("v.prices", "vp")
             ->join("v.features", "vf")
             ->join("v.options", "vo")
             ->join("v.descriptions", "vd")
-            ->join("v.brand", "b")
-            ->join("v.description", "bd")
-            ->join("v.routing", "br")
-            ->join("p.departments", "d")
-            ->join("d.description", "dd")
-            ->join("d.routing", "dr")
+            ->join("p.brand", "b")
+            ->join("b.descriptions", "bd")
+            ->join("b.routings", "br")
+            ->join("p.departments", "pd")
+            ->join("pd.department", "d")
+            ->join("d.descriptions", "dd")
+            ->join("d.routings", "dr")
             ->where("p.id = ?1")
             ->andWhere("vd.locale = ?2")
             ->andWhere("bd.locale = ?2")
-            ->andWhere("dd.locale = ?2")
             ->andWhere("vd.locale = ?2")
-            ->andWhere("vp.prices = ?3")
+            ->andWhere("dd.locale = ?2")
+            ->andWhere("vp.currencyCode = ?3")
             ->setParameter(1, $id)
-            ->setParameter(1, $locale)
-            ->setParameter(1, $currencyCode);
+            ->setParameter(2, $locale)
+            ->setParameter(3, $currencyCode);
 
         /**
          * @var Product $productObject

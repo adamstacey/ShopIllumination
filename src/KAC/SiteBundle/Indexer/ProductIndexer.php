@@ -62,6 +62,9 @@ class ProductIndexer extends Indexer
             $document->setField('tagline', $descriptions[0]->getTagline());
             $document->setField('variants_count', count($product->getVariants()));
 
+            // Generate the product URL
+
+
             // Add product code from the product
             $productCodes = explode(',', $product->getAlternativeProductCodes());
             array_unshift($productCodes, $product->getProductCode());

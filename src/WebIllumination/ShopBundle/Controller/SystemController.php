@@ -243,7 +243,7 @@ class SystemController extends Controller
    					break;
    				case 'product':
    					// Check the status of the product
-   					$productObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Product')->findOneBy(array('id' => $routingObject->getObjectId(), 'locale' => 'en'));
+   					$productObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Product')->findOneBy(array('id' => $routingObject->getObjectId()));
    					if ($productObject)
    					{
 	   					if ($productObject->getStatus() == 'a')
