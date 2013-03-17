@@ -34,7 +34,9 @@ class DepartmentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $department = $this->getManager()->createDepartment();
+        $manager = $this->getManager();
+
+        $department = $manager->createDepartment();
 
         /**
          * @var \Craue\FormFlowBundle\Form\FormFlow $flow
@@ -54,11 +56,14 @@ class DepartmentController extends Controller
                 $form = $flow->createForm($department);
             } else {
                 // Update descriptions TODO: move to listener
-                $manager = $this->container->get('kac_site.manager.department');
+                /*$manager = $this->container->get('kac_site.manager.department');
                 foreach ($department->getDescriptions() as $description)
                 {
                     $manager->updateDescription($description);
-                }
+                }*/
+
+                // Update the department path
+                $manager->updateDepartmentPath($department);
 
                 // Update the database
                 $em->persist($department);
@@ -66,7 +71,11 @@ class DepartmentController extends Controller
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('admin_listing_products'));
+                // Notify user
+                $this->get('session')->setFlash('notice', 'The new department "'.$department->getName().'" has been added.');
+
+                // Forward
+                return $this->redirect($this->get('router')->generate('homepage'));
             }
         }
 

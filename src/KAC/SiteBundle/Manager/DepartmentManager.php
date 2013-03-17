@@ -27,6 +27,24 @@ class DepartmentManager extends Manager
         return $department;
     }
 
+    public function updateDepartmentPath(Department $department)
+    {
+        $departmentPath = array();
+
+        // Get the ids of parent departments
+        $parentDepartments = $department->getParents();
+        $parentDepartments = array_reverse($parentDepartments);
+        foreach ($parentDepartments as $parentDepartment)
+        {
+            $departmentPath[] = $parentDepartment->getId();
+        }
+        $departmentPath[] = $department->getId();
+        $departmentPath = implode('|', $departmentPath);
+
+        // Update the department path
+        $department->setDepartmentPath($departmentPath);
+    }
+
     public function updateDescription(DepartmentDescription $description)
     {
         if(!$description->getDepartment()) return;

@@ -41,6 +41,11 @@ class NewDepartmentType extends AbstractType
                     'type' => new DepartmentDescriptionOverviewType(),
                 ));
                 break;
+            case 2:
+                $builder->add('descriptions', 'collection', array(
+                    'type' => new DepartmentDescriptionSeoType(),
+                ));
+                break;
         }
     }
 

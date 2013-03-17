@@ -8550,6 +8550,10 @@ $(document).ready(function() {
         $(this).val($(this).val().replace(/[^0-9.]/g,''));
         $(this).caret($currentCaretPosition);
     });
+
+    if (typeof CKEDITOR != 'undefined') {
+        //$("textarea.editor-basic").ckeditor();
+    }
 });
 
 function generateButtons($object) {
@@ -8615,5 +8619,15 @@ $(document).ready(function() {
         $(".search-container input").val("");
         $(this).hide();
         $(".search-container input").focus();
+    });
+});
+
+$(document).ready(function() {
+    $(".main-menu > nav > ul > li > a").hover(function(){
+        $(this).addClass("hover");
+        $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).show();
+    }, function(){
+        $(this).removeClass("hover");
+        $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).hide();
     });
 });
