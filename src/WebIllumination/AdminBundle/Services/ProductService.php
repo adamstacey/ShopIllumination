@@ -391,7 +391,7 @@ class ProductService {
             foreach ($departmentPathIds as $departmentPathId)
             {
                 $departmentPathDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Description')->findOneBy(array('departmentId' => $departmentPathId));
-                $departmentPathRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
+                $departmentPathRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', ));
                 if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
                 {
                     $departmentPathCount++;

@@ -379,13 +379,12 @@ class BrandService {
     	$brand['contacts'] = $contactService->getContacts($id, 'brand');
     	    	
     	// Get the routing
-    	$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
+    	$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Routing')->findOneBy(array('objectId' => $id, 'locale' => $locale));
     	if (!$routingObject)
     	{
     		// Add routing
-    		$routingObject = new Routing();
+    		$routingObject = new Brand\Routing();
     		$routingObject->setObjectId($id);
-    		$routingObject->setObjectType('brand');
     		$routingObject->setLocale('en');
     		$routingObject->setUrl($seoService->createUrl($brandDescriptionObject->getHeader()));
 		    $em->persist($routingObject);
@@ -393,72 +392,72 @@ class BrandService {
     	}
     	$brand['url'] = $routingObject->getUrl();
     	
-    	// Get the logo
-    	$brand['logo'] = array();
-    	$imageObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->find($brandDescriptionObject->getLogoImageId());
-    	if ($imageObject)
-    	{
-    		$logo = array();
-    		$logo['originalPath'] = $imageObject->getOriginalPath();
-    		list($logo['originalWidth'], $logo['originalHeight']) = getimagesize($this->getUploadRootDir().$logo['originalPath']);
-    		$logo['thumbnailPath'] = $imageObject->getThumbnailPath();
-    		list($logo['thumbnailWidth'], $logo['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$logo['thumbnailPath']);
-    		$logo['mediumPath'] = $imageObject->getMediumPath();
-    		list($logo['mediumWidth'], $logo['mediumHeight']) = getimagesize($this->getUploadRootDir().$logo['mediumPath']);
-    		$logo['largePath'] = $imageObject->getLargePath();
-    		list($logo['largeWidth'], $logo['largeHeight']) = getimagesize($this->getUploadRootDir().$logo['largePath']);
-    		$logo['title'] = $imageObject->getTitle();
-    		$logo['link'] = $imageObject->getLink();
-    		$logo['description'] = $imageObject->getDescription();
-    		$logo['alignment'] = $imageObject->getAlignment();
-    		$brand['logo'] = $logo;
-    	}
-    	
-    	// Get the images
-    	$images = array();
-    	$imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'brand', 'imageType' => 'gallery', 'locale' => $locale), array('displayOrder' => 'ASC'));
-    	foreach ($imagesObject as $imageObject)
-    	{
-    		$image = array();
-    		$image['originalPath'] = $imageObject->getOriginalPath();
-    		list($image['originalWidth'], $image['originalHeight']) = getimagesize($this->getUploadRootDir().$image['originalPath']);
-    		$image['thumbnailPath'] = $imageObject->getThumbnailPath();
-    		list($image['thumbnailWidth'], $image['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$image['thumbnailPath']);
-    		$image['mediumPath'] = $imageObject->getMediumPath();
-    		list($image['mediumWidth'], $image['mediumHeight']) = getimagesize($this->getUploadRootDir().$image['mediumPath']);
-    		$image['largePath'] = $imageObject->getLargePath();
-    		list($image['largeWidth'], $image['largeHeight']) = getimagesize($this->getUploadRootDir().$image['largePath']);
-    		$image['title'] = $imageObject->getTitle();
-    		$image['link'] = $imageObject->getLink();
-    		$image['description'] = $imageObject->getDescription();
-    		$image['alignment'] = $imageObject->getAlignment();
-    		$images[] = $image;
-    	}
-    	$brand['images'] = $images;
+//    	// Get the logo
+//    	$brand['logo'] = array();
+//    	$imageObject = $brandDescriptionObject->getLogoImage();
+//    	if ($imageObject)
+//    	{
+//    		$logo = array();
+//    		$logo['originalPath'] = $imageObject->getOriginalPath();
+//    		list($logo['originalWidth'], $logo['originalHeight']) = getimagesize($this->getUploadRootDir().$logo['originalPath']);
+//    		$logo['thumbnailPath'] = $imageObject->getThumbnailPath();
+//    		list($logo['thumbnailWidth'], $logo['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$logo['thumbnailPath']);
+//    		$logo['mediumPath'] = $imageObject->getMediumPath();
+//    		list($logo['mediumWidth'], $logo['mediumHeight']) = getimagesize($this->getUploadRootDir().$logo['mediumPath']);
+//    		$logo['largePath'] = $imageObject->getLargePath();
+//    		list($logo['largeWidth'], $logo['largeHeight']) = getimagesize($this->getUploadRootDir().$logo['largePath']);
+//    		$logo['title'] = $imageObject->getTitle();
+//    		$logo['link'] = $imageObject->getLink();
+//    		$logo['description'] = $imageObject->getDescription();
+//    		$logo['alignment'] = $imageObject->getAlignment();
+//    		$brand['logo'] = $logo;
+//    	}
+//
+//    	// Get the images
+//    	$images = array();
+//    	$imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'brand', 'imageType' => 'gallery', 'locale' => $locale), array('displayOrder' => 'ASC'));
+//    	foreach ($imagesObject as $imageObject)
+//    	{
+//    		$image = array();
+//    		$image['originalPath'] = $imageObject->getOriginalPath();
+//    		list($image['originalWidth'], $image['originalHeight']) = getimagesize($this->getUploadRootDir().$image['originalPath']);
+//    		$image['thumbnailPath'] = $imageObject->getThumbnailPath();
+//    		list($image['thumbnailWidth'], $image['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$image['thumbnailPath']);
+//    		$image['mediumPath'] = $imageObject->getMediumPath();
+//    		list($image['mediumWidth'], $image['mediumHeight']) = getimagesize($this->getUploadRootDir().$image['mediumPath']);
+//    		$image['largePath'] = $imageObject->getLargePath();
+//    		list($image['largeWidth'], $image['largeHeight']) = getimagesize($this->getUploadRootDir().$image['largePath']);
+//    		$image['title'] = $imageObject->getTitle();
+//    		$image['link'] = $imageObject->getLink();
+//    		$image['description'] = $imageObject->getDescription();
+//    		$image['alignment'] = $imageObject->getAlignment();
+//    		$images[] = $image;
+//    	}
+//    	$brand['images'] = $images;
     	
     	// Get the guarantees
     	$guarantees = array();
-    	$guaranteeObjects = $em->getRepository('KAC\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
-		foreach ($guaranteeObjects as $guaranteeObject)
-		{
-			if ($guaranteeObject)
-			{				
-				$guaranteeLengthObject = $em->getRepository('KAC\SiteBundle\Entity\Guarantee\Length')->find($guaranteeObject->getGuaranteeLengthId());
-				$guaranteeTypeObject = $em->getRepository('KAC\SiteBundle\Entity\Guarantee\Type')->find($guaranteeObject->getGuaranteeTypeId());
-				if ($guaranteeLengthObject && $guaranteeTypeObject)
-				{
-					$guarantee = array();
-					$guarantee['id'] = $guaranteeObject->getId();
-					$guarantee['displayOrder'] = $guaranteeObject->getDisplayOrder();
-					$guarantee['guaranteeLengthId'] = $guaranteeObject->getGuaranteeLengthId();
-					$guarantee['guaranteeLength'] = $guaranteeLengthObject->getGuaranteeLength();
-					$guarantee['guaranteeTitle'] = $guaranteeLengthObject->getGuaranteeTitle();
-					$guarantee['guaranteeTypeId'] = $guaranteeObject->getGuaranteeTypeId();
-					$guarantee['guaranteeType'] = $guaranteeTypeObject->getGuaranteeType();
-					$guarantees[$guaranteeObject->getId()] = $guarantee;
-				}
-			}
-		}
+//    	$guaranteeObjects = $em->getRepository('KAC\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
+//		foreach ($guaranteeObjects as $guaranteeObject)
+//		{
+//			if ($guaranteeObject)
+//			{
+//				$guaranteeLengthObject = $em->getRepository('KAC\SiteBundle\Entity\Guarantee\Length')->find($guaranteeObject->getGuaranteeLengthId());
+//				$guaranteeTypeObject = $em->getRepository('KAC\SiteBundle\Entity\Guarantee\Type')->find($guaranteeObject->getGuaranteeTypeId());
+//				if ($guaranteeLengthObject && $guaranteeTypeObject)
+//				{
+//					$guarantee = array();
+//					$guarantee['id'] = $guaranteeObject->getId();
+//					$guarantee['displayOrder'] = $guaranteeObject->getDisplayOrder();
+//					$guarantee['guaranteeLengthId'] = $guaranteeObject->getGuaranteeLengthId();
+//					$guarantee['guaranteeLength'] = $guaranteeLengthObject->getGuaranteeLength();
+//					$guarantee['guaranteeTitle'] = $guaranteeLengthObject->getGuaranteeTitle();
+//					$guarantee['guaranteeTypeId'] = $guaranteeObject->getGuaranteeTypeId();
+//					$guarantee['guaranteeType'] = $guaranteeTypeObject->getGuaranteeType();
+//					$guarantees[$guaranteeObject->getId()] = $guarantee;
+//				}
+//			}
+//		}
 		$brand['guarantees'] = $guarantees;
 		
 		// Get the departments
