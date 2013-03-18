@@ -71,6 +71,10 @@ class NewDepartmentFlow extends FormFlow
             {
                 $formData->getDescription()->setMetaKeywords($this->seoManager->generateKeywords($formData->getDescription()->getName().' '.$formData->getDescription()->getDescription()));
             }
+            if (!$formData->getRouting()->getUrl())
+            {
+                $formData->getRouting()->setUrl($this->seoManager->createUrl($formData->getDescription()->getPageTitle()));
+            }
         }
 
         return $options;
