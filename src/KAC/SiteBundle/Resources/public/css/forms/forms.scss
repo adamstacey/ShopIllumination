@@ -520,7 +520,7 @@ header.error {
 }
 
 .form-element-error {
-    padding: $spacingSmall 0 $spacingSmall 20px !important;
+    padding: $spacingSmall 30px $spacingSmall 20px !important;
     margin: 5px -10px 10px -30px !important;
 
     background: $colourRedExtraExtraLight url("#{$cssPath}/resources/images/icons/warning.png") 6px 14px no-repeat;
