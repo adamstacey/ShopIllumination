@@ -44,7 +44,22 @@ fieldset legend {
 }
 
 .form-element {
-    padding: 0 0 $spacingSmall 0;
+    position: relative;
+
+    padding: 0 30px $spacingSmall 0;
+}
+
+.form-helper {
+    position: absolute;
+    top: 8px;
+    right: 5px;
+
+    cursor: pointer;
+    background-image: url("#{$cssPath}/resources/images/icons/grey_small.png");
+}
+
+.form-helper:hover {
+    background-image: url("#{$cssPath}/resources/images/icons/yellow_small.png");
 }
 
 .form-element label {
@@ -508,7 +523,7 @@ header.error {
     padding: $spacingSmall 0 $spacingSmall 20px !important;
     margin: 5px -10px 10px -30px !important;
 
-    background: $colourRedExtraExtraLight url("#{$cssPath}/resources/images/icons/warning.png") 6px 13px no-repeat;
+    background: $colourRedExtraExtraLight url("#{$cssPath}/resources/images/icons/warning.png") 6px 14px no-repeat;
     @include borderRadius($radiusSize, 0, 0, $radiusSize);
     @include boxGlow($colourRed, 3px, 0, 0.5);
 }
