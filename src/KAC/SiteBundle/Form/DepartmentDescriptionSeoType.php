@@ -5,6 +5,7 @@ namespace KAC\SiteBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class DepartmentDescriptionSeoType extends AbstractType
 {
@@ -38,6 +39,24 @@ class DepartmentDescriptionSeoType extends AbstractType
                 'characterHelp' => 160,
             ),
         ));
+
+        $builder->add('googleDepartment', 'entity', array(
+            'required'  => true,
+            'label' => 'Google Department',
+            'property' => 'name',
+            'class' => 'KAC\SiteBundle\Entity\Taxonomy',
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('t')
+                    ->where('t.objectType = :objectType')
+                    ->setParameter('objectType', 'google')
+                    ->orderBy('t.name', 'ASC');
+            },
+            'empty_value' => '- Select a Google Department -',
+            'attr' => array(
+                'class' => 'select-google-department fill no-uniform',
+                'help' => 'Select the equivalent Google department that matches this department. This is very important as Google require this for the Google products feed.',
+            ),
+        ), array());
 
         $builder->add('menuTitle', 'text', array(
             'required'  => true,
