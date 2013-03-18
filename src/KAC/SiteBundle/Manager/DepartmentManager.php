@@ -45,6 +45,15 @@ class DepartmentManager extends Manager
         $department->setDepartmentPath($departmentPath);
     }
 
+    public function updateObjectLinks(Department $department)
+    {
+        // Update the routings
+        foreach ($department->getRoutings() as $routing)
+        {
+            $routing->setDepartment($department);
+        }
+    }
+
     public function updateDescription(DepartmentDescription $description)
     {
         if(!$description->getDepartment()) return;
