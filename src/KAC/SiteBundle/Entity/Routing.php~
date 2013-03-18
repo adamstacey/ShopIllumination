@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -26,7 +27,7 @@ class Routing
     private $id;    
 	
 	/**
-     * @ORM\Column(name="object_id", type="integer", length=11)
+     * @ORM\Column(name="object_id", type="integer", length=11, nullable=true)
      */
     private $objectId;
         
@@ -36,7 +37,8 @@ class Routing
     private $locale = "en_GB";
     
 	/**
-     * @ORM\Column(name="url", type="text")
+     * @ORM\Column(name="url", type="string", length=255, unique=true)
+     * @Assert\NotBlank(groups={"flow_site_new_department_step2"}, message="Enter an internal web address.")
      */
     private $url;
 
