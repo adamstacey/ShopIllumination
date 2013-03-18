@@ -51,7 +51,9 @@ class NewDepartmentType extends AbstractType
                 $builder->add('descriptions', 'collection', array(
                     'type' => new DepartmentDescriptionSeoType(),
                 ));
-
+                $builder->add('routings', 'collection', array(
+                    'type' => new DepartmentRoutingType(),
+                ));
                 break;
             case 3:
                 $builder->add('deliveryBand', 'choice', array(
