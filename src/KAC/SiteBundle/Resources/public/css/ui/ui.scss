@@ -821,12 +821,17 @@
 }
 
 .ui-tooltip {
-    padding: 8px;
+    padding: $spacingMedium;
+
     position: absolute;
+
     z-index: 9999;
-    max-width: 300px;
-    -webkit-box-shadow: 0 0 5px #aaa;
-    box-shadow: 0 0 5px #aaa;
+    max-width: 400px;
+    @include boxGlow($colourGreyDark, 10px, 0, 0.7);
+    @include fontSize($fontSizeMedium);
+    background: $helpBackgroundColour;
+    line-height: 150%;
+    border: 0 none;
 }
 body .ui-tooltip {
     border-width: 2px;
