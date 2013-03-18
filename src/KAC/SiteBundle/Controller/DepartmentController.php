@@ -30,7 +30,7 @@ class DepartmentController extends Controller
      * @Route("/admin/departments/new", name="departments_new")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function newAction(Request $request, $departmentId = null, $brandId = null, $admin = false)
+    public function newAction(Request $request, $admin = false)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -64,6 +64,9 @@ class DepartmentController extends Controller
 
                 // Update the department path
                 $manager->updateDepartmentPath($department);
+
+                // Update the object links
+                $manager->updateObjectLinks($department);
 
                 // Update the database
                 $em->persist($department);
