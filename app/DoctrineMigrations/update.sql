@@ -314,7 +314,6 @@ ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52D3B69A9AF FOREIGN
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DDE23A8E3 FOREIGN KEY (option_group_id) REFERENCES product_option_groups (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DA7C41D6F FOREIGN KEY (option_id) REFERENCES product_options (id);
 ALTER TABLE routing CHANGE object_type object_type VARCHAR(255) NOT NULL;
-ALTER TABLE routing ADD CONSTRAINT FK_A5F8B9FA232D562B FOREIGN KEY (object_id) REFERENCES brands (id);
 CREATE INDEX IDX_A5F8B9FA232D562B ON routing (object_id);
 ALTER TABLE contact_addresses ADD type_id INT DEFAULT NULL, ADD title_id INT DEFAULT NULL, DROP contact_address_type_id, DROP contact_title_id, CHANGE contact_id contact_id INT DEFAULT NULL;
 ALTER TABLE contact_addresses ADD CONSTRAINT FK_13B566DE7A1254A FOREIGN KEY (contact_id) REFERENCES contacts (id);
@@ -383,4 +382,7 @@ ALTER TABLE departments_tmp DROP check_delivery_band;
 ALTER TABLE routing CHANGE url url VARCHAR(255) NOT NULL;
 CREATE UNIQUE INDEX UNIQ_A5F8B9FAF47645AE ON routing (url);
 ALTER TABLE department_descriptions CHANGE google_department google_department LONGTEXT NOT NULL;
+ALTER TABLE routing CHANGE object_id object_id INT DEFAULT NULL;
+ALTER TABLE departments_tmp DROP template;
+ALTER TABLE departments_tmp ADD CONSTRAINT FK_C7AFC1E2727ACA70 FOREIGN KEY (parent_id) REFERENCES departments_tmp (id) ON DELETE SET NULL
 SET FOREIGN_KEY_CHECKS = 1;
