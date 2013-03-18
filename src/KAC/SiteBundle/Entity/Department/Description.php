@@ -29,12 +29,7 @@ class Description implements DescriptionInterface
      * @ORM\Column(name="locale", type="string", length=2)
      */
     private $locale = "en_GB";
-    
-    /**
-     * @ORM\Column(name="delivery_band_notes", type="text", nullable=true)
-     */
-    private $deliveryBandNotes;
-    
+
     /**
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank(groups={"flow_site_new_department_step1"}, message="Enter a name.")
@@ -42,7 +37,8 @@ class Description implements DescriptionInterface
     private $name;
     
     /**
-     * @ORM\Column(name="google_department", type="text", nullable=true)
+     * @ORM\Column(name="google_department", type="text")
+     * @Assert\NotBlank(groups={"flow_site_new_department_step2"}, message="Select a Google department.")
      */
     private $googleDepartment;
     
@@ -144,29 +140,6 @@ class Description implements DescriptionInterface
     public function getLocale()
     {
         return $this->locale;
-    }
-
-    /**
-     * Set deliveryBandNotes
-     *
-     * @param string $deliveryBandNotes
-     * @return Description
-     */
-    public function setDeliveryBandNotes($deliveryBandNotes)
-    {
-        $this->deliveryBandNotes = $deliveryBandNotes;
-    
-        return $this;
-    }
-
-    /**
-     * Get deliveryBandNotes
-     *
-     * @return string 
-     */
-    public function getDeliveryBandNotes()
-    {
-        return $this->deliveryBandNotes;
     }
 
     /**
