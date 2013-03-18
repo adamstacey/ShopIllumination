@@ -380,4 +380,7 @@ ALTER TABLE department_descriptions CHANGE description description LONGTEXT DEFA
 ALTER TABLE department_descriptions DROP delivery_band_notes;
 ALTER TABLE departments DROP check_delivery_band;
 ALTER TABLE departments_tmp DROP check_delivery_band;
+ALTER TABLE routing CHANGE url url VARCHAR(255) NOT NULL;
+CREATE UNIQUE INDEX UNIQ_A5F8B9FAF47645AE ON routing (url);
+ALTER TABLE department_descriptions CHANGE google_department google_department LONGTEXT NOT NULL;
 SET FOREIGN_KEY_CHECKS = 1;
