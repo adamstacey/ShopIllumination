@@ -12,42 +12,45 @@ class DepartmentDescriptionSeoType extends AbstractType
     {
         $builder->add('pageTitle', 'text', array(
             'required'  => true,
-            'label' => 'Page Title',
+            'label' => '<span class="important">Page Title</span>',
             'attr' => array(
                 'class' => 'fill',
-                'help' => '<span class="important">VERY IMPORTANT:</span> The page title is the title used in the Browser window and more importantly the title in search engine results pages (SERPs). This should be more specific than the header.',
+                'help' => '<span class="important">Very Important:</span> The page title is the title used in the Browser window and more importantly the title in search engine results pages (SERPs). This should be more specific than the header.',
             ),
         ));
+
         $builder->add('header', 'text', array(
             'required'  => true,
-            'label' => 'Header',
+            'label' => '<span class="important">Header</span>',
             'attr' => array(
                 'class' => 'fill',
-                'help' => '<span class="important">VERY IMPORTANT:</span> The header is the main header used in listings and on the pages in the site. This should exclude specifics and be more general than the page title.',
-            ),
-        ));
-        $builder->add('menuTitle', 'text', array(
-            'required'  => true,
-            'label' => 'Menu Title',
-            'attr' => array(
-                'class' => 'fill',
-                'help' => 'Enter the name of the department',
+                'help' => '<span class="important">Very Important:</span> The header is the main header used in listings and on the pages in the site. This should exclude specifics and be more general than the page title.',
             ),
         ));
 
         $builder->add('metaDescription', 'textarea', array(
             'required'  => true,
-            'label' => 'Name',
+            'label' => '<span class="important">Meta Description</span>',
             'attr' => array(
                 'class' => 'fill',
-                'help' => 'Enter the name of the department',
+                'help' => '<span class="important">Very Important:</span> Your "Advert" in organic search results. You need to include keywords, but primarily the meta description needs to entice people to click through by using a call to action with benefits (e.g. lowest price, in stock, free delivery, etc).',
             ),
         ));
-        $builder->add('metaKeywords', 'textarea', array(
-            'label' => 'Name',
+
+        $builder->add('menuTitle', 'text', array(
+            'required'  => true,
+            'label' => 'Menu Title',
             'attr' => array(
                 'class' => 'fill',
-                'help' => 'Enter the name of the department',
+                'help' => 'This will usually be the same as the name, but if the name needs to appear different on the menu (e.g. shorter) then this can be set here.',
+            ),
+        ));
+
+        $builder->add('metaKeywords', 'textarea', array(
+            'label' => 'Search Words',
+            'attr' => array(
+                'class' => 'fill',
+                'help' => 'Enter any alternative words to be found by (separated by a comma). This could be slight differences in wording or phrasing and should include all keywords used in the page title.',
             ),
         ));
     }
