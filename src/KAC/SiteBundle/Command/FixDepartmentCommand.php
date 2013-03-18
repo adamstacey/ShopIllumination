@@ -53,7 +53,6 @@ class FixDepartmentCommand extends ContainerAwareCommand
         $rootDepartment->setMaximumMembershipCardDiscount(0);
         $rootDepartment->setDeliveryBand(1);
         $rootDepartment->setInheritedDeliveryBand(1);
-        $rootDepartment->setCheckDeliveryBand(false);
         $rootDepartment->setDisplayOrder(0);
         $rootDepartment->setCreatedAt(new \DateTime());
         $rootDepartment->setUpdatedAt(new \DateTime());
@@ -100,7 +99,6 @@ class FixDepartmentCommand extends ContainerAwareCommand
         $new->setMembershipCardDiscountAvailable($department->getMembershipCardDiscountAvailable());
         $new->setMaximumMembershipCardDiscount($department->getMaximumMembershipCardDiscount());
         $new->setDeliveryBand($department->getDeliveryBand());
-        $new->setCheckDeliveryBand($department->getCheckDeliveryBand());
         $new->setInheritedDeliveryBand($department->getInheritedDeliveryBand());
         $new->setDisplayOrder($department->getDisplayOrder());
         $new->setCreatedAt($department->getCreatedAt());
