@@ -14,8 +14,9 @@ class DepartmentDescriptionSeoType extends AbstractType
             'required'  => true,
             'label' => '<span class="important">Page Title</span>',
             'attr' => array(
-                'class' => 'fill',
-                'help' => '<span class="important">Very Important:</span> The page title is the title used in the Browser window and more importantly the title in search engine results pages (SERPs). This should be more specific than the header.',
+                'class' => 'fill recommended-characters',
+                'help' => 'VERY IMPORTANT: The page title is the title used in the Browser window and more importantly the title in search engine results pages (SERPs). This should be more specific than the header.',
+                'characterHelp' => 70,
             ),
         ));
 
@@ -24,7 +25,7 @@ class DepartmentDescriptionSeoType extends AbstractType
             'label' => '<span class="important">Header</span>',
             'attr' => array(
                 'class' => 'fill',
-                'help' => '<span class="important">Very Important:</span> The header is the main header used in listings and on the pages in the site. This should exclude specifics and be more general than the page title.',
+                'help' => 'VERY IMPORTANT: The header is the main header used in listings and on the pages in the site. This should exclude specifics and be more general than the page title.',
             ),
         ));
 
@@ -32,8 +33,9 @@ class DepartmentDescriptionSeoType extends AbstractType
             'required'  => true,
             'label' => '<span class="important">Meta Description</span>',
             'attr' => array(
-                'class' => 'fill',
-                'help' => '<span class="important">Very Important:</span> Your "Advert" in organic search results. You need to include keywords, but primarily the meta description needs to entice people to click through by using a call to action with benefits (e.g. lowest price, in stock, free delivery, etc).',
+                'class' => 'fill recommended-characters',
+                'help' => 'VERY IMPORTANT: Your Advert in organic search results. You need to include keywords, but primarily the meta description needs to entice people to click through by using a call to action with benefits (e.g. lowest price, in stock, free delivery, etc).',
+                'characterHelp' => 160,
             ),
         ));
 
