@@ -2,6 +2,7 @@
 
 namespace WebIllumination\AdminBundle\Services;
 
+use KAC\SiteBundle\Entity\Department;
 use Symfony\Component\HttpFoundation\Request;
 use WebIllumination\AdminBundle\Entity\Routing;
 use WebIllumination\AdminBundle\Entity\DepartmentIndex;
@@ -322,16 +323,19 @@ class DepartmentService {
     	
    		// Setup the department
     	$department = array();
-	   		
-   		// Get the department
-   		$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
-    	$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+
+        /**
+         * @var $departmentObject Department
+         * @var $departmentDescriptionObject Department\Description
+         */
+        $departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
+    	$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Description')->findOneBy(array('department' => $id, 'locale' => $locale));
     	if (!$departmentObject || !$departmentDescriptionObject)
 	    {
         	return false;
     	}
     	$department['id'] = $departmentObject->getId();
-    	$department['parentId'] = $departmentObject->getParentId();
+    	$department['parentId'] = $departmentObject->getParent()->getId();
     	$department['status'] = $departmentObject->getStatus();
     	$department['departmentPath'] = $departmentObject->getDepartmentPath();
     	$department['hidePrices'] = $departmentObject->getHidePrices();
@@ -339,7 +343,7 @@ class DepartmentService {
     	$department['membershipCardDiscountAvailable'] = $departmentObject->getMembershipCardDiscountAvailable();
     	$department['maximumMembershipCardDiscount'] = $departmentObject->getMaximumMembershipCardDiscount();
     	$department['displayOrder'] = $departmentObject->getDisplayOrder();
-    	$department['departmentId'] = $departmentDescriptionObject->getDepartmentId();
+    	$department['departmentId'] = $departmentDescriptionObject->getDepartment()->getId();
     	$department['locale'] = $departmentDescriptionObject->getLocale();
     	$department['name'] = $departmentDescriptionObject->getName();
     	$department['description'] = $departmentDescriptionObject->getDescription();
@@ -348,37 +352,36 @@ class DepartmentService {
     	$department['header'] = $departmentDescriptionObject->getHeader();
     	$department['metaDescription'] = $departmentDescriptionObject->getMetaDescription();
     	$department['metaKeywords'] = $departmentDescriptionObject->getMetaKeywords();
-    	$department['searchWords'] = $departmentDescriptionObject->getSearchWords();
+    	$department['searchWords'] = $departmentDescriptionObject->getMetaKeywords();
     	$department['updatedAt'] = $departmentDescriptionObject->getUpdatedAt();
     	
     	// Get the department paths
     	$departmentPaths = array();
-    	$departmentPathIds = explode('|', $department['departmentPath']);
-		foreach ($departmentPathIds as $departmentPathId)
-		{
-			$departmentPathDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
-			$departmentPathRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
-			if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
-			{
-				$departmentPath = array();
-				$departmentPath['department'] = $departmentPathDescriptionObject->getName();
-				$departmentPath['routing'] = $departmentPathRoutingObject->getUrl();
-				$departmentPaths[] = $departmentPath;
-			}
-		}
+//    	$departmentPathIds = explode('|', $department['departmentPath']);
+//		foreach ($departmentPathIds as $departmentPathId)
+//		{
+//			$departmentPathDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
+//			$departmentPathRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
+//			if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
+//			{
+//				$departmentPath = array();
+//				$departmentPath['department'] = $departmentPathDescriptionObject->getName();
+//				$departmentPath['routing'] = $departmentPathRoutingObject->getUrl();
+//				$departmentPaths[] = $departmentPath;
+//			}
+//		}
 		$department['departmentPaths'] = $departmentPaths;
     	
     	// Get the product count
-    	$department['productCount'] = $productService->getProductListingCount($departmentObject->getId(), false, false, false, false, 0, 0, $currencyCode, 'GBP');
+    	$department['productCount'] = 0;
     	
     	// Get the routing
-    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
+    	$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findOneBy(array('objectId' => $id, 'locale' => $locale));
     	if (!$routingObject)
     	{
     		// Add routing
-    		$routingObject = new Routing();
+    		$routingObject = new Department\Routing();
     		$routingObject->setObjectId($id);
-    		$routingObject->setObjectType('department');
     		$routingObject->setLocale('en');
     		$routingObject->setUrl($seoService->createUrl($departmentDescriptionObject->getHeader()));
 		    $em->persist($routingObject);
@@ -388,107 +391,7 @@ class DepartmentService {
 				       		
     	return $department;
     }
-    
-    // Get a department
-    public function getDepartmentOld($id, $locale = 'en', $currencyCode = 'GBP')
-    {
-    	// Check if the object is stored
-    	$department = apc_fetch('ride_direct_department_'.$id);
-    	if (!$department)
-    	{
-	    	// Get the services
-	    	$doctrineService = $this->container->get('doctrine');
-	    	$seoService = $this->container->get('web_illumination_admin.seo_service');
-	    	$productService = $this->container->get('web_illumination_admin.product_service');
-	    	
-	    	// Get the entity manager
-	    	$em = $doctrineService->getEntityManager();
-	    	/*
-	    	// Check if the department is already stored
-	    	$departmentObject = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'department', 'locale' => $locale));
-	    	    	
-	   		// Check if the department needs rebuilding
-	   		$rebuildDepartment = true;
-	   		if ($departmentObject)
-	   		{
-	   			if ($departmentObject->getRebuild() < 1)
-	   			{
-	   				$rebuildDepartment = false;
-	   			}
-	   		}
-	   		
-	   		// Get the department
-	   		if ($rebuildDepartment)
-	   		{
-	   		*/
-		   		// Setup the department
-		    	$department = array();
-		   		
-		   		// Get the department
-		   		$department['department'] = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
-		    	$department['description'] = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
-		    	if (!$department['department'] || !$department['description'])
-			    {
-		        	return false;
-		    	}
-		   	    	    	
-		    	// Get the routing
-		    	$department['routing'] = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
-		    	if (!$department['routing'])
-		    	{
-		    		// Add routing
-		    		$department['routing'] = new Routing();
-		    		$department['routing']->setObjectId($id);
-		    		$department['routing']->setObjectType('department');
-		    		$department['routing']->setLocale('en');
-		    		$department['routing']->setUrl($seoService->createUrl($department['description']->getHeader()));
-				    $em->persist($department['routing']);
-				    $em->flush();
-		    	}
-		    	
-		    	// Get the products
-		    	$department['products'] = array();
-	    		$subDepartmentIndexList = $this->getSubDepartmentIndexList($id, $locale, $currencyCode);
-	    		if (sizeof($subDepartmentIndexList) > 0)
-	    		{
-					$productToDepartments = $em
-						->createQuery("SELECT ptd FROM WebIlluminationAdminBundle:ProductToDepartment ptd WHERE ptd.departmentId IN (:departments)")
-						->setParameter('departments', $subDepartmentIndexList)
-						->getResult();
-					foreach($productToDepartments as $productToDepartment)
-					{
-						$department['products'][$productToDepartment->getProductId()] = $productService->getProduct($productToDepartment->getProductId());
-					}
-				}
-		    		    	
-		    	// Get the redirects
-		    	$department['redirects'] = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'department'), array('redirectFrom' => 'ASC'));
-		    	/*	
-		    	// Check for the department object
-		   		if (!$departmentObject)
-		   		{
-		   			$departmentObject = new ObjectIndex();
-		   			$departmentObject->setObjectKey($id);
-		   			$departmentObject->setObjectType('department');
-		   			$departmentObject->setLocale($locale);
-		   		}
-		   		
-		   		// Update the department object
-		   		$departmentObject->setObjectData(base64_encode(serialize($department)));
-		   		$departmentObject->setRebuild(0);
-		   		$em->persist($departmentObject);
-			    $em->flush();
-			    */
-			    
-			    apc_store('ride_direct_product_'.$id, $department);
-	   		//}   		
-	   	}
-   		
-   		return $department;
-   		
-    	//return unserialize(base64_decode($departmentObject->getObjectData()));
-    }
-    
+
     // Get the list of all sub departments for a department
     public function getSubDepartmentList($parentId, $locale = 'en', $currencyCode = 'GBP')
     {
@@ -505,7 +408,7 @@ class DepartmentService {
     	$departments[] = $parentId;
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parent' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -542,7 +445,7 @@ class DepartmentService {
     	$departments[] = $parentId;
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -576,7 +479,7 @@ class DepartmentService {
     	$departments = array();
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -608,14 +511,14 @@ class DepartmentService {
     	$departments = array();
     	
     	// Get the sub departments
-    	$subDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartmentObjects) > 0 )
 		{
 	        foreach ($subDepartmentObjects as $subDepartmentObject)
 	        {
-	        	$productCount = $productService->getProductListingCount($subDepartmentObject->getDepartmentId(), false, false, false, false, 0, 0, $locale, $currencyCode);
+	        	$productCount = 0;
 	    		$department = array();
 	    		$department['id'] = $subDepartmentObject->getDepartmentId();
 	    		$department['level'] = $level;
@@ -623,7 +526,7 @@ class DepartmentService {
 	    		$department['parentId'] = $subDepartmentObject->getParentId();
 	    		$department['name'] = $subDepartmentObject->getName();
 	    		$departments[] = $department;
-	    		$subDepartments = $this->getFullDepartmentList($subDepartmentObject->getDepartmentId(), ($level + 1), $locale, $currencyCode);
+	    		$subDepartments = $this->getFullDepartmentList($subDepartmentObject->getId(), ($level + 1), $locale, $currencyCode);
 	    		if (sizeof($subDepartments) > 0)
 	    		{
 	    			$departments = array_merge($departments, $subDepartments);
@@ -648,7 +551,7 @@ class DepartmentService {
     	$departments = array();
    		
    		// Get the departments
-   		foreach ($em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findBy(array(), array('name' => 'ASC')) as $departmentDescriptionObject)
+   		foreach ($em->getRepository('KAC\SiteBundle\Entity\Department\Description')->findBy(array(), array('name' => 'ASC')) as $departmentDescriptionObject)
    		{
    			$department = $this->getDepartment($departmentDescriptionObject->getDepartmentId(), $locale, $currencyCode);
    			if (($department['status'] == 'a'))
@@ -675,11 +578,11 @@ class DepartmentService {
     	
         // Get the sub departments
 		$query = "SELECT ";
-        $query .= "d.id, d.parentId, d.status, d.departmentPath, d.hidePrices, d.showPricesOutOfHours, d.displayOrder, ";
-        $query .= "dd.name, dd.description, dd.menuTitle, dd.pageTitle, dd.header, dd.metaDescription, dd.metaKeywords, dd.searchWords, ";
+        $query .= "d.id, d.status, d.departmentPath, d.hidePrices, d.showPricesOutOfHours, d.displayOrder, ";
+        $query .= "dd.name, dd.description, dd.menuTitle, dd.pageTitle, dd.header, dd.metaDescription, dd.metaKeywords, ";
         $query .= "r.url ";
-        $query .= "FROM WebIlluminationAdminBundle:Department d, WebIlluminationAdminBundle:DepartmentDescription dd, WebIlluminationAdminBundle:Routing r ";
-        $query .= "WHERE d.id = dd.departmentId AND d.id = r.objectId AND r.objectType = 'department' AND d.parentId = '".$parentId."' ";
+        $query .= "FROM KAC\SiteBundle\Entity\Department d, KAC\SiteBundle\Entity\Department\Description dd, KAC\SiteBundle\Entity\Department\Routing r ";
+        $query .= "WHERE d.id = dd.department AND d.id = r.objectId AND d.parent = '".$parentId."' ";
 		if ($status)
     	{
     		$options = explode('|', $status);
@@ -759,7 +662,7 @@ class DepartmentService {
 		{
 	        foreach ($subDepartments as $subDepartment)
 	        {
-	        	$productCount = $productService->getProductListingCount($subDepartment['id'], $selectedBrands, $selectedGroup, $selectedOptions, $selectedFeatures, $selectedPriceFrom, $selectedPriceTo, $locale, $currencyCode);      	
+	        	$productCount = $productService->getProductListingCount($subDepartment['id'], $selectedBrands, $selectedGroup, $selectedOptions, $selectedFeatures, $selectedPriceFrom, $selectedPriceTo, $locale, $currencyCode);
 	        	if ($productCount > 0)
 	        	{
 		    		$department = array();

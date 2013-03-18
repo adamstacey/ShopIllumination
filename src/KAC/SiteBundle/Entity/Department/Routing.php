@@ -38,4 +38,9 @@ class Routing extends SiteRouting
     {
         return $this->department;
     }
+
+    public function getObjectType()
+    {
+        return 'department';
+    }
 }

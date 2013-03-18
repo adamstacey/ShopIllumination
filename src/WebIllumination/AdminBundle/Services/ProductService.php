@@ -205,12 +205,32 @@ class ProductService {
         // Get the services
         $doctrineService = $this->container->get('doctrine');
 
-        // Get the entity manager
+        /**
+         * Get entity manager
+         * @var EntityManager $em
+         */
         $em = $doctrineService->getEntityManager();
 
-        // Setup products
-        $products = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findBy(array(), array('header' => 'ASC'));
+        // Get the query builder
+        $qb = $em->createQueryBuilder();
 
+        // Build the query
+        $qb->select("p")
+            ->from("KAC\SiteBundle\Entity\Product", "p")
+            ->join("v.prices", "vp")
+            ->join("v.features", "vf")
+            ->join("v.options", "vo")
+            ->join("v.descriptions", "vd")
+            ->join("v.brand", "b")
+            ->join("v.description", "bd")
+            ->join("v.routing", "br")
+            ->join("p.departments", "d")
+            ->join("d.description", "dd")
+            ->join("d.routing", "dr")
+            ->addOrderBy('pd.header', 'ASC');
+        $query = $qb->getQuery();
+
+        $products = $query->getResult();
         return $products;
     }
 
@@ -230,23 +250,57 @@ class ProductService {
         // Setup the product
         $product = array();
 
-        // Get the product
-        $productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
-        $productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $id, 'locale' => $locale));
-        if (!$productObject || !$productDescriptionObject)
+        $query = $em->createQueryBuilder()
+            ->select("p, pd, v, vp, vd, b, bd, br, d, pd, d, dd, dr")
+            ->from("KAC\SiteBundle\Entity\Product", "p")
+            ->join("p.variants", "v")
+            ->join("p.descriptions", "vpd")
+            ->join("v.prices", "vp")
+            ->join("v.features", "vf")
+            ->join("v.options", "vo")
+            ->join("v.descriptions", "vd")
+            ->join("p.brand", "b")
+            ->join("b.descriptions", "bd")
+            ->join("b.routings", "br")
+            ->join("p.departments", "pd")
+            ->join("pd.department", "d")
+            ->join("d.descriptions", "dd")
+            ->join("d.routings", "dr")
+            ->where("p.id = ?1")
+            ->andWhere("vd.locale = ?2")
+            ->andWhere("bd.locale = ?2")
+            ->andWhere("vd.locale = ?2")
+            ->andWhere("dd.locale = ?2")
+            ->andWhere("vp.currencyCode = ?3")
+            ->setParameter(1, $id)
+            ->setParameter(2, $locale)
+            ->setParameter(3, $currencyCode);
+
+        /**
+         * @var Product $productObject
+         * @var \KAC\SiteBundle\Entity\Product\Description $productDescriptionObject
+         */
+        $productObject = $query->getQuery()->execute();
+
+        // Product Info
+        if (!$productObject || count($productObject->getDescriptions()) > 0)
         {
             return false;
         }
+
+        $productDescriptionObjects = $productObject->getDescriptions();
+        $productDescriptionObject = $productDescriptionObjects[0];
+
         $product['id'] = $productObject->getId();
         $product['productId'] = $productObject->getId();
-        $product['productGroupId'] = $productObject->getProductGroupId();
+        $product['productGroupId'] = $productObject->getId();
         $product['availableForPurchase'] = $productObject->getAvailableForPurchase();
         $product['status'] = $productObject->getStatus();
-        $product['product'] = $productDescriptionObject->getProduct();
+        $product['product'] = $productDescriptionObject->getName();
         $product['prefix'] = $productDescriptionObject->getPrefix();
         $product['tagline'] = $productDescriptionObject->getTagline();
         $product['productCode'] = $productObject->getProductCode();
-        $product['productGroupCode'] = $productObject->getProductGroupCode();
+        $product['productGroupCode'] = $productObject->getProductCode();
         $product['alternativeProductCodes'] = $productObject->getAlternativeProductCodes();
         $product['description'] = $productDescriptionObject->getDescription();
         $product['shortDescription'] = $productDescriptionObject->getShortDescription();
@@ -258,15 +312,6 @@ class ProductService {
         $product['deliveryBand'] = $productObject->getDeliveryBand();
         $product['inheritedDeliveryBand'] = $productObject->getInheritedDeliveryBand();
         $product['deliveryCost'] = $productObject->getDeliveryCost();
-        $product['weight'] = $productObject->getWeight();
-        $product['length'] = $productObject->getLength();
-        $product['width'] = $productObject->getWidth();
-        $product['height'] = $productObject->getHeight();
-        $product['mpn'] = $productObject->getMpn();
-        $product['ean'] = $productObject->getEan();
-        $product['upc'] = $productObject->getUpc();
-        $product['jan'] = $productObject->getJan();
-        $product['isbn'] = $productObject->getIsbn();
         $product['featureComparison'] = $productObject->getFeatureComparison();
         $product['downloadable'] = $productObject->getDownloadable();
         $product['specialOffer'] = $productObject->getSpecialOffer();
@@ -279,469 +324,7 @@ class ProductService {
         $product['maximumMembershipCardDiscount'] = $productObject->getMaximumMembershipCardDiscount();
         $product['updatedAt'] = $productObject->getUpdatedAt();
 
-        // Get the brand
-        $brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($productObject->getBrandId());
-        $brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $productObject->getBrandId(), 'locale' => $locale));
-        $brandRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $productObject->getBrandId(), 'locale' => 'en', 'objectType' => 'brand'));
-        $product['brand'] = array();
-        if ($brandObject && $brandDescriptionObject && $brandRoutingObject)
-        {
-            $product['brand']['id'] = $productObject->getBrandId();
-            $product['brand']['brand'] = $brandDescriptionObject->getBrand();
-            $product['brand']['routing'] = $brandRoutingObject->getUrl();
-            $product['brand']['membershipCardDiscountAvailable'] = $brandObject->getMembershipCardDiscountAvailable();
-            $product['brand']['maximumMembershipCardDiscount'] = $brandObject->getMaximumMembershipCardDiscount();
-
-            // Get brand logo
-            $brandLogoObject = $em->getRepository('WebIlluminationAdminBundle:Image')->find($brandDescriptionObject->getLogoImageId());
-            if ($brandLogoObject)
-            {
-                $product['brand']['logoOriginalPath'] = $brandLogoObject->getOriginalPath();
-                $product['brand']['logoThumbnailPath'] = $brandLogoObject->getThumbnailPath();
-                $product['brand']['logoMediumPath'] = $brandLogoObject->getMediumPath();
-                $product['brand']['logoLargePath'] = $brandLogoObject->getLargePath();
-            }
-
-            // Get the guarantees
-            $guarantees = array();
-            $guaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $productObject->getBrandId(), 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
-            foreach ($guaranteeObjects as $guaranteeObject)
-            {
-                if ($guaranteeObject)
-                {
-                    $guaranteeLengthObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
-                    $guaranteeTypeObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
-                    if ($guaranteeLengthObject && $guaranteeTypeObject)
-                    {
-                        $guarantee = array();
-                        $guarantee['id'] = $guaranteeObject->getId();
-                        $guarantee['displayOrder'] = $guaranteeObject->getDisplayOrder();
-                        $guarantee['guaranteeLengthId'] = $guaranteeObject->getGuaranteeLengthId();
-                        $guarantee['guaranteeLength'] = $guaranteeLengthObject->getGuaranteeLength();
-                        $guarantee['guaranteeTitle'] = $guaranteeLengthObject->getGuaranteeTitle();
-                        $guarantee['guaranteeTypeId'] = $guaranteeObject->getGuaranteeTypeId();
-                        $guarantee['guaranteeType'] = $guaranteeTypeObject->getGuaranteeType();
-                        $guarantees[$guaranteeObject->getId()] = $guarantee;
-                    }
-                }
-            }
-            $product['brand']['guarantees'] = $guarantees;
-
-            // Check the hide price and show price out of hours status for the brand
-            if ($brandObject->getHidePrices() > 0)
-            {
-                $product['hidePrice'] = 1;
-            }
-            if ($brandObject->getShowPricesOutOfHours() > 0)
-            {
-                $product['showPriceOutOfHours'] = 1;
-            }
-        }
-
-        // Get the departments
-        $departments = array();
-        $productToDepartments = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('productId' => $id), array('displayOrder' => 'ASC'));
-        $departmentCount = 0;
-        foreach ($productToDepartments as $productToDepartmentObject)
-        {
-            if ($productToDepartmentObject)
-            {
-                $departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($productToDepartmentObject->getDepartmentId());
-                $departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $productToDepartmentObject->getDepartmentId()));
-                $departmentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $productToDepartmentObject->getDepartmentId(), 'locale' => 'en', 'objectType' => 'department'));
-                if ($departmentObject && $departmentDescriptionObject && $departmentRoutingObject)
-                {
-                    $departmentCount++;
-                    $department = array();
-                    $department['id'] = $productToDepartmentObject->getDepartmentId();
-                    $department['membershipCardDiscountAvailable'] = $departmentObject->getMembershipCardDiscountAvailable();
-                    $department['maximumMembershipCardDiscount'] = $departmentObject->getMaximumMembershipCardDiscount();
-                    $department['name'] = $departmentDescriptionObject->getName();
-                    $department['pathIds'] = $departmentObject->getDepartmentPath();
-                    $department['path'] = array();
-                    $departmentPathCount = 0;
-                    $departmentPathIds = explode('|', $department['pathIds']);
-                    foreach ($departmentPathIds as $departmentPathId)
-                    {
-                        $departmentPathDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
-                        $departmentPathRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
-                        if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
-                        {
-                            $departmentPathCount++;
-                            $departmentPath = array();
-                            $departmentPath['name'] = $departmentPathDescriptionObject->getName();
-                            $departmentPath['routing'] = $departmentPathRoutingObject->getUrl();
-                            $department['path'][] = $departmentPath;
-                            if ((sizeof($departmentPathIds) == $departmentPathCount) && ($departmentCount == 1))
-                            {
-                                $product['listingUrl'] = $departmentPath['routing'];
-                            }
-                        }
-                    }
-                    $departments[] = $department;
-
-                    // Check the hide price and show price out of hours status for the brand
-                    if ($departmentObject->getHidePrices() > 0)
-                    {
-                        $product['hidePrice'] = 1;
-                    }
-                    if ($departmentObject->getShowPricesOutOfHours() > 0)
-                    {
-                        $product['showPriceOutOfHours'] = 1;
-                    }
-                }
-            }
-        }
-        $product['departments'] = $departments;
-
-        // Get the prices
-        $prices = array();
-        $productPrices = $em->getRepository('WebIlluminationAdminBundle:ProductPrice')->findBy(array('productId' => $id, 'currencyCode' => $currencyCode), array('displayOrder' => 'ASC'));
-        foreach ($productPrices as $productPriceObject)
-        {
-            $productPrice = array();
-            $productPrice['costPrice'] = $productPriceObject->getCostPrice();
-            $productPrice['costPriceExcludingVat'] = $productPriceObject->getCostPriceExcludingVat();
-            $productPrice['recommendedRetailPrice'] = $productPriceObject->getRecommendedRetailPrice();
-            $productPrice['recommendedRetailPriceExcludingVat'] = $productPriceObject->getRecommendedRetailPriceExcludingVat();
-            $productPrice['listPrice'] = $productPriceObject->getListPrice();
-            $productPrice['listPriceExcludingVat'] = $productPriceObject->getListPriceExcludingVat();
-            $productPrice['profit'] = $productPriceObject->getProfit();
-            $productPrice['profitExcludingVat'] = $productPriceObject->getProfitExcludingVat();
-            $productPrice['profitPercentageClass'] = $productPriceObject->getProfitPercentageClass();
-            $productPrice['markupPercentage'] = $productPriceObject->getMarkupPercentage();
-            $productPrice['markupPercentageClass'] = $productPriceObject->getMarkupPercentageClass();
-            $productPrice['discount'] = $productPriceObject->getDiscount();
-            $productPrice['savings'] = $productPriceObject->getSavings();
-            $productPrice['currencyCode'] = $productPriceObject->getCurrencyCode();
-
-            // Calculate the membership card price
-            $membershipCardDiscountAvailable = true;
-            $bestMembershipCardDiscountAvailable = $this->membershipCardDiscount;
-            if ($product['membershipCardDiscountAvailable'] > 0)
-            {
-                if ($product['maximumMembershipCardDiscount'] > 0)
-                {
-                    $bestMembershipCardDiscountAvailable = $product['maximumMembershipCardDiscount'];
-                } else {
-                    foreach ($product['departments'] as $department)
-                    {
-                        if ($department['membershipCardDiscountAvailable'] > 0)
-                        {
-                            if ($department['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-                            {
-                                $bestMembershipCardDiscountAvailable = $department['maximumMembershipCardDiscount'];
-                            }
-                        } else {
-                            $membershipCardDiscountAvailable = false;
-                            break;
-                        }
-                    }
-                    if ($product['brand']['membershipCardDiscountAvailable'] > 0)
-                    {
-                        if ($product['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-                        {
-                            $bestMembershipCardDiscountAvailable = $product['brand']['maximumMembershipCardDiscount'];
-                        }
-                    } else {
-                        $membershipCardDiscountAvailable = false;
-                    }
-                }
-            } else {
-                $membershipCardDiscountAvailable = false;
-            }
-            if ($membershipCardDiscountAvailable)
-            {
-                $productPrice['membershipCardPrice'] = $productPrice['recommendedRetailPrice'] - ($productPrice['recommendedRetailPrice'] * ($bestMembershipCardDiscountAvailable / 100));
-            } else {
-                $productPrice['membershipCardPrice'] = $productPrice['listPrice'];
-            }
-            $prices[] = $productPrice;
-        }
-        $product['prices'] = $prices;
-
-        // Get the images
-        $images = array();
-        $imagesObject = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'product', 'imageType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
-        foreach ($imagesObject as $imageObject)
-        {
-            $image = array();
-            $image['originalPath'] = $imageObject->getOriginalPath();
-            if (file_exists($this->getUploadRootDir().$image['originalPath']) && ($image['originalPath'] != ''))
-            {
-                list($image['originalWidth'], $image['originalHeight']) = getimagesize($this->getUploadRootDir().$image['originalPath']);
-            }
-            $image['thumbnailPath'] = $imageObject->getThumbnailPath();
-            if (file_exists($this->getUploadRootDir().$image['thumbnailPath']) && ($image['thumbnailPath'] != ''))
-            {
-                list($image['thumbnailWidth'], $image['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$image['thumbnailPath']);
-            }
-            $image['mediumPath'] = $imageObject->getMediumPath();
-            if (file_exists($this->getUploadRootDir().$image['mediumPath']) && ($image['mediumPath'] != ''))
-            {
-                list($image['mediumWidth'], $image['mediumHeight']) = getimagesize($this->getUploadRootDir().$image['mediumPath']);
-            }
-            $image['largePath'] = $imageObject->getLargePath();
-            if (file_exists($this->getUploadRootDir().$image['largePath']) && ($image['largePath'] != ''))
-            {
-                list($image['largeWidth'], $image['largeHeight']) = getimagesize($this->getUploadRootDir().$image['largePath']);
-            }
-            $image['title'] = $imageObject->getTitle();
-            $images[] = $image;
-        }
-        $product['images'] = $images;
-
-        // Get the videos
-        $videos = array();
-        $videosObject = $em->getRepository('WebIlluminationAdminBundle:Video')->findBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
-        foreach ($videosObject as $videoObject)
-        {
-            $video = array();
-            $video['title'] = $videoObject->getTitle();
-            $video['description'] = $videoObject->getDescription();
-            $video['alignment'] = $videoObject->getAlignment();
-            $video['link'] = $videoObject->getLink();
-            $video['path'] = $videoObject->getPath();
-            $videos[] = $video;
-        }
-        $product['videos'] = $videos;
-
-        // Get the related products
-        $relatedProducts = array();
-        $relatedProductsObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
-        foreach ($relatedProductsObject as $relatedProductObject)
-        {
-            $relatedProduct = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $relatedProductObject->getProductLinkId()));
-            if ($relatedProductObject)
-            {
-                $relatedProducts[] = $relatedProduct;
-            }
-        }
-        $product['relatedProducts'] = $relatedProducts;
-
-        // Get the cheaper alternatives
-        $cheaperAlternatives = array();
-        $cheaperAlternativesObject = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
-        foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
-        {
-            $cheaperAlternative = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $cheaperAlternativeObject->getProductLinkId()));
-            if ($cheaperAlternative)
-            {
-                $cheaperAlternatives[] = $cheaperAlternative;
-            }
-        }
-        $product['cheaperAlternatives'] = $cheaperAlternatives;
-
-        // Get the options
-        $productOptions = array();
-        $productToOptionsObject = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->findBy(array('productId' => $id, 'active' => 1), array('displayOrder' => 'ASC'));
-        foreach ($productToOptionsObject as $productToOptionObject)
-        {
-            $productOption = array();
-            $productOptionGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
-            $productOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->find($productToOptionObject->getProductOptionId());
-            $productOption['id'] = $productToOptionObject->getId();
-            $productOption['productOptionGroupId'] = $productOptionGroupObject->getId();
-            $productOption['productOptionGroup'] = $productOptionGroupObject->getProductOptionGroup();
-            $productOption['productOptionId'] = $productOptionObject->getId();
-            $productOption['productOption'] = $productOptionObject->getProductOption();
-            $productOption['price'] = $productToOptionObject->getPrice();
-            $productOption['priceType'] = $productToOptionObject->getPriceType();
-            $productOption['priceUse'] = $productToOptionObject->getPriceUse();
-            $productOptions[$productOptionGroupObject->getProductOptionGroup()][] = $productOption;
-        }
-        $product['productOptions'] = $productOptions;
-
-        // Get the features
-        $productFeatures = array();
-        $productToFeaturesObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $id, 'active' => 1), array('displayOrder' => 'ASC'));
-        foreach ($productToFeaturesObject as $productToFeatureObject)
-        {
-            $productFeature = array();
-            $productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($productToFeatureObject->getProductFeatureGroupId());
-            $productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
-            if ($productFeatureGroupObject && $productFeatureObject)
-            {
-                $productFeature['id'] = $productToFeatureObject->getId();
-                $productFeature['productFeatureGroupId'] = $productFeatureGroupObject->getId();
-                $productFeature['productFeatureGroup'] = $productFeatureGroupObject->getProductFeatureGroup();
-                $productFeature['filter'] = $productFeatureGroupObject->getFilter();
-                $productFeature['productFeatureId'] = $productFeatureObject->getId();
-                $productFeature['productFeature'] = $productFeatureObject->getProductFeature();
-                $productFeatures[$productFeatureGroupObject->getProductFeatureGroup()][] = $productFeature;
-            }
-        }
-        $product['productFeatures'] = $productFeatures;
-
-        // Get the routing
-        $routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product', 'locale' => $locale));
-        if (!$routingObject)
-        {
-            // Add routing
-            $routingObject = new Routing();
-            $routingObject->setObjectId($id);
-            $routingObject->setObjectType('product');
-            $routingObject->setLocale($locale);
-            $routingObject->setUrl($seoService->createUrl($productDescriptionObject->getHeader()));
-            $em->persist($routingObject);
-            $em->flush();
-        }
-        $product['url'] = $routingObject->getUrl();
-
-        // Get the guarantees
-        $guarantees = array();
-        $guaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'product'), array('displayOrder' => 'ASC'));
-        if (sizeof($guaranteeObjects) > 0)
-        {
-            foreach ($guaranteeObjects as $guaranteeObject)
-            {
-                if ($guaranteeObject)
-                {
-                    $guaranteeLengthObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
-                    $guaranteeTypeObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
-                    if ($guaranteeLengthObject && $guaranteeTypeObject)
-                    {
-                        $guarantee = array();
-                        $guarantee['id'] = $guaranteeObject->getId();
-                        $guarantee['displayOrder'] = $guaranteeObject->getDisplayOrder();
-                        $guarantee['guaranteeLengthId'] = $guaranteeObject->getGuaranteeLengthId();
-                        $guarantee['guaranteeLength'] = $guaranteeLengthObject->getGuaranteeLength();
-                        $guarantee['guaranteeTitle'] = $guaranteeLengthObject->getGuaranteeTitle();
-                        $guarantee['guaranteeTypeId'] = $guaranteeObject->getGuaranteeTypeId();
-                        $guarantee['guaranteeType'] = $guaranteeTypeObject->getGuaranteeType();
-                        $guarantees[$guaranteeObject->getId()] = $guarantee;
-                    }
-                }
-            }
-        } else {
-            $guarantees = $product['brand']['guarantees'];
-        }
-        $product['guarantees'] = $guarantees;
-
-        // Check if the prices should be shown or not
-        if (($product['hidePrice'] > 0) && ($product['showPriceOutOfHours'] > 0))
-        {
-            $currentDay = date("D");
-            $currentTime = date("G");
-            switch ($currentDay)
-            {
-                case 'Sat':
-                case 'Sun':
-                    $product['hidePrice'] = 0;
-                    break;
-                case 'Mon':
-                case 'Tue':
-                case 'Wed':
-                case 'Thu':
-                case 'Fri':
-                    if (($currentTime < 7) || ($currentTime > 17))
-                    {
-                        $product['hidePrice'] = 0;
-                    }
-                    break;
-            }
-        }
-
-        return $product;
-    }
-
-    public function getVariant($id, $locale = 'en', $currencyCode = 'GBP')
-    {
-        // Get the services
-        $doctrineService = $this->container->get('doctrine');
-        $seoService = $this->container->get('web_illumination_admin.seo_service');
-
-        /**
-         * Get the entity manager
-         * @var EntityManager $em
-         */
-        $em = $doctrineService->getManager();
-
-        // Setup the product
-        $product = array();
-
-        $query = $em->createQueryBuilder()
-            ->select("v, p, vp, vd, b, bd, br, d, dd, dr")
-            ->from("KAC\SiteBundle\Entity\Variant", "v")
-            ->join("p", "p")
-            ->join("v.prices", "vp")
-            ->join("v.features", "vf")
-            ->join("v.options", "vo")
-            ->join("v.descriptions", "vd")
-            ->join("v.brand", "b")
-            ->join("v.description", "bd")
-            ->join("v.routing", "br")
-            ->join("p.departments", "d")
-            ->join("d.description", "dd")
-            ->join("d.routing", "dr")
-            ->where("v.id = ?1")
-            ->andWhere("vd.locale = ?2")
-            ->andWhere("bd.locale = ?2")
-            ->andWhere("dd.locale = ?2")
-            ->andWhere("vd.locale = ?2")
-            ->andWhere("vp.prices = ?3")
-            ->setParameter(1, $id)
-            ->setParameter(1, $locale)
-            ->setParameter(1, $currencyCode);
-
-        /**
-         * @var Product\Variant $variantObject
-         * @var \KAC\SiteBundle\Entity\Product\Variant\Description $variantDescriptionObject
-         */
-        $variantObject = $query->getQuery()->execute();
-
-        // Product Info
-        if (!$variantObject || count($variantObject->getDescriptions()) > 0)
-        {
-            return false;
-        }
-
-        $variantDescriptionObjects = $variantObject->getDescriptions();
-        $variantDescriptionObject = $variantDescriptionObjects[0];
-
-        $product['id'] = $variantObject->getId();
-        $product['productId'] = $variantObject->getId();
-        $product['productGroupId'] = $variantObject->getProduct()->getId();
-        $product['availableForPurchase'] = $variantObject->getProduct()->getAvailableForPurchase();
-        $product['status'] = $variantObject->getStatus();
-        $product['product'] = $variantDescriptionObject->getProduct();
-        $product['prefix'] = $variantDescriptionObject->getPrefix();
-        $product['tagline'] = $variantDescriptionObject->getTagline();
-        $product['productCode'] = $variantObject->getProductCode();
-        $product['productGroupCode'] = $variantObject->getProductCode();
-        $product['alternativeProductCodes'] = $variantObject->getAlternativeProductCodes();
-        $product['description'] = $variantDescriptionObject->getDescription();
-        $product['shortDescription'] = $variantDescriptionObject->getShortDescription();
-        $product['pageTitle'] = $variantDescriptionObject->getPageTitle();
-        $product['header'] = $variantDescriptionObject->getHeader();
-        $product['metaDescription'] = $variantDescriptionObject->getMetaDescription();
-        $product['metaKeywords'] = $variantDescriptionObject->getMetaKeywords();
-        $product['searchWords'] = $variantDescriptionObject->getSearchWords();
-        $product['deliveryBand'] = $variantObject->getProduct()->getDeliveryBand();
-        $product['inheritedDeliveryBand'] = $variantObject->getProduct()->getInheritedDeliveryBand();
-        $product['deliveryCost'] = $variantObject->getProduct()->getDeliveryCost();
-        $product['weight'] = $variantObject->getWeight();
-        $product['length'] = $variantObject->getLength();
-        $product['width'] = $variantObject->getWidth();
-        $product['height'] = $variantObject->getHeight();
-        $product['mpn'] = $variantObject->getMpn();
-        $product['ean'] = $variantObject->getEan();
-        $product['upc'] = $variantObject->getUpc();
-        $product['jan'] = $variantObject->getJan();
-        $product['isbn'] = $variantObject->getIsbn();
-        $product['featureComparison'] = $variantObject->getProduct()->getFeatureComparison();
-        $product['downloadable'] = $variantObject->getProduct()->getDownloadable();
-        $product['specialOffer'] = $variantObject->getProduct()->getSpecialOffer();
-        $product['recommended'] = $variantObject->getProduct()->getRecommended();
-        $product['accessory'] = $variantObject->getProduct()->getAccessory();
-        $product['new'] = $variantObject->getProduct()->getNew();
-        $product['hidePrice'] = $variantObject->getProduct()->getHidePrice();
-        $product['showPriceOutOfHours'] = $variantObject->getProduct()->getShowPriceOutOfHours();
-        $product['membershipCardDiscountAvailable'] = $variantObject->getProduct()->getMembershipCardDiscountAvailable();
-        $product['maximumMembershipCardDiscount'] = $variantObject->getProduct()->getMaximumMembershipCardDiscount();
-        $product['updatedAt'] = $variantObject->getUpdatedAt();
-
-        $product['url'] = $variantObject->getProduct()->getRouting()->getUrl();
+        $product['url'] = $productObject->getRouting()->getUrl();
 
         // Brand
         $product['brand'] = array();
@@ -749,7 +332,7 @@ class ProductService {
         /**
          * @var Brand $brandObject
          */
-        $brandObject = $variantObject->getProduct()->getBrand();
+        $brandObject = $productObject->getBrand();
         if(count($brandObject->getDescriptions()) > 0 && count($brandObject->getRoutings()) > 0)
         {
             $product['brand']['id'] = $brandObject->getId();
@@ -759,7 +342,7 @@ class ProductService {
             $product['brand']['maximumMembershipCardDiscount'] = $brandObject->getMaximumMembershipCardDiscount();
 
             // Get brand logo
-            $brandLogoObject = $em->getRepository('WebIlluminationAdminBundle:Image')->find($brandObject->getDescription()->getLogoImage()->getId());
+            $brandLogoObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->find($brandObject->getDescription()->getLogoImage()->getId());
             if ($brandLogoObject)
             {
                 $product['brand']['logoOriginalPath'] = $brandLogoObject->getOriginalPath();
@@ -791,7 +374,7 @@ class ProductService {
          * @var ProductToDepartment $productToDepartmentObject
          * @var Department $departmentObject
          */
-        foreach ($variantObject->getProduct()->getDepartments() as $productToDepartmentObject)
+        foreach ($productObject->getDepartments() as $productToDepartmentObject)
         {
             $departmentObject = $productToDepartmentObject->getDepartment();
 
@@ -807,8 +390,8 @@ class ProductService {
             $departmentPathIds = explode('|', $department['pathIds']);
             foreach ($departmentPathIds as $departmentPathId)
             {
-                $departmentPathDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
-                $departmentPathRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
+                $departmentPathDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Description')->findOneBy(array('departmentId' => $departmentPathId));
+                $departmentPathRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', ));
                 if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
                 {
                     $departmentPathCount++;
@@ -822,6 +405,7 @@ class ProductService {
                     }
                 }
             }
+
             $departments[] = $department;
 
             // Check the hide price and show price out of hours status for the brand
@@ -835,74 +419,6 @@ class ProductService {
             }
         }
         $product['departments'] = $departments;
-
-        // Prices
-        $prices = array();
-        /**
-         * @var Product\Price $productPriceObject
-         */
-        foreach ($variantObject->getProduct()->getPrices() as $productPriceObject)
-        {
-            $productPrice = array();
-            $productPrice['costPrice'] = $productPriceObject->getCostPrice();
-            $productPrice['costPriceExcludingVat'] = $productPriceObject->getCostPriceExcludingVat();
-            $productPrice['recommendedRetailPrice'] = $productPriceObject->getRecommendedRetailPrice();
-            $productPrice['recommendedRetailPriceExcludingVat'] = $productPriceObject->getRecommendedRetailPriceExcludingVat();
-            $productPrice['listPrice'] = $productPriceObject->getListPrice();
-            $productPrice['listPriceExcludingVat'] = $productPriceObject->getListPriceExcludingVat();
-            $productPrice['profit'] = $productPriceObject->getProfit();
-            $productPrice['profitExcludingVat'] = $productPriceObject->getProfitExcludingVat();
-            $productPrice['profitPercentageClass'] = $productPriceObject->getProfitPercentageClass();
-            $productPrice['markupPercentage'] = $productPriceObject->getMarkupPercentage();
-            $productPrice['markupPercentageClass'] = $productPriceObject->getMarkupPercentageClass();
-            $productPrice['discount'] = $productPriceObject->getDiscount();
-            $productPrice['savings'] = $productPriceObject->getSavings();
-            $productPrice['currencyCode'] = $productPriceObject->getCurrencyCode();
-
-            // Calculate the membership card price
-            $membershipCardDiscountAvailable = true;
-            $bestMembershipCardDiscountAvailable = $this->membershipCardDiscount;
-            if ($product['membershipCardDiscountAvailable'] > 0)
-            {
-                if ($product['maximumMembershipCardDiscount'] > 0)
-                {
-                    $bestMembershipCardDiscountAvailable = $product['maximumMembershipCardDiscount'];
-                } else {
-                    foreach ($product['departments'] as $department)
-                    {
-                        if ($department['membershipCardDiscountAvailable'] > 0)
-                        {
-                            if ($department['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-                            {
-                                $bestMembershipCardDiscountAvailable = $department['maximumMembershipCardDiscount'];
-                            }
-                        } else {
-                            $membershipCardDiscountAvailable = false;
-                            break;
-                        }
-                    }
-                    if ($product['brand']['membershipCardDiscountAvailable'] > 0)
-                    {
-                        if ($product['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-                        {
-                            $bestMembershipCardDiscountAvailable = $product['brand']['maximumMembershipCardDiscount'];
-                        }
-                    } else {
-                        $membershipCardDiscountAvailable = false;
-                    }
-                }
-            } else {
-                $membershipCardDiscountAvailable = false;
-            }
-            if ($membershipCardDiscountAvailable)
-            {
-                $productPrice['membershipCardPrice'] = $productPrice['recommendedRetailPrice'] - ($productPrice['recommendedRetailPrice'] * ($bestMembershipCardDiscountAvailable / 100));
-            } else {
-                $productPrice['membershipCardPrice'] = $productPrice['listPrice'];
-            }
-            $prices[] = $productPrice;
-        }
-        $product['prices'] = $prices;
 
         // Images
         $images = array();
@@ -974,57 +490,19 @@ class ProductService {
 
         // Cheaper Alternatives
         $cheaperAlternatives = array();
-        $cheaperAlternativesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Lin')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
+        $cheaperAlternativesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
         /**
          * @var Product\Link $cheaperAlternativeObject
          */
         foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
         {
-            $cheaperAlternative = $em->getRepository('KAC\SiteBundle\Entity\Product\Lin')->findOneBy(array('productId' => $cheaperAlternativeObject->getLinkedProduct()->getId()));
+            $cheaperAlternative = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('productId' => $cheaperAlternativeObject->getLinkedProduct()->getId()));
             if ($cheaperAlternative)
             {
                 $cheaperAlternatives[] = $cheaperAlternative;
             }
         }
         $product['cheaperAlternatives'] = $cheaperAlternatives;
-
-        // Features
-        $productFeatures = array();
-        /**
-         * @var Product\VariantToFeature $productToFeatureObject
-         */
-        foreach ($variantObject->getFeatures() as $productToFeatureObject)
-        {
-            $productFeature = array();
-            $productFeature['id'] = $productToFeatureObject->getId();
-            $productFeature['productFeatureGroupId'] = $productToFeatureObject->getFeatureGroup()->getId();
-            $productFeature['productFeatureGroup'] = $productToFeatureObject->getFeatureGroup()->getName();
-            $productFeature['filter'] = $productToFeatureObject->getFeatureGroup()->getFilter();
-            $productFeature['productFeatureId'] = $productToFeatureObject->getFeatureGroup()->getId();
-            $productFeature['productFeature'] = $productToFeatureObject->getFeature()->getName();
-            $productFeatures[$productToFeatureObject->getFeatureGroup()->getName()][] = $productFeature;
-        }
-        $product['productFeatures'] = $productFeatures;
-
-        // Options
-        $productOptions = array();
-        /**
-         * @var Product\VariantToOption $productToOptionObject
-         */
-        foreach ($variantObject->getOptions() as $productToOptionObject)
-        {
-            $productOption = array();
-            $productOption['id'] = $productToOptionObject->getId();
-            $productOption['productOptionGroupId'] = $productToOptionObject->getOptionGroup()->getId();
-            $productOption['productOptionGroup'] = $productToOptionObject->getOptionGroup()->getName();
-            $productOption['productOptionId'] = $productToOptionObject->getOptionGroup()->getId();
-            $productOption['productOption'] = $productToOptionObject->getOption()->getName();
-            $productOption['price'] = $productToOptionObject->getPrice();
-            $productOption['priceType'] = $productToOptionObject->getPriceType();
-            $productOption['priceUse'] = $productToOptionObject->getPriceUse();
-            $productOptions[$productToOptionObject->getOptionGroup()->getName()][] = $productOption;
-        }
-        $product['productOptions'] = $productOptions;
 
         // Guarantees
         $guarantees = array();
@@ -1057,17 +535,342 @@ class ProductService {
         return $product;
     }
 
-    // Calculate price based on options
-    public function getPrice($productId, $selectedOptions)
+    public function getVariant($id, $locale = 'en', $currencyCode = 'GBP')
     {
         // Get the services
         $doctrineService = $this->container->get('doctrine');
+        $seoService = $this->container->get('web_illumination_admin.seo_service');
+
+        /**
+         * Get the entity manager
+         * @var EntityManager $em
+         */
+        $em = $doctrineService->getManager();
+
+        // Setup the product
+        $variant = array();
+
+        $query = $em->createQueryBuilder()
+            ->select("v, p, vp, vd, b, bd, br, d, dd, dr")
+            ->from("KAC\SiteBundle\Entity\Variant", "v")
+            ->join("v.product", "p")
+            ->join("v.prices", "vp")
+            ->join("v.features", "vf")
+            ->join("v.options", "vo")
+            ->join("v.descriptions", "vd")
+            ->join("v.brand", "b")
+            ->join("v.description", "bd")
+            ->join("v.routing", "br")
+            ->join("p.departments", "d")
+            ->join("d.description", "dd")
+            ->join("d.routing", "dr")
+            ->where("v.id = ?1")
+            ->andWhere("vd.locale = ?2")
+            ->andWhere("bd.locale = ?2")
+            ->andWhere("dd.locale = ?2")
+            ->andWhere("vd.locale = ?2")
+            ->andWhere("vp.prices = ?3")
+            ->setParameter(1, $id)
+            ->setParameter(1, $locale)
+            ->setParameter(1, $currencyCode);
+
+        /**
+         * @var Product\Variant $variantObject
+         * @var \KAC\SiteBundle\Entity\Product\Variant\Description $variantDescriptionObject
+         */
+        $variantObject = $query->getQuery()->execute();
+
+        // Product Info
+        if (!$variantObject || count($variantObject->getDescriptions()) > 0)
+        {
+            return false;
+        }
+
+        $variantDescriptionObjects = $variantObject->getDescriptions();
+        $variantDescriptionObject = $variantDescriptionObjects[0];
+
+        $variant['id'] = $variantObject->getId();
+        $variant['productId'] = $variantObject->getId();
+        $variant['productGroupId'] = $variantObject->getProduct()->getId();
+        $variant['availableForPurchase'] = $variantObject->getProduct()->getAvailableForPurchase();
+        $variant['status'] = $variantObject->getStatus();
+        $variant['product'] = $variantDescriptionObject->getName();
+        $variant['prefix'] = $variantDescriptionObject->getPrefix();
+        $variant['tagline'] = $variantDescriptionObject->getTagline();
+        $variant['productCode'] = $variantObject->getProductCode();
+        $variant['productGroupCode'] = $variantObject->getProductCode();
+        $variant['alternativeProductCodes'] = $variantObject->getAlternativeProductCodes();
+        $variant['description'] = $variantDescriptionObject->getDescription();
+        $variant['shortDescription'] = $variantDescriptionObject->getShortDescription();
+        $variant['pageTitle'] = $variantDescriptionObject->getPageTitle();
+        $variant['header'] = $variantDescriptionObject->getHeader();
+        $variant['metaDescription'] = $variantDescriptionObject->getMetaDescription();
+        $variant['metaKeywords'] = $variantDescriptionObject->getMetaKeywords();
+        $variant['searchWords'] = $variantDescriptionObject->getSearchWords();
+        $variant['deliveryBand'] = $variantObject->getProduct()->getDeliveryBand();
+        $variant['inheritedDeliveryBand'] = $variantObject->getProduct()->getInheritedDeliveryBand();
+        $variant['deliveryCost'] = $variantObject->getProduct()->getDeliveryCost();
+        $variant['weight'] = $variantObject->getWeight();
+        $variant['length'] = $variantObject->getLength();
+        $variant['width'] = $variantObject->getWidth();
+        $variant['height'] = $variantObject->getHeight();
+        $variant['mpn'] = $variantObject->getMpn();
+        $variant['ean'] = $variantObject->getEan();
+        $variant['upc'] = $variantObject->getUpc();
+        $variant['jan'] = $variantObject->getJan();
+        $variant['isbn'] = $variantObject->getIsbn();
+        $variant['featureComparison'] = $variantObject->getProduct()->getFeatureComparison();
+        $variant['downloadable'] = $variantObject->getProduct()->getDownloadable();
+        $variant['specialOffer'] = $variantObject->getProduct()->getSpecialOffer();
+        $variant['recommended'] = $variantObject->getProduct()->getRecommended();
+        $variant['accessory'] = $variantObject->getProduct()->getAccessory();
+        $variant['new'] = $variantObject->getProduct()->getNew();
+        $variant['hidePrice'] = $variantObject->getProduct()->getHidePrice();
+        $variant['showPriceOutOfHours'] = $variantObject->getProduct()->getShowPriceOutOfHours();
+        $variant['membershipCardDiscountAvailable'] = $variantObject->getProduct()->getMembershipCardDiscountAvailable();
+        $variant['maximumMembershipCardDiscount'] = $variantObject->getProduct()->getMaximumMembershipCardDiscount();
+        $variant['updatedAt'] = $variantObject->getUpdatedAt();
+
+        $variant['url'] = $variantObject->getProduct()->getRouting()->getUrl();
+
+        // Prices
+        $prices = array();
+        /**
+         * @var Product\Price $variantPriceObject
+         */
+        foreach ($variantObject->getPrices() as $variantPriceObject)
+        {
+            $variantPrice = array();
+            $variantPrice['costPrice'] = $variantPriceObject->getCostPrice();
+            $variantPrice['costPriceExcludingVat'] = $variantPriceObject->getCostPriceExcludingVat();
+            $variantPrice['recommendedRetailPrice'] = $variantPriceObject->getRecommendedRetailPrice();
+            $variantPrice['recommendedRetailPriceExcludingVat'] = $variantPriceObject->getRecommendedRetailPriceExcludingVat();
+            $variantPrice['listPrice'] = $variantPriceObject->getListPrice();
+            $variantPrice['listPriceExcludingVat'] = $variantPriceObject->getListPriceExcludingVat();
+            $variantPrice['profit'] = $variantPriceObject->getProfit();
+            $variantPrice['profitExcludingVat'] = $variantPriceObject->getProfitExcludingVat();
+            $variantPrice['profitPercentageClass'] = $variantPriceObject->getProfitPercentageClass();
+            $variantPrice['markupPercentage'] = $variantPriceObject->getMarkupPercentage();
+            $variantPrice['markupPercentageClass'] = $variantPriceObject->getMarkupPercentageClass();
+            $variantPrice['discount'] = $variantPriceObject->getDiscount();
+            $variantPrice['savings'] = $variantPriceObject->getSavings();
+            $variantPrice['currencyCode'] = $variantPriceObject->getCurrencyCode();
+
+            // Calculate the membership card price
+            $membershipCardDiscountAvailable = true;
+            $bestMembershipCardDiscountAvailable = $this->membershipCardDiscount;
+            if ($variant['membershipCardDiscountAvailable'] > 0)
+            {
+                if ($variant['maximumMembershipCardDiscount'] > 0)
+                {
+                    $bestMembershipCardDiscountAvailable = $variant['maximumMembershipCardDiscount'];
+                } else {
+                    foreach ($variant['departments'] as $department)
+                    {
+                        if ($department['membershipCardDiscountAvailable'] > 0)
+                        {
+                            if ($department['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
+                            {
+                                $bestMembershipCardDiscountAvailable = $department['maximumMembershipCardDiscount'];
+                            }
+                        } else {
+                            $membershipCardDiscountAvailable = false;
+                            break;
+                        }
+                    }
+                    if ($variant['brand']['membershipCardDiscountAvailable'] > 0)
+                    {
+                        if ($variant['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
+                        {
+                            $bestMembershipCardDiscountAvailable = $variant['brand']['maximumMembershipCardDiscount'];
+                        }
+                    } else {
+                        $membershipCardDiscountAvailable = false;
+                    }
+                }
+            } else {
+                $membershipCardDiscountAvailable = false;
+            }
+            if ($membershipCardDiscountAvailable)
+            {
+                $variantPrice['membershipCardPrice'] = $variantPrice['recommendedRetailPrice'] - ($variantPrice['recommendedRetailPrice'] * ($bestMembershipCardDiscountAvailable / 100));
+            } else {
+                $variantPrice['membershipCardPrice'] = $variantPrice['listPrice'];
+            }
+            $prices[] = $variantPrice;
+        }
+        $variant['prices'] = $prices;
+
+        // Images
+        $images = array();
+        $imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'variant', 'imageType' => 'variant', 'locale' => $locale), array('displayOrder' => 'ASC'));
+        /**
+         * @var Image $imageObject
+         */
+        foreach ($imagesObject as $imageObject)
+        {
+            $image = array();
+            $image['originalPath'] = $imageObject->getOriginalPath();
+            if (file_exists($this->getUploadRootDir().$image['originalPath']) && ($image['originalPath'] != ''))
+            {
+                list($image['originalWidth'], $image['originalHeight']) = getimagesize($this->getUploadRootDir().$image['originalPath']);
+            }
+            $image['thumbnailPath'] = $imageObject->getPublicPath();
+            if (file_exists($this->getUploadRootDir().$image['thumbnailPath']) && ($image['thumbnailPath'] != ''))
+            {
+                list($image['thumbnailWidth'], $image['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$image['thumbnailPath']);
+            }
+            $image['mediumPath'] = $imageObject->getPublicPath();
+            if (file_exists($this->getUploadRootDir().$image['mediumPath']) && ($image['mediumPath'] != ''))
+            {
+                list($image['mediumWidth'], $image['mediumHeight']) = getimagesize($this->getUploadRootDir().$image['mediumPath']);
+            }
+            $image['largePath'] = $imageObject->getPublicPath();
+            if (file_exists($this->getUploadRootDir().$image['largePath']) && ($image['largePath'] != ''))
+            {
+                list($image['largeWidth'], $image['largeHeight']) = getimagesize($this->getUploadRootDir().$image['largePath']);
+            }
+            $image['title'] = $imageObject->getTitle();
+            $images[] = $image;
+        }
+        $variant['images'] = $images;
+
+        // Videos
+        $videos = array();
+        $videosObject = $em->getRepository('KAC\SiteBundle\Entity\Video')->findBy(array('objectId' => $id, 'objectType' => 'variant', 'locale' => $locale), array('displayOrder' => 'ASC'));
+        /**
+         * @var Video $videoObject
+         */
+        foreach ($videosObject as $videoObject)
+        {
+            $video = array();
+            $video['title'] = $videoObject->getTitle();
+            $video['description'] = $videoObject->getDescription();
+            $video['alignment'] = $videoObject->getAlignment();
+            $video['link'] = $videoObject->getLink();
+            $video['path'] = $videoObject->getPath();
+            $videos[] = $video;
+        }
+        $variant['videos'] = $videos;
+
+        // Related products
+        $relatedProducts = array();
+        $relatedProductsObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
+        /**
+         * @var Product\Link $relatedProductObject
+         */
+        foreach ($relatedProductsObject as $relatedProductObject)
+        {
+            $relatedProduct = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('productId' => $relatedProductObject->getLinkedProduct()->getId()));
+            if ($relatedProductObject)
+            {
+                $relatedProducts[] = $relatedProduct;
+            }
+        }
+        $variant['relatedProducts'] = $relatedProducts;
+
+        // Cheaper Alternatives
+        $cheaperAlternatives = array();
+        $cheaperAlternativesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
+        /**
+         * @var Product\Link $cheaperAlternativeObject
+         */
+        foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
+        {
+            $cheaperAlternative = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('productId' => $cheaperAlternativeObject->getLinkedProduct()->getId()));
+            if ($cheaperAlternative)
+            {
+                $cheaperAlternatives[] = $cheaperAlternative;
+            }
+        }
+        $variant['cheaperAlternatives'] = $cheaperAlternatives;
+
+        // Features
+        $variantFeatures = array();
+        /**
+         * @var Product\VariantToFeature $variantToFeatureObject
+         */
+        foreach ($variantObject->getFeatures() as $variantToFeatureObject)
+        {
+            $variantFeature = array();
+            $variantFeature['id'] = $variantToFeatureObject->getId();
+            $variantFeature['productFeatureGroupId'] = $variantToFeatureObject->getFeatureGroup()->getId();
+            $variantFeature['productFeatureGroup'] = $variantToFeatureObject->getFeatureGroup()->getName();
+            $variantFeature['filter'] = $variantToFeatureObject->getFeatureGroup()->getFilter();
+            $variantFeature['productFeatureId'] = $variantToFeatureObject->getFeatureGroup()->getId();
+            $variantFeature['productFeature'] = $variantToFeatureObject->getFeature()->getName();
+            $variantFeatures[$variantToFeatureObject->getFeatureGroup()->getName()][] = $variantFeature;
+        }
+        $variant['productFeatures'] = $variantFeatures;
+
+        // Options
+        $variantOptions = array();
+        /**
+         * @var Product\VariantToOption $variantToOptionObject
+         */
+        foreach ($variantObject->getOptions() as $variantToOptionObject)
+        {
+            $variantOption = array();
+            $variantOption['id'] = $variantToOptionObject->getId();
+            $variantOption['productOptionGroupId'] = $variantToOptionObject->getOptionGroup()->getId();
+            $variantOption['productOptionGroup'] = $variantToOptionObject->getOptionGroup()->getName();
+            $variantOption['productOptionId'] = $variantToOptionObject->getOptionGroup()->getId();
+            $variantOption['productOption'] = $variantToOptionObject->getOption()->getName();
+            $variantOption['price'] = $variantToOptionObject->getPrice();
+            $variantOption['priceType'] = $variantToOptionObject->getPriceType();
+            $variantOption['priceUse'] = $variantToOptionObject->getPriceUse();
+            $variantOptions[$variantToOptionObject->getOptionGroup()->getName()][] = $variantOption;
+        }
+        $variant['productOptions'] = $variantOptions;
+
+        // Guarantees
+        $guarantees = array();
+        $variant['guarantees'] = $guarantees;
+
+        // Check if price is hidden
+        if (($variant['hidePrice'] > 0) && ($variant['showPriceOutOfHours'] > 0))
+        {
+            $currentDay = date("D");
+            $currentTime = date("G");
+            switch ($currentDay)
+            {
+                case 'Sat':
+                case 'Sun':
+                    $variant['hidePrice'] = 0;
+                    break;
+                case 'Mon':
+                case 'Tue':
+                case 'Wed':
+                case 'Thu':
+                case 'Fri':
+                    if (($currentTime < 7) || ($currentTime > 17))
+                    {
+                        $variant['hidePrice'] = 0;
+                    }
+                    break;
+            }
+        }
+
+        return $variant;
+    }
+
+    // Calculate price based on options
+    public function getPrice($variantId, $selectedOptions)
+    {
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        /**
+         * Get the entity manager
+         * @var EntityManager $em
+         */
+        $em = $doctrineService->getManager();
 
         // Setup array to collect price information
         $price = array();
 
         // Get the product
-        $product = $this->getProduct($productId, 'en', 'GBP');
+        $product = $this->getVariant($variantId, 'en', 'GBP');
         $price['productCode'] = $product['productCode'];
         $price['listPrice'] = $product['prices'][0]['listPrice'];
         $price['recommendedRetailPrice'] = $product['prices'][0]['recommendedRetailPrice'];
@@ -1077,13 +880,10 @@ class ProductService {
         // Get selected options
         if ($selectedOptions)
         {
-            // Get the entity manager
-            $em = $doctrineService->getEntityManager();
-
             $selectedOptionIds = explode('|', $selectedOptions);
             foreach ($selectedOptionIds as $selectedOptionId)
             {
-                $productToOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->find($selectedOptionId);
+                $productToOptionObject = $em->getRepository('KAC\SiteBundle\Entity\Product\VariantToOption')->find($selectedOptionId);
                 $priceChange = $productToOptionObject->getPrice();
                 $priceType = $productToOptionObject->getPriceType();
                 $priceUse = $productToOptionObject->getPriceUse();
@@ -1197,228 +997,43 @@ class ProductService {
         return $price;
     }
 
-    // Delete a product
-    public function deleteProduct($id)
-    {
-        // Get the services
-        $doctrineService = $this->container->get('doctrine');
-
-        // Get the entity manager
-        $em = $doctrineService->getEntityManager();
-
-        // Get the product
-        $productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
-        if (!$productObject)
-        {
-            error_log('Can\'t find the product!');
-            return false;
-        } else {
-            $em->remove($productObject);
-        }
-
-        // Get the product escriptions
-        $productDescriptions = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findBy(array('productId' => $id));
-        if (!$productDescriptions)
-        {
-            error_log('Can\'t find the product description!');
-            return false;
-        } else {
-            foreach ($productDescriptions as $productDescriptionObject)
-            {
-                if ($productDescriptionObject)
-                {
-                    $em->remove($productDescriptionObject);
-                }
-            }
-        }
-
-        // Get the product indexes
-        $productIndexes = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findBy(array('productId' => $id));
-        foreach ($productIndexes as $productIndexObject)
-        {
-            if ($productIndexObject)
-            {
-                $em->remove($productIndexObject);
-            }
-        }
-
-        // Get the departments
-        $productToDepartments = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('productId' => $id));
-        foreach ($productToDepartments as $productToDepartmentObject)
-        {
-            if ($productToDepartmentObject)
-            {
-                $em->remove($productToDepartmentObject);
-            }
-        }
-
-        // Get the prices
-        $productPrices = $em->getRepository('WebIlluminationAdminBundle:ProductPrice')->findBy(array('productId' => $id));
-        foreach ($productPrices as $productPriceObject)
-        {
-            if ($productPriceObject)
-            {
-                $em->remove($productPriceObject);
-            }
-        }
-
-        // Get the images
-        $images = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'product', 'imageType' => 'product'));
-        foreach ($images as $imageObject)
-        {
-            if ($imageObject)
-            {
-                $em->remove($imageObject);
-            }
-        }
-
-        // Get the guarantees
-        $guarantees = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'product'));
-        foreach ($guarantees as $guaranteeObject)
-        {
-            if ($guaranteeObject)
-            {
-                $em->remove($guaranteeObject);
-            }
-        }
-
-        // Get linked products
-        $productLinks = $em->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $id));
-        foreach ($productLinks as $productLinkObject)
-        {
-            if ($productLinkObject)
-            {
-                $em->remove($productLinkObject);
-            }
-        }
-
-        // Get the options
-        $productToOptions = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->findBy(array('productId' => $id));
-        foreach ($productToOptions as $productToOptionObject)
-        {
-            if ($productToOptionObject)
-            {
-                $em->remove($productToOptionObject);
-            }
-        }
-
-        // Get the features
-        $productToFeatures = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $id));
-        foreach ($productToFeatures as $productToFeatureObject)
-        {
-            if ($productToFeatureObject)
-            {
-                $em->remove($productToFeatureObject);
-            }
-        }
-
-        // Get the routings
-        $routings = $em->getRepository('WebIlluminationAdminBundle:Routing')->findBy(array('objectId' => $id, 'objectType' => 'product'));
-        foreach ($routings as $routingObject)
-        {
-            if ($routingObject)
-            {
-                $em->remove($routingObject);
-            }
-        }
-
-        // Get the redirects
-        $redirects = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'product'));
-        foreach ($redirects as $redirectObject)
-        {
-            if ($routingObject)
-            {
-                $em->remove($redirectObject);
-            }
-        }
-
-        // Flush the database
-        $em->flush();
-
-        return true;
-    }
-
-    // Get the filter being used
-    public function getFilter($departmentId, $filter, $locale = 'en', $currencyCode = 'GBP')
-    {
-        // Get the services
-        $doctrineService = $this->container->get('doctrine');
-
-        // Get the entity manager
-        $em = $doctrineService->getEntityManager();
-
-        // Get the query builder
-        $qb = $em->createQueryBuilder();
-
-        // Build the query
-        $qb->select('pi');
-        $qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
-        $qb->where($qb->expr()->like('pi.departmentIds', $qb->expr()->literal('%|'.$departmentId.'|%')));
-        $qb->andWhere($qb->expr()->eq('pi.locale', $qb->expr()->literal($locale)));
-        $qb->andWhere($qb->expr()->eq('pi.currencyCode', $qb->expr()->literal($currencyCode)));
-        $query = $qb->getQuery();
-
-        // Get the products
-        $products = $query->getResult();
-
-        // Get the brands
-        $available = array();
-        foreach ($products as $product)
-        {
-            if (isset($brands[$product->getBrandId()]))
-            {
-                $brands[$product->getBrandId()]['productCount']++;
-            } else {
-                $brand = array();
-                $brand['id'] = $product->getBrandId();
-                $brand['brand'] = $product->getBrand();
-                $brand['productCount'] = 1;
-                $brand['selected'] = false;
-                $brands[$product->getBrandId()] = $brand;
-            }
-        }
-
-        return $brands;
-
-    }
-
     // Update the product delivery bands
     public function updateProductDeliveryBand($id, $locale = 'en')
     {
         // Get the services
         $doctrineService = $this->container->get('doctrine');
 
-        // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        /**
+         * Get the entity manager
+         * @var EntityManager $em
+         */
+        $em = $doctrineService->getManager();
 
         // Get the inherited delivery band
         $inheritedDeliveryBand = 0;
 
-        // Get the product objects
-        $productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
-        $productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $id));
+        /**
+         * Get the product objects
+         * @var $productObject Product
+         */
+        $productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
 
         // Check to see if the delivery band has been set by the product
-        if ($productObject && $productIndexObject)
+        if ($productObject)
         {
             if ($productObject->getDeliveryBand() > 0)
             {
                 $inheritedDeliveryBand = $productObject->getDeliveryBand();
             } else {
-                // Get the department ids
-                if (strpos($productIndexObject->getDepartmentIds(), '^') !== false)
-                {
-                    $departmentIds = explode('^', $productIndexObject->getDepartmentIds());
-                    $departmentIds = array_reverse(explode('|', substr(substr($departmentIds[0], 1), 0, -1)));
-                } else {
-                    $departmentIds = array_reverse(explode('|', substr(substr($productIndexObject->getDepartmentIds(), 1), 0, -1)));
-                }
-
-                // Check each of the departments
-                foreach ($departmentIds as $departmentId)
+                /**
+                 * Check each of the departments
+                 * @var $department Department
+                 */
+                foreach ($productObject->getDepartments() as $department)
                 {
                     // Check the brand department for a delivery band
-                    $brandToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findOneBy(array('departmentId' => $departmentId, 'brandId' => $productIndexObject->getBrandId()));
+                    $brandToDepartmentObject = $em->getRepository('KAC\SiteBundle\Entity\BrandToDepartment')->findOneBy(array('department' => $department->getId(), 'brand' => $productObject->getBrand()->getId()));
+
                     if ($brandToDepartmentObject)
                     {
                         if ($brandToDepartmentObject->getDeliveryBand() > 0)
@@ -1430,7 +1045,7 @@ class ProductService {
                     // Check the department for a delivery band
                     if ($inheritedDeliveryBand < 1)
                     {
-                        $departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));
+                        $departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->findOneBy(array('id' =>  $department->getId(), 'locale' => $locale));
                         if ($departmentIndexObject)
                         {
                             if ($departmentIndexObject->getInheritedDeliveryBand() > 0)
@@ -1446,18 +1061,34 @@ class ProductService {
                         break;
                     }
                 }
-
-                error_log('Delivery Band for '.$productIndexObject->getProductId().': '.$inheritedDeliveryBand);
-
-                // Update the delivery band
-                $productObject->setInheritedDeliveryBand($inheritedDeliveryBand);
-                $em->persist($productObject);
-                $em->flush();
-                $productIndexObject->setInheritedDeliveryBand($inheritedDeliveryBand);
-                $em->persist($productIndexObject);
-                $em->flush();
             }
+
+            error_log('Delivery Band for '.$productObject->getId().': '.$inheritedDeliveryBand);
+
+            // Update the delivery band
+            $productObject->setInheritedDeliveryBand($inheritedDeliveryBand);
+            $em->persist($productObject);
+            $em->flush();
         }
+    }
+
+    public function getProductListingCount()
+    {
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        /**
+         * Get entity manager
+         * @var EntityManager $em
+         */
+        $em = $doctrineService->getManager();
+
+        $query = $em->createQueryBuilder()
+            ->select('COUNT(p)')
+            ->from('KAC\SiteBundle\Entity\Product', 'p')
+            ->getQuery();
+
+        return $query->getSingleScalarResult();
     }
 
     // Get the root upload directory

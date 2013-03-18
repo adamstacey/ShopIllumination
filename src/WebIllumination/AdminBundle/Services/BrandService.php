@@ -2,6 +2,7 @@
 
 namespace WebIllumination\AdminBundle\Services;
 
+use KAC\SiteBundle\Entity\Brand;
 use Symfony\Component\HttpFoundation\Request;
 use WebIllumination\AdminBundle\Entity\Routing;
 use WebIllumination\AdminBundle\Entity\BrandIndex;
@@ -95,23 +96,23 @@ class BrandService {
     	
     	return true;
     }
-    
+
     // Get listing
     public function getAdminListing($status, $hidePrices, $showPricesOutOfHours, $membershipCardDiscountAvailable, $name, $description, $sort, $order, $page, $maxResults)
     {
     	// Get the services
     	$doctrineService = $this->container->get('doctrine');
     	$systemService = $this->container->get('web_illumination_admin.system_service');
-	    	
+
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
-    	
+
     	// Calculate the first result
     	$firstResult = ($page - 1) * $maxResults;
-    	
+
     	// Setup the brands array
     	$brands = array();
-    	
+
         // Get the brands
 		$query = "SELECT b.id ";
         $query .= "FROM WebIlluminationAdminBundle:Brand b, WebIlluminationAdminBundle:BrandDescription bd ";
@@ -185,9 +186,9 @@ class BrandService {
     		$query .= "AND bd.description LIKE '%".$description."%' ";
     	}
         $query .= "ORDER BY ".$sort." ".$order;
-        
+
     	$brandObjects = $em->createQuery($query)->setFirstResult($firstResult)->setMaxResults($maxResults)->getResult();
-				
+
         foreach ($brandObjects as $brandObject)
         {
         	if ($brandObject)
@@ -196,23 +197,23 @@ class BrandService {
 	    		$brands[$brandObject['id']] = $brand;
 	    	}
 	    }
-				
+
    		return $brands;
     }
-    
+
     // Get listing count
     public function getAdminListingCount($status, $hidePrices, $showPricesOutOfHours, $membershipCardDiscountAvailable, $name, $description)
     {
     	// Get the services
     	$doctrineService = $this->container->get('doctrine');
     	$systemService = $this->container->get('web_illumination_admin.system_service');
-	    	
+
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
-    	
+
     	// Setup the brands array
     	$brands = array();
-    	
+
         // Get the brands
 		$query = "SELECT COUNT(b.id) ";
         $query .= "FROM WebIlluminationAdminBundle:Brand b, WebIlluminationAdminBundle:BrandDescription bd ";
@@ -285,37 +286,37 @@ class BrandService {
     	{
     		$query .= "AND bd.description LIKE '%".$description."%' ";
     	}
-		
+
 		// Get the listing count
 		$listingCount = $em->createQuery($query)->getSingleScalarResult();
-		
+
    		return $listingCount;
     }
-        
+
     // Get listing pagination
     public function getAdminListingPagination($status, $hidePrices, $showPricesOutOfHours, $membershipCardDiscountAvailable, $name, $description, $maxResults)
-    {    	
+    {
     	// Get the services
     	$doctrineService = $this->container->get('doctrine');
-	    	
+
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
-    	
+
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
-    	
+
     	// Get the number of results
     	$listingCount = $this->getAdminListingCount($status, $hidePrices, $showPricesOutOfHours, $membershipCardDiscountAvailable, $name, $description);
-    	
+
     	// Check if there is only one page of results
     	if ($listingCount <= $maxResults)
     	{
     		return 1;
     	}
-    	
+
     	// Calculate the number of pages
     	$pagination = ceil($listingCount / $maxResults);
-    	
+
    		return $pagination;
     }
     
@@ -333,17 +334,21 @@ class BrandService {
     	
    		// Setup the brand
     	$brand = array();
-   		
-   		// Get the brand
-   		$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
-    	$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id, 'locale' => $locale));
+
+        /**
+         * Get the brand object
+         * @var $brandObject Brand
+         * @var $brandDescriptionObject Brand\Description
+         */
+        $brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
+    	$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brand' => $id, 'locale' => $locale));
     	if (!$brandObject || !$brandDescriptionObject)
 	    {
         	return false;
     	}
     	$brand['id'] = $brandObject->getId();
-    	$brand['brandId'] = $brandDescriptionObject->getBrandId();
-    	$brand['logoImageId'] = $brandDescriptionObject->getLogoImageId();
+    	$brand['brandId'] = $brandDescriptionObject->getBrand()->getId();
+    	$brand['logoImageId'] = $brandDescriptionObject->getLogoImage();
     	$brand['status'] = $brandObject->getStatus();
     	$brand['statusColour'] = $brandObject->getStatusColour();
     	$brand['requestABrochure'] = $brandObject->getRequestABrochure();
@@ -368,19 +373,18 @@ class BrandService {
     	$brand['updatedAt'] = $brandDescriptionObject->getUpdatedAt();
     	
     	// Get the product count
-    	$brand['productCount'] = $productService->getProductListingCount('', $brandObject->getId(), false, false, false, 0, 0, $locale, 'GBP');
+    	$brand['productCount'] = 0;
     	
     	// Get the contacts
     	$brand['contacts'] = $contactService->getContacts($id, 'brand');
     	    	
     	// Get the routing
-    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
+    	$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Routing')->findOneBy(array('objectId' => $id, 'locale' => $locale));
     	if (!$routingObject)
     	{
     		// Add routing
-    		$routingObject = new Routing();
+    		$routingObject = new Brand\Routing();
     		$routingObject->setObjectId($id);
-    		$routingObject->setObjectType('brand');
     		$routingObject->setLocale('en');
     		$routingObject->setUrl($seoService->createUrl($brandDescriptionObject->getHeader()));
 		    $em->persist($routingObject);
@@ -388,112 +392,112 @@ class BrandService {
     	}
     	$brand['url'] = $routingObject->getUrl();
     	
-    	// Get the logo
-    	$brand['logo'] = array();
-    	$imageObject = $em->getRepository('WebIlluminationAdminBundle:Image')->find($brandDescriptionObject->getLogoImageId());
-    	if ($imageObject)
-    	{
-    		$logo = array();
-    		$logo['originalPath'] = $imageObject->getOriginalPath();
-    		list($logo['originalWidth'], $logo['originalHeight']) = getimagesize($this->getUploadRootDir().$logo['originalPath']);
-    		$logo['thumbnailPath'] = $imageObject->getThumbnailPath();
-    		list($logo['thumbnailWidth'], $logo['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$logo['thumbnailPath']);
-    		$logo['mediumPath'] = $imageObject->getMediumPath();
-    		list($logo['mediumWidth'], $logo['mediumHeight']) = getimagesize($this->getUploadRootDir().$logo['mediumPath']);
-    		$logo['largePath'] = $imageObject->getLargePath();
-    		list($logo['largeWidth'], $logo['largeHeight']) = getimagesize($this->getUploadRootDir().$logo['largePath']);
-    		$logo['title'] = $imageObject->getTitle();
-    		$logo['link'] = $imageObject->getLink();
-    		$logo['description'] = $imageObject->getDescription();
-    		$logo['alignment'] = $imageObject->getAlignment();
-    		$brand['logo'] = $logo;
-    	}
-    	
-    	// Get the images
-    	$images = array();
-    	$imagesObject = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'brand', 'imageType' => 'gallery', 'locale' => $locale), array('displayOrder' => 'ASC'));
-    	foreach ($imagesObject as $imageObject)
-    	{
-    		$image = array();
-    		$image['originalPath'] = $imageObject->getOriginalPath();
-    		list($image['originalWidth'], $image['originalHeight']) = getimagesize($this->getUploadRootDir().$image['originalPath']);
-    		$image['thumbnailPath'] = $imageObject->getThumbnailPath();
-    		list($image['thumbnailWidth'], $image['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$image['thumbnailPath']);
-    		$image['mediumPath'] = $imageObject->getMediumPath();
-    		list($image['mediumWidth'], $image['mediumHeight']) = getimagesize($this->getUploadRootDir().$image['mediumPath']);
-    		$image['largePath'] = $imageObject->getLargePath();
-    		list($image['largeWidth'], $image['largeHeight']) = getimagesize($this->getUploadRootDir().$image['largePath']);
-    		$image['title'] = $imageObject->getTitle();
-    		$image['link'] = $imageObject->getLink();
-    		$image['description'] = $imageObject->getDescription();
-    		$image['alignment'] = $imageObject->getAlignment();
-    		$images[] = $image;
-    	}
-    	$brand['images'] = $images;
+//    	// Get the logo
+//    	$brand['logo'] = array();
+//    	$imageObject = $brandDescriptionObject->getLogoImage();
+//    	if ($imageObject)
+//    	{
+//    		$logo = array();
+//    		$logo['originalPath'] = $imageObject->getOriginalPath();
+//    		list($logo['originalWidth'], $logo['originalHeight']) = getimagesize($this->getUploadRootDir().$logo['originalPath']);
+//    		$logo['thumbnailPath'] = $imageObject->getThumbnailPath();
+//    		list($logo['thumbnailWidth'], $logo['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$logo['thumbnailPath']);
+//    		$logo['mediumPath'] = $imageObject->getMediumPath();
+//    		list($logo['mediumWidth'], $logo['mediumHeight']) = getimagesize($this->getUploadRootDir().$logo['mediumPath']);
+//    		$logo['largePath'] = $imageObject->getLargePath();
+//    		list($logo['largeWidth'], $logo['largeHeight']) = getimagesize($this->getUploadRootDir().$logo['largePath']);
+//    		$logo['title'] = $imageObject->getTitle();
+//    		$logo['link'] = $imageObject->getLink();
+//    		$logo['description'] = $imageObject->getDescription();
+//    		$logo['alignment'] = $imageObject->getAlignment();
+//    		$brand['logo'] = $logo;
+//    	}
+//
+//    	// Get the images
+//    	$images = array();
+//    	$imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'brand', 'imageType' => 'gallery', 'locale' => $locale), array('displayOrder' => 'ASC'));
+//    	foreach ($imagesObject as $imageObject)
+//    	{
+//    		$image = array();
+//    		$image['originalPath'] = $imageObject->getOriginalPath();
+//    		list($image['originalWidth'], $image['originalHeight']) = getimagesize($this->getUploadRootDir().$image['originalPath']);
+//    		$image['thumbnailPath'] = $imageObject->getThumbnailPath();
+//    		list($image['thumbnailWidth'], $image['thumbnailHeight']) = getimagesize($this->getUploadRootDir().$image['thumbnailPath']);
+//    		$image['mediumPath'] = $imageObject->getMediumPath();
+//    		list($image['mediumWidth'], $image['mediumHeight']) = getimagesize($this->getUploadRootDir().$image['mediumPath']);
+//    		$image['largePath'] = $imageObject->getLargePath();
+//    		list($image['largeWidth'], $image['largeHeight']) = getimagesize($this->getUploadRootDir().$image['largePath']);
+//    		$image['title'] = $imageObject->getTitle();
+//    		$image['link'] = $imageObject->getLink();
+//    		$image['description'] = $imageObject->getDescription();
+//    		$image['alignment'] = $imageObject->getAlignment();
+//    		$images[] = $image;
+//    	}
+//    	$brand['images'] = $images;
     	
     	// Get the guarantees
     	$guarantees = array();
-    	$guaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
-		foreach ($guaranteeObjects as $guaranteeObject)
-		{
-			if ($guaranteeObject)
-			{				
-				$guaranteeLengthObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->find($guaranteeObject->getGuaranteeLengthId());
-				$guaranteeTypeObject = $em->getRepository('WebIlluminationAdminBundle:GuaranteeType')->find($guaranteeObject->getGuaranteeTypeId());
-				if ($guaranteeLengthObject && $guaranteeTypeObject)
-				{
-					$guarantee = array();
-					$guarantee['id'] = $guaranteeObject->getId();
-					$guarantee['displayOrder'] = $guaranteeObject->getDisplayOrder();
-					$guarantee['guaranteeLengthId'] = $guaranteeObject->getGuaranteeLengthId();
-					$guarantee['guaranteeLength'] = $guaranteeLengthObject->getGuaranteeLength();
-					$guarantee['guaranteeTitle'] = $guaranteeLengthObject->getGuaranteeTitle();
-					$guarantee['guaranteeTypeId'] = $guaranteeObject->getGuaranteeTypeId();
-					$guarantee['guaranteeType'] = $guaranteeTypeObject->getGuaranteeType();
-					$guarantees[$guaranteeObject->getId()] = $guarantee;
-				}
-			}
-		}
+//    	$guaranteeObjects = $em->getRepository('KAC\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'), array('displayOrder' => 'ASC'));
+//		foreach ($guaranteeObjects as $guaranteeObject)
+//		{
+//			if ($guaranteeObject)
+//			{
+//				$guaranteeLengthObject = $em->getRepository('KAC\SiteBundle\Entity\Guarantee\Length')->find($guaranteeObject->getGuaranteeLengthId());
+//				$guaranteeTypeObject = $em->getRepository('KAC\SiteBundle\Entity\Guarantee\Type')->find($guaranteeObject->getGuaranteeTypeId());
+//				if ($guaranteeLengthObject && $guaranteeTypeObject)
+//				{
+//					$guarantee = array();
+//					$guarantee['id'] = $guaranteeObject->getId();
+//					$guarantee['displayOrder'] = $guaranteeObject->getDisplayOrder();
+//					$guarantee['guaranteeLengthId'] = $guaranteeObject->getGuaranteeLengthId();
+//					$guarantee['guaranteeLength'] = $guaranteeLengthObject->getGuaranteeLength();
+//					$guarantee['guaranteeTitle'] = $guaranteeLengthObject->getGuaranteeTitle();
+//					$guarantee['guaranteeTypeId'] = $guaranteeObject->getGuaranteeTypeId();
+//					$guarantee['guaranteeType'] = $guaranteeTypeObject->getGuaranteeType();
+//					$guarantees[$guaranteeObject->getId()] = $guarantee;
+//				}
+//			}
+//		}
 		$brand['guarantees'] = $guarantees;
 		
 		// Get the departments
     	$departments = array();
-    	$departmentIds = array();
-    	$productIndexObjects = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findBy(array('brandId' => $id, 'locale' => 'en'));
-		foreach ($productIndexObjects as $productIndexObject)
-		{
-			$departmentIdGroups = explode('^', $productIndexObject->getDepartmentIds());
-			foreach ($departmentIdGroups as $departmentIdGroup)
-			{
-				$departmentId = 0;
-				$departmentIds = explode('|', $departmentIdGroup);
-				if (sizeof($departmentIds) > 2)
-				{
-					$departmentId = $departmentIds[2];
-				}
-				if ($departmentId > 0)
-				{
-					// Check if the department has been added
-					if (isset($departments[$departmentId]))
-					{
-						$departments[$departmentId]['productCount']++;
-					} else {
-						$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
-						$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
-						$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
-						if ($departmentObject && $departmentDescriptionObject && $routingObject)
-						{
-							$department = array();
-							$department['id'] = $departmentId;
-							$department['productCount'] = 1;
-							$department['name'] = $departmentDescriptionObject->getName();
-							$department['url'] = $routingObject->getUrl();
-							$departments[$departmentId] = $department;
-						}
-					}
-				}
-			}
-		}
+        //TODO: Fix this section!
+//    	$departmentIds = array();
+//    	$productIndexObjects = $em->getRepository('KAC\SiteBundle\Entity\Product')->findBy(array('brand' => $id, 'locale' => 'en'));
+//		foreach ($productIndexObjects as $productIndexObject)
+//        {
+//			foreach ($productIndexObject->getDepartments() as $departmentIdGroup)
+//			{
+//				$departmentId = 0;
+//				$departmentIds = explode('|', $departmentIdGroup);
+//				if (sizeof($departmentIds) > 2)
+//				{
+//					$departmentId = $departmentIds[2];
+//				}
+//				if ($departmentId > 0)
+//				{
+//					// Check if the department has been added
+//					if (isset($departments[$departmentId]))
+//					{
+//						$departments[$departmentId]['productCount']++;
+//					} else {
+//						$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
+//						$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
+//						$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
+//						if ($departmentObject && $departmentDescriptionObject && $routingObject)
+//						{
+//							$department = array();
+//							$department['id'] = $departmentId;
+//							$department['productCount'] = 1;
+//							$department['name'] = $departmentDescriptionObject->getName();
+//							$department['url'] = $routingObject->getUrl();
+//							$departments[$departmentId] = $department;
+//						}
+//					}
+//				}
+//			}
+//		}
 		$brand['departments'] = $departments;
 		usort($brand['departments'], array($this, "sortDepartmentsByName"));
     	   		
@@ -508,53 +512,21 @@ class BrandService {
     	
     	// Get the entity manager
     	$em = $doctrineService->getEntityManager();
-    	
-    	// Check if the brands are already stored
-    	$objectIndexObject = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => 'all', 'objectType' => 'brands', 'locale' => $locale));
-    	    	
-   		// Check if the brands need rebuilding
-   		$rebuildBrands = true;
-   		if ($objectIndexObject)
-   		{
-   			if ($objectIndexObject->getRebuild() < 1)
-   			{
-   				$rebuildBrands = false;
-   			}
-   		}
+
+        // Setup brands
+        $brands = array();
+
+        // Get the brands
+        foreach ($em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findBy(array(), array('name' => 'ASC')) as $brandDescriptionObject)
+        {
+            $brand = $this->getBrand($brandDescriptionObject->getBrand()->getId(), $locale);
+            if (($brand['status'] == 'a') && ($brand['productCount'] > 0))
+            {
+                $brands[$brandDescriptionObject->getBrandId()] = $brand;
+            }
+        }
    		
-   		// Get the brands
-   		if ($rebuildBrands)
-   		{
-	   		// Setup brands
-	    	$brands = array();
-	   		
-	   		// Get the brands
-	   		foreach ($em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findBy(array(), array('brand' => 'ASC')) as $brandDescriptionObject)
-	   		{
-	   			$brand = $this->getBrand($brandDescriptionObject->getBrandId(), $locale);
-	   			if (($brand['status'] == 'a') && ($brand['productCount'] > 0))
-	   			{
-	   				$brands[$brandDescriptionObject->getBrandId()] = $brand;
-	   			}
-	   		}
-	   			    	
-	    	// Check for the index object
-	   		if (!$objectIndexObject)
-	   		{
-	   			$objectIndexObject = new ObjectIndex();
-	   			$objectIndexObject->setObjectKey('all');
-	   			$objectIndexObject->setObjectType('brands');
-	   			$objectIndexObject->setLocale($locale);
-	   		}
-	   		
-	   		// Update the index object
-	   		$objectIndexObject->setObjectData(base64_encode(serialize($brands)));
-	   		$objectIndexObject->setRebuild(0);
-	   		$em->persist($objectIndexObject);
-		    $em->flush();
-   		}   		
-   		
-    	return unserialize(base64_decode($objectIndexObject->getObjectData()));
+    	return $brands;
     }
     
     // Get full list of brands
@@ -570,115 +542,16 @@ class BrandService {
     	$brands = array();
    		
    		// Get the brands
-   		$brandDescriptions = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findBy(array('locale' => 'en'), array('brand' => 'ASC'));
+   		$brandDescriptions = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findBy(array('locale' => 'en'), array('name' => 'ASC'));
    		foreach ($brandDescriptions as $brandDescriptionObject)
    		{
    			$brand = array();
-   			$brand['id'] = $brandDescriptionObject->getBrandId();
-   			$brand['brand'] = $brandDescriptionObject->getBrand();
+   			$brand['id'] = $brandDescriptionObject->getBrand()->getId();
+   			$brand['brand'] = $brandDescriptionObject->getName();
    			$brands[] = $brand;
    		}
    			   	   		
     	return $brands;
-    }
-    
-    // Delete a brand
-    public function deleteBrand($id)
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
-    
-   		// Get the brand
-   		$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
-    	if (!$brandObject)
-	    {
-	    	error_log('Can\'t find the brand!');
-        	return false;
-    	} else {
-    		$em->remove($brandObject);
-    	}
-    	
-    	// Get the brand descriptions
-	    $brandDescriptions = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findBy(array('brandId' => $id));
-	    if (!$brandDescriptions)
-	    {
-	    	error_log('Can\'t find the brand description!');
-	    	return false;
-	    } else {
-		    foreach ($brandDescriptions as $brandDescriptionObject)
-		    {
-	    		if ($brandDescriptionObject)
-	    		{
-	    			$em->remove($brandDescriptionObject);
-	    		}
-	    	}
-    	}
-    	
-    	// Get the object index
-   		$objectIndex = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findOneBy(array('objectKey' => $id, 'objectType' => 'brand'));
-		if ($objectIndex)
-		{
-			$em->remove($objectIndex);
-		}
-	    	    	
-	    // Get the images
-	    $images = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
-    	foreach ($images as $imageObject)
-    	{
-    		if ($imageObject)
-    		{
-    			$em->remove($imageObject);
-    		}
-    	}
-    	
-    	// Get the guarantees
-	    $guarantees = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
-    	foreach ($guarantees as $guaranteeObject)
-    	{
-    		if ($guaranteeObject)
-    		{
-    			$em->remove($guaranteeObject);
-    		}
-    	}
-	    	    	
-    	// Get the routings
-    	$routings = $em->getRepository('WebIlluminationAdminBundle:Routing')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
-    	foreach ($routings as $routingObject)
-		{
-			if ($routingObject)
-    		{
-    			$em->remove($routingObject);
-    		}
-		}
-		
-		// Get the redirects
-    	$redirects = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
-    	foreach ($redirects as $redirectObject)
-		{
-			if ($routingObject)
-    		{
-    			$em->remove($redirectObject);
-    		}
-		}
-		
-		// Remove product associations
-		$products = $em->getRepository('WebIlluminationAdminBundle:Product')->findBy(array('brandId' => $id));
-   		foreach ($products as $productObject)
-		{
-			if ($productObject)
-    		{
-    			$productObject->setBrandId(0);
-    			$em->persist($productObject);
-    		}
-		}
-		
-   		// Flush the database
-   		$em->flush();
-   		
-   		return true;
     }
     
     public function getBrandWarnings($id, $locale = 'en')
@@ -764,92 +637,6 @@ class BrandService {
 	static function sortDepartmentsByName($a, $b)
 	{
 	    return $a['name']>$b['name'];
-	}
-	
-	
-	
-	// Rebuild the brand index
-    public function rebuildBrandIndex($locale = 'en')
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
-    	
-    	// Get the brands
-    	$brandObjects = $em->getRepository('WebIlluminationAdminBundle:Brand')->findAll();
-    	
-    	// Rebuild the brand index
-    	foreach ($brandObjects as $brandObject)
-    	{
-	    	$this->rebuildBrandIndexObject($brandObject->getId(), $locale);
-    	}
-		    
-    	return true;
-	}
-	
-	// Rebuild a brand index object
-    public function rebuildBrandIndexObject($id, $locale = 'en')
-    {
-    	// Get the services
-    	$doctrineService = $this->container->get('doctrine');
-    	
-    	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
-    	
-    	// Get the objects
-    	$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
-    	$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id, 'locale' => $locale));
-    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => $locale));
-    	
-    	// Check the objects both exist
-    	if (!$brandObject || !$brandDescriptionObject || !$routingObject)
-    	{
-	    	return false;
-    	}
-    	
-    	// Get product count
-    	$qb = $em->createQueryBuilder();
-    	$qb->select($qb->expr()->count("pi.id"));
-    	$qb->from('WebIlluminationAdminBundle:ProductIndex', 'pi');
-    	$qb->andWhere($qb->expr()->eq('pi.brandId', $qb->expr()->literal($id)));
-		$productCount = $qb->getQuery()->getSingleScalarResult();
-		
-		// Update the index    	
-    	$brandIndexObject = $em->getRepository('WebIlluminationAdminBundle:BrandIndex')->findOneBy(array('brandId' => $id));
-    	if (!$brandIndexObject)
-    	{
-    		$brandIndexObject = new BrandIndex();
-    		$brandIndexObject->setBrandId($id);
-    	}
-		$brandIndexObject->setStatus($brandObject->getStatus());
-		$brandIndexObject->setRequestABrochure($brandObject->getRequestABrochure());
-		$brandIndexObject->setBrochureWebAddress($brandObject->getBrochureWebAddress());
-		$brandIndexObject->setRequestASample($brandObject->getRequestASample());
-		$brandIndexObject->setSampleWebAddress($brandObject->getSampleWebAddress());
-		$brandIndexObject->setHidePrices($brandObject->getHidePrices());
-		$brandIndexObject->setShowPricesOutOfHours($brandObject->getShowPricesOutOfHours());
-		$brandIndexObject->setMembershipCardDiscountAvailable($brandObject->getMembershipCardDiscountAvailable());
-		$brandIndexObject->setMaximumMembershipCardDiscount($brandObject->getMaximumMembershipCardDiscount());
-		$brandIndexObject->setLogoImageId($brandDescriptionObject->getLogoImageId());
-    	$brandIndexObject->setLocale($locale);
-		$brandIndexObject->setBrand($brandDescriptionObject->getBrand());
-		$brandIndexObject->setDescription($brandDescriptionObject->getDescription());
-		$brandIndexObject->setAbout($brandDescriptionObject->getAbout());
-		$brandIndexObject->setHistory($brandDescriptionObject->getHistory());
-		$brandIndexObject->setMoreInformation($brandDescriptionObject->getMoreInformation());
-		$brandIndexObject->setPageTitle($brandDescriptionObject->getPageTitle());
-		$brandIndexObject->setHeader($brandDescriptionObject->getHeader());
-		$brandIndexObject->setMetaDescription($brandDescriptionObject->getMetaDescription());
-		$brandIndexObject->setMetaKeywords($brandDescriptionObject->getMetaKeywords());
-		$brandIndexObject->setSearchWords($brandDescriptionObject->getSearchWords());
-		$brandIndexObject->setUrl($routingObject->getUrl());
-		$brandIndexObject->setProductCount($productCount);
-    	$em->persist($brandIndexObject);
-		$em->flush();
-		    
-    	return true;
 	}
 }
 
