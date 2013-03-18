@@ -18,6 +18,7 @@ class NewDepartmentType extends AbstractType
         switch ($options['flowStep']) {
             case 1:
                 $builder->add('parent', 'entity', array(
+                    'label' => 'Department',
                     'property' => 'indentedName',
                     'class' => 'KAC\SiteBundle\Entity\Department',
                     'query_builder' => function(DepartmentRepository $er) {
@@ -36,6 +37,7 @@ class NewDepartmentType extends AbstractType
                     ),
                 ), array());
                 $builder->add('status', 'choice', array(
+                    'label' => 'Status',
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
                     'attr' => array(
                         'help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
@@ -48,6 +50,16 @@ class NewDepartmentType extends AbstractType
             case 2:
                 $builder->add('descriptions', 'collection', array(
                     'type' => new DepartmentDescriptionSeoType(),
+                ));
+
+                break;
+            case 3:
+                $builder->add('deliveryBand', 'choice', array(
+                    'label' => 'Delivery Band',
+                    'choices' => array(0.0000 => '- Not Set -', 1.0000 => 'Delivery Band 1', 2.0000 => 'Delivery Band 2', 3.0000 => 'Delivery Band 3', 4.0000 => 'Delivery Band 4', 5.0000 => 'Delivery Band 5', 6.0000 => 'Delivery Band 6'),
+                    'attr' => array(
+                        'help' => 'Select the delivery band for the department. Leave it as "Not Set" if you want the delivery band to be inherited from the department this department falls under.',
+                    ),
                 ));
                 break;
         }
