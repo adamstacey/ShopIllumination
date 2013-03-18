@@ -25,7 +25,7 @@ option {
 
 fieldset {
     margin: 0 0 $spacingMedium;
-    padding: $spacingMedium $spacingMedium 0 $spacingMedium;
+    padding: $spacingMedium $spacingMedium $spacingSmall $spacingMedium;
     width: 100%;
 
     @include borderBox;
