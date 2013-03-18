@@ -86,6 +86,36 @@ function generateFormElements($object) {
     $object.find("input, textarea, select, button, a.button").not(".no-uniform").uniform();
 }
 
+function updateRecommendedCharacters($object) {
+    if ($object.length > 0) {
+        var $messageObject = $object.next("small");
+        if ($messageObject.length > 0) {
+            var $recommendedCharacters = $messageObject.attr("data-recommended-characters");
+            var $numberOfCharacters = $object.val().length;
+            var $remainingCharacters = 0;
+            var $colourClass = "";
+            var $plural = "";
+            var $message = "";
+            if ($numberOfCharacters > $recommendedCharacters) {
+                $remainingCharacters = $numberOfCharacters - $recommendedCharacters;
+                $colourClass = "red";
+                $message = "too many";
+                if ($remainingCharacters != 1) {
+                    $plural = "s";
+                }
+            } else {
+                $remainingCharacters = $recommendedCharacters - $numberOfCharacters;
+                $colourClass = "green";
+                $message = "remaining";
+                if ($remainingCharacters != 1) {
+                    $plural = "s";
+                }
+            }
+            $messageObject.html('<strong>Recommended Characters:</strong> '+$recommendedCharacters+' (<strong class="colour-'+$colourClass+'">'+$remainingCharacters+'</strong> character'+$plural+' '+$message+')');
+        }
+    }
+}
+
 $(document).ready(function() {
     generateFormElements($(document));
 
@@ -166,5 +196,13 @@ $(document).ready(function() {
         var $currentCaretPosition = $(this).caret();
         $(this).val($(this).val().replace(/[^0-9.]/g,''));
         $(this).caret($currentCaretPosition);
+    });
+
+    $(document).on("keypress keyup focus", ".recommended-characters", function() {
+        updateRecommendedCharacters($(this));
+    });
+
+    $(".recommended-characters").each(function() {
+        updateRecommendedCharacters($(this));
     });
 });
