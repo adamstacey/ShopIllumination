@@ -81,11 +81,6 @@ class Department implements DescribableInterface
      * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
     private $inheritedDeliveryBand = 0.0000;
-    
-    /**
-     * @ORM\Column(name="check_delivery_band", type="boolean")
-     */
-    private $checkDeliveryBand = false;
 
     /**
      * @ORM\Column(name="template", type="string", length=255)
@@ -444,29 +439,6 @@ class Department implements DescribableInterface
     public function getInheritedDeliveryBand()
     {
         return $this->inheritedDeliveryBand;
-    }
-
-    /**
-     * Set checkDeliveryBand
-     *
-     * @param boolean $checkDeliveryBand
-     * @return Department
-     */
-    public function setCheckDeliveryBand($checkDeliveryBand)
-    {
-        $this->checkDeliveryBand = $checkDeliveryBand;
-    
-        return $this;
-    }
-
-    /**
-     * Get checkDeliveryBand
-     *
-     * @return boolean 
-     */
-    public function getCheckDeliveryBand()
-    {
-        return $this->checkDeliveryBand;
     }
 
     /**
