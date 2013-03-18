@@ -9,6 +9,10 @@ class SeoManager extends Manager {
 
     protected $templating;
 
+    // Common words to ignore
+    protected $wordsToIgnore;
+
+
     // HTML Purifier config
     protected $htmlPurifierConfig;
 
@@ -16,8 +20,8 @@ class SeoManager extends Manager {
     {
         parent::__construct($doctrine);
 
-//        $this->templating = $templating;
-//        $this->mailer = $mailer;
+        // Common words to ignore
+        $this->wordsToIgnore = array('the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'person', 'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us');
 
         \HTMLPurifier_Bootstrap::registerAutoload();
 
@@ -252,9 +256,6 @@ class SeoManager extends Manager {
     // Generate keywords
     public function generateKeywords($content = '', $separator = ', ')
     {
-        // Common words to ignore
-        $words_to_ignore = array('the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'person', 'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us');
-
         // Remove HTML
         $content = $this->removeHtml($content);
 
@@ -273,7 +274,7 @@ class SeoManager extends Manager {
         // Remove any words on the ignore list
         foreach ($keywords as $index => $keyword)
         {
-            if (in_array($keyword, $words_to_ignore))
+            if (in_array($keyword, $this->wordsToIgnore) || ($keyword == '-'))
             {
                 unset($keywords[$index]);
             } elseif ($keyword == '') {
