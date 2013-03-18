@@ -20,6 +20,8 @@
                     {% include 'KACSiteBundle:Department:new_Step1.html.twig' %}
                 {% elseif flow.getCurrentStep() == 2 %}
                     {% include 'KACSiteBundle:Department:new_Step2.html.twig' %}
+                {% elseif flow.getCurrentStep() == 3 %}
+                    {% include 'KACSiteBundle:Department:new_Step3.html.twig' %}
                 {% endif %}
             </div>
         </div>
