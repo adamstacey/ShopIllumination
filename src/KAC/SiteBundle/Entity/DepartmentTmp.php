@@ -73,12 +73,7 @@ class DepartmentTmp implements DescribableInterface
      * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
     private $inheritedDeliveryBand;
-    
-    /**
-     * @ORM\Column(name="check_delivery_band", type="boolean")
-     */
-    private $checkDeliveryBand;
-    
+
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
@@ -427,29 +422,6 @@ class DepartmentTmp implements DescribableInterface
     public function getInheritedDeliveryBand()
     {
         return $this->inheritedDeliveryBand;
-    }
-
-    /**
-     * Set checkDeliveryBand
-     *
-     * @param boolean $checkDeliveryBand
-     * @return Department
-     */
-    public function setCheckDeliveryBand($checkDeliveryBand)
-    {
-        $this->checkDeliveryBand = $checkDeliveryBand;
-    
-        return $this;
-    }
-
-    /**
-     * Get checkDeliveryBand
-     *
-     * @return boolean 
-     */
-    public function getCheckDeliveryBand()
-    {
-        return $this->checkDeliveryBand;
     }
 
     /**
