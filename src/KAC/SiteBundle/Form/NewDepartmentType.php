@@ -32,10 +32,14 @@ class NewDepartmentType extends AbstractType
                     },
                     'attr' => array(
                         'class' => 'select-department fill no-uniform',
+                        'help' => 'Select the department you want this department to fall under.',
                     ),
                 ), array());
                 $builder->add('status', 'choice', array(
-                    'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
+                    'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
+                    'attr' => array(
+                        'help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
+                    ),
                 ));
                 $builder->add('descriptions', 'collection', array(
                     'type' => new DepartmentDescriptionOverviewType(),
