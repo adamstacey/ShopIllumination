@@ -19,7 +19,7 @@ use KAC\SiteBundle\Manager\SeoManager;
 
 class NewDepartmentFlow extends FormFlow
 {
-    protected $maxSteps = 2;
+    protected $maxSteps = 3;
     protected $allowDynamicStepNavigation = true;
 
     private $seoManager;
@@ -32,7 +32,8 @@ class NewDepartmentFlow extends FormFlow
     protected function loadStepDescriptions() {
         return array(
             '1. Overview',
-            '2. SEO'
+            '2. SEO',
+            '3. Delivery Options'
         );
     }
 
