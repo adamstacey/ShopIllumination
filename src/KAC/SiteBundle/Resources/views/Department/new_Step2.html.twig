@@ -9,9 +9,8 @@
                 <section class="ui-widget-content ui-corner-all">
                     {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
                     <fieldset>
-                        {{ form_row(form.descriptions) }}
+                        {{ form_rest(form) }}
                     </fieldset>
-                    {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Department:newControls.html.twig' %}
                 </section>
@@ -19,3 +18,11 @@
         </div>
     </div>
 </form>
+<script>
+    $(document).ready(function() {
+        $("select.select-google-department").select2({
+            placeholder: "- Select a Google Department -",
+            allowClear: true
+        });
+    })
+</script>
