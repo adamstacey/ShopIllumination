@@ -377,4 +377,7 @@ CREATE INDEX IDX_1ECE137DE23A8E3 ON product_options (option_group_id);
 ALTER TABLE product_option_groups CHANGE product_option_group name VARCHAR(255) NOT NULL;
 ALTER TABLE products ADD template VARCHAR(255) NOT NULL, CHANGE product_code product_code VARCHAR(100) DEFAULT NULL;
 ALTER TABLE department_descriptions CHANGE description description LONGTEXT DEFAULT NULL, CHANGE menu_title menu_title VARCHAR(255) DEFAULT NULL, CHANGE page_title page_title VARCHAR(255) DEFAULT NULL, CHANGE page_title_template page_title_template LONGTEXT DEFAULT NULL, CHANGE delivery_band_notes delivery_band_notes LONGTEXT DEFAULT NULL, CHANGE header header VARCHAR(255) DEFAULT NULL, CHANGE header_template header_template LONGTEXT DEFAULT NULL, CHANGE meta_description meta_description LONGTEXT DEFAULT NULL, CHANGE meta_description_template meta_description_template LONGTEXT DEFAULT NULL, CHANGE meta_keywords meta_keywords LONGTEXT DEFAULT NULL, CHANGE google_department google_department LONGTEXT DEFAULT NULL, CHANGE ebay_department ebay_department LONGTEXT DEFAULT NULL, CHANGE amazon_department amazon_department LONGTEXT DEFAULT NULL;
+ALTER TABLE department_descriptions DROP delivery_band_notes;
+ALTER TABLE departments DROP check_delivery_band;
+ALTER TABLE departments_tmp DROP check_delivery_band;
 SET FOREIGN_KEY_CHECKS = 1;
