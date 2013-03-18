@@ -12,7 +12,7 @@
                         <p>The delivery band is the default delivery band setting for the department. Each sub department and any product associated with this department will use this delivery band setting unless the sub department or product has their own delivery band set, which will override this setting.</p>
                     </div>
                     {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
-                    <fieldset class="pbs">
+                    <fieldset>
                         {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
