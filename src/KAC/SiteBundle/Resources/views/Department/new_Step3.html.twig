@@ -1,0 +1,24 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="ui-button-icon-primary ui-icon icon-white icon-1113"></span>
+                    <h2>3. Delivery Options</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
+                        <p>The delivery band is the default delivery band setting for the department. Each sub department and any product associated with this department will use this delivery band setting unless the sub department or product has their own delivery band set, which will override this setting.</p>
+                    </div>
+                    {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
+                    <fieldset class="pbs">
+                        {{ form_rest(form) }}
+                    </fieldset>
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Department:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
