@@ -1,5 +1,9 @@
-<pre>{{ dump(form) }}</pre>
 {% for child in form %}
-    <td>{{ form_widget(child) }}</td>
+    {% if child.vars.block_prefixes.2 != 'hidden' %}
+        <td{% if child.vars.attr.containerClass is defined %} class="{{ child.vars.attr.containerClass }}"{% endif %}>{{ form_widget(child) }}</td>
+    {% endif %}
 {% endfor %}
-<td>&nbsp;</td>
+<td class="tac" width="1">
+    {{ form_rest(form) }}
+    <button type="button" class="actionDeleteFormRow button button-red icon-white" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+</td>
