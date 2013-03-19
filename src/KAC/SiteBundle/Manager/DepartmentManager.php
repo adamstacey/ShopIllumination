@@ -1,11 +1,10 @@
 <?php
 namespace KAC\SiteBundle\Manager;
 
-use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Department\Description as DepartmentDescription;
 use KAC\SiteBundle\Entity\Department\Routing as DepartmentRouting;
 use KAC\SiteBundle\Entity\Department;
-use KAC\SiteBundle\Entity\Routing;
+use KAC\SiteBundle\Entity\DepartmentToFeature;
 
 class DepartmentManager extends Manager
 {
@@ -22,6 +21,7 @@ class DepartmentManager extends Manager
     {
         $department = new Department();
         $department->addDescription(new DepartmentDescription());
+        $department->addFeature(new DepartmentToFeature());
         $department->addRouting(new DepartmentRouting());
 
         return $department;
@@ -47,6 +47,12 @@ class DepartmentManager extends Manager
 
     public function updateObjectLinks(Department $department)
     {
+        // Update the features
+        foreach ($department->getFeatures() as $feature)
+        {
+            $feature->setDepartment($department);
+        }
+
         // Update the routings
         foreach ($department->getRoutings() as $routing)
         {
