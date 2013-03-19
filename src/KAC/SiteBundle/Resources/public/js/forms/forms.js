@@ -139,8 +139,7 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".actionDeleteFormRow", function() {
-        var $tableObject = $("#"+$(this).attr("data-table-object"));
-        if ($tableObject.find("tbody tr").length > 1) {
+        if ($(this).closest("tr").length > 0) {
             $(this).closest("tr").remove();
 
             // Trigger an event on the table when the row is deleted
