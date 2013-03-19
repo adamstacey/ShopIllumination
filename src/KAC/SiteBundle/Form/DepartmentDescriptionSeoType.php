@@ -40,23 +40,20 @@ class DepartmentDescriptionSeoType extends AbstractType
             ),
         ));
 
-        $builder->add('googleDepartment', 'entity', array(
-            'required'  => true,
-            'label' => 'Google Department',
-            'property' => 'name',
+        $builder->add('googleDepartment', 'entity_id', array(
             'class' => 'KAC\SiteBundle\Entity\Taxonomy',
-            'query_builder' => function(EntityRepository $er) {
+            'query_builder' => function(EntityRepository $er, $id) {
                 return $er->createQueryBuilder('t')
-                    ->where('t.objectType = :objectType')
-                    ->setParameter('objectType', 'google')
-                    ->orderBy('t.name', 'ASC');
+                    ->where("t.id = :id")
+                    ->andWhere('t.objectType = :objectType')
+                    ->setParameter('id', $id)
+                    ->setParameter('objectType', 'google');
             },
-            'empty_value' => '- Select a Google Department -',
             'attr' => array(
                 'class' => 'select-google-department fill no-uniform',
                 'help' => 'Select the equivalent Google department that matches this department. This is very important as Google require this for the Google products feed.',
             ),
-        ), array());
+        ));
 
         $builder->add('menuTitle', 'text', array(
             'required'  => true,
