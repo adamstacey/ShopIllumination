@@ -69,9 +69,14 @@
 {% block collection_row %}
     {% spaceless %}
         {% if prototype is defined %}
-            {% set attr = attr|merge({'data-prototype': form_row(prototype) }) %}
-            <p>Table will go here!</p>
-            {# TODO: ADD TABLE DATA TO HANDLE THIS FOR MULTIPLE ADDITION DECIDED BY WHETHER allow_add is set to true #}
+            {% set attr = attr|merge({'data-prototype': prototype }) %}
+            {% for row in form %}
+                <tr>
+                    {% for child in row %}
+                        <td{% if child.vars.valid is sameas(false) %} class="form-element-error"{% endif %}>{{ form_widget(child) }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
         {% else %}
             {% for row in form %}
                 {% for child in row %}
