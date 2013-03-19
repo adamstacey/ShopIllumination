@@ -12,23 +12,21 @@
                         <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
                     </div>
                     {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
-                    <fieldset>
-                        <table class="form-table" id="feature-list" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
-                            <thead>
-                                <tr>
-                                    <th>Group</th>
-                                    <th>Feature</th>
-                                    <th>Filter?</th>
-                                    <th>Listing?</th>
-                                    <th>product?</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {{ form_rest(form) }}
-                            </tbody>
-                        </table>
-                    </fieldset>
+                    <table class="form-table mbm" id="featureList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
+                        <thead>
+                            <tr>
+                                <th title="Select a feature group." class="tal">Group</th>
+                                <th title="Select the default feature a product will automatically be assigned with. Leave this as 'No Default Feature' if you want to set the feature." class="tal">Default Feature</th>
+                                <th title="Do you want this feature to show up on the product filter in the listings?">Filter?</th>
+                                <th title="Do you want the feature to display on the bullets of a product on the product listings?">Listing?</th>
+                                <th title="Do you want the feature to display in the features section on the product page?">Product?</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {{ form_rest(form) }}
+                        </tbody>
+                    </table>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Department:newControls.html.twig' %}
                 </section>
@@ -36,3 +34,22 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('change', '.feature-group', function() {
+            var $featureGroupId = $(this).val();
+            var $selectObject = $(this).closest("tr").find(".feature");
+            $selectObject.prev("span").html("Loading Features...");
+            $.getJSON('{{ path('api_features', {'featureGroupId': '-1'}) }}'.replace(/-1/, $featureGroupId), function(data) {
+                $selectObject.val([]).empty();
+                var $option = $('<option/>', { value: '' }).text('No Default Feature');
+                $option.appendTo($selectObject);
+                for (var $feature = 0; $feature < data.features.length; $feature++) {
+                    var $option = $('<option/>', { value: data.features[$feature]['id'] }).text(data.features[$feature]['name']);
+                    $option.appendTo($selectObject);
+                }
+                $.uniform.update($selectObject);
+            });
+        });
+    });
+</script>
