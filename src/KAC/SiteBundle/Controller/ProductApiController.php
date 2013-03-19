@@ -67,7 +67,7 @@ class ProductApiController extends Controller
          */
         $em = $this->getDoctrine()->getManager();
 
-        $product= $em->getRepository("KAC\SiteBundle\Entity\Product")->find($id);
+        $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($id);
 
         $serializer = $this->get('serializer');
         $data = $serializer->serialize($product, $format);
