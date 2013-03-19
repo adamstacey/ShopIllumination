@@ -14,7 +14,7 @@ class DepartmentRoutingType extends AbstractType
             'required'  => true,
             'label' => 'Internal Web Address',
             'attr' => array(
-                'class' => 'fill',
+                'class' => 'fill routing',
                 'help' => 'The internal web address is automatically generated and is kept up-to-date by the rules setup in the system. However, you can make any changes to enhance the internal web address here.',
             ),
         ));
