@@ -172,7 +172,7 @@ $(document).ready(function() {
         $(this).caret($currentCaretPosition);
     });
 
-    $(document).on("keypress keyup focus", ".seo-url", function() {
+    $(document).on("keypress keyup focus", ".routing", function() {
         var $currentCaretPosition = $(this).caret();
         $(this).val($(this).val().toLowerCase());
         $(this).val($(this).val().replace(/[ ]/g,'-'));
