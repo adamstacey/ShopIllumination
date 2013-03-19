@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     $(".tabs").tabs();
 
-    $("img[title], span[title]").tooltip({
+    $("img[title], span[title], th[title]").tooltip({
         track: true
     });
 });
