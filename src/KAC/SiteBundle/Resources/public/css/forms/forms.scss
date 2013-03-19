@@ -124,6 +124,41 @@ textarea.uniform {
     border: 1px solid $colourGreyLight;
 }
 
+table.form-table td input.text,
+table.form-table td input[type="text"],
+table.form-table td input.email,
+table.form-table td input[type="email"],
+table.form-table td input.search,
+table.form-table td input[type="search"],
+table.form-table td input.tel,
+table.form-table td input[type="tel"],
+table.form-table td input.url,
+table.form-table td input[type="url"],
+table.form-table td input.datetime,
+table.form-table td input[type="datetime"],
+table.form-table td input.date,
+table.form-table td input[type="date"],
+table.form-table td input.month,
+table.form-table td input[type="month"],
+table.form-table td input.week,
+table.form-table td input[type="week"],
+table.form-table td input.time,
+table.form-table td input[type="time"],
+table.form-table td input.datetime-local,
+table.form-table td input[type="datetime-local"],
+table.form-table td input.number,
+table.form-table td input[type="number"],
+table.form-table td input.password,
+table.form-table td input[type="password"],
+table.form-table td select.uniform-multiselect,
+table.form-table td select[multiple="multiple"],
+table.form-table td textarea,
+table.form-table td textarea.uniform {
+    padding: 8px $spacingSmall;
+
+    @include fontSize($fontSizeSmall);
+}
+
 input.text:focus,
 input[type="text"]:focus,
 input.email:focus,
@@ -206,6 +241,11 @@ div.checker-group {
     margin: $spacingMedium 0 $spacingSmall 0;
 }
 
+table.form-table td div.radio-group,
+table.form-table td div.checker-group {
+    margin: 0;
+}
+
 div.radio-group label,
 div.checker-group label {
     float: left;
@@ -237,6 +277,11 @@ div.checker {
     @include transitionAll(0.3s, ease-in-out);
     border: 1px solid $colourGreyLight;
     cursor: pointer;
+}
+
+table.form-table td div.checker {
+    margin: 0;
+     float: none;
 }
 
 div.checker span {
@@ -456,6 +501,12 @@ div.selector span {
     background: transparent url("#{$cssPath}/resources/images/icons/select.png") no-repeat center right;
 }
 
+table.form-table td div.selector span {
+    padding: 8px 25px 8px $spacingSmall;
+
+    @include fontSize($fontSizeSmall);
+}
+
 div.selector.disabled span {
     color: $colourGreyExtraLight;
 }
@@ -627,12 +678,13 @@ table.form-table {
 }
 
 table.form-table th {
+    padding: $spacingMedium $spacingSmall;
+
     border-collapse: collapse;
     border: 1px solid $colourGrey;
-    padding: $spacingMedium $spacingSmall;
-    text-align: left;
     color: $colourBlack;
     @include highlightedVerticalGradientGrey;
+    cursor: help;
 }
 
 table.form-table td {
