@@ -1,0 +1,38 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="ui-button-icon-primary ui-icon icon-white icon-69"></span>
+                    <h2>4. Feature Templates</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
+                        <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
+                    </div>
+                    {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
+                    <fieldset>
+                        <table class="form-table" id="feature-list" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
+                            <thead>
+                                <tr>
+                                    <th>Group</th>
+                                    <th>Feature</th>
+                                    <th>Filter?</th>
+                                    <th>Listing?</th>
+                                    <th>product?</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {{ form_rest(form) }}
+                            </tbody>
+                        </table>
+                    </fieldset>
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Department:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
