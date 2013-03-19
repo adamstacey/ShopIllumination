@@ -1,0 +1,5 @@
+<pre>{{ dump(form) }}</pre>
+{% for child in form %}
+    <td>{{ form_widget(child) }}</td>
+{% endfor %}
+<td>&nbsp;</td>
