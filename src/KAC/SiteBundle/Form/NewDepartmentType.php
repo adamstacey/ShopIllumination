@@ -64,6 +64,13 @@ class NewDepartmentType extends AbstractType
                     ),
                 ));
                 break;
+            case 4:
+                $builder->add('features', 'collection', array(
+                    'type' => new DepartmentFeatureType(),
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
+                break;
         }
     }
 
