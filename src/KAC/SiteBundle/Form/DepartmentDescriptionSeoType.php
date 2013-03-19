@@ -41,6 +41,8 @@ class DepartmentDescriptionSeoType extends AbstractType
         ));
 
         $builder->add('googleDepartment', 'entity_id', array(
+            'required'  => true,
+            'label' => 'Google Department',
             'class' => 'KAC\SiteBundle\Entity\Taxonomy',
             'query_builder' => function(EntityRepository $er, $id) {
                 return $er->createQueryBuilder('t')
