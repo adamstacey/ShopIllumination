@@ -1,5 +1,0 @@
-{% extends ':Old:print.html.twig' %}
-{% block title %}Kitchen Appliance Centre {% if order.deliveryType == 'Collection' %}Collection{% else %}Delivery{% endif %}: {{ order.orderNumber }}{% endblock %}
-{% block body %}
-	{% include 'WebIlluminationAdminBundle:Orders:deliveryNote.html.twig' with {'order': order} %}
-{% endblock %}
