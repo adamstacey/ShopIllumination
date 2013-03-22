@@ -1,6 +1,7 @@
 <?php
 
 namespace WebIllumination\ShopBundle\Controller;
+use FOS\UserBundle\Util\UserManipulator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -79,7 +80,7 @@ class CheckoutController extends Controller
 
 		// Check to see if the email address has a user account assigned to it 
 		$userAccountExists = false;
-		$userObject = $em->getRepository('WebIlluminationAdminBundle:User')->findOneBy(array('emailAddress' => $emailAddress));
+		$userObject = $em->getRepository('KAC\UserBundle\Entity\User')->findOneBy(array('email' => $emailAddress));
 		if ($userObject)
 		{
 			$userAccountExists = true;
@@ -97,27 +98,14 @@ class CheckoutController extends Controller
 		
 		// Get the entity manager
 	   	$em = $this->getDoctrine()->getEntityManager();
-		
-		// Create new user
-		$userObject = new User();
-    	$userObject->setContactId(0);
-    	$userObject->setEmailAddress($emailAddress);
-    	$userObject->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
-    	$userObject->setPassword('');
-    	$userObject->setActive(1);
-    	$em->persist($userObject);
-    	$em->flush();
-    	
-    	// Get the encoder factory
-	   	$encoderFactory = $this->get('security.encoder_factory');
-	   	
-	  	// Generate the password to check
-	  	$encoder = $encoderFactory->getEncoder($userObject);  
-	  	
-    	// Setup password
-    	$userObject->setPassword($encoder->encodePassword($password, $userObject->getSalt()));
-    	$em->persist($userObject);
-    	$em->flush();
+
+        /**
+         * Create the user
+         * @var $manipulator UserManipulator
+         * @var $userObject \KAC\UserBundle\Entity\User
+         */
+        $manipulator = $this->getContainer()->get('fos_user.util.user_manipulator');
+        $userObject = $manipulator->create($emailAddress, $password, $emailAddress, true, false);
     	
     	// Authenticate the user
 		$token = new UsernamePasswordToken($userObject, null, 'shop', array('ROLE_CUSTOMER'));
@@ -128,9 +116,10 @@ class CheckoutController extends Controller
 		$customer = array();
 		$user = array();
 		$user['id'] = $userObject->getId();
-		$user['contactId'] = $userObject->getContactId();
-		$user['emailAddress'] = $userObject->getEmailAddress();
-		$user['lastLoggedIn'] = $userObject->getLastLoggedIn();
+//		$user['contactId'] = $userObject->getContactId();
+		$user['contactId'] = $userObject->getContacts()->isEmpty() ? null : $userObject->getContacts()->first()->getId();
+		$user['emailAddress'] = $userObject->getEmail();
+		$user['lastLoggedIn'] = $userObject->getLastLogin();
 		$customer['user'] = $user;
 		$customer['contact'] = array();
 		
