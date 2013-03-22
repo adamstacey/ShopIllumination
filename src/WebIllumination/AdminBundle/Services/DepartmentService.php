@@ -445,7 +445,7 @@ class DepartmentService {
     	$departments[] = $parentId;
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parent' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -479,7 +479,7 @@ class DepartmentService {
     	$departments = array();
     	
     	// Get the sub departments
-    	$subDepartments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parent' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartments) > 0 )
@@ -511,7 +511,7 @@ class DepartmentService {
     	$departments = array();
     	
     	// Get the sub departments
-    	$subDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parentId' => $parentId), array('displayOrder' => 'ASC'));
+    	$subDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parent' => $parentId), array('displayOrder' => 'ASC'));
 		
 		// Make sure some departments exist
 		if (sizeof($subDepartmentObjects) > 0 )
@@ -1553,7 +1553,7 @@ class DepartmentService {
     	}
     	
     	// Get any sub departments
-    	$subDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parentId' => $id));
+    	$subDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parent' => $id));
     	$departmentCount = sizeof($subDepartmentObjects);
     	if ($departmentCount > 0)
     	{
@@ -1653,7 +1653,7 @@ class DepartmentService {
     	
     	// Build the path
     	$existingDepartmentPath = $departmentObject->getDepartmentPath();
-    	$parentId = $departmentObject->getParentId();
+    	$parentId = $departmentObject->getParent()->getId();
     	$departmentPath = $parentId.'|'.$id;
     	while ($parentId > 0)
     	{
