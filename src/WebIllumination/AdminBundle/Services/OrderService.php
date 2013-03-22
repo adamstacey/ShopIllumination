@@ -506,7 +506,7 @@ class OrderService {
             $orderObject->setNotesCount(0);
         } else {
             // Clear the existing order products
-            $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('orderId' => $order['orderNumber']));
+            $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $order['orderNumber']));
             foreach ($orderProducts as $orderProduct)
             {
                 $em->remove($orderProduct);
@@ -514,7 +514,7 @@ class OrderService {
             }
 
             // Clear any existing order discounts
-            $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('orderId' => $order['orderNumber']));
+            $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('order' => $order['orderNumber']));
             foreach ($orderDiscounts as $orderDiscount)
             {
                 $em->remove($orderDiscount);
@@ -522,7 +522,7 @@ class OrderService {
             }
 
             // Clear any existing order donations
-            $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('orderId' => $order['orderNumber']));
+            $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('order' => $order['orderNumber']));
             foreach ($orderDonations as $orderDonation)
             {
                 $em->remove($orderDonation);
@@ -530,7 +530,7 @@ class OrderService {
             }
 
             // Clear any existing order notes
-            $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('orderId' => $order['orderNumber']));
+            $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $order['orderNumber']));
             foreach ($orderNotes as $orderNote)
             {
                 $em->remove($orderNote);
@@ -615,17 +615,7 @@ class OrderService {
             $orderProductObject->setProduct($product['productId']);
             $orderProductObject->setVariant($product['variantId']);
             $orderProductObject->setProduct($product['product']);
-            $orderProductObject->setUrl($product['url']);
-            $orderProductObject->setHeader($product['header']);
-            $orderProductObject->setProductCode($product['productCode']);
-            $orderProductObject->setBrand($product['brand']['brand']);
-            $orderProductObject->setShortDescription($product['shortDescription']);
             $orderProductObject->setQuantity($product['quantity']);
-            $orderProductObject->setUnitCost($product['unitCost']);N
-            $orderProductObject->setRecommendedRetailPrice($product['recommendedRetailPrice']);
-            $orderProductObject->setDiscount($product['discount']);
-            $orderProductObject->setSavings($product['savings']);
-            $orderProductObject->setVat($product['vat']);
             $orderProductObject->setSubTotal($product['subTotal']);
             $orderProductObject->setSelectedOptions($product['selectedOptions']);
             $orderProductObject->setSelectedOptionLabels(join('|', $product['selectedOptionLabels']));
@@ -637,8 +627,8 @@ class OrderService {
         $numberOfNotes = 0;
         if ($basket['delivery']['requestedDeliveryDate'] != '')
         {
-            $orderNoteObject = new OrderNote();
-            $orderNoteObject->setOrderId($order['orderNumber']);
+            $orderNoteObject = new Order\Note();
+            $orderNoteObject->setOrder($orderObject);
             $orderNoteObject->setNoteType('customer');
             $orderNoteObject->setNotified(0);
             if ($basket['delivery']['service'] == 'Collection')
@@ -654,8 +644,8 @@ class OrderService {
         }
         if ($basket['delivery']['notes'] != '')
         {
-            $orderNoteObject = new OrderNote();
-            $orderNoteObject->setOrderId($order['orderNumber']);
+            $orderNoteObject = new Order\Note();
+            $orderNoteObject->setOrder($orderObject);
             $orderNoteObject->setNoteType('customer');
             $orderNoteObject->setNotified(0);
             $orderNoteObject->setNote($basket['delivery']['notes']);
@@ -674,8 +664,8 @@ class OrderService {
         {
             if (($discount['discount'] > 0) && ($discount['description'] != ''))
             {
-                $orderDiscountObject = new OrderDiscount();
-                $orderDiscountObject->setOrderId($order['orderNumber']);
+                $orderDiscountObject = new Order\Discount();
+                $orderDiscountObject->setOrder($orderObject);
                 $orderDiscountObject->setVoucherCode(($discount['voucherCode']?$discount['voucherCode']:''));
                 $orderDiscountObject->setGiftVoucherCode(($discount['giftVoucherCode']?$discount['giftVoucherCode']:''));
                 $orderDiscountObject->setDescription(($discount['description']?$discount['description']:''));
@@ -695,8 +685,8 @@ class OrderService {
         {
             if (($donation['donation'] > 0) && ($donation['description'] != ''))
             {
-                $orderDonationObject = new OrderDonation();
-                $orderDonationObject->setOrderId($order['orderNumber']);
+                $orderDonationObject = new Order\Donation();
+                $orderDonationObject->setOrder($orderObject);
                 $orderDonationObject->setDescription(($donation['description']?$donation['description']:''));
                 $orderDonationObject->setDonation(($donation['donation']?$donation['donation']:0));
                 $em->persist($orderDonationObject);
@@ -1103,10 +1093,10 @@ class OrderService {
 
         // Get the order
         $orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
-        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-        $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-        $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-        $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('header' => 'ASC'));
+        $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
+        $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
+        $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
         if (!$orderObject)
         {
             return false;
@@ -1172,7 +1162,8 @@ class OrderService {
         {
             $newProduct = array();
             $newProduct['basketItemId'] = $orderProductObject->getBasketItemId();
-            $newProduct['productId'] = $orderProductObject->getProductId();
+            $newProduct['productId'] = $orderProductObject->getProduct()->getId();
+            $newProduct['variantId'] = $orderProductObject->getVariant()->getId();
             $newProduct['product'] = $orderProductObject->getProduct();
             $newProduct['url'] = $orderProductObject->getUrl();
             $newProduct['header'] = $orderProductObject->getHeader();
@@ -1223,7 +1214,7 @@ class OrderService {
         {
             $newNote = array();
             $newNote['id'] = $orderNoteObject->getId();
-            $newNote['orderId'] = $orderNoteObject->getOrderId();
+            $newNote['orderId'] = $orderNoteObject->getOrder()->getId();
             $newNote['creator'] = $orderNoteObject->getCreator();
             $newNote['noteType'] = $orderNoteObject->getNoteType();
             $newNote['notified'] = $orderNoteObject->getNotified();
@@ -1253,10 +1244,10 @@ class OrderService {
 
         // Get the order details
         $orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
-        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-        $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-        $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
-        $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('header' => 'ASC'));
+        $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
+        $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
+        $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
         if (!$orderObject)
         {
             return false;
@@ -1461,7 +1452,7 @@ class OrderService {
         // Get the brands and products
         foreach ($orders as $order)
         {
-            $orderProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('orderId' => $order->getId()));
+            $orderProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $order->getId()));
             foreach ($orderProductObjects as $orderProductObject)
             {
                 if ($orderProductObject)
@@ -1479,15 +1470,15 @@ class OrderService {
                     }
 
                     // Get the products
-                    if (!isset($products[$orderProductObject->getProductId()]))
+                    if (!isset($products[$orderProductObject->getProduct()->getId()]))
                     {
-                        $products[$orderProductObject->getProductId()] = array();
-                        $products[$orderProductObject->getProductId()]['product'] = $orderProductObject->getHeader();
-                        $products[$orderProductObject->getProductId()]['quantity'] = $orderProductObject->getQuantity();
-                        $products[$orderProductObject->getProductId()]['total'] = $orderProductObject->getSubTotal();
+                        $products[$orderProductObject->getProduct()->getId()] = array();
+                        $products[$orderProductObject->getProduct()->getId()]['product'] = $orderProductObject->getHeader();
+                        $products[$orderProductObject->getProduct()->getId()]['quantity'] = $orderProductObject->getQuantity();
+                        $products[$orderProductObject->getProduct()->getId()]['total'] = $orderProductObject->getSubTotal();
                     } else {
-                        $products[$orderProductObject->getProductId()]['quantity'] += $orderProductObject->getQuantity();
-                        $products[$orderProductObject->getProductId()]['total'] += $orderProductObject->getSubTotal();
+                        $products[$orderProductObject->getProduct()->getId()]['quantity'] += $orderProductObject->getQuantity();
+                        $products[$orderProductObject->getProduct()->getId()]['total'] += $orderProductObject->getSubTotal();
                     }
                 }
             }
