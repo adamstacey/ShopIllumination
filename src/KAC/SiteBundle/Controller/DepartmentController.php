@@ -55,13 +55,6 @@ class DepartmentController extends Controller
                 // Get next form step
                 $form = $flow->createForm($department);
             } else {
-                // Update descriptions TODO: move to listener
-                /*$manager = $this->container->get('kac_site.manager.department');
-                foreach ($department->getDescriptions() as $description)
-                {
-                    $manager->updateDescription($description);
-                }*/
-
                 // Update the department path
                 $manager->updateDepartmentPath($department);
 

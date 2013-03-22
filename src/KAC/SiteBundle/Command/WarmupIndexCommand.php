@@ -30,9 +30,11 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $productIndexer->delete();
         unset($productIndexer);
 
+        $totalProducts = count($products);
+
         for($i = count($products) - 1; $i >= 0; $i--)
         {
-            $output->writeln("Writing index for product ".$i." of ".count($products)."...");
+            $output->writeln("Writing index for product ".$i." of ".$totalProducts."...");
             $product = $products[$i];
             unset($products[$i]);
             $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));

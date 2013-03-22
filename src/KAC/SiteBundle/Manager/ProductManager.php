@@ -29,9 +29,9 @@ class ProductManager extends Manager
 
         $product->addDescription(new ProductDescription());
         $product->addDepartment(new ProductToDepartment());
-        $product->addPrice(new Price());
-
         $product->addFeatureGroup(new VariantToFeature());
+        $product->addPrice(new Product\Price());
+        $product->addRouting(new Product\Routing());
 
         return $product;
     }
@@ -120,6 +120,20 @@ class ProductManager extends Manager
             $description->setHeader($header);
             $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
             $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
+        }
+    }
+
+    public function updateObjectLinks(Product $product)
+    {
+        // Update the links
+        foreach($product->getLinks() as $link) {
+            $link->setProduct($product);
+        }
+
+        // Update the routings
+        foreach ($product->getRoutings() as $routing)
+        {
+            $routing->setProduct($product);
         }
     }
 

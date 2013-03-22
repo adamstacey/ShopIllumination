@@ -35,7 +35,8 @@ class ProductController extends Controller {
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $this->getManager()->createProduct();
+        $manager = $this->getManager();
+        $product = $manager->createProduct();
 
         /**
          * @var \Craue\FormFlowBundle\Form\FormFlow $flow
@@ -54,8 +55,7 @@ class ProductController extends Controller {
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
-                // Update descriptions TODO: move to listener
-                $manager = $this->container->get('kac_site.manager.product');
+                // Update descriptions
                 foreach($product->getDescriptions() as $description)
                 {
                     $manager->updateProductDescription($description);
@@ -69,9 +69,7 @@ class ProductController extends Controller {
                     }
                 }
 
-                foreach($product->getLinks() as $link) {
-                    $link->setProduct($product);
-                }
+                $manager->updateObjectLinks($product);
 
                 $em->persist($product);
                 $em->flush();
@@ -82,7 +80,6 @@ class ProductController extends Controller {
                 {
                     $this->getImageManager()->persistImages($variant, 'variant');
                 }
-
                 $em->flush();
 
                 $flow->reset();
