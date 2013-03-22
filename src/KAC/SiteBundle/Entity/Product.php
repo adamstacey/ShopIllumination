@@ -52,7 +52,7 @@ class Product implements DescribableInterface
     private $variants;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Routing", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Routing", mappedBy="product", cascade={"all"})
      */
     private $routings;
 
