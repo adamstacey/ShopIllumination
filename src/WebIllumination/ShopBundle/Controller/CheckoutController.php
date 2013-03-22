@@ -9,11 +9,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\User;
-use WebIllumination\AdminBundle\Entity\Contact;
-use WebIllumination\AdminBundle\Entity\ContactNumber;
-use WebIllumination\AdminBundle\Entity\ContactAddress;
-use WebIllumination\AdminBundle\Entity\ContactEmailAddress;
 
 class CheckoutController extends Controller
 {
@@ -359,7 +354,7 @@ class CheckoutController extends Controller
     	
     	// Get the order
     	$orderId = $orderSession['orderNumber'];
-    	$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($orderId);
+    	$orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($orderId);
     	if (!$orderObject)
     	{
     		// Set error message
@@ -418,7 +413,7 @@ class CheckoutController extends Controller
 		if ($orderObject->getMembershipCardNumber() == 1)
 		{
 			// Check the user doesn't already have a card
-			$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('userId' => $orderObject->getUserId(), 'active' => 1));
+			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('userId' => $orderObject->getUserId(), 'active' => 1));
 			if ($membershipCardObject)
 			{
 				$orderObject->setMembershipCardNumber($membershipCardObject->getMembershipNumber());
@@ -427,7 +422,7 @@ class CheckoutController extends Controller
 		    	$basketSession['discounts']['membershipCardNumber'] = $membershipCardObject->getMembershipNumber();
 			} else {
 				// Setup the user a new membership card
-				$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('userId' => '0', 'active' => 1));
+				$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('userId' => '0', 'active' => 1));
 				if ($membershipCardObject)
 				{
 					$membershipCardObject->setUserId($orderObject->getUserId());
@@ -460,7 +455,7 @@ class CheckoutController extends Controller
 			}
 		} elseif ($orderObject->getMembershipCardNumber() > 0) {
 			// Update the membership card reporting
-			$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('membershipNumber' => $orderObject->getMembershipCardNumber(), 'active' => 1));
+			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('membershipNumber' => $orderObject->getMembershipCardNumber(), 'active' => 1));
 			if ($membershipCardObject)
 			{
 				$membershipCardObject->setItems(($membershipCardObject->getItems() + $orderObject->getItems()));
@@ -540,7 +535,7 @@ class CheckoutController extends Controller
 	   	
 	   	// Get the order
     	$orderId = $orderSession['orderNumber'];
-    	$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($orderId);
+    	$orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($orderId);
     	if (!$orderObject)
     	{
     		// Set error message
