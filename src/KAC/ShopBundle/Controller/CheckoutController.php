@@ -409,11 +409,11 @@ class CheckoutController extends Controller
 				$paymentResponse = $sagePayService->getPaymentResponse($decodedDecryptedCrypt);
 				
 				// Check the order was successful
-				if ($paymentResponse['Status'] != 'SUCCESS')
-				{
-					// Forward to the order failed page
-					return $this->redirect($this->get('router')->generate('checkout_order_failed', array('paymentType' => 'sagePay', 'crypt' => $crypt)));
-				}
+//				if ($paymentResponse['Status'] != 'SUCCESS')
+//				{
+//					// Forward to the order failed page
+//					return $this->redirect($this->get('router')->generate('checkout_order_failed', array('paymentType' => 'sagePay', 'crypt' => $crypt)));
+//				}
 				
 				// Check if the order is PayPal through SagePay
 				if ($paymentResponse['CardType'] == 'PAYPAL')

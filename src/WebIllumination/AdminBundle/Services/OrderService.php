@@ -609,12 +609,17 @@ class OrderService {
         // Save the order products
         foreach ($basket['products'] as $product)
         {
+            // Get variant
+            $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+            if(!$variant) {
+                break;
+            }
+
             $orderProductObject = new Order\Product();
             $orderProductObject->setOrder($orderObject);
             $orderProductObject->setBasketItemId($product['basketItemId']);
-            $orderProductObject->setProduct($product['productId']);
-            $orderProductObject->setVariant($product['variantId']);
-            $orderProductObject->setProduct($product['product']);
+            $orderProductObject->setProduct($variant->getProduct());
+            $orderProductObject->setVariant($variant);
             $orderProductObject->setQuantity($product['quantity']);
             $orderProductObject->setSubTotal($product['subTotal']);
             $orderProductObject->setSelectedOptions($product['selectedOptions']);

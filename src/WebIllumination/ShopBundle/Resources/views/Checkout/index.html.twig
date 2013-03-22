@@ -7,7 +7,7 @@
                 <header>
                     <h2>Secure Checkout</h2>
                 </header>
-                <section id="checkout-details" class="form">
+                <section id="checkout-details" class="form novalidate no-validate">
                 	{% if order.paymentAttempt > 1 and orderObject is defined %}
                 		<p class="no-margin-top"><strong>Sorry, there was a problem placing your order. No money has been taken from your card. Please try again or <a href="{{ path('content_contact_us') }}">contact us</a> if you have any questions.</strong></p>
 	                	{% if (orderObject.paymentType == 'PayPal through SagePay') or (orderObject.paymentType == 'SagePay') %}

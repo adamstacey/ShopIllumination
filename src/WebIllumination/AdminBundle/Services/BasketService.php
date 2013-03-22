@@ -392,7 +392,7 @@ class BasketService {
 		{
 			$delivery['service'] = '';
 		}
-		
+
 		// Calculate the delivery options
 		$deliveryOptions = array();
 		switch ($zone)
