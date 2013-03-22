@@ -300,7 +300,7 @@ class BasketController extends Controller
     		$savings = $recommendedRetailPrice - $price;
     		$newProduct['basketItemId'] = $basketItemId;
     		$newProduct['productId'] = $productId;
-    		$newProduct['variantId'] = $variantId;
+            $newProduct['variantId'] = $variantId;
     		$newProduct['product'] = $product['pageTitle'];
     		$newProduct['url'] = $product['url'];
     		$newProduct['header'] = str_replace(' '.$product['productCode'].' ', ' ', $product['pageTitle']);
