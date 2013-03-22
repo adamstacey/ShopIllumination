@@ -366,7 +366,7 @@ class ProductsController extends Controller
 		
 		// Get the price
 		$price = $productService->getPrice($productId, $selectedOptions);
-		
+
 		// Create response    	    	    	   		    
     	$response = $this->render('WebIlluminationShopBundle:Products:ajaxGetProductPrice.html.twig', array('noAjax' => 0, 'price' => $price, 'product' => $product));
 		$response->headers->set('Connection', 'Keep-Alive');

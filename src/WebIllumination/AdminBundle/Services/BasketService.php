@@ -1095,9 +1095,11 @@ class BasketService {
 			{
                 /**
                  * @var Product $productEntity
+                 * @var Product\Variant $variantEntity
                  */
                 $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
-				if ($productEntity)
+                $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+				if ($productEntity && $variantEntity)
 				{
 					// Check for Stellar Pans
                     foreach($productEntity->getDepartments() as $department) {
@@ -1132,15 +1134,18 @@ class BasketService {
 				{
                     /**
                      * @var Product $productEntity
+                     * @var Product\Variant $variantEntity
                      */
-                    $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find(array('productId' => $product['productId']));
+                    $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+                    $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+
 					if ($stellarPanSetDiscountsAvailable > 0)
 					{
 						if (($product['productCode'] == 'S7C1D') || ($product['productCode'] == 'S7A1D'))
 						{
 							if ($product['quantity'] == 1)
 							{
-                                $prices = $productEntity->getPrices();
+                                $prices = $variantEntity->getPrices();
                                 if(count($prices) > 0) {
                                     $price = $prices[0];
                                     $panDiscount = $price->getListPrice() * 0.4;
@@ -1153,7 +1158,7 @@ class BasketService {
 							} else {
 								if ($stellarPanSetDiscountsAvailable >= $product['quantity'])
 								{
-                                    $prices = $productEntity->getPrices();
+                                    $prices = $variantEntity->getPrices();
                                     if(count($prices) > 0) {
                                         $price = $prices[0];
                                         $panDiscount = $price->getListPrice() * 0.4;
@@ -1164,7 +1169,7 @@ class BasketService {
                                         $stellarPanSetDiscountsAvailable -= $product['quantity'];
                                     }
 								} else {
-                                    $prices = $productEntity->getPrices();
+                                    $prices = $variantEntity->getPrices();
                                     if(count($prices) > 0) {
                                         $price = $prices[0];
                                         $panDiscount = ($price->getListPrice() * 0.4) * $stellarPanSetDiscountsAvailable;
@@ -1199,13 +1204,16 @@ class BasketService {
 			{
                 /**
                  * @var Product $productEntity
+                 * @var Product\Variant $variantEntity
                  */
-                $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find(array('productId' => $product['productId']));
-	 			if ($productEntity)
+                $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+                $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+
+	 			if ($productEntity && $variantEntity)
 	 			{
 					if ($productEntity->getBrand()->getId() == '7')
 					{
-                        $prices = $productEntity->getPrices();
+                        $prices = $variantEntity->getPrices();
                         if(count($prices) > 0) {
                             $price = $prices[0];
                             if ($numberOfCdaAppliances >= 3)
