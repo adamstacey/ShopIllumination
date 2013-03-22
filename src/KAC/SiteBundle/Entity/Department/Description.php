@@ -70,7 +70,7 @@ class Description implements DescriptionInterface
     /**
      * @ORM\Column(name="page_title_template", type="text", nullable=true)
      */
-    private $pageTitleTemplate;
+    private $pageTitleTemplate = "brand^productCode^department^extraProductKeyword";
     
     /**
      * @ORM\Column(name="header", type="string", length=255, nullable=true)
