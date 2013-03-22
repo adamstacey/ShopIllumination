@@ -2,12 +2,8 @@
 
 namespace WebIllumination\AdminBundle\Services;
 
+use KAC\SiteBundle\Entity\Order;
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Order;
-use WebIllumination\AdminBundle\Entity\OrderProduct;
-use WebIllumination\AdminBundle\Entity\OrderDiscount;
-use WebIllumination\AdminBundle\Entity\OrderDonation;
-use WebIllumination\AdminBundle\Entity\OrderNote;
 
 class OrderService {
 
@@ -613,10 +609,11 @@ class OrderService {
         // Save the order products
         foreach ($basket['products'] as $product)
         {
-            $orderProductObject = new OrderProduct();
-            $orderProductObject->setOrderId($order['orderNumber']);
+            $orderProductObject = new Order\Product();
+            $orderProductObject->setOrder($orderObject);
             $orderProductObject->setBasketItemId($product['basketItemId']);
-            $orderProductObject->setProductId($product['productId']);
+            $orderProductObject->setProduct($product['productId']);
+            $orderProductObject->setVariant($product['variantId']);
             $orderProductObject->setProduct($product['product']);
             $orderProductObject->setUrl($product['url']);
             $orderProductObject->setHeader($product['header']);
@@ -624,7 +621,7 @@ class OrderService {
             $orderProductObject->setBrand($product['brand']['brand']);
             $orderProductObject->setShortDescription($product['shortDescription']);
             $orderProductObject->setQuantity($product['quantity']);
-            $orderProductObject->setUnitCost($product['unitCost']);
+            $orderProductObject->setUnitCost($product['unitCost']);N
             $orderProductObject->setRecommendedRetailPrice($product['recommendedRetailPrice']);
             $orderProductObject->setDiscount($product['discount']);
             $orderProductObject->setSavings($product['savings']);

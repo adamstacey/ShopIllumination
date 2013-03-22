@@ -34,6 +34,11 @@ class Product
     private $product;
 
     /**
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product\Variant")
+     */
+    private $variant;
+
+    /**
      * @ORM\Column(name="quantity", type="integer", length=11)
      */
     private $quantity;
@@ -262,10 +267,10 @@ class Product
     /**
      * Set product
      *
-     * @param \KAC\SiteBundle\Entity\Order\Product $product
+     * @param \KAC\SiteBundle\Entity\Product $product
      * @return Product
      */
-    public function setProduct(\KAC\SiteBundle\Entity\Order\Product $product = null)
+    public function setProduct(\KAC\SiteBundle\Entity\Product $product = null)
     {
         $this->product = $product;
 
@@ -275,10 +280,27 @@ class Product
     /**
      * Get product
      *
-     * @return \KAC\SiteBundle\Entity\Order\Product
+     * @return \KAC\SiteBundle\Entity\Product
      */
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * @param \KAC\SiteBundle\Entity\Product\Variant $variant
+     */
+    public function setVariant($variant)
+    {
+        $this->variant = $variant;
+    }
+
+
+    /**
+     * @return \KAC\SiteBundle\Entity\Product\Variant
+     */
+    public function getVariant()
+    {
+        return $this->variant;
     }
 }
