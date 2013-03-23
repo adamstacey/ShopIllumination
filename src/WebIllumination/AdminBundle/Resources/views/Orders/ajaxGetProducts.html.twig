@@ -10,7 +10,7 @@
 		<tr>
 			<td class="ac{% if product.quantity > 1 %} gradient-background-red{% endif %}" width="1">{{ product.quantity }}</td>
 			<td class="ac" width="1">&times;</td>
-			<td class="al">{{ product.header }}</td>
+			<td class="al">{{ product.name }}</td>
 			<td class="ac" width="1">{{ product.productCode }}</td>
 			<td class="ac" width="1">&pound;{{ product.unitCost|number_format(2) }}</td>
 			<td class="ac" width="1">=</td>
