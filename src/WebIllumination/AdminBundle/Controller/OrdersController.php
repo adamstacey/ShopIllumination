@@ -2047,7 +2047,7 @@ class OrdersController extends Controller
         $data['mode'] = 'update';
 
         // Get the items
-        $data['items'] = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
+        $data['items'] = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
 
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemProducts.html.twig', array('data' => $data));
     }

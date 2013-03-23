@@ -340,53 +340,53 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#filter-department").jstree({
-                "plugins" : ["themes","html_data"],
-                "themes" : {
-                    "theme" : "default",
-                    "dots" : false,
-                    "icons" : false
-                }
-            });
-            $(":input", "#form-settings, #form-filter").live('change', function() {
-                $(this).closest("form").submit();
-            });
-            $(".action-reset-filter").click(function() {
-                // If the price filter is being reset then reset value to min/max
-                if($(this).data('filter') === "price") {
-                    var slider = $("#price-range-slider"),
-                        lowField = $("#filter-low-price"),
-                        highField = $("#filter-high-price");
+            {#$("#filter-department").jstree({#}
+                {#"plugins" : ["themes","html_data"],#}
+                {#"themes" : {#}
+                    {#"theme" : "default",#}
+                    {#"dots" : false,#}
+                    {#"icons" : false#}
+                {#}#}
+            {#});#}
+            {#$(":input", "#form-settings, #form-filter").live('change', function() {#}
+                {#$(this).closest("form").submit();#}
+            {#});#}
+            {#$(".action-reset-filter").click(function() {#}
+                {#// If the price filter is being reset then reset value to min/max#}
+                {#if($(this).data('filter') === "price") {#}
+                    {#var slider = $("#price-range-slider"),#}
+                        {#lowField = $("#filter-low-price"),#}
+                        {#highField = $("#filter-high-price");#}
 
-                    lowField.unbind('change');
-                    highField.unbind('change');
+                    {#lowField.unbind('change');#}
+                    {#highField.unbind('change');#}
 
-                    lowField.val(slider.slider("option", "min"));
-                    highField.val(slider.slider("option", "max"));
-                    console.log(":(");
+                    {#lowField.val(slider.slider("option", "min"));#}
+                    {#highField.val(slider.slider("option", "max"));#}
+                    {#console.log(":(");#}
 
-                    $(this).closest("form").submit();
-                } else {
-                    $(":input", "#filter-"+$(this).data('filter'))
-                        .not(':button, :submit, :reset, :hidden')
-                        .val('')
-                        .removeAttr('checked')
-                        .removeAttr('selected');
-                }
-            });
-            $("#price-range-slider").slider({
-                range: true,
-                min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),
-                max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),
-                values: [parseInt('{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}', 10), parseInt('{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}', 10)],
-                slide: function(event, ui) {
-                    $("#filter-low-price").val(ui.values[0]);
-                    $("#filter-high-price").val(ui.values[1]);
-                },
-                change: function(event, ui) {
-                    $(this).closest("form").submit();
-                }
-            });
+                    {#$(this).closest("form").submit();#}
+                {#} else {#}
+                    {#$(":input", "#filter-"+$(this).data('filter'))#}
+                        {#.not(':button, :submit, :reset, :hidden')#}
+                        {#.val('')#}
+                        {#.removeAttr('checked')#}
+                        {#.removeAttr('selected');#}
+                {#}#}
+            {#});#}
+            {#$("#price-range-slider").slider({#}
+                {#range: true,#}
+                {#min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),#}
+                {#max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),#}
+                {#values: [parseInt('{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}', 10), parseInt('{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}', 10)],#}
+                {#slide: function(event, ui) {#}
+                    {#$("#filter-low-price").val(ui.values[0]);#}
+                    {#$("#filter-high-price").val(ui.values[1]);#}
+                {#},#}
+                {#change: function(event, ui) {#}
+                    {#$(this).closest("form").submit();#}
+                {#}#}
+            {#});#}
         });
     </script>
 {% endblock %}

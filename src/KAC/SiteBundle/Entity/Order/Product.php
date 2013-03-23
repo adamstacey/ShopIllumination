@@ -39,14 +39,59 @@ class Product
     private $variant;
 
     /**
-     * @ORM\Column(name="unit_cost", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="url", type="string", length=255)
      */
-    private $unitCost;
+    private $url;
+
+    /**
+     * @ORM\Column(name="header", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(name="product_code", type="string", length=255)
+     */
+    private $productCode;
+
+    /**
+     * @ORM\Column(name="brand", type="string", length=255)
+     */
+    private $brand;
+
+    /**
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
 
     /**
      * @ORM\Column(name="quantity", type="integer", length=11)
      */
     private $quantity;
+
+    /**
+     * @ORM\Column(name="unit_cost", type="decimal", precision=12, scale=4)
+     */
+    private $unitCost;
+
+    /**
+     * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
+     */
+    private $recommendedRetailPrice;
+
+    /**
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
+     */
+    private $discount;
+
+    /**
+     * @ORM\Column(name="savings", type="decimal", precision=12, scale=4)
+     */
+    private $savings;
+
+    /**
+     * @ORM\Column(name="vat", type="decimal", precision=12, scale=4)
+     */
+    private $vat;
 
     /**
      * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4)
@@ -308,4 +353,106 @@ class Product
     {
         return $this->variant;
     }
+
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+    }
+
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+    }
+
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setProductCode($productCode)
+    {
+        $this->productCode = $productCode;
+    }
+
+    public function getProductCode()
+    {
+        return $this->productCode;
+    }
+
+    public function setRecommendedRetailPrice($recommendedRetailPrice)
+    {
+        $this->recommendedRetailPrice = $recommendedRetailPrice;
+    }
+
+    public function getRecommendedRetailPrice()
+    {
+        return $this->recommendedRetailPrice;
+    }
+
+    public function setSavings($savings)
+    {
+        $this->savings = $savings;
+    }
+
+    public function getSavings()
+    {
+        return $this->savings;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setUnitCost($unitCost)
+    {
+        $this->unitCost = $unitCost;
+    }
+
+    public function getUnitCost()
+    {
+        return $this->unitCost;
+    }
+
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
+
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+    }
+
+    public function getVat()
+    {
+        return $this->vat;
+    }
+
+
 }

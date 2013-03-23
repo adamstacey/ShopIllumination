@@ -149,7 +149,7 @@ UPDATE order_donations SET order_id=NULL WHERE order_id=0;
 DROP INDEX search_idx ON orders;
 ALTER TABLE orders CHANGE labels_printed labels_printed TINYINT(1) NOT NULL, CHANGE send_review_request send_review_request TINYINT(1) NOT NULL, CHANGE review_requested review_requested TINYINT(1) NOT NULL, CHANGE membership_card_purchased membership_card_purchased TINYINT(1) NOT NULL, CHANGE order_printed order_printed TINYINT(1) NOT NULL, CHANGE delivery_note_printed delivery_note_printed TINYINT(1) NOT NULL, CHANGE actioned actioned TINYINT(1) NOT NULL, CHANGE fraud_check_customer_ordered fraud_check_customer_ordered TINYINT(1) NOT NULL, CHANGE fraud_check_address_match fraud_check_address_match TINYINT(1) NOT NULL, CHANGE fraud_check_name_used_on_different_order fraud_check_name_used_on_different_order TINYINT(1) NOT NULL, CHANGE fraud_check_post_zip_code_used_on_different_order fraud_check_post_zip_code_used_on_different_order TINYINT(1) NOT NULL, CHANGE fraud_check_telephone_used_on_different_order fraud_check_telephone_used_on_different_order TINYINT(1) NOT NULL;
 ALTER TABLE links CHANGE default_image default_image TINYINT(1) NOT NULL;
-ALTER TABLE order_products CHANGE order_id order_id INT DEFAULT NULL, CHANGE product_id product_id INT DEFAULT NULL, ADD variant_id INT NOT NULL AFTER  `product_id`;
+ALTER TABLE order_products CHANGE order_id order_id INT DEFAULT NULL, CHANGE product_id product_id INT DEFAULT NULL, ADD variant_id INT NULL AFTER product_id;
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB8D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id);
 CREATE INDEX IDX_716EF29AAE51FB5F ON order_donations (order_id);
 ALTER TABLE order_discounts CHANGE order_id order_id INT DEFAULT NULL;
@@ -358,7 +358,8 @@ ALTER TABLE department_to_feature ADD CONSTRAINT FK_346447F87B97678 FOREIGN KEY 
 ALTER TABLE department_to_feature ADD CONSTRAINT FK_346447F60E4B879 FOREIGN KEY (feature_id) REFERENCES product_features (id);
 CREATE INDEX IDX_346447F87B97678 ON department_to_feature (feature_group_id);
 CREATE INDEX IDX_346447F60E4B879 ON department_to_feature (feature_id);
-ALTER TABLE order_products DROP product, DROP url, DROP header, DROP product_code, DROP brand, DROP short_description, DROP unit_cost, DROP recommended_retail_price, DROP discount, DROP savings, DROP vat;
+ALTER TABLE order_products CHANGE product name VARCHAR(255) NOT NULL, CHANGE short_description description VARCHAR(255) NOT NULL;
+UPDATE order_products SET variant_id = NULL where variant_id = 0;
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB4584665A FOREIGN KEY (product_id) REFERENCES products (id);
 CREATE INDEX IDX_5242B8EB4584665A ON order_products (product_id);
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
@@ -385,6 +386,6 @@ ALTER TABLE routing CHANGE url url VARCHAR(255) NOT NULL;
 CREATE UNIQUE INDEX UNIQ_A5F8B9FAF47645AE ON routing (url);
 ALTER TABLE department_descriptions CHANGE google_department google_department LONGTEXT NOT NULL;
 ALTER TABLE routing CHANGE object_id object_id INT DEFAULT NULL;
-ALTER TABLE departments_tmp DROP template;
+-- ALTER TABLE departments_tmp DROP template;
 ALTER TABLE departments_tmp ADD CONSTRAINT FK_C7AFC1E2727ACA70 FOREIGN KEY (parent_id) REFERENCES departments_tmp (id) ON DELETE SET NULL
 SET FOREIGN_KEY_CHECKS = 1;
