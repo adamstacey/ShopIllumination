@@ -134,12 +134,13 @@ class ListingController extends Controller
                 $departmentFilterPath = $currDepartment->__toString() . "|" . $departmentFilterPath;
                 $currDepartment = $currDepartment->getParent();
             } while ($currDepartment !== null);
-            $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(rtrim($departmentFilterPath, "|")));
+            $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
         }
         if($brand) {
             $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
         }
 
+        // Add filters for any flags that the user has set
         foreach($flags as $flag)
         {
             if(array_key_exists($flag, $filters))
