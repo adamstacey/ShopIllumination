@@ -1967,45 +1967,46 @@ class OrdersController extends Controller
             // Add item
             if($newItem)
             {
-                die("Depreciated");
-//                /**
-//                 * Find product
-//                 * @var \WebIllumination\AdminBundle\Entity\ProductIndex $product
-//                 */
-//                if (!$newProductId || !($product = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->find($newProductId)))
-//                {
-//                    // Notify user
-//                    $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem finding the product <strong>"'.$request->request->get('product-id').'"</strong>. Please try again.');
-//
-//                    // Forward
-//                    return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
-//                }
-//
-//                $itemProductObject = new OrderProduct();
-//                $itemProductObject->setOrderId($id);
-//                $itemProductObject->setQuantity($newProductQuantity);
-//                $itemProductObject->setBasketItemId($id.'-1');
-//                $itemProductObject->setProductId($product->getProductId());
-//                $itemProductObject->setProduct($product->getProduct());
-//                $itemProductObject->setProductCode($product->getProductCode());
-//                $itemProductObject->setUrl($product->getUrl());
-//                $itemProductObject->setHeader($product->getHeader());
-//                $itemProductObject->setBrand($product->getBrand());
-//                $itemProductObject->setShortDescription($product->getShortDescription());
-//
-//                $itemProductObject->setUnitCost($product->getListPrice());
-//                $itemProductObject->setRecommendedRetailPrice($product->getRecommendedRetailPrice());
-//                $itemProductObject->setDiscount($product->getDiscount());
-//                $itemProductObject->setSavings($product->getSavings());
-//                $itemProductObject->setVat($itemObject->getVat());
-//                $itemProductObject->setSubTotal($product->getListPrice() * $newProductQuantity);
-//
-//                $itemProductObject->setSelectedOptions("");
-//                $itemProductObject->setSelectedOptionLabels("");
-//
-//
-//                $em->persist($itemProductObject);
-//                $em->flush();
+                /**
+                 * Find product
+                 * @var \KAC\SiteBundle\Entity\Product\Variant $variant
+                 */
+                $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+                if(!$variant) {
+                    // Notify user
+                    $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem finding the product <strong>"'.$request->request->get('product-id').'"</strong>. Please try again.');
+
+                    // Forward
+                    return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
+                }
+
+                $itemProductObject = new Order\Product();
+                $itemProductObject->setOrder($itemObject);
+                $itemProductObject->setQuantity($newProductQuantity);
+                $itemProductObject->setBasketItemId($id.'-1');
+                $itemProductObject->setProduct($variant->getProduct());
+                $itemProductObject->setVariant($variant);
+
+                $itemProductObject->setUrl($variant->getProduct()->getRouting()->getUrl());
+                $itemProductObject->setName($variant->getProduct()->getDescription()->getName());
+                $itemProductObject->setProductCode($variant->getProductCode());
+                $itemProductObject->setBrand($variant->getProduct()->getBrand());
+                $itemProductObject->setDescription($variant->getDescription() != null ? $variant->getDescription()->getShortDescription() : "");
+
+                $itemProductObject->setUnitCost($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getUnitCost());
+                $itemProductObject->setRecommendedRetailPrice($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getUnitCost());
+                $itemProductObject->setDiscount($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getDiscount());
+                $itemProductObject->setSavings($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getSavings());
+                $itemProductObject->setVat(1.2);
+                $itemProductObject->setQuantity($newProductQuantity);
+                $itemProductObject->setSubTotal($itemProductObject->getUnitCost() * $newProductQuantity);
+
+                $itemProductObject->setSelectedOptions("");
+                $itemProductObject->setSelectedOptionLabels("");
+
+
+                $em->persist($itemProductObject);
+                $em->flush();
             }
 
             // Recalculate totals
