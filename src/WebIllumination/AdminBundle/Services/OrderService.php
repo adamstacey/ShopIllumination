@@ -620,6 +620,16 @@ class OrderService {
             $orderProductObject->setBasketItemId($product['basketItemId']);
             $orderProductObject->setProduct($variant->getProduct());
             $orderProductObject->setVariant($variant);
+            $orderProductObject->setUrl($product['url']);
+            $orderProductObject->setName($product['header']);
+            $orderProductObject->setProductCode($product['productCode']);
+            $orderProductObject->setBrand($product['brand']['brand']);
+            $orderProductObject->setDescription($product['shortDescription']);
+            $orderProductObject->setUnitCost($product['unitCost']);
+            $orderProductObject->setRecommendedRetailPrice($product['recommendedRetailPrice']);
+            $orderProductObject->setDiscount($product['discount']);
+            $orderProductObject->setSavings($product['savings']);
+            $orderProductObject->setVat($product['vat']);
             $orderProductObject->setQuantity($product['quantity']);
             $orderProductObject->setSubTotal($product['subTotal']);
             $orderProductObject->setSelectedOptions($product['selectedOptions']);
