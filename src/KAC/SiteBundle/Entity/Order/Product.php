@@ -39,6 +39,11 @@ class Product
     private $variant;
 
     /**
+     * @ORM\Column(name="unit_cost", type="decimal", precision=12, scale=4)
+     */
+    private $unitCost;
+
+    /**
      * @ORM\Column(name="quantity", type="integer", length=11)
      */
     private $quantity;

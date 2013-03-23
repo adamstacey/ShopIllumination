@@ -176,7 +176,7 @@
                                                 {% block product_controls %}
                                                     <a href="{#{{ path('page_request', {'url': product.url}) }}#}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
                                                     <div class="buy-now">
-                                                        {% if (product.availableForPurchase == 1) and (product.hide_price == 0) %}
+                                                        {% if product.availableForPurchase and not product.hide_price %}
                                                             <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
                                                                 <tr>
                                                                     {% if product.productCode == '' %}

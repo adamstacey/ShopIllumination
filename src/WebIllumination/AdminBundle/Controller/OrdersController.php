@@ -2,6 +2,7 @@
 
 namespace WebIllumination\AdminBundle\Controller;
 use KAC\SiteBundle\Entity\Order;
+use KAC\SiteBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -483,7 +484,7 @@ class OrdersController extends Controller
                             if ($delete > 0)
                             {
                                 // Delete any item discounts
-                                $itemDiscountObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
+                                $itemDiscountObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->find($itemId);
                                 foreach ($itemDiscountObjects as $itemDiscountObject)
                                 {
                                     $em->remove($itemDiscountObject);
@@ -491,7 +492,7 @@ class OrdersController extends Controller
                                 }
 
                                 // Delete any item notes
-                                $itemNoteObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
+                                $itemNoteObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->find($itemId);
                                 foreach ($itemNoteObjects as $itemNoteObject)
                                 {
                                     $em->remove($itemNoteObject);
@@ -499,7 +500,7 @@ class OrdersController extends Controller
                                 }
 
                                 // Delete any item products
-                                $itemProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
+                                $itemProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->find($itemId);
                                 foreach ($itemProductObjects as $itemProductObject)
                                 {
                                     $em->remove($itemProductObject);
@@ -1891,16 +1892,20 @@ class OrdersController extends Controller
 
         /**
          * Get the item
-         * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
+         * @var \KAC\SiteBundle\Entity\Order $itemObject
          */
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
 
         $products = $productService->getAllProducts();
         $productLabels = array();
+
+        /**
+         * @var Product $product
+         */
         foreach($products as $product) {
             $productLabels[] = array(
-                'label' => $product->getPageTitle(),
-                'value' => $product->getProductId(),
+                'label' => $product->getDescription() != null ? $product->getDescription()->getPageTitle() : "",
+                'value' => $product->getId(),
             );
         }
 
@@ -1932,7 +1937,7 @@ class OrdersController extends Controller
                     // Get the item
                     /**
                      * Get the item
-                     * @var \WebIllumination\AdminBundle\Entity\OrderNote $itemNoteObject
+                     * @var \KAC\SiteBundle\Entity\Order\Product $itemProductObject
                      */
                     $itemProductObject = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->find($itemId);
 
@@ -1949,7 +1954,7 @@ class OrdersController extends Controller
                                 $itemProductObject->setQuantity($listingProductQuantity[$itemId]);
                             }
 
-                            $itemProductObject->setSubTotal($itemProductObject->getUnitCost() * $itemProductObject->getQuantity());
+                            $itemProductObject->setSubTotal($itemProductObject->get() * $itemProductObject->getQuantity());
 
                             $em->persist($itemProductObject);
                         }
