@@ -21,7 +21,6 @@ class DepartmentManager extends Manager
     {
         $department = new Department();
         $department->addDescription(new DepartmentDescription());
-        $department->addFeature(new DepartmentToFeature());
         $department->addRouting(new DepartmentRouting());
 
         return $department;
