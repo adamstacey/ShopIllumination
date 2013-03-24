@@ -1,4 +1,10 @@
 {% for child in form %}
+    {% if child.vars.name == 'displayOrder' %}
+        <td><img class="handle" src="{{ asset('bundles/kacsite/images/icons/handle.png') }}" border="0" /></td>
+    {% endif %}
+{% endfor %}
+<td class="row-count"></td>
+{% for child in form %}
     {% if child.vars.block_prefixes.2 != 'hidden' %}
         <td{% if child.vars.attr.containerClass is defined %} class="{{ child.vars.attr.containerClass }}"{% endif %}>{{ form_widget(child) }}</td>
     {% endif %}
