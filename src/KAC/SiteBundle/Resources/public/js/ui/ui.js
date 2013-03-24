@@ -11,4 +11,8 @@ $(document).ready(function() {
     $("img[title], span[title], th[title]").tooltip({
         track: true
     });
+
+    $(document).on("click", ".actionDeleteParent", function() {
+        $(this).parent().remove();
+    });
 });
