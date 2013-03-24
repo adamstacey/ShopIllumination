@@ -6,4 +6,12 @@ $(document).ready(function() {
         $(this).removeClass("hover");
         $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).hide();
     });
+
+    $(document).on("click", ".actionClose", function() {
+        if ($(this).attr("data-hide-class") != "") {
+            $(this).closest("."+$(this).attr("data-hide-class")).remove();
+        } else {
+            $(this).remove();
+        }
+    });
 });
