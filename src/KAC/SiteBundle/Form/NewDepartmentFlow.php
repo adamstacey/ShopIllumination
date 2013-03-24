@@ -35,7 +35,7 @@ class NewDepartmentFlow extends FormFlow
             '2. SEO',
             '3. Delivery Options',
             '4. Feature Templates',
-            '5. Something'
+            '5. Product Templates'
         );
     }
 
@@ -76,6 +76,22 @@ class NewDepartmentFlow extends FormFlow
             if (!$formData->getRouting()->getUrl())
             {
                 $formData->getRouting()->setUrl($this->seoManager->createUrl($formData->getDescription()->getPageTitle()));
+            }
+        }
+
+        if ($step == 4)
+        {
+            // Sort the features in their display order
+            $sortedFeatures = array();
+            foreach ($formData->getFeatures() as $feature)
+            {
+                $sortedFeatures[$feature->getDisplayOrder()] = $feature;
+                $formData->removeFeature($feature);
+            }
+            ksort($sortedFeatures);
+            foreach ($sortedFeatures as $feature)
+            {
+                $formData->addFeature($feature);
             }
         }
 
