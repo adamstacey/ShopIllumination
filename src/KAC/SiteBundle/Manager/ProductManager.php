@@ -7,10 +7,10 @@ use KAC\SiteBundle\Entity\Product\Description as ProductDescription;
 use KAC\SiteBundle\Entity\Product\Price;
 use KAC\SiteBundle\Entity\Product\VariantToFeature;
 use KAC\SiteBundle\Entity\Product\Variant;
+use KAC\SiteBundle\Entity\Product\Routing as ProductRouting;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Entity\Image;
-use KAC\SiteBundle\Entity\Routing;
 
 class ProductManager extends Manager
 {
@@ -30,6 +30,7 @@ class ProductManager extends Manager
         $product->addDescription(new ProductDescription());
         $product->addDepartment(new ProductToDepartment());
         $product->addPrice(new Price());
+        $product->addRouting(new ProductRouting());
 
         $product->addFeatureGroup(new VariantToFeature());
 
@@ -120,29 +121,6 @@ class ProductManager extends Manager
             $description->setHeader($header);
             $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
             $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
-        }
-    }
-
-    /**
-     * Add a new route to the routing table. If the URL already exists in the table it is not added
-     *
-     * @param \KAC\SiteBundle\Entity\Product $product
-     */
-    public function addRoute(Product $product)
-    {
-        $em = $this->doctrine->getManager();
-        $url = $this->seoManager->createUrl($product->getDescription()->getPageTitle(), '');
-
-        if(count($em->getRepository('KAC\SiteBundle\Entity\Routing')->findBy(array('url' => $url))) === 0)
-        {
-            $route = new Routing();
-            $route->setObjectId($product->getId());
-            $route->setObjectType('product');
-            $route->setLocale('en');
-            $route->setUrl($url);
-
-            $em->persist($route);
-            $em->flush();
         }
     }
 }
