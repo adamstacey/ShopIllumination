@@ -60,7 +60,12 @@ class DepartmentFeatureType extends AbstractType
             ),
         ));
 
-        $builder->add('displayOrder', 'hidden');
+        $builder->add('displayOrder', 'hidden', array(
+            'required'  => false,
+            'attr' => array(
+                'class' => 'display-order',
+            ),
+        ));
 
         $builder->addEventListener(FormEvents::SET_DATA, function($event) use ($factory) {
             /**
