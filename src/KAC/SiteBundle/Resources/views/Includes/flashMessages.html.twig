@@ -1,0 +1,75 @@
+{% if app.session.flashbag.has('help') %}
+    <div class="flash-message">
+        <div class="message message-help">
+            <div class="container">
+                <div class="flash-message-content">
+                    <span class="icon ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-762"></span>
+                    {% for flashMessage in app.session.flashbag.get('help') %}
+                        <p>{{ flashMessage|raw }}</p>
+                    {% endfor %}
+                    <span data-hide-class="flash-message" class="actionClose close ui-button-icon-primary ui-icon-small icon-small-red icon-small-850"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if app.session.flashbag.has('error') %}
+    <div class="flash-message">
+        <div class="message message-error">
+            <div class="container">
+                <div class="flash-message-content">
+                    <span class="icon ui-button-icon-primary ui-icon-small icon-small-grey icon-small-850"></span>
+                    {% for flashMessage in app.session.flashbag.get('error') %}
+                        <p>{{ flashMessage|raw }}</p>
+                    {% endfor %}
+                    <span data-hide-class="flash-message" class="actionClose close ui-button-icon-primary ui-icon-small icon-small-white icon-small-850"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if app.session.flashbag.has('warning') %}
+    <div class="flash-message">
+        <div class="message message-warning">
+            <div class="container">
+                <div class="flash-message-content">
+                    <span class="icon ui-button-icon-primary ui-icon-small icon-small-white icon-small-694"></span>
+                    {% for flashMessage in app.session.flashbag.get('warning') %}
+                        <p>{{ flashMessage|raw }}</p>
+                    {% endfor %}
+                    <span data-hide-class="flash-message" class="actionClose close ui-button-icon-primary ui-icon-small icon-small-white icon-small-850"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if app.session.flashbag.has('notice') %}
+    <div class="flash-message">
+        <div class="message message-notice">
+            <div class="container">
+                <div class="flash-message-content">
+                    <span class="icon ui-button-icon-primary ui-icon-small icon-small-white icon-small-702"></span>
+                    {% for flashMessage in app.session.flashbag.get('notice') %}
+                        <p>{{ flashMessage|raw }}</p>
+                    {% endfor %}
+                    <span data-hide-class="flash-message" class="actionClose close ui-button-icon-primary ui-icon-small icon-small-white icon-small-850"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if app.session.flashbag.has('success') %}
+    <div class="flash-message">
+        <div class="message message-success">
+            <div class="container">
+                <div class="flash-message-content">
+                    <span class="icon ui-button-icon-primary ui-icon-small icon-small-white icon-small-1118"></span>
+                    {% for flashMessage in app.session.flashbag.get('success') %}
+                        <p>{{ flashMessage|raw }}</p>
+                    {% endfor %}
+                    <span data-hide-class="flash-message" class="actionClose close ui-button-icon-primary ui-icon-small icon-small-white icon-small-850"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
