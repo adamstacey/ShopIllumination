@@ -10,6 +10,7 @@ select {
     margin: 0;
     padding: 0;
     max-width: 100%;
+    @include borderBox;
 }
 
 option {
@@ -46,7 +47,7 @@ fieldset legend {
 .form-element {
     position: relative;
 
-    padding: 0 30px $spacingSmall 0;
+    padding: 0 26px $spacingSmall 0;
 }
 
 .form-helper {
@@ -122,6 +123,7 @@ textarea.uniform {
     color: $textColour;
     line-height: 22px;
     border: 1px solid $colourGreyLight;
+    @include borderBox;
 }
 
 table.form-table td input.text,
@@ -214,6 +216,7 @@ input[type="search"] {
 .radio,
 .uploader {
     @include inlineBlock;
+    @include borderBox;
     vertical-align: middle;
 }
 
@@ -709,6 +712,8 @@ table.form-table ul li {
 }
 
 .select2-container {
+    min-height: 40px;
+
     position: relative;
     display: inline-block;
     zoom: 1;
@@ -726,6 +731,7 @@ table.form-table ul li {
 
 .select2-container .select2-choice {
     padding: 8px $spacingMedium;
+    min-height: 22px;
 
     display: block;
     overflow: hidden;
@@ -1182,4 +1188,51 @@ table.form-table ul li {
 .select2-offscreen {
     position: absolute;
     left: -10000px;
+}
+
+.sortable-placeholder {
+    background: $colourGreyExtraLight;
+    border: 2px dashed $primaryColour;
+    height: 50px;
+}
+
+.handle {
+    cursor: move;
+}
+
+.multiple-selector {
+    padding: $spacingSmall 0 0 $spacingSmall;
+
+    @include verticalGradientGreyToGreyDark;
+    @include equalBorderRadius($radiusSize);
+    @include boxInsetGlow($colourGreyDark, 10px, 0, 1);
+    min-height: 35px;
+}
+
+.multiple-selector ul {
+    margin: 0;
+    padding: 0;
+}
+
+.multiple-selector ul li {
+    margin: 0 $spacingSmall $spacingSmall 0;
+    padding: 0 22px 0 $spacingSmall;
+
+    position: relative;
+    float: left;
+
+    list-style: none;
+    line-height: 30px;
+    cursor: move;
+    @include equalBorderRadius($radiusSize);
+    @include verticalGradientGreyExtraLightToWhite;
+    @include fontSize($fontSizeExtraSmall);
+}
+
+.multiple-selector ul li img {
+    position: absolute;
+    top: 9px;
+    right: $spacingSmall;
+
+    cursor: pointer;
 }
