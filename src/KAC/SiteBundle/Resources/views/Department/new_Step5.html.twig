@@ -1,0 +1,143 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="ui-button-icon-primary ui-icon icon-white icon-1256"></span>
+                    <h2>5. Product Templates</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
+                        <p>The product templates allow you to build page title, header and meta description templates for the products in this department. These templates ensure the SEO for the products are relevant, consistent and more importantly set. The template is followed for all new products added to this department.</p>
+                    </div>
+                    {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
+                    <fieldset>
+                        <legend class="clearfix fill">Add New Template Part</legend>
+                        <div class="clear"></div>
+                        <div class="form-element widget-group clearfix">
+                            <span title="Select the template you want to add a template part to." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="formTemplate">Template</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <select id="formTemplate" class="fill">
+                                    <option value="" selected="selected">- Select Template -</option>
+                                    <option value="pageTitleTemplate">Page Title Template</option>
+                                    <option value="headerTemplate">Header Template</option>
+                                    <option value="metaDescriptionTemplate">Meta Description Template</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-element widget-group clearfix">
+                            <span title="Select what template part you want to add to the selected template." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="formTemplatePart">Template Part</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <select id="formTemplatePart" class="free-text fill">
+                                    <option value="" selected="selected">- Select New Template Part -</option>
+                                    <option value="Free Text">Free Text</option>
+                                    <option value="Brand">Brand</option>
+                                    <option value="Product Code">Product Code</option>
+                                    <option value="Department">Department</option>
+                                    <option value="Extra Product Keyword">Extra Product Keyword</option>
+                                    <option value="Key Message">Key Message</option>
+                                    <optgroup label="Symbols">
+                                        <option value="”">”</option>
+                                        <option value="'">'</option>
+                                        <option value="°">°</option>
+                                        <option value="°C">°C</option>
+                                        <option value="×">×</option>
+                                        <option value="²">²</option>
+                                        <option value="³">³</option>
+                                        <option value="A">A</option>
+                                        <option value="bar">bar</option>
+                                        <option value="cl">cl</option>
+                                        <option value="cm">cm</option>
+                                        <option value="dB">dB</option>
+                                        <option value="g">g</option>
+                                        <option value="kg">kg</option>
+                                        <option value="kW">kW</option>
+                                        <option value="kW/h">kW/h</option>
+                                        <option value="L">L</option>
+                                        <option value="m">m</option>
+                                        <option value="m³">m³</option>
+                                        <option value="m³/h">m³/h</option>
+                                        <option value="mm">mm</option>
+                                        <option value="Ø">Ø</option>
+                                        <option value="V">V</option>
+                                        <option value="W">W</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-element widget-group clearfix free-text-container ui-helper-hidden">
+                            <span title="Enter the free text you want to add to the selected template." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="formNewTemplatePart">Free Text</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <input type="text" id="formFreeText" class="fill" placeholder="Enter free text..." value="" />
+                            </div>
+                        </div>
+                        <div class="form-element clearfix">
+                            <button type="button" class="actionAddTemplatePart button button-small fr">Add</button>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend class="clearfix fill">Templates</legend>
+                        <div class="clear"></div>
+                        <div class="form-element widget-group clearfix">
+                            <span title="The page title template is the template used by the products that are directly within this department to automatically generate the page title. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="pageTitleTemplate"><em class="required" title="This field is required">*</em>&nbsp;Page Title Template</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <div class="multiple-selector">
+                                    <ul data-hidden-field="site_new_department_descriptions_0_pageTitleTemplate" id="pageTitleTemplate" class="sortable template-part clearfix">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-element widget-group clearfix">
+                            <span title="The header template is the template used by the products that are directly within this department to automatically generate the header text that is displayed on the product listings. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="headerTemplate">Header Template</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <div class="multiple-selector">
+                                    <ul data-hidden-field="site_new_department_descriptions_0_headerTemplate" id="headerTemplate" class="sortable template-part clearfix">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-element widget-group clearfix">
+                            <span title="The meta description template is the template used by the products that are directly within this department to automatically generate the meta description. Please note this template is only used by products that are in this department. If a product is in a sub department that is within this department then the template from the sub department will be used instead." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="metaDescriptionTemplate">Meta Description Template</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <div class="multiple-selector">
+                                    <ul data-hidden-field="site_new_department_descriptions_0_metaDescriptionTemplate" id="metaDescriptionTemplate" class="sortable template-part clearfix">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    {{ form_rest(form) }}
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Department:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+</script>
