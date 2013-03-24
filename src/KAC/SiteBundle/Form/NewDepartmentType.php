@@ -35,7 +35,8 @@ class NewDepartmentType extends AbstractType
                         'class' => 'select-department fill no-uniform',
                         'help' => 'Select the department you want this department to fall under.',
                     ),
-                ), array());
+                ));
+
                 $builder->add('status', 'choice', array(
                     'label' => 'Status',
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
@@ -43,6 +44,7 @@ class NewDepartmentType extends AbstractType
                         'help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
                     ),
                 ));
+
                 $builder->add('descriptions', 'collection', array(
                     'type' => new DepartmentDescriptionOverviewType(),
                 ));
@@ -51,6 +53,7 @@ class NewDepartmentType extends AbstractType
                 $builder->add('descriptions', 'collection', array(
                     'type' => new DepartmentDescriptionSeoType(),
                 ));
+
                 $builder->add('routings', 'collection', array(
                     'type' => new DepartmentRoutingType(),
                 ));
@@ -69,6 +72,11 @@ class NewDepartmentType extends AbstractType
                     'type' => new DepartmentFeatureType(),
                     'allow_add' => true,
                     'allow_delete' => true,
+                ));
+                break;
+            case 5:
+                $builder->add('descriptions', 'collection', array(
+                    'type' => new DepartmentDescriptionTemplatesType(),
                 ));
                 break;
         }
