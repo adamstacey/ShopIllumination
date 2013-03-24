@@ -1,6 +1,7 @@
 <?php
 
 namespace WebIllumination\ShopBundle\Controller;
+use FOS\UserBundle\Util\UserManipulator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -8,11 +9,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\User;
-use WebIllumination\AdminBundle\Entity\Contact;
-use WebIllumination\AdminBundle\Entity\ContactNumber;
-use WebIllumination\AdminBundle\Entity\ContactAddress;
-use WebIllumination\AdminBundle\Entity\ContactEmailAddress;
 
 class CheckoutController extends Controller
 {
@@ -79,7 +75,7 @@ class CheckoutController extends Controller
 
 		// Check to see if the email address has a user account assigned to it 
 		$userAccountExists = false;
-		$userObject = $em->getRepository('WebIlluminationAdminBundle:User')->findOneBy(array('emailAddress' => $emailAddress));
+		$userObject = $em->getRepository('KAC\UserBundle\Entity\User')->findOneBy(array('email' => $emailAddress));
 		if ($userObject)
 		{
 			$userAccountExists = true;
@@ -97,27 +93,14 @@ class CheckoutController extends Controller
 		
 		// Get the entity manager
 	   	$em = $this->getDoctrine()->getEntityManager();
-		
-		// Create new user
-		$userObject = new User();
-    	$userObject->setContactId(0);
-    	$userObject->setEmailAddress($emailAddress);
-    	$userObject->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
-    	$userObject->setPassword('');
-    	$userObject->setActive(1);
-    	$em->persist($userObject);
-    	$em->flush();
-    	
-    	// Get the encoder factory
-	   	$encoderFactory = $this->get('security.encoder_factory');
-	   	
-	  	// Generate the password to check
-	  	$encoder = $encoderFactory->getEncoder($userObject);  
-	  	
-    	// Setup password
-    	$userObject->setPassword($encoder->encodePassword($password, $userObject->getSalt()));
-    	$em->persist($userObject);
-    	$em->flush();
+
+        /**
+         * Create the user
+         * @var $manipulator UserManipulator
+         * @var $userObject \KAC\UserBundle\Entity\User
+         */
+        $manipulator = $this->getContainer()->get('fos_user.util.user_manipulator');
+        $userObject = $manipulator->create($emailAddress, $password, $emailAddress, true, false);
     	
     	// Authenticate the user
 		$token = new UsernamePasswordToken($userObject, null, 'shop', array('ROLE_CUSTOMER'));
@@ -128,9 +111,10 @@ class CheckoutController extends Controller
 		$customer = array();
 		$user = array();
 		$user['id'] = $userObject->getId();
-		$user['contactId'] = $userObject->getContactId();
-		$user['emailAddress'] = $userObject->getEmailAddress();
-		$user['lastLoggedIn'] = $userObject->getLastLoggedIn();
+//		$user['contactId'] = $userObject->getContactId();
+		$user['contactId'] = $userObject->getContacts()->isEmpty() ? null : $userObject->getContacts()->first()->getId();
+		$user['emailAddress'] = $userObject->getEmail();
+		$user['lastLoggedIn'] = $userObject->getLastLogin();
 		$customer['user'] = $user;
 		$customer['contact'] = array();
 		
@@ -370,7 +354,7 @@ class CheckoutController extends Controller
     	
     	// Get the order
     	$orderId = $orderSession['orderNumber'];
-    	$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($orderId);
+    	$orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($orderId);
     	if (!$orderObject)
     	{
     		// Set error message
@@ -429,7 +413,7 @@ class CheckoutController extends Controller
 		if ($orderObject->getMembershipCardNumber() == 1)
 		{
 			// Check the user doesn't already have a card
-			$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('userId' => $orderObject->getUserId(), 'active' => 1));
+			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('userId' => $orderObject->getUserId(), 'active' => 1));
 			if ($membershipCardObject)
 			{
 				$orderObject->setMembershipCardNumber($membershipCardObject->getMembershipNumber());
@@ -438,7 +422,7 @@ class CheckoutController extends Controller
 		    	$basketSession['discounts']['membershipCardNumber'] = $membershipCardObject->getMembershipNumber();
 			} else {
 				// Setup the user a new membership card
-				$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('userId' => '0', 'active' => 1));
+				$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('userId' => '0', 'active' => 1));
 				if ($membershipCardObject)
 				{
 					$membershipCardObject->setUserId($orderObject->getUserId());
@@ -471,7 +455,7 @@ class CheckoutController extends Controller
 			}
 		} elseif ($orderObject->getMembershipCardNumber() > 0) {
 			// Update the membership card reporting
-			$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('membershipNumber' => $orderObject->getMembershipCardNumber(), 'active' => 1));
+			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('membershipNumber' => $orderObject->getMembershipCardNumber(), 'active' => 1));
 			if ($membershipCardObject)
 			{
 				$membershipCardObject->setItems(($membershipCardObject->getItems() + $orderObject->getItems()));
@@ -551,7 +535,7 @@ class CheckoutController extends Controller
 	   	
 	   	// Get the order
     	$orderId = $orderSession['orderNumber'];
-    	$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($orderId);
+    	$orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($orderId);
     	if (!$orderObject)
     	{
     		// Set error message

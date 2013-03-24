@@ -2,7 +2,7 @@
 	<a title="Start shopping for kitchen appliances" href="{{ path('homepage') }}">Shopping</a>&nbsp;|&nbsp;
 	<a class="action-scroll-to-bottom" title="Do you need any help or advice on your kitchen appliances?" href="Javascript:void(0);">Help &amp; Advice</a>&nbsp;|&nbsp;
 	<a target="_blank" title="Check out the latest kitchen appliance news and articles at our blog" href="http://www.kitchenappliancecentre.co.uk/blog/">Read our Blog</a>&nbsp;|&nbsp;
-	{% if app.session.get('_security_shop') %}
+    {% if is_granted("ROLE_USER") %}
 		<a title="Click here if you would like to securely logout." class="account" href="{{ path('fos_user_registration_register') }}"><strong>Securely Logout</strong></a>&nbsp;|&nbsp;
 		<a title="Click here to update your account." class="account" href="{{ path('fos_user_registration_register') }}"><strong>Your Account</strong></a>
 	{% else %}

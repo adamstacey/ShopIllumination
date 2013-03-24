@@ -15,11 +15,13 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $this
             ->setName('admin:index:warmup')
             ->setDescription('Load data into Solr index')
+            ->addOption('start', null, InputOption::VALUE_REQUIRED);
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
         gc_enable();
         // Load products
         $em = $this->getContainer()->get('doctrine')->getManager();
@@ -27,12 +29,18 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
 
         //Clear product index
-        $productIndexer->delete();
+        if($input->getOption('start') === null)
+        {
+            $productIndexer->delete();
+        }
         unset($productIndexer);
 
-        for($i = count($products) - 1; $i >= 0; $i--)
+        $totalProducts = count($products);
+        $startI = $input->getOption('start') == null ? count($products) - 1 : $input->getOption('start');
+
+        for($i = $startI; $i >= 0; $i--)
         {
-            $output->writeln("Writing index for product ".$i." of ".count($products)."...");
+            $output->writeln("Writing index for product ".$i." of ".$totalProducts."...");
             $product = $products[$i];
             unset($products[$i]);
             $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));

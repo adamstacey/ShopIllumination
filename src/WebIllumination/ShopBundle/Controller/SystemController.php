@@ -239,7 +239,7 @@ class SystemController extends Controller
    					}
    					$this->resetProductSearch();
 //   					return $this->forward('WebIlluminationShopBundle:Departments:index', array('id' => $routingObject->getObjectId(), 'url' => $url, 'brand' => $brand, 'group' => $group));
-   					return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'brandId' => $brand));
+   					return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'brandId' => $brand), $request->query->all());
    					break;
    				case 'product':
    					// Check the status of the product

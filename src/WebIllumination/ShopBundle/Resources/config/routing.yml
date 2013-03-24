@@ -208,29 +208,6 @@ basket_ajax_delete_membership_card_number:
 basket_ajax_delete_voucher_code:
     pattern:  /basket/ajaxDeleteVoucherCode
     defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxDeleteVoucherCode }
-    
-# Security
-security_login:
-    pattern:  /secure-login.html
-    defaults: { _controller: WebIlluminationShopBundle:Security:login }
-    requirements:
-        _scheme:  https
-security_ajax_login:
-    pattern:  /security/ajaxLogin
-    defaults: { _controller: WebIlluminationShopBundle:Security:ajaxLogin }
-security_ajax_forgotten_your_password:
-    pattern:  /security/ajaxForgottenYourPassword
-    defaults: { _controller: WebIlluminationShopBundle:Security:ajaxForgottenYourPassword }
-security_reset_password:
-    pattern:  /security/resetPassword/{userKey}
-    defaults: { _controller: WebIlluminationShopBundle:Security:resetPassword }
-    requirements:
-        _scheme:  https
-security_logout:
-    pattern:  /securely-logout.html
-    defaults: { _controller: WebIlluminationShopBundle:Security:logout }
-    requirements:
-        _scheme:  https
 
 # Users
 users_register:

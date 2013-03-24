@@ -2,6 +2,7 @@
 
 namespace WebIllumination\AdminBundle\Controller;
 use KAC\SiteBundle\Entity\Order;
+use KAC\SiteBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -483,7 +484,7 @@ class OrdersController extends Controller
                             if ($delete > 0)
                             {
                                 // Delete any item discounts
-                                $itemDiscountObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
+                                $itemDiscountObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->find($itemId);
                                 foreach ($itemDiscountObjects as $itemDiscountObject)
                                 {
                                     $em->remove($itemDiscountObject);
@@ -491,7 +492,7 @@ class OrdersController extends Controller
                                 }
 
                                 // Delete any item notes
-                                $itemNoteObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
+                                $itemNoteObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->find($itemId);
                                 foreach ($itemNoteObjects as $itemNoteObject)
                                 {
                                     $em->remove($itemNoteObject);
@@ -499,7 +500,7 @@ class OrdersController extends Controller
                                 }
 
                                 // Delete any item products
-                                $itemProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array($this->settings['singleClass'].'Id' => $itemId));
+                                $itemProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->find($itemId);
                                 foreach ($itemProductObjects as $itemProductObject)
                                 {
                                     $em->remove($itemProductObject);
@@ -1891,16 +1892,20 @@ class OrdersController extends Controller
 
         /**
          * Get the item
-         * @var \WebIllumination\AdminBundle\Entity\Order $itemObject
+         * @var \KAC\SiteBundle\Entity\Order $itemObject
          */
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
 
         $products = $productService->getAllProducts();
         $productLabels = array();
+
+        /**
+         * @var Product $product
+         */
         foreach($products as $product) {
             $productLabels[] = array(
-                'label' => $product->getPageTitle(),
-                'value' => $product->getProductId(),
+                'label' => $product->getDescription() != null ? $product->getDescription()->getPageTitle() : "",
+                'value' => $product->getId(),
             );
         }
 
@@ -1932,7 +1937,7 @@ class OrdersController extends Controller
                     // Get the item
                     /**
                      * Get the item
-                     * @var \WebIllumination\AdminBundle\Entity\OrderNote $itemNoteObject
+                     * @var \KAC\SiteBundle\Entity\Order\Product $itemProductObject
                      */
                     $itemProductObject = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->find($itemId);
 
@@ -1949,7 +1954,7 @@ class OrdersController extends Controller
                                 $itemProductObject->setQuantity($listingProductQuantity[$itemId]);
                             }
 
-                            $itemProductObject->setSubTotal($itemProductObject->getUnitCost() * $itemProductObject->getQuantity());
+                            $itemProductObject->setSubTotal($itemProductObject->get() * $itemProductObject->getQuantity());
 
                             $em->persist($itemProductObject);
                         }
@@ -1962,45 +1967,46 @@ class OrdersController extends Controller
             // Add item
             if($newItem)
             {
-                die("Depreciated");
-//                /**
-//                 * Find product
-//                 * @var \WebIllumination\AdminBundle\Entity\ProductIndex $product
-//                 */
-//                if (!$newProductId || !($product = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->find($newProductId)))
-//                {
-//                    // Notify user
-//                    $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem finding the product <strong>"'.$request->request->get('product-id').'"</strong>. Please try again.');
-//
-//                    // Forward
-//                    return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
-//                }
-//
-//                $itemProductObject = new OrderProduct();
-//                $itemProductObject->setOrderId($id);
-//                $itemProductObject->setQuantity($newProductQuantity);
-//                $itemProductObject->setBasketItemId($id.'-1');
-//                $itemProductObject->setProductId($product->getProductId());
-//                $itemProductObject->setProduct($product->getProduct());
-//                $itemProductObject->setProductCode($product->getProductCode());
-//                $itemProductObject->setUrl($product->getUrl());
-//                $itemProductObject->setHeader($product->getHeader());
-//                $itemProductObject->setBrand($product->getBrand());
-//                $itemProductObject->setShortDescription($product->getShortDescription());
-//
-//                $itemProductObject->setUnitCost($product->getListPrice());
-//                $itemProductObject->setRecommendedRetailPrice($product->getRecommendedRetailPrice());
-//                $itemProductObject->setDiscount($product->getDiscount());
-//                $itemProductObject->setSavings($product->getSavings());
-//                $itemProductObject->setVat($itemObject->getVat());
-//                $itemProductObject->setSubTotal($product->getListPrice() * $newProductQuantity);
-//
-//                $itemProductObject->setSelectedOptions("");
-//                $itemProductObject->setSelectedOptionLabels("");
-//
-//
-//                $em->persist($itemProductObject);
-//                $em->flush();
+                /**
+                 * Find product
+                 * @var \KAC\SiteBundle\Entity\Product\Variant $variant
+                 */
+                $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+                if(!$variant) {
+                    // Notify user
+                    $this->get('session')->getFlashBag()->add('error', 'Sorry, there was a problem finding the product <strong>"'.$request->request->get('product-id').'"</strong>. Please try again.');
+
+                    // Forward
+                    return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id)));
+                }
+
+                $itemProductObject = new Order\Product();
+                $itemProductObject->setOrder($itemObject);
+                $itemProductObject->setQuantity($newProductQuantity);
+                $itemProductObject->setBasketItemId($id.'-1');
+                $itemProductObject->setProduct($variant->getProduct());
+                $itemProductObject->setVariant($variant);
+
+                $itemProductObject->setUrl($variant->getProduct()->getRouting()->getUrl());
+                $itemProductObject->setName($variant->getProduct()->getDescription()->getName());
+                $itemProductObject->setProductCode($variant->getProductCode());
+                $itemProductObject->setBrand($variant->getProduct()->getBrand());
+                $itemProductObject->setDescription($variant->getDescription() != null ? $variant->getDescription()->getShortDescription() : "");
+
+                $itemProductObject->setUnitCost($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getUnitCost());
+                $itemProductObject->setRecommendedRetailPrice($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getUnitCost());
+                $itemProductObject->setDiscount($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getDiscount());
+                $itemProductObject->setSavings($variant->getPrices()->isEmpty() ? 0 : $product->getPrices()->first()->getSavings());
+                $itemProductObject->setVat(1.2);
+                $itemProductObject->setQuantity($newProductQuantity);
+                $itemProductObject->setSubTotal($itemProductObject->getUnitCost() * $newProductQuantity);
+
+                $itemProductObject->setSelectedOptions("");
+                $itemProductObject->setSelectedOptionLabels("");
+
+
+                $em->persist($itemProductObject);
+                $em->flush();
             }
 
             // Recalculate totals
@@ -2042,7 +2048,7 @@ class OrdersController extends Controller
         $data['mode'] = 'update';
 
         // Get the items
-        $data['items'] = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
+        $data['items'] = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
 
         return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemProducts.html.twig', array('data' => $data));
     }

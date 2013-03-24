@@ -657,7 +657,7 @@ class Variant implements DescribableInterface
     /**
      * Get description
      *
-     * @return VariantDescription
+     * @return Variant\Description
      */
     public function getDescription()
     {

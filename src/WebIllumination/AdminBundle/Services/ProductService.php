@@ -251,42 +251,37 @@ class ProductService {
         $product = array();
 
         $query = $em->createQueryBuilder()
-            ->select("p, pd, v, vp, vd, b, bd, br, d, pd, d, dd, dr")
+            ->select("p, pd, v, vp, vd, b, bd, br, ptd, d, dd, dr")
             ->from("KAC\SiteBundle\Entity\Product", "p")
-            ->join("p.variants", "v")
-            ->join("p.descriptions", "vpd")
-            ->join("v.prices", "vp")
-            ->join("v.features", "vf")
-            ->join("v.options", "vo")
-            ->join("v.descriptions", "vd")
-            ->join("p.brand", "b")
-            ->join("b.descriptions", "bd")
-            ->join("b.routings", "br")
-            ->join("p.departments", "pd")
-            ->join("pd.department", "d")
-            ->join("d.descriptions", "dd")
-            ->join("d.routings", "dr")
+            ->leftJoin("p.variants", "v")
+            ->leftJoin("p.descriptions", "pd")
+            ->leftJoin("v.prices", "vp")
+            ->leftJoin("v.features", "vf")
+            ->leftJoin("v.options", "vo")
+            ->leftJoin("v.descriptions", "vd")
+            ->leftJoin("p.brand", "b")
+            ->leftJoin("b.descriptions", "bd")
+            ->leftJoin("b.routings", "br")
+            ->leftJoin("p.departments", "ptd")
+            ->join("ptd.department", "d")
+            ->leftJoin("d.descriptions", "dd")
+            ->leftJoin("d.routings", "dr")
             ->where("p.id = ?1")
-            ->andWhere("vd.locale = ?2")
-            ->andWhere("bd.locale = ?2")
-            ->andWhere("vd.locale = ?2")
-            ->andWhere("dd.locale = ?2")
-            ->andWhere("vp.currencyCode = ?3")
-            ->setParameter(1, $id)
-            ->setParameter(2, $locale)
-            ->setParameter(3, $currencyCode);
+            ->setParameter(1, $id);
 
         /**
          * @var Product $productObject
          * @var \KAC\SiteBundle\Entity\Product\Description $productDescriptionObject
          */
-        $productObject = $query->getQuery()->execute();
+        $productObjects = $query->getQuery()->execute();
 
         // Product Info
-        if (!$productObject || count($productObject->getDescriptions()) > 0)
+        if (!$productObjects || count($productObjects) < 0 || count($productObjects[0]->getDescriptions()) < 0)
         {
             return false;
         }
+
+        $productObject = $productObjects[0];
 
         $productDescriptionObjects = $productObject->getDescriptions();
         $productDescriptionObject = $productDescriptionObjects[0];
@@ -345,10 +340,10 @@ class ProductService {
             $brandLogoObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->find($brandObject->getDescription()->getLogoImage()->getId());
             if ($brandLogoObject)
             {
-                $product['brand']['logoOriginalPath'] = $brandLogoObject->getOriginalPath();
-                $product['brand']['logoThumbnailPath'] = $brandLogoObject->getThumbnailPath();
-                $product['brand']['logoMediumPath'] = $brandLogoObject->getMediumPath();
-                $product['brand']['logoLargePath'] = $brandLogoObject->getLargePath();
+                $product['brand']['logoOriginalPath'] = $brandLogoObject->getPublicPath();
+                $product['brand']['logoThumbnailPath'] = $brandLogoObject->getPublicPath();
+                $product['brand']['logoMediumPath'] = $brandLogoObject->getPublicPath();
+                $product['brand']['logoLargePath'] = $brandLogoObject->getPublicPath();
             }
 
             // Get the guarantees
@@ -390,7 +385,7 @@ class ProductService {
             $departmentPathIds = explode('|', $department['pathIds']);
             foreach ($departmentPathIds as $departmentPathId)
             {
-                $departmentPathDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Description')->findOneBy(array('departmentId' => $departmentPathId));
+                $departmentPathDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Description')->findOneBy(array('department' => $departmentPathId));
                 $departmentPathRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', ));
                 if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
                 {
@@ -474,13 +469,13 @@ class ProductService {
 
         // Related products
         $relatedProducts = array();
-        $relatedProductsObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
+        $relatedProductsObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('product' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
         /**
          * @var Product\Link $relatedProductObject
          */
         foreach ($relatedProductsObject as $relatedProductObject)
         {
-            $relatedProduct = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('productId' => $relatedProductObject->getLinkedProduct()->getId()));
+            $relatedProduct = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('product' => $relatedProductObject->getLinkedProduct()->getId()));
             if ($relatedProductObject)
             {
                 $relatedProducts[] = $relatedProduct;
@@ -490,13 +485,13 @@ class ProductService {
 
         // Cheaper Alternatives
         $cheaperAlternatives = array();
-        $cheaperAlternativesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
+        $cheaperAlternativesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('product' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
         /**
          * @var Product\Link $cheaperAlternativeObject
          */
         foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
         {
-            $cheaperAlternative = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('productId' => $cheaperAlternativeObject->getLinkedProduct()->getId()));
+            $cheaperAlternative = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('product' => $cheaperAlternativeObject->getLinkedProduct()->getId()));
             if ($cheaperAlternative)
             {
                 $cheaperAlternatives[] = $cheaperAlternative;
@@ -551,43 +546,42 @@ class ProductService {
         $variant = array();
 
         $query = $em->createQueryBuilder()
-            ->select("v, p, vp, vd, b, bd, br, d, dd, dr")
-            ->from("KAC\SiteBundle\Entity\Variant", "v")
+            ->select("v, p, vp, vf, vo, vd, d, pd, pr")
+            ->from("KAC\SiteBundle\Entity\Product\Variant", "v")
             ->join("v.product", "p")
-            ->join("v.prices", "vp")
-            ->join("v.features", "vf")
-            ->join("v.options", "vo")
-            ->join("v.descriptions", "vd")
-            ->join("v.brand", "b")
-            ->join("v.description", "bd")
-            ->join("v.routing", "br")
-            ->join("p.departments", "d")
-            ->join("d.description", "dd")
-            ->join("d.routing", "dr")
+            ->leftJoin("v.prices", "vp")
+            ->leftJoin("v.features", "vf")
+            ->leftJoin("v.options", "vo")
+            ->leftJoin("v.descriptions", "vd")
+            ->leftJoin("p.descriptions", "pd")
+            ->leftJoin("p.routings", "pr")
+            ->leftJoin("p.departments", "d")
             ->where("v.id = ?1")
-            ->andWhere("vd.locale = ?2")
-            ->andWhere("bd.locale = ?2")
-            ->andWhere("dd.locale = ?2")
-            ->andWhere("vd.locale = ?2")
-            ->andWhere("vp.prices = ?3")
-            ->setParameter(1, $id)
-            ->setParameter(1, $locale)
-            ->setParameter(1, $currencyCode);
+            ->setParameter(1, $id);
 
         /**
          * @var Product\Variant $variantObject
-         * @var \KAC\SiteBundle\Entity\Product\Variant\Description $variantDescriptionObject
+         * @var \KAC\SiteBundle\Entity\Product\Variant\Description $productDescriptionObject
          */
-        $variantObject = $query->getQuery()->execute();
+        $variantObjects = $query->getQuery()->execute();
 
         // Product Info
-        if (!$variantObject || count($variantObject->getDescriptions()) > 0)
+        if (!$variantObjects || count($variantObjects) < 0)
         {
             return false;
         }
 
-        $variantDescriptionObjects = $variantObject->getDescriptions();
-        $variantDescriptionObject = $variantDescriptionObjects[0];
+        $variantObject = $variantObjects[0];
+
+        if($variantObject->getDescription() === null) {
+            if($variantObject->getProduct()->getDescription() === null) {
+                return false;
+            } else {
+                $variantDescriptionObject = $variantObject->getProduct()->getDescription();
+            }
+        } else {
+            $variantDescriptionObject = $variantObject->getDescription();
+        }
 
         $variant['id'] = $variantObject->getId();
         $variant['productId'] = $variantObject->getId();
@@ -755,13 +749,13 @@ class ProductService {
 
         // Related products
         $relatedProducts = array();
-        $relatedProductsObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('productId' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
+        $relatedProductsObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('product' => $id, 'linkType' => 'related', 'active' => 1), array('displayOrder' => 'ASC'));
         /**
          * @var Product\Link $relatedProductObject
          */
         foreach ($relatedProductsObject as $relatedProductObject)
         {
-            $relatedProduct = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('productId' => $relatedProductObject->getLinkedProduct()->getId()));
+            $relatedProduct = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('product' => $relatedProductObject->getLinkedProduct()->getId()));
             if ($relatedProductObject)
             {
                 $relatedProducts[] = $relatedProduct;
@@ -771,13 +765,13 @@ class ProductService {
 
         // Cheaper Alternatives
         $cheaperAlternatives = array();
-        $cheaperAlternativesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('productId' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
+        $cheaperAlternativesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('product' => $id, 'linkType' => 'cheaper', 'active' => 1), array('displayOrder' => 'ASC'));
         /**
          * @var Product\Link $cheaperAlternativeObject
          */
         foreach ($cheaperAlternativesObject as $cheaperAlternativeObject)
         {
-            $cheaperAlternative = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('productId' => $cheaperAlternativeObject->getLinkedProduct()->getId()));
+            $cheaperAlternative = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findOneBy(array('product' => $cheaperAlternativeObject->getLinkedProduct()->getId()));
             if ($cheaperAlternative)
             {
                 $cheaperAlternatives[] = $cheaperAlternative;

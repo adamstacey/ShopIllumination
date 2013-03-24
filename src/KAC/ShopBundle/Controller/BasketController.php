@@ -169,6 +169,7 @@ class BasketController extends Controller
     	
 		// Get submitted data
 		$productId = $request->query->get('productId');
+		$variantId = $request->query->get('variantId', $productId);
 		$quantity = ($request->query->get('quantity')?$request->query->get('quantity'):1);
 		$selectedOptions = ($request->query->get('selectedOptions')?$request->query->get('selectedOptions'):'');
 		$price = 0;
@@ -176,6 +177,7 @@ class BasketController extends Controller
 		
 		// Get the product
     	$product = $productService->getProduct($productId, 'en', 'GBP');
+        $variant = $productService->getVariant($variantId, 'en', 'GBP');
     	$header = $product['pageTitle'];
     	$url = $product['url'];
     	$thumbnailPath = $product['images'][0]['thumbnailPath'];
@@ -221,9 +223,9 @@ class BasketController extends Controller
 		    }
 	    	$basketItemId = $productId.'-'.$productCount;
     		$newProduct = array();
-    		$price = $product['prices'][0]['listPrice'];
-    		$recommendedRetailPrice = $product['prices'][0]['recommendedRetailPrice'];
-    		$discount = $product['prices'][0]['discount'];
+    		$price = $variant['prices'][0]['listPrice'];
+    		$recommendedRetailPrice = $variant['prices'][0]['recommendedRetailPrice'];
+    		$discount = $variant['prices'][0]['discount'];
     		
     		// Get selected options
     		$selectedOptionLabels = array();

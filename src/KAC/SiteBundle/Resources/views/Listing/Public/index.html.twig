@@ -11,10 +11,10 @@
 {% block product_block %}
     <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
         <div class="fl">
-            <a href="{#{{ path('page_request', {'url': product.url}) }}#}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
+            <a href="{{ path('page_request', {'url': product.url}) }}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
         </div>
         <div>
-            <h4><a itemprop="name" href="{#{{ path('page_request', {'url': product.url}) }}#}">{{ product.header|raw }}</a></h4>
+            <h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
             <div class="product-options">
                 {% block product_prices %}
                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -22,7 +22,7 @@
                             {% spaceless %}
                                 {% if product.hide_price == 0 %}
                                     {% if product.url != '' %}
-                                        <a href="{#{{ path('page_request', {'url': url}) }}#}">
+                                        <a href="{{ path('page_request', {'url': url}) }}">
                                     {% endif %}
                                     {% if product.low_price == product.high_price %}
                                         <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
@@ -52,12 +52,12 @@
                 {% endblock %}
 
                 {% block product_controls %}
-                    <a href="{#{{ path('page_request', {'url': product.url}) }}#}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
+                    <a href="{{ path('page_request', {'url': product.url}) }}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
                     <div class="buy-now">
-                        {% if (product.availableForPurchase == 1) and (product.hide_price == 0) %}
+                        {% if product.available_for_purchase and not product.hide_price %}
                             <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
                                 <tr>
-                                    {% if product.productCode == '' %}
+                                    {% if product.product_code == '' %}
                                         <td class="out-of-stock">Out of Stock Until Further Notice</td>
                                     {% else %}
                                         <td class="no-padding no-border"><input id="quantity-{{ product.id }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" />id
@@ -83,20 +83,18 @@
 
             {% block product_description %}
                 <div class="product-information">
-                    {% if (product.description) %}
-                        {{ product.description.description|raw }}
-                    {% endif %}
+                    {{ product.description|raw }}
                 </div>
             {% endblock %}
 
             {% block product_misc %}
-                {% if '|1034|1122|69|' in product.departmentIds %}
+                {% if '|1034|1122|69|' in product.department_ids %}
                     <div class="small-floating-offer small-floating-offer-top-left">
                         <p class="small-floating-offer-title">40% OFF</p>
                         <p class="small-floating-offer-description">Stellar<br />Pans</p>
                     </div>
                 {% endif %}
-                {% if product.brandId == '7' %}
+                {% if product.brand_id == '7' %}
                     <div class="medium-floating-offer medium-floating-offer-bottom-left">
                         <p class="medium-floating-offer-title">10% OFF</p>
                         <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>

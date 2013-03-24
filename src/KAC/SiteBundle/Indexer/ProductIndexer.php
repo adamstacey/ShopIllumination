@@ -63,7 +63,9 @@ class ProductIndexer extends Indexer
             $document->setField('variants_count', count($product->getVariants()));
 
             // Generate the product URL
-
+            if($product->getRouting()) {
+                $document->setField('url', $product->getRouting()->getUrl());
+            }
 
             // Add product code from the product
             $productCodes = explode(',', $product->getAlternativeProductCodes());
