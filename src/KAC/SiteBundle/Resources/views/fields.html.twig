@@ -73,6 +73,12 @@
             {% for row in form %}
                 <tr>
                     {% for child in row %}
+                        {% if child.vars.name == 'displayOrder' %}
+                            <td><img class="handle" src="{{ asset('bundles/kacsite/images/icons/handle.png') }}" border="0" /></td>
+                        {% endif %}
+                    {% endfor %}
+                    <td class="row-count">{{ loop.index }}</td>
+                    {% for child in row %}
                         {% if child.vars.block_prefixes.2 != 'hidden' %}
                             {% set containerClass = [] %}
                             {% if child.vars.valid is sameas(false) %}
@@ -93,27 +99,31 @@
         {% else %}
             {% for row in form %}
                 {% for child in row %}
-                    <div class="form-element{% if child.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
-                        {% if help is defined %}
-                            <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
-                        {% elseif child.vars.attr.help is defined %}
-                            <span title="{{ child.vars.attr.help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
-                        {% endif %}
-                        <div class="widget widget-1-of-3">
-                            {{ form_label(child) }}
-                        </div>
-                        <div class="widget widget-2-of-3">
-                            {{ form_widget(child) }}
-                            {% if child.vars.valid is sameas(false) %}
-                                <small>
-                                    {{ form_errors(child) }}
-                                </small>
+                    {% if child.vars.block_prefixes.2 != 'hidden' %}
+                        <div class="form-element{% if child.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
+                            {% if help is defined %}
+                                <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            {% elseif child.vars.attr.help is defined %}
+                                <span title="{{ child.vars.attr.help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
                             {% endif %}
-                            {% if child.vars.attr.characterHelp is defined %}
-                                <small data-recommended-characters="{{ child.vars.attr.characterHelp }}" class="recommended-characters">Updating...</small>
-                            {% endif %}
+                            <div class="widget widget-1-of-3">
+                                {{ form_label(child) }}
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                {{ form_widget(child) }}
+                                {% if child.vars.valid is sameas(false) %}
+                                    <small>
+                                        {{ form_errors(child) }}
+                                    </small>
+                                {% endif %}
+                                {% if child.vars.attr.characterHelp is defined %}
+                                    <small data-recommended-characters="{{ child.vars.attr.characterHelp }}" class="recommended-characters">Updating...</small>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
+                    {% else %}
+                        {{ form_widget(child) }}
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         {% endif %}
