@@ -12,9 +12,11 @@
                         <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
                     </div>
                     {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
-                    <table class="form-table mbm" id="featureList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
+                    <table class="form-table sortable mbm" id="featureList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
                         <thead>
                             <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
                                 <th title="Select a feature group." class="tal">Group</th>
                                 <th title="Select the default feature a product will automatically be assigned with. Leave this as 'No Default Feature' if you want to set the feature." class="tal">Default Feature</th>
                                 <th title="Do you want this feature to show up on the product filter in the listings?">Filter?</th>
@@ -24,7 +26,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {{ form_rest(form) }}
+                            <tr class="no-data ui-helper-hidden">
+                                <td colspan="8">
+                                    <div class="message message-help mas">
+                                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-383"></span>
+                                        <p>There are no features currently setup. Add a feature using the "Add Feature" button below.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{ form_rest(form) }}
                         </tbody>
                     </table>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
@@ -51,5 +61,7 @@
                 $.uniform.update($selectObject);
             });
         });
+
+        updateRowCounts();
     });
 </script>
