@@ -146,6 +146,10 @@ nav.left-menu .button .ui-button-icon-secondary {
     right: 5px;
 }
 
+nav.left-menu .ui-button-text {
+    padding: 0 $spacingSmall;
+}
+
 .main-menu {
     height: 40px;
     @include highlightedVerticalGradientTurquoise;
