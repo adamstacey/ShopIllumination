@@ -59,9 +59,9 @@
 }
 
 .message-notice {
-    border: 1px solid $colourTurquoise;
-    @include highlightedVerticalGradientTurquoise;
-    @include boxGlow($colourTurquoise, 5px, 0, 0.5);
+    border: 1px solid $colourOrange;
+    @include highlightedVerticalGradientOrange;
+    @include boxGlow($colourOrange, 5px, 0, 0.5);
 }
 
 .message-success {
@@ -89,4 +89,40 @@
 .message-notice ul,
 .message-notice ul li {
     color: $colourWhite;
+}
+
+.flash-message .message {
+    margin: 0;
+    padding: 0;
+
+    position: relative;
+
+    @include equalBorderRadius(0);
+    border-top-width: 3px;
+}
+
+.flash-message-content {
+    position: relative;
+    padding: $spacingSmall $spacingSmall $spacingSmall 40px;
+}
+
+.flash-message-content .icon {
+    position: absolute;
+    top: $spacingSmall;
+    left: $spacingSmall;
+}
+
+.flash-message-content .close {
+    position: absolute;
+    top: $spacingSmall;
+    right: $spacingSmall;
+
+    cursor: pointer;
+}
+
+.flash-message-content p {
+    padding: 0;
+    margin: 0;
+
+    line-height: 24px;
 }
