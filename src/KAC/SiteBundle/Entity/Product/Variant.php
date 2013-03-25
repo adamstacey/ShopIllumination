@@ -28,16 +28,19 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Description", mappedBy="variant", cascade={"all"})
+     * @ORM\OrderBy({"displayOrder" = "DESC"})
      */
     private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
+     * @ORM\OrderBy({"displayOrder" = "DESC"})
      */
     private $features;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToOption", mappedBy="variant", cascade={"all"})
+     * @ORM\OrderBy({"displayOrder" = "DESC"})
      */
     private $options;
 
