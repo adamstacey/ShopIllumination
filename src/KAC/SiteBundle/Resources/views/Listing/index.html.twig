@@ -127,44 +127,29 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
-
-                                                <div class="product-information">
-                                                    <p class="product-code uppercase">
-                                                        {% spaceless %}
-                                                            {% if product.url != '' %}
-                                                                <a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': product.url}) }}">
-                                                            {% endif %}
-                                                            PRODUCT CODE: <strong>{{ product.product_code[0] }}</strong>
-                                                            {% if product.url != '' %}
-                                                                </a>
-                                                            {% endif %}
-                                                        {% endspaceless %}
-                                                    </p>
-                                                    {% if (product.common_features|length < 0) or (product.tagline != '') %}
-                                                        {% if 'ENERGY RATING:' in product.tagline|upper %}
-                                                            <p class="energy-rating">{{ product.tagline|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
-                                                        {% endif %}
-                                                        {% for productFeature in product.productFeatures|explode('|') %}
-                                                            {% if (productFeature != '') and ('ENERGY RATING:' in productFeature|upper) %}
-                                                                <p class="energy-rating">{{ productFeature|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                        <ul>
-                                                            {% if (product.tagline != '') and ('ENERGY RATING:' not in product.tagline|upper) %}
-                                                                <li>{{ product.tagline|raw }}</li>
-                                                            {% endif %}
-                                                            {% for productFeature in product.productFeatures|explode('|') %}
-                                                                {% if (productFeature != '') and ('COLOUR GROUP:' not in productFeature|upper) and ('ENERGY RATING:' not in productFeature|upper) %}
-                                                                    {% set productFeatureData = productFeature|explode(':') %}
-                                                                    {% if productFeatureData.1|upper not in product.pageTitle|upper %}
-                                                                        <li>{{ productFeature|replace({':': ': '})|raw|upper }}</li>
-                                                                    {% endif %}
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </ul>
+                                                <div>
+                                                    {% if product.brand_logo != '' %}
+                                                        <a href="{{ path('page_request', {'url': product.brand_logo}) }}">
+                                                            <img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23">
+                                                        </a>
                                                     {% endif %}
-                                                    <div class="clear"></div>
+                                                    <h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
+
+                                                    {% for feature in product.features %}
+                                                        {% if 'COLOUR:' in feature|upper %}
+                                                            {% spaceless %}
+                                                                <p class="colour">
+                                                                    {% if product.url != '' %}
+                                                                        <a href="{{ path('page_request', {'url': product.url}) }}">
+                                                                    {% endif %}
+                                                                    <strong>{{ featureGroup|upper|replace({'COLOUR:': ''}) }}</strong>
+                                                                    {% if product.url != '' %}
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </p>
+                                                            {% endspaceless %}
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </div>
 
                                                 <div class="product-options">
@@ -192,14 +177,6 @@
                                                             {% endspaceless %}
                                                         </p>
                                                     </div>
-
-                                                    {% block product_options %}
-
-                                                    {% endblock %}
-
-                                                    {% block product_features %}
-
-                                                    {% endblock %}
 
                                                     {% if admin == true %}
                                                         <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red">Delete</a>
@@ -235,6 +212,27 @@
                                                         </div>
                                                     {% endif %}
                                                 </div>
+
+
+                                                {% if product.features|length > 0 %}
+                                                    <div class="product-information">
+                                                        <ul>
+                                                            {% for featureGroup in product.features|slice(1, 4) %}
+                                                                {% set feature = product['attr_feature_'~featureGroup][0] %}
+                                                                {% if feature != '' %}
+                                                                    {% if feature == 'Yes' %}
+                                                                        {% set className = 'green-tick' %}
+                                                                    {% elseif feature == 'No' %}
+                                                                        {% set className = 'red-cross' %}
+                                                                    {% else %}
+                                                                        {% set className = 'bullet' %}
+                                                                    {% endif %}
+                                                                    <li class="{{ className }}">{{ featureGroup }}: <strong>{{ feature }}</strong></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
 
                                                 {% if '|1034|1122|69|' in product.departmentIds %}
                                                     <div class="small-floating-offer small-floating-offer-top-left">
