@@ -39,15 +39,6 @@
         <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
     {% endif %}
 
-    {% if department.parents|length > 0 %}
-        <div class="breadcrumb-trail no-margin" itemprop="breadcrumb">
-            {% for parent in department.parents %}
-                <a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a> >
-            {% endfor %}
-            <a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a>
-        </div>
-    {% endif %}
-
     {% if department is not null and brand is null and brand.description.description%}
         <div class="department-description">
             {{ department.description.description|raw }}
@@ -71,6 +62,27 @@
 
 {% block body %}
     <section class="clearfix">
+        <div class="widget-group clearfix mbm">
+            {% if department.parents|length > 0 %}
+                <div class="widget widget-7-of-8">
+                    <ul class="breadcrumbs" itemprop="breadcrumb">
+                        <li>{{ department.description.header }}</li>
+                        {% for parent in department.parents %}
+                            {% if parent.parent is not null %}
+                                <li><a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="widget widget-7-of-8"></div>
+            {% endif %}
+            <div class="widget widget-1-of-8">
+                {% if is_granted('ROLE_ADMIN') and admin == false %}
+                    <a href="{{ path('admin_'~app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}" class="fr button button-blue button-small">Admin Mode</a>
+                {% endif %}
+            </div>
+        </div>
         <div class="widget-group clearfix">
             <form id="form-filter" class="form" method="GET" action="{#{{ path(app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}#}">
                 <div class="widget widget-5-of-7 listing">

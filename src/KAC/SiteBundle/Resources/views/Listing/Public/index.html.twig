@@ -1,13 +1,5 @@
 {% extends 'KACSiteBundle:Listing:index.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {% if is_granted('ROLE_ADMIN') %}
-        <a href="{#{{ path('admin_'~app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}#}" class="fr button">Admin Mode</a>
-    {% endif %}
-    <div class="clear"></div>
-{% endblock %}
-
 {% block product_block %}
     <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
         <a href="{{ path('page_request', {'url': product.url}) }}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
