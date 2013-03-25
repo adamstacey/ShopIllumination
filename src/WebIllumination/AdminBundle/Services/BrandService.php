@@ -115,7 +115,7 @@ class BrandService {
 
         // Get the brands
 		$query = "SELECT b.id ";
-        $query .= "FROM WebIlluminationAdminBundle:Brand b, WebIlluminationAdminBundle:BrandDescription bd ";
+        $query .= "FROM KAC\SiteBundle\Entity\Brand b, KAC\SiteBundle\Entity\Brand\Description bd ";
         $query .= "WHERE b.id = bd.brandId ";
 		if ($status)
     	{
@@ -216,7 +216,7 @@ class BrandService {
 
         // Get the brands
 		$query = "SELECT COUNT(b.id) ";
-        $query .= "FROM WebIlluminationAdminBundle:Brand b, WebIlluminationAdminBundle:BrandDescription bd ";
+        $query .= "FROM KAC\SiteBundle\Entity\Brand b, KAC\SiteBundle\Entity\Brand\Description bd ";
         $query .= "WHERE b.id = bd.brandId ";
 		if ($status)
     	{
