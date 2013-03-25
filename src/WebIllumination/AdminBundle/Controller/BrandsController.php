@@ -1,14 +1,12 @@
 <?php
 
 namespace WebIllumination\AdminBundle\Controller;
+use KAC\SiteBundle\Entity\Brand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Brand;
-use WebIllumination\AdminBundle\Entity\BrandDescription;
-use WebIllumination\AdminBundle\Entity\Routing;
 
 class BrandsController extends Controller
 {
@@ -181,36 +179,16 @@ class BrandsController extends Controller
     		$status = $request->query->get('status');
     		
     		// Get the product object
-    		$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
+    		$brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
     		if (!$brandObject)
     		{
-    			throw new AccessDeniedException();
+    			throw new NotFoundHttpException();
     		}
     		
     		// Update the brand
     		$brandObject->setStatus($status);
     		$em->persist($brandObject);
     		$em->flush();
-    		
-    		// Build the brand index
-			$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $id, 'objectType' => 'brand'));
-			foreach ($objectIndexObjects as $objectIndexObject)
-			{
-				$objectIndexObject->setRebuild(1);
-				$em->persist($objectIndexObject);
-    			$em->flush();
-			}
-	               
-	        // Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
 			 
 	       	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
     	}
@@ -234,17 +212,6 @@ class BrandsController extends Controller
 			$brandDeleted = $brandService->deleteBrand($id);
 			if ($brandDeleted)
 			{
-				// Clear the full brand index so it is rebuilt
-				apc_delete('kitchen_appliance_centre_full_brand_list');
-				apc_delete('kitchen_appliance_centre_all_brands_0');
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-				foreach ($indexObjects as $indexObject)
-				{
-					$indexObject->setRebuild(1);
-					$em->persist($indexObject);
-	    			$em->flush();
-				}
-				
 				return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
 			}
 	                
@@ -256,7 +223,7 @@ class BrandsController extends Controller
     
     // Delete
     public function deleteAction(Request $request, $id)
-    {	
+    {
 		// Get the services
     	$brandService = $this->get('web_illumination_admin.brand_service');
     	
@@ -264,17 +231,6 @@ class BrandsController extends Controller
 		$brandDeleted = $brandService->deleteBrand($id);
 		if ($brandDeleted)
 		{
-			// Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
-			
 			// Set success message
 		    $this->get('session')->setFlash('success', 'The brand was successfully deleted.');
 		    
@@ -337,11 +293,11 @@ class BrandsController extends Controller
 			$url = $seoService->createUrl($brand, '');
 			
 			// Add the product description object
-			$brandDescriptionObject = new BrandDescription();
-			$brandDescriptionObject->setBrandId($brandObject->getId());
-			$brandDescriptionObject->setLogoImageId(0);
+			$brandDescriptionObject = new Brand\Description();
+			$brandDescriptionObject->setBrand($brandObject);
+			$brandDescriptionObject->setLogoImage(null);
 			$brandDescriptionObject->setLocale('en');
-			$brandDescriptionObject->setBrand($brand);
+			$brandDescriptionObject->setName($brand);
 			$brandDescriptionObject->setDescription($description);
 			$brandDescriptionObject->setAbout('');
 			$brandDescriptionObject->setHistory('');
@@ -364,30 +320,18 @@ class BrandsController extends Controller
 			    $logoImageObject = $imageService->processImage($logoImage, $brand, '', '', '', 1, 'brand', 'logo', $brandObject->getId(), 'en');
 			    
 			    // Update the brand description
-	        	$brandDescriptionObject->setLogoImageId($logoImageObject->getId());
+	        	$brandDescriptionObject->setLogoImage($logoImageObject);
 	        	$em->persist($brandDescriptionObject);
 				$em->flush();	        	
     		}
 						
 			// Add the routing
-			$routingObject = new Routing();
+			$routingObject = new Brand\Routing();
 			$routingObject->setObjectId($brandObject->getId());
-			$routingObject->setObjectType('brand');
 			$routingObject->setLocale('en');
 			$routingObject->setUrl($url);
 			$em->persist($routingObject);
 			$em->flush();
-						
-			// Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
 		
 			// Set success message
 		    $this->get('session')->setFlash('success', 'The brand "'.$brand.'" has been added.');
@@ -449,8 +393,8 @@ class BrandsController extends Controller
 	        $logo = false;
     		
     		// Get the brand objects
-    		$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
-    		$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id));
+    		$brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
+    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brandId' => $id));
     		if (!$brandObject || !$brandDescriptionObject)
     		{
     			throw new AccessDeniedException();
@@ -466,7 +410,7 @@ class BrandsController extends Controller
     		if ($logoImage)
     		{
     			// Get the image object if it exists
-				$logoImageObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Image')->find($brandDescriptionObject->getLogoImageId());
+				$logoImageObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Image')->find($brandDescriptionObject->getLogoImageId());
 			
 				// Get the image service
 	    		$imageService = $this->get('web_illumination_admin.image_service');
@@ -484,7 +428,7 @@ class BrandsController extends Controller
 			    }
 			    
 			    // Update the brand description
-	        	$brandDescriptionObject->setLogoImageId($logoImageObject->getId());
+	        	$brandDescriptionObject->setLogoImage($logoImageObject);
 	        	
 	        	// Update the logo details
 	        	$logo = array();
@@ -507,26 +451,6 @@ class BrandsController extends Controller
 	        $brandDescriptionObject->setBrand($brand);
 	        $em->persist($brandDescriptionObject);
 			$em->flush();
-	        
-	        // Build the brand index
-			$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $id, 'objectType' => 'brand'));
-			foreach ($objectIndexObjects as $objectIndexObject)
-			{
-				$objectIndexObject->setRebuild(1);
-				$em->persist($objectIndexObject);
-    			$em->flush();
-			}
-			
-			// Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
 	                
 	       	return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'resetSeo' => $resetSeo, 'logo' => $logo)), ENT_NOQUOTES));
     	}
@@ -544,7 +468,7 @@ class BrandsController extends Controller
     		$id = $request->query->get('id');
    		
     		// Find image
-    		$imageObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Image')->find($id);
+    		$imageObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Image')->find($id);
     		if ($imageObject)
     		{
     			// Get the object id
@@ -555,26 +479,6 @@ class BrandsController extends Controller
 	    		
 	    		// Delete the image
 	    		$imageService->deleteImage($imageObject);
-	    		
-	    		// Build the brand index
-				$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $objectId, 'objectType' => 'brand'));
-				foreach ($objectIndexObjects as $objectIndexObject)
-				{
-					$objectIndexObject->setRebuild(1);
-					$em->persist($objectIndexObject);
-	    			$em->flush();
-				}
-				
-				// Clear the full brand index so it is rebuilt
-				apc_delete('kitchen_appliance_centre_full_brand_list');
-				apc_delete('kitchen_appliance_centre_all_brands_0');
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-				foreach ($indexObjects as $indexObject)
-				{
-					$indexObject->setRebuild(1);
-					$em->persist($indexObject);
-	    			$em->flush();
-				}
 	    		
 	    		return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
     		}
@@ -604,7 +508,7 @@ class BrandsController extends Controller
     		$moreInformation = $seoService->cleanHtml(trim($request->request->get('moreInformation')));
     		
     		// Get the product objects
-    		$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id));
+    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brand' => $id));
     		if (!$brandDescriptionObject)
     		{
     			throw new AccessDeniedException();
@@ -617,26 +521,6 @@ class BrandsController extends Controller
 	        $brandDescriptionObject->setMoreInformation($moreInformation);
 	        $em->persist($brandDescriptionObject);
 			$em->flush();
-			
-			// Build the brand index
-			$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $id, 'objectType' => 'brand'));
-			foreach ($objectIndexObjects as $objectIndexObject)
-			{
-				$objectIndexObject->setRebuild(1);
-				$em->persist($objectIndexObject);
-    			$em->flush();
-			}
-			
-			// Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
 	        
 	       	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
     	}
@@ -661,7 +545,7 @@ class BrandsController extends Controller
     		$maximumMembershipCardDiscount = trim($request->request->get('maximumMembershipCardDiscount'));
     		
     		// Get the brand object
-    		$brandObject = $em->getRepository('WebIlluminationAdminBundle:Brand')->find($id);
+    		$brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
     		if (!$brandObject)
     		{
     			throw new AccessDeniedException();
@@ -674,27 +558,7 @@ class BrandsController extends Controller
 	        $brandObject->setMaximumMembershipCardDiscount($maximumMembershipCardDiscount);
 	        $em->persist($brandObject);
 			$em->flush();
-			
-			// Build the brand index
-			$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $id, 'objectType' => 'brand'));
-			foreach ($objectIndexObjects as $objectIndexObject)
-			{
-				$objectIndexObject->setRebuild(1);
-				$em->persist($objectIndexObject);
-    			$em->flush();
-			}
-			
-			// Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
-	        	                
+
 	       	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
     	}
     	
@@ -724,8 +588,8 @@ class BrandsController extends Controller
     		$searchWords = trim($request->request->get('searchWords'));
     		
     		// Get the brand objects
-    		$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id));
-    		$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand'));
+    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\EntityBrand\Description')->findOneBy(array('brand' => $id));
+    		$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Routing')->findOneBy(array('objectId' => $id));
     		if (!$brandDescriptionObject || !$routingObject)
     		{
     			throw new AccessDeniedException();
@@ -788,26 +652,6 @@ class BrandsController extends Controller
     		$seo['metaKeywords'] = $metaKeywords;
     		$seo['searchWords'] = $searchWords;
     		$seo['url'] = $url;
-						
-			// Build the brand index
-			$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $id, 'objectType' => 'brand'));
-			foreach ($objectIndexObjects as $objectIndexObject)
-			{
-				$objectIndexObject->setRebuild(1);
-				$em->persist($objectIndexObject);
-    			$em->flush();
-			}
-			
-			// Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
 	                
 	       	return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'seo' => $seo)), ENT_NOQUOTES));
     	}
@@ -831,8 +675,8 @@ class BrandsController extends Controller
     		$id = $request->query->get('id');
     		
     		// Get the brand objects
-    		$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $id));
-    		$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand'));
+    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brandId' => $id));
+    		$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Routing')->findOneBy(array('objectId' => $id));
     		if (!$brandDescriptionObject || !$routingObject)
     		{
     			throw new AccessDeniedException();
@@ -879,26 +723,6 @@ class BrandsController extends Controller
     		$seo['metaKeywords'] = $metaKeywords;
     		$seo['searchWords'] = $searchWords;
     		$seo['url'] = $url;
-    		
-    		// Build the brand index
-			$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $id, 'objectType' => 'brand'));
-			foreach ($objectIndexObjects as $objectIndexObject)
-			{
-				$objectIndexObject->setRebuild(1);
-				$em->persist($objectIndexObject);
-    			$em->flush();
-			}
-			
-			// Clear the full brand index so it is rebuilt
-			apc_delete('kitchen_appliance_centre_full_brand_list');
-			apc_delete('kitchen_appliance_centre_all_brands_0');
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'brands'));
-			foreach ($indexObjects as $indexObject)
-			{
-				$indexObject->setRebuild(1);
-				$em->persist($indexObject);
-    			$em->flush();
-			}
 						
 	       	return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'seo' => $seo)), ENT_NOQUOTES));
     	}	    	    	
@@ -911,10 +735,10 @@ class BrandsController extends Controller
     public function ajaxGetStatisticsVisitsAction($id)
     {	
     	// Get the web address
-    	$web_address = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => 'en'));
+    	$web_address = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Brand\Routing')->findOneBy(array('objectId' => $id, 'locale' => 'en'));
     	
     	// Get the redirects
-    	$redirects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+    	$redirects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	
     	// Setup URLs
     	$urls = array();
@@ -938,10 +762,10 @@ class BrandsController extends Controller
     public function ajaxGetStatisticsReferrersAction($id)
     {	
     	// Get the web address
-    	$web_address = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => 'en'));
+    	$web_address = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Brand\Routing')->findOneBy(array('objectId' => $id, 'locale' => 'en'));
     	
     	// Get the redirects
-    	$redirects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+    	$redirects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	
     	// Setup URLs
     	$urls = array();
