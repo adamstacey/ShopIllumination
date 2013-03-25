@@ -10,9 +10,10 @@
 
 {% block product_block %}
     <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
-        <div class="fl">
-            <a href="{{ path('page_request', {'url': product.url}) }}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
-        </div>
+        <a href="{{ path('page_request', {'url': product.url}) }}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
+        {% if product.brand_logo != '' %}
+            <a href="{{ path('page_request', {'url': product.brand_logo}) }}"><img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23"></a>
+        {% endif %}
         <div>
             <h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
             <div class="product-options">
@@ -52,7 +53,7 @@
                 {% endblock %}
 
                 {% block product_controls %}
-                    <a href="{{ path('page_request', {'url': product.url}) }}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
+                    <a href="{{ path('page_request', {'url': product.url}) }}" class="fr button button-blue button-small margin-bottom-5">More Info</a>
                     <div class="buy-now">
                         {% if product.available_for_purchase and not product.hide_price %}
                             <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
@@ -60,7 +61,9 @@
                                     {% if product.product_code == '' %}
                                         <td class="out-of-stock">Out of Stock Until Further Notice</td>
                                     {% else %}
-                                        <td class="no-padding no-border"><input id="quantity-{{ product.id }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" />id
+                                        <td class="no-padding no-border">
+                                            <input id="quantity-{{ product.id }}" data-product-id="{{ product.id }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" />
+                                        </td>
                                         <td class="no-padding no-border">
                                             <div class="quantity-buttons-container no-padding">
                                                 <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.id }}">+</div>
@@ -68,14 +71,14 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <button data-product-id="{{ product.id }}" class="action-add-to-basket button margin-left-5 ui-button-green">Add to Basket</button>
+                                            <button data-product-id="{{ product.id }}" class="action-add-to-basket button margin-left-5 button-green">Add to Basket</button>
                                         </td>
                                     {% endif %}
                                 </tr>
                             </table>
                             <input type="hidden" value="" id="selected-options-{{ product.id }}">
                         {% else %}
-                            <a href="{#{{ path('content_contact_us') }}#}" class="fr button ui-button-green">Contact Us to Buy</a>
+                            <a href="{#{{ path('content_contact_us') }}#}" class="fr button button-green">Contact Us to Buy</a>
                         {% endif %}
                     </div>
                 {% endblock %}
