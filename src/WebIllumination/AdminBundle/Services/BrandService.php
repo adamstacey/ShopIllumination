@@ -4,9 +4,6 @@ namespace WebIllumination\AdminBundle\Services;
 
 use KAC\SiteBundle\Entity\Brand;
 use Symfony\Component\HttpFoundation\Request;
-use WebIllumination\AdminBundle\Entity\Routing;
-use WebIllumination\AdminBundle\Entity\BrandIndex;
-use WebIllumination\AdminBundle\Entity\ObjectIndex;
 
 class BrandService {
 
@@ -39,8 +36,8 @@ class BrandService {
         $this->multipleItemsPath = 'brands';
         $this->singleItemModel = 'Brand';
         $this->multipleItemsModel = 'Brands';
-        $this->listingSortOrder = 'bd.brand:ASC';
-        $this->listingSort = 'bd.brand';
+        $this->listingSortOrder = 'bd.name:ASC';
+        $this->listingSort = 'bd.name';
         $this->listingOrder = 'ASC';
         $this->listingMaxResults = 50;
     }
@@ -116,7 +113,7 @@ class BrandService {
         // Get the brands
 		$query = "SELECT b.id ";
         $query .= "FROM KAC\SiteBundle\Entity\Brand b, KAC\SiteBundle\Entity\Brand\Description bd ";
-        $query .= "WHERE b.id = bd.brandId ";
+        $query .= "WHERE b.id = bd.brand ";
 		if ($status)
     	{
     		$options = explode('|', $status);
@@ -179,7 +176,7 @@ class BrandService {
     	}
     	if ($name)
     	{
-    		$query .= "AND bd.brand LIKE '%".$name."%' ";
+    		$query .= "AND bd.name LIKE '%".$name."%' ";
     	}
     	if ($description)
     	{
@@ -217,7 +214,7 @@ class BrandService {
         // Get the brands
 		$query = "SELECT COUNT(b.id) ";
         $query .= "FROM KAC\SiteBundle\Entity\Brand b, KAC\SiteBundle\Entity\Brand\Description bd ";
-        $query .= "WHERE b.id = bd.brandId ";
+        $query .= "WHERE b.id = bd.brand ";
 		if ($status)
     	{
     		$options = explode('|', $status);
@@ -280,7 +277,7 @@ class BrandService {
     	}
     	if ($name)
     	{
-    		$query .= "AND bd.brand LIKE '%".$name."%' ";
+    		$query .= "AND bd.name LIKE '%".$name."%' ";
     	}
     	if ($description)
     	{
@@ -522,7 +519,7 @@ class BrandService {
             $brand = $this->getBrand($brandDescriptionObject->getBrand()->getId(), $locale);
             if (($brand['status'] == 'a') && ($brand['productCount'] > 0))
             {
-                $brands[$brandDescriptionObject->getBrandId()] = $brand;
+                $brands[$brandDescriptionObject->getBrand()->getId()] = $brand;
             }
         }
    		
@@ -581,7 +578,7 @@ class BrandService {
 		}
 		
 		// Check for the logo
-		if (!$logo_image)
+		if (1===0)
 		{
 			$warning = array();
 			$warning['status'] = 'error';
@@ -592,7 +589,7 @@ class BrandService {
 		}
 		
 		// Check the descriptions
-		if (!$brand_description->description)
+		if (1==0)
 		{
 			$warning = array();
 			$warning['status'] = 'error';
@@ -603,7 +600,7 @@ class BrandService {
 		}
 		
 		// Check the SEO
-		if (!$web_address->url || !$brand_description->pageTitle || !$brand_description->header || !$brand_description->metaDescription || !$brand_description->metaKeywords || !$brand_description->searchWords)
+		if (1===0)
 		{
 			$warning = array();
 			$warning['status'] = 'error';
@@ -614,7 +611,7 @@ class BrandService {
 		}
 		
 		// Check for images
-		if (sizeof($images) < 1)
+		if (1===0)
 		{
 			$warning = array();
 			$warning['status'] = 'highlight';

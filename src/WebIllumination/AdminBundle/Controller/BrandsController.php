@@ -394,7 +394,7 @@ class BrandsController extends Controller
     		
     		// Get the brand objects
     		$brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
-    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brandId' => $id));
+    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brand' => $id));
     		if (!$brandObject || !$brandDescriptionObject)
     		{
     			throw new AccessDeniedException();
@@ -675,7 +675,7 @@ class BrandsController extends Controller
     		$id = $request->query->get('id');
     		
     		// Get the brand objects
-    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brandId' => $id));
+    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brand' => $id));
     		$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Brand\Routing')->findOneBy(array('objectId' => $id));
     		if (!$brandDescriptionObject || !$routingObject)
     		{

@@ -50,7 +50,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [KACSiteBundle]
+    bundles:        [KACSiteBundle,WebIlluminationAdminBundle]
 #    bundles:        [KACShopBundle,KACAdminBundle]
     filters:
         sass: ~
