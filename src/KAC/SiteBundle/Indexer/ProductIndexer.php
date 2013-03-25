@@ -111,13 +111,15 @@ class ProductIndexer extends Indexer
                     }
 
                     // Check for common features
-                    if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
-                    {
-                        $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                    }
-                    else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
-                    {
-                        unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                    if($feature->getFeatureGroup() && $feature->getFeature()) {
+                        if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        {
+                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        }
+                        else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
+                        {
+                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                        }
                     }
                 }
 
@@ -139,7 +141,7 @@ class ProductIndexer extends Indexer
             // Add the common features to the document
             foreach(array_keys($commonFeatures) as $commonFeature)
             {
-                $document->addField('features', $commonFeatures);
+                $document->addField('features', $commonFeature);
             }
 
             // Add the image for the variant
