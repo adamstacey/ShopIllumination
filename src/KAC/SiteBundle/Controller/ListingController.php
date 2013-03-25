@@ -201,21 +201,15 @@ class ListingController extends Controller
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
 
-        // Render template
-        if($admin) {
-            $template = 'KACSiteBundle:Listing:Admin/index.html.twig';
-        } else {
-            $template = 'KACSiteBundle:Listing:Public/index.html.twig';
-        }
-
-        return $this->render($template, array(
-            'pagination' => $pagination,
-            'facets' => $facets,
-            'stats' => $stats,
-            'featureGroups' => $featureGroups,
+        return $this->render('KACSiteBundle:Listing:index.html.twig', array(
+            'admin' => $admin,
+            'brand' => $brand,
             'department' => $department,
             'departments' => $departments,
-            'brand' => $brand
+            'facets' => $facets,
+            'featureGroups' => $featureGroups,
+            'pagination' => $pagination,
+            'stats' => $stats,
         ));
     }
 
