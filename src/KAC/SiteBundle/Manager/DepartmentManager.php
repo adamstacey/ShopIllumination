@@ -46,6 +46,12 @@ class DepartmentManager extends Manager
 
     public function updateObjectLinks(Department $department)
     {
+        // Update the descriptions
+        foreach ($department->getDescriptions() as $description)
+        {
+            $description->setDepartment($department);
+        }
+
         // Update the features
         foreach ($department->getFeatures() as $feature)
         {
