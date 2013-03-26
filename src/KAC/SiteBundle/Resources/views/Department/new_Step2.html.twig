@@ -6,7 +6,7 @@
                     <span class="ui-button-icon-primary ui-icon icon-white icon-369"></span>
                     <h2>2. Search Engine Optimisation</h2>
                 </header>
-                <section class="ui-widget-content ui-corner-all">
+                <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
                     <fieldset>
                         {{ form_rest(form) }}
@@ -18,7 +18,7 @@
         </div>
     </div>
 </form>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
         var googleDepartmentsUrl = "{{ path('api_taxonomies_get') }}";
         var googleDepartmentUrl = "{{ path('api_taxonomies_get_taxonomy', {'id': -1}) }}";
@@ -61,5 +61,6 @@
                 return "";
             }
         });
-    })
+    });
 </script>
+
