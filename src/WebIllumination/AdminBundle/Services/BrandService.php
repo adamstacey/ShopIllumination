@@ -559,6 +559,20 @@ class BrandService {
         // Get the entity manager
         $em = $doctrineService->getEntityManager();
 
+        // Remove product associations
+        $products = $em->getRepository('KAC\SiteBundle\Entity\Product')->findBy(array('brand' => $id));
+        foreach ($products as $productObject)
+        {
+            // Remove any links to this product
+            $links = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('linkedProduct' => $productObject->getId()));
+            foreach ($links as $link)
+            {
+                $em->remove($link);
+            }
+
+            $em->remove($productObject);
+        }
+
         $brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
         if (!$brandObject)
         {
