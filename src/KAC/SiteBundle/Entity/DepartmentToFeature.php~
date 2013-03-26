@@ -21,7 +21,7 @@ class DepartmentToFeature
     /**
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    private $active = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department", inversedBy="features")

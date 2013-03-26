@@ -4,18 +4,16 @@ namespace KAC\SiteBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="routing")
- * @ORM\HasLifecycleCallbacks()
- *
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="object_type", type="string")
  * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Routing", "department" = "KAC\SiteBundle\Entity\Department\Routing", "brand" = "KAC\SiteBundle\Entity\Brand\Routing"})
  * @ORM\Table(name="routing")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"url"}, groups={"flow_site_new_department_step2"}, message="This internal web address is already in use.")
  */
 class Routing
 {
