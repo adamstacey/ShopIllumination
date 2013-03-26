@@ -5,15 +5,15 @@
         <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" formnovalidate="formnovalidate" class="button button-small mrm fl">Back</button>
     {% endif %}
 
-    <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="reset" formnovalidate="formnovalidate" class="button button-small button-red fl">Reset</button>
+    <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="reset" formnovalidate="formnovalidate" class="button button-small button-red mrm fl">Reset</button>
 
     {% if flow.getCurrentStep() < flow.getLastStep() %}
-        <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Continue</button>
+        <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Continue</button>
     {% else %}
-        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Department</button>
+        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
     {% endif %}
 
     {% if flow.getCurrentStep() == 4 %}
-        <button type="button" data-table-object="featureList" class="actionAddFormRow mrm fr button icon-green" data-icon-secondary="icon-1121">Add Feature</button>
+        <button type="button" data-table-object="featureList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
     {% endif %}
 </div>
