@@ -23,26 +23,27 @@ class FeatureGroup
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Feature", mappedBy="featureGroup")
      */
     private $features;
-    
+
     /**
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    private $active = true;
     
     /**
      * @ORM\Column(name="filter", type="boolean")
      */
-    private $filter;
+    private $filter = true;
     
     /**
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank(message="Enter a name for the feature group.")
      */
     private $name;
     
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale = "en_GB";
+    private $locale = "en";
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -247,5 +248,38 @@ class FeatureGroup
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add departments
+     *
+     * @param \KAC\SiteBundle\Entity\Department $departments
+     * @return FeatureGroup
+     */
+    public function addDepartment(\KAC\SiteBundle\Entity\Department $departments)
+    {
+        $this->departments[] = $departments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove departments
+     *
+     * @param \KAC\SiteBundle\Entity\Department $departments
+     */
+    public function removeDepartment(\KAC\SiteBundle\Entity\Department $departments)
+    {
+        $this->departments->removeElement($departments);
+    }
+
+    /**
+     * Get departments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDepartments()
+    {
+        return $this->departments;
     }
 }
