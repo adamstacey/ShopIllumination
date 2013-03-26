@@ -47,8 +47,10 @@
     {% spaceless %}
         <div class="clearfix{% if errors %} error{% endif %}">
             {{ form_widget(form) }}{{ form_label(form) }}
-            {% if help %}
+            {% if help is defined %}
                 <small>{{ help }}</small>
+            {% elseif form.vars.attr.help is defined %}
+                <small>{{ form.vars.attr.help }}</small>
             {% endif %}
             {% if errors %}
                 <div class="clear"></div>
@@ -131,16 +133,6 @@
 {% endblock collection_row %}
 
 {# CONFIRMED BLOCKS IN USE IN ORDER THEY ARE USED #}
-{% block _site_new_department_single_collection_row %}
-    {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.single_collection_row(form) }}
-{% endblock %}
-
-{% block _site_new_product_departments_row %}
-    {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.product_departments_row(form) }}
-{% endblock %}
-
 {# This block needs to be in this file so that it has access to the widget attributes block #}
 {% block _site_new_product_departments_entry_department_widget %}
     <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
