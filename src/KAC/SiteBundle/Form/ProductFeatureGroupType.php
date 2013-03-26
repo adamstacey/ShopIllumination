@@ -8,10 +8,12 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
+use KAC\SiteBundle\Repository\DepartmentRepository;
 use KAC\SiteBundle\Entity\Product\Feature;
 
 class ProductFeatureGroupType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', 'text', array(
@@ -38,12 +40,7 @@ class ProductFeatureGroupType extends AbstractType
                 'help' => 'Can you filter by the feature group?',
             ),
         ));
-
-        $builder->add('departments', 'collection', array(
-            'type' => new ProductDepartmentType(),
-            'mapped' => false,
-        ));
-    }
+     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
