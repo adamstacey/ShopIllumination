@@ -1,0 +1,11 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block body %}
+    <section>
+        <p>Refreshing...</p>
+    </section>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            window.parent.location = window.parent.location;
+        });
+    </script>
+{% endblock %}
