@@ -67,7 +67,7 @@ class OrdersController extends Controller
         $systemService = $this->get('web_illumination_admin.system_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Setup listing
         $sessionListing = $this->get('session')->get('listing');
@@ -942,7 +942,7 @@ class OrdersController extends Controller
     public function ajaxGetCustomerAction(Request $request)
     {
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get submitted data
         $id = $request->query->get('id');
@@ -961,7 +961,7 @@ class OrdersController extends Controller
     public function ajaxGetDeliveryInformationAction(Request $request)
     {
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get submitted data
         $id = $request->query->get('id');
@@ -980,7 +980,7 @@ class OrdersController extends Controller
     public function ajaxGetDocumentsAction(Request $request)
     {
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get submitted data
         $id = $request->query->get('id');
@@ -999,7 +999,7 @@ class OrdersController extends Controller
     public function ajaxGetNotesAction(Request $request)
     {
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get submitted data
         $id = $request->query->get('id');
@@ -1022,7 +1022,7 @@ class OrdersController extends Controller
     public function ajaxGetPaymentInformationAction(Request $request)
     {
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get submitted data
         $id = $request->query->get('id');
@@ -1041,7 +1041,7 @@ class OrdersController extends Controller
     public function ajaxGetProductsAction(Request $request)
     {
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get submitted data
         $id = $request->query->get('id');
@@ -1143,7 +1143,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Update
         if ($request->getMethod() == 'POST')
@@ -1166,7 +1166,9 @@ class OrdersController extends Controller
 
                 foreach ($select as $itemId => $item)
                 {
-                    // Get the item
+                    /**
+                     * @var $itemObject Order
+                     */
                     $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($itemId);
                     if ($itemObject)
                     {
@@ -1226,7 +1228,7 @@ class OrdersController extends Controller
                                     $plainTextNote .= "There is no consignment number provided for standard delivery, so there is no tracking information available.";
                                 }
                                 $orderNoteObject = new Order\Note();
-                                $orderNoteObject->setOrder($itemObject->getId());
+                                $orderNoteObject->setOrder($itemObject);
                                 $orderNoteObject->setNoteType('customer');
                                 $orderNoteObject->setNotified(1);
                                 $orderNoteObject->setNote($plainTextNote);
@@ -1258,7 +1260,7 @@ class OrdersController extends Controller
                                     $itemObject->setReviewRequested(1);
                                     $em->persist($itemObject);
                                     $em->flush();
-                                } catch (Exception $exception) {
+                                } catch (\Exception $exception) {
                                     error_log('Error sending email!');
                                 }
 
@@ -1329,7 +1331,7 @@ class OrdersController extends Controller
                                 $plainTextNote .= "Go to http://www.parcelforce.com/track-trace?trackNumber=".$itemTrackingNumber." to track your delivery.";
                                 $plainTextNote .= "Tracking will be active after 5.30pm today.";
                                 $orderNoteObject = new Order\Note();
-                                $orderNoteObject->setOrder($itemObject->getId());
+                                $orderNoteObject->setOrder($itemObject);
                                 $orderNoteObject->setNoteType('customer');
                                 $orderNoteObject->setNotified(1);
                                 $orderNoteObject->setNote($plainTextNote);
@@ -1361,7 +1363,7 @@ class OrdersController extends Controller
                                     $itemObject->setReviewRequested(1);
                                     $em->persist($itemObject);
                                     $em->flush();
-                                } catch (Exception $exception) {
+                                } catch (\Exception $exception) {
                                     error_log('Error sending email!');
                                 }
 
@@ -1397,7 +1399,7 @@ class OrdersController extends Controller
                                         $plainTextNote .= "Palletways will call you within <strong>24-48 hours</strong> to arrange delivery delivery.";
                                     }
                                     $orderNoteObject = new Order\Note();
-                                    $orderNoteObject->setOrder($itemObject->getId());
+                                    $orderNoteObject->setOrder($itemObject);
                                     $orderNoteObject->setNoteType('customer');
                                     $orderNoteObject->setNotified(1);
                                     $orderNoteObject->setNote($plainTextNote);
@@ -1429,7 +1431,7 @@ class OrdersController extends Controller
                                         $itemObject->setReviewRequested(1);
                                         $em->persist($itemObject);
                                         $em->flush();
-                                    } catch (Exception $exception) {
+                                    } catch (\Exception $exception) {
                                         error_log('Error sending email!');
                                     }
 
@@ -1450,7 +1452,7 @@ class OrdersController extends Controller
                                 $plainTextNote .= "For Delivery Enquiries Tel: 0115 944 3702 (GHD Transport Limited).\n\n";
                                 $plainTextNote .= "Please check all items before signing. Thank you.";
                                 $orderNoteObject = new Order\Note();
-                                $orderNoteObject->setOrder($itemObject->getId());
+                                $orderNoteObject->setOrder($itemObject);
                                 $orderNoteObject->setNoteType('customer');
                                 $orderNoteObject->setNotified(1);
                                 $orderNoteObject->setNote($plainTextNote);
@@ -1482,7 +1484,7 @@ class OrdersController extends Controller
                                     $itemObject->setReviewRequested(1);
                                     $em->persist($itemObject);
                                     $em->flush();
-                                } catch (Exception $exception) {
+                                } catch (\Exception $exception) {
                                     error_log('Error sending email!');
                                 }
 
@@ -1499,7 +1501,7 @@ class OrdersController extends Controller
                 // Check if we need to save the DPD import file
                 if ($dpdImportFile != "Account|AddressCode|Name|Address 1|Address 2|Town|County|PostCode|Service|Qty of Labels|Contact|Telephone|Email|Email2|Additional Info\n")
                 {
-                    $dpdImportFileName = '/var/www/vhosts/kitchenappliancecentre.co.uk/webapps/web/uploads/imports/dpd/import-'.date('dmYHis').'.txt';
+                    $dpdImportFileName = $this->get('kernel')->getRootDir() . '/../web/uploads/imports/dpd/import-'.date('dmYHis').'.txt';
                     $fileHandle = fopen($dpdImportFileName, 'w');
                     fwrite($fileHandle, $dpdImportFile);
                     fclose($fileHandle);
@@ -1549,14 +1551,14 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Set the number of orders updated
         $ordersUpdated = 0;
 
         // Get tracking data
-        $trackingFileName = '/var/www/vhosts/kitchenappliancecentre.co.uk/webapps/web/uploads/exports/dpd/EXPORT.TXT';
-        $renamedTrackingFileName = '/var/www/vhosts/kitchenappliancecentre.co.uk/webapps/web/uploads/exports/dpd/export-'.date("dmYHis").'.txt';
+        $trackingFileName = $this->get('kernel')->getRootDir() . '/../web/uploads/exports/dpd/EXPORT.TXT';
+        $renamedTrackingFileName = $this->get('kernel')->getRootDir() . '/../web/uploads/exports/dpd/export-'.date("dmYHis").'.txt';
         if (file_exists($trackingFileName))
         {
             $fileHandle = fopen($trackingFileName, "r");
@@ -1568,7 +1570,9 @@ class OrdersController extends Controller
                 {
                     $orderId = $orderInfo[3];
 
-                    // Get the item
+                    /**
+                     * @var $itemObject Order
+                     */
                     $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($orderId);
                     if ($itemObject)
                     {
@@ -1594,7 +1598,7 @@ class OrdersController extends Controller
                             $plainTextNote .= "Go to http://www.dpd.co.uk/service/tracking?parcel=".$trackingNumber." to track your delivery.\n\n";
                             $plainTextNote .= "Tracking will be active after 5.30pm today.";
                             $orderNoteObject = new Order\Note();
-                            $orderNoteObject->setOrder($itemObject->getId());
+                            $orderNoteObject->setOrder($itemObject);
                             $orderNoteObject->setNoteType('customer');
                             $orderNoteObject->setNotified(1);
                             $orderNoteObject->setNote($plainTextNote);
@@ -1626,7 +1630,7 @@ class OrdersController extends Controller
                                 $itemObject->setReviewRequested(1);
                                 $em->persist($itemObject);
                                 $em->flush();
-                            } catch (Exception $exception) {
+                            } catch (\Exception $exception) {
                                 error_log('Error sending email!');
                             }
 
@@ -1667,9 +1671,11 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        // Get the item
+        /**
+         * @var $itemObject Order
+         */
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
 
         // Update
@@ -1746,9 +1752,11 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
-        // Get the item
+        /**
+         * @var $itemObject Order
+         */
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
 
         // Update
@@ -1815,7 +1823,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get the item
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
@@ -1888,7 +1896,7 @@ class OrdersController extends Controller
         $productService = $this->get('web_illumination_admin.product_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         /**
          * Get the item
@@ -2060,7 +2068,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Get the item
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
