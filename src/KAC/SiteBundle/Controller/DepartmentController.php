@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
+use KAC\SiteBundle\Form\EditDepartmentFeaturesType;
 use KAC\SiteBundle\Entity\Image;
 use KAC\SiteBundle\Entity\Department;
 use KAC\SiteBundle\Entity\Department\Description;
@@ -100,6 +101,67 @@ class DepartmentController extends Controller
         $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
 
         return array('departments' => $departments);
+    }
+
+    public function baseEditAction(Request $request, $departmentId, $template, $formClass)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $manager = $this->getManager();
+
+        $department = $em->getRepository("KAC\SiteBundle\Entity\Department")->find($departmentId);
+        if(!$department)
+        {
+            throw new NotFoundHttpException("Department not found");
+        }
+
+        $form = $this->createForm($formClass, $department);
+
+        if ($request->isMethod('POST'))
+        {
+            $form->bind($request);
+            if ($form->isValid())
+            {
+                // Update the department path
+                $manager->updateDepartmentPath($department);
+
+                // Update the object links
+                $manager->updateObjectLinks($department);
+
+                // Update the database
+                $em->persist($department);
+                $em->flush();
+
+                // Notify user
+                $this->get('session')->setFlash('notice', 'The department "'.$department->getName().'" has been updated.');
+
+                // Check if request is modal
+                if ($request->query->get('modal') == true)
+                {
+                    // Break out the modal
+                    return $this->render('KACSiteBundle:Includes:modalBreakout.html.twig');
+                } else {
+                    // Forward
+                    return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                        'departmentId' => $department->getId(),
+                    )));
+                }
+            }
+        }
+
+        return $this->render($template, array(
+            'department' => $department,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/departments/{departmentId}/features", name="departments_edit_features")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editFeaturesAction(Request $request, $departmentId)
+    {
+        return $this->baseEditAction($request, $departmentId, 'KACSiteBundle:Department:edit_features.html.twig', new EditDepartmentFeaturesType());
     }
 
     /**
