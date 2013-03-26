@@ -41,6 +41,14 @@
     display: none;
 }
 
+.ui-button-icon-only {
+    padding: 6px;
+}
+
+.ui-button-icon-only .ui-icon {
+    margin: 0 !important;
+}
+
 input.ui-button {
     padding: $spacingMedium;
 }
@@ -81,15 +89,11 @@ button.ui-button::-moz-focus-inner {
     border: 1px solid $colourGrey;
 }
 
-.button-green .ui-button-text {
-  color: $colourWhite;
-  @include textShadow($colourBlack, 0, 1px);
-}
-
 .button-grey:hover {
     @include highlightedVerticalGradientGreyReversed;
 }
 
+.button .ui-button-text,
 .button-grey .ui-button-text {
     color: $textColour;
 }
@@ -109,16 +113,20 @@ button.ui-button::-moz-focus-inner {
     @include textShadow($colourBlack, 0, 1px);
 }
 
+.ui-dialog-titlebar-close,
+.ui-dialog-titlebar-close:focus,
 .button-red {
     @include highlightedVerticalGradientRed;
     @include boxGlow($colourRed, 5px);
     border: 1px solid $colourRed;
 }
 
+.ui-dialog-titlebar-close:hover,
 .button-red:hover {
     @include highlightedVerticalGradientRedReversed;
 }
 
+.ui-dialog-titlebar-close,
 .button-red .ui-button-text {
     color: $colourWhite;
     @include textShadow($colourBlack, 0, 1px);
