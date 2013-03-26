@@ -70,8 +70,16 @@ class DepartmentController extends Controller
                 // Notify user
                 $this->get('session')->setFlash('notice', 'The new department "'.$department->getName().'" has been added.');
 
-                // Forward
-                return $this->redirect($this->get('router')->generate('homepage'));
+                // Check if request is modal
+                if ($request->query->get('modal') == true)
+                {
+                    // Break out the modal
+                    return $this->render('KACSiteBundle:Includes:modalBreakout.html.twig');
+                } else {
+                    // Forward
+                    return $this->redirect($this->get('router')->generate('homepage'));
+                }
+
             }
         }
 
