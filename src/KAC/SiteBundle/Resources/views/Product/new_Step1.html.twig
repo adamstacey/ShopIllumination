@@ -44,20 +44,13 @@
         </div>
     </div>
 </form>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
-        $("#site_new_product_brand").select2();
-        $("select.select-department").prepend('<option value="">- Select a Department -</option>');
-        $("select.select-department:selected").removeAttr("selected");
-        $("select.select-department :nth-child(1)").attr("selected", "selected");
+        $("select.select-brand").select2({
+            placeholder: "- Select a Brand -"
+        });
         $("select.select-department").select2({
-            matcher: function(term, text) {
-                return text.replace(/^[\s&nbsp;]+/,'').toUpperCase().indexOf(term.toUpperCase()) >= 0;
-            }
+            placeholder: "- Select a Department -"
         });
-        $(".select2-highlighted").each(function() {
-            $(this).removeClass("select2-highlighted");
-        });
-        $(".select-department > .select2-choice > span").html("- Select a Department -");
     })
 </script>
