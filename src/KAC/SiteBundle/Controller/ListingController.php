@@ -103,7 +103,8 @@ class ListingController extends Controller
 
         // Facets
         $facetSet = $query->getFacetSet();
-        $featureGroups = array();
+        $filterFeatureGroup = array();
+
         $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1)->setPrefix($request->query->get('filter[department_path]', '', true));
         // Add brand facet if user is not on the brand listing
         if(!$brand) {
@@ -116,7 +117,7 @@ class ListingController extends Controller
                 if($departmentToFeature->getDisplayOnFilter())
                 {
                     $flags[] = 'attr_feature_'.str_replace(' ', '', $departmentToFeature->getFeatureGroup()->getName());
-                    $featureGroups[] = $departmentToFeature->getFeatureGroup()->getName();
+                    $filterFeatureGroup[] = $departmentToFeature->getFeatureGroup()->getName();
                     $facetSet->createFacetField($helper->escapeTerm('feature_'.str_replace(' ', '', $departmentToFeature->getFeatureGroup()->getName())))
                         ->setField('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName())
                         ->setMinCount(1)
@@ -207,7 +208,7 @@ class ListingController extends Controller
             'department' => $department,
             'departments' => $departments,
             'facets' => $facets,
-            'featureGroups' => $featureGroups,
+            'filterFeatureGroups' => $filterFeatureGroup,
             'pagination' => $pagination,
             'stats' => $stats,
         ));

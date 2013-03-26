@@ -328,7 +328,7 @@
                                         </div>
                                     </div>
                                 {% endif %}
-                                {% if featureGroups|length > 0 %}
+                                {% if filterFeatureGroups|length > 0 %}
                                     <h5 id="filter-feature-header" class="no-margin">
                                         {% spaceless %}
                                             Features
@@ -339,7 +339,7 @@
                                     <div id="filter-feature-container">
                                         <div id="filter-feature" class="filter">
                                             <ul>
-                                                {% for featureGroup in featureGroups %}
+                                                {% for featureGroup in filterFeatureGroups %}
                                                     {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
                                                         <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
                                                         {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}

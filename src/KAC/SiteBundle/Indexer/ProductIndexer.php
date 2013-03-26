@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Indexer;
 
+use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Product\VariantToFeature;
 
@@ -26,8 +27,12 @@ class ProductIndexer extends Indexer
             $commonFeatures = array();
             $descriptions = $product->getDescriptions();
 
-            // Fetch images
+            /**
+             * @var $em EntityManager
+             */
             $em = $this->getDoctrine()->getManager();
+
+            // Fetch images
             $images = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array(
                 'objectId' => $product->getId(),
                 'objectType' => 'product',
@@ -108,17 +113,27 @@ class ProductIndexer extends Indexer
                             $helper->escapeTerm(htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())),
                             $feature->getFeature()->getName()
                         );
-                    }
 
-                    // Check for common features
-                    if($feature->getFeatureGroup() && $feature->getFeature()) {
-                        if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        // Fetch the relevant department to feature entity
+                        $departmentToFeature = $em->createQuery("
+                            SELECT dtf
+                            FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf
+                            WHERE dtf.featureGroup = ?1 AND dtf.department = ?2")
+                            ->setParameter(1, $feature->getFeatureGroup()->getId())
+                            ->setParameter(2, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
+                            ->execute();
+
+                        // Check for common features
+                        if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnListing())
                         {
-                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
-                        }
-                        else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
-                        {
-                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                            if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                            {
+                                $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                            }
+                            else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
+                            {
+                                unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                            }
                         }
                     }
                 }
