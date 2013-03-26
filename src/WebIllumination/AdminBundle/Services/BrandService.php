@@ -550,6 +550,29 @@ class BrandService {
    			   	   		
     	return $brands;
     }
+
+    public function deleteBrand($id)
+    {
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        // Get the entity manager
+        $em = $doctrineService->getEntityManager();
+
+        $brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
+        if (!$brandObject)
+        {
+            error_log('Can\'t find the brand!');
+            return false;
+        } else {
+            $em->remove($brandObject);
+        }
+
+        // Flush the database
+        $em->flush();
+
+        return true;
+    }
     
     public function getBrandWarnings($id, $locale = 'en')
 	{
