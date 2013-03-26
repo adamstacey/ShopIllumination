@@ -89,10 +89,10 @@ class ProductsController extends Controller
     		{
     			error_log('Rebuilding Header: '.$productCount);
 	    		// Get the product description
-	    		$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $product->getProductId()));
+	    		$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $product->getProductId()));
 	    		
 	    		// Generate the seo data
-				$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $product->getBrandId()));
+				$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $product->getBrandId()));
 				$departmentGroups = explode('^', $product->getDepartmentIds());
 				$departments = explode('|', $departmentGroups[0]);
 				if (sizeof($departments) > 1)
@@ -101,7 +101,7 @@ class ProductsController extends Controller
 				} else {
 					$departmentId = 0;
 				}
-				$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
+				$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
 				$header = $product->getProduct();
 				$pageTitle = $product->getProduct().' ('.$product->getProductCode().')';
 				if ($departmentDescriptionObject)
@@ -351,7 +351,7 @@ class ProductsController extends Controller
     		$status = $request->query->get('status');
     		
     		// Get the product object
-    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
+    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
     		if (!$productObject)
     		{
     			throw new AccessDeniedException();
@@ -366,7 +366,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($id);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -400,7 +400,7 @@ class ProductsController extends Controller
 			if ($productDeleted)
 			{
 				// Clear the full product index so it is rebuilt
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+				$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 				foreach ($indexObjects as $indexObject)
 				{
 					$indexObject->setRebuild(1);
@@ -485,8 +485,8 @@ class ProductsController extends Controller
     		$em->flush();
 			
 			// Generate the seo data
-			$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $brandId));
-			$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
+			$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $brandId));
+			$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
 			$pageTitle = $productCode;
 			$header = $productCode;
 			$metaKeywords = $productCode;
@@ -590,7 +590,7 @@ class ProductsController extends Controller
 			}
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -682,12 +682,12 @@ class ProductsController extends Controller
 		    		if ($importContent['productCode'] && ($importContent['newPrice'] > 0))
 		    		{
 		    			$totalImports++;
-			    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->findOneBy(array('productCode' => $importContent['productCode']));
+			    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->findOneBy(array('productCode' => $importContent['productCode']));
 			    		if ($productObject)
 			    		{
 				    		$importContent['productId'] = $productObject->getId();
-				    		$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $importContent['productId']));
-				    		$productPriceObject = $em->getRepository('WebIlluminationAdminBundle:ProductPrice')->findOneBy(array('productId' => $importContent['productId'], 'displayOrder' => 1), array('listPrice' => 'ASC'));
+				    		$productIndexObject = $em->getRepository('KAC\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $importContent['productId']));
+				    		$productPriceObject = $em->getRepository('KAC\SiteBundle\Entity\ProductPrice')->findOneBy(array('productId' => $importContent['productId'], 'displayOrder' => 1), array('listPrice' => 'ASC'));
 				    		if ($productIndexObject && $productPriceObject)
 				    		{
 				    			$importContent['pageTitle'] = $productIndexObject->getPageTitle();
@@ -777,10 +777,10 @@ class ProductsController extends Controller
     	}
     	
     	// Get the product option groups
-		$productOptionGroupObjects = $em->getRepository('WebIlluminationAdminBundle:ProductOptionGroup')->findBy(array(), array('productOptionGroup' => 'ASC'));
+		$productOptionGroupObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductOptionGroup')->findBy(array(), array('productOptionGroup' => 'ASC'));
 		
 		// Get the product options
-		$productOptionObjects = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->findBy(array(), array('productOption' => 'ASC'));
+		$productOptionObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->findBy(array(), array('productOption' => 'ASC'));
     	    	
     	// Get the product
     	$product = $productService->getProduct($id, 'en', 'GBP');
@@ -834,8 +834,8 @@ class ProductsController extends Controller
     		$resetSeo = false;
     		
     		// Get the product objects
-    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
-    		$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $id));
+    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
+    		$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $id));
     		if (!$productObject || !$productDescriptionObject)
     		{
     			throw new AccessDeniedException();
@@ -893,7 +893,7 @@ class ProductsController extends Controller
 			}
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -931,8 +931,8 @@ class ProductsController extends Controller
     		}
     		
     		// Get the product objects
-    		$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $id));
-    		$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $id));
+    		$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $id));
+    		$productIndexObject = $em->getRepository('KAC\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $id));
     		if (!$productDescriptionObject || !$productIndexObject)
     		{
     			throw new AccessDeniedException();
@@ -948,7 +948,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($id);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -1014,7 +1014,7 @@ class ProductsController extends Controller
     		$productId = $request->query->get('productId');
     		    		
     		// Get the prices
-    		$prices = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductPrice')->findBy(array('productId' => $productId), array('displayOrder' => 'ASC'));
+    		$prices = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductPrice')->findBy(array('productId' => $productId), array('displayOrder' => 'ASC'));
     		
 		    return $this->render('WebIlluminationAdminBundle:Products:ajaxGetPrices.html.twig', array('productId' => $productId, 'prices' => $prices));
 		}
@@ -1062,7 +1062,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find price
-    		$priceObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductPrice')->find($id);
+    		$priceObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductPrice')->find($id);
     		if (!$priceObject)
     		{
     			$priceObject = new ProductPrice();
@@ -1081,7 +1081,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($productId);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -1113,7 +1113,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find price
-    		$price = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductPrice')->find($id);
+    		$price = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductPrice')->find($id);
     		if ($price)
     		{
     			// Get the product id
@@ -1127,7 +1127,7 @@ class ProductsController extends Controller
 				$productService->rebuildProduct($productId);
 				
 				// Clear the full product index so it is rebuilt
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+				$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 				foreach ($indexObjects as $indexObject)
 				{
 					$indexObject->setRebuild(1);
@@ -1163,7 +1163,7 @@ class ProductsController extends Controller
     		$maximumMembershipCardDiscount = trim($request->request->get('maximumMembershipCardDiscount'));
     		
     		// Get the product objects
-    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
+    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
     		if (!$productObject)
     		{
     			throw new AccessDeniedException();
@@ -1181,7 +1181,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($id);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -1218,12 +1218,12 @@ class ProductsController extends Controller
     		    		
     		// Get the options
 	    	$options = array();
-	    	$productToOptionsObject = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->findBy(array('productId' => $productId), array('displayOrder' => 'ASC'));
+	    	$productToOptionsObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToOption')->findBy(array('productId' => $productId), array('displayOrder' => 'ASC'));
 			foreach ($productToOptionsObject as $productToOptionObject)
 			{
 				$option = array();
-				$productOptionGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
-				$productOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->find($productToOptionObject->getProductOptionId());
+				$productOptionGroupObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
+				$productOptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->find($productToOptionObject->getProductOptionId());
 				$option['id'] = $productToOptionObject->getId();
 				$option['productOptionGroupId'] = $productOptionGroupObject->getId();
 				$option['productOptionGroup'] = $productOptionGroupObject->getProductOptionGroup();
@@ -1236,10 +1236,10 @@ class ProductsController extends Controller
 			}
 			
 			// Get the product option groups
-			$productOptionGroupObjects = $em->getRepository('WebIlluminationAdminBundle:ProductOptionGroup')->findBy(array(), array('productOptionGroup' => 'ASC'));
+			$productOptionGroupObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductOptionGroup')->findBy(array(), array('productOptionGroup' => 'ASC'));
 			
 			// Get the product options
-			$productOptionObjects = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->findBy(array(), array('productOption' => 'ASC'));
+			$productOptionObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->findBy(array(), array('productOption' => 'ASC'));
     		
 		    return $this->render('WebIlluminationAdminBundle:Products:ajaxGetOptions.html.twig', array('settings' => $settings['admin']['products'], 'productId' => $productId, 'options' => $options, 'productOptionGroupObjects' => $productOptionGroupObjects, 'productOptionObjects' => $productOptionObjects));
 		}
@@ -1262,7 +1262,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
     		
 			// Get the first product option
-			$productOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->findOneBy(array('productOptionGroupId' => $id), array('productOption' => 'ASC'));
+			$productOptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->findOneBy(array('productOptionGroupId' => $id), array('productOption' => 'ASC'));
 			if (!$productOptionObject)
 			{
 				throw new AccessDeniedException();
@@ -1305,7 +1305,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find option
-    		$options = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToOption')->findBy(array('productOptionGroupId' => $id, 'productId' => $productId));
+    		$options = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToOption')->findBy(array('productOptionGroupId' => $id, 'productId' => $productId));
     		if ($options)
     		{
     			foreach ($options as $optionObject)
@@ -1324,7 +1324,7 @@ class ProductsController extends Controller
 				$productService->rebuildProduct($productId);
 				
 				// Clear the full product index so it is rebuilt
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+				$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 				foreach ($indexObjects as $indexObject)
 				{
 					$indexObject->setRebuild(1);
@@ -1355,7 +1355,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
     		
     		// Get the product options
-			$productOptionObjects = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->findBy(array('productOptionGroupId' => $optionGroupId), array('productOption' => 'ASC'));
+			$productOptionObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->findBy(array('productOptionGroupId' => $optionGroupId), array('productOption' => 'ASC'));
     			    	
 	    	return $this->render('WebIlluminationAdminBundle:Products:ajaxAddOption.html.twig', array('id' => $id, 'optionGroupId' => $optionGroupId, 'productId' => $productId, 'productOptionObjects' => $productOptionObjects));
 	    }
@@ -1388,7 +1388,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find product option
-    		$productOptionObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductOption')->find($productOptionId);
+    		$productOptionObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductOption')->find($productOptionId);
     		if (!$productOptionObject)
     		{
     			$productOptionObject = new ProductOption();
@@ -1402,7 +1402,7 @@ class ProductsController extends Controller
     		}
     		
     		// Find option
-    		$productToOptionObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToOption')->find($id);
+    		$productToOptionObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToOption')->find($id);
     		if (!$productToOptionObject)
     		{
     			$productToOptionObject = new ProductToOption();
@@ -1422,7 +1422,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($productId);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -1452,7 +1452,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find option
-    		$option = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToOption')->find($id);
+    		$option = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToOption')->find($id);
     		if ($option)
     		{
     			// Remove the option from the database
@@ -1490,12 +1490,12 @@ class ProductsController extends Controller
     		    		
     		// Get the features
 	    	$features = array();
-	    	$productToFeaturesObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $productId), array('displayOrder' => 'ASC'));
+	    	$productToFeaturesObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findBy(array('productId' => $productId), array('displayOrder' => 'ASC'));
 			foreach ($productToFeaturesObject as $productToFeatureObject)
 			{
 				$feature = array();
-				$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($productToFeatureObject->getProductFeatureGroupId());
-				$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
+				$productFeatureGroupObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeatureGroup')->find($productToFeatureObject->getProductFeatureGroupId());
+				$productFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->find($productToFeatureObject->getProductFeatureId());
 				if ($productFeatureGroupObject && $productFeatureObject)
 				{
 					$feature['id'] = $productToFeatureObject->getId();
@@ -1508,10 +1508,10 @@ class ProductsController extends Controller
 			}
 			
 			// Get the product feature groups
-			$productFeatureGroupObjects = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findBy(array(), array('productFeatureGroup' => 'ASC'));
+			$productFeatureGroupObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductFeatureGroup')->findBy(array(), array('productFeatureGroup' => 'ASC'));
 			
 			// Get the product features
-			$productFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findBy(array(), array('productFeature' => 'ASC'));
+			$productFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findBy(array(), array('productFeature' => 'ASC'));
     		
 		    return $this->render('WebIlluminationAdminBundle:Products:ajaxGetFeatures.html.twig', array('settings' => $settings['admin']['products'], 'productId' => $productId, 'features' => $features, 'productFeatureGroupObjects' => $productFeatureGroupObjects, 'productFeatureObjects' => $productFeatureObjects));
 		}
@@ -1534,7 +1534,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
     		
 			// Get the first product feature
-			$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('productFeatureGroupId' => $id), array('productFeature' => 'ASC'));
+			$productFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findOneBy(array('productFeatureGroupId' => $id), array('productFeature' => 'ASC'));
 			if (!$productFeatureObject)
 			{
 				throw new AccessDeniedException();
@@ -1574,7 +1574,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find feature
-    		$features = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productFeatureGroupId' => $id, 'productId' => $productId));
+    		$features = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findBy(array('productFeatureGroupId' => $id, 'productId' => $productId));
     		if ($features)
     		{
     			foreach ($features as $featureObject)
@@ -1590,7 +1590,7 @@ class ProductsController extends Controller
 				$productService->rebuildProduct($productId);
 				
 				// Clear the full product index so it is rebuilt
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+				$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 				foreach ($indexObjects as $indexObject)
 				{
 					$indexObject->setRebuild(1);
@@ -1624,7 +1624,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
     		
     		// Get the product features
-			$productFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findBy(array('productFeatureGroupId' => $featureGroupId), array('productFeature' => 'ASC'));
+			$productFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findBy(array('productFeatureGroupId' => $featureGroupId), array('productFeature' => 'ASC'));
     			    	
 	    	return $this->render('WebIlluminationAdminBundle:Products:ajaxAddFeature.html.twig', array('id' => $id, 'featureGroupId' => $featureGroupId, 'productId' => $productId, 'productFeatureObjects' => $productFeatureObjects));
 	    }
@@ -1654,7 +1654,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find product feature
-    		$productFeatureObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productFeatureId);
+    		$productFeatureObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductFeature')->find($productFeatureId);
     		if (!$productFeatureObject)
     		{
     			$productFeatureObject = new ProductFeature();
@@ -1668,7 +1668,7 @@ class ProductsController extends Controller
     		}
     		
     		// Find feature
-    		$productToFeatureObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToFeature')->find($id);
+    		$productToFeatureObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->find($id);
     		if (!$productToFeatureObject)
     		{
     			$productToFeatureObject = new ProductToFeature();
@@ -1685,7 +1685,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($productId);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -1715,7 +1715,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find feature
-    		$feature = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductToFeature')->find($id);
+    		$feature = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->find($id);
     		if ($feature)
     		{
     			// Remove the feature from the database
@@ -1743,7 +1743,7 @@ class ProductsController extends Controller
     		$productId = $request->query->get('productId');
     		    		
     		// Get the related products
-    		$relatedProducts = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $productId, 'linkType' => 'related'), array('displayOrder' => 'ASC'));
+    		$relatedProducts = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->findBy(array('productId' => $productId, 'linkType' => 'related'), array('displayOrder' => 'ASC'));
     		
     		// Get the products
 	    	$products = $productService->getAllProducts();
@@ -1796,7 +1796,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find related product
-    		$relatedProductObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductLink')->find($id);
+    		$relatedProductObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
     		if (!$relatedProductObject)
     		{
     			$relatedProductObject = new ProductLink();
@@ -1813,7 +1813,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($productId);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -1845,7 +1845,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find related product
-    		$relatedProduct = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductLink')->find($id);
+    		$relatedProduct = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
     		if ($relatedProduct)
     		{
     			// Get the product id
@@ -1859,7 +1859,7 @@ class ProductsController extends Controller
 				$productService->rebuildProduct($productId);
 				
 				// Clear the full product index so it is rebuilt
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+				$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 				foreach ($indexObjects as $indexObject)
 				{
 					$indexObject->setRebuild(1);
@@ -1888,7 +1888,7 @@ class ProductsController extends Controller
     		$productId = $request->query->get('productId');
     		    		
     		// Get the cheaper alternatives
-    		$cheaperAlternatives = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductLink')->findBy(array('productId' => $productId, 'linkType' => 'cheaper'), array('displayOrder' => 'ASC'));
+    		$cheaperAlternatives = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->findBy(array('productId' => $productId, 'linkType' => 'cheaper'), array('displayOrder' => 'ASC'));
     		
     		// Get the products
 	    	$products = $productService->getAllProducts();
@@ -1941,7 +1941,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find cheaper alternative
-    		$cheaperAlternativeObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductLink')->find($id);
+    		$cheaperAlternativeObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
     		if (!$cheaperAlternativeObject)
     		{
     			$cheaperAlternativeObject = new ProductLink();
@@ -1958,7 +1958,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($productId);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -1990,7 +1990,7 @@ class ProductsController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find cheaper alternative
-    		$cheaperAlternative = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductLink')->find($id);
+    		$cheaperAlternative = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
     		if ($cheaperAlternative)
     		{
     			// Get the product id
@@ -2004,7 +2004,7 @@ class ProductsController extends Controller
 				$productService->rebuildProduct($productId);
 				
 				// Clear the full product index so it is rebuilt
-				$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+				$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 				foreach ($indexObjects as $indexObject)
 				{
 					$indexObject->setRebuild(1);
@@ -2041,7 +2041,7 @@ class ProductsController extends Controller
     		$isbn = $request->request->get('isbn');
     		
     		// Get the product object
-    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
+    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
     		if (!$productObject)
     		{
     			throw new AccessDeniedException();
@@ -2060,7 +2060,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($id);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -2094,7 +2094,7 @@ class ProductsController extends Controller
     		$height = $request->request->get('height');
     		
     		// Get the product object
-    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
+    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
     		if (!$productObject)
     		{
     			throw new AccessDeniedException();
@@ -2112,7 +2112,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($id);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -2150,10 +2150,10 @@ class ProductsController extends Controller
     		$alternativeProductCodes = trim($request->request->get('alternativeProductCodes'));
     		
     		// Get the product objects
-    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
-    		$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $id));
-    		$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $id));
-    		$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product'));
+    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
+    		$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $id));
+    		$productIndexObject = $em->getRepository('KAC\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $id));
+    		$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product'));
     		if (!$productObject || !$productDescriptionObject || !$productIndexObject || !$routingObject)
     		{
     			throw new AccessDeniedException();
@@ -2167,10 +2167,10 @@ class ProductsController extends Controller
     		
     		if (!$pageTitle)
     		{
-    			$productToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findOneBy(array('productId' => $id), array('displayOrder' => 'ASC'));
+    			$productToDepartmentObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findOneBy(array('productId' => $id), array('displayOrder' => 'ASC'));
     			if ($productToDepartmentObject)
     			{
-    				$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $productToDepartmentObject->getDepartmentId()));
+    				$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $productToDepartmentObject->getDepartmentId()));
     			}
     			if ($departmentDescriptionObject)
     			{
@@ -2257,7 +2257,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($id);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -2288,10 +2288,10 @@ class ProductsController extends Controller
     		$id = $request->query->get('id');
     		
     		// Get the product objects
-    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($id);
-    		$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $id));
-    		$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $id));
-    		$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product'));
+    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
+    		$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $id));
+    		$productIndexObject = $em->getRepository('KAC\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $id));
+    		$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'product'));
     		if (!$productObject || !$productDescriptionObject || !$productIndexObject || !$routingObject)
     		{
     			throw new AccessDeniedException();
@@ -2301,11 +2301,11 @@ class ProductsController extends Controller
     		$previousUrl = $routingObject->getUrl();
     		
     		// Generate the seo data
-    		$productToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findOneBy(array('productId' => $id), array('displayOrder' => 'ASC'));
+    		$productToDepartmentObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findOneBy(array('productId' => $id), array('displayOrder' => 'ASC'));
 			$departmentDescriptionObject = false;
 			if ($productToDepartmentObject)
 			{
-				$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $productToDepartmentObject->getDepartmentId()));
+				$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $productToDepartmentObject->getDepartmentId()));
 			}
     		$pageTitle = $productObject->getProductCode();
 			$header = $productObject->getProductCode();
@@ -2397,7 +2397,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($id);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);
@@ -2416,10 +2416,10 @@ class ProductsController extends Controller
     public function ajaxGetStatisticsVisitsAction($id)
     {	
     	// Get the web address
-    	$web_address = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => 'en'));
+    	$web_address = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => 'en'));
     	
     	// Get the redirects
-    	$redirects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+    	$redirects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	
     	// Setup URLs
     	$urls = array();
@@ -2443,10 +2443,10 @@ class ProductsController extends Controller
     public function ajaxGetStatisticsReferrersAction($id)
     {	
     	// Get the web address
-    	$web_address = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => 'en'));
+    	$web_address = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'brand', 'locale' => 'en'));
     	
     	// Get the redirects
-    	$redirects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
+    	$redirects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $id, 'objectType' => 'brand'));
     	
     	// Setup URLs
     	$urls = array();
@@ -2482,7 +2482,7 @@ class ProductsController extends Controller
 			$productService->rebuildProduct($productId);
 			
 			// Clear the full product index so it is rebuilt
-			$indexObjects = $em->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
+			$indexObjects = $em->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => 'all', 'objectType' => 'products'));
 			foreach ($indexObjects as $indexObject)
 			{
 				$indexObject->setRebuild(1);

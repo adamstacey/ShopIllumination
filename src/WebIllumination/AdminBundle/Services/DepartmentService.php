@@ -360,8 +360,8 @@ class DepartmentService {
 //    	$departmentPathIds = explode('|', $department['departmentPath']);
 //		foreach ($departmentPathIds as $departmentPathId)
 //		{
-//			$departmentPathDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
-//			$departmentPathRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
+//			$departmentPathDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId));
+//			$departmentPathRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $departmentPathId, 'locale' => 'en', 'objectType' => 'department'));
 //			if ($departmentPathDescriptionObject && $departmentPathRoutingObject)
 //			{
 //				$departmentPath = array();
@@ -720,7 +720,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
     	
     	// Get the object
-    	$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
+    	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
     	if (!$departmentObject)
     	{
 	    	return false;
@@ -730,7 +730,7 @@ class DepartmentService {
     	$breadcrumbs = array();
     	foreach (explode('|', $departmentObject->getDepartmentPath()) as $departmentId)
     	{
-	    	$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));
+	    	$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => $locale));
 	    	if ($departmentDescriptionObject)
 	    	{
 		    	$breadcrumb = array();
@@ -760,13 +760,13 @@ class DepartmentService {
     	$productFeatureGroupDepartmentIds = $qb->getQuery()->getResult();
     	foreach ($productFeatureGroupDepartmentIds as $productFeatureGroupDepartmentId)
     	{
-    		$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($productFeatureGroupDepartmentId['departmentId']);
+    		$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($productFeatureGroupDepartmentId['departmentId']);
     		if ($departmentObject)
     		{
 	    		$productFeatureGroupDepartment = array();
 	    		foreach (explode('|', $departmentObject->getDepartmentPath()) as $departmentPathId)
 	    		{
-		    		$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId, 'locale' => $locale));
+		    		$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentPathId, 'locale' => $locale));
 		    		if ($departmentDescriptionObject)
 		    		{
 			    		$productFeatureGroupDepartment[] = $departmentDescriptionObject->getName();
@@ -793,7 +793,7 @@ class DepartmentService {
     	$productToDepartmentObjects = $em->createQuery("SELECT pi FROM WebIlluminationAdminBundle:ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%'")->getResult();
     	foreach ($productToDepartmentObjects as $productToDepartmentObject)
     	{
-	    	$productToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $productToDepartmentObject->getProductId()));
+	    	$productToFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findBy(array('productId' => $productToDepartmentObject->getProductId()));
 	    	foreach ($productToFeatureObjects as $productToFeatureObject)
 	    	{
 	    		$productFeatureGroupIds[] = $productToFeatureObject->getProductFeatureGroupId();
@@ -820,7 +820,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 		
 		// Get the department
-		$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id));
+		$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id));
     	
     	// Get the product feature groups
     	$brandIds = array();
@@ -837,7 +837,7 @@ class DepartmentService {
 	    	// Check to make sure the brand to department is setup
 	    	foreach ($brandIndexObjects as $brandIndexObject)
 	    	{
-		    	$brandToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findOneBy(array('departmentId' => $id, 'brandId' => $brandIndexObject->getBrandId()));
+		    	$brandToDepartmentObject = $em->getRepository('KAC\SiteBundle\Entity\BrandToDepartment')->findOneBy(array('departmentId' => $id, 'brandId' => $brandIndexObject->getBrandId()));
 		    	if (!$brandToDepartmentObject)
 		    	{
 		    		$brandId = $brandIndexObject->getBrandId();
@@ -874,11 +874,11 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 		
 		// Get the department
-		$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id));
+		$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id));
     	
     	// Get the product feature groups
     	$productIds = array();
-    	$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
+    	$productToDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
     	foreach ($productToDepartmentObjects as $productToDepartmentObject)
     	{
     		$productIds[] = $productToDepartmentObject->getProductId();
@@ -911,7 +911,7 @@ class DepartmentService {
 			$productFeatureGroupIds = array();
 			foreach ($products as $product)
 			{
-    			$productToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $product->getProductId()), array('displayOrder' => 'ASC'));
+    			$productToFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findBy(array('productId' => $product->getProductId()), array('displayOrder' => 'ASC'));
     			foreach ($productToFeatureObjects as $productToFeatureObject)
     			{
 	    			if ($productToFeatureObject)
@@ -923,7 +923,7 @@ class DepartmentService {
 			$productFeatureGroupIds = array_unique($productFeatureGroupIds);
 			foreach ($productFeatureGroupIds as $productFeatureGroupId)
 			{
-				$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $productFeatureGroupId));
+				$departmentToFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $productFeatureGroupId));
 				if (!$departmentToFeatureObject)
 				{
 	    			$departmentToFeatureObject = new DepartmentToFeature();
@@ -956,12 +956,12 @@ class DepartmentService {
 		
 		// Get the product feature groups
 		$productFeaturesAdded = 0;
-		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $departmentId));
+		$departmentToFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->findBy(array('departmentId' => $departmentId));
 		if (sizeof($departmentToFeatureObjects) > 0)
 		{
 			foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 			{
-				$departmentToFeatureCheckObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId()));
+				$departmentToFeatureCheckObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $departmentToFeatureObject->getProductFeatureGroupId()));
 				if (!$departmentToFeatureCheckObject)
 				{
 	    			$newDepartmentToFeatureObject = new DepartmentToFeature();
@@ -996,7 +996,7 @@ class DepartmentService {
 		$products = $this->getProducts($id, $locale);
 		
 		// Get the department features
-		$departmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
+		$departmentToFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
 		
 		// Check to make sure all products match the features in the departments
 		if (sizeof($products) > 0)
@@ -1006,11 +1006,11 @@ class DepartmentService {
 				foreach ($departmentToFeatureObjects as $departmentToFeatureObject)
 				{
 					// Get the product feature to check
-					$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
+					$productToFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findOneBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
 				}
 				
 				
-    			$productToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findBy(array('productId' => $product->getProductId()), array('displayOrder' => 'ASC'));
+    			$productToFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findBy(array('productId' => $product->getProductId()), array('displayOrder' => 'ASC'));
     			foreach ($productToFeatureObjects as $productToFeatureObject)
     			{
 	    			if ($productToFeatureObject)
@@ -1022,7 +1022,7 @@ class DepartmentService {
 			$productFeatureGroupIds = array_unique($productFeatureGroupIds);
 			foreach ($productFeatureGroupIds as $productFeatureGroupId)
 			{
-				$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $productFeatureGroupId));
+				$departmentToFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->findOneBy(array('departmentId' => $id, 'productFeatureGroupId' => $productFeatureGroupId));
 				if (!$departmentToFeatureObject)
 				{
 	    			$departmentToFeatureObject = new DepartmentToFeature();
@@ -1055,7 +1055,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 				
 		// Get the product indexes
-		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id));
+		$productToDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findBy(array('departmentId' => $id));
 				
 		// Update the products
 		$count = 0;
@@ -1081,8 +1081,8 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 				
 		// Get the department objects
-		$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
-		$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id));
+		$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
+		$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id));
 				
 		// Update the departments
 		if ($departmentIndexObject)
@@ -1102,7 +1102,7 @@ class DepartmentService {
 				// Update the department delivery bands
 				foreach ($departmentIds as $departmentId)
 				{
-					$departmentPathIndexObject =  $em->getRepository('WebIlluminationAdminBundle:Department')->find($departmentId);
+					$departmentPathIndexObject =  $em->getRepository('KAC\SiteBundle\Entity\Department')->find($departmentId);
 					if ($departmentPathIndexObject)
 					{
 						if ($departmentPathIndexObject->getDeliveryBand() > 0)
@@ -1158,7 +1158,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 		
 		// Get the department index
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
 		
 		// Get the product indexes
 		$productIndexObjects = $this->getProducts($id, $locale);
@@ -1236,10 +1236,10 @@ class DepartmentService {
 						{
 							if ($templatePartName == 'productFeatureGroup')
 							{
-								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $templatePartValue, 'productId' => $productIndexObject->getProductId()));
+								$productToFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findOneBy(array('productFeatureGroupId' => $templatePartValue, 'productId' => $productIndexObject->getProductId()));
 								if ($productToFeatureObject)
 								{
-									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
+									$productFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->find($productToFeatureObject->getProductFeatureId());
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
@@ -1266,7 +1266,7 @@ class DepartmentService {
 						$productIndexObject->setPageTitle($templatePreview);
 						$em->persist($productIndexObject);
 						$em->flush();
-						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
+						$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
 						if ($productDescriptionObject)
 						{
 							$productDescriptionObject->setPageTitle($templatePreview);
@@ -1281,7 +1281,7 @@ class DepartmentService {
 						$productIndexObject->setHeader($templatePreview);
 						$em->persist($productIndexObject);
 						$em->flush();
-						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
+						$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
 						if ($productDescriptionObject)
 						{
 							$productDescriptionObject->setHeader($templatePreview);
@@ -1296,7 +1296,7 @@ class DepartmentService {
 						$productIndexObject->setMetaDescription($templatePreview);
 						$em->persist($productIndexObject);
 						$em->flush();
-						$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
+						$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $productIndexObject->getProductId(), 'locale' => $locale));
 						if ($productDescriptionObject)
 						{
 							$productDescriptionObject->setMetaDescription($templatePreview);
@@ -1321,7 +1321,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 		
 		// Get the department index
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
 		
 		// Get the template
 		$template = false;
@@ -1380,7 +1380,7 @@ class DepartmentService {
 						{
 							if ($templatePartName == 'productFeatureGroup')
 							{
-								$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->find($templatePartValue);
+								$productFeatureGroupObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeatureGroup')->find($templatePartValue);
 								if ($productFeatureGroupObject)
 								{
 									$templateContent .= '<li data-flat-sortable-list-object="'.$templateField.'-template" id="flat-sortable-list-'.$templateField.'-item-'.$templatePartsCount.'" data-value="productFeatureGroup|'.$templatePartValue.'">Feature Group: '.$productFeatureGroupObject->getProductFeatureGroup().'<a class="action-delete-flat-sortable-list-item button ui-button-red ui-corner-right icon-set-white" data-icon-primary="ui-icon-circle-cross" data-icon-only="true">Delete</a></li>';
@@ -1407,7 +1407,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
 		
 		// Get the department index
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
 		
 		// Get the product indexes
 		$productIndexObjects = $this->getProducts($id, $locale);
@@ -1485,10 +1485,10 @@ class DepartmentService {
 						{
 							if ($templatePartName == 'productFeatureGroup')
 							{
-								$productToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $productIndexObject->getProductId()));
+								$productToFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findOneBy(array('productFeatureGroupId' => $pageTitlePartValue, 'productId' => $productIndexObject->getProductId()));
 								if ($productToFeatureObject)
 								{
-									$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->find($productToFeatureObject->getProductFeatureId());
+									$productFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->find($productToFeatureObject->getProductFeatureId());
 									if ($productFeatureObject)
 									{
 										$productFeatureValue = $productFeatureObject->getProductFeature();
@@ -1521,7 +1521,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
     	
     	// Get the departments
-    	$departmentObjects = $em->getRepository('WebIlluminationAdminBundle:Department')->findAll();
+    	$departmentObjects = $em->getRepository('KAC\SiteBundle\Entity\Department')->findAll();
     	
     	// Rebuild the department index
     	foreach ($departmentObjects as $departmentObject)
@@ -1542,9 +1542,9 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
     	
     	// Get the objects
-    	$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
-    	$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
-    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
+    	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
+    	$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+    	$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $id, 'objectType' => 'department', 'locale' => $locale));
     	
     	// Check the objects both exist
     	if (!$departmentObject || !$departmentDescriptionObject || !$routingObject)
@@ -1553,7 +1553,7 @@ class DepartmentService {
     	}
     	
     	// Get any sub departments
-    	$subDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:Department')->findBy(array('parent' => $id));
+    	$subDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\Department')->findBy(array('parent' => $id));
     	$departmentCount = sizeof($subDepartmentObjects);
     	if ($departmentCount > 0)
     	{
@@ -1561,7 +1561,7 @@ class DepartmentService {
 	    	$departments = array();
 	    	foreach ($subDepartmentObjects as $subDepartmentObject)
 	    	{
-	    		$subDepartmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $subDepartmentObject->getId(), 'locale' => $locale));
+	    		$subDepartmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $subDepartmentObject->getId(), 'locale' => $locale));
 	    		if ($subDepartmentDescriptionObject)
 	    		{
 		    		$departmentIds[] = $subDepartmentObject->getId();
@@ -1585,7 +1585,7 @@ class DepartmentService {
 		$productCount = $qb->getQuery()->getSingleScalarResult();
 		
 		// Get direct product count
-		$productToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
+		$productToDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findBy(array('departmentId' => $id, 'displayOrder' => '1'));
 		$directProductCount = sizeof($productToDepartmentObjects);
 		
     	$qb = $em->createQueryBuilder();
@@ -1595,7 +1595,7 @@ class DepartmentService {
 		$productCount = $qb->getQuery()->getSingleScalarResult();
 		
 		// Update the index    	
-    	$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $id));
+    	$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id));
     	if (!$departmentIndexObject)
     	{
     		$departmentIndexObject = new DepartmentIndex();
@@ -1649,7 +1649,7 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
     	
     	// Get the department object
-    	$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
+    	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
     	
     	// Build the path
     	$existingDepartmentPath = $departmentObject->getDepartmentPath();
@@ -1657,7 +1657,7 @@ class DepartmentService {
     	$departmentPath = $parentId.'|'.$id;
     	while ($parentId > 0)
     	{
-	    	$parentDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($parentId);
+	    	$parentDepartmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($parentId);
 	    	if ($parentDepartmentObject)
 	    	{
 		    	$parentId = $parentDepartmentObject->getParentId();
@@ -1690,16 +1690,16 @@ class DepartmentService {
 		$em = $doctrineService->getEntityManager();
     	
     	// Get the object
-    	$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->find($id);
-    	$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
+    	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
+    	$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
     	if (!$departmentObject || !$departmentDescriptionObject)
     	{
 	    	return false;
     	}
     	
     	// Get the routing
-    	$parentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $departmentObject->getParentId(), 'locale' => $locale));
-    	$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $id, 'locale' => $locale));
+    	$parentRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $departmentObject->getParentId(), 'locale' => $locale));
+    	$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $id, 'locale' => $locale));
     	
     	// Get the URLs
     	$existingUrl = $routingObject->getUrl();

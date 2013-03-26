@@ -25,7 +25,7 @@ class SecurityController extends Controller
 		   	$password = trim($request->request->get('password'));
 		   	
 		   	// Find the user
-		  	$userObject = $em->getRepository('WebIlluminationAdminBundle:User')->findOneBy(array('emailAddress' => $emailAddress));
+		  	$userObject = $em->getRepository('KAC\SiteBundle\Entity\User')->findOneBy(array('emailAddress' => $emailAddress));
 		  	if (!$userObject)
 		  	{
 		  		// Set error message
@@ -84,7 +84,7 @@ class SecurityController extends Controller
 		
 		/*$em = $this->getDoctrine()->getEntityManager();
     	$encoderFactory = $this->get('security.encoder_factory');
-    	$userObject = $em->getRepository('WebIlluminationAdminBundle:User')->find(3);
+    	$userObject = $em->getRepository('KAC\SiteBundle\Entity\User')->find(3);
     	$encoder = $encoderFactory->getEncoder($userObject);
     	$userObject->setSalt(base_convert(sha1(uniqid(mt_rand(), true)), 16, 36));
     	$userObject->setPassword($encoder->encodePassword('madelaine12', $userObject->getSalt()));

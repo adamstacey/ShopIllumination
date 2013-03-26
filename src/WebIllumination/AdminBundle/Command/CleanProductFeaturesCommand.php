@@ -335,7 +335,7 @@ class CleanProductFeaturesCommand extends ContainerAwareCommand
     	
     	// Get the product group features
     	$productFeatureCount = 1;
-	    $productFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findBy(array(), array('productFeature' => 'ASC'));
+	    $productFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findBy(array(), array('productFeature' => 'ASC'));
 	    $productFeatureTotal = sizeof($productFeatureObjects);
 	    foreach ($productFeatureObjects as $productFeatureObject)
 	    {

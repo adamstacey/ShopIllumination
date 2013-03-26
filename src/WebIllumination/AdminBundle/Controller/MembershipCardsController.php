@@ -181,7 +181,7 @@ class MembershipCardsController extends Controller
     		$expiryDate = new \DateTime($request->request->get('expiryDate'));  		
     		
     		// Check membership number hasn't already been used
-    		$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('membershipNumber' => $membershipNumber));
+    		$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('membershipNumber' => $membershipNumber));
     		if ($membershipCardObject)
     		{
     			return new Response(htmlspecialchars(json_encode(array('response' => 'error', 'message' => 'The membership number you have tried to use is already in use. Please try another membership number.')), ENT_NOQUOTES));
@@ -222,7 +222,7 @@ class MembershipCardsController extends Controller
     		$expiryDate = new \DateTime($request->request->get('expiryDate'));
     		
     		// Get the membership card object
-    		$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->find($id);	    	
+    		$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->find($id);
 	    	if (!$membershipCardObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -230,7 +230,7 @@ class MembershipCardsController extends Controller
     		
     		// Check membership number hasn't already been used
     		$membershipCardAlreadyUsed = false;
-    		$membershipCardCheckObjects = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findBy(array('membershipNumber' => $membershipNumber));
+    		$membershipCardCheckObjects = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findBy(array('membershipNumber' => $membershipNumber));
   			foreach ($membershipCardCheckObjects as $membershipCardCheckObject)
   			{
   				if ($membershipCardObject->getId() != $membershipCardCheckObject->getId())
@@ -270,7 +270,7 @@ class MembershipCardsController extends Controller
     		$userId = $request->query->get('userId');
     		
     		// Get the membership card object
-    		$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->find($id);	    	
+    		$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->find($id);
 	    	if (!$membershipCardObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -300,7 +300,7 @@ class MembershipCardsController extends Controller
     		$id = $request->query->get('id');
     		
     		// Get the membership card object
-    		$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->find($id);	    	
+    		$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->find($id);
 	    	if (!$membershipCardObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -333,7 +333,7 @@ class MembershipCardsController extends Controller
     		$id = $request->query->get('id');
 	   		
 	   		// Get the membership card object
-    		$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->find($id);
+    		$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->find($id);
     			    	
 	    	// Delete the membership card
 	    	if ($membershipCardObject)
@@ -363,7 +363,7 @@ class MembershipCardsController extends Controller
     		$userId = $request->query->get('userId');
     		
     		// Get the user object
-    		$userObject = $em->getRepository('WebIlluminationAdminBundle:User')->find($userId);
+    		$userObject = $em->getRepository('KAC\SiteBundle\Entity\User')->find($userId);
 	    	if (!$userObject)
 	    	{
 	    		throw new AccessDeniedException();

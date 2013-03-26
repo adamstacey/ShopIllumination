@@ -61,12 +61,12 @@ class SystemController extends Controller
 		    		if ($importContent['productCode'] && ($importContent['newPrice'] > 0))
 		    		{
 		    			$totalImports++;
-			    		$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->findOneBy(array('productCode' => $importContent['productCode']));
+			    		$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->findOneBy(array('productCode' => $importContent['productCode']));
 			    		if ($productObject)
 			    		{
 				    		$importContent['productId'] = $productObject->getId();
-				    		$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $importContent['productId']));
-				    		$productPriceObject = $em->getRepository('WebIlluminationAdminBundle:ProductPrice')->findOneBy(array('productId' => $importContent['productId'], 'displayOrder' => 1), array('listPrice' => 'ASC'));
+				    		$productIndexObject = $em->getRepository('KAC\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $importContent['productId']));
+				    		$productPriceObject = $em->getRepository('KAC\SiteBundle\Entity\ProductPrice')->findOneBy(array('productId' => $importContent['productId'], 'displayOrder' => 1), array('listPrice' => 'ASC'));
 				    		if ($productIndexObject && $productPriceObject)
 				    		{
 				    			$importContent['pageTitle'] = $productIndexObject->getPageTitle();
@@ -185,7 +185,7 @@ class SystemController extends Controller
 				if ($group > 0)
 				{
 					$productGroupId = $productObject->getProductGroupId();
-					$productGroupObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Product')->findBy(array('productGroupId' => $productGroupId));
+					$productGroupObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Product')->findBy(array('productGroupId' => $productGroupId));
 					if (sizeof($productGroupObjects) > 1)
 					{
 						$departmentUrl = $product['departments'][0]['path'];
@@ -200,8 +200,8 @@ class SystemController extends Controller
 				}
 			}
 		} elseif (($brandId > 0) && ($departmentId > 0)) {
-			$brandRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'brand', 'objectId' => $brandId, 'locale' => 'en'));
-			$departmentRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $departmentId, 'locale' => 'en'));
+			$brandRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'brand', 'objectId' => $brandId, 'locale' => 'en'));
+			$departmentRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $departmentId, 'locale' => 'en'));
 			if ($brandRoutingObject && $departmentRoutingObject)
 			{
 				$brandUrl = $brandRoutingObject->getUrl();
@@ -209,14 +209,14 @@ class SystemController extends Controller
 				$url = $this->get('router')->generate('department_with_brand', array('brand' => $brandUrl, 'url' => $departmentUrl));
 			}
 		} elseif ($departmentId > 0) {
-			$departmentRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $departmentId, 'locale' => 'en'));
+			$departmentRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $departmentId, 'locale' => 'en'));
 			if ($departmentRoutingObject)
 			{
 				$url = $departmentRoutingObject->getUrl();
 				$url = $this->get('router')->generate('page_request', array('url' => $url));
 			}
 		} elseif ($brandId > 0) {
-			$brandRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'brand', 'objectId' => $brandId, 'locale' => 'en'));
+			$brandRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'brand', 'objectId' => $brandId, 'locale' => 'en'));
 			if ($brandRoutingObject)
 			{
 				$url = $brandRoutingObject->getUrl();
@@ -291,7 +291,7 @@ class SystemController extends Controller
     		}
     		
     		// Get the images
-    		$images = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $objectId, 'objectType' => $objectType, 'imageType' => $imageType, 'locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$images = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $objectId, 'objectType' => $objectType, 'imageType' => $imageType, 'locale' => 'en'), array('displayOrder' => 'ASC'));
     		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetImages.html.twig', array('objectId' => $objectId, 'objectType' => $objectType, 'imageType' => $imageType, 'images' => $images));
 		}
@@ -318,7 +318,7 @@ class SystemController extends Controller
    			{
    				case 'product':
    					// Get the product description object if it exists
-					$productDecriptionObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ProductDescription')->find($objectId);
+					$productDecriptionObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductDescription')->find($objectId);
 					if ($productDecriptionObject)
 					{
 						$title = $productDecriptionObject->getHeader();
@@ -357,7 +357,7 @@ class SystemController extends Controller
    			$elementIndex = $request->query->get('elementIndex');
 
 			// Get the image object if it exists
-			$imageObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Image')->find($id);
+			$imageObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Image')->find($id);
 			
 			// Get the image service
 	    	$imageService = $this->get('web_illumination_admin.image_service');
@@ -390,7 +390,7 @@ class SystemController extends Controller
    					$em = $this->getDoctrine()->getEntityManager();
    					
 					// Set the object index to rebuild the brand
-    				$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $imageObject->getObjectId(), 'objectType' => $objectType));
+    				$objectIndexObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => $imageObject->getObjectId(), 'objectType' => $objectType));
 					foreach ($objectIndexObjects as $objectIndexObject)
 					{
 						$objectIndexObject->setRebuild(1);
@@ -417,7 +417,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
    		
     		// Find image
-    		$imageObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Image')->find($id);
+    		$imageObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Image')->find($id);
     		if ($imageObject)
     		{
     			// Get the services
@@ -451,7 +451,7 @@ class SystemController extends Controller
     		}
     		
     		// Get the files
-    		$files = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:File')->findBy(array('objectId' => $objectId, 'objectType' => $objectType, 'locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$files = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\File')->findBy(array('objectId' => $objectId, 'objectType' => $objectType, 'locale' => 'en'), array('displayOrder' => 'ASC'));
     		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetFiles.html.twig', array('objectId' => $objectId, 'objectType' => $objectType, 'files' => $files));
 		}
@@ -493,7 +493,7 @@ class SystemController extends Controller
    			$elementIndex = $request->query->get('elementIndex');
 
 			// Get the file object if it exists
-			$fileObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:File')->find($id);
+			$fileObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\File')->find($id);
 			
 			// Get the file service
 	    	$fileService = $this->get('web_illumination_admin.file_service');
@@ -524,7 +524,7 @@ class SystemController extends Controller
    					$em = $this->getDoctrine()->getEntityManager();
    					
 					// Set the object index to rebuild the brand
-    				$objectIndexObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ObjectIndex')->findBy(array('objectKey' => $fileObject->getObjectId(), 'objectType' => $objectType));
+    				$objectIndexObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => $fileObject->getObjectId(), 'objectType' => $objectType));
 					foreach ($objectIndexObjects as $objectIndexObject)
 					{
 						$objectIndexObject->setRebuild(1);
@@ -551,7 +551,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
    		
     		// Find file
-    		$fileObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:File')->find($id);
+    		$fileObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\File')->find($id);
     		if ($fileObject)
     		{
     			// Get the services
@@ -579,12 +579,12 @@ class SystemController extends Controller
     		$objectType = $request->query->get('objectType');
     		    		    		    		
     		// Get the web address
-    		$routing = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $objectId, 'objectType' => $objectType, 'locale' => 'en'));
+    		$routing = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $objectId, 'objectType' => $objectType, 'locale' => 'en'));
 
     		if ($routing)
     		{
 	    		// Get the redirects
-	    		$redirects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('redirectFrom' => 'ASC'));
+	    		$redirects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('redirectFrom' => 'ASC'));
 	    		
 			    return $this->render('WebIlluminationAdminBundle:System:ajaxGetRedirects.html.twig', array('objectId' => $objectId, 'objectType' => $objectType, 'routing' => $routing, 'redirects' => $redirects));
 			}
@@ -627,7 +627,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find redirect
-    		$redirect = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Redirect')->find($id);
+    		$redirect = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->find($id);
     		if (!$redirect)
     		{
     			$redirect = new Redirect();
@@ -661,7 +661,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find redirect
-    		$redirect = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Redirect')->find($id);
+    		$redirect = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->find($id);
     		if ($redirect)
     		{
     			// Remove the redirect from the database
@@ -687,13 +687,13 @@ class SystemController extends Controller
     		$objectType = $request->query->get('objectType');
     		    		
     		// Get the guarantees
-    		$guarantees = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('displayOrder' => 'ASC'));
+    		$guarantees = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('displayOrder' => 'ASC'));
     		
     		// Get a list of guarantee types
-    		$guaranteeTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:GuaranteeType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$guaranteeTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\GuaranteeType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     	
     		// Get a list of guarantee lengths
-    		$guaranteeLengths = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$guaranteeLengths = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\GuaranteeLength')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetGuarantees.html.twig', array('objectId' => $objectId, 'objectType' => $objectType, 'guarantees' => $guarantees, 'guaranteeTypes' => $guaranteeTypes, 'guaranteeLengths' => $guaranteeLengths));
 		}
@@ -711,10 +711,10 @@ class SystemController extends Controller
     		$id = $request->query->get('id');
     		
 	    	// Get a list of guarantee types
-	    	$guaranteeTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:GuaranteeType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+	    	$guaranteeTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\GuaranteeType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
 	    	
 	    	// Get a list of guarantee lengths
-	    	$guaranteeLengths = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:GuaranteeLength')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+	    	$guaranteeLengths = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\GuaranteeLength')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
 	    	
 	    	return $this->render('WebIlluminationAdminBundle:System:ajaxAddGuarantee.html.twig', array('id' => $id, 'guaranteeTypes' => $guaranteeTypes, 'guaranteeLengths' => $guaranteeLengths));
 	    }
@@ -741,7 +741,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find guarantee
-    		$guarantee = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Guarantee')->find($id);
+    		$guarantee = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Guarantee')->find($id);
     		if (!$guarantee)
     		{
     			$guarantee = new Guarantee();
@@ -775,7 +775,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find guarantee
-    		$guarantee = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Guarantee')->find($id);
+    		$guarantee = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Guarantee')->find($id);
     		if ($guarantee)
     		{
     			// Remove the guarantee from the database
@@ -801,10 +801,10 @@ class SystemController extends Controller
     		$objectType = $request->query->get('objectType');
     		
     		// Get the contacts
-    		$contacts = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Contact')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('displayOrder' => 'ASC'));
+    		$contacts = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Contact')->findBy(array('objectId' => $objectId, 'objectType' => $objectType), array('displayOrder' => 'ASC'));
     		    		
     		// Get the contact titles
-    		$contactTitles = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactTitles = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		    		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetContacts.html.twig', array('objectId' => $objectId, 'objectType' => $objectType, 'contacts' => $contacts, 'contactTitles' => $contactTitles));
 		}
@@ -822,7 +822,7 @@ class SystemController extends Controller
     		$id = $request->query->get('id');
     		
 	    	// Get the contact titles
-    		$contactTitles = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactTitles = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
 	    	
 	    	return $this->render('WebIlluminationAdminBundle:System:ajaxAddContact.html.twig', array('id' => $id, 'contactTitles' => $contactTitles));
 	    }
@@ -853,7 +853,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact
-    		$contact = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Contact')->find($id);
+    		$contact = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Contact')->find($id);
     		if (!$contact)
     		{
     			$contact = new Contact();
@@ -890,11 +890,11 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact
-    		$contactObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Contact')->find($id);
+    		$contactObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Contact')->find($id);
     		if ($contactObject)
     		{
     			// Remove any addresses
-    			$contactAddressObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactAddress')->findBy(array('contactId' => $id));
+    			$contactAddressObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddress')->findBy(array('contactId' => $id));
     			foreach ($contactAddressObjects as $contactAddressObject)
     			{
     				$em->remove($contactAddressObject);
@@ -902,7 +902,7 @@ class SystemController extends Controller
     			}
     			
     			// Remove any email addresses
-    			$contactEmailAddressObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactEmailAddress')->findBy(array('contactId' => $id));
+    			$contactEmailAddressObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddress')->findBy(array('contactId' => $id));
     			foreach ($contactEmailAddressObjects as $contactEmailAddressObject)
     			{
     				$em->remove($contactEmailAddressObject);
@@ -910,7 +910,7 @@ class SystemController extends Controller
     			}
     			
     			// Remove any numbers
-    			$contactNumberObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactNumber')->findBy(array('contactId' => $id));
+    			$contactNumberObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumber')->findBy(array('contactId' => $id));
     			foreach ($contactNumberObjects as $contactNumberObject)
     			{
     				$em->remove($contactNumberObject);
@@ -918,7 +918,7 @@ class SystemController extends Controller
     			}
     			
     			// Remove any web addresses
-    			$contactWebAddressObjects = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactWebAddress')->findBy(array('contactId' => $id));
+    			$contactWebAddressObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddress')->findBy(array('contactId' => $id));
     			foreach ($contactWebAddressObjects as $contactWebAddressObject)
     			{
     				$em->remove($contactWebAddressObject);
@@ -945,10 +945,10 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
     		// Get the contact numbers
-    		$contactNumbers = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactNumber')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
+    		$contactNumbers = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumber')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
     		    		
     		// Get the contact number types
-    		$contactNumberTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactNumberType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactNumberTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumberType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		    		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetContactNumbers.html.twig', array('contactId' => $contactId, 'contactNumbers' => $contactNumbers, 'contactNumberTypes' => $contactNumberTypes));
 		}
@@ -967,7 +967,7 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
 	    	// Get the contact number types
-    		$contactNumberTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactNumberType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactNumberTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumberType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
 	    	
 	    	return $this->render('WebIlluminationAdminBundle:System:ajaxAddContactNumber.html.twig', array('id' => $id, 'contactId' => $contactId, 'contactNumberTypes' => $contactNumberTypes));
 	    }
@@ -993,7 +993,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact number
-    		$contactNumber = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactNumber')->find($id);
+    		$contactNumber = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumber')->find($id);
     		if (!$contactNumber)
     		{
     			$contactNumber = new ContactNumber();
@@ -1028,7 +1028,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact number
-    		$contactNumber = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactNumber')->find($id);
+    		$contactNumber = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumber')->find($id);
     		if ($contactNumber)
     		{
     			// Remove the contact number from the database
@@ -1051,13 +1051,13 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
     		// Get the contact addresses
-    		$contactAddresses = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactAddress')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
+    		$contactAddresses = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddress')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
     		    		
     		// Get the contact address types
-    		$contactAddressTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactAddressTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		
     		// Get the contact titles
-    		$contactTitles = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactTitles = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		    		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetContactAddresses.html.twig', array('contactId' => $contactId, 'contactAddresses' => $contactAddresses, 'contactAddressTypes' => $contactAddressTypes, 'contactTitles' => $contactTitles));
 		}
@@ -1076,10 +1076,10 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
 	    	// Get the contact address types
-    		$contactAddressTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactAddressTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		
     		// Get the contact titles
-    		$contactTitles = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactTitles = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactTitle')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
 	    	
 	    	return $this->render('WebIlluminationAdminBundle:System:ajaxAddContactAddress.html.twig', array('id' => $id, 'contactId' => $contactId, 'contactAddressTypes' => $contactAddressTypes, 'contactTitles' => $contactTitles));
 	    }
@@ -1127,7 +1127,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact address
-    		$contactAddress = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactAddress')->find($id);
+    		$contactAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddress')->find($id);
     		if (!$contactAddress)
     		{
     			$contactAddress = new ContactAddress();
@@ -1172,7 +1172,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact address
-    		$contactAddress = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactAddress')->find($id);
+    		$contactAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddress')->find($id);
     		if ($contactAddress)
     		{
     			// Remove the contact address from the database
@@ -1195,10 +1195,10 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
     		// Get the contact email addresses
-    		$contactEmailAddresses = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactEmailAddress')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
+    		$contactEmailAddresses = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddress')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
     		    		
     		// Get the contact email addresses types
-    		$contactEmailAddressTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactEmailAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactEmailAddressTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		    		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetContactEmailAddresses.html.twig', array('contactId' => $contactId, 'contactEmailAddresses' => $contactEmailAddresses, 'contactEmailAddressTypes' => $contactEmailAddressTypes));
 		}
@@ -1217,7 +1217,7 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
 	    	// Get the contact email addresses types
-    		$contactEmailAddressTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactEmailAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactEmailAddressTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
 	    	
 	    	return $this->render('WebIlluminationAdminBundle:System:ajaxAddContactEmailAddress.html.twig', array('id' => $id, 'contactId' => $contactId, 'contactEmailAddressTypes' => $contactEmailAddressTypes));
 	    }
@@ -1243,7 +1243,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact email addresses
-    		$contactEmailAddress = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactEmailAddress')->find($id);
+    		$contactEmailAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddress')->find($id);
     		if (!$contactEmailAddress)
     		{
     			$contactEmailAddress = new ContactEmailAddress();
@@ -1277,7 +1277,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact email addresses
-    		$contactEmailAddress = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactEmailAddress')->find($id);
+    		$contactEmailAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddress')->find($id);
     		if ($contactEmailAddress)
     		{
     			// Remove the contact email addresses from the database
@@ -1300,10 +1300,10 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
     		// Get the contact web addresses
-    		$contactWebAddresses = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactWebAddress')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
+    		$contactWebAddresses = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddress')->findBy(array('contactId' => $contactId), array('displayOrder' => 'ASC'));
     		    		
     		// Get the contact web addresses types
-    		$contactWebAddressTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactWebAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactWebAddressTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
     		    		
 		    return $this->render('WebIlluminationAdminBundle:System:ajaxGetContactWebAddresses.html.twig', array('contactId' => $contactId, 'contactWebAddresses' => $contactWebAddresses, 'contactWebAddressTypes' => $contactWebAddressTypes));
 		}
@@ -1322,7 +1322,7 @@ class SystemController extends Controller
     		$contactId = $request->query->get('contactId');
     		
 	    	// Get the contact web addresses types
-    		$contactWebAddressTypes = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactWebAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
+    		$contactWebAddressTypes = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddressType')->findBy(array('locale' => 'en'), array('displayOrder' => 'ASC'));
 	    	
 	    	return $this->render('WebIlluminationAdminBundle:System:ajaxAddContactWebAddress.html.twig', array('id' => $id, 'contactId' => $contactId, 'contactWebAddressTypes' => $contactWebAddressTypes));
 	    }
@@ -1348,7 +1348,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact web addresses
-    		$contactWebAddress = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactWebAddress')->find($id);
+    		$contactWebAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddress')->find($id);
     		if (!$contactWebAddress)
     		{
     			$contactWebAddress = new ContactWebAddress();
@@ -1382,7 +1382,7 @@ class SystemController extends Controller
    			$em = $this->getDoctrine()->getEntityManager();
    		
     		// Find contact web addresses
-    		$contactWebAddress = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:ContactWebAddress')->find($id);
+    		$contactWebAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddress')->find($id);
     		if ($contactWebAddress)
     		{
     			// Remove the contact web addresses from the database

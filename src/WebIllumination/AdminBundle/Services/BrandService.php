@@ -479,9 +479,9 @@ class BrandService {
 //					{
 //						$departments[$departmentId]['productCount']++;
 //					} else {
-//						$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
-//						$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
-//						$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
+//						$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
+//						$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
+//						$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
 //						if ($departmentObject && $departmentDescriptionObject && $routingObject)
 //						{
 //							$department = array();

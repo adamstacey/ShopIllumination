@@ -382,12 +382,12 @@ class SystemService {
 		    	{
 		    		$productFeatureGroupId = 0;
 		    		$productFeatureId = 0;
-			    	$productFeatureGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findOneBy(array('productFeatureGroup' => $featureObject[0], 'locale' => 'en'));
+			    	$productFeatureGroupObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeatureGroup')->findOneBy(array('productFeatureGroup' => $featureObject[0], 'locale' => 'en'));
 			    	if ($productFeatureGroupObject)
 			    	{
 				    	$productFeatureGroupId = $productFeatureGroupObject->getId();
 			    	}
-			    	$productFeatureObject = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findOneBy(array('productFeature' => $featureObject[1], 'locale' => 'en'));
+			    	$productFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findOneBy(array('productFeature' => $featureObject[1], 'locale' => 'en'));
 			    	if ($productFeatureObject)
 			    	{
 				    	$productFeatureId = $productFeatureObject->getId();

@@ -27,12 +27,12 @@ class UpdateOrderProductHeadersCommand extends ContainerAwareCommand
    		    	
     	// Get the basket products
     	$orderProductCount = 1;
-	    $orderProductObjects = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array(), array('productId' => 'ASC'));
+	    $orderProductObjects = $em->getRepository('KAC\SiteBundle\Entity\OrderProduct')->findBy(array(), array('productId' => 'ASC'));
 	    $orderProductTotal = sizeof($orderProductObjects);
 	    foreach ($orderProductObjects as $orderProductObject)
 	    {
 	    	// Get product index
-	    	$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $orderProductObject->getProductId(), 'locale' => 'en'));
+	    	$productIndexObject = $em->getRepository('KAC\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $orderProductObject->getProductId(), 'locale' => 'en'));
 	    	
 	    	// Get the new header
 	    	if ($productIndexObject)

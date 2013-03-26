@@ -293,9 +293,9 @@ class VoucherCodeService {
     	$order = array();
    		
    		// Get the order
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('KAC\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderNotes = $em->getRepository('KAC\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;
@@ -417,9 +417,9 @@ class VoucherCodeService {
     	$em = $doctrineService->getEntityManager();
    		
    		// Get the order details
-   		$orderObject = $em->getRepository('WebIlluminationAdminBundle:Order')->find($id);
-    	$orderProducts = $em->getRepository('WebIlluminationAdminBundle:OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
-    	$orderNotes = $em->getRepository('WebIlluminationAdminBundle:OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
+   		$orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
+    	$orderProducts = $em->getRepository('KAC\SiteBundle\Entity\OrderProduct')->findBy(array('orderId' => $id), array('header' => 'ASC'));
+    	$orderNotes = $em->getRepository('KAC\SiteBundle\Entity\OrderNote')->findBy(array('orderId' => $id), array('createdAt' => 'DESC'));
     	if (!$orderObject)
 	    {
         	return false;

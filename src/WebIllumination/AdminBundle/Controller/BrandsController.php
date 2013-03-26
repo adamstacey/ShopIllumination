@@ -446,9 +446,9 @@ class BrandsController extends Controller
 	        $brandObject->setStatus($status);
 	        $em->persist($brandObject);
 			$em->flush();
-			
+
 			// Update the brand description
-	        $brandDescriptionObject->setBrand($brand);
+	        $brandDescriptionObject->setNameWebIlluminationAdminBundle($brand);
 	        $em->persist($brandDescriptionObject);
 			$em->flush();
 	                

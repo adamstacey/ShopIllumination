@@ -1066,7 +1066,7 @@ class BasketService {
 		$membershipCardObject = false;
 		if ($basket['membershipCardNumber'] > 1)
 		{
-			$membershipCardObject = $em->getRepository('WebIlluminationAdminBundle:MembershipCard')->findOneBy(array('membershipNumber' => $basket['membershipCardNumber']));
+			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('membershipNumber' => $basket['membershipCardNumber']));
 			if (!$membershipCardObject)
 			{
 				$messages['error'][] =  'The membership number <strong>"'.$basket['membershipCardNumber'].'"</strong> does not exist or is not active. Please try another one.';
@@ -1079,7 +1079,7 @@ class BasketService {
 		{
 			if ($discount['voucherCode'] != '')
 			{
-				$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->findOneBy(array('code' => $discount['voucherCode']));
+				$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->findOneBy(array('code' => $discount['voucherCode']));
 				if (!$voucherCodeObject)
 				{
 					$messages['error'][] = 'The voucher code <strong>"'.$discount['voucherCode'].'"</strong> does not exist. Please try another one.';

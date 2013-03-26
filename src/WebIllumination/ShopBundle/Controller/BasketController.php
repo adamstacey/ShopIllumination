@@ -237,9 +237,9 @@ class BasketController extends Controller
 	    		$selectedOptionIds = explode('|', $selectedOptions);
 	    		foreach ($selectedOptionIds as $selectedOptionId)
 	    		{
-	    			$productToOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductToOption')->find($selectedOptionId);
-	    			$productOptionGroupObject = $em->getRepository('WebIlluminationAdminBundle:ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
-					$productOptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductOption')->find($productToOptionObject->getProductOptionId());
+	    			$productToOptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToOption')->find($selectedOptionId);
+	    			$productOptionGroupObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
+					$productOptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->find($productToOptionObject->getProductOptionId());
 					$selectedOptionLabel = $productOptionGroupObject->getProductOptionGroup().': '.$productOptionObject->getProductOption();
 					$priceChange = $productToOptionObject->getPrice();
 					$priceType = $productToOptionObject->getPriceType();
