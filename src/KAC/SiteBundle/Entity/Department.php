@@ -33,6 +33,7 @@ class Department implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\DepartmentToFeature", mappedBy="department", cascade={"all"})
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
      **/
     private $features;
 
@@ -125,7 +126,7 @@ class Department implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department", mappedBy="parent")
-     * @ORM\OrderBy({"displayOrder" = "ASC"})
+     * @ORM\OrderBy({"displayOrder" = "DESC"})
      */
     private $children;
 
