@@ -1,0 +1,25 @@
+{% import _self as helpers %}
+
+{% macro getColour(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        turquoise
+    {% else %}
+        grey
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+<div class="ui-widget mbl">
+    <header class="ui-widget-header ui-corner-top">
+        <h2>Edit</h2>
+    </header>
+    <section class="ui-widget-content ui-corner-bottom">
+        <nav class="left-menu">
+            <ul class="clearfix">
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getColour('departments_edit_features') }} icon-69"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button button-{{ helpers.getColour('departments_edit_features') }} icon-white" href="{{ path('departments_edit_features', {'departmentId': department.id}) }}">Feature Templates</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+</div>
