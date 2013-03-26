@@ -18,6 +18,11 @@ class ProductIndexer extends Indexer
                 return;
             }
 
+            // Check that the product is not disabled
+            if ($product->getStatus() !== "a") {
+                return;
+            }
+
             $update = $this->getSolarium()->createUpdate();
             $helper = $update->getHelper();
             $document = $update->createDocument();
@@ -84,6 +89,11 @@ class ProductIndexer extends Indexer
             /** @var $variant Product\Variant */
             // Add product codes from each variant
             foreach ($product->getVariants() as $variant) {
+                // Check that the variant is not disabled
+                if ($variant->getStatus() !== "a") {
+                    continue;
+                }
+
                 // Add all product codes
                 $productCodes = explode(',', $variant->getAlternativeProductCodes());
                 array_unshift($productCodes, $variant->getProductCode());
