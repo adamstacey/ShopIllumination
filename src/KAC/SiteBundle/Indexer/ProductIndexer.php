@@ -23,7 +23,7 @@ class ProductIndexer extends Indexer
 
             $lowestPrice = -1;
             $highestPrice = -1;
-
+            $commonFeatures = array();
             $descriptions = $product->getDescriptions();
 
             // Fetch images
@@ -109,6 +109,18 @@ class ProductIndexer extends Indexer
                             $feature->getFeature()->getName()
                         );
                     }
+
+                    // Check for common features
+                    if($feature->getFeatureGroup() && $feature->getFeature()) {
+                        if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        {
+                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        }
+                        else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
+                        {
+                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                        }
+                    }
                 }
 
                 // Add the image for the variant
@@ -124,6 +136,12 @@ class ProductIndexer extends Indexer
 
                 $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
                 $document->setField('high_price', $highestPrice === -1 ? 0 : $highestPrice);
+            }
+
+            // Add the common features to the document
+            foreach(array_keys($commonFeatures) as $commonFeature)
+            {
+                $document->addField('features', $commonFeature);
             }
 
             // Add the image for the variant

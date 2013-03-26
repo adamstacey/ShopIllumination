@@ -39,15 +39,6 @@
         <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
     {% endif %}
 
-    {% if department.parents|length > 0 %}
-        <div class="breadcrumb-trail no-margin" itemprop="breadcrumb">
-            {% for parent in department.parents %}
-                <a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a> >
-            {% endfor %}
-            <a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a>
-        </div>
-    {% endif %}
-
     {% if department is not null and brand is null and brand.description.description%}
         <div class="department-description">
             {{ department.description.description|raw }}
@@ -70,81 +61,104 @@
 
 
 {% block body %}
-    <section class="container_6 clearfix">
-        <form id="form-filter" class="form" method="GET" action="{#{{ path(app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}#}">
-            <div class="grid_4 grid-listings">
-                <div class="portlet">
-                    <header>
-                        <h2 id="product-count">Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
-                    </header>
-                    <section class="clearfix no-padding-right no-padding-bottom">
-                        <div id="product-sorting">
-                            <div class="fl">
-                                <div class="product-sorting-title fl">Sort By</div>
-                                <select name="sort_order" id="listing-sort-order" class="fl">
-                                    <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
-                                    <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
-                                    <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
-                                    <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
-                                    <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
-                                </select>
+    <section class="clearfix">
+        <div class="widget-group clearfix mbm">
+            {% if department.parents|length > 0 %}
+                <div class="widget widget-7-of-8">
+                    <ul class="breadcrumbs" itemprop="breadcrumb">
+                        <li>{{ department.description.header }}</li>
+                        {% for parent in department.parents %}
+                            {% if parent.parent is not null %}
+                                <li><a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="widget widget-7-of-8">&nbsp;</div>
+            {% endif %}
+            <div class="widget widget-1-of-8">
+                {% if is_granted('ROLE_ADMIN') and admin == false %}
+                    <a href="{{ path('admin_'~app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}" class="fr button button-blue button-small">Admin Mode</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <form id="form-filter" class="form" method="GET" action="{#{{ path(app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}#}">
+                <div class="widget widget-5-of-7 listing">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all">
+                            <div id="product-sorting">
+                                <div class="fl">
+                                    <div class="product-sorting-title fl">Sort By</div>
+                                    <select name="sort_order" id="listing-sort-order" class="fl">
+                                        <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
+                                        <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
+                                        <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
+                                        <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
+                                        <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
+                                    </select>
+                                </div>
+                                <div class="fr">
+                                    <div class="product-sorting-title fl">Per Page</div>
+                                    <select name="limit" class="fl" id="listing-max-results">
+                                        <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
+                                        <option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
+                                        <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
+                                        <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
+                                        <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+                                    </select>
+                                </div>
+                                <div class="clear"></div>
                             </div>
-                            <div class="fr">
-                                <div class="product-sorting-title fl">Per Page</div>
-                                <select name="limit" class="fl" id="listing-max-results">
-                                    <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
-                                    <option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
-                                    <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
-                                    <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
-                                    <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
-                                </select>
+                            <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
+                                {{ knp_pagination_render(pagination) }}
                             </div>
-                            <div class="clear"></div>
-                        </div>
-                        <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
-                            {{ knp_pagination_render(pagination) }}
-                        </div>
-                        <div id="products">
-                            {% for product in pagination %}
-                                {% block product_block %}
-                                    <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
-                                        <div class="fl">
-                                            <a href="{{ path('page_request', {'url': product.url}) }}"><img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150"></a>
-                                        </div>
-                                        <div>
-                                            <h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
-
-                                            {% block product_information %}
-                                                <div class="product-information">
-                                                    <p class="product-code uppercase">
-                                                        {% spaceless %}
-                                                            {% if product.url != '' %}<a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': product.url}) }}">{% endif %}
-                                                            PRODUCT CODE: <strong>{{ product.product_code[0] }}</strong>
-                                                            {% if product.url != '' %}</a>{% endif %}
-                                                        {% endspaceless %}
-                                                    </p>
-                                                    {% if (product.productFeatures != '') or (product.tagline != '') %}
-                                                        {% if 'ENERGY RATING:' in product.tagline|upper %}
-                                                            <p class="energy-rating">{{ product.tagline|replace({':': ': '})|replace({'Rated': ''})|raw|upper }}</p>
-                                                        {% endif %}
-                                                        <ul>
-                                                            {% if (product.tagline != '') and ('ENERGY RATING:' not in product.tagline|upper) %}
-                                                                <li>{{ product.tagline|raw }}</li>
-                                                            {% endif %}
-                                                        </ul>
+                            <div id="products">
+                                {% for product in pagination %}
+                                    {% block product_block %}
+                                        <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
+                                            <div class="fl">
+                                                <a href="{{ path('page_request', {'url': product.url}) }}">
+                                                    <img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    {% if product.brand_logo != '' %}
+                                                        <a href="{{ path('page_request', {'url': product.brand_logo}) }}">
+                                                            <img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23">
+                                                        </a>
                                                     {% endif %}
-                                                    <div class="clear"></div>
-                                                </div>
-                                            {% endblock %}
+                                                    <h4><a itemprop="name" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header|raw }}</a></h4>
 
-                                            <div class="product-options">
-                                                {% block product_prices %}
+                                                    {% for feature in product.features %}
+                                                        {% if 'COLOUR:' in feature|upper %}
+                                                            {% spaceless %}
+                                                                <p class="colour">
+                                                                    {% if product.url != '' %}
+                                                                        <a href="{{ path('page_request', {'url': product.url}) }}">
+                                                                    {% endif %}
+                                                                    <strong>{{ featureGroup|upper|replace({'COLOUR:': ''}) }}</strong>
+                                                                    {% if product.url != '' %}
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </p>
+                                                            {% endspaceless %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+
+                                                <div class="product-options">
                                                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                                         <p class="ar product-price">
                                                             {% spaceless %}
                                                                 {% if product.hide_price == 0 %}
                                                                     {% if product.url != '' %}
-                                                                        <a href="{#{{ path('page_request', {'url': url}) }}#}">
+                                                                        <a href="{{ path('page_request', {'url': url}) }}">
                                                                     {% endif %}
                                                                     {% if product.low_price == product.high_price %}
                                                                         <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
@@ -163,47 +177,63 @@
                                                             {% endspaceless %}
                                                         </p>
                                                     </div>
-                                                {% endblock %}
 
-                                                {% block product_options %}
+                                                    {% if admin == true %}
+                                                        <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red">Delete</a>
+                                                        <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue">Edit</a>
+                                                    {% else %}
+                                                        <a href="{{ path('page_request', {'url': product.url}) }}" class="fr button button-blue button-small margin-bottom-5">More Info</a>
+                                                        <div class="buy-now">
+                                                            {% if product.available_for_purchase and not product.hide_price %}
+                                                                <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
+                                                                    <tr>
+                                                                        {% if product.product_code == '' %}
+                                                                            <td class="out-of-stock">Out of Stock Until Further Notice</td>
+                                                                        {% else %}
+                                                                            <td class="no-padding no-border">
+                                                                                <input id="quantity-{{ product.id }}" data-product-id="{{ product.id }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" />
+                                                                            </td>
+                                                                            <td class="no-padding no-border">
+                                                                                <div class="quantity-buttons-container no-padding">
+                                                                                    <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.id }}">+</div>
+                                                                                    <div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.id }}">-</div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <button data-product-id="{{ product.id }}" class="action-add-to-basket button margin-left-5 button-green">Add to Basket</button>
+                                                                            </td>
+                                                                        {% endif %}
+                                                                    </tr>
+                                                                </table>
+                                                                <input type="hidden" value="" id="selected-options-{{ product.id }}">
+                                                            {% else %}
+                                                                <a href="{#{{ path('content_contact_us') }}#}" class="fr button button-green">Contact Us to Buy</a>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
 
-                                                {% endblock %}
 
-                                                {% block product_features %}
-
-                                                {% endblock %}
-
-                                                {% block product_controls %}
-                                                    <a href="{#{{ path('page_request', {'url': product.url}) }}#}" class="fr button ui-button-blue margin-bottom-5">More Info</a>
-                                                    <div class="buy-now">
-                                                        {% if product.availableForPurchase and not product.hide_price %}
-                                                            <table class="fr no-padding no-border" align="right" cellpadding="0" cellspacing="0" border="0">
-                                                                <tr>
-                                                                    {% if product.productCode == '' %}
-                                                                        <td class="out-of-stock">Out of Stock Until Further Notice</td>
+                                                {% if product.features|length > 0 %}
+                                                    <div class="product-information">
+                                                        <ul>
+                                                            {% for featureGroup in product.features|slice(1, 4) %}
+                                                                {% set feature = product['attr_feature_'~featureGroup][0] %}
+                                                                {% if feature != '' %}
+                                                                    {% if feature == 'Yes' %}
+                                                                        {% set className = 'green-tick' %}
+                                                                    {% elseif feature == 'No' %}
+                                                                        {% set className = 'red-cross' %}
                                                                     {% else %}
-                                                                        <td class="no-padding no-border"><input id="quantity-{{ product.id }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" />id
-                                                                        <td class="no-padding no-border">
-                                                                            <div class="quantity-buttons-container no-padding">
-                                                                                <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.id }}">+</div>
-                                                                                <div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.id }}">-</div>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <button data-product-id="{{ product.id }}" class="action-add-to-basket button margin-left-5 ui-button-green">Add to Basket</button>
-                                                                        </td>
+                                                                        {% set className = 'bullet' %}
                                                                     {% endif %}
-                                                                </tr>
-                                                            </table>
-                                                            <input type="hidden" value="" id="selected-options-{{ product.id }}">
-                                                        {% else %}
-                                                            <a href="{#{{ path('content_contact_us') }}#}" class="fr button ui-button-green">Contact Us to Buy</a>
-                                                        {% endif %}
+                                                                    <li class="{{ className }}">{{ featureGroup }}: <strong>{{ feature }}</strong></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
                                                     </div>
-                                                {% endblock %}
-                                            </div>
+                                                {% endif %}
 
-                                            {% block product_misc %}
                                                 {% if '|1034|1122|69|' in product.departmentIds %}
                                                     <div class="small-floating-offer small-floating-offer-top-left">
                                                         <p class="small-floating-offer-title">40% OFF</p>
@@ -216,121 +246,121 @@
                                                         <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
                                                     </div>
                                                 {% endif %}
-                                            {% endblock %}
+                                            </div>
+                                            <div class="clear"></div>
                                         </div>
-                                        <div class="clear"></div>
-                                    </div>
-                                {% endblock %}
-                            {% else %}
-                                <p class="no-products">Sorry, there are currently no products in this department.</p>
-                            {% endfor %}
-                            <div class="clear"></div>
-                        </div>
-                        <div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
-                            {{ knp_pagination_render(pagination) }}
-                        </div>
-                        <div class="clear"></div>
-                    </section>
-                </div>
-            </div>
-
-            <div class="grid_2 grid-filters">
-                <div class="portlet">
-                    <header>
-                        <h2 class="ac">Refine Search By</h2>
-                    </header>
-                    <section class="no-padding">
-                        <div id="filters">
-                            <h5 id="filter-price-header" class="no-margin no-border-top">
-                                {% spaceless %}
-                                    Price
-                                    <button data-filter="price" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                    <button data-filter="price" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
-                                {% endspaceless %}
-                            </h5>
-                            <div id="filter-price-container">
-                                <div id="filter-price" class="filter price-range-filter">
-                                    <div class="range-slider-values">
-                                        <span>&pound;</span>
-                                        <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0)|number_format(0), true) }}" />
-                                        <span>&nbsp;-&nbsp;</span>
-                                        <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999)|number_format(0), true) }}" />
-                                    </div>
-                                    <div class="price-range" id="price-range-slider"></div>
-                                </div>
+                                    {% endblock %}
+                                {% else %}
+                                    <p class="no-products">Sorry, there are currently no products in this department.</p>
+                                {% endfor %}
+                                <div class="clear"></div>
                             </div>
-
-                            {% if departments|length > 0 %}
-                                <h5 id="filter-brand-header" class="no-margin">
-                                    {% spaceless %}
-                                        Department
-                                        <button data-filter="department" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                        <button data-filter="department" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
-                                    {% endspaceless %}
-                                </h5>
-                                <div id="filter-department-container">
-                                    <div id="filter-department" class="filter">
-                                        <ul>
-                                            {% include 'KACSiteBundle:Listing:Includes/departmentTree.html.twig' with {'rootDepartment': department, 'departments': departments, 'brand': brand} %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            {% endif %}
-
-                            {% if brand is null %}
-                                <h5 id="filter-brand-header" class="no-margin">
-                                    {% spaceless %}
-                                        Brands
-                                        <button data-filter="brand" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                        <button data-filter="brand" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
-                                    {% endspaceless %}
-                                </h5>
-                                <div id="filter-brand-container">
-                                    <div id="filter-brand" class="filter">
-                                        <ul>
-                                            {% for brand, count in facets.facet('brands') %}
-                                                <li>
-                                                    <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
-                                                    <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            {% endif %}
-                            {% if featureGroups|length > 0 %}
-                                <h5 id="filter-feature-header" class="no-margin">
-                                    {% spaceless %}
-                                        Features
-                                        <button data-filter="feature" class="ui-corner-none ui-corner-right small button ui-button-dark-grey fr action-show-hide-filter" data-icon-primary="ui-icon-triangle-1-n" data-icon-only="true">Filter</button>
-                                        <button data-filter="feature" class="ui-corner-none ui-corner-left small button ui-button-dark-grey fr action-reset-filter" data-icon-primary="ui-icon-refresh" data-icon-only="true">Reset</button>
-                                    {% endspaceless %}
-                                </h5>
-                                <div id="filter-feature-container">
-                                    <div id="filter-feature" class="filter">
-                                        <ul>
-                                            {% for featureGroup in featureGroups %}
-                                                {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
-                                                    <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
-                                                    {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}
-                                                        <li>
-                                                            <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup }}][]" type="checkbox" value="{{ feature }}" id="filter-{{ featureGroup }}-{{ loop.index }}" />
-                                                            <label for="filter-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ feature }}</label>
-                                                        </li>
-                                                    {% endfor %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                    <input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
-                                </div>
-                            {% endif %}
-                        </div>
-                    </section>
+                            <div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
+                                {{ knp_pagination_render(pagination) }}
+                            </div>
+                            <div class="clear"></div>
+                        </section>
+                    </div>
                 </div>
-            </div>
-            <div class="clear"></div>
-        </form>
+
+                <div class="widget widget-2-of-7 filters">
+                    <div class="ui-widget mbl">
+                        <header class="ui-widget-header ui-corner-top">
+                            <h2>Refine Search By</h2>
+                        </header>
+                        <section class="ui-widget-content ui-corner-all ui-no-padding">
+                            <div id="filters">
+                                <h5 id="filter-price-header" class="no-margin no-border-top">
+                                    {% spaceless %}
+                                        Price
+
+                                        <button data-filter="price" class="fr button button-small button-grey action-show-hide-filter">Reset</button>
+                                        <button data-filter="price" class="fr button button-small button-grey action-reset-filter">Hide</button>
+                                    {% endspaceless %}
+                                </h5>
+                                <div id="filter-price-container">
+                                    <div id="filter-price" class="filter price-range-filter">
+                                        <div class="range-slider-values">
+                                            <span>&pound;</span>
+                                            <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0)|number_format(0), true) }}" />
+                                            <span>&nbsp;-&nbsp;</span>
+                                            <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999)|number_format(0), true) }}" />
+                                        </div>
+                                        <div class="price-range" id="price-range-slider"></div>
+                                    </div>
+                                </div>
+
+                                {% if departments|length > 0 %}
+                                    <h5 id="filter-brand-header" class="no-margin">
+                                        {% spaceless %}
+                                            Department
+                                            <button data-filter="department" class="fr button button-small button-grey action-show-hide-filter">Reset</button>
+                                            <button data-filter="department" class="fr button button-small button-grey action-reset-filter">Hide</button>
+                                        {% endspaceless %}
+                                    </h5>
+                                    <div id="filter-department-container">
+                                        <div id="filter-department" class="filter">
+                                            <ul>
+                                                {% include 'KACSiteBundle:Listing:Includes/departmentTree.html.twig' with {'rootDepartment': department, 'departments': departments, 'brand': brand} %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if brand is null %}
+                                    <h5 id="filter-brand-header" class="no-margin">
+                                        {% spaceless %}
+                                            Brands
+                                            <button data-filter="brand" class="fr button button-small button-grey action-show-hide-filter">Reset</button>
+                                            <button data-filter="brand" class="fr button button-small button-grey action-reset-filter">Hide</button>
+                                        {% endspaceless %}
+                                    </h5>
+                                    <div id="filter-brand-container">
+                                        <div id="filter-brand" class="filter">
+                                            <ul>
+                                                {% for brand, count in facets.facet('brands') %}
+                                                    <li>
+                                                        <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
+                                                        <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if featureGroups|length > 0 %}
+                                    <h5 id="filter-feature-header" class="no-margin">
+                                        {% spaceless %}
+                                            Features
+                                            <button data-filter="feature" class="fr button button-small button-grey action-show-hide-filter">Reset</button>
+                                            <button data-filter="feature" class="fr button button-small button-grey action-reset-filter">Hide</button>
+                                        {% endspaceless %}
+                                    </h5>
+                                    <div id="filter-feature-container">
+                                        <div id="filter-feature" class="filter">
+                                            <ul>
+                                                {% for featureGroup in featureGroups %}
+                                                    {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
+                                                        <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
+                                                        {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}
+                                                            <li>
+                                                                <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup }}][]" type="checkbox" value="{{ feature }}" id="filter-{{ featureGroup }}-{{ loop.index }}" />
+                                                                <label for="filter-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ feature }}</label>
+                                                            </li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </form>
+        </div>
     </section>
 {% endblock %}
 
@@ -340,53 +370,53 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            {#$("#filter-department").jstree({#}
-                {#"plugins" : ["themes","html_data"],#}
-                {#"themes" : {#}
-                    {#"theme" : "default",#}
-                    {#"dots" : false,#}
-                    {#"icons" : false#}
-                {#}#}
-            {#});#}
-            {#$(":input", "#form-settings, #form-filter").live('change', function() {#}
-                {#$(this).closest("form").submit();#}
-            {#});#}
-            {#$(".action-reset-filter").click(function() {#}
-                {#// If the price filter is being reset then reset value to min/max#}
-                {#if($(this).data('filter') === "price") {#}
-                    {#var slider = $("#price-range-slider"),#}
-                        {#lowField = $("#filter-low-price"),#}
-                        {#highField = $("#filter-high-price");#}
+            $("#filter-department").jstree({
+                "plugins" : ["themes","html_data"],
+                "themes" : {
+                    "theme" : "default",
+                    "dots" : false,
+                    "icons" : false
+                }
+            });
+            $(":input", "#form-settings, #form-filter").live('change', function() {
+                $(this).closest("form").submit();
+            });
+            $(".action-reset-filter").click(function() {
+                // If the price filter is being reset then reset value to min/max
+                if($(this).data('filter') === "price") {
+                    var slider = $("#price-range-slider"),
+                        lowField = $("#filter-low-price"),
+                        highField = $("#filter-high-price");
 
-                    {#lowField.unbind('change');#}
-                    {#highField.unbind('change');#}
+                    lowField.unbind('change');
+                    highField.unbind('change');
 
-                    {#lowField.val(slider.slider("option", "min"));#}
-                    {#highField.val(slider.slider("option", "max"));#}
-                    {#console.log(":(");#}
+                    lowField.val(slider.slider("option", "min"));
+                    highField.val(slider.slider("option", "max"));
+                    console.log(":(");
 
-                    {#$(this).closest("form").submit();#}
-                {#} else {#}
-                    {#$(":input", "#filter-"+$(this).data('filter'))#}
-                        {#.not(':button, :submit, :reset, :hidden')#}
-                        {#.val('')#}
-                        {#.removeAttr('checked')#}
-                        {#.removeAttr('selected');#}
-                {#}#}
-            {#});#}
-            {#$("#price-range-slider").slider({#}
-                {#range: true,#}
-                {#min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),#}
-                {#max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),#}
-                {#values: [parseInt('{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}', 10), parseInt('{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}', 10)],#}
-                {#slide: function(event, ui) {#}
-                    {#$("#filter-low-price").val(ui.values[0]);#}
-                    {#$("#filter-high-price").val(ui.values[1]);#}
-                {#},#}
-                {#change: function(event, ui) {#}
-                    {#$(this).closest("form").submit();#}
-                {#}#}
-            {#});#}
+                    $(this).closest("form").submit();
+                } else {
+                    $(":input", "#filter-"+$(this).data('filter'))
+                        .not(':button, :submit, :reset, :hidden')
+                        .val('')
+                        .removeAttr('checked')
+                        .removeAttr('selected');
+                }
+            });
+            $("#price-range-slider").slider({
+                range: true,
+                min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),
+                max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),
+                values: [parseInt('{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}', 10), parseInt('{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}', 10)],
+                slide: function(event, ui) {
+                    $("#filter-low-price").val(ui.values[0]);
+                    $("#filter-high-price").val(ui.values[1]);
+                },
+                change: function(event, ui) {
+                    $(this).closest("form").submit();
+                }
+            });
         });
     </script>
 {% endblock %}

@@ -312,6 +312,9 @@ ALTER TABLE product_variant_to_feature ADD CONSTRAINT FK_9118317A60E4B879 FOREIG
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52D3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DDE23A8E3 FOREIGN KEY (option_group_id) REFERENCES product_option_groups (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DA7C41D6F FOREIGN KEY (option_id) REFERENCES product_options (id);
+
+INSERT INTO product_variant_to_feature (id, variant_id, feature_group_id, feature_id, active, display_order, created_at, updated_at) SELECT id, variant_id, product_feature_group_id	, product_feature_id, active, display_order, created_at, updated_at FROM product_to_feature;
+DROP TABLE product_to_feature;
 ALTER TABLE routing CHANGE object_type object_type VARCHAR(255) NOT NULL;
 CREATE INDEX IDX_A5F8B9FA232D562B ON routing (object_id);
 ALTER TABLE contact_addresses ADD type_id INT DEFAULT NULL, ADD title_id INT DEFAULT NULL, DROP contact_address_type_id, DROP contact_title_id, CHANGE contact_id contact_id INT DEFAULT NULL;

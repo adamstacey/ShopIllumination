@@ -1025,7 +1025,11 @@ body .ui-tooltip {
 ----------------------------------*/
 
 /* states and images */
-
+.ui-corner-none {
+    -webkit-border-top-left-radius: 0;
+    -moz-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+}
 
 .ui-corner-all,
 .ui-corner-top,

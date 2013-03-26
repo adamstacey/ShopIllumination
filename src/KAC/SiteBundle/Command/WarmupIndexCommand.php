@@ -21,7 +21,6 @@ class WarmupIndexCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         gc_enable();
         // Load products
         $em = $this->getContainer()->get('doctrine')->getManager();
