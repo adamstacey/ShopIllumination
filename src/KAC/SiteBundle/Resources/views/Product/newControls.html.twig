@@ -5,19 +5,20 @@
         <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" formnovalidate="formnovalidate" class="button button-small mrm fl">Back</button>
     {% endif %}
 
-    <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="reset" formnovalidate="formnovalidate" class="button button-small button-red fl">Reset</button>
+    <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="reset" formnovalidate="formnovalidate" class="button button-small button-red mrm fl">Reset</button>
 
     {% if flow.getCurrentStep() < flow.getLastStep() %}
-        <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Continue</button>
+        <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Continue</button>
     {% else %}
-        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Product</button>
+        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save Product</button>
     {% endif %}
 
     {% if flow.getCurrentStep() == 1 %}
-        <a href="{{ path('departments_new', {'modal': true}) }}" class="actionLoadPageDialog mrm fr button icon-green" title="Add New Department" data-icon-secondary="icon-1121">Add Department</a>
+        <a href="{{ path('departments_new', {'modal': true}) }}" class="actionLoadPageDialog mrm fl button button-small" title="Add New Department">Add Department</a>
     {% elseif flow.getCurrentStep() == 2 %}
-        <button type="button" data-table-object="feature-list" class="actionAddFormRow mrm fr button icon-green" data-icon-secondary="icon-1121">Add Feature</button>
+        <button type="button" data-table-object="combinationList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add Combination</button>
+        <a href="#" class="mrm fr button icon-grey" data-icon-secondary="icon-69">Manage Features</a>
     {% elseif flow.getCurrentStep() == 6 %}
-        <button type="button" data-table-object="link-list" class="actionAddFormRow mrm fr button icon-green" data-icon-secondary="icon-1121">Add Link</button>
+        <button type="button" data-table-object="link-list" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add Link</button>
     {% endif %}
 </div>
