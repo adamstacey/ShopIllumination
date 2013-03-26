@@ -19,8 +19,10 @@ use KAC\SiteBundle\Form\EditProductDescriptionsType;
 use KAC\SiteBundle\Form\EditProductImagesType;
 use KAC\SiteBundle\Form\EditProductLinksType;
 use KAC\SiteBundle\Form\EditProductOverviewType;
+use KAC\SiteBundle\Form\ProductFeatureGroupType;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Product\Description;
+use KAC\SiteBundle\Entity\Product\FeatureGroup;
 use KAC\SiteBundle\Entity\Product\Variant;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Manager\ProductManager;
@@ -91,6 +93,49 @@ class ProductController extends Controller {
         return $this->render('KACSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/newFeatureGroup", name="products_new_feature_group")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function newFeatureGroupAction(Request $request, $admin=false)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $featureGroup = new FeatureGroup();
+
+        $form = $this->createForm(new ProductFeatureGroupType(), $featureGroup);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+
+                // Get the data
+                $featureGroup = $form->getData();
+
+                // Update the database
+                $em->persist($featureGroup);
+                $em->flush();
+
+                // Notify user
+                $this->get('session')->setFlash('notice', 'The new feature group "'.$featureGroup->getName().'" has been added.');
+
+                // Check if request is modal
+                if ($request->query->get('modal') == true)
+                {
+                    // Break out the modal
+                    return $this->render('KACSiteBundle:Includes:modalBreakout.html.twig');
+                } else {
+                    // Forward
+                    return $this->redirect($this->get('router')->generate('homepage'));
+                }
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:newFeatureGroup.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 
