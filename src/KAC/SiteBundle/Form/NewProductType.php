@@ -24,44 +24,87 @@ class NewProductType extends AbstractType
                             ->leftJoin('b.descriptions', 'bd')
                             ->orderBy('bd.name');
                     },
+                    'label' => 'Brand',
                     'attr' => array(
                         'class' => 'fill no-uniform',
+                        'help' => 'Select the department you want this department to fall under.',
                     ),
+                    'required' => true,
                     'empty_value' => '- Select a Brand -',
                 ), array());
                 $builder->add('departments', 'collection', array(
                     'type' => new ProductDepartmentType(),
-                    'required' => true,
                 ));
                 $builder->add('status', 'choice', array(
-                    'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled')
+                    'label' => 'Status',
+                    'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
+                    'required' => true,
+                    'attr' => array(
+                        'help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
+                    ),
                 ));
                 $builder->add('availableForPurchase', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Available',
+                    'attr' => array(
+                        'help' => 'Is the product available to purchase?',
+                    ),
                 ));
                 $builder->add('featureComparison', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Feature Comparison',
+                    'attr' => array(
+                        'help' => 'Include in feature comparison?',
+                    ),
                 ));
                 $builder->add('downloadable', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Downloadable',
+                    'attr' => array(
+                        'help' => 'Is the product a download?',
+                    ),
                 ));
                 $builder->add('specialOffer', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Special Offer',
+                    'attr' => array(
+                        'help' => 'Is the product a special offer?',
+                    ),
                 ));
                 $builder->add('recommended', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Recommended',
+                    'attr' => array(
+                        'help' => 'Do you want to recommend?',
+                    ),
                 ));
                 $builder->add('accessory', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Accessory',
+                    'attr' => array(
+                        'help' => 'Is the product an accessory?',
+                    ),
                 ));
                 $builder->add('new', 'checkbox', array(
                     'required' => false,
+                    'label' => 'New',
+                    'attr' => array(
+                        'help' => 'Is the product new?',
+                    ),
                 ));
                 $builder->add('hidePrice', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Hide Price',
+                    'attr' => array(
+                        'help' => 'Hide price for this product?',
+                    ),
                 ));
                 $builder->add('showPriceOutOfHours', 'checkbox', array(
                     'required' => false,
+                    'label' => 'Show Price Out Of Hours',
+                    'attr' => array(
+                        'help' => 'Show price out of hours?',
+                    ),
                 ));
 
                 break;
