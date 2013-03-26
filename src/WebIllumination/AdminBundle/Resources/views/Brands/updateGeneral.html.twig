@@ -29,7 +29,7 @@
 			        <span class="ui-icon ui-icon-help"></span>
 			        <p><strong>WARNING:</strong> Are you sure you want to delete the logo?</p>
 			        <p>
-			        	<button data-id="{{ data.brand.logoImageId }}" id="logo-image-confirm-delete-button" class="button ui-button-red action-delete-logo-image" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
+			        	<button data-id="{{ data.brand.logoImage }}" id="logo-image-confirm-delete-button" class="button ui-button-red action-delete-logo-image" data-icon-primary="ui-icon-closethick">Confirm Delete</button>
 			        	<button id="image-cancel-delete-button" class="button ui-button-blue action-cancel-delete-logo-image">Cancel</button>
 			        </p>
 			    </div>
@@ -73,7 +73,7 @@
 							        		<img id="form-logo-image-preview" height="30" src="{{ asset('bundles/webilluminationadmin/images/no-image-available.png') }}" border="0" alt="No Image Available" />
 							        	{% endif %}
 									</td>
-									<td id="delete-logo-image-container" class="ac{% if data.brand.logoImageId == 0 %} ui-helper-hidden{% endif %}" width="1">
+									<td id="delete-logo-image-container" class="ac{% if data.brand.logoImage == 0 %} ui-helper-hidden{% endif %}" width="1">
 										<button class="button ui-button-red action-confirm-delete-logo-image" data-icon-primary="ui-icon-closethick">Delete</button>
 									</td>
 								</tr>

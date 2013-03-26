@@ -3853,6 +3853,9 @@ input[type=date]:focus,
 {
 	margin: 5px 0 5px 0;
 }
+.price-range .ui-slider-range {
+    padding: 0;
+}
 .filter ul li a.selected-filter
 {
 	font-weight: bold;

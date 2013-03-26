@@ -290,7 +290,7 @@ class VoucherCodesController extends Controller
     		$expiryDate = new \DateTime($request->request->get('expiryDate'));
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -332,7 +332,7 @@ class VoucherCodesController extends Controller
 	    	}
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -362,7 +362,7 @@ class VoucherCodesController extends Controller
     		$id = $request->query->get('id');
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -379,7 +379,7 @@ class VoucherCodesController extends Controller
 		    		{
 			    		$discountBreakdown = explode(':', $brand);
 			    		$brandId = $discountBreakdown[0];
-			    		$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $brandId));
+			    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $brandId));
 			    		$discount = $discountBreakdown[1];
 			    		$brandDiscounts[] = array('brandId' => $brandId, 'brand' => $brandDescriptionObject->getBrand(), 'discount' => $discount);
 			    	}
@@ -410,7 +410,7 @@ class VoucherCodesController extends Controller
 	    	}
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -431,7 +431,7 @@ class VoucherCodesController extends Controller
 		    		{
 			    		$discountBreakdown = explode(':', $brand);
 			    		$brandId = $discountBreakdown[0];
-			    		$brandDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $brandId));
+			    		$brandDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $brandId));
 			    		$brand = $brandDescriptionObject->getBrand();
 			    		$discount = $discountBreakdown[1];
 			    		if ($brandId == $newBrandId)
@@ -487,7 +487,7 @@ class VoucherCodesController extends Controller
     		$brandIdToDelete = $request->query->get('brandId');
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -531,7 +531,7 @@ class VoucherCodesController extends Controller
     		$id = $request->query->get('id');
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -548,7 +548,7 @@ class VoucherCodesController extends Controller
 		    		{
 			    		$discountBreakdown = explode(':', $department);
 			    		$departmentId = $discountBreakdown[0];
-			    		$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
+			    		$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
 			    		$discount = $discountBreakdown[1];
 			    		$departmentDiscounts[] = array('departmentId' => $departmentId, 'department' => $departmentDescriptionObject->getName(), 'discount' => $discount);
 			    	}
@@ -579,7 +579,7 @@ class VoucherCodesController extends Controller
 	    	}
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -600,7 +600,7 @@ class VoucherCodesController extends Controller
 		    		{
 			    		$discountBreakdown = explode(':', $department);
 			    		$departmentId = $discountBreakdown[0];
-			    		$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
+			    		$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId));
 			    		$department = $departmentDescriptionObject->getName();
 			    		$discount = $discountBreakdown[1];
 			    		if ($departmentId == $newDepartmentId)
@@ -656,7 +656,7 @@ class VoucherCodesController extends Controller
     		$departmentIdToDelete = $request->query->get('departmentId');
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -700,7 +700,7 @@ class VoucherCodesController extends Controller
     		$id = $request->query->get('id');
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -717,7 +717,7 @@ class VoucherCodesController extends Controller
 		    		{
 			    		$discountBreakdown = explode(':', $product);
 			    		$productId = $discountBreakdown[0];
-			    		$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productId));
+			    		$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $productId));
 			    		$discount = $discountBreakdown[1];
 			    		$productDiscounts[] = array('productId' => $productId, 'product' => $productDescriptionObject->getHeader(), 'discount' => $discount);
 			    	}
@@ -748,7 +748,7 @@ class VoucherCodesController extends Controller
 	    	}
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();
@@ -769,7 +769,7 @@ class VoucherCodesController extends Controller
 		    		{
 			    		$discountBreakdown = explode(':', $product);
 			    		$productId = $discountBreakdown[0];
-			    		$productDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:ProductDescription')->findOneBy(array('productId' => $productId));
+			    		$productDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductDescription')->findOneBy(array('productId' => $productId));
 			    		$product = $productDescriptionObject->getProduct();
 			    		$discount = $discountBreakdown[1];
 			    		if ($productId == $newproductId)
@@ -825,7 +825,7 @@ class VoucherCodesController extends Controller
     		$productIdToDelete = $request->query->get('productId');
     		    		
     		// Get the voucher code object
-    		$voucherCodeObject = $em->getRepository('WebIlluminationAdminBundle:VoucherCode')->find($id);	    	
+    		$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->find($id);
 	    	if (!$voucherCodeObject)
 	    	{
 	    		throw new AccessDeniedException();

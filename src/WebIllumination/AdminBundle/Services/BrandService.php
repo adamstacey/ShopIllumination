@@ -479,9 +479,9 @@ class BrandService {
 //					{
 //						$departments[$departmentId]['productCount']++;
 //					} else {
-//						$departmentObject = $em->getRepository('WebIlluminationAdminBundle:Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
-//						$departmentDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
-//						$routingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
+//						$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->findOneBy(array('id' => $departmentId, 'status' => 'a'));
+//						$departmentDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentDescription')->findOneBy(array('departmentId' => $departmentId, 'locale' => 'en'));
+//						$routingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $departmentId, 'objectType' => 'department'));
 //						if ($departmentObject && $departmentDescriptionObject && $routingObject)
 //						{
 //							$department = array();
@@ -549,6 +549,43 @@ class BrandService {
    		}
    			   	   		
     	return $brands;
+    }
+
+    public function deleteBrand($id)
+    {
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        // Get the entity manager
+        $em = $doctrineService->getEntityManager();
+
+        // Remove product associations
+        $products = $em->getRepository('KAC\SiteBundle\Entity\Product')->findBy(array('brand' => $id));
+        foreach ($products as $productObject)
+        {
+            // Remove any links to this product
+            $links = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('linkedProduct' => $productObject->getId()));
+            foreach ($links as $link)
+            {
+                $em->remove($link);
+            }
+
+            $em->remove($productObject);
+        }
+
+        $brandObject = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($id);
+        if (!$brandObject)
+        {
+            error_log('Can\'t find the brand!');
+            return false;
+        } else {
+            $em->remove($brandObject);
+        }
+
+        // Flush the database
+        $em->flush();
+
+        return true;
     }
     
     public function getBrandWarnings($id, $locale = 'en')

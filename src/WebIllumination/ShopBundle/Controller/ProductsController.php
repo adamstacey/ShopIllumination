@@ -254,7 +254,7 @@ class ProductsController extends Controller
 		// Get the brand
 		if ($brandId > 0)
 		{
-    		$brandRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $brandId, 'objectType' => 'brand', 'locale' => $locale));
+    		$brandRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectId' => $brandId, 'objectType' => 'brand', 'locale' => $locale));
     		if ($brandRoutingObject)
     		{
 	    		$brand = $brandRoutingObject->getUrl();
@@ -520,7 +520,7 @@ class ProductsController extends Controller
 	    if ($departmentBrand)
 	    {
 	    	$departmentBrandId = 0;
-			$brandRoutingObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('url' => $departmentBrand, 'locale' => 'en', 'objectType' => 'brand'));
+			$brandRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('url' => $departmentBrand, 'locale' => 'en', 'objectType' => 'brand'));
 			if ($brandRoutingObject)
 			{
     			$departmentBrandId = $brandRoutingObject->getObjectId();
@@ -528,7 +528,7 @@ class ProductsController extends Controller
 			$brandDescriptionObject = false;
 			if ($departmentBrandId > 0)
 			{
-    			$brandDescriptionObject = $this->getDoctrine()->getRepository('WebIlluminationAdminBundle:BrandDescription')->findOneBy(array('brandId' => $departmentBrandId));
+    			$brandDescriptionObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\BrandDescription')->findOneBy(array('brandId' => $departmentBrandId));
 			}
 			if ($brandDescriptionObject)
 			{

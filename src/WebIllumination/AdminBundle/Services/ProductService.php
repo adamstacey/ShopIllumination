@@ -1085,6 +1085,37 @@ class ProductService {
         return $query->getSingleScalarResult();
     }
 
+    public function deleteProduct($id)
+    {
+        // Get the services
+        $doctrineService = $this->container->get('doctrine');
+
+        /**
+         * Get entity manager
+         * @var EntityManager $em
+         */
+        $em = $doctrineService->getManager();
+
+        $productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
+
+        if(!$productObject)
+        {
+            return false;
+        }
+
+        // Remove any links to this product
+        $links = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array('linkedProduct' => $productObject->getId()));
+        foreach ($links as $link)
+        {
+            $em->remove($link);
+        }
+
+        $em->remove($productObject);
+        $em->flush();
+
+        return true;
+    }
+
     // Get the root upload directory
     public function getUploadRootDir()
     {

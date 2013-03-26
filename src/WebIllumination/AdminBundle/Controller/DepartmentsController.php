@@ -90,8 +90,8 @@ class DepartmentsController extends Controller
     			foreach ($select as $itemId => $item)
     			{
 	    			// Get the item
-	    			$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($itemId);
-	    			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $itemId));
+	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($itemId);
+	    			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $itemId));
 	    			if ($itemObject && $itemDescriptionObject)
 	    			{
 	    				// Delete the item
@@ -105,7 +105,7 @@ class DepartmentsController extends Controller
 	    					foreach ($relatedIndexObjects as $relatedIndexObject)
 	    					{
 	    						// Delete the item
-		    					$relatedItemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
+		    					$relatedItemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
 		    					if ($relatedItemObject)
 		    					{
 			    					$em->remove($relatedItemObject);
@@ -113,7 +113,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any item descriptions
-		    					$relatedItemDescriptionObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedItemDescriptionObjects = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedItemDescriptionObjects as $relatedItemDescriptionObject)
 		    					{
 			    					$em->remove($relatedItemDescriptionObject);
@@ -121,7 +121,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any feature templates
-		    					$relatedDepartmentToFeatureObjects = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedDepartmentToFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedDepartmentToFeatureObjects as $relatedDepartmentToFeatureObject)
 		    					{
 			    					$em->remove($relatedDepartmentToFeatureObject);
@@ -129,7 +129,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any brand associations
-		    					$relatedBrandToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedBrandToDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\BrandToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedBrandToDepartmentObjects as $relatedBrandToDepartmentObject)
 		    					{
 			    					$em->remove($relatedBrandToDepartmentObject);
@@ -137,7 +137,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any product associations
-		    					$relatedProductToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedProductToDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedProductToDepartmentObjects as $relatedProductToDepartmentObject)
 		    					{
 			    					$em->remove($relatedProductToDepartmentObject);
@@ -145,7 +145,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any images
-		    					$relatedImageObjects = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedImageObjects = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedImageObjects as $relatedImageObject)
 		    					{
 			    					$em->remove($relatedImageObject);
@@ -153,7 +153,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any guarantees
-		    					$relatedGuaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedGuaranteeObjects = $em->getRepository('KAC\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedGuaranteeObjects as $relatedGuaranteeObject)
 		    					{
 			    					$em->remove($relatedGuaranteeObject);
@@ -161,7 +161,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any redirects
-		    					$relatedRedirectObjects = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedRedirectObjects = $em->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedRedirectObjects as $relatedRedirectObject)
 		    					{
 			    					$em->remove($relatedRedirectObject);
@@ -169,7 +169,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any routings
-		    					$relatedRoutingObjects = $em->getRepository('WebIlluminationAdminBundle:Routing')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedRoutingObjects = $em->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedRoutingObjects as $relatedRoutingObject)
 		    					{
 			    					$em->remove($relatedRoutingObject);
@@ -271,7 +271,7 @@ class DepartmentsController extends Controller
     	$data['breadcrumbs'] = $service->getBreadcrumbs($parentId);
     	
     	// Get the department
-    	$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
+    	$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
     	$data['department'] = $departmentIndexObject;
     	    	
     	// Get the number of items
@@ -441,7 +441,7 @@ class DepartmentsController extends Controller
     		$membershipCardDiscountAvailable = 0;
     		$maximumMembershipCardDiscount = 0.0000;
     		$deliveryBand = 0.0000;
-    		$parentDepartmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentIndex')->findOneBy(array('departmentId' => $parentId, 'locale' => 'en'));
+    		$parentDepartmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $parentId, 'locale' => 'en'));
     		$checkDeliveryBand = $parentDepartmentIndexObject->getCheckDeliveryBand();
     		$inheritedDeliveryBand = $parentDepartmentIndexObject->getInheritedDeliveryBand();
     		$displayOrder = 999999;
@@ -502,7 +502,7 @@ class DepartmentsController extends Controller
     		$service->rebuildPath($id);
     		
     		// Get the parent routing
-    		$parentRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectId' => $parentId, 'objectType' => 'department'));
+    		$parentRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findOneBy(array('objectId' => $parentId));
     		
     		// Setup the routing
     		if ($parentRoutingObject)
@@ -554,7 +554,7 @@ class DepartmentsController extends Controller
     	
     	// Get the taxonomy
     	$taxonomy = array();
-    	$taxonomyGoogle = $em->getRepository('WebIlluminationAdminBundle:Taxonomy')->findBy(array('objectType' => 'google', 'locale' => 'en'), array('name' => 'ASC'));
+    	$taxonomyGoogle = $em->getRepository('KAC\SiteBundle\Entity\Taxonomy')->findBy(array('objectType' => 'google', 'locale' => 'en'), array('name' => 'ASC'));
     	$taxonomy['google'] = $taxonomyGoogle;
     	$data['taxonomy'] = $taxonomy;
     	    	
@@ -572,14 +572,14 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-    		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+    		$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
@@ -727,13 +727,13 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			if (!$itemDescriptionObject)
 			{
 				// Notify user
@@ -809,14 +809,14 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-    		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+    		$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
@@ -916,7 +916,7 @@ class DepartmentsController extends Controller
     			foreach ($displayOrder as $id => $value)
     			{
     				// Get the item
-    				$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
+    				$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
     				if ($itemObject)
     				{
 		    			$itemObject->setDisplayOrder($value);
@@ -933,8 +933,8 @@ class DepartmentsController extends Controller
     			foreach ($select as $id => $item)
     			{
 	    			// Get the item
-	    			$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-	    			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+	    			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 	    			if ($itemObject && $itemDescriptionObject)
 	    			{
 	    				// Delete the item
@@ -948,7 +948,7 @@ class DepartmentsController extends Controller
 	    					foreach ($relatedIndexObjects as $relatedIndexObject)
 	    					{
 	    						// Delete the item
-		    					$relatedItemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
+		    					$relatedItemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
 		    					if ($relatedItemObject)
 		    					{
 			    					$em->remove($relatedItemObject);
@@ -956,7 +956,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any item descriptions
-		    					$relatedItemDescriptionObjects = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedItemDescriptionObjects = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedItemDescriptionObjects as $relatedItemDescriptionObject)
 		    					{
 			    					$em->remove($relatedItemDescriptionObject);
@@ -964,7 +964,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any product associations
-		    					$relatedProductToDepartmentObjects = $em->getRepository('WebIlluminationAdminBundle:ProductToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedProductToDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findBy(array('departmentId' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedProductToDepartmentObjects as $relatedProductToDepartmentObject)
 		    					{
 			    					$em->remove($relatedProductToDepartmentObject);
@@ -972,7 +972,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any images
-		    					$relatedImageObjects = $em->getRepository('WebIlluminationAdminBundle:Image')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedImageObjects = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedImageObjects as $relatedImageObject)
 		    					{
 			    					$em->remove($relatedImageObject);
@@ -980,7 +980,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any guarantees
-		    					$relatedGuaranteeObjects = $em->getRepository('WebIlluminationAdminBundle:Guarantee')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedGuaranteeObjects = $em->getRepository('KAC\SiteBundle\Entity\Guarantee')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedGuaranteeObjects as $relatedGuaranteeObject)
 		    					{
 			    					$em->remove($relatedGuaranteeObject);
@@ -988,7 +988,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any redirects
-		    					$relatedRedirectObjects = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedRedirectObjects = $em->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedRedirectObjects as $relatedRedirectObject)
 		    					{
 			    					$em->remove($relatedRedirectObject);
@@ -996,7 +996,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any routings
-		    					$relatedRoutingObjects = $em->getRepository('WebIlluminationAdminBundle:Routing')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
+		    					$relatedRoutingObjects = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findBy(array('objectId' => $relatedIndexObject->getDepartmentId(), 'objectType' => 'department'));
 		    					foreach ($relatedRoutingObjects as $relatedRoutingObject)
 		    					{
 			    					$em->remove($relatedRoutingObject);
@@ -1076,7 +1076,7 @@ class DepartmentsController extends Controller
     	$data['breadcrumbs'] = $service->getBreadcrumbs($parentId);
     	
     	// Get the department
-    	$departmentIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
+    	$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
     	$data['department'] = $departmentIndexObject;
     	    	
     	// Get the number of items
@@ -1177,7 +1177,7 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 				
 		// Update
     	if ($request->getMethod() == 'POST')
@@ -1245,7 +1245,7 @@ class DepartmentsController extends Controller
     			foreach ($select as $itemId => $item)
     			{
 	    			// Get the item
-	    			$departmentToFeatureObject = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->find($itemId);
+	    			$departmentToFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->find($itemId);
 	    			if ($departmentToFeatureObject)
 	    			{
 	    				// Delete the item
@@ -1349,7 +1349,7 @@ class DepartmentsController extends Controller
     	$data['mode'] = 'update';
     	
     	// Get the items
-		$data['items'] = $em->getRepository('WebIlluminationAdminBundle:DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
+		$data['items'] = $em->getRepository('KAC\SiteBundle\Entity\DepartmentToFeature')->findBy(array('departmentId' => $id), array('displayOrder' => 'ASC'));
 		
 		// Get the existing product feature group ids
 		$existingProductFeatureGroupIds = array();
@@ -1360,10 +1360,10 @@ class DepartmentsController extends Controller
 		$data['existingProductFeatureGroupIds'] = '|'.implode('|', $existingProductFeatureGroupIds).'|';
 		
 		// Get the product feature groups
-		$data['productFeatureGroups'] = $em->getRepository('WebIlluminationAdminBundle:ProductFeatureGroup')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeatureGroup' => 'ASC'));
+		$data['productFeatureGroups'] = $em->getRepository('KAC\SiteBundle\Entity\ProductFeatureGroup')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeatureGroup' => 'ASC'));
 		
 		// Get the product features
-		$data['productFeatures'] = $em->getRepository('WebIlluminationAdminBundle:ProductFeature')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeature' => 'ASC'));
+		$data['productFeatures'] = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findBy(array('active' => 1, 'locale' => 'en'), array('productFeature' => 'ASC'));
 		
 		// Get the product feature departments
     	$data['productFeatureDepartments'] = $service->getProductFeatureGroupDepartments('en');
@@ -1384,7 +1384,7 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 				
 		// Update
     	if ($request->getMethod() == 'POST')
@@ -1405,7 +1405,7 @@ class DepartmentsController extends Controller
     			foreach ($select as $itemId => $item)
     			{
 	    			// Get the item
-	    			$redirectObject = $em->getRepository('WebIlluminationAdminBundle:Redirect')->find($itemId);
+	    			$redirectObject = $em->getRepository('KAC\SiteBundle\Entity\Redirect')->find($itemId);
 	    			if ($redirectObject)
 	    			{
 	    				// Delete the item
@@ -1471,7 +1471,7 @@ class DepartmentsController extends Controller
     	$data['mode'] = 'update';
     	
     	// Get the items
-		$items = $em->getRepository('WebIlluminationAdminBundle:Redirect')->findBy(array('objectType' => 'department', 'objectId' => $id), array('redirectFrom' => 'ASC'));
+		$items = $em->getRepository('KAC\SiteBundle\Entity\Redirect')->findBy(array('objectType' => 'department', 'objectId' => $id), array('redirectFrom' => 'ASC'));
 		$data['items'] = $items;
     	
     	// Get the breadcrumbs
@@ -1497,9 +1497,9 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'])->find($id);
-		$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
+		$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+		$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
@@ -1559,7 +1559,7 @@ class DepartmentsController extends Controller
 		    	foreach ($brandDeliveryBands as $itemId => $brandDeliveryBand)
 		    	{
 			    	// Get the product objects
-					$brandToDepartmentObject = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->find($itemId);
+					$brandToDepartmentObject = $em->getRepository('KAC\SiteBundle\Entity\BrandToDepartment')->find($itemId);
 					if ($brandToDepartmentObject)
 					{
 						$brandToDepartmentObject->setDeliveryBand($brandDeliveryBand);
@@ -1581,8 +1581,8 @@ class DepartmentsController extends Controller
 		    	foreach ($productDeliveryBands as $itemId => $productDeliveryBand)
 		    	{
 			    	// Get the product objects
-					$productObject = $em->getRepository('WebIlluminationAdminBundle:Product')->find($itemId);
-					$productIndexObject = $em->getRepository('WebIlluminationAdminBundle:ProductIndex')->findOneBy(array('productId' => $itemId));
+					$productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($itemId);
+					$productIndexObject = $em->getRepository('KAC\SiteBundle\Entity\ProductIndex')->findOneBy(array('productId' => $itemId));
 					if ($productObject && $productIndexObject)
 					{
 						if ($productDeliveryBand > 0)
@@ -1636,7 +1636,7 @@ class DepartmentsController extends Controller
     	$data['brands'] = $service->getBrands($id, 'en');
     	
     	// Get the brand to departments
-    	$data['brandToDepartments'] = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array('departmentId' => $id));
+    	$data['brandToDepartments'] = $em->getRepository('KAC\SiteBundle\Entity\BrandToDepartment')->findBy(array('departmentId' => $id));
     	
     	// Get the products
     	$data['products'] = $em->createQuery("SELECT pi.productId, pi.deliveryBand, pi.inheritedDeliveryBand, pi.pageTitle, pi.brand FROM WebIlluminationAdminBundle:ProductIndex pi WHERE pi.departmentIds LIKE '%|".$id."|%' ORDER BY pi.pageTitle ASC")->getResult();
@@ -1660,14 +1660,14 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-			$itemDescriptionObject = $em->getRepository('WebIlluminationAdminBundle:'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
-			$itemRoutingObject = $em->getRepository('WebIlluminationAdminBundle:Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $id, 'locale' => 'en'));
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+			$itemRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $id, 'locale' => 'en'));
 			if (!$itemDescriptionObject || !$itemRoutingObject)
 			{
 				// Notify user
@@ -1768,11 +1768,11 @@ class DepartmentsController extends Controller
     	$data['brands'] = $service->getBrands($id, 'en');
     	
     	// Get the brand to departments
-    	$data['brandToDepartments'] = $em->getRepository('WebIlluminationAdminBundle:BrandToDepartment')->findBy(array('departmentId' => $id));
+    	$data['brandToDepartments'] = $em->getRepository('KAC\SiteBundle\Entity\BrandToDepartment')->findBy(array('departmentId' => $id));
 	        	    	
     	// Get the taxonomy
     	$taxonomy = array();
-    	$taxonomyGoogle = $em->getRepository('WebIlluminationAdminBundle:Taxonomy')->findBy(array('objectType' => 'google', 'locale' => 'en'), array('name' => 'ASC'));
+    	$taxonomyGoogle = $em->getRepository('KAC\SiteBundle\Entity\Taxonomy')->findBy(array('objectType' => 'google', 'locale' => 'en'), array('name' => 'ASC'));
     	$taxonomy['google'] = $taxonomyGoogle;
     	$data['taxonomy'] = $taxonomy;
     	
