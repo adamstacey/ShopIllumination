@@ -8371,7 +8371,7 @@ the specific language governing permissions and limitations under the Apache Lic
     $.fn._reverse = [].reverse;
     
 })(jQuery);
-$(document).ready(function() {
+function loadUiFunctions() {
     $(".accordion").accordion({
         header: "div.accordion-item h3",
         icons: { "header": "icon-black icon-465", "activeHeader": "icon-grey icon-466", "headerSelected": "icon-black icon-466" },
@@ -8380,6 +8380,14 @@ $(document).ready(function() {
     });
 
     $(".tabs").tabs();
+
+    $("img[title], span[title], th[title]").tooltip({
+        track: true
+    });
+}
+
+$(document).ready(function() {
+    loadUiFunctions();
 });
 (function ($) {
     $.caretTo = function (el, index) {
@@ -8469,18 +8477,174 @@ function generateFormElements($object) {
     $object.find("input, textarea, select, button, a.button").not(".no-uniform").uniform();
 }
 
+function updateRecommendedCharacters($object) {
+    if ($object.length > 0) {
+        var $messageObject = $object.next("small");
+        if ($messageObject.length > 0) {
+            var $recommendedCharacters = $messageObject.attr("data-recommended-characters");
+            var $numberOfCharacters = $object.val().length;
+            var $remainingCharacters = 0;
+            var $colourClass = "";
+            var $plural = "";
+            var $message = "";
+            if ($numberOfCharacters > $recommendedCharacters) {
+                $remainingCharacters = $numberOfCharacters - $recommendedCharacters;
+                $colourClass = "red";
+                $message = "too many";
+                if ($remainingCharacters != 1) {
+                    $plural = "s";
+                }
+            } else {
+                $remainingCharacters = $recommendedCharacters - $numberOfCharacters;
+                $colourClass = "green";
+                $message = "remaining";
+                if ($remainingCharacters != 1) {
+                    $plural = "s";
+                }
+            }
+            $messageObject.html('<strong>Recommended Characters:</strong> '+$recommendedCharacters+' (<strong class="colour-'+$colourClass+'">'+$remainingCharacters+'</strong> character'+$plural+' '+$message+')');
+        }
+    }
+}
+
+function updateRowCounts() {
+    $("table.form-table").each(function() {
+        var $tableObject = $(this);
+        var $rowCount = 0;
+        $tableObject.find("tbody > tr:not(.no-data)").each(function() {
+            $rowCount++;
+            $(this).find("td.row-count").html($rowCount);
+            $(this).find("input.display-order").val($rowCount);
+        });
+    });
+}
+
+function updateTemplatePartHiddenFields() {
+    $("ul.template-part").each(function() {
+        var $hiddenFieldObject = $("#"+$(this).attr("data-hidden-field"));
+        var $template = new Array();
+        $(this).find("li").each(function() {
+            var $templatePartValue =  $(this).html().replace(/(<([^>]+)>)/ig,"");
+            switch ($templatePartValue) {
+                case "Brand":
+                    $template[$template.length] = "brand";
+                    break;
+                case "Product Code":
+                    $template[$template.length] = "productCode";
+                    break;
+                case "Department":
+                    $template[$template.length] = "department";
+                    break;
+                case "Extra Product Keyword":
+                    $template[$template.length] = "extraProductKeyword";
+                    break;
+                case "Key Message":
+                    $template[$template.length] = "keyMessage";
+                    break;
+                default:
+                    $template[$template.length] = "freeText|"+$templatePartValue;
+                    break;
+            }
+        });
+        $hiddenFieldObject.val($template.join("^"));
+    });
+}
+
+function generateTemplateParts() {
+    $("ul.template-part").each(function() {
+        $(this).html("");
+        var $hiddenFieldObject = $("#"+$(this).attr("data-hidden-field"));
+        var $templateParts = $hiddenFieldObject.val().split("^");
+        for (var $templatePartCount = 0; $templatePartCount <= $templateParts.length; $templatePartCount++) {
+            var $templatePartKey =  $templateParts[$templatePartCount];
+            var $templatePartValue = "";
+            switch ($templatePartKey) {
+                case "brand":
+                    $templatePartValue = "Brand";
+                    break;
+                case "productCode":
+                    $templatePartValue = "Product Code";
+                    break;
+                case "department":
+                    $templatePartValue = "Department";
+                    break;
+                case "extraProductKeyword":
+                    $templatePartValue = "Extra Product Keyword";
+                    break;
+                case "keyMessage":
+                    $templatePartValue = "Key Message";
+                    break;
+                default:
+                    if ($templatePartKey) {
+                        if ($templatePartKey.indexOf("freeText|") > -1) {
+                            $templatePartValue.replace("freeText|", "");
+                        }
+                    }
+                    break;
+            }
+            if ($templatePartValue) {
+                var $newTemplatePart = $("<li></li>").html('<img class="actionDeleteParent" src="/bundles/kacsite/images/icons/error_small.png" border="0" />'+$templatePartValue);
+                $(this).append($newTemplatePart);
+            }
+        }
+    });
+}
+
+var fixHelper = function(e, ui) {
+    ui.children().each(function() {
+        $(this).width($(this).width());
+    });
+    return ui;
+};
+
+function loadFormFunctions() {
+    $("tr.no-data").each(function() {
+        if ($(this).closest("tbody").find("tr").length == 1) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+
+    $(".recommended-characters").each(function() {
+        updateRecommendedCharacters($(this));
+    });
+
+    $("table.sortable tbody").sortable({
+        helper: fixHelper,
+        placeholder: "sortable-placeholder",
+        handle: ".handle",
+        update: function(event, ui) {
+            updateRowCounts();
+        }
+    }).disableSelection();
+
+    $("ul.sortable").sortable({
+        helper: fixHelper,
+        update: function(event, ui) {
+            updateTemplatePartHiddenFields();
+        }
+    }).disableSelection();
+}
+
 $(document).ready(function() {
     generateFormElements($(document));
 
-    $(".actionAddFormRow").click(function() {
+    $(document).on("click", ".actionAddFormRow", function() {
         var $tableObject = $("#"+$(this).attr("data-table-object"));
-        var $rowCount = $tableObject.find("tr").length + 1;
+        var $rowCount = $tableObject.find("tbody > tr:not(.no-data)").length + 1;
+        if ($tableObject.find("tr.no-data").length > 0)
+        {
+            $tableObject.find("tr.no-data").hide();
+        }
         var $newRow = $tableObject.attr("data-prototype");
         $newRow = $newRow.replace(/__name__/g, $rowCount);
+        $newRow = $newRow.replace('<td class="row-count"></td>', '<td class="row-count">'+$rowCount+'</td>');
         $newRow = $("<tr></tr>").html($newRow);
         $newRow.appendTo($tableObject.find("tbody"));
         generateFormElements($newRow);
         generateButtons($newRow);
+        updateRowCounts();
 
         // Fire event on the table when the row has been added
         $tableObject.trigger("rowadded", {
@@ -8492,13 +8656,30 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".actionDeleteFormRow", function() {
-        var $tableObject = $("#"+$(this).attr("data-table-object"));
-        if ($tableObject.find("tbody tr").length > 1) {
+        var $tableObject = $(this).closest("table");
+        if ($tableObject.find("tr.no-data").length > 0)
+        {
             $(this).closest("tr").remove();
+            if ($tableObject.find("tbody > tr:not(.no-data)").length < 1) {
+                $tableObject.find("tbody > tr.no-data").show();
+            }
+            updateRowCounts();
 
             // Trigger an event on the table when the row is deleted
             $tableObject.trigger("rowdeleted");
+        } else {
+            if ($tableObject.find("tbody > tr").length > 1) {
+                $(this).closest("tr").remove();
+                updateRowCounts();
+
+                // Trigger an event on the table when the row is deleted
+                $tableObject.trigger("rowdeleted");
+            }
         }
+    });
+
+    $(document).on("click", ".actionDeleteParent", function() {
+        $(this).parent().remove();
     });
 
     $(document).on("keypress keyup focus", ".uppercase", function() {
@@ -8525,7 +8706,7 @@ $(document).ready(function() {
         $(this).caret($currentCaretPosition);
     });
 
-    $(document).on("keypress keyup focus", ".seo-url", function() {
+    $(document).on("keypress keyup focus", ".routing", function() {
         var $currentCaretPosition = $(this).caret();
         $(this).val($(this).val().toLowerCase());
         $(this).val($(this).val().replace(/[ ]/g,'-'));
@@ -8550,6 +8731,37 @@ $(document).ready(function() {
         $(this).val($(this).val().replace(/[^0-9.]/g,''));
         $(this).caret($currentCaretPosition);
     });
+
+    $(document).on("keypress keyup focus", ".recommended-characters", function() {
+        updateRecommendedCharacters($(this));
+    });
+
+    $(document).on("change", ".free-text", function() {
+        if ($(this).val() == 'Free Text')
+        {
+            $(this).closest("fieldset").find(".free-text-container").show();
+            $(this).closest("fieldset").find("#formFreeText").focus();
+        } else {
+            $(this).closest("fieldset").find(".free-text-container").hide();
+        }
+    });
+
+    $(document).on("click", ".actionAddTemplatePart", function() {
+        var $templateObject = $("#"+$("#formTemplate").val());
+        var $templatePartContent = $("#formTemplatePart").val();
+        if ($("#formTemplatePart").val() == 'Free Text') {
+            $templatePartContent = $("#formFreeText").val();
+        }
+        if ($templatePartContent != '') {
+            var $newTemplatePart = $("<li></li>").html('<img class="actionDeleteParent" src="/bundles/kacsite/images/icons/error_small.png" border="0" />'+$templatePartContent);
+            $templateObject.append($newTemplatePart);
+            updateTemplatePartHiddenFields();
+        }
+    });
+
+    loadFormFunctions();
+
+    generateTemplateParts();
 });
 
 function generateButtons($object) {
@@ -8626,4 +8838,37 @@ $(document).ready(function() {
         $(this).removeClass("hover");
         $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).hide();
     });
+
+    $(document).on("click", ".actionClose", function() {
+        if ($(this).attr("data-hide-class") != "") {
+            $(this).closest("."+$(this).attr("data-hide-class")).remove();
+        } else {
+            $(this).remove();
+        }
+    });
+
+    $(document).on("click", ".actionLoadPageDialog", function() {
+        var $url = $(this).attr("href");
+        var $title = $(this).attr("title");
+        var $dialogObject = $('<div class="dialog-container"><div class="loading">Loading...<br /><img src="/bundles/kacsite/"</div></div>');
+        var $iframeObject = $('<iframe width="100%" height="100%" src="'+$url+'" />"');
+        $iframeObject.load(function() {
+            //$dialogObject.height("90%");
+            //alert($iframeObject.height());
+        });
+        $iframeObject.appendTo($dialogObject);
+        $dialogObject.appendTo("body");
+        $dialogObject.dialog({
+            close: function(event, ui) {
+                $dialogObject.remove();
+            },
+            modal: true,
+            title: $title,
+            width: 980,
+            height: ($(window).height() * 0.8)
+        });
+        return false;
+    });
+
+
 });
