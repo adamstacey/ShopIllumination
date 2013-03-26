@@ -13,9 +13,11 @@
         <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Product</button>
     {% endif %}
 
-    {% if flow.getCurrentStep() == 2 %}
-        <button type="button" data-table-object="feature-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Feature</button>
+    {% if flow.getCurrentStep() == 1 %}
+        <a href="{{ path('departments_new', {'modal': true}) }}" class="actionLoadPageDialog mrm fr button icon-green" title="Add New Department" data-icon-secondary="icon-1121">Add Department</a>
+    {% elseif flow.getCurrentStep() == 2 %}
+        <button type="button" data-table-object="feature-list" class="actionAddFormRow mrm fr button icon-green" data-icon-secondary="icon-1121">Add Feature</button>
     {% elseif flow.getCurrentStep() == 6 %}
-        <button type="button" data-table-object="link-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Link</button>
+        <button type="button" data-table-object="link-list" class="actionAddFormRow mrm fr button icon-green" data-icon-secondary="icon-1121">Add Link</button>
     {% endif %}
 </div>
