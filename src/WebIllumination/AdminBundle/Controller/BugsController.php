@@ -91,7 +91,7 @@ class BugsController extends Controller
     			foreach ($displayOrder as $id => $value)
     			{
     				// Get the item
-    				$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
+    				$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
     				if ($itemObject)
     				{
 		    			$itemObject->setDisplayOrder($value);
@@ -107,7 +107,7 @@ class BugsController extends Controller
     			foreach ($select as $id => $item)
     			{
 	    			// Get the item
-	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
+	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
 	    			if ($itemObject)
 	    			{
 	    				// Delete the item
@@ -556,7 +556,7 @@ class BugsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$bugObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
+		$bugObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
 		
     	// Update
     	if ($request->getMethod() == 'POST')

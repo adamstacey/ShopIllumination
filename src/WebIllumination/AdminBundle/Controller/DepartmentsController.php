@@ -90,8 +90,8 @@ class DepartmentsController extends Controller
     			foreach ($select as $itemId => $item)
     			{
 	    			// Get the item
-	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($itemId);
-	    			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $itemId));
+	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($itemId);
+	    			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $itemId));
 	    			if ($itemObject && $itemDescriptionObject)
 	    			{
 	    				// Delete the item
@@ -105,7 +105,7 @@ class DepartmentsController extends Controller
 	    					foreach ($relatedIndexObjects as $relatedIndexObject)
 	    					{
 	    						// Delete the item
-		    					$relatedItemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
+		    					$relatedItemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
 		    					if ($relatedItemObject)
 		    					{
 			    					$em->remove($relatedItemObject);
@@ -113,7 +113,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any item descriptions
-		    					$relatedItemDescriptionObjects = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedItemDescriptionObjects = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedItemDescriptionObjects as $relatedItemDescriptionObject)
 		    					{
 			    					$em->remove($relatedItemDescriptionObject);
@@ -271,7 +271,7 @@ class DepartmentsController extends Controller
     	$data['breadcrumbs'] = $service->getBreadcrumbs($parentId);
     	
     	// Get the department
-    	$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
+    	$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
     	$data['department'] = $departmentIndexObject;
     	    	
     	// Get the number of items
@@ -572,14 +572,14 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-    		$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
-			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+    		$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
@@ -727,13 +727,13 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			if (!$itemDescriptionObject)
 			{
 				// Notify user
@@ -809,14 +809,14 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-    		$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
-			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+    		$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			if (!$itemObject || !$itemDescriptionObject)
 			{
 				// Notify user
@@ -916,7 +916,7 @@ class DepartmentsController extends Controller
     			foreach ($displayOrder as $id => $value)
     			{
     				// Get the item
-    				$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
+    				$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
     				if ($itemObject)
     				{
 		    			$itemObject->setDisplayOrder($value);
@@ -933,8 +933,8 @@ class DepartmentsController extends Controller
     			foreach ($select as $id => $item)
     			{
 	    			// Get the item
-	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
-	    			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+	    			$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+	    			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 	    			if ($itemObject && $itemDescriptionObject)
 	    			{
 	    				// Delete the item
@@ -948,7 +948,7 @@ class DepartmentsController extends Controller
 	    					foreach ($relatedIndexObjects as $relatedIndexObject)
 	    					{
 	    						// Delete the item
-		    					$relatedItemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
+		    					$relatedItemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($relatedIndexObject->getDepartmentId());
 		    					if ($relatedItemObject)
 		    					{
 			    					$em->remove($relatedItemObject);
@@ -956,7 +956,7 @@ class DepartmentsController extends Controller
 		    					}
 		    					
 		    					// Delete any item descriptions
-		    					$relatedItemDescriptionObjects = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
+		    					$relatedItemDescriptionObjects = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findBy(array($this->settings['singleClass'].'Id' => $relatedIndexObject->getDepartmentId()));
 		    					foreach ($relatedItemDescriptionObjects as $relatedItemDescriptionObject)
 		    					{
 			    					$em->remove($relatedItemDescriptionObject);
@@ -1076,7 +1076,7 @@ class DepartmentsController extends Controller
     	$data['breadcrumbs'] = $service->getBreadcrumbs($parentId);
     	
     	// Get the department
-    	$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
+    	$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $parentId));
     	$data['department'] = $departmentIndexObject;
     	    	
     	// Get the number of items
@@ -1177,7 +1177,7 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 				
 		// Update
     	if ($request->getMethod() == 'POST')
@@ -1384,7 +1384,7 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 				
 		// Update
     	if ($request->getMethod() == 'POST')
@@ -1497,9 +1497,9 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'])->find($id);
-		$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
-		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
+		$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
+		$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id, 'locale' => 'en'));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
@@ -1660,13 +1660,13 @@ class DepartmentsController extends Controller
 		$em = $this->getDoctrine()->getEntityManager();
 		
 		// Get the item
-		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 		
     	// Update
     	if ($request->getMethod() == 'POST')
     	{   
     		// Get the item
-			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity\'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
+			$itemDescriptionObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Description')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
 			$itemRoutingObject = $em->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'department', 'objectId' => $id, 'locale' => 'en'));
 			if (!$itemDescriptionObject || !$itemRoutingObject)
 			{
