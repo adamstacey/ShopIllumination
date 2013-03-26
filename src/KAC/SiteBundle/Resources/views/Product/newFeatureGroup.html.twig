@@ -1,0 +1,52 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Add New Feature Group | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Add New Feature Group</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget mbl">
+                                <section class="ui-widget-content ui-corner-all">
+                                    {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
+                                    <fieldset>
+                                        <legend class="fill clearfix">Feature Group</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.name) }}
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label>Options</label>
+                                            </div>
+                                            <div class="widget checker-group widget-2-of-3">
+                                                {{ form_row(form.active) }}
+                                                {{ form_row(form.filter) }}
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend class="fill clearfix">Apply to Department</legend>
+                                        <div class="clear"></div>
+                                        {{ form_widget(form.departments) }}
+                                        {{ form_rest(form) }}
+                                    </fieldset>
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Feature Group</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
