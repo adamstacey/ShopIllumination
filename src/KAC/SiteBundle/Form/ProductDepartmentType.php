@@ -25,8 +25,11 @@ class ProductDepartmentType extends AbstractType
                         ->leftJoin('node.descriptions', 'd');
                 }
             },
+            'label' => 'Main Department',
+            'required' => true,
             'attr' => array(
                 'class' => 'select-department fill no-uniform',
+                'help' => 'Select the department you want this department to fall under.',
             ),
         ), array());
         $builder->add('displayOrder', 'hidden');
