@@ -431,51 +431,85 @@
 }
 
 .ui-dialog {
+    padding: 0;
+
     position: absolute;
     top: 0;
     left: 0;
-    padding: $spacingSmall;
+
+    background: $colourGreyLight;
     outline: 0;
+    @include boxGlow($primaryColour, 10px);
 }
 
 .ui-dialog .ui-dialog-titlebar {
-    padding: $spacingSmall $spacingLarge;
     position: relative;
+
+    @include verticalGradientGreyToGreyDark;
+    @include boxInsetShadow($colourWhite, 0, 1px, 0, 0, 0.7);
+    @include borderRadius($radiusSize, $radiusSize, 0, 0);
+    border-bottom: 3px solid $primaryColour;
+}
+
+.ui-widget-header .ui-icon {
+    position: absolute;
+    top: 3px;
+    right: $spacingMedium;
 }
 
 .ui-dialog .ui-dialog-title {
-    float: left;
-    margin: $spacingSmall 0;
-    white-space: nowrap;
-    width: 90%;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin: 0;
+    padding: $spacingMedium;
+
+    @include textShadow($colourBlack, 0, 1px);
+    letter-spacing: 2px;
+    color: $colourWhite;
+    font-family: $complimentaryFontFamily;
+    @include ellipsis;
+    @include fontSize($fontSizeExtraLarge);
 }
 
 .ui-dialog .ui-dialog-titlebar-close {
+    width: 38px;
+    height: 38px;
+    margin: 0;
+    padding: 0;
     position: absolute;
-    right: $spacingSmall;
-    top: 50%;
-    width: $spacingExtraLarge;
-    margin: -#{$spacingLarge} 0 0 0;
-    padding: $spacingExtraExtraSmall;
-    height: $spacingExtraLarge;
+    right: 0;
+    top: 0;
+    outline: none!important;
+    @include borderRadius(0, $radiusSize, 0, 0);
+    @include noBoxShadow;
+    border: 0 none;
+}
+
+.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick:hover {
+    @include noBoxShadow;
 }
 
 .ui-dialog .ui-dialog-content {
     position: relative;
     border: 0;
-    padding: $spacingSmall;
+    padding: 0;
     background: none;
     overflow: auto;
 }
 
 .ui-dialog .ui-dialog-buttonpane {
-    text-align: left;
-    border-width: 1px 0 0 0;
-    background-image: none;
-    margin-top: $spacingSmall;
-    padding: $spacingSmall;
+    margin: 0 0 -2px 0;
+    padding: $spacingSmall 0 $spacingSmall $spacingSmall;
+
+    @include highlightedVerticalGradientGrey;
+    @include borderRadius(0, 0, $radiusSize, $radiusSize);
+    @include boxInsetGlow($colourGreyDark, 10px, 0, 1);
+    border-top: 3px solid $colourGreyDark;
+
 }
 
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
@@ -483,8 +517,9 @@
 }
 
 .ui-dialog .ui-dialog-buttonpane button {
-    margin: $spacingSmall $spacingSmall $spacingSmall 0;
+    margin: 0 $spacingSmall 0 0;
     cursor: pointer;
+    outline: none !important;
 }
 
 .ui-dialog .ui-resizable-se {
@@ -852,6 +887,10 @@ body .ui-tooltip {
     padding: $spacingMedium;
 }
 
+.ui-dialog.ui-widget-content {
+    padding: 0;
+}
+
 .ui-widget-content a {
     color: $primaryColour;
 }
@@ -863,7 +902,7 @@ body .ui-tooltip {
     @include boxInsetShadow($colourWhite, 0, 1px, 0, 0, 0.7);
 }
 
-.ui-widget-header .ui-icon {
+.ui-widget-header > .ui-icon {
     position: absolute;
     top: 3px;
     right: $spacingMedium;
@@ -1024,18 +1063,13 @@ body .ui-tooltip {
     border-bottom-right-radius: $radiusSize;
 }
 
-/* Overlays */
 .ui-widget-overlay {
-    background: #666666 url(images/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat;
-    opacity: .5;
-    filter: Alpha(Opacity=50);
+    @include alphaBackground($colourWhite, 0.8);
 }
 
 .ui-widget-shadow {
-    margin: -5px 0 0 -5px;
-    padding: 5px;
-    background: #000000 url(images/ui-bg_flat_10_000000_40x100.png) 50% 50% repeat-x;
-    opacity: .2;
-    filter: Alpha(Opacity=20);
-    border-radius: 5px;
+    margin: -#{$spacingSmall} 0 0 -#{$spacingSmall};
+    padding: $spacingSmall;
+    @include boxGlow($primaryColour, 10px);
+    @include equalBorderRadius($radiusSize);
 }
