@@ -26,7 +26,7 @@ class NewProductType extends AbstractType
                     },
                     'label' => 'Brand',
                     'attr' => array(
-                        'class' => 'fill no-uniform',
+                        'class' => 'fill no-uniform select-brand',
                         'help' => 'Select the department you want this department to fall under.',
                     ),
                     'required' => true,
