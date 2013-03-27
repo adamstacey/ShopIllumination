@@ -8,7 +8,7 @@ use KAC\SiteBundle\Entity\DescriptionInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="offer_conditions")
+ * @ORM\Table(name="offer_condition_types")
  * @ORM\HasLifecycleCallbacks()
  */
 class ConditionType

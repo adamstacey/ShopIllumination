@@ -9,7 +9,7 @@ use KAC\SiteBundle\Entity\DescriptionInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="department_descriptions")
+ * @ORM\Table(name="offer_descriptions")
  * @ORM\HasLifecycleCallbacks()
  */
 class Description
