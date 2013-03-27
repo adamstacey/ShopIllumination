@@ -72,6 +72,7 @@
     {% spaceless %}
         {% if prototype is defined %}
             {% set attr = attr|merge({'data-prototype': prototype }) %}
+            <tr><td colspan="8">{{ form_errors(form) }}</td></tr>
             {% for row in form %}
                 <tr>
                     {% for child in row %}
@@ -84,12 +85,12 @@
                         {% if child.vars.block_prefixes.2 != 'hidden' %}
                             {% set containerClass = [] %}
                             {% if child.vars.valid is sameas(false) %}
-                                {% set containerClass = containerClass|merge(['form-element-error']) %}
+                                {% set containerClass = containerClass|merge(['error']) %}
                             {% endif %}
                             {% if child.vars.attr.containerClass is defined %}
                                 {% set containerClass = containerClass|merge([child.vars.attr.containerClass]) %}
                             {% endif %}
-                            <td{% if containerClass|length > 0 %} class="{{ containerClass|join(' ') }}"{% endif %}>{{ form_widget(child) }}</td>
+                            <td{% if containerClass|length > 0 %} class="{{ containerClass|join(' ') }}"{% endif %}>{{ form_errors(child) }}<br />{% if child.vars.valid is sameas(false) %}ERROR!!!!<br/>{% endif %}{{ form_widget(child) }}</td>
                         {% endif %}
                     {% endfor %}
                     <td class="tac" width="1">
