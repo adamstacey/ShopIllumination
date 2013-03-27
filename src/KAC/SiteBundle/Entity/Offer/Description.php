@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Entity\Offer;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\SiteBundle\Entity\Offer;
 use Symfony\Component\Validator\Constraints as Assert;
 use KAC\SiteBundle\Entity\DescriptionInterface;
 
@@ -21,9 +22,9 @@ class Description
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department", inversedBy="descriptions")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Offer", inversedBy="descriptions")
      */
-    private $department;
+    private $offer;
         
     /**
      * @ORM\Column(name="locale", type="string", length=2)
@@ -178,25 +179,25 @@ class Description
     }
 
     /**
-     * Set department
+     * Set offer
      *
-     * @param \KAC\SiteBundle\Entity\Department $department
+     * @param Offer $offer
      * @return Description
      */
-    public function setDepartment(\KAC\SiteBundle\Entity\Department $department = null)
+    public function setOffer(Offer $offer = null)
     {
-        $this->department = $department;
+        $this->offer = $offer;
     
         return $this;
     }
 
     /**
-     * Get department
+     * Get offer
      *
-     * @return \KAC\SiteBundle\Entity\Department 
+     * @return \KAC\SiteBundle\Entity\Offer
      */
-    public function getDepartment()
+    public function getOffer()
     {
-        return $this->department;
+        return $this->offer;
     }
 }

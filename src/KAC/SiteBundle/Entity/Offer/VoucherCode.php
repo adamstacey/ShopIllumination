@@ -1,5 +1,5 @@
 <?php
-namespace KAC\SiteBundle\Entity;
+namespace KAC\SiteBundle\Entity\Offer;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +16,12 @@ class VoucherCode
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Offer")
+     */
+    private $offer;
 	
 	/**
      * @ORM\Column(name="code", type="string", length=255, unique=true)
@@ -29,26 +34,6 @@ class VoucherCode
     private $description;
     
     /**
-     * @ORM\Column(name="minimum_order_value", type="decimal", precision=12, scale=4)
-     */
-    private $minimumOrderValue;
-    
-    /**
-     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
-     */
-    private $discount;
-    
-    /**
-     * @ORM\Column(name="discount_type", type="string", length=1)
-     */
-    private $discountType;
-    
-    /**
-     * @ORM\Column(name="discount_use", type="string", length=1)
-     */
-    private $discountUse;
-    
-    /**
      * @ORM\Column(name="number_of_uses", type="integer", length=11)
      */
     private $numberOfUses;
@@ -57,26 +42,6 @@ class VoucherCode
      * @ORM\Column(name="number_used", type="integer", length=11)
      */
     private $numberUsed;
-    
-    /**
-     * @ORM\Column(name="brands", type="text")
-     */
-    private $brands;
-    
-    /**
-     * @ORM\Column(name="departments", type="text")
-     */
-    private $departments;
-    
-    /**
-     * @ORM\Column(name="products", type="text")
-     */
-    private $products;
-    
-    /**
-     * @ORM\Column(name="orders", type="text")
-     */
-    private $orders;
     
     /**
      * @ORM\Column(name="creator", type="string", length=255)
@@ -109,98 +74,6 @@ class VoucherCode
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
-    
-    /**
-     * Get discountTypeName
-     *
-     * @return string 
-     */
-    public function getDiscountTypeName()
-    {
-        switch ($this->discountType)
-    	{
-    		case 'p':
-    			return 'Percentage Off';
-    		case 'a':
-    			return 'Fixed Amount Off';
-    		case 'r':
-    			return 'Replaces Value';
-    		case 'd':
-    			return 'Free Delivery';
-    		case 'm':
-    			return 'Free Membership Card';
-    	}
-        return 'Unknown';
-    }
-    
-    /**
-     * Get discountTypeSymbol
-     *
-     * @return string 
-     */
-    public function getDiscountTypeSymbol()
-    {
-        switch ($this->discountType)
-    	{
-    		case 'p':
-    			return '%';
-    		case 'a':
-    			return '&pound;';
-    		case 'r':
-    			return '&pound;';
-    		case 'd':
-    		case 'm':
-    			return '';
-    	}
-        return '';
-    }
-    
-    /**
-     * Get discountUseName
-     *
-     * @return string 
-     */
-    public function getDiscountUseName()
-    {
-        switch ($this->discountUse)
-    	{
-    		case 's':
-    			return 'Once Only';
-    		case 'u':
-    			return 'Unlimited Use';
-    		case 'f':
-    			return 'Fixed Number of Times';
-    	}
-        return 'Unknown';
-    }
-    
-    /**
-     * Get activeColour
-     *
-     * @return string 
-     */
-    public function getActiveColour()
-    {
-        switch ($this->active)
-    	{
-    		case 1:
-    			return 'green';
-    		default:
-    		case 0:
-    			return 'red';
-    	}
-        return 'red';
-    }
-    
-    /**
-     * Get activeIcon
-     *
-     * @return text 
-     */
-    public function getActiveIcon()
-    {
-        return 'bundles/kacadmin/images/icons/'.$this->getActiveColour().'-light-icon.png';
-    }
 
     /**
      * Get id
@@ -210,6 +83,16 @@ class VoucherCode
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setOffer($offer)
+    {
+        $this->offer = $offer;
+    }
+
+    public function getOffer()
+    {
+        return $this->offer;
     }
 
     /**
