@@ -1,5 +1,5 @@
 .message {
-    padding: $spacingMedium $spacingMedium 0 47px   ;
+    padding: $spacingMedium $spacingMedium 0 39px;
     margin: 0 0 $spacingMedium 0;
     min-height: 22px;
 
@@ -12,6 +12,13 @@
     position: absolute;
     top: 50%;
     margin-top: -16px;
+    left: 5px;
+}
+
+.message .ui-icon-small {
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
     left: 5px;
 }
 
@@ -89,6 +96,31 @@
 .message-notice ul,
 .message-notice ul li {
     color: $colourWhite;
+}
+
+.error-list {
+    padding: $spacingLarge $spacingMedium $spacingMedium $spacingMedium;
+    margin: -#{$spacingLarge} 0 $spacingMedium 0;
+
+    background: $colourRedExtraLight;
+    border-radius: 0 0 4px 4px;
+    @include borderRadius(0, 0, $radiusSize, $radiusSize);
+}
+
+.error-list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.error-list ul li {
+    padding: 0 0 0 22px;
+    margin: 0;
+
+    color: $colourRed;
+    @include fontSize($fontSizeSmall);
+    line-height: 18px;
+    list-style: none;
+    background: transparent url("#{$cssPath}/resources/images/icons/error_small.png") center left no-repeat;
 }
 
 .flash-message .message {
