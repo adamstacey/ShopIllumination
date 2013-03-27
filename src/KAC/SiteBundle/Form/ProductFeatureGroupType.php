@@ -22,6 +22,7 @@ class ProductFeatureGroupType extends AbstractType
             'attr' => array(
                 'class' => 'fill',
                 'help' => 'Enter the name of the product feature group.',
+                'placeholder' => 'Feature Group',
             ),
         ));
 
@@ -30,7 +31,9 @@ class ProductFeatureGroupType extends AbstractType
             'label' => 'Active',
             'attr' => array(
                 'help' => 'Is the feature group active?',
+                'containerClass' => 'tac',
             ),
+            'data' => true,
         ));
 
         $builder->add('filter', 'checkbox', array(
@@ -38,7 +41,9 @@ class ProductFeatureGroupType extends AbstractType
             'label' => 'Filter',
             'attr' => array(
                 'help' => 'Can you filter by the feature group?',
+                'containerClass' => 'tac',
             ),
+            'data' => true,
         ));
      }
 
