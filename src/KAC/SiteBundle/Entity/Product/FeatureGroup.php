@@ -36,7 +36,7 @@ class FeatureGroup
     
     /**
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\NotBlank(message="Enter a name for the feature group.")
+     * @Assert\NotBlank(groups={"site_product_feature_group"}, message="Enter a name for the feature group.")
      */
     private $name;
     
