@@ -44,7 +44,6 @@ class ProductFeatureGroupsType extends AbstractType
                         ->leftJoin('node.descriptions', 'd');
                 }
             },
-            'mapped' => false,
             'label' => 'Department',
             'required' => false,
             'empty_value' => '- Apply to Department -',
@@ -54,13 +53,6 @@ class ProductFeatureGroupsType extends AbstractType
                 'help' => 'Select a department you want to apply the new feature group to.',
             ),
         ), array());
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'KAC\SiteBundle\Entity\Product\FeatureGroup'
-        ));
     }
 
     public function getName()
