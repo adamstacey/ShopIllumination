@@ -45,7 +45,7 @@ class Feature
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
-    private $locale = "en_GB";
+    private $locale = "en";
 
     /**
      * @Gedmo\Timestampable(on="create")
