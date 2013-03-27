@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="KAC\SiteBundle\Repository\OrderRepository")
  * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks()
-
  */
 class Order
 {

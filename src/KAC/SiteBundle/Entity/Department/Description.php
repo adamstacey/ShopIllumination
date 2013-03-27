@@ -24,7 +24,7 @@ class Description implements DescriptionInterface
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department", inversedBy="descriptions")
      */
     private $department;
-        
+
     /**
      * @ORM\Column(name="locale", type="string", length=2)
      */
@@ -35,63 +35,63 @@ class Description implements DescriptionInterface
      * @Assert\NotBlank(groups={"flow_site_new_department_step1"}, message="Enter a name.")
      */
     private $name;
-    
+
     /**
      * @ORM\Column(name="google_department", type="text")
      * @Assert\NotBlank(groups={"flow_site_new_department_step2"}, message="Select a Google department.")
      */
     private $googleDepartment;
-    
+
     /**
      * @ORM\Column(name="ebay_department", type="text", nullable=true)
      */
     private $ebayDepartment;
-    
+
     /**
      * @ORM\Column(name="amazon_department", type="text", nullable=true)
      */
     private $amazonDepartment;
-    
+
     /**
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-        
+
     /**
      * @ORM\Column(name="menu_title", type="string", length=255, nullable=true)
      */
     private $menuTitle;
-    
+
     /**
      * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
      */
     private $pageTitle;
-    
+
     /**
      * @ORM\Column(name="page_title_template", type="text", nullable=true)
      */
     private $pageTitleTemplate = "brand^productCode^department^extraProductKeyword";
-    
+
     /**
      * @ORM\Column(name="header", type="string", length=255, nullable=true)
      */
     private $header;
-    
+
     /**
      * @ORM\Column(name="header_template", type="text", nullable=true)
      */
     private $headerTemplate;
-    
+
     /**
      * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
     private $metaDescription;
-    
+
     /**
      * @ORM\Column(name="meta_description_template", type="text", nullable=true)
      */
     private $metaDescriptionTemplate;
-    
+
     /**
      * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      */
@@ -112,7 +112,7 @@ class Description implements DescriptionInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -128,14 +128,14 @@ class Description implements DescriptionInterface
     public function setLocale($locale)
     {
         $this->locale = $locale;
-    
+
         return $this;
     }
 
     /**
      * Get locale
      *
-     * @return string 
+     * @return string
      */
     public function getLocale()
     {
@@ -151,14 +151,14 @@ class Description implements DescriptionInterface
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -174,14 +174,14 @@ class Description implements DescriptionInterface
     public function setGoogleDepartment($googleDepartment)
     {
         $this->googleDepartment = $googleDepartment;
-    
+
         return $this;
     }
 
     /**
      * Get googleDepartment
      *
-     * @return string 
+     * @return string
      */
     public function getGoogleDepartment()
     {
@@ -197,14 +197,14 @@ class Description implements DescriptionInterface
     public function setEbayDepartment($ebayDepartment)
     {
         $this->ebayDepartment = $ebayDepartment;
-    
+
         return $this;
     }
 
     /**
      * Get ebayDepartment
      *
-     * @return string 
+     * @return string
      */
     public function getEbayDepartment()
     {
@@ -220,14 +220,14 @@ class Description implements DescriptionInterface
     public function setAmazonDepartment($amazonDepartment)
     {
         $this->amazonDepartment = $amazonDepartment;
-    
+
         return $this;
     }
 
     /**
      * Get amazonDepartment
      *
-     * @return string 
+     * @return string
      */
     public function getAmazonDepartment()
     {
@@ -243,14 +243,14 @@ class Description implements DescriptionInterface
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -266,14 +266,14 @@ class Description implements DescriptionInterface
     public function setMenuTitle($menuTitle)
     {
         $this->menuTitle = $menuTitle;
-    
+
         return $this;
     }
 
     /**
      * Get menuTitle
      *
-     * @return string 
+     * @return string
      */
     public function getMenuTitle()
     {
@@ -289,14 +289,14 @@ class Description implements DescriptionInterface
     public function setPageTitle($pageTitle)
     {
         $this->pageTitle = $pageTitle;
-    
+
         return $this;
     }
 
     /**
      * Get pageTitle
      *
-     * @return string 
+     * @return string
      */
     public function getPageTitle()
     {
@@ -312,14 +312,14 @@ class Description implements DescriptionInterface
     public function setPageTitleTemplate($pageTitleTemplate)
     {
         $this->pageTitleTemplate = $pageTitleTemplate;
-    
+
         return $this;
     }
 
     /**
      * Get pageTitleTemplate
      *
-     * @return string 
+     * @return string
      */
     public function getPageTitleTemplate()
     {
@@ -335,14 +335,14 @@ class Description implements DescriptionInterface
     public function setHeader($header)
     {
         $this->header = $header;
-    
+
         return $this;
     }
 
     /**
      * Get header
      *
-     * @return string 
+     * @return string
      */
     public function getHeader()
     {
@@ -358,14 +358,14 @@ class Description implements DescriptionInterface
     public function setHeaderTemplate($headerTemplate)
     {
         $this->headerTemplate = $headerTemplate;
-    
+
         return $this;
     }
 
     /**
      * Get headerTemplate
      *
-     * @return string 
+     * @return string
      */
     public function getHeaderTemplate()
     {
@@ -381,14 +381,14 @@ class Description implements DescriptionInterface
     public function setMetaDescription($metaDescription)
     {
         $this->metaDescription = $metaDescription;
-    
+
         return $this;
     }
 
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -404,14 +404,14 @@ class Description implements DescriptionInterface
     public function setMetaDescriptionTemplate($metaDescriptionTemplate)
     {
         $this->metaDescriptionTemplate = $metaDescriptionTemplate;
-    
+
         return $this;
     }
 
     /**
      * Get metaDescriptionTemplate
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescriptionTemplate()
     {
@@ -427,14 +427,14 @@ class Description implements DescriptionInterface
     public function setMetaKeywords($metaKeywords)
     {
         $this->metaKeywords = $metaKeywords;
-    
+
         return $this;
     }
 
     /**
      * Get metaKeywords
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeywords()
     {
@@ -450,14 +450,14 @@ class Description implements DescriptionInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -473,14 +473,14 @@ class Description implements DescriptionInterface
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -496,7 +496,7 @@ class Description implements DescriptionInterface
     public function setDepartment(\KAC\SiteBundle\Entity\Department $department = null)
     {
         $this->department = $department;
-    
+
         return $this;
     }
 
