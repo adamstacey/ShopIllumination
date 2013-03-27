@@ -1,6 +1,18 @@
+{% import _self as helpers %}
+
+{% macro errorList(formElements) %}
+    {% for formElement in formElements %}
+        {{ form_errors(formElement) }}
+        {{ _self.errorList(formElement) }}
+    {% endfor %}
+{% endmacro %}
+
 {% if form.vars.valid is sameas(false) %}
     <div class="message message-error">
-        <span class="ui-button-icon-primary ui-icon icon-white icon-850"></span>
+        <span class="ui-button-icon-primary ui-icon-small icon-small-white icon-small-850"></span>
         <p>There was a problem saving. Please, check the information below and try again.</p>
     </div>
+    <ul class="error-list">
+        {{ helpers.errorList(form) }}
+    </ul>
 {% endif %}
