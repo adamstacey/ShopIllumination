@@ -4,7 +4,6 @@ namespace KAC\SiteBundle\Entity\Offer;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use KAC\SiteBundle\Entity\DescriptionInterface;
 
 /**
  * @ORM\Entity
@@ -46,4 +45,129 @@ class Condition
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set parameters
+     *
+     * @param array $parameters
+     * @return Condition
+     */
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
+    
+        return $this;
+    }
+
+    /**
+     * Get parameters
+     *
+     * @return array 
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Condition
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Condition
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set offer
+     *
+     * @param \KAC\SiteBundle\Entity\Offer $offer
+     * @return Condition
+     */
+    public function setOffer(\KAC\SiteBundle\Entity\Offer $offer = null)
+    {
+        $this->offer = $offer;
+    
+        return $this;
+    }
+
+    /**
+     * Get offer
+     *
+     * @return \KAC\SiteBundle\Entity\Offer 
+     */
+    public function getOffer()
+    {
+        return $this->offer;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \KAC\SiteBundle\Entity\Offer\ConditionType $type
+     * @return Condition
+     */
+    public function setType(\KAC\SiteBundle\Entity\Offer\ConditionType $type = null)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \KAC\SiteBundle\Entity\Offer\ConditionType 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
 }

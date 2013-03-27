@@ -46,7 +46,13 @@ class Offer implements DescribableInterface
      */
     private $type;
 
+    /**
+     * @ORM\Column(name="fixed_discount", type="decimal", precision=12, scale=4)
+     */
     private $fixedDiscount;
+    /**
+     * @ORM\Column(name="percent_discount", type="decimal", precision=12, scale=4)
+     */
     private $percentDiscount;
 
     /**
@@ -250,5 +256,74 @@ class Offer implements DescribableInterface
     public function getConditions()
     {
         return $this->conditions;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Offer
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set fixedDiscount
+     *
+     * @param float $fixedDiscount
+     * @return Offer
+     */
+    public function setFixedDiscount($fixedDiscount)
+    {
+        $this->fixedDiscount = $fixedDiscount;
+    
+        return $this;
+    }
+
+    /**
+     * Get fixedDiscount
+     *
+     * @return float 
+     */
+    public function getFixedDiscount()
+    {
+        return $this->fixedDiscount;
+    }
+
+    /**
+     * Set percentDiscount
+     *
+     * @param float $percentDiscount
+     * @return Offer
+     */
+    public function setPercentDiscount($percentDiscount)
+    {
+        $this->percentDiscount = $percentDiscount;
+    
+        return $this;
+    }
+
+    /**
+     * Get percentDiscount
+     *
+     * @return float 
+     */
+    public function getPercentDiscount()
+    {
+        return $this->percentDiscount;
     }
 }
