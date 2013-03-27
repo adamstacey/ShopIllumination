@@ -1,11 +1,11 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 
-{% block title %}Add New Feature Group | {{ parent() }}{% endblock %}
+{% block title %}Add New Feature Groups | {{ parent() }}{% endblock %}
 
 {% block header %}
     <header>
         {{ parent() }}
-        <h1>Add New Feature Group</h1>
+        <h1>Add New Feature Groups</h1>
     </header>
 {% endblock %}
 {% block body %}
@@ -21,12 +21,11 @@
                                     <table class="form-table sortable mbm" id="featureGroupList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
                                         <thead>
                                             <tr>
-                                                <th title="Select a feature group." class="tal">Group</th>
-                                                <th title="Select the default feature a product will automatically be assigned with. Leave this as 'No Default Feature' if you want to set the feature." class="tal">Default Feature</th>
-                                                <th title="Do you want this feature to show up on the product filter in the listings?">Filter?</th>
-                                                <th title="Do you want the feature to display on the bullets of a product on the product listings?">Listing?</th>
-                                                <th title="Do you want the feature to display in the features section on the product page?">Product?</th>
-                                                <th>&nbsp;</th>
+                                                <th width="1">&nbsp;</th>
+                                                <th title="Enter the name of the product feature group." class="tal">Name</th>
+                                                <th width="1" title="Is the feature group active?">Active?</th>
+                                                <th width="1" title="Can you filter by the feature group?">Filter?</th>
+                                                <th width="1">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -38,17 +37,18 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            {{ form_rest(form) }}
+                                            {{ form_row(form.features) }}
                                         </tbody>
                                     </table>
                                     <fieldset>
                                         <legend class="fill clearfix">Apply to Department</legend>
                                         <div class="clear"></div>
+                                        {{ form_row(form.department) }}
                                         {{ form_rest(form) }}
                                     </fieldset>
                                     <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
                                         <button type="button" data-table-object="featureGroupList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
-                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save</button>
                                     </div>
                                 </section>
                             </div>
