@@ -1,0 +1,55 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Links | {{ product.description.pageTitle }}{% endblock %}
+
+{% block body %}
+    <div class="widget-group clearfix">
+        <div class="widget widget-2-of-7">
+            {% include 'KACSiteBundle:Product:editLeftMenu.html.twig' %}
+        </div>
+        <div class="widget widget-5-of-7">
+            <section>
+                <div class="widget-group clearfix">
+                    <div class="widget widget-1-of-1">
+                        <div class="ui-widget">
+                            <header class="ui-widget-header ui-corner-top">
+                                <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                <h2>Product Links</h2>
+                            </header>
+                            <section class="ui-widget-content ui-corner-all">
+                                <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
+                                    {{ knp_pagination_render(pagination) }}
+                                </div>
+                                <table class="data-table" id="offers-list">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for offer in pagination %}
+                                        <tr>
+                                            <td>{{ offer.id }}</td>
+                                            <td>{{ offer.description != null ? offer.description.name : '' }}</td>
+                                            <td>{{ offer.type }}</td>
+                                            <td>{{ offer.status }}</td>
+                                            <td></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
+                                    {{ knp_pagination_render(pagination) }}
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

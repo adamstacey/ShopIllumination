@@ -2,9 +2,11 @@
 
 namespace KAC\SiteBundle\Controller;
 
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -29,18 +31,12 @@ class ListingController extends Controller
      */
 	public function indexAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
     {
-        // Ensure user has the correct permissions
-        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
-            throw new AccessDeniedException();
-        }
-
         /**
          * Define variable types
          * @var $department \KAC\SiteBundle\Entity\Department
          * @var $brand \KAC\SiteBundle\Entity\Brand
          * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
          */
-
         $em = $this->getDoctrine()->getManager();
 
         // If department was specified fetch from the database
@@ -219,6 +215,7 @@ class ListingController extends Controller
      * @Route("/admin/brand/{brandId}", name="admin_listing_brand", defaults={"brandId" = null})
      * @Route("/admin/department/{departmentId}/brand/{brandId}", name="admin_listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
      * @Method({"GET"})
+     * @Secure(roles="ROLE_ADMIN")
      */
     public function indexAdminAction(Request $request, $departmentId=null, $brandId=null)
     {
