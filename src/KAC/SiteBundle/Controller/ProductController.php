@@ -20,7 +20,7 @@ use KAC\SiteBundle\Form\EditProductDescriptionsType;
 use KAC\SiteBundle\Form\EditProductImagesType;
 use KAC\SiteBundle\Form\EditProductLinksType;
 use KAC\SiteBundle\Form\EditProductOverviewType;
-use KAC\SiteBundle\Form\ProductFeatureGroupType;
+use KAC\SiteBundle\Form\ProductFeatureGroupsType;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Product\Description;
 use KAC\SiteBundle\Entity\Product\FeatureGroup;
@@ -105,24 +105,27 @@ class ProductController extends Controller {
     {
         $em = $this->getDoctrine()->getManager();
 
-        $featureGroup = new FeatureGroup();
+        //$featureGroup = new FeatureGroup();
 
         $department = $em->getRepository("KAC\SiteBundle\Entity\Department")->find($request->query->get('departmentId'));
 
-        $form = $this->createForm(new ProductFeatureGroupType($department), $featureGroup);
+        $form = $this->createForm(new ProductFeatureGroupsType($department));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
 
                 // Get the data
-                $featureGroup = $form->getData();
+                $featureGroups = $form->get('features')->getData();
 
                 // Update the database
-                $em->persist($featureGroup);
-                $em->flush();
+                foreach ($featureGroups as $featureGroup)
+                {
+                    $em->persist($featureGroup);
+                    $em->flush();
+                }
 
-                // Check if new feature group needs to be applied to a department
+                /*// Check if new feature group needs to be applied to a department
                 $department = $form->get('department')->getData();
                 if ($department)
                 {
@@ -139,7 +142,7 @@ class ProductController extends Controller {
                     $departmentToFeature->setDisplayOrder(sizeof($departments) + 1);
                     $em->persist($departmentToFeature);
                     $em->flush();
-                }
+                }*/
 
                 // Notify user
                 $this->get('session')->setFlash('notice', 'The new feature group "'.$featureGroup->getName().'" has been added.');
