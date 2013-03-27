@@ -18,7 +18,7 @@
                                     <h2>1. Product Information</h2>
                                 </header>
                                 <section class="ui-widget-content ui-corner-all">
-                                    {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
                                         {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
                                         {{ form_row(form.departments) }}

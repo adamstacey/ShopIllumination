@@ -29,7 +29,7 @@
                                         <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
                                         <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
                                     </div>
-                                    {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <table class="form-table sortable mbm" id="featureList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
                                         <thead>
                                         <tr>

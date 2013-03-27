@@ -11,7 +11,7 @@
                         <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
                         <p>The delivery band is the default delivery band setting for the department. Each sub department and any product associated with this department will use this delivery band setting unless the sub department or product has their own delivery band set, which will override this setting.</p>
                     </div>
-                    {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
+                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         {{ form_rest(form) }}
                     </fieldset>

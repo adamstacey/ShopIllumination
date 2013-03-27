@@ -17,7 +17,7 @@
                         <div class="widget widget-1-of-1">
                             <div class="ui-widget mbl">
                                 <section class="ui-widget-content ui-corner-all">
-                                    {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <table class="form-table sortable mbm" id="featureGroupList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
                                         <thead>
                                             <tr>
