@@ -25,6 +25,18 @@ class Condition
     private $offer;
 
     /**
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Offer\Condition", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Offer\Condition", mappedBy="parent")
+     * @ORM\OrderBy({"displayOrder" = "DESC"})
+     */
+    private $children;
+
+    /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Offer\ConditionType")
      */
     private $type;
@@ -169,5 +181,25 @@ class Condition
     public function getType()
     {
         return $this->type;
+    }
+
+    public function setChildren($children)
+    {
+        $this->children = $children;
+    }
+
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
