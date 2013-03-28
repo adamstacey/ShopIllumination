@@ -42,6 +42,11 @@ class NewType extends AbstractType
                 ));
 
                 break;
+            case 2:
+                $builder->add('conditions', 'collection', array(
+                    'type' => new ConditionType(),
+                ));
+                break;
         }
     }
 

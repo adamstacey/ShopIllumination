@@ -7,12 +7,13 @@
                     <h2>1. Overview</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-all">
-                    {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
+                    {% include 'KACSiteBundle:Department:newErrors.html.twig' %}
                     <fieldset>
                         {{ form_row(form.descriptions) }}
                         {{ form_row(form.status) }}
                         {{ form_row(form.type) }}
                         {{ form_row(form.discount) }}
+                        {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Offers:newControls.html.twig' %}
