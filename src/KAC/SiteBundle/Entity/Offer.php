@@ -47,14 +47,9 @@ class Offer implements DescribableInterface
     private $type;
 
     /**
-     * @ORM\Column(name="fixed_discount", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
      */
-    private $fixedDiscount;
-
-    /**
-     * @ORM\Column(name="percent_discount", type="decimal", precision=12, scale=4)
-     */
-    private $percentDiscount;
+    private $discount;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -283,48 +278,25 @@ class Offer implements DescribableInterface
     }
 
     /**
-     * Set fixedDiscount
+     * Set discount
      *
-     * @param float $fixedDiscount
+     * @param float $discount
      * @return Offer
      */
-    public function setFixedDiscount($fixedDiscount)
+    public function setDiscount($discount)
     {
-        $this->fixedDiscount = $fixedDiscount;
+        $this->discount = $discount;
     
         return $this;
     }
 
     /**
-     * Get fixedDiscount
+     * Get discount
      *
      * @return float 
      */
-    public function getFixedDiscount()
+    public function getDiscount()
     {
-        return $this->fixedDiscount;
-    }
-
-    /**
-     * Set percentDiscount
-     *
-     * @param float $percentDiscount
-     * @return Offer
-     */
-    public function setPercentDiscount($percentDiscount)
-    {
-        $this->percentDiscount = $percentDiscount;
-    
-        return $this;
-    }
-
-    /**
-     * Get percentDiscount
-     *
-     * @return float 
-     */
-    public function getPercentDiscount()
-    {
-        return $this->percentDiscount;
+        return $this->discount;
     }
 }

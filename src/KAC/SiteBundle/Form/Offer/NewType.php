@@ -25,27 +25,19 @@ class NewType extends AbstractType
                     ),
                 ));
                 $builder->add('type', 'choice', array(
-                    'choices' => array('p' => 'Discount', 'r' => 'Replaces Value', 'd' => 'Free Delivery', 'm' => 'Free Membership Card'),
+                    'choices' => array('p' => 'Percentage Off', 'a' => 'Fixed Amount Off', 'r' => 'Replaces Value', 'd' => 'Free Delivery', 'm' => 'Free Membership Card'),
                     'label' => 'Type',
                     'attr' => array(
                         'class' => 'fill',
                         'help' => 'Select the type of this offer',
                     ),
                 ));
-                $builder->add('percentDiscount', null, array(
+                $builder->add('discount', null, array(
                     'required'  => false,
-                    'label' => 'Percentage Discount',
+                    'label' => 'Discount',
                     'attr' => array(
                         'class' => 'fill',
-                        'help' => 'Enter the percentage to be discounted',
-                    ),
-                ));
-                $builder->add('fixedDiscount', null, array(
-                    'required'  => false,
-                    'label' => 'Fixed Discount',
-                    'attr' => array(
-                        'class' => 'fill',
-                        'help' => 'Enter the amount of money to be discounted',
+                        'help' => 'Enter the amount to be discounted.',
                     ),
                 ));
 
