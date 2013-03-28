@@ -9,7 +9,11 @@
                 <section class="ui-widget-content ui-corner-all">
                     {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
                     <fieldset>
-                        {{ form_widget(form) }}
+                        {{ form_row(form.descriptions) }}
+                        {{ form_row(form.status) }}
+                        {{ form_row(form.type) }}
+                        {{ form_row(form.percentDiscount) }}
+                        {{ form_row(form.fixedDiscount) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Offers:newControls.html.twig' %}
