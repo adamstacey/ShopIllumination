@@ -20,7 +20,7 @@ class Condition
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Offer", inversedBy="offers")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Offer", inversedBy="conditions")
      */
     private $offer;
 
@@ -32,7 +32,6 @@ class Condition
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Offer\Condition", mappedBy="parent")
-     * @ORM\OrderBy({"displayOrder" = "DESC"})
      */
     private $children;
 

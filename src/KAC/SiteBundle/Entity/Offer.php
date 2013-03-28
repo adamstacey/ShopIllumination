@@ -31,7 +31,7 @@ class Offer implements DescribableInterface
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Offer\Description", mappedBy="offer", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Offer\Condition", mappedBy="offer", cascade={"all"})
      */
     private $conditions;
 
