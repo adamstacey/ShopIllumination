@@ -1,11 +1,11 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 
-{% block title %}Links | {{ product.description.pageTitle }}{% endblock %}
+{% block title %}Offers{% endblock %}
 
 {% block body %}
     <div class="widget-group clearfix">
         <div class="widget widget-2-of-7">
-            {% include 'KACSiteBundle:Product:editLeftMenu.html.twig' %}
+            {% include 'KACSiteBundle:Offers:indexLeftMenu.html.twig' %}
         </div>
         <div class="widget widget-5-of-7">
             <section>
@@ -14,7 +14,7 @@
                         <div class="ui-widget">
                             <header class="ui-widget-header ui-corner-top">
                                 <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
-                                <h2>Product Links</h2>
+                                <h2>Offers</h2>
                             </header>
                             <section class="ui-widget-content ui-corner-all">
                                 <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
@@ -42,8 +42,11 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
-                                <div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
+                                <div id="product-pagination-bottom">
                                     {{ knp_pagination_render(pagination) }}
+                                </div>
+                                <div class="clearfix">
+                                    <a href="" class="button button-blue">Add Offer</a>
                                 </div>
                             </section>
                         </div>

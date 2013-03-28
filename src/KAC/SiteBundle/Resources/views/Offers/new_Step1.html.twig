@@ -1,0 +1,20 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                    <h2>1. Overview</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    {% include 'KACSiteBundle:Product:newErrors.html.twig' %}
+                    <fieldset>
+                        {{ form_widget(form) }}
+                    </fieldset>
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Offers:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>

@@ -28,7 +28,7 @@ use KAC\SiteBundle\Manager\SeoManager;
 class OffersController extends Controller
 {
     /**
-     * @Route("/admin/offers", name="offers_index")
+     * @Route("/admin/offers", name="admin_offers_index")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function indexAction(Request $request)
@@ -50,12 +50,55 @@ class OffersController extends Controller
     }
 
     /**
-     * Fetch project manager from container
+     * @Route("/admin/offers/new", name="admin_offers_new")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function newAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $manager = $this->getManager();
+        $product = $manager->createOffer();
+
+        /**
+         * @var \Craue\FormFlowBundle\Form\FormFlow $flow
+         */
+        $flow = $this->get('kac_site.form.flow.new_offer');
+        $flow->bind($product);
+
+        // Get current form step
+        $form = $flow->createForm($product);
+
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData();
+
+            if ($flow->nextStep())
+            {
+                // Get next form step
+                $form = $flow->createForm($product);
+            } else {
+                $em->persist($product);
+                $em->flush();
+
+                $flow->reset();
+
+                return $this->redirect($this->generateUrl('admin_offers_index'));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Offers:new.html.twig', array(
+            'form' => $form->createView(),
+            'flow' => $flow,
+        ));
+    }
+
+    /**
+     * Fetch manager from container
      *
-     * @return \KAC\SiteBundle\Manager\DepartmentManager
+     * @return \KAC\SiteBundle\Manager\OfferManager
      */
     private function getManager()
     {
-        return $this->get('kac_site.manager.department');
+        return $this->get('kac_site.manager.offer');
     }
 }

@@ -50,6 +50,7 @@ class Offer implements DescribableInterface
      * @ORM\Column(name="fixed_discount", type="decimal", precision=12, scale=4)
      */
     private $fixedDiscount;
+
     /**
      * @ORM\Column(name="percent_discount", type="decimal", precision=12, scale=4)
      */

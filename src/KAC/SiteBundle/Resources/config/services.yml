@@ -12,6 +12,9 @@ services:
   kac_site.manager.department:
       class: KAC\SiteBundle\Manager\DepartmentManager
       arguments: [@doctrine, @kac_site.manager.seo]
+  kac_site.manager.offer:
+    class: KAC\SiteBundle\Manager\OfferManager
+    arguments: [@doctrine]
   kac_site.manager.image:
     class: KAC\SiteBundle\Manager\ImageManager
     arguments: [@doctrine]
@@ -86,3 +89,13 @@ services:
     scope: request
     calls:
       - [ setFormType, [@kac_site.form.new_variant]]
+  kac_site.form.new_offer:
+    class: KAC\SiteBundle\Form\Offer\NewType
+    tags:
+      - { name: form.type, alias: site_new_offer }
+  kac_site.form.flow.new_offer:
+    class: KAC\SiteBundle\Form\Offer\NewFlow
+    parent: craue.form.flow
+    scope: request
+    calls:
+      - [ setFormType, [@kac_site.form.new_offer]]
