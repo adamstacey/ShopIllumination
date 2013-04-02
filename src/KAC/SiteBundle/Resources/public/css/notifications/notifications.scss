@@ -139,14 +139,19 @@
 }
 
 .flash-message-content .icon {
+    margin: 0;
+
     position: absolute;
     top: $spacingSmall;
     left: $spacingSmall;
 }
 
 .flash-message-content .close {
+    margin: 0;
+
     position: absolute;
     top: $spacingSmall;
+    left: auto;
     right: $spacingSmall;
 
     cursor: pointer;
