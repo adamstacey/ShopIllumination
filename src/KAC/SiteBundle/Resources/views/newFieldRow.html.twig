@@ -6,7 +6,7 @@
 <td class="row-count" width="1"></td>
 {% for child in form %}
     {% if child.vars.block_prefixes.2 != 'hidden' %}
-        <td{% if child.vars.attr.containerClass is defined %} class="{{ child.vars.attr.containerClass }}"{% endif %}>{{ form_widget(child) }}</td>
+        <td{% if child.vars.attr['data-container-class'] is defined %} class="{{ child.vars.attr['data-container-class'] }}"{% endif %}>{{ form_widget(child) }}</td>
     {% endif %}
 {% endfor %}
 <td class="tac" width="1">
