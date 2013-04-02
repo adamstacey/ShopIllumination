@@ -46,14 +46,11 @@ class DepartmentManager extends Manager
         $department->setDepartmentPath($departmentPath);
     }
 
-    public function checkObjectLinks(Department $originalDepartment, Department $department)
+    public function checkObjectLinks($originalFeatures, Department $department)
     {
+        $em = $this->doctrine->getManager();
+
         // Check the features
-        $originalFeatures = array();
-        foreach ($originalDepartment->getFeatures() as $originalFeature)
-        {
-            $originalFeatures[] = $originalFeature;
-        }
         foreach ($department->getFeatures() as $feature)
         {
             foreach ($originalFeatures as $key => $originalFeature)
@@ -66,6 +63,7 @@ class DepartmentManager extends Manager
         }
         foreach ($originalFeatures as $originalFeature) {
             $department->removeFeature($originalFeature);
+            $em->remove($originalFeature);
         }
     }
 

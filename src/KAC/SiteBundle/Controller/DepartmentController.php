@@ -114,7 +114,13 @@ class DepartmentController extends Controller
         {
             throw new NotFoundHttpException("Department not found");
         }
-        $originalDepartment = $department;
+
+        // Clone features
+        $originalFeatures = array();
+        foreach($department->getFeatures() as $feature)
+        {
+            $originalFeatures[] = $feature;
+        }
 
         $form = $this->createForm($formClass, $department);
 
@@ -128,7 +134,7 @@ class DepartmentController extends Controller
                 $manager->updateDepartmentPath($department);
 
                 // Check the object links
-                $manager->checkObjectLinks($originalDepartment, $department);
+                $manager->checkObjectLinks($originalFeatures, $department);
 
                 // Update the object links
                 $manager->updateObjectLinks($department);
