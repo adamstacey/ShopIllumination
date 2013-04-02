@@ -42,21 +42,21 @@ class DepartmentFeatureType extends AbstractType
         $builder->add('displayOnFilter', 'checkbox', array(
             'required'  => false,
             'attr' => array(
-                'containerClass' => 'tac',
+                'data-container-class' => 'tac',
             ),
         ));
 
         $builder->add('displayOnListing', 'checkbox', array(
             'required'  => false,
             'attr' => array(
-                'containerClass' => 'tac',
+                'data-container-class' => 'tac',
             ),
         ));
 
         $builder->add('displayOnProduct', 'checkbox', array(
             'required'  => false,
             'attr' => array(
-                'containerClass' => 'tac',
+                'data-container-class' => 'tac',
             ),
         ));
 

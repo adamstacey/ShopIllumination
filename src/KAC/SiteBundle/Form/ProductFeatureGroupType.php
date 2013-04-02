@@ -35,7 +35,7 @@ class ProductFeatureGroupType extends AbstractType
             'label' => 'Active',
             'attr' => array(
                 'help' => 'Is the feature group active?',
-                'containerClass' => 'tac',
+                'data-container-class' => 'tac',
             ),
             'data' => true,
         ));
@@ -45,7 +45,7 @@ class ProductFeatureGroupType extends AbstractType
             'label' => 'Filter',
             'attr' => array(
                 'help' => 'Can you filter by the feature group?',
-                'containerClass' => 'tac',
+                'data-container-class' => 'tac',
             ),
             'data' => true,
         ));

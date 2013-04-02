@@ -15,14 +15,14 @@ class DepartmentDescriptionOverviewType extends AbstractType
             'label' => 'Name',
             'attr' => array(
                 'class' => 'fill',
-                'help' => 'Enter the name of the department.',
+                'data-help' => 'Enter the name of the department.',
             ),
         ));
         $builder->add('description', 'ckeditor', array(
             'label' =>'Description',
             'attr' => array(
                 'class' => 'fill',
-                'help' => 'Enter a detailed description about the department. Include a brief description of the range of products that are contained within the department and the key selling points of the range.',
+                'data-help' => 'Enter a detailed description about the department. Include a brief description of the range of products that are contained within the department and the key selling points of the range.',
             ),
         ));
     }

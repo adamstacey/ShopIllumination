@@ -27,7 +27,9 @@ class NewProductType extends AbstractType
                     'label' => 'Brand',
                     'attr' => array(
                         'class' => 'fill no-uniform select-brand',
-                        'help' => 'Select the department you want this department to fall under.',
+                        'data-help' => 'Select the department you want this department to fall under.',
+                        'data-placeholder' => '- Select a Brand -',
+                        'placeholder' => '- Select a Brand -',
                     ),
                     'required' => true,
                     'empty_value' => '- Select a Brand -',
@@ -40,70 +42,70 @@ class NewProductType extends AbstractType
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
                     'required' => true,
                     'attr' => array(
-                        'help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
+                        'data-help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
                     ),
                 ));
                 $builder->add('availableForPurchase', 'checkbox', array(
                     'required' => false,
                     'label' => 'Available',
                     'attr' => array(
-                        'help' => 'Is the product available to purchase?',
+                        'data-help' => 'Is the product available to purchase?',
                     ),
                 ));
                 $builder->add('featureComparison', 'checkbox', array(
                     'required' => false,
                     'label' => 'Feature Comparison',
                     'attr' => array(
-                        'help' => 'Include in feature comparison?',
+                        'data-help' => 'Include in feature comparison?',
                     ),
                 ));
                 $builder->add('downloadable', 'checkbox', array(
                     'required' => false,
                     'label' => 'Downloadable',
                     'attr' => array(
-                        'help' => 'Is the product a download?',
+                        'data-help' => 'Is the product a download?',
                     ),
                 ));
                 $builder->add('specialOffer', 'checkbox', array(
                     'required' => false,
                     'label' => 'Special Offer',
                     'attr' => array(
-                        'help' => 'Is the product a special offer?',
+                        'data-help' => 'Is the product a special offer?',
                     ),
                 ));
                 $builder->add('recommended', 'checkbox', array(
                     'required' => false,
                     'label' => 'Recommended',
                     'attr' => array(
-                        'help' => 'Do you want to recommend?',
+                        'data-help' => 'Do you want to recommend?',
                     ),
                 ));
                 $builder->add('accessory', 'checkbox', array(
                     'required' => false,
                     'label' => 'Accessory',
                     'attr' => array(
-                        'help' => 'Is the product an accessory?',
+                        'data-help' => 'Is the product an accessory?',
                     ),
                 ));
                 $builder->add('new', 'checkbox', array(
                     'required' => false,
                     'label' => 'New',
                     'attr' => array(
-                        'help' => 'Is the product new?',
+                        'data-help' => 'Is the product new?',
                     ),
                 ));
                 $builder->add('hidePrice', 'checkbox', array(
                     'required' => false,
                     'label' => 'Hide Price',
                     'attr' => array(
-                        'help' => 'Hide price for this product?',
+                        'data-help' => 'Hide price for this product?',
                     ),
                 ));
                 $builder->add('showPriceOutOfHours', 'checkbox', array(
                     'required' => false,
                     'label' => 'Show Price Out Of Hours',
                     'attr' => array(
-                        'help' => 'Show price out of hours?',
+                        'data-help' => 'Show price out of hours?',
                     ),
                 ));
 

@@ -33,7 +33,7 @@ class NewDepartmentType extends AbstractType
                     },
                     'attr' => array(
                         'class' => 'select-department fill no-uniform',
-                        'help' => 'Select the department you want this department to fall under.',
+                        'data-help' => 'Select the department you want this department to fall under.',
                     ),
                 ));
 
@@ -41,7 +41,7 @@ class NewDepartmentType extends AbstractType
                     'label' => 'Status',
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),
                     'attr' => array(
-                        'help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
+                        'data-help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
                     ),
                 ));
 
@@ -63,7 +63,7 @@ class NewDepartmentType extends AbstractType
                     'label' => 'Delivery Band',
                     'choices' => array(0.0000 => '- Not Set -', 1.0000 => 'Delivery Band 1', 2.0000 => 'Delivery Band 2', 3.0000 => 'Delivery Band 3', 4.0000 => 'Delivery Band 4', 5.0000 => 'Delivery Band 5', 6.0000 => 'Delivery Band 6'),
                     'attr' => array(
-                        'help' => 'Select the delivery band for the department. Leave it as "Not Set" if you want the delivery band to be inherited from the department this department falls under.',
+                        'data-help' => 'Select the delivery band for the department. Leave it as "Not Set" if you want the delivery band to be inherited from the department this department falls under.',
                     ),
                 ));
                 break;
