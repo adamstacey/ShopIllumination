@@ -114,6 +114,7 @@ class DepartmentController extends Controller
         {
             throw new NotFoundHttpException("Department not found");
         }
+        $originalDepartment = $department;
 
         $form = $this->createForm($formClass, $department);
 
@@ -122,8 +123,12 @@ class DepartmentController extends Controller
             $form->bind($request);
             if ($form->isValid())
             {
+
                 // Update the department path
                 $manager->updateDepartmentPath($department);
+
+                // Check the object links
+                $manager->checkObjectLinks($originalDepartment, $department);
 
                 // Update the object links
                 $manager->updateObjectLinks($department);
