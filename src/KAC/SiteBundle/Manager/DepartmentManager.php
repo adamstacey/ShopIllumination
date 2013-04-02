@@ -5,6 +5,8 @@ use KAC\SiteBundle\Entity\Department\Description as DepartmentDescription;
 use KAC\SiteBundle\Entity\Department\Routing as DepartmentRouting;
 use KAC\SiteBundle\Entity\Department;
 use KAC\SiteBundle\Entity\DepartmentToFeature;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Form\Form;
 
 class DepartmentManager extends Manager
 {
@@ -42,6 +44,29 @@ class DepartmentManager extends Manager
 
         // Update the department path
         $department->setDepartmentPath($departmentPath);
+    }
+
+    public function checkObjectLinks(Department $originalDepartment, Department $department)
+    {
+        // Check the features
+        $originalFeatures = array();
+        foreach ($originalDepartment->getFeatures() as $originalFeature)
+        {
+            $originalFeatures[] = $originalFeature;
+        }
+        foreach ($department->getFeatures() as $feature)
+        {
+            foreach ($originalFeatures as $key => $originalFeature)
+            {
+                if ($originalFeature->getId() === $feature->getId())
+                {
+                    unset($originalFeatures[$key]);
+                }
+            }
+        }
+        foreach ($originalFeatures as $originalFeature) {
+            $department->removeFeature($originalFeature);
+        }
     }
 
     public function updateObjectLinks(Department $department)
