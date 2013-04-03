@@ -19,7 +19,7 @@ avalanche_imagine:
             options: { size: [300, 86], quality: 100 }
         gallery_large:
             type:   resize
-            options: { size: [978, 280], quality: 100 }
+            options: { size: [978, 400], quality: 100 }
         # Logos
         product_thumbnail:
             type:   thumbnail
