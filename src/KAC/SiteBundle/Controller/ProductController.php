@@ -81,7 +81,7 @@ class ProductController extends Controller {
                         ->execute();
 
                     // Check for common features
-                    if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnListing())
+                    if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
                     {
                         if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
                         {
