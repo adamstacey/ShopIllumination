@@ -24108,6 +24108,7 @@ table.data-table .price .currency-tax {
 
 /* line 102, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .logo {
+  height: 50px;
   margin: 0 10px 10px 0;
   -webkit-box-shadow: 0 0 10px 0 #c5d2d6;
   -webkit-box-shadow: 0 0 10px 0 #c5d2d6;
@@ -24117,7 +24118,7 @@ table.data-table .price .currency-tax {
   box-shadow: 0 0 10px 0 #c5d2d6;
 }
 
-/* line 108, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 109, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .summary {
   font-size: 13px;
   font-size: 1.3rem;
@@ -24125,7 +24126,7 @@ table.data-table .price .currency-tax {
   line-height: 150%;
 }
 
-/* line 114, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 115, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .energy-rating {
   background: #569E6C;
   border-left: 5px solid #0E7F30;
@@ -24143,27 +24144,27 @@ table.data-table .price .currency-tax {
   line-height: 100%;
 }
 
-/* line 131, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 132, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-back-button {
   position: absolute;
   top: 0px;
   left: 0px;
 }
 
-/* line 137, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 138, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information {
   float: left;
   margin: 0 15px 0 0;
   padding: 5px 0 0 0;
 }
 
-/* line 143, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 144, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information ul {
   margin: 0 0 0 10px;
   padding: 0;
 }
 
-/* line 148, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 149, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information ul li {
   list-style: none;
   margin: 0;
@@ -24173,28 +24174,28 @@ table.data-table .price .currency-tax {
   color: #000;
 }
 
-/* line 157, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 158, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information ul li.bullet {
   background: url(/bundles/kacshop/images/icons/small-bullet.png) top left no-repeat;
 }
 
-/* line 161, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 162, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information ul li.green-tick {
   background: url(/bundles/kacshop/images/icons/small-green-tick.png) top left no-repeat;
 }
 
-/* line 165, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 166, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information ul li.red-cross {
   background: url(/bundles/kacshop/images/icons/small-red-cross.png) top left no-repeat;
 }
 
-/* line 169, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 170, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-options {
   float: right;
   padding: 5px 0 0 0;
 }
 
-/* line 174, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 175, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product p, .product-description p {
   line-height: 120%;
   padding: 0px;
@@ -24202,65 +24203,65 @@ table.data-table .price .currency-tax {
   font-size: 10px;
 }
 
-/* line 181, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 182, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product p.product-code, .product p.product-code a, p.product-code, .product p.colour, .product p.colour a, p.colour {
   font-size: 11px;
   color: #4EC0E3 !important;
 }
 
-/* line 186, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 187, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 #product-price .product-code {
   font-size: 18px !important;
 }
 
-/* line 190, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 191, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-description li {
   color: #676767;
   line-height: 100%;
 }
 
-/* line 195, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 196, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .buy-now {
   text-align: right;
 }
 
-/* line 199, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 200, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-description ul {
   margin-bottom: 10px;
 }
 
-/* line 203, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 204, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-was-price, .product-was-price {
   color: #FF2300 !important;
   font-size: 11px !important;
   padding: 0 !important;
 }
 
-/* line 209, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 210, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-tax, .product-tax {
   color: #FF2300 !important;
   font-size: 9px !important;
   padding: 0 !important;
 }
 
-/* line 215, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 216, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .membership-card-price, .membership-card-price {
   color: #000 !important;
   font-size: 11px !important;
   padding: 0 0 10px 0 !important;
 }
 
-/* line 221, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 222, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-was-price span, .product-was-price span {
   text-decoration: line-through !important;
 }
 
-/* line 225, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 226, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-tax, .product-tax {
   padding: 0 0 5px 0 !important;
 }
 
-/* line 229, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 230, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-price, .product .product-price a, .product-price, .product-price a {
   font-size: 24px !important;
   color: #FF2300 !important;
@@ -24269,14 +24270,14 @@ table.data-table .price .currency-tax {
   padding: 0 !important;
 }
 
-/* line 237, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 238, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product input.quantity {
   width: 40px;
   margin-top: 2px;
   text-align: center;
 }
 
-/* line 243, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 244, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .features-link {
   padding: 5px 10px;
   line-height: 100%;
@@ -24310,13 +24311,13 @@ table.data-table .price .currency-tax {
   border: 1px solid #454D52;
 }
 
-/* line 268, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 269, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .features {
   padding: 0 0 10px 0;
   display: none;
 }
 
-/* line 273, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 274, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dt {
   float: left;
   width: 99px;
@@ -24330,17 +24331,17 @@ table.data-table .price .currency-tax {
   text-align: right;
 }
 
-/* line 286, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 287, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dt.even {
   background: #EDEDED;
 }
 
-/* line 290, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 291, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dt.odd {
   background: #D5D5D5;
 }
 
-/* line 294, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 295, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dd {
   float: left;
   line-height: 100%;
@@ -24353,17 +24354,17 @@ table.data-table .price .currency-tax {
   border-bottom: 1px solid #D5D5D5;
 }
 
-/* line 306, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 307, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-compare {
   margin: 10px 0;
 }
 
-/* line 310, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 311, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-short-description {
   padding: 10px 0 0 0;
 }
 
-/* line 314, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 315, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-short-description p {
   padding: 0;
   margin: 0 !important;
@@ -24374,7 +24375,7 @@ table.data-table .price .currency-tax {
   overflow: hidden;
 }
 
-/* line 324, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 325, ../var/www/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-header {
   padding-left: 20px;
 }
