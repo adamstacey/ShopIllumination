@@ -7,20 +7,18 @@
         {% block product_block %}
             {% block department_breadcrumb %}
                 <div class="widget-group clearfix mbm">
-                    {% if department.parents|length > 0 %}
-                        <div class="widget widget-7-of-8">
-                            <ul class="breadcrumbs" itemprop="breadcrumb">
-                                <li>{{ department.description.header }}</li>
-                                {% for parent in department.parents %}
-                                    {% if parent.parent is not null %}
-                                        <li><a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
+                    <div class="widget widget-7-of-8">
+                        <ul class="breadcrumbs" itemprop="breadcrumb">
+                            {% for department in departments %}
+                                {#{% if department.parent is not null %}#}
+                                    <li><a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a></li>
+                                {#{% endif %}#}
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             {% endblock %}
+
             {% block product_info %}
                 <div class="widget-group clearfix mbl">
                     <div class="widget widget-1-of-1">

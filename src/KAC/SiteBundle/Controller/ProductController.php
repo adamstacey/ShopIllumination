@@ -58,7 +58,6 @@ class ProductController extends Controller {
             // Calculate price range
             foreach ($variant->getPrices() as $price) {
                 if ($lowestPrice === null || $price->getListPrice() < $lowestPrice->getListPrice()) {
-                    $lowestPrice = $price;
                 }
                 if ($highestPrice === null || $price->getListPrice() > $highestPrice->getListPrice()) {
                     $highestPrice = $price;
@@ -128,10 +127,13 @@ class ProductController extends Controller {
 
         // Find template from the departments
         $template = 'default';
+        $departments = array();
         if($product->getDepartment()) {
             // Check the department tree
             $currDepartment = $product->getDepartment()->getDepartment();
             do {
+                $departments[] = $currDepartment;
+
                 if($currDepartment->getTemplate() !== '' && $currDepartment->getTemplate() !== null) {
                     $template = $product->getDepartment()->getDepartment()->getTemplate();
                 }
@@ -142,6 +144,7 @@ class ProductController extends Controller {
 
         return $this->render('KACSiteBundle:Product:view\\'.$template.'.html.twig', array(
             'product' => $product,
+            'departments' => $departments,
             'gallery_images' => $galleryImages,
             'thumbnail_image' => $thumbnailImage,
             'lowest_price' => $lowestPrice,
