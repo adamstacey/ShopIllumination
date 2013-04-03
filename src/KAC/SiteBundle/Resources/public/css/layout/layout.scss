@@ -1,17 +1,11 @@
 $containerWidth: 980px;
 
 html {
-    width: 100%;
-    height: 100%;
-
     background: $colourWhite;
     font-size: 62.5%;
 }
 
 body {
-    width: 100%;
-    height: 100%;
-
     background: $backgroundColour;
     font-family: $primaryFontFamily;
     @include fontSize($fontSizeMedium);
@@ -53,27 +47,9 @@ html.modal body > section {
     min-height: 300px;
     padding: $spacingExtraLarge;
 
+    position: relative;
     background: $colourGreyLight;
     border-left: 1px solid $colourGrey;
     border-right: 1px solid $colourGrey;
     @include boxGlow($colourBlack, 5px, 0, 0.7);
-}
-
-.loading-container {
-    width: 100%;
-    height: 100%;
-
-    display: table;
-}
-.loading {
-    width: 100%;
-    height: 100%;
-
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    line-height: 150%;
-    @include fontSize($fontSizeExtraLarge);
-    color: $textColour;
-    background: $colourWhite;
 }
