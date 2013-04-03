@@ -19,31 +19,24 @@ $(document).ready(function() {
         var $url = $(this).attr("href");
         var $title = $(this).attr("title");
         var $dialogObject = $('<div class="dialog-container"></div>');
+        var $loadingObject = $(".loading-container").clone();
+        $loadingObject.removeAttr("style");
+        $loadingObject.appendTo($dialogObject);
         var $iframeObject = $("<iframe />");
         $iframeObject.attr({"src": $url, "width": "100%", "height": "100%"});
-        $iframeObject.load(function() {
-
-        });
         $iframeObject.appendTo($dialogObject);
-        $dialogObject.appendTo("body");
+        $iframeObject.load(function() {
+            $dialogObject.find(".loading-container").fadeOut(500);
+        });
         $dialogObject.dialog({
             close: function(event, ui) {
                 $dialogObject.remove();
             },
             modal: true,
             title: $title,
-            width: 980,
-            height: ($(window).height() * 0.8),
-            buttons: {
-                Close: function() {
-                    $(this).dialog("close");
-                }
-            }
+            width: ($(window).width() * 0.8),
+            height: ($(window).height() * 0.9)
         });
         return false;
     });
-});
-
-$(window).load(function() {
-    $(".loading-container").slideUp();
 });
