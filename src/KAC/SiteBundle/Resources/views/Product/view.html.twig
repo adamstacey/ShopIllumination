@@ -67,7 +67,11 @@
                                                         <div class="price pbm">
                                                             <span class="currency-tax">(inc. VAT)</span>
                                                         </div>
-                                                        <a class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465" href="#buynow">Buy Now</a>
+                                                        {% if product.variants | length > 1 %}
+                                                            <a class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465" href="#buynow">Buy Now</a>
+                                                        {% else %}
+                                                            {% include "KACSiteBundle:Product:Includes/buyButtons.html.twig" with {'product': product, 'variant': product.variants[0]} %}
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,56 +132,80 @@
                 </div>
             {% endblock %}
             {% block product_variants%}
-                {#{% if product.variants|length > 1 %}#}
-                <div class="widget-group clearfix">
-                    <div class="widget widget-1-of-1">
-                        <div class="ui-widget">
-                            <header class="ui-widget-header ui-corner-top">
-                                <a name="buynow"></a>
-                                <h2>Variations</h2>
-                            </header>
-                            <section class="ui-widget-content ui-corner-bottom clearfix">
-                                <table class="data-table">
-                                    <thead>
-                                    <tr>
-                                        <th colspan="1">Product</th>
-                                        <th colspan="1">Features</th>
-                                        <th colspan="2">Price</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for variant in product.variants %}
-                                        <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
-                                            <td>{{ variant.description|length <= 0 ? product.description.header : variant.description.header }}</td>
-                                            <td>
-                                                <ul>
-                                                    {% for group, feature in variant_features[variant.id] %}
-                                                        {% if feature == 'Yes' %}
-                                                            {% set className = 'green-tick' %}
-                                                        {% elseif feature.feature.name == 'No' %}
-                                                            {% set className = 'red-cross' %}
-                                                        {% else %}
-                                                            {% set className = 'bullet' %}
-                                                        {% endif %}
-                                                        <li class="{{ className }}">{{ group }}: <strong>{{ feature }}</strong></li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </td>
-                                            <td width="1" class="nowrap price">{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}</td>
-                                            <td width="1" class="nowrap">
-                                                <button data-product-id="{{ product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}" class="button button-small button-green uppercase action-add-to-basket">Add to Basket</button>
-                                                <input type="hidden" value="" id="selected-options-{{ product.id }}" />
-                                            </td>
+                {% if product.variants|length > 1 %}
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <a name="buynow"></a>
+                                    <h2>Variations</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-bottom clearfix">
+                                    <table class="data-table">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="1">Product</th>
+                                            <th colspan="1">Features</th>
+                                            <th colspan="2">Price</th>
                                         </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </section>
+                                        </thead>
+                                        <tbody>
+                                        {% for variant in product.variants %}
+                                            <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                <td>{{ variant.description|length <= 0 ? product.description.header : variant.description.header }}</td>
+                                                <td>
+                                                    <ul>
+                                                        {% for group, feature in variant_features[variant.id] %}
+                                                            {% if feature == 'Yes' %}
+                                                                {% set className = 'green-tick' %}
+                                                            {% elseif feature.feature.name == 'No' %}
+                                                                {% set className = 'red-cross' %}
+                                                            {% else %}
+                                                                {% set className = 'bullet' %}
+                                                            {% endif %}
+                                                            <li class="{{ className }}">{{ group }}: <strong>{{ feature }}</strong></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </td>
+                                                <td width="1" class="nowrap price">{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}</td>
+                                                <td width="1" class="nowrap">
+                                                    {% include "KACSiteBundle:Product:Includes/buyButtons.html.twig" with {'product': product, 'variant': variant} %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {#{% endif %}#}
+                {% endif %}
             {% endblock %}
         {% endblock %}
     </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            {# Increase quantity #}
+            $(".action-increase-quantity").live('click', function() {
+                var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+                var $newQuantity = parseInt($quantityObject.val()) + 1;
+                $quantityObject.val($newQuantity);
+            });
+
+            {# Decrease quantity #}
+            $(".action-decrease-quantity").live('click', function() {
+                var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+                var $newQuantity = parseInt($quantityObject.val()) - 1;
+                if ($newQuantity < 1)
+                {
+                    $newQuantity = 1;
+                }
+                $quantityObject.val($newQuantity);
+            });
+        });
+    </script>
 {% endblock %}
