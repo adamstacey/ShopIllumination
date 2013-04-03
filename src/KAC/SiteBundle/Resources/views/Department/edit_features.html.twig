@@ -10,65 +10,71 @@
 {% endblock %}
 
 {% block body %}
-    <div class="widget-group clearfix">
-        <div class="widget widget-2-of-7">
-            {% include 'KACSiteBundle:Department:editLeftMenu.html.twig' %}
-        </div>
-        <div class="widget widget-5-of-7">
-            <section>
-                <div class="widget-group clearfix">
-                    <div class="widget widget-1-of-1">
-                        <div class="ui-widget">
-                            <header class="ui-widget-header ui-corner-top">
-                                <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
-                                <h2>Feature Templates</h2>
-                            </header>
-                            <section class="ui-widget-content ui-corner-bottom">
-                                <form class="form" method="post" novalidate="novalidate" action="{{ path('departments_edit_features', {'departmentId': department.id}) }}" {{ form_enctype(form) }}>
-                                    <div class="message message-help">
-                                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
-                                        <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
-                                    </div>
-                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                                    <table class="form-table sortable mbm" id="featureList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
-                                        <thead>
-                                        <tr>
-                                            <th>&nbsp;</th>
-                                            <th>&nbsp;</th>
-                                            <th title="Select a feature group." class="tal">Group</th>
-                                            <th title="Select the default feature a product will automatically be assigned with. Leave this as 'No Default Feature' if you want to set the feature." class="tal">Default Feature</th>
-                                            <th title="Do you want this feature to show up on the product filter in the listings?">Filter?</th>
-                                            <th title="Do you want the feature to display on the bullets of a product on the product listings?">Listing?</th>
-                                            <th title="Do you want the feature to display in the features section on the product page?">Product?</th>
-                                            <th>&nbsp;</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr class="no-data ui-helper-hidden">
-                                            <td colspan="8">
-                                                <div class="message message-help mas">
-                                                    <span class="ui-button-icon-primary ui-icon icon-yellow icon-383"></span>
-                                                    <p>There are no features currently setup. Add a feature using the "Add Feature" button below.</p>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        {{ form_rest(form) }}
-                                        </tbody>
-                                    </table>
-                                    <div class="clearfix">
-                                        <a href="{{ path('products_new_feature_group', {'modal': true, 'departmentId': department.id}) }}" title="Add Feature Group" class="actionLoadPageDialog button button-small button mrm fl">Add Feature Group</a>
-                                        <a href="#" class="button button-small button mrm fl">Add Feature</a>
-                                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
-                                        <button type="button" data-table-object="featureList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
-                                    </div>
-                                </form>
-                            </section>
-                        </div>
-                    </div>
+    {% if app.request.query.get('modal') != true %}
+        <section>
+            <div class="widget-group clearfix">
+                <div class="widget widget-2-of-7">
+                    {% include 'KACSiteBundle:Department:editLeftMenu.html.twig' %}
                 </div>
-            </section>
+                <div class="widget widget-5-of-7">
+    {% endif %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                        <h2>Feature Templates</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <form class="form" method="post" novalidate="novalidate" action="{{ path('departments_edit_features', {'departmentId': department.id}) }}" {{ form_enctype(form) }}>
+                            <div class="message message-help">
+                                <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
+                                <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
+                            </div>
+                            {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                            <table class="form-table sortable mbm" id="featureList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
+                                <thead>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                    <th title="Select a feature group." class="tal">Group</th>
+                                    <th title="Select the default feature a product will automatically be assigned with. Leave this as 'No Default Feature' if you want to set the feature." class="tal">Default Feature</th>
+                                    <th title="Do you want this feature to show up on the product filter in the listings?">Filter?</th>
+                                    <th title="Do you want the feature to display on the bullets of a product on the product listings?">Listing?</th>
+                                    <th title="Do you want the feature to display in the features section on the product page?">Product?</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="no-data ui-helper-hidden">
+                                    <td colspan="8">
+                                        <div class="message message-help mas">
+                                            <span class="ui-button-icon-primary ui-icon icon-yellow icon-383"></span>
+                                            <p>There are no features currently setup. Add a feature using the "Add Feature" button below.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{ form_rest(form) }}
+                                </tbody>
+                            </table>
+                            <div class="clearfix">
+                                <a href="{{ path('products_new_feature_group', {'modal': true, 'departmentId': department.id}) }}" title="Add Feature Group" class="actionLoadPageDialog button button-small button mrm fl">Add Feature Group</a>
+                                <a href="#" class="button button-small button mrm fl">Add Feature</a>
+                                <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                <button type="button" data-table-object="featureList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+    {% if app.request.query.get('modal') != true %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
