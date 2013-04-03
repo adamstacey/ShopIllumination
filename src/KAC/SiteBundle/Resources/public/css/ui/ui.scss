@@ -1068,7 +1068,7 @@ body .ui-tooltip {
 }
 
 .ui-widget-overlay {
-    @include alphaBackground($colourWhite, 0.8);
+    @include alphaBackground($colourBlack, 0.8);
 }
 
 .ui-widget-shadow {
