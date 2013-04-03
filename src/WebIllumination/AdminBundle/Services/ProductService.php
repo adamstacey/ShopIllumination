@@ -583,8 +583,10 @@ class ProductService {
             $variantDescriptionObject = $variantObject->getDescription();
         }
 
+        $product = $this->getProduct($variantObject->getProduct()->getId());
+
         $variant['id'] = $variantObject->getId();
-        $variant['productId'] = $variantObject->getId();
+        $variant['productId'] = $variantObject->getProduct()->getId();
         $variant['productGroupId'] = $variantObject->getProduct()->getId();
         $variant['availableForPurchase'] = $variantObject->getProduct()->getAvailableForPurchase();
         $variant['status'] = $variantObject->getStatus();
@@ -655,11 +657,11 @@ class ProductService {
             $bestMembershipCardDiscountAvailable = $this->membershipCardDiscount;
             if ($variant['membershipCardDiscountAvailable'] > 0)
             {
-                if ($variant['maximumMembershipCardDiscount'] > 0)
+                if ($product['maximumMembershipCardDiscount'] > 0)
                 {
-                    $bestMembershipCardDiscountAvailable = $variant['maximumMembershipCardDiscount'];
+                    $bestMembershipCardDiscountAvailable = $product['maximumMembershipCardDiscount'];
                 } else {
-                    foreach ($variant['departments'] as $department)
+                    foreach ($product['departments'] as $department)
                     {
                         if ($department['membershipCardDiscountAvailable'] > 0)
                         {
@@ -672,11 +674,11 @@ class ProductService {
                             break;
                         }
                     }
-                    if ($variant['brand']['membershipCardDiscountAvailable'] > 0)
+                    if ($product['brand']['membershipCardDiscountAvailable'] > 0)
                     {
-                        if ($variant['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
+                        if ($product['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
                         {
-                            $bestMembershipCardDiscountAvailable = $variant['brand']['maximumMembershipCardDiscount'];
+                            $bestMembershipCardDiscountAvailable = $product['brand']['maximumMembershipCardDiscount'];
                         }
                     } else {
                         $membershipCardDiscountAvailable = false;

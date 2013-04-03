@@ -67,7 +67,7 @@
                                                         <div class="price pbm">
                                                             <span class="currency-tax">(inc. VAT)</span>
                                                         </div>
-                                                        <button class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</button>
+                                                        <a class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465" href="#buynow">Buy Now</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -133,6 +133,7 @@
                     <div class="widget widget-1-of-1">
                         <div class="ui-widget">
                             <header class="ui-widget-header ui-corner-top">
+                                <a name="buynow"></a>
                                 <h2>Variations</h2>
                             </header>
                             <section class="ui-widget-content ui-corner-bottom clearfix">
@@ -163,7 +164,10 @@
                                                 </ul>
                                             </td>
                                             <td width="1" class="nowrap price">{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}</td>
-                                            <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                            <td width="1" class="nowrap">
+                                                <button data-product-id="{{ product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}" class="button button-small button-green uppercase action-add-to-basket">Add to Basket</button>
+                                                <input type="hidden" value="" id="selected-options-{{ product.id }}" />
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
