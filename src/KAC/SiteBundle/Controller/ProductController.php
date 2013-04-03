@@ -105,11 +105,23 @@ class ProductController extends Controller {
     {
         $em = $this->getDoctrine()->getManager();
 
-        //$featureGroup = new FeatureGroup();
+        // Setup the department and product objects
+        $department = null;
+        $product = null;
 
-        $department = $em->getRepository("KAC\SiteBundle\Entity\Department")->find($request->query->get('departmentId'));
+        // Check for a department
+        if ($request->query->has('departmentId'))
+        {
+            $department = $em->getRepository("KAC\SiteBundle\Entity\Department")->find($request->query->get('departmentId'));
+        }
 
-        $form = $this->createForm(new ProductFeatureGroupsType($department));
+        // Check for a product
+        if ($request->query->has('productId'))
+        {
+            $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($request->query->get('productId'));
+        }
+
+        $form = $this->createForm(new ProductFeatureGroupsType($department, $product));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -118,34 +130,40 @@ class ProductController extends Controller {
                 // Get the data
                 $featureGroups = $form->get('features')->getData();
 
-                // Update the database
+                // Check if new feature groups need to be applied to a department
+                $department = $form->get('department')->getData();
+
+                // Check if new feature groups need to be applied to a product
+                $product = $form->get('department')->getData();
+
+                // Add the new feature groups
                 foreach ($featureGroups as $featureGroup)
                 {
+                    // Update the database
                     $em->persist($featureGroup);
                     $em->flush();
+
+                    // Check if we need to assign the features to a department
+                    if ($department)
+                    {
+                        // Get the other feature groups
+                        $departmentToFeatures = $em->getRepository("KAC\SiteBundle\Entity\DepartmentToFeature")->findBy(array('department' => $department));
+
+                        // Add the department to feature
+                        $departmentToFeature = new DepartmentToFeature();
+                        $departmentToFeature->setDepartment($department);
+                        $departmentToFeature->setFeatureGroup($featureGroup);
+                        $departmentToFeature->setDisplayOnFilter($featureGroup->getFilter());
+                        $departmentToFeature->setDisplayOnListing(true);
+                        $departmentToFeature->setDisplayOnProduct(true);
+                        $departmentToFeature->setDisplayOrder(sizeof($departmentToFeatures) + 1);
+                        $em->persist($departmentToFeature);
+                        $em->flush();
+                    }
                 }
 
-                /*// Check if new feature group needs to be applied to a department
-                $department = $form->get('department')->getData();
-                if ($department)
-                {
-                    // Get the other feature groups
-                    $departments = $em->getRepository("KAC\SiteBundle\Entity\DepartmentToFeature")->findBy(array('department' => $department));
-
-                    // Add the department to feature
-                    $departmentToFeature = new DepartmentToFeature();
-                    $departmentToFeature->setDepartment($department);
-                    $departmentToFeature->setFeatureGroup($featureGroup);
-                    $departmentToFeature->setDisplayOnFilter($featureGroup->getFilter());
-                    $departmentToFeature->setDisplayOnListing(true);
-                    $departmentToFeature->setDisplayOnProduct(true);
-                    $departmentToFeature->setDisplayOrder(sizeof($departments) + 1);
-                    $em->persist($departmentToFeature);
-                    $em->flush();
-                }*/
-
                 // Notify user
-                $this->get('session')->setFlash('notice', 'The new feature group "'.$featureGroup->getName().'" has been added.');
+                $this->get('session')->setFlash('notice', sizeof($featureGroups).' new feature group'.(sizeof($featureGroups) == 1?' has':'s have').' been added.');
 
                 // Check if request is modal
                 if ($request->query->get('modal') == true)
