@@ -24,15 +24,15 @@
         {% endif %}
     </head>
     <body itemscope itemtype="http://schema.org/WebPage">
-        {% include 'KACSiteBundle:Includes:loading.html.twig' %}
         {% if app.request.query.get('modal') != true %}
             <div class="document clearfix">
                 {% include 'KACSiteBundle:Includes:header.html.twig' %}
                 <section class="container">
                     <div class="content">
-                       {% block slider %}{% endblock %}
+                        {% block slider %}{% endblock %}
                         {% block header %}{% endblock %}
         {% endif %}
+            {% include 'KACSiteBundle:Includes:loading.html.twig' %}
             {% block body %}{% endblock %}
         {% if app.request.query.get('modal') != true %}
                     </div>
