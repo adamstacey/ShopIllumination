@@ -133,8 +133,8 @@ class DepartmentController extends Controller
                 // Update the department path
                 $manager->updateDepartmentPath($department);
 
-                // Check the object links
-                $manager->checkObjectLinks($originalFeatures, $department);
+                // Update the features
+                $manager->updateFeatures($originalFeatures, $department);
 
                 // Update the object links
                 $manager->updateObjectLinks($department);
