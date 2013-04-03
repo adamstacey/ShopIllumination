@@ -40,7 +40,7 @@ class AppKernel extends Kernel
             new KAC\SiteBundle\KACSiteBundle(),
             new KAC\AdminBundle\KACAdminBundle(),
             new KAC\UserBundle\KACUserBundle(),
-            new Trsteel\CkeditorBundle\TrsteelCkeditorBundle(),
+            new Trsteel\CkeditorBundle\TrsteelCkeditorBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
