@@ -1,0 +1,16 @@
+<div id="trustpilot-bar" class="container">
+    <div class="widget-group clearfix mbm">
+        <div class="widget widget-1-of-4">
+            <h1>{{ result.TrustScore.Human }}</h1>
+            <img src="{{ result.TrustScore.StarsImageUrls.large }}" alt="stars"/>
+            <p class="review-count">{{ result.ReviewCount.Total }} customers has written a review on Trustpilot</p>
+        </div>
+        <div class="widget widget-3-of-4">
+            {% for review in result.Reviews | slice(0,1) %}
+                <h4>Reviews</h4>
+                <p><span class="review-user">{{ review.User.Name }}</span> ({{ review.TrustScore.Human }}) : {{ review.Title }}</p>
+                <a href="{{ review.Url }}">Read More</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

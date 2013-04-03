@@ -1,0 +1,209 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}{{ product.description.pageTitle }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <section class="product">
+        {% block product_block %}
+            {% block department_breadcrumb %}
+                <div class="widget-group clearfix mbm">
+                    <div class="widget widget-7-of-8">
+                        <ul class="breadcrumbs" itemprop="breadcrumb">
+                            {% for department in departments %}
+                                {#{% if department.parent is not null %}#}
+                                    <li><a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a></li>
+                                {#{% endif %}#}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block product_info %}
+                <div class="widget-group clearfix mbl">
+                    <div class="widget widget-1-of-1">
+                        <div class="ui-widget">
+                            <section class="ui-widget-content ui-corner-all clearfix">
+                                <div class="slider-wrapper {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
+                                    <div class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
+                                        {% for image in gallery_images %}
+                                            <img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />
+                                        {% endfor %}
+                                    </div>
+                                    <h1>{{ product.description.header }}</h1>
+                                </div>
+                                <div class="widget-group clearfix">
+                                    <div class="widget widget-1-of-1 border-bottom-separator pbl mbl">
+                                        <div class="widget-group clearfix">
+                                            <div class="widget widget-2-of-7">
+                                                <ul class="etalage etalage-inset">
+                                                    <li><img class="etalage_source_image" src="{{ image.publicPath | apply_filter('product_thumbnail') }}" alt="{{ product.description.header }}" /></li>
+                                                </ul>
+                                            </div>
+                                            <div class="widget widget-5-of-7 product-header">
+                                                <div class="widget-group clearfix">
+                                                    <div class="widget widget-3-of-4 pll">
+                                                        <div class="widget-group clearfix">
+                                                            <div class="widget widget-1-of-3"><img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail') }}" alt="{{ product.brand.description.name }}" /></div>
+                                                            <div class="widget widget-2-of-3 clearfix">
+                                                                <div class="review-rating-small review-rating-small-4-5 fr"></div>
+                                                                <div class="clear"></div>
+                                                                <div class="fr review-summary"><strong>4.7</strong> out of <strong>5</strong> Customer Rating</div>
+                                                                <div class="clear"></div>
+                                                                <div class="fr review-summary"><a href="#">Read Reviews</a> (7) | <a href="#">Read Questions</a> (2)</div>
+                                                            </div>
+                                                        </div>
+                                                        <p class="summary man">{{ product.description.shortDescription }}</p>
+                                                    </div>
+                                                    <div class="widget widget-1-of-4">
+                                                        <div class="price">
+                                                            <span class="currency-prefix">from only</span>
+                                                        </div>
+                                                        <div class="price">
+                                                            {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                        </div>
+                                                        <div class="price pbm">
+                                                            <span class="currency-tax">(inc. VAT)</span>
+                                                        </div>
+                                                        {% if product.variants | length > 1 %}
+                                                            <a class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465" href="#buynow">Buy Now</a>
+                                                        {% else %}
+                                                            {% include "KACSiteBundle:Product:Includes/buyButtons.html.twig" with {'product': product, 'variant': product.variants[0]} %}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="widget widget-1-of-1">
+                                        <section>
+                                            <div class="tabs">
+                                                <ul>
+                                                    <li><a href="#overview">Overview</a></li>
+                                                    <li><a href="#technicalSpecification">Technical Specification</a></li>
+                                                    <li><a href="#reviews">Reviews</a></li>
+                                                    <li><a href="#questionsAndAnswers">Questions &amp; Answers</a></li>
+                                                </ul>
+                                                <div id="overview">
+                                                    <section>
+                                                        <p class="summary">
+                                                        {{ product.description.description }}
+                                                        </p>
+                                                    </section>
+                                                </div>
+                                                <div id="technicalSpecification">
+                                                    <section>
+                                                        <table class="data-table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th colspan="2">Product Feature</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for group, feature in common_features %}
+                                                                <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                                    <td width="1" class="nowrap tar">{{ group }}</td>
+                                                                    <td><strong>{{ feature }}</strong></td>
+                                                                </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </section>
+                                                </div>
+                                                <div id="reviews">
+                                                    <section>
+                                                        <p>Reviews are currently not available</p>
+                                                    </section>
+                                                </div>
+                                                <div id="questionsAndAnswers">
+                                                    <section>
+                                                        <p>This section is currently not available</p>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+            {% block product_variants%}
+                {% if product.variants|length > 1 %}
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <a name="buynow"></a>
+                                    <h2>Variations</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-bottom clearfix">
+                                    <table class="data-table">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="1">Product</th>
+                                            <th colspan="1">Features</th>
+                                            <th colspan="2">Price</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for variant in product.variants %}
+                                            <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                <td>{{ variant.description|length <= 0 ? product.description.header : variant.description.header }}</td>
+                                                <td>
+                                                    <ul>
+                                                        {% for group, feature in variant_features[variant.id] %}
+                                                            {% if feature == 'Yes' %}
+                                                                {% set className = 'green-tick' %}
+                                                            {% elseif feature.feature.name == 'No' %}
+                                                                {% set className = 'red-cross' %}
+                                                            {% else %}
+                                                                {% set className = 'bullet' %}
+                                                            {% endif %}
+                                                            <li class="{{ className }}">{{ group }}: <strong>{{ feature }}</strong></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </td>
+                                                <td width="1" class="nowrap price">{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}</td>
+                                                <td width="1" class="nowrap">
+                                                    {% include "KACSiteBundle:Product:Includes/buyButtons.html.twig" with {'product': product, 'variant': variant} %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
+        {% endblock %}
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            {# Increase quantity #}
+            $(".action-increase-quantity").live('click', function() {
+                var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+                var $newQuantity = parseInt($quantityObject.val()) + 1;
+                $quantityObject.val($newQuantity);
+            });
+
+            {# Decrease quantity #}
+            $(".action-decrease-quantity").live('click', function() {
+                var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
+                var $newQuantity = parseInt($quantityObject.val()) - 1;
+                if ($newQuantity < 1)
+                {
+                    $newQuantity = 1;
+                }
+                $quantityObject.val($newQuantity);
+            });
+        });
+    </script>
+{% endblock %}

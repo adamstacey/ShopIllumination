@@ -248,7 +248,7 @@ class SystemController extends Controller
    					{
 	   					if ($productObject->getStatus() == 'a')
 	   					{
-		   					return $this->forward('WebIlluminationShopBundle:Products:index', array('id' => $routingObject->getObjectId()));		
+		   					return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()));
 	   					} else {
 	   						$productToDepartmentObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findOneBy(array('product' => $routingObject->getObjectId(), 'displayOrder' => '1'));
 	   						$departmentRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findOneBy(array('objectId' => $productToDepartmentObject->getDepartment()->getId(), 'locale' => 'en'));

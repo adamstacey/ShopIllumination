@@ -30,6 +30,130 @@ use KAC\SiteBundle\Manager\ProductManager;
 use KAC\SiteBundle\Manager\SeoManager;
 
 class ProductController extends Controller {
+    public function viewAction(Request $request, $id)
+    {
+        /**
+         * @var EntityManager $em
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var \KAC\SiteBundle\Entity\Product $product
+         */
+        $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($id);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        $lowestPrice = null;
+        $highestPrice = null;
+        $commonFeatures = array();
+        $variantFeatures = array();
+
+        foreach($product->getVariants() as $variant)
+        {
+            $variantFeatures[$variant->getId()] = array();
+
+            // Calculate price range
+            foreach ($variant->getPrices() as $price) {
+                if ($lowestPrice === null || $price->getListPrice() < $lowestPrice->getListPrice()) {
+                }
+                if ($highestPrice === null || $price->getListPrice() > $highestPrice->getListPrice()) {
+                    $highestPrice = $price;
+                }
+            }
+
+            // Get features
+            /** @var $feature VariantToFeature */
+            foreach ($variant->getFeatures() as $feature)
+            {
+                if($feature && $feature->getFeatureGroup() && $feature->getFeature())
+                {
+                    // Fetch the relevant department to feature entity
+                    $departmentToFeature = $em->createQuery("
+                            SELECT dtf
+                            FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf
+                            WHERE dtf.featureGroup = ?1 AND dtf.department = ?2")
+                        ->setParameter(1, $feature->getFeatureGroup()->getId())
+                        ->setParameter(2, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
+                        ->execute();
+
+                    // Check for common features
+                    if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
+                    {
+                        if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        {
+                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        }
+                        else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
+                        {
+                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                        }
+                    }
+                    if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
+                    {
+                        $variantFeatures[$variant->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                    }
+                }
+            }
+        }
+
+        // Get all images
+        $galleryImages = array();
+        $thumbnailImage = null;
+
+        $images = $em->getRepository("KAC\SiteBundle\Entity\Image")->findBy(array(
+            'objectId' => $id,
+            'objectType' => 'product',
+        ), array(
+            'displayOrder' => 'ASC'
+        ));
+
+        /**
+         * @var Image $image
+         */
+        foreach($images as $image)
+        {
+            // Get the gallery images
+            if($image->getImageType() === 'gallery')
+            {
+                $galleryImages[] = $image;
+            // Get the thumbnail image
+            } else if ($image->getImageType() === 'product') {
+                $thumbnailImage = $image;
+            }
+        }
+
+        // Find template from the departments
+        $template = 'default';
+        $departments = array();
+        if($product->getDepartment()) {
+            // Check the department tree
+            $currDepartment = $product->getDepartment()->getDepartment();
+            do {
+                $departments[] = $currDepartment;
+
+                if($currDepartment->getTemplate() !== '' && $currDepartment->getTemplate() !== null) {
+                    $template = $product->getDepartment()->getDepartment()->getTemplate();
+                }
+
+                $currDepartment = $currDepartment->getParent();
+            } while ($currDepartment !== null);
+        }
+
+        return $this->render('KACSiteBundle:Product:view\\'.$template.'.html.twig', array(
+            'product' => $product,
+            'departments' => $departments,
+            'gallery_images' => $galleryImages,
+            'thumbnail_image' => $thumbnailImage,
+            'lowest_price' => $lowestPrice,
+            'highest_price' => $highestPrice,
+            'common_features' => $commonFeatures,
+            'variant_features' => $variantFeatures,
+        ));
+    }
+
     /**
      * @Route("/admin/products/new", name="products_new")
      * @Secure(roles="ROLE_ADMIN")

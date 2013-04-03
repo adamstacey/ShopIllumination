@@ -113,9 +113,10 @@
 				$.ajax({
 	   				type: "GET",
 	   				dataType: "json",
-	   				url: "{#{{ path('basket_ajax_add_to_basket') }}#}",
+	   				url: "{{ path('basket_ajax_add_to_basket') }}",
 	   				data: {
 	   					productId: $(this).attr("data-product-id"),
+	   					variantId: $(this).attr("data-variant-id"),
 	   					quantity: $("#quantity-"+$(this).attr("data-product-id")).val(),
 	   					selectedOptions: $("#selected-options-"+$(this).attr("data-product-id")).val()
 	   				},

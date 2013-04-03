@@ -214,7 +214,7 @@ class ProductIndexer extends Indexer
     function delete($product = null)
     {
         $delete = $this->getSolarium()->createUpdate();
-        if($product === null)
+        if($product !== null)
         {
             $delete->addDeleteById($product->getId());
         } else {

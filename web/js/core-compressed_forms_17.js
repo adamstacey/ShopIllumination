@@ -206,10 +206,40 @@ var fixHelper = function(e, ui) {
     return ui;
 };
 
+function loadFormFunctions() {
+    $("tr.no-data").each(function() {
+        if ($(this).closest("tbody").find("tr").length == 1) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+
+    $(".recommended-characters").each(function() {
+        updateRecommendedCharacters($(this));
+    });
+
+    $("table.sortable tbody").sortable({
+        helper: fixHelper,
+        placeholder: "sortable-placeholder",
+        handle: ".handle",
+        update: function(event, ui) {
+            updateRowCounts();
+        }
+    }).disableSelection();
+
+    $("ul.sortable").sortable({
+        helper: fixHelper,
+        update: function(event, ui) {
+            updateTemplatePartHiddenFields();
+        }
+    }).disableSelection();
+}
+
 $(document).ready(function() {
     generateFormElements($(document));
 
-    $(".actionAddFormRow").click(function() {
+    $(document).on("click", ".actionAddFormRow", function() {
         var $tableObject = $("#"+$(this).attr("data-table-object"));
         var $rowCount = $tableObject.find("tbody > tr:not(.no-data)").length + 1;
         if ($tableObject.find("tr.no-data").length > 0)
@@ -255,6 +285,10 @@ $(document).ready(function() {
                 $tableObject.trigger("rowdeleted");
             }
         }
+    });
+
+    $(document).on("click", ".actionDeleteParent", function() {
+        $(this).parent().remove();
     });
 
     $(document).on("keypress keyup focus", ".uppercase", function() {
@@ -311,26 +345,6 @@ $(document).ready(function() {
         updateRecommendedCharacters($(this));
     });
 
-    $(".recommended-characters").each(function() {
-        updateRecommendedCharacters($(this));
-    });
-
-    $("table.sortable tbody").sortable({
-        helper: fixHelper,
-        placeholder: "sortable-placeholder",
-        handle: ".handle",
-        update: function(event, ui) {
-            updateRowCounts();
-        }
-    }).disableSelection();
-
-    $("ul.sortable").sortable({
-        helper: fixHelper,
-        update: function(event, ui) {
-            updateTemplatePartHiddenFields();
-        }
-    }).disableSelection();
-
     $(document).on("change", ".free-text", function() {
         if ($(this).val() == 'Free Text')
         {
@@ -354,13 +368,7 @@ $(document).ready(function() {
         }
     });
 
-    $("tr.no-data").each(function() {
-        if ($(this).closest("tbody").find("tr").length == 1) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        }
-    });
+    loadFormFunctions();
 
     generateTemplateParts();
 });

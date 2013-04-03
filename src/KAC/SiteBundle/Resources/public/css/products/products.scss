@@ -100,6 +100,7 @@ table.data-table .price .currency-tax {
 }
 
 .product .logo {
+    height: 50px;
     margin: 0 $spacingMedium $spacingMedium 0;
 
     @include boxGlow($colourGreyLight, 10px, 0, 1);
@@ -319,4 +320,8 @@ table.data-table .price .currency-tax {
     line-height: 12px !important;
     font-size: 11px !important;
     overflow: hidden;
+}
+
+.product-header {
+    padding-left: 20px;
 }
