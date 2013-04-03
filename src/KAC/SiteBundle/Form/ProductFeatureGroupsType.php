@@ -15,15 +15,18 @@ use KAC\SiteBundle\Entity\Product\Feature;
 class ProductFeatureGroupsType extends AbstractType
 {
     private $department;
+    private $product;
 
-    public function __construct($department)
+    public function __construct($department, $product)
     {
         $this->department = $department;
+        $this->product = $product;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $department = $this->department;
+        $product = $this->product;
 
         $builder->add('features', 'collection', array(
             'type' => new ProductFeatureGroupType(),
