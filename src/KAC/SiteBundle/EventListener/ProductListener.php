@@ -5,6 +5,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Indexer\ProductIndexer;
 use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Entity\Product\Variant;
 use KAC\SiteBundle\Manager\ProductManager;
 
 class ProductListener
@@ -56,12 +57,16 @@ class ProductListener
 
         if($entity instanceof Product)
         {
+            // Ensure that there is at least one description
+            if (!$entity->getDescription()) $entity->addDescription(new Product\Description());
+
             foreach($entity->getDescriptions() as $description)
             {
                 $this->manager->updateProductDescription($description);
             }
             foreach($entity->getVariants() as $variant)
             {
+                if (!$variant->getDescription()) $variant->addDescription(new Variant\Description());
                 foreach($variant->getDescriptions() as $description)
                 {
                     $this->manager->updateVariantDescription($description);

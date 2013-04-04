@@ -11,6 +11,9 @@ use KAC\SiteBundle\Entity\Product\Routing as ProductRouting;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Entity\Image;
+use KAC\SiteBundle\Manager\Templating\ProductTemplateBuilder;
+use KAC\SiteBundle\Manager\Templating\TemplateBuilder;
+use KAC\SiteBundle\Manager\Templating\VariantTemplateBuilder;
 
 class ProductManager extends Manager
 {
@@ -58,10 +61,14 @@ class ProductManager extends Manager
     {
         if(!$description->getProduct()) return;
 
-        \Doctrine\Common\Util\Debug::dump($description->__get("name"));die();
-        /* @var \KAC\SiteBundle\Entity\Department $department*/
+        // Get objects
         $brand = $description->getProduct()->getBrand();
         $department = $description->getProduct()->getDepartment()->getDepartment();
+
+        $builder = new ProductTemplateBuilder($this->doctrine->getManager());
+//        $pageTitle = $builder->buildString($description, $department->getDescription()->getPageTitleTemplate());
+
+        /* @var \KAC\SiteBundle\Entity\Department $department*/
 
         if($brand && $department)
         {
@@ -97,6 +104,10 @@ class ProductManager extends Manager
         /* @var \KAC\SiteBundle\Entity\Department $department*/
         $brand = $description->getVariant()->getProduct()->getBrand();
         $department = $description->getVariant()->getProduct()->getDepartment()->getDepartment();
+
+        $builder = new VariantTemplateBuilder($this->doctrine->getManager());
+        $pageTitle = $builder->buildString($description, $department->getDescription()->getPageTitleTemplate());
+        \Doctrine\Common\Util\Debug::dump($pageTitle);die();
 
         if($brand && $department)
         {
