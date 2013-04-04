@@ -2,6 +2,7 @@
 namespace KAC\SiteBundle\EventListener;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Indexer\ProductIndexer;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Manager\ProductManager;
@@ -20,6 +21,11 @@ class ProductListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
+        if($entity instanceof ProductToDepartment)
+        {
+            $entity = $entity->getProduct();
+        }
 
         if($entity instanceof Product)
         {
@@ -43,11 +49,15 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
+        if($entity instanceof ProductToDepartment)
+        {
+            $entity = $entity->getProduct();
+        }
+
         if($entity instanceof Product)
         {
             foreach($entity->getDescriptions() as $description)
             {
-
                 $this->manager->updateProductDescription($description);
             }
             foreach($entity->getVariants() as $variant)
@@ -64,6 +74,11 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
+        if($entity instanceof ProductToDepartment)
+        {
+            $entity = $entity->getProduct();
+        }
+
         if($entity instanceof Product)
         {
             $this->manager->addRoute($entity);
@@ -75,6 +90,11 @@ class ProductListener
     public function postUpdate(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
+        if($entity instanceof ProductToDepartment)
+        {
+            $entity = $entity->getProduct();
+        }
 
         if($entity instanceof Product)
         {

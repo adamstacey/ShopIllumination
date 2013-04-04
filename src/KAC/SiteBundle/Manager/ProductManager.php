@@ -58,6 +58,7 @@ class ProductManager extends Manager
     {
         if(!$description->getProduct()) return;
 
+        \Doctrine\Common\Util\Debug::dump($description->__get("name"));die();
         /* @var \KAC\SiteBundle\Entity\Department $department*/
         $brand = $description->getProduct()->getBrand();
         $department = $description->getProduct()->getDepartment()->getDepartment();
