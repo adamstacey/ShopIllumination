@@ -144,8 +144,8 @@ function updateTemplatePartHiddenFields() {
                 case "Department":
                     $template[$template.length] = "department";
                     break;
-                case "Extra Product Keyword":
-                    $template[$template.length] = "extraProductKeyword";
+                case "Tagline":
+                    $template[$template.length] = "tagline";
                     break;
                 case "Key Message":
                     $template[$template.length] = "keyMessage";
@@ -177,8 +177,8 @@ function generateTemplateParts() {
                 case "department":
                     $templatePartValue = "Department";
                     break;
-                case "extraProductKeyword":
-                    $templatePartValue = "Extra Product Keyword";
+                case "tagline":
+                    $templatePartValue = "Tagline";
                     break;
                 case "keyMessage":
                     $templatePartValue = "Key Message";
@@ -359,7 +359,7 @@ $(document).ready(function() {
         var $templateObject = $("#"+$("#formTemplate").val());
         var $templatePartContent = $("#formTemplatePart").val();
         if ($("#formTemplatePart").val() == 'Free Text') {
-            $templatePartContent = $("#formFreeText").val();
+            $templatePartContent = $("#formFreeText").text();
         }
         if ($templatePartContent != '') {
             var $newTemplatePart = $("<li></li>").html('<img class="actionDeleteParent" src="/bundles/kacsite/images/icons/error_small.png" border="0" />'+$templatePartContent);
