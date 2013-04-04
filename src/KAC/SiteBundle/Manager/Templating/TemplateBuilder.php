@@ -25,53 +25,45 @@ abstract class TemplateBuilder
 
         while ($token = $this->getNextToken($tokens))
         {
-            // Ensure that each string part begins with a caret
-            if($token["type"] === "T_CARET")
+            // If token is a string literal then add directly to the string
+            if($token["type"] === "T_STRING_LITERAL")
             {
+                $parts[] = $token["value"];
+            } elseif($token["type"] === "T_IDENTIFIER") {
+                // Attempt to fetch the specified value from the object
+                $parts[] = $this->getPropertyValue($object, $token["value"]);
+            // Check if part is an entity
+            } elseif($token["type"] === "T_AT") {
                 // Check the next token
                 if($token = $this->getNextToken($tokens))
                 {
-                    // If token is a string literal then add directly to the string
-                    if($token["type"] === "T_STRING_LITERAL")
+                    if($token["type"] === "T_IDENTIFIER")
                     {
-                        $parts[] = $token["value"];
-                    } elseif($token["type"] === "T_IDENTIFIER") {
-                        // Attempt to fetch the specified value from the object
-                        $parts[] = $this->getPropertyValue($object, $token["value"]);
-                    // Check if part is an entity
-                    } elseif($token["type"] === "T_AT") {
+                        $entityAlias = $token["value"];
                         // Check the next token
                         if($token = $this->getNextToken($tokens))
                         {
-                            if($token["type"] === "T_IDENTIFIER")
+                            if($token["type"] === "T_PIPE")
                             {
-                                $entityAlias = $token["value"];
                                 // Check the next token
                                 if($token = $this->getNextToken($tokens))
                                 {
-                                    if($token["type"] === "T_PIPE")
+                                    if($token["type"] === "T_IDENTIFIER")
                                     {
+                                        $entityId = $token["value"];
                                         // Check the next token
                                         if($token = $this->getNextToken($tokens))
                                         {
-                                            if($token["type"] === "T_IDENTIFIER")
+                                            if($token["type"] === "T_PIPE")
                                             {
-                                                $entityId = $token["value"];
                                                 // Check the next token
                                                 if($token = $this->getNextToken($tokens))
                                                 {
-                                                    if($token["type"] === "T_PIPE")
+                                                    if($token["type"] === "T_IDENTIFIER")
                                                     {
-                                                        // Check the next token
-                                                        if($token = $this->getNextToken($tokens))
-                                                        {
-                                                            if($token["type"] === "T_IDENTIFIER")
-                                                            {
-                                                                // Fetch value
-                                                                $entity = $this->getEntity($object, $entityAlias, $entityId);
-                                                                $parts[] = $this->getPropertyValue($entity, $token["value"]);
-                                                            }
-                                                        }
+                                                        // Fetch value
+                                                        $entity = $this->getEntity($object, $entityAlias, $entityId);
+                                                        $parts[] = $this->getPropertyValue($entity, $token["value"]);
                                                     }
                                                 }
                                             }
