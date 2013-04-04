@@ -90,9 +90,6 @@ abstract class TemplateBuilder
             return $part != '' || $part != null;
         });
 
-        \Doctrine\Common\Util\Debug::dump(implode(' ', $parts));
-
-        die();
         return implode(' ', $parts);
     }
 
