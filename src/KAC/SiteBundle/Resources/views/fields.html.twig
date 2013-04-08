@@ -142,11 +142,6 @@
     </select>
 {% endblock %}
 
-{% block _site_new_product_features_entry_widget %}
-    {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.table_features_widget(form) }}
-{% endblock %}
-
 {% block _site_new_product_variants_overview_entry_widget %}
     {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
     {{ fields.product_variants_overview_widget(form) }}
