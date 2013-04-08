@@ -22,24 +22,11 @@
 {% endmacro %}
 
 {% macro product_variants_overview_widget(form) %}
-    <tr>
-        <td class="fill">
-            <ul>
-                {% for feature in form.get('value').features %}
-                    <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
-                {% else %}
-                    <li>Single Combination</li>
-                {% endfor %}
-            </ul>
-        </td>
-        <td{% if form.productCode.vars.valid is sameas(false) %} class="error"{% endif %}>
-            {{ form_widget(form.productCode) }}
-        </td>
-        {{ form_widget(form.prices) }}
-        <td width="1">
-            <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productVariantList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
-        </td>
-    </tr>
+    <td{% if form.productCode.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(form.productCode) }}</td>
+    {{ form_widget(form.prices) }}
+    <td width="1">
+        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productVariantList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+    </td>
 {% endmacro %}
 
 {% macro table_prices_widget(form) %}
