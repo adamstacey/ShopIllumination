@@ -12,7 +12,7 @@ body {
     color: $textColour;
 }
 
-html.modal body {
+html.modal, html.modal body {
     background: $colourGreyLight;
 }
 
