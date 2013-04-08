@@ -20,11 +20,14 @@ use KAC\SiteBundle\Form\EditProductDescriptionsType;
 use KAC\SiteBundle\Form\EditProductImagesType;
 use KAC\SiteBundle\Form\EditProductLinksType;
 use KAC\SiteBundle\Form\EditProductOverviewType;
-use KAC\SiteBundle\Form\ProductFeatureGroupsType;
+use KAC\SiteBundle\Form\NewProductFeatureGroupsType;
+use KAC\SiteBundle\Form\NewProductFeaturesType;
+use KAC\SiteBundle\Entity\Department;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Product\Description;
 use KAC\SiteBundle\Entity\Product\FeatureGroup;
 use KAC\SiteBundle\Entity\Product\Variant;
+use KAC\SiteBundle\Entity\Product\VariantToFeature;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Manager\ProductManager;
 use KAC\SiteBundle\Manager\SeoManager;
@@ -222,10 +225,10 @@ class ProductController extends Controller {
     }
 
     /**
-     * @Route("/admin/products/newFeatureGroup", name="products_new_feature_group")
+     * @Route("/admin/products/newFeatureGroups", name="products_new_feature_groups")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function newFeatureGroupAction(Request $request, $admin=false)
+    public function newFeatureGroupsAction(Request $request, $admin=false)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -245,7 +248,7 @@ class ProductController extends Controller {
             $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($request->query->get('productId'));
         }
 
-        $form = $this->createForm(new ProductFeatureGroupsType($department, $product));
+        $form = $this->createForm(new NewProductFeatureGroupsType($department));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -258,14 +261,13 @@ class ProductController extends Controller {
                 $department = $form->get('department')->getData();
 
                 // Check if new feature groups need to be applied to a product
-                $product = $form->get('department')->getData();
+                $product = $form->get('product')->getData();
 
                 // Add the new feature groups
                 foreach ($featureGroups as $featureGroup)
                 {
                     // Update the database
                     $em->persist($featureGroup);
-                    $em->flush();
 
                     // Check if we need to assign the features to a department
                     if ($department)
@@ -273,7 +275,7 @@ class ProductController extends Controller {
                         // Get the other feature groups
                         $departmentToFeatures = $em->getRepository("KAC\SiteBundle\Entity\DepartmentToFeature")->findBy(array('department' => $department));
 
-                        // Add the department to feature
+                        // Assign the feature to the department
                         $departmentToFeature = new DepartmentToFeature();
                         $departmentToFeature->setDepartment($department);
                         $departmentToFeature->setFeatureGroup($featureGroup);
@@ -282,8 +284,29 @@ class ProductController extends Controller {
                         $departmentToFeature->setDisplayOnProduct(true);
                         $departmentToFeature->setDisplayOrder(sizeof($departmentToFeatures) + 1);
                         $em->persist($departmentToFeature);
-                        $em->flush();
                     }
+
+                    // Check if we need to assign the features to a product
+                    if ($product)
+                    {
+                        // Go through the variants of the product
+                        $variants = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->findBy(array('product' => $product));
+                        foreach ($variants as $variant)
+                        {
+                            // Get the other feature groups
+                            $variantToFeatures = $em->getRepository("KAC\SiteBundle\Entity\Product\VariantToFeature")->findBy(array('variant' => $variant));
+
+                            // Assign the feature to the variant
+                            $variantToFeature = new VariantToFeature();
+                            $variantToFeature->setVariant($variant);
+                            $variantToFeature->setFeatureGroup($featureGroup);
+                            $variantToFeature->setDisplayOrder(sizeof($variantToFeatures) + 1);
+                            $em->persist($variantToFeature);
+                        }
+                    }
+
+                    // Flush the database
+                    $em->flush();
                 }
 
                 // Notify user
@@ -301,7 +324,62 @@ class ProductController extends Controller {
             }
         }
 
-        return $this->render('KACSiteBundle:Product:newFeatureGroup.html.twig', array(
+        return $this->render('KACSiteBundle:Product:newFeatureGroups.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/newFeatures", name="products_new_features")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function newFeaturesAction(Request $request, $admin=false)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $departmentId = 0;
+
+        // Check for a department ID
+        if ($request->query->has('departmentId'))
+        {
+            $departmentId = $request->query->get('departmentId');
+        }
+
+        $form = $this->createForm(new NewProductFeaturesType($departmentId));
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if ($form->isValid()) {
+
+                // Get the data
+                $features = $form->get('features')->getData();
+
+                // Add the new features
+                foreach ($features as $feature)
+                {
+                    // Update the database
+                    $em->persist($feature);
+
+                    // Flush the database
+                    $em->flush();
+                }
+
+                // Notify user
+                $this->get('session')->setFlash('notice', sizeof($features).' new feature'.(sizeof($features) == 1?' has':'s have').' been added.');
+
+                // Check if request is modal
+                if ($request->query->get('modal') == true)
+                {
+                    // Break out the modal
+                    return $this->render('KACSiteBundle:Includes:modalBreakout.html.twig');
+                } else {
+                    // Forward
+                    return $this->redirect($this->get('router')->generate('homepage'));
+                }
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:newFeatures.html.twig', array(
             'form' => $form->createView(),
         ));
     }
