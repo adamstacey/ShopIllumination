@@ -14,7 +14,8 @@ class ProductVariantOverviewType extends AbstractType
         $builder->add('productCode', 'text', array(
             'attr' => array(
                 'size' => 10,
-                'class' => 'uppercase',
+                'data-help' => 'Enter the unique product code supplied by the manufacturer or supplier.',
+                'class' => 'tac fill uppercase',
             ),
         ));
         $builder->add('prices', 'collection', array(
