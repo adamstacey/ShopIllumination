@@ -1,0 +1,57 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Add New Features | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Add New Features</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget mbl">
+                                <section class="ui-widget-content ui-corner-all">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <table class="form-table sortable mbm" id="featureGroupList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
+                                        <thead>
+                                            <tr>
+                                                <th width="1">&nbsp;</th>
+                                                <th title="Select the product feature group." class="tal">Feature Group</th>
+                                                <th title="Enter the name of the product feature." class="tal">Name</th>
+                                                <th width="1" title="Is the feature active?">Active?</th>
+                                                <th width="1" title="Can you filter by the feature?">Filter?</th>
+                                                <th width="1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="no-data ui-helper-hidden">
+                                                <td colspan="8">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no features currently setup. Add a feature using the "Add" button below.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {{ form_row(form.features) }}
+                                        </tbody>
+                                    </table>
+                                    {{ form_rest(form) }}
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                        <button type="button" data-table-object="featureGroupList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
