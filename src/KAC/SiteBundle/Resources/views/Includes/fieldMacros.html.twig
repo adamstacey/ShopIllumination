@@ -27,6 +27,8 @@
             <ul>
                 {% for feature in form.get('value').features %}
                     <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
+                {% else %}
+                    <li>Single Combination</li>
                 {% endfor %}
             </ul>
         </td>
