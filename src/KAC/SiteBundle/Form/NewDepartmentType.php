@@ -24,7 +24,7 @@ class NewDepartmentType extends AbstractType
                     'query_builder' => function(DepartmentRepository $er) {
                         $rootNodes = $er->getRootNodes();
                         if(count($rootNodes) != 1) {
-                            return new $er->createQueryBuilder('d');
+                            return $er->createQueryBuilder('d');
                         } else {
                             return $er->childrenQueryBuilder($rootNodes[0])
                                 ->addSelect('d')

@@ -11,6 +11,9 @@ use KAC\SiteBundle\Entity\Product\Routing as ProductRouting;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Entity\Image;
+use KAC\SiteBundle\Manager\Templating\ProductTemplateBuilder;
+use KAC\SiteBundle\Manager\Templating\TemplateBuilder;
+use KAC\SiteBundle\Manager\Templating\VariantTemplateBuilder;
 
 class ProductManager extends Manager
 {
@@ -58,32 +61,34 @@ class ProductManager extends Manager
     {
         if(!$description->getProduct()) return;
 
-        /* @var \KAC\SiteBundle\Entity\Department $department*/
+        // Get objects
         $brand = $description->getProduct()->getBrand();
         $department = $description->getProduct()->getDepartment()->getDepartment();
 
+        $builder = new ProductTemplateBuilder($this->doctrine->getManager());
+        $pageTitle = $builder->buildString($description, $department->getDescription()->getPageTitleTemplate());
+        $header = $builder->buildString($description, $department->getDescription()->getHeaderTemplate());
+        $metaDescription = $builder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate());
+
+        /* @var \KAC\SiteBundle\Entity\Department $department*/
+
         if($brand && $department)
         {
-            $pageTitle = $description->getProduct()->getProductCode();
-            $header = $description->getProduct()->getProductCode();
             $metaKeywords = $description->getProduct()->getProductCode();
 
             if ($brand->getDescription())
             {
-                $pageTitle = $brand->getDescription()->getName().' '.$pageTitle;
-                $header = $brand->getDescription()->getName().' '.$header;
                 $metaKeywords .= ' '.$brand->getDescription()->getName();
             }
             if ($department->getDescription())
             {
-                $pageTitle .= ' '.$department->getDescription()->getName();
-                $header .= ' '.$department->getDescription()->getName();
                 $metaKeywords .= ' '.$department->getDescription()->getName();
             }
 
             $description->setName($pageTitle);
             $description->setPageTitle($pageTitle);
             $description->setHeader($header);
+            $description->setMetaDescription($metaDescription);
             $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
             $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
         }
@@ -97,28 +102,28 @@ class ProductManager extends Manager
         $brand = $description->getVariant()->getProduct()->getBrand();
         $department = $description->getVariant()->getProduct()->getDepartment()->getDepartment();
 
+        $builder = new VariantTemplateBuilder($this->doctrine->getManager());
+        $pageTitle = $builder->buildString($description, $department->getDescription()->getPageTitleTemplate());
+        $header = $builder->buildString($description, $department->getDescription()->getHeaderTemplate());
+        $metaDescription = $builder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate());
+
         if($brand && $department)
         {
-            $pageTitle = $description->getVariant()->getProductCode();
-            $header = $description->getVariant()->getProductCode();
             $metaKeywords = $description->getVariant()->getProductCode();
 
             if ($brand->getDescription())
             {
-                $pageTitle = $brand->getDescription()->getName().' '.$pageTitle;
-                $header = $brand->getDescription()->getName().' '.$header;
                 $metaKeywords .= ' '.$brand->getDescription()->getName();
             }
             if ($department->getDescription())
             {
-                $pageTitle .= ' '.$department->getDescription()->getName();
-                $header .= ' '.$department->getDescription()->getName();
                 $metaKeywords .= ' '.$department->getDescription()->getName();
             }
 
             $description->setName($pageTitle);
             $description->setPageTitle($pageTitle);
             $description->setHeader($header);
+            $description->setMetaDescription($metaDescription);
             $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
             $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
         }

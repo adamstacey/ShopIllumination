@@ -37,12 +37,13 @@
                             <div class="widget widget-2-of-3">
                                 <select id="formTemplatePart" class="free-text fill">
                                     <option value="" selected="selected">- Select New Template Part -</option>
-                                    <option value="Free Text">Free Text</option>
-                                    <option value="Brand">Brand</option>
-                                    <option value="Product Code">Product Code</option>
-                                    <option value="Department">Department</option>
-                                    <option value="Extra Product Keyword">Extra Product Keyword</option>
-                                    <option value="Key Message">Key Message</option>
+                                    <option value="freeText">Free Text</option>
+                                    <option value="brand">Brand</option>
+                                    <option value="productCode">Product Code</option>
+                                    <option value="department">Department</option>
+                                    <option value="tagline">Tagline</option>
+                                    <option value="keyMessage">Key Message</option>
+                                    <option value="@VariantToFeature">Feature</option>
                                     <optgroup label="Symbols">
                                         <option value="”">”</option>
                                         <option value="'">'</option>
@@ -79,6 +80,21 @@
                             </div>
                             <div class="widget widget-2-of-3">
                                 <input type="text" id="formFreeText" class="fill" placeholder="Enter free text..." value="" />
+                            </div>
+                        </div>
+                        <div class="form-element widget-group clearfix feature-container ui-helper-hidden">
+                            <span title="Enter the feature you want to add to the selected template." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="formNewTemplatePart">Feature</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <select id="formFeature" class="free-text fill">
+                                    {% for feature in form.vars.value.features %}
+                                        <option value="{{ feature.featureGroup.id }}">{{ feature.featureGroup.name }}</option>
+                                    {% else %}
+                                        <option value="">No Options Available</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                         <div class="form-element clearfix">

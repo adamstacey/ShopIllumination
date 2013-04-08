@@ -9,7 +9,7 @@
         </div>
         <div class="widget widget-5-of-7">
             <section>
-                <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': product.id}) }}" {{ form_enctype(form) }}>
+                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': product.id}) }}" {{ form_enctype(form) }}>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-1">
                             <div class="ui-widget">
