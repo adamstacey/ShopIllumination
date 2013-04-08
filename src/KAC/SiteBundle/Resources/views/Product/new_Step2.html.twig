@@ -8,29 +8,35 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     <div class="message message-help">
-                        <span class="ui-button-icon-primary ui-icon icon-top icon-yellow icon-762"></span>
+                        <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
                         <p>Here you need to select the features that will be used to build the product combinations that make up the product you are adding.</p>
                         <p>This is NOT where you are setting the product features and in most cases will simply be what features are different across the combinations.</p>
                     </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset class="pbm">
-                        <table class="form-table" id="combinationList" data-prototype="{{ form_widget(form.features.vars.prototype) | e }}">
+                        <table class="form-table" id="combinationList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
                             <thead>
                                 <tr>
-                                    <th>Group</th>
-                                    <th>Feature</th>
-                                    <th>&nbsp;</th>
+                                    <th width="1">&nbsp;</th>
+                                    <th title="Select a feature group.">Group</th>
+                                    <th title="Select a corresponding feature.">Feature</th>
+                                    <th width="1">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for feature in form.features %}
-                                    <tr>{{ form_widget(feature) }}</tr>
-                                {% endfor %}
+                                <tr class="no-data ui-helper-hidden">
+                                    <td colspan="4">
+                                        <div class="message message-help mas">
+                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                            <p>There are no combinations currently setup. Add a combination using the "Add" button below.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{ form_rest(form) }}
                             </tbody>
                         </table>
                         {% do form.features.setRendered() %}
                     </fieldset>
-                    {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
                 </section>
