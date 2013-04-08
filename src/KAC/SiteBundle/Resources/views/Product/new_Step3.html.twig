@@ -23,22 +23,35 @@
                         <table class="form-table" id="productVariantList">
                             <thead>
                                 <tr>
-                                    <th>Combination</th>
-                                    <th>Product Code</th>
-                                    <th>RRP</th>
-                                    <th>List Price</th>
-                                    <th>&nbsp;</th>
+                                    <th width="1">&nbsp;</th>
+                                    <th class="tal" title="The features that make up the combination.">Combination</th>
+                                    <th title="Enter the unique product code supplied by the manufacturer or supplier.">Product Code</th>
+                                    <th title="Enter the recommended retail price (RRP) of the product. Leave it blank if you want the RRP to be the list price.">RRP</th>
+                                    <th title="Enter the list price. This is the price the product will sell for.">List Price</th>
+                                    <th width="1">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for variant in form.variants %}
-                                    {{ form_widget(variant) }}
-                                {% endfor %}
+                                <tr>
+                                    {% for variant in form.variants %}
+                                        <td class="row-count tar">{{ loop.index }}</td>
+                                        <td>
+                                            <ul>
+                                                {% for feature in variant.get('value').features %}
+                                                    <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
+                                                {% else %}
+                                                    <li>Single Combination</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        {{ form_widget(variant) }}
+                                    {% endfor %}
+                                </tr>
+                                {% do form.features.setRendered() %}
+                                {{ form_rest(form) }}
                             </tbody>
-                            {% do form.variants.setRendered() %}
                         </table>
                     </fieldset>
-                    {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
                 </section>
