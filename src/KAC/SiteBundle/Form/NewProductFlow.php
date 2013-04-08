@@ -118,7 +118,7 @@ class NewProductFlow extends FormFlow
             }
 
             // Create the variant entities
-            foreach($options['variants'] as $variantFeatures)
+            foreach ($options['variants'] as $variantFeatures)
             {
                 // Build the combinations to check
                 $combination = array();
@@ -140,7 +140,7 @@ class NewProductFlow extends FormFlow
                 if (!$variantExists)
                 {
                     $variant = new Variant();
-                    foreach($variantFeatures as $feature)
+                    foreach ($variantFeatures as $feature)
                     {
                         $variantToFeature = new VariantToFeature();
                         $variantToFeature->setVariant($variant);
@@ -151,7 +151,7 @@ class NewProductFlow extends FormFlow
 
                     $variant->setProduct($formData);
                     $variant->addPrice(new Price());
-                    foreach($formData->getDescriptions() as $description)
+                    foreach ($formData->getDescriptions() as $description)
                     {
                         $variantDescription = new Description();
                         $variantDescription->setLocale($description->getLocale());
@@ -160,6 +160,22 @@ class NewProductFlow extends FormFlow
                     }
                     $formData->addVariant($variant);
                 }
+            }
+
+            // Add a single variant if no combinations are set
+            if (sizeof($formData->getVariants()) < 1)
+            {
+                $variant = new Variant();
+                $variant->setProduct($formData);
+                $variant->addPrice(new Price());
+                foreach ($formData->getDescriptions() as $description)
+                {
+                    $variantDescription = new Description();
+                    $variantDescription->setLocale($description->getLocale());
+                    $variantDescription->setDescription($description->getDescription());
+                    $variant->addDescription($variantDescription);
+                }
+                $formData->addVariant($variant);
             }
 
         }
