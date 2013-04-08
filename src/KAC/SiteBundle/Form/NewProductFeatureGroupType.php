@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
 use KAC\SiteBundle\Repository\DepartmentRepository;
 use KAC\SiteBundle\Entity\Product\Feature;
 
-class ProductFeatureGroupType extends AbstractType
+class NewProductFeatureGroupType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -60,6 +60,6 @@ class ProductFeatureGroupType extends AbstractType
 
     public function getName()
     {
-        return 'site_product_feature_group';
+        return 'site_new_product_feature_group';
     }
 }
