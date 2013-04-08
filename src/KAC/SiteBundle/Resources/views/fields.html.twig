@@ -79,7 +79,7 @@
                             <td><img class="handle" src="{{ asset('bundles/kacsite/images/icons/handle.png') }}" border="0" /></td>
                         {% endif %}
                     {% endfor %}
-                    <td class="row-count">{{ loop.index }}</td>
+                    <td class="row-count tar">{{ loop.index }}</td>
                     {% for child in row %}
                         {% if child.vars.block_prefixes.2 != 'hidden' %}
                             {% set containerClass = [] %}
