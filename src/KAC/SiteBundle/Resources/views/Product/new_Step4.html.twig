@@ -8,27 +8,37 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                    <div class="accordion mbm">
-                        {% for variant in form.variants %}
-                            <div class="accordion-item">
-                                <h3>Features for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
-                                <div>
-                                    <table class="data-table">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{ form_widget(variant) }}
-                                        </tbody>
-                                        {% do form.variants.setRendered() %}
-                                    </table>
+                    <fieldset>
+                        <div class="accordion mbm">
+                            {% for variant in form.variants %}
+                                <div class="accordion-item">
+                                    <h3>Features for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+                                        <table class="form-table mbm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="1">&nbsp;</th>
+                                                    <th title="Select a feature group.">Group</th>
+                                                    <th title="Select a corresponding feature.">Feature</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for row in variant.features %}
+                                                    <tr>
+                                                        <td class="row-count tar">{{ loop.index }}</td>
+                                                        <td>{{ form_widget(row.featureGroup) }}</td>
+                                                        <td>{{ form_widget(row.feature) }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    {{ form_rest(form) }}
+                            {% endfor %}
+                            {% do form.variants.setRendered() %}
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
                 </section>
