@@ -18,7 +18,7 @@ class ProductVariantFeaturesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('features', 'collection', array(
-            'type' => new ProductFeatureType($this->departmentId),
+            'type' => new ProductFeatureCombinationType($this->departmentId),
             'allow_add' => false,
             'allow_delete' => false,
         ));

@@ -112,7 +112,7 @@ class NewProductType extends AbstractType
                 break;
             case 2:
                 $builder->add('features', 'collection', array(
-                    'type' => new ProductFeatureType($options['departmentId']),
+                    'type' => new ProductFeatureCombinationType($options['departmentId']),
                     'allow_add' => true,
                     'allow_delete' => true,
                 ));
