@@ -45,6 +45,7 @@ class ProductFeatureCombinationType extends AbstractType
                 'class' => 'feature-group fill',
                 'data-placeholder' => '- Select a Group -',
                 'placeholder' => '- Select a Group -',
+                'data-help' => 'Select a feature group.',
             ),
         ));
 
@@ -56,6 +57,7 @@ class ProductFeatureCombinationType extends AbstractType
                 'class' => 'feature fill',
                 'data-placeholder' => '- Select a Group First -',
                 'placeholder' => '- Select a Group First -',
+                'data-help' => 'Select a corresponding feature.',
             ),
         ));
 
