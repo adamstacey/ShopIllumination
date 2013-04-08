@@ -33,6 +33,6 @@ class ProductVariantFeaturesType extends AbstractType
 
     public function getName()
     {
-        return 'site_product_variant_images';
+        return 'site_product_variant_features';
     }
 }
