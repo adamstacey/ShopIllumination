@@ -209,7 +209,12 @@ var fixHelper = function(e, ui) {
 function loadFormFunctions() {
     $("tr.no-data").each(function() {
         if ($(this).closest("tbody").find("tr").length == 1) {
-            $(this).show();
+            var $addFormRowObject = $(this).closest("form").find(".actionAddFormRow");
+            if ($addFormRowObject.length > 0) {
+                $addFormRowObject.click();
+            } else {
+                $(this).show();
+            }
         } else {
             $(this).hide();
         }
@@ -238,6 +243,10 @@ function loadFormFunctions() {
 
 $(document).ready(function() {
     generateFormElements($(document));
+
+    $(document).on("focus", ".ui-dialog-titlebar-close", function() {
+        $(this).blur();
+    });
 
     $(document).on("click", ".actionAddFormRow", function() {
         var $tableObject = $("#"+$(this).attr("data-table-object"));
