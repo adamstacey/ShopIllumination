@@ -35,7 +35,7 @@ class ProductApiController extends Controller
          */
         $em = $this->getDoctrine()->getManager();
         if($request->query->get('q', null)) {
-            $query = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.descriptions pd WHERE pd.name LIKE ?1");
+            $query = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.descriptions pd WHERE pd.pageTitle LIKE ?1 ");
             $query->setParameter(1, "%" . $request->query->get('q', null) . "%");
         } else {
             $query = $em->createQuery("SELECT p, pd FROM KAC\SiteBundle\Entity\Product p JOIN p.descriptions pd");
