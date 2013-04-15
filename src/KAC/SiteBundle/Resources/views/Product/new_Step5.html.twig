@@ -116,9 +116,6 @@
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
                 formData: []
-            }).bind('fileuploadadded', function (e, data) {
-                generateButtons($(that));
-                return true;
             }).bind('fileuploaddcompleted', function (e, data) {
                 generateButtons($(that));
                 return true;
@@ -140,15 +137,17 @@
 
             // On page load fetch the info for any existing files
             var imageIds = $(that).find('input[type=hidden]').val();
-            var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
-                var template = tmpl("template-download");
-                var result = template({
-                    files: data.files,
-                    formatFileSize: this._formatFileSize,
-                    options: this.options
+            if (imageIds) {
+                var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
+                    var template = tmpl("template-download");
+                    var result = template({
+                        files: data.files,
+                        formatFileSize: this._formatFileSize,
+                        options: this.options
+                    });
+                    $(that).find('.files tbody').append(result);
                 });
-                $(that).find('.files tbody').append(result);
-            });
+            }
         });
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();
