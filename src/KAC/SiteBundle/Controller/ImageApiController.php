@@ -119,6 +119,7 @@ class ImageApiController extends Controller
              * @var $file UploadedFile
              */
             $file = $image->getFile();
+            $size = $file->getSize();
 
             $em = $this->getDoctrine()->getManager();
 
@@ -128,7 +129,7 @@ class ImageApiController extends Controller
             $filesArray[] = array(
                 'id' => $image->getId(),
                 'name' => $file->getClientOriginalName(),
-                'size' => $file->getSize(),
+                'size' => $size,
                 'url' => $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
                 'delete_type' => 'DELETE',
