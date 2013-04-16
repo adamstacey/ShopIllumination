@@ -110,7 +110,8 @@ class NewProductFlow extends FormFlow
                 $existingCombination = array();
                 foreach ($existingVariant->getFeatures() as $variantFeatureGroup)
                 {
-                    if($variantFeatureGroup->getFeature()) {
+                    if ($variantFeatureGroup->getFeatureGroup() && $variantFeatureGroup->getFeature())
+                    {
                         $existingCombination[] = array('featureGroupId' => $variantFeatureGroup->getFeatureGroup()->getId(), 'featureId' => $variantFeatureGroup->getFeature()->getId());
                     }
                 }
