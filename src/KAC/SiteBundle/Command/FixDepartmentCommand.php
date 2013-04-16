@@ -47,6 +47,7 @@ class FixDepartmentCommand extends ContainerAwareCommand
         $rootDepartment->setStatus('h');
         $rootDepartment->setParent(null);
         $rootDepartment->setDepartmentPath('');
+        $rootDepartment->setTemplate('');
         $rootDepartment->setHidePrices(false);
         $rootDepartment->setShowPricesOutOfHours(false);
         $rootDepartment->setMembershipCardDiscountAvailable(false);
@@ -95,6 +96,7 @@ class FixDepartmentCommand extends ContainerAwareCommand
         $new->setStatus($department->getStatus());
         $new->setDepartmentPath($department->getDepartmentPath());
         $new->setHidePrices($department->getHidePrices());
+        $new->setTemplate($department->getTemplate());
         $new->setShowPricesOutOfHours($department->getShowPricesOutOfHours());
         $new->setMembershipCardDiscountAvailable($department->getMembershipCardDiscountAvailable());
         $new->setMaximumMembershipCardDiscount($department->getMaximumMembershipCardDiscount());
