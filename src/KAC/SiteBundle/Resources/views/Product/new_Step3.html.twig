@@ -8,17 +8,6 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                    <fieldset>
-                        <div class="form-element widget-group clearfix">
-                            <div class="widget widget-1-of-3">
-                                <label for="formProductCode">Apply Base Product Code</label>
-                            </div>
-                            <div class="widget widget-2-of-3">
-                                <input type="text" id="formProductCode" name="productCode" class="fl uppercase" size="15" value="" />
-                                <button type="button" class="actionApplyProductCode fl button icon-grey mls" data-icon-secondary="icon-465">Apply</button>
-                            </div>
-                        </div>
-                    </fieldset>
                     <fieldset class="pbm">
                         <table class="form-table" id="productVariantList">
                             <thead>
@@ -32,8 +21,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    {% for variant in form.variants %}
+                                {% for variant in form.variants %}
+                                    <tr>
                                         <td class="row-count tar">{{ loop.index }}</td>
                                         <td>
                                             <ul>
@@ -45,12 +34,12 @@
                                             </ul>
                                         </td>
                                         {{ form_widget(variant) }}
-                                    {% endfor %}
-                                </tr>
+                                    </tr>
+                                {% endfor %}
                                 {% do form.features.setRendered() %}
-                                {{ form_rest(form) }}
                             </tbody>
                         </table>
+                        {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
@@ -59,15 +48,3 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".actionApplyProductCode").click(function() {
-            var $productCode = $("#formProductCode").val();
-            $("#productVariantList").find("tr input:nth-child(1)").each(function() {
-                if (!$(this).val()) {
-                    $(this).val($productCode);
-                }
-            });
-        })
-    })
-</script>
