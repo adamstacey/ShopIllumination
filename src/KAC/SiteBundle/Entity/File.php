@@ -29,7 +29,7 @@ class File
     private $objectId;
     
     /**
-     * @ORM\Column(name="locale", type="string", length=2)
+     * @ORM\Column(name="locale", type="string", length=5)
      */
     private $locale = "en_GB";
 	

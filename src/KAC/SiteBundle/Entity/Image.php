@@ -34,9 +34,9 @@ class Image
      * @ORM\Column(name="image_type", type="string", length=100, nullable=true)
      */
     private $imageType;
-    
+
     /**
-     * @ORM\Column(name="locale", type="string", length=2)
+     * @ORM\Column(name="locale", type="string", length=5)
      */
     private $locale = "en_GB";
 	
