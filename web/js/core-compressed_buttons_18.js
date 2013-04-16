@@ -13,6 +13,7 @@ function generateButtons($object) {
             $(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
         }
     });
+    return true;
 }
 
 $(document).ready(function() {
