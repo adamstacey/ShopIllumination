@@ -28,7 +28,7 @@
     adminPath: RequestHandler path to manage cores.
       If 'null' (or absent), cores will not be manageable via request handler
     -->
-    <cores adminPath="/admin/cores" host="${host:}" hostPort="${jetty.port:}">
+    <cores adminPath="/admin/cores" defaultCoreName="products" host="${host:}" hostPort="${jetty.port:}">
         <core name="products" instanceDir="products" />
     </cores>
 </solr>

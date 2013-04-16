@@ -492,8 +492,9 @@
         <field name="isDeleted" type="boolean" indexed="true" stored="true" multiValued="false"/>
 
         <field name="url" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="image_path" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="variant_image_paths" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="thumbnail_path" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="large_image_path" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="image_paths" type="string" indexed="true" stored="true" multiValued="true"/>
 
         <field name="status" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="locale" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -533,6 +534,9 @@
 
         <field name="low_price" type="float" indexed="true" stored="true" multiValued="false"/>
         <field name="high_price" type="float" indexed="true" stored="true" multiValued="false"/>
+        <!--<field name="cost_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
+        <!--<field name="rrp" type="currency" indexed="true" stored="true" multiValued="false"/>-->
+        <!--<field name="list_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
 
         <field name="created_at" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="updated_at" type="date" indexed="true" stored="true" multiValued="false"/>
@@ -550,35 +554,6 @@
 
         <!-- Sortable fields -->
         <field name="header_sort" type="alphaOnlySort" indexed="true" stored="false" multiValued="false"/>
-
-
-        <!-- Dynamic fields -->
-        <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
-        <dynamicField name="*_s"  type="string"  indexed="true"  stored="true"/>
-        <dynamicField name="*_l"  type="long"   indexed="true"  stored="true"/>
-        <dynamicField name="*_t"  type="text_general"    indexed="true"  stored="true"/>
-        <dynamicField name="*_txt" type="text_general"    indexed="true"  stored="true" multiValued="true"/>
-        <dynamicField name="*_en"  type="text_en"    indexed="true"  stored="true" multiValued="true" />
-        <dynamicField name="*_b"  type="boolean" indexed="true"  stored="true"/>
-        <dynamicField name="*_f"  type="float"  indexed="true"  stored="true"/>
-        <dynamicField name="*_d"  type="double" indexed="true"  stored="true"/>
-
-        <dynamicField name="*_dt" type="date"    indexed="true"  stored="true"/>
-
-        <!-- some trie-coded dynamic fields for faster range queries -->
-        <dynamicField name="*_ti" type="tint"    indexed="true"  stored="true"/>
-        <dynamicField name="*_tl" type="tlong"   indexed="true"  stored="true"/>
-        <dynamicField name="*_tf" type="tfloat"  indexed="true"  stored="true"/>
-        <dynamicField name="*_td" type="tdouble" indexed="true"  stored="true"/>
-        <dynamicField name="*_tdt" type="tdate"  indexed="true"  stored="true"/>
-
-        <dynamicField name="*_pi"  type="pint"    indexed="true"  stored="true"/>
-        <dynamicField name="*_c"   type="currency" indexed="true"  stored="true"/>
-
-        <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
-        <dynamicField name="attr_*" type="string" indexed="true" stored="true" multiValued="true"/>
-
-        <dynamicField name="random_*" type="random" />
     </fields>
 
     <!-- Field to use to determine and enforce document uniqueness.
