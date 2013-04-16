@@ -312,7 +312,6 @@ ALTER TABLE product_variant_to_feature ADD CONSTRAINT FK_9118317A60E4B879 FOREIG
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52D3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DDE23A8E3 FOREIGN KEY (option_group_id) REFERENCES product_option_groups (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DA7C41D6F FOREIGN KEY (option_id) REFERENCES product_options (id);
-
 INSERT INTO product_variant_to_feature (id, variant_id, feature_group_id, feature_id, active, display_order, created_at, updated_at) SELECT id, variant_id, product_feature_group_id	, product_feature_id, active, display_order, created_at, updated_at FROM product_to_feature;
 DROP TABLE product_to_feature;
 ALTER TABLE routing CHANGE object_type object_type VARCHAR(255) NOT NULL;
@@ -385,5 +384,8 @@ CREATE UNIQUE INDEX UNIQ_A5F8B9FAF47645AE ON routing (url);
 ALTER TABLE department_descriptions CHANGE google_department google_department LONGTEXT NOT NULL;
 ALTER TABLE routing CHANGE object_id object_id INT DEFAULT NULL;
 -- ALTER TABLE departments_tmp DROP template;
+ALTER TABLE files CHANGE locale locale VARCHAR(5) NOT NULL;
+ALTER TABLE images CHANGE locale locale VARCHAR(5) NOT NULL;
+ALTER TABLE order_products DROP name;
 ALTER TABLE departments_tmp ADD CONSTRAINT FK_C7AFC1E2727ACA70 FOREIGN KEY (parent_id) REFERENCES departments_tmp (id) ON DELETE SET NULL
 SET FOREIGN_KEY_CHECKS = 1;
