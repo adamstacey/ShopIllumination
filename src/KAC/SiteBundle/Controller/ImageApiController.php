@@ -113,7 +113,7 @@ class ImageApiController extends Controller
             ->getForm();
         $form->bind($request);
 
-        if($form->isValid())
+        if ($form->isValid())
         {
             /**
              * @var $file UploadedFile
@@ -150,8 +150,6 @@ class ImageApiController extends Controller
         $response->headers->set('Content-Type', 'application/'.$format);
         return $response;
     }
-
-
 
     /**
      * @Route("/{id}.{format}", name="api_images_delete_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
