@@ -75,6 +75,11 @@ class DepartmentTmp implements DescribableInterface
     private $inheritedDeliveryBand;
 
     /**
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    private $template = 'standard';
+
+    /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
@@ -712,5 +717,28 @@ class DepartmentTmp implements DescribableInterface
     public function setRoot($root)
     {
         $this->root = $root;
+    }
+
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return DepartmentTmp
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string 
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }
