@@ -199,7 +199,7 @@ class NewProductFlow extends FormFlow
             // Attempt to load variant UIDs from google
             foreach ($formData->getVariants() as $variant)
             {
-                $result = $this->googleApi->findProduct($variant->getProductCode());
+                $result = $this->googleApi->findProductUids($variant->getProductCode());
 
                 if (isset($result["items"][0]["product"]["mpns"][0]))
                 {

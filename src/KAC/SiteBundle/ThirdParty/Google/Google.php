@@ -94,13 +94,13 @@ class Google {
     }
 
 
-    public function findProduct($productId)
+    public function findProductUids($productCode)
     {
         // Tidy up search phrases
-        $productId = urlencode($productId);
+        $productCode = urlencode($productCode);
 
         // API URL
-        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$productId.'&alt=json&maxResults=1&restrictBy=gtin';
+        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$productCode.'&alt=json&maxResults=1&restrictBy=gtin';
 
         // Try to fetch the product data from Google search
         $curl = curl_init($url);
@@ -113,5 +113,26 @@ class Google {
         curl_close($curl);
 
         return json_decode($product, true);
+    }
+    
+    public function findMoreExpensiveProducts($productCode, $price, $limit)
+    {
+        // Tidy up search phrases
+        $productCode = urlencode($productCode);
+
+        // API URL
+        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$productCode.'&alt=json&maxResults='.$limit.'&restrictBy=price=['.$price.',*]';
+
+        // Try to fetch the product data from Google search
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $products = curl_exec($curl);
+
+        // Close the curl connection
+        curl_close($curl);
+
+        return json_decode($products, true);
     }
 }
