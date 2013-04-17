@@ -102,7 +102,7 @@ class Google {
         $searchPhrase = urlencode($searchPhrase);
 
         // API URL
-        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$searchPhrase.'&alt=json&maxResults=1000';
+        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$searchPhrase.'&alt=json&maxResults=1&restrictBy=gtin';
 
         // Try to fetch the product data from Google search
         $curl = curl_init($url);
@@ -114,13 +114,6 @@ class Google {
         // Close the curl connection
         curl_close($curl);
 
-        // Get the products
-        $productData = json_decode($productSearchData->getProductData());
-        if ($productData->totalItems > 0)
-        {
-            return $productData->items;
-        }
-
-        return false;
+        return json_decode($productSearchData, true);
     }
 }

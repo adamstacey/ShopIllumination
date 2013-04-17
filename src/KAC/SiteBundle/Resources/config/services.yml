@@ -8,7 +8,7 @@ services:
   # Third Party services
   kac_site.google.google:
     class: KAC\SiteBundle\ThirdParty\Google\Google
-    arguments: [google_api_key, google_dev_token, google_email, google_password, google_analytics_id]
+    arguments: [%google_api_key%, %google_dev_token%, %google_email%, %google_password%, %google_analytics_id%]
 
   # Managers
   kac_site.manager.product:

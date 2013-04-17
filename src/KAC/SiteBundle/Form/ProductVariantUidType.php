@@ -11,8 +11,8 @@ class ProductVariantUidType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('ean');
         $builder->add('mpn');
+        $builder->add('ean');
         $builder->add('upc');
         $builder->add('jan');
         $builder->add('isbn');

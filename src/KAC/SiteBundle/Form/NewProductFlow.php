@@ -193,6 +193,47 @@ class NewProductFlow extends FormFlow
 
         if ($step == 4)
         {
+            /**
+             * @var $variant Variant
+             */
+            // Attempt to load variant UIDs from google
+            foreach ($formData->getVariants() as $variant)
+            {
+                $result = $this->googleApi->getProductSearchData($variant->getProductCode());
+
+                if (isset($result["items"][0]["product"]["mpns"][0]))
+                {
+                    $variant->setMpn($result["items"][0]["product"]["mpns"][0]);
+                }
+                if (isset($result["items"][0]["product"]["gtins"]))
+                {
+                    foreach($result["items"][0]["product"]["gtins"] as $gtin)
+                    {
+                        if(strlen($gtin) === 12)
+                        {
+                            $variant->setUpc($gtin);
+                        } elseif(strlen($gtin) === 14) {
+                            $variant->setEan($gtin);
+                        } elseif(strlen($gtin) === 10) {
+                            $variant->setIsbn($gtin);
+                        } elseif(strlen($gtin) === 13) {
+                            $variant->setEan($gtin);
+                            $variant->setJan($gtin);
+                            $variant->setIsbn($gtin);
+                        } else {
+                            $variant->setUpc($gtin);
+                            $variant->setEan($gtin);
+                            $variant->setJan($gtin);
+                            $variant->setIsbn($gtin);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        if ($step == 5)
+        {
             // Get the department features
             $departmentFeatures = $formData->getDepartment()->getDepartment()->getFeatures();
 
