@@ -16,22 +16,22 @@
                                     <div>
                                         <table class="form-table mbm">
                                             <thead>
-                                                <tr>
-                                                    <th width="1">&nbsp;</th>
-                                                    <th title="The selected feature group.">Group</th>
-                                                    <th title="Select a corresponding feature.">Feature</th>
-                                                    <th width="1">&nbsp;</th>
-                                                </tr>
+                                            <tr>
+                                                <th width="1">&nbsp;</th>
+                                                <th title="The selected feature group.">Group</th>
+                                                <th title="Select a corresponding feature.">Feature</th>
+                                                <th width="1">&nbsp;</th>
+                                            </tr>
                                             </thead>
                                             <tbody>
-                                                {% for row in variant.features %}
-                                                    <tr>
-                                                        <td width="1" class="row-count tar">{{ loop.index }}</td>
-                                                        <td>{{ form_widget(row.featureGroup) }}</td>
-                                                        <td>{{ form_widget(row.feature) }}</td>
-                                                        <td width="1" class="tar"><button type="button" title="Click to apply the selected feature across all other variants." class="actionApplyFeatureToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button></td>
-                                                    </tr>
-                                                {% endfor %}
+                                            {% for row in variant.features %}
+                                                <tr>
+                                                    <td width="1" class="row-count tar">{{ loop.index }}</td>
+                                                    <td>{{ form_widget(row.featureGroup) }}</td>
+                                                    <td>{{ form_widget(row.feature) }}</td>
+                                                    <td width="1" class="tar"><button type="button" title="Click to apply the selected feature across all other variants." class="actionApplyFeatureToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button></td>
+                                                </tr>
+                                            {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>

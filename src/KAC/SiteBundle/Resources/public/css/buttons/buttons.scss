@@ -98,6 +98,21 @@ button.ui-button::-moz-focus-inner {
     color: $textColour;
 }
 
+.button-dark-grey {
+    @include highlightedVerticalGradientGreyDark;
+    @include boxGlow($colourGreyDark, 5px);
+    border: 1px solid $colourGreyDark;
+}
+
+.button-dark-grey:hover {
+    @include highlightedVerticalGradientGreyDarkReversed;
+}
+
+.button-dark-grey .ui-button-text {
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
+}
+
 .button-dark-red {
     @include highlightedVerticalGradientDarkRed;
     @include boxGlow($colourDarkRed, 5px);
