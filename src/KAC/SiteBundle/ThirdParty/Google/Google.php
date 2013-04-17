@@ -121,7 +121,7 @@ class Google {
         $productCode = urlencode($productCode);
 
         // API URL
-        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$productCode.'&alt=json&maxResults='.$limit.'&restrictBy=price=['.$price.',*]';
+        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$productCode.'&alt=json&maxResults='.$limit.'&restrictBy=price=('.$price.',*]&restrictBy=accountId~4162886';
 
         // Try to fetch the product data from Google search
         $curl = curl_init($url);

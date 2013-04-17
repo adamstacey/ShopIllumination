@@ -145,6 +145,10 @@ class ProductController extends Controller {
             } while ($currDepartment !== null);
         }
 
+        // Find competitors prices
+        $googleApi = $this->get('kac_site.google.google');
+        $competitorPrices = $googleApi->findMoreExpensiveProducts($product->getProductCode(), $lowestPrice !== null ? $lowestPrice->getListPrice() : $highestPrice->getListPrice(), 5);
+
         return $this->render('KACSiteBundle:Product:view\\'.$template.'.html.twig', array(
             'product' => $product,
             'departments' => $departments,
@@ -154,6 +158,7 @@ class ProductController extends Controller {
             'highest_price' => $highestPrice,
             'common_features' => $commonFeatures,
             'variant_features' => $variantFeatures,
+            'competitorPrices' => $competitorPrices,
         ));
     }
 
@@ -214,8 +219,6 @@ class ProductController extends Controller {
                 return $this->redirect($this->generateUrl('admin_listing_products'));
             }
         }
-
-//        \Doctrine\Common\Util\Debug::dump($product->getVariants(), 4);die();
 
         return $this->render('KACSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),

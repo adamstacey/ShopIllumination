@@ -60,7 +60,11 @@
                                                             <span class="currency-prefix">from only</span>
                                                         </div>
                                                         <div class="price">
-                                                            {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                            {% if lowest_price is null %}
+                                                                {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                            {% else %}
+                                                                {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                            {% endif %}
                                                         </div>
                                                         <div class="price pbm">
                                                             <span class="currency-tax">(inc. VAT)</span>
@@ -83,6 +87,7 @@
                                                     <li><a href="#technicalSpecification">Technical Specification</a></li>
                                                     <li><a href="#reviews">Reviews</a></li>
                                                     <li><a href="#questionsAndAnswers">Questions &amp; Answers</a></li>
+                                                    <li><a href="#cheaperThan">Cheaper Than</a></li>
                                                 </ul>
                                                 <div id="overview">
                                                     <section>
@@ -119,6 +124,14 @@
                                                     <section>
                                                         <p>This section is currently not available</p>
                                                     </section>
+                                                </div>
+                                                <div id="cheaperThan">
+                                                    {% for item in competitorPrices.items %}
+                                                        <li>
+                                                            <span class="competitor-name"><a href="{{ item.product.link }}">{{ item.product.author.name }}</a></span>
+                                                            <span class="competitor-price">{{ item.product.inventories[0].price|currency(item.product.inventories[0].currency) }}</span>
+                                                        </li>
+                                                    {% endfor %}
                                                 </div>
                                             </div>
                                         </section>
