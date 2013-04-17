@@ -123,6 +123,7 @@ class NewProductType extends AbstractType
                     'block_name' => 'variants_overview',
                     'type' => new ProductVariantOverviewType(),
                     'required'  => false,
+                    'allow_add' => true,
                     'allow_delete' => true,
                 ));
 
@@ -132,6 +133,7 @@ class NewProductType extends AbstractType
                     'block_name' => 'variants_features',
                     'type' => new ProductVariantFeaturesType($options['departmentId']),
                     'required'  => false,
+                    'allow_add' => true,
                     'allow_delete' => true,
                 ));
 
@@ -142,6 +144,7 @@ class NewProductType extends AbstractType
                     'block_name' => 'variants_images',
                     'type' => new ProductVariantImagesType(),
                     'required'  => false,
+                    'allow_add' => true,
                     'allow_delete' => true,
                 ));
                 break;
