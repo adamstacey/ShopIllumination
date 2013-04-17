@@ -1,3 +1,17 @@
+<style>
+    .accordion-item {
+        position: relative;
+    }
+    .accordion-header-buttons {
+        position: absolute;
+        top: 4px;
+        right: 52px;
+        z-index: 1;
+    }
+    .accordion-header-buttons .button {
+        padding: 0 2px;
+    }
+</style>
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
@@ -8,8 +22,47 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                    <fieldset>
+                        <div class="accordion mbm">
+                            {% for variant in form.variants %}
+                                <div class="accordion-item fileupload">
+                                    <div class="accordion-header-buttons">
+                                        <button type="button" class="fileinput-button button button-dark-grey icon-white mlm fr" data-icon-secondary="icon-1121"><input class="no-uniform" type="file" name="file" multiple>Add Images</button>
+                                    </div>
+                                    <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+                                        <div class="clearfix">
 
-                    <fieldset class="fileupload">
+                                        </div>
+                                        <table class="form-table files mbm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="1">&nbsp;</th>
+                                                    <th title="The selected feature group.">Group</th>
+                                                    <th title="Select a corresponding feature.">Feature</th>
+                                                    <th width="1">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                        {{ form_widget(variant) }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% do form.variants.setRendered() %}
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Product:newControls.html.twig' %}
+
+
+
+
+
+
+                    {#<fieldset class="fileupload">
                         <legend class="fill">Images for the product group</legend>
                         <table class="form-table files">
                             <thead>
@@ -27,7 +80,7 @@
                         </table>
                         {{ form_widget(form.images) }}
                         {% do form.images.setRendered() %}
-                    </fieldset>
+                    </fieldset>#}
                     {% for variant in form.variants %}
                         <fieldset class="fileupload">
                             <legend class="fill">Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</legend>
@@ -115,7 +168,8 @@
             $(this).fileupload({
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
-                formData: []
+                formData: [],
+                autoUpload: true
             }).bind('fileuploaddcompleted', function (e, data) {
                 generateButtons($(that));
                 return true;
