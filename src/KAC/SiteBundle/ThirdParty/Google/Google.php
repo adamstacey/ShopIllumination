@@ -94,26 +94,24 @@ class Google {
     }
 
 
-    public function getProductSearchData($searchPhrase)
+    public function findProduct($productId)
     {
-        $products = array();
-
         // Tidy up search phrases
-        $searchPhrase = urlencode($searchPhrase);
+        $productId = urlencode($productId);
 
         // API URL
-        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$searchPhrase.'&alt=json&maxResults=1&restrictBy=gtin';
+        $url = 'https://www.googleapis.com/shopping/search/v1/public/products?key='.$this->googleApiKey.'&country=GB&q='.$productId.'&alt=json&maxResults=1&restrictBy=gtin';
 
         // Try to fetch the product data from Google search
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $productSearchData = curl_exec($curl);
+        $product = curl_exec($curl);
 
         // Close the curl connection
         curl_close($curl);
 
-        return json_decode($productSearchData, true);
+        return json_decode($product, true);
     }
 }
