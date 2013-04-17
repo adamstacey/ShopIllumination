@@ -168,9 +168,6 @@ class ProductController extends Controller {
         $manager = $this->getManager();
         $product = $manager->createProduct();
 
-        /**
-         * @var \Craue\FormFlowBundle\Form\FormFlow $flow
-         */
         $flow = $this->get('kac_site.form.flow.new_product');
         $flow->bind($product);
 
@@ -217,6 +214,8 @@ class ProductController extends Controller {
                 return $this->redirect($this->generateUrl('admin_listing_products'));
             }
         }
+
+//        \Doctrine\Common\Util\Debug::dump($product->getVariants(), 4);die();
 
         return $this->render('KACSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
