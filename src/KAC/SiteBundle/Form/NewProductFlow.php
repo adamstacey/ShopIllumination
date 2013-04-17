@@ -7,6 +7,7 @@ use Craue\FormFlowBundle\Event\PostBindSavedDataEvent;
 use Craue\FormFlowBundle\Event\PostValidateEvent;
 use Craue\FormFlowBundle\Event\PreBindEvent;
 use Craue\FormFlowBundle\Form\FormFlowEvents;
+use KAC\SiteBundle\ThirdParty\Google\Google;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\AbstractType;
@@ -22,8 +23,15 @@ use KAC\SiteBundle\Entity\Product;
 
 class NewProductFlow extends FormFlow
 {
+    protected $googleApi;
+
     protected $maxSteps = 6;
     protected $allowDynamicStepNavigation = true;
+
+    function __construct(Google $googleApi)
+    {
+        $this->googleApi = $googleApi;
+    }
 
     protected function loadStepDescriptions() {
         return array(
@@ -35,6 +43,8 @@ class NewProductFlow extends FormFlow
             '6. Links'
         );
     }
+
+
 
     /**
      * @param $formData Product

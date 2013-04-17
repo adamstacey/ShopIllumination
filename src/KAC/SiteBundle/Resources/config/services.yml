@@ -5,6 +5,11 @@ services:
     tags:
       - { name: twig.extension }
 
+  # Third Party services
+  kac_site.google.google:
+    class: KAC\SiteBundle\ThirdParty\Google\Google
+    arguments: [google_api_key, google_dev_token, google_email, google_password, google_analytics_id]
+
   # Managers
   kac_site.manager.product:
     class: KAC\SiteBundle\Manager\ProductManager
@@ -74,6 +79,7 @@ services:
     class: KAC\SiteBundle\Form\NewProductFlow
     parent: craue.form.flow
     scope: request
+    arguments: [@kac_site.google.google]
     calls:
       - [ setFormType, [@kac_site.form.new_product]]
   kac_site.form.new_variant:

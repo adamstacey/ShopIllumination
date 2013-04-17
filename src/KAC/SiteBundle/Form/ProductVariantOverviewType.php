@@ -18,6 +18,13 @@ class ProductVariantOverviewType extends AbstractType
                 'class' => 'tac fill uppercase',
             ),
         ));
+        $builder->add('ean', 'text', array(
+            'attr' => array(
+                'size' => 10,
+                'data-help' => 'Enter the products EAN number',
+                'class' => 'tac fill uppercase',
+            ),
+        ));
         $builder->add('prices', 'collection', array(
             'type' => new ProductPriceType(),
             'allow_add' => true,
