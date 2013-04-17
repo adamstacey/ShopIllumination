@@ -15,7 +15,6 @@
                                     <th width="1">&nbsp;</th>
                                     <th class="tal" title="The features that make up the combination.">Combination</th>
                                     <th title="Enter the unique product code supplied by the manufacturer or supplier.">Product Code</th>
-                                    <th title="Enter the unique EAN supplied by the manufacturer or supplier.">EAN</th>
                                     <th title="Enter the recommended retail price (RRP) of the product. Leave it blank if you want the RRP to be the list price.">RRP</th>
                                     <th title="Enter the list price. This is the price the product will sell for.">List Price</th>
                                     <th width="1">&nbsp;</th>
@@ -37,7 +36,6 @@
                                         {{ form_widget(variant) }}
                                     </tr>
                                 {% endfor %}
-                                {% do form.features.setRendered() %}
                             </tbody>
                         </table>
                         {{ form_rest(form) }}

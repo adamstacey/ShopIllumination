@@ -27,6 +27,8 @@
                     {% include 'KACSiteBundle:Product:new_Step5.html.twig' %}
                 {% elseif flow.getCurrentStep() == 6 %}
                     {% include 'KACSiteBundle:Product:new_Step6.html.twig' %}
+                {% elseif flow.getCurrentStep() == 7 %}
+                    {% include 'KACSiteBundle:Product:new_Step7.html.twig' %}
                 {% endif %}
             </div>
         </div>

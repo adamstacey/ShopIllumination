@@ -23,8 +23,20 @@
 
 {% macro product_variants_overview_widget(form) %}
     <td{% if form.productCode.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(form.productCode) }}</td>
-    <td{% if form.ean.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(form.ean) }}</td>
     {{ form_widget(form.prices) }}
+    <td width="1">
+        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productVariantList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+    </td>
+{% endmacro %}
+
+{% macro product_variants_uid_widget(form) %}
+    <td>
+        {{ form_row(form.ean) }}
+        {{ form_row(form.mpn) }}
+        {{ form_row(form.upc) }}
+        {{ form_row(form.jan) }}
+        {{ form_row(form.isbn) }}
+    </td>
     <td width="1">
         <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productVariantList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
     </td>

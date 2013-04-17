@@ -130,6 +130,16 @@ class NewProductType extends AbstractType
                 break;
             case 4:
                 $builder->add('variants', 'collection', array(
+                    'block_name' => 'variants_uid',
+                    'type' => new ProductVariantUidType(),
+                    'required'  => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
+
+                break;
+            case 5:
+                $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_features',
                     'type' => new ProductVariantFeaturesType($options['departmentId']),
                     'required'  => false,
@@ -138,7 +148,7 @@ class NewProductType extends AbstractType
                 ));
 
                 break;
-            case 5:
+            case 6:
                 $builder->add('images', 'hidden');
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_images',
@@ -148,7 +158,7 @@ class NewProductType extends AbstractType
                     'allow_delete' => true,
                 ));
                 break;
-            case 6:
+            case 7:
                 $builder->add('links', 'collection', array(
                     'type' => new ProductLinkType(),
                     'allow_add' => true,

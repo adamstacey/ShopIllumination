@@ -4,52 +4,43 @@
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
-                    <h2>4. Images</h2>
+                    <h2>4. Features</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-
-                    <fieldset class="fileupload">
-                        <legend class="fill">Images for the product group</legend>
-                        <table class="form-table files">
-                            <thead>
-                            <tr>
-                                <th colspan="4">
-                                    <span class="button fileinput-button button-small mrm fl">
-                                        <span>Add files</span>
-                                        <input class="no-uniform" type="file" name="file" multiple>
-                                    </span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        {{ form_widget(form.images) }}
-                        {% do form.images.setRendered() %}
-                    </fieldset>
-                    {% for variant in form.variants %}
-                        <fieldset class="fileupload">
-                            <legend class="fill">Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</legend>
-                            <table class="form-table files">
-                                <thead>
-                                    <tr>
-                                        <th colspan="4">
-                                            <span class="button fileinput-button button-small mrm fl">
-                                                Add files
-                                                <input class="no-uniform" type="file" name="file" multiple>
-                                            </span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            {{ form_widget(variant) }}
+                    <fieldset>
+                        <div class="accordion mbm">
+                            {% for variant in form.variants %}
+                                <div class="accordion-item">
+                                    <h3>Features for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+                                        <table class="form-table mbm">
+                                            <thead>
+                                                <tr>
+                                                    <th width="1">&nbsp;</th>
+                                                    <th title="The selected feature group.">Group</th>
+                                                    <th title="Select a corresponding feature.">Feature</th>
+                                                    <th width="1">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for row in variant.features %}
+                                                    <tr>
+                                                        <td width="1" class="row-count tar">{{ loop.index }}</td>
+                                                        <td>{{ form_widget(row.featureGroup) }}</td>
+                                                        <td>{{ form_widget(row.feature) }}</td>
+                                                        <td width="1" class="tar"><button type="button" title="Click to apply the selected feature across all other variants." class="actionApplyFeatureToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endfor %}
                             {% do form.variants.setRendered() %}
-                        </fieldset>
-                    {% endfor %}
-                    {{ form_rest(form) }}
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
                 </section>
@@ -57,101 +48,19 @@
         </div>
     </div>
 </form>
-
-{% raw %}
-<script id="template-upload" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload">
-        <td class="name"><span>{%=file.name%}</span></td>
-        {% if (file.error) { %}
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else if (o.files.valid && !i) { %}
-        <td>
-            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-        </td>
-        <td class="start">
-            {% if (!o.options.autoUpload) { %}
-            <button type="button" class="button button-small mrm fl">Start</button>
-            {% } %}
-        </td>
-        {% } else { %}
-        <td colspan="2"></td>
-        {% } %}
-        <td class="cancel">
-            {% if (!i) { %}
-            <button type="button" class="button button-small mrm fl">Cancel</button>
-            {% } %}
-        </td>
-    </tr>
-    {% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download">
-        {% if (file.error) { %}
-        <td class="name"><span>{%=file.name%}</span></td>
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else { %}
-        <td class="name">
-            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
-        </td>
-        <td></td>
-        {% } %}
-        <td class="delete" colspan="2">
-            <button type="button"  data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red button-small mrm fl">Delete</button>
-        </td>
-    </tr>
-    {% } %}
-</script>
-{% endraw %}
-<script>
-    $(function () {
-        'use strict';
-
-        $('.fileupload').each(function () {
-            var that = this;
-
-            $(this).fileupload({
-                url: '{{ path('api_images_post_image') }}',
-                dropZone: $(this),
-                formData: []
-            }).bind('fileuploaddcompleted', function (e, data) {
-                generateButtons($(that));
-                return true;
-            }).bind('fileuploaddone', function (e, data) {
-                var images = $(that).find('input[type=hidden]').val();
-
-                $.each(data.result.files, function (index, file) {
-                    if (images === "") {
-                        images = [];
-                    } else {
-                        images = images.split(',');
-                    }
-
-                    images.push(file.id);
-                });
-
-                $(that).find('input[type=hidden]').val(images.join(','));
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on("click", ".actionApplyFeatureToAll", function() {
+            $("body").css("cursor", "progress");
+            var $selectedValue = $(this).parent().prev().find("select:eq(0)").val();
+            var $tableIndex = $("table.form-table").index($(this).closest("table.form-table"));
+            var $selectedIndex = $("table.form-table:eq("+$tableIndex+") tbody tr td .actionApplyFeatureToAll").index(this);
+            $("table.form-table").each(function() {
+                $(this).find("tbody tr:eq("+$selectedIndex+") td:eq(2) select option:selected").removeAttr("selected");
+                $(this).find("tbody tr:eq("+$selectedIndex+") td:eq(2) select option[value='"+$selectedValue+"']").attr("selected", "selected");
             });
-
-            // On page load fetch the info for any existing files
-            var imageIds = $(that).find('input[type=hidden]').val();
-            if (imageIds) {
-                var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
-                    var template = tmpl("template-download");
-                    var result = template({
-                        files: data.files,
-                        formatFileSize: this._formatFileSize,
-                        options: this.options
-                    });
-                    $(that).find('.files tbody').append(result);
-                });
-            }
-        });
-        $(document).bind('drop dragover', function (e) {
-            e.preventDefault();
+            $.uniform.update();
+            $("body").css("cursor", "default");
         });
     });
-
 </script>
