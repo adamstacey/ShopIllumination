@@ -69,90 +69,115 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step > 2)
+        if ($step == 3)
         {
-            // Generate variations
-            $options['variants'] = array();
+            // Generate combinations
+            $combinations = array();
 
             // Sort features into groups
-            $featureGroups = array();
-            foreach ($formData->getFeatures() as $featureGroup)
+            $productFeatures = array();
+            foreach ($formData->getFeatures() as $productFeature)
             {
-                if ($featureGroup->getFeature() && $featureGroup->getFeatureGroup())
+                if ($productFeature->getFeature() && $productFeature->getFeatureGroup())
                 {
-                    $featureGroups[$featureGroup->getFeatureGroup()->getId()][] = $featureGroup->getFeature();
+                    $productFeatures[$productFeature->getFeatureGroup()->getId()][] = $productFeature->getFeature();
                 }
             }
 
             // Create array containing each combination of the features
-            foreach ($featureGroups as $featureGroup)
+            foreach ($productFeatures as $features)
             {
                 // If variations is empty create the first variations
-                if (empty($options['variants']))
+                if (empty($combinations))
                 {
-                    foreach ($featureGroup as $featureGroupId => $feature)
+                    foreach ($features as $feature)
                     {
-                        $options['variants'][] = array($feature);
+                        $combinations[] = array($feature);
                     }
                 } else {
                     // Create new variations based on the previous variation with the extra features
-                    $count = count($options['variants']);
-                    for ($i = 0; $i < $count; $i++)
+                    $combinationCount = count($combinations);
+                    for ($combinationLoop = 0; $combinationLoop < $combinationCount; $combinationLoop++)
                     {
-                        if ($featureGroup)
+                        if ($features)
                         {
-                            $variant = array_pop($options['variants']);
-
-                            foreach ($featureGroup as $feature)
+                            $variant = array_pop($combinations);
+                            foreach ($features as $feature)
                             {
                                 $variantTmp = $variant;
                                 $variantTmp[] = $feature;
-                                array_unshift($options['variants'], $variantTmp);
+                                array_unshift($combinations, $variantTmp);
                             }
                         }
                     }
                 }
             }
 
-            // Build the existing combinations to check
-            $existingCombinations = array();
-            foreach ($formData->getVariants() as $existingVariant)
+            // Get the combination groups to check against
+            $combinationGroups = array();
+            foreach ($combinations as $combination)
             {
-                $existingCombination = array();
-                foreach ($existingVariant->getFeatures() as $variantFeatureGroup)
+                foreach ($combination as $feature)
                 {
-                    if ($variantFeatureGroup->getFeatureGroup() && $variantFeatureGroup->getFeature())
+                    if (!in_array($feature->getFeatureGroup()->getId(), $combinationGroups))
                     {
-                        $existingCombination[] = array('featureGroupId' => $variantFeatureGroup->getFeatureGroup()->getId(), 'featureId' => $variantFeatureGroup->getFeature()->getId());
+                        $combinationGroups[] = $feature->getFeatureGroup()->getId();
                     }
                 }
-                $existingCombinations[] = $existingCombination;
+            }
+            sort($combinationGroups);
+
+            // Build a list of the feature ids from the combinations to check
+            $combinationsToCheck = array();
+            foreach ($combinations as $combination)
+            {
+                $combinationToCheck = array();
+                foreach ($combination as $feature)
+                {
+                    $combinationToCheck[$feature->getFeatureGroup()->getId()] = $feature->getId();
+                }
+                ksort($combinationToCheck);
+                $combinationsToCheck[] = $combinationToCheck;
             }
 
-            // Create the variant entities
-            foreach ($options['variants'] as $variantFeatures)
+            // Build a list of the feature ids from the variants to check against
+            $variantsToCheck = array();
+            foreach ($formData->getVariants() as $variant)
             {
-                // Build the combinations to check
-                $combination = array();
-                foreach ($variantFeatures as $feature)
+                if ($variant)
                 {
-                    $combination[] = array('featureGroupId' => $feature->getFeatureGroup()->getId(), 'featureId' => $feature->getId());
+                    $variantToCheck = array();
+                    foreach ($variant->getFeatures() as $variantFeature)
+                    {
+                        if ($variantFeature->getFeatureGroup() && $variantFeature->getFeature())
+                        {
+                            if (in_array($variantFeature->getFeatureGroup()->getId(), $combinationGroups))
+                            {
+                                $variantToCheck[$variantFeature->getFeatureGroup()->getId()] = $variantFeature->getFeature()->getId();
+                            }
+                        }
+                    }
+                    ksort($variantToCheck);
+                    $variantsToCheck[] = $variantToCheck;
                 }
+            }
 
-                // Check if the combinations exist already
+            // Check to see if a variant exists and add if required
+            foreach ($combinationsToCheck as $index => $combinationToCheck)
+            {
                 $variantExists = false;
-                foreach ($existingCombinations as $existingCombination)
+                foreach ($variantsToCheck as $variantToCheck)
                 {
-                    if ($existingCombination === $combination)
+                    if ($combinationToCheck === $variantToCheck)
                     {
                         $variantExists = true;
+                        break;
                     }
                 }
-
                 if (!$variantExists)
                 {
                     $variant = new Variant();
-                    foreach ($variantFeatures as $feature)
+                    foreach ($combinations[$index] as $feature)
                     {
                         $variantToFeature = new VariantToFeature();
                         $variantToFeature->setVariant($variant);
@@ -240,30 +265,33 @@ class NewProductFlow extends FormFlow
             // Go through the variants
             foreach ($formData->getVariants() as $variant)
             {
-                // Go through all the default features of the main department
-                foreach ($departmentFeatures as $departmentToFeature)
+                if ($variant)
                 {
-                    // Check if the feature was already added as part of generating the combinations
-                    $featureExists = false;
-                    foreach ($variant->getFeatures() as $variantToFeature)
+                    // Go through all the default features of the main department
+                    foreach ($departmentFeatures as $departmentToFeature)
                     {
-                        if ($variantToFeature->getFeatureGroup()->getId() == $departmentToFeature->getFeatureGroup()->getId())
+                        // Check if the feature was already added as part of generating the combinations
+                        $featureExists = false;
+                        foreach ($variant->getFeatures() as $variantToFeature)
                         {
-                            $featureExists = true;
+                            if ($variantToFeature->getFeatureGroup()->getId() == $departmentToFeature->getFeatureGroup()->getId())
+                            {
+                                $featureExists = true;
+                            }
                         }
-                    }
 
-                    // If the feature does not exist add it to the variant
-                    if (!$featureExists)
-                    {
-                        $variantToFeature = new VariantToFeature();
-                        $variantToFeature->setVariant($variant);
-                        $variantToFeature->setFeatureGroup($departmentToFeature->getFeatureGroup());
-                        if ($departmentToFeature->getFeature())
+                        // If the feature does not exist add it to the variant
+                        if (!$featureExists)
                         {
-                            $variantToFeature->setFeature($departmentToFeature->getFeature());
+                            $variantToFeature = new VariantToFeature();
+                            $variantToFeature->setVariant($variant);
+                            $variantToFeature->setFeatureGroup($departmentToFeature->getFeatureGroup());
+                            if ($departmentToFeature->getFeature())
+                            {
+                                $variantToFeature->setFeature($departmentToFeature->getFeature());
+                            }
+                            $variant->addFeature($variantToFeature);
                         }
-                        $variant->addFeature($variantToFeature);
                     }
                 }
             }
