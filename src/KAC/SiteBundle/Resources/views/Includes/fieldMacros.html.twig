@@ -29,19 +29,6 @@
     </td>
 {% endmacro %}
 
-{% macro product_variants_uid_widget(form) %}
-    <td>
-        {{ form_row(form.mpn) }}
-        {{ form_row(form.ean) }}
-        {{ form_row(form.upc) }}
-        {{ form_row(form.jan) }}
-        {{ form_row(form.isbn) }}
-    </td>
-    <td width="1">
-        <button type="button" class="actionDeleteFormRow button button-red icon-white" data-table-object="productVariantList" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
-    </td>
-{% endmacro %}
-
 {% macro table_prices_widget(form) %}
     {% if form|length == 1 %}
         {% for child in form %}
