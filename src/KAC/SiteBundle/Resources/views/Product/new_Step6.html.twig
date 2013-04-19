@@ -4,7 +4,7 @@
             <div class="ui-widget">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="ui-button-icon-primary ui-icon icon-white icon-369"></span>
-                    <h2>2. Search Engine Optimisation</h2>
+                    <h2>6. Search Engine Optimisation</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
@@ -12,55 +12,11 @@
                         {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
-                    {% include 'KACSiteBundle:Department:newControls.html.twig' %}
+                    {% include 'KACSiteBundle:Product:newControls.html.twig' %}
                 </section>
             </div>
         </div>
     </div>
 </form>
 <script type="text/javascript">
-    $(document).ready(function() {
-        var googleDepartmentsUrl = "{{ path('api_taxonomies_get') }}";
-        var googleDepartmentUrl = "{{ path('api_taxonomies_get_taxonomy', {'id': -1}) }}";
-        $(".select-google-department").select2({
-            placeholder: "- Select a Google Department -",
-            minimumInputLength: 1,
-            quietMillis: 100,
-            ajax: {
-                url: googleDepartmentsUrl,
-                dataType: 'json',
-                data: function (term, page) {
-                    return {
-                        q: term,
-                        page: page
-                    };
-                },
-                results: function (data, page) {
-                    var more = (page * 10) < data.total;
-                    return {results: data.taxonomies, more: more};
-                }
-            },
-            initSelection: function(element, callback) {
-                var id = $(element).val();
-                if (id !== "") {
-                    $.ajax(googleDepartmentUrl.replace(/-1/, id), {
-                        dataType: "json"
-                    }).done(function(data) { callback(data); });
-                }
-            },
-            formatResult: function(taxonomy) {
-                if (taxonomy != 'undefined') {
-                    return taxonomy.name;
-                }
-                return "";
-            },
-            formatSelection: function(taxonomy) {
-                if (taxonomy != 'undefined') {
-                    return taxonomy.name;
-                }
-                return "";
-            }
-        });
-    });
 </script>
-
