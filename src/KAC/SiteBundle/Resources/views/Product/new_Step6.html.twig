@@ -9,6 +9,17 @@
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
+                        <div class="accordion mbm">
+                            {% for variant in form.variants %}
+                                <div class="accordion-item">
+                                    <h3>Search Engine Optimisation for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+                                        {{ form_rest(variant) }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% do form.variants.setRendered() %}
+                        </div>
                         {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
