@@ -16,7 +16,7 @@ class Routing extends SiteRouting
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="routings")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
@@ -32,14 +32,14 @@ class Routing extends SiteRouting
     public function setProduct(\KAC\SiteBundle\Entity\Product $product = null)
     {
         $this->product = $product;
-    
+
         return $this;
     }
 
     /**
      * Get product
      *
-     * @return \KAC\SiteBundle\Entity\Product 
+     * @return \KAC\SiteBundle\Entity\Product
      */
     public function getProduct()
     {
@@ -54,7 +54,7 @@ class Routing extends SiteRouting
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
