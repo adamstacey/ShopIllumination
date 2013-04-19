@@ -1,6 +1,6 @@
 <?php
 
-namespace KAC\SiteBundle\Form\Variant;
+namespace KAC\SiteBundle\Form\Product;
 
 use KAC\SiteBundle\Form\Product\ProductFeatureCombinationType;
 use Symfony\Component\Form\AbstractType;

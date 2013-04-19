@@ -18,13 +18,13 @@
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
-                    <h2>4. Images</h2>
+                    <h2>7. Images</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
-                            {% for variant in form.variants %}
+                            {% for variant in form.vars.value.variants %}
                                 <div class="accordion-item fileupload">
                                     <div class="accordion-header-buttons">
                                         <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
@@ -34,18 +34,19 @@
                                         <table class="form-table files mbm">
                                             <thead>
                                             <tr>
-                                                <th width="1">&nbsp;</th>
-                                                <th>&nbsp;</th>
-                                                <th width="1">&nbsp;</th>
+                                                <th colspan="6"></th>
                                             </tr>
                                             </thead>
-                                            <tbody></tbody>
+                                            <tbody>
+                                                {% for variant in form.vars.value.variants %}
+                                                    {{ variant|dump }}
+                                                {% endfor %}
+                                            </tbody>
                                         </table>
-                                        {{ form_widget(variant) }}
                                     </div>
                                 </div>
                             {% endfor %}
-                            {% do form.variants.setRendered() %}
+                            {{ form_widget(form.images) }}
                         </div>
                         {{ form_rest(form) }}
                     </fieldset>
@@ -57,100 +58,13 @@
     </div>
 </form>
 
-{% raw %}
-<script id="template-upload" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload">
-        <td class="name"><span>{%=file.name%}</span></td>
-        {% if (file.error) { %}
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else if (o.files.valid && !i) { %}
-        <td>
-            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-        </td>
-        <td class="start">
-            {% if (!o.options.autoUpload) { %}
-            <button type="button" class="button button-small mrm fl">Start</button>
-            {% } %}
-        </td>
-        {% } else { %}
-        <td colspan="2"></td>
-        {% } %}
-        <td class="cancel">
-            {% if (!i) { %}
-            <button type="button" class="button button-small mrm fl">Cancel</button>
-            {% } %}
-        </td>
-    </tr>
-    {% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download">
-        {% if (file.error) { %}
-        <td class="name"><span>{%=file.name%}</span></td>
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else { %}
-        <td class="name" width="100">
-            <img src="{%=file.url%}" width="100" border="0" alt="{%=file.name%}" />
-        </td>
-        <td></td>
-        {% } %}
-        <td class="tac delete" width="1">
-            <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
-        </td>
-    </tr>
-    {% } %}
-</script>
-{% endraw %}
 <script>
     $(function () {
         'use strict';
+        
 
-        $('.fileupload').each(function () {
-            var that = this;
-
-            $(this).fileupload({
-                url: '{{ path('api_images_post_image') }}',
-                dropZone: $(this),
-                formData: [],
-                autoUpload: true
-            }).bind('fileuploaddcompleted', function (e, data) {
-                        generateButtons($(that));
-                        return true;
-                    }).bind('fileuploaddone', function (e, data) {
-                        var images = $(that).find('input[type=hidden]').val();
-
-                        $.each(data.result.files, function (index, file) {
-                            if (images === "") {
-                                images = [];
-                            } else {
-                                images = images.split(',');
-                            }
-
-                            images.push(file.id);
-                        });
-                        $(that).find('input[type=hidden]').val(images.join(','));
-                    });
-
-            // On page load fetch the info for any existing files
-            var imageIds = $(that).find('input[type=hidden]').val();
-            if (imageIds) {
-                var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
-                    var template = tmpl("template-download");
-                    var result = template({
-                        files: data.files,
-                        formatFileSize: this._formatFileSize,
-                        options: this.options
-                    });
-                    $(that).find('.files tbody').append(result);
-                });
-            }
-        });
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();
         });
     });
-
 </script>

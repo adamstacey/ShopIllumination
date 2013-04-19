@@ -1,6 +1,6 @@
 <?php
 
-namespace KAC\SiteBundle\Form\Variant;
+namespace KAC\SiteBundle\Form\Product;
 
 use KAC\SiteBundle\Form\Product\ProductPriceType;
 use Symfony\Component\Form\AbstractType;

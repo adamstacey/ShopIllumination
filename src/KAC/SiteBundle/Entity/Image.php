@@ -5,11 +5,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="images")
  * @ORM\HasLifecycleCallbacks()
+ * @Assert\Callback(methods={"isImageTypeValid"})
  */
 class Image
 {
@@ -468,5 +470,12 @@ class Image
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return '/uploads/images';
+    }
+
+    public function isImageTypeValid(ExecutionContext $context)
+    {
+            if(!in_array($this->getImageType(), array("product", "gallery"))) {
+                    $context->addViolationAtSubPath("imageType", "That image type is invalid");
+            }
     }
 }

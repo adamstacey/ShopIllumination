@@ -29,11 +29,13 @@ class NewProductFlow extends FormFlow
             '3. Prices',
             '4. Unique Identifiers',
             '5. Features',
-            '6. SEO',
-            '7. Images',
+            '6. Images',
+            '7. Product Images',
             '8. Links'
         );
     }
+
+
 
     /**
      * @param $formData Product

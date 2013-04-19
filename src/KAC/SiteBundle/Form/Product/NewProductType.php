@@ -2,10 +2,10 @@
 
 namespace KAC\SiteBundle\Form\Product;
 
-use KAC\SiteBundle\Form\Variant\ProductVariantFeaturesType;
-use KAC\SiteBundle\Form\Variant\ProductVariantImagesType;
-use KAC\SiteBundle\Form\Variant\ProductVariantOverviewType;
-use KAC\SiteBundle\Form\Variant\ProductVariantUidType;
+use KAC\SiteBundle\Form\Product\ProductVariantFeaturesType;
+use KAC\SiteBundle\Form\Product\ProductVariantImagesType;
+use KAC\SiteBundle\Form\Product\ProductVariantOverviewType;
+use KAC\SiteBundle\Form\Product\ProductVariantUidType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -154,8 +154,8 @@ class NewProductType extends AbstractType
                 break;
             case 6:
                 $builder->add('variants', 'collection', array(
-                    'block_name' => 'variants_seo',
-                    'type' => new ProductVariantSeoType(),
+                    'block_name' => 'variants_images',
+                    'type' => new ProductVariantImagesType(),
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
@@ -163,13 +163,6 @@ class NewProductType extends AbstractType
                 break;
             case 7:
                 $builder->add('images', 'hidden');
-                $builder->add('variants', 'collection', array(
-                    'block_name' => 'variants_images',
-                    'type' => new ProductVariantImagesType(),
-                    'required'  => false,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                ));
                 break;
             case 8:
                 $builder->add('links', 'collection', array(
