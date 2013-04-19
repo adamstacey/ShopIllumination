@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
-use KAC\SiteBundle\Form\EditDepartmentFeaturesType;
+use KAC\SiteBundle\Form\Department\EditDepartmentFeaturesType;
 use KAC\SiteBundle\Entity\Image;
 use KAC\SiteBundle\Entity\Department;
 use KAC\SiteBundle\Entity\Department\Description;
