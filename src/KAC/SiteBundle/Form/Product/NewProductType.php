@@ -155,7 +155,7 @@ class NewProductType extends AbstractType
             case 6:
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_seo',
-                    'type' => new ProductVariantSeoType($options['departmentId']),
+                    'type' => new ProductVariantSeoType(),
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
