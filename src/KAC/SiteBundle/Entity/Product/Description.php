@@ -57,7 +57,7 @@ class Description implements DescriptionInterface
     /**
      * @ORM\Column(name="short_description", type="text")
      */
-    private $shortDescription;
+    private $shortDescription = "";
 
     /**
      * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
