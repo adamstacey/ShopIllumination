@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="object_type", type="string")
- * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Routing", "department" = "KAC\SiteBundle\Entity\Department\Routing", "brand" = "KAC\SiteBundle\Entity\Brand\Routing"})
+ * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Routing", "product_variant" = "KAC\SiteBundle\Entity\Product\Variant\Routing", "department" = "KAC\SiteBundle\Entity\Department\Routing", "brand" = "KAC\SiteBundle\Entity\Brand\Routing"})
  * @ORM\Table(name="routing")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"url"}, groups={"flow_site_new_department_step2"}, message="This internal web address is already in use.")
