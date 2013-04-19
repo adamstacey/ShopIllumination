@@ -36,8 +36,6 @@ class NewProductFlow extends FormFlow
         );
     }
 
-
-
     /**
      * @param $formData Product
      * @param $step
