@@ -50,6 +50,11 @@ class Variant implements DescribableInterface
     private $prices;
 
     /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Routing", mappedBy="variant", cascade={"all"})
+     */
+    private $routings;
+
+    /**
      * @ORM\Column(name="status", type="string", length=1)
      * @Assert\NotBlank(groups={"site_edit_product_overview"})
      * @Assert\Choice(choices={"a", "h", "d"})
@@ -150,6 +155,7 @@ class Variant implements DescribableInterface
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function isDeleted()
@@ -689,5 +695,38 @@ class Variant implements DescribableInterface
     public function setImages($images)
     {
         $this->images = $images;
+    }
+
+    /**
+     * Add routings
+     *
+     * @param \KAC\SiteBundle\Entity\Product\Variant\Routing $routings
+     * @return Variant
+     */
+    public function addRouting(\KAC\SiteBundle\Entity\Product\Variant\Routing $routings)
+    {
+        $this->routings[] = $routings;
+    
+        return $this;
+    }
+
+    /**
+     * Remove routings
+     *
+     * @param \KAC\SiteBundle\Entity\Product\Variant\Routing $routings
+     */
+    public function removeRouting(\KAC\SiteBundle\Entity\Product\Variant\Routing $routings)
+    {
+        $this->routings->removeElement($routings);
+    }
+
+    /**
+     * Get routings
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoutings()
+    {
+        return $this->routings;
     }
 }
