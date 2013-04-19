@@ -14,7 +14,7 @@ class NewProductFlow extends FormFlow
 {
     protected $googleApi;
 
-    protected $maxSteps = 8;
+    protected $maxSteps = 9;
     protected $allowDynamicStepNavigation = true;
 
     function __construct(Google $googleApi)
@@ -29,9 +29,10 @@ class NewProductFlow extends FormFlow
             '3. Prices',
             '4. Unique Identifiers',
             '5. Features',
-            '6. Images',
-            '7. Product Images',
-            '8. Links'
+            '6. SEO',
+            '7. Uploads',
+            '8. Images',
+            '9. Links'
         );
     }
 
