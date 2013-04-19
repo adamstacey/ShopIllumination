@@ -61,33 +61,33 @@ services:
 
   # Form Services
   kac_site.form.new_department:
-     class: KAC\SiteBundle\Form\NewDepartmentType
+     class: KAC\SiteBundle\Form\Department\NewDepartmentType
      tags:
        - { name: form.type, alias: site_new_department }
   kac_site.form.flow.new_department:
-      class: KAC\SiteBundle\Form\NewDepartmentFlow
+      class: KAC\SiteBundle\Form\Departmenet\NewDepartmentFlow
       parent: craue.form.flow
       scope: request
       calls:
         - [ setFormType, [@kac_site.form.new_department]]
       arguments: [@doctrine, @kac_site.manager.seo]
   kac_site.form.new_product:
-    class: KAC\SiteBundle\Form\NewProductType
+    class: KAC\SiteBundle\Form\Product\NewProductType
     tags:
       - { name: form.type, alias: site_new_product }
   kac_site.form.flow.new_product:
-    class: KAC\SiteBundle\Form\NewProductFlow
+    class: KAC\SiteBundle\Form\Product\NewProductFlow
     parent: craue.form.flow
     scope: request
     arguments: [@kac_site.google.google]
     calls:
       - [ setFormType, [@kac_site.form.new_product]]
   kac_site.form.new_variant:
-    class: KAC\SiteBundle\Form\NewVariantType
+    class: KAC\SiteBundle\Form\Variant\NewVariantType
     tags:
       - { name: form.type, alias: site_new_variant }
   kac_site.form.flow.new_variant:
-    class: KAC\SiteBundle\Form\NewVariantFlow
+    class: KAC\SiteBundle\Form\Variant\NewVariantFlow
     parent: craue.form.flow
     scope: request
     calls:

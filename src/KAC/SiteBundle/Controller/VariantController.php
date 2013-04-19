@@ -15,12 +15,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Solarium_Query_Select;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Product\Variant;
-use KAC\SiteBundle\Form\EditVariantDescriptionsType;
-use KAC\SiteBundle\Form\EditVariantDimensionsType;
-use KAC\SiteBundle\Form\EditVariantFeaturesType;
-use KAC\SiteBundle\Form\EditVariantImagesType;
-use KAC\SiteBundle\Form\EditVariantOverviewType;
-use KAC\SiteBundle\Form\EditVariantPricesType;
+use KAC\SiteBundle\Form\Variant\EditVariantDescriptionsType;
+use KAC\SiteBundle\Form\Variant\EditVariantDimensionsType;
+use KAC\SiteBundle\Form\Variant\EditVariantFeaturesType;
+use KAC\SiteBundle\Form\Variant\EditVariantImagesType;
+use KAC\SiteBundle\Form\Variant\EditVariantOverviewType;
+use KAC\SiteBundle\Form\Variant\EditVariantPricesType;
 
 class VariantController extends Controller {
     /**
