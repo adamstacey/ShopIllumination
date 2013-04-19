@@ -33,8 +33,8 @@
                         {% block slider %}{% endblock %}
                         {% block header %}{% endblock %}
         {% endif %}
-            {% include 'KACSiteBundle:Includes:loading.html.twig' %}
             {% block body %}{% endblock %}
+            {% include 'KACSiteBundle:Includes:loading.html.twig' %}
         {% if app.request.query.get('modal') != true %}
                     </div>
                 </section>
