@@ -101,6 +101,18 @@
         $('.fileupload').each(function () {
             var that = this;
 
+            $(".files tbody", this).sortable({
+                handle: 'td:last',
+                update: function() {
+                    // Update hidden field
+                    var images = [];
+                    $(that).find("tr.template-download").each(function(key, row) {
+                        images.push($(row).attr("data-id"));
+                    });
+                    $(that).find('input[type=hidden]').val(images.join(','));
+                }
+            }).disableSelection();
+
             $(this).fileupload({
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
@@ -113,22 +125,18 @@
                             "imageType": typeField.val()
                         };
                     }).bind('fileuploadcompleted', function (e, data) {
-                        generateButtons($(that));
-                        return true;
-                    }).bind('fileuploaddone', function (e, data) {
-                        var images = $(that).find('input[type=hidden]').val();
+                        // Add image ID to row as data attr
+                        data.context.attr("data-id", data.result.files[0].id);
 
-                        $.each(data.result.files, function (index, file) {
-                            if (images === "") {
-                                images = [];
-                            } else {
-                                images = images.split(',');
-                            }
-
-                            images.push(file.id);
+                        // Update hidden field
+                        var images = [];
+                        $(that).find("tr.template-download").each(function(key, row) {
+                            images.push($(row).attr("data-id"));
                         });
-
                         $(that).find('input[type=hidden]').val(images.join(','));
+
+                        generateButtons($(that).find('.files'));
+                        return true;
                     });
 
             // On page load fetch the info for any existing files

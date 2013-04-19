@@ -194,6 +194,7 @@ class Product implements DescribableInterface
     private $features = array();
     private $prices = array();
     private $images = "";
+    private $productImages = "";
 
     /**
      * Get statusColour

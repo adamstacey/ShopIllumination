@@ -153,7 +153,7 @@ class ImageManager extends Manager
                 if($image)
                 {
                     $image->setObjectId($entity->getId());
-                    $image->setObjectType($entityType);
+                    $image->setObjectType($entityType);new
 
                     $image->setTitle($entity->getDescription()->getHeader());
                     $image->setDisplayOrder($i);
