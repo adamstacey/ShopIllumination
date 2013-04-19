@@ -1,3 +1,17 @@
+<style>
+    .accordion-item {
+        position: relative;
+    }
+    .accordion-header-buttons {
+        position: absolute;
+        top: 4px;
+        right: 52px;
+        z-index: 1;
+    }
+    .accordion-header-buttons button {
+        padding: 0 3px;
+    }
+</style>
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
@@ -8,48 +22,33 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-
-                    <fieldset class="fileupload">
-                        <legend class="fill">Images for the product group</legend>
-                        <table class="form-table files">
-                            <thead>
-                            <tr>
-                                <th colspan="4">
-                                    <span class="button fileinput-button button-small mrm fl">
-                                        <span>Add files</span>
-                                        <input class="no-uniform" type="file" name="file" multiple>
-                                    </span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        {{ form_widget(form.images) }}
-                        {% do form.images.setRendered() %}
-                    </fieldset>
-                    {% for variant in form.variants %}
-                        <fieldset class="fileupload">
-                            <legend class="fill">Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</legend>
-                            <table class="form-table files">
-                                <thead>
-                                    <tr>
-                                        <th colspan="4">
-                                            <span class="button fileinput-button button-small mrm fl">
-                                                Add files
-                                                <input class="no-uniform" type="file" name="file" multiple>
-                                            </span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            {{ form_widget(variant) }}
+                    <fieldset>
+                        <div class="accordion mbm">
+                            {% for variant in form.variants %}
+                                <div class="accordion-item fileupload">
+                                    <div class="accordion-header-buttons">
+                                        <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
+                                    </div>
+                                    <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+                                        <table class="form-table files mbm">
+                                            <thead>
+                                            <tr>
+                                                <th width="1">&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th width="1">&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        {{ form_widget(variant) }}
+                                    </div>
+                                </div>
+                            {% endfor %}
                             {% do form.variants.setRendered() %}
-                        </fieldset>
-                    {% endfor %}
-                    {{ form_rest(form) }}
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
                 </section>
@@ -93,13 +92,13 @@
         <td class="name"><span>{%=file.name%}</span></td>
         <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else { %}
-        <td class="name">
-            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
+        <td class="name" width="100">
+            <img src="{%=file.url%}" width="100" border="0" alt="{%=file.name%}" />
         </td>
         <td></td>
         {% } %}
-        <td class="delete" colspan="2">
-            <button type="button"  data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red button-small mrm fl">Delete</button>
+        <td class="tac delete" width="1">
+            <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
         </td>
     </tr>
     {% } %}
@@ -115,25 +114,25 @@
             $(this).fileupload({
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
-                formData: []
+                formData: [],
+                autoUpload: true
             }).bind('fileuploaddcompleted', function (e, data) {
-                generateButtons($(that));
-                return true;
-            }).bind('fileuploaddone', function (e, data) {
-                var images = $(that).find('input[type=hidden]').val();
+                        generateButtons($(that));
+                        return true;
+                    }).bind('fileuploaddone', function (e, data) {
+                        var images = $(that).find('input[type=hidden]').val();
 
-                $.each(data.result.files, function (index, file) {
-                    if (images === "") {
-                        images = [];
-                    } else {
-                        images = images.split(',');
-                    }
+                        $.each(data.result.files, function (index, file) {
+                            if (images === "") {
+                                images = [];
+                            } else {
+                                images = images.split(',');
+                            }
 
-                    images.push(file.id);
-                });
-
-                $(that).find('input[type=hidden]').val(images.join(','));
-            });
+                            images.push(file.id);
+                        });
+                        $(that).find('input[type=hidden]').val(images.join(','));
+                    });
 
             // On page load fetch the info for any existing files
             var imageIds = $(that).find('input[type=hidden]').val();
