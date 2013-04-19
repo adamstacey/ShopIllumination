@@ -1,3 +1,17 @@
+<style>
+    .accordion-item {
+        position: relative;
+    }
+    .accordion-header-buttons {
+        position: absolute;
+        top: 4px;
+        right: 52px;
+        z-index: 1;
+    }
+    .accordion-header-buttons button {
+        padding: 0 3px;
+    }
+</style>
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
@@ -28,9 +42,9 @@
                             </table>
                             {{ form_widget(variant) }}
                             {% do form.variants.setRendered() %}
-                        </fieldset>
-                    {% endfor %}
-                    {{ form_rest(form) }}
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
                 </section>
@@ -88,8 +102,8 @@
                 {% if (file.type == 'product') { %}Product{% } %}
             </span></td>
         {% } %}
-        <td class="delete" colspan="2">
-            <button type="button"  data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red button-small mrm fl">Delete</button>
+        <td class="tac delete" width="1">
+            <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
         </td>
     </tr>
     {% } %}
@@ -105,6 +119,7 @@
             $(this).fileupload({
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
+                autoUpload: true,
                 formData: []
             }).bind('fileuploadsubmit', function (e, data) {
                 //Add type field to form
@@ -119,18 +134,17 @@
             }).bind('fileuploaddone', function (e, data) {
                 var images = $(that).find('input[type=hidden]').val();
 
-                $.each(data.result.files, function (index, file) {
-                    if (images === "") {
-                        images = [];
-                    } else {
-                        images = images.split(',');
-                    }
+                        $.each(data.result.files, function (index, file) {
+                            if (images === "") {
+                                images = [];
+                            } else {
+                                images = images.split(',');
+                            }
 
-                    images.push(file.id);
-                });
-
-                $(that).find('input[type=hidden]').val(images.join(','));
-            });
+                            images.push(file.id);
+                        });
+                        $(that).find('input[type=hidden]').val(images.join(','));
+                    });
 
             // On page load fetch the info for any existing files
             var imageIds = $(that).find('input[type=hidden]').val();
