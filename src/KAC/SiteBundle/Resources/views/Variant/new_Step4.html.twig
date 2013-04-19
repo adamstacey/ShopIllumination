@@ -43,6 +43,12 @@
     {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload">
         <td class="name"><span>{%=file.name%}</span></td>
+        <td class="type">
+            <select class="image-type" name="type">
+                <option value="product">Product</option>
+                <option value="gallery">Gallery</option>
+            </select>
+        </td>
         {% if (file.error) { %}
         <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else if (o.files.valid && !i) { %}
@@ -76,7 +82,10 @@
         <td class="name">
             <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
         </td>
-        <td></td>
+        <td class="type" colspan="2"><span>
+                {% if (file.type == 'gallery') { %}Gallery{% } %}
+                {% if (file.type == 'product') { %}Product{% } %}
+            </span></td>
         {% } %}
         <td class="delete" colspan="2">
             <button type="button"  data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red button-small mrm fl">Delete</button>
@@ -96,10 +105,14 @@
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
                 formData: []
-            }).bind('fileuploadadded', function (e, data) {
-                        generateButtons($(that));
-                        return true;
-                    }).bind('fileuploaddcompleted', function (e, data) {
+            }).bind('fileuploadsubmit', function (e, data) {
+                        //Add type field to form
+                        var typeField = $(".image-type", data.context);
+
+                        data.formData = {
+                            "imageType": typeField.val()
+                        };
+                    }).bind('fileuploadcompleted', function (e, data) {
                         generateButtons($(that));
                         return true;
                     }).bind('fileuploaddone', function (e, data) {
@@ -120,19 +133,20 @@
 
             // On page load fetch the info for any existing files
             var imageIds = $(that).find('input[type=hidden]').val();
-            var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
-                var template = tmpl("template-download");
-                var result = template({
-                    files: data.files,
-                    formatFileSize: this._formatFileSize,
-                    options: this.options
+            if (imageIds) {
+                var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
+                    var template = tmpl("template-download");
+                    var result = template({
+                        files: data.files,
+                        formatFileSize: this._formatFileSize,
+                        options: this.options
+                    });
+                    $(that).find('.files tbody').append(result);
                 });
-                $(that).find('.files tbody').append(result);
-            });
+            }
         });
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();
         });
     });
-
 </script>

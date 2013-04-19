@@ -110,6 +110,7 @@ class ImageApiController extends Controller
             'csrf_protection'   => false
         ))
             ->add('file', 'file')
+            ->add('imageType', 'text')
             ->getForm();
         $form->bind($request);
 
@@ -128,6 +129,7 @@ class ImageApiController extends Controller
 
             $filesArray[] = array(
                 'id' => $image->getId(),
+                'type' => $image->getImageType(),
                 'name' => $file->getClientOriginalName(),
                 'size' => $size,
                 'url' => $image->getOriginalPath(),

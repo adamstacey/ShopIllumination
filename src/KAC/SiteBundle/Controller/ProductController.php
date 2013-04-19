@@ -3,7 +3,6 @@ namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\DepartmentToFeature;
-use KAC\SiteBundle\Form\Product\EditProductImagesType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;

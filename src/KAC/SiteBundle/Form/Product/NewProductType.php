@@ -2,10 +2,10 @@
 
 namespace KAC\SiteBundle\Form\Product;
 
-use KAC\SiteBundle\Form\Variant\ProductVariantFeaturesType;
-use KAC\SiteBundle\Form\Variant\ProductVariantImagesType;
-use KAC\SiteBundle\Form\Variant\ProductVariantOverviewType;
-use KAC\SiteBundle\Form\Variant\ProductVariantUidType;
+use KAC\SiteBundle\Form\Product\ProductVariantFeaturesType;
+use KAC\SiteBundle\Form\Product\ProductVariantImagesType;
+use KAC\SiteBundle\Form\Product\ProductVariantOverviewType;
+use KAC\SiteBundle\Form\Product\ProductVariantUidType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 

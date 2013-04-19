@@ -139,7 +139,6 @@ class ImageManager extends Manager
             $image->setAlignment('');
             $image->setDescription('');
             $image->setLink('');
-            $image->setObjectType($entityType);
             $image->setImageType($entityType);
             $image->setObjectId($entity->getId());
             $image->setDisplayOrder(1);
@@ -160,6 +159,10 @@ class ImageManager extends Manager
                     $image->setTitle($entity->getDescription()->getHeader());
                     $image->setDisplayOrder($i);
                     $image->setPublicPath(/*Set this field to a blank value so it can be changed in the listener*/"");
+
+                    if($image->getImageType() === "" || $image->getImageType() === null) {
+                        $image->setImageType($entityType);
+                    }
 
                     $i++;
 
