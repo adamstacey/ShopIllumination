@@ -106,7 +106,6 @@ class ImageManager extends Manager
          */
         $em = $this->doctrine->getManager();
         $i = 0;
-        $imageIds = explode(',', $entity->getImages());
         $imageIds = array_diff(explode(',', $entity->getImages()), array(''));
 
         // Get any images already linked to the entity
@@ -153,7 +152,7 @@ class ImageManager extends Manager
                 if($image)
                 {
                     $image->setObjectId($entity->getId());
-                    $image->setObjectType($entityType);new
+                    $image->setObjectType($entityType);
 
                     $image->setTitle($entity->getDescription()->getHeader());
                     $image->setDisplayOrder($i);

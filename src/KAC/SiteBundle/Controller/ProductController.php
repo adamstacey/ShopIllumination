@@ -199,7 +199,20 @@ class ProductController extends Controller {
                     }
                 }
 
-//                $manager->updateObjectLinks($product);
+                // Copy the selected product images
+                $newImageIds = array();
+                foreach(explode(',', $product->getImages()) as $imageId)
+                {
+                    $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($imageId);
+                    if($image) {
+                        $newImage = clone $image;
+                        $em->persist($newImage);
+                        $em->flush();
+
+                        $newImageIds[] = $newImage->getId();
+                    }
+                }
+                $product->setImages(implode(',', $newImageIds));
 
                 $em->persist($product);
                 $em->flush();

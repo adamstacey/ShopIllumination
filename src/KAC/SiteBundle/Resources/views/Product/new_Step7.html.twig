@@ -18,7 +18,7 @@
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
-                    <h2>4. Images</h2>
+                    <h2>7. Images</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
@@ -92,15 +92,15 @@
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-template">
     {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download">
+    <tr class="template-download" data-id="{%=file.id%}">
         {% if (file.error) { %}
-            <td class="name"><span>{%=file.name%}</span></td>
-            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
         {% } else { %}
-            <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
-            </td>
-            <td class="type" colspan="2"><span>
+        <td class="name">
+            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
+        </td>
+        <td class="type" colspan="2"><span>
                 {% if (file.type == 'gallery') { %}Gallery{% } %}
                 {% if (file.type == 'product') { %}Product{% } %}
             </span></td>
@@ -117,7 +117,7 @@
 <script>
     $(function () {
         'use strict';
-        
+
         $('.fileupload').each(function () {
             var that = this;
 
@@ -138,26 +138,23 @@
                 dropZone: $(this),
                 formData: []
             }).bind('fileuploadsubmit', function (e, data) {
-                //Add type field to form
-                var typeField = $(".image-type", data.context);
+                        //Add type field to form
+                        var typeField = $(".image-type", data.context);
 
-                data.formData = {
-                    "imageType": typeField.val()
-                };
-            }).bind('fileuploadcompleted', function (e, data) {
-                // Add image ID to row as data attr
-                data.context.attr("data-id", data.result.files[0].id);
+                        data.formData = {
+                            "imageType": typeField.val()
+                        };
+                    }).bind('fileuploadcompleted', function (e, data) {
+                        // Update hidden field
+                        var images = [];
+                        $(that).find("tr.template-download").each(function(key, row) {
+                            images.push($(row).attr("data-id"));
+                        });
+                        $(that).find('input[type=hidden]').val(images.join(','));
 
-                // Update hidden field
-                var images = [];
-                $(that).find("tr.template-download").each(function(key, row) {
-                    images.push($(row).attr("data-id"));
-                });
-                $(that).find('input[type=hidden]').val(images.join(','));
-
-                generateButtons($(that).find('.files'));
-                return true;
-            });
+                        generateButtons($(that).find('.files'));
+                        return true;
+                    });
 
             // On page load fetch the info for any existing files
             var imageIds = $(that).find('input[type=hidden]').val();
@@ -172,6 +169,12 @@
                     $(that).find('.files tbody').append(result);
                 });
             }
+            // Update hidden field
+            var images = [];
+            $(that).find("tr.template-download").each(function(key, row) {
+                images.push($(row).attr("data-id"));
+            });
+            $(that).find('input[type=hidden]').val(images.join(','));
         });
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();
