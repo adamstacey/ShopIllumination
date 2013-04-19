@@ -172,7 +172,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\Column(name="template", type="string", length=255)
      */
-    private $template;
+    private $template = "default";
 
     /**
      * @Gedmo\Timestampable(on="create")

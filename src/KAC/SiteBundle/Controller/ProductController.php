@@ -199,7 +199,7 @@ class ProductController extends Controller {
                     }
                 }
 
-                $manager->updateObjectLinks($product);
+//                $manager->updateObjectLinks($product);
 
                 $em->persist($product);
                 $em->flush();

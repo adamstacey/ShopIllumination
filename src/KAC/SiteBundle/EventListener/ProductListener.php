@@ -89,7 +89,7 @@ class ProductListener
 
         if($entity instanceof Product)
         {
-            $this->manager->addRoute($entity);
+//            $this->manager->addRoute($entity);
 
             $this->indexer->index($entity);
         }

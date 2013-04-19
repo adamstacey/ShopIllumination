@@ -22,25 +22,27 @@
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-
-                    {% for variant in form.variants %}
-                        <fieldset class="fileupload">
-                            <legend class="fill">Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</legend>
-                            <table class="form-table files">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5">
-                                            <span class="button fileinput-button button-small mrm fl">
-                                                Add files
-                                                <input class="no-uniform" type="file" name="file" multiple>
-                                            </span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                            {{ form_widget(variant) }}
+                    <fieldset>
+                        <div class="accordion mbm">
+                            {% for variant in form.variants %}
+                                <div class="accordion-item fileupload">
+                                    <div class="accordion-header-buttons">
+                                        <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
+                                    </div>
+                                    <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+                                        <table class="form-table files mbm">
+                                            <thead>
+                                            <tr>
+                                                <th colspan="6"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        {{ form_widget(variant) }}
+                                    </div>
+                                </div>
+                            {% endfor %}
                             {% do form.variants.setRendered() %}
                         </div>
                         {{ form_rest(form) }}
@@ -83,6 +85,7 @@
             <button type="button" class="button button-small mrm fl">Cancel</button>
             {% } %}
         </td>
+        <td></td>
     </tr>
     {% } %}
 </script>
@@ -102,9 +105,11 @@
                 {% if (file.type == 'product') { %}Product{% } %}
             </span></td>
         {% } %}
+        <td></td>
         <td class="tac delete" width="1">
             <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
         </td>
+        <td><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
     </tr>
     {% } %}
 </script>
@@ -112,14 +117,25 @@
 <script>
     $(function () {
         'use strict';
-
+        
         $('.fileupload').each(function () {
             var that = this;
+
+            $(".files tbody", this).sortable({
+                handle: 'td:last',
+                update: function() {
+                    // Update hidden field
+                    var images = [];
+                    $(that).find("tr.template-download").each(function(key, row) {
+                        images.push($(row).attr("data-id"));
+                    });
+                    $(that).find('input[type=hidden]').val(images.join(','));
+                }
+            }).disableSelection();
 
             $(this).fileupload({
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
-                autoUpload: true,
                 formData: []
             }).bind('fileuploadsubmit', function (e, data) {
                 //Add type field to form
@@ -129,22 +145,19 @@
                     "imageType": typeField.val()
                 };
             }).bind('fileuploadcompleted', function (e, data) {
-                generateButtons($(that));
+                // Add image ID to row as data attr
+                data.context.attr("data-id", data.result.files[0].id);
+
+                // Update hidden field
+                var images = [];
+                $(that).find("tr.template-download").each(function(key, row) {
+                    images.push($(row).attr("data-id"));
+                });
+                $(that).find('input[type=hidden]').val(images.join(','));
+
+                generateButtons($(that).find('.files'));
                 return true;
-            }).bind('fileuploaddone', function (e, data) {
-                var images = $(that).find('input[type=hidden]').val();
-
-                        $.each(data.result.files, function (index, file) {
-                            if (images === "") {
-                                images = [];
-                            } else {
-                                images = images.split(',');
-                            }
-
-                            images.push(file.id);
-                        });
-                        $(that).find('input[type=hidden]').val(images.join(','));
-                    });
+            });
 
             // On page load fetch the info for any existing files
             var imageIds = $(that).find('input[type=hidden]').val();
