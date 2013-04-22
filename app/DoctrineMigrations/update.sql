@@ -387,7 +387,6 @@ ALTER TABLE files CHANGE locale locale VARCHAR(5) NOT NULL;
 ALTER TABLE images CHANGE locale locale VARCHAR(5) NOT NULL;
 ALTER TABLE order_products DROP name;
 ALTER TABLE departments_tmp ADD CONSTRAINT FK_C7AFC1E2727ACA70 FOREIGN KEY (parent_id) REFERENCES departments_tmp (id) ON DELETE SET NULL;
-DROP TABLE departments_tmp;
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB4584665A FOREIGN KEY (product_id) REFERENCES products (id);
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
 CREATE INDEX IDX_5242B8EB4584665A ON order_products (product_id);
