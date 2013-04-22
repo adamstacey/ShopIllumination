@@ -11,7 +11,6 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\Entity
  * @ORM\Table(name="products")
  * @ORM\HasLifecycleCallbacks()
- * @Assert\Callback(methods={"isFeatureSelected"}, groups={"flow_site_new_product_step5"})
  */
 class Product implements DescribableInterface
 {
@@ -44,6 +43,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
      * @Serializer\Exclude()
+     * @Assert\Valid()
      */
     private $links;
 
@@ -196,29 +196,6 @@ class Product implements DescribableInterface
     private $prices = array();
     private $images = "";
     private $productImages = "";
-
-    public function isFeatureSelected(ExecutionContext $context)
-    {
-        // Check the validation group
-        if($context->getGroup() === "flow_site_new_product_step2")
-        {
-            // Check that the feature and feature group fields have both been filled in
-            $i = 0;
-            foreach($this->features as $feature)
-            {
-                if($feature->getFeatureGroup() === null)
-                {
-                    $context->addViolationAtSubPath('features['.$i.'].featureGroup', 'You must select a feature group');
-                }
-                if($feature->getFeature() === null)
-                {
-                    $context->addViolationAtSubPath('features['.$i.'].feature', 'You must select a feature');
-                }
-
-                $i++;
-            }
-        }
-    }
 
     /**
      * Get statusColour

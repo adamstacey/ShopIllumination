@@ -11,7 +11,6 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\Entity
  * @ORM\Table(name="product_variants")
  * @ORM\HasLifecycleCallbacks()
- * @Assert\Callback(methods={"isFeatureSelected"}, groups={"flow_site_new_product_step5"})
 
  */
 class Variant implements DescribableInterface
@@ -36,18 +35,21 @@ class Variant implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
      * @ORM\OrderBy({"displayOrder" = "DESC"})
+     * @Assert\Valid()
      */
     private $features;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToOption", mappedBy="variant", cascade={"all"})
      * @ORM\OrderBy({"displayOrder" = "DESC"})
+     * @Assert\Valid()
      */
     private $options;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
      * @Assert\Count(min="1", groups={"flow_site_new_product_step3"})
+     * @Assert\Valid()
      */
     private $prices;
 
@@ -147,29 +149,6 @@ class Variant implements DescribableInterface
     private $deletedAt;
 
     private $images = array();
-
-    public function isFeatureSelected(ExecutionContext $context)
-    {
-        // Check the validation group
-        if($context->getGroup() === "flow_site_new_product_step5")
-        {
-            // Check that the feature and feature group fields have both been filled in
-            $i = 0;
-            foreach($this->features as $feature)
-            {
-                if($feature->getFeatureGroup() === null)
-                {
-                    $context->addViolationAtSubPath('features['.$i.'].featureGroup', 'You must select a feature group');
-                }
-                if($feature->getFeature() === null)
-                {
-                    $context->addViolationAtSubPath('features['.$i.'].feature', 'You must select a feature');
-                }
-
-                $i++;
-            }
-        }
-    }
 
     /**
      * Constructor
