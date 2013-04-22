@@ -18,7 +18,7 @@
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
-                    <h2>7. Images</h2>
+                    <h2>8. Product Images</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
@@ -38,9 +38,6 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                {% for variant in form.vars.value.variants %}
-                                                    {{ variant|dump }}
-                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -58,10 +55,58 @@
     </div>
 </form>
 
+{% raw %}
+<!-- The template to display files available for download -->
+<script id="template-image-row" type="text/x-template">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="image-row">
+        <td class="name">
+            <a href="{%=file.url%}" title="{%=file.name%}">{%=file.name%}</a>
+        </td>
+        <td class="type" colspan="2"><span>
+                {% if (file.type == 'gallery') { %}Gallery{% } %}
+                {% if (file.type == 'product') { %}Product{% } %}
+            </span></td>
+        <td><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
+        <td><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
+    </tr>
+    {% } %}
+</script>
+{% endraw %}
+
 <script>
     $(function () {
         'use strict';
-        
+
+        {% set images = [] %}
+        {% for variant in form.vars.value.variants %}
+        {% set images = images|merge(variant.images|split(',')) %}
+        {% endfor %}
+        var images = "{{ images|join(',') }}";
+
+        if (images) {
+            var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', images), function(data) {
+                var template = tmpl("template-image-row");
+                var result = template({
+                    files: data.files,
+                    formatFileSize: this._formatFileSize,
+                    options: this.options
+                });
+                $('.files tbody').append(result);
+            });
+        }
+
+        $("#form-add").submit(function() {
+            var images = [];
+            $('.files tbody tr').each(function(key, row) {
+                var input = $(row).find('input');
+                if(input.is(':checked')) {
+                    images.push(input.attr("data-id"));
+                }
+            });
+
+            $("#site_new_product_images").val(images.join(','));
+        });
 
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();

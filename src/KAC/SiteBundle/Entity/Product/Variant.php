@@ -5,6 +5,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use KAC\SiteBundle\Entity\DescribableInterface;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
@@ -34,18 +35,21 @@ class Variant implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
      * @ORM\OrderBy({"displayOrder" = "DESC"})
+     * @Assert\Valid()
      */
     private $features;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToOption", mappedBy="variant", cascade={"all"})
      * @ORM\OrderBy({"displayOrder" = "DESC"})
+     * @Assert\Valid()
      */
     private $options;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
      * @Assert\Count(min="1", groups={"flow_site_new_product_step3"})
+     * @Assert\Valid()
      */
     private $prices;
 

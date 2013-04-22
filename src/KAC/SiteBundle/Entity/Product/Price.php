@@ -4,6 +4,7 @@ namespace KAC\SiteBundle\Entity\Product;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
@@ -32,21 +33,21 @@ class Price
     /**
      * @ORM\Column(name="cost_price", type="decimal", precision=12, scale=4)
      * @Assert\NotBlank(groups={"site_edit_product_prices"})
-     * @Assert\Min(limit="0", groups={"site_edit_product_prices"})
+     * @Assert\Range(min="0.01", groups={"site_edit_product_prices"})
      */
     private $costPrice = 0.0;
     
     /**
      * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
      * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_prices"})
-     * @Assert\Min(limit="0", groups={"flow_site_new_product_step3", "site_edit_product_prices"})
+     * @Assert\Range(min="0.01", groups={"flow_site_new_product_step3", "site_edit_product_prices"})
      */
     private $recommendedRetailPrice = 0.0;
     
     /**
      * @ORM\Column(name="list_price", type="decimal", precision=12, scale=4)
      * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_prices"})
-     * @Assert\Min(limit="0", groups={"flow_site_new_product_step3", "site_edit_product_prices"})
+     * @Assert\Range(min="0.01", groups={"flow_site_new_product_step3", "site_edit_product_prices"})
      */
     private $listPrice = 0.0;
     

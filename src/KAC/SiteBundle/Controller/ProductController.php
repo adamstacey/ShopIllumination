@@ -177,6 +177,8 @@ class ProductController extends Controller {
         // Get current form step
         $form = $flow->createForm($product);
 
+//        \Doctrine\Common\Util\Debug::dump($flow->isValid($form));die();
+
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
 
@@ -199,7 +201,20 @@ class ProductController extends Controller {
                     }
                 }
 
-//                $manager->updateObjectLinks($product);
+                // Copy the selected product images
+                $newImageIds = array();
+                foreach(explode(',', $product->getImages()) as $imageId)
+                {
+                    $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($imageId);
+                    if($image) {
+                        $newImage = clone $image;
+                        $em->persist($newImage);
+                        $em->flush();
+
+                        $newImageIds[] = $newImage->getId();
+                    }
+                }
+                $product->setImages(implode(',', $newImageIds));
 
                 $em->persist($product);
                 $em->flush();

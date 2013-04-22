@@ -75,6 +75,7 @@ class ImageApiController extends Controller
         foreach($images as $image) {
             $filesArray[] = array(
                 'id' => $image->getId(),
+                'type' => $image->getImageType(),
                 'name' => basename($image->getPublicPath() == null ? $image->getOriginalPath() : $image->getPublicPath()),
                 'url' => $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),

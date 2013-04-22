@@ -5,12 +5,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\SerializerBundle\Annotation as Serializer;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="products")
  * @ORM\HasLifecycleCallbacks()
-
  */
 class Product implements DescribableInterface
 {
@@ -43,6 +43,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
      * @Serializer\Exclude()
+     * @Assert\Valid()
      */
     private $links;
 
@@ -59,7 +60,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\Column(name="status", type="string", length=1)
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a status.")
-     * @Assert\Choice(choices={"a", "h", "d"})
+     * @Assert\Choice(choices={"a", "h", "d"}, groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      */
     private $status = 'a';
 

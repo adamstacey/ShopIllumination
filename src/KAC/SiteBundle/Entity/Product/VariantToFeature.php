@@ -4,6 +4,7 @@ namespace KAC\SiteBundle\Entity\Product;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
@@ -32,12 +33,14 @@ class VariantToFeature
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product\FeatureGroup")
      * @ORM\JoinColumn(name="feature_group_id", referencedColumnName="id")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step5", "flow_site_new_product_step2"})
      **/
     private $featureGroup;
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product\Feature")
      * @ORM\JoinColumn(name="feature_id", referencedColumnName="id")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step5", "flow_site_new_product_step2"})
      **/
     private $feature;
         
