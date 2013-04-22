@@ -1,10 +1,26 @@
 $(document).ready(function() {
-    $(".main-menu > nav > ul > li > a").hover(function(){
-        $(this).addClass("hover");
-        $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).show();
-    }, function(){
-        $(this).removeClass("hover");
-        $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).hide();
+    $(document).on("mouseenter", ".main-menu > nav > ul > li > a", function() {
+        if (!$(this).hasClass("hover")) {
+            $(".main-menu > nav > ul > li > a").removeClass("hover");
+            $(".main-menu-group").fadeOut(100);
+            $(this).addClass("hover");
+            $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).fadeIn(200);
+        }
+    });
+
+    $(document).mousemove(function(event){
+        if ($(".main-menu-group:visible").length > 0) {
+            var $mainMenuGroupX = $(".main-menu-group:visible").offset().left;
+            var $mainMenuGroupY = $(".main-menu-group:visible").offset().top - 40;
+            var $mainMenuGroupWidth = $(".main-menu-group:visible").outerWidth(true);
+            var $mainMenuGroupHeight = $(".main-menu-group:visible").outerHeight(true) + 40;
+            var $mainMenuGroupOffsetX = event.pageX - $mainMenuGroupX;
+            var $mainMenuGroupOffsetY = event.pageY - $mainMenuGroupY;
+            if (($mainMenuGroupOffsetX < 0) || ($mainMenuGroupOffsetY < 0) || ($mainMenuGroupOffsetX > $mainMenuGroupWidth) || ($mainMenuGroupOffsetY > $mainMenuGroupHeight)) {
+                $(".main-menu > nav > ul > li > a").removeClass("hover");
+                $(".main-menu-group").fadeOut(100);
+            }
+        }
     });
 
     $(document).on("click", ".actionClose", function() {
