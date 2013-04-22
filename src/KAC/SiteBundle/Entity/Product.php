@@ -10,7 +10,6 @@ use JMS\SerializerBundle\Annotation as Serializer;
  * @ORM\Entity
  * @ORM\Table(name="products")
  * @ORM\HasLifecycleCallbacks()
-
  */
 class Product implements DescribableInterface
 {
@@ -59,7 +58,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\Column(name="status", type="string", length=1)
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a status.")
-     * @Assert\Choice(choices={"a", "h", "d"})
+     * @Assert\Choice(choices={"d"}, groups={"flow_site_new_product_step1", "site_edit_product_overview"})
      */
     private $status = 'a';
 

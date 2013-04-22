@@ -177,6 +177,8 @@ class ProductController extends Controller {
         // Get current form step
         $form = $flow->createForm($product);
 
+//        \Doctrine\Common\Util\Debug::dump($flow->isValid($form));die();
+
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
 

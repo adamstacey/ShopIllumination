@@ -5,11 +5,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use KAC\SiteBundle\Entity\DescribableInterface;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="product_variants")
  * @ORM\HasLifecycleCallbacks()
+ * @Assert\Callback(methods={"isFeatureSelected"}, groups={"flow_site_new_product_step5"})
 
  */
 class Variant implements DescribableInterface
@@ -145,6 +147,29 @@ class Variant implements DescribableInterface
     private $deletedAt;
 
     private $images = array();
+
+    public function isFeatureSelected(ExecutionContext $context)
+    {
+        // Check the validation group
+        if($context->getGroup() === "flow_site_new_product_step5")
+        {
+            // Check that the feature and feature group fields have both been filled in
+            $i = 0;
+            foreach($this->features as $feature)
+            {
+                if($feature->getFeatureGroup() === null)
+                {
+                    $context->addViolationAtSubPath('features['.$i.'].featureGroup', 'You must select a feature group');
+                }
+                if($feature->getFeature() === null)
+                {
+                    $context->addViolationAtSubPath('features['.$i.'].feature', 'You must select a feature');
+                }
+
+                $i++;
+            }
+        }
+    }
 
     /**
      * Constructor
