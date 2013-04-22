@@ -391,5 +391,6 @@ ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB4584665A FOREIGN KEY (produ
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
 CREATE INDEX IDX_5242B8EB4584665A ON order_products (product_id);
 CREATE INDEX IDX_5242B8EB3B69A9AF ON order_products (variant_id);
+DELETE FROM departments WHERE (id = 1205) OR (id = 1207) OR (id = 1208) OR (id = 1210) OR (id = 1211) OR (id = 1212) OR (id = 1213) OR (id = 1216);
 DROP TABLE departments_tmp;
 SET FOREIGN_KEY_CHECKS = 1;
