@@ -35,8 +35,9 @@ class RemoveGhostDepartmentsCommand extends ContainerAwareCommand
             if (sizeof($department->getDescriptions()) < 1)
             {
                 $output->writeln('Removing Department: '.$department->getId());
-                $em->remove($department);
-                $em->flush();
+                $em->getRepository('KAC\SiteBundle\Entity\Department')->removeFromTree($department);
+                $em->clear();
+                $em->persist();
             }
         }
 
