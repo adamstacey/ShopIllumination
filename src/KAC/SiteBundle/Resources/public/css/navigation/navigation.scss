@@ -175,7 +175,8 @@ nav.left-menu .ui-button-text {
     list-style: none;
 }
 
-.main-menu nav > ul > li > a {
+.main-menu nav > ul > li > a,
+.main-menu nav > ul > li > a.hover {
     padding: 0 7px;
     height: 40px;
 
@@ -192,7 +193,8 @@ nav.left-menu .ui-button-text {
     line-height: 16px;
 }
 
-.main-menu nav > ul > li > a:hover {
+.main-menu nav > ul > li > a:hover,
+.main-menu nav > ul > li > a.hover {
     @include boxInsetShadow($colourGreyDark, 0, -5px, 20px, 0, 1);
 }
 
@@ -202,7 +204,7 @@ nav.left-menu .ui-button-text {
 
 .main-menu nav > .button {
     position: absolute;
-    bottom: 0;
+    top: 8px;
     right: 1px;
     border: 0 none;
 
@@ -215,28 +217,26 @@ nav.left-menu .ui-button-text {
 }
 
 .main-menu .main-menu-group {
-    position: relative;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    padding: $spacingMedium $spacingSmall 0 $spacingSmall;
 
     display: none;
 
-    border: 1px solid $colourGreyDark;
     border-top: 3px solid $colourGreyDark;
-    z-index: 1;
+    border-bottom: 3px solid $primaryColour;
+    z-index: 99;
+    @include alphaBackground($colourBlack, 0.7);
 }
 
 .main-menu .widget-group {
     width: 100%;
     margin: 0;
-
-    @include alphaBackground($colourBlack, 0.7);
-    border-top: 1px solid $colourGreyDark;
 }
 
 .main-menu .widget-group > .widget {
-    padding: 0;
-
-    border-right: 1px solid $colourGreyDark;
-    @include borderBox;
+    padding: 0 $spacingSmall $spacingMedium $spacingSmall;
 }
 
 .main-menu .widget-group > .widget:last-child {
