@@ -7,7 +7,7 @@
             {% endfor %}
         </ul>
         {% for department in departments %}
-            <div id="mainMenuGroup{{ department.id }}" class="main-menu-group">
+            <div id="mainMenuGroup{{ department.id }}" class="main-menu-group container">
                 {% for subDepartment in department.children %}
                     {% if department.children|length < 4 %}
                         {% if department.children|length == 1 %}
