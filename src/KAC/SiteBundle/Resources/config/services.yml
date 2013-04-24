@@ -79,9 +79,9 @@ services:
     class: KAC\SiteBundle\Form\Product\NewProductFlow
     parent: craue.form.flow
     scope: request
-    arguments: [@kac_site.google.google]
     calls:
       - [ setFormType, [@kac_site.form.new_product]]
+    arguments: [@kac_site.manager.product, @kac_site.google.google]
   kac_site.form.new_variant:
     class: KAC\SiteBundle\Form\Variant\NewVariantType
     tags:
