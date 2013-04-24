@@ -1,27 +1,24 @@
-<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-277"></span>
-                    <h2>4. Unique Product Identifiers</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-874"></span>
+                    <h2>4. Delivery</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
-                    <div class="message message-help">
-                        <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
-                        <p>Unique product identifiers uniquely identify a product and are important for the search and comparison engines as it helps them place the product in the best positions. Unique product identifiers also allow users of the site to search for products without having to know your own product code.</p>
-                    </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
                             {% for variant in form.variants %}
                                 <div class="accordion-item">
-                                    <h3>Unique Product Identifiers for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
-                                    <div class="pbm">
-                                        {{ form_rest(variant) }}
+                                    <h3>Delivery for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+
                                     </div>
                                 </div>
                             {% endfor %}
+                            {% do form.variants.setRendered() %}
                         </div>
                         {{ form_rest(form) }}
                     </fieldset>
@@ -32,3 +29,8 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+</script>

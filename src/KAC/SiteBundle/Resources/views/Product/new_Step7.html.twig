@@ -1,45 +1,20 @@
-<style>
-    .accordion-item {
-        position: relative;
-    }
-    .accordion-header-buttons {
-        position: absolute;
-        top: 4px;
-        right: 52px;
-        z-index: 1;
-    }
-    .accordion-header-buttons button {
-        padding: 0 3px;
-    }
-</style>
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
-                    <h2>7. Product Images</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-944"></span>
+                    <h2>7. Descriptions</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
                             {% for variant in form.variants %}
-                                <div class="accordion-item fileupload">
-                                    <div class="accordion-header-buttons">
-                                        <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
-                                    </div>
-                                    <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                <div class="accordion-item">
+                                    <h3>Descriptions for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
                                     <div>
-                                        <table class="form-table files mbm">
-                                            <thead>
-                                            <tr>
-                                                <th colspan="6"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        {{ form_widget(variant) }}
+
                                     </div>
                                 </div>
                             {% endfor %}
@@ -54,130 +29,8 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    $(document).ready(function() {
 
-{% raw %}
-<script id="template-upload" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload">
-        <td class="name"><span>{%=file.name%}</span></td>
-        <td class="type">
-            <select class="image-type" name="type">
-                <option value="product">Product</option>
-                <option value="gallery">Gallery</option>
-            </select>
-        </td>
-        {% if (file.error) { %}
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else if (o.files.valid && !i) { %}
-        <td>
-            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-        </td>
-        <td class="start">
-            {% if (!o.options.autoUpload) { %}
-            <button type="button" class="button button-small mrm fl">Start</button>
-            {% } %}
-        </td>
-        {% } else { %}
-        <td colspan="2"></td>
-        {% } %}
-        <td class="cancel">
-            {% if (!i) { %}
-            <button type="button" class="button button-small mrm fl">Cancel</button>
-            {% } %}
-        </td>
-        <td></td>
-    </tr>
-    {% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download" data-id="{%=file.id%}">
-        {% if (file.error) { %}
-        <td class="name"><span>{%=file.name%}</span></td>
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else { %}
-        <td class="name">
-            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
-        </td>
-        <td class="type" colspan="2"><span>
-                {% if (file.type == 'gallery') { %}Gallery{% } %}
-                {% if (file.type == 'product') { %}Product{% } %}
-            </span></td>
-        {% } %}
-        <td></td>
-        <td class="tac delete" width="1">
-            <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
-        </td>
-        <td><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
-    </tr>
-    {% } %}
-</script>
-{% endraw %}
-<script>
-    $(function () {
-        'use strict';
-
-        $('.fileupload').each(function () {
-            var that = this;
-
-            $(".files tbody", this).sortable({
-                handle: 'td:last',
-                update: function() {
-                    // Update hidden field
-                    var images = [];
-                    $(that).find("tr.template-download").each(function(key, row) {
-                        images.push($(row).attr("data-id"));
-                    });
-                    $(that).find('input[type=hidden]').val(images.join(','));
-                }
-            }).disableSelection();
-
-            $(this).fileupload({
-                url: '{{ path('api_images_post_image') }}',
-                dropZone: $(this),
-                formData: []
-            }).bind('fileuploadsubmit', function (e, data) {
-                        //Add type field to form
-                        var typeField = $(".image-type", data.context);
-
-                        data.formData = {
-                            "imageType": typeField.val()
-                        };
-                    }).bind('fileuploadcompleted', function (e, data) {
-                        // Update hidden field
-                        var images = [];
-                        $(that).find("tr.template-download").each(function(key, row) {
-                            images.push($(row).attr("data-id"));
-                        });
-                        $(that).find('input[type=hidden]').val(images.join(','));
-
-                        generateButtons($(that).find('.files'));
-                        return true;
-                    });
-
-            // On page load fetch the info for any existing files
-            var imageIds = $(that).find('input[type=hidden]').val();
-            if (imageIds) {
-                var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
-                    var template = tmpl("template-download");
-                    var result = template({
-                        files: data.files,
-                        formatFileSize: this._formatFileSize,
-                        options: this.options
-                    });
-                    $(that).find('.files tbody').append(result);
-                });
-            }
-            // Update hidden field
-            var images = [];
-            $(that).find("tr.template-download").each(function(key, row) {
-                images.push($(row).attr("data-id"));
-            });
-            $(that).find('input[type=hidden]').val(images.join(','));
-        });
-        $(document).bind('drop dragover', function (e) {
-            e.preventDefault();
-        });
     });
 </script>

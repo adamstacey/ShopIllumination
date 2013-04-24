@@ -1,49 +1,24 @@
-<style>
-    .accordion-item {
-        position: relative;
-    }
-    .accordion-header-buttons {
-        position: absolute;
-        top: 4px;
-        right: 52px;
-        z-index: 1;
-    }
-    .accordion-header-buttons button {
-        padding: 0 3px;
-    }
-</style>
-<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
-            <div class="ui-widget mbl">
+            <div class="ui-widget">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-69"></span>
-                    <h2>8. Product Images</h2>
+                    <span class="ui-button-icon-primary ui-icon icon-white icon-369"></span>
+                    <h2>8. Search Engine Optimisation</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
-                            {% for variant in form.vars.value.variants %}
-                                <div class="accordion-item fileupload">
-                                    <div class="accordion-header-buttons">
-                                        <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
-                                    </div>
-                                    <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                            {% for variant in form.variants %}
+                                <div class="accordion-item">
+                                    <h3>Search Engine Optimisation for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
                                     <div>
-                                        <table class="form-table files mbm">
-                                            <thead>
-                                            <tr>
-                                                <th colspan="6"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
+                                        {{ form_rest(variant) }}
                                     </div>
                                 </div>
                             {% endfor %}
-                            {{ form_widget(form.images) }}
+                            {% do form.variants.setRendered() %}
                         </div>
                         {{ form_rest(form) }}
                     </fieldset>
@@ -54,62 +29,3 @@
         </div>
     </div>
 </form>
-
-{% raw %}
-<!-- The template to display files available for download -->
-<script id="template-image-row" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="image-row">
-        <td class="name">
-            <a href="{%=file.url%}" title="{%=file.name%}">{%=file.name%}</a>
-        </td>
-        <td class="type" colspan="2"><span>
-                {% if (file.type == 'gallery') { %}Gallery{% } %}
-                {% if (file.type == 'product') { %}Product{% } %}
-            </span></td>
-        <td><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
-        <td><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
-    </tr>
-    {% } %}
-</script>
-{% endraw %}
-
-<script>
-    $(function () {
-        'use strict';
-
-        {% set images = [] %}
-        {% for variant in form.vars.value.variants %}
-        {% set images = images|merge(variant.images|split(',')) %}
-        {% endfor %}
-        var images = "{{ images|join(',') }}";
-
-        if (images) {
-            var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', images), function(data) {
-                var template = tmpl("template-image-row");
-                var result = template({
-                    files: data.files,
-                    formatFileSize: this._formatFileSize,
-                    options: this.options
-                });
-                $('.files tbody').append(result);
-            });
-        }
-
-        $("#form-add").submit(function() {
-            var images = [];
-            $('.files tbody tr').each(function(key, row) {
-                var input = $(row).find('input');
-                if(input.is(':checked')) {
-                    images.push(input.attr("data-id"));
-                }
-            });
-
-            $("#site_new_product_images").val(images.join(','));
-        });
-
-        $(document).bind('drop dragover', function (e) {
-            e.preventDefault();
-        });
-    });
-</script>
