@@ -35,7 +35,8 @@ class ProductFeatureCombinationType extends AbstractType
                 $qb2 = $er->createQueryBuilder('fg2');
                 $qb2->select('fg2.id')
                     ->from('KAC\SiteBundle\Entity\DepartmentToFeature', 'df')
-                    ->where('df.featureGroup = fg2');
+                    ->where('df.featureGroup = fg2')
+                    ->orderBy('df.displayOrder');
                 if($departmentId) {
                     $qb2->andWhere($qb2->expr()->eq('df.department', $departmentId));
                 }
@@ -69,24 +70,28 @@ class ProductFeatureCombinationType extends AbstractType
              */
             $data = $event->getData();
             $form = $event->getForm();
-            if ($data && $data->getFeatureGroup() !== null) {
-                $form->remove('feature');
-                $form->add($factory->createNamed('feature', 'entity', null, array(
-                    'required'  => true,
-                    'empty_value' => '- Select a Feature -',
-                    'class' => 'KAC\SiteBundle\Entity\Product\Feature',
-                    'query_builder' => function(EntityRepository $er) use ($data) {
-                        $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data->getFeatureGroup()->getId()));
-                        $qb->orderBy('f.name');
-                        return $qb;
-                    },
-                    'attr' => array(
-                        'class' => 'feature fill',
-                        'data-placeholder' => '- Select a Feature -',
-                        'placeholder' => '- Select a Feature -',
-                    ),
-                )));
+            if ($data && $data->getFeatureGroup())
+            {
+                if ($data->getFeatureGroup()->getId() > 0)
+                {
+                    $form->remove('feature');
+                    $form->add($factory->createNamed('feature', 'entity', null, array(
+                        'required'  => true,
+                        'empty_value' => '- Select a Feature -',
+                        'class' => 'KAC\SiteBundle\Entity\Product\Feature',
+                        'query_builder' => function(EntityRepository $er) use ($data) {
+                            $qb = $er->createQueryBuilder('f');
+                            $qb->add('where', $qb->expr()->eq('f.featureGroup', $data->getFeatureGroup()->getId()));
+                            $qb->orderBy('f.name');
+                            return $qb;
+                        },
+                        'attr' => array(
+                            'class' => 'feature fill',
+                            'data-placeholder' => '- Select a Feature -',
+                            'placeholder' => '- Select a Feature -',
+                        ),
+                    )));
+                }
             }
         });
 
@@ -98,24 +103,28 @@ class ProductFeatureCombinationType extends AbstractType
             $data = $event->getData();
             $form = $event->getForm();
 
-            if ($data && isset($data['featureGroup'])) {
-                $form->remove('feature');
-                $form->add($factory->createNamed('feature', 'entity', null, array(
-                    'required'  => true,
-                    'empty_value' => '- Select a Feature -',
-                    'class' => 'KAC\SiteBundle\Entity\Product\Feature',
-                    'query_builder' => function(EntityRepository $er) use ($data) {
-                        $qb = $er->createQueryBuilder('f');
-                        $qb->add('where', $qb->expr()->eq('f.featureGroup', $data['featureGroup']));
-                        $qb->orderBy('f.name');
-                        return $qb;
-                    },
-                    'attr' => array(
-                        'class' => 'feature fill',
-                        'data-placeholder' => '- Select a Feature -',
-                        'placeholder' => '- Select a Feature -',
-                    ),
-                )));
+            if ($data && isset($data['featureGroup']))
+            {
+                if ($data['featureGroup'] > 0)
+                {
+                    $form->remove('feature');
+                    $form->add($factory->createNamed('feature', 'entity', null, array(
+                        'required'  => true,
+                        'empty_value' => '- Select a Feature -',
+                        'class' => 'KAC\SiteBundle\Entity\Product\Feature',
+                        'query_builder' => function(EntityRepository $er) use ($data) {
+                            $qb = $er->createQueryBuilder('f');
+                            $qb->add('where', $qb->expr()->eq('f.featureGroup', $data['featureGroup']));
+                            $qb->orderBy('f.name');
+                            return $qb;
+                        },
+                        'attr' => array(
+                            'class' => 'feature fill',
+                            'data-placeholder' => '- Select a Feature -',
+                            'placeholder' => '- Select a Feature -',
+                        ),
+                    )));
+                }
             }
         });
     }
