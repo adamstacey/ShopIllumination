@@ -39,15 +39,14 @@ class Price
     
     /**
      * @ORM\Column(name="recommended_retail_price", type="decimal", precision=12, scale=4)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_prices"})
-     * @Assert\Range(min="0.01", groups={"flow_site_new_product_step3", "site_edit_product_prices"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_prices"}, message="Enter a recommended retail price.")
      */
     private $recommendedRetailPrice = 0.0;
     
     /**
      * @ORM\Column(name="list_price", type="decimal", precision=12, scale=4)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_prices"})
-     * @Assert\Range(min="0.01", groups={"flow_site_new_product_step3", "site_edit_product_prices"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_prices"}, message="Enter a list price.")
+     * @Assert\Range(min="0.01", groups={"flow_site_new_product_step3", "site_edit_product_prices"}, minMessage="Enter a valid list price.")
      */
     private $listPrice = 0.0;
     
