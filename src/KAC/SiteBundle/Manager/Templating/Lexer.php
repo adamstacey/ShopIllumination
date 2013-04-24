@@ -6,22 +6,24 @@ class Lexer
 {
     // Define token constants
     protected static $terminals = array(
-        '/^(@)/'    => 'T_AT',
+        '/^(\@)/'    => 'T_AT',
         '/^(\^)/'   => 'T_CARET',
         '/^(\|)/'   => 'T_PIPE',
         '/^(\s+)/'  => 'T_WHITESPACE',
         '/^([\w\.]+)/' => 'T_IDENTIFIER',
-        '/^(\"((.*)(?:[\"]|[^"]|""))+\")/' => 'T_STRING_LITERAL',
+        '/^("[^"]*")/' => 'T_STRING_LITERAL',
     );
 
-    public function run($source) {
+    public function run($source)
+    {
         $tokens = array();
 
         $offset = 0;
-        while($offset < strlen($source)) {
+        while ($offset < strlen($source))
+        {
             $result = $this->match($source, $offset);
-            if($result === false) {
-                throw new \Exception("Unable to parse character " . ($offset+1) . ".");
+            if ($result === false) {
+                throw new \Exception("Unable to parse character ".($offset + 1).".");
             }
             $tokens[] = $result;
             $offset += strlen($result['raw']);
@@ -30,26 +32,20 @@ class Lexer
         return $tokens;
     }
 
-    protected function match($string, $offset) {
+    protected function match($string, $offset)
+    {
         $string = substr($string, $offset);
 
-        foreach(static::$terminals as $pattern => $name) {
-            if(preg_match($pattern, $string, $matches)) {
-                // Special case for string literal to remove quotes
-                if($name === 'T_STRING_LITERAL')
-                {
-                    $match = $matches[1];
-                    $value = $matches[2];
-                } else {
-                    $match = $matches[1];
-                    $value = $matches[1];
-                }
-
+        foreach (static::$terminals as $pattern => $name)
+        {
+            if (preg_match($pattern, $string, $matches)) {
+                $match = $matches[1];
+                $value = $matches[1];
                 return array(
-                    'value' => $value,
+                    'value' => ($name === 'T_STRING_LITERAL'?substr($value, 1, -1):$value),
                     'raw'   => $match,
                     'type' => $name,
-                    'char'  => $offset+1
+                    'char'  => $offset + 1
                 );
             }
         }
