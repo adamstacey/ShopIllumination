@@ -32,6 +32,9 @@
 {% macro table_prices_widget(form) %}
     {% if form|length == 1 %}
         {% for child in form %}
+            <td{% if child.costPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+                {{ form_widget(child.costPrice) }}
+            </td>
             <td{% if child.recommendedRetailPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
                 {{ form_widget(child.recommendedRetailPrice) }}
             </td>
