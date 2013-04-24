@@ -15,27 +15,25 @@ abstract class TemplateBuilder
         $this->em = $em;
     }
 
-
     public function buildString($object, $template)
     {
         $parts = array();
 
         $lexer = new Lexer();
         $tokens = $lexer->run($template);
-
         while ($token = $this->getNextToken($tokens))
         {
             // If token is a string literal then add directly to the string
-            if($token["type"] === "T_STRING_LITERAL")
+            if ($token["type"] === "T_STRING_LITERAL")
             {
                 $parts[] = $token["value"];
             } elseif($token["type"] === "T_IDENTIFIER") {
                 // Attempt to fetch the specified value from the object
                 $parts[] = $this->getPropertyValue($object, $token["value"]);
             // Check if part is an entity
-            } elseif($token["type"] === "T_AT") {
+            } elseif ($token["type"] === "T_AT") {
                 // Check the next token
-                if($token = $this->getNextToken($tokens))
+                if ($token = $this->getNextToken($tokens))
                 {
                     if($token["type"] === "T_IDENTIFIER")
                     {
@@ -89,7 +87,7 @@ abstract class TemplateBuilder
 
     private function getPropertyValue($object, $name)
     {
-        if($object) {
+        if ($object) {
             try {
                 $path = new PropertyPath($this->getPropertyName($name));
                 return  $path->getValue($object);
