@@ -32,19 +32,14 @@ class Description implements DescriptionInterface
     private $locale = "en_GB";
 
     /**
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="extra_keywords", type="string", length=255, nullable=true)
      */
-    private $name;
+    private $extraKeywords;
 
     /**
-     * @ORM\Column(name="prefix", type="string", length=255, nullable=true)
+     * @ORM\Column(name="key_message", type="string", length=255, nullable=true)
      */
-    private $prefix;
-
-    /**
-     * @ORM\Column(name="tagline", type="string", length=255, nullable=true)
-     */
-    private $tagline;
+    private $keyMessage;
 
     /**
      * @ORM\Column(name="description", type="text")
@@ -54,9 +49,9 @@ class Description implements DescriptionInterface
     private $description = "";
 
     /**
-     * @ORM\Column(name="short_description", type="text")
+     * @ORM\Column(name="brand_description", type="text")
      */
-    private $shortDescription;
+    private $brandDescription;
 
     /**
      * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
@@ -77,11 +72,6 @@ class Description implements DescriptionInterface
      * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      */
     private $metaKeywords;
-
-    /**
-     * @ORM\Column(name="search_words", type="text", nullable=true)
-     */
-    private $searchWords;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -448,5 +438,74 @@ class Description implements DescriptionInterface
     public function getVariant()
     {
         return $this->variant;
+    }
+
+    /**
+     * Set brandDescription
+     *
+     * @param string $brandDescription
+     * @return Description
+     */
+    public function setBrandDescription($brandDescription)
+    {
+        $this->brandDescription = $brandDescription;
+    
+        return $this;
+    }
+
+    /**
+     * Get brandDescription
+     *
+     * @return string 
+     */
+    public function getBrandDescription()
+    {
+        return $this->brandDescription;
+    }
+
+    /**
+     * Set extraKeywords
+     *
+     * @param string $extraKeywords
+     * @return Description
+     */
+    public function setExtraKeywords($extraKeywords)
+    {
+        $this->extraKeywords = $extraKeywords;
+    
+        return $this;
+    }
+
+    /**
+     * Get extraKeywords
+     *
+     * @return string 
+     */
+    public function getExtraKeywords()
+    {
+        return $this->extraKeywords;
+    }
+
+    /**
+     * Set keyMessage
+     *
+     * @param string $keyMessage
+     * @return Description
+     */
+    public function setKeyMessage($keyMessage)
+    {
+        $this->keyMessage = $keyMessage;
+    
+        return $this;
+    }
+
+    /**
+     * Get keyMessage
+     *
+     * @return string 
+     */
+    public function getKeyMessage()
+    {
+        return $this->keyMessage;
     }
 }
