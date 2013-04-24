@@ -40,11 +40,6 @@ class ProductManager extends Manager
         return $product;
     }
 
-    /**
-     * Create a new product variant
-     * @param Product $product the parent product
-     * @return \KAC\SiteBundle\Entity\Product\Variant
-     */
     public function createVariant(Product $product)
     {
         $variant = new Variant();
@@ -59,7 +54,7 @@ class ProductManager extends Manager
 
     public function updateProductDescription(ProductDescription $description)
     {
-        if(!$description->getProduct()) return;
+        if (!$description->getProduct()) return;
 
         // Get objects
         $brand = $description->getProduct()->getBrand();
@@ -96,36 +91,27 @@ class ProductManager extends Manager
 
     public function updateVariantDescription(VariantDescription $description)
     {
-        if(!$description->getVariant()) return;
+        if (!$description->getVariant()) return;
 
-        /* @var \KAC\SiteBundle\Entity\Department $department*/
+        // Get objects
         $brand = $description->getVariant()->getProduct()->getBrand();
         $department = $description->getVariant()->getProduct()->getDepartment()->getDepartment();
 
-        $builder = new VariantTemplateBuilder($this->doctrine->getManager());
-        $pageTitle = $builder->buildString($description, $department->getDescription()->getPageTitleTemplate());
-        $header = $builder->buildString($description, $department->getDescription()->getHeaderTemplate());
-        $metaDescription = $builder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate());
-
-        if($brand && $department)
+        if ($brand && $department)
         {
-            $metaKeywords = $description->getVariant()->getProductCode();
+            // Get the SEO data from the department templates
+            $pageTitleBuilder = new VariantTemplateBuilder($this->doctrine->getManager());
+            $pageTitle = $pageTitleBuilder->buildString($description, $department->getDescription()->getPageTitleTemplate());
+            $headerBuilder = new VariantTemplateBuilder($this->doctrine->getManager());
+            $header = $headerBuilder->buildString($description, $department->getDescription()->getHeaderTemplate());
+            $metaDescriptionBuilder = new VariantTemplateBuilder($this->doctrine->getManager());
+            $metaDescription = $metaDescriptionBuilder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate());
 
-            if ($brand->getDescription())
-            {
-                $metaKeywords .= ' '.$brand->getDescription()->getName();
-            }
-            if ($department->getDescription())
-            {
-                $metaKeywords .= ' '.$department->getDescription()->getName();
-            }
-
-            $description->setName($pageTitle);
+            // Update the variant description
             $description->setPageTitle($pageTitle);
             $description->setHeader($header);
             $description->setMetaDescription($metaDescription);
-            $description->setMetaKeywords($this->seoManager->generateKeywords($metaKeywords));
-            $description->setShortDescription($this->seoManager->shortenContent($description->getDescription(), 160));
+            $description->setMetaKeywords($this->seoManager->generateKeywords($pageTitle));
         }
     }
 }
