@@ -9,16 +9,19 @@ use KAC\SiteBundle\Entity\Product\VariantToFeature;
 use KAC\SiteBundle\Entity\Product\Price;
 use KAC\SiteBundle\Entity\Product\Variant\Description;
 use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Manager\ProductManager;
 
 class NewProductFlow extends FormFlow
 {
+    protected $productManager;
     protected $googleApi;
 
-    protected $maxSteps = 9;
+    protected $maxSteps = 11;
     protected $allowDynamicStepNavigation = true;
 
-    function __construct(Google $googleApi)
+    function __construct(ProductManager $productManager, Google $googleApi)
     {
+        $this->productManager = $productManager;
         $this->googleApi = $googleApi;
     }
 
@@ -27,12 +30,14 @@ class NewProductFlow extends FormFlow
             '1. Overview',
             '2. Build Combinations',
             '3. Prices',
-            '4. Unique Identifiers',
-            '5. Features',
-            '6. SEO',
-            '7. Uploads',
-            '8. Images',
-            '9. Links'
+            '4. Delivery',
+            '5. Unique Identifiers',
+            '6. Features',
+            '7. Descriptions',
+            '8. SEO',
+            '9. Uploads',
+            '10. Images',
+            '11. Links'
         );
     }
 
@@ -55,6 +60,21 @@ class NewProductFlow extends FormFlow
                 $options['departmentId'] = $departments[0]->getDepartment()->getId();
             } else {
                 $options['departmentId'] = null;
+            }
+        }
+
+        if ($step > 2)
+        {
+            // Go through the variants and update any zero recommended retail prices
+            foreach ($formData->getVariants() as $variant)
+            {
+                foreach ($variant->getPrices() as $price)
+                {
+                    if ($price->getRecommendedRetailPrice() < 0.01)
+                    {
+                        $price->setRecommendedRetailPrice($price->getListPrice());
+                    }
+                }
             }
         }
 
@@ -205,11 +225,8 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 4)
+        if ($step == 5)
         {
-            /**
-             * @var $variant Variant
-             */
             // Attempt to load variant UIDs from google
             foreach ($formData->getVariants() as $variant)
             {
@@ -246,7 +263,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 5)
+        if ($step == 6)
         {
             // Get the department features
             $departmentFeatures = $formData->getDepartment()->getDepartment()->getFeatures();
@@ -283,6 +300,15 @@ class NewProductFlow extends FormFlow
                         }
                     }
                 }
+            }
+        }
+
+        if ($step == 8)
+        {
+            // Go through the variants
+            foreach ($formData->getVariants() as $variant)
+            {
+                $this->productManager->updateVariantDescription($variant->getDescription());
             }
         }
 
