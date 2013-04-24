@@ -8,7 +8,7 @@ function loadUiFunctions() {
 
     $(".tabs").tabs();
 
-    $("img[title], span[title], th[title] .button[title]").tooltip({
+    $("img[title], span[title], th[title], .button[title]").tooltip({
         track: true
     });
 }
