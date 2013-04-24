@@ -80,7 +80,7 @@ class Description implements DescriptionInterface
     /**
      * @ORM\Column(name="header_template", type="text", nullable=true)
      */
-    private $headerTemplate;
+    private $headerTemplate = "brand^productCode^department^extraProductKeyword";
     
     /**
      * @ORM\Column(name="meta_description", type="text", nullable=true)
@@ -90,7 +90,7 @@ class Description implements DescriptionInterface
     /**
      * @ORM\Column(name="meta_description_template", type="text", nullable=true)
      */
-    private $metaDescriptionTemplate;
+    private $metaDescriptionTemplate = "brand^productCode^department^extraProductKeyword";
     
     /**
      * @ORM\Column(name="meta_keywords", type="text", nullable=true)
