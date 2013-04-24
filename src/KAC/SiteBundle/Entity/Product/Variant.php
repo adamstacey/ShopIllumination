@@ -48,7 +48,7 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
-     * @Assert\Count(min="1", groups={"flow_site_new_product_step3"})
+     * @Assert\Count(min="1", groups={"flow_site_new_product_step3"}, minMessage="Enter a valid price.")
      * @Assert\Valid()
      */
     private $prices;
@@ -67,8 +67,8 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"})
-     * @Assert\Type(type="string", groups={"flow_site_new_product_step3", "site_edit_product_overview"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"}, message="Enter a product code.")
+     * @Assert\Type(type="string", groups={"flow_site_new_product_step3", "site_edit_product_overview"}, message="Enter a valid product code.")
      */
     private $productCode = '';
 
