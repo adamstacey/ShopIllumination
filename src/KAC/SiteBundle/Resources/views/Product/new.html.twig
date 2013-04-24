@@ -33,6 +33,10 @@
                     {% include 'KACSiteBundle:Product:new_Step8.html.twig' %}
                 {% elseif flow.getCurrentStep() == 9 %}
                     {% include 'KACSiteBundle:Product:new_Step9.html.twig' %}
+                {% elseif flow.getCurrentStep() == 10 %}
+                    {% include 'KACSiteBundle:Product:new_Step10.html.twig' %}
+                {% elseif flow.getCurrentStep() == 11 %}
+                    {% include 'KACSiteBundle:Product:new_Step11.html.twig' %}
                 {% endif %}
             </div>
         </div>
