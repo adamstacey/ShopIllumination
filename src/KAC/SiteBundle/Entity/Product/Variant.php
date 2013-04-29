@@ -133,8 +133,9 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
+     * @Assert\NotBlank(groups={"flow_site_new_product_step4"}, message="Select a delivery band.")
      */
-    private $deliveryBand = 1;
+    private $deliveryBand;
 
     /**
      * @Gedmo\Timestampable(on="create")
