@@ -142,6 +142,13 @@ class NewProductType extends AbstractType
 
                 break;
             case 4:
+                $builder->add('variants', 'collection', array(
+                    'block_name' => 'variants_delivery',
+                    'type' => new ProductVariantDeliveryType(),
+                    'required'  => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
 
                 break;
             case 5:
