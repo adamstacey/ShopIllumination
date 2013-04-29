@@ -396,5 +396,6 @@ ALTER TABLE product_descriptions DROP name, DROP search_words, CHANGE short_desc
 ALTER TABLE product_variant_descriptions DROP name, DROP search_words, CHANGE short_description brand_description LONGTEXT NOT NULL;
 ALTER TABLE product_descriptions CHANGE prefix extra_keywords VARCHAR(255) DEFAULT NULL, CHANGE tagline key_message VARCHAR(255) DEFAULT NULL;
 ALTER TABLE product_variant_descriptions CHANGE prefix extra_keywords VARCHAR(255) DEFAULT NULL, CHANGE tagline key_message VARCHAR(255) DEFAULT NULL;
+ALTER TABLE product_variants ADD delivery_band NUMERIC(12, 4) NOT NULL;
 DROP TABLE departments_tmp;
 SET FOREIGN_KEY_CHECKS = 1;
