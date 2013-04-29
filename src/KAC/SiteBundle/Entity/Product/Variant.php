@@ -132,6 +132,11 @@ class Variant implements DescribableInterface
     private $height = 0;
 
     /**
+     * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
+     */
+    private $deliveryBand = 1;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -732,5 +737,28 @@ class Variant implements DescribableInterface
     public function getRoutings()
     {
         return $this->routings;
+    }
+
+    /**
+     * Set deliveryBand
+     *
+     * @param float $deliveryBand
+     * @return Variant
+     */
+    public function setDeliveryBand($deliveryBand)
+    {
+        $this->deliveryBand = $deliveryBand;
+    
+        return $this;
+    }
+
+    /**
+     * Get deliveryBand
+     *
+     * @return float 
+     */
+    public function getDeliveryBand()
+    {
+        return $this->deliveryBand;
     }
 }
