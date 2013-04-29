@@ -171,6 +171,21 @@ class NewProductFlow extends FormFlow
                 }
             }
 
+            // Get the default delivery band for the variants to inherit
+            $deliveryBand = null;
+            if ($productToDepartment = $formData->getDepartment())
+            {
+                if ($department = $productToDepartment->getDepartment())
+                {
+                    if ($department->getDeliveryBand() > 0)
+                    {
+                        $deliveryBand = $department->getDeliveryBand();
+                    } elseif ($department->getInheritedDeliveryBand() > 0) {
+                        $deliveryBand = $department->getInheritedDeliveryBand();
+                    }
+                }
+            }
+
             // Check to see if a variant exists and add if required
             foreach ($combinationsToCheck as $index => $combinationToCheck)
             {
@@ -195,6 +210,7 @@ class NewProductFlow extends FormFlow
                         $variant->addFeature($variantToFeature);
                     }
 
+                    $variant->setDeliveryBand($deliveryBand);
                     $variant->setProduct($formData);
                     $variant->addPrice(new Price());
                     foreach ($formData->getDescriptions() as $description)
@@ -212,6 +228,7 @@ class NewProductFlow extends FormFlow
             if (sizeof($formData->getVariants()) < 1)
             {
                 $variant = new Variant();
+                $variant->setDeliveryBand($deliveryBand);
                 $variant->setProduct($formData);
                 $variant->addPrice(new Price());
                 foreach ($formData->getDescriptions() as $description)
