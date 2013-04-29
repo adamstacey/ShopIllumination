@@ -49,6 +49,15 @@ class NewProductType extends AbstractType
                         'data-help' => 'Select the status of the department. Any sub-departments will also inherit this status.',
                     ),
                 ));
+                $builder->add('template', 'choice', array(
+                    'label' => 'Template',
+                    'choices' => array('default' => 'Standard Product Template', 'ducting' => 'Ducting Product Template', 'lighting' => 'Lighting Product Template', 'worktop' => 'Worktop Product Template'),
+                    'required' => true,
+                    'attr' => array(
+                        'class' => 'fill',
+                        'data-help' => 'Select the template the product will use when a user visits the product.',
+                    ),
+                ));
                 $builder->add('availableForPurchase', 'checkbox', array(
                     'required' => false,
                     'label' => 'Available',
