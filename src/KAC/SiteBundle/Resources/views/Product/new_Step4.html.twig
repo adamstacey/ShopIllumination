@@ -1,3 +1,9 @@
+{% set departmentName = form.vars.value.department.department.name %}
+{% if form.vars.value.department.department.deliveryBrand %}
+    {% set departmentDeliveryBand = form.vars.value.department.department.deliveryBrand %}
+{% else %}
+    {% set departmentDeliveryBand = form.vars.value.department.department.inheritedDeliveryBrand %}
+{% endif %}
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
@@ -7,14 +13,46 @@
                     <h2>4. Delivery</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
+                    {% if departmentDeliveryBand %}
+                        <div class="message message-help">
+                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
+                            <p>The default delivery band set is <strong>"{{ departmentDeliveryBand }}"</strong>, which has been set by default from the department <strong>"{{ departmentName }}"</strong>.</p>
+                        </div>
+                    {% else %}
+                        <div class="message message-help">
+                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-694"></span>
+                            <p>The default delivery band cannot be set as the department <strong>"{{ departmentName }}"</strong> has no default delivery band set.</p>
+                            <p><strong>Please check the delivery bands below and make sure you set them.</strong></p>
+                        </div>
+                    {% endif %}
+                    <fieldset>
+                        <div class="form-element widget-group clearfix">
+                            <span title="Select the delivery band you want to apply to all variants." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="formDeliveryBand">Apply Delivery Band to All</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <select id="formDeliveryBand" class="fill">
+                                    <option selected="selected" value="">- Select a Delivery Band -</option>
+                                    <option value="1">Delivery Band 1</option>
+                                    <option value="2">Delivery Band 2</option>
+                                    <option value="3">Delivery Band 3</option>
+                                    <option value="4">Delivery Band 4</option>
+                                    <option value="5">Delivery Band 5</option>
+                                    <option value="6">Delivery Band 6</option>
+                                </select>
+                                <button type="button" class="actionApplyDeliveryBandToAll button button-small mlm fr">Apply to All</button>
+                            </div>
+                        </div>
+                    </fieldset>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
                             {% for variant in form.variants %}
                                 <div class="accordion-item">
                                     <h3>Delivery for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
-                                    <div>
-
+                                    <div class="pbm">
+                                        {{ form_rest(variant) }}
                                     </div>
                                 </div>
                             {% endfor %}
@@ -31,6 +69,13 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
-
+        $(document).on("click", ".actionApplyDeliveryBandToAll", function() {
+            var $deliveryBand = $("#formDeliveryBand").val();
+            $(".accordion-item select").each(function() {
+                $(this).find("option:selected").removeAttr("selected");
+                $(this).find("option[value='"+$deliveryBand+"']").attr("selected", "selected");
+            });
+            $.uniform.update();
+        });
     });
 </script>
