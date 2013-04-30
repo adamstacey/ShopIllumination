@@ -1024,12 +1024,6 @@ body .ui-tooltip {
 ----------------------------------*/
 
 /* states and images */
-.ui-corner-none {
-    -webkit-border-top-left-radius: 0;
-    -moz-border-top-left-radius: 0;
-    border-top-left-radius: 0;
-}
-
 .ui-corner-all,
 .ui-corner-top,
 .ui-corner-left,
@@ -1064,6 +1058,42 @@ body .ui-tooltip {
     -webkit-border-bottom-right-radius: $radiusSize;
     -moz-border-bottom-right-radius: $radiusSize;
     border-bottom-right-radius: $radiusSize;
+}
+
+.ui-corner-none,
+.ui-corner-none-top,
+.ui-corner-none-left,
+.ui-corner-none-tl {
+    -webkit-border-top-left-radius: 0 !important;
+    -moz-border-top-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+.ui-corner-none,
+.ui-corner-none-top,
+.ui-corner-none-right,
+.ui-corner-none-tr {
+    -webkit-border-top-right-radius: 0 !important;
+    -moz-border-top-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.ui-corner-none,
+.ui-corner-none-bottom,
+.ui-corner-none-left,
+.ui-corner-none-bl {
+    -webkit-border-bottom-left-radius: 0 !important;
+    -moz-border-bottom-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.ui-corner-none,
+.ui-corner-none-bottom,
+.ui-corner-none-right,
+.ui-corner-none-br {
+    -webkit-border-bottom-right-radius: 0 !important;
+    -moz-border-bottom-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
 
 .ui-widget-overlay {
