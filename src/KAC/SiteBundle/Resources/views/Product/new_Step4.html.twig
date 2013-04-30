@@ -25,26 +25,6 @@
                             <p><strong>Please check the delivery bands below and make sure you set them.</strong></p>
                         </div>
                     {% endif %}
-                    <fieldset>
-                        <div class="form-element widget-group clearfix">
-                            <span title="Select the delivery band you want to apply to all variants." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
-                            <div class="widget widget-1-of-3">
-                                <label for="formDeliveryBand">Apply Delivery Band to All</label>
-                            </div>
-                            <div class="widget widget-2-of-3">
-                                <select id="formDeliveryBand" class="fill">
-                                    <option selected="selected" value="">- Select a Delivery Band -</option>
-                                    <option value="1">Delivery Band 1</option>
-                                    <option value="2">Delivery Band 2</option>
-                                    <option value="3">Delivery Band 3</option>
-                                    <option value="4">Delivery Band 4</option>
-                                    <option value="5">Delivery Band 5</option>
-                                    <option value="6">Delivery Band 6</option>
-                                </select>
-                                <button type="button" class="actionApplyDeliveryBandToAll button button-small mlm fr">Apply to All</button>
-                            </div>
-                        </div>
-                    </fieldset>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
@@ -67,15 +47,3 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(document).on("click", ".actionApplyDeliveryBandToAll", function() {
-            var $deliveryBand = $("#formDeliveryBand").val();
-            $(".accordion-item select").each(function() {
-                $(this).find("option:selected").removeAttr("selected");
-                $(this).find("option[value='"+$deliveryBand+"']").attr("selected", "selected");
-            });
-            $.uniform.update();
-        });
-    });
-</script>
