@@ -18,8 +18,9 @@ class ProductVariantDeliveryType extends AbstractType
             'required' => true,
             'empty_value' => '- Select a Delivery Band -',
             'attr' => array(
-                'class' => 'fill',
+                'class' => 'fill ui-corner-none-br',
                 'data-help' => 'Select the delivery band this product falls in.',
+                'data-apply-to-all' => 'deliveryBand',
             ),
         ));
     }
