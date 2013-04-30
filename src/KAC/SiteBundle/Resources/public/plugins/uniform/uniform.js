@@ -652,6 +652,10 @@
                         });
                     }
 
+                    if ($el.hasClass("ui-corner-none-br")) {
+                        $div.addClass("ui-corner-none-br");
+                    }
+
                     // Take care of events
                     bindUi($el, $div, options);
                     bindMany($el, options, {
