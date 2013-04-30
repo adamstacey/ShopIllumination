@@ -8,6 +8,11 @@
     {% if child.vars.block_prefixes.2 != 'hidden' %}
         <td{% if child.vars.attr['data-container-class'] is defined %} class="{{ child.vars.attr['data-container-class'] }}"{% endif %}>{{ form_widget(child) }}</td>
     {% endif %}
+    {% if child.vars.attr['data-apply-to-all'] is defined %}
+        <td width="1" class="tar">
+            <button type="button" data-apply-to-all-field="{{ child.vars.attr['data-apply-to-all'] }}" title="Click to apply this value to all others." class="actionApplyToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button>
+        </td>
+    {% endif %}
 {% endfor %}
 <td class="tac" width="1">
     {{ form_rest(form) }}
