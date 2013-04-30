@@ -401,6 +401,70 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on("click", ".actionApplyToAll", function() {
+        $(".loading-container").show();
+        var $fieldToApplyToAll = $(this).attr("data-apply-to-all-field");
+        if ($fieldToApplyToAll) {
+            if ($(this).attr("data-icon-only") == "true") {
+                var $valueToApply = $(this).parent().prev("td").find("[data-apply-to-all='"+$fieldToApplyToAll+"']").val();
+                if ($valueToApply) {
+                    var $tableIndex = $("table.form-table").index($(this).closest("table.form-table"));
+                    var $selectedIndex = $("table.form-table:eq("+$tableIndex+") tbody tr td [data-apply-to-all-field='"+$fieldToApplyToAll+"']").index(this);
+                    var $numberToApplyToAll = $("table.form-table").length;
+                    if ($numberToApplyToAll > 0) {
+                        var $numberApplied = 0;
+                        $("table.form-table").each(function() {
+                            var $objectToUpdate = $(this).find("tbody tr:eq("+$selectedIndex+") [data-apply-to-all='"+$fieldToApplyToAll+"']");
+                            if ($objectToUpdate.is("select")) {
+                                $objectToUpdate.find("option:selected").removeAttr("selected");
+                                $objectToUpdate.find("option[value='"+$valueToApply+"']").attr("selected", "selected");
+                            } else {
+                                $objectToUpdate.val($valueToApply);
+                            }
+                            $numberApplied++;
+                            if ($numberApplied == $numberToApplyToAll) {
+                                $.uniform.update();
+                                $(".loading-container").fadeOut(500);
+                            }
+                        });
+                    } else {
+                        $(".loading-container").fadeOut(500);
+                    }
+                } else {
+                    $(".loading-container").fadeOut(500);
+                }
+            } else {
+                var $valueToApply = $(this).closest(".widget").find("[data-apply-to-all='"+$fieldToApplyToAll+"']").val();
+                if ($valueToApply) {
+                    var $numberToApplyToAll = $("[data-apply-to-all='"+$fieldToApplyToAll+"']").length;
+                    if ($numberToApplyToAll > 0) {
+                        var $numberApplied = 0;
+                        $("[data-apply-to-all='"+$fieldToApplyToAll+"']").each(function() {
+                            var $objectToUpdate = $(this);
+                            if ($objectToUpdate.is("select")) {
+                                $objectToUpdate.find("option:selected").removeAttr("selected");
+                                $objectToUpdate.find("option[value='"+$valueToApply+"']").attr("selected", "selected");
+                            } else {
+                                $objectToUpdate.val($valueToApply);
+                            }
+                            $numberApplied++;
+                            if ($numberApplied == $numberToApplyToAll) {
+                                $.uniform.update();
+                                $(".loading-container").fadeOut(500);
+                            }
+                        });
+                    } else {
+                        $(".loading-container").fadeOut(500);
+                    }
+                } else {
+                    $(".loading-container").fadeOut(500);
+                }
+            }
+        } else {
+            $(".loading-container").fadeOut(500);
+        }
+    });
+
     loadFormFunctions();
 
     generateTemplateParts();
