@@ -28,8 +28,8 @@
                                                 <tr>
                                                     <td width="1" class="row-count tar">{{ loop.index }}</td>
                                                     <td{% if row.featureGroup.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(row.featureGroup) }}</td>
-                                                    <td{% if row.feature.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(row.feature) }}</td>
-                                                    <td width="1" class="tar"><button type="button" title="Click to apply the selected feature across all other variants." class="actionApplyFeatureToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button></td>
+                                                    <td{% if row.feature.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(row.feature, { 'attr': {'data-apply-to-all': 'feature'} }) }}</td>
+                                                    <td width="1" class="tar"><button type="button" title="Click to apply the selected feature across all other variants." data-apply-to-all-field="feature" class="actionApplyToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button></td>
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
@@ -48,19 +48,3 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(document).on("click", ".actionApplyFeatureToAll", function() {
-            $("body").css("cursor", "progress");
-            var $selectedValue = $(this).parent().prev().find("select:eq(0)").val();
-            var $tableIndex = $("table.form-table").index($(this).closest("table.form-table"));
-            var $selectedIndex = $("table.form-table:eq("+$tableIndex+") tbody tr td .actionApplyFeatureToAll").index(this);
-            $("table.form-table").each(function() {
-                $(this).find("tbody tr:eq("+$selectedIndex+") td:eq(2) select option:selected").removeAttr("selected");
-                $(this).find("tbody tr:eq("+$selectedIndex+") td:eq(2) select option[value='"+$selectedValue+"']").attr("selected", "selected");
-            });
-            $.uniform.update();
-            $("body").css("cursor", "default");
-        });
-    });
-</script>
