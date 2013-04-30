@@ -37,6 +37,7 @@ class ProductVariantDescriptionSeoType extends AbstractType
                 'class' => 'fill recommended-characters',
                 'data-help' => 'VERY IMPORTANT: Your Advert in organic search results. You need to include keywords, but primarily the meta description needs to entice people to click through by using a call to action with benefits (e.g. lowest price, in stock, free delivery, etc).',
                 'data-character-help' => 160,
+                'rows' => 4,
             ),
         ));
 
@@ -45,6 +46,7 @@ class ProductVariantDescriptionSeoType extends AbstractType
             'attr' => array(
                 'class' => 'fill',
                 'data-help' => 'Enter any alternative words to be found by (separated by a comma). This could be slight differences in wording or phrasing and should include all keywords used in the page title.',
+                'rows' => 3,
             ),
         ));
     }
