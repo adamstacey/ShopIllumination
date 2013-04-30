@@ -32,6 +32,9 @@
             </div>
             <div class="widget widget-2-of-3">
                 {{ form_widget(form) }}
+                {% if form.vars.attr['data-apply-to-all'] is defined %}
+                    <button type="button" data-apply-to-all-field="{{ form.vars.attr['data-apply-to-all'] }}" class="actionApplyToAll button button-small ui-corner-none-top mlm fr">Apply to All</button>
+                {% endif %}
                 {% if errors %}
                     <small>{{ form_errors(form) }}</small>
                 {% endif %}
@@ -90,6 +93,11 @@
                                 {% set containerClass = containerClass|merge([child.vars.attr['data-container-class']]) %}
                             {% endif %}
                             <td{% if containerClass|length > 0 %} class="{{ containerClass|join(' ') }}"{% endif %}>{{ form_widget(child) }}</td>
+                            {% if child.vars.attr['data-apply-to-all'] is defined %}
+                                <td width="1" class="tar">
+                                    <button type="button" data-apply-to-all-field="{{ child.vars.attr['data-apply-to-all'] }}" title="Click to apply this value to all others." class="actionApplyToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button>
+                                </td>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                     <td class="tac" width="1">
@@ -113,6 +121,9 @@
                             </div>
                             <div class="widget widget-2-of-3">
                                 {{ form_widget(child) }}
+                                {% if child.vars.attr['data-apply-to-all'] is defined %}
+                                    <button type="button" data-apply-to-all-field="{{ child.vars.attr['data-apply-to-all'] }}" class="actionApplyToAll button button-small ui-corner-none-top mlm fr">Apply to All</button>
+                                {% endif %}
                                 {% if child.vars.valid is sameas(false) %}
                                     <small>
                                         {{ form_errors(child) }}
