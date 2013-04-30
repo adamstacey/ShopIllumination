@@ -13,8 +13,8 @@
                             {% for variant in form.variants %}
                                 <div class="accordion-item">
                                     <h3>Descriptions for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
-                                    <div>
-
+                                    <div class="pbm">
+                                        {{ form_rest(variant) }}
                                     </div>
                                 </div>
                             {% endfor %}
@@ -29,8 +29,3 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    $(document).ready(function() {
-
-    });
-</script>
