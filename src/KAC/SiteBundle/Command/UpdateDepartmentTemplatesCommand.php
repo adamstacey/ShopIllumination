@@ -25,8 +25,8 @@ class UpdateDepartmentTemplatesCommand extends ContainerAwareCommand
 
         $departments = $em->getRepository("KAC\SiteBundle\Entity\Department")->findAll();
 
-        $patterns = array('/productFeatureGroup\|([0-9]*)/', '/freeText\|(.[^\^]*)/');
-        $replacements = array('@VariantToFeature|$1|name', '"$1"');
+        $patterns = array('/productFeatureGroup\|([0-9]*)/', '/freeText\|(.[^\^]*)/', '/productExtraKeyword/', '/extraProductKeyword/', '/\/extraKeywords\//', '/[\r\n\t\s]+/s');
+        $replacements = array('@VariantToFeature|$1|name', '"$1"', 'extraKeywords', 'extraKeywords', 'extraKeywords', ' ');
 
         $departmentCount = 0;
         $numberOfDepartments = sizeof($departments);
@@ -42,7 +42,7 @@ class UpdateDepartmentTemplatesCommand extends ContainerAwareCommand
                 $newPageTitleTemplate = preg_replace($patterns, $replacements, $pageTitleTemplate);
                 if (!$newPageTitleTemplate)
                 {
-                    $newPageTitleTemplate = 'brand^productCode^department^extraProductKeyword';
+                    $newPageTitleTemplate = 'brand^productCode^department^extraKeywords';
                 }
                 $output->writeln('PAGE TITLE TEMPLATE:');
                 $output->writeln('------------------------------------------------');
@@ -55,7 +55,7 @@ class UpdateDepartmentTemplatesCommand extends ContainerAwareCommand
                 $newHeaderTemplate = preg_replace($patterns, $replacements, $headerTemplate);
                 if (!$newHeaderTemplate)
                 {
-                    $newHeaderTemplate = 'brand^productCode^department^extraProductKeyword';
+                    $newHeaderTemplate = 'brand^productCode^department^extraKeywords';
                 }
                 $output->writeln('HEADER TEMPLATE:');
                 $output->writeln('------------------------------------------------');
@@ -65,10 +65,10 @@ class UpdateDepartmentTemplatesCommand extends ContainerAwareCommand
                 $department->getDescription()->setHeaderTemplate($newHeaderTemplate);
 
                 $metaDescriptionTemplate = $department->getDescription()->getMetaDescriptionTemplate();
-                $newMetaDescriptionTemplate = str_replace('^"available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."', '^" available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."', preg_replace($patterns, $replacements, $metaDescriptionTemplate));
+                $newMetaDescriptionTemplate = preg_replace($patterns, $replacements, $metaDescriptionTemplate);
                 if (!$newMetaDescriptionTemplate)
                 {
-                    $newMetaDescriptionTemplate = '"Find out more about the amazing "^brand^productExtraKeyword^productCode^@VariantToFeature|2|name^department^" available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."';
+                    $newMetaDescriptionTemplate = '"Find out more about the amazing "^brand^extraKeywords^productCode^@VariantToFeature|2|name^department^" available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."';
                 }
                 $output->writeln('META DESCRIPTION TEMPLATE:');
                 $output->writeln('------------------------------------------------');
