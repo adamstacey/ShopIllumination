@@ -14,6 +14,7 @@ use KAC\SiteBundle\Entity\Image;
 use KAC\SiteBundle\Manager\Templating\ProductTemplateBuilder;
 use KAC\SiteBundle\Manager\Templating\TemplateBuilder;
 use KAC\SiteBundle\Manager\Templating\VariantTemplateBuilder;
+use KAC\SiteBundle\Entity\Product\Variant\Routing as ProductVariantRouting;
 
 class ProductManager extends Manager
 {
@@ -91,7 +92,11 @@ class ProductManager extends Manager
 
     public function updateVariantDescription(VariantDescription $description)
     {
-        if (!$description->getVariant()) return;
+        $variant = $description->getVariant();
+        if (!$variant) return;
+
+        // Check if we should automatically update the description
+        if ($description->getOverride()) return;
 
         // Get objects
         $brand = $description->getVariant()->getProduct()->getBrand();
@@ -106,6 +111,26 @@ class ProductManager extends Manager
             $header = $headerBuilder->buildString($description, $department->getDescription()->getHeaderTemplate());
             $metaDescriptionBuilder = new VariantTemplateBuilder($this->doctrine->getManager());
             $metaDescription = $metaDescriptionBuilder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate());
+
+            // Update the URL
+            if (sizeof($variant->getRoutings()) > 0)
+            {
+                foreach ($variant->getRoutings() as $routing)
+                {
+                    if ($routing->getLocale() == $description->getLocale())
+                    {
+                        $url = $this->seoManager->createUrl($pageTitle, $routing->getUrl());
+                        $routing->setUrl($url);
+                    }
+                }
+            } else {
+                $url = $this->seoManager->createUrl($pageTitle);
+                $routing = new ProductVariantRouting();
+                $routing->setVariant($variant);
+                $routing->setLocale($description->getLocale());
+                $routing->setUrl($url);
+                $variant->addRouting($routing);
+            }
 
             // Update the variant description
             $description->setPageTitle($pageTitle);
