@@ -65,7 +65,7 @@ services:
      tags:
        - { name: form.type, alias: site_new_department }
   kac_site.form.flow.new_department:
-      class: KAC\SiteBundle\Form\Departmenet\NewDepartmentFlow
+      class: KAC\SiteBundle\Form\Department\NewDepartmentFlow
       parent: craue.form.flow
       scope: request
       calls:
