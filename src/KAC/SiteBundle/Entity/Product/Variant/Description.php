@@ -54,6 +54,11 @@ class Description implements DescriptionInterface
     private $brandDescription;
 
     /**
+     * @ORM\Column(name="override", type="boolean")
+     */
+    private $override = false;
+
+    /**
      * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
      */
     private $pageTitle;
@@ -507,5 +512,28 @@ class Description implements DescriptionInterface
     public function getKeyMessage()
     {
         return $this->keyMessage;
+    }
+
+    /**
+     * Set override
+     *
+     * @param boolean $override
+     * @return Description
+     */
+    public function setOverride($override)
+    {
+        $this->override = $override;
+    
+        return $this;
+    }
+
+    /**
+     * Get override
+     *
+     * @return boolean 
+     */
+    public function getOverride()
+    {
+        return $this->override;
     }
 }
