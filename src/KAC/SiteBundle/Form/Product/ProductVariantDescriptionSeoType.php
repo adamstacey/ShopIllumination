@@ -11,6 +11,14 @@ class ProductVariantDescriptionSeoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('override', 'checkbox', array(
+            'required'  => false,
+            'label' => 'Override',
+            'attr' => array(
+                'data-help' => 'The search engine optimisation is automatically generated. If you would like to override it tick here.',
+            ),
+        ));
+
         $builder->add('pageTitle', 'text', array(
             'required'  => true,
             'label' => '<span class="important">Page Title</span>',
