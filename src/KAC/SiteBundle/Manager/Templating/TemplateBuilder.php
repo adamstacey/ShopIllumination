@@ -80,7 +80,10 @@ abstract class TemplateBuilder
             return $part != '' || $part != null;
         });
 
-        return implode(' ', $parts);
+        $parts = implode(' ', $parts);
+        $parts = preg_replace("/[\r\n\t\s]+/s", " ", $parts);
+
+        return $parts;
     }
 
     abstract function getEntity($object, $alias, $id);
