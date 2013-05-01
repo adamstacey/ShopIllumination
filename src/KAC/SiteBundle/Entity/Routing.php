@@ -21,6 +21,7 @@ class Routing
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @UniqueEntity(fields={"url"}, message="This internal web address is already in use.")
      */
     private $id;    
 	
