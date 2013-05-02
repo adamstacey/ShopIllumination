@@ -49,6 +49,18 @@ class Price
      * @Assert\Range(min="0.01", groups={"flow_site_new_product_step3", "site_edit_product_prices"}, minMessage="Enter a valid list price.")
      */
     private $listPrice = 0.0;
+
+    /**
+     * @ORM\Column(name="hide_price", type="boolean")
+     *
+     */
+    private $hidePrice = false;
+
+    /**
+     * @ORM\Column(name="show_price_out_of_hours", type="boolean")
+     *
+     */
+    private $showPriceOutOfHours = false;
     
     /**
      * @ORM\Column(name="currency_code", type="string", length=3)
@@ -256,11 +268,11 @@ class Price
     {
     	if ($this->getProfitPercentage() >= 20)
     	{
-    		return 'ui-state-success';
+    		return 'gradient-green';
     	} else if (($this->getProfitPercentage() < 20) && ($this->getProfitPercentage() >= 10)) {
-    		return 'ui-state-highlight';
+    		return 'gradient-yellow';
     	} else {
-    		return 'ui-state-error';
+    		return 'gradient-red';
     	}
     }
     
@@ -287,11 +299,11 @@ class Price
     {
     	if ($this->getMarkupPercentage() >= 20)
     	{
-    		return 'ui-state-success';
+    		return 'gradient-green';
     	} else if (($this->getMarkupPercentage() < 20) && ($this->getMarkupPercentage() >= 10)) {
-    		return 'ui-state-highlight';
+    		return 'gradient-yellow';
     	} else {
-    		return 'ui-state-error';
+    		return 'gradient-red';
     	}
     }
     
@@ -421,5 +433,51 @@ class Price
     public function getVariant()
     {
         return $this->variant;
+    }
+
+    /**
+     * Set hidePrice
+     *
+     * @param boolean $hidePrice
+     * @return Price
+     */
+    public function setHidePrice($hidePrice)
+    {
+        $this->hidePrice = $hidePrice;
+    
+        return $this;
+    }
+
+    /**
+     * Get hidePrice
+     *
+     * @return boolean 
+     */
+    public function getHidePrice()
+    {
+        return $this->hidePrice;
+    }
+
+    /**
+     * Set showPriceOutOfHours
+     *
+     * @param boolean $showPriceOutOfHours
+     * @return Price
+     */
+    public function setShowPriceOutOfHours($showPriceOutOfHours)
+    {
+        $this->showPriceOutOfHours = $showPriceOutOfHours;
+    
+        return $this;
+    }
+
+    /**
+     * Get showPriceOutOfHours
+     *
+     * @return boolean 
+     */
+    public function getShowPriceOutOfHours()
+    {
+        return $this->showPriceOutOfHours;
     }
 }
