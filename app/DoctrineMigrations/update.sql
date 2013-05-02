@@ -398,5 +398,10 @@ ALTER TABLE product_descriptions CHANGE prefix extra_keywords VARCHAR(255) DEFAU
 ALTER TABLE product_variant_descriptions CHANGE prefix extra_keywords VARCHAR(255) DEFAULT NULL, CHANGE tagline key_message VARCHAR(255) DEFAULT NULL;
 ALTER TABLE product_variants ADD delivery_band NUMERIC(12, 4) NOT NULL;
 ALTER TABLE product_variant_descriptions ADD override TINYINT(1) NOT NULL;
+ALTER TABLE product_descriptions CHANGE locale locale VARCHAR(5) NOT NULL;
+ALTER TABLE product_variant_descriptions CHANGE locale locale VARCHAR(5) NOT NULL;
+ALTER TABLE product_variant_descriptions CHANGE description description LONGTEXT DEFAULT NULL, CHANGE brand_description brand_description LONGTEXT DEFAULT NULL;
+ALTER TABLE routing CHANGE locale locale VARCHAR(5) NOT NULL;
+ALTER TABLE product_variants ADD display_order INT DEFAULT NULL;
 DROP TABLE departments_tmp;
 SET FOREIGN_KEY_CHECKS = 1;
