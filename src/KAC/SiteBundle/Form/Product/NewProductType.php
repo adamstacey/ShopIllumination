@@ -107,20 +107,6 @@ class NewProductType extends AbstractType
                         'data-help' => 'Is the product new?',
                     ),
                 ));
-                $builder->add('hidePrice', 'checkbox', array(
-                    'required' => false,
-                    'label' => 'Hide Price',
-                    'attr' => array(
-                        'data-help' => 'Hide price for this product?',
-                    ),
-                ));
-                $builder->add('showPriceOutOfHours', 'checkbox', array(
-                    'required' => false,
-                    'label' => 'Show Price Out Of Hours',
-                    'attr' => array(
-                        'data-help' => 'Show price out of hours?',
-                    ),
-                ));
 
                 break;
             case 2:
@@ -182,6 +168,13 @@ class NewProductType extends AbstractType
 
                 break;
             case 8:
+                $builder->add('descriptions', 'collection', array(
+                    'block_name' => 'descriptions_seo',
+                    'type' => new ProductSeoType(),
+                    'required'  => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_seo',
                     'type' => new ProductVariantSeoType(),
