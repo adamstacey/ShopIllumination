@@ -12,6 +12,21 @@ class ProductVariantOverviewType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('displayOrder', 'hidden', array(
+            'required'  => false,
+            'attr' => array(
+                'class' => 'display-order',
+            ),
+        ));
+
+        $builder->add('productCode', 'text', array(
+            'attr' => array(
+                'size' => 10,
+                'data-help' => 'Enter the unique product code supplied by the manufacturer or supplier.',
+                'class' => 'tac fill uppercase',
+            ),
+        ));
+
         $builder->add('productCode', 'text', array(
             'attr' => array(
                 'size' => 10,
