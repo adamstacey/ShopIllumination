@@ -68,11 +68,17 @@ class NewProductFlow extends FormFlow
             // Go through the variants and update any zero recommended retail prices
             foreach ($formData->getVariants() as $variant)
             {
-                foreach ($variant->getPrices() as $price)
+                if ($variant)
                 {
-                    if ($price->getRecommendedRetailPrice() < 0.01)
+                    foreach ($variant->getPrices() as $price)
                     {
-                        $price->setRecommendedRetailPrice($price->getListPrice());
+                        if ($price)
+                        {
+                            if ($price->getRecommendedRetailPrice() < 0.01)
+                            {
+                                $price->setRecommendedRetailPrice($price->getListPrice());
+                            }
+                        }
                     }
                 }
             }
@@ -250,13 +256,16 @@ class NewProductFlow extends FormFlow
                 $sortedVariants = array();
                 foreach ($formData->getVariants() as $variant)
                 {
-                    $displayOrder = $variant->getDisplayOrder();
-                    while (isset($sortedVariants[$displayOrder]))
+                    if ($variant)
                     {
-                        $displayOrder++;
+                        $displayOrder = $variant->getDisplayOrder();
+                        while (isset($sortedVariants[$displayOrder]))
+                        {
+                            $displayOrder++;
+                        }
+                        $sortedVariants[$displayOrder] = $variant;
+                        $formData->removeVariant($variant);
                     }
-                    $sortedVariants[$displayOrder] = $variant;
-                    $formData->removeVariant($variant);
                 }
                 ksort($sortedVariants);
                 foreach ($sortedVariants as $variant)
@@ -346,14 +355,20 @@ class NewProductFlow extends FormFlow
 
         if ($step == 8)
         {
-            // Go through the variants
+            // Update the variant descriptions
             foreach ($formData->getVariants() as $variant)
             {
                 $this->productManager->updateVariantDescription($variant->getDescription());
             }
 
+            // Update the product description
+            foreach ($formData->getDescriptions() as $description)
+            {
+                $this->productManager->updateProductDescription($description);
+            }
+
             // Go through and check that the updated variants do not have a duplicate URL
-            $duplicateUrlsCheck = array();
+            /*$duplicateUrlsCheck = array();
             foreach ($formData->getVariants() as $variant)
             {
                 if ($routings = $variant->getRoutings())
@@ -368,7 +383,7 @@ class NewProductFlow extends FormFlow
                     }
                 }
             }
-            $this->productManager->updateVariantDescription($variant->getDescription());
+            $this->productManager->updateVariantDescription($variant->getDescription());*/
         }
 
         return $options;
