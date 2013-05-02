@@ -65,11 +65,11 @@ class ProductIndexer extends Indexer
 
             $document->setField('status', $product->getStatus());
             $document->setField('locale', $descriptions[0]->getLocale());
-            $document->setField('tagline', $descriptions[0]->getTagline());
+            //$document->setField('tagline', $descriptions[0]->getTagline());
             $document->setField('header', $descriptions[0]->getHeader());
             $document->setField('page_title', $descriptions[0]->getPageTitle());
             $document->setField('short_description', $descriptions[0]->getShortDescription());
-            $document->setField('tagline', $descriptions[0]->getTagline());
+            //$document->setField('tagline', $descriptions[0]->getTagline());
             $document->setField('variants_count', count($product->getVariants()));
 
             // Generate the product URL
@@ -174,9 +174,9 @@ class ProductIndexer extends Indexer
                 $document->setField("image_path", $images[0]->getPublicPath());
             }
 
-            foreach (explode(',', $descriptions[0]->getSearchWords()) as $searchWord) {
-                $document->addField('search_words', $searchWord);
-            }
+            //foreach (explode(',', $descriptions[0]->getSearchWords()) as $searchWord) {
+                //$document->addField('search_words', $searchWord);
+            //}
 
             $document->setField('brand', $product->getBrand()->getDescription()->getName());
             $document->setField('brand_logo', $product->getBrand()->getDescription()->getLogoImage()->getOriginalPath());
