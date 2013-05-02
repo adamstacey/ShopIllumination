@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Routing", "product_variant" = "KAC\SiteBundle\Entity\Product\Variant\Routing", "department" = "KAC\SiteBundle\Entity\Department\Routing", "brand" = "KAC\SiteBundle\Entity\Brand\Routing"})
  * @ORM\Table(name="routing")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"url"}, groups={"flow_site_new_department_step2"}, message="This internal web address is already in use.")
+ * @UniqueEntity(fields={"url"}, groups={"flow_site_new_product_step8", "flow_site_new_department_step2"}, message="This internal web address is already in use.")
  */
 class Routing
 {
@@ -21,7 +21,6 @@ class Routing
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @UniqueEntity(fields={"url"}, message="This internal web address is already in use.")
      */
     private $id;    
 	
@@ -31,7 +30,7 @@ class Routing
     private $objectId;
         
     /**
-     * @ORM\Column(name="locale", type="string", length=2)
+     * @ORM\Column(name="locale", type="string", length=5)
      */
     private $locale = "en_GB";
     
