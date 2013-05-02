@@ -27,30 +27,22 @@ class Description implements DescriptionInterface
 
     /**
      * @ORM\Column(name="locale", type="string", length=5)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_description"})
      * @Assert\Locale(groups={"flow_site_new_product_step1", "site_edit_product_description"})
      */
     private $locale = "en_GB";
 
     /**
-     * @ORM\Column(name="extra_keywords", type="string", length=255, nullable=true)
+     * @ORM\Column(name="override", type="boolean")
      */
-    private $extraKeywords;
+    private $override = false;
 
     /**
-     * @ORM\Column(name="key_message", type="string", length=255, nullable=true)
-     */
-    private $keyMessage;
-
-    /**
-     * @ORM\Column(name="description", type="text")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_description"})
-     * @Assert\Type(type="string", groups={"flow_site_new_product_step1", "site_edit_product_description"})
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description = "";
 
     /**
-     * @ORM\Column(name="brand_description", type="text")
+     * @ORM\Column(name="brand_description", type="text", nullable=true)
      */
     private $brandDescription = "";
 
@@ -120,52 +112,6 @@ class Description implements DescriptionInterface
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Description
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set prefix
-     *
-     * @param string $prefix
-     * @return Description
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-
-        return $this;
-    }
-
-    /**
-     * Get prefix
-     *
-     * @return string
-     */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -186,29 +132,6 @@ class Description implements DescriptionInterface
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set shortDescription
-     *
-     * @param string $shortDescription
-     * @return Description
-     */
-    public function setShortDescription($shortDescription)
-    {
-        $this->shortDescription = $shortDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get shortDescription
-     *
-     * @return string
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
     }
 
     /**
@@ -419,48 +342,25 @@ class Description implements DescriptionInterface
     }
 
     /**
-     * Set extraKeywords
+     * Set override
      *
-     * @param string $extraKeywords
+     * @param boolean $override
      * @return Description
      */
-    public function setExtraKeywords($extraKeywords)
+    public function setOverride($override)
     {
-        $this->extraKeywords = $extraKeywords;
+        $this->override = $override;
     
         return $this;
     }
 
     /**
-     * Get extraKeywords
+     * Get override
      *
-     * @return string 
+     * @return boolean 
      */
-    public function getExtraKeywords()
+    public function getOverride()
     {
-        return $this->extraKeywords;
-    }
-
-    /**
-     * Set keyMessage
-     *
-     * @param string $keyMessage
-     * @return Description
-     */
-    public function setKeyMessage($keyMessage)
-    {
-        $this->keyMessage = $keyMessage;
-    
-        return $this;
-    }
-
-    /**
-     * Get keyMessage
-     *
-     * @return string 
-     */
-    public function getKeyMessage()
-    {
-        return $this->keyMessage;
+        return $this->override;
     }
 }
