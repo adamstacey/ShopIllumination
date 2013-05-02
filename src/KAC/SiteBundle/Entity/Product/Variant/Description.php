@@ -32,6 +32,11 @@ class Description implements DescriptionInterface
     private $locale = "en_GB";
 
     /**
+     * @ORM\Column(name="override", type="boolean")
+     */
+    private $override = false;
+
+    /**
      * @ORM\Column(name="extra_keywords", type="string", length=255, nullable=true)
      */
     private $extraKeywords;
@@ -50,11 +55,6 @@ class Description implements DescriptionInterface
      * @ORM\Column(name="brand_description", type="text", nullable=true)
      */
     private $brandDescription = "";
-
-    /**
-     * @ORM\Column(name="override", type="boolean")
-     */
-    private $override = false;
 
     /**
      * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
@@ -122,75 +122,6 @@ class Description implements DescriptionInterface
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return Description
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set prefix
-     *
-     * @param string $prefix
-     * @return Description
-     */
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-
-        return $this;
-    }
-
-    /**
-     * Get prefix
-     *
-     * @return string
-     */
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
-
-    /**
-     * Set tagline
-     *
-     * @param string $tagline
-     * @return Description
-     */
-    public function setTagline($tagline)
-    {
-        $this->tagline = $tagline;
-
-        return $this;
-    }
-
-    /**
-     * Get tagline
-     *
-     * @return string
-     */
-    public function getTagline()
-    {
-        return $this->tagline;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -211,29 +142,6 @@ class Description implements DescriptionInterface
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set shortDescription
-     *
-     * @param string $shortDescription
-     * @return Description
-     */
-    public function setShortDescription($shortDescription)
-    {
-        $this->shortDescription = $shortDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get shortDescription
-     *
-     * @return string
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
     }
 
     /**
@@ -329,29 +237,6 @@ class Description implements DescriptionInterface
     }
 
     /**
-     * Set searchWords
-     *
-     * @param string $searchWords
-     * @return Description
-     */
-    public function setSearchWords($searchWords)
-    {
-        $this->searchWords = $searchWords;
-
-        return $this;
-    }
-
-    /**
-     * Get searchWords
-     *
-     * @return string
-     */
-    public function getSearchWords()
-    {
-        return $this->searchWords;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -395,29 +280,6 @@ class Description implements DescriptionInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
-    }
-
-    /**
-     * Set product
-     *
-     * @param \KAC\SiteBundle\Entity\Product $product
-     * @return Description
-     */
-    public function setProduct(\KAC\SiteBundle\Entity\Product $product = null)
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    /**
-     * Get product
-     *
-     * @return \KAC\SiteBundle\Entity\Product
-     */
-    public function getProduct()
-    {
-        return $this->product;
     }
 
     /**
