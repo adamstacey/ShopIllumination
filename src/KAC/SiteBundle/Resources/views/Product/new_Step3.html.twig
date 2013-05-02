@@ -7,11 +7,16 @@
                     <h2>3. Prices</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
+                        <p><strong>NOTE:</strong> The first combination will be the default combination displayed in a product, so it is important that you order the combinations below to reflect this.</p>
+                    </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset class="pbm">
-                        <table class="form-table" id="productVariantList">
+                        <table class="form-table sortable">
                             <thead>
                                 <tr>
+                                    <th width="1">&nbsp;</th>
                                     <th width="1">&nbsp;</th>
                                     <th class="tal" title="The features that make up the combination.">Combination</th>
                                     <th title="Enter the unique product code supplied by the manufacturer or supplier.">Product Code</th>
@@ -24,6 +29,7 @@
                             <tbody>
                                 {% for variant in form.variants %}
                                     <tr>
+                                        <td><img class="handle" src="{{ asset('bundles/kacsite/images/icons/handle.png') }}" border="0" />{{ form_widget(variant.displayOrder) }}</td>
                                         <td class="row-count tar">{{ loop.index }}</td>
                                         <td>
                                             <ul>
