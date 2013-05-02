@@ -26,7 +26,7 @@ class Description implements DescriptionInterface
     private $variant;
 
     /**
-     * @ORM\Column(name="locale", type="string", length=2)
+     * @ORM\Column(name="locale", type="string", length=5   )
      * @Assert\Locale(groups={"flow_site_new_product_step3", "site_edit_product_description"})
      */
     private $locale = "en_GB";
@@ -42,16 +42,14 @@ class Description implements DescriptionInterface
     private $keyMessage;
 
     /**
-     * @ORM\Column(name="description", type="text")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"})
-     * @Assert\Type(type="string", groups={"flow_site_new_product_step3", "site_edit_product_description"})
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description = "";
 
     /**
-     * @ORM\Column(name="brand_description", type="text")
+     * @ORM\Column(name="brand_description", type="text", nullable=true)
      */
-    private $brandDescription;
+    private $brandDescription = "";
 
     /**
      * @ORM\Column(name="override", type="boolean")
