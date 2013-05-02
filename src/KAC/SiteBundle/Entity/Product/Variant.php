@@ -138,6 +138,11 @@ class Variant implements DescribableInterface
     private $deliveryBand;
 
     /**
+     * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
+     */
+    private $displayOrder = 1;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -761,5 +766,28 @@ class Variant implements DescribableInterface
     public function getDeliveryBand()
     {
         return $this->deliveryBand;
+    }
+
+    /**
+     * Set displayOrder
+     *
+     * @param integer $displayOrder
+     * @return Variant
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+    
+        return $this;
+    }
+
+    /**
+     * Get displayOrder
+     *
+     * @return integer 
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
     }
 }
