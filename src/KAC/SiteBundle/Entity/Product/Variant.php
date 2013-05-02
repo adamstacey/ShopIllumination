@@ -138,6 +138,11 @@ class Variant implements DescribableInterface
     private $deliveryBand;
 
     /**
+     * @ORM\Column(name="delivery_cost", type="decimal", precision=12, scale=4)
+     */
+    private $deliveryCost = 0;
+
+    /**
      * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
      */
     private $displayOrder = 1;
@@ -789,5 +794,28 @@ class Variant implements DescribableInterface
     public function getDisplayOrder()
     {
         return $this->displayOrder;
+    }
+
+    /**
+     * Set deliveryCost
+     *
+     * @param float $deliveryCost
+     * @return Variant
+     */
+    public function setDeliveryCost($deliveryCost)
+    {
+        $this->deliveryCost = $deliveryCost;
+    
+        return $this;
+    }
+
+    /**
+     * Get deliveryCost
+     *
+     * @return float 
+     */
+    public function getDeliveryCost()
+    {
+        return $this->deliveryCost;
     }
 }
