@@ -403,5 +403,9 @@ ALTER TABLE product_variant_descriptions CHANGE locale locale VARCHAR(5) NOT NUL
 ALTER TABLE product_variant_descriptions CHANGE description description LONGTEXT DEFAULT NULL, CHANGE brand_description brand_description LONGTEXT DEFAULT NULL;
 ALTER TABLE routing CHANGE locale locale VARCHAR(5) NOT NULL;
 ALTER TABLE product_variants ADD display_order INT DEFAULT NULL;
+ALTER TABLE product_descriptions ADD override TINYINT(1) NOT NULL, DROP extra_keywords, DROP key_message, CHANGE description description LONGTEXT DEFAULT NULL, CHANGE brand_description brand_description LONGTEXT DEFAULT NULL;
+ALTER TABLE product_prices ADD hide_price TINYINT(1) NOT NULL, ADD show_price_out_of_hours TINYINT(1) NOT NULL;
+ALTER TABLE product_variants ADD delivery_cost NUMERIC(12, 4) NOT NULL;
+ALTER TABLE products DROP checked, DROP product_code, DROP alternative_product_codes, DROP delivery_band, DROP inherited_delivery_band, DROP delivery_cost, DROP hide_price, DROP show_price_out_of_hours, DROP membership_card_discount_available, DROP maximum_membership_card_discount, DROP last_checked;
 DROP TABLE departments_tmp;
 SET FOREIGN_KEY_CHECKS = 1;
