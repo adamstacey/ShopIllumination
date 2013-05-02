@@ -27,15 +27,6 @@
                                 {{ form_row(form.new) }}
                             </div>
                         </div>
-                        <div class="form-element widget-group clearfix">
-                            <div class="widget widget-1-of-3">
-                                <label>Price Options</label>
-                            </div>
-                            <div class="widget checker-group widget-2-of-3">
-                                {{ form_row(form.hidePrice) }}
-                                {{ form_row(form.showPriceOutOfHours) }}
-                            </div>
-                        </div>
                         {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
