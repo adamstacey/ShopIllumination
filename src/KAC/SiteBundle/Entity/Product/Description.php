@@ -26,7 +26,7 @@ class Description implements DescriptionInterface
     private $product;
 
     /**
-     * @ORM\Column(name="locale", type="string", length=2)
+     * @ORM\Column(name="locale", type="string", length=5)
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_description"})
      * @Assert\Locale(groups={"flow_site_new_product_step1", "site_edit_product_description"})
      */
@@ -166,29 +166,6 @@ class Description implements DescriptionInterface
     }
 
     /**
-     * Set tagline
-     *
-     * @param string $tagline
-     * @return Description
-     */
-    public function setTagline($tagline)
-    {
-        $this->tagline = $tagline;
-
-        return $this;
-    }
-
-    /**
-     * Get tagline
-     *
-     * @return string
-     */
-    public function getTagline()
-    {
-        return $this->tagline;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -324,29 +301,6 @@ class Description implements DescriptionInterface
     public function getMetaKeywords()
     {
         return $this->metaKeywords;
-    }
-
-    /**
-     * Set searchWords
-     *
-     * @param string $searchWords
-     * @return Description
-     */
-    public function setSearchWords($searchWords)
-    {
-        $this->searchWords = $searchWords;
-
-        return $this;
-    }
-
-    /**
-     * Get searchWords
-     *
-     * @return string
-     */
-    public function getSearchWords()
-    {
-        return $this->searchWords;
     }
 
     /**
