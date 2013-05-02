@@ -242,6 +242,30 @@ class NewProductFlow extends FormFlow
             }
         }
 
+        if ($step > 2)
+        {
+            // Sort the variants in their display order
+            if (sizeof($formData->getVariants()) > 1)
+            {
+                $sortedVariants = array();
+                foreach ($formData->getVariants() as $variant)
+                {
+                    $displayOrder = $variant->getDisplayOrder();
+                    while (isset($sortedVariants[$displayOrder]))
+                    {
+                        $displayOrder++;
+                    }
+                    $sortedVariants[$displayOrder] = $variant;
+                    $formData->removeVariant($variant);
+                }
+                ksort($sortedVariants);
+                foreach ($sortedVariants as $variant)
+                {
+                    $formData->addVariant($variant);
+                }
+            }
+        }
+
         if ($step == 5)
         {
             // Attempt to load variant UIDs from google
@@ -327,6 +351,24 @@ class NewProductFlow extends FormFlow
             {
                 $this->productManager->updateVariantDescription($variant->getDescription());
             }
+
+            // Go through and check that the updated variants do not have a duplicate URL
+            $duplicateUrlsCheck = array();
+            foreach ($formData->getVariants() as $variant)
+            {
+                if ($routings = $variant->getRoutings())
+                {
+                    foreach ($routings as $routing)
+                    {
+                        if (in_array($routing->getUrl(), $duplicateUrlsCheck))
+                        {
+
+                        }
+                        $duplicateUrlsCheck[] = $routing->getUrl();
+                    }
+                }
+            }
+            $this->productManager->updateVariantDescription($variant->getDescription());
         }
 
         return $options;
