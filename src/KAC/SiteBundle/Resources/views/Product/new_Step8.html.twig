@@ -10,6 +10,13 @@
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
+                            <div class="accordion-item">
+                                <h3>Search Engine Optimisation for Product</h3>
+                                <div>
+                                    {{ form_rest(form.descriptions) }}
+                                </div>
+                                {% do form.descriptions.setRendered() %}
+                            </div>
                             {% for variant in form.variants %}
                                 <div class="accordion-item">
                                     <h3>Search Engine Optimisation for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
