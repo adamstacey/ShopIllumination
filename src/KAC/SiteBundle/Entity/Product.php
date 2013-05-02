@@ -49,6 +49,7 @@ class Product implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
     private $variants;
 
