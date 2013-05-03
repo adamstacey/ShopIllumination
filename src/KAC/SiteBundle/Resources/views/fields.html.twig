@@ -21,45 +21,89 @@
 
 {% block form_row %}
     {% spaceless %}
-        <div class="form-element{% if errors %} form-element-error{% endif %} widget-group clearfix">
-            {% if help is defined %}
-                <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
-            {% elseif form.vars.attr['data-help'] is defined %}
-                <span title="{{ form.vars.attr['data-help'] }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+        {% if form.vars.block_prefixes.2 == 'checkbox' %}
+            <div class="form-element{% if form.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
+                {% if help is defined %}
+                    <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                {% elseif form.vars.attr['data-help'] is defined %}
+                    <span title="{{ child.vars.attr['data-help'] }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                {% endif %}
+                <div class="widget widget-1-of-3">
+                    {{ form_label(form) }}
+                </div>
+                <div class="widget widget-2-of-3">
+                    <div class="clearfix mtm{% if form.vars.valid is sameas(false) %} error{% endif %}">
+                        {{ form_widget(form) }}
+                        {% if form.vars.valid is sameas(false) %}
+                            <div class="clear"></div>
+                            <small>{{ form_errors(form) }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <div class="form-element{% if form.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
+                    {% if help is defined %}
+                        <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                    {% elseif form.vars.attr['data-help'] is defined %}
+                        <span title="{{ form.vars.attr['data-help'] }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                    {% endif %}
+                    <div class="widget widget-1-of-3">
+                        {{ form_label(form) }}
+                    </div>
+                    <div class="widget widget-2-of-3">
+                        {{ form_widget(form) }}
+                        {% if form.vars.attr['data-apply-to-all'] is defined %}
+                            <button type="button" data-apply-to-all-field="{{ form.vars.attr['data-apply-to-all'] }}" class="actionApplyToAll button button-small ui-corner-none-top mlm fr">Apply to All</button>
+                        {% endif %}
+                        {% if errors %}
+                            <small>{{ form_errors(form) }}</small>
+                        {% endif %}
+                        {% if form.vars.attr['data-character-help'] is defined %}
+                            <small data-recommended-characters="{{ form.vars.attr['data-character-help'] }}" class="recommended-characters">Updating...</small>
+                        {% endif %}
+                    </div>
+                </div>
             {% endif %}
-            <div class="widget widget-1-of-3">
-                {{ form_label(form) }}
-            </div>
-            <div class="widget widget-2-of-3">
-                {{ form_widget(form) }}
-                {% if form.vars.attr['data-apply-to-all'] is defined %}
-                    <button type="button" data-apply-to-all-field="{{ form.vars.attr['data-apply-to-all'] }}" class="actionApplyToAll button button-small ui-corner-none-top mlm fr">Apply to All</button>
-                {% endif %}
-                {% if errors %}
-                    <small>{{ form_errors(form) }}</small>
-                {% endif %}
-                {% if form.vars.attr['data-character-help'] is defined %}
-                    <small data-recommended-characters="{{ form.vars.attr['data-character-help'] }}" class="recommended-characters">Updating...</small>
-                {% endif %}
-            </div>
-        </div>
     {% endspaceless %}
 {% endblock form_row %}
 
 {% block checkbox_row %}
     {% spaceless %}
-        <div class="clearfix{% if form.vars.valid is sameas(false) %} error{% endif %}">
-            {{ form_widget(form) }}{{ form_label(form) }}
-            {% if help is defined %}
-                <small>{{ help }}</small>
-            {% elseif form.vars.attr['data-help'] is defined %}
-                <small>{{ form.vars.attr['data-help'] }}</small>
-            {% endif %}
-            {% if form.vars.valid is sameas(false) %}
-                <div class="clear"></div>
-                <small>{{ form_errors(form) }}</small>
-            {% endif %}
-        </div>
+        {% if form.vars.attr['data-single-checkbox'] == true %}
+            <div class="form-element{% if form.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
+                {% if help is defined %}
+                    <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                {% elseif form.vars.attr['data-help'] is defined %}
+                    <span title="{{ child.vars.attr['data-help'] }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                {% endif %}
+                <div class="widget widget-1-of-3">
+                    {{ form_label(form) }}
+                </div>
+                <div class="widget widget-2-of-3">
+                    <div class="clearfix mtm{% if form.vars.valid is sameas(false) %} error{% endif %}">
+                        {{ form_widget(form) }}
+                        {% if form.vars.valid is sameas(false) %}
+                            <div class="clear"></div>
+                            <small>{{ form_errors(form) }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="clearfix{% if form.vars.valid is sameas(false) %} error{% endif %}">
+                {{ form_widget(form) }}{{ form_label(form) }}
+                {% if help is defined %}
+                    <small>{{ help }}</small>
+                {% elseif form.vars.attr['data-help'] is defined %}
+                    <small>{{ form.vars.attr['data-help'] }}</small>
+                {% endif %}
+                {% if form.vars.valid is sameas(false) %}
+                    <div class="clear"></div>
+                    <small>{{ form_errors(form) }}</small>
+                {% endif %}
+            </div>
+        {% endif %}
     {% endspaceless %}
 {% endblock %}
 
