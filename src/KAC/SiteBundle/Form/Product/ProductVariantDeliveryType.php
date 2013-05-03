@@ -14,7 +14,7 @@ class ProductVariantDeliveryType extends AbstractType
     {
         $builder->add('deliveryBand', 'choice', array(
             'label' => 'Delivery Band',
-            'choices' => array('1' => 'Delivery Band 1', '2' => 'Delivery Band 2', '3' => 'Delivery Band 3', '4' => 'Delivery Band 4', '5' => 'Delivery Band 5', '6' => 'Delivery Band 6'),
+            'choices' => array('1.0000' => 'Delivery Band 1', '2.0000' => 'Delivery Band 2', '3.0000' => 'Delivery Band 3', '4.0000' => 'Delivery Band 4', '5.0000' => 'Delivery Band 5', '6.0000' => 'Delivery Band 6'),
             'required' => true,
             'empty_value' => '- Select a Delivery Band -',
             'attr' => array(
