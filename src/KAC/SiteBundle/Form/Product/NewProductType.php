@@ -158,6 +158,13 @@ class NewProductType extends AbstractType
 
                 break;
             case 7:
+                $builder->add('descriptions', 'collection', array(
+                    'block_name' => 'descriptions',
+                    'type' => new ProductDescriptionType(),
+                    'required'  => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_descriptions',
                     'type' => new ProductVariantDescriptionsType(),
@@ -170,7 +177,14 @@ class NewProductType extends AbstractType
             case 8:
                 $builder->add('descriptions', 'collection', array(
                     'block_name' => 'descriptions_seo',
-                    'type' => new ProductSeoType(),
+                    'type' => new ProductDescriptionSeoType(),
+                    'required'  => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
+                $builder->add('routings', 'collection', array(
+                    'block_name' => 'descriptions_routing',
+                    'type' => new ProductRoutingType(),
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
