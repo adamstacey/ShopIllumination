@@ -12,10 +12,16 @@
                         <div class="accordion mbm">
                             <div class="accordion-item">
                                 <h3>Search Engine Optimisation for Product</h3>
-                                <div>
-                                    {{ form_rest(form.descriptions) }}
+                                <div class="pbm">
+                                    {% for description in form.descriptions %}
+                                        {{ form_rest(description) }}
+                                    {% endfor %}
+                                    {% do form.descriptions.setRendered() %}
+                                    {% for routing in form.routings %}
+                                        {{ form_rest(routing) }}
+                                    {% endfor %}
+                                    {% do form.routings.setRendered() %}
                                 </div>
-                                {% do form.descriptions.setRendered() %}
                             </div>
                             {% for variant in form.variants %}
                                 <div class="accordion-item">
