@@ -81,7 +81,7 @@ services:
     scope: request
     calls:
       - [ setFormType, [@kac_site.form.new_product]]
-    arguments: [@kac_site.manager.product, @kac_site.google.google]
+    arguments: [@kac_site.manager.seo, @kac_site.manager.product, @kac_site.google.google]
   kac_site.form.new_variant:
     class: KAC\SiteBundle\Form\Variant\NewVariantType
     tags:
