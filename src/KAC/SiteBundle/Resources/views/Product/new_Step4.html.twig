@@ -1,8 +1,8 @@
 {% set departmentName = form.vars.value.department.department.name %}
-{% if form.vars.value.department.department.deliveryBrand %}
-    {% set departmentDeliveryBand = form.vars.value.department.department.deliveryBrand %}
+{% if form.vars.value.department.department.deliveryBand %}
+    {% set departmentDeliveryBand = form.vars.value.department.department.deliveryBand %}
 {% else %}
-    {% set departmentDeliveryBand = form.vars.value.department.department.inheritedDeliveryBrand %}
+    {% set departmentDeliveryBand = form.vars.value.department.department.inheritedDeliveryBand %}
 {% endif %}
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
@@ -16,7 +16,7 @@
                     {% if departmentDeliveryBand %}
                         <div class="message message-help">
                             <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
-                            <p>The default delivery band set is <strong>"{{ departmentDeliveryBand }}"</strong>, which has been set by default from the department <strong>"{{ departmentName }}"</strong>.</p>
+                            <p>The default delivery band set is <strong>"{{ departmentDeliveryBand|number_format(0) }}"</strong>, which has been set by default from the department <strong>"{{ departmentName }}"</strong>.</p>
                         </div>
                     {% else %}
                         <div class="message message-help">
