@@ -10,6 +10,15 @@
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
+                            <div class="accordion-item">
+                                <h3>Descriptions for Product</h3>
+                                <div class="pbm">
+                                    {% for description in form.descriptions %}
+                                        {{ form_rest(description) }}
+                                    {% endfor %}
+                                    {% do form.descriptions.setRendered() %}
+                                </div>
+                            </div>
                             {% for variant in form.variants %}
                                 <div class="accordion-item">
                                     <h3>Descriptions for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
