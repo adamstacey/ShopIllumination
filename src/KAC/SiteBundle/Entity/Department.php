@@ -52,7 +52,12 @@ class Department implements DescribableInterface
      * @ORM\Column(name="department_path", type="text")
      */
     private $departmentPath;
-    
+
+    /**
+     * @ORM\Column(name="list_product_variants", type="boolean")
+     */
+    private $listProductVariants = true;
+
     /**
      * @ORM\Column(name="hide_prices", type="boolean")
      */
@@ -62,17 +67,7 @@ class Department implements DescribableInterface
      * @ORM\Column(name="show_prices_out_of_hours", type="boolean")
      */
     private $showPricesOutOfHours = false;
-    
-    /**
-     * @ORM\Column(name="membership_card_discount_available", type="boolean")
-     */
-    private $membershipCardDiscountAvailable = false;
-    
-    /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
-     */
-    private $maximumMembershipCardDiscount = 0.0000;
-    
+
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
@@ -348,52 +343,6 @@ class Department implements DescribableInterface
     public function getShowPricesOutOfHours()
     {
         return $this->showPricesOutOfHours;
-    }
-
-    /**
-     * Set membershipCardDiscountAvailable
-     *
-     * @param boolean $membershipCardDiscountAvailable
-     * @return Department
-     */
-    public function setMembershipCardDiscountAvailable($membershipCardDiscountAvailable)
-    {
-        $this->membershipCardDiscountAvailable = $membershipCardDiscountAvailable;
-    
-        return $this;
-    }
-
-    /**
-     * Get membershipCardDiscountAvailable
-     *
-     * @return boolean 
-     */
-    public function getMembershipCardDiscountAvailable()
-    {
-        return $this->membershipCardDiscountAvailable;
-    }
-
-    /**
-     * Set maximumMembershipCardDiscount
-     *
-     * @param float $maximumMembershipCardDiscount
-     * @return Department
-     */
-    public function setMaximumMembershipCardDiscount($maximumMembershipCardDiscount)
-    {
-        $this->maximumMembershipCardDiscount = $maximumMembershipCardDiscount;
-    
-        return $this;
-    }
-
-    /**
-     * Get maximumMembershipCardDiscount
-     *
-     * @return float 
-     */
-    public function getMaximumMembershipCardDiscount()
-    {
-        return $this->maximumMembershipCardDiscount;
     }
 
     /**
@@ -864,5 +813,28 @@ class Department implements DescribableInterface
     public function getRoutings()
     {
         return $this->routings;
+    }
+
+    /**
+     * Set listProductVariants
+     *
+     * @param boolean $listProductVariants
+     * @return Department
+     */
+    public function setListProductVariants($listProductVariants)
+    {
+        $this->listProductVariants = $listProductVariants;
+    
+        return $this;
+    }
+
+    /**
+     * Get listProductVariants
+     *
+     * @return boolean 
+     */
+    public function getListProductVariants()
+    {
+        return $this->listProductVariants;
     }
 }
