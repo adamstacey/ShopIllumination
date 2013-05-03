@@ -70,16 +70,6 @@ class Brand
     private $showPricesOutOfHours = false;
 
     /**
-     * @ORM\Column(name="membership_card_discount_available", type="boolean")
-     */
-    private $membershipCardDiscountAvailable = true;
-
-    /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
-     */
-    private $maximumMembershipCardDiscount = 0.0000;
-
-    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -313,52 +303,6 @@ class Brand
     public function getShowPricesOutOfHours()
     {
         return $this->showPricesOutOfHours;
-    }
-
-    /**
-     * Set membershipCardDiscountAvailable
-     *
-     * @param boolean $membershipCardDiscountAvailable
-     * @return Brand
-     */
-    public function setMembershipCardDiscountAvailable($membershipCardDiscountAvailable)
-    {
-        $this->membershipCardDiscountAvailable = $membershipCardDiscountAvailable;
-
-        return $this;
-    }
-
-    /**
-     * Get membershipCardDiscountAvailable
-     *
-     * @return boolean
-     */
-    public function getMembershipCardDiscountAvailable()
-    {
-        return $this->membershipCardDiscountAvailable;
-    }
-
-    /**
-     * Set maximumMembershipCardDiscount
-     *
-     * @param float $maximumMembershipCardDiscount
-     * @return Brand
-     */
-    public function setMaximumMembershipCardDiscount($maximumMembershipCardDiscount)
-    {
-        $this->maximumMembershipCardDiscount = $maximumMembershipCardDiscount;
-
-        return $this;
-    }
-
-    /**
-     * Get maximumMembershipCardDiscount
-     *
-     * @return float
-     */
-    public function getMaximumMembershipCardDiscount()
-    {
-        return $this->maximumMembershipCardDiscount;
     }
 
     /**
