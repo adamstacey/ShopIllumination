@@ -9,18 +9,21 @@ use KAC\SiteBundle\Entity\Product\VariantToFeature;
 use KAC\SiteBundle\Entity\Product\Price;
 use KAC\SiteBundle\Entity\Product\Variant\Description;
 use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Manager\SeoManager;
 use KAC\SiteBundle\Manager\ProductManager;
 
 class NewProductFlow extends FormFlow
 {
+    protected $seoManager;
     protected $productManager;
     protected $googleApi;
 
     protected $maxSteps = 11;
     protected $allowDynamicStepNavigation = true;
 
-    function __construct(ProductManager $productManager, Google $googleApi)
+    function __construct(SeoManager $seoManager, ProductManager $productManager, Google $googleApi)
     {
+        $this->seoManager = $seoManager;
         $this->productManager = $productManager;
         $this->googleApi = $googleApi;
     }
@@ -353,7 +356,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 8)
+        if (($step == 8) || ($step == 9))
         {
             // Update the variant descriptions
             foreach ($formData->getVariants() as $variant)
@@ -367,23 +370,39 @@ class NewProductFlow extends FormFlow
                 $this->productManager->updateProductDescription($description);
             }
 
-            // Go through and check that the updated variants do not have a duplicate URL
-            /*$duplicateUrlsCheck = array();
+            // Check the URLs
+            $duplicateUrlsCheck = array();
+
+            // Check the variant URLs
             foreach ($formData->getVariants() as $variant)
             {
-                if ($routings = $variant->getRoutings())
+                foreach ($variant->getRoutings() as $routing)
                 {
-                    foreach ($routings as $routing)
+                    $url = $this->seoManager->createUrl($routing->getUrl());
+                    $duplicateCount = 0;
+                    while (in_array($url, $duplicateUrlsCheck))
                     {
-                        if (in_array($routing->getUrl(), $duplicateUrlsCheck))
-                        {
-
-                        }
-                        $duplicateUrlsCheck[] = $routing->getUrl();
+                        $duplicateCount++;
+                        $url = $this->seoManager->createUrl($url.'-'.$duplicateCount);
                     }
+                    $duplicateUrlsCheck[] = $url;
+                    $routing->setUrl($url);
                 }
             }
-            $this->productManager->updateVariantDescription($variant->getDescription());*/
+
+            // Check the product URLs
+            foreach ($formData->getRoutings() as $routing)
+            {
+                $url = $this->seoManager->createUrl($routing->getUrl());
+                $duplicateCount = 0;
+                while (in_array($url, $duplicateUrlsCheck))
+                {
+                    $duplicateCount++;
+                    $url = $this->seoManager->createUrl($url.'-'.$duplicateCount);
+                }
+                $duplicateUrlsCheck[] = $url;
+                $routing->setUrl($url);
+            }
         }
 
         return $options;
