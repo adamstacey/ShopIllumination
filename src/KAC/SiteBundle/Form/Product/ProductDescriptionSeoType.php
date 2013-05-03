@@ -15,6 +15,7 @@ class ProductDescriptionSeoType extends AbstractType
             'required'  => false,
             'label' => 'Override',
             'attr' => array(
+                'data-single-checkbox' => true,
                 'data-help' => 'The search engine optimisation is automatically generated. If you would like to override it tick here.',
             ),
         ));
