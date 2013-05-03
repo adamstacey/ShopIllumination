@@ -1,7 +1,7 @@
 {% set departmentName = form.vars.value.department.department.name %}
-{% if form.vars.value.department.department.deliveryBand %}
+{% if form.vars.value.department.department.deliveryBand > 0 %}
     {% set departmentDeliveryBand = form.vars.value.department.department.deliveryBand %}
-{% else %}
+{% elseif form.vars.value.department.department.inheritedDeliveryBand > 0 %}
     {% set departmentDeliveryBand = form.vars.value.department.department.inheritedDeliveryBand %}
 {% endif %}
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
