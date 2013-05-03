@@ -248,7 +248,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step > 2)
+        if ($step == 4)
         {
             // Sort the variants in their display order
             if (sizeof($formData->getVariants()) > 1)
