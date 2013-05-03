@@ -68,7 +68,7 @@ class ProductIndexer extends Indexer
             //$document->setField('tagline', $descriptions[0]->getTagline());
             $document->setField('header', $descriptions[0]->getHeader());
             $document->setField('page_title', $descriptions[0]->getPageTitle());
-            $document->setField('short_description', $descriptions[0]->getShortDescription());
+            //$document->setField('short_description', $descriptions[0]->getShortDescription());
             //$document->setField('tagline', $descriptions[0]->getTagline());
             $document->setField('variants_count', count($product->getVariants()));
 
@@ -78,13 +78,13 @@ class ProductIndexer extends Indexer
             }
 
             // Add product code from the product
-            $productCodes = explode(',', $product->getAlternativeProductCodes());
+            /*$productCodes = explode(',', $product->getAlternativeProductCodes());
             array_unshift($productCodes, $product->getProductCode());
             foreach ($productCodes as $productCode) {
                 if (!empty($productCode)) {
                     $document->addField('product_code', $productCode);
                 }
-            }
+            }*/
 
             /** @var $variant Product\Variant */
             // Add product codes from each variant
@@ -182,10 +182,8 @@ class ProductIndexer extends Indexer
             $document->setField('brand_logo', $product->getBrand()->getDescription()->getLogoImage()->getOriginalPath());
 
             $document->setField('available_for_purchase', $product->getAvailableForPurchase());
-            $document->setField('hide_price', $product->getHidePrice());
-            $document->setField('show_price_out_of_hours', $product->getShowPriceOutOfHours());
-            $document->setField('membership_discount_available', $product->getMembershipCardDiscountAvailable());
-            $document->setField('membership_maximum_discount', $product->getMaximumMembershipCardDiscount());
+            //$document->setField('hide_price', $product->getHidePrice());
+            //$document->setField('show_price_out_of_hours', $product->getShowPriceOutOfHours());
             $document->setField('feature_comparison', $product->getFeatureComparison());
             $document->setField('download', $product->getDownloadable());
             $document->setField('available_for_purchase', $product->getAvailableForPurchase());
@@ -194,7 +192,7 @@ class ProductIndexer extends Indexer
             $document->setField('accessory', $product->getAccessory());
             $document->setField('new', $product->getNew());
 
-            $document->setField('delivery_cost', $product->getDeliveryCost());
+            //$document->setField('delivery_cost', $product->getDeliveryCost());
 
             $document->setField('created_at', $helper->formatDate($product->getCreatedAt()));
             $document->setField('updated_at', $helper->formatDate($product->getUpdatedAt()));
