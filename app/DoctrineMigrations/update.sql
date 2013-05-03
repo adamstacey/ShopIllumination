@@ -407,5 +407,6 @@ ALTER TABLE product_descriptions ADD override TINYINT(1) NOT NULL, DROP extra_ke
 ALTER TABLE product_prices ADD hide_price TINYINT(1) NOT NULL, ADD show_price_out_of_hours TINYINT(1) NOT NULL;
 ALTER TABLE product_variants ADD delivery_cost NUMERIC(12, 4) NOT NULL;
 ALTER TABLE products DROP checked, DROP product_code, DROP alternative_product_codes, DROP delivery_band, DROP inherited_delivery_band, DROP delivery_cost, DROP hide_price, DROP show_price_out_of_hours, DROP membership_card_discount_available, DROP maximum_membership_card_discount, DROP last_checked;
+ALTER TABLE departments DROP maximum_membership_card_discount, CHANGE membership_card_discount_available list_product_variants TINYINT(1) NOT NULL;
 DROP TABLE departments_tmp;
 SET FOREIGN_KEY_CHECKS = 1;
