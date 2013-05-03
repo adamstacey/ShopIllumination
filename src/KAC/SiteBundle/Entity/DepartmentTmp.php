@@ -53,17 +53,7 @@ class DepartmentTmp implements DescribableInterface
      * @ORM\Column(name="show_prices_out_of_hours", type="boolean")
      */
     private $showPricesOutOfHours;
-    
-    /**
-     * @ORM\Column(name="membership_card_discount_available", type="boolean")
-     */
-    private $membershipCardDiscountAvailable;
-    
-    /**
-     * @ORM\Column(name="maximum_membership_card_discount", type="decimal", precision=12, scale=4)
-     */
-    private $maximumMembershipCardDiscount;
-    
+
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
@@ -335,52 +325,6 @@ class DepartmentTmp implements DescribableInterface
     public function getShowPricesOutOfHours()
     {
         return $this->showPricesOutOfHours;
-    }
-
-    /**
-     * Set membershipCardDiscountAvailable
-     *
-     * @param boolean $membershipCardDiscountAvailable
-     * @return Department
-     */
-    public function setMembershipCardDiscountAvailable($membershipCardDiscountAvailable)
-    {
-        $this->membershipCardDiscountAvailable = $membershipCardDiscountAvailable;
-    
-        return $this;
-    }
-
-    /**
-     * Get membershipCardDiscountAvailable
-     *
-     * @return boolean 
-     */
-    public function getMembershipCardDiscountAvailable()
-    {
-        return $this->membershipCardDiscountAvailable;
-    }
-
-    /**
-     * Set maximumMembershipCardDiscount
-     *
-     * @param float $maximumMembershipCardDiscount
-     * @return Department
-     */
-    public function setMaximumMembershipCardDiscount($maximumMembershipCardDiscount)
-    {
-        $this->maximumMembershipCardDiscount = $maximumMembershipCardDiscount;
-    
-        return $this;
-    }
-
-    /**
-     * Get maximumMembershipCardDiscount
-     *
-     * @return float 
-     */
-    public function getMaximumMembershipCardDiscount()
-    {
-        return $this->maximumMembershipCardDiscount;
     }
 
     /**
