@@ -8,9 +8,9 @@ function generateButtons($object) {
             text : $(this).attr("data-icon-only") === "true" ? false : true
         });
         var $dataNotification = $(this).attr("data-notification");
-        if (($(this).attr("data-notification") != "") && ($(this).attr("data-notification") != undefined))
+        if (($dataNotification != "") && ($dataNotification != undefined))
         {
-            $(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
+            $(this).prepend('<div class="button-notification">'+$dataNotification+'</div>');
         }
     });
     return true;
