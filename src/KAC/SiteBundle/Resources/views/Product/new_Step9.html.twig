@@ -11,6 +11,12 @@
     .accordion-header-buttons button {
         padding: 0 3px;
     }
+    .fn {
+        float: none !important;
+    }
+    td.tac .image-preview {
+        margin: 0 auto;
+    }
 </style>
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
@@ -24,26 +30,35 @@
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
-                            {% for variant in form.variants %}
-                                <div class="accordion-item fileupload">
-                                    <div class="accordion-header-buttons">
-                                        <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
-                                    </div>
-                                    <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
-                                    <div>
-                                        <table class="form-table files mbm">
-                                            <thead>
-                                            <tr>
-                                                <th colspan="6"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                        {{ form_widget(variant) }}
-                                    </div>
+                            <div class="accordion-item imageupload">
+                                <div class="accordion-header-buttons">
+                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
                                 </div>
-                            {% endfor %}
-                            {% do form.variants.setRendered() %}
+                                <h3>Image Uploads</h3>
+                                <div>
+                                    <table class="form-table files mbm">
+                                        <thead>
+                                            <tr>
+                                                <th width="1" title="The image.">Image</th>
+                                                <th title="The image type.">Image Type</th>
+                                                <th>&nbsp;</th>
+                                                <th width="1">&nbsp;</th>
+                                                <th width="1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="no-files">
+                                                <td colspan="5">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no images currently saved. Add an image using the "Add Images" button above.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                         {{ form_rest(form) }}
                     </fieldset>
@@ -57,36 +72,41 @@
 
 {% raw %}
 <script id="template-upload" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload">
-        <td class="name"><span>{%=file.name%}</span></td>
-        <td class="type">
-            <select class="image-type" name="type">
-                <option value="product">Product</option>
-                <option value="gallery">Gallery</option>
-            </select>
-        </td>
-        {% if (file.error) { %}
-        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-        {% } else if (o.files.valid && !i) { %}
-        <td>
-            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-        </td>
-        <td class="start">
-            {% if (!o.options.autoUpload) { %}
-            <button type="button" class="button button-small mrm fl">Start</button>
+    {% for (var i = 0, file; file = o.files[i]; i++) { %}
+        <tr class="template-upload">
+            <td width="1" class="name tac">
+                <span class="fn image-preview ui-button-icon-primary ui-icon icon-black icon-1306"></span>
+            </td>
+            <td width="1" class="type">
+                <select class="image-type fill" name="type">
+                    <option value="product">Product Image</option>
+                    <option value="gallery">Gallery Image</option>
+                </select>
+            </td>
+            {% if (file.error) { %}
+                <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+            {% } else if (o.files.valid && !i) { %}
+                <td>
+                    <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+                </td>
+                <td width="1" class="start">
+                    {% if (!o.options.autoUpload) { %}
+                        <button type="button" class="button icon-green">Save</button>
+                    {% } else { %}
+                        &nbsp;
+                    {% } %}
+                </td>
+            {% } else { %}
+                <td colspan="2">&nbsp;</td>
             {% } %}
-        </td>
-        {% } else { %}
-        <td colspan="2"></td>
-        {% } %}
-        <td class="cancel">
-            {% if (!i) { %}
-            <button type="button" class="button button-small mrm fl">Cancel</button>
-            {% } %}
-        </td>
-        <td></td>
-    </tr>
+            <td class="cancel">
+                {% if (!i) { %}
+                    <button type="button" class="button button-red icon-white" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+                {% } else { %}
+                    &nbsp;
+                {% } %}
+            </td>
+        </tr>
     {% } %}
 </script>
 <!-- The template to display files available for download -->
@@ -109,7 +129,6 @@
         <td class="tac delete" width="1">
             <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
         </td>
-        <td><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
     </tr>
     {% } %}
 </script>
@@ -117,44 +136,36 @@
 <script>
     $(function () {
         'use strict';
-
-        $('.fileupload').each(function () {
+        $(".imageupload").each(function () {
             var that = this;
-
-            $(".files tbody", this).sortable({
-                handle: 'td:last',
-                update: function() {
-                    // Update hidden field
-                    var images = [];
-                    $(that).find("tr.template-download").each(function(key, row) {
-                        images.push($(row).attr("data-id"));
-                    });
-                    $(that).find('input[type=hidden]').val(images.join(','));
-                }
-            }).disableSelection();
-
             $(this).fileupload({
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
                 formData: []
-            }).bind('fileuploadsubmit', function (e, data) {
-                        //Add type field to form
-                        var typeField = $(".image-type", data.context);
-
-                        data.formData = {
-                            "imageType": typeField.val()
-                        };
-                    }).bind('fileuploadcompleted', function (e, data) {
-                        // Update hidden field
-                        var images = [];
-                        $(that).find("tr.template-download").each(function(key, row) {
-                            images.push($(row).attr("data-id"));
-                        });
-                        $(that).find('input[type=hidden]').val(images.join(','));
-
-                        generateButtons($(that).find('.files'));
-                        return true;
-                    });
+            }).bind("fileuploadadd", function (e, data) {
+                $(that).find("tr.no-files").hide();
+            }).bind("fileuploadchange", function (e, data) {
+                if ($(that).find("tbody tr").length > 1) {
+                    $(that).find("tr.no-files").hide();
+                } else {
+                    $(that).find("tr.no-files").show();
+                }
+            }).bind("fileuploadsubmit", function (e, data) {
+                //Add type field to form
+                var typeField = $(".image-type", data.context);
+                data.formData = {
+                    "imageType": typeField.val()
+                };
+            }).bind("fileuploadcompleted", function (e, data) {
+                // Update hidden field
+                var $images = [];
+                $(that).find("tr.template-download").each(function(key, row) {
+                    $images.push($(row).attr("data-id"));
+                });
+                $(that).find('input[type=hidden]').val($images.join(','));
+                generateButtons($(that).find(".files"));
+                return true;
+            });
 
             // On page load fetch the info for any existing files
             var imageIds = $(that).find('input[type=hidden]').val();
@@ -169,6 +180,7 @@
                     $(that).find('.files tbody').append(result);
                 });
             }
+
             // Update hidden field
             var images = [];
             $(that).find("tr.template-download").each(function(key, row) {
