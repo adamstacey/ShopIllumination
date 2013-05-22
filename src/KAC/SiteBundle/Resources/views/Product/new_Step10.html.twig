@@ -12,7 +12,7 @@
         padding: 0 3px;
     }
 </style>
-<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" id="formStep10" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
@@ -24,11 +24,23 @@
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
-                            {% for variant in form.vars.value.variants %}
+                            <div class="accordion-item fileupload">
+                                <h3>Images for Product</h3>
+                                <div>
+                                    <table class="form-table files mbm">
+                                        <thead>
+                                        <tr>
+                                            <th colspan="6"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                    {{ form_widget(form.images) }}
+                                </div>
+                            </div>
+                            {% for variant in form.variants %}
                                 <div class="accordion-item fileupload">
-                                    <div class="accordion-header-buttons">
-                                        <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
-                                    </div>
                                     <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
                                     <div>
                                         <table class="form-table files mbm">
@@ -40,10 +52,11 @@
                                             <tbody>
                                             </tbody>
                                         </table>
+                                        {{ form_rest(variant) }}
                                     </div>
                                 </div>
                             {% endfor %}
-                            {{ form_widget(form.images) }}
+                            {% do form.variants.setRendered() %}
                         </div>
                         {{ form_rest(form) }}
                     </fieldset>
@@ -78,11 +91,20 @@
     $(function () {
         'use strict';
 
-        {% set images = [] %}
-        {% for variant in form.vars.value.variants %}
-        {% set images = images|merge(variant.images|split(',')) %}
-        {% endfor %}
-        var images = "{{ images|join(',') }}";
+        $(".files tbody", this).sortable({
+            handle: 'td:last',
+            update: function() {
+                // Update hidden field
+                var images = [];
+                $(that).find("tr.template-download").each(function(key, row) {
+                    images.push($(row).attr("data-id"));
+                });
+                $(that).find('input[type=hidden]').val(images.join(','));
+            }
+        }).disableSelection();
+
+
+        var images = "{{ form.vars.value.images }}";
 
         if (images) {
             var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', images), function(data) {
@@ -96,16 +118,20 @@
             });
         }
 
-        $("#form-add").submit(function() {
-            var images = [];
-            $('.files tbody tr').each(function(key, row) {
-                var input = $(row).find('input');
-                if(input.is(':checked')) {
-                    images.push(input.attr("data-id"));
-                }
+        $("#formStep10").submit(function() {
+            $(".fileupload").each(function() {
+                var $images = [];
+                var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
+                $(this).find(".files tbody tr").each(function() {
+                    var $checkBoxObject = $(this).find("input");
+                    if($checkBoxObject.is(":checked")) {
+                        $images.push($checkBoxObject.attr("data-id"));
+                    }
+                });
+                $imagesHiddenInputObject.val($images.join(','));
             });
 
-            $("#site_new_product_images").val(images.join(','));
+            return false;
         });
 
         $(document).bind('drop dragover', function (e) {
