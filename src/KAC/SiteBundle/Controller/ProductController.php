@@ -42,7 +42,7 @@ class ProductController extends Controller {
          * @var \KAC\SiteBundle\Entity\Product $product
          */
         $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($id);
-        if(!$product)
+        if (!$product)
         {
             throw new NotFoundHttpException("Product not found");
         }
