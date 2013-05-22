@@ -498,7 +498,22 @@
             if (result instanceof $) {
                 return result;
             }
-            return $(this.options.templatesContainer).html(result).children();
+            var renderedTemplate = $(this.options.templatesContainer).html(result).children();
+            renderedTemplate.find("input, textarea, select, button, a.button").not(".no-uniform").uniform();
+            renderedTemplate.find(".button").each(function () {
+                $(this).button({
+                    icons : {
+                        primary : $(this).attr("data-icon-primary") ? $(this).attr("data-icon-primary") : null,
+                        secondary : $(this).attr("data-icon-secondary") ? $(this).attr("data-icon-secondary") : null
+                    },
+                    text : $(this).attr("data-icon-only") === "true" ? false : true
+                });
+                if (($(this).attr("data-notification") != "") && ($(this).attr("data-notification") != undefined))
+                {
+                    $(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
+                }
+            });
+            return renderedTemplate;
         },
 
         _renderPreview: function (file, node) {
