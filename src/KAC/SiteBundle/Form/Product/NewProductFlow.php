@@ -59,7 +59,8 @@ class NewProductFlow extends FormFlow
         if ($step > 1)
         {
             $departments = $formData->getDepartments();
-            if (count($departments) > 0 && $departments[0]->getDepartment() !== null) {
+            if (count($departments) > 0 && $departments[0]->getDepartment() !== null)
+            {
                 $options['departmentId'] = $departments[0]->getDepartment()->getId();
             } else {
                 $options['departmentId'] = null;
