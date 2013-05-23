@@ -24,15 +24,10 @@
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
-                            <div class="accordion-item fileupload">
+                            <div class="accordion-item imageupload">
                                 <h3>Images for Product</h3>
                                 <div>
-                                    <table class="form-table files mbm">
-                                        <thead>
-                                        <tr>
-                                            <th colspan="6"></th>
-                                        </tr>
-                                        </thead>
+                                    <table class="form-table sortable files mbm">
                                         <tbody>
                                         </tbody>
                                     </table>
@@ -40,15 +35,10 @@
                                 </div>
                             </div>
                             {% for variant in form.variants %}
-                                <div class="accordion-item fileupload">
+                                <div class="accordion-item imageupload">
                                     <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
                                     <div>
-                                        <table class="form-table files mbm">
-                                            <thead>
-                                            <tr>
-                                                <th colspan="6"></th>
-                                            </tr>
-                                            </thead>
+                                        <table class="form-table sortable files mbm">
                                             <tbody>
                                             </tbody>
                                         </table>
@@ -72,17 +62,17 @@
 <!-- The template to display files available for download -->
 <script id="template-image-row" type="text/x-template">
     {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="image-row">
-        <td class="name">
-            <a href="{%=file.url%}" title="{%=file.name%}">{%=file.name%}</a>
-        </td>
-        <td class="type" colspan="2"><span>
-                {% if (file.type == 'gallery') { %}Gallery{% } %}
-                {% if (file.type == 'product') { %}Product{% } %}
-            </span></td>
-        <td><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
-        <td><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
-    </tr>
+        <tr class="image-row">
+            <td width="1"><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
+            <td width="1"><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
+            <td width="1" class="name">
+                <a href="{%=file.url%}" target="_blank"><img border="0" src="{%=file.url%}" width="100" /></a>
+            </td>
+            <td class="type">
+                {% if (file.type == 'gallery') { %}Gallery Image{% } %}
+                {% if (file.type == 'product') { %}Product Image{% } %}
+            </td>
+        </tr>
     {% } %}
 </script>
 {% endraw %}
@@ -91,20 +81,7 @@
     $(function () {
         'use strict';
 
-        $(".files tbody", this).sortable({
-            handle: 'td:last',
-            update: function() {
-                // Update hidden field
-                var images = [];
-                $(that).find("tr.template-download").each(function(key, row) {
-                    images.push($(row).attr("data-id"));
-                });
-                $(that).find('input[type=hidden]').val(images.join(','));
-            }
-        }).disableSelection();
-
-
-        var images = "{{ form.vars.value.images }}";
+        var images = "{{ form.vars.value.imageUploads }}";
 
         if (images) {
             var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', images), function(data) {
@@ -114,12 +91,14 @@
                     formatFileSize: this._formatFileSize,
                     options: this.options
                 });
-                $('.files tbody').append(result);
+                generateButtons(result);
+                generateFormElements(result);
+                $(".files tbody").append(result);
             });
         }
 
         $("#formStep10").submit(function() {
-            $(".fileupload").each(function() {
+            $(".imageupload").each(function() {
                 var $images = [];
                 var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
                 $(this).find(".files tbody tr").each(function() {
