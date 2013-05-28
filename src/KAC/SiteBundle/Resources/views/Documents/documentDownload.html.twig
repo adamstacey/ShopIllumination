@@ -12,17 +12,9 @@
                     </td>
                 {% } else { %}
                     <td width="1" class="name">
-                        <a href="{%=file.url%}" target="_blank"><span class="fn image-preview ui-button-icon-primary ui-icon icon-red icon-1116"></span></a>
+                        <a href="{%=file.url%}" target="_blank"><span class="fn image-preview ui-button-icon-primary ui-icon icon-turquoise icon-53"></span></a>
                     </td>
-                    <td class="type tac">
-                        {% if (file.type == 'gallery') { %}
-                            Gallery Image
-                        {% } else if (file.type == 'product') { %}
-                            Product Image
-                        {% } else { %}
-                            -
-                        {% } %}
-                    </td>
+                    <td class="type tac">{%=file.title%}</td>
                     <td colspan="2">&nbsp;</td>
                     <td class="tac delete" width="1">
                         <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
