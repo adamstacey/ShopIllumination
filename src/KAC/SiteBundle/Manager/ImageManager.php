@@ -11,17 +11,19 @@ use KAC\SiteBundle\Entity\Routing;
 
 class ImageManager extends Manager
 {
-    public function __construct($doctrine)
+    private $fileManager;
+
+    public function __construct($doctrine, FileManager $fileManager)
     {
         parent::__construct($doctrine);
+
+        $this->fileManager = $fileManager;
     }
 
     public function createImage()
     {
         $image = new Image();
-
         $image->setDisplayOrder(0);
-
         return $image;
     }
 
@@ -43,6 +45,9 @@ class ImageManager extends Manager
             case 'brand':
                 $className = "\KAC\SiteBundle\Entity\Brand";
                 break;
+            case 'department':
+                $className = "\KAC\SiteBundle\Entity\Department";
+                break;
         }
 
         if (!$className)
@@ -57,55 +62,25 @@ class ImageManager extends Manager
     public function process(Image $image, DescribableInterface $object)
     {
         $imagine = new Imagine();
-
-        $title = $object->getDescription()->getHeader();
-        $title = $this->cleanFilename($title);
-        $basePath = $image->getUploadDir() . '/' . $image->getObjectType() . '/' . $image->getImageType();
-
-        $image->setPublicPath($basePath . '/' . $title . '-' . $image->getId() . '.jpg');
-
+        $filename = $this->fileManager->cleanFilename($object->getDescription()->getHeader());
+        $basePath = $image->getUploadDir().'/'.$image->getObjectType().'/'.$image->getImageType();
+        $filePath = $basePath.'/'.$filename.'-'.$image->getId().'.jpg';
+        $fileSize = filesize($filePath);
+        $image->setPublicPath($filePath);
+        $image->setFileExtension('jpg');
+        $image->setFileSize($fileSize);
         $imagine
-            ->open($image->getUploadPath() . $image->getOriginalPath())
-            ->save($image->getUploadPath() . $image->getPublicPath());
+            ->open($image->getUploadPath().$image->getOriginalPath())
+            ->save($image->getUploadPath().$image->getPublicPath());
     }
-    // Generate a clean filename
-    public function cleanFilename($filename = '')
+
+    public function persistImages($entity, $entityType)
     {
-        if ($filename != '')
-        {
-            // Add spaces to ending HTMl tags
-            $filename = preg_replace("/<\/([^\s])>/", "</$1> ", $filename);
-
-            // Strip tags
-            $filename = strip_tags($filename);
-
-            // Convert all HTML entities
-            $filename = html_entity_decode($filename);
-
-            // Replace any white space
-            $filename = preg_replace("/[\r\n\t\s]+/s", "-", $filename);
-
-            // Replace any dashes
-            $filename = preg_replace("/[\-]+/s", "-", $filename);
-            $filename = str_replace('--', '-', $filename);
-
-            // Convert to lowercase
-            $filename = strtolower($filename);
-
-            // Remove any unexpected characters
-            $filename = preg_replace("/[^a-zA-Z0-9\-]?/", "", $filename);
-        }
-
-        return $filename;
-    }
-
-    public  function persistImages($entity, $entityType) {
         /**
          * @var $em EntityManager
          * @var $image Image
          */
         $em = $this->doctrine->getManager();
-        $i = 0;
         $imageIds = array_diff(explode(',', $entity->getImages()), array(''));
 
         // Get any images already linked to the entity
@@ -115,55 +90,56 @@ class ImageManager extends Manager
         ));
 
         // Delete any old images that no longer exist
-        foreach($existingImages as $existingImage) {
+        foreach ($existingImages as $existingImage)
+        {
             $found = false;
-            foreach($imageIds as $imageId) {
-                if($existingImage->getId() == $imageId) {
+            foreach ($imageIds as $imageId)
+            {
+                if ($existingImage->getId() == $imageId)
+                {
                     $found = true;
                     break;
                 }
             }
-
-            if(!$found) {
+            if (!$found) {
                 $em->remove($existingImage);
                 $em->flush();
             }
         }
 
         // If no images were added add a blank image
-        if(count($imageIds) == 0) {
+        if (count($imageIds) == 0)
+        {
             $image = new Image();
-            $image->setLocale('en');
-            $image->setTitle($entity->getDescription()->getHeader());
-            $image->setAlignment('');
-            $image->setDescription('');
-            $image->setLink('');
-            $image->setImageType($entityType);
+            $image->setObjectType($entityType);
             $image->setObjectId($entity->getId());
-            $image->setDisplayOrder(1);
+            $image->setImageType($entityType);
+            $image->setLocale('en_GB');
+            $image->setTitle($entity->getDescription()->getHeader());
+            $image->setDescription('');
+            $image->setAlignment('');
+            $image->setLink('');
             $image->setOriginalPath('/images/no-image.jpg');
             $image->setPublicPath('/images/no-image.jpg');
+            $image->setDisplayOrder(1);
             $em->persist($image);
         } else {
-            // Link each image to the variant
-            foreach($imageIds as $imageId)
+            // Link each image
+            $displayOrder = 1;
+            foreach ($imageIds as $imageId)
             {
                 $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($imageId);
-                if($image)
+                if ($image)
                 {
-                    $image->setObjectId($entity->getId());
                     $image->setObjectType($entityType);
-
-                    $image->setTitle($entity->getDescription()->getHeader());
-                    $image->setDisplayOrder($i);
-                    $image->setPublicPath(/*Set this field to a blank value so it can be changed in the listener*/"");
-
-                    if($image->getImageType() === "" || $image->getImageType() === null) {
+                    $image->setObjectId($entity->getId());
+                    if($image->getImageType() === "" || $image->getImageType() === null)
+                    {
                         $image->setImageType($entityType);
                     }
-
-                    $i++;
-
+                    $image->setPublicPath("");
+                    $image->setDisplayOrder($displayOrder);
+                    $displayOrder++;
                     $em->persist($image);
                 }
             }
