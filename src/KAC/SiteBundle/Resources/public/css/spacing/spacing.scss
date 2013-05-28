@@ -300,9 +300,15 @@ table dl {
 .fr {
     float: right;
 }
+
+.fn {
+    float: none !important;
+}
+
 .pr {
     position: relative;
 }
+
 .pa {
     position: absolute;
 }
