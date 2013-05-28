@@ -629,6 +629,80 @@
     background-image: none;
 }
 
+.progress-bar {
+    position: relative;
+    margin: 0;
+    padding: $spacingSmall !important;
+    height: 30px;
+
+    background-color: $colourGreyDark !important;
+    @include equalBorderRadius($radiusSize);
+    @include boxInsetShadow($colourGreyDark, 0, $spacingSmall);
+}
+
+.progress-bar div {
+    display: inline-block;
+    height: 100%;
+    margin: 0 !important;
+
+    @include equalBorderRadius($radiusSize);
+    @include boxInsetShadow($colourBlack, 0, $spacingSmall, 0, 0, 0.7);
+    background-color: $primaryColour;
+    @include transition(width, .4s, ease-in-out);
+    @include backgroundSize(40px, 40px);
+    background-repeat: repeat !important;
+    background-image: -webkit-gradient(linear, left top, right bottom,
+        color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent),
+        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)),
+        color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent),
+        to(transparent));
+    background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+        transparent 75%, transparent);
+    background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+        transparent 75%, transparent);
+    background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+        transparent 75%, transparent);
+    background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+        transparent 75%, transparent);
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+        transparent 75%, transparent);
+    @include transition(animate-stripes, 3s, linear infinite);
+}
+
+.progress-bar-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: $spacingSmall $spacingLarge;
+
+    overflow: hidden;
+    white-space: nowrap;
+
+    line-height: 40px;
+    color: $colourWhite;
+    @include fontSize($fontSizeExtraSmall);
+    @include ellipsis;
+}
+
+.progress-error {
+    color: $colourRed;
+    @include fontSize($fontSizeSmall);
+    font-weight: bold;
+}
+
+@-webkit-keyframes animate-stripes {
+    0% {background-position: 0 0;} 100% {background-position: 76px 0;}
+}
+
+@-moz-keyframes animate-stripes {
+    0% {background-position: 0 0;} 100% {background-position: 76px 0;}
+}
+
 .ui-slider {
     position: relative;
     text-align: left;
@@ -645,7 +719,7 @@
 .ui-slider .ui-slider-range {
     position: absolute;
     z-index: 1;
-    font-size: $spacingMedium;
+    @include fontSize($fontSizeMedium);
     display: block;
     border: 0;
     background-position: 0 0;
@@ -724,7 +798,7 @@
 .ui-spinner-button {
     width: 16px;
     height: 50%;
-    font-size: $spacingMedium;
+    @include fontSize($fontSizeMedium);
     padding: 0;
     margin: 0;
     text-align: center;
@@ -924,6 +998,19 @@ body .ui-tooltip {
 .accordion {
     @include noBoxShadow;
     @include equalBorderRadius(0);
+}
+
+.accordion-item {
+    position: relative;
+}
+.accordion-header-buttons {
+    position: absolute;
+    top: 4px;
+    right: 52px;
+    z-index: 1;
+}
+.accordion-header-buttons button {
+    padding: 0 3px;
 }
 
 /* Interaction states
