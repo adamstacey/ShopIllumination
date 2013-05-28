@@ -4,7 +4,6 @@ namespace KAC\SiteBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use KAC\SiteBundle\Entity\Image;
-use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Manager\ImageManager;
 
 class ImageListener
@@ -21,7 +20,7 @@ class ImageListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Image)
+        if ($entity instanceof Image)
         {
             $entity->preUpload();
         }
@@ -31,11 +30,12 @@ class ImageListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Image)
+        if ($entity instanceof Image)
         {
             $entity->preUpload();
-            $object= $this->manager->getObject($entity);
-            if ($object) {
+            $object = $this->manager->getObject($entity);
+            if ($object)
+            {
                 $this->manager->process($entity, $object);
                 $args->setNewValue('publicPath', $entity->getPublicPath());
             }
@@ -46,7 +46,7 @@ class ImageListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Image)
+        if ($entity instanceof Image)
         {
             $entity->upload();
         }
@@ -56,7 +56,7 @@ class ImageListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Image)
+        if ($entity instanceof Image)
         {
             $entity->upload();
         }
@@ -66,7 +66,7 @@ class ImageListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Image)
+        if ($entity instanceof Image)
         {
             $entity->storeFilenameForRemove();
         }
@@ -76,7 +76,7 @@ class ImageListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Image)
+        if ($entity instanceof Image)
         {
             $entity->removeUpload();
         }
