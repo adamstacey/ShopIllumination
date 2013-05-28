@@ -18,7 +18,7 @@ class NewProductFlow extends FormFlow
     protected $productManager;
     protected $googleApi;
 
-    protected $maxSteps = 11;
+    protected $maxSteps = 12;
     protected $allowDynamicStepNavigation = true;
 
     function __construct(SeoManager $seoManager, ProductManager $productManager, Google $googleApi)
@@ -40,7 +40,8 @@ class NewProductFlow extends FormFlow
             '8. SEO',
             '9. Uploads',
             '10. Images',
-            '11. Links'
+            '11. Documents',
+            '12. Links'
         );
     }
 
