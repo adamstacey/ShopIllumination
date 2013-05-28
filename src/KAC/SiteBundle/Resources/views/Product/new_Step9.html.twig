@@ -1,111 +1,3 @@
-<style>
-    .accordion-item {
-        position: relative;
-    }
-    .accordion-header-buttons {
-        position: absolute;
-        top: 4px;
-        right: 52px;
-        z-index: 1;
-    }
-    .accordion-header-buttons button {
-        padding: 0 3px;
-    }
-    .fn {
-        float: none !important;
-    }
-    td.tac .image-preview {
-        margin: 0 auto;
-    }
-    .progress-bar {
-        position: relative;
-        background-color: #384246;
-        height: 30px;
-        padding: 5px;
-        margin: 0;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-        -moz-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #384246;
-        -webkit-box-shadow: 0 1px 5px #000 inset, 0 1px 0 #384246;
-        box-shadow: 0 1px 5px #000 inset, 0 1px 0 #384246;
-    }
-
-    .progress-bar div {
-        display: inline-block;
-        height: 100%;
-        margin: 0 !important;
-        -moz-border-radius: 4px;
-        -webkit-border-radius: 4px;
-        border-radius: 4px;
-        background-color: #4ec0e3;
-        -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset;
-        -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset;
-        box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset;
-        -webkit-transition: width .4s ease-in-out;
-        -moz-transition: width .4s ease-in-out;
-        -ms-transition: width .4s ease-in-out;
-        -o-transition: width .4s ease-in-out;
-        transition: width .4s ease-in-out;
-        -webkit-background-size: 40px 40px;
-        -moz-background-size: 40px 40px;
-        background-size: 40px 40px;
-        background-repeat: repeat !important;
-        background-image: -webkit-gradient(linear, left top, right bottom,
-        color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent),
-        color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)),
-        color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent),
-        to(transparent));
-        background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-        transparent 75%, transparent);
-        background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-        transparent 75%, transparent);
-        background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-        transparent 75%, transparent);
-        background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-        transparent 75%, transparent);
-        background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-        transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-        transparent 75%, transparent);
-
-        -webkit-animation: animate-stripes 3s linear infinite;
-        -moz-animation: animate-stripes 3s linear infinite;
-    }
-    .progress-bar-caption {
-        position: absolute;
-        top: 0;
-        left: 0;
-        line-height: 40px;
-        padding: 5px 15px;
-        color: #FFF;
-        font-size: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .progress-error {
-        color: #cc0000;
-        font-size: 11px;
-        font-weight: bold;
-    }
-    @-webkit-keyframes animate-stripes {
-        0% {background-position: 0 0;} 100% {background-position: 76px 0;}
-    }
-
-    @-moz-keyframes animate-stripes {
-        0% {background-position: 0 0;} 100% {background-position: 76px 0;}
-    }
-    .pr {
-        position: relative;
-    }
-    .pa {
-        position: absolute;
-    }
-</style>
 <form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
@@ -176,7 +68,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                {{ form_widget(form.imageUploads) }}
+                                {{ form_widget(form.documentUploads) }}
                             </div>
                         </div>
                         {{ form_rest(form) }}
@@ -206,7 +98,7 @@
             }).bind("fileuploadadd", function (e, data) {
                 $(that).find("tr.no-files").hide();
             }).bind("fileuploadsubmit", function (e, data) {
-                //Add type field to form
+                // Add type field to form
                 var typeField = $(".image-type", data.context);
                 data.formData = {
                     "imageType": typeField.val()
@@ -226,7 +118,7 @@
             var $imageIds = $(that).find('input[type=hidden]').val();
             if ($imageIds) {
                 var $images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', $imageIds), function(data) {
-                    var template = tmpl("template-download");
+                    var template = tmpl("templateImageDownload");
                     var result = template({
                         files: data.files,
                         formatFileSize: this._formatFileSize,
@@ -249,11 +141,11 @@
             }).bind("fileuploadadd", function (e, data) {
                 $(that).find("tr.no-files").hide();
             }).bind("fileuploadsubmit", function (e, data) {
-                //Add type field to form
-                //var typeField = $(".image-type", data.context);
-                //data.formData = {
-                //    "imageType": typeField.val()
-                //};
+                // Add title field to form
+                var titleField = $(".document-title", data.context);
+                data.formData = {
+                    "title": titleField.val()
+                };
             }).bind("fileuploadcompleted", function (e, data) {
                 // Update hidden field
                 var $documents = [];
@@ -269,7 +161,7 @@
             var $documentIds = $(that).find('input[type=hidden]').val();
             if ($documentIds) {
                 var $documents = $.getJSON('{{ path('api_documents_get_multiple', {'ids': '-1'}) }}'.replace('-1', $documentIds), function(data) {
-                    var template = tmpl("template-download");
+                    var template = tmpl("templateDocumentDownload");
                     var result = template({
                         files: data.files,
                         formatFileSize: this._formatFileSize,
