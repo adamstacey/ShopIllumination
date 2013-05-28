@@ -410,5 +410,13 @@ ALTER TABLE products DROP checked, DROP product_code, DROP alternative_product_c
 ALTER TABLE departments DROP maximum_membership_card_discount, CHANGE membership_card_discount_available list_product_variants TINYINT(1) NOT NULL;
 ALTER TABLE brands DROP membership_card_discount_available, DROP maximum_membership_card_discount;
 ALTER TABLE departments_tmp DROP membership_card_discount_available, DROP maximum_membership_card_discount;
+CREATE TABLE documents (id INT AUTO_INCREMENT NOT NULL, object_type VARCHAR(100) DEFAULT NULL, object_id INT DEFAULT NULL, document_type VARCHAR(100) DEFAULT NULL, locale VARCHAR(5) NOT NULL, title VARCHAR(255) DEFAULT NULL, description LONGTEXT DEFAULT NULL, file_extension VARCHAR(20) NOT NULL, file_size VARCHAR(20) NOT NULL, path VARCHAR(255) DEFAULT NULL, display_order INT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE images ADD file_extension VARCHAR(20) NOT NULL, ADD file_size VARCHAR(20) NOT NULL;
+ALTER TABLE documents CHANGE file_extension file_extension VARCHAR(20) DEFAULT NULL, CHANGE file_size file_size VARCHAR(20) DEFAULT NULL;
+ALTER TABLE images CHANGE file_extension file_extension VARCHAR(20) DEFAULT NULL, CHANGE file_size file_size VARCHAR(20) DEFAULT NULL;
+ALTER TABLE documents CHANGE file_size file_size INT DEFAULT NULL;
+ALTER TABLE images DROP file_size;
+ALTER TABLE images ADD file_size INT DEFAULT NULL;
+DROP TABLE files;
 DROP TABLE departments_tmp;
 SET FOREIGN_KEY_CHECKS = 1;
