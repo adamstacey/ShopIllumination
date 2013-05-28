@@ -30,10 +30,8 @@ class ImageApiController extends Controller
     public function getAction(Request $request, $id, $format)
     {
         $em = $this->getDoctrine()->getManager();
-
         $serializer = $this->get('serializer');
         $data = $serializer->serialize(array(), $format);
-
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/'.$format);
         return $response;
@@ -47,10 +45,8 @@ class ImageApiController extends Controller
     public function getImageAction(Request $request, $id, $format)
     {
         $em = $this->getDoctrine()->getManager();
-
         $serializer = $this->get('serializer');
         $data = $serializer->serialize(array(), $format);
-
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/'.$format);
         return $response;
@@ -72,11 +68,13 @@ class ImageApiController extends Controller
         /**
          * @var $image Image
          */
-        foreach($images as $image) {
+        foreach ($images as $image)
+        {
             $filesArray[] = array(
                 'id' => $image->getId(),
                 'type' => $image->getImageType(),
-                'name' => basename($image->getPublicPath() == null ? $image->getOriginalPath() : $image->getPublicPath()),
+                'title' => ($image->getTitle()?$image->getTitle():basename($image->getOriginalPath())),
+                'fileType' => 'image',
                 'url' => $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
                 'delete_type' => 'DELETE',
@@ -107,9 +105,7 @@ class ImageApiController extends Controller
         /**
          * @var $form FormInterface
          */
-        $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $image, array(
-            'csrf_protection'   => false
-        ))
+        $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $image, array('csrf_protection' => false))
             ->add('file', 'file')
             ->add('imageType', 'text')
             ->getForm();
@@ -121,18 +117,14 @@ class ImageApiController extends Controller
              * @var $file UploadedFile
              */
             $file = $image->getFile();
-            $size = $file->getSize();
-
             $em = $this->getDoctrine()->getManager();
-
             $em->persist($image);
             $em->flush();
-
             $filesArray[] = array(
                 'id' => $image->getId(),
                 'type' => $image->getImageType(),
-                'name' => $file->getClientOriginalName(),
-                'size' => $size,
+                'title' => ($image->getTitle()?$image->getTitle():$file->getClientOriginalName()),
+                'fileType' => 'image',
                 'url' => $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
                 'delete_type' => 'DELETE',
@@ -140,7 +132,7 @@ class ImageApiController extends Controller
         } else {
             $errors = $form->getErrors();
             $filesArray[] = array(
-                'error' => count($errors) > 0 ? $errors[0] : 'That file was invalid',
+                'error' => count($errors) > 0 ? $errors[0] : 'The file was invalid.',
             );
         }
 
@@ -162,16 +154,13 @@ class ImageApiController extends Controller
     public function deleteImageAction(Request $request, $id, $format)
     {
         $em = $this->getDoctrine()->getManager();
-
         $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($id);
-        if(!$image)
+        if (!$image)
         {
-            throw new NotFoundHttpException("Image not found");
+            throw new NotFoundHttpException("The image was not found.");
         }
-
         $em->remove($image);
         $em->flush();
-
         $response = new Response();
         $response->headers->set('Content-Type', 'application/'.$format);
         return $response;
@@ -180,7 +169,7 @@ class ImageApiController extends Controller
     /**
      * Fetch project manager from container
      *
-     * @return \KAC\SiteBundle\Manager\ProductManager
+     * @return \KAC\SiteBundle\Manager\ImageManager
      */
     private function getManager()
     {
