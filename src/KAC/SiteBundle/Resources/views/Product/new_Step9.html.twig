@@ -120,7 +120,7 @@
                         <div class="accordion mbm">
                             <div class="accordion-item imageupload">
                                 <div class="accordion-header-buttons">
-                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Images<input class="no-uniform" type="file" name="file" multiple></button>
+                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="file" multiple></button>
                                 </div>
                                 <h3>Image Uploads</h3>
                                 <div>
@@ -139,10 +139,40 @@
                                                 <td colspan="5">
                                                     <div class="message message-help mas">
                                                         <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                                        <p>There are no images currently saved. Add an image using the "Add Images" button above.</p>
+                                                        <p>There are no images currently saved. Add an image using the "Add Files" button above.</p>
                                                     </div>
                                                 </td>
                                             </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {{ form_widget(form.imageUploads) }}
+                            </div>
+                            <div class="accordion-item documentupload">
+                                <div class="accordion-header-buttons">
+                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="file" multiple></button>
+                                </div>
+                                <h3>Document Uploads</h3>
+                                <div>
+                                    <table class="form-table files mbm">
+                                        <thead>
+                                        <tr>
+                                            <th width="1">&nbsp;</th>
+                                            <th title="The title of the document.">Title</th>
+                                            <th>&nbsp;</th>
+                                            <th width="1">&nbsp;</th>
+                                            <th width="1">&nbsp;</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="no-files">
+                                            <td colspan="5">
+                                                <div class="message message-help mas">
+                                                    <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                    <p>There are no documents currently saved. Add a document using the "Add Files" button above.</p>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -158,96 +188,23 @@
         </div>
     </div>
 </form>
-
-{% raw %}
-<script id="template-upload" type="text/x-template">
-    {% for (var i = 0, file; file = o.files[i]; i++) { %}
-        <tr class="template-upload">
-            {% if (file.error) { %}
-                <td class="name tac">
-                    <span class="fn image-preview ui-button-icon-primary ui-icon icon-red icon-1116"></span>
-                </td>
-                <td colspan="3" class="progress-error error">There was an error selecting the file. Please try again. ({%=file.error%})</td>
-                <td class="tac delete" width="1">
-                    <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
-                </td>
-            {% } else { %}
-                <td width="1" class="name tac">
-                    <span class="fn image-preview ui-button-icon-primary ui-icon icon-black icon-1306"></span>
-                </td>
-                <td width="1" class="type">
-                    <select class="image-type fill" name="type">
-                        <option value="product">Product Image</option>
-                        <option value="gallery">Gallery Image</option>
-                    </select>
-                </td>
-                <td class="pr">
-                    <div class="progress-bar progress progress-success active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                        <div class="bar" style="width: 0%;"></div>
-                    </div>
-                    <div class="progress-bar-caption">{%=o.formatFileSize(file.size)%} ({%=file.name%})</div>
-                </td>
-                <td width="1" class="start">
-                    {% if (!o.options.autoUpload) { %}
-                        <button type="button" class="button icon-green">Save</button>
-                    {% } else { %}
-                        &nbsp;
-                    {% } %}
-                </td>
-                <td class="cancel">
-                    <button type="button" class="button button-red icon-white" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
-                </td>
-            {% } %}
-        </tr>
-    {% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-template">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-download" data-id="{%=file.id%}">
-            {% if (file.error) { %}
-                <td class="name tac">
-                    <span class="fn image-preview ui-button-icon-primary ui-icon icon-red icon-1116"></span>
-                </td>
-                <td colspan="3" class="progress-error error">There was an error saving the file. Please try again. ({%=file.error%})</td>
-                <td class="tac delete" width="1">
-                    <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
-                </td>
-            {% } else { %}
-                <td width="1" class="name">
-                    <a href="{%=file.url%}" target="_blank"><img border="0" src="{%=file.url%}" width="100" /></a>
-                </td>
-                <td class="type tac">
-                    {% if (file.type == 'gallery') { %}Gallery Image{% } %}
-                    {% if (file.type == 'product') { %}Product Image{% } %}
-                </td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td class="tac delete" width="1">
-                    <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
-                </td>
-            {% } %}
-        </tr>
-    {% } %}
-</script>
-{% endraw %}
+{% include 'KACSiteBundle:Images:imageUpload.html.twig' %}
+{% include 'KACSiteBundle:Images:imageDownload.html.twig' %}
+{% include 'KACSiteBundle:Documents:documentUpload.html.twig' %}
+{% include 'KACSiteBundle:Documents:documentDownload.html.twig' %}
 <script>
     $(function () {
-        'use strict';
+        "use strict";
         $(".imageupload").each(function () {
             var that = this;
             $(this).fileupload({
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
-                formData: []
+                formData: [],
+                uploadTemplateId: "templateImageUpload",
+                downloadTemplateId: "templateImageDownload"
             }).bind("fileuploadadd", function (e, data) {
                 $(that).find("tr.no-files").hide();
-            }).bind("fileuploadchange", function (e, data) {
-                if ($(that).find("tbody tr").length > 1) {
-                    $(that).find("tr.no-files").hide();
-                } else {
-                    $(that).find("tr.no-files").show();
-                }
             }).bind("fileuploadsubmit", function (e, data) {
                 //Add type field to form
                 var typeField = $(".image-type", data.context);
@@ -260,31 +217,71 @@
                 $(that).find("tr.template-download").each(function(key, row) {
                     $images.push($(row).attr("data-id"));
                 });
-                $(that).find('input[type=hidden]').val($images.join(','));
+                $(that).find("input[type=hidden]").val($images.join(","));
                 generateButtons($(that).find(".files"));
                 return true;
             });
 
             // On page load fetch the info for any existing files
-            var imageIds = $(that).find('input[type=hidden]').val();
-            if (imageIds) {
-                var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
+            var $imageIds = $(that).find('input[type=hidden]').val();
+            if ($imageIds) {
+                var $images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', $imageIds), function(data) {
                     var template = tmpl("template-download");
                     var result = template({
                         files: data.files,
                         formatFileSize: this._formatFileSize,
                         options: this.options
                     });
+                    $(that).find(".no-files").hide();
                     $(that).find('.files tbody').append(result);
+                    $(that).find(".lightbox").lightbox();
+                });
+            }
+        });
+        $(".documentupload").each(function () {
+            var that = this;
+            $(this).fileupload({
+                url: '{{ path('api_documents_post_document') }}',
+                dropZone: $(this),
+                formData: [],
+                uploadTemplateId: "templateDocumentUpload",
+                downloadTemplateId: "templateDocumentDownload"
+            }).bind("fileuploadadd", function (e, data) {
+                $(that).find("tr.no-files").hide();
+            }).bind("fileuploadsubmit", function (e, data) {
+                //Add type field to form
+                //var typeField = $(".image-type", data.context);
+                //data.formData = {
+                //    "imageType": typeField.val()
+                //};
+            }).bind("fileuploadcompleted", function (e, data) {
+                // Update hidden field
+                var $documents = [];
+                $(that).find("tr.template-download").each(function(key, row) {
+                    $documents.push($(row).attr("data-id"));
+                });
+                $(that).find("input[type=hidden]").val($documents.join(","));
+                generateButtons($(that).find(".files"));
+                return true;
+            });
+
+            // On page load fetch the info for any existing files
+            var $documentIds = $(that).find('input[type=hidden]').val();
+            if ($documentIds) {
+                var $documents = $.getJSON('{{ path('api_documents_get_multiple', {'ids': '-1'}) }}'.replace('-1', $documentIds), function(data) {
+                    var template = tmpl("template-download");
+                    var result = template({
+                        files: data.files,
+                        formatFileSize: this._formatFileSize,
+                        options: this.options
+                    });
+                    $(that).find(".no-files").hide();
+                    $(that).find('.files tbody').append(result);
+                    $(that).find(".lightbox").lightbox();
                 });
             }
 
-            // Update hidden field
-            var images = [];
-            $(that).find("tr.template-download").each(function(key, row) {
-                images.push($(row).attr("data-id"));
-            });
-            $(that).find('input[type=hidden]').val(images.join(','));
+
         });
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();
