@@ -513,6 +513,7 @@
                     $(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
                 }
             });
+            renderedTemplate.find(".lightbox").lightbox();
             return renderedTemplate;
         },
 
