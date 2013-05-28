@@ -165,6 +165,7 @@ class Variant implements DescribableInterface
     private $deletedAt;
 
     private $images = array();
+    private $documents = array();
 
     /**
      * Constructor
@@ -715,6 +716,16 @@ class Variant implements DescribableInterface
     public function setImages($images)
     {
         $this->images = $images;
+    }
+
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    public function setDocuments($documents)
+    {
+        $this->documents = $documents;
     }
 
     /**
