@@ -200,6 +200,7 @@ class NewProductType extends AbstractType
                 break;
             case 9:
                 $builder->add('imageUploads', 'hidden');
+                $builder->add('documentUploads', 'hidden');
                 break;
             case 10:
                 $builder->add('images', 'hidden');
@@ -213,6 +214,17 @@ class NewProductType extends AbstractType
                 ));
                 break;
             case 11:
+                $builder->add('documents', 'hidden');
+
+                $builder->add('variants', 'collection', array(
+                    'block_name' => 'variants_documents',
+                    'type' => new ProductVariantDocumentsType(),
+                    'required'  => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ));
+                break;
+            case 12:
                 $builder->add('links', 'collection', array(
                     'type' => new ProductLinkType(),
                     'allow_add' => true,
