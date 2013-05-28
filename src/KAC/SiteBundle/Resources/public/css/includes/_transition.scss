@@ -1,5 +1,4 @@
-@mixin transition($property, $duration, $type)
-{
+@mixin transition($property, $duration, $type) {
     -webkit-transition: $property $duration $type;
     -moz-transition: $property $duration $type;
     -ms-transition: $property $duration $type;
@@ -7,8 +6,7 @@
     transition: $property $duration $type;
 }
 
-@mixin transitionAll($duration, $type)
-{
+@mixin transitionAll($duration, $type) {
     -webkit-transition: all $duration $type;
     -moz-transition: all $duration $type;
     -ms-transition: all $duration $type;
@@ -16,8 +14,7 @@
     transition: all $duration $type;
 }
 
-@mixin transitionNone
-{
+@mixin transitionNone {
     -webkit-transition: none;
     -moz-transition: none;
     -ms-transition: none;
