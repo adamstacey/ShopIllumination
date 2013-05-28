@@ -74,7 +74,6 @@ class ImageApiController extends Controller
                 'id' => $image->getId(),
                 'type' => $image->getImageType(),
                 'title' => ($image->getTitle()?$image->getTitle():basename($image->getOriginalPath())),
-                'fileType' => 'image',
                 'url' => $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
                 'delete_type' => 'DELETE',
