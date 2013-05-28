@@ -17,9 +17,15 @@ services:
   kac_site.manager.department:
       class: KAC\SiteBundle\Manager\DepartmentManager
       arguments: [@doctrine, @kac_site.manager.seo]
+  kac_site.manager.file:
+      class: KAC\SiteBundle\Manager\FileManager
+      arguments: [@doctrine]
   kac_site.manager.image:
     class: KAC\SiteBundle\Manager\ImageManager
-    arguments: [@doctrine]
+    arguments: [@doctrine, @kac_site.manager.file]
+  kac_site.manager.document:
+      class: KAC\SiteBundle\Manager\DocumentManager
+      arguments: [@doctrine, @kac_site.manager.file]
   kac_site.manager.seo:
     class: KAC\SiteBundle\Manager\SeoManager
     arguments: [@doctrine]
@@ -58,6 +64,16 @@ services:
           - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
           - { name: doctrine.event_listener, event: preRemove, method: preRemove}
           - { name: doctrine.event_listener, event: postRemove, method: preRemove}
+  kac_site.listener.document:
+        class: KAC\SiteBundle\EventListener\DocumentListener
+        arguments: [@kac_site.manager.document]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+            - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+            - { name: doctrine.event_listener, event: preRemove, method: preRemove}
+            - { name: doctrine.event_listener, event: postRemove, method: preRemove}
 
   # Form Services
   kac_site.form.new_department:
