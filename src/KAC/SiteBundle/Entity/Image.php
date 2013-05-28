@@ -21,16 +21,16 @@ class Image
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-   
+
+    /**
+     * @ORM\Column(name="object_type", type="string", length=100, nullable=true)
+     */
+    private $objectType;
+
     /**
      * @ORM\Column(name="object_id", type="integer", length=11, nullable=true)
      */
     private $objectId;
-    
-     /**
-     * @ORM\Column(name="object_type", type="string", length=100, nullable=true)
-     */
-    private $objectType;
     
      /**
      * @ORM\Column(name="image_type", type="string", length=100, nullable=true)
@@ -61,11 +61,16 @@ class Image
      * @ORM\Column(name="link", type="string", length=255, nullable=true)
      */
     private $link;
-    
+
     /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
+     * @ORM\Column(name="file_extension", type="string", length=20, nullable=true)
      */
-    private $displayOrder = 0;
+    private $fileExtension;
+
+    /**
+     * @ORM\Column(name="file_size", type="integer", length=11, nullable=true)
+     */
+    private $fileSize;
 
     /**
      * @ORM\Column(name="original_path", type="string", length=255, nullable=true)
@@ -73,9 +78,14 @@ class Image
     private $originalPath;
     
     /**
-     * @ORM\Column(name="public_path", type="string", length=255, nullable=true, nullable=true)
+     * @ORM\Column(name="public_path", type="string", length=255, nullable=true)
      */
     private $publicPath;
+
+    /**
+     * @ORM\Column(name="display_order", type="integer", length=11)
+     */
+    private $displayOrder = 0;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -92,7 +102,7 @@ class Image
     /**
      * @var UploadedFile
      * @Assert\NotNull
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="5000000")
      */
     private $file = null;
     private $filesForRemoval = array();
@@ -105,29 +115,6 @@ class Image
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set objectId
-     *
-     * @param integer $objectId
-     * @return Image
-     */
-    public function setObjectId($objectId)
-    {
-        $this->objectId = $objectId;
-    
-        return $this;
-    }
-
-    /**
-     * Get objectId
-     *
-     * @return integer 
-     */
-    public function getObjectId()
-    {
-        return $this->objectId;
     }
 
     /**
@@ -151,6 +138,29 @@ class Image
     public function getObjectType()
     {
         return $this->objectType;
+    }
+
+    /**
+     * Set objectId
+     *
+     * @param integer $objectId
+     * @return Image
+     */
+    public function setObjectId($objectId)
+    {
+        $this->objectId = $objectId;
+
+        return $this;
+    }
+
+    /**
+     * Get objectId
+     *
+     * @return integer
+     */
+    public function getObjectId()
+    {
+        return $this->objectId;
     }
 
     /**
@@ -292,26 +302,49 @@ class Image
     }
 
     /**
-     * Set displayOrder
+     * Set fileExtension
      *
-     * @param integer $displayOrder
+     * @param string $fileExtension
      * @return Image
      */
-    public function setDisplayOrder($displayOrder)
+    public function setFileExtension($fileExtension)
     {
-        $this->displayOrder = $displayOrder;
-    
+        $this->fileExtension = $fileExtension;
+
         return $this;
     }
 
     /**
-     * Get displayOrder
+     * Get fileExtension
      *
-     * @return integer 
+     * @return string
      */
-    public function getDisplayOrder()
+    public function getFileExtension()
     {
-        return $this->displayOrder;
+        return $this->fileExtension;
+    }
+
+    /**
+     * Set fileSize
+     *
+     * @param integer $fileSize
+     * @return Image
+     */
+    public function setFileSize($fileSize)
+    {
+        $this->fileSize = $fileSize;
+
+        return $this;
+    }
+
+    /**
+     * Get fileSize
+     *
+     * @return integer
+     */
+    public function getFileSize()
+    {
+        return $this->fileSize;
     }
 
     /**
@@ -338,7 +371,7 @@ class Image
     }
 
     /**
-     * Set pubpic path
+     * Set public path
      *
      * @param string $publicPath
      * @return Image
@@ -358,6 +391,29 @@ class Image
     public function getPublicPath()
     {
         return $this->publicPath;
+    }
+
+    /**
+     * Set displayOrder
+     *
+     * @param integer $displayOrder
+     * @return Image
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get displayOrder
+     *
+     * @return integer
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
     }
 
     /**
@@ -424,22 +480,22 @@ class Image
 
     public function preUpload()
     {
-        if (null !== $this->file) {
+        if (null !== $this->file)
+        {
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->originalPath = $this->getUploadDir() . '/' . $filename.'.'.$this->file->guessExtension();
+            $this->originalPath = $this->getUploadDir().'/'.$filename.'.'.$this->file->guessExtension();
+            $this->setFileExtension($this->file->guessExtension());
+            $this->setFileSize($this->file->getSize());
         }
     }
 
     public function upload()
     {
-        if (null === $this->file) {
+        if (null === $this->file)
+        {
             return;
         }
-
-        // you must throw an exception here if the file cannot be moved
-        // so that the entity is not persisted to the database
-        // which the UploadedFile move() method does
-        $this->file->move($this->getUploadPath() . $this->getUploadDir(), basename($this->originalPath));
+        $this->file->move($this->getUploadPath().$this->getUploadDir(), basename($this->originalPath));
 
         $this->file = null;
     }
@@ -447,15 +503,17 @@ class Image
     public function storeFilenameForRemove()
     {
         $this->filesForRemoval = array();
-        $this->filesForRemoval[] = $this->getUploadPath() . '/' . $this->getOriginalPath();
-        if($this->getPublicPath() !== null && $this->getPublicPath() !== "") {
-            $this->filesForRemoval[] = $this->getUploadPath() . '/' . $this->getPublicPath();
+        $this->filesForRemoval[] = $this->getUploadPath().'/'.$this->getOriginalPath();
+        if ($this->getPublicPath() !== null && $this->getPublicPath() !== "")
+        {
+            $this->filesForRemoval[] = $this->getUploadPath().'/'.$this->getPublicPath();
         }
     }
 
     public function removeUpload()
     {
-        foreach($this->filesForRemoval as $fileForRemoval) {
+        foreach ($this->filesForRemoval as $fileForRemoval)
+        {
             unlink($fileForRemoval);
         }
     }
@@ -467,15 +525,14 @@ class Image
 
     public function getUploadDir()
     {
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
         return '/uploads/images';
     }
 
     public function isImageTypeValid(ExecutionContext $context)
     {
-            if(!in_array($this->getImageType(), array("product", "gallery"))) {
-                    $context->addViolationAtSubPath("imageType", "That image type is invalid");
-            }
+        if(!in_array($this->getImageType(), array("product", "gallery")))
+        {
+            $context->addViolationAtSubPath("imageType", "That image type is invalid.");
+        }
     }
 }
