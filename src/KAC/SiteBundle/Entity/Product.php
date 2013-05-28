@@ -139,6 +139,8 @@ class Product implements DescribableInterface
 
     private $imageUploads = "";
     private $images = "";
+    private $documentUploads = "";
+    private $documents = "";
     private $features = array();
 
     /**
@@ -695,6 +697,26 @@ class Product implements DescribableInterface
     public function setImages($images)
     {
         $this->images = $images;
+    }
+
+    public function getDocumentUploads()
+    {
+        return $this->documentUploads;
+    }
+
+    public function setDocumentUploads($documentUploads)
+    {
+        $this->documentUploads = $documentUploads;
+    }
+
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    public function setDocuments($documents)
+    {
+        $this->documents = $documents;
     }
 
     /**
