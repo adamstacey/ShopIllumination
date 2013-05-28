@@ -66,7 +66,7 @@
             <td width="1"><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
             <td width="1"><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
             <td width="1" class="name">
-                <a href="{%=file.url%}" target="_blank"><img border="0" src="{%=file.url%}" width="100" /></a>
+                <a class="lightbox" href="{%=file.url%}" target="_blank"><img width="100" src="{%=file.url%}" /></a>
             </td>
             <td class="type">
                 {% if (file.type == 'gallery') { %}Gallery Image{% } %}
@@ -91,12 +91,11 @@
                     formatFileSize: this._formatFileSize,
                     options: this.options
                 });
-                generateButtons(result);
-                generateFormElements(result);
                 $(".files tbody").append(result);
+                generateButtons($(".files tbody"));
+                generateFormElements($(".files tbody"));
             });
         }
-
         $("#formStep10").submit(function() {
             $(".imageupload").each(function() {
                 var $images = [];
@@ -107,14 +106,23 @@
                         $images.push($checkBoxObject.attr("data-id"));
                     }
                 });
-                $imagesHiddenInputObject.val($images.join(','));
+                $imagesHiddenInputObject.val($images.join(","));
             });
-
-            return false;
+            return true;
         });
 
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();
         });
+    });
+    $(window).load(function() {
+        $(".imageupload").each(function() {
+            var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
+            var $images = $imagesHiddenInputObject.val().split(",");
+            for (var $index = 0; $index < $images.length; $index++) {
+                $(this).find("input[type='checkbox'][data-id='"+$images[$index]+"']").attr("checked", "checked");
+            }
+        });
+        $.uniform.update();
     });
 </script>
