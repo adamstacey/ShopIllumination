@@ -1,0 +1,43 @@
+{% raw %}
+    <script id="templateImageUpload" type="text/x-template">
+        {% for (var i = 0, file; file = o.files[i]; i++) { %}
+            <tr class="template-upload">
+                {% if (file.error) { %}
+                    <td class="name tac">
+                        <span class="fn image-preview ui-button-icon-primary ui-icon icon-red icon-1116"></span>
+                    </td>
+                    <td colspan="3" class="progress-error error">There was an error selecting the file. Please try again. ({%=file.error%})</td>
+                    <td class="tac delete" width="1">
+                        <button type="button" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red icon-white ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-icon-primary="icon-1117" data-icon-only="true" role="button" aria-disabled="false" title="Delete"><span class="ui-button-icon-primary ui-icon icon-1117"></span><span class="ui-button-text">Delete</span></button>
+                    </td>
+                {% } else { %}
+                    <td width="1" class="name tac">
+                        <span class="fn image-preview ui-button-icon-primary ui-icon icon-black icon-1306"></span>
+                    </td>
+                    <td width="1" class="type">
+                        <select class="image-type fill" name="type">
+                            <option value="product">Product Image</option>
+                            <option value="gallery">Gallery Image</option>
+                        </select>
+                    </td>
+                    <td class="pr">
+                        <div class="progress-bar progress progress-success active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-bar-caption">{%=o.formatFileSize(file.size)%} ({%=file.name%})</div>
+                    </td>
+                    <td width="1" class="start">
+                        {% if (!o.options.autoUpload) { %}
+                            <button type="button" class="button icon-green">Save</button>
+                        {% } else { %}
+                            &nbsp;
+                        {% } %}
+                    </td>
+                    <td class="cancel">
+                        <button type="button" class="button button-red icon-white" data-icon-primary="icon-1117" data-icon-only="true">Delete</button>
+                    </td>
+                {% } %}
+            </tr>
+        {% } %}
+    </script>
+{% endraw %}
