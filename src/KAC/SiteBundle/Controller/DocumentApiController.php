@@ -74,7 +74,6 @@ class DocumentApiController extends Controller
                 'id' => $document->getId(),
                 'type' => $document->getDocumentType(),
                 'title' => ($document->getTitle()?$document->getTitle():basename($document->getPath())),
-                'fileType' => 'image',
                 'url' => $document->getPath(),
                 'delete_url' => $this->generateUrl('api_documents_delete_document', array('id' => $document->getId())),
                 'delete_type' => 'DELETE',
@@ -107,7 +106,7 @@ class DocumentApiController extends Controller
          */
         $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $document, array('csrf_protection' => false))
             ->add('file', 'file')
-            ->add('documentType', 'text')
+            ->add('title', 'text')
             ->getForm();
         $form->bind($request);
 
