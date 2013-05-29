@@ -117,12 +117,14 @@ class ImageApiController extends Controller
              */
             $file = $image->getFile();
             $em = $this->getDoctrine()->getManager();
+            $image->setFileExtension($file->guessExtension());
+            $image->setFileSize($file->getSize());
             $em->persist($image);
             $em->flush();
             $filesArray[] = array(
                 'id' => $image->getId(),
                 'type' => $image->getImageType(),
-                'title' => ($image->getTitle()?$image->getTitle():$file->getClientOriginalName()),
+                'title' => $image->getTitle(),
                 'fileType' => 'image',
                 'url' => $image->getOriginalPath(),
                 'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
@@ -131,7 +133,7 @@ class ImageApiController extends Controller
         } else {
             $errors = $form->getErrors();
             $filesArray[] = array(
-                'error' => count($errors) > 0 ? $errors[0] : 'The file was invalid.',
+                'error' => (count($errors) > 0?$errors[0]:'The file was invalid.'),
             );
         }
 
@@ -146,7 +148,7 @@ class ImageApiController extends Controller
     }
 
     /**
-     * @Route("/{id}.{format}", name="api_images_delete_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Route("/delete/{id}.{format}", name="api_images_delete_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"DELETE"})
      * @Secure(roles="ROLE_ADMIN")
      */
