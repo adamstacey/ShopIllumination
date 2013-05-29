@@ -117,12 +117,18 @@ class DocumentApiController extends Controller
              */
             $file = $document->getFile();
             $em = $this->getDoctrine()->getManager();
+            if (!$document->getTitle())
+            {
+                $document->setTitle($file->getClientOriginalName());
+            }
+            $document->setFileExtension($file->guessExtension());
+            $document->setFileSize($file->getSize());
             $em->persist($document);
             $em->flush();
             $filesArray[] = array(
                 'id' => $document->getId(),
                 'type' => $document->getDocumentType(),
-                'title' => ($document->getTitle()?$document->getTitle():$file->getClientOriginalName()),
+                'title' => $document->getTitle(),
                 'fileType' => 'image',
                 'url' => $document->getPath(),
                 'delete_url' => $this->generateUrl('api_documents_delete_document', array('id' => $document->getId())),
@@ -131,7 +137,7 @@ class DocumentApiController extends Controller
         } else {
             $errors = $form->getErrors();
             $filesArray[] = array(
-                'error' => count($errors) > 0 ? $errors[0] : 'The file was invalid.',
+                'error' => (count($errors) > 0?$errors[0]:'The file was invalid.'),
             );
         }
 
@@ -146,7 +152,7 @@ class DocumentApiController extends Controller
     }
 
     /**
-     * @Route("/{id}.{format}", name="api_documents_delete_document", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Route("/delete/{id}.{format}", name="api_documents_delete_document", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"DELETE"})
      * @Secure(roles="ROLE_ADMIN")
      */
