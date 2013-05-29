@@ -102,7 +102,11 @@ class Image
     /**
      * @var UploadedFile
      * @Assert\NotNull
-     * @Assert\File(maxSize="5000000")
+     * @Assert\File(
+     *     maxSize = "10485760",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/pjpeg", "image/png"},
+     *     mimeTypesMessage = "Please upload a valid image."
+     * )
      */
     private $file = null;
     private $filesForRemoval = array();
@@ -484,8 +488,6 @@ class Image
         {
             $filename = sha1(uniqid(mt_rand(), true));
             $this->originalPath = $this->getUploadDir().'/'.$filename.'.'.$this->file->guessExtension();
-            $this->setFileExtension($this->file->guessExtension());
-            $this->setFileSize($this->file->getSize());
         }
     }
 
@@ -503,10 +505,10 @@ class Image
     public function storeFilenameForRemove()
     {
         $this->filesForRemoval = array();
-        $this->filesForRemoval[] = $this->getUploadPath().'/'.$this->getOriginalPath();
-        if ($this->getPublicPath() !== null && $this->getPublicPath() !== "")
+        $this->filesForRemoval[] = $this->getUploadPath().$this->getOriginalPath();
+        if (($this->getPublicPath() !== null) && ($this->getPublicPath() !== ""))
         {
-            $this->filesForRemoval[] = $this->getUploadPath().'/'.$this->getPublicPath();
+            $this->filesForRemoval[] = $this->getUploadPath().$this->getPublicPath();
         }
     }
 
