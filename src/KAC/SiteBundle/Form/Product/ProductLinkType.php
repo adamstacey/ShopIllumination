@@ -21,12 +21,26 @@ class ProductLinkType extends AbstractType
                     ->where("p.id = ?1")
                     ->setParameter(1, $id);
             },
+            'attr' => array(
+                'class' => 'fill no-uniform select-product',
+                'data-placeholder' => '- Select a Product -',
+                'placeholder' => '- Select a Product -',
+            ),
+            'required' => true,
         ));
         $builder->add('linkType', 'choice', array(
             'choices' => array(
-                'related' => 'Related',
+                'cheaper' => 'Cheaper Alternative',
+                'related' => 'Related Product',
                 'series' => 'Series',
             ),
+            'attr' => array(
+                'class' => 'fill',
+                'data-placeholder' => '- Select a Link Type -',
+                'placeholder' => '- Select a Link Type -',
+            ),
+            'required' => true,
+            'empty_value' => '- Select a Link Type -',
         ));
         $builder->add('displayOrder', 'hidden');
     }
