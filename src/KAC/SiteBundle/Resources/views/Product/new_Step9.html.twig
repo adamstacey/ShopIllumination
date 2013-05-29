@@ -93,6 +93,7 @@
                 url: '{{ path('api_images_post_image') }}',
                 dropZone: $(this),
                 formData: [],
+                maxFileSize: 10485760,
                 uploadTemplateId: "templateImageUpload",
                 downloadTemplateId: "templateImageDownload"
             }).bind("fileuploadadd", function (e, data) {
@@ -136,6 +137,7 @@
                 url: '{{ path('api_documents_post_document') }}',
                 dropZone: $(this),
                 formData: [],
+                maxFileSize: 10485760,
                 uploadTemplateId: "templateDocumentUpload",
                 downloadTemplateId: "templateDocumentDownload"
             }).bind("fileuploadadd", function (e, data) {
