@@ -86,7 +86,18 @@ class Document
     /**
      * @var UploadedFile
      * @Assert\NotNull
-     * @Assert\File(maxSize="5000000")
+     * @Assert\File(
+     *     maxSize = "10485760",
+     *     mimeTypes = {
+     *         "application/rtf", "application/x-rtf", "text/rtf", "text/richtext",
+     *         "text/plain", "application/txt", "browser/internal", "text/anytext", "widetext/plain", "widetext/paragraph",
+     *         "application/pdf", "application/x-pdf",
+     *         "application/vnd.ms-word", "application/msword", "application/x-msword", "application/x-ms-word", "application/x-word", "application/x-dos_ms_word", "application/doc", "application/x-doc", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/x-soffice",
+     *         "application/vnd.ms-excel", "application/msexcel", "application/x-msexcel", "application/x-ms-excel", "application/x-excel", "application/x-dos_ms_excel", "application/xls", "application/x-xls", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     *         "application/vnd.ms-powerpoint", "application/mspowerpoint", "application/x-mspowerpoint", "application/x-ms-powerpoint", "application/x-powerpoint", "application/x-dos_ms_powerpoint", "application/ppt", "application/x-ppt", "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+     *     },
+     *     mimeTypesMessage = "Please upload a valid document."
+     * )
      */
     private $file = null;
     private $filesForRemoval = array();
@@ -415,11 +426,7 @@ class Document
     public function storeFilenameForRemove()
     {
         $this->filesForRemoval = array();
-        $this->filesForRemoval[] = $this->getUploadPath().'/'.$this->getPath();
-        if ($this->getPath() !== null)
-        {
-            $this->filesForRemoval[] = $this->getUploadPath().'/'.$this->getPath();
-        }
+        $this->filesForRemoval[] = $this->getUploadPath().$this->getPath();
     }
 
     public function removeUpload()
