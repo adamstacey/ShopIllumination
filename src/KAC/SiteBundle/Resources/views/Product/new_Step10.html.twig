@@ -15,6 +15,14 @@
                                 <div>
                                     <table class="form-table sortable files mbm">
                                         <tbody>
+                                            <tr class="no-files">
+                                                <td colspan="4">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no images currently uploaded. Go back and upload an image.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                     {{ form_widget(form.images) }}
@@ -26,6 +34,14 @@
                                     <div>
                                         <table class="form-table sortable files mbm">
                                             <tbody>
+                                                <tr class="no-files">
+                                                    <td colspan="4">
+                                                        <div class="message message-help mas">
+                                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                            <p>There are no images currently uploaded. Go back and upload an image.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                         {{ form_rest(variant) }}
@@ -46,7 +62,7 @@
 {% raw %}
     <script id="templateImageRow" type="text/x-template">
         {% for (var i = 0, file; file = o.files[i]; i++) { %}
-            <tr class="image-row">
+            <tr class="image-row" data-id="{%=file.id %}">
                 <td width="1"><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
                 <td width="1"><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
                 <td width="1" class="name">
@@ -65,7 +81,6 @@
         {% } %}
     </script>
 {% endraw %}
-
 <script>
     $(function () {
         "use strict";
@@ -79,8 +94,7 @@
                     options: this.options
                 });
                 $(".files tbody").append(result);
-                generateButtons($(".files tbody"));
-                generateFormElements($(".files tbody"));
+                $(".files tbody").find(".no-files").remove();
             });
         }
         $("#formStep10").submit(function() {
@@ -104,9 +118,26 @@
     $(window).load(function() {
         $(".imageupload").each(function() {
             var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
+            var $tableBodyObject = $(this).find(".files tbody");
             var $images = $imagesHiddenInputObject.val().split(",");
+            var $reOrderedRows = new Array();
             for (var $index = 0; $index < $images.length; $index++) {
-                $(this).find("input[type='checkbox'][data-id='"+$images[$index]+"']").attr("checked", "checked");
+                var $row = $tableBodyObject.find("tr[data-id='"+$images[$index]+"']");
+                $reOrderedRows.push($row);
+                $row.remove();
+            }
+            $tableBodyObject.find("tr").each(function() {
+                $reOrderedRows.push($(this));
+                $(this).remove();
+            });
+            $tableBodyObject.empty();
+            for (var $index = 0; $index < $reOrderedRows.length; $index++) {
+                $tableBodyObject.append($reOrderedRows[$index]);
+            }
+            generateButtons($tableBodyObject);
+            generateFormElements($tableBodyObject);
+            for (var $index = 0; $index < $images.length; $index++) {
+                $tableBodyObject.find("input[type='checkbox'][data-id='"+$images[$index]+"']").attr("checked", "checked");
             }
         });
         $.uniform.update();
