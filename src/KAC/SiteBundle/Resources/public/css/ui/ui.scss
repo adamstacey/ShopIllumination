@@ -646,7 +646,7 @@
     margin: 0 !important;
 
     @include equalBorderRadius($radiusSize);
-    @include boxInsetShadow($colourBlack, 0, $spacingSmall, 0, 0, 0.7);
+    @include boxInsetShadow($colourBlack, 0, 0, $spacingSmall, 0, 0.7);
     background-color: $primaryColour;
     @include transition(width, .4s, ease-in-out);
     @include backgroundSize(40px, 40px);
@@ -674,10 +674,13 @@
     @include transition(animate-stripes, 3s, linear infinite);
 }
 
-.progress-bar-caption {
+.progress-bar-caption-container {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.progress-bar-caption {
     padding: $spacingSmall $spacingLarge;
 
     overflow: hidden;
