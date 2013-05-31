@@ -504,9 +504,13 @@ div.selector span {
     background: transparent url("#{$cssPath}/resources/images/icons/select.png") no-repeat center right;
 }
 
-table.form-table td div.selector span {
+table.form-table td div.select2-container span {
     padding: 8px 25px 8px $spacingSmall;
 
+    @include fontSize($fontSizeSmall);
+}
+
+table.form-table td div.select2-container .select2-choice span {
     @include fontSize($fontSizeSmall);
 }
 
@@ -624,7 +628,7 @@ header.error {
 .error .checker,
 .error .uploader,
 .error .select2-choice {
-    border: 1px solid $colourRed;
+    border: 1px solid $colourRed !important;
 }
 
 .form-element-error input:focus,
@@ -769,6 +773,7 @@ table.form-table ul li {
 .select2-container .select2-choice span {
     margin-right: 26px;
 
+    @include fontSize($fontSizeMedium);
     @include ellipsis;
 }
 
