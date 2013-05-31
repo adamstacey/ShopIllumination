@@ -139,8 +139,8 @@ class ImageManager extends Manager
                     }
                     $image->setPublicPath("");
                     $image->setDisplayOrder($displayOrder);
-                    $displayOrder++;
                     $em->persist($image);
+                    $displayOrder++;
                 }
             }
         }
