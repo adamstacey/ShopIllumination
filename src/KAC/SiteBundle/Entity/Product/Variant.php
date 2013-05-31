@@ -54,6 +54,16 @@ class Variant implements DescribableInterface
     private $prices;
 
     /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Image", mappedBy="variant", cascade={"all"})
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Document", mappedBy="variant", cascade={"all"})
+     */
+    private $documents;
+
+    /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Routing", mappedBy="variant", cascade={"all"})
      */
     private $routings;
@@ -164,8 +174,10 @@ class Variant implements DescribableInterface
      */
     private $deletedAt;
 
-    private $images = array();
-    private $documents = array();
+    private $imageUploads = "";
+    private $temporaryImages = "";
+    private $documentUploads = "";
+    private $temporaryDocuments = "";
 
     /**
      * Constructor
@@ -176,6 +188,8 @@ class Variant implements DescribableInterface
         $this->options = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
         $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -708,24 +722,74 @@ class Variant implements DescribableInterface
         $this->deletedAt = $deletedAt;
     }
 
-    public function getImages()
+    public function getImageUploads()
     {
-        return $this->images;
+        return $this->imageUploads;
     }
 
-    public function setImages($images)
+    public function setImageUploads($imageUploads)
     {
-        $this->images = $images;
+        $this->imageUploads = $imageUploads;
     }
 
-    public function getDocuments()
+    public function getTemporaryImages()
     {
-        return $this->documents;
+        return $this->temporaryImages;
     }
 
-    public function setDocuments($documents)
+    public function setTemporaryImages($temporaryImages)
     {
-        $this->documents = $documents;
+        $this->temporaryImages = $temporaryImages;
+    }
+
+    public function getDocumentUploads()
+    {
+        return $this->documentUploads;
+    }
+
+    public function setDocumentUploads($documentUploads)
+    {
+        $this->documentUploads = $documentUploads;
+    }
+
+    public function getTemporaryDocuments()
+    {
+        return $this->temporaryDocuments;
+    }
+
+    public function setTemporaryDocuments($temporaryDocuments)
+    {
+        $this->temporaryDocuments = $temporaryDocuments;
+    }
+
+    /**
+     * Get routing
+     *
+     * @return \KAC\SiteBundle\Entity\Product\Variant\Routing
+     */
+    public function getRouting()
+    {
+        if (count($this->routings) > 0)
+        {
+            return $this->routings[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        if ($this->getRouting())
+        {
+            return $this->getRouting()->getUrl();
+        }
+
+        return null;
     }
 
     /**
@@ -759,6 +823,102 @@ class Variant implements DescribableInterface
     public function getRoutings()
     {
         return $this->routings;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \KAC\SiteBundle\Entity\Product\Variant\Image
+     */
+    public function getImage()
+    {
+        if (count($this->images) > 0)
+        {
+            return $this->images[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \KAC\SiteBundle\Entity\Product\Variant\Image $images
+     * @return Variant
+     */
+    public function addImage(\KAC\SiteBundle\Entity\Product\Variant\Image $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \KAC\SiteBundle\Entity\Product\Variant\Image $images
+     */
+    public function removeImage(\KAC\SiteBundle\Entity\Product\Variant\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \KAC\SiteBundle\Entity\Product\Variant\Document
+     */
+    public function getDocument()
+    {
+        if (count($this->document) > 0)
+        {
+            return $this->documents[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add documents
+     *
+     * @param \KAC\SiteBundle\Entity\Product\Variant\Document $documents
+     * @return Variant
+     */
+    public function addDocument(\KAC\SiteBundle\Entity\Product\Variant\Document $documents)
+    {
+        $this->documents[] = $documents;
+
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param \KAC\SiteBundle\Entity\Product\Variant\Document $documents
+     */
+    public function removeDocument(\KAC\SiteBundle\Entity\Product\Variant\Document $documents)
+    {
+        $this->documents->removeElement($documents);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 
     /**
