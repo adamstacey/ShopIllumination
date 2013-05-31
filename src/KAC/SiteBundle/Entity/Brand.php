@@ -86,6 +86,11 @@ class Brand
      */
     private $deletedAt;
 
+    private $imageUploads = "";
+    private $temporaryImages = "";
+    private $documentUploads = "";
+    private $temporaryDocuments = "";
+
     /**
      * Constructor
      */
@@ -93,6 +98,8 @@ class Brand
     {
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -351,6 +358,46 @@ class Brand
         return $this->updatedAt;
     }
 
+    public function getImageUploads()
+    {
+        return $this->imageUploads;
+    }
+
+    public function setImageUploads($imageUploads)
+    {
+        $this->imageUploads = $imageUploads;
+    }
+
+    public function getTemporaryImages()
+    {
+        return $this->temporaryImages;
+    }
+
+    public function setTemporaryImages($temporaryImages)
+    {
+        $this->temporaryImages = $temporaryImages;
+    }
+
+    public function getDocumentUploads()
+    {
+        return $this->documentUploads;
+    }
+
+    public function setDocumentUploads($documentUploads)
+    {
+        $this->documentUploads = $documentUploads;
+    }
+
+    public function getTemporaryDocuments()
+    {
+        return $this->temporaryDocuments;
+    }
+
+    public function setTemporaryDocuments($temporaryDocuments)
+    {
+        $this->temporaryDocuments = $temporaryDocuments;
+    }
+
     /**
      * Add departments
      *
@@ -440,6 +487,102 @@ class Brand
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \KAC\SiteBundle\Entity\Brand\Image
+     */
+    public function getImage()
+    {
+        if (count($this->images) > 0)
+        {
+            return $this->images[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \KAC\SiteBundle\Entity\Brand\Image $images
+     * @return Brand
+     */
+    public function addImage(\KAC\SiteBundle\Entity\Brand\Image $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \KAC\SiteBundle\Entity\Brand\Image $images
+     */
+    public function removeImage(\KAC\SiteBundle\Entity\Brand\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \KAC\SiteBundle\Entity\Brand\Document
+     */
+    public function getDocument()
+    {
+        if (count($this->document) > 0)
+        {
+            return $this->documents[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add documents
+     *
+     * @param \KAC\SiteBundle\Entity\Brand\Document $documents
+     * @return Brand
+     */
+    public function addDocument(\KAC\SiteBundle\Entity\Brand\Document $documents)
+    {
+        $this->documents[] = $documents;
+
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param \KAC\SiteBundle\Entity\Brand\Document $documents
+     */
+    public function removeDocument(\KAC\SiteBundle\Entity\Brand\Document $documents)
+    {
+        $this->documents->removeElement($documents);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 
     /**
