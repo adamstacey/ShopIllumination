@@ -164,7 +164,7 @@ class ProductController extends Controller {
      * @Route("/admin/products/new", name="products_new")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function newAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
+    public function newAction(Request $request, $departmentId = null, $brandId = null, $admin = false)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -177,8 +177,6 @@ class ProductController extends Controller {
         // Get current form step
         $form = $flow->createForm($product);
 
-//        \Doctrine\Common\Util\Debug::dump($flow->isValid($form));die();
-
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData();
 
@@ -187,19 +185,6 @@ class ProductController extends Controller {
                 // Get next form step
                 $form = $flow->createForm($product);
             } else {
-                // Update descriptions
-                foreach($product->getDescriptions() as $description)
-                {
-                    $manager->updateProductDescription($description);
-                }
-
-                foreach($product->getVariants() as $variant)
-                {
-                    foreach($variant->getDescriptions() as $description)
-                    {
-                        $manager->updateVariantDescription($description);
-                    }
-                }
 
                 // Copy the selected product images
                 $newImageIds = array();
