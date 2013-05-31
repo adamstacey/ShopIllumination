@@ -38,6 +38,16 @@ class Department implements DescribableInterface
     private $features;
 
     /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Image", mappedBy="department", cascade={"all"})
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Document", mappedBy="department", cascade={"all"})
+     */
+    private $documents;
+
+    /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Routing", mappedBy="department", cascade={"all"})
      */
     private $routings;
@@ -142,6 +152,11 @@ class Department implements DescribableInterface
      */
     private $deletedAt;
 
+    private $imageUploads = "";
+    private $temporaryImages = "";
+    private $documentUploads = "";
+    private $temporaryDocuments = "";
+
     public function isDeleted()
     {
         return $this->getDeletedAt() !== null;
@@ -240,6 +255,8 @@ class Department implements DescribableInterface
         $this->brands = new \Doctrine\Common\Collections\ArrayCollection();
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -750,6 +767,142 @@ class Department implements DescribableInterface
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    public function getImageUploads()
+    {
+        return $this->imageUploads;
+    }
+
+    public function setImageUploads($imageUploads)
+    {
+        $this->imageUploads = $imageUploads;
+    }
+
+    public function getTemporaryImages()
+    {
+        return $this->temporaryImages;
+    }
+
+    public function setTemporaryImages($temporaryImages)
+    {
+        $this->temporaryImages = $temporaryImages;
+    }
+
+    public function getDocumentUploads()
+    {
+        return $this->documentUploads;
+    }
+
+    public function setDocumentUploads($documentUploads)
+    {
+        $this->documentUploads = $documentUploads;
+    }
+
+    public function getTemporaryDocuments()
+    {
+        return $this->temporaryDocuments;
+    }
+
+    public function setTemporaryDocuments($temporaryDocuments)
+    {
+        $this->temporaryDocuments = $temporaryDocuments;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \KAC\SiteBundle\Entity\Department\Image
+     */
+    public function getImage()
+    {
+        if (count($this->images) > 0)
+        {
+            return $this->images[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Image $images
+     * @return Department
+     */
+    public function addImage(\KAC\SiteBundle\Entity\Department\Image $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Image $images
+     */
+    public function removeImage(\KAC\SiteBundle\Entity\Department\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \KAC\SiteBundle\Entity\Department\Document
+     */
+    public function getDocument()
+    {
+        if (count($this->document) > 0)
+        {
+            return $this->documents[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add documents
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Document $documents
+     * @return Department
+     */
+    public function addDocument(\KAC\SiteBundle\Entity\Department\Document $documents)
+    {
+        $this->documents[] = $documents;
+
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Document $documents
+     */
+    public function removeDocument(\KAC\SiteBundle\Entity\Department\Document $documents)
+    {
+        $this->documents->removeElement($documents);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 
     /**
