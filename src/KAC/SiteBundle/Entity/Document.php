@@ -9,6 +9,9 @@ use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="object_type", type="string")
+ * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Document", "product_variant" = "KAC\SiteBundle\Entity\Product\Variant\Document", "department" = "KAC\SiteBundle\Entity\Department\Document", "brand" = "KAC\SiteBundle\Entity\Brand\Document"})
  * @ORM\Table(name="documents")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -20,11 +23,6 @@ class Document
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @ORM\Column(name="object_type", type="string", length=100, nullable=true)
-     */
-    private $objectType;
 
     /**
      * @ORM\Column(name="object_id", type="integer", length=11, nullable=true)
@@ -110,29 +108,6 @@ class Document
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set objectType
-     *
-     * @param string $objectType
-     * @return Document
-     */
-    public function setObjectType($objectType)
-    {
-        $this->objectType = $objectType;
-
-        return $this;
-    }
-
-    /**
-     * Get objectType
-     *
-     * @return string
-     */
-    public function getObjectType()
-    {
-        return $this->objectType;
     }
 
     /**
