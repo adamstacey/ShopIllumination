@@ -9,6 +9,9 @@ use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="object_type", type="string")
+ * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Image", "product_variant" = "KAC\SiteBundle\Entity\Product\Variant\Image", "department" = "KAC\SiteBundle\Entity\Department\Image", "brand" = "KAC\SiteBundle\Entity\Brand\Image"})
  * @ORM\Table(name="images")
  * @ORM\HasLifecycleCallbacks()
  * @Assert\Callback(methods={"isImageTypeValid"})
@@ -21,11 +24,6 @@ class Image
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @ORM\Column(name="object_type", type="string", length=100, nullable=true)
-     */
-    private $objectType;
 
     /**
      * @ORM\Column(name="object_id", type="integer", length=11, nullable=true)
@@ -119,29 +117,6 @@ class Image
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set objectType
-     *
-     * @param string $objectType
-     * @return Image
-     */
-    public function setObjectType($objectType)
-    {
-        $this->objectType = $objectType;
-    
-        return $this;
-    }
-
-    /**
-     * Get objectType
-     *
-     * @return string 
-     */
-    public function getObjectType()
-    {
-        return $this->objectType;
     }
 
     /**
