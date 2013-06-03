@@ -38,9 +38,8 @@ class ProductIndexer extends Indexer
             $em = $this->getDoctrine()->getManager();
 
             // Fetch images
-            $images = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array(
+            $images = $em->getRepository('KAC\SiteBundle\Entity\Product\Image')->findBy(array(
                 'objectId' => $product->getId(),
-                'objectType' => 'product',
                 'imageType' => 'product',
             ));
 
@@ -149,9 +148,8 @@ class ProductIndexer extends Indexer
                 }
 
                 // Add the image for the variant
-                $variantImages = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array(
+                $variantImages = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant\Image')->findBy(array(
                     'objectId' => $variant->getId(),
-                    'objectType' => 'variant',
                     'imageType' => 'variant',
                 ));
 

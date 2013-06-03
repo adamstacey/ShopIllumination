@@ -1,0 +1,43 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     localhost
+    database_port:     ~
+    database_name:     kacstaging
+    database_user:     ~
+    database_password: ~
+
+    solr_host: localhost
+    solr_port: 8080
+    solr_path: /solr4
+
+    mailer_transport: smtp
+    mailer_host:      mail.ridedirect.co.uk
+    mailer_user:      sales@ridedirect.co.uk
+    mailer_password:  ~
+
+    locale: en
+    secret: 90f229762b755dda3c62e49b328f84cd9c126a22
+
+    host:         http://kac.dev
+    ssl_host:     http://kac.dev
+    cdn_host:     http://kac.dev
+    cdn_ssl_host: http://kac.dev
+
+    social_media.twitter.username:  appliancecentre
+    social_media.facebook.username: kitchenappliancecentre
+
+    google.analytics.account_number: UA-8584069-1
+
+    company.name:        Kitchen Appliance Centre
+    company.web_address: www.kitchenappliancecentre.co.uk
+    company.url:         http://www.kitchenappliancecentre.co.uk
+
+    assetic.filter.compass.images_dir: %kernel.root_dir%/../web/
+    assetic.filter.compass.http_path:  /
+    assetic.filter.compass.generated_images_path: %kernel.root_dir%/../web/
+
+    google_api_key: ~
+    google_dev_token: ~
+    google_email: google@kitchenappliancecentre.co.uk
+    google_password: ~
+    google_analytics_id: 17291318
