@@ -102,6 +102,7 @@
                 // Add type field to form
                 var typeField = $(".image-type", data.context);
                 data.formData = {
+                    "objectType": "product",
                     "imageType": typeField.val()
                 };
             }).bind("fileuploadcompleted", function (e, data) {
@@ -146,6 +147,7 @@
                 // Add title field to form
                 var titleField = $(".document-title", data.context);
                 data.formData = {
+                    "objectType": "product",
                     "title": titleField.val()
                 };
             }).bind("fileuploadcompleted", function (e, data) {
