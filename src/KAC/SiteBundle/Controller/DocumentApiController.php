@@ -97,8 +97,9 @@ class DocumentApiController extends Controller
      */
     public function postAction(Request $request, $format)
     {
+        $objectType = $this->get('request')->request->get('objectType');
         $manager = $this->get('kac_site.manager.document');
-        $document = $manager->createDocument();
+        $document = $manager->createDocument($objectType);
         $filesArray = array();
 
         /**
@@ -106,6 +107,7 @@ class DocumentApiController extends Controller
          */
         $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $document, array('csrf_protection' => false))
             ->add('file', 'file')
+            ->add('objectType', 'text', array('mapped' => false))
             ->add('title', 'text')
             ->getForm();
         $form->bind($request);
