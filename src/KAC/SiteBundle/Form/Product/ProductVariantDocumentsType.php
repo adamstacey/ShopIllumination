@@ -11,7 +11,7 @@ class ProductVariantDocumentsType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('documents', 'hidden');
+        $builder->add('temporaryDocuments', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
