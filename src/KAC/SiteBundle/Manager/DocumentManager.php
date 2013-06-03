@@ -20,43 +20,26 @@ class DocumentManager extends Manager
         $this->fileManager = $fileManager;
     }
 
-    public function createDocument()
+    public function createDocument($objectType)
     {
-        $document = new Document();
-        $document->setDisplayOrder(0);
-        return $document;
-    }
-
-    /**
-     * @param \KAC\SiteBundle\Entity\Document $document
-     * @return null|DescribableInterface
-     */
-    public function getObject(Document $document)
-    {
-        $className = "";
-        switch ($document->getObjectType())
+        switch ($objectType)
         {
-            case 'product':
-                $className = "\KAC\SiteBundle\Entity\Product";
-                break;
-            case 'variant':
-                $className = "\KAC\SiteBundle\Entity\Product\Variant";
-                break;
             case 'brand':
-                $className = "\KAC\SiteBundle\Entity\Brand";
+                $document = new BrandDocument();
                 break;
             case 'department':
-                $className = "\KAC\SiteBundle\Entity\Department";
+                $document = new DepartmentDocument();
+                break;
+            case 'product_variant':
+                $document = new ProductVariantDocument();
+                break;
+            case 'product':
+            default:
+                $document = new ProductDocument();
                 break;
         }
-
-        if (!$className)
-        {
-            return null;
-        } else {
-            $em = $this->doctrine->getManager();
-            return $em->getRepository($className)->find($document->getObjectId());
-        }
+        $document->setDisplayOrder(0);
+        return $document;
     }
 
     public function process(Document $document, DescribableInterface $object)
