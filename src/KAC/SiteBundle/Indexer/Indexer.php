@@ -2,6 +2,8 @@
 namespace KAC\SiteBundle\Indexer;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class Indexer implements IndexerInterface
 {
@@ -14,6 +16,16 @@ abstract class Indexer implements IndexerInterface
      * @var Registry $doctrine
      */
     private $doctrine;
+
+    public function getProperty($object, $path, $default=null)
+    {
+        try {
+            $accessor = PropertyAccess::createPropertyAccessor();
+            return $accessor->getValue($object, $path);
+        } catch(\Exception $e) {
+            return $default;
+        }
+    }
 
     function __construct(\Solarium_Client $solarium, Registry $doctrine)
     {

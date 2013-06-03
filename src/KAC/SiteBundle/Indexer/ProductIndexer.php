@@ -30,7 +30,6 @@ class ProductIndexer extends Indexer
             $lowestPrice = -1;
             $highestPrice = -1;
             $commonFeatures = array();
-            $descriptions = $product->getDescriptions();
 
             /**
              * @var $em EntityManager
@@ -45,45 +44,45 @@ class ProductIndexer extends Indexer
 
             $document->setField('id', $product->getId());
             $document->setField('brand_id', $product->getBrand()->getId());
-            $document->setField('isDeleted', $product->getDeletedAt() !== null);
+            $document->setField('brand', $product->getBrand()->getDescription()->getName());
+            $document->setField('status', $product->getStatus());
+            $document->setField('locale', $product->getDescription()->getLocale());
+            $document->setField('header', $product->getDescription()->getHeader());
+            $document->setField('page_title', $product->getDescription()->getPageTitle());
+            $document->setField('variants_count', count($product->getVariants()));
+
+
+            $document->setField('available_for_purchase', $product->getAvailableForPurchase());
+            $document->setField('feature_comparison', $product->getFeatureComparison());
+            $document->setField('download', $product->getDownloadable());
+            $document->setField('available_for_purchase', $product->getAvailableForPurchase());
+            $document->setField('special_offer', $product->getSpecialOffer());
+            $document->setField('recommended', $product->getRecommended());
+            $document->setField('accessory', $product->getAccessory());
+            $document->setField('new', $product->getNew());
+
+            $document->setField('created_at', $helper->formatDate($product->getCreatedAt()));
+            $document->setField('updated_at', $helper->formatDate($product->getUpdatedAt()));
+            $document->setField('isDeleted', $product->isDeleted());
 
             foreach ($product->getDepartments() as $department) {
-                $document->addField('department_ids', $department->getDepartment()->getId());
-                $departmentDescriptions = $department->getDepartment()->getDescriptions();
-                $document->addField('department', count($departmentDescriptions) > 0 ? $departmentDescriptions[0]->getName() : "");
+                $document->addField('department_ids', $this->getProperty($department, 'department.id'));
+                $document->addField('department', $this->getProperty($department, 'department.description.name', ''));
 
                 // Get path
                 $departmentNamesPath = "";
                 $currDepartment = $department->getDepartment();
                 do {
-                    $departmentNamesPath = $currDepartment->__toString() . "|" . $departmentNamesPath;
+                    $departmentNamesPath = $currDepartment . "|" . $departmentNamesPath;
                     $currDepartment = $currDepartment->getParent();
                 } while ($currDepartment !== null);
                 $document->addField("department_path", ltrim(rtrim($departmentNamesPath, "|"), "|"));
             }
 
-            $document->setField('status', $product->getStatus());
-            $document->setField('locale', $descriptions[0]->getLocale());
-            //$document->setField('tagline', $descriptions[0]->getTagline());
-            $document->setField('header', $descriptions[0]->getHeader());
-            $document->setField('page_title', $descriptions[0]->getPageTitle());
-            //$document->setField('short_description', $descriptions[0]->getShortDescription());
-            //$document->setField('tagline', $descriptions[0]->getTagline());
-            $document->setField('variants_count', count($product->getVariants()));
-
             // Generate the product URL
             if($product->getRouting()) {
                 $document->setField('url', $product->getRouting()->getUrl());
             }
-
-            // Add product code from the product
-            /*$productCodes = explode(',', $product->getAlternativeProductCodes());
-            array_unshift($productCodes, $product->getProductCode());
-            foreach ($productCodes as $productCode) {
-                if (!empty($productCode)) {
-                    $document->addField('product_code', $productCode);
-                }
-            }*/
 
             /** @var $variant Product\Variant */
             // Add product codes from each variant
@@ -167,39 +166,20 @@ class ProductIndexer extends Indexer
                 $document->addField('features', $commonFeature);
             }
 
+            // Add the brand logo
+            $document->setField('brand_logo', $this->getProperty($product, 'brand.description.logoImage.originalPath'));
+
             // Add the image for the variant
             if(count($images) > 0) {
                 $document->setField("image_path", $images[0]->getPublicPath());
             }
 
-            //foreach (explode(',', $descriptions[0]->getSearchWords()) as $searchWord) {
-                //$document->addField('search_words', $searchWord);
-            //}
-
-            $document->setField('brand', $product->getBrand()->getDescription()->getName());
-            $document->setField('brand_logo', $product->getBrand()->getDescription()->getLogoImage()->getOriginalPath());
-
-            $document->setField('available_for_purchase', $product->getAvailableForPurchase());
-            //$document->setField('hide_price', $product->getHidePrice());
-            //$document->setField('show_price_out_of_hours', $product->getShowPriceOutOfHours());
-            $document->setField('feature_comparison', $product->getFeatureComparison());
-            $document->setField('download', $product->getDownloadable());
-            $document->setField('available_for_purchase', $product->getAvailableForPurchase());
-            $document->setField('special_offer', $product->getSpecialOffer());
-            $document->setField('recommended', $product->getRecommended());
-            $document->setField('accessory', $product->getAccessory());
-            $document->setField('new', $product->getNew());
-
-            //$document->setField('delivery_cost', $product->getDeliveryCost());
-
-            $document->setField('created_at', $helper->formatDate($product->getCreatedAt()));
-            $document->setField('updated_at', $helper->formatDate($product->getUpdatedAt()));
-
             $update->addDocument($document);
             $update->addCommit();
             $this->getSolarium()->update($update);
         } catch (\Exception $e) {
-            \Doctrine\Common\Util\Debug::dump($e->getMessage());
+            \Doctrine\Common\Util\Debug::dump(debug_backtrace());
+            \Doctrine\Common\Util\Debug::dump($e);
             echo "An error occured proccessing product ID " . $product->getId() . "\n";
         }
     }
