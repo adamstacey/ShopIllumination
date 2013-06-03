@@ -15,29 +15,29 @@
                 {% include 'KACSiteBundle:Product:newLeftMenu.html.twig' %}
             </div>
             <div class="widget widget-5-of-7">
-                {% if flow.getCurrentStep() == 1 %}
+                {% if flow.getCurrentStepNumber() == 1 %}
                     {% include 'KACSiteBundle:Product:new_Step1.html.twig' %}
-                {% elseif flow.getCurrentStep() == 2 %}
+                {% elseif flow.getCurrentStepNumber() == 2 %}
                     {% include 'KACSiteBundle:Product:new_Step2.html.twig' %}
-                {% elseif flow.getCurrentStep() == 3 %}
+                {% elseif flow.getCurrentStepNumber() == 3 %}
                     {% include 'KACSiteBundle:Product:new_Step3.html.twig' %}
-                {% elseif flow.getCurrentStep() == 4 %}
+                {% elseif flow.getCurrentStepNumber() == 4 %}
                     {% include 'KACSiteBundle:Product:new_Step4.html.twig' %}
-                {% elseif flow.getCurrentStep() == 5 %}
+                {% elseif flow.getCurrentStepNumber() == 5 %}
                     {% include 'KACSiteBundle:Product:new_Step5.html.twig' %}
-                {% elseif flow.getCurrentStep() == 6 %}
+                {% elseif flow.getCurrentStepNumber() == 6 %}
                     {% include 'KACSiteBundle:Product:new_Step6.html.twig' %}
-                {% elseif flow.getCurrentStep() == 7 %}
+                {% elseif flow.getCurrentStepNumber() == 7 %}
                     {% include 'KACSiteBundle:Product:new_Step7.html.twig' %}
-                {% elseif flow.getCurrentStep() == 8 %}
+                {% elseif flow.getCurrentStepNumber() == 8 %}
                     {% include 'KACSiteBundle:Product:new_Step8.html.twig' %}
-                {% elseif flow.getCurrentStep() == 9 %}
+                {% elseif flow.getCurrentStepNumber() == 9 %}
                     {% include 'KACSiteBundle:Product:new_Step9.html.twig' %}
-                {% elseif flow.getCurrentStep() == 10 %}
+                {% elseif flow.getCurrentStepNumber() == 10 %}
                     {% include 'KACSiteBundle:Product:new_Step10.html.twig' %}
-                {% elseif flow.getCurrentStep() == 11 %}
+                {% elseif flow.getCurrentStepNumber() == 11 %}
                     {% include 'KACSiteBundle:Product:new_Step11.html.twig' %}
-                {% elseif flow.getCurrentStep() == 12 %}
+                {% elseif flow.getCurrentStepNumber() == 12 %}
                     {% include 'KACSiteBundle:Product:new_Step12.html.twig' %}
                 {% endif %}
             </div>

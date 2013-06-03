@@ -16,15 +16,15 @@
                 {% include 'KACSiteBundle:Department:newLeftMenu.html.twig' %}
             </div>
             <div class="widget widget-5-of-7">
-                {% if flow.getCurrentStep() == 1 %}
+                {% if flow.getCurrentStepNumber() == 1 %}
                     {% include 'KACSiteBundle:Department:new_Step1.html.twig' %}
-                {% elseif flow.getCurrentStep() == 2 %}
+                {% elseif flow.getCurrentStepNumber() == 2 %}
                     {% include 'KACSiteBundle:Department:new_Step2.html.twig' %}
-                {% elseif flow.getCurrentStep() == 3 %}
+                {% elseif flow.getCurrentStepNumber() == 3 %}
                     {% include 'KACSiteBundle:Department:new_Step3.html.twig' %}
-                {% elseif flow.getCurrentStep() == 4 %}
+                {% elseif flow.getCurrentStepNumber() == 4 %}
                     {% include 'KACSiteBundle:Department:new_Step4.html.twig' %}
-                {% elseif flow.getCurrentStep() == 5 %}
+                {% elseif flow.getCurrentStepNumber() == 5 %}
                     {% include 'KACSiteBundle:Department:new_Step5.html.twig' %}
                 {% endif %}
             </div>

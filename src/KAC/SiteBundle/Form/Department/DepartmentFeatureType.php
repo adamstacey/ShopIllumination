@@ -76,6 +76,7 @@ class DepartmentFeatureType extends AbstractType
             $form = $event->getForm();
             if ($data && $data->getFeatureGroup() !== null) {
                 $form->offsetSet('feature', $factory->createNamed('feature', 'entity', null, array(
+                    'auto_initialize' => false,
                     'required'  => false,
                     'empty_value' => 'No Default Feature',
                     'class' => 'KAC\SiteBundle\Entity\Product\Feature',
@@ -101,6 +102,7 @@ class DepartmentFeatureType extends AbstractType
 
             if ($data && isset($data['featureGroup'])) {
                 $form->offsetSet('feature', $factory->createNamed('feature', 'entity', null, array(
+                    'auto_initialize' => false,
                     'required'  => false,
                     'empty_value' => 'No Default Feature',
                     'class' => 'KAC\SiteBundle\Entity\Product\Feature',

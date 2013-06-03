@@ -17,15 +17,15 @@
 {% endblock %}
 {% block body %}
     <section>
-        {% if flow.getCurrentStep() == 1 %}
+        {% if flow.getCurrentStepNumber() == 1 %}
             {% include 'KACSiteBundle:Variant:new_Step1.html.twig' %}
-        {% elseif flow.getCurrentStep() == 2 %}
+        {% elseif flow.getCurrentStepNumber() == 2 %}
             {% include 'KACSiteBundle:Variant:new_Step2.html.twig' %}
-        {% elseif flow.getCurrentStep() == 3 %}
+        {% elseif flow.getCurrentStepNumber() == 3 %}
             {% include 'KACSiteBundle:Variant:new_Step3.html.twig' %}
-        {% elseif flow.getCurrentStep() == 4 %}
+        {% elseif flow.getCurrentStepNumber() == 4 %}
             {% include 'KACSiteBundle:Variant:new_Step4.html.twig' %}
-        {% elseif flow.getCurrentStep() == 5 %}
+        {% elseif flow.getCurrentStepNumber() == 5 %}
             {% include 'KACSiteBundle:Variant:new_Step5.html.twig' %}
         {% endif %}
     </section>

@@ -1,27 +1,27 @@
 <div class="clearfix">
-    {% set renderBackButton = flow.getCurrentStep() in (flow.getFirstStep() + 1) .. flow.getLastStep() %}
+    {% set renderBackButton = flow.getCurrentStepNumber() in (flow.getFirstStep() + 1) .. flow.getLastStep() %}
 
     {% if renderBackButton %}
         <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" formnovalidate="formnovalidate" class="button button-small mrm fl">Back</button>
     {% endif %}
 
-    {% if flow.getCurrentStep() == 1 %}
+    {% if flow.getCurrentStepNumber() == 1 %}
         <a href="{{ path('departments_new', {'modal': true}) }}" class="actionLoadPageDialog mrm fl button button-small" title="Add New Department">Add Department</a>
-    {% elseif flow.getCurrentStep() == 2 %}
+    {% elseif flow.getCurrentStepNumber() == 2 %}
         <a href="{{ path('departments_edit_features', {'departmentId': form.vars.value.departments.0.department.id, 'modal': true}) }}" class="actionLoadPageDialog mrm fl button button-small" title="Manage Features">Manage Features</a>
     {% endif %}
 
     <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="reset" formnovalidate="formnovalidate" class="button button-small button-red mrm fl">Reset</button>
 
-    {% if flow.getCurrentStep() < flow.getLastStep() %}
+    {% if flow.getCurrentStepNumber() < flow.getLastStep() %}
         <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Continue</button>
     {% else %}
         <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save Product</button>
     {% endif %}
 
-    {% if flow.getCurrentStep() == 2 %}
+    {% if flow.getCurrentStepNumber() == 2 %}
         <button type="button" data-table-object="combinationList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
-    {% elseif flow.getCurrentStep() == 12 %}
+    {% elseif flow.getCurrentStepNumber() == 12 %}
         <button type="button" data-table-object="linkList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
     {% endif %}
 </div>

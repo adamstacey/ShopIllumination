@@ -1,6 +1,6 @@
 {% import _self as helpers %}
 
-{% if loop.index == flow.getCurrentStep() %}
+{% if loop.index == flow.getCurrentStepNumber() %}
     {% set statusIconColour = 'icon-white' %}
     {% set buttonColour = ' button-turquoise' %}
     {% set iconColour = 'turquoise' %}

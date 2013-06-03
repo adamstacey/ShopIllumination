@@ -1,7 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Manager\Templating;
 
-use Symfony\Component\Form\Util\PropertyPath;
+use Symfony\Component\PropertyAccess\PropertyPath;
 
 class ProductTemplateBuilder extends TemplateBuilder
 {

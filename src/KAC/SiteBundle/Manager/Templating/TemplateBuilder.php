@@ -2,7 +2,9 @@
 namespace KAC\SiteBundle\Manager\Templating;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\Util\PropertyPath;
+use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyPath;
 
 abstract class TemplateBuilder
 {
@@ -92,9 +94,11 @@ abstract class TemplateBuilder
     {
         if ($object) {
             try {
-                $path = new PropertyPath($this->getPropertyName($name));
-                return  $path->getValue($object);
-            } catch (\Exception $e) {}
+                $accessor = PropertyAccess::createPropertyAccessor();
+                return $accessor->getValue($object, $this->getPropertyName($name));
+            } catch (\Exception $e) {
+                return null;
+            }
         }
     }
 

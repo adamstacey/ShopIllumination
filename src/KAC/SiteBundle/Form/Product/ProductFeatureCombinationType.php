@@ -76,6 +76,7 @@ class ProductFeatureCombinationType extends AbstractType
                 {
                     $form->remove('feature');
                     $form->add($factory->createNamed('feature', 'entity', null, array(
+                        'auto_initialize' => false,
                         'required'  => true,
                         'empty_value' => '- Select a Feature -',
                         'class' => 'KAC\SiteBundle\Entity\Product\Feature',
@@ -109,6 +110,7 @@ class ProductFeatureCombinationType extends AbstractType
                 {
                     $form->remove('feature');
                     $form->add($factory->createNamed('feature', 'entity', null, array(
+                        'auto_initialize' => false,
                         'required'  => true,
                         'empty_value' => '- Select a Feature -',
                         'class' => 'KAC\SiteBundle\Entity\Product\Feature',
