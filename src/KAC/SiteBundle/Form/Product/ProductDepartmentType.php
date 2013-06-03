@@ -34,8 +34,6 @@ class ProductDepartmentType extends AbstractType
                 'placeholder' => '- Select a Department -',
             ),
         ));
-
-        $builder->add('displayOrder', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
