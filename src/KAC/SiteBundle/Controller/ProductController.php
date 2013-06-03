@@ -199,7 +199,7 @@ class ProductController extends Controller {
                         $newImageIds[] = $newImage->getId();
                     }
                 }
-                $product->setImages(implode(',', $newImageIds));
+                $product->setTemporaryImages(implode(',', $newImageIds));
 
                 $em->persist($product);
                 $em->flush();
