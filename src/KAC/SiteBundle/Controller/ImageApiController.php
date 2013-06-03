@@ -97,8 +97,9 @@ class ImageApiController extends Controller
      */
     public function postAction(Request $request, $format)
     {
+        $objectType = $this->get('request')->request->get('objectType');
         $manager = $this->get('kac_site.manager.image');
-        $image = $manager->createImage();
+        $image = $manager->createImage($objectType);
         $filesArray = array();
 
         /**
@@ -106,6 +107,7 @@ class ImageApiController extends Controller
          */
         $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $image, array('csrf_protection' => false))
             ->add('file', 'file')
+            ->add('objectType', 'text', array('mapped' => false))
             ->add('imageType', 'text')
             ->getForm();
         $form->bind($request);
