@@ -6,6 +6,10 @@ use Imagine\Imagick\Imagine;
 use KAC\SiteBundle\Entity\DescribableInterface;
 use KAC\SiteBundle\Entity\Image;
 use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Entity\Product\Image as ProductImage;
+use KAC\SiteBundle\Entity\Product\Variant\Image as ProductVariantImage;
+use KAC\SiteBundle\Entity\Brand\Image as BrandImage;
+use KAC\SiteBundle\Entity\Department\Image as DepartmentImage;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Entity\Routing;
 
@@ -20,43 +24,26 @@ class ImageManager extends Manager
         $this->fileManager = $fileManager;
     }
 
-    public function createImage()
+    public function createImage($objectType)
     {
-        $image = new Image();
-        $image->setDisplayOrder(0);
-        return $image;
-    }
-
-    /**
-     * @param \KAC\SiteBundle\Entity\Image $image
-     * @return null|DescribableInterface
-     */
-    public function getObject(Image $image)
-    {
-        $className = "";
-        switch ($image->getObjectType())
+        switch ($objectType)
         {
-            case 'product':
-                $className = "\KAC\SiteBundle\Entity\Product";
-                break;
-            case 'variant':
-                $className = "\KAC\SiteBundle\Entity\Product\Variant";
-                break;
             case 'brand':
-                $className = "\KAC\SiteBundle\Entity\Brand";
+                $image = new BrandImage();
                 break;
             case 'department':
-                $className = "\KAC\SiteBundle\Entity\Department";
+                $image = new DepartmentImage();
+                break;
+            case 'product_variant':
+                $image = new ProductVariantImage();
+                break;
+            case 'product':
+            default:
+                $image = new ProductImage();
                 break;
         }
-
-        if (!$className)
-        {
-            return null;
-        } else {
-            $em = $this->doctrine->getManager();
-            return $em->getRepository($className)->find($image->getObjectId());
-        }
+        $image->setDisplayOrder(0);
+        return $image;
     }
 
     public function process(Image $image, DescribableInterface $object)
