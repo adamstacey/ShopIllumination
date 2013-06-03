@@ -135,15 +135,15 @@ CREATE INDEX IDX_B88B579644F5D008 ON brand_to_department (brand_id);
 CREATE INDEX IDX_B88B5796AE80F5DF ON brand_to_department (department_id);
 ALTER TABLE brands CHANGE request_a_brochure request_a_brochure TINYINT(1) NOT NULL, CHANGE request_a_sample request_a_sample TINYINT(1) NOT NULL, CHANGE hide_prices hide_prices TINYINT(1) NOT NULL, CHANGE show_prices_out_of_hours show_prices_out_of_hours TINYINT(1) NOT NULL, CHANGE membership_card_discount_available membership_card_discount_available TINYINT(1) NOT NULL;
 DELETE op from order_products op
-left join products p on op.product_id=p.id
+  left join products p on op.product_id=p.id
 where p.id is null AND op.product_id != 0;
 UPDATE order_products SET product_id=NULL WHERE product_id=0;
 DELETE od from order_discounts od
-left join orders o on od.order_id=o.id
+  left join orders o on od.order_id=o.id
 where o.id is null AND od.order_id != 0;
 UPDATE order_donations SET order_id=NULL WHERE order_id=0;
 DELETE od from order_donations od
-left join orders o on od.order_id=o.id
+  left join orders o on od.order_id=o.id
 where o.id is null AND od.order_id != 0;
 UPDATE order_donations SET order_id=NULL WHERE order_id=0;
 DROP INDEX search_idx ON orders;
@@ -165,15 +165,15 @@ ALTER TABLE departments CHANGE parent_id parent_id INT DEFAULT NULL, CHANGE hide
 ALTER TABLE department_to_feature CHANGE default_product_feature_id product_feature_id INT DEFAULT NULL, CHANGE active active TINYINT(1) NOT NULL, CHANGE department_id department_id INT DEFAULT NULL, CHANGE product_feature_group_id product_feature_group_id INT DEFAULT NULL, CHANGE display_on_filter display_on_filter TINYINT(1) NOT NULL, CHANGE display_on_listing display_on_listing TINYINT(1) NOT NULL, CHANGE display_on_product display_on_product TINYINT(1) NOT NULL;
 ALTER TABLE department_descriptions DROP search_words, CHANGE department_id department_id INT DEFAULT NULL;
 DELETE df FROM department_to_feature df
-left join product_features f on df.product_feature_id=f.id
+  left join product_features f on df.product_feature_id=f.id
 where f.id is null AND df.product_feature_id != 0;
 UPDATE department_to_feature SET product_feature_id=NULL WHERE product_feature_id=0;
 DELETE df FROM department_to_feature df
-left join product_feature_groups fg on df.product_feature_group_id=fg.id
+  left join product_feature_groups fg on df.product_feature_group_id=fg.id
 where fg.id is null AND df.product_feature_group_id != 0;
 UPDATE department_to_feature SET product_feature_group_id=NULL WHERE product_feature_group_id=0;
 DELETE d1 FROM departments d1
-left join departments d2 on d1.parent_id=d2.id
+  left join departments d2 on d1.parent_id=d2.id
 where d2.id is null AND d1.parent_id != 0;
 UPDATE departments SET parent_id=NULL WHERE parent_id=0;
 DROP INDEX search_idx ON departments;
@@ -203,31 +203,31 @@ ALTER TABLE product_features CHANGE active active TINYINT(1) NOT NULL, CHANGE pr
 ALTER TABLE product_options CHANGE active active TINYINT(1) NOT NULL, CHANGE product_option_group_id product_option_group_id INT DEFAULT NULL;
 ALTER TABLE product_links CHANGE product_link_id linked_product_id INT DEFAULT NULL, CHANGE active active TINYINT(1) NOT NULL, CHANGE product_id product_id INT DEFAULT NULL;
 DELETE pp FROM product_prices pp
-left join product_variants pv on pp.variant_id=pv.id
+  left join product_variants pv on pp.variant_id=pv.id
 where pv.id is null AND pp.variant_id != 0;
 UPDATE product_prices SET variant_id=NULL WHERE variant_id=0;
 DELETE pl FROM product_links pl
-left join products p on pl.linked_product_id=p.id
+  left join products p on pl.linked_product_id=p.id
 where p.id is null AND pl.linked_product_id != 0;
 UPDATE product_links SET linked_product_id=NULL WHERE linked_product_id=0;
 DELETE pf FROM product_to_feature pf
-left join product_feature_groups fg on pf.product_feature_group_id=fg.id
+  left join product_feature_groups fg on pf.product_feature_group_id=fg.id
 where fg.id is null AND pf.product_feature_group_id != 0;
 UPDATE product_to_feature SET product_feature_group_id=NULL WHERE product_feature_group_id=0;
 DELETE pf FROM product_to_feature pf
-left join product_features f on pf.product_feature_id=f.id
+  left join product_features f on pf.product_feature_id=f.id
 where f.id is null AND pf.product_feature_id != 0;
 UPDATE product_to_feature SET product_feature_id=NULL WHERE product_feature_id=0;
 DELETE f FROM product_features f
-left join product_feature_groups fg on f.product_feature_group_id=fg.id
+  left join product_feature_groups fg on f.product_feature_group_id=fg.id
 where fg.id is null AND f.product_feature_group_id != 0;
 UPDATE product_features SET product_feature_group_id=NULL WHERE product_feature_group_id=0;
 DELETE pd FROM product_to_department pd
-left join products p on pd.product_id=p.id
+  left join products p on pd.product_id=p.id
 where p.id is null AND pd.product_id != 0;
 UPDATE product_to_department SET product_id=NULL WHERE product_id=0;
 DELETE pd FROM product_to_department pd
-left join departments d on pd.department_id=d.id
+  left join departments d on pd.department_id=d.id
 where d.id is null AND pd.department_id != 0;
 UPDATE product_to_department SET department_id=NULL WHERE department_id=0;
 ALTER TABLE product_variant_descriptions ADD CONSTRAINT FK_6F0B2FDC3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
@@ -269,8 +269,8 @@ ALTER TABLE users ADD CONSTRAINT FK_1483A5E9E7A1254A FOREIGN KEY (contact_id) RE
 ALTER TABLE users_temp CHANGE contact_id contact_id INT DEFAULT NULL;
 UPDATE users_temp SET contact_id=NULL WHERE contact_id=0;
 INSERT INTO users (id, contact_id, username, username_canonical, email, email_canonical, enabled, salt, password, roles, last_login)
-SELECT id, contact_id, email_address, email_address, email_address, email_address, active, salt, password, 'a:0:{}', last_logged_in
-FROM users_temp;
+  SELECT id, contact_id, email_address, email_address, email_address, email_address, active, salt, password, 'a:0:{}', last_logged_in
+  FROM users_temp;
 DROP TABLE users_temp;
 DROP TABLE user_keys;
 ALTER TABLE users DROP FOREIGN KEY FK_1483A5E9E7A1254A;
@@ -307,8 +307,8 @@ CREATE TABLE product_variant_to_feature (id INT AUTO_INCREMENT NOT NULL, variant
 CREATE TABLE product_variant_to_option (id INT AUTO_INCREMENT NOT NULL, variant_id INT DEFAULT NULL, option_group_id INT DEFAULT NULL, option_id INT DEFAULT NULL, active TINYINT(1) NOT NULL, price NUMERIC(12, 4) NOT NULL, price_type VARCHAR(1) NOT NULL, price_use VARCHAR(1) NOT NULL, display_order INT DEFAULT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_2B2DE52D3B69A9AF (variant_id), INDEX IDX_2B2DE52DDE23A8E3 (option_group_id), INDEX IDX_2B2DE52DA7C41D6F (option_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 ALTER TABLE departments_tmp ADD CONSTRAINT FK_C7AFC1E2727ACA70 FOREIGN KEY (parent_id) REFERENCES departments_tmp (id) ON DELETE SET NULL;
 ALTER TABLE product_variant_to_feature ADD CONSTRAINT FK_9118317A3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
-ALTER TABLE product_variant_to_feature ADD CONSTRAINT FK_9118317A87B97678 FOREIGN KEY (feature_group_id) REFERENCES product_feature_groups (id);
-ALTER TABLE product_variant_to_feature ADD CONSTRAINT FK_9118317A60E4B879 FOREIGN KEY (feature_id) REFERENCES product_features (id);
+ALTER TABLE product_variant_to_feature ADD CONSTRAINT FK_9118317A60E4B879 FOREIGN KEY (feature_group_id) REFERENCES product_feature_groups (id);
+ALTER TABLE product_variant_to_feature ADD CONSTRAINT FK_9118317A60E4B889 FOREIGN KEY (feature_id) REFERENCES product_features (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52D3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DDE23A8E3 FOREIGN KEY (option_group_id) REFERENCES product_option_groups (id);
 ALTER TABLE product_variant_to_option ADD CONSTRAINT FK_2B2DE52DA7C41D6F FOREIGN KEY (option_id) REFERENCES product_options (id);
@@ -386,7 +386,6 @@ ALTER TABLE routing CHANGE object_id object_id INT DEFAULT NULL;
 ALTER TABLE files CHANGE locale locale VARCHAR(5) NOT NULL;
 ALTER TABLE images CHANGE locale locale VARCHAR(5) NOT NULL;
 ALTER TABLE order_products DROP name;
-ALTER TABLE departments_tmp ADD CONSTRAINT FK_C7AFC1E2727ACA70 FOREIGN KEY (parent_id) REFERENCES departments_tmp (id) ON DELETE SET NULL;
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB4584665A FOREIGN KEY (product_id) REFERENCES products (id);
 ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
 CREATE INDEX IDX_5242B8EB4584665A ON order_products (product_id);
