@@ -184,7 +184,7 @@
 							</div>
 							<div id="filter-price" class="filter price-range-filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
 								{% if noAjax > 0 %}
-									{% render "KACShopBundle:Products:getProductListingPriceFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+									{% render(controller('KACShopBundle:Products:getProductListingPriceFilter', {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing})) %}
 								{% endif %}
 							</div>
 							<input type="hidden" name="filter-price-reset-from" id="filter-price-reset-from" value="{{ departmentListing.priceFrom }}" />
@@ -202,7 +202,7 @@
 							</div>
 							<div id="filter-department" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
 								{% if noAjax > 0 %}
-									{% render "KACShopBundle:Products:getProductListingDepartmentFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+									{% render(controller('KACShopBundle:Products:getProductListingDepartmentFilter', {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing})) %}
 								{% endif %}
 							</div>
 						</div>
@@ -221,7 +221,7 @@
 								</div>
 								<div id="filter-brand" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
 									{% if noAjax > 0 %}
-										{% render "KACShopBundle:Products:getProductListingBrandFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+										{% render(controller('KACShopBundle:Products:getProductListingBrandFilter', {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing})) %}
 									{% endif %}
 								</div>
 								<input type="hidden" name="filter-brands" id="filter-brands" value="{{ departmentListing.brands }}" />
@@ -239,7 +239,7 @@
 							</div>
 							<div id="filter-feature" class="filter{% if noAjax < 1 %} ui-helper-hidden{% endif %}">
 								{% if noAjax > 0 %}
-									{% render "KACShopBundle:Products:getProductListingFeatureFilter" with {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing} %}
+									{% render(controller('KACShopBundle:Products:getProductListingFeatureFilter', {'url': url, 'departmentBrand': brand, 'departmentGroup': group, 'department': department, 'productListingSettings': productListingSettings, 'departmentListing': departmentListing})) %}
 								{% endif %}
 							</div>
 							<input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />

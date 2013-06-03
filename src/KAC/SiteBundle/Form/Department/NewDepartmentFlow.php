@@ -5,10 +5,14 @@ namespace KAC\SiteBundle\Form\Department;
 use Craue\FormFlowBundle\Form\FormFlow;
 use KAC\SiteBundle\Entity\Department;
 use KAC\SiteBundle\Manager\SeoManager;
+use Symfony\Component\Form\FormTypeInterface;
 
 class NewDepartmentFlow extends FormFlow
 {
-    protected $maxSteps = 5;
+    /**
+     * @var FormTypeInterface
+     */
+    protected $formType;
     protected $allowDynamicStepNavigation = true;
 
     private $seoManager;
@@ -18,27 +22,42 @@ class NewDepartmentFlow extends FormFlow
         $this->seoManager = $seoManager;
     }
 
-    protected function loadStepDescriptions() {
+    public function setFormType(FormTypeInterface $formType) {
+        $this->formType = $formType;
+    }
+
+    protected function loadStepsConfig() {
         return array(
-            '1. Overview',
-            '2. SEO',
-            '3. Delivery Options',
-            '4. Feature Templates',
-            '5. Product Templates'
+            array(
+                'label' => '1. Overview',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '2. SEO',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '3. Delivery Options',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '4. Feature Templates',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '5. Product Templates',
+                'type' => $this->formType,
+            ),
         );
     }
 
-    /**
-     * @param $formData Department
-     * @param $step
-     * @param array $options
-     * @return array
-     */
-    public function getFormOptions($formData, $step, array $options = array())
+    public function getFormOptions($step, array $options = array())
     {
-        $options = parent::getFormOptions($formData, $step, $options);
-
+        $options = parent::getFormOptions($step, $options);
         $options['cascade_validation'] = true;
+        $options['flowStep'] = $step;
+
+        $formData = $this->getFormData();
 
         if ($step == 2)
         {
@@ -85,5 +104,10 @@ class NewDepartmentFlow extends FormFlow
         }
 
         return $options;
+    }
+
+    public function getName()
+    {
+        return 'site_new_department';
     }
 }

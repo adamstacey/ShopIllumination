@@ -29,7 +29,7 @@
 	</div>
 	<div class="clear"></div>
 	{% if (app.request.attributes.get('_route') != 'checkout_secure_checkout') and (app.request.attributes.get('_route') != 'checkout_order_failed') %}
-	    {% render "WebIlluminationShopBundle:System:mainMenu" %}
+	    {% render(controller('WebIlluminationShopBundle:System:mainMenu')) %}
 	    <div class="clear"></div>
 	    {% include ':Old:shopUniqueSellingPoints.html.twig' %}
 	    <div class="clear"></div>

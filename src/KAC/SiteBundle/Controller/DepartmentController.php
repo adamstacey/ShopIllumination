@@ -46,15 +46,15 @@ class DepartmentController extends Controller
         $flow->bind($department);
 
         // Get current form step
-        $form = $flow->createForm($department);
+        $form = $flow->createForm();
 
         if ($flow->isValid($form)) {
-            $flow->saveCurrentStepData();
+            $flow->saveCurrentStepData($form);
 
             if ($flow->nextStep())
             {
                 // Get next form step
-                $form = $flow->createForm($department);
+                $form = $flow->createForm();
             } else {
                 // Update the department path
                 $manager->updateDepartmentPath($department);

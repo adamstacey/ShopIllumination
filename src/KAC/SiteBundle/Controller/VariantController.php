@@ -49,17 +49,17 @@ class VariantController extends Controller {
         $flow->bind($variant);
 
         // Get current form step
-        $form = $flow->createForm($variant, array(
+        $form = $flow->createForm(array(
             'departmentId' => $product->getDepartment()->getDepartment()->getId(),
         ));
 
         if ($flow->isValid($form)) {
-            $flow->saveCurrentStepData();
+            $flow->saveCurrentStepData($form);
 
             if ($flow->nextStep())
             {
                 // Get next form step
-                $form = $flow->createForm($variant);
+                $form = $flow->createForm();
             } else {
                 // Add the variant to each feature
                 foreach($variant->getFeatures() as $feature)

@@ -11,6 +11,7 @@ use KAC\SiteBundle\Entity\Product\Variant\Description;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Manager\SeoManager;
 use KAC\SiteBundle\Manager\ProductManager;
+use Symfony\Component\Form\FormTypeInterface;
 
 class NewProductFlow extends FormFlow
 {
@@ -18,7 +19,10 @@ class NewProductFlow extends FormFlow
     protected $productManager;
     protected $googleApi;
 
-    protected $maxSteps = 12;
+    /**
+     * @var FormTypeInterface
+     */
+    protected $formType;
     protected $allowDynamicStepNavigation = true;
 
     function __construct(SeoManager $seoManager, ProductManager $productManager, Google $googleApi)
@@ -28,34 +32,70 @@ class NewProductFlow extends FormFlow
         $this->googleApi = $googleApi;
     }
 
-    protected function loadStepDescriptions() {
+    public function setFormType(FormTypeInterface $formType) {
+        $this->formType = $formType;
+    }
+
+    protected function loadStepsConfig() {
         return array(
-            '1. Overview',
-            '2. Build Combinations',
-            '3. Prices',
-            '4. Delivery',
-            '5. Unique Identifiers',
-            '6. Features',
-            '7. Descriptions',
-            '8. SEO',
-            '9. Uploads',
-            '10. Images',
-            '11. Documents',
-            '12. Links'
+            array(
+                'label' => '1. Overview',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '2. Build Combinations',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '3. Prices',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '4. Delivery',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '5. Unique Identifiers',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '6. Features',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '7. Descriptions',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '8. SEO',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '9. Uploads',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '10. Images',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '11. Documents',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '12. Links',
+                'type' => $this->formType,
+            ),
         );
     }
 
-    /**
-     * @param $formData Product
-     * @param $step
-     * @param array $options
-     * @return array
-     */
-    public function getFormOptions($formData, $step, array $options = array())
+    public function getFormOptions($step, array $options = array())
     {
-        $options = parent::getFormOptions($formData, $step, $options);
-
+        $options = parent::getFormOptions($step, $options);
         $options['cascade_validation'] = true;
+        $options['flowStep'] = $step;
+
+        $formData = $this->getFormData();
 
         if ($step > 1)
         {
@@ -408,5 +448,10 @@ class NewProductFlow extends FormFlow
         }
 
         return $options;
+    }
+
+    public function getName()
+    {
+        return 'site_new_product';
     }
 }

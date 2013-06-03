@@ -5,7 +5,7 @@
     <section class="ui-widget-content ui-corner-bottom">
         <nav class="left-menu">
             <ul class="clearfix">
-                {% for stepDescription in flow.getStepDescriptions() %}
+                {% for stepLabel in flow.getStepLabels() %}
                     {% if loop.index == flow.getCurrentStep() %}
                         {% set statusIcon = 'icon-471' %}
                         {% set statusIconColour = 'icon-white' %}
@@ -42,11 +42,11 @@
 
                         {% if flow.isAllowDynamicStepNavigation() and (loop.index != flow.getCurrentStep()) and flow.isStepDone(loop.index) and (not flow.hasSkipStep(loop.index)) %}
                             <a data-icon-secondary="{{ statusIcon }}" class="fl ui-button button{{ buttonColour }} {{ statusIconColour }}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge(app.request.attributes.get('_route_params')) | craue_addDynamicStepNavigationParameter(flow, loop.index)) }}">
-                                {{ stepDescription|raw }}
+                                {{ stepLabel|raw }}
                             </a>
                         {% else %}
                             <button data-icon-secondary="{{ statusIcon }}" class="fl ui-button button{{ buttonColour }} {{ statusIconColour }}">
-                                {{ stepDescription|raw }}
+                                {{ stepLabel|raw }}
                             </button>
                         {% endif %}
                     </li>

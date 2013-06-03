@@ -4,7 +4,7 @@ namespace KAC\SiteBundle\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\SerializerBundle\Annotation as Serializer;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\ExecutionContext;
 
 /**

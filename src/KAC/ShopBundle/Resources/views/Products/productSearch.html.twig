@@ -17,7 +17,7 @@
 					<section class="no-padding-bottom no-padding-right">
 						<div id="product-search-results">
 							{% if noAjax > 0 %}
-								{% render "KACShopBundle:Products:getProductSearch" with {'search': search} %}
+								{% render(controller('KACShopBundle:Products:getProductSearch', {'search': search})) %}
 							{% else %}
 								<div class="loading-container">
 									<p><img src="{{ asset('bundles/kacshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" /></p>

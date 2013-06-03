@@ -175,15 +175,15 @@ class ProductController extends Controller {
         $flow->bind($product);
 
         // Get current form step
-        $form = $flow->createForm($product);
+        $form = $flow->createForm();
 
         if ($flow->isValid($form)) {
-            $flow->saveCurrentStepData();
+            $flow->saveCurrentStepData($form);
 
             if ($flow->nextStep())
             {
                 // Get next form step
-                $form = $flow->createForm($product);
+                $form = $flow->createForm();
             } else {
 
                 // Copy the selected product images
