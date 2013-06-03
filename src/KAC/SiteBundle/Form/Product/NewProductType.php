@@ -203,7 +203,7 @@ class NewProductType extends AbstractType
                 $builder->add('documentUploads', 'hidden');
                 break;
             case 10:
-                $builder->add('images', 'hidden');
+                $builder->add('temporaryImages', 'hidden');
 
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_images',
@@ -214,7 +214,7 @@ class NewProductType extends AbstractType
                 ));
                 break;
             case 11:
-                $builder->add('documents', 'hidden');
+                $builder->add('temporaryDocuments', 'hidden');
 
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_documents',
