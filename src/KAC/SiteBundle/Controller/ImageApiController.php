@@ -121,8 +121,10 @@ class ImageApiController extends Controller
             $em = $this->getDoctrine()->getManager();
             $image->setFileExtension($file->guessExtension());
             $image->setFileSize($file->getSize());
+
             $em->persist($image);
             $em->flush();
+
             $filesArray[] = array(
                 'id' => $image->getId(),
                 'type' => $image->getImageType(),
@@ -146,6 +148,7 @@ class ImageApiController extends Controller
 
         $response = new Response($json);
         $response->headers->set('Content-Type', 'application/'.$format);
+
         return $response;
     }
 

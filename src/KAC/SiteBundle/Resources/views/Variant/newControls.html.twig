@@ -1,5 +1,5 @@
 <div class="clearfix">
-    {% set renderBackButton = flow.getCurrentStepNumber() in (flow.getFirstStep() + 1) .. flow.getLastStep() %}
+    {% set renderBackButton = flow.getCurrentStepNumber() in (flow.getFirstStep() + 1) .. flow.getLastStepNumber() %}
 
     {% if renderBackButton %}
         <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" formnovalidate="formnovalidate" class="button button-small mrm fl">Back</button>
@@ -7,7 +7,7 @@
 
     <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="reset" formnovalidate="formnovalidate" class="button button-small button-red fl">Reset</button>
 
-    {% if flow.getCurrentStepNumber() < flow.getLastStep() %}
+    {% if flow.getCurrentStepNumber() < flow.getLastStepNumber() %}
         <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Continue</button>
     {% else %}
         <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Variant</button>
