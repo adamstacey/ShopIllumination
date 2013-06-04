@@ -19,33 +19,59 @@
                             <section class="ui-widget-content ui-corner-all">
                                 <div id="variant-listing">
                                     {% for variant in product.variants %}
-                                        <div class="variant-item">
-                                            <div class="variant-options">
-                                                {% block variant_prices %}
+                                        <div itemscope itemtype="http://schema.org/Product" class="variant product relative" data-product-id="{{ product.id }}" data-variant-id="{{ variant.id }}" id="variant-{{ variant.id }}">
+                                            <div>
+                                                <div>
+                                                    <h4><a itemprop="name" href="{{ path('variants_edit', {'productId': product.id, 'variantId': variant.id}) }}">{{ variant.description.header }}</a></h4>
+                                                    {% for feature in variant.features %}
+                                                        {% if 'COLOUR' == feature.featureGroup|upper %}
+                                                            {% spaceless %}
+                                                                <p class="colour">
+                                                                    <strong>{{ feature.feature|upper }}</strong>
+                                                                </p>
+                                                            {% endspaceless %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+
+                                                <div class="product-options">
                                                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                                         <p class="ar product-price">
-                                                            <span itemprop="price">&pound;{{ variant.prices[0].list_price|number_format(2) }}</span>
+                                                            {% spaceless %}
+                                                                <span itemprop="price">&pound;{{ variant.prices[0].list_price|number_format(2) }}</span>
+                                                                <span class="product-tax"> (inc. VAT)</span>
+                                                            {% endspaceless %}
                                                         </p>
                                                     </div>
-                                                {% endblock %}
 
-                                                <ul>
-                                                    {% for feature in variant.features %}
-                                                        <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
-                                                    {% endfor %}
-                                                </ul>
-
-                                                <a href="{{ path('variants_delete', {'productId': product.id, 'variantId': variant.id}) }}" class="button ui-button-red margin-bottom-5">Delete</a>
-                                                <a href="{{ path('variants_edit', {'productId': product.id, 'variantId': variant.id}) }}" class="fr button ui-button-blue margin-bottom-5">Edit</a>
-                                            </div>
-
-                                            {% block variant_description %}
-                                                <div class="variant-information">
-                                                    {% if (variant.description) %}
-                                                        {{ variant.description.description|raw }}
-                                                    {% endif %}
+                                                    <a href="{{ path('variants_delete', {'productId': product.id, 'variantId': variant.id}) }}" class="fr button button-red">Delete</a>
+                                                    <a href="{{ path('variants_edit', {'productId': product.id, 'variantId': variant.id}) }}" class="fr button button-blue">Edit</a>
                                                 </div>
-                                            {% endblock %}
+
+
+                                                {% if variant.features|length > 0 %}
+                                                    <div class="product-information">
+                                                        <ul>
+                                                            {% for feature in variant.features %}
+                                                                {% set featureValue = feature.feature %}
+                                                                {% set featureGroup = feature.featureGroup %}
+
+                                                                {% if featureValue != '' %}
+                                                                    {% if featureValue == 'Yes' %}
+                                                                        {% set className = 'green-tick' %}
+                                                                    {% elseif feature == 'No' %}
+                                                                        {% set className = 'red-cross' %}
+                                                                    {% else %}
+                                                                        {% set className = 'bullet' %}
+                                                                    {% endif %}
+                                                                    <li class="{{ className }}">{{ featureGroup }}: <strong>{{ featureValue }}</strong></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="clear"></div>
                                         </div>
                                     {% endfor %}
                                 </div>

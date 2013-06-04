@@ -7,11 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
-class EditProductImagesType extends AbstractType
+class EditProductDocumentsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('temporaryImages', 'hidden');
+        $builder->add('temporaryDocuments', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -23,6 +23,6 @@ class EditProductImagesType extends AbstractType
 
     public function getName()
     {
-        return 'site_edit_product_images';
+        return 'site_edit_product_documents';
     }
 }
