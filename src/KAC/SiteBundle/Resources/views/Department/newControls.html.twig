@@ -1,5 +1,5 @@
 <div class="clearfix">
-    {% set renderBackButton = flow.getCurrentStepNumber() in (flow.getFirstStep() + 1) .. flow.getLastStepNumber() %}
+    {% set renderBackButton = flow.getCurrentStepNumber() in (flow.getFirstStepNumber() + 1) .. flow.getLastStepNumber() %}
 
     {% if renderBackButton %}
         <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" formnovalidate="formnovalidate" class="button button-small mrm fl">Back</button>

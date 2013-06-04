@@ -112,7 +112,7 @@ class DemoController extends Controller
     public function testAction(Request $request)
     {
         $api = $this->get('kac_site.google.google');
-        \Doctrine\Common\Util\Debug::dump($api->findMoreExpensiveProducts('SMS40C02GB', '280', 5)["items"], 5);
-        die();
+        //\Doctrine\Common\Util\Debug::dump($api->findMoreExpensiveProducts('SMS40C02GB', '280', 5)["items"], 5);
+        //die();
     }
 }

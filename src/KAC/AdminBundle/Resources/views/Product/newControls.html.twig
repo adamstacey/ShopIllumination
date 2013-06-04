@@ -1,5 +1,5 @@
 <div class="clearfix">
-    {% set renderBackButton = flow.getCurrentStep() in (flow.getFirstStep() + 1) .. flow.getLastStepNumber() %}
+    {% set renderBackButton = flow.getCurrentStep() in (flow.getFirstStepNumber() + 1) .. flow.getLastStepNumber() %}
     <div class="form-input buttons form-flow-buttons no-margin-bottom">
         <button type="submit" class="button ui-button-green">
             {%- if flow.getCurrentStep() < flow.getLastStepNumber() -%}
