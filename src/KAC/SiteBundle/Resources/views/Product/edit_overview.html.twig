@@ -20,34 +20,26 @@
                                 <section class="ui-widget-content ui-corner-all">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
-                                        {{ form_row(form.brand, {'label': 'Brand', 'help': 'Select a brand'}) }}
+                                        {{ form_row(form.brand) }}
                                         {{ form_row(form.departments) }}
-                                        {{ form_row(form.status, {'label': 'Status', 'help': 'Is the product available?'}) }}
-                                        <div class="form-element{% if errors %} form-element-error{% endif %} widget-group clearfix">
+                                        {{ form_row(form.template) }}
+                                        {{ form_row(form.status) }}
+                                        <div class="form-element widget-group clearfix">
                                             <div class="widget widget-1-of-3">
                                                 <label>Listing Options</label>
                                             </div>
                                             <div class="widget checker-group widget-2-of-3">
-                                                {{ form_row(form.availableForPurchase, {'label': 'Available', 'help': 'Is the product available to purchase?'}) }}
-                                                {{ form_row(form.featureComparison, {'label': 'Feature Comparison', 'help': 'Include in feature comparison?'}) }}
-                                                {{ form_row(form.downloadable, {'label': 'Downloadable', 'help': 'Is the product a download?'}) }}
-                                                {{ form_row(form.specialOffer, {'label': 'Special Offer', 'help': 'Is the product a special offer?'}) }}
-                                                {{ form_row(form.recommended, {'label': 'Recommended', 'help': 'Do you want to recommend?'}) }}
-                                                {{ form_row(form.accessory, {'label': 'Accessory', 'help': 'Is the product an accessory?'}) }}
-                                                {{ form_row(form.new, {'label': 'New', 'help': 'Is the product new?'}) }}
+                                                {{ form_row(form.availableForPurchase) }}
+                                                {{ form_row(form.featureComparison) }}
+                                                {{ form_row(form.downloadable) }}
+                                                {{ form_row(form.specialOffer) }}
+                                                {{ form_row(form.recommended) }}
+                                                {{ form_row(form.accessory) }}
+                                                {{ form_row(form.new) }}
                                             </div>
                                         </div>
-                                        <div class="form-element{% if errors %} form-element-error{% endif %} widget-group clearfix">
-                                            <div class="widget widget-1-of-3">
-                                                <label>Price Options</label>
-                                            </div>
-                                            <div class="widget checker-group widget-2-of-3">
-                                                {{ form_row(form.hidePrice, {'label': 'Hide Price', 'help': 'Hide price for this product?'}) }}
-                                                {{ form_row(form.showPriceOutOfHours, {'label': 'Show Price Out Of Hours', 'help': 'Show price out of hours?'}) }}
-                                            </div>
-                                        </div>
+                                        {{ form_rest(form) }}
                                     </fieldset>
-                                    {{ form_rest(form) }}
 
                                     <div class="clearfix">
                                         <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Product</button>
