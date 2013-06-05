@@ -11,13 +11,6 @@ use \KAC\SiteBundle\Entity\Routing as SiteRouting;
 class Routing extends SiteRouting
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length=11)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="routings")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
      */
@@ -49,15 +42,5 @@ class Routing extends SiteRouting
     public function getObjectType()
     {
         return 'product';
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 }
