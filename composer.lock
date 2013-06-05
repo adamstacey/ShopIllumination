@@ -85,7 +85,6 @@
                     "Avalanche\\Bundle\\ImagineBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -764,7 +763,6 @@
                     "Doctrine\\DBAL\\Migrations": "lib"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -883,7 +881,6 @@
                     "library/HTMLPurifier.composer.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL"
             ],
@@ -1072,7 +1069,6 @@
                     "src/Google/Api/Ads/AdWords/Lib"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache License 2.0"
             ],
@@ -1153,7 +1149,6 @@
                     "Imagine": "lib/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1299,7 +1294,6 @@
                     "JMS\\AopBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "Apache"
             ],
@@ -1307,7 +1301,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1341,7 +1335,6 @@
                     "CG\\": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
             "license": [
                 "Apache"
             ],
@@ -1349,7 +1342,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1918,7 +1911,6 @@
                     "Knp\\Bundle\\SnappyBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2432,7 +2424,6 @@
                     "Solarium": "library/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "NewBSD"
             ],
@@ -2486,7 +2477,6 @@
                     "Stof\\DoctrineExtensionsBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],

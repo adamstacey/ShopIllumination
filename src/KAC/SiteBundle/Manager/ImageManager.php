@@ -68,12 +68,11 @@ class ImageManager extends Manager
          * @var $image Image
          */
         $em = $this->doctrine->getManager();
-        $imageIds = array_diff(explode(',', $entity->getImages()), array(''));
+        $imageIds = array_diff(explode(',', $entity->getTemporaryImages()), array(''));
 
         // Get any images already linked to the entity
-        $existingImages = $em->getRepository("KAC\SiteBundle\Entity\Image")->findBy(array(
+        $existingImages = $em->getRepository($this->getClassName($entityType))->findBy(array(
             'objectId' => $entity->getId(),
-            'objectType' => $entityType,
         ));
 
         // Delete any old images that no longer exist
@@ -118,7 +117,6 @@ class ImageManager extends Manager
                 $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($imageId);
                 if ($image)
                 {
-                    $image->setObjectType($entityType);
                     $image->setObjectId($entity->getId());
                     if($image->getImageType() === "" || $image->getImageType() === null)
                     {
@@ -131,5 +129,49 @@ class ImageManager extends Manager
                 }
             }
         }
+    }
+
+    public function getClassName($objectType)
+    {
+        switch ($objectType)
+        {
+            case 'brand':
+                $className = "KAC\\SiteBundle\\Entity\\Brand\\Image";
+                break;
+            case 'department':
+                $className = "KAC\\SiteBundle\\Entity\\Department\\Image";
+                break;
+            case 'product_variant':
+                $className = "KAC\\SiteBundle\\Entity\\Product\\Variant\\Image";
+                break;
+            case 'product':
+            default:
+                $className = "KAC\\SiteBundle\\Entity\\Product\\Image";
+                break;
+        }
+
+        return $className;
+    }
+
+    public function getObject($object)
+    {
+        switch (get_class($object))
+        {
+            case 'KAC\\SiteBundle\\Entity\\Brand\\Image':
+                return $object->getBrand();
+                break;
+            case 'KAC\\SiteBundle\\Entity\\Department\\Image':
+                return $object->getDepartment();
+                break;
+            case 'KAC\\SiteBundle\\Entity\\Product\\Variant\\Image':
+                return $object->getVariant();
+                break;
+            case 'KAC\\SiteBundle\\Entity\\Product\\Image':
+            default:
+                return $object->getProduct();
+                break;
+        }
+
+        return $className;
     }
 }

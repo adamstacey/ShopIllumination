@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\DepartmentToFeature;
+use KAC\SiteBundle\Form\Product\EditProductImagesType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -448,11 +449,10 @@ class ProductController extends Controller {
         }
 
         // Fetch the products images
-        $images = $em->getRepository("KAC\SiteBundle\Entity\Image")->findBy(array(
+        $images = $em->getRepository("KAC\SiteBundle\Entity\Product\Image")->findBy(array(
             'objectId' => $product->getId(),
-            'objectType' => 'product',
         ));
-        $product->setImages(join(',', array_map(function($image) {
+        $product->setTemporaryImages(join(',', array_map(function($image) {
             return $image->getId();
         }, $images)));
 

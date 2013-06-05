@@ -509,7 +509,7 @@ class Image
     {
         if(!in_array($this->getImageType(), array("product", "gallery")))
         {
-            $context->addViolationAtSubPath("imageType", "That image type is invalid.");
+            $context->addViolationAt("imageType", "That image type is invalid.");
         }
     }
 }
