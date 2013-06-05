@@ -11,13 +11,6 @@ use \KAC\SiteBundle\Entity\Document as SiteDocument;
 class Document extends SiteDocument
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer", length=11)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="documents")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
      */
@@ -49,15 +42,5 @@ class Document extends SiteDocument
     public function getObjectType()
     {
         return 'product';
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 }
