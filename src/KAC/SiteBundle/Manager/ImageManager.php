@@ -222,6 +222,4 @@ class ImageManager extends Manager
                 return $object->getProduct();
                 break;
         }
-    }
-
 }

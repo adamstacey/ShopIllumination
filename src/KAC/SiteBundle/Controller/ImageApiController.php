@@ -134,6 +134,11 @@ class ImageApiController extends Controller
                 'delete_type' => 'DELETE',
             );
         } else {
+            foreach($form->all() as $sform)
+            {
+                \Doctrine\Common\Util\Debug::dump($sform->getErrors());
+            }
+            die();
             $errors = $form->getErrors();
             $filesArray[] = array(
                 'error' => (count($errors) > 0?$errors[0]:'The file was invalid.'),
