@@ -13,7 +13,7 @@ services:
   # Managers
   kac_site.manager.product:
     class: KAC\SiteBundle\Manager\ProductManager
-    arguments: [@doctrine, @kac_site.manager.seo]
+    arguments: [@doctrine, @kac_site.manager.seo, @kac_site.manager.image]
   kac_site.manager.department:
       class: KAC\SiteBundle\Manager\DepartmentManager
       arguments: [@doctrine, @kac_site.manager.seo]
