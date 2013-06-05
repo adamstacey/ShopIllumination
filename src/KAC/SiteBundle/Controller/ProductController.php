@@ -187,32 +187,7 @@ class ProductController extends Controller {
                 // Get next form step
                 $form = $flow->createForm();
             } else {
-
-                // Copy the selected product images
-                $newImageIds = array();
-                foreach (explode(',', $product->getImages()) as $imageId)
-                {
-                    $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($imageId);
-                    if ($image)
-                    {
-                        $newImage = clone $image;
-                        $em->persist($newImage);
-                        $em->flush();
-
-                        $newImageIds[] = $newImage->getId();
-                    }
-                }
-                $product->setTemporaryImages(implode(',', $newImageIds));
-
                 $em->persist($product);
-                $em->flush();
-
-                // Link images
-                $this->getImageManager()->persistImages($product, 'product');
-                foreach($product->getVariants() as $variant)
-                {
-                    $this->getImageManager()->persistImages($variant, 'variant');
-                }
                 $em->flush();
 
                 $flow->reset();
