@@ -4,6 +4,8 @@ namespace KAC\SiteBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\DepartmentToFeature;
 use KAC\SiteBundle\Form\Product\EditProductImagesType;
+use KAC\SiteBundle\Form\Product\EditProductDescriptionType;
+use KAC\SiteBundle\Form\Product\EditProductSeoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -410,6 +412,24 @@ class ProductController extends Controller {
     public function editOverviewAction(Request $request, $productId)
     {
         return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/description", name="products_edit_description")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDescriptionAction(Request $request, $productId)
+    {
+        return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_description.html.twig', new EditProductDescriptionType());
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/seo", name="products_edit_seo")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editSeoAction(Request $request, $productId)
+    {
+        return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_seo.html.twig', new EditProductSeoType());
     }
 
     /**
