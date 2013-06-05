@@ -21,7 +21,7 @@
 
 {% block form_row %}
     {% spaceless %}
-        {% if form.vars.block_prefixes.2 == 'checkbox' %}
+        {% if form.vars.block_prefixes.1 == 'checkbox' %}
             <div class="form-element{% if form.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
                 {% if help is defined %}
                     <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
@@ -128,7 +128,7 @@
                     {% endfor %}
                     <td class="row-count tar">{{ loop.index }}</td>
                     {% for child in row %}
-                        {% if child.vars.block_prefixes.2 != 'hidden' %}
+                        {% if child.vars.block_prefixes.1 != 'hidden' %}
                             {% set containerClass = [] %}
                             {% if child.vars.valid is sameas(false) %}
                                 {% set containerClass = containerClass|merge(['error']) %}
@@ -153,8 +153,8 @@
         {% else %}
             {% for row in form %}
                 {% for child in row %}
-                    {% if child.vars.block_prefixes.2 != 'hidden' %}
-                        {% if child.vars.block_prefixes.2 == 'checkbox' %}
+                    {% if child.vars.block_prefixes.1 != 'hidden' %}
+                        {% if child.vars.block_prefixes.1 == 'checkbox' %}
                             <div class="form-element{% if child.vars.valid is sameas(false) %} form-element-error{% endif %} widget-group clearfix">
                                 {% if help is defined %}
                                     <span title="{{ help }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
