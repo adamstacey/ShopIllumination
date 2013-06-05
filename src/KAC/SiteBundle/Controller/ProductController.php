@@ -169,6 +169,7 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $manager = $this->getManager();
+
         $product = $manager->createProduct();
 
         $flow = $this->get('kac_site.form.flow.new_product');
@@ -177,7 +178,8 @@ class ProductController extends Controller {
         // Get current form step
         $form = $flow->createForm();
 
-        if ($flow->isValid($form)) {
+        if ($flow->isValid($form))
+        {
             $flow->saveCurrentStepData($form);
 
             if ($flow->nextStep())
@@ -188,10 +190,11 @@ class ProductController extends Controller {
 
                 // Copy the selected product images
                 $newImageIds = array();
-                foreach(explode(',', $product->getImages()) as $imageId)
+                foreach (explode(',', $product->getImages()) as $imageId)
                 {
                     $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($imageId);
-                    if($image) {
+                    if ($image)
+                    {
                         $newImage = clone $image;
                         $em->persist($newImage);
                         $em->flush();

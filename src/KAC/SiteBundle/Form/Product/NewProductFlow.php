@@ -447,6 +447,15 @@ class NewProductFlow extends FormFlow
             }
         }
 
+        if ($step == 11)
+        {
+            // Update the images
+            $this->productManager->updateImages($formData);
+
+            // Update the documents
+            $this->productManager->updateDocuments($formData);
+        }
+
         return $options;
     }
 
