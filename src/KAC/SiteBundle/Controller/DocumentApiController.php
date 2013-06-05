@@ -131,7 +131,6 @@ class DocumentApiController extends Controller
                 'id' => $document->getId(),
                 'type' => $document->getDocumentType(),
                 'title' => $document->getTitle(),
-                'fileType' => 'image',
                 'url' => $document->getPath(),
                 'delete_url' => $this->generateUrl('api_documents_delete_document', array('id' => $document->getId())),
                 'delete_type' => 'DELETE',
