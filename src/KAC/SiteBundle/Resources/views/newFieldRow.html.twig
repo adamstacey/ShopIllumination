@@ -5,7 +5,7 @@
 {% endfor %}
 <td class="row-count" width="1"></td>
 {% for child in form %}
-    {% if child.vars.block_prefixes.2 != 'hidden' %}
+    {% if child.vars.block_prefixes.1 != 'hidden' %}
         <td{% if child.vars.attr['data-container-class'] is defined %} class="{{ child.vars.attr['data-container-class'] }}"{% endif %}>{{ form_widget(child) }}</td>
     {% endif %}
     {% if child.vars.attr['data-apply-to-all'] is defined %}
