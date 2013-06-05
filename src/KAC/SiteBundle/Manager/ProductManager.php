@@ -7,6 +7,10 @@ use KAC\SiteBundle\Entity\Product\Description as ProductDescription;
 use KAC\SiteBundle\Entity\Product\Price;
 use KAC\SiteBundle\Entity\Product\VariantToFeature;
 use KAC\SiteBundle\Entity\Product\Variant;
+use KAC\SiteBundle\Entity\Product\Image as ProductImage;
+use KAC\SiteBundle\Entity\Product\Variant\Image as ProductVariantImage;
+use KAC\SiteBundle\Entity\Product\Document as ProductDocument;
+use KAC\SiteBundle\Entity\Product\Variant\Document as ProductVariantDocument;
 use KAC\SiteBundle\Entity\Product\Routing as ProductRouting;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\ProductToDepartment;
@@ -15,16 +19,20 @@ use KAC\SiteBundle\Manager\Templating\ProductTemplateBuilder;
 use KAC\SiteBundle\Manager\Templating\TemplateBuilder;
 use KAC\SiteBundle\Manager\Templating\VariantTemplateBuilder;
 use KAC\SiteBundle\Entity\Product\Variant\Routing as ProductVariantRouting;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 class ProductManager extends Manager
 {
     private $seoManager;
+    private $imageManager;
 
-    public function __construct($doctrine, SeoManager $seoManager)
+    public function __construct($doctrine, SeoManager $seoManager, ImageManager $imageManager)
     {
         parent::__construct($doctrine);
 
         $this->seoManager = $seoManager;
+        $this->imageManager = $imageManager;
     }
 
     public function createProduct()
@@ -182,5 +190,26 @@ class ProductManager extends Manager
             $description->setMetaDescription($metaDescription);
             $description->setMetaKeywords($this->seoManager->generateKeywords($pageTitle));
         }
+    }
+
+    public function updateImages(Product $product)
+    {
+        // Update the product images
+        $this->imageManager->persistImages($product, 'product');
+
+        // Update variant images
+        foreach ($product->getVariants() as $variant)
+        {
+            $this->imageManager->persistImages($variant, 'product_variant');
+        }
+
+        // Remove any temporary product images
+        $this->imageManager->removeTemporaryImages($product);
+
+    }
+
+    public function updateDocuments(Product $product)
+    {
+
     }
 }
