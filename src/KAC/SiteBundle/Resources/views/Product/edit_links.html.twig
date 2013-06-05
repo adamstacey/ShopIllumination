@@ -17,31 +17,39 @@
                                     <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
                                     <h2>Product Links</h2>
                                 </header>
-                                <section class="ui-widget-content ui-corner-all">
+                                <section class="ui-widget-content ui-corner-bottom">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset class="pbm">
-                                        <table class="form-table" id="link-list" data-prototype="{{ form_widget(form.links.vars.prototype) | e }}">
+                                        <table class="form-table sortable" id="linkList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.links.vars.prototype} %}{% endfilter %}">
                                             <thead>
                                             <tr>
-                                                <th>Product</th>
+                                                <th width="1">&nbsp;</th>
+                                                <th width="1">&nbsp;</th>
+                                                <th width="50%">Product</th>
                                                 <th>Link Type</th>
-                                                <th>&nbsp;</th>
+                                                <th width="1">&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for link in form.links %}
-                                                <tr>{{ form_widget(link) }}</tr>
-                                            {% endfor %}
+                                                <tr class="no-data ui-helper-hidden">
+                                                    <td colspan="5">
+                                                        <div class="message message-help mas">
+                                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                            <p>There are no product links currently setup. Add a link using the "Add" button below.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% for link in form.links %}
+                                                    <tr>{{ form_widget(link) }}</tr>
+                                                {% endfor %}
                                             </tbody>
                                         </table>
-                                        {% do form.links.setRendered() %}
+                                        {{ form_rest(form) }}
                                     </fieldset>
-                                    {{ form_rest(form) }}
 
                                     <div class="clearfix">
                                         <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Save</button>
-                                        <button type="button" data-table-object="link-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Link</button>
-                                    </div>
+                                        <button type="button" data-table-object="linkList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>                                    </div>
                                 </section>
                             </div>
                         </div>
