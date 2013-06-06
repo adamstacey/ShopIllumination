@@ -97,22 +97,23 @@ class ImageApiController extends Controller
      */
     public function newAction(Request $request, $format)
     {
-        $objectType = $this->get('request')->request->get('objectType');
+        $objectType = $request->request->get('form[objectType]', null, true);
         $manager = $this->get('kac_site.manager.image');
-        $image = $manager->createImage($objectType);
         $filesArray = array();
 
-        /**
-         * @var $form FormInterface
-         */
-        $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $image, array('csrf_protection' => false))
+        $image = $manager->createImage($objectType);
+
+        $form = $this->createFormBuilder($image, array(
+            'csrf_protection' => false,
+            'validation_groups' => array('new_image'),
+        ))
             ->add('file', 'file')
             ->add('objectType', 'text', array('mapped' => false))
             ->add('imageType', 'text')
             ->getForm();
         $form->bind($request);
 
-        if ($form->isValid())
+        if ($image !== null && $form->isValid())
         {
             /**
              * @var $file UploadedFile
@@ -134,6 +135,11 @@ class ImageApiController extends Controller
                 'delete_type' => 'DELETE',
             );
         } else {
+            foreach($form->all() as $child)
+            {
+                \Doctrine\Common\Util\Debug::dump($child, 3);
+            }
+            die();
             $errors = $form->getErrors();
             $filesArray[] = array(
                 'error' => (count($errors) > 0?$errors[0]:'The file was invalid.'),
@@ -152,7 +158,7 @@ class ImageApiController extends Controller
     }
 
     /**
-     * @Route("/{id}.{format}", name="api_images_new_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Route("/{id}.{format}", name="api_images_edit_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"POST"})
      * @Secure(roles="ROLE_ADMIN")
      */
@@ -165,19 +171,23 @@ class ImageApiController extends Controller
             throw new NotFoundHttpException("The image was not found.");
         }
 
-        $manager = $this->get('kac_site.manager.image');
         $filesArray = array();
 
         /**
          * @var $form FormInterface
          */
-        $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $image, array('csrf_protection' => false))
+        $form = $this->createFormBuilder($image, array(
+            'csrf_protection' => false,
+            'validation_groups' => array('edit_image'),
+        ))
             ->add('imageType', 'text')
             ->getForm();
+
         $form->bind($request);
 
         if ($form->isValid())
-        {            $em->persist($image);
+        {
+            $em->persist($image);
             $em->flush();
 
             $filesArray[] = array(

@@ -15,13 +15,10 @@
                         <a class="lightbox" href="{%=file.url%}" target="_blank"><img width="100" src="{%=file.url%}" /></a>
                     </td>
                     <td class="type tac">
-                        {% if (file.type == 'gallery') { %}
-                            Gallery Image
-                        {% } else if (file.type == 'product') { %}
-                            Product Image
-                        {% } else { %}
-                            -
-                        {% } %}
+                        <select class="image-type fill" name="type">
+                            <option value="product" {% if (file.type == 'product') { %}selected{% } %}>Product Image</option>
+                            <option value="gallery" {% if (file.type == 'gallery') { %}selected{% } %}>Gallery Image</option>
+                        </select>
                     </td>
                     <td colspan="2">&nbsp;</td>
                     <td class="tac delete" width="1">

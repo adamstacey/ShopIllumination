@@ -37,7 +37,7 @@ class ImageListener
             if ($object)
             {
                 $this->manager->process($entity, $object);
-                $args->setNewValue('publicPath', $entity->getPublicPath());
+//                $args->setNewValue('publicPath', $entity->getPublicPath());
             }
         }
     }

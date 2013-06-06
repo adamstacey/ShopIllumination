@@ -32,6 +32,7 @@ class Image
     
      /**
      * @ORM\Column(name="image_type", type="string", length=100, nullable=true)
+      * @Assert\NotNull(groups={"new_image", "edit_image"})
      */
     private $imageType;
 
@@ -99,8 +100,9 @@ class Image
 
     /**
      * @var UploadedFile
-     * @Assert\NotNull
+     * @Assert\NotNull(groups={"new_image"})
      * @Assert\File(
+     *     groups={"new_image"},
      *     maxSize = "10485760",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/pjpeg", "image/png"},
      *     mimeTypesMessage = "Please upload a valid image."
