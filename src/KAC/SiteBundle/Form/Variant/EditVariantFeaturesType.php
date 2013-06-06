@@ -15,6 +15,7 @@ class EditVariantFeaturesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('features', 'collection', array(
+            'block_name' => 'variants_features',
             'type' => new ProductFeatureCombinationType($options['departmentId']),
             'allow_add' => true,
             'allow_delete' => true,

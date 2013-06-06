@@ -21,28 +21,31 @@
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
 
                                     <fieldset class="pbm">
-                                        <table class="form-table" id="feature-list" data-prototype="{{ form_widget(form.features.vars.prototype) | e }}">
+                                        <table class="form-table mbm">
                                             <thead>
                                             <tr>
-                                                <th>Group</th>
-                                                <th>Feature</th>
-                                                <th>&nbsp;</th>
+                                                <th width="1">&nbsp;</th>
+                                                <th title="The selected feature group.">Group</th>
+                                                <th title="Select a corresponding feature.">Feature</th>
+                                                <th width="1">&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for feature in form.features %}
-                                                <tr>{{ form_widget(feature) }}</tr>
+                                            {% for row in features %}
+                                                <tr>
+                                                    <td width="1" class="row-count tar">{{ loop.index }}</td>
+                                                    <td{% if row.featureGroup.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(row.featureGroup) }}</td>
+                                                    <td{% if row.feature.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(row.feature, { 'attr': {'data-apply-to-all': 'feature'} }) }}</td>
+                                                    <td width="1" class="tar"><button type="button" title="Click to apply the selected feature across all other variants." data-apply-to-all-field="feature" class="actionApplyToAll button icon-grey" data-icon-primary="icon-751" data-icon-only="true">Apply to All</button></td>
+                                                </tr>
                                             {% endfor %}
+                                            {{ form_rest(form) }}
                                             </tbody>
-                                            {% do form.features.setRendered() %}
                                         </table>
                                     </fieldset>
 
-
-                                    {{ form_rest(form) }}
                                     <div class="clearfix">
-                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Variant</button>                                        <button type="button" data-table-object="feature-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Feature</button>
-
+                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Variant</button>
                                     </div>
                                 </section>
                             </div>
