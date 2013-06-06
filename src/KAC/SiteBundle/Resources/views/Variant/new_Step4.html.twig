@@ -114,7 +114,7 @@
             }).disableSelection();
 
             $(this).fileupload({
-                url: '{{ path('api_images_post_image') }}',
+                url: '{{ path('api_images_new_image') }}',
                 dropZone: $(this),
                 formData: []
             }).bind('fileuploadsubmit', function (e, data) {

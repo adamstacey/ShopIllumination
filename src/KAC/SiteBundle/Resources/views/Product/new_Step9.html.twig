@@ -90,7 +90,7 @@
         $(".imageupload").each(function () {
             var that = this;
             $(this).fileupload({
-                url: '{{ path('api_images_post_image') }}',
+                url: '{{ path('api_images_new_image') }}',
                 dropZone: $(this),
                 formData: [],
                 maxFileSize: 10485760,

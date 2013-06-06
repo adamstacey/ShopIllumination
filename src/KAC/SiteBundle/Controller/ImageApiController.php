@@ -91,11 +91,11 @@ class ImageApiController extends Controller
     }
 
     /**
-     * @Route("/.{format}", name="api_images_post_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Route("/.{format}", name="api_images_new_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"POST"})
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function postAction(Request $request, $format)
+    public function newAction(Request $request, $format)
     {
         $objectType = $this->get('request')->request->get('objectType');
         $manager = $this->get('kac_site.manager.image');
@@ -134,11 +134,61 @@ class ImageApiController extends Controller
                 'delete_type' => 'DELETE',
             );
         } else {
-            foreach($form->all() as $sform)
-            {
-                \Doctrine\Common\Util\Debug::dump($sform->getErrors());
-            }
-            die();
+            $errors = $form->getErrors();
+            $filesArray[] = array(
+                'error' => (count($errors) > 0?$errors[0]:'The file was invalid.'),
+            );
+        }
+
+        $serializer = $this->get('serializer');
+        $json = $serializer->serialize(array(
+            'files' => $filesArray,
+        ), $format);
+
+        $response = new Response($json);
+        $response->headers->set('Content-Type', 'application/'.$format);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/{id}.{format}", name="api_images_new_image", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Method({"POST"})
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editAction(Request $request, $format, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($id);
+        if (!$image)
+        {
+            throw new NotFoundHttpException("The image was not found.");
+        }
+
+        $manager = $this->get('kac_site.manager.image');
+        $filesArray = array();
+
+        /**
+         * @var $form FormInterface
+         */
+        $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $image, array('csrf_protection' => false))
+            ->add('imageType', 'text')
+            ->getForm();
+        $form->bind($request);
+
+        if ($form->isValid())
+        {            $em->persist($image);
+            $em->flush();
+
+            $filesArray[] = array(
+                'id' => $image->getId(),
+                'type' => $image->getImageType(),
+                'title' => $image->getTitle(),
+                'url' => $image->getOriginalPath(),
+                'delete_url' => $this->generateUrl('api_images_delete_image', array('id' => $image->getId())),
+                'delete_type' => 'DELETE',
+            );
+        } else {
             $errors = $form->getErrors();
             $filesArray[] = array(
                 'error' => (count($errors) > 0?$errors[0]:'The file was invalid.'),
