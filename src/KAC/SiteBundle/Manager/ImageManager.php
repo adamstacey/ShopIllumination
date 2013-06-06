@@ -85,19 +85,13 @@ class ImageManager extends Manager
         $fs = new Filesystem();
         $em = $this->doctrine->getManager();
 
-        // Unlink the existing images
-        foreach ($object->getImages() as $image)
-        {
-            $object->removeImage($image);
-        }
-
         // Go through the temporary images
         $imageIds = explode(',', $object->getTemporaryImages());
         $displayOrder = 0;
         foreach ($imageIds as $imageId)
         {
             $image = $em->getRepository($this->getClassName($objectType))->find($imageId);
-            if ($image)
+            if ($image && $this->getObject($image) == null)
             {
                 // Get a new original filename and copy the file
                 $filename = sha1(uniqid(mt_rand(), true));
@@ -161,7 +155,7 @@ class ImageManager extends Manager
         foreach ($uploadIds as $uploadId)
         {
             $upload = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($uploadId);
-            if ($upload)
+            if ($upload && $this->getObject($upload) == null)
             {
                 $em->remove($upload);
             }
@@ -172,7 +166,7 @@ class ImageManager extends Manager
         foreach ($imageIds as $imageId)
         {
             $image = $em->getRepository("KAC\SiteBundle\Entity\Image")->find($imageId);
-            if ($image)
+            if ($image && $this->getObject($image) == null)
             {
                 $em->remove($image);
             }
@@ -204,22 +198,22 @@ class ImageManager extends Manager
         return $className;
     }
 
-    public function getObject($object)
+    public function getObject($image)
     {
-        switch (get_class($object))
+        switch (get_class($image))
         {
             case 'KAC\\SiteBundle\\Entity\\Brand\\Image':
-                return $object->getBrand();
+                return $image->getBrand();
                 break;
             case 'KAC\\SiteBundle\\Entity\\Department\\Image':
-                return $object->getDepartment();
+                return $image->getDepartment();
                 break;
             case 'KAC\\SiteBundle\\Entity\\Product\\Variant\\Image':
-                return $object->getVariant();
+                return $image->getVariant();
                 break;
             case 'KAC\\SiteBundle\\Entity\\Product\\Image':
             default:
-                return $object->getProduct();
+                return $image->getProduct();
                 break;
         }
     }

@@ -12,9 +12,7 @@ class EditVariantDescriptionsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('descriptions', 'collection', array(
-            'type' => new VariantDescriptionType(),
-            'allow_add' => true,
-            'allow_delete' => true,
+            'type' => new ProductVariantDescriptionType(),
         ));
     }
 

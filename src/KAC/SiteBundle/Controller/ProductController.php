@@ -446,13 +446,50 @@ class ProductController extends Controller {
             throw new NotFoundHttpException("Product not found");
         }
 
-        // Fetch the products images
-        $images = $em->getRepository("KAC\SiteBundle\Entity\Product\Image")->findBy(array(
-            'objectId' => $product->getId(),
-        ));
         $product->setTemporaryImages(join(',', array_map(function($image) {
             return $image->getId();
-        }, $images)));
+        }, $product->getImages())));
+
+
+        $form = $this->createForm(new EditProductImagesType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
+            if($form->isValid()) {
+                $this->getImageManager()->persistImages($product, 'product');
+
+                $em->persist($product);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:edit_images.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/documents", name="products_edit_documents")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDocumentsAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        $product->setTemporaryImages(join(',', array_map(function($image) {
+            return $image->getId();
+        }, $product->getImages())));
 
 
         $form = $this->createForm(new EditProductImagesType(), $product);

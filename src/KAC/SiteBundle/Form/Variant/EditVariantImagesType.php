@@ -11,7 +11,7 @@ class EditVariantImagesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('images', 'hidden');
+        $builder->add('temporaryImages', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
