@@ -126,7 +126,7 @@ class DepartmentController extends Controller
 
         if ($request->isMethod('POST'))
         {
-            $form->bind($request);
+            $form->submit($request);
             if ($form->isValid())
             {
 

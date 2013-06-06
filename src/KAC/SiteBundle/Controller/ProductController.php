@@ -232,7 +232,7 @@ class ProductController extends Controller {
         $form = $this->createForm(new NewProductFeatureGroupsType($department));
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if ($form->isValid()) {
 
                 // Get the data
@@ -329,7 +329,7 @@ class ProductController extends Controller {
         $form = $this->createForm(new NewProductFeaturesType($departmentId));
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if ($form->isValid()) {
 
                 // Get the data
@@ -378,7 +378,7 @@ class ProductController extends Controller {
         $form = $this->createForm($formClass, $product);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
 
                 $em->persist($product);
@@ -454,7 +454,7 @@ class ProductController extends Controller {
         $form = $this->createForm(new EditProductImagesType(), $product);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
                 $this->getImageManager()->persistImages($product, 'product');
 
@@ -495,7 +495,7 @@ class ProductController extends Controller {
         $form = $this->createForm(new EditProductImagesType(), $product);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
                 $this->getImageManager()->persistImages($product, 'product');
 
@@ -537,7 +537,7 @@ class ProductController extends Controller {
         $form = $this->createForm(new EditProductLinksType(), $product);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
                 // Remove all links from the to delete array that have not been deleted
                 foreach($product->getLinks() as $link) {

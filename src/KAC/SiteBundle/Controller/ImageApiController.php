@@ -111,7 +111,7 @@ class ImageApiController extends Controller
             ->add('objectType', 'text', array('mapped' => false))
             ->add('imageType', 'text')
             ->getForm();
-        $form->bind($request);
+        $form->submit($request);
 
         if ($image !== null && $form->isValid())
         {
@@ -183,7 +183,7 @@ class ImageApiController extends Controller
             ->add('imageType', 'text')
             ->getForm();
 
-        $form->bind($request);
+        $form->submit($request);
 
         if ($form->isValid())
         {

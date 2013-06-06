@@ -101,7 +101,7 @@ class VariantController extends Controller {
         $form = $this->createForm($formClass, $variant);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
                 $em->persist($variant);
                 $em->flush();
@@ -170,7 +170,7 @@ class VariantController extends Controller {
         $form = $this->createForm(new EditVariantPricesType(), $variant);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
                 // Remove all links from the to delete array that have not been deleted
                 foreach($variant->getPrices() as $price) {
@@ -228,7 +228,7 @@ class VariantController extends Controller {
         ));
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
                 // Remove all links from the to delete array that have not been deleted
                 foreach($variant->getFeatures() as $feature) {
@@ -288,7 +288,7 @@ class VariantController extends Controller {
         $form = $this->createForm(new EditVariantImagesType(), $variant);
 
         if ($request->isMethod('POST')) {
-            $form->bind($request);
+            $form->submit($request);
             if($form->isValid()) {
                 $this->getImageManager()->persistImages($variant, 'variant');
 

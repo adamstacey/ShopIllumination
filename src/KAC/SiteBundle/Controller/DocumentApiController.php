@@ -110,7 +110,7 @@ class DocumentApiController extends Controller
             ->add('objectType', 'text', array('mapped' => false))
             ->add('title', 'text')
             ->getForm();
-        $form->bind($request);
+        $form->submit($request);
 
         if ($form->isValid())
         {
