@@ -93,7 +93,7 @@ class VariantController extends Controller {
         ));
     }
 
-    public function editAction(Request $request, $variantId, $template, $formClass)
+    public function editBaseAction(Request $request, $variantId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -131,12 +131,22 @@ class VariantController extends Controller {
 
     /**
      * @Route("/admin/products/{productId}/variants/{variantId}/edit", name="variants_edit")
+     */
+    public function editAction($productId, $variantId)
+    {
+        return $this->redirect($this->generateUrl('variants_edit_overview', array(
+            'productId' => $productId,
+            'variantId' => $variantId,
+        )));
+    }
+
+    /**
      * @Route("/admin/products/{productId}/variants/{variantId}/overview", name="variants_edit_overview")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editOverviewAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_overview.html.twig', new EditVariantOverviewType());
+        return $this->editBaseAction($request, $variantId, 'KACSiteBundle:Variant:edit_overview.html.twig', new EditVariantOverviewType());
     }
 
     /**
@@ -145,7 +155,7 @@ class VariantController extends Controller {
      */
     public function editDescriptionsAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_descriptions.html.twig', new ProductVariantDescriptionsType());
+        return $this->editBaseAction($request, $variantId, 'KACSiteBundle:Variant:edit_descriptions.html.twig', new ProductVariantDescriptionsType());
     }
 
     /**
@@ -154,7 +164,7 @@ class VariantController extends Controller {
      */
     public function editSeoAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_seo.html.twig', new ProductVariantSeoType());
+        return $this->editBaseAction($request, $variantId, 'KACSiteBundle:Variant:edit_seo.html.twig', new ProductVariantSeoType());
     }
 
     /**
@@ -163,7 +173,7 @@ class VariantController extends Controller {
      */
     public function editDimensionsAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_dimensions.html.twig', new EditVariantDimensionsType());
+        return $this->editBaseAction($request, $variantId, 'KACSiteBundle:Variant:edit_dimensions.html.twig', new EditVariantDimensionsType());
     }
 
     /**
@@ -172,7 +182,7 @@ class VariantController extends Controller {
      */
     public function editDeliveryAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_delivery.html.twig', new ProductVariantDeliveryType());
+        return $this->editBaseAction($request, $variantId, 'KACSiteBundle:Variant:edit_delivery.html.twig', new ProductVariantDeliveryType());
     }
 
     /**
