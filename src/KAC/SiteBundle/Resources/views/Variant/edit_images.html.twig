@@ -9,7 +9,7 @@
         </div>
         <div class="widget widget-5-of-7">
             <section>
-                <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': variant.product.id, 'variantId': variant.id}) }}" {{ form_enctype(form) }}>
+                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': variant.product.id, 'variantId': variant.id}) }}" {{ form_enctype(form) }}>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-1">
                             <div class="ui-widget mbl">
@@ -21,21 +21,37 @@
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
 
                                     <fieldset class="fileupload">
-                                        <table class="form-table files">
-                                            <thead>
-                                            <tr>
-                                                <th colspan="4">
-                                                    <button type="button" class="button fileinput-button button-small mrm fl">
-                                                        Add files
-                                                        <input class="no-uniform" type="file" name="file" multiple>
-                                                    </button>
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                        {{ form_widget(form.images) }}
+                                        <div class="accordion mbm">
+                                            <div class="accordion-item imageupload">
+                                                <div class="accordion-header-buttons">
+                                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="form[file]" multiple></button>
+                                                </div>
+                                                <h3>Image Uploads</h3>
+                                                <div>
+                                                    <table class="form-table files mbm">
+                                                        <thead>
+                                                        <tr>
+                                                            <th width="1" title="The image.">Image</th>
+                                                            <th title="The image type.">Image Type</th>
+                                                            <th>&nbsp;</th>
+                                                            <th width="1">&nbsp;</th>
+                                                            <th width="1">&nbsp;</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr class="no-files">
+                                                            <td colspan="5">
+                                                                <div class="message message-help mas">
+                                                                    <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                                    <p>There are no images currently saved. Add an image using the "Add Files" button above.</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                {{ form_widget(form.temporaryImages) }}
+                                            </div>
                                     </fieldset>
 
                                     {{ form_rest(form) }}
@@ -46,62 +62,8 @@
                         </div>
                     </div>
                 </form>
-                {% raw %}
-                <script id="template-upload" type="text/x-template">
-                    {% for (var i=0, file; file=o.files[i]; i++) { %}
-                    <tr class="template-upload">
-                        <td class="name"><span>{%=file.name%}</span></td>
-                        <td class="type">
-                            <select class="image-type" name="type">
-                                <option value="product">Product</option>
-                                <option value="gallery">Gallery</option>
-                            </select>
-                        </td>
-                        {% if (file.error) { %}
-                        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-                        {% } else if (o.files.valid && !i) { %}
-                        <td>
-                            <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
-                        </td>
-                        <td class="start">
-                            {% if (!o.options.autoUpload) { %}
-                            <button type="button" class="button button-small mrm fl">Start</button>
-                            {% } %}
-                        </td>
-                        {% } else { %}
-                        <td colspan="2"></td>
-                        {% } %}
-                        <td class="cancel">
-                            {% if (!i) { %}
-                            <button type="button" class="button button-small mrm fl">Cancel</button>
-                            {% } %}
-                        </td>
-                    </tr>
-                    {% } %}
-                </script>
-                <!-- The template to display files available for download -->
-                <script id="template-download" type="text/x-template">
-                    {% for (var i=0, file; file=o.files[i]; i++) { %}
-                    <tr class="template-download">
-                        {% if (file.error) { %}
-                        <td class="name"><span>{%=file.name%}</span></td>
-                        <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
-                        {% } else { %}
-                        <td class="name">
-                            <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
-                        </td>
-                        <td class="type" colspan="2"><span>
-                {% if (file.type == 'gallery') { %}Gallery{% } %}
-                {% if (file.type == 'product') { %}Product{% } %}
-            </span></td>
-                        {% } %}
-                        <td class="delete" colspan="2">
-                            <button type="button"  data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %} class="button button-red button-small mrm fl">Delete</button>
-                        </td>
-                    </tr>
-                    {% } %}
-                </script>
-                {% endraw %}
+                {% include 'KACSiteBundle:Images:imageUpload.html.twig' %}
+                {% include 'KACSiteBundle:Images:imageDownload.html.twig' %}
                 <script>
                     $(function () {
                         'use strict';
@@ -109,55 +71,73 @@
                         $('.fileupload').each(function () {
                             var that = this;
 
-                            $(".files tbody", this).sortable({
-                                handle: 'td:last',
-                                update: function() {
-                                    // Update hidden field
-                                    var images = [];
-                                    $(that).find("tr.template-download").each(function(key, row) {
-                                        images.push($(row).attr("data-id"));
-                                    });
-                                    $(that).find('input[type=hidden]').val(images.join(','));
-                                }
-                            }).disableSelection();
-
                             $(this).fileupload({
                                 url: '{{ path('api_images_new_image') }}',
                                 dropZone: $(this),
-                                formData: []
-                            }).bind('fileuploadsubmit', function (e, data) {
-                                        //Add type field to form
+                                formData: [],
+                                maxFileSize: 10485760,
+                                uploadTemplateId: "templateImageUpload",
+                                downloadTemplateId: "templateImageDownload"
+                            }).bind("fileuploadadd", function (e, data) {
+                                        $(that).find("tr.no-files").hide();
+                                    }).bind("fileuploadsubmit", function (e, data) {
+                                        // Add type field to form
                                         var typeField = $(".image-type", data.context);
-
                                         data.formData = {
-                                            "imageType": typeField.val()
+                                            "form[objectType]": "product_variant",
+                                            "form[imageType]": typeField.val()
                                         };
-                                    }).bind('fileuploadcompleted', function (e, data) {
-                                        // Add image ID to row as data attr
-                                        data.context.attr("data-id", data.result.files[0].id);
-
+                                    }).bind('fileuploaddcompleted', function (e, data) {
                                         // Update hidden field
-                                        var images = [];
+                                        var $images = [];
                                         $(that).find("tr.template-download").each(function(key, row) {
-                                            images.push($(row).attr("data-id"));
+                                            $images.push($(row).attr("data-id"));
                                         });
-                                        $(that).find('input[type=hidden]').val(images.join(','));
+                                        $(that).find("input[type=hidden]").val($images.join(","));
+                                        generateButtons($(that).find(".files"));
+                                        return true;
+                                    }).bind('fileuploaddone', function (e, data) {
+                                        var images = $(that).find('input[type=hidden]').val();
 
-                                        generateButtons($(that).find('.files'));
+                                        $.each(data.result.files, function (index, file) {
+                                            if (images === "") {
+                                                images = [];
+                                            } else {
+                                                images = images.split(',');
+                                            }
+
+                                            images.push(file.id);
+                                        });
+
+                                        $(that).find('input[type=hidden]').val(images.join(','));
                                         return true;
                                     });
 
+                            // Add event handler for updating image type
+                            $(".files").on("change", ".template-download .image-type", function() {
+                                var id = $(this).parents(".template-download").attr("data-id");
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '{{ path('api_images_edit_image', {'id': '-1'}) }}'.replace('-1', id),
+                                    data: {
+                                        form: {"imageType": $(this).val()}
+                                    }
+                                });
+                            });
+
                             // On page load fetch the info for any existing files
                             var imageIds = $(that).find('input[type=hidden]').val();
-                            if (imageIds) {
-                                var images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
-                                    var template = tmpl("template-download");
+                            if(imageIds != "") {
+                                $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', imageIds), function(data) {
+                                    var template = tmpl("templateImageDownload");
                                     var result = template({
                                         files: data.files,
                                         formatFileSize: this._formatFileSize,
                                         options: this.options
                                     });
+                                    $(that).find(".no-files").hide();
                                     $(that).find('.files tbody').append(result);
+                                    $(that).find(".lightbox").lightbox();
                                 });
                             }
                         });
@@ -165,8 +145,8 @@
                             e.preventDefault();
                         });
                     });
-                </script>
 
+                </script>
             </section>
         </div>
     </div>

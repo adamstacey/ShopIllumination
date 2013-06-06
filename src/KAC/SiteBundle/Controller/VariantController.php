@@ -101,9 +101,9 @@ class VariantController extends Controller {
             throw new NotFoundHttpException("Variant not found");
         }
 
-        if($variant->getDescription() === null)
+        if(count($variant->getDescriptions()) === 0)
         {
-            $variant->addDescription(new Variant\Description());
+            $variant->addDescription($variant->getDescription());
         }
 
         $form = $this->createForm($formClass, $variant);
@@ -298,17 +298,12 @@ class VariantController extends Controller {
         $variant = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->find($variantId);
         if(!$variant)
         {
-            throw new NotFoundHttpException("Product not found");
+            throw new NotFoundHttpException("Variant not found");
         }
 
-        // Fetch the products images
-        $images = $em->getRepository("KAC\SiteBundle\Entity\Image")->findBy(array(
-            'objectId' => $variant->getId(),
-            'objectType' => 'variant',
-        ));
-        $variant->setImages(join(',', array_map(function($image) {
+        $variant->setTemporaryImages(join(',', array_map(function($image) {
             return $image->getId();
-        }, $images)));
+        }, $variant->getImages()->toArray())));
 
 
         $form = $this->createForm(new EditVariantImagesType(), $variant);
@@ -316,14 +311,14 @@ class VariantController extends Controller {
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
-                $this->getImageManager()->persistImages($variant, 'variant');
+                $this->getImageManager()->persistImages($variant, 'product_variant');
 
                 $em->persist($variant);
                 $em->flush();
 
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
-                    'productId' => $variant->getProduct()->getId(),
                     'variantId' => $variant->getId(),
+                    'productId' => $variant->getProduct()->getId(),
                 )));
             }
         }

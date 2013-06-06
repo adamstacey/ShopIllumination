@@ -707,6 +707,18 @@ class Variant implements DescribableInterface
         if(count($this->descriptions) > 0)
         {
             return $this->descriptions[0];
+        } else {
+            if($this->getProduct()->getDescription() !== null) {
+                $description = new Variant\Description();
+                $description->setVariant($this);
+                $description->setLocale($this->getProduct()->getDescription()->getLocale());
+                $description->setBrandDescription($this->getProduct()->getDescription()->getBrandDescription());
+                $description->setPageTitle($this->getProduct()->getDescription()->getPageTitle());
+                $description->setHeader($this->getProduct()->getDescription()->getHeader());
+                $description->setMetaKeywords($this->getProduct()->getDescription()->getMetaKeywords());
+                $description->setMetaDescription($this->getProduct()->getDescription()->getMetaDescription());
+                return $description;
+            }
         }
 
         return null;
