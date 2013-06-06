@@ -172,6 +172,9 @@ class ImageManager extends Manager
                     $newImage->setDisplayOrder($displayOrder);
                     $newImage->setOriginalPath($originalPath);
 
+                    $em->persist($newImage);
+                    $em->flush();
+
                     // Process the new image and add it to the object
                     $this->process($newImage, $object);
                     $object->addImage($newImage);

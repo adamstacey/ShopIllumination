@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\DepartmentToFeature;
+use KAC\SiteBundle\Form\Product\EditProductDocumentsType;
 use KAC\SiteBundle\Form\Product\EditProductImagesType;
 use KAC\SiteBundle\Form\Product\EditProductDescriptionType;
 use KAC\SiteBundle\Form\Product\EditProductSeoType;
@@ -492,17 +493,18 @@ class ProductController extends Controller {
             throw new NotFoundHttpException("Product not found");
         }
 
-        $product->setTemporaryImages(join(',', array_map(function($image) {
-            return $image->getId();
-        }, $product->getImages())));
+        $product->setTemporaryDocuments(join(',', array_map(function($document) {
+            return $document->getId();
+        }, $product->getDocuments()->toArray())));
 
 
-        $form = $this->createForm(new EditProductImagesType(), $product);
+        $form = $this->createForm(new EditProductDocumentsType(), $product);
 
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
-                $this->getImageManager()->persistImages($product, 'product');
+//                $this->getDocumentManager()->persistDocuments($product, 'product');
+                $this->getManager()->updateDocuments($product);
 
                 $em->persist($product);
                 $em->flush();
@@ -513,7 +515,7 @@ class ProductController extends Controller {
             }
         }
 
-        return $this->render('KACSiteBundle:Product:edit_images.html.twig', array(
+        return $this->render('KACSiteBundle:Product:edit_documents.html.twig', array(
             'product' => $product,
             'form' => $form->createView(),
         ));
@@ -614,7 +616,7 @@ class ProductController extends Controller {
     }
 
     /**
-     * Fetch project manager from container
+     * Fetch product manager from container
      *
      * @return \KAC\SiteBundle\Manager\ProductManager
      */
@@ -624,12 +626,22 @@ class ProductController extends Controller {
     }
 
     /**
-     * Fetch project manager from container
+     * Fetch image manager from container
      *
      * @return \KAC\SiteBundle\Manager\ImageManager
      */
     private function getImageManager()
     {
         return $this->get('kac_site.manager.image');
+    }
+
+    /**
+     * Fetch document manager from container
+     *
+     * @return \KAC\SiteBundle\Manager\DocumentManager
+     */
+    private function getDocumentManager()
+    {
+        return $this->get('kac_site.manager.document');
     }
 }

@@ -45,6 +45,7 @@ class DocumentManager extends Manager
                 return null;
         }
         $document->setDisplayOrder(0);
+        $document->setDocumentType("document");
         return $document;
     }
 
@@ -85,15 +86,17 @@ class DocumentManager extends Manager
     public function process(Document $document, DescribableInterface $object)
     {
         $fs = new Filesystem();
-        $fileExtension = $this->fileManager->getFileExtension($document->getPath());
+        $fileSize = filesize($document->getUploadPath().$document->getPath());
+        $fileExtension = $this->fileManager->getFileExtension($document->getUploadPath().$document->getPath());
+
         $filename = $this->fileManager->cleanFilename($object->getDescription()->getHeader());
         $basePath = $document->getUploadDir().'/'.$document->getObjectType().'/'.$document->getDocumentType();
         $filePath = $basePath.'/'.$filename.'-'.$document->getId().'.'.$fileExtension;
-        $fileSize = filesize($filePath);
+        $fs->rename($document->getUploadPath().$document->getPath(), $document->getUploadPath().$filePath, true);
+
+        $document->setPath($filePath);
         $document->setFileExtension($fileExtension);
         $document->setFileSize($fileSize);
-        $fs->rename($document->getPath(), $filePath);
-        $document->setPath($filePath);
     }
 
     public function persistDocuments($object, $objectType)
@@ -112,15 +115,6 @@ class DocumentManager extends Manager
             if ($document)
             {
                 if($this->getObject($document) == null) {
-                    // Get a new original filename and copy the file
-                    $filename = sha1(uniqid(mt_rand(), true));
-                    $originalPath = $document->getUploadDir().'/'.$filename.'.'.$this->fileManager->getFileExtension($document->getOriginalPath());
-                    try {
-                        $fs->copy($document->getUploadPath().$document->getOriginalPath(), $document->getUploadPath().$originalPath, true);
-                    } catch (IOException $e) {
-                        throw new \Exception('An error occurred while copying the document '.$document->getUploadPath().$document->getOriginalPath().' to '.$document->getUploadPath().$originalPath.'.');
-                    }
-
                     // Create a new document based on the object type
                     switch ($objectType)
                     {
@@ -143,19 +137,23 @@ class DocumentManager extends Manager
                             break;
                     }
 
-                    // Copy the data from the temporary document                    
+                    // Copy the data from the temporary document
+                    $newDocument->setPath($document->getPath());
                     $newDocument->setLocale($document->getLocale());
                     $newDocument->setTitle($document->getTitle());
                     $newDocument->setDescription($document->getDescription());
                     $newDocument->setDocumentType($document->getDocumentType());
-                    $newDocument->setDisplayOrder($document->getDisplayOrder());
+                    $newDocument->setFileExtension($document->getFileExtension());
+                    $newDocument->setDisplayOrder($displayOrder);
+
+                    $em->persist($newDocument);
+                    $em->flush();
 
                     // Process the new document and add it to the object
                     $this->process($newDocument, $object);
                     $object->addDocument($newDocument);
                 } else {
                     $document->setDisplayOrder($displayOrder);
-                    $this->process($document, $object);
                 }
 
                 $displayOrder++;

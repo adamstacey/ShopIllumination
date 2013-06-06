@@ -228,10 +228,12 @@ class ProductManager extends Manager
     public function updateVariantImages(Variant $variant)
     {
         $this->imageManager->persistImages($variant, 'product_variant');
+        $this->imageManager->removeTemporaryImages($variant);
     }
 
     public function updateVariantDocuments(Variant $variant)
     {
         $this->documentManager->persistDocuments($variant, 'product_variant');
+        $this->documentManager->removeTemporaryDocuments($variant);
     }
 }

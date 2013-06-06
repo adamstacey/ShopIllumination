@@ -160,7 +160,7 @@
                 var titleField = $(".document-title", data.context);
                 data.formData = {
                     "form[objectType]": "product",
-                    "form[imageType]": typeField.val()
+                    "form[title]": typeField.val()
                 };
             }).bind("fileuploadcompleted", function (e, data) {
                 // Update hidden field

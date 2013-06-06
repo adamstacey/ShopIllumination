@@ -109,7 +109,7 @@ class DocumentApiController extends Controller
         ))
             ->add('file', 'file')
             ->add('objectType', 'text', array('mapped' => false))
-            ->add('documentType', 'text')
+            ->add('title', 'text')
             ->getForm();
         $form->submit($request);
 
@@ -175,7 +175,7 @@ class DocumentApiController extends Controller
             'csrf_protection' => false,
             'validation_groups' => array('edit_document'),
         ))
-            ->add('documentType', 'text')
+            ->add('title', 'text')
             ->getForm();
 
         $form->submit($request);
