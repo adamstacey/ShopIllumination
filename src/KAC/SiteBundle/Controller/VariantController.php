@@ -2,6 +2,7 @@
 namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use KAC\SiteBundle\Form\Product\ProductVariantDescriptionsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -98,6 +99,11 @@ class VariantController extends Controller {
             throw new NotFoundHttpException("Variant not found");
         }
 
+        if($variant->getDescription() === null)
+        {
+            $variant->addDescription(new Variant\Description());
+        }
+
         $form = $this->createForm($formClass, $variant);
 
         if ($request->isMethod('POST')) {
@@ -135,7 +141,7 @@ class VariantController extends Controller {
      */
     public function editDescriptionsAction(Request $request, $variantId)
     {
-        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_descriptions.html.twig', new EditVariantDescriptionsType());
+        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_descriptions.html.twig', new ProductVariantDescriptionsType());
     }
 
     /**
