@@ -72,7 +72,8 @@ class VariantController extends Controller {
                 $em->persist($variant);
                 $em->flush();
 
-                $this->getImageManager()->persistImages($variant, 'variant');
+                $this->getImageManager()->persistImages($variant, 'product_variant');
+//                $this->getImageManager()->persistImages($variant, 'product_variant');
 
                 $em->flush();
 

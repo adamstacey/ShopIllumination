@@ -1,0 +1,210 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge ({'productId': product.id, }) | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-944"></span>
+                    <h2>7. Uploads</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom">
+                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                    <fieldset>
+                        <div class="accordion mbm">
+                            <div class="accordion-item imageupload">
+                                <div class="accordion-header-buttons">
+                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="form[file]" multiple></button>
+                                </div>
+                                <h3>Image Uploads</h3>
+                                <div>
+                                    <table class="form-table files mbm">
+                                        <thead>
+                                        <tr>
+                                            <th width="1" title="The image.">Image</th>
+                                            <th title="The image type.">Image Type</th>
+                                            <th>&nbsp;</th>
+                                            <th width="1">&nbsp;</th>
+                                            <th width="1">&nbsp;</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="no-files">
+                                            <td colspan="5">
+                                                <div class="message message-help mas">
+                                                    <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                    <p>There are no images currently saved. Add an image using the "Add Files" button above.</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {{ form_widget(form.imageUploads) }}
+                            </div>
+                            <div class="accordion-item documentupload">
+                                <div class="accordion-header-buttons">
+                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="form[file]" multiple></button>
+                                </div>
+                                <h3>Document Uploads</h3>
+                                <div>
+                                    <table class="form-table files mbm">
+                                        <thead>
+                                        <tr>
+                                            <th width="1">&nbsp;</th>
+                                            <th title="The title of the document.">Title</th>
+                                            <th>&nbsp;</th>
+                                            <th width="1">&nbsp;</th>
+                                            <th width="1">&nbsp;</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="no-files">
+                                            <td colspan="5">
+                                                <div class="message message-help mas">
+                                                    <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                    <p>There are no documents currently saved. Add a document using the "Add Files" button above.</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {{ form_widget(form.documentUploads) }}
+                            </div>
+                        </div>
+                        {{ form_rest(form) }}
+                    </fieldset>
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Variant:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
+{% include 'KACSiteBundle:Images:imageUpload.html.twig' %}
+{% include 'KACSiteBundle:Images:imageDownload.html.twig' %}
+{% include 'KACSiteBundle:Documents:documentUpload.html.twig' %}
+{% include 'KACSiteBundle:Documents:documentDownload.html.twig' %}
+<script>
+    $(function () {
+        "use strict";
+        $(".imageupload").each(function () {
+            var that = this;
+            $(this).fileupload({
+                url: '{{ path('api_images_new_image') }}',
+                dropZone: $(this),
+                formData: [],
+                maxFileSize: 10485760,
+                uploadTemplateId: "templateImageUpload",
+                downloadTemplateId: "templateImageDownload"
+            }).bind("fileuploadadd", function (e, data) {
+                        $(that).find("tr.no-files").hide();
+                    }).bind("fileuploadsubmit", function (e, data) {
+                        // Add type field to form
+                        var typeField = $(".image-type", data.context);
+                        data.formData = {
+                            "form[objectType]": "product_variant",
+                            "form[imageType]": typeField.val()
+                        };
+                    }).bind("fileuploadcompleted", function (e, data) {
+                        // Update hidden field
+                        var $images = [];
+                        $(that).find("tr.template-download").each(function(key, row) {
+                            $images.push($(row).attr("data-id"));
+                        });
+                        $(that).find("input[type=hidden]").val($images.join(","));
+                        generateButtons($(that).find(".files"));
+                        return true;
+                    });
+
+            // Add event handler for updating image type
+            $(".files").on("change", ".template-download .image-type", function() {
+                var id = $(this).parents(".template-download").attr("data-id");
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('api_images_edit_image', {'id': '-1'}) }}'.replace('-1', id),
+                    data: {
+                        form: {"imageType": $(this).val()}
+                    }
+                });
+            });
+
+            // On page load fetch the info for any existing files
+            var $imageIds = $(that).find('input[type=hidden]').val();
+            if ($imageIds) {
+                var $images = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', $imageIds), function(data) {
+                    var template = tmpl("templateImageDownload");
+                    var result = template({
+                        files: data.files,
+                        formatFileSize: this._formatFileSize,
+                        options: this.options
+                    });
+                    $(that).find(".no-files").hide();
+                    $(that).find('.files tbody').append(result);
+                    $(that).find(".lightbox").lightbox();
+                });
+            }
+        });
+        $(".documentupload").each(function () {
+            var that = this;
+            $(this).fileupload({
+                url: '{{ path('api_documents_post_document') }}',
+                dropZone: $(this),
+                formData: [],
+                maxFileSize: 10485760,
+                uploadTemplateId: "templateDocumentUpload",
+                downloadTemplateId: "templateDocumentDownload"
+            }).bind("fileuploadadd", function (e, data) {
+                        $(that).find("tr.no-files").hide();
+                    }).bind("fileuploadsubmit", function (e, data) {
+                        // Add title field to form
+                        var titleField = $(".document-title", data.context);
+                        data.formData = {
+                            "form[objectType]": "product_variant",
+                            "form[imageType]": typeField.val()
+                        };
+                    }).bind("fileuploadcompleted", function (e, data) {
+                        // Update hidden field
+                        var $documents = [];
+                        $(that).find("tr.template-download").each(function(key, row) {
+                            $documents.push($(row).attr("data-id"));
+                        });
+                        $(that).find("input[type=hidden]").val($documents.join(","));
+                        generateButtons($(that).find(".files"));
+                        return true;
+                    });
+
+            // Add event handler for updating product type
+            {#$(".files").on("change", ".template-download .image-type", function() {#}
+            {#var id = $(this).parents(".template-download").attr("data-id");#}
+            {#$.ajax({#}
+            {#type: 'POST',#}
+            {#url: '{{ path('api_images_edit_image', {'id': '-1'}) }}'.replace('-1', id),#}
+            {#data: {#}
+            {#form: {"imageType": $(this).val()}#}
+            {#}#}
+            {#});#}
+            {#});#}
+
+            // On page load fetch the info for any existing files
+            var $documentIds = $(that).find('input[type=hidden]').val();
+            if ($documentIds) {
+                var $documents = $.getJSON('{{ path('api_documents_get_multiple', {'ids': '-1'}) }}'.replace('-1', $documentIds), function(data) {
+                    var template = tmpl("templateDocumentDownload");
+                    var result = template({
+                        files: data.files,
+                        formatFileSize: this._formatFileSize,
+                        options: this.options
+                    });
+                    $(that).find(".no-files").hide();
+                    $(that).find('.files tbody').append(result);
+                    $(that).find(".lightbox").lightbox();
+                });
+            }
+
+
+        });
+        $(document).bind('drop dragover', function (e) {
+            e.preventDefault();
+        });
+    });
+</script>

@@ -1,0 +1,116 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge ({'productId': product.id, }) | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-1103"></span>
+                    <h2>9. Documents</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom">
+                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                    <fieldset>
+                        <table class="form-table sortable files mbm">
+                            <tbody>
+                            <tr class="no-files">
+                                <td colspan="4">
+                                    <div class="message message-help mas">
+                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                        <p>There are no documents currently uploaded. Go back and upload an documents.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        {{ form_rest(form) }}
+                    </fieldset>
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Variant:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
+{% raw %}
+<script id="templateImageRow" type="text/x-template">
+    {% for (var i = 0, file; file = o.files[i]; i++) { %}
+    <tr class="image-row" data-id="{%=file.id %}">
+        <td width="1"><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
+        <td width="1"><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
+        <td width="1" class="name">
+            <a class="lightbox" href="{%=file.url%}" target="_blank"><img width="100" src="{%=file.url%}" /></a>
+        </td>
+        <td class="type">
+            {% if (file.type == 'gallery') { %}
+            Gallery Image
+            {% } else if (file.type == 'product') { %}
+            Product Image
+            {% } else { %}
+            -
+            {% } %}
+        </td>
+    </tr>
+    {% } %}
+</script>
+{% endraw %}
+<script>
+    $(function () {
+        "use strict";
+        var $images = "{{ form.vars.value.imageUploads }}";
+        if ($images) {
+            var $imageData = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', $images), function(data) {
+                var template = tmpl("templateImageRow");
+                var result = template({
+                    files: data.files,
+                    formatFileSize: this._formatFileSize,
+                    options: this.options
+                });
+                $(".files tbody").append(result);
+                $(".files tbody").find(".no-files").remove();
+            });
+        }
+        $("#formStep10").submit(function() {
+            $(".imageupload").each(function() {
+                var $images = [];
+                var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
+                $(this).find(".files tbody tr").each(function() {
+                    var $checkBoxObject = $(this).find("input");
+                    if($checkBoxObject.is(":checked")) {
+                        $images.push($checkBoxObject.attr("data-id"));
+                    }
+                });
+                $imagesHiddenInputObject.val($images.join(","));
+            });
+            return true;
+        });
+        $(document).bind('drop dragover', function (e) {
+            e.preventDefault();
+        });
+    });
+    $(window).load(function() {
+        $(".imageupload").each(function() {
+            var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
+            var $tableBodyObject = $(this).find(".files tbody");
+            var $images = $imagesHiddenInputObject.val().split(",");
+            var $reOrderedRows = new Array();
+            for (var $index = 0; $index < $images.length; $index++) {
+                var $row = $tableBodyObject.find("tr[data-id='"+$images[$index]+"']");
+                $reOrderedRows.push($row);
+                $row.remove();
+            }
+            $tableBodyObject.find("tr").each(function() {
+                $reOrderedRows.push($(this));
+                $(this).remove();
+            });
+            $tableBodyObject.empty();
+            for (var $index = 0; $index < $reOrderedRows.length; $index++) {
+                $tableBodyObject.append($reOrderedRows[$index]);
+            }
+            generateButtons($tableBodyObject);
+            generateFormElements($tableBodyObject);
+            for (var $index = 0; $index < $images.length; $index++) {
+                $tableBodyObject.find("input[type='checkbox'][data-id='"+$images[$index]+"']").attr("checked", "checked");
+            }
+        });
+        $.uniform.update();
+    });
+</script>

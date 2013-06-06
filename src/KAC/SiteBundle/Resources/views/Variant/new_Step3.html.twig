@@ -4,28 +4,15 @@
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-700"></span>
-                    <h2>3. Prices</h2>
+                    <h2>3. Description</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-
-                    <fieldset class="pbm">
-                        <table class="data-table" id="price-list" data-prototype="{{ form_widget(form.prices.vars.prototype) | e }}">
-                            <thead>
-                                <tr>
-                                    <th>RRP</th>
-                                    <th>List Price</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for row in form.prices %}
-                                <tr>
-                                    {{ form_widget(row) }}
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                    <fieldset>
+                        {% for description in form.descriptions %}
+                            {{ form_rest(description) }}
+                        {% endfor %}
+                        {% do form.descriptions.setRendered() %}
                     </fieldset>
 
                     {{ form_rest(form) }}

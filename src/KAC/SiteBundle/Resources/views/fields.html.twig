@@ -241,14 +241,7 @@
 {% endblock %}
 
 {# New Variant Blocks #}
-{% block _site_new_variant_prices_entry_widget %}
-    {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.table_prices_row(form) }}
-{% endblock %}
-{% block _site_new_variant_features_entry_widget %}
-    {% import "KACSiteBundle:Includes:fieldMacros.html.twig" as fields %}
-    {{ fields.table_features_widget(form) }}
-{% endblock %}
+
 
 {# Edit Variant Blocks #}
 {% block _site_edit_variant_features_features_entry_widget %}

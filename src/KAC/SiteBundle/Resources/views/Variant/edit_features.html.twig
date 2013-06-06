@@ -31,7 +31,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {% for row in features %}
+                                            {% for row in form.features %}
                                                 <tr>
                                                     <td width="1" class="row-count tar">{{ loop.index }}</td>
                                                     <td{% if row.featureGroup.vars.valid is sameas(false) %} class="error"{% endif %}>{{ form_widget(row.featureGroup) }}</td>

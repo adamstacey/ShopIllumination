@@ -190,6 +190,11 @@ class ProductController extends Controller {
                 // Get next form step
                 $form = $flow->createForm();
             } else {
+                // Update the images
+                $manager->updateImages($product);
+                // Update the documents
+                $manager->updateDocuments($product);
+
                 $em->persist($product);
                 $em->flush();
 

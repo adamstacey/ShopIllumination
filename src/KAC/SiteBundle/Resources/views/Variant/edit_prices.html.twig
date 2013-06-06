@@ -35,12 +35,10 @@
                                                     {{ form_widget(row) }}
                                                 </tr>
                                             {% endfor %}
+                                            {{ form_rest(form) }}
                                             </tbody>
                                         </table>
                                     </fieldset>
-
-
-                                    {{ form_rest(form) }}
                                     <div class="clearfix">
                                         <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Variant</button>                                        <button type="button" data-table-object="price-list" class="actionAddFormRow mrm fr button button-green icon-white" data-icon-secondary="icon-1120">Add Price</button>
 

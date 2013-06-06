@@ -3,20 +3,35 @@
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-700"></span>
-                    <h2>5. Dimensions</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-277"></span>
+                    <h2>5. Prices</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
+                        <p>Unique product identifiers uniquely identify a product and are important for the search and comparison engines as it helps them place the product in the best positions. Unique product identifiers also allow users of the site to search for products without having to know your own product code.</p>
+                    </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-
-                    <fieldset>
-                        {{ form_row(form.weight, {'label': 'Weight', 'help': ''}) }}
-                        {{ form_row(form.length, {'label': 'Length', 'help': ''}) }}
-                        {{ form_row(form.width, {'label': 'Width', 'help': ''}) }}
-                        {{ form_row(form.height, {'label': 'Height', 'help': ''}) }}
+                    <fieldset class="pbm">
+                        <table class="data-table" id="price-list" data-prototype="{{ form_widget(form.prices.vars.prototype) | e }}">
+                            <thead>
+                                <tr>
+                                    <th title="Enter the price of the product at the cost we but it in at.">Cost Price</th>
+                                    <th title="Enter the recommended retail price (RRP) of the product. Leave it blank if you want the RRP to be the list price.">RRP</th>
+                                    <th title="Enter the list price. This is the price the product will sell for.">List Price</th>
+                                    <th width="1">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in form.prices %}
+                                    <tr>
+                                        {{ form_widget(row) }}
+                                    </tr>
+                                {% endfor %}
+                                {{ form_rest(form) }}
+                            </tbody>
+                        </table>
                     </fieldset>
-
-                    {{ form_rest(form) }}
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Variant:newControls.html.twig' %}
                 </section>

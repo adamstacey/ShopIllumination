@@ -3,6 +3,12 @@
 {% block title %}Delivery | {{ variant.description.pageTitle }}{% endblock %}
 
 {% block body %}
+    {% set departmentName = form.vars.value.department.department.name %}
+    {% if form.vars.value.department.department.deliveryBand > 0 %}
+        {% set departmentDeliveryBand = form.vars.value.department.department.deliveryBand %}
+    {% elseif form.vars.value.department.department.inheritedDeliveryBand > 0 %}
+        {% set departmentDeliveryBand = form.vars.value.department.department.inheritedDeliveryBand %}
+    {% endif %}
     <div class="widget-group clearfix">
         <div class="widget widget-2-of-7">
             {% include 'KACSiteBundle:Variant:editLeftMenu.html.twig' %}

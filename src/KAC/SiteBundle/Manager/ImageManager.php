@@ -87,6 +87,8 @@ class ImageManager extends Manager
         $em = $this->doctrine->getManager();
 
         // Go through the temporary images
+        if($object->getTemporaryImages() === "") return;
+
         $imageIds = explode(',', $object->getTemporaryImages());
         $displayOrder = 0;
         foreach ($imageIds as $imageId)
