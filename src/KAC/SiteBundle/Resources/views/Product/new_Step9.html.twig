@@ -12,7 +12,7 @@
                         <div class="accordion mbm">
                             <div class="accordion-item imageupload">
                                 <div class="accordion-header-buttons">
-                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="file" multiple></button>
+                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="form[file]" multiple></button>
                                 </div>
                                 <h3>Image Uploads</h3>
                                 <div>
@@ -42,7 +42,7 @@
                             </div>
                             <div class="accordion-item documentupload">
                                 <div class="accordion-header-buttons">
-                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="file" multiple></button>
+                                    <button type="button" class="fileinput-button fr mlm button button-dark-grey icon-white" data-icon-secondary="icon-1121">Add Files<input class="no-uniform" type="file" name="form[file]" multiple></button>
                                 </div>
                                 <h3>Document Uploads</h3>
                                 <div>
@@ -102,8 +102,8 @@
                 // Add type field to form
                 var typeField = $(".image-type", data.context);
                 data.formData = {
-                    "objectType": "product",
-                    "imageType": typeField.val()
+                    "form[objectType]": "product",
+                    "form[imageType]": typeField.val()
                 };
             }).bind("fileuploadcompleted", function (e, data) {
                 // Update hidden field
@@ -114,6 +114,18 @@
                 $(that).find("input[type=hidden]").val($images.join(","));
                 generateButtons($(that).find(".files"));
                 return true;
+            });
+
+            // Add event handler for updating product type
+            $(".files").on("change", ".template-download .image-type", function() {
+                var id = $(this).parents(".template-download").attr("data-id");
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('api_images_edit_image', {'id': '-1'}) }}'.replace('-1', id),
+                    data: {
+                        form: {"imageType": $(this).val()}
+                    }
+                });
             });
 
             // On page load fetch the info for any existing files
@@ -147,8 +159,8 @@
                 // Add title field to form
                 var titleField = $(".document-title", data.context);
                 data.formData = {
-                    "objectType": "product",
-                    "title": titleField.val()
+                    "form[objectType]": "product",
+                    "form[imageType]": typeField.val()
                 };
             }).bind("fileuploadcompleted", function (e, data) {
                 // Update hidden field
@@ -160,6 +172,18 @@
                 generateButtons($(that).find(".files"));
                 return true;
             });
+
+            // Add event handler for updating product type
+            {#$(".files").on("change", ".template-download .image-type", function() {#}
+                {#var id = $(this).parents(".template-download").attr("data-id");#}
+                {#$.ajax({#}
+                    {#type: 'POST',#}
+                    {#url: '{{ path('api_images_edit_image', {'id': '-1'}) }}'.replace('-1', id),#}
+                    {#data: {#}
+                        {#form: {"imageType": $(this).val()}#}
+                    {#}#}
+                {#});#}
+            {#});#}
 
             // On page load fetch the info for any existing files
             var $documentIds = $(that).find('input[type=hidden]').val();
