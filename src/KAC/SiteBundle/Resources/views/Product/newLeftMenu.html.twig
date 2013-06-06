@@ -1,6 +1,6 @@
 <div class="ui-widget mbl">
     <header class="ui-widget-header ui-corner-top">
-        <h2>Steps</h2>
+        <h2>Steps{{ flow.getCurrentStepNumber() }}</h2>
     </header>
     <section class="ui-widget-content ui-corner-bottom">
         <nav class="left-menu">
@@ -12,7 +12,7 @@
                         {% set buttonColour = ' button-turquoise' %}
                         {% set iconColour = 'turquoise' %}
                     {% else %}
-                        {% if flow.isStepDone(loop.index) %}
+                        {% if flow.isStepDone(loop.index) or flow.isStepDone(loop.index-1) %}
                             {% set statusIcon = 'icon-1119' %}
                             {% set statusIconColour = 'icon-white' %}
                             {% set buttonColour = ' button-green' %}
@@ -54,7 +54,7 @@
                             <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ iconColour }} icon-946"></span>
                         {% endif %}
 
-                        {% if flow.isAllowDynamicStepNavigation() and (loop.index != flow.getCurrentStepNumber()) and flow.isStepDone(loop.index) and (not flow.isStepSkipped(loop.index)) %}
+                        {% if flow.isAllowDynamicStepNavigation() and (loop.index != flow.getCurrentStepNumber()) and (flow.isStepDone(loop.index) or flow.isStepDone(loop.index-1)) and (not flow.isStepSkipped(loop.index)) %}
                             <a data-icon-secondary="{{ statusIcon }}" class="fl ui-button button{{ buttonColour }} {{ statusIconColour }}" href="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge(app.request.attributes.get('_route_params')) | craue_addDynamicStepNavigationParameter(flow, loop.index)) }}">
                                 {{ stepLabel|raw }}
                             </a>
