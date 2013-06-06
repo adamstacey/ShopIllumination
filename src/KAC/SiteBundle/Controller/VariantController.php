@@ -2,6 +2,7 @@
 namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use KAC\SiteBundle\Form\Product\ProductVariantDeliveryType;
 use KAC\SiteBundle\Form\Product\ProductVariantDescriptionsType;
 use KAC\SiteBundle\Form\Product\ProductVariantSeoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -161,6 +162,15 @@ class VariantController extends Controller {
     public function editDimensionsAction(Request $request, $variantId)
     {
         return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_dimensions.html.twig', new EditVariantDimensionsType());
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/variants/{variantId}/delivery", name="variants_edit_delivery")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDeliveryAction(Request $request, $variantId)
+    {
+        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_delivery.html.twig', new ProductVariantDeliveryType());
     }
 
     /**

@@ -1,0 +1,50 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Delivery | {{ variant.description.pageTitle }}{% endblock %}
+
+{% block body %}
+    <div class="widget-group clearfix">
+        <div class="widget widget-2-of-7">
+            {% include 'KACSiteBundle:Variant:editLeftMenu.html.twig' %}
+        </div>
+        <div class="widget widget-5-of-7">
+            <section>
+                <form class="form" id="form-edit" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': variant.product.id, 'variantId': variant.id}) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                    <h2>Delivery</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-all">
+                                    {% if departmentDeliveryBand %}
+                                        <div class="message message-help">
+                                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
+                                            <p>The default delivery band set is <strong>"{{ departmentDeliveryBand|number_format(0) }}"</strong>, which has been set by default from the department <strong>"{{ departmentName }}"</strong>.</p>
+                                        </div>
+                                    {% else %}
+                                        <div class="message message-help">
+                                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-694"></span>
+                                            <p>The default delivery band cannot be set as the department <strong>"{{ departmentName }}"</strong> has no default delivery band set.</p>
+                                            <p><strong>Please check the delivery bands below and make sure you set them.</strong></p>
+                                        </div>
+                                    {% endif %}
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset class="pbm">
+                                        {{ form_rest(form) }}
+                                    </fieldset>
+
+                                    {{ form_rest(form) }}
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Variant</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+{% endblock %}
