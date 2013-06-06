@@ -1,27 +1,25 @@
 {% import _self as helpers %}
 
-{% if loop.index == flow.getCurrentStepNumber() %}
-    {% set statusIconColour = 'icon-white' %}
-    {% set buttonColour = ' button-turquoise' %}
-    {% set iconColour = 'turquoise' %}
-{% else %}
-    {% set statusIconColour = 'icon-red' %}
-    {% set buttonColour = 'button-white' %}
-    {% set iconColour = 'grey' %}
-{% endif %}
-
-{% macro getRowColour(route) %}{% spaceless %}
+{% macro getStatusIconColour(route) %}{% spaceless %}
         {% if app.request.get('_route') == route %}
-            turquoise
+            white
         {% else %}
             grey
         {% endif %}
 {% endspaceless %}{% endmacro %}
 
+{% macro getIconColour(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        turquoise
+    {% else %}
+        grey
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
 {% macro getButtonClass(route) %}{% spaceless %}
-        {% if app.request.get('_route') == route %}
-            button-turquoise
-        {% endif %}
+    {% if app.request.get('_route') == route %}
+        button-turquoise
+    {% endif %}
 {% endspaceless %}{% endmacro %}
 
 <div class="ui-widget mbl">
@@ -31,38 +29,44 @@
         <nav class="left-menu">
             <ul class="clearfix">
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-276"></span>
-                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('products_edit_overview', {'productId': product.id}) }}">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_overview') }} icon-946"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_overview') }} icon-{{ helpers.getStatusIconColour('products_edit_overview') }}" href="{{ path('products_edit_overview', {'productId': product.id}) }}">
                         Product Information
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-398"></span>
-                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('products_edit_variants', {'productId': product.id}) }}">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_variants') }} icon-398"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_variants') }} icon-{{ helpers.getStatusIconColour('products_edit_variants') }}" href="{{ path('products_edit_variants', {'productId': product.id}) }}">
                         Product Combinations
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-398"></span>
-                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('products_edit_description', {'productId': product.id}) }}">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_description') }} icon-944"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_description') }} icon-{{ helpers.getStatusIconColour('products_edit_description') }}" href="{{ path('products_edit_description', {'productId': product.id}) }}">
                         Description
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-398"></span>
-                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('products_edit_seo', {'productId': product.id}) }}">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_seo') }} icon-369"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_seo') }} icon-{{ helpers.getStatusIconColour('products_edit_seo') }}" href="{{ path('products_edit_seo', {'productId': product.id}) }}">
                         SEO
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-1305"></span>
-                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('products_edit_images', {'productId': product.id}) }}">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_images') }} icon-1305"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_images') }} icon-{{ helpers.getStatusIconColour('products_edit_images') }}" href="{{ path('products_edit_images', {'productId': product.id}) }}">
                         Images
                     </a>
                 </li>
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-grey icon-276"></span>
-                    <a data-icon-secondary="icon-471" class="fl ui-button button icon-grey" href="{{ path('products_edit_links', {'productId': product.id}) }}">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_documents') }} icon-51"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_documents') }} icon-{{ helpers.getStatusIconColour('products_edit_documents') }}" href="{{ path('products_edit_documents', {'productId': product.id}) }}">
+                        Documents
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_links') }} icon-1249"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_links') }} icon-{{ helpers.getStatusIconColour('products_edit_links') }}" href="{{ path('products_edit_links', {'productId': product.id}) }}">
                         Links
                     </a>
                 </li>
