@@ -26,13 +26,15 @@ class ProductManager extends Manager
 {
     private $seoManager;
     private $imageManager;
+    private $documentManager;
 
-    public function __construct($doctrine, SeoManager $seoManager, ImageManager $imageManager)
+    public function __construct($doctrine, SeoManager $seoManager, ImageManager $imageManager, DocumentManager $documentManager)
     {
         parent::__construct($doctrine);
 
         $this->seoManager = $seoManager;
         $this->imageManager = $imageManager;
+        $this->documentManager = $documentManager;
     }
 
     public function createProduct()
@@ -200,7 +202,7 @@ class ProductManager extends Manager
         // Update variant images
         foreach ($product->getVariants() as $variant)
         {
-            $this->imageManager->persistImages($variant, 'product_variant');
+            $this->updateVariantImages($variant);
         }
 
         // Remove any temporary product images
@@ -210,6 +212,26 @@ class ProductManager extends Manager
 
     public function updateDocuments(Product $product)
     {
+        // Update the product documents
+        $this->documentManager->persistDocuments($product, 'product');
 
+        // Update variant documents
+        foreach ($product->getVariants() as $variant)
+        {
+            $this->updateVariantDocuments($variant);
+        }
+
+        // Remove any temporary product documents
+        $this->documentManager->removeTemporaryDocuments($product);
+    }
+
+    public function updateVariantImages(Variant $variant)
+    {
+        $this->imageManager->persistImages($variant, 'product_variant');
+    }
+
+    public function updateVariantDocuments(Variant $variant)
+    {
+        $this->documentManager->persistDocuments($variant, 'product_variant');
     }
 }

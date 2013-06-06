@@ -37,7 +37,6 @@ class DocumentListener
             if ($object)
             {
                 $this->manager->process($entity, $object);
-                $args->setNewValue('path', $entity->getPath());
             }
         }
     }

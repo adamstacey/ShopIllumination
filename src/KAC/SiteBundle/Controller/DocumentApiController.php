@@ -91,42 +91,41 @@ class DocumentApiController extends Controller
     }
 
     /**
-     * @Route("/.{format}", name="api_documents_post_document", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Route("/.{format}", name="api_documents_new_document", defaults={"format":"json"}, requirements={"format":"json|xml"})
      * @Method({"POST"})
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function postAction(Request $request, $format)
+    public function newAction(Request $request, $format)
     {
-        $objectType = $this->get('request')->request->get('objectType');
+        $objectType = $request->request->get('form[objectType]', null, true);
         $manager = $this->get('kac_site.manager.document');
-        $document = $manager->createDocument($objectType);
         $filesArray = array();
 
-        /**
-         * @var $form FormInterface
-         */
-        $form = $this->get('form.factory')->createNamedBuilder(null, 'form', $document, array('csrf_protection' => false))
+        $document = $manager->createDocument($objectType);
+
+        $form = $this->createFormBuilder($document, array(
+            'csrf_protection' => false,
+            'validation_groups' => array('new_document'),
+        ))
             ->add('file', 'file')
             ->add('objectType', 'text', array('mapped' => false))
-            ->add('title', 'text')
+            ->add('documentType', 'text')
             ->getForm();
         $form->submit($request);
 
-        if ($form->isValid())
+        if ($document !== null && $form->isValid())
         {
             /**
              * @var $file UploadedFile
              */
             $file = $document->getFile();
             $em = $this->getDoctrine()->getManager();
-            if (!$document->getTitle())
-            {
-                $document->setTitle($file->getClientOriginalName());
-            }
             $document->setFileExtension($file->guessExtension());
             $document->setFileSize($file->getSize());
+
             $em->persist($document);
             $em->flush();
+
             $filesArray[] = array(
                 'id' => $document->getId(),
                 'type' => $document->getDocumentType(),
@@ -149,6 +148,66 @@ class DocumentApiController extends Controller
 
         $response = new Response($json);
         $response->headers->set('Content-Type', 'application/'.$format);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/{id}.{format}", name="api_documents_edit_document", defaults={"format":"json"}, requirements={"format":"json|xml"})
+     * @Method({"POST"})
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editAction(Request $request, $format, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $document = $em->getRepository("KAC\SiteBundle\Entity\Document")->find($id);
+        if (!$document)
+        {
+            throw new NotFoundHttpException("The document was not found.");
+        }
+
+        $filesArray = array();
+
+        /**
+         * @var $form FormInterface
+         */
+        $form = $this->createFormBuilder($document, array(
+            'csrf_protection' => false,
+            'validation_groups' => array('edit_document'),
+        ))
+            ->add('documentType', 'text')
+            ->getForm();
+
+        $form->submit($request);
+
+        if ($form->isValid())
+        {
+            $em->persist($document);
+            $em->flush();
+
+            $filesArray[] = array(
+                'id' => $document->getId(),
+                'type' => $document->getDocumentType(),
+                'title' => $document->getTitle(),
+                'url' => $document->getPath(),
+                'delete_url' => $this->generateUrl('api_documents_delete_document', array('id' => $document->getId())),
+                'delete_type' => 'DELETE',
+            );
+        } else {
+            $errors = $form->getErrors();
+            $filesArray[] = array(
+                'error' => (count($errors) > 0?$errors[0]:'The file was invalid.'),
+            );
+        }
+
+        $serializer = $this->get('serializer');
+        $json = $serializer->serialize(array(
+            'files' => $filesArray,
+        ), $format);
+
+        $response = new Response($json);
+        $response->headers->set('Content-Type', 'application/'.$format);
+
         return $response;
     }
 

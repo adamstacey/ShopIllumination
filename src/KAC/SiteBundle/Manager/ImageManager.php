@@ -47,6 +47,40 @@ class ImageManager extends Manager
         return $image;
     }
 
+    public function getClassName($objectType)
+    {
+        switch ($objectType)
+        {
+            case 'brand':
+                return "KAC\\SiteBundle\\Entity\\Brand\\Image";
+            case 'department':
+                return "KAC\\SiteBundle\\Entity\\Department\\Image";
+            case 'product_variant':
+                return "KAC\\SiteBundle\\Entity\\Product\\Variant\\Image";
+            case 'product':
+                return "KAC\\SiteBundle\\Entity\\Product\\Image";
+            default:
+                return false;
+        }
+    }
+
+    public function getObject($image)
+    {
+        switch (get_class($image))
+        {
+            case 'KAC\\SiteBundle\\Entity\\Brand\\Image':
+                return $image->getBrand();
+            case 'KAC\\SiteBundle\\Entity\\Department\\Image':
+                return $image->getDepartment();
+            case 'KAC\\SiteBundle\\Entity\\Product\\Variant\\Image':
+                return $image->getVariant();
+            case 'KAC\\SiteBundle\\Entity\\Product\\Image':
+                return $image->getProduct();
+            default:
+                return null;
+        }
+    }
+
     public function process(Image $image, DescribableInterface $object)
     {
         // Set up defaults where we can
@@ -183,39 +217,5 @@ class ImageManager extends Manager
 
         // Flush the database
         $em->flush();
-    }
-
-    public function getClassName($objectType)
-    {
-        switch ($objectType)
-        {
-            case 'brand':
-                return "KAC\\SiteBundle\\Entity\\Brand\\Image";
-            case 'department':
-                return "KAC\\SiteBundle\\Entity\\Department\\Image";
-            case 'product_variant':
-                return "KAC\\SiteBundle\\Entity\\Product\\Variant\\Image";
-            case 'product':
-                return "KAC\\SiteBundle\\Entity\\Product\\Image";
-            default:
-                return false;
-        }
-    }
-
-    public function getObject($image)
-    {
-        switch (get_class($image))
-        {
-            case 'KAC\\SiteBundle\\Entity\\Brand\\Image':
-                return $image->getBrand();
-            case 'KAC\\SiteBundle\\Entity\\Department\\Image':
-                return $image->getDepartment();
-            case 'KAC\\SiteBundle\\Entity\\Product\\Variant\\Image':
-                return $image->getVariant();
-            case 'KAC\\SiteBundle\\Entity\\Product\\Image':
-                return $image->getProduct();
-            default:
-                return null;
-        }
     }
 }
