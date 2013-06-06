@@ -448,7 +448,7 @@ class ProductController extends Controller {
 
         $product->setTemporaryImages(join(',', array_map(function($image) {
             return $image->getId();
-        }, $product->getImages())));
+        }, $product->getImages()->toArray())));
 
 
         $form = $this->createForm(new EditProductImagesType(), $product);
