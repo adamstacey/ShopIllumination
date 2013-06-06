@@ -38,9 +38,10 @@ class ImageManager extends Manager
                 $image = new ProductVariantImage();
                 break;
             case 'product':
-            default:
                 $image = new ProductImage();
                 break;
+            default:
+                return null;
         }
         $image->setDisplayOrder(0);
         return $image;
@@ -91,52 +92,58 @@ class ImageManager extends Manager
         foreach ($imageIds as $imageId)
         {
             $image = $em->getRepository($this->getClassName($objectType))->find($imageId);
-            if ($image && $this->getObject($image) == null)
+            if ($image)
             {
-                // Get a new original filename and copy the file
-                $filename = sha1(uniqid(mt_rand(), true));
-                $originalPath = $image->getUploadDir().'/'.$filename.'.'.$this->fileManager->getFileExtension($image->getOriginalPath());
-                try {
-                    $fs->copy($image->getUploadPath().$image->getOriginalPath(), $image->getUploadPath().$originalPath, true);
-                } catch (IOException $e) {
-                    throw new \Exception('An error occurred while copying the image '.$image->getUploadPath().$image->getOriginalPath().' to '.$image->getUploadPath().$originalPath.'.');
+                if($this->getObject($image) == null) {
+                    // Get a new original filename and copy the file
+                    $filename = sha1(uniqid(mt_rand(), true));
+                    $originalPath = $image->getUploadDir().'/'.$filename.'.'.$this->fileManager->getFileExtension($image->getOriginalPath());
+                    try {
+                        $fs->copy($image->getUploadPath().$image->getOriginalPath(), $image->getUploadPath().$originalPath, true);
+                    } catch (IOException $e) {
+                        throw new \Exception('An error occurred while copying the image '.$image->getUploadPath().$image->getOriginalPath().' to '.$image->getUploadPath().$originalPath.'.');
+                    }
+
+                    // Create a new image based on the object type
+                    switch ($objectType)
+                    {
+                        case 'brand':
+                            $newImage = new BrandImage();
+                            $newImage->setBrand($object);
+                            break;
+                        case 'department':
+                            $newImage = new DepartmentImage();
+                            $newImage->setDepartment($object);
+                            break;
+                        case 'product_variant':
+                            $newImage = new ProductVariantImage();
+                            $newImage->setVariant($object);
+                            break;
+                        case 'product':
+                        default:
+                            $newImage = new ProductImage();
+                            $newImage->setProduct($object);
+                            break;
+                    }
+
+                    // Copy the data from the temporary image
+                    $newImage->setLocale($image->getLocale());
+                    $newImage->setTitle($image->getTitle());
+                    $newImage->setAlignment($image->getAlignment());
+                    $newImage->setDescription($image->getDescription());
+                    $newImage->setLink($image->getLink());
+                    $newImage->setImageType($image->getImageType());
+                    $newImage->setDisplayOrder($displayOrder);
+                    $newImage->setOriginalPath($originalPath);
+
+                    // Process the new image and add it to the object
+                    $this->process($newImage, $object);
+                    $object->addImage($newImage);
+                } else {
+                    $image->setDisplayOrder($displayOrder);
+                    $this->process($image, $object);
                 }
 
-                // Create a new image based on the object type
-                switch ($objectType)
-                {
-                    case 'brand':
-                        $newImage = new BrandImage();
-                        $newImage->setBrand($object);
-                        break;
-                    case 'department':
-                        $newImage = new DepartmentImage();
-                        $newImage->setDepartment($object);
-                        break;
-                    case 'product_variant':
-                        $newImage = new ProductVariantImage();
-                        $newImage->setVariant($object);
-                        break;
-                    case 'product':
-                    default:
-                        $newImage = new ProductImage();
-                        $newImage->setProduct($object);
-                        break;
-                }
-
-                // Copy the data from the temporary image
-                $newImage->setLocale($image->getLocale());
-                $newImage->setTitle($image->getTitle());
-                $newImage->setAlignment($image->getAlignment());
-                $newImage->setDescription($image->getDescription());
-                $newImage->setLink($image->getLink());
-                $newImage->setImageType($image->getImageType());
-                $newImage->setDisplayOrder($displayOrder);
-                $newImage->setOriginalPath($originalPath);
-
-                // Process the new image and add it to the object
-                $this->process($newImage, $object);
-                $object->addImage($newImage);
                 $displayOrder++;
             }
         }
@@ -181,21 +188,16 @@ class ImageManager extends Manager
         switch ($objectType)
         {
             case 'brand':
-                $className = "KAC\\SiteBundle\\Entity\\Brand\\Image";
-                break;
+                return "KAC\\SiteBundle\\Entity\\Brand\\Image";
             case 'department':
-                $className = "KAC\\SiteBundle\\Entity\\Department\\Image";
-                break;
+                return "KAC\\SiteBundle\\Entity\\Department\\Image";
             case 'product_variant':
-                $className = "KAC\\SiteBundle\\Entity\\Product\\Variant\\Image";
-                break;
+                return "KAC\\SiteBundle\\Entity\\Product\\Variant\\Image";
             case 'product':
+                return "KAC\\SiteBundle\\Entity\\Product\\Image";
             default:
-                $className = "KAC\\SiteBundle\\Entity\\Product\\Image";
-                break;
+                return false;
         }
-
-        return $className;
     }
 
     public function getObject($image)
@@ -204,17 +206,14 @@ class ImageManager extends Manager
         {
             case 'KAC\\SiteBundle\\Entity\\Brand\\Image':
                 return $image->getBrand();
-                break;
             case 'KAC\\SiteBundle\\Entity\\Department\\Image':
                 return $image->getDepartment();
-                break;
             case 'KAC\\SiteBundle\\Entity\\Product\\Variant\\Image':
                 return $image->getVariant();
-                break;
             case 'KAC\\SiteBundle\\Entity\\Product\\Image':
-            default:
                 return $image->getProduct();
-                break;
+            default:
+                return null;
         }
     }
 }
