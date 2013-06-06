@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Form\Product\ProductVariantDescriptionsType;
+use KAC\SiteBundle\Form\Product\ProductVariantSeoType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -142,6 +143,15 @@ class VariantController extends Controller {
     public function editDescriptionsAction(Request $request, $variantId)
     {
         return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_descriptions.html.twig', new ProductVariantDescriptionsType());
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/variants/{variantId}/seo", name="variants_edit_seo")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editSeoAction(Request $request, $variantId)
+    {
+        return $this->editAction($request, $variantId, 'KACSiteBundle:Variant:edit_seo.html.twig', new ProductVariantSeoType());
     }
 
     /**

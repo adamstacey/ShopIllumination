@@ -42,9 +42,9 @@
                                                 {% for link in form.links %}
                                                     <tr>{{ form_widget(link) }}</tr>
                                                 {% endfor %}
+                                                {{ form_rest(form) }}
                                             </tbody>
                                         </table>
-                                        {{ form_rest(form) }}
                                     </fieldset>
 
                                     <div class="clearfix">
