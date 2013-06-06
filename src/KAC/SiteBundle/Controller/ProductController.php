@@ -503,7 +503,6 @@ class ProductController extends Controller {
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
-//                $this->getDocumentManager()->persistDocuments($product, 'product');
                 $this->getManager()->updateDocuments($product);
 
                 $em->persist($product);

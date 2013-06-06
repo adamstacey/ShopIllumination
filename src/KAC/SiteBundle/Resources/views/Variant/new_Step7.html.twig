@@ -146,8 +146,9 @@
         });
         $(".documentupload").each(function () {
             var that = this;
+
             $(this).fileupload({
-                url: '{{ path('api_documents_post_document') }}',
+                url: '{{ path('api_documents_new_document') }}',
                 dropZone: $(this),
                 formData: [],
                 maxFileSize: 10485760,
@@ -156,13 +157,13 @@
             }).bind("fileuploadadd", function (e, data) {
                         $(that).find("tr.no-files").hide();
                     }).bind("fileuploadsubmit", function (e, data) {
-                        // Add title field to form
+                        // Add type field to form
                         var titleField = $(".document-title", data.context);
                         data.formData = {
-                            "form[objectType]": "product_variant",
-                            "form[imageType]": typeField.val()
+                            "form[objectType]": "product",
+                            "form[title]": titleField.val()
                         };
-                    }).bind("fileuploadcompleted", function (e, data) {
+                    }).bind('fileuploaddcompleted', function (e, data) {
                         // Update hidden field
                         var $documents = [];
                         $(that).find("tr.template-download").each(function(key, row) {
@@ -171,24 +172,39 @@
                         $(that).find("input[type=hidden]").val($documents.join(","));
                         generateButtons($(that).find(".files"));
                         return true;
+                    }).bind('fileuploaddone', function (e, data) {
+                        var documents = $(that).find('input[type=hidden]').val();
+
+                        $.each(data.result.files, function (index, file) {
+                            if (documents === "") {
+                                documents = [];
+                            } else {
+                                documents = documents.split(',');
+                            }
+
+                            documents.push(file.id);
+                        });
+
+                        $(that).find('input[type=hidden]').val(documents.join(','));
+                        return true;
                     });
 
-            // Add event handler for updating product type
-            {#$(".files").on("change", ".template-download .image-type", function() {#}
-            {#var id = $(this).parents(".template-download").attr("data-id");#}
-            {#$.ajax({#}
-            {#type: 'POST',#}
-            {#url: '{{ path('api_images_edit_image', {'id': '-1'}) }}'.replace('-1', id),#}
-            {#data: {#}
-            {#form: {"imageType": $(this).val()}#}
-            {#}#}
-            {#});#}
-            {#});#}
+            // Add event handler for updating document type
+            $(".files").on("change", ".template-download .document-title", function() {
+                var id = $(this).parents(".template-download").attr("data-id");
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ path('api_documents_edit_document', {'id': '-1'}) }}'.replace('-1', id),
+                    data: {
+                        form: {"title": $(this).val()}
+                    }
+                });
+            });
 
             // On page load fetch the info for any existing files
-            var $documentIds = $(that).find('input[type=hidden]').val();
-            if ($documentIds) {
-                var $documents = $.getJSON('{{ path('api_documents_get_multiple', {'ids': '-1'}) }}'.replace('-1', $documentIds), function(data) {
+            var documentIds = $(that).find('input[type=hidden]').val();
+            if(documentIds != "") {
+                $.getJSON('{{ path('api_documents_get_multiple', {'ids': '-1'}) }}'.replace('-1', documentIds), function(data) {
                     var template = tmpl("templateDocumentDownload");
                     var result = template({
                         files: data.files,
@@ -200,8 +216,6 @@
                     $(that).find(".lightbox").lightbox();
                 });
             }
-
-
         });
         $(document).bind('drop dragover', function (e) {
             e.preventDefault();

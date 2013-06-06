@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Form\Product\ProductVariantDeliveryType;
 use KAC\SiteBundle\Form\Product\ProductVariantDescriptionsType;
 use KAC\SiteBundle\Form\Product\ProductVariantSeoType;
+use KAC\SiteBundle\Form\Variant\EditVariantDocumentsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -325,6 +326,48 @@ class VariantController extends Controller {
         }
 
         return $this->render('KACSiteBundle:Variant:edit_images.html.twig', array(
+            'variant' => $variant,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/variants/{variantId}/documents", name="variants_edit_documents")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDocumentsAction(Request $request, $variantId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $variant = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->find($variantId);
+        if(!$variant)
+        {
+            throw new NotFoundHttpException("Variant not found");
+        }
+
+        $variant->setTemporaryDocuments(join(',', array_map(function($document) {
+            return $document->getId();
+        }, $variant->getDocuments()->toArray())));
+
+
+        $form = $this->createForm(new EditVariantDocumentsType(), $variant);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                $this->getManager()->updateVariantDocuments($variant);
+
+                $em->persist($variant);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'variantId' => $variant->getId(),
+                    'productId' => $variant->getProduct()->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Variant:edit_documents.html.twig', array(
             'variant' => $variant,
             'form' => $form->createView(),
         ));

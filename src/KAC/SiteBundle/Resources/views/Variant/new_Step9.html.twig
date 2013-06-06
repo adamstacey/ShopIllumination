@@ -1,5 +1,5 @@
 <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | merge ({'productId': product.id, }) | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
-    <div class="widget-group clearfix">
+<div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
