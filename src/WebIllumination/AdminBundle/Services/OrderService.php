@@ -3,6 +3,7 @@
 namespace WebIllumination\AdminBundle\Services;
 
 use KAC\SiteBundle\Entity\Order;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 
 class OrderService {
@@ -24,7 +25,7 @@ class OrderService {
     protected $listingMaxResults;
     protected $pdfUrl;
 
-    public function __construct($container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
         $this->singleItemTitle = 'Order';
@@ -41,7 +42,7 @@ class OrderService {
         $this->listingSort = 'createdAt';
         $this->listingOrder = 'DESC';
         $this->listingMaxResults = 20;
-        $this->pdfUrl = 'http://www.kitchenappliancecentre.co.uk/';
+        $this->pdfUrl = $this->container->getParameter('cdn_host');
     }
 
     // Initialise the admin order session
@@ -444,11 +445,10 @@ class OrderService {
         $copyOrderDocument = $this->getUploadRootDir().'/copy-order-'.$id.'.pdf';
         $invoiceDocument = $this->getUploadRootDir().'/invoice-'.$id.'.pdf';
         $deliveryNoteDocument = $this->getUploadRootDir().'/delivery-note-'.$id.'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
-
+        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'app_dev.php/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
+        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
+        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
+        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
         return true;
     }
 
@@ -459,7 +459,7 @@ class OrderService {
 
         // Create the PDF documents
         $invoicesDocument = $this->getUploadRootDir().'/orders-'.str_replace(',', '-', $ids).'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewOrders/'.$ids.' '.$invoicesDocument.' 2>&1');
+        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewOrders/'.$ids.' '.$invoicesDocument.' 2>&1');
 
         return '/'.$this->getUploadDir().'/orders-'.str_replace(',', '-', $ids).'.pdf';
     }
@@ -471,7 +471,7 @@ class OrderService {
 
         // Create the PDF documents
         $deliveryNotesDocument = $this->getUploadRootDir().'/delivery-notes-'.str_replace(',', '-', $ids).'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewDeliveryNotes/'.$ids.' '.$deliveryNotesDocument.' 2>&1');
+        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewDeliveryNotes/'.$ids.' '.$deliveryNotesDocument.' 2>&1');
 
         return '/'.$this->getUploadDir().'/delivery-notes-'.str_replace(',', '-', $ids).'.pdf';
     }
@@ -825,19 +825,19 @@ class OrderService {
             $deliveryNoteDocument = $this->getUploadRootDir().'/delivery-note-'.$order->getId().'.pdf';
             if (!file_exists($invoiceDocument))
             {
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
+                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
             }
             if (!file_exists($copyInvoiceDocument))
             {
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
+                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
             }
             if (!file_exists($invoiceDocument))
             {
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
+                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
             }
             if (!file_exists($deliveryNoteDocument))
             {	
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
+                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
             }
         }*/
 
@@ -1108,7 +1108,7 @@ class OrderService {
 
         // Get the order
         $orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
-        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('header' => 'ASC'));
+        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('name' => 'ASC'));
         $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
         $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
         $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
@@ -1178,13 +1178,16 @@ class OrderService {
             $newProduct = array();
             $newProduct['basketItemId'] = $orderProductObject->getBasketItemId();
             $newProduct['productId'] = $orderProductObject->getProduct()->getId();
-            $newProduct['variantId'] = $orderProductObject->getVariant()->getId();
+            if($orderProductObject->getVariant())
+            {
+                $newProduct['variantId'] = $orderProductObject->getVariant()->getId();
+            }
             $newProduct['product'] = $orderProductObject->getProduct();
             $newProduct['url'] = $orderProductObject->getUrl();
-            $newProduct['header'] = $orderProductObject->getHeader();
+            $newProduct['header'] = $orderProductObject->getName();
             $newProduct['productCode'] = $orderProductObject->getProductCode();
             $newProduct['brand'] = $orderProductObject->getBrand();
-            $newProduct['shortDescription'] = $orderProductObject->getShortDescription();
+            $newProduct['shortDescription'] = $orderProductObject->getDescription();
             $newProduct['quantity'] = $orderProductObject->getQuantity();
             $newProduct['unitCost'] = $orderProductObject->getUnitCost();
             $newProduct['recommendedRetailPrice'] = $orderProductObject->getRecommendedRetailPrice();

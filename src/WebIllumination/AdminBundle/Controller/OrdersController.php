@@ -63,7 +63,7 @@ class OrdersController extends Controller
     public function indexAction(Request $request, $document = '')
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
         $systemService = $this->get('web_illumination_admin.system_service');
 
         // Get the entity manager
@@ -167,7 +167,7 @@ class OrdersController extends Controller
                                     }
 
                                     // Get the order HTML
-                                    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrders.html.twig', array('orders' => $orders));
+                                    $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewOrders.html.twig', array('orders' => $orders));
 
                                     // Get the files
                                     $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
@@ -236,7 +236,7 @@ class OrdersController extends Controller
                                     }
 
                                     // Get the order HTML
-                                    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewCopyOrders.html.twig', array('orders' => $orders));
+                                    $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewCopyOrders.html.twig', array('orders' => $orders));
 
                                     // Get the files
                                     $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
@@ -323,7 +323,7 @@ class OrdersController extends Controller
                                     }
 
                                     // Get the order HTML
-                                    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewDeliveryNotes.html.twig', array('orders' => $orders));
+                                    $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewDeliveryNotes.html.twig', array('orders' => $orders));
 
                                     // Get the files
                                     $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
@@ -392,7 +392,7 @@ class OrdersController extends Controller
                                     }
 
                                     // Get the order HTML
-                                    $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoices.html.twig', array('orders' => $orders));
+                                    $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewInvoices.html.twig', array('orders' => $orders));
 
                                     // Get the files
                                     $ordersHtmlFileName = 'invoices-'.date('dmYHis').'.html';
@@ -961,7 +961,7 @@ class OrdersController extends Controller
         // Get the documents
         $data['document'] = $document;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':index.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:index.html.twig', array('data' => $data));
     }
 
     // Update listing
@@ -1035,7 +1035,7 @@ class OrdersController extends Controller
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
         $data['item'] = $itemObject;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetCustomer.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:ajaxGetCustomer.html.twig', array('data' => $data));
     }
 
     // Get the delivery information via Ajax
@@ -1054,7 +1054,7 @@ class OrdersController extends Controller
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
         $data['item'] = $itemObject;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetDeliveryInformation.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:ajaxGetDeliveryInformation.html.twig', array('data' => $data));
     }
 
     // Get the documents via Ajax
@@ -1073,7 +1073,7 @@ class OrdersController extends Controller
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
         $data['item'] = $itemObject;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetDocuments.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:ajaxGetDocuments.html.twig', array('data' => $data));
     }
 
     // Get the notes via Ajax
@@ -1096,7 +1096,7 @@ class OrdersController extends Controller
         $itemNoteObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id));
         $data['notes'] = $itemNoteObjects;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetNotes.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:ajaxGetNotes.html.twig', array('data' => $data));
     }
 
     // Get the payment information via Ajax
@@ -1115,7 +1115,7 @@ class OrdersController extends Controller
         $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
         $data['item'] = $itemObject;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetPaymentInformation.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:ajaxGetPaymentInformation.html.twig', array('data' => $data));
     }
 
     // Get the products via Ajax
@@ -1142,14 +1142,14 @@ class OrdersController extends Controller
         $itemDonationObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('order' => $id));
         $data['donations'] = $itemDonationObjects;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetProducts.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:ajaxGetProducts.html.twig', array('data' => $data));
     }
 
     // Get the statistics via Ajax
     public function ajaxGetStatisticsAction(Request $request)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Setup the data
         $data = array();
@@ -1169,7 +1169,7 @@ class OrdersController extends Controller
         // Get this years stats
         $data['statistics']['year'] = $service->getStatistics('year');
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':ajaxGetStatistics.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:ajaxGetStatistics.html.twig', array('data' => $data));
     }
 
     // Print orders
@@ -1179,7 +1179,7 @@ class OrdersController extends Controller
         if ($request->getMethod() == 'POST')
         {
             // Get the services
-            $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+            $service = $this->get('web_illumination_admin.order_service');
             $systemService = $this->container->get('web_illumination_admin.system_service');
 
             // Get submitted data
@@ -1193,7 +1193,7 @@ class OrdersController extends Controller
                 {
                     $orders[] = $service->getOrder($itemId);
                 }
-                $orderHtml = $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrders.html.twig', array('orders' => $orders));
+                $orderHtml = $this->render('WebIlluminationAdminBundle:Orders:viewOrders.html.twig', array('orders' => $orders));
 
                 $ordersHtmlFileName = 'orders-'.date('dmYHis').'.html';
                 $ordersHtmlFilePath = $this->get('kernel')->getRootdir().'/../web/uploads/temporary/'.$ordersHtmlFileName;
@@ -1221,7 +1221,7 @@ class OrdersController extends Controller
     public function processDeliveriesAction(Request $request)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the entity manager
         $em = $this->getDoctrine()->getManager();
@@ -1333,8 +1333,8 @@ class OrdersController extends Controller
                                     {
                                         $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                     }
-                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                     $this->get('mailer')->send($email);
 
                                     // Set the review as requested
@@ -1436,8 +1436,8 @@ class OrdersController extends Controller
                                     {
                                         $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                     }
-                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                     $this->get('mailer')->send($email);
 
                                     // Set the review as requested
@@ -1504,8 +1504,8 @@ class OrdersController extends Controller
                                         {
                                             $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                         }
-                                        $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                        $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                        $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                        $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                         $this->get('mailer')->send($email);
 
                                         // Set the review as requested
@@ -1557,8 +1557,8 @@ class OrdersController extends Controller
                                     {
                                         $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                     }
-                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                     $this->get('mailer')->send($email);
 
                                     // Set the review as requested
@@ -1622,14 +1622,14 @@ class OrdersController extends Controller
         $items = $qb->getQuery()->getResult();
         $data['items'] = $items;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':processDeliveries.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:processDeliveries.html.twig', array('data' => $data));
     }
 
     // Import tracking
     public function importTrackingAction(Request $request)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the entity manager
         $em = $this->getDoctrine()->getManager();
@@ -1703,8 +1703,8 @@ class OrdersController extends Controller
                                 {
                                     $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                 }
-                                $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                 $this->get('mailer')->send($email);
 
                                 // Set the review as requested
@@ -1736,7 +1736,7 @@ class OrdersController extends Controller
         $data['settings'] = $this->settings;
         $data['ordersUpdated'] = $ordersUpdated;
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':importTracking.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:importTracking.html.twig', array('data' => $data));
     }
 
     // Add
@@ -1749,7 +1749,7 @@ class OrdersController extends Controller
     public function updateAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the entity manager
         $em = $this->getDoctrine()->getManager();
@@ -1823,14 +1823,14 @@ class OrdersController extends Controller
         $data['formAction'] = $this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_update', array('id' => $id));
         $data['mode'] = 'update';
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':item.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:item.html.twig', array('data' => $data));
     }
 
     // Update payment
     public function updatePaymentAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the entity manager
         $em = $this->getDoctrine()->getManager();
@@ -1894,14 +1894,14 @@ class OrdersController extends Controller
         // Get the items
         $data['items'] = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemPayment.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:itemPayment.html.twig', array('data' => $data));
     }
 
     // Update delivery
     public function updateDeliveryAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the entity manager
         $em = $this->getDoctrine()->getManager();
@@ -1966,14 +1966,14 @@ class OrdersController extends Controller
         // Get the items
         $data['items'] = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemDelivery.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:itemDelivery.html.twig', array('data' => $data));
     }
 
     // Update products
     public function updateProductsAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
         $productService = $this->get('web_illumination_admin.product_service');
 
         // Get the entity manager
@@ -2139,14 +2139,14 @@ class OrdersController extends Controller
         // Get the items
         $data['items'] = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemProducts.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:itemProducts.html.twig', array('data' => $data));
     }
 
     // Update notes
     public function updateNotesAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the entity manager
         $em = $this->getDoctrine()->getManager();
@@ -2239,8 +2239,8 @@ class OrdersController extends Controller
                                 $email->setSubject('You have a new Message from Kitchen Appliance Centre about your Order: '.$itemObject->getId());
                                 $email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
                                 $email->setTo(array($itemObject->getEmailAddress() => $itemObject->getFirstName().' '.$itemObject->getLastName()));
-                                $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/html');
-                                $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/plain');
+                                $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/html');
+                                $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $itemNote)), 'text/plain');
                                 $this->get('mailer')->send($email);
                             } catch (Exception $exception) {
                                 error_log('Error sending email!');
@@ -2286,54 +2286,54 @@ class OrdersController extends Controller
         // Get the items
         $data['items'] = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':itemNotes.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:Orders:itemNotes.html.twig', array('data' => $data));
     }
 
     // View copy order
     public function viewCopyOrderAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
         $item = $service->getOrder($id);
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewCopyOrder.html.twig', array('order' => $item));
+        return $this->render('WebIlluminationAdminBundle:Orders:viewCopyOrder.html.twig', array('order' => $item));
     }
 
     // View delivery note
     public function viewDeliveryNoteAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
         $item = $service->getOrder($id);
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewDeliveryNote.html.twig', array('order' => $item));
+        return $this->render('WebIlluminationAdminBundle:Orders:viewDeliveryNote.html.twig', array('order' => $item));
     }
 
     // View invoice
     public function viewInvoiceAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
         $item = $service->getOrder($id);
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewInvoice.html.twig', array('order' => $item));
+        return $this->render('WebIlluminationAdminBundle:Orders:viewInvoice.html.twig', array('order' => $item));
     }
 
     // View order
     public function viewOrderAction(Request $request, $id)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
+        $service = $this->get('web_illumination_admin.order_service');
 
         // Get the order
         $item = $service->getOrder($id);
 
-        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':viewOrder.html.twig', array('order' => $item));
+        return $this->render('WebIlluminationAdminBundle:Orders:viewOrder.html.twig', array('order' => $item));
     }
 }
