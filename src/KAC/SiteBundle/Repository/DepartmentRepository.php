@@ -8,7 +8,7 @@ class DepartmentRepository extends NestedTreeRepository
 {
     public function findActiveDepartment($id)
     {
-        $query = $this->getEntityManager()->createQuery('
+        $query = $this->getManager()->createQuery('
                 SELECT d, dd, dc, dp
                 FROM KAC\SiteBundle\Entity\Department d
                 LEFT JOIN d.descriptions dd
@@ -26,7 +26,7 @@ class DepartmentRepository extends NestedTreeRepository
 
     public function findActiveDepartments()
     {
-        $query = $this->getEntityManager()->createQuery('
+        $query = $this->getManager()->createQuery('
                 SELECT d, dd, dc
                 FROM KAC\SiteBundle\Entity\Department d
                 LEFT JOIN d.descriptions dd
@@ -40,7 +40,7 @@ class DepartmentRepository extends NestedTreeRepository
 
     public function findAllAsTree()
     {
-        $departments = $this->getEntityManager()
+        $departments = $this->getManager()
             ->createQuery('
                 SELECT d, dd
                 FROM KAC\SiteBundle\Entity\Department d

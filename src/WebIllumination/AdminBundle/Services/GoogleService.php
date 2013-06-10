@@ -123,7 +123,7 @@ class GoogleService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	    	
     	$keywordSuggestionData = $doctrineService->getRepository('KAC\SiteBundle\Entity\KeywordSuggestion')->findOneByKeywordPhrase($keywordPhrase);
     	    	
@@ -618,7 +618,7 @@ class GoogleService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	    	
     	$statistics_data = $doctrineService->getRepository('KAC\SiteBundle\Entity\Statistic')->findOneBy(array('url' => $url, 'statisticType' => 'visits'));
     	    	
@@ -767,7 +767,7 @@ class GoogleService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	    	
     	$statistics_data = $doctrineService->getRepository('KAC\SiteBundle\Entity\Statistic')->findOneBy(array('url' => $url, 'statisticType' => 'referrers'));
     	
@@ -948,7 +948,7 @@ class GoogleService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Tidy up search phrases
     	$searchPhrase = urlencode($searchPhrase);

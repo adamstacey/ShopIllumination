@@ -123,7 +123,7 @@ class ImageService {
 	    $doctrineService = $this->container->get('doctrine');
 	    	
 	    // Get the entity manager
-	    $em = $doctrineService->getEntityManager();
+	    $em = $doctrineService->getManager();
 	    		
     	// Check if image exists and is valid
     	if ($imageObject && $image)
@@ -254,7 +254,7 @@ class ImageService {
     		$doctrineService = $this->container->get('doctrine');
     	
     		// Get the entity manager
-    		$em = $doctrineService->getEntityManager();
+    		$em = $doctrineService->getManager();
     		
     		// Add a new image
     		$imageObject = new Image();
@@ -362,7 +362,7 @@ class ImageService {
     		$doctrineService = $this->container->get('doctrine');
     	
     		// Get the entity manager
-    		$em = $doctrineService->getEntityManager();
+    		$em = $doctrineService->getManager();
 		
 			// Get the paths and filenames
 			$title = $this->cleanFilename($title);
@@ -415,7 +415,7 @@ class ImageService {
     		$doctrineService = $this->container->get('doctrine');
     	
     		// Get the entity manager
-    		$em = $doctrineService->getEntityManager();
+    		$em = $doctrineService->getManager();
 		
 			// Get the path
 			$imagePath = $this->getUploadRootDir().'/'.$imageObject->getObjectType();

@@ -61,7 +61,7 @@ class DepartmentsController extends Controller
     	$productService = $this->get('web_illumination_admin.product_service');    	
     	    	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Setup listing
     	$sessionListing = $this->get('session')->get('listing');
@@ -427,7 +427,7 @@ class DepartmentsController extends Controller
     	$seoService = $this->get('web_illumination_admin.seo_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
     	// Add
     	if ($request->getMethod() == 'POST')
@@ -569,7 +569,7 @@ class DepartmentsController extends Controller
     	$seoService = $this->get('web_illumination_admin.seo_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
@@ -724,7 +724,7 @@ class DepartmentsController extends Controller
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
@@ -806,7 +806,7 @@ class DepartmentsController extends Controller
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
@@ -898,7 +898,7 @@ class DepartmentsController extends Controller
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	    	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 				
 		// Update
     	if ($request->getMethod() == 'POST')
@@ -1174,7 +1174,7 @@ class DepartmentsController extends Controller
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	    	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
@@ -1381,7 +1381,7 @@ class DepartmentsController extends Controller
     	$service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
     	    	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));
@@ -1494,7 +1494,7 @@ class DepartmentsController extends Controller
     	$productService = $this->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$itemObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);
@@ -1657,7 +1657,7 @@ class DepartmentsController extends Controller
     	//$brandService->rebuildBrandIndex('en');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'].'Index')->findOneBy(array($this->settings['singleClass'].'Id' => $id));

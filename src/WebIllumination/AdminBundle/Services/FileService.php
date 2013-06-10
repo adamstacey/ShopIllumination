@@ -24,7 +24,7 @@ class FileService {
     		$doctrineService = $this->container->get('doctrine');
     	
     		// Get the entity manager
-    		$em = $doctrineService->getEntityManager();
+    		$em = $doctrineService->getManager();
     		
     		// Add a new file
     		$fileObject = new File();
@@ -70,7 +70,7 @@ class FileService {
 	    $doctrineService = $this->container->get('doctrine');
 	    	
 	    // Get the entity manager
-	    $em = $doctrineService->getEntityManager();
+	    $em = $doctrineService->getManager();
 	    		
     	// Check if file exists and is valid
     	if ($fileObject && $file)
@@ -129,7 +129,7 @@ class FileService {
     		$doctrineService = $this->container->get('doctrine');
     	
     		// Get the entity manager
-    		$em = $doctrineService->getEntityManager();
+    		$em = $doctrineService->getManager();
 		
 			// Get the path
 			$filePath = $this->getUploadRootDir().'/'.$fileObject->getObjectType();

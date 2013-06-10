@@ -61,7 +61,7 @@ class BugsController extends Controller
     public function indexAction(Request $request)
     {
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Setup listing
     	$sessionListing = $this->get('session')->get('listing');
@@ -489,7 +489,7 @@ class BugsController extends Controller
     public function addAction(Request $request)
     {
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
     	// Add
     	if ($request->getMethod() == 'POST')
@@ -553,7 +553,7 @@ class BugsController extends Controller
     public function updateAction(Request $request, $id)
     {
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		// Get the item
 		$bugObject = $em->getRepository('KAC\SiteBundle\Entity'.$this->settings['singleModel'])->find($id);

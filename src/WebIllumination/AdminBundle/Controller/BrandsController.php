@@ -172,7 +172,7 @@ class BrandsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    				    	
     		// Get submitted data
     		$id = $request->query->get('id');
@@ -262,7 +262,7 @@ class BrandsController extends Controller
     	if ($request->getMethod() == 'POST')
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$brand = trim($request->request->get('brand'));
@@ -357,7 +357,7 @@ class BrandsController extends Controller
     	$systemService->initialiseSettingsSession();
     	
     	// Get the entity manager
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	
     	// Get the settings session
     	$settings = $this->get('session')->get('settings');
@@ -378,7 +378,7 @@ class BrandsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{	    	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -498,7 +498,7 @@ class BrandsController extends Controller
 	    	$seoService = $this->get('web_illumination_admin.seo_service');
 	    	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -535,7 +535,7 @@ class BrandsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -576,7 +576,7 @@ class BrandsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
     	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -669,7 +669,7 @@ class BrandsController extends Controller
     		$seoService = $this->get('web_illumination_admin.seo_service');
     	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->query->get('id');

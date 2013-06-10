@@ -41,7 +41,7 @@ class SeoService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Remove any redirects to the new URL
         $existingRedirects = $doctrineService->getRepository('KAC\SiteBundle\Entity\Redirect')->findByRedirectFrom($redirectTo);

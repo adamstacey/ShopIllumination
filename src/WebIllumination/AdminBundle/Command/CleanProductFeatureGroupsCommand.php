@@ -21,7 +21,7 @@ class CleanProductFeatureGroupsCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
     	// Get the entity manager
-   		$em = $this->getContainer()->get('doctrine')->getEntityManager();
+   		$em = $this->getContainer()->get('doctrine')->getManager();
    		
    		// Common words
    		$commonWordsSearch = array(' The ', ' Be ', ' To ', ' Of ', ' And ', ' A ', ' In ', ' That ', ' Have ', ' It ', ' For ', ' Not ', ' On ', ' With ', ' He ', ' As ', ' You ', ' Do ', ' At ', ' This ', ' But ', ' His ', ' By ', ' From' , ' They ', ' We ', ' Say ', ' Her ', ' She ', ' Or ', ' An ', ' Will ', ' My ', ' One ', ' All ', ' Would ', ' There ', ' Their ', ' What ', ' So ', ' Up ', ' Out ', ' If ', ' About ', ' Who ', ' Get ', ' Which ', ' Go ', ' Me ', ' When ', ' Make ', ' Can ', ' Like ', ' Just ', ' Him ', ' Know ', ' Take ', ' Into ', ' Your ', ' Some ', ' Could ', ' Them ', ' See ',  ' Other ', ' Than ', ' Then ', ' Now ', ' Look ', ' Only ', ' Come ', ' Its ', ' Also ', ' Back ', ' After ', ' Use ', ' How ', ' Our ', ' Work ', ' Well ', ' Way ', ' New ', ' Want ', ' Because ', ' Any ', ' These ', ' Give ', ' Most ', ' Us ', ' Per ', 'Pvc', 'Led', 'Hd', 'Lcd', 'Lpg', 'Usb', 'N/a', 'Max.', 'Min.', 'Maximum', 'Minimum', 'Ise6445hj', 'Bb', 'Aaa', 'Aa', '(if Above May Require Pressure Reducing Valve)', ' Cubic Metres', '°c', 'Co²', '2.5 Rec & 1m Round');

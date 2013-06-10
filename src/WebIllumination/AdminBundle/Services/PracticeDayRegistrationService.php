@@ -73,7 +73,7 @@ class PracticeDayRegistrationService {
     	$systemService = $this->container->get('web_illumination_admin.system_service');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	    	
     	// Calculate the first result
     	$firstResult = ($page - 1) * $maxResults;
@@ -152,7 +152,7 @@ class PracticeDayRegistrationService {
     	$doctrineService = $this->container->get('doctrine');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Get the query builder
     	$qb = $em->createQueryBuilder();

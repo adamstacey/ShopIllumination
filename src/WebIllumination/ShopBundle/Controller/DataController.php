@@ -25,7 +25,7 @@ class DataController extends Controller
 	    $systemService->initialiseSession();
 	    
 		// Get the entity manager
-   		$em = $this->getDoctrine()->getEntityManager();
+   		$em = $this->getDoctrine()->getManager();
     	
     	// Get the products
     	$products = $productService->getProducts('en', 'GBP');
@@ -46,7 +46,7 @@ class DataController extends Controller
 	    $systemService->initialiseSession();
 	    
 		// Get the entity manager
-   		$em = $this->getDoctrine()->getEntityManager();
+   		$em = $this->getDoctrine()->getManager();
     	
     	// Get the brands
     	$brands = $brandService->getBrands('en');

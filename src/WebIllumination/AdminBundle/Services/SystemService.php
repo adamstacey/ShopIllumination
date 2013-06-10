@@ -360,7 +360,7 @@ class SystemService {
     	$doctrineService = $this->container->get('doctrine');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Make sure a URL has been supplied
     	if ($url == '')

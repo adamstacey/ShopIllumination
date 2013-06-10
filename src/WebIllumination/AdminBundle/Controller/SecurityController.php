@@ -17,7 +17,7 @@ class SecurityController extends Controller
     	if ($request->getMethod() == 'POST')
     	{
 	    	// Get the entity manager
-		   	$em = $this->getDoctrine()->getEntityManager();
+		   	$em = $this->getDoctrine()->getManager();
 		   	
 		   	// Get the submitted data
 		   	$emailAddress = strtolower(trim($request->request->get('email-address')));
@@ -82,7 +82,7 @@ class SecurityController extends Controller
 			return $this->redirect($this->get('router')->generate('orders'));
     	}
 		
-		/*$em = $this->getDoctrine()->getEntityManager();
+		/*$em = $this->getDoctrine()->getManager();
     	$encoderFactory = $this->get('security.encoder_factory');
     	$userObject = $em->getRepository('KAC\SiteBundle\Entity\User')->find(3);
     	$encoder = $encoderFactory->getEncoder($userObject);

@@ -23,7 +23,7 @@ class UpdateOrderProductHeadersCommand extends ContainerAwareCommand
     	ini_set('memory_limit','512M');
     	
     	// Get the entity manager
-   		$em = $this->getContainer()->get('doctrine')->getEntityManager();
+   		$em = $this->getContainer()->get('doctrine')->getManager();
    		    	
     	// Get the basket products
     	$orderProductCount = 1;

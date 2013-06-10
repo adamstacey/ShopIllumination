@@ -61,7 +61,7 @@ class CrawlErrorsController extends Controller
 	    $systemService->initialiseSession();
 	    
 		// Get the entity manager
-   		$em = $this->getDoctrine()->getEntityManager();
+   		$em = $this->getDoctrine()->getManager();
     	
     	// Get the products
     	$products = $productService->getAllProducts('en', 'GBP');
@@ -331,7 +331,7 @@ class CrawlErrorsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
     		// Get the services
 	    	$productService = $this->get('web_illumination_admin.product_service');
@@ -377,7 +377,7 @@ class CrawlErrorsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
     		// Get the services
 	    	$productService = $this->get('web_illumination_admin.product_service');
@@ -427,7 +427,7 @@ class CrawlErrorsController extends Controller
     	if ($request->getMethod() == 'POST')
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$brandId = $request->request->get('brand-id');
@@ -638,7 +638,7 @@ class CrawlErrorsController extends Controller
     	if ($request->getMethod() == 'POST')
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$action = $request->request->get('action');
@@ -746,7 +746,7 @@ class CrawlErrorsController extends Controller
     	$systemService->initialiseSettingsSession();
     	
     	// Get the entity manager
-    	$em = $this->getDoctrine()->getEntityManager();
+    	$em = $this->getDoctrine()->getManager();
     	
     	// Get the settings session
     	$settings = $this->get('session')->get('settings');
@@ -796,7 +796,7 @@ class CrawlErrorsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
 	    	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -893,7 +893,7 @@ class CrawlErrorsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
 	    	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -1034,7 +1034,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find price
     		$priceObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductPrice')->find($id);
@@ -1085,7 +1085,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find price
     		$price = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductPrice')->find($id);
@@ -1128,7 +1128,7 @@ class CrawlErrorsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
 	    	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -1189,7 +1189,7 @@ class CrawlErrorsController extends Controller
     		$productId = $request->query->get('productId');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		    		
     		// Get the options
 	    	$options = array();
@@ -1234,7 +1234,7 @@ class CrawlErrorsController extends Controller
     		$displayOrder = $request->query->get('displayOrder');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
 			// Get the first product option
 			$productOptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->findOneBy(array('productOptionGroupId' => $id), array('productOption' => 'ASC'));
@@ -1277,7 +1277,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find option
     		$options = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToOption')->findBy(array('productOptionGroupId' => $id, 'productId' => $productId));
@@ -1327,7 +1327,7 @@ class CrawlErrorsController extends Controller
     		$productId = $request->query->get('productId');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get the product options
 			$productOptionObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->findBy(array('productOptionGroupId' => $optionGroupId), array('productOption' => 'ASC'));
@@ -1360,7 +1360,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find product option
     		$productOptionObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductOption')->find($productOptionId);
@@ -1424,7 +1424,7 @@ class CrawlErrorsController extends Controller
     		$optionGroupId = $request->query->get('optionGroupId');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find option
     		$option = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToOption')->find($id);
@@ -1461,7 +1461,7 @@ class CrawlErrorsController extends Controller
     		$productId = $request->query->get('productId');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		    		
     		// Get the features
 	    	$features = array();
@@ -1506,7 +1506,7 @@ class CrawlErrorsController extends Controller
     		$displayOrder = $request->query->get('displayOrder');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
 			// Get the first product feature
 			$productFeatureObject = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findOneBy(array('productFeatureGroupId' => $id), array('productFeature' => 'ASC'));
@@ -1546,7 +1546,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find feature
     		$features = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->findBy(array('productFeatureGroupId' => $id, 'productId' => $productId));
@@ -1596,7 +1596,7 @@ class CrawlErrorsController extends Controller
     		$productId = $request->query->get('productId');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get the product features
 			$productFeatureObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductFeature')->findBy(array('productFeatureGroupId' => $featureGroupId), array('productFeature' => 'ASC'));
@@ -1626,7 +1626,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find product feature
     		$productFeatureObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductFeature')->find($productFeatureId);
@@ -1687,7 +1687,7 @@ class CrawlErrorsController extends Controller
     		$featureGroupId = $request->query->get('featureGroupId');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find feature
     		$feature = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductToFeature')->find($id);
@@ -1768,7 +1768,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find related product
     		$relatedProductObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
@@ -1817,7 +1817,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find related product
     		$relatedProduct = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
@@ -1913,7 +1913,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find cheaper alternative
     		$cheaperAlternativeObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
@@ -1962,7 +1962,7 @@ class CrawlErrorsController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find cheaper alternative
     		$cheaperAlternative = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ProductLink')->find($id);
@@ -2005,7 +2005,7 @@ class CrawlErrorsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
 	    	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -2059,7 +2059,7 @@ class CrawlErrorsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
 	    	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -2112,7 +2112,7 @@ class CrawlErrorsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
     	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->request->get('id');
@@ -2257,7 +2257,7 @@ class CrawlErrorsController extends Controller
 	    	$productService = $this->get('web_illumination_admin.product_service');
     	
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$id = $request->query->get('id');

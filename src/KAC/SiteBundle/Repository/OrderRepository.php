@@ -7,7 +7,7 @@ class OrderRepository extends EntityRepository
 {
     public function findNumOrdersWithSameAddress($postZipCode, $email)
     {
-        return $this->getEntityManager()
+        return $this->getManager()
             ->createQuery('
                 SELECT COUNT(o)
                 FROM KAC\SiteBundle\Entity\Order o
@@ -20,7 +20,7 @@ class OrderRepository extends EntityRepository
 
     public function findNumOrdersWithSameEmail($email)
     {
-        return $this->getEntityManager()
+        return $this->getManager()
             ->createQuery('
                 SELECT COUNT(o)
                 FROM KAC\SiteBundle\Entity\Order o
@@ -32,7 +32,7 @@ class OrderRepository extends EntityRepository
 
     public function findNumOrdersWithSameName($firstName, $lastName, $billingFirstName, $billingLastName, $deliveryFirstName, $deliveryLastName)
     {
-        return $this->getEntityManager()
+        return $this->getManager()
             ->createQuery('
                 SELECT COUNT(o)
                 FROM KAC\SiteBundle\Entity\Order o
@@ -54,7 +54,7 @@ class OrderRepository extends EntityRepository
 
     public function findNumOrdersWithSameTelephone($telephone)
     {
-        return $this->getEntityManager()
+        return $this->getManager()
             ->createQuery('
                 SELECT COUNT(o)
                 FROM KAC\SiteBundle\Entity\Order o

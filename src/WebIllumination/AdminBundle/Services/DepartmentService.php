@@ -107,7 +107,7 @@ class DepartmentService {
     	$systemService = $this->container->get('web_illumination_admin.system_service');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	    	
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
@@ -203,7 +203,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
@@ -290,7 +290,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
@@ -319,7 +319,7 @@ class DepartmentService {
     	$productService = $this->container->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
    		// Setup the department
     	$department = array();
@@ -399,7 +399,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Setup the departments array
     	$departments = array();
@@ -436,7 +436,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Setup the departments array
     	$departments = array();
@@ -473,7 +473,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Setup the departments array
     	$departments = array();
@@ -505,7 +505,7 @@ class DepartmentService {
     	$productService = $this->container->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Setup the departments array
     	$departments = array();
@@ -545,7 +545,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
    		// Setup departments
     	$departments = array();
@@ -571,7 +571,7 @@ class DepartmentService {
     	$productService = $this->container->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Setup the departments array
     	$departments = array();
@@ -717,7 +717,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
     	
     	// Get the object
     	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
@@ -750,7 +750,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
     	
 		// Get the product feature group departments
     	$productFeatureGroupDepartments = array();
@@ -786,7 +786,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
     	
     	// Get the product feature groups
     	$productFeatureGroupIds = array();
@@ -817,7 +817,7 @@ class DepartmentService {
     	$seoService = $this->container->get('web_illumination_admin.seo_service');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the department
 		$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id));
@@ -871,7 +871,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the department
 		$departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id));
@@ -901,7 +901,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the products
 		$productFeaturesAdded = 0;
@@ -952,7 +952,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the product feature groups
 		$productFeaturesAdded = 0;
@@ -990,7 +990,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the products
 		$products = $this->getProducts($id, $locale);
@@ -1052,7 +1052,7 @@ class DepartmentService {
     	$productService = $this->container->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 				
 		// Get the product indexes
 		$productToDepartmentObjects = $em->getRepository('KAC\SiteBundle\Entity\ProductToDepartment')->findBy(array('departmentId' => $id));
@@ -1078,7 +1078,7 @@ class DepartmentService {
     	$productService = $this->container->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 				
 		// Get the department objects
 		$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
@@ -1134,7 +1134,7 @@ class DepartmentService {
     	$productService = $this->container->get('web_illumination_admin.product_service');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 				
 		// Get the department indexes
 		$departmentIndexObjects = $em->createQuery("SELECT di FROM WebIlluminationAdminBundle:DepartmentIndex di WHERE di.departmentPath LIKE '%|".$id."|%' AND di.departmentId != '".$id."' ORDER BY di.departmentPath ASC")->getResult();
@@ -1155,7 +1155,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the department index
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
@@ -1318,7 +1318,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the department index
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
@@ -1404,7 +1404,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
 		
 		// Get the department index
 		$itemIndexObject = $em->getRepository('KAC\SiteBundle\Entity\DepartmentIndex')->findOneBy(array('departmentId' => $id, 'locale' => $locale));
@@ -1518,7 +1518,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
     	
     	// Get the departments
     	$departmentObjects = $em->getRepository('KAC\SiteBundle\Entity\Department')->findAll();
@@ -1539,7 +1539,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
     	
     	// Get the objects
     	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
@@ -1646,7 +1646,7 @@ class DepartmentService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
     	
     	// Get the department object
     	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);
@@ -1687,7 +1687,7 @@ class DepartmentService {
     	$seoService = $this->container->get('web_illumination_admin.seo_service');
     	
     	// Get the entity manager
-		$em = $doctrineService->getEntityManager();
+		$em = $doctrineService->getManager();
     	
     	// Get the object
     	$departmentObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->find($id);

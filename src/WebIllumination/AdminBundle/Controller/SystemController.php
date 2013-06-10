@@ -36,7 +36,7 @@ class SystemController extends Controller
     	if ($request->getMethod() == 'POST')
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
     		
     		// Get submitted data
     		$importFileName = $request->request->get('import-file');
@@ -387,7 +387,7 @@ class SystemController extends Controller
 				    break;
 				default:
     				// Get the entity manager
-   					$em = $this->getDoctrine()->getEntityManager();
+   					$em = $this->getDoctrine()->getManager();
    					
 					// Set the object index to rebuild the brand
     				$objectIndexObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => $imageObject->getObjectId(), 'objectType' => $objectType));
@@ -521,7 +521,7 @@ class SystemController extends Controller
 				    break;
 				default:
     				// Get the entity manager
-   					$em = $this->getDoctrine()->getEntityManager();
+   					$em = $this->getDoctrine()->getManager();
    					
 					// Set the object index to rebuild the brand
     				$objectIndexObjects = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ObjectIndex')->findBy(array('objectKey' => $fileObject->getObjectId(), 'objectType' => $objectType));
@@ -624,7 +624,7 @@ class SystemController extends Controller
     		$elementIndex = $request->request->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find redirect
     		$redirect = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->find($id);
@@ -658,7 +658,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find redirect
     		$redirect = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Redirect')->find($id);
@@ -738,7 +738,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find guarantee
     		$guarantee = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Guarantee')->find($id);
@@ -772,7 +772,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find guarantee
     		$guarantee = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Guarantee')->find($id);
@@ -850,7 +850,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact
     		$contact = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Contact')->find($id);
@@ -887,7 +887,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact
     		$contactObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Contact')->find($id);
@@ -990,7 +990,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact number
     		$contactNumber = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumber')->find($id);
@@ -1025,7 +1025,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact number
     		$contactNumber = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactNumber')->find($id);
@@ -1124,7 +1124,7 @@ class SystemController extends Controller
     		}
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact address
     		$contactAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddress')->find($id);
@@ -1169,7 +1169,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact address
     		$contactAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactAddress')->find($id);
@@ -1240,7 +1240,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact email addresses
     		$contactEmailAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddress')->find($id);
@@ -1274,7 +1274,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact email addresses
     		$contactEmailAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactEmailAddress')->find($id);
@@ -1345,7 +1345,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact web addresses
     		$contactWebAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddress')->find($id);
@@ -1379,7 +1379,7 @@ class SystemController extends Controller
     		$elementIndex = $request->query->get('elementIndex');
     		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    		
     		// Find contact web addresses
     		$contactWebAddress = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\ContactWebAddress')->find($id);

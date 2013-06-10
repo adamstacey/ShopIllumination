@@ -25,7 +25,7 @@ class PracticeDayRegistrationsController extends Controller
     public function testAction()
     {
 		// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		
 		$practiceDayRegistrations = $em->getRepository('KAC\SiteBundle\Entity\PracticeDayRegistration')->findBy(array('day' => 'Saturday 3rd'), array('name' => 'ASC'));
     	
@@ -155,7 +155,7 @@ class PracticeDayRegistrationsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get the admin
     		$admin = $this->get('session')->get('admin');
@@ -204,7 +204,7 @@ class PracticeDayRegistrationsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->request->get('id');
@@ -254,7 +254,7 @@ class PracticeDayRegistrationsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -285,7 +285,7 @@ class PracticeDayRegistrationsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -318,7 +318,7 @@ class PracticeDayRegistrationsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
     		// Get submitted data
     		$id = $request->query->get('id');
@@ -345,7 +345,7 @@ class PracticeDayRegistrationsController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get the services
 	    	$contactService = $this->get('web_illumination_admin.contact_service');

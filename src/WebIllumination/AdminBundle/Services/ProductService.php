@@ -129,7 +129,7 @@ class ProductService {
          * Get entity manager
          * @var EntityManager $em
          */
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -163,7 +163,7 @@ class ProductService {
          * Get entity manager
          * @var EntityManager $em
          */
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -209,7 +209,7 @@ class ProductService {
          * Get entity manager
          * @var EntityManager $em
          */
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();

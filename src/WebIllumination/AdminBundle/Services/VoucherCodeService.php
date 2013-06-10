@@ -68,7 +68,7 @@ class VoucherCodeService {
     	$systemService = $this->container->get('web_illumination_admin.system_service');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	    	
     	// Calculate the first result
     	$firstResult = ($page - 1) * $maxResults;
@@ -155,7 +155,7 @@ class VoucherCodeService {
     	$doctrineService = $this->container->get('doctrine');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
@@ -236,7 +236,7 @@ class VoucherCodeService {
     	$doctrineService = $this->container->get('doctrine');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
@@ -263,7 +263,7 @@ class VoucherCodeService {
     	$doctrineService = $this->container->get('doctrine');
 	    	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
@@ -287,7 +287,7 @@ class VoucherCodeService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
 
    		// Setup the order
     	$order = array();
@@ -414,7 +414,7 @@ class VoucherCodeService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
    		
    		// Get the order details
    		$orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);

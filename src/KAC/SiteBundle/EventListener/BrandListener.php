@@ -17,7 +17,7 @@ class BrandListener
     public function postPersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $em = $args->getEntityManager();
+        $em = $args->getManager();
 
         if($entity instanceof Brand)
         {
@@ -28,7 +28,7 @@ class BrandListener
     public function postRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        $entityManager = $args->getEntityManager();
+        $entityManager = $args->getManager();
 
         if($entity instanceof Brand)
         {

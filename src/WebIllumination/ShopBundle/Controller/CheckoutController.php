@@ -71,7 +71,7 @@ class CheckoutController extends Controller
 		$this->get('session')->set('order', $order);
 		
 		// Get the entity manager
-	   	$em = $this->getDoctrine()->getEntityManager();
+	   	$em = $this->getDoctrine()->getManager();
 
 		// Check to see if the email address has a user account assigned to it 
 		$userAccountExists = false;
@@ -92,7 +92,7 @@ class CheckoutController extends Controller
 		$password  = trim($request->request->get('password'));
 		
 		// Get the entity manager
-	   	$em = $this->getDoctrine()->getEntityManager();
+	   	$em = $this->getDoctrine()->getManager();
 
         /**
          * Create the user
@@ -140,7 +140,7 @@ class CheckoutController extends Controller
     	$orderService = $this->get('web_illumination_admin.order_service');
     	
 		// Get the entity manager
-	   	$em = $this->getDoctrine()->getEntityManager();
+	   	$em = $this->getDoctrine()->getManager();
 	   	    		
 		// Get the session
 		$order = $this->get('session')->get('order');
@@ -346,7 +346,7 @@ class CheckoutController extends Controller
 	    $systemService->initialiseSession();
     	
     	// Get the entity manager
-	   	$em = $this->getDoctrine()->getEntityManager();
+	   	$em = $this->getDoctrine()->getManager();
     	
     	// Get the session
     	$basketSession = $this->get('session')->get('basket');
@@ -528,7 +528,7 @@ class CheckoutController extends Controller
 	    $systemService->initialiseSession();
     	
     	// Get the entity manager
-	   	$em = $this->getDoctrine()->getEntityManager();
+	   	$em = $this->getDoctrine()->getManager();
 	   	
 	   	// Get the session
     	$orderSession = $this->get('session')->get('order');

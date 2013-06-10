@@ -227,7 +227,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get the admin
     		$admin = $this->get('session')->get('admin');
@@ -276,7 +276,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->request->get('id');
@@ -321,7 +321,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -356,7 +356,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -398,7 +398,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -480,7 +480,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -525,7 +525,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -567,7 +567,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -649,7 +649,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -694,7 +694,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -736,7 +736,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');
@@ -818,7 +818,7 @@ class VoucherCodesController extends Controller
     	if ($request->isXmlHttpRequest())
     	{    		
     		// Get the entity manager
-   			$em = $this->getDoctrine()->getEntityManager();
+   			$em = $this->getDoctrine()->getManager();
    			
    			// Get submitted data
     		$id = $request->query->get('id');

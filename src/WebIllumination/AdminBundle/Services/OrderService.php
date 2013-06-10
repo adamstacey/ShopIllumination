@@ -297,7 +297,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -326,7 +326,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -369,7 +369,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -408,7 +408,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -483,7 +483,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the order
         $order = $this->container->get('session')->get('order');
@@ -729,7 +729,7 @@ class OrderService {
         $systemService = $this->container->get('web_illumination_admin.system_service');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Calculate the first result
         $firstResult = ($page - 1) * $maxResults;
@@ -851,7 +851,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -945,7 +945,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -1050,7 +1050,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -1077,7 +1077,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the query builder
         $qb = $em->createQueryBuilder();
@@ -1101,7 +1101,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Setup the order
         $order = array();
@@ -1255,7 +1255,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the order details
         $orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
@@ -1311,7 +1311,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get statistics
         $statistics = array();
@@ -1346,7 +1346,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get statistics
         $statistics = array();
@@ -1453,7 +1453,7 @@ class OrderService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Get the statistics
         $brands = array();

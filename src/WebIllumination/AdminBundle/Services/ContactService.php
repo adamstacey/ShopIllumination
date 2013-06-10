@@ -21,7 +21,7 @@ class ContactService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
    		// Setup contact
 	    $contact = array();
@@ -139,7 +139,7 @@ class ContactService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
    		// Setup contacts
 	    $contacts = array();
@@ -168,7 +168,7 @@ class ContactService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
    		// Setup contacts
     	$contacts = array();

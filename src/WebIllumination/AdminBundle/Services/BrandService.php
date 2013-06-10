@@ -102,7 +102,7 @@ class BrandService {
     	$systemService = $this->container->get('web_illumination_admin.system_service');
 
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
 
     	// Calculate the first result
     	$firstResult = ($page - 1) * $maxResults;
@@ -206,7 +206,7 @@ class BrandService {
     	$systemService = $this->container->get('web_illumination_admin.system_service');
 
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
 
     	// Setup the brands array
     	$brands = array();
@@ -297,7 +297,7 @@ class BrandService {
     	$doctrineService = $this->container->get('doctrine');
 
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
 
     	// Get the query builder
     	$qb = $em->createQueryBuilder();
@@ -327,7 +327,7 @@ class BrandService {
     	$contactService = $this->container->get('web_illumination_admin.contact_service');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
    		// Setup the brand
     	$brand = array();
@@ -508,7 +508,7 @@ class BrandService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
 
         // Setup brands
         $brands = array();
@@ -533,7 +533,7 @@ class BrandService {
     	$doctrineService = $this->container->get('doctrine');
     	
     	// Get the entity manager
-    	$em = $doctrineService->getEntityManager();
+    	$em = $doctrineService->getManager();
     	
    		// Setup brands
     	$brands = array();
@@ -557,7 +557,7 @@ class BrandService {
         $doctrineService = $this->container->get('doctrine');
 
         // Get the entity manager
-        $em = $doctrineService->getEntityManager();
+        $em = $doctrineService->getManager();
 
         // Remove product associations
         $products = $em->getRepository('KAC\SiteBundle\Entity\Product')->findBy(array('brand' => $id));
