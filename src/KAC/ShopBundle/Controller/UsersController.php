@@ -35,7 +35,7 @@ class UsersController extends Controller
     		$emailAddress = strtolower(trim($request->request->get('emailAddress')));
     		
     		// Get the entity manager
-		   	$em = $this->getDoctrine()->getEntityManager();
+		   	$em = $this->getDoctrine()->getManager();
 	
 			// Check to see if the email address has a user account assigned to it 
 			$userAccountExists = false;
@@ -65,7 +65,7 @@ class UsersController extends Controller
     		$password  = trim($request->request->get('password'));
     		
     		// Get the entity manager
-		   	$em = $this->getDoctrine()->getEntityManager();
+		   	$em = $this->getDoctrine()->getManager();
     		
     		// Create new user
     		$userObject = new User();
@@ -233,7 +233,7 @@ class UsersController extends Controller
 	public function userAction(Request $request)
     {
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		   	
     	// Check the user is logged in
     	if (!$this->get('session')->get('customer')) {
@@ -264,7 +264,7 @@ class UsersController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-		   	$em = $this->getDoctrine()->getEntityManager();
+		   	$em = $this->getDoctrine()->getManager();
 		   	
 		   	// Get the services
     		$contactService = $this->get('kac_admin.contact_service');
@@ -429,7 +429,7 @@ class UsersController extends Controller
     	if ($request->isXmlHttpRequest())
     	{
     		// Get the entity manager
-		   	$em = $this->getDoctrine()->getEntityManager();
+		   	$em = $this->getDoctrine()->getManager();
 		   	
 		   	// Get the services
     		$contactService = $this->get('kac_admin.contact_service');

@@ -68,6 +68,7 @@ class OrdersController extends Controller
 
         // Get the entity manager
         $em = $this->getDoctrine()->getManager();
+        $em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         // Setup listing
         $sessionListing = $this->get('session')->get('listing');
@@ -525,7 +526,7 @@ class OrdersController extends Controller
                     // Notify user
                     $this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
 
-                    // Forward
+                    // Forward/orders
                     return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
                 }
 
@@ -775,7 +776,7 @@ class OrdersController extends Controller
         $statistic['averageOrderValue'] = 0;
         $statistic['averageOrderValueNett'] = 0;
         $qb = $em->createQueryBuilder();
-        $qb->select('i');
+        $qb->select('count(i)');
         $qb->from('KAC\SiteBundle\Entity\Order', 'i');
         if ($this->filter['id'])
         {
@@ -855,11 +856,91 @@ class OrdersController extends Controller
         $qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Open Payment')));
         $qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Payment Failed')));
         $qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Cancelled')));
-        foreach ($qb->getQuery()->getResult() as $order)
+        $statistic['count'] = $qb->getQuery()->getSingleScalarResult();
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('SUM(i.total)');
+        $qb->from('KAC\SiteBundle\Entity\Order', 'i');
+        if ($this->filter['id'])
         {
-            $statistic['count']++;
-            $statistic['total'] = $statistic['total'] + $order->getTotal();
+            $qb->andWhere($qb->expr()->like('i.id', $qb->expr()->literal('%'.$this->filter['id'].'%')));
         }
+        if ($this->filter['customer'])
+        {
+            $customerNames = explode(' ', $this->filter['customer']);
+            foreach ($customerNames as $customerName)
+            {
+                $qb->andWhere($qb->expr()->orx(
+                    $qb->expr()->like('i.firstName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.lastName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.organisationName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.billingFirstName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.billingLastName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.billingOrganisationName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.deliveryFirstName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.deliveryLastName', $qb->expr()->literal('%'.$customerName.'%')),
+                    $qb->expr()->like('i.deliveryOrganisationName', $qb->expr()->literal('%'.$customerName.'%'))
+                ));
+            }
+        }
+        if ($this->filter['emailAddress'])
+        {
+            $qb->andWhere($qb->expr()->like('i.emailAddress', $qb->expr()->literal('%'.$this->filter['emailAddress'].'%')));
+        }
+        if ($this->filter['statuses'])
+        {
+            $option = $this->filter['statuses'];
+            $options = explode('|', $option);
+            if (sizeof($options) > 1)
+            {
+                $qb->andWhere($qb->expr()->in('i.status', $options));
+            } else {
+                $qb->andWhere($qb->expr()->eq('i.status', $qb->expr()->literal($option)));
+            }
+        }
+        if ($this->filter['paymentTypes'])
+        {
+            $option = $this->filter['paymentTypes'];
+            $options = explode('|', $option);
+            if (sizeof($options) > 1)
+            {
+                $qb->andWhere($qb->expr()->in('i.paymentType', $options));
+            } else {
+                $qb->andWhere($qb->expr()->eq('i.paymentType', $qb->expr()->literal($option)));
+            }
+        }
+        if ($this->filter['deliveryTypes'])
+        {
+            $option = $this->filter['deliveryTypes'];
+            $options = explode('|', $option);
+            if (sizeof($options) > 1)
+            {
+                $qb->andWhere($qb->expr()->in('i.deliveryType', $options));
+            } else {
+                $qb->andWhere($qb->expr()->eq('i.deliveryType', $qb->expr()->literal($option)));
+            }
+        }
+        if ($this->filter['totalFrom'] > 0)
+        {
+            $qb->andWhere($qb->expr()->gte('i.total', $qb->expr()->literal($this->filter['totalFrom'])));
+        }
+        if ($this->filter['totalTo'] > 0)
+        {
+            $qb->andWhere($qb->expr()->lte('i.total', $qb->expr()->literal($this->filter['totalTo'])));
+        }
+        if ($this->filter['dateFromFormatted'] != '')
+        {
+            $qb->andWhere($qb->expr()->gte('i.createdAt', $qb->expr()->literal($this->filter['dateFromFormatted']." 00:00:00")));
+        }
+        if ($this->filter['dateToFormatted'] != '')
+        {
+            $qb->andWhere($qb->expr()->lte('i.createdAt', $qb->expr()->literal($this->filter['dateToFormatted']." 23:59:59")));
+        }
+        $qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Open Payment')));
+        $qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Payment Failed')));
+        $qb->andWhere($qb->expr()->neq('i.status', $qb->expr()->literal('Cancelled')));
+        $statistic['total'] = $qb->getQuery()->getSingleScalarResult();
+
         $statistic['totalNett'] = $statistic['total'] / 1.2;
         if ($statistic['count'] > 0)
         {

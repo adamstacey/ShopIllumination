@@ -48,7 +48,7 @@ class ContentController extends Controller
     	if ($request->getMethod() == 'POST')
     	{
     		// Get the entity manager
-	   		$em = $this->getDoctrine()->getEntityManager();
+	   		$em = $this->getDoctrine()->getManager();
 	   			    	    	
 	    	// Get submitted data
     		$departmentEmailAddress = ($request->request->get('enquiry')?$request->request->get('enquiry'):'sales@kitchenappliancecentre.co.uk');
@@ -122,7 +122,7 @@ class ContentController extends Controller
     	{
     		/*
     		// Get the entity manager
-	   		$em = $this->getDoctrine()->getEntityManager();
+	   		$em = $this->getDoctrine()->getManager();
 	   			    	    	
 	    	// Get submitted data
     		$departmentEmailAddress = ($request->request->get('enquiry')?$request->request->get('enquiry'):'sales@ridedirect.co.uk');
@@ -371,7 +371,7 @@ class ContentController extends Controller
     	if ($request->getMethod() == 'POST')
     	{
     		// Get the entity manager
-	   		$em = $this->getDoctrine()->getEntityManager();
+	   		$em = $this->getDoctrine()->getManager();
 	   			    	    	
 	    	// Get submitted data
     		$membershipNumber = ucwords(trim($request->request->get('membership-number')));

@@ -232,7 +232,7 @@ class BasketController extends Controller
     		if ($selectedOptions)
     		{
     			// Get the entity manager
-	   			$em = $this->getDoctrine()->getEntityManager();
+	   			$em = $this->getDoctrine()->getManager();
 	   		
 	    		$selectedOptionIds = explode('|', $selectedOptions);
 	    		foreach ($selectedOptionIds as $selectedOptionId)
@@ -386,7 +386,7 @@ class BasketController extends Controller
     	$basketService = $this->get('kac_admin.basket_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
     	
     	// Get the basket session
 		$basket = $this->get('session')->get('basket');
@@ -413,7 +413,7 @@ class BasketController extends Controller
     	$basketService = $this->get('kac_admin.basket_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
     	
     	// Get the basket session
 		$basket = $this->get('session')->get('basket');
@@ -437,7 +437,7 @@ class BasketController extends Controller
     	$basketService = $this->get('kac_admin.basket_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
     	
     	// Get the basket session
 		$basket = $this->get('session')->get('basket');
@@ -490,7 +490,7 @@ class BasketController extends Controller
     	$basketService = $this->get('kac_admin.basket_service');
     	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
     	
     	// Get the basket session
 		$basket = $this->get('session')->get('basket');

@@ -42,7 +42,7 @@ class SecurityController extends Controller
     		$contactService = $this->get('kac_admin.contact_service');
     		
     		// Get the entity manager
-		   	$em = $this->getDoctrine()->getEntityManager();
+		   	$em = $this->getDoctrine()->getManager();
     				
 			// Get the user
 			$userObject = $em->getRepository('KACAdminBundle:User')->findOneBy(array('emailAddress' => $emailAddress, 'active' => 1));
@@ -194,7 +194,7 @@ class SecurityController extends Controller
     		$contactService = $this->get('kac_admin.contact_service');
     		
     		// Get the entity manager
-		   	$em = $this->getDoctrine()->getEntityManager();
+		   	$em = $this->getDoctrine()->getManager();
     				
 			// Get the user
 			$userObject = $em->getRepository('KACAdminBundle:User')->findOneBy(array('emailAddress' => $emailAddress, 'active' => 1));
@@ -272,7 +272,7 @@ class SecurityController extends Controller
     public function resetPasswordAction($userKey, Request $request)
     {	
     	// Get the entity manager
-		$em = $this->getDoctrine()->getEntityManager();
+		$em = $this->getDoctrine()->getManager();
 		   	
     	// Create the user key object
 		$userKeyObject = $em->getRepository('KACAdminBundle:UserKey')->findOneBy(array('userKey' => $userKey));
