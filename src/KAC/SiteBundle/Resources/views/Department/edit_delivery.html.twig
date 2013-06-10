@@ -1,0 +1,41 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Delivery | {{ product.description.pageTitle }}{% endblock %}
+
+{% block body %}
+    <div class="widget-group clearfix">
+        <div class="widget widget-2-of-7">
+            {% include 'KACSiteBundle:Department:editLeftMenu.html.twig' %}
+        </div>
+        <div class="widget widget-5-of-7">
+            <section>
+                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'departmentId': department.id}) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                    <h2>Delivery</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-all">
+                                    <div class="message message-help">
+                                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-762"></span>
+                                        <p>The delivery band is the default delivery band setting for the department. Each sub department and any product associated with this department will use this delivery band setting unless the sub department or product has their own delivery band set, which will override this setting.</p>
+                                    </div>
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset>
+                                        {{ form_rest(form) }}
+                                    </fieldset>
+                                    
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white fr" data-icon-secondary="icon-1118">Save Product</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+{% endblock %}

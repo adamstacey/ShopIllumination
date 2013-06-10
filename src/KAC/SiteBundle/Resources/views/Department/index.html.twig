@@ -1,0 +1,49 @@
+{# Forms #}
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Departments | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Departments</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <fieldset class="pbm">
+            <table class="form-table treetable" id="departments">
+                <tr>
+                    {# sorting of properties based on query components #}
+                    <th>#</th>
+                    <th>Status</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+
+                {# table body #}
+                {% for department in departments %}
+                    {% if department.lvl != 0 %}
+                        <tr data-tt-id="{{ department.id }}" {% if department.parent and department.parent.lvl != 0 %}data-tt-parent-id="{{ department.parent.id }}"{% endif %}>
+                            <td>{{ department.id }}</td>
+                            <td>{{ department.status }}</td>
+                            <td>{{ department.description.name }}</td>
+                            <td>
+                                <a href="{{ path('departments_edit', {'departmentId': department.id}) }}" class="button button-blue">Edit</a>
+                                <a href="{{ path('departments_delete', {'departmentId': department.id}) }}" class="button button-red icon-white" data-icon-primary="icon-1117" data-icon-only="true">Delete</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </fieldset>
+    </section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $("#departments").treetable({
+            expandable: true
+        });
+    </script>
+{% endblock %}

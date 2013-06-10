@@ -3,6 +3,10 @@
 namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use KAC\SiteBundle\Form\Department\EditDepartmentDeliveryType;
+use KAC\SiteBundle\Form\Department\EditDepartmentOverviewType;
+use KAC\SiteBundle\Form\Department\EditDepartmentProductTemplatesType;
+use KAC\SiteBundle\Form\Department\EditDepartmentSeoType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +32,26 @@ use KAC\SiteBundle\Manager\SeoManager;
 class DepartmentController extends Controller
 {
     /**
+     * @Route("/admin/departments", name="departments_index")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function indexAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $repo = $em->getRepository("KAC\\SiteBundle\\Entity\\Department");
+        $departments = $repo->findAll();
+
+
+        // parameters to template
+        return $this->render('KACSiteBundle:Department:index.html.twig', array('departments' => $departments));
+    }
+
+    /**
      * @Route("/admin/departments/new", name="departments_new")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function newAction(Request $request, $admin = false)
+    public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -167,12 +187,79 @@ class DepartmentController extends Controller
     }
 
     /**
+     * @Route("/admin/departments/{departmentId}/edit", name="departments_edit")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editAction(Request $request, $departmentId)
+    {
+        return $this->redirect($this->generateUrl('departments_edit_overview', array(
+            'departmentId' => $departmentId
+        )));
+    }
+
+    /**
+     * @Route("/admin/departments/{departmentId}/overview", name="departments_edit_overview")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editOverviewAction(Request $request, $departmentId)
+    {
+        return $this->baseEditAction($request, $departmentId, 'KACSiteBundle:Department:edit_overview.html.twig', new EditDepartmentOverviewType());
+    }
+
+    /**
+     * @Route("/admin/departments/{departmentId}/seo", name="departments_edit_seo")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editSeoAction(Request $request, $departmentId)
+    {
+        return $this->baseEditAction($request, $departmentId, 'KACSiteBundle:Department:edit_seo.html.twig', new EditDepartmentSeoType());
+    }
+
+    /**
+     * @Route("/admin/departments/{departmentId}/delivery", name="departments_edit_delivery")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDeliveryAction(Request $request, $departmentId)
+    {
+        return $this->baseEditAction($request, $departmentId, 'KACSiteBundle:Department:edit_delivery.html.twig', new EditDepartmentDeliveryType());
+    }
+
+    /**
      * @Route("/admin/departments/{departmentId}/features", name="departments_edit_features")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editFeaturesAction(Request $request, $departmentId)
     {
         return $this->baseEditAction($request, $departmentId, 'KACSiteBundle:Department:edit_features.html.twig', new EditDepartmentFeaturesType());
+    }
+
+    /**
+     * @Route("/admin/departments/{departmentId}/products", name="departments_edit_product_templates")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editProductTemplatesAction(Request $request, $departmentId)
+    {
+        return $this->baseEditAction($request, $departmentId, 'KACSiteBundle:Department:edit_product_templates.html.twig', new EditDepartmentProductTemplatesType());
+    }
+
+    /**
+     * @Route("/admin/departments/{departmentId}/delete", name="departments_delete")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function deleteAction(Request $request, $departmentId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $department = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->find($departmentId);
+        if(!$department)
+        {
+            throw new NotFoundHttpException("Department not found");
+        }
+
+        $em->remove($department);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('departments_index'));
     }
 
     /**

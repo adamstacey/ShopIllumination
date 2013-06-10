@@ -424,4 +424,19 @@ ALTER TABLE images DROP object_type;
 ALTER TABLE images ADD object_type VARCHAR(255) NOT NULL;
 CREATE INDEX IDX_E01FBE6A232D562B ON images (object_id);
 DROP TABLE departments_tmp;
+DROP TABLE IF EXISTS descriptions_;
+CREATE TABLE descriptions_ LIKE department_descriptions;
+INSERT INTO descriptions_ SELECT * FROM `department_descriptions`;
+ALTER TABLE  `department_descriptions` CHANGE  `google_department`  `google_department` INT NOT NULL;
+
+ALTER TABLE  `taxonomies` DEFAULT CHARACTER SET utf32 COLLATE utf32_unicode_ci;
+ALTER TABLE  `taxonomies` CHANGE  `name`  `name` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL;
+
+UPDATE department_descriptions t1
+  INNER JOIN descriptions_ t2
+    ON t1.id = t2.id
+  INNER JOIN taxonomies t3
+    ON t2.google_department = t3.name
+SET t1.google_department = t3.id;
+DROP TABLE IF EXISTS descriptions_;
 SET FOREIGN_KEY_CHECKS = 1;

@@ -445,7 +445,7 @@ class OrderService {
         $copyOrderDocument = $this->getUploadRootDir().'/copy-order-'.$id.'.pdf';
         $invoiceDocument = $this->getUploadRootDir().'/invoice-'.$id.'.pdf';
         $deliveryNoteDocument = $this->getUploadRootDir().'/delivery-note-'.$id.'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'app_dev.php/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
+        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
         $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
         $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
         $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
@@ -1262,7 +1262,7 @@ class OrderService {
 
         // Get the order details
         $orderObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($id);
-        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('header' => 'ASC'));
+        $orderProducts = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $id), array('name' => 'ASC'));
         $orderDiscounts = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
         $orderDonations = $em->getRepository('KAC\SiteBundle\Entity\Order\Donation')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
         $orderNotes = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $id), array('createdAt' => 'DESC'));
@@ -1491,7 +1491,7 @@ class OrderService {
                     if (!isset($products[$orderProductObject->getProduct()->getId()]))
                     {
                         $products[$orderProductObject->getProduct()->getId()] = array();
-                        $products[$orderProductObject->getProduct()->getId()]['product'] = $orderProductObject->getHeader();
+                        $products[$orderProductObject->getProduct()->getId()]['product'] = $orderProductObject->getName();
                         $products[$orderProductObject->getProduct()->getId()]['quantity'] = $orderProductObject->getQuantity();
                         $products[$orderProductObject->getProduct()->getId()]['total'] = $orderProductObject->getSubTotal();
                     } else {
