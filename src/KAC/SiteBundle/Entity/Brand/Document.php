@@ -11,7 +11,7 @@ use \KAC\SiteBundle\Entity\Document as SiteDocument;
 class Document extends SiteDocument
 {
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Brand", inversedBy="images")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Brand", inversedBy="documents")
      * @ORM\JoinColumn(name="object_id", referencedColumnName="id")
      */
     protected $brand;

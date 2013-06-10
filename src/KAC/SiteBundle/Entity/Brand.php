@@ -35,6 +35,16 @@ class Brand
     private $routings;
 
     /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Image", mappedBy="brand", cascade={"all"})
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Document", mappedBy="brand", cascade={"all"})
+     */
+    private $documents;
+
+    /**
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status = 'a';
