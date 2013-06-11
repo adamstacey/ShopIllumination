@@ -38,7 +38,7 @@ nav.left-menu ul {
 }
 
 nav.left-menu ul li {
-    margin: 0 0 5px 0;
+    margin: 0 0 $spacingSmall 0;
     padding: 0 0 0 42px;
     width: 100%;
 
@@ -90,7 +90,7 @@ nav.left-menu ul li.blue {
 nav.left-menu ul li .nav-icon {
     position: absolute;
     top: 3px;
-    left: 5px;
+    left: $spacingSmall;
 }
 
 nav.left-menu .button {
@@ -143,7 +143,7 @@ nav.left-menu li.blue .button {
 nav.left-menu .button .ui-button-icon-secondary {
     position: absolute;
     top: 3px;
-    right: 5px;
+    right: $spacingSmall;
 }
 
 nav.left-menu .ui-button-text {
@@ -195,7 +195,7 @@ nav.left-menu .ui-button-text {
 
 .main-menu nav > ul > li > a:hover,
 .main-menu nav > ul > li > a.hover {
-    @include boxInsetShadow($colourGreyDark, 0, -5px, 20px, 0, 1);
+    @include boxInsetShadow($colourGreyDark, 0, -#{$spacingSmall}, 20px, 0, 1);
 }
 
 .main-menu nav > ul > li > a.highlighted {
@@ -209,7 +209,7 @@ nav.left-menu .ui-button-text {
     border: 0 none;
 
     @include borderRadius($radiusSize, $radiusSize, 0, 0);
-    @include boxShadow($colourGreyDark, 0, -2px, 5px, 0, 1);
+    @include boxShadow($colourGreyDark, 0, -2px, $spacingSmall, 0, 1);
 }
 
 .main-menu nav > .button .ui-button-text {
@@ -261,7 +261,7 @@ nav.left-menu .ui-button-text {
 }
 
 .main-menu .widget h4 a:hover {
-    @include boxInsetShadow($colourGreyDark, 0, -5px, 20px, 0, 1);
+    @include boxInsetShadow($colourGreyDark, 0, -#{$spacingSmall}, 20px, 0, 1);
 }
 
 .main-menu .widget ul,
@@ -284,5 +284,64 @@ nav.left-menu .ui-button-text {
 }
 
 .main-menu .widget ul li a:hover {
-    @include boxInsetShadow($colourGreyDark, 0, 0, 10px, 0, 1);
+    @include boxInsetShadow($colourGreyDark, 0, 0, $spacingMedium, 0, 1);
+}
+
+.unique-selling-points-container {
+    position: relative;
+    z-index: 2;
+
+    @include verticalGradientWhiteToGreyLight;
+    @include boxInsetShadow($colourGreyDark, 0, 1px, $spacingSmall);
+    border-bottom: 3px solid $colourGrey;
+}
+
+.unique-selling-points-container .widget {
+    padding: 8px $spacingMedium;
+}
+
+.unique-selling-points-container .ui-icon-small {
+    margin: 0 $spacingMedium 0 0;
+}
+
+.unique-selling-points-container h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.unique-selling-points-container h2,
+.unique-selling-points-container h2 a {
+    @include fontSize($fontSizeExtraExtraLarge);
+    color: $colourGreyDark;
+    line-height: 100%;
+    @include textShadow($colourWhite, 0, 1px);
+    text-decoration: none;
+}
+
+.unique-selling-points-container h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.unique-selling-points-container h3,
+.unique-selling-points-container h3 a {
+    @include fontSize($fontSizeLarge);
+    color: $colourGreyDark;
+    line-height: 100%;
+    letter-spacing: 1px;
+    @include textShadow($colourWhite, 0, 1px);
+    text-decoration: none;
+}
+
+.unique-selling-points-container p {
+    padding: 2px 0 0 0;
+    margin: 0;
+}
+
+.unique-selling-points-container p,
+.unique-selling-points-container p a {
+    @include fontSize($fontSizeExtraSmall);
+    color: $colourGrey;
+    line-height: 100%;
+    text-decoration: none;
 }
