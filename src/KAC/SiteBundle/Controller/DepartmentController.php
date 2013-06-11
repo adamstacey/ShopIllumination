@@ -164,7 +164,7 @@ class DepartmentController extends Controller
                 $em->flush();
 
                 // Notify user
-                $this->get('session')->setFlash('notice', 'The department "'.$department->getName().'" has been updated.');
+                $this->get('session')->getFlashBag()->all('notice', 'The department "'.$department->getName().'" has been updated.');
 
                 // Check if request is modal
                 if ($request->query->get('modal') == true)

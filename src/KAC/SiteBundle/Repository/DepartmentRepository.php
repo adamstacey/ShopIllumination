@@ -31,7 +31,7 @@ class DepartmentRepository extends NestedTreeRepository
                 FROM KAC\SiteBundle\Entity\Department d
                 LEFT JOIN d.descriptions dd
                 LEFT JOIN d.children dc
-                WHERE d.status = :status AND d.lvl != 0
+                WHERE d.status = :status
                 ORDER BY d.displayOrder ASC
             ')->setParameter('status', 'a');
 

@@ -1,10 +1,24 @@
 {% import _self as helpers %}
 
-{% macro getColour(route) %}{% spaceless %}
+{% macro getStatusIconColour(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        white
+    {% else %}
+        grey
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro getIconColour(route) %}{% spaceless %}
     {% if app.request.get('_route') == route %}
         turquoise
     {% else %}
         grey
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro getButtonClass(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        button-turquoise
     {% endif %}
 {% endspaceless %}{% endmacro %}
 
@@ -16,8 +30,28 @@
         <nav class="left-menu">
             <ul class="clearfix">
                 <li class="clearfix grey">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getColour('departments_edit_features') }} icon-69"></span>
-                    <a data-icon-secondary="icon-471" class="fl ui-button button button-{{ helpers.getColour('departments_edit_features') }} icon-white" href="{{ path('departments_edit_features', {'departmentId': department.id}) }}">Feature Templates</a>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_overview') }} icon-944"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_overview') }} icon-{{ helpers.getStatusIconColour('departments_edit_overview') }}" href="{{ path('departments_edit_overview', {'departmentId': department.id}) }}">
+                        Overview
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_seo') }} icon-369"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_seo') }} icon-{{ helpers.getStatusIconColour('departments_edit_seo') }}" href="{{ path('departments_edit_seo', {'departmentId': department.id}) }}">
+                        SEO
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_delivery') }} icon-1305"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_delivery') }} icon-{{ helpers.getStatusIconColour('departments_edit_delivery') }}" href="{{ path('departments_edit_delivery', {'departmentId': department.id}) }}">
+                        Delivery
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('departments_edit_features') }} icon-51"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('departments_edit_features') }} icon-{{ helpers.getStatusIconColour('departments_edit_features') }}" href="{{ path('departments_edit_features', {'departmentId': department.id}) }}">
+                        Feature Templates
+                    </a>
                 </li>
             </ul>
         </nav>

@@ -13,8 +13,8 @@ class EditDepartmentOverviewType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('parent', 'entity', array(
-            'label' => 'Department',
-            'property' => 'indentedName',
+            'label' => 'Parent Department',
+            'property' => 'indentedNameWithRoot',
             'class' => 'KAC\SiteBundle\Entity\Department',
             'query_builder' => function(DepartmentRepository $er) {
                 $rootNodes = $er->getRootNodes();

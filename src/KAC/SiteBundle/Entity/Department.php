@@ -5,12 +5,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity(repositoryClass="KAC\SiteBundle\Repository\DepartmentRepository")
  * @ORM\Table(name="departments")
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\Tree(type="nested")
+ * @Assert\Callback(methods={"isDepartmentParentNotSelf", "isDepartmentNotChildOfItsChildren"})
  */
 class Department implements DescribableInterface
 {
@@ -200,6 +202,21 @@ class Department implements DescribableInterface
             if ($level > 0)
             {
                 $indentation = str_repeat("&nbsp;&nbsp;", $level);
+            }
+            return html_entity_decode($indentation).$this->getName();
+        } else {
+            return "";
+        }
+    }
+
+    public function getIndentedNameWithRoot()
+    {
+        if (count($this->descriptions) > 0)
+        {
+            $indentation = "";
+            if ($this->getLevel() > 0)
+            {
+                $indentation = str_repeat("&nbsp;&nbsp;", $this->getLevel());
             }
             return html_entity_decode($indentation).$this->getName();
         } else {
@@ -989,5 +1006,30 @@ class Department implements DescribableInterface
     public function getListProductVariants()
     {
         return $this->listProductVariants;
+    }
+
+    public function isDepartmentParentNotSelf(ExecutionContext $context)
+    {
+        if($this->getParent() === $this)
+        {
+            $context->addViolationAt("parent", "You cannot set the parent department to be itself.");
+        }
+    }
+
+    public function isDepartmentNotChildOfItsChildren(ExecutionContext $context)
+    {
+        $that = $this;
+        $func = function(Department $department) use ($that, $context, &$func) {
+            foreach($department->getChildren() as $child)
+            {
+                if($child === $this->getParent()) {
+                    $context->addViolationAt("parent", "You cannot set the parent department to be one of its children.");
+                }
+
+                $func($child);
+            }
+        };
+
+        $func($this);
     }
 }
