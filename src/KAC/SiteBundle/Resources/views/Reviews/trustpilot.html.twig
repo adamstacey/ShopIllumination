@@ -21,7 +21,7 @@
                             <div class="widget widget-1-of-1">
                                 <div class="fl">
                                     <div class="trustpilot-review-user-image">
-                                        <a target="_blank" href="{{ review.Url }}"><img width="56" src="{{ review.User.ImageUrls.i73 }}" alt="{{ review.User.Name }}"/></a>
+                                        <a target="_blank" href="{{ review.Url }}"><img width="42" src="{{ review.User.ImageUrls.i73 }}" alt="{{ review.User.Name }}"/></a>
                                     </div>
                                 </div>
                                 <div class="trustpilot-review-content">
@@ -32,8 +32,8 @@
                                             <span class="trustpilot-review-star trustpilot-review-star-small"></span>
                                         {% endfor %}
                                     </div>
+                                    <a class="trustpilot-review-read-more" target="_blank" href="{{ review.Url }}"><strong>Read More</strong></a>
                                     <p class="trustpilot-review-rating">{{ review.Content }}</p>
-                                    <p><a target="_blank" href="{{ review.Url }}"><strong>Read More</strong></a></p>
                                 </div>
                             </div>
                         </div>
