@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         // Hide the menu and any menus that were left open
         $submenu.css("display", "none");
-        $submenu.find('menu-horizontal').css("display", "none");
+        $submenu.find('menu-vertical').css("display", "none");
     });
 
     // Add events for lower level navigation
