@@ -1,24 +1,27 @@
 $(document).ready(function() {
+    // Add events for top level navigation
     var $menuRow = $(".main-menu .menu-horizontal");
-    var activeRow = null;
     $menuRow.find('> li').on('mouseenter', function() {
         var submenuId = $(this).data("submenu"),
             $submenu = $("#" + submenuId),
             height = $menuRow.outerHeight();
 
+        // Show the menu
         $submenu.css({
             display: "block",
             left: $(this).position().left,
             top: height
         });
     }).on('mouseleave', function() {
-            var submenuId = $(this).data("submenu"),
-                $submenu = $("#" + submenuId);
+        var submenuId = $(this).data("submenu"),
+            $submenu = $("#" + submenuId);
 
-            $submenu.css("display", "none");
-            $submenu.find('menu-horizontal').css("display", "none");
-        });
+        // Hide the menu and any menus that were left open
+        $submenu.css("display", "none");
+        $submenu.find('menu-horizontal').css("display", "none");
+    });
 
+    // Add events for lower level navigation
     var $menu = $(".main-menu .menu-vertical");
     $menu.menuAim({
         activate: activateSubmenu,
