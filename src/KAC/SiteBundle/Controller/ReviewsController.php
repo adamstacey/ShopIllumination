@@ -20,11 +20,25 @@ class ReviewsController extends Controller
      */
     public function trustpilotAction(Request $request)
     {
-        // Get the JSON feed and gzunpack
-        $file = gzdecode( file_get_contents("http://s.trustpilot.com/tpelements/283177/f.json.gz") );
+        $url = "http://s.trustpilot.com/tpelements/283177/f.json.gz";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $file = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
 
-        // JSON decode the string
-        $result = json_decode($file, true);
+        // Check on the status of the HTTP code
+        if (($httpCode >= 200) && ($httpCode < 300))
+        {
+            // Get the JSON feed and gzunpack
+            $file = gzdecode($file);
+
+            // JSON decode the string
+            $result = json_decode($file, true);
+        } else {
+            $result = false;
+        }
 
         return $this->render('KACSiteBundle:Reviews:trustpilot.html.twig', array(
             'result' => $result
