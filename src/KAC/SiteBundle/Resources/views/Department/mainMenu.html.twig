@@ -1,44 +1,30 @@
+{% macro menuItem(parentId, departments) %}
+    <ul id="submenu-department-{{ parentId }}" class="menu-vertical">
+        {% for department in departments %}
+            <li {% if department.children|length > 0 %}data-submenu="submenu-department-{{ department.id }}"{% endif %}>
+                <a class="dropdown-toggle" href="{{ path('routing', {'url': department.url}) }}">
+                    {{ department.description.name|raw }}
+                </a>
+                {% if department.children|length > 0 %}
+                    {{ _self.menuItem(department.id, department.children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
 <div class="main-menu">
     <nav class="container clearfix">
         <a class="ui-button button button-turquoise uppercase" href="#">Brands</a>
-        <ul class="clearfix">
+        <ul class="clearfix menu-horizontal">
             {% for department in departments %}
-                <li><a{% if loop.last %} class="highlighted"{% endif %} data-main-menu-group="{{ department.id }}" href="{{ path('routing', {'url': department.url}) }}">{{ department.menuTitle|raw }}</a></li>
+                <li data-submenu="submenu-department-{{ department.id }}">
+                    <a class="{% if loop.last %}highlighted{% endif %} dropdown-toggle" href="{{ path('routing', {'url': department.url}) }}">
+                        {{ department.menuTitle|raw }}
+                    </a>
+                    {{ _self.menuItem(department.id, department.children) }}
+                </li>
             {% endfor %}
         </ul>
-        {% for department in departments %}
-            <div id="mainMenuGroup{{ department.id }}" class="main-menu-group container">
-                {% for subDepartment in department.children %}
-                    {% if department.children|length < 4 %}
-                        {% if department.children|length == 1 %}
-                            {% set widgetGroupSize = '1-of-4' %}
-                        {% elseif department.children|length == 2 %}
-                            {% set widgetGroupSize = '1-of-2' %}
-                        {% elseif department.children|length == 3 %}
-                            {% set widgetGroupSize = '3-of-4' %}
-                        {% else %}
-                            {% set widgetGroupSize = '1-of-1' %}
-                        {% endif %}
-                    {% else %}
-                        {% set widgetGroupSize = '1-of-1' %}
-                    {% endif %}
-                    {% if (loop.index % 4) == 1 %}<div class="widget-group widget-{{ widgetGroupSize }} clearfix">{% endif %}
-                        <div class="widget widget-1-of-4">
-                            <h4><a href="{{ path('routing', {'url': subDepartment.url}) }}">{{ subDepartment.name|raw }}</a></h4>
-                            {% if subDepartment.children is defined %}
-                                <ul>
-                                    {% for subSubDepartment in subDepartment.children %}
-                                        <li><a href="{{ path('routing', {'url': subSubDepartment.url}) }}">{{ subSubDepartment.name|raw }}</a></li>
-                                    {% else %}
-                                        <li><a href="{{ path('routing', {'url': subDepartment.url}) }}">{{ subDepartment.name|raw }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-                    {% if (loop.index % 4) == 0 %}</div>{% endif %}
-                {% endfor %}
-                {% if (department.children|length % 4) != 0 %}</div>{% endif %}
-            </div>
-        {% endfor %}
     </nav>
 </div>
