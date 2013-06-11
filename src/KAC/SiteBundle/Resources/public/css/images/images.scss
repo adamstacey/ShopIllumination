@@ -491,18 +491,7 @@ div.etalage_description.rtl {
     display: none;
 }
 
-/*
- * jQuery Nivo Slider v3.2
- * http://nivo.dev7studios.com
- *
- * Copyright 2012, Dev7studios
- * Free to use and abuse under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
- */
-
-/* The Nivo Slider styles */
 .slider-wrapper {
-    margin: -10px -10px 0 -10px;
     position: relative;
 }
 
@@ -542,23 +531,21 @@ div.etalage_description.rtl {
     width:100%;
     height:auto;
     overflow: hidden;
-    @include borderRadius($radiusSize, $radiusSize, 0, 0);
 }
+
 .nivoSlider img {
     position:absolute;
     top:0px;
     left:0px;
     max-width: none;
-    @include borderRadius($radiusSize, $radiusSize, 0, 0);
 }
+
 .nivo-main-image {
     display: block !important;
     position: relative !important;
     width: 100% !important;
-    @include borderRadius($radiusSize, $radiusSize, 0, 0);
 }
 
-/* If an image is wrapped in a link */
 .nivoSlider a.nivo-imageLink {
     position:absolute;
     top:0px;
@@ -574,7 +561,7 @@ div.etalage_description.rtl {
     filter:alpha(opacity=0);
     opacity:0;
 }
-/* The slices and boxes in the Slider */
+
 .nivo-slice {
     display:block;
     position:absolute;
@@ -582,40 +569,39 @@ div.etalage_description.rtl {
     height:100%;
     top:0;
 }
+
 .nivo-box {
     display:block;
     position:absolute;
     z-index:5;
     overflow:hidden;
 }
+
 .nivo-box img { display:block; }
 
-/* Caption styles */
 .nivo-caption {
-    position:absolute;
-    left:0px;
-    bottom:0px;
-    background:#000;
-    color:#fff;
-    width:100%;
-    z-index:8;
-    padding: 5px 10px;
-    opacity: 0.8;
-    overflow: hidden;
-    display: none;
-    -moz-opacity: 0.8;
-    filter:alpha(opacity=8);
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+    position: absolute;
+    top: $spacingLarge;
+    color: $colourWhite;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    padding: $spacingExtraLarge;
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeExtraExtraLarge);
+    z-index: 99;
+    @include textShadow($colourBlack, 0, 1px);
+    font-weight: normal;
 }
+
 .nivo-caption p {
     padding:5px;
     margin:0;
 }
+
 .nivo-caption a {
     display:inline !important;
 }
+
 .nivo-html-caption {
     display:none;
 }
@@ -646,6 +632,7 @@ div.etalage_description.rtl {
     z-index: 99;
     text-align: center;
 }
+
 .nivo-controlNav a {
     cursor: pointer;
 }
@@ -655,19 +642,18 @@ div.etalage_description.rtl {
 }
 
 .slider-wrapper .nivoSlider {
-    margin-bottom: $spacingMedium;
-
     position: relative;
 
     background: $colourWhite url("#{$cssPath}/resources/images/loaders/loader.gif") no-repeat 50% 50%;
-    border-bottom: 5px solid $colourGrey;
 }
+
 .slider-wrapper .nivoSlider img {
     position:absolute;
     top:0px;
     left:0px;
     display:none;
 }
+
 .slider-wrapper .nivoSlider a {
     border:0;
     display:block;
@@ -677,6 +663,7 @@ div.etalage_description.rtl {
     text-align: center;
     padding: 0;
 }
+
 .slider-wrapper .nivo-controlNav a {
     display:inline-block;
     width:22px;
@@ -686,6 +673,7 @@ div.etalage_description.rtl {
     border:0;
     margin: 0 2px;
 }
+
 .slider-wrapper .nivo-controlNav a.active {
     background-position:0 -22px;
 }
@@ -703,11 +691,13 @@ div.etalage_description.rtl {
     -o-transition: all 200ms ease-in-out;
     transition: all 200ms ease-in-out;
 }
+
 .slider-wrapper:hover .nivo-directionNav a { opacity: 1; }
 .slider-wrapper a.nivo-nextNav {
     background-position:-30px 0;
     right:15px;
 }
+
 .slider-wrapper a.nivo-prevNav {
     left:15px;
 }
@@ -715,10 +705,12 @@ div.etalage_description.rtl {
 .slider-wrapper .nivo-caption {
     font-family: Helvetica, Arial, sans-serif;
 }
+
 .slider-wrapper .nivo-caption a {
     color:#fff;
     border-bottom:1px dotted #fff;
 }
+
 .slider-wrapper .nivo-caption a:hover {
     color:#fff;
 }
@@ -726,12 +718,14 @@ div.etalage_description.rtl {
 .slider-wrapper .nivo-controlNav.nivo-thumbs-enabled {
     width: 100%;
 }
+
 .slider-wrapper .nivo-controlNav.nivo-thumbs-enabled a {
     width: auto;
     height: auto;
     background: none;
     margin-bottom: 5px;
 }
+
 .slider-wrapper .nivo-controlNav.nivo-thumbs-enabled img {
     display: block;
     width: 120px;
