@@ -174,7 +174,6 @@ nav.left-menu .ui-button-text {
 
     list-style: none;
 }
-
 .main-menu nav > ul > li > a,
 .main-menu nav > ul > li > a.hover {
     padding: 0 7px;
@@ -195,7 +194,7 @@ nav.left-menu .ui-button-text {
 
 .main-menu nav > ul > li > a:hover,
 .main-menu nav > ul > li > a.hover {
-    @include boxInsetShadow($colourGreyDark, 0, -#{$spacingSmall}, 20px, 0, 1);
+    @include boxInsetShadow($colourGreyDark, 0, -5px, 20px, 0, 1);
 }
 
 .main-menu nav > ul > li > a.highlighted {
@@ -209,82 +208,48 @@ nav.left-menu .ui-button-text {
     border: 0 none;
 
     @include borderRadius($radiusSize, $radiusSize, 0, 0);
-    @include boxShadow($colourGreyDark, 0, -2px, $spacingSmall, 0, 1);
+    @include boxShadow($colourGreyDark, 0, -2px, 5px, 0, 1);
 }
 
 .main-menu nav > .button .ui-button-text {
     line-height: 26px;
 }
 
-.main-menu .main-menu-group {
+.main-menu .menu-vertical {
     position: absolute;
-    top: 40px;
+    top: 100%;
     left: 0;
-    padding: $spacingMedium $spacingSmall 0 $spacingSmall;
-
+    z-index: 1000;
+    min-height: 288px;
     display: none;
+    float: left;
+    min-width: 160px;
+    padding: $spacingMedium 0;
+    list-style: none;
+    border: 1px solid $colourGreyDark;
 
-    border-top: 3px solid $colourGreyDark;
-    border-bottom: 3px solid $primaryColour;
-    z-index: 99;
-    @include alphaBackground($colourBlack, 0.7);
+    background: $colourWhite;
+    @include boxShadow($colourGreyDark, 0, 0, 10px, 0, 1);
 }
 
-.main-menu .widget-group {
-    width: 100%;
+.main-menu .menu-vertical li {
     margin: 0;
+    padding: $spacingExtraSmall $spacingMedium;
 }
 
-.main-menu .widget-group > .widget {
-    padding: 0 $spacingSmall $spacingMedium $spacingSmall;
-}
-
-.main-menu .widget-group > .widget:last-child {
-    border-right: 0 none;
-}
-
-.main-menu .widget h4 {
-    margin: 0;
-}
-
-.main-menu .widget h4 a {
-    height: 30px;
-
-    display: block;
-    @include highlightedVerticalGradientGreyDark;
-    line-height: 30px;
-    padding: 0 $spacingMedium;
+.main-menu .menu-vertical li a {
+    line-height: 15px;
     @include fontSize(13);
-    color: $colourWhite;
-    @include textShadow($colourBlack, 1px, 0, 0, 1);
     text-decoration: none;
+    color: $colourBlack;
 }
 
-.main-menu .widget h4 a:hover {
-    @include boxInsetShadow($colourGreyDark, 0, -#{$spacingSmall}, 20px, 0, 1);
+.main-menu .menu-vertical li:hover a {
+    font-weight: bold;
 }
 
-.main-menu .widget ul,
-.main-menu .widget ul li {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
-.main-menu .widget ul li a {
-    height: 25px;
-
-    display: block;
-    @include highlightedVerticalGradientGreyLight;
-    line-height: 25px;
-    padding: 0 $spacingMedium;
-    @include fontSize(11);
-    color: $textColour;
-    text-decoration: none;
-}
-
-.main-menu .widget ul li a:hover {
-    @include boxInsetShadow($colourGreyDark, 0, 0, $spacingMedium, 0, 1);
+.main-menu .menu-vertical li a:hover {
+    text-decoration: underline;
 }
 
 .unique-selling-points-container {
