@@ -34,7 +34,6 @@ html.modal body > section {
 .header {
     padding: $spacingSmall 0;
 
-    border-top: 1px solid $colourGreyDark;
     @include verticalGradientGreyToGreyDark;
     @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
 }
@@ -45,11 +44,12 @@ html.modal body > section {
 
 .content {
     min-height: 300px;
-    padding: $spacingExtraLarge;
+    padding: 25px $spacingExtraLarge $spacingExtraLarge $spacingExtraLarge;
+    margin: -#{$spacingSmall} 0 0 0;
 
     position: relative;
+    z-index: 1;
+    
     background: $colourGreyLight;
-    border-left: 1px solid $colourGrey;
-    border-right: 1px solid $colourGrey;
     @include boxGlow($colourBlack, 5px, 0, 0.7);
 }
