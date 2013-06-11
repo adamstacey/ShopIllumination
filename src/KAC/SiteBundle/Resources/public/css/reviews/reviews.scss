@@ -171,7 +171,7 @@
     margin: 0;
     padding: 0;
 
-    @include highlightedVerticalGradientGreen;
+    @include verticalGradient(#2D802D, #6BAA3C);
     @include equalBorderRadius($radiusSize);
 }
 .trustpilot-reviews {
