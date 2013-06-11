@@ -439,4 +439,7 @@ UPDATE department_descriptions t1
     ON t2.google_department = t3.name
 SET t1.google_department = t3.id;
 DROP TABLE IF EXISTS descriptions_;
+ALTER TABLE department_descriptions CHANGE google_department googleDepartment_id INT DEFAULT NULL;
+ALTER TABLE department_descriptions ADD CONSTRAINT FK_3213CC7486EE50E2 FOREIGN KEY (googleDepartment_id) REFERENCES taxonomies (id);
+CREATE INDEX IDX_3213CC7486EE50E2 ON department_descriptions (googleDepartment_id);
 SET FOREIGN_KEY_CHECKS = 1;

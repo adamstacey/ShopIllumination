@@ -37,7 +37,6 @@ class Description implements DescriptionInterface
     private $name;
     
     /**
-     * @ORM\Column(name="google_department", type="integer", length=11)
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Taxonomy")
      * @Assert\NotBlank(groups={"flow_site_new_department_step2"}, message="Select a Google department.")
      */
@@ -164,29 +163,6 @@ class Description implements DescriptionInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set googleDepartment
-     *
-     * @param string $googleDepartment
-     * @return Description
-     */
-    public function setGoogleDepartment($googleDepartment)
-    {
-        $this->googleDepartment = $googleDepartment;
-    
-        return $this;
-    }
-
-    /**
-     * Get googleDepartment
-     *
-     * @return string 
-     */
-    public function getGoogleDepartment()
-    {
-        return $this->googleDepartment;
     }
 
     /**
@@ -509,5 +485,21 @@ class Description implements DescriptionInterface
     public function getDepartment()
     {
         return $this->department;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGoogleDepartment()
+    {
+        return $this->googleDepartment;
+    }
+
+    /**
+     * @param mixed $googleDepartment
+     */
+    public function setGoogleDepartment($googleDepartment)
+    {
+        $this->googleDepartment = $googleDepartment;
     }
 }
