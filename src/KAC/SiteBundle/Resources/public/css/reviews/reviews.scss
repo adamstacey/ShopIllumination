@@ -155,3 +155,114 @@
 .review-rating-small-5 {
     background-position: -0px -135px;
 }
+
+
+
+.trustpilot-reviews-border {
+    margin: -#{$spacingLarge} -#{$spacingLarge} $spacingMedium -#{$spacingLarge};
+    padding: 3px;
+
+    background: $colourWhite;
+    overflow: hidden;
+    @include equalBorderRadius($radiusSize);
+    @include boxGlow($colourBlack, $spacingSmall, 0, 0.7);
+}
+.trustpilot-reviews-container {
+    margin: 0;
+    padding: 0;
+
+    @include highlightedVerticalGradientGreen;
+    @include equalBorderRadius($radiusSize);
+}
+.trustpilot-reviews {
+    @include boxInsetShadow($colourGreyDark, 0, 0, $spacingSmall);
+    background-image: url("#{$cssPath}/resources/images/icons/trustpilot_background_tick.png");
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: 700px 200px;
+    @include equalBorderRadius($radiusSize);
+}
+.trustpilot-reviews-container h2 {
+    color: $colourWhite;
+    @include fontSize(22);
+    @include textShadow($colourGreyDark, 1px, 0);
+    line-height: 30px;
+    padding: 0 $spacingMedium;
+    margin: 0;
+}
+.trustpilot-reviews-container h3 {
+    color: $colourGreyExtraLight;
+    @include fontSize($fontSizeSmall);
+    line-height: 30px;
+    padding: 0 $spacingMedium;
+    margin: 0;
+    font-weight: normal;
+}
+.trustpilot-reviews-container h4 {
+    color: $colourWhite;
+    @include fontSize($fontSizeLarge);
+    margin: 0 0 $spacingSmall 0;
+}
+.trustpilot-reviews-container p {
+    color: $colourGreyExtraLight;
+    @include fontSize($fontSizeSmall);
+    line-height: 14px;
+    margin: 0;
+}
+.trustpilot-reviews-container a {
+    text-decoration: none;
+    color: $colourWhite;
+}
+.trustpilot-overall-rating {
+    float: left;
+    padding: 3px $spacingMedium 3px 0;
+}
+.trustpilot-rating {
+    height: 14px;
+}
+.trustpilot-review-star {
+    background-image: url("#{$cssPath}/resources/images/icons/white_star.png");
+    background-position: 0 0;
+    display: block;
+    float: left;
+}
+.trustpilot-review-star-large {
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+}
+.trustpilot-review-star-small {
+    background-size: 14px 14px;
+    width: 14px;
+    height: 14px;
+}
+.trustpilot-review {
+    padding: $spacingSmall $spacingMedium $spacingMedium $spacingMedium;
+}
+.trustpilot-review-content
+{
+    margin: 0 0 0 76px;
+}
+.trustpilot-review-user-image {
+    margin: 0 auto;
+    width: 56px;
+
+    border: 5px solid $colourWhite;
+    background: $colourWhite;
+    @include boxGlow($colourBlack, $spacingSmall, 0, 0.7);
+}
+.trustpilot-review-user-name {
+    margin: 0;
+
+    @include fontSize($fontSizeSmall);
+    padding: 0 $spacingSmall 0 0;
+    line-height: 14px;
+    color: $colourWhite;
+    float: left;
+}
+.trustpilot-review-rating {
+    padding: $spacingSmall 0 0 0;
+    margin: 0;
+    height: 14px;
+    @include ellipsis;
+}
