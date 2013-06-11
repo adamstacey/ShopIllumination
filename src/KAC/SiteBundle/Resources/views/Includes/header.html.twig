@@ -14,8 +14,6 @@
         </div>
     </div>
     {% render(controller('KACSiteBundle:Department:mainMenu')) %}
-    <div style="height: 30px; background: #384246;" class="">
-
-    </div>
+    {% include 'KACSiteBundle:Includes:uniqueSellingPoints.html.twig' %}
     {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
 </header>
