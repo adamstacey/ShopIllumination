@@ -29,8 +29,8 @@
                 {% include 'KACSiteBundle:Includes:header.html.twig' %}
                 <section class="container">
                     <div class="content">
-                        {% render url('reviews_trustpilot') %}
                         {% block slider %}{% endblock %}
+                        {% render url('reviews_trustpilot') %}
                         {% block header %}{% endblock %}
         {% endif %}
             {% block body %}{% endblock %}
