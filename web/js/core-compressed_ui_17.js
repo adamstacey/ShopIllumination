@@ -15,4 +15,9 @@ function loadUiFunctions() {
 
 $(document).ready(function() {
     loadUiFunctions();
+
+    $(document).on("click", ".accordion-header-buttons .button", function() {
+        var $accordionItemIndex = $(".accordion-item .accordion-header-buttons").index($(this).closest(".accordion-header-buttons"));
+        $(this).closest(".accordion").accordion( "option", "active", $accordionItemIndex);
+    });
 });

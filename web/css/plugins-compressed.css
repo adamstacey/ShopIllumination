@@ -33,20 +33,6 @@
 .files th {
     padding: 5px;
 }
-.files .progress {
-  width: 200px;
-}
-.files .progress,
-.fileupload-buttonbar .progress {
-  height: 20px;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-.files .ui-progressbar-value,
-.fileupload-buttonbar .ui-progressbar-value {
-  background: url("/bundles/kacsite/plugins/upload/img/progressbar.gif");
-}
 .fileupload-buttonbar .fade,
 .files .fade {
   display: none;
