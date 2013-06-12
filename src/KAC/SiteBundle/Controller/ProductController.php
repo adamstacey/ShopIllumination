@@ -108,9 +108,8 @@ class ProductController extends Controller {
         $galleryImages = array();
         $thumbnailImage = null;
 
-        $images = $em->getRepository("KAC\SiteBundle\Entity\Image")->findBy(array(
-            'objectId' => $id,
-            'objectType' => 'product',
+        $images = $em->getRepository("KAC\SiteBundle\Entity\Product\Image")->findBy(array(
+            'objectId' => $id
         ), array(
             'displayOrder' => 'ASC'
         ));
