@@ -76,46 +76,6 @@ content_gift_vouchers:
     pattern:  /kitchen-appliance-centre-gift-vouchers.html
     defaults: { _controller: WebIlluminationShopBundle:Content:giftVouchers }
 
-# Products
-products_test:
-    pattern:  /products/test
-    defaults: { _controller: WebIlluminationShopBundle:Products:test }
-products_get_product_listing:
-    pattern:  /products/getProductListing
-    defaults: { _controller: WebIlluminationShopBundle:Products:getProductListing }
-products_ajax_get_product_listing:
-    pattern:  /products/ajaxGetProductListing
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductListing }
-products_ajax_get_product_listing_count:
-    pattern:  /products/ajaxGetProductListingCount
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductListingCount }
-products_ajax_get_product_listing_pagination:
-    pattern:  /products/ajaxGetProductListingPagination
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductListingPagination }
-products_ajax_get_product_listing_brand_filter:
-    pattern:  /products/ajaxGetProductListingBrandFilter
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductListingBrandFilter }
-products_ajax_get_product_listing_department_filter:
-    pattern:  /products/ajaxGetProductListingDepartmentFilter
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductListingDepartmentFilter }
-products_ajax_get_product_listing_feature_filter:
-    pattern:  /products/ajaxGetProductListingFeatureFilter
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductListingFeatureFilter }
-products_ajax_get_product_listing_price_filter:
-    pattern:  /products/ajaxGetProductListingPriceFilter
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductListingPriceFilter }
-products_ajax_get_product_price:
-    pattern:  /products/ajaxGetProductPrice
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductPrice }
-products_ajax_get_product_search:
-    pattern:  /products/ajaxGetProductSearch
-    defaults: { _controller: WebIlluminationShopBundle:Products:ajaxGetProductSearch }
-products_product_search:
-    pattern:  /products/search/{search}.html
-    defaults: { _controller: WebIlluminationShopBundle:Products:productSearch }
-    requirements:
-        search: ".+"
-
 # Checkout
 checkout_secure_checkout:
     pattern:  /secure-checkout.html
@@ -208,34 +168,3 @@ basket_ajax_delete_membership_card_number:
 basket_ajax_delete_voucher_code:
     pattern:  /basket/ajaxDeleteVoucherCode
     defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxDeleteVoucherCode }
-
-# Users
-users_register:
-    pattern:  /register.html
-    defaults: { _controller: WebIlluminationShopBundle:Users:register }
-    requirements:
-        _scheme:  https
-users_ajax_check_email_address:
-    pattern:  /users/ajaxCheckEmailAddress
-    defaults: { _controller: WebIlluminationShopBundle:Users:ajaxCheckEmailAddress }
-users_ajax_create_user:
-    pattern:  /users/ajaxCreateUser
-    defaults: { _controller: WebIlluminationShopBundle:Users:ajaxCreateUser }
-users_user:
-    pattern:  /my-account.html
-    defaults: { _controller: WebIlluminationShopBundle:Users:user }
-    requirements:
-        _scheme:  https
-users_ajax_save_user:
-    pattern:  /users/ajaxSaveUser
-    defaults: { _controller: WebIlluminationShopBundle:Users:ajaxSaveUser }
-users_ajax_save_contact_addresses:
-    pattern:  /users/ajaxSaveContactAddresses
-    defaults: { _controller: WebIlluminationShopBundle:Users:ajaxSaveContactAddresses }
-
-# System
-shop_homepage:
-    pattern:  /
-    defaults: { _controller: WebIlluminationShopBundle:System:index }
-    requirements:
-        _scheme:  http
