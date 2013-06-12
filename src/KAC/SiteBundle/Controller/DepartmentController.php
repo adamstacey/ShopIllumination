@@ -119,8 +119,9 @@ class DepartmentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+        $brands = $em->getRepository("KACSiteBundle:Brand")->findBy(array('status' => 'a'));
 
-        return array('departments' => $departments);
+        return array('departments' => $departments, 'brands' => $brands);
     }
 
     public function baseEditAction(Request $request, $departmentId, $template, $formClass)
