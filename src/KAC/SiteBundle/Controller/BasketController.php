@@ -14,6 +14,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class BasketController extends Controller
 {
+    /**
+     * @Route("/summary", name="basket_summary")
+     */
     public function summaryAction(Request $request)
     {
         $basket = $this->get('session')->get('basket');

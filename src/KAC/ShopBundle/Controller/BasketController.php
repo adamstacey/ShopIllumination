@@ -233,86 +233,21 @@ class BasketController extends Controller
     		$discount = $variant['prices'][0]['discount'];
     		
     		// Get selected options
-    		$selectedOptionLabels = array();
-    		if ($selectedOptions)
-    		{
-    			// Get the entity manager
-	   			$em = $this->getDoctrine()->getManager();
-	   		
-	    		$selectedOptionIds = explode('|', $selectedOptions);
-	    		foreach ($selectedOptionIds as $selectedOptionId)
-	    		{
-	    			$productToOptionObject = $em->getRepository('KACAdminBundle:ProductToOption')->find($selectedOptionId);
-	    			$productOptionGroupObject = $em->getRepository('KACAdminBundle:ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
-					$productOptionObject = $em->getRepository('KACAdminBundle:ProductOption')->find($productToOptionObject->getProductOptionId());
-					$selectedOptionLabel = $productOptionGroupObject->getProductOptionGroup().': '.$productOptionObject->getProductOption();
-					$priceChange = $productToOptionObject->getPrice();
-					$priceType = $productToOptionObject->getPriceType();
-					$priceUse = $productToOptionObject->getPriceUse();
-					if ($priceType == 'a')
-					{
-						if ($priceUse == 'i')
-						{
-							$price += $priceChange;
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice += $priceChange;
-							}
-						} elseif (($priceUse == 'd')) {
-							$price -= $priceChange;
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice -= $priceChange;
-							}
-						}
-					}
-					if ($priceType == 'p')
-					{
-						if ($priceUse == 'i')
-						{
-							$price = $price + ($price * ($priceChange / 100));
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice = $recommendedRetailPrice + ($price * ($priceChange / 100));
-							}
-						} elseif (($priceUse == 'd')) {
-							$price = $price - ($price * ($priceChange / 100));
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice = $recommendedRetailPrice - ($price * ($priceChange / 100));
-							}
-						}
-					}
-					if ($priceType == 'r')
-					{
-						if ($priceUse == 'i')
-						{
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice += ($priceChange - $price);
-							}
-						} elseif (($priceUse == 'd')) {
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice -= ($priceChange - $price);
-							}
-						}
-						$price = $priceChange;
-					}
-					$selectedOptionLabels[] = $selectedOptionLabel;
-	    		}
-    		}
     		$savings = $recommendedRetailPrice - $price;
     		$newProduct['basketItemId'] = $basketItemId;
     		$newProduct['productId'] = $productId;
     		$newProduct['product'] = $product['pageTitle'];
     		$newProduct['url'] = $product['url'];
-    		$newProduct['header'] = str_replace(' '.$product['productCode'].' ', ' ', $product['pageTitle']);
-    		$newProduct['productCode'] = $product['productCode'];
+    		$newProduct['header'] = str_replace(' '.$variant['productCode'].' ', ' ', $product['pageTitle']);
+    		$newProduct['productCode'] = $variant['productCode'];
     		$newProduct['brand'] = $product['brand'];
-    		$newProduct['shortDescription'] = $product['shortDescription'];
+    		$newProduct['description'] = $product['description'];
     		$newProduct['weight'] = $product['weight'];
-    		$newProduct['deliveryBand'] = $product['inheritedDeliveryBand'];
+    		$newProduct['deliveryBand'] = $variant['deliveryBand'];
+    		$newProduct['weight'] = $variant['weight'];
+    		$newProduct['height'] = $variant['height'];
+    		$newProduct['length'] = $variant['length'];
+    		$newProduct['width'] = $variant['width'];
     		$newProduct['quantity'] = $quantity;
     		$newProduct['unitCost'] = $price;
     		$newProduct['recommendedRetailPrice'] = $recommendedRetailPrice;
@@ -320,58 +255,11 @@ class BasketController extends Controller
     		$newProduct['savings'] = $savings;
     		$newProduct['subTotal'] = $quantity * $price;
     		$newProduct['vat'] = $newProduct['subTotal'] - ($newProduct['subTotal'] / 1.2);
-    		$newProduct['selectedOptions'] = $selectedOptions;
-    		$newProduct['selectedOptionLabels'] = $selectedOptionLabels;
-    		
-    		// Calculate the membership card price
-    		$membershipCardDiscountAvailable = true;
-    		$bestMembershipCardDiscountAvailable = $this->membershipCardDiscount;
-    		if ($product['membershipCardDiscountAvailable'] > 0)
-    		{
-	    		if ($product['maximumMembershipCardDiscount'] > 0)
-	    		{
-	    			$bestMembershipCardDiscountAvailable = $product['maximumMembershipCardDiscount'];
-	    		} else {
-		    		foreach ($product['departments'] as $department)
-		    		{
-		    			if ($department['membershipCardDiscountAvailable'] > 0)
-		    			{
-		    				if ($department['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-		    				{
-		    					$bestMembershipCardDiscountAvailable = $department['maximumMembershipCardDiscount'];
-		    				}
-		    			} else {
-		    				$membershipCardDiscountAvailable = false;
-		    				break;
-		    			}
-		    		}
-		    		if ($product['brand']['membershipCardDiscountAvailable'] > 0)
-	    			{
-	    				if ($product['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-	    				{
-	    					$bestMembershipCardDiscountAvailable = $product['brand']['maximumMembershipCardDiscount'];
-	    				}
-	    			} else {
-	    				$membershipCardDiscountAvailable = false;
-	    			}
-	    		}
-    		} else {
-    			$membershipCardDiscountAvailable = false;
-    		}
-    		if ($membershipCardDiscountAvailable)
-    		{
-    			if ($recommendedRetailPrice > 0)
-				{
-    				$newProduct['membershipCardPrice'] = $recommendedRetailPrice - ($recommendedRetailPrice * ($bestMembershipCardDiscountAvailable / 100));
-    			} else {
-    				$newProduct['membershipCardPrice'] = $price;
-    			}
-    		} else {
-    			$newProduct['membershipCardPrice'] = $price;
-    		}
-    		
+    		$newProduct['selectedOptions'] = array();
+    		$newProduct['selectedOptionLabels'] = array();
+
     		$basket['products'][$basketItemId] = $newProduct;
-    		
+
 	    	$subTotal = $price * $quantity;
     	}
     	

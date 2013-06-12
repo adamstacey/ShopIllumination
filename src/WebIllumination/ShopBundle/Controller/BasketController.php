@@ -232,76 +232,6 @@ class BasketController extends Controller
             $recommendedRetailPrice = $variant['prices'][0]['recommendedRetailPrice'];
             $discount = $variant['prices'][0]['discount'];
 
-    		// Get selected options
-    		$selectedOptionLabels = array();
-    		if ($selectedOptions)
-    		{
-    			// Get the entity manager
-	   			$em = $this->getDoctrine()->getManager();
-
-	    		$selectedOptionIds = explode('|', $selectedOptions);
-	    		foreach ($selectedOptionIds as $selectedOptionId)
-	    		{
-	    			$productToOptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductToOption')->find($selectedOptionId);
-	    			$productOptionGroupObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOptionGroup')->find($productToOptionObject->getProductOptionGroupId());
-					$productOptionObject = $em->getRepository('KAC\SiteBundle\Entity\ProductOption')->find($productToOptionObject->getProductOptionId());
-					$selectedOptionLabel = $productOptionGroupObject->getProductOptionGroup().': '.$productOptionObject->getProductOption();
-					$priceChange = $productToOptionObject->getPrice();
-					$priceType = $productToOptionObject->getPriceType();
-					$priceUse = $productToOptionObject->getPriceUse();
-					if ($priceType == 'a')
-					{
-						if ($priceUse == 'i')
-						{
-							$price += $priceChange;
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice += $priceChange;
-							}
-						} elseif (($priceUse == 'd')) {
-							$price -= $priceChange;
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice -= $priceChange;
-							}
-						}
-					}
-					if ($priceType == 'p')
-					{
-						if ($priceUse == 'i')
-						{
-							$price = $price + ($price * ($priceChange / 100));
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice = $recommendedRetailPrice + ($price * ($priceChange / 100));
-							}
-						} elseif (($priceUse == 'd')) {
-							$price = $price - ($price * ($priceChange / 100));
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice = $recommendedRetailPrice - ($price * ($priceChange / 100));
-							}
-						}
-					}
-					if ($priceType == 'r')
-					{
-						if ($priceUse == 'i')
-						{
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice += ($priceChange - $price);
-							}
-						} elseif (($priceUse == 'd')) {
-							if ($recommendedRetailPrice > 0)
-							{
-								$recommendedRetailPrice -= ($priceChange - $price);
-							}
-						}
-						$price = $priceChange;
-					}
-					$selectedOptionLabels[] = $selectedOptionLabel;
-	    		}
-    		}
     		$savings = $recommendedRetailPrice - $price;
     		$newProduct['basketItemId'] = $basketItemId;
     		$newProduct['productId'] = $productId;
@@ -309,10 +239,15 @@ class BasketController extends Controller
     		$newProduct['product'] = $product['pageTitle'];
     		$newProduct['url'] = $product['url'];
     		$newProduct['header'] = $product['header'];
-    		$newProduct['productCode'] = $product['productCode'];
+    		$newProduct['productCode'] = $variant['productCode'];
     		$newProduct['brand'] = $product['brand'];
-    		$newProduct['shortDescription'] = $product['shortDescription'];
+    		$newProduct['shortDescription'] = $product['metaDescription'];
     		$newProduct['weight'] = $variant['weight'];
+            $newProduct['deliveryBand'] = $variant['deliveryBand'];
+            $newProduct['weight'] = $variant['weight'];
+            $newProduct['height'] = $variant['height'];
+            $newProduct['length'] = $variant['length'];
+            $newProduct['width'] = $variant['width'];
     		$newProduct['quantity'] = $quantity;
     		$newProduct['unitCost'] = $price;
     		$newProduct['recommendedRetailPrice'] = $recommendedRetailPrice;
@@ -321,7 +256,7 @@ class BasketController extends Controller
     		$newProduct['subTotal'] = $quantity * $price;
     		$newProduct['vat'] = $newProduct['subTotal'] - ($newProduct['subTotal'] / 1.2);
     		$newProduct['selectedOptions'] = $selectedOptions;
-    		$newProduct['selectedOptionLabels'] = $selectedOptionLabels;
+            $newProduct['selectedOptionLabels'] = array();
 
     		$basket['products'][$basketItemId] = $newProduct;
 
