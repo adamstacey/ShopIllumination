@@ -409,69 +409,6 @@ class CheckoutController extends Controller
     			break;
     	}
 		
-		// Check if the user applied for a membership card
-		if ($orderObject->getMembershipCardNumber() == 1)
-		{
-			// Check the user doesn't already have a card
-			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('userId' => $orderObject->getUserId(), 'active' => 1));
-			if ($membershipCardObject)
-			{
-				$orderObject->setMembershipCardNumber($membershipCardObject->getMembershipNumber());
-
-				// Update the session with the membership card number
-		    	$basketSession['discounts']['membershipCardNumber'] = $membershipCardObject->getMembershipNumber();
-			} else {
-				// Setup the user a new membership card
-				$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('userId' => '0', 'active' => 1));
-				if ($membershipCardObject)
-				{
-					$membershipCardObject->setUserId($orderObject->getUserId());
-					$membershipCardObject->setItems($orderObject->getItems());
-					$membershipCardObject->setSubTotal($orderObject->getSubTotal());
-					$membershipCardObject->setSavings($orderObject->getSavings());
-					$em->persist($membershipCardObject);
-			    	$em->flush();
-			    	
-			    	// Update the session with the membership card number
-			    	$basketSession['discounts']['membershipCardNumber'] = $membershipCardObject->getMembershipNumber();
-			    	
-		    		// Send the membership card information
-		    		try
-					{
-						$email = \Swift_Message::newInstance();
-			        	$email->setSubject('Your Kitchen Appliance Centre Privilege Card: '.$membershipCardObject->getMembershipNumber());
-			        	$email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre - Sales Team'));
-			        	$email->setTo(array($orderObject->getEmailAddress() => $orderObject->getFirstName().' '.$orderObject->getLastName()));
-			        	$email->setBody($this->renderView('WebIlluminationShopBundle:Checkout:membershipCardInformation.html.twig', array('firstName' => $orderObject->getFirstName(), 'membershipNumber' => $membershipCardObject->getMembershipNumber())), 'text/html');
-						$email->addPart($this->renderView('WebIlluminationShopBundle:Checkout:membershipCardInformation.txt.twig', array('firstName' => $orderObject->getFirstName(), 'membershipNumber' => $membershipCardObject->getMembershipNumber())), 'text/plain');
-			    		$this->get('mailer')->send($email);
-					} catch (Exception $exception) {
-				    	error_log('Error sending the membership card information email');
-					}
-			    	
-			    	// Update the order with the new membership number
-			    	$orderObject->setMembershipCardNumber($membershipCardObject->getMembershipNumber());
-		    	}
-			}
-		} elseif ($orderObject->getMembershipCardNumber() > 0) {
-			// Update the membership card reporting
-			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('membershipNumber' => $orderObject->getMembershipCardNumber(), 'active' => 1));
-			if ($membershipCardObject)
-			{
-				$membershipCardObject->setItems(($membershipCardObject->getItems() + $orderObject->getItems()));
-				$membershipCardObject->setSubTotal(($membershipCardObject->getSubTotal() + $orderObject->getSubTotal()));
-				$membershipCardObject->setSavings(($membershipCardObject->getSavings() + $orderObject->getSavings()));
-				$em->persist($membershipCardObject);
-		    	$em->flush();
-		    	
-		    	// Update the session with the membership card number
-		    	$basketSession['discounts']['membershipCardNumber'] = $membershipCardObject->getMembershipNumber();
-		    	
-		    	// Update the order with the new membership number
-		    	$orderObject->setMembershipCardNumber($membershipCardObject->getMembershipNumber());
-	    	}
-		}
-		
 		// Save the payment response
 		$orderObject->setStatus('Payment Received');
 		$em->persist($orderObject);
@@ -526,6 +463,9 @@ class CheckoutController extends Controller
 		
 		// Initialise the session
 	    $systemService->initialiseSession();
+
+        // Get the catalogue page history
+        $departmentHistory = $this->get('session')->get('departmentHistory');
     	
     	// Get the entity manager
 	   	$em = $this->getDoctrine()->getManager();

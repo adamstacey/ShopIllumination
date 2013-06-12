@@ -59,7 +59,6 @@ class BasketService {
     		
     		// Setup the donations
     		$basket['discounts'] = array();
-    		$basket['membershipCardNumber'] = 0;
     		$basket['possibleDiscount'] = 0;
     		
     		// Setup the donations
@@ -183,10 +182,6 @@ class BasketService {
     		if (!is_array($basket['discounts']))
     		{
     			$basket['discounts'] = array();
-    		}
-    		if (!isset($basket['membershipCardNumber']))
-    		{
-	    		$basket['membershipCardNumber'] = 0;
     		}
     		if (!isset($basket['possibleDiscount']))
     		{
@@ -1048,7 +1043,6 @@ class BasketService {
 		$totalDiscount = 0;
 		$possibleDiscount = 0;
 		$multiBuyDiscount = 0;
-		$membershipCardDiscount = 0;
 		$voucherCodeDiscount = 0;
 		$numberOfLargeAppliances = 0;
 		$vat = 0;
@@ -1061,17 +1055,6 @@ class BasketService {
 		$basket['discounts'] = array();
 		$basket['donations']['company']['description'] = '';
 		$basket['donations']['company']['donation'] = 0;
-		
-		// Check for a membership card
-		$membershipCardObject = false;
-		if ($basket['membershipCardNumber'] > 1)
-		{
-			$membershipCardObject = $em->getRepository('KAC\SiteBundle\Entity\MembershipCard')->findOneBy(array('membershipNumber' => $basket['membershipCardNumber']));
-			if (!$membershipCardObject)
-			{
-				$messages['error'][] =  'The membership number <strong>"'.$basket['membershipCardNumber'].'"</strong> does not exist or is not active. Please try another one.';
-			}
-		}
 		
 		// Check for a voucher code
 		$voucherCodeObject = false;
@@ -1253,17 +1236,6 @@ class BasketService {
 				$items += $product['quantity'];
 				$recommendedRetailPrice += ($product['recommendedRetailPrice'] * $product['quantity']);
 				$subTotal += ($product['unitCost'] * $product['quantity']);
-				
-				if ($product['membershipCardPrice'] < $product['unitCost'])
-				{
-					$possibleDiscount += (($product['unitCost'] * $product['quantity']) - ($product['membershipCardPrice'] * $product['quantity']));
-
-					// Get the membership card discount
-					if (($basket['membershipCardNumber'] == 1) || $membershipCardObject)
-					{
-						$membershipCardDiscount += $possibleDiscount;
-					}
-				}
 			}
         }
 		

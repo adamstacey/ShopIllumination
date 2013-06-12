@@ -9,10 +9,10 @@ use KAC\SiteBundle\Entity\Image;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Entity\Video;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductService {
-
     protected $container;
     protected $singleItemTitle;
     protected $multipleItemsTitle;
@@ -29,7 +29,7 @@ class ProductService {
     protected $listingOrder;
     protected $listingMaxResults;
 
-    public function __construct($container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
         $this->singleItemTitle = 'Product';
@@ -917,81 +917,6 @@ class ProductService {
         }
 
         return $price;
-    }
-
-    // Update the product delivery bands
-    public function updateProductDeliveryBand($id, $locale = 'en')
-    {
-        // Get the services
-        $doctrineService = $this->container->get('doctrine');
-
-        /**
-         * Get the entity manager
-         * @var EntityManager $em
-         */
-        $em = $doctrineService->getManager();
-
-        // Get the inherited delivery band
-        $inheritedDeliveryBand = 0;
-
-        /**
-         * Get the product objects
-         * @var $productObject Product
-         */
-        $productObject = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($id);
-
-        // Check to see if the delivery band has been set by the product
-        if ($productObject)
-        {
-            if ($productObject->getDeliveryBand() > 0)
-            {
-                $inheritedDeliveryBand = $productObject->getDeliveryBand();
-            } else {
-                /**
-                 * Check each of the departments
-                 * @var $department Department
-                 */
-                foreach ($productObject->getDepartments() as $department)
-                {
-                    // Check the brand department for a delivery band
-                    $brandToDepartmentObject = $em->getRepository('KAC\SiteBundle\Entity\BrandToDepartment')->findOneBy(array('department' => $department->getId(), 'brand' => $productObject->getBrand()->getId()));
-
-                    if ($brandToDepartmentObject)
-                    {
-                        if ($brandToDepartmentObject->getDeliveryBand() > 0)
-                        {
-                            $inheritedDeliveryBand = $brandToDepartmentObject->getDeliveryBand();
-                        }
-                    }
-
-                    // Check the department for a delivery band
-                    if ($inheritedDeliveryBand < 1)
-                    {
-                        $departmentIndexObject = $em->getRepository('KAC\SiteBundle\Entity\Department')->findOneBy(array('id' =>  $department->getId(), 'locale' => $locale));
-                        if ($departmentIndexObject)
-                        {
-                            if ($departmentIndexObject->getInheritedDeliveryBand() > 0)
-                            {
-                                $inheritedDeliveryBand = $departmentIndexObject->getInheritedDeliveryBand();
-                            }
-                        }
-                    }
-
-                    // Check if we need to keep checking
-                    if ($inheritedDeliveryBand > 0)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            error_log('Delivery Band for '.$productObject->getId().': '.$inheritedDeliveryBand);
-
-            // Update the delivery band
-            $productObject->setInheritedDeliveryBand($inheritedDeliveryBand);
-            $em->persist($productObject);
-            $em->flush();
-        }
     }
 
     public function getProductListingCount()
