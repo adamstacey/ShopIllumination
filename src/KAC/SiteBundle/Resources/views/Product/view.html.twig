@@ -27,7 +27,7 @@
                                 <div class="slider-wrapper {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
                                     <div class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
                                         {% for image in gallery_images %}
-                                            {#<img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />#}
+                                            <img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />
                                         {% endfor %}
                                     </div>
                                     <h1>{{ product.description.header }}</h1>
