@@ -78,7 +78,6 @@ class BrandService {
     		$filters['status'] = '';
     		$filters['hidePrices'] = '';
     		$filters['showPricesOutOfHours'] = '';
-    		$filters['membershipCardDiscountAvailable'] = '';
     		$filters['name'] = '';
     		$filters['description'] = '';
    		} else {
@@ -354,8 +353,6 @@ class BrandService {
     	$brand['sampleWebAddress'] = $brandObject->getSampleWebAddress();
     	$brand['hidePrices'] = $brandObject->getHidePrices();
     	$brand['showPricesOutOfHours'] = $brandObject->getShowPricesOutOfHours();
-    	$brand['membershipCardDiscountAvailable'] = $brandObject->getMembershipCardDiscountAvailable();
-    	$brand['maximumMembershipCardDiscount'] = $brandObject->getMaximumMembershipCardDiscount();
     	$brand['locale'] = $brandDescriptionObject->getLocale();
     	$brand['brand'] = $brandDescriptionObject->getBrand();
     	$brand['description'] = $brandDescriptionObject->getDescription();

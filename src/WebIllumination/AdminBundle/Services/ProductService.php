@@ -291,32 +291,18 @@ class ProductService {
         $product['productGroupId'] = $productObject->getId();
         $product['availableForPurchase'] = $productObject->getAvailableForPurchase();
         $product['status'] = $productObject->getStatus();
-        $product['product'] = $productDescriptionObject->getName();
-        $product['prefix'] = $productDescriptionObject->getPrefix();
-        $product['tagline'] = $productDescriptionObject->getTagline();
-        $product['productCode'] = $productObject->getProductCode();
-        $product['productGroupCode'] = $productObject->getProductCode();
-        $product['alternativeProductCodes'] = $productObject->getAlternativeProductCodes();
+        $product['product'] = $productDescriptionObject->getHeader();
         $product['description'] = $productDescriptionObject->getDescription();
-        $product['shortDescription'] = $productDescriptionObject->getShortDescription();
         $product['pageTitle'] = $productDescriptionObject->getPageTitle();
         $product['header'] = $productDescriptionObject->getHeader();
         $product['metaDescription'] = $productDescriptionObject->getMetaDescription();
         $product['metaKeywords'] = $productDescriptionObject->getMetaKeywords();
-        $product['searchWords'] = $productDescriptionObject->getSearchWords();
-        $product['deliveryBand'] = $productObject->getDeliveryBand();
-        $product['inheritedDeliveryBand'] = $productObject->getInheritedDeliveryBand();
-        $product['deliveryCost'] = $productObject->getDeliveryCost();
         $product['featureComparison'] = $productObject->getFeatureComparison();
         $product['downloadable'] = $productObject->getDownloadable();
         $product['specialOffer'] = $productObject->getSpecialOffer();
         $product['recommended'] = $productObject->getRecommended();
         $product['accessory'] = $productObject->getAccessory();
         $product['new'] = $productObject->getNew();
-        $product['hidePrice'] = $productObject->getHidePrice();
-        $product['showPriceOutOfHours'] = $productObject->getShowPriceOutOfHours();
-        $product['membershipCardDiscountAvailable'] = $productObject->getMembershipCardDiscountAvailable();
-        $product['maximumMembershipCardDiscount'] = $productObject->getMaximumMembershipCardDiscount();
         $product['updatedAt'] = $productObject->getUpdatedAt();
 
         $product['url'] = $productObject->getRouting()->getUrl();
@@ -333,17 +319,18 @@ class ProductService {
             $product['brand']['id'] = $brandObject->getId();
             $product['brand']['brand'] = $brandObject->getDescription()->getName();
             $product['brand']['routing'] = $brandObject->getRouting()->getUrl();
-            $product['brand']['membershipCardDiscountAvailable'] = $brandObject->getMembershipCardDiscountAvailable();
-            $product['brand']['maximumMembershipCardDiscount'] = $brandObject->getMaximumMembershipCardDiscount();
 
             // Get brand logo
-            $brandLogoObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->find($brandObject->getDescription()->getLogoImage()->getId());
-            if ($brandLogoObject)
+            if($brandObject->getDescription()->getLogoImage())
             {
-                $product['brand']['logoOriginalPath'] = $brandLogoObject->getPublicPath();
-                $product['brand']['logoThumbnailPath'] = $brandLogoObject->getPublicPath();
-                $product['brand']['logoMediumPath'] = $brandLogoObject->getPublicPath();
-                $product['brand']['logoLargePath'] = $brandLogoObject->getPublicPath();
+                $brandLogoObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->find($brandObject->getDescription()->getLogoImage()->getId());
+                if ($brandLogoObject)
+                {
+                    $product['brand']['logoOriginalPath'] = $brandLogoObject->getPublicPath();
+                    $product['brand']['logoThumbnailPath'] = $brandLogoObject->getPublicPath();
+                    $product['brand']['logoMediumPath'] = $brandLogoObject->getPublicPath();
+                    $product['brand']['logoLargePath'] = $brandLogoObject->getPublicPath();
+                }
             }
 
             // Get the guarantees
@@ -376,8 +363,6 @@ class ProductService {
             $departmentCount++;
             $department = array();
             $department['id'] = $departmentObject->getId();
-            $department['membershipCardDiscountAvailable'] = $departmentObject->getMembershipCardDiscountAvailable();
-            $department['maximumMembershipCardDiscount'] = $departmentObject->getMaximumMembershipCardDiscount();
             $department['name'] = $departmentObject->getName();
             $department['pathIds'] = $departmentObject->getDepartmentPath();
             $department['path'] = array();
@@ -417,7 +402,7 @@ class ProductService {
 
         // Images
         $images = array();
-        $imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'product', 'imageType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
+        $imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Image')->findBy(array('objectId' => $id, 'imageType' => 'product', 'locale' => $locale), array('displayOrder' => 'ASC'));
         /**
          * @var Image $imageObject
          */
@@ -503,30 +488,6 @@ class ProductService {
         $guarantees = array();
         $product['guarantees'] = $guarantees;
 
-        // Check if price is hidden
-        if (($product['hidePrice'] > 0) && ($product['showPriceOutOfHours'] > 0))
-        {
-            $currentDay = date("D");
-            $currentTime = date("G");
-            switch ($currentDay)
-            {
-                case 'Sat':
-                case 'Sun':
-                    $product['hidePrice'] = 0;
-                    break;
-                case 'Mon':
-                case 'Tue':
-                case 'Wed':
-                case 'Thu':
-                case 'Fri':
-                    if (($currentTime < 7) || ($currentTime > 17))
-                    {
-                        $product['hidePrice'] = 0;
-                    }
-                    break;
-            }
-        }
-
         return $product;
     }
 
@@ -590,22 +551,15 @@ class ProductService {
         $variant['productGroupId'] = $variantObject->getProduct()->getId();
         $variant['availableForPurchase'] = $variantObject->getProduct()->getAvailableForPurchase();
         $variant['status'] = $variantObject->getStatus();
-        $variant['product'] = $variantDescriptionObject->getName();
-        $variant['prefix'] = $variantDescriptionObject->getPrefix();
-        $variant['tagline'] = $variantDescriptionObject->getTagline();
+        $variant['product'] = $variantDescriptionObject->getHeader();
         $variant['productCode'] = $variantObject->getProductCode();
         $variant['productGroupCode'] = $variantObject->getProductCode();
         $variant['alternativeProductCodes'] = $variantObject->getAlternativeProductCodes();
         $variant['description'] = $variantDescriptionObject->getDescription();
-        $variant['shortDescription'] = $variantDescriptionObject->getShortDescription();
         $variant['pageTitle'] = $variantDescriptionObject->getPageTitle();
         $variant['header'] = $variantDescriptionObject->getHeader();
         $variant['metaDescription'] = $variantDescriptionObject->getMetaDescription();
         $variant['metaKeywords'] = $variantDescriptionObject->getMetaKeywords();
-        $variant['searchWords'] = $variantDescriptionObject->getSearchWords();
-        $variant['deliveryBand'] = $variantObject->getProduct()->getDeliveryBand();
-        $variant['inheritedDeliveryBand'] = $variantObject->getProduct()->getInheritedDeliveryBand();
-        $variant['deliveryCost'] = $variantObject->getProduct()->getDeliveryCost();
         $variant['weight'] = $variantObject->getWeight();
         $variant['length'] = $variantObject->getLength();
         $variant['width'] = $variantObject->getWidth();
@@ -621,10 +575,6 @@ class ProductService {
         $variant['recommended'] = $variantObject->getProduct()->getRecommended();
         $variant['accessory'] = $variantObject->getProduct()->getAccessory();
         $variant['new'] = $variantObject->getProduct()->getNew();
-        $variant['hidePrice'] = $variantObject->getProduct()->getHidePrice();
-        $variant['showPriceOutOfHours'] = $variantObject->getProduct()->getShowPriceOutOfHours();
-        $variant['membershipCardDiscountAvailable'] = $variantObject->getProduct()->getMembershipCardDiscountAvailable();
-        $variant['maximumMembershipCardDiscount'] = $variantObject->getProduct()->getMaximumMembershipCardDiscount();
         $variant['updatedAt'] = $variantObject->getUpdatedAt();
 
         $variant['url'] = $variantObject->getProduct()->getRouting()->getUrl();
@@ -655,51 +605,51 @@ class ProductService {
             // Calculate the membership card price
             $membershipCardDiscountAvailable = true;
             $bestMembershipCardDiscountAvailable = $this->membershipCardDiscount;
-            if ($variant['membershipCardDiscountAvailable'] > 0)
-            {
-                if ($product['maximumMembershipCardDiscount'] > 0)
-                {
-                    $bestMembershipCardDiscountAvailable = $product['maximumMembershipCardDiscount'];
-                } else {
-                    foreach ($product['departments'] as $department)
-                    {
-                        if ($department['membershipCardDiscountAvailable'] > 0)
-                        {
-                            if ($department['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-                            {
-                                $bestMembershipCardDiscountAvailable = $department['maximumMembershipCardDiscount'];
-                            }
-                        } else {
-                            $membershipCardDiscountAvailable = false;
-                            break;
-                        }
-                    }
-                    if ($product['brand']['membershipCardDiscountAvailable'] > 0)
-                    {
-                        if ($product['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-                        {
-                            $bestMembershipCardDiscountAvailable = $product['brand']['maximumMembershipCardDiscount'];
-                        }
-                    } else {
-                        $membershipCardDiscountAvailable = false;
-                    }
-                }
-            } else {
-                $membershipCardDiscountAvailable = false;
-            }
-            if ($membershipCardDiscountAvailable)
-            {
-                $variantPrice['membershipCardPrice'] = $variantPrice['recommendedRetailPrice'] - ($variantPrice['recommendedRetailPrice'] * ($bestMembershipCardDiscountAvailable / 100));
-            } else {
-                $variantPrice['membershipCardPrice'] = $variantPrice['listPrice'];
-            }
+//            if ($variant['membershipCardDiscountAvailable'] > 0)
+//            {
+//                if ($product['maximumMembershipCardDiscount'] > 0)
+//                {
+//                    $bestMembershipCardDiscountAvailable = $product['maximumMembershipCardDiscount'];
+//                } else {
+//                    foreach ($product['departments'] as $department)
+//                    {
+//                        if ($department['membershipCardDiscountAvailable'] > 0)
+//                        {
+//                            if ($department['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
+//                            {
+//                                $bestMembershipCardDiscountAvailable = $department['maximumMembershipCardDiscount'];
+//                            }
+//                        } else {
+//                            $membershipCardDiscountAvailable = false;
+//                            break;
+//                        }
+//                    }
+//                    if ($product['brand']['membershipCardDiscountAvailable'] > 0)
+//                    {
+//                        if ($product['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
+//                        {
+//                            $bestMembershipCardDiscountAvailable = $product['brand']['maximumMembershipCardDiscount'];
+//                        }
+//                    } else {
+//                        $membershipCardDiscountAvailable = false;
+//                    }
+//                }
+//            } else {
+//                $membershipCardDiscountAvailable = false;
+//            }
+//            if ($membershipCardDiscountAvailable)
+//            {
+//                $variantPrice['membershipCardPrice'] = $variantPrice['recommendedRetailPrice'] - ($variantPrice['recommendedRetailPrice'] * ($bestMembershipCardDiscountAvailable / 100));
+//            } else {
+//                $variantPrice['membershipCardPrice'] = $variantPrice['listPrice'];
+//            }
             $prices[] = $variantPrice;
         }
         $variant['prices'] = $prices;
 
         // Images
         $images = array();
-        $imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Image')->findBy(array('objectId' => $id, 'objectType' => 'variant', 'imageType' => 'variant', 'locale' => $locale), array('displayOrder' => 'ASC'));
+        $imagesObject = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant\Image')->findBy(array('objectId' => $id, 'imageType' => 'variant', 'locale' => $locale), array('displayOrder' => 'ASC'));
         /**
          * @var Image $imageObject
          */
@@ -822,30 +772,6 @@ class ProductService {
         // Guarantees
         $guarantees = array();
         $variant['guarantees'] = $guarantees;
-
-        // Check if price is hidden
-        if (($variant['hidePrice'] > 0) && ($variant['showPriceOutOfHours'] > 0))
-        {
-            $currentDay = date("D");
-            $currentTime = date("G");
-            switch ($currentDay)
-            {
-                case 'Sat':
-                case 'Sun':
-                    $variant['hidePrice'] = 0;
-                    break;
-                case 'Mon':
-                case 'Tue':
-                case 'Wed':
-                case 'Thu':
-                case 'Fri':
-                    if (($currentTime < 7) || ($currentTime > 17))
-                    {
-                        $variant['hidePrice'] = 0;
-                    }
-                    break;
-            }
-        }
 
         return $variant;
     }

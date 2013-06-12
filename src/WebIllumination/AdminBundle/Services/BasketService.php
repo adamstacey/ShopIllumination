@@ -1116,7 +1116,7 @@ class BasketService {
 					}
 					
 					// Check for Movember products
-					if (($productEntity->getProductCode() == 'KHCH') || ($productEntity->getProductCode() == 'EVOLUTION200') || ($productEntity->getProductCode() == 'SE80050SS') || ($productEntity->getProductCode() == 'C95030') || ($productEntity->getProductCode() == '119.0179.532') || ($productEntity->getProductCode() == 'PH01SS') || ($productEntity->getProductCode() == 'FWC302SS'))
+					if (($variantEntity->getProductCode() == 'KHCH') || ($variantEntity->getProductCode() == 'EVOLUTION200') || ($variantEntity->getProductCode() == 'SE80050SS') || ($variantEntity->getProductCode() == 'C95030') || ($variantEntity->getProductCode() == '119.0179.532') || ($variantEntity->getProductCode() == 'PH01SS') || ($variantEntity->getProductCode() == 'FWC302SS'))
 					{
 						$basket['donations']['company']['description'] = 'Movember Donation from Kitchen Appliance Centre';
 						$basket['donations']['company']['donation'] = $product['quantity'];

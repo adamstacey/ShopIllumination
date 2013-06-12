@@ -180,7 +180,12 @@ class BasketController extends Controller
         $variant = $productService->getVariant($variantId, 'en', 'GBP');
         $header = $product['pageTitle'];
         $url = $product['url'];
-        $thumbnailPath = $product['images'][0]['thumbnailPath'];
+        if(count($product['images']) > 0)
+        {
+            $thumbnailPath = $product['images'][0]['thumbnailPath'];
+        } else {
+            $thumbnailPath = null;
+        }
 
         // Get the basket
         $basket = $this->get('session')->get('basket');
@@ -303,12 +308,11 @@ class BasketController extends Controller
             $newProduct['variantId'] = $variantId;
     		$newProduct['product'] = $product['pageTitle'];
     		$newProduct['url'] = $product['url'];
-    		$newProduct['header'] = str_replace(' '.$product['productCode'].' ', ' ', $product['pageTitle']);
+    		$newProduct['header'] = $product['header'];
     		$newProduct['productCode'] = $product['productCode'];
     		$newProduct['brand'] = $product['brand'];
     		$newProduct['shortDescription'] = $product['shortDescription'];
     		$newProduct['weight'] = $variant['weight'];
-    		$newProduct['deliveryBand'] = $product['inheritedDeliveryBand'];
     		$newProduct['quantity'] = $quantity;
     		$newProduct['unitCost'] = $price;
     		$newProduct['recommendedRetailPrice'] = $recommendedRetailPrice;
@@ -318,53 +322,6 @@ class BasketController extends Controller
     		$newProduct['vat'] = $newProduct['subTotal'] - ($newProduct['subTotal'] / 1.2);
     		$newProduct['selectedOptions'] = $selectedOptions;
     		$newProduct['selectedOptionLabels'] = $selectedOptionLabels;
-
-    		// Calculate the membership card price
-    		$membershipCardDiscountAvailable = true;
-    		$bestMembershipCardDiscountAvailable = $this->membershipCardDiscount;
-    		if ($product['membershipCardDiscountAvailable'] > 0)
-    		{
-	    		if ($product['maximumMembershipCardDiscount'] > 0)
-	    		{
-	    			$bestMembershipCardDiscountAvailable = $product['maximumMembershipCardDiscount'];
-	    		} else {
-		    		foreach ($product['departments'] as $department)
-		    		{
-		    			if ($department['membershipCardDiscountAvailable'] > 0)
-		    			{
-		    				if ($department['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-		    				{
-		    					$bestMembershipCardDiscountAvailable = $department['maximumMembershipCardDiscount'];
-		    				}
-		    			} else {
-		    				$membershipCardDiscountAvailable = false;
-		    				break;
-		    			}
-		    		}
-		    		if ($product['brand']['membershipCardDiscountAvailable'] > 0)
-	    			{
-	    				if ($product['brand']['maximumMembershipCardDiscount'] > $bestMembershipCardDiscountAvailable)
-	    				{
-	    					$bestMembershipCardDiscountAvailable = $product['brand']['maximumMembershipCardDiscount'];
-	    				}
-	    			} else {
-	    				$membershipCardDiscountAvailable = false;
-	    			}
-	    		}
-    		} else {
-    			$membershipCardDiscountAvailable = false;
-    		}
-    		if ($membershipCardDiscountAvailable)
-    		{
-    			if ($recommendedRetailPrice > 0)
-				{
-    				$newProduct['membershipCardPrice'] = $recommendedRetailPrice - ($recommendedRetailPrice * ($bestMembershipCardDiscountAvailable / 100));
-    			} else {
-    				$newProduct['membershipCardPrice'] = $price;
-    			}
-    		} else {
-    			$newProduct['membershipCardPrice'] = $price;
-    		}
 
     		$basket['products'][$basketItemId] = $newProduct;
 

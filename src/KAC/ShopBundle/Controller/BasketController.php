@@ -180,7 +180,12 @@ class BasketController extends Controller
         $variant = $productService->getVariant($variantId, 'en', 'GBP');
     	$header = $product['pageTitle'];
     	$url = $product['url'];
-    	$thumbnailPath = $product['images'][0]['thumbnailPath'];
+        if(count($product['images']) > 0)
+        {
+    	    $thumbnailPath = $product['images'][0]['thumbnailPath'];
+        } else {
+            $thumbnailPath = null;
+        }
 
 		// Get the basket
 			$basket = $this->get('session')->get('basket');   			
