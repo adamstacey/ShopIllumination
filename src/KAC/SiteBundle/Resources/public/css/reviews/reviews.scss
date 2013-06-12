@@ -157,7 +157,7 @@
 }
 
 .trustpilot-reviews-border {
-    margin: -#{$spacingLarge} -#{$spacingLarge} $spacingMedium -#{$spacingLarge};
+    margin: $spacingSmall -#{$spacingLarge} $spacingMedium -#{$spacingLarge};
     padding: 3px;
 
     background: $colourWhite;

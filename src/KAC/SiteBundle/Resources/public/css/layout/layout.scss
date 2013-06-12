@@ -44,7 +44,7 @@ html.modal body > section {
 
 .content {
     min-height: 300px;
-    padding: 25px $spacingExtraLarge $spacingExtraLarge $spacingExtraLarge;
+    padding: $spacingSmall $spacingExtraLarge $spacingExtraLarge $spacingExtraLarge;
     margin: -#{$spacingSmall} 0 0 0;
 
     position: relative;
