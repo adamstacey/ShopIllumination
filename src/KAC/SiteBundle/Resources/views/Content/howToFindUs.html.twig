@@ -22,54 +22,51 @@
 	<header>
 		<h1>Where are we?</h1>
 	</header>
-	<section class="container_6 clearfix">
-	    <div class="grid_4"> 
-			<div class="portlet">
-				<header>
-	                <h2>Location</h2>
-	            </header>
-				<section id="contact-location">
-					<div class="clearfix">
-						<div class="google-map">
-							<iframe width="597" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=ng16+2uz&amp;ie=UTF8&amp;hq=&amp;hnear=Giltbrook,+NG16+2UZ,+United+Kingdom&amp;gl=uk&amp;t=m&amp;ll=53.010652,-1.279907&amp;spn=0.020657,0.051155&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
-						</div>
-					</div>
-				</section>
-	        </div>
-	    </div>
-	    <div class="grid_2"> 
-			<div class="portlet">
-				<header>
-	                <h2>Get Directions</h2>
-	            </header>
-				<section id="contact-directions">
-					<div class="clearfix">
-						<div class="info-message ui-status-highlight">
-							<span class="info-message-icon ui-icon ui-icon-info"></span>
-							<p>To get the directions to the Kitchen Appliance Centre showroom in Nottingham, simply enter your postcode and click the <strong>"Get Directions"</strong> button.<br /><br />Your directions will then be displayed externally in Google Maps.</p>
-							<div class="clear"></div>
-						</div>
-						<form class="form has-validation" id="form-directions" action="http://maps.google.co.uk/maps" target="_blank">
-							<input type="hidden" value="Kitchen Appliance Centre @53.004093,-1.288233" name="daddr">
-							<p class="ac no-margin-bottom">
-						        <label for="form-name">Your Postcode</label>
-						    </p>
-							<p class="ac no-margin-top">
-								<input data-message="Please enter your postcode." type="text" id="form-name" name="saddr" required="required" value="" />
-						    </p>
-						    <p>
-						        <div class="ac buttons no-margin-bottom">
-						    		<button type="submit" class="button action-save-about-you ui-button-green" data-icon-primary="ui-icon-extlink">Get Directions</button>
-						        </div>
-						    </p>
-						    <p class="ac no-margin-bottom"><a href="{{ path('content_the_shop') }}">Click here</a> for our opening hours.</p>
-						</form>
-					</div>
-				</section>
-	        </div>
-	    </div>
-	    <div class="clear"></div>
-	</section>
+    <div class="widget-group clearfix">
+        <div class="widget widget-2-of-3">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Location</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    <div class="google-map">
+                        <iframe width="597" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=ng16+2uz&amp;ie=UTF8&amp;hq=&amp;hnear=Giltbrook,+NG16+2UZ,+United+Kingdom&amp;gl=uk&amp;t=m&amp;ll=53.010652,-1.279907&amp;spn=0.020657,0.051155&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="widget widget-1-of-3">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Get Directions</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    <div class="clearfix">
+                        <div class="info-message ui-status-highlight">
+                            <span class="info-message-icon ui-icon ui-icon-info"></span>
+                            <p>To get the directions to the Kitchen Appliance Centre showroom in Nottingham, simply enter your postcode and click the <strong>"Get Directions"</strong> button.<br /><br />Your directions will then be displayed externally in Google Maps.</p>
+                            <div class="clear"></div>
+                        </div>
+                        <form class="form has-validation" id="form-directions" action="http://maps.google.co.uk/maps" target="_blank">
+                            <input type="hidden" value="Kitchen Appliance Centre @53.004093,-1.288233" name="daddr">
+                            <p class="ac no-margin-bottom">
+                                <label for="form-name">Your Postcode</label>
+                            </p>
+                            <p class="ac no-margin-top">
+                                <input data-message="Please enter your postcode." type="text" id="form-name" name="saddr" required="required" value="" />
+                            </p>
+                            <p>
+                            <div class="ac buttons no-margin-bottom">
+                                <button type="submit" class="button action-save-about-you ui-button-green" data-icon-primary="ui-icon-extlink">Get Directions</button>
+                            </div>
+                            </p>
+                            <p class="ac no-margin-bottom"><a href="{{ path('content_the_shop') }}">Click here</a> for our opening hours.</p>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
