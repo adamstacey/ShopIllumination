@@ -159,17 +159,6 @@
 							<td width="1" class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
 						</tr>
 					{% endfor %}
-					{% if order.membershipCardNumber == 1 %}
-						<tr>
-							<td><a href="{{ path('content_privilege_card') }}">Ride Direct Privilege Card</a></td>
-							<td class="ac"><strong>PRIVILEGE</strong></td>
-							<td width="1" class="ac">1</td>
-							<td width="1" class="ac">&times;</td>
-							<td width="1" class="ac">&pound;1.00</td>
-							<td width="1" class="ac">=</td>
-							<td width="1" class="ac">&pound;1.00</td>
-						</tr>
-					{% endif %}
 				</table>
 			</div>
 			<div id="basket-totals" class="clearfix no-margin-bottom">
