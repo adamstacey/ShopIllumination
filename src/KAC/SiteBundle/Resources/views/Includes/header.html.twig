@@ -10,6 +10,7 @@
         <div class="container">
             {% include 'KACSiteBundle:Includes:logo.html.twig' %}
             {% include 'KACSiteBundle:Includes:search.html.twig' %}
+            {% render(controller('KACSiteBundle:Basket:summary')) %}
             <div class="clear"></div>
         </div>
     </div>

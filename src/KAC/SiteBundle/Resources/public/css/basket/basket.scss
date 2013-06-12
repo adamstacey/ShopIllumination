@@ -1,0 +1,73 @@
+//TODO: Convert to compass functions
+.basket-message
+{
+    color: #FF2300;
+    font-size: 13px;
+}
+#basket-summary
+{
+    float: right;
+    margin: 10px 0;
+    width: 260px;
+    height: 70px;
+    background: #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+    background: #c5d2d6; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2YzgwODciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #c5d2d6 0%, #6c8087 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c5d2d6), color-stop(100%,#6c8087)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #c5d2d6 0%,#6c8087 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #c5d2d6 0%,#6c8087 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #c5d2d6 0%,#6c8087 100%); /* IE10+ */
+    background: linear-gradient(top,  #c5d2d6 0%,#6c8087 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5d2d6', endColorstr='#6c8087',GradientType=0 ); /* IE6-8 */
+    padding: 0 10px 10px 10px;
+}
+#basket-summary h2
+{
+    margin: 0 0 5px 0;
+    padding: 0;
+    font-size: 16px;
+    color: #384246;
+    text-shadow: 0 1px 0 #FFF;
+    text-shadow: 0 1px 0 rgb(255,255,255);
+    text-shadow: 0 1px 0 rgba(255,255,255,1);
+    line-height: 38px;
+    border-bottom: 1px dotted #FFF;
+    font-family: 'Stag Medium', Arial;
+    font-weight: normal;
+}
+#basket-summary p
+{
+    margin: 0 0 5px 0;
+    padding: 0;
+    font-size: 12px;
+    color: #FFF;
+    line-height: 120%;
+}
+#basket-summary p strong
+{
+    text-shadow: 0 1px 0 #000;
+    text-shadow: 0 1px 0 rgb(0,0,0);
+    text-shadow: 0 1px 0 rgba(0,0,0,1);
+}
+#basket-summary a.button
+{
+    margin-left: 5px;
+    float: right;
+}
+#basket-summary-loading p
+{
+    line-height: 15px;
+    font-size: 12px;
+}
+#basket-summary-loading img
+{
+    margin: 8px 10px 0 0;
+}
