@@ -453,9 +453,6 @@ class BasketController extends Controller
     	// Get the basket session
 		$basket = $this->get('session')->get('basket');
 
-		// Update the membership card number
-		//$basket['discounts']['voucherCode'] = '';
-
     	// Update the basket session
     	$this->get('session')->set('basket', $basket);
 
