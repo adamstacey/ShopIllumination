@@ -68,7 +68,7 @@
                     <ul class="breadcrumbs" itemprop="breadcrumb">
                         <li>{{ department.description.header }}</li>
                         {% for parent in department.parents %}
-                            {% if parent.parent is not null %}
+                            {% if parent.parent != null and parent.level != 1  %}
                                 <li><a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a></li>
                             {% endif %}
                         {% endfor %}

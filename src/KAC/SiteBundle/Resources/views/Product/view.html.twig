@@ -10,9 +10,9 @@
                     <div class="widget widget-7-of-8">
                         <ul class="breadcrumbs" itemprop="breadcrumb">
                             {% for department in departments %}
-                                {#{% if department.parent is not null %}#}
+                                {% if department.level != 0  %}
                                     <li><a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a></li>
-                                {#{% endif %}#}
+                                {% endif %}
                             {% endfor %}
                         </ul>
                     </div>
