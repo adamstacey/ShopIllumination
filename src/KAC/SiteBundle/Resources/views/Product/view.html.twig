@@ -27,7 +27,7 @@
                                 <div class="slider-wrapper {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
                                     <div class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
                                         {% for image in gallery_images %}
-                                            <img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />
+                                            {#<img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />#}
                                         {% endfor %}
                                     </div>
                                     <h1>{{ product.description.header }}</h1>
@@ -36,15 +36,21 @@
                                     <div class="widget widget-1-of-1 border-bottom-separator pbl mbl">
                                         <div class="widget-group clearfix">
                                             <div class="widget widget-2-of-7">
-                                                <ul class="etalage etalage-inset">
-                                                    <li><img class="etalage_source_image" src="{{ image.publicPath | apply_filter('product_thumbnail') }}" alt="{{ product.description.header }}" /></li>
-                                                </ul>
+                                                {% if image %}
+                                                    <ul class="etalage etalage-inset">
+                                                        <li><img class="etalage_source_image" src="{{ image.publicPath | apply_filter('product_thumbnail') }}" alt="{{ product.description.header }}" /></li>
+                                                    </ul>
+                                                {% endif %}
                                             </div>
                                             <div class="widget widget-5-of-7 product-header">
                                                 <div class="widget-group clearfix">
                                                     <div class="widget widget-3-of-4 pll">
                                                         <div class="widget-group clearfix">
-                                                            <div class="widget widget-1-of-3"><img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail') }}" alt="{{ product.brand.description.name }}" /></div>
+                                                            <div class="widget widget-1-of-3">
+                                                                {% if product.brand.description.logoImage.publicPath %}
+                                                                    <img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail') }}" alt="{{ product.brand.description.name }}" />
+                                                                {% endif %}
+                                                            </div>
                                                             <div class="widget widget-2-of-3 clearfix">
                                                                 <div class="review-rating-small review-rating-small-4-5 fr"></div>
                                                                 <div class="clear"></div>
