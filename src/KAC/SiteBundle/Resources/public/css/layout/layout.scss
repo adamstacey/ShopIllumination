@@ -49,7 +49,7 @@ html.modal body > section {
 
     position: relative;
     z-index: 1;
-    
+
     background: $colourGreyLight;
     @include boxGlow($colourBlack, 5px, 0, 0.7);
 }
