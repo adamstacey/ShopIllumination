@@ -18,7 +18,13 @@ class ProductIndexer extends Indexer
         }
 
         // Check that the product is not disabled
-        if ($product->getStatus() !== "a") {
+        if ($product->getStatus() !== "a")
+        {
+            return;
+        }
+        // Ensure that the product has at least one description
+        if ($product->getDescription() === null)
+        {
             return;
         }
 

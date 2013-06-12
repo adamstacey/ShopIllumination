@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Command;
 
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,38 +15,42 @@ class WarmupIndexCommand extends ContainerAwareCommand
     {
         $this
             ->setName('admin:index:warmup')
-            ->setDescription('Load data into Solr index')
-            ->addOption('start', null, InputOption::VALUE_REQUIRED);
+            ->setDescription('Load data into Solr index');
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        gc_enable();
-        // Load products
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $products = $em->getRepository('KAC\SiteBundle\Entity\Product')->findAll();
         $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
+
+        /**
+         * Load products
+         * @var IterableResult $iterableResult
+         */
+        $products = $em->getRepository('KAC\SiteBundle\Entity\Product')->findAll();
+        $query = $em->createQuery("
+            SELECT * FROM KAC\\SiteBundle\\Entity\\Product p
+        ");
+        $iterableResult = $query->iterate();
+
 
         //Clear product index
         if($input->getOption('start') === null)
         {
             $productIndexer->delete();
         }
-        unset($productIndexer);
 
-        $totalProducts = count($products);
-        $startI = $input->getOption('start') == null ? count($products) - 1 : $input->getOption('start');
+        // Index products
+        $i = 0;
+        while (($row = $iterableResult->next()) !== false) {
+            $output->writeln("Writing index for product ".$i."...");
 
-        for($i = $startI; $i >= 0; $i--)
-        {
-            $output->writeln("Writing index for product ".$i." of ".$totalProducts."...");
-            $product = $products[$i];
-            unset($products[$i]);
-            $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
+            $product = $row[0];
             $productIndexer->index($product);
+            $i++;
 
-            gc_collect_cycles();
+            $em->detach($product[0]);
         }
 
         $output->writeln("Product indexes created");
