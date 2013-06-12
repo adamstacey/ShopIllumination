@@ -21,7 +21,7 @@
                 {% for brand in brands %}
                     <div class="brand {% if ((loop.index % 4) == 1) %} brand-first{% endif %}{% if ((loop.index % 4) == 0) %} brand-last{% endif %}">
                         <h4>
-                            {% if brand.logo.thumbnailPath is defined %}<a href="{{ path('page_request', {'url': brand.url}) }}"><img class="fl" src="{{ asset(brand.logo.thumbnailPath) }}" border="0" alt="{{ brand.description.name|raw }}" width="48" height="23" /></a>{% endif %}
+                            {% if brand.logo.thumbnailPath is defined %}<a href="{{ path('routing', {'url': brand.url}) }}"><img class="fl" src="{{ asset(brand.logo.thumbnailPath) }}" border="0" alt="{{ brand.description.name|raw }}" width="48" height="23" /></a>{% endif %}
                             <a class="text" href="{{ path('routing', {'url': brand.url}) }}">{{ brand.description.name|raw }}</a>
                         </h4>
                     </div>

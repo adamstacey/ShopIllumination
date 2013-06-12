@@ -7,7 +7,7 @@
 {% block body %}
 	<div class="breadcrumb-trail padding-left-20 padding-right-20 padding-top-10 padding-bottom-5" itemprop="breadcrumb">
 		{% for departmentPath in product.departments.0.path %}
-			<a href="{{ asset(path('page_request', {'url': departmentPath.routing}), 'nocdn') }}">{{ departmentPath.name }}</a>{% if not loop.last %}&nbsp;&nbsp;&gt;&nbsp;&nbsp;{% endif %}
+			<a href="{{ asset(path('routing', {'url': departmentPath.routing}), 'nocdn') }}">{{ departmentPath.name }}</a>{% if not loop.last %}&nbsp;&nbsp;&gt;&nbsp;&nbsp;{% endif %}
 		{% endfor %}
 	</div>
 	<div itemscope itemtype="http://schema.org/Product">
@@ -138,7 +138,7 @@
 								{% if product.cheaperAlternatives|length > 0 %}
 									{% for cheaperAlternative in product.cheaperAlternatives %}
 										{% if loop.first %}
-											<a class="cheaper-alternative" href="{{ path('page_request', {'url': cheaperAlternative.url}) }}">Cheaper Alternative Only <strong>&pound;{{ cheaperAlternative.listPrice|number_format(2) }}</strong></a>
+											<a class="cheaper-alternative" href="{{ path('routing', {'url': cheaperAlternative.url}) }}">Cheaper Alternative Only <strong>&pound;{{ cheaperAlternative.listPrice|number_format(2) }}</strong></a>
 										{% endif %}
 									{% endfor %}
 								{% endif %}
@@ -150,17 +150,17 @@
 						{% if '1034|1122|69' in department.pathIds %}
 							<div class="special-offer-banner">40% Off Stellar Pans when you buy any induction hob<br /><span>Simply add an induction hob and a Stellar Pan Set to your basket</span></div>
 					        <div itemscope="" itemtype="http://schema.org/Product" class="product small-product" data-product-id="5068" id="product-5068">
-								<h4 class="no-margin"><a itemprop="name" href="{{ path('page_request', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}">Stellar 7000 3 Piece Sauce Pan Set </a></h4>
+								<h4 class="no-margin"><a itemprop="name" href="{{ path('routing', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}">Stellar 7000 3 Piece Sauce Pan Set </a></h4>
 								<p class="no-margin no-padding uppercase">Lifetime Warranty</p>
 								<p class="no-margin no-padding uppercase blue"><strong>STAINLESS STEEL</strong></p>
 								<div class="clear"></div>
 								<div class="product-information relative">
-									<a href="{{ path('page_request', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}"><img itemprop="image" src="{{ asset('/uploads/images/product/product/stellar-7000-3-piece-induction-saucepan-set-s7a1d-thumbnail-44764.jpg') }}" border="0" alt="Stellar 7000 3 Piece INDUCTION COMPATIBLE Sauce Pan Set " width="90" height="90" class="fl" /></a>
+									<a href="{{ path('routing', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}"><img itemprop="image" src="{{ asset('/uploads/images/product/product/stellar-7000-3-piece-induction-saucepan-set-s7a1d-thumbnail-44764.jpg') }}" border="0" alt="Stellar 7000 3 Piece INDUCTION COMPATIBLE Sauce Pan Set " width="90" height="90" class="fl" /></a>
 									<div class="fr">
-										<p class="ar product-code uppercase"><a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}">CODE: <strong>S7A1D</strong></a></p>
+										<p class="ar product-code uppercase"><a itemprop="model" class="ellipsis uppercase" href="{{ path('routing', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}">CODE: <strong>S7A1D</strong></a></p>
 										<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
 											<p class="ar product-was-price uppercase">was <span>&pound;99.00</span></p>
-											<p class="ar product-price uppercase"><a href="{{ path('page_request', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}"><span itemprop="price">&pound;59.40</span></a><span class="product-tax"> (inc. VAT)</span></p>
+											<p class="ar product-price uppercase"><a href="{{ path('routing', {'url': '7000-3-piece-induction-saucepan-set-s7a1d-s7a1d-3-piece-pan-sets-stellar'}) }}"><span itemprop="price">&pound;59.40</span></a><span class="product-tax"> (inc. VAT)</span></p>
 										</div>
 										<div class="buy-now">
 											<button data-product-id="5068" class="fr action-add-to-basket button ui-button-green">Buy Now</button>
@@ -171,17 +171,17 @@
 								<div class="clear"></div>
 							</div>
 							<div itemscope="" itemtype="http://schema.org/Product" class="product small-product" data-product-id="5069" id="product-5069">
-								<h4 class="no-margin"><a itemprop="name" href="{{ path('page_request', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}">Stellar 7000 5 Piece Sauce Pan Set </a></h4>
+								<h4 class="no-margin"><a itemprop="name" href="{{ path('routing', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}">Stellar 7000 5 Piece Sauce Pan Set </a></h4>
 								<p class="no-margin no-padding uppercase">Lifetime Warranty</p>
 								<p class="no-margin no-padding uppercase blue"><strong>STAINLESS STEEL</strong></p>
 								<div class="clear"></div>
 								<div class="product-information relative">
-									<a href="{{ path('page_request', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}"><img itemprop="image" src="{{ asset('/uploads/images/product/product/stellar-7000-5-piece-induction-saucepan-set-s7c1d-thumbnail-44765.jpg') }}" border="0" alt="Stellar 7000 5 Piece INDUCTION COMPATIBLE Sauce Pan Set" width="90" height="90" class="fl" /></a>
+									<a href="{{ path('routing', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}"><img itemprop="image" src="{{ asset('/uploads/images/product/product/stellar-7000-5-piece-induction-saucepan-set-s7c1d-thumbnail-44765.jpg') }}" border="0" alt="Stellar 7000 5 Piece INDUCTION COMPATIBLE Sauce Pan Set" width="90" height="90" class="fl" /></a>
 									<div class="fr">
-										<p class="ar product-code uppercase"><a itemprop="model" class="ellipsis uppercase" href="{{ path('page_request', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}">CODE: <strong>S7C1D</strong></a></p>
+										<p class="ar product-code uppercase"><a itemprop="model" class="ellipsis uppercase" href="{{ path('routing', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}">CODE: <strong>S7C1D</strong></a></p>
 										<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
 											<p class="ar product-was-price uppercase">was <span>&pound;125.00</span></p>
-											<p class="ar product-price uppercase"><a href="{{ path('page_request', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}"><span itemprop="price">&pound;75.00</span></a><span class="product-tax"> (inc. VAT)</span></p>
+											<p class="ar product-price uppercase"><a href="{{ path('routing', {'url': '7000-5-piece-induction-saucepan-set-s7c1d-s7c1d-5-piece-pan-sets-stellar'}) }}"><span itemprop="price">&pound;75.00</span></a><span class="product-tax"> (inc. VAT)</span></p>
 										</div>
 										<div class="buy-now">
 											<button data-product-id="5069" class="fr action-add-to-basket button ui-button-green">Buy Now</button>

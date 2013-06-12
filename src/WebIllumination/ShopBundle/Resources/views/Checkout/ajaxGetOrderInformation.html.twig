@@ -4,7 +4,7 @@
 			{% for product in basket.products %}
 				<tr>
 					<td class="product-page-title" colspan="6">
-						<a href="{{ path('page_request', {'url': product.url}) }}">{{ product.header }}</a>
+						<a href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
 						{% if product.selectedOptionLabels|length > 0 %}
 							<br />
 							{% for selectedOptionLabel in product.selectedOptionLabels %}

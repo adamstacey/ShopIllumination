@@ -53,7 +53,7 @@ class CheckoutController extends Controller
 		    $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 		    
 		    // Forward to the last catalogue page
-		    return $this->redirect($this->get('router')->generate('page_request', array('url' => $departmentHistory[0])));
+		    return $this->redirect($this->get('router')->generate('routing', array('url' => $departmentHistory[0])));
    		}
     	
         return $this->render('KACShopBundle:Checkout:index.html.twig', array('order' => $order, 'basket' => $basket, 'backUrl' => $backUrl));
@@ -633,7 +633,7 @@ class CheckoutController extends Controller
 		    $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 		    
 		    // Forward to the last catalogue page
-		    return $this->redirect($this->get('router')->generate('page_request', array('url' => $departmentHistory[0])));
+		    return $this->redirect($this->get('router')->generate('routing', array('url' => $departmentHistory[0])));
    		}
     	
         return $this->render('KACShopBundle:Checkout:index.html.twig', array('order' => $orderSession, 'orderObject' => $orderObject, 'basket' => $basket, 'backUrl' => $backUrl));

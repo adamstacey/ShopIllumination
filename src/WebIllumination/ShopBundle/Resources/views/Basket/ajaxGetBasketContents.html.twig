@@ -25,7 +25,7 @@
 		{% for product in basket.products %}
 			<tr{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="red"{% endif %}>
 				<td>
-					<a class="uppercase" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header }}</a>
+					<a class="uppercase" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
 					{% if product.selectedOptionLabels|length > 0 %}
 						<br />
 						{% for selectedOptionLabel in product.selectedOptionLabels %}

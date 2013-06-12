@@ -296,7 +296,7 @@ class SystemService {
 				{
 	    			$departmentUrl = $this->container->get('router')->generate('department_view_all', array('url' => $url));
 				} else {
-	    			$departmentUrl = $this->container->get('router')->generate('page_request', array('url' => $url));
+	    			$departmentUrl = $this->container->get('router')->generate('routing', array('url' => $url));
 				}		    	
 	    	}
 	    } else {
@@ -325,7 +325,7 @@ class SystemService {
 				{
 	    			$departmentUrl = $this->container->get('router')->generate('department_view_all', array('url' => $url));
 				} else {
-	    			$departmentUrl = $this->container->get('router')->generate('page_request', array('url' => $url));
+	    			$departmentUrl = $this->container->get('router')->generate('routing', array('url' => $url));
 				}
 		    }
 		}
