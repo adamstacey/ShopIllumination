@@ -51,6 +51,7 @@ class ProductController extends Controller {
             throw new NotFoundHttpException("Product not found");
         }
 
+        $cheapestVariant = null;
         $lowestPrice = null;
         $highestPrice = null;
         $commonFeatures = array();
@@ -63,6 +64,8 @@ class ProductController extends Controller {
             // Calculate price range
             foreach ($variant->getPrices() as $price) {
                 if ($lowestPrice === null || $price->getListPrice() < $lowestPrice->getListPrice()) {
+                    $lowestPrice = $price;
+                    $cheapestVariant = $variant;
                 }
                 if ($highestPrice === null || $price->getListPrice() > $highestPrice->getListPrice()) {
                     $highestPrice = $price;
@@ -148,7 +151,7 @@ class ProductController extends Controller {
 
         // Find competitors prices
         $googleApi = $this->get('kac_site.google.google');
-        $competitorPrices = $googleApi->findMoreExpensiveProducts($product->getProductCode(), $lowestPrice !== null ? $lowestPrice->getListPrice() : $highestPrice->getListPrice(), 5);
+        $competitorPrices = $googleApi->findMoreExpensiveProducts($cheapestVariant->getProductCode(), $lowestPrice !== null ? $lowestPrice->getListPrice() : $highestPrice->getListPrice(), 5);
 
         return $this->render('KACSiteBundle:Product:view\\'.$template.'.html.twig', array(
             'product' => $product,
