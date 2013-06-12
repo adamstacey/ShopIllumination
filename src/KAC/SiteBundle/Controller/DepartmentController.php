@@ -110,20 +110,6 @@ class DepartmentController extends Controller
         ));
     }
 
-    /**
-     * @Method({"GET"})
-     * @Template()
-     */
-    public function mainMenuAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
-        $brands = $em->getRepository("KACSiteBundle:Brand")->findBy(array('status' => 'a'));
-
-        return array('departments' => $departments, 'brands' => $brands);
-    }
-
     public function baseEditAction(Request $request, $departmentId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();

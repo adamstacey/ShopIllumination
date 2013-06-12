@@ -1,0 +1,144 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}Link to Ride Direct{% endblock %}
+{% block metatags %}
+	<meta name="description" content="If you find the Ride Direct site useful and would like to link to us choose from a number of links below.">
+	<meta name="keywords" content="ride direct, useful, links, site">
+{% endblock %}
+{% block slider %}
+	<div class="container_8 clearfix">
+		<header>
+			<div class="slider-gallery-container">
+				<div class="slider-gallery">
+					<div class="slider-element">
+						<img src="{{ asset('/bundles/webilluminationshop/images/headers/link-to-us.jpg') }}" alt="Would you like to link to us?" />
+						<h3 class="right">Would you like to link to us?</h3>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+{% endblock %}
+{% block body %}
+	<header>
+		<h1>Copy a Ride Direct link and link to this site</h1>
+	</header>
+	<section class="container_6 clearfix">
+		<div class="grid_6"> 
+			<div class="portlet">
+				<section>
+					<div class="clearfix">
+						<p class="no-margin-top"><strong>Do you share our passion for motocross? Do you want to include links and banners to Ride Direct on your website? Would you like us to link to your site and list you as a partner?</strong></p>
+						<p class="no-margin-bottom">Thank you for your interest in supporting the Ride Direct site. We welcome everyone that wants to link to our site. The process is simple:</p>
+						<ol>
+							<li>Select a link from the <a class="action-scroll-to-links" href="Javascript:void(0);">image or text links below</a> and copy the HTML code to a page on your site.</li>
+							<li>Fill out the form below, providing us with some information about yourself, what link you would like us to add and where we can find our link on your site.</li>
+							<li>We will check your site to make sure you have linked to us. If we cannot find a link to us your request will be denied.</li>
+							<li>It may take us a few days to process your request, but if everything is okay we will publsih a link on our <a href="{{ path('content_useful_links') }}">Useful Links</a> page.</li>
+						</ol>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	    <div class="clear"></div>
+	    <div class="grid_6 leading"> 
+			<div class="portlet">
+				<header>
+	                <h2>Request a reciprocal link</h2>
+	            </header>
+				<section id="link-to-us-request-a-reciprocal-link">
+					<div class="clearfix">
+						<div class="info-message ui-status-highlight">
+							<span class="info-message-icon ui-icon ui-icon-info"></span>
+							<p>Please make sure that you link to us before completing this form. If we can't find your link we won't add a reciprocal link.</p>
+							<div class="clear"></div>
+						</div>
+						<form id="form-request-a-reciprocal-link" method="post" action="{{ path('content_link_to_us') }}" class="form has-validation">
+							<div class="clearfix">
+						        <label for="form-name" class="form-label"><em>*</em> Your Name<small>Enter your full name</small></label>
+							    <div class="form-input no-margin-bottom"><input class="full" data-message="Please enter your full name." type="text" id="form-name" name="name" required="required" value="" /></div>
+						    </div>
+						    <div class="clearfix">
+						        <label for="form-name" class="form-label">Your Company Name<small>Enter your company name</small></label>
+							    <div class="form-input no-margin-bottom"><input class="full" type="text" id="form-organisation" name="organisation" value="" /></div>
+						    </div>
+						    <div class="clearfix">
+						        <label for="form-email-address" class="form-label"><em>*</em> Your Email Address<small>Enter a valid email address</small></label>
+						        <div class="form-input no-margin-bottom"><input class="full" data-message="Please enter a valid email address." type="email" id="form-email-address" name="email-address" required="required" value="" /></div>
+						    </div>
+						    <div class="clearfix">
+						        <label for="form-email-address" class="form-label"><em>*</em> Your Contact Number<small>Enter a contact number</small></label>
+						        <div class="form-input"><input class="full" data-message="Please enter a contact number." type="text" id="form-contact-number" name="contact-number" required="required" value="" /></div>
+						    </div>
+						    <div class="clearfix">
+						        <label for="form-web-address" class="form-label"><em>*</em> Your Web Address<small>Web address where our link is</small></label>
+						        <div class="form-input"><input class="full url" data-message="Please enter your web address where you have added our link." type="url" id="form-web-address" name="web-address" required="required" value="" /></div>
+						    </div>
+						    <div class="clearfix">
+						        <label for="form-html-link" class="form-label"><em>*</em> Your HTML link<small>Enter HTML code</small></label>
+						        <div class="form-input no-margin-bottom"><textarea data-message="Please enter your HTML code." required="required" id="form-html-link" name="html-link"></textarea></div>
+						    </div>
+						    <div class="clearfix">
+						        <div class="form-input buttons no-margin-bottom">
+						    		<button type="submit" class="button action-save-about-you ui-button-orange" data-icon-primary="ui-icon-circle-check">Send Reciprocal Link Request</button>
+						        </div>
+						    </div>
+						</form>
+					</div>
+				</section>
+	        </div>
+	    </div>
+	    <div class="clear"></div>
+		<div class="grid_3 leading">
+			<div class="portlet">
+				<header>
+	                <h2>Image Links</h2>
+	            </header>
+				<section id="link-to-us-image-links" class="no-padding-top">
+					<div class="clearfix">
+						{% for imageLink in imageLinks %}
+							<div{% if not loop.last %} class="separator"{% endif %}>
+								<div class="clearfix ac">{{ imageLink|raw }}</div>
+								<div class="clearfix code">{{ imageLink }}</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+	        </div>
+	    </div>
+	    <div class="grid_3 leading"> 
+			<div class="portlet">
+				<header>
+	                <h2>Text Links</h2>
+	            </header>
+				<section id="link-to-us-text-links" class="no-padding-top">
+					<div class="clearfix">
+						{% for textLink in textLinks %}
+							<div{% if not loop.last %} class="separator"{% endif %}>
+								<div class="clearfix">{{ textLink|raw }}</div>
+								<div class="clearfix code">{{ textLink }}</div>
+							</div>
+						{% endfor %}
+					</div>
+				</section>
+	        </div>
+	    </div>
+	    <div class="clear"></div>
+	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script defer="defer" type="text/javascript">
+		$(document).ready(function() {
+			$(".action-scroll-to-links").live('click', function() {
+				$("html, body").animate({scrollTop: $("#link-to-us-image-links").offset().top - 50},'slow');
+			});
+			$("#link-to-us-image-links").height($("#link-to-us-text-links").height());
+			$("#form-request-a-reciprocal-link").validator({
+    			position : 'bottom left', 
+    			offset : [0, 250], 
+    			messageClass : 'form-error', 
+        		message : '<div><em/></div>'
+			});
+		});
+	</script>
+{% endblock %}

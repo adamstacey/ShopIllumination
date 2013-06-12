@@ -1,7 +1,3 @@
-_welcome:
-    pattern:  /
-    defaults: { _controller: KACSiteBundle:Content:index }
-
 #KACShopBundle:
 #    resource: "@KACShopBundle/Resources/config/routing.yml"
 #    prefix:   /

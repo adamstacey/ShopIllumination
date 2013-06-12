@@ -15,7 +15,7 @@ class ContentController extends Controller
      */
     public function cookiePolicyAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:cookiePolicy.html.twig', array());
+        return $this->render('KACSiteBundle:Content:cookiePolicy.html.twig', array());
     }
 
     /**
@@ -23,7 +23,7 @@ class ContentController extends Controller
      */
     public function usefulLinksAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:usefulLinks.html.twig', array());
+        return $this->render('KACSiteBundle:Content:usefulLinks.html.twig', array());
     }
 
     /**
@@ -31,7 +31,7 @@ class ContentController extends Controller
      */
     public function installationGuidesAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:installationGuides.html.twig', array());
+        return $this->render('KACSiteBundle:Content:installationGuides.html.twig', array());
     }
 
     /**
@@ -39,7 +39,7 @@ class ContentController extends Controller
      */
     public function waterPressureInformationAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:waterPressureInformation.html.twig', array());
+        return $this->render('KACSiteBundle:Content:waterPressureInformation.html.twig', array());
     }
 
     /**
@@ -47,7 +47,7 @@ class ContentController extends Controller
      */
     public function returnsAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:returns.html.twig', array());
+        return $this->render('KACSiteBundle:Content:returns.html.twig', array());
     }
 
     /**
@@ -55,7 +55,7 @@ class ContentController extends Controller
      */
     public function privacyPolicyAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:privacyPolicy.html.twig', array());
+        return $this->render('KACSiteBundle:Content:privacyPolicy.html.twig', array());
     }
 
     /**
@@ -63,7 +63,7 @@ class ContentController extends Controller
      */
     public function termsAndConditionsAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:termsAndConditions.html.twig', array());
+        return $this->render('KACSiteBundle:Content:termsAndConditions.html.twig', array());
     }
 
     /**
@@ -74,7 +74,7 @@ class ContentController extends Controller
         // Get the basket
         $basket = $this->get('session')->get('basket');
 
-        return $this->render('WebIlluminationShopBundle:Content:delivery.html.twig', array('basket' => $basket));
+        return $this->render('KACSiteBundle:Content:delivery.html.twig', array('basket' => $basket));
     }
 
     /**
@@ -82,7 +82,7 @@ class ContentController extends Controller
      */
     public function securityAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:security.html.twig', array());
+        return $this->render('KACSiteBundle:Content:security.html.twig', array());
     }
 
     /**
@@ -90,7 +90,7 @@ class ContentController extends Controller
      */
     public function fraudPreventionAction(Request $request)
     {
-        return $this->render('WebIlluminationShopBundle:Content:fraudPrevention.html.twig', array());
+        return $this->render('KACSiteBundle:Content:fraudPrevention.html.twig', array());
     }
 
     /**
@@ -99,7 +99,7 @@ class ContentController extends Controller
      */
 	public function theShopAction(Request $request)
     {	    
-        return $this->render('WebIlluminationShopBundle:Content:theShop.html.twig', array());
+        return $this->render('KACSiteBundle:Content:theShop.html.twig', array());
     }
 
     /**
@@ -108,7 +108,7 @@ class ContentController extends Controller
      */
 	public function howToFindUsAction(Request $request)
     {  	
-        return $this->render('WebIlluminationShopBundle:Content:howToFindUs.html.twig', array());
+        return $this->render('KACSiteBundle:Content:howToFindUs.html.twig', array());
     }
 
     /**
@@ -178,6 +178,6 @@ class ContentController extends Controller
             // Forward to the contact us page
             return $this->redirect($this->get('router')->generate('content_contact_us', array()));
         }
-        return $this->render('WebIlluminationShopBundle:Content:contactUs.html.twig', array());
+        return $this->render('KACSiteBundle:Content:contactUs.html.twig', array());
     }
 }

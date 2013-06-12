@@ -13,7 +13,6 @@ class DataController extends Controller
 {
     /**
      * @Route("/google-products.xml", name="data_google_products")
-     * @Route("/google-products.xml", name="homepage")
      */
 	public function googleProductsAction(Request $request)
     {
