@@ -37,6 +37,6 @@ class CurrencyExtension extends \Twig_Extension
 
     public function getName()
     {
-        return 'currency_extension';
+        return 'kac_currency_extension';
     }
 }

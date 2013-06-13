@@ -309,10 +309,3 @@ department_with_filters:
         url: ".+"
         _scheme:  http
         _format:  html
-page_request:
-    pattern:  /{url}.html
-    defaults: { _controller: KACShopBundle:System:pageRequest }
-    requirements:
-        url: ".+"
-        _scheme:  http
-        _format:  html

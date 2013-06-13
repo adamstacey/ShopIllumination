@@ -46,7 +46,7 @@ class ProductsController extends Controller
     	$backUrl = $systemService->getLastDepartmentUrl();
     	if (!$backUrl)
     	{
-	    	$backUrl = $this->generateUrl('page_request', array('url' => $product['listingUrl']));
+	    	$backUrl = $this->generateUrl('routing', array('url' => $product['listingUrl']));
     	}
 
     	// Create response    	    	    	   		    

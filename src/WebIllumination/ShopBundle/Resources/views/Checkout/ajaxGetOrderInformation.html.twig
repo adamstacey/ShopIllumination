@@ -1,10 +1,10 @@
 <div id="basket-contents" class="clearfix">
-	{% if (basket.products|length > 0) or (basket.discounts.membershipCardNumber != '') %}
+	{% if basket.products|length > 0 %}
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 			{% for product in basket.products %}
 				<tr>
 					<td class="product-page-title" colspan="6">
-						<a href="{{ path('page_request', {'url': product.url}) }}">{{ product.header }}</a>
+						<a href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
 						{% if product.selectedOptionLabels|length > 0 %}
 							<br />
 							{% for selectedOptionLabel in product.selectedOptionLabels %}

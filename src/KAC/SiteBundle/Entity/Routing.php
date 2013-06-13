@@ -10,7 +10,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="object_type", type="string")
- * @ORM\DiscriminatorMap({"product" = "KAC\SiteBundle\Entity\Product\Routing", "product_variant" = "KAC\SiteBundle\Entity\Product\Variant\Routing", "department" = "KAC\SiteBundle\Entity\Department\Routing", "brand" = "KAC\SiteBundle\Entity\Brand\Routing"})
+ * @ORM\DiscriminatorMap({
+ *     "product" = "KAC\SiteBundle\Entity\Product\Routing",
+ *     "product_variant" = "KAC\SiteBundle\Entity\Product\Variant\Routing",
+ *     "department" = "KAC\SiteBundle\Entity\Department\Routing",
+ *     "brand" = "KAC\SiteBundle\Entity\Brand\Routing",
+ *     "brand_with_department" = "KAC\SiteBundle\Entity\Brand\DepartmentRouting"
+ * })
  * @ORM\Table(name="routing")
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("url")
@@ -28,6 +34,11 @@ class Routing
      * @ORM\Column(name="object_id", type="integer", length=11, nullable=true)
      */
     private $objectId;
+
+	/**
+     * @ORM\Column(name="secondary_id", type="integer", length=11, nullable=true)
+     */
+    private $secondaryId;
         
     /**
      * @ORM\Column(name="locale", type="string", length=5)
@@ -83,6 +94,29 @@ class Routing
     public function getObjectId()
     {
         return $this->objectId;
+    }
+
+    /**
+     * Set secondaryId
+     *
+     * @param integer $secondaryId
+     * @return Routing
+     */
+    public function setSecondaryId($secondaryId)
+    {
+        $this->secondaryId = $secondaryId;
+
+        return $this;
+    }
+
+    /**
+     * Get secondaryId
+     *
+     * @return integer
+     */
+    public function getSecondaryId()
+    {
+        return $this->secondaryId;
     }
 
     /**

@@ -3,7 +3,7 @@
    	{# List all brands and brand departments #}
    	{% for brand in brands %}
    		<url>
-			<loc>{{ asset(path('page_request', {'url': brand.url}), 'nocdn') }}</loc>
+			<loc>{{ asset(path('routing', {'url': brand.url}), 'nocdn') }}</loc>
 			<lastmod>{{ brand.updatedAt|date("Y-m-d") }}</lastmod>
 			<changefreq>always</changefreq>
 			<priority>1.0</priority>
@@ -33,7 +33,7 @@
    	{# List all products #}
 	{% for product in products %}
    		<url>
-			<loc>{{ asset(path('page_request', {'url': product.url}), 'nocdn') }}</loc>
+			<loc>{{ asset(path('routing', {'url': product.url}), 'nocdn') }}</loc>
 			<lastmod>{{ product.updatedAt|date("Y-m-d") }}</lastmod>
 			<changefreq>always</changefreq>
 			<priority>1.0</priority>

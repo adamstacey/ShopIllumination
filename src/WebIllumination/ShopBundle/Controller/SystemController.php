@@ -22,87 +22,6 @@ class SystemController extends Controller
    		// Tidy up URL
    		$url = trim($url);
    		
-   		// Check for old index.php queries
-   		if (($url == 'index.php') || ($url == 'image.php'))
-   		{
-	   		switch ($request->query->get('target'))
-	   		{
-		   		case 'products':
-		   			switch ($request->query->get('mode'))
-			   		{
-				   		case 'search':
-				   			$mid = $request->query->get('mid');
-				   			$cid = $request->query->get('cid');
-				   			$q = $request->query->get('q');
-				   			if ($mid)
-				   			{
-					   			$midRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Brand\Description')->findOneBy(array('brand' => $mid, 'locale' => 'en'));
-					   			if ($midRoutingObject)
-					   			{
-						   			$midRouting = $midRoutingObject->getBrand();
-						   			$midRouting = $seoService->generateUrl(urldecode($midRouting));
-					   			}
-				   			}
-				   			if ($cid)
-				   			{
-					   			$cidRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Department\Routing')->findOneBy(array('objectId' => $cid, 'locale' => 'en'));
-					   			if ($cidRoutingObject)
-					   			{
-						   			$cidRouting = $cidRoutingObject->getUrl();
-					   			}
-				   			}
-				   			$q = $seoService->generateUrl(urldecode($q));
-					   		$qObjects = explode('-', $q);
-					   		if (sizeof($qObjects) > 3)
-					   		{
-						   		$q = $qObjects[sizeof($qObjects) - 3].'-'.$qObjects[sizeof($qObjects) - 2].'-'.$qObjects[sizeof($qObjects) - 1];
-					   		}
-					   		if (($midRouting) && ($cidRouting))
-					   		{
-					   			$this->resetProductSearch();
-						   		return $this->redirect($this->get('router')->generate('department_with_brand', array('brand' => $midRouting, 'url' => $cidRouting)), 301);
-					   		} elseif ($midRouting) {
-					   			$this->resetProductSearch();
-					   			return $this->redirect($this->get('router')->generate('page_request', array('url' => $midRouting)), 301);
-					   		} elseif ($cidRouting) {
-					   			$this->resetProductSearch();
-						   		return $this->redirect($this->get('router')->generate('page_request', array('url' => $cidRouting)), 301);
-					   		} else {
-					   			$this->resetProductSearch();
-						   		return $this->redirect($this->get('router')->generate('products_product_search', array('search' => $q)), '301');
-					   		}
-				   			break;
-				   	}
-		   			break;
-		   		case 'forms':
-		   		case 'pages':
-		   			$this->resetProductSearch();
-		   			return $this->redirect($this->get('router')->generate('content_contact_us', array()), 301);
-		   			break;
-		   		default:
-		   			// Set error message
-					$this->get('session')->getFlashBag()->add('error', 'Sorry, you cannot access this page directly.');
-					    
-				    // Forward to the last catalogue page
-				    return $this->redirect($this->get('router')->generate('homepage'));
-	   		}	
-   		}
-   		   		
-   		// Check for the home page
-   		if (($url == '') || ($url == 'index'))
-   		{
-   			$this->resetProductSearch();
-			return $this->forward('WebIlluminationShopBundle:System:index');
-   		}
-   		
-   		// Remove the page listings from the URL from the old site
-   		if (strrpos($url, '-page-full_list') !== false)
-   		{
-   			$url = str_replace('-page-full_list', '', $url);
-   		} elseif (strrpos($url, '-page-') !== false) {
-	   		$url = substr($url, 0, strrpos($url, '-page-'));
-   		}
-   		
    		// Try and find the routing
    		$routingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('url' => $url, 'locale' => 'en'));
    		if (!$routingObject)
@@ -111,7 +30,7 @@ class SystemController extends Controller
    			if ($redirectObject)
    			{
    				$this->resetProductSearch();
-   				return $this->redirect($this->get('router')->generate('page_request', array('url' => $redirectObject->getRedirectTo())), $redirectObject->getRedirectCode());
+   				return $this->redirect($this->get('router')->generate('routing', array('url' => $redirectObject->getRedirectTo())), $redirectObject->getRedirectCode());
    			}
    		}
    		if ($routingObject)
@@ -120,7 +39,7 @@ class SystemController extends Controller
    			{
    				case 'brand':
    					$this->resetProductSearch();
-   					return $this->forward('WebIlluminationShopBundle:Brands:index', array('id' => $routingObject->getObjectId()));
+   					return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId()));
    					break;
    				case 'department':
    					// Get the current route
@@ -233,12 +152,11 @@ class SystemController extends Controller
    						$systemService->checkDepartmentListing($url);
    						$systemService->updateDepartmentListing($url, $page, $group, $brand, $brandId, $priceFrom, $priceTo, $brands, $options, $features);
    					}
-   					if ($route == 'page_request')
+   					if ($route == 'routing')
    					{
 	   					$systemService->updateDepartmentListing($url);
    					}
    					$this->resetProductSearch();
-//   					return $this->forward('WebIlluminationShopBundle:Departments:index', array('id' => $routingObject->getObjectId(), 'url' => $url, 'brand' => $brand, 'group' => $group));
    					return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'brandId' => $brand), $request->query->all());
    					break;
    				case 'product':
@@ -282,7 +200,7 @@ class SystemController extends Controller
    		$fullUrl = $request->server->get('REQUEST_URI');
    		if (strpos($fullUrl, '.html') === false)
    		{
-	   		return $this->redirect($this->get('router')->generate('page_request', array('url' => $url)));
+	   		return $this->redirect($this->get('router')->generate('routing', array('url' => $url)));
    		}
    		
    		// Try and search for what the visitor has come through with
@@ -292,8 +210,7 @@ class SystemController extends Controller
    		{
 	   		$search = $searchObjects[sizeof($searchObjects) - 3].'-'.$searchObjects[sizeof($searchObjects) - 2].'-'.$searchObjects[sizeof($searchObjects) - 1];
    		}
-   		//mail('acfstacey@gmail.com', '404: '.$url, '404: '.$url);
-   		//return $this->redirect($this->get('router')->generate('products_product_search', array('search' => $search)), '301');
+
    		return $this->forward('WebIlluminationShopBundle:Products:productSearch', array('search' => $search));
 
     }
@@ -311,7 +228,7 @@ class SystemController extends Controller
 	    $routingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Product\Routing')->findOneBy(array('objectId' => $id, 'locale' => 'en'));
 	    if ($routingObject)
 	    {
-	    	return $this->redirect($this->get('router')->generate('page_request', array('url' => $routingObject->getUrl())), 301);
+	    	return $this->redirect($this->get('router')->generate('routing', array('url' => $routingObject->getUrl())), 301);
 	    }
 	    	   		   		    	
         return $this->render('WebIlluminationShopBundle:System:pageNotFound.html.twig', array());

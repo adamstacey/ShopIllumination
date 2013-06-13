@@ -10,11 +10,13 @@
         <div class="container">
             {% include 'KACSiteBundle:Includes:logo.html.twig' %}
             {% include 'KACSiteBundle:Includes:search.html.twig' %}
-            {% render(controller('KACSiteBundle:Basket:summary')) %}
+            <div id="basket-summary" class="basket-summary" data-url="{{ path('basket_summary') }}">
+                {% render(controller('KACSiteBundle:Basket:summary')) %}
+            </div>
             <div class="clear"></div>
         </div>
     </div>
-    {% render(controller('KACSiteBundle:Department:mainMenu')) %}
+    {% render(controller('KACSiteBundle:System:mainMenu')) %}
     {% include 'KACSiteBundle:Includes:uniqueSellingPoints.html.twig' %}
     {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
 </header>

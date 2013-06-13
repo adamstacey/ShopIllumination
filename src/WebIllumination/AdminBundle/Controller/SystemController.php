@@ -192,11 +192,11 @@ class SystemController extends Controller
 						$url = $this->get('router')->generate('department_with_group', array('url' => $departmentUrl, 'group' => $productGroupId));
 					} else {
 						$url = $productObject['url'];
-						$url = $this->get('router')->generate('page_request', array('url' => $url));
+						$url = $this->get('router')->generate('routing', array('url' => $url));
 					}
 				} else {
 					$url = $productObject['url'];
-					$url = $this->get('router')->generate('page_request', array('url' => $url));
+					$url = $this->get('router')->generate('routing', array('url' => $url));
 				}
 			}
 		} elseif (($brandId > 0) && ($departmentId > 0)) {
@@ -213,14 +213,14 @@ class SystemController extends Controller
 			if ($departmentRoutingObject)
 			{
 				$url = $departmentRoutingObject->getUrl();
-				$url = $this->get('router')->generate('page_request', array('url' => $url));
+				$url = $this->get('router')->generate('routing', array('url' => $url));
 			}
 		} elseif ($brandId > 0) {
 			$brandRoutingObject = $this->getDoctrine()->getRepository('KAC\SiteBundle\Entity\Routing')->findOneBy(array('objectType' => 'brand', 'objectId' => $brandId, 'locale' => 'en'));
 			if ($brandRoutingObject)
 			{
 				$url = $brandRoutingObject->getUrl();
-				$url = $this->get('router')->generate('page_request', array('url' => $url));
+				$url = $this->get('router')->generate('routing', array('url' => $url));
 			}
 		}
 		

@@ -8,7 +8,7 @@
 			{% if product.status == 'a' %}
 				<item>
 				    <title><![CDATA[{{ product.pageTitle }}]]></title>
-				    <link><![CDATA[http://www.kitchenappliancecentre.co.uk{{ path('page_request', {'url': product.url}) }}?utm_source=Google+Shopping&utm_medium=organic&utm_campaign=Google+Shopping]]></link>
+				    <link><![CDATA[http://www.kitchenappliancecentre.co.uk{{ path('routing', {'url': product.url}) }}?utm_source=Google+Shopping&utm_medium=organic&utm_campaign=Google+Shopping]]></link>
 				    <description><![CDATA[{{ product.header }}{{ product.departments|replace({'|': ', '})|replace({', ^, ': ', '}) }}{{ product.productCode }}{% if product.shortDescription %}, {{ product.shortDescription }}{% endif %}]]></description>
 				    <g:id>{{ product.productId }}</g:id>
 				    <g:condition>new</g:condition>

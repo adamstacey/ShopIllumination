@@ -1,0 +1,28 @@
+.department
+{
+    float: left;
+    width: 193px;
+    height: 217px;
+    background: #EDEDED;
+    margin: 0 15px 15px 0;
+    border: 1px solid #D5D5D5;
+    padding: 10px;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.department h4, .department h4 a
+{
+    font-size: 12px;
+    line-height: 120%;
+    padding: 0;
+    color: #000;
+    margin: 0 0 10px 0;
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-family: 'Stag Medium', Arial;
+}
+.department img
+{
+    border: 1px solid #454D52;
+}

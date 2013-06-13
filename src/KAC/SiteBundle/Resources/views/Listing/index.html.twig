@@ -122,25 +122,25 @@
                                     {% block product_block %}
                                         <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
                                             <div class="fl">
-                                                <a href="{{ product.url != '' ? path('page_request', {'url': product.url}) : '' }}">
+                                                <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                                                     <img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" height="150">
                                                 </a>
                                             </div>
                                             <div>
                                                 <div>
                                                     {% if product.brand_logo != '' %}
-                                                        <a href="{{ path('page_request', {'url': product.brand_logo}) }}">
+                                                        <a href="{{ path('routing', {'url': product.brand_logo}) }}">
                                                             <img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" width="48" height="23">
                                                         </a>
                                                     {% endif %}
-                                                    <h4><a itemprop="name" href="{{ product.url != '' ? path('page_request', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
+                                                    <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
 
                                                     {% for feature in product.features %}
                                                         {% if 'COLOUR:' in feature|upper %}
                                                             {% spaceless %}
                                                                 <p class="colour">
                                                                     {% if product.url != '' %}
-                                                                        <a href="{{ path('page_request', {'url': product.url}) }}">
+                                                                        <a href="{{ path('routing', {'url': product.url}) }}">
                                                                     {% endif %}
                                                                     <strong>{{ featureGroup|upper|replace({'COLOUR:': ''}) }}</strong>
                                                                     {% if product.url != '' %}
@@ -158,7 +158,7 @@
                                                             {% spaceless %}
                                                                 {% if product.hide_price == 0 %}
                                                                     {% if product.url != '' %}
-                                                                        <a href="{{ path('page_request', {'url': product.url}) }}">
+                                                                        <a href="{{ path('routing', {'url': product.url}) }}">
                                                                     {% endif %}
                                                                     {% if product.low_price == product.high_price %}
                                                                         <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
@@ -182,8 +182,8 @@
                                                         <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red">Delete</a>
                                                         <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue">Edit</a>
                                                     {% else %}
-                                                        <a href="{{ product.url != '' ? path('page_request', {'url': product.url}) : '' }}" class="fr button  button-green icon-white button-small">More Info</a>
-                                                        <a href="{{ product.url != '' ? path('page_request', {'url': product.url}) : '' }}#buynow" class="fr button button-blue button-small mrs">Buy Now</a>
+                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}" class="fr button  button-green icon-white button-small">More Info</a>
+                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}#buynow" class="fr button button-blue button-small mrs">Buy Now</a>
                                                     {% endif %}
                                                 </div>
 

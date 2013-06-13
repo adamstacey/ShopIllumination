@@ -564,6 +564,7 @@ class ProductService {
         $variant['length'] = $variantObject->getLength();
         $variant['width'] = $variantObject->getWidth();
         $variant['height'] = $variantObject->getHeight();
+        $variant['deliveryBand'] = $variantObject->getDeliveryBand();
         $variant['mpn'] = $variantObject->getMpn();
         $variant['ean'] = $variantObject->getEan();
         $variant['upc'] = $variantObject->getUpc();

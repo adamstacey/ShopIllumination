@@ -10,7 +10,7 @@ $(document).ready(function() {
         $submenu.css({
             display: "block",
             left: $(this).position().left,
-            top: height
+            top: height - 2
         });
     }).on('mouseleave', function() {
         var submenuId = $(this).data("submenu"),
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         // Hide the menu and any menus that were left open
         $submenu.css("display", "none");
-        $submenu.find('menu-vertical').css("display", "none");
+        $submenu.find('.menu-vertical').css("display", "none");
     });
 
     // Add events for lower level navigation

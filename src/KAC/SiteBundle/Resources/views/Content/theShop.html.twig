@@ -1,0 +1,52 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}Visit the Kitchen Appliance Centre Showroom Based in Nottingham{% endblock %}
+{% block metatags %}
+	<meta name="description" content="If you need any help or advice on kitchen appliances or just want a look around please visit us in our showroom in Nottingham.">
+	<meta name="keywords" content="kitchen appliance centre, nottingham, kitchen appliances, hobs, ovens, worktops, charcoal filters">
+{% endblock %}
+{% block slider %}
+	<div class="container_8 clearfix">
+		<header>
+			<div class="slider-gallery-container">
+				<div class="slider-gallery">
+					<div class="slider-element">
+						<img src="{{ asset('/bundles/webilluminationshop/images/headers/the-kitchen-appliance-centre-showroom.jpg') }}" alt="The Kitchen Appliance Centre Showroom" />
+						<h3 class="right">Come and See Us</h3>
+					</div>
+				</div>
+			</div>
+		</header>
+	</div>
+{% endblock %}
+{% block body %}
+	<header>
+		<h1>Visit the Kitchen Appliance Centre Showroom Based in Nottingham</h1>
+	</header>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Welcome to the Kitchen Appliance Centre Showroom</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    <div class="clearfix">
+                        <p class="no-margin-top">If you need any help or advice or just want a look around please visit us in our showroom in Nottingham.</p>
+                        <p>Onefit Kitchen Appliance Centre began in the 1990's providing a fast, efficient and reliable Kitchen fitting service to the public. The Company soon became well established and achieved a major contract with Ikea Nottingham which took the business even further forward.</p>
+                        <p>When fitting kichens, we found that customers appliance orders were not being delivered on time for the kitchen, which in turn had a knock on effect for both the customers and fitters, who then had to return again to complete their work causing unnecessary inconvenience for all concerned.</p>
+                        <p>We realised this problem could be easily solved by supplying all the appliances directly at discounted prices. After this came a small showroom in Denby Derbyshire along with a small home made website.  Kitchen Appliance Centre was formed supplying both the trade and general public.</p>
+                        <p>We very quickly outgrew the Denby premises and in May 2003 moved to larger Premises with better warehousing facilities, ideally situated near Ikea Nottingham, making us more readily accessable to a wider catchment area. In 2005 we turned our head more towards the internet and concentrated on offering Appliances, Sinks, Taps and Worktops to the whole of the UK.</p>
+                        <p>Once we realised our potential on the net we developed our site massively, closely monitoring feedback from customers to make our site what it is today. We have highly knowledgeable, customer friendly staff that are here to offer help to all customers to make sure they make the correct choice in appliances. Our prices are regularly checked to keep us competitive with appliance sales online.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script defer="defer" type="text/javascript">
+		$(document).ready(function() {
+			$("#the-showroom-opening-hours").height($("#the-showroom-welcome").height());
+		});
+	</script>
+{% endblock %}

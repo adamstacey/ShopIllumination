@@ -13,7 +13,7 @@
 	<p id="basket-message-success-text"></p>
 	<div class="clear"></div>
 </div>
-{% if (basket.products|length > 0) or (basket.membershipCardNumber != '') %}
+{% if basket.products|length > 0 %}
 	<table width="100%" cellpadding="0" cellspacing="0" border="0">
 		<tr>
 			<th class="al">Product</th>
@@ -25,7 +25,7 @@
 		{% for product in basket.products %}
 			<tr{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="red"{% endif %}>
 				<td>
-					<a class="uppercase" href="{{ path('page_request', {'url': product.url}) }}">{{ product.header }}</a>
+					<a class="uppercase" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
 					{% if product.selectedOptionLabels|length > 0 %}
 						<br />
 						{% for selectedOptionLabel in product.selectedOptionLabels %}
@@ -65,18 +65,6 @@
 				</tr>
 			{% endif %}
 		{% endfor %}
-		{% if basket.membershipCardNumber == 1 %}
-			<tr>
-				<td><a href="{{ path('content_privilege_card') }}">Kitchen Appliance Centre Privilege Card</a></td>
-				<td class="ac"><strong>PRIVILEGE</strong></td>
-				<td class="ac">1</td>
-				<td class="ac">&times;</td>
-				<td class="ac">&pound;5.00</td>
-				<td class="ac">=</td>
-				<td class="ac">&pound;5.00</td>
-				<td class="ac"><img class="link action-delete-membership-card" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Privilege Card"></td>
-			</tr>
-		{% endif %}
 	</table>
 {% else %}
 	<p>Sorry, you haven't added anything to your basket.</p>

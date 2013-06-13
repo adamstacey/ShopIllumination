@@ -10,7 +10,7 @@
 	<p class="ar product-price">{% spaceless %}
 		{% if hidePrice == 0 %}
 			{% if url != '' %}
-				<a href="{{ path('page_request', {'url': url}) }}">
+				<a href="{{ path('routing', {'url': url}) }}">
 			{% endif %}
 			<span itemprop="price">&pound;{{ listPrice|number_format(2) }}</span>
 			{% if url != '' %}
