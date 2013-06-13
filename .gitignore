@@ -17,5 +17,9 @@ composer.phar
 web/uploads/*
 web/bundles/*
 
+# Generated files
+web/google-products.xml
+web/sitemap.xml
+
 # Configuration files
 app/config/parameters.yml
