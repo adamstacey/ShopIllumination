@@ -12,27 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DataController extends Controller
 {
     /**
-     * @Route("/google-products.xml", name="data_google_products")
-     */
-	public function googleProductsAction(Request $request)
-    {
-    	// Get the services
-	    $systemService = $this->get('web_illumination_admin.system_service');
-	    $productService = $this->get('web_illumination_admin.product_service');
-	    
-	    // Initialise the session
-	    $systemService->initialiseSession();
-	    
-		// Get the entity manager
-   		$em = $this->getDoctrine()->getManager();
-    	
-    	// Get the products
-    	$products = $productService->getProducts('en', 'GBP');
-   		   		    	
-        return $this->render('WebIlluminationShopBundle:Data:googleProducts.xml.twig', array('products' => $products));
-    }
-
-    /**
      * @Route("/sitemap.xml", name="data_sitemap")
      */
 	public function xmlSitemapAction(Request $request)

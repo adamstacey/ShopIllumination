@@ -641,6 +641,21 @@ class Variant implements DescribableInterface
     }
 
     /**
+     * Get price
+     *
+     * @return Price
+     */
+    public function getPrice()
+    {
+        if(count($this->prices) > 0)
+        {
+            return $this->prices[0];
+        }
+
+        return null;
+    }
+
+    /**
      * Set product
      *
      * @param \KAC\SiteBundle\Entity\Product $product

@@ -4,6 +4,11 @@ services:
     class: KAC\SiteBundle\Twig\CurrencyExtension
     tags:
       - { name: twig.extension }
+  kac_site.twig.doctrine_extension:
+    class: KAC\SiteBundle\Twig\DoctrineExtension
+    arguments: [@doctrine]
+    tags:
+      - { name: twig.extension }
 
   # Third Party services
   kac_site.google.google:
