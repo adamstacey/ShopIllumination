@@ -40,14 +40,17 @@ class RoutingController extends Controller
                 // Forward request to relevant controller
                 switch (get_class($routingObject))
                 {
-                    case 'KAC\SiteBundle\Entity\Product\Routing':
-                        return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()));
+                    case 'KAC\SiteBundle\Entity\Brand\Routing':
+                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId()));
+                        break;
+                    case 'KAC\SiteBundle\Entity\Brand\DepartmentRouting':
+                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'departmentId' => $routingObject->getDepartment()->getId()));
                         break;
                     case 'KAC\SiteBundle\Entity\Department\Routing':
                         return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId()));
                         break;
-                    case 'KAC\SiteBundle\Entity\Brand\Routing':
-                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId()));
+                    case 'KAC\SiteBundle\Entity\Product\Routing':
+                        return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()));
                         break;
                 }
             }

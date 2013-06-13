@@ -442,4 +442,8 @@ DROP TABLE IF EXISTS descriptions_;
 ALTER TABLE department_descriptions CHANGE google_department googleDepartment_id INT DEFAULT NULL;
 ALTER TABLE department_descriptions ADD CONSTRAINT FK_3213CC7486EE50E2 FOREIGN KEY (googleDepartment_id) REFERENCES taxonomies (id);
 CREATE INDEX IDX_3213CC7486EE50E2 ON department_descriptions (googleDepartment_id);
+ALTER TABLE routing ADD secondary_id INT DEFAULT NULL;
+CREATE INDEX IDX_A5F8B9FAC59D180C ON routing (secondary_id);
+INSERT INTO `routing` (`id`, `object_id`, `object_type`, `locale`, `url`, `created_at`, `updated_at`, `secondary_id`) VALUES
+(39032, 7, 'brand_with_department', 'en', 'brand/cda/kitchen-built-in-microwave-ovens', '2013-06-13 00:00:00', '2013-06-13 00:00:00', 11);
 SET FOREIGN_KEY_CHECKS = 1;

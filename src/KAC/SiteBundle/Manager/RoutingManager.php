@@ -16,6 +16,8 @@ class RoutingManager extends Manager
         {
             case 'brand':
                 return "KAC\\SiteBundle\\Entity\\Brand\\Routing";
+            case 'brand_with_department':
+                return "KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting";
             case 'department':
                 return "KAC\\SiteBundle\\Entity\\Department\\Routing";
             case 'product_variant':
@@ -32,6 +34,8 @@ class RoutingManager extends Manager
         switch (get_class($route))
         {
             case 'KAC\\SiteBundle\\Entity\\Brand\\Routing':
+                return $route->getBrand();
+            case 'KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting':
                 return $route->getBrand();
             case 'KAC\\SiteBundle\\Entity\\Department\\Routing':
                 return $route->getDepartment();
