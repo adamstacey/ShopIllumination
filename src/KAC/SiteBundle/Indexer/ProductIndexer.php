@@ -12,6 +12,15 @@ class ProductIndexer extends Indexer
      */
     function index($product)
     {
+        $query = $this->getSolarium()->createUpdate();
+        $document = $this->createDocument($query, $product);
+        $query->addDocument($document);
+        $query->addCommit();
+        $this->getSolarium()->update($query);
+    }
+
+    public function createDocument(\Solarium_Query_Update $query, Product $product)
+    {
         // If product does not contain all the required fields ignore it
         if (count($product->getDescriptions()) === 0) {
             return;
@@ -27,10 +36,8 @@ class ProductIndexer extends Indexer
         {
             return;
         }
-
-        $update = $this->getSolarium()->createUpdate();
-        $helper = $update->getHelper();
-        $document = $update->createDocument();
+        $helper = $query->getHelper();
+        $document = $query->createDocument();
 
         $lowestPrice = -1;
         $highestPrice = -1;
@@ -179,15 +186,13 @@ class ProductIndexer extends Indexer
             $document->setField("image_path", $images[0]->getPublicPath());
         }
 
-        $update->addDocument($document);
-        $update->addCommit();
-        $this->getSolarium()->update($update);
+        return $document;
     }
 
     /**
      * @param Product $product
      */
-    function delete($product = null)
+    public function delete($product = null)
     {
         $delete = $this->getSolarium()->createUpdate();
         if($product !== null)

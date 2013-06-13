@@ -21,39 +21,37 @@ class WarmupIndexCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        $productIndexer = new ProductIndexer($this->getContainer()->get('solarium.client.product'), $this->getContainer()->get('doctrine'));
-
         /**
-         * Load products
-         * @var IterableResult $iterableResult
+         * @var $iterableResult IterableResult
+         * @var $buffer \Solarium_Plugin_BufferedAdd
          */
-        $products = $em->getRepository('KAC\SiteBundle\Entity\Product')->findAll();
-        $query = $em->createQuery("
-            SELECT * FROM KAC\\SiteBundle\\Entity\\Product p
-        ");
+        $em = $this->getContainer()->get('doctrine')->getManager();
+        $solarium = $this->getContainer()->get('solarium.client.product');
+        $productIndexer = new ProductIndexer($solarium, $this->getContainer()->get('doctrine'));
+        $buffer = $solarium->getPlugin('bufferedadd');
+
+        // Load products
+        $query = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\\Product p");
         $iterableResult = $query->iterate();
 
-
-        //Clear product index
-        if($input->getOption('start') === null)
-        {
-            $productIndexer->delete();
-        }
-
         // Index products
-        $i = 0;
         while (($row = $iterableResult->next()) !== false) {
-            $output->writeln("Writing index for product ".$i."...");
+            try {
+                $product = $row[0];
 
-            $product = $row[0];
-            $productIndexer->index($product);
-            $i++;
+                // Create the document and populate the data
+                $query = $solarium->createUpdate();
+                $document = $productIndexer->createDocument($query, $product);
+                if($document)
+                {
+                    $buffer->addDocument($document);
+                }
 
-            $em->detach($product[0]);
+                $em->detach($row[0]);
+            } catch (\Exception $e) {
+                $output->writeln("An error occurred");
+            }
         }
-
-        $output->writeln("Product indexes created");
 
         $output->writeln('Finished!');
     }
