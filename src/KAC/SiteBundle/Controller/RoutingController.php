@@ -44,7 +44,7 @@ class RoutingController extends Controller
                         return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId()));
                         break;
                     case 'KAC\SiteBundle\Entity\Brand\DepartmentRouting':
-                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'departmentId' => $routingObject->getDepartment()->getId()));
+                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'departmentId' => $routingObject->getSecondaryId()));
                         break;
                     case 'KAC\SiteBundle\Entity\Department\Routing':
                         return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId()));

@@ -34,6 +34,11 @@ class Routing
      * @ORM\Column(name="object_id", type="integer", length=11, nullable=true)
      */
     private $objectId;
+
+	/**
+     * @ORM\Column(name="secondary_id", type="integer", length=11, nullable=true)
+     */
+    private $secondaryId;
         
     /**
      * @ORM\Column(name="locale", type="string", length=5)
@@ -89,6 +94,29 @@ class Routing
     public function getObjectId()
     {
         return $this->objectId;
+    }
+
+    /**
+     * Set secondaryId
+     *
+     * @param integer $secondaryId
+     * @return Routing
+     */
+    public function setSecondaryId($secondaryId)
+    {
+        $this->secondaryId = $secondaryId;
+
+        return $this;
+    }
+
+    /**
+     * Get secondaryId
+     *
+     * @return integer
+     */
+    public function getSecondaryId()
+    {
+        return $this->secondaryId;
     }
 
     /**
