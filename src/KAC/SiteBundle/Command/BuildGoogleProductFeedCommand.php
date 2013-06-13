@@ -17,6 +17,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         $this
             ->setName('admin:build:googlefeed')
             ->setDescription('Build the google product feed')
+            ->addArgument('host', InputArgument::REQUIRED, 'The host to be used for the URLs')
             ->addArgument('filename', InputArgument::OPTIONAL, 'The file to be written to. Path should be relative to the document root', 'web/google-products.xml')
         ;
     }
@@ -32,6 +33,8 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
          * @var $variant Variant
          */
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $router = $this->getContainer()->get('router');
+        $router->getContext()->setHost($input->getArgument('host'));
 
         // Clear file
         file_put_contents($filename, '');
@@ -56,7 +59,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('link');
-        $xmlWriter->writeCdata($this->getContainer()->get('router')->generate('homepage', array(), true));
+        $xmlWriter->writeCdata($router->generate('homepage', array(), true));
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('description');
@@ -86,7 +89,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 $xmlWriter->writeCdata($variant->getDescription()->getPageTitle());
                 $xmlWriter->endElement();
                 $xmlWriter->startElement('link');
-                $xmlWriter->writeCdata($this->getContainer()->get('router')->generate('routing', array(
+                $xmlWriter->writeCdata($router->generate('routing', array(
                     'url' => $variant->getUrl() ? $variant->getUrl() : $product->getUrl(),
                 ), true));
                 $xmlWriter->endElement();

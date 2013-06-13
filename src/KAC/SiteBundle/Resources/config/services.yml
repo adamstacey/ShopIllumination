@@ -4,11 +4,6 @@ services:
     class: KAC\SiteBundle\Twig\CurrencyExtension
     tags:
       - { name: twig.extension }
-  kac_site.twig.doctrine_extension:
-    class: KAC\SiteBundle\Twig\DoctrineExtension
-    arguments: [@doctrine]
-    tags:
-      - { name: twig.extension }
 
   # Third Party services
   kac_site.google.google:
@@ -31,6 +26,9 @@ services:
   kac_site.manager.document:
       class: KAC\SiteBundle\Manager\DocumentManager
       arguments: [@doctrine, @kac_site.manager.file]
+  kac_site.manager.routing:
+      class: KAC\SiteBundle\Manager\RoutingManager
+      arguments: [@doctrine]
   kac_site.manager.seo:
     class: KAC\SiteBundle\Manager\SeoManager
     arguments: [@doctrine]
