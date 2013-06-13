@@ -172,7 +172,6 @@ class ListingController extends Controller
         $stats->createField('low_price');
         $stats->createField('high_price');
 
-
         // Deal with price filtering separately
         if(array_key_exists('low_price', $filters)) {
             if(!empty($filters['low_price'])) {
