@@ -30,6 +30,8 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $productIndexer = new ProductIndexer($solarium, $this->getContainer()->get('doctrine'));
         $buffer = $solarium->getPlugin('bufferedadd');
 
+        $productIndexer->delete();
+
         // Load products
         $query = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\\Product p");
         $iterableResult = $query->iterate();
@@ -51,6 +53,12 @@ class WarmupIndexCommand extends ContainerAwareCommand
             } catch (\Exception $e) {
                 $output->writeln("An error occurred");
             }
+        }
+
+        try {
+            $buffer->flush();
+        } catch (\Exception $e) {
+            $output->writeln("An error occurred");
         }
 
         $output->writeln('Finished!');

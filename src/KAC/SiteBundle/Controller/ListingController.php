@@ -132,7 +132,7 @@ class ListingController extends Controller
             $departmentFilterPath = "";
             $currDepartment = $department;
             do {
-                $departmentFilterPath = $currDepartment->__toString() . "|" . $departmentFilterPath;
+                $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
                 $currDepartment = $currDepartment->getParent();
             } while ($currDepartment !== null);
             $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
