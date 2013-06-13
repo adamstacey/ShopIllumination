@@ -55,6 +55,16 @@ class FixDepartmentCommand extends ContainerAwareCommand
         $rootDepartment->setDisplayOrder(0);
         $rootDepartment->setCreatedAt(new \DateTime());
         $rootDepartment->setUpdatedAt(new \DateTime());
+
+        $description = new Department\Description();
+        $description->setDepartment($rootDepartment);
+        $description->setLocale('en');
+        $description->setName("Root Department");
+        $description->setMenuTitle("Root Department");
+        $description->setPageTitle("Root Department");
+        $description->setHeader("Root Department");
+        $rootDepartment->addDescription($description);
+
         $em->persist($rootDepartment);
         $em->flush();
 
