@@ -41,16 +41,16 @@ class RoutingController extends Controller
                 switch (get_class($routingObject))
                 {
                     case 'KAC\SiteBundle\Entity\Brand\Routing':
-                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId()));
+                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId()), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Brand\DepartmentRouting':
-                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'departmentId' => $routingObject->getSecondaryId()));
+                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'departmentId' => $routingObject->getSecondaryId()), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Department\Routing':
-                        return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId()));
+                        return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId()), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Product\Routing':
-                        return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()));
+                        return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()), $request->query->all());
                         break;
                 }
             }

@@ -132,7 +132,7 @@ class ListingController extends Controller
             $departmentFilterPath = "";
             $currDepartment = $department;
             do {
-                $departmentFilterPath = $currDepartment->__toString() . "|" . $departmentFilterPath;
+                $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
                 $currDepartment = $currDepartment->getParent();
             } while ($currDepartment !== null);
             $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
@@ -171,7 +171,6 @@ class ListingController extends Controller
         $stats = $statsQuery->getStats();
         $stats->createField('low_price');
         $stats->createField('high_price');
-
 
         // Deal with price filtering separately
         if(array_key_exists('low_price', $filters)) {
