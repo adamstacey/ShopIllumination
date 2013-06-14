@@ -22,6 +22,11 @@ class Redirect
      * @ORM\Column(name="object_id", type="integer", length=11)
      */
     private $objectId;
+
+	/**
+     * @ORM\Column(name="secondary_id", type="integer", length=11)
+     */
+    private $secondaryId;
 	
 	/**
      * @ORM\Column(name="object_type", type="string", length=100)
@@ -224,5 +229,21 @@ class Redirect
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSecondaryId()
+    {
+        return $this->secondaryId;
+    }
+
+    /**
+     * @param mixed $secondaryId
+     */
+    public function setSecondaryId($secondaryId)
+    {
+        $this->secondaryId = $secondaryId;
     }
 }

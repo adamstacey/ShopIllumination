@@ -7,6 +7,7 @@ use KAC\SiteBundle\Entity\BrandToDepartment;
 use KAC\SiteBundle\Entity\Product\Routing;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Product\Variant;
+use KAC\SiteBundle\Entity\Redirect;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -74,6 +75,11 @@ class UpdateRoutesCommand extends ContainerAwareCommand
         $departments = $em->getRepository("KAC\\SiteBundle\\Entity\\Department")->findAll();
         foreach($departments as $department)
         {
+            if($department->getStatus() !== 'a')
+            {
+                break;
+            }
+
             // Check if a route already exists
             $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Department\\Routing")->findBy(array(
                 'department' => $department->getId(),
@@ -119,7 +125,7 @@ class UpdateRoutesCommand extends ContainerAwareCommand
                     $route->setBrand($brand);
                     $route->setDepartment($department);
                     $route->setLocale('en');
-                    $route->setUrl($seo->generateUrl('brand/'.$brand->getRouting()->getUrl().'/'.$department->getRouting()->getUrl()));
+                    $route->setUrl($seo->generateUrl($brand->getRouting()->getUrl().'/'.$department->getRouting()->getUrl()));
 
                     $em->persist($route);
 
@@ -129,6 +135,40 @@ class UpdateRoutesCommand extends ContainerAwareCommand
                 if (($i % $batchSize) === 0) {
                     $em->flush();
                 }
+            }
+        }
+
+        /**
+         * @var $route Brand\DepartmentRouting
+         */
+        // Add redirects for the brand_to_department urls
+        $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting")->findAll();
+        foreach($routes as $route)
+        {
+            // Check if a redirect already exists
+            $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
+                'redirectFrom' => $route->getUrl(),
+            ));
+
+            // If no routes were found create a new route
+            if(count($redirects) <= 0)
+            {
+                $redirect = new Redirect();
+                $redirect->setObjectId($route->getBrand()->getId());
+                $redirect->setSecondaryId($route->getDepartment()->getId());
+                $redirect->setObjectType($route->getObjectType());
+                $redirect->setRedirectCode(301);
+                $redirect->setRedirectFrom($seo->generateUrl('brand/'.$route->getBrand()->getRouting()->getUrl().'/'.$route->getDepartment()->getRouting()->getUrl()));
+                $redirect->setRedirectTo($route->getUrl());
+
+
+                $em->persist($redirect);
+
+                $i++;
+            }
+
+            if (($i % $batchSize) === 0) {
+                $em->flush();
             }
         }
     }
