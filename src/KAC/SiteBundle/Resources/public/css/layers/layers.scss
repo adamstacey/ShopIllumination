@@ -1,0 +1,100 @@
+
+
+
+
+
+.etalage-inset {
+    z-index: 99;
+}
+
+.etalage_zoom_area {
+    z-index: 996;
+}
+
+.etalage_zoom_area div {
+    z-index: 997;
+}
+
+.etalage_zoom_preview {
+    z-index: 998;
+}
+
+.etalage_zoom_img,
+.etalage_hint {
+    z-index: 999;
+}
+
+div.etalage_description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
+
+
+
+
+.slider-wrapper h1 {
+    z-index: 99;
+}
+
+.slider-wrapper img.logo {
+    z-index: 99;
+}
+
+
+
+
+.select2-drop-mask {
+    z-index: 9998;
+}
+
+.select2-drop {
+    z-index: 9999;
+}
+
+.select2-search {
+    z-index: 10000;
+}
+
+
+
+
+.jquery-lightbox-mode-image .jquery-lightbox-html {
+    z-index: 6998;
+}
+
+.jquery-lightbox-background {
+    z-index: 6999;
+}
+
+.jquery-lightbox-border-top-left,
+.jquery-lightbox-border-top-right,
+.jquery-lightbox-border-bottom-left,
+.jquery-lightbox-border-bottom-right {
+    z-index: 7000;
+}
+
+.jquery-lightbox-border-top-middle {
+    z-index: 7000;
+}
+
+.jquery-lightbox-border-bottom-middle {
+    z-index: 7000;
+}
+
+.jquery-lightbox-title {
+    z-index: 7000;
+}
+
+.jquery-lightbox-html {
+    z-index: 7000;
+}
+
+.jquery-lightbox-buttons {
+    z-index: 7001;
+}
+
+.jquery-lightbox-mode-image .jquery-lightbox-button-close {
+    z-index: 7002;
+}
