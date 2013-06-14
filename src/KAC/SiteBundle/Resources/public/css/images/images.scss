@@ -5,7 +5,6 @@
 
 .etalage-inset {
     margin-top: -140px !important;
-    z-index: 99;
 }
 
 .etalage .etalage_thumb,
@@ -141,23 +140,12 @@ ul .etalage_small_thumbs li,
     float: none;
 }
 
-.etalage_zoom_area {
-    z-index: 996;
-}
-
 .etalage_zoom_area div {
     overflow: hidden;
-    z-index: 997;
 }
 
 .etalage_zoom_preview {
     position: absolute;
-    z-index: 998;
-}
-
-.etalage_zoom_img,
-.etalage_hint {
-    z-index: 999;
 }
 
 .etalage {
@@ -168,7 +156,6 @@ div.etalage_description {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 999;
 }
 
 div.etalage_description.rtl {
@@ -197,8 +184,6 @@ div.etalage_description.rtl {
     width: 12%;
 
     position: absolute;
-
-    z-index: 7000;
 }
 
 .jquery-lightbox-border-top-left {
@@ -223,7 +208,6 @@ div.etalage_description.rtl {
     left: 12%;
 
     background: $colourWhite;
-    z-index: 7000;
     overflow: hidden;
 }
 
@@ -249,7 +233,6 @@ div.etalage_description.rtl {
     bottom: 0;
     left: 12%;
 
-    z-index: 7000;
     overflow: hidden;
     background: $colourWhite;
 }
@@ -266,7 +249,6 @@ div.etalage_description.rtl {
     font-family: $primaryFontFamily;
     @include fontSize($fontSizeSmall);
     line-height: 14px;
-    z-index: 7000;
     opacity: 0.9;
 }
 
@@ -277,7 +259,6 @@ div.etalage_description.rtl {
     border: 0;
     border-left: 7px solid $colourWhite;
     border-right: 7px solid $colourWhite;
-    z-index: 7000;
     vertical-align: top;
 }
 
@@ -296,8 +277,6 @@ div.etalage_description.rtl {
     left: 7px;
 
     float: left;
-
-    z-index: 6999;
 }
 
 .jquery-lightbox-background img {
@@ -314,8 +293,6 @@ div.etalage_description.rtl {
 
 .jquery-lightbox-mode-image .jquery-lightbox-html {
     padding: 0;
-
-    z-index: 6998;
 }
 
 .jquery-lightbox-mode-html .jquery-lightbox-background {
@@ -353,8 +330,6 @@ div.etalage_description.rtl {
 
 .jquery-lightbox-mode-image .jquery-lightbox-button-close {
     right: 14px;
-
-    z-index: 7002;
 }
 
 .jquery-lightbox-buttons {
@@ -364,7 +339,6 @@ div.etalage_description.rtl {
     top: 7px;
     left: 7px;
 
-    z-index: 7001;
     display: none;
 }
 
@@ -504,7 +478,6 @@ div.etalage_description.rtl {
     padding: $spacingExtraLarge;
     font-family: $primaryFontFamily;
     @include fontSize($fontSizeExtraExtraExtraLarge);
-    z-index: 99;
     @include textShadow($colourBlack, 0, 1px);
     font-weight: normal;
 }
@@ -523,7 +496,6 @@ div.etalage_description.rtl {
     position: absolute;
     top: $spacingLarge;
     right: $spacingLarge;
-    z-index: 99;
 }
 
 .nivoSlider {
