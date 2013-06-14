@@ -92,6 +92,6 @@ screen and (min-resolution: 1.3dppx),
 screen and (min-resolution: 1.5dppx),
 screen and (min-resolution: 2dppx) {
     .logo a {
-        background-image: url("#{$cssPath}/resources/images/logo_2x.png");
+        background-image: url("#{$cssPath}/resources/images/logo@2x.png");
     }
 }

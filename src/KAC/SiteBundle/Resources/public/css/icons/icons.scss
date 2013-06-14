@@ -196,52 +196,52 @@ screen and (min-resolution: 1.5dppx),
 screen and (min-resolution: 2dppx) {
     .icon-black span.ui-icon,
     span.icon-black {
-        background-image: url("#{$cssPath}/resources/images/icons/black_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/black@2x.png");
     }
 
     .icon-grey span.ui-icon,
     span.icon-grey {
-        background-image: url("#{$cssPath}/resources/images/icons/grey_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/grey@2x.png");
     }
 
     .icon-white span.ui-icon,
     span.icon-white {
-        background-image: url("#{$cssPath}/resources/images/icons/white_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/white@2x.png");
     }
 
     .icon-dark-red span.ui-icon,
     span.icon-dark-red {
-        background-image: url("#{$cssPath}/resources/images/icons/dark_red_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/dark_red@2x.png");
     }
 
     .icon-red span.ui-icon,
     span.icon-red {
-        background-image: url("#{$cssPath}/resources/images/icons/red_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/red@2x.png");
     }
 
     .icon-orange span.ui-icon,
     span.icon-orange {
-        background-image: url("#{$cssPath}/resources/images/icons/orange_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/orange@2x.png");
     }
 
     .icon-yellow span.ui-icon,
     span.icon-yellow {
-        background-image: url("#{$cssPath}/resources/images/icons/yellow_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/yellow@2x.png");
     }
 
     .icon-green span.ui-icon,
     span.icon-green {
-        background-image: url("#{$cssPath}/resources/images/icons/green_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/green@2x.png");
     }
 
     .icon-turquoise span.ui-icon,
     span.icon-turquoise {
-        background-image: url("#{$cssPath}/resources/images/icons/turquoise_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/turquoise@2x.png");
     }
 
     .icon-blue span.ui-icon,
     span.icon-blue {
-        background-image: url("#{$cssPath}/resources/images/icons/blue_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/blue@2x.png");
     }
 
     .ui-button .icon-black span.ui-icon,
@@ -250,7 +250,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-black,
     .icon-small-black span.ui-icon-small,
     span.icon-small-black {
-        background-image: url("#{$cssPath}/resources/images/icons/black_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/black_small@2x.png");
     }
 
     .ui-button .icon-grey span.ui-icon,
@@ -259,7 +259,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-grey,
     .icon-small-grey span.ui-icon-small,
     span.icon-small-grey {
-        background-image: url("#{$cssPath}/resources/images/icons/grey_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/grey_small@2x.png");
     }
 
     .ui-icon-closethick,
@@ -269,7 +269,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-white,
     .icon-small-white span.ui-icon-small,
     span.icon-small-white {
-        background-image: url("#{$cssPath}/resources/images/icons/white_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/white_small@2x.png");
     }
 
     .ui-button .icon-dark-red span.ui-icon,
@@ -278,7 +278,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-dark-red,
     .icon-small-dark-red span.ui-icon-small,
     span.icon-small-dark-red {
-        background-image: url("#{$cssPath}/resources/images/icons/dark_red_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/dark_red_small@2x.png");
     }
 
     .ui-button .icon-red span.ui-icon,
@@ -287,7 +287,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-red,
     .icon-small-red span.ui-icon-small,
     span.icon-small-red {
-        background-image: url("#{$cssPath}/resources/images/icons/red_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/red_small@2x.png");
     }
 
     .ui-button .icon-orange span.ui-icon,
@@ -296,7 +296,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-orange,
     .icon-small-orange span.ui-icon-small,
     span.icon-small-orange {
-        background-image: url("#{$cssPath}/resources/images/icons/orange_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/orange_small@2x.png");
     }
 
     .ui-button .icon-yellow span.ui-icon,
@@ -305,7 +305,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-yellow,
     .icon-small-yellow span.ui-icon-small,
     span.icon-small-yellow {
-        background-image: url("#{$cssPath}/resources/images/icons/yellow_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/yellow_small@2x.png");
     }
 
     .ui-button .icon-green span.ui-icon,
@@ -314,7 +314,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-green,
     .icon-small-green span.ui-icon-small,
     span.icon-small-green {
-        background-image: url("#{$cssPath}/resources/images/icons/green_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/green_small@2x.png");
     }
 
     .ui-button .icon-turquoise span.ui-icon,
@@ -323,7 +323,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-turquoise,
     .icon-small-turquoise span.ui-icon-small,
     span.icon-small-turquoise {
-        background-image: url("#{$cssPath}/resources/images/icons/turquoise_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/turquoise_small@2x.png");
     }
 
     .ui-button .icon-blue span.ui-icon,
@@ -332,7 +332,7 @@ screen and (min-resolution: 2dppx) {
     .button span.icon-blue,
     .icon-small-blue span.ui-icon-small,
     span.icon-small-blue {
-        background-image: url("#{$cssPath}/resources/images/icons/blue_small_2x.png");
+        background-image: url("#{$cssPath}/resources/images/icons/blue_small@2x.png");
     }
 }
 
