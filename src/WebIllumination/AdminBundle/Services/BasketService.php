@@ -1043,7 +1043,6 @@ class BasketService {
 		$totalDiscount = 0;
 		$possibleDiscount = 0;
 		$multiBuyDiscount = 0;
-		$voucherCodeDiscount = 0;
 		$numberOfLargeAppliances = 0;
 		$vat = 0;
 		$total = 0;
@@ -1055,20 +1054,6 @@ class BasketService {
 		$basket['discounts'] = array();
 		$basket['donations']['company']['description'] = '';
 		$basket['donations']['company']['donation'] = 0;
-		
-		// Check for a voucher code
-		$voucherCodeObject = false;
-		foreach ($basket['discounts'] as $discount)
-		{
-			if ($discount['voucherCode'] != '')
-			{
-				$voucherCodeObject = $em->getRepository('KAC\SiteBundle\Entity\VoucherCode')->findOneBy(array('code' => $discount['voucherCode']));
-				if (!$voucherCodeObject)
-				{
-					$messages['error'][] = 'The voucher code <strong>"'.$discount['voucherCode'].'"</strong> does not exist. Please try another one.';
-				}
-			}
-		}
 		
 		// Go through all the products
 		if (sizeof($basket['products']) > 0)
@@ -1171,8 +1156,6 @@ class BasketService {
 				if ($totalPanDiscount > 0)
 				{
 					$basketDiscount = array();
-					$basketDiscount['voucherCode'] = '';
-					$basketDiscount['giftVoucherCode'] = '';
 					$basketDiscount['description'] = '40% Off Stellar Pan Sets';
 					$basketDiscount['discount'] = $totalPanDiscount;
 					$basket['discounts'][] = $basketDiscount;
@@ -1222,8 +1205,6 @@ class BasketService {
 			if ($totalCdaDiscount > 0)
 			{
 				$basketDiscount = array();
-				$basketDiscount['voucherCode'] = '';
-				$basketDiscount['giftVoucherCode'] = '';
 				$basketDiscount['description'] = '10% Off CDA Appliances';
 				$basketDiscount['discount'] = $totalCdaDiscount;
 				$basket['discounts'][] = $basketDiscount;
@@ -1244,8 +1225,6 @@ class BasketService {
 		if ($savings > 0)
 		{
 			$basketDiscount = array();
-			$basketDiscount['voucherCode'] = '';
-			$basketDiscount['giftVoucherCode'] = '';
 			$basketDiscount['description'] = 'Product Discounts';
 			if ($totalPanDiscount > 0)
 			{
@@ -1268,16 +1247,6 @@ class BasketService {
 		// Get the estimated delivery days
 		$basket['estimatedDeliveryDays'] = $this->getEstimatedDeliveryDays();
 		$this->container->get('session')->set('basket', $basket);
-		
-		// Check if there is free delivery on a voucher codes
-		/*if ($voucherCodeObject)
-		{
-			if ($voucherCodeObject->getDiscountType() == 'd')
-			{
-				$messages['success'][] = 'The voucher code (<strong>"'.$voucherCodeObject->getCode().'"</strong>) has entitled you to free delivery.';
-				$deliveryCharge = 0;
-			}
-		}*/
 		
 		// Calculate the total and vat
 		$total = $subTotal + $deliveryCharge;
