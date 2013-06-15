@@ -33,7 +33,7 @@ WebIlluminationShopBundle:
     resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
     prefix:   /
 
-kac_shop:
+kac_site:
     resource: "@KACSiteBundle/Controller/"
     type:     annotation
     prefix:   /

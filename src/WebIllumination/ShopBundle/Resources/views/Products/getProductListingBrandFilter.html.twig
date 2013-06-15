@@ -1,5 +1,0 @@
-<ul>
-	{% for brand in brands %}	
-		<li><input{%if brand.selected %} checked="checked"{% endif %} class="filter-brand" data-brand-id="{{ brand.id }}" type="checkbox" id="filter-brand-{{ brand.id }}" name="brand-{{ brand.id }}" value="1" /><label for="filter-brand-{{ brand.id }}"><span class="fr">({{ brand.productCount }})</span>{{ brand.brand }}</label></li>
-	{% endfor %}
-</ul>
