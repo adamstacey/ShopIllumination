@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $(".action-add-to-basket").on('click', function() {
         $("#ajax-loading").show();
-        console.log("????");
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -21,7 +20,6 @@ $(document).ready(function() {
                 });
             },
             success: function(data) {
-                console.log("????");
                 updateBasketSummary();
                 $("html, body").animate({scrollTop: 0},'slow', function() {
                     $("#shopping-basket-popup-image").attr("src", data.thumbnailPath);

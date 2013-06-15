@@ -9,13 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BasketController extends Controller
 {
-	protected $membershipCardDiscount;
-
-    public function __construct()
-    {
-        $this->membershipCardDiscount = 10;
-    }
-
 	// Index page
 	public function indexAction(Request $request)
     {
@@ -76,16 +69,6 @@ class BasketController extends Controller
 
 		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketContents.html.twig', array('departmentHistory' => $departmentHistory, 'basket' => $basket, 'messages' => $messages));
     }
-
-    // Get basket contents
-	public function ajaxGetMembershipCardDiscountAction(Request $request)
-    {
-		// Get the basket
-		$basket = $this->get('session')->get('basket');
-
-		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetMembershipCardDiscount.html.twig', array('basket' => $basket));
-    }
-
     // Update delivery options
 	public function ajaxUpdateDeliveryOptionsAction(Request $request)
     {
@@ -270,173 +253,6 @@ class BasketController extends Controller
     	$basketService->updateBasketTotals();
 
     	return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'thumbnailPath' => $thumbnailPath, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));
-    }
-
-    // Redeem membership card number
-	public function ajaxRedeemMembershipCardNumberAction(Request $request)
-    {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-
-    	// Get the entity manager
-		$em = $this->getDoctrine()->getManager();
-
-    	// Get the basket session
-		$basket = $this->get('session')->get('basket');
-
-    	// Get submitted data
-		$membershipCardNumber = strtoupper(trim($request->query->get('membershipCardNumber')));
-
-		// Update the membership card number
-		$basket['membershipCardNumber'] = $membershipCardNumber;
-
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
-
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
-
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
-    }
-
-    // Delete membership card number
-	public function ajaxDeleteMembershipCardNumberAction(Request $request)
-    {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-
-    	// Get the entity manager
-		$em = $this->getDoctrine()->getManager();
-
-    	// Get the basket session
-		$basket = $this->get('session')->get('basket');
-
-		// Update the membership card number
-		$basket['membershipCardNumber'] = 0;
-
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
-
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
-
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
-    }
-
-    // Redeem voucher code
-	public function ajaxRedeemVoucherCodeAction(Request $request)
-    {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-
-    	// Get the entity manager
-		$em = $this->getDoctrine()->getManager();
-
-    	// Get the basket session
-		$basket = $this->get('session')->get('basket');
-
-    	// Get submitted data
-		$voucherCode = strtoupper(trim($request->query->get('voucherCode')));
-
-		// TODO!
-		// Update the voucher code
-	    //$basket['discounts']['voucherCode'] = $voucherCode;
-
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
-
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
-
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
-    }
-
-    // Make donation
-	public function ajaxMakeDonationAction(Request $request)
-    {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-
-    	// Get the basket session
-		$basket = $this->get('session')->get('basket');
-
-    	// Get submitted data
-		$donation = $request->query->get('donation');
-
-		// Update the donation
-	    $basket['donations']['customer']['description'] = 'Movember Donation from You - Thank You';
-		$basket['donations']['customer']['donation'] = $donation;
-
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
-
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
-
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
-    }
-
-    // Delete voucher code
-	public function ajaxDeleteVoucherCodeAction(Request $request)
-    {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-
-    	// Get the entity manager
-		$em = $this->getDoctrine()->getManager();
-
-    	// Get the basket session
-		$basket = $this->get('session')->get('basket');
-
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
-
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
-
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
-    }
-
-    // Add membership card to basket
-	public function ajaxAddMembershipCardToBasketAction(Request $request)
-    {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-
-		// Get the basket
-		$basket = $this->get('session')->get('basket');
-
-    	// Update the membership card
-    	$basket['membershipCardNumber'] = 1;
-
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
-
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
-
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
-    }
-
-    // Delete membership card from basket
-	public function ajaxDeleteMembershipCardAction(Request $request)
-    {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-
-    	// Get the basket
-		$basket = $this->get('session')->get('basket');
-
-    	// Update the membership card
-    	$basket['membershipCardNumber'] = 0;
-
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
-
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
-
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
     }
 
     // Update basket item

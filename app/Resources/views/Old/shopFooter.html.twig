@@ -60,7 +60,7 @@
     		&copy; {{ "now"|date("Y") }} All Rights Reserved <strong>Kitchen Appliance Centre</strong><br />
     		{#<a title="Find out how the Kitchen Appliance Centre web site supports accessibility" href="#">Accessibility</a>&nbsp;|&nbsp;#}
     		<a title="View our terms and conditions" href="{{ path('content_terms_and_conditions') }}">Terms &amp; Conditions</a>&nbsp;|&nbsp;
-    		<a title="View our site map - search engines go crazy" href="{{ path('data_sitemap') }}">Site Map</a>&nbsp;|&nbsp;
+    		<a title="View our site map - search engines go crazy" href="{{ asset('/sitemap.xml') }}">Site Map</a>&nbsp;|&nbsp;
     		<span itemscope itemtype="http://schema.org/Organization">{% spaceless %}
     			<span itemprop="name"><strong>Kitchen Appliance Centre</strong></span>
     			<span>&nbsp;is</span>
