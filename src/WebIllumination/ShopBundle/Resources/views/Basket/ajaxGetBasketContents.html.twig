@@ -37,11 +37,11 @@
 				<td>
 					<table class="no-padding no-border" cellpadding="0" cellspacing="0" border="0">
 						<tr>
-							<td class="no-padding no-border"><input id="quantity-{{ product.productId }}" data-selected-options="{{ product.selectedOptions }}" data-product-id="{{ product.productId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="{{ product.quantity }}" /></td>
+							<td class="no-padding no-border"><input id="quantity-{{ product.variantId }}" data-selected-options="{{ product.selectedOptions }}" data-product-id="{{ product.productId }}" data-variant-id="{{ product.variantId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="{{ product.quantity }}" /></td>
 							<td class="no-padding no-border">
 								<div class="quantity-buttons-container no-padding">
-									<div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.productId }}">+</div>
-									<div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.productId }}">-</div>
+									<div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.variantId }}">+</div>
+									<div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.variantId }}">-</div>
 								</div>
 							</td>
 						</tr>

@@ -209,7 +209,7 @@ class BasketController extends Controller
                     }
                 }
             }
-            $basketItemId = $productId.'-'.$productCount;
+            $basketItemId = $productId.'-'.$variantId.'-'.$productCount;
             $newProduct = array();
             $price = $variant['prices'][0]['listPrice'];
             $recommendedRetailPrice = $variant['prices'][0]['recommendedRetailPrice'];
@@ -263,6 +263,7 @@ class BasketController extends Controller
 
 		// Get submitted data
 		$productId = $request->query->get('productId');
+		$variantId = $request->query->get('variantId');
 		$quantity = ($request->query->get('quantity')?$request->query->get('quantity'):1);
 		$selectedOptions = $request->query->get('selectedOptions');
 
@@ -272,7 +273,7 @@ class BasketController extends Controller
     	// Check if product already exists in the basket
     	foreach ($basket['products'] as $key => $product)
     	{
-    		if ($product['productId'] == $productId)
+    		if ($product['variantId'] == $variantId)
     		{
     			if ($product['selectedOptions'] == $selectedOptions)
     			{

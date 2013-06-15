@@ -16,6 +16,7 @@
    				url: "{{ path('basket_ajax_update_basket_item') }}",
    				data: {
    					productId: $(this).attr("data-product-id"),
+   					variantId: $(this).attr("data-variant-id"),
    					quantity: $(this).val(),
    					selectedOptions: $(this).attr("data-selected-options")
    				},
