@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $(".action-add-to-basket").live('click', function() {
+    $(".action-add-to-basket").on('click', function() {
         $("#ajax-loading").show();
         $.ajax({
             type: "GET",
@@ -12,6 +12,7 @@ $(document).ready(function() {
                 selectedOptions: $("#selected-options-"+$(this).attr("data-product-id")).val()
             },
             error: function(data) {
+                console.log(data);
                 $("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
                 $("#message-error").fadeIn(function() {
                     $("html, body").animate({scrollTop: $("#message-error").offset().top - 15},'slow');
@@ -19,7 +20,7 @@ $(document).ready(function() {
                 });
             },
             success: function(data) {
-                getBasketSummary();
+                updateBasketSummary();
                 $("html, body").animate({scrollTop: 0},'slow', function() {
                     $("#shopping-basket-popup-image").attr("src", data.thumbnailPath);
                     $("#shopping-basket-popup-image").attr("alt", data.header);
@@ -34,3 +35,15 @@ $(document).ready(function() {
         });
     });
 });
+
+function updateBasketSummary() {
+    var $el = $("#basket-summary");
+
+    $.ajax({
+        type: "GET",
+        url: $el.attr("data-url"),
+        success: function(data) {
+            $el.html(data);
+        }
+    });
+}
