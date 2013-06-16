@@ -559,13 +559,6 @@ class OrderService {
         $orderObject->setDiscount($basket['totals']['discount']);
         $orderObject->setVat($basket['totals']['vat']);
         $orderObject->setTotal($basket['totals']['total']);
-        if ($basket['membershipCardNumber'] == 1)
-        {
-            $orderObject->setMembershipCardPurchased(1);
-        } else {
-            $orderObject->setMembershipCardPurchased(0);
-        }
-        $orderObject->setMembershipCardNumber($basket['membershipCardNumber']);
         $orderObject->setPossibleDiscount($basket['possibleDiscount']);
         $orderObject->setFirstName($order['firstName']);
         $orderObject->setLastName($order['lastName']);
@@ -1137,8 +1130,6 @@ class OrderService {
         $order['discount'] = $orderObject->getDiscount();
         $order['vat'] = $orderObject->getVat();
         $order['total'] = $orderObject->getTotal();
-        $order['membershipCardPurchased'] = $orderObject->getMembershipCardPurchased();
-        $order['membershipCardNumber'] = $orderObject->getMembershipCardNumber();
         $order['possibleDiscount'] = $orderObject->getPossibleDiscount();
         $order['firstName'] = $orderObject->getFirstName();
         $order['lastName'] = $orderObject->getLastName();
