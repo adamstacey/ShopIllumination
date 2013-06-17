@@ -53,10 +53,6 @@
     @include opacity(0);
 }
 
-.ui-front {
-    z-index: 100;
-}
-
 .ui-state-disabled {
     cursor: default !important;
 }
@@ -170,7 +166,6 @@
 
 .ui-selectable-helper {
     position: absolute;
-    z-index: 100;
 
     border: 1px dotted $colourBlack;
 }
@@ -713,7 +708,6 @@
 
 .ui-slider .ui-slider-handle {
     position: absolute;
-    z-index: 2;
     width: $spacingLarge;
     height: $spacingLarge;
     cursor: default;
@@ -721,7 +715,6 @@
 
 .ui-slider .ui-slider-range {
     position: absolute;
-    z-index: 1;
     @include fontSize($fontSizeMedium);
     display: block;
     border: 0;
@@ -936,7 +929,6 @@
 
     position: absolute;
 
-    z-index: 9999;
     max-width: 400px;
     @include boxGlow($colourGreyDark, 10px, 0, 0.7);
     @include fontSize($fontSizeMedium);
@@ -944,6 +936,7 @@
     line-height: 150%;
     border: 0 none;
 }
+
 body .ui-tooltip {
     border-width: 2px;
 }
@@ -1006,18 +999,17 @@ body .ui-tooltip {
 .accordion-item {
     position: relative;
 }
+
 .accordion-header-buttons {
     position: absolute;
     top: 4px;
     right: 52px;
-    z-index: 1;
 }
+
 .accordion-header-buttons button {
     padding: 0 3px;
 }
 
-/* Interaction states
-----------------------------------*/
 .ui-state-default {
     @include highlightedVerticalGradientGrey;
     font-weight: bold;

@@ -219,7 +219,6 @@ nav.left-menu .ui-button-text {
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 1000;
     min-height: 288px;
     display: none;
     float: left;
@@ -258,8 +257,8 @@ nav.left-menu .ui-button-text {
 .brands-button:hover div {
     display: block;
 }
+
 .submenu-brands {
-    z-index: 25;
     position: absolute;
     top: 40px;
     left: 0px;
@@ -359,7 +358,6 @@ nav.left-menu .ui-button-text {
 
 .unique-selling-points-container {
     position: relative;
-    z-index: 2;
 
     @include verticalGradientWhiteToGreyLight;
     @include boxInsetShadow($colourGreyDark, 0, 1px, $spacingSmall);

@@ -60,7 +60,6 @@ html.modal body > section {
     margin: -#{$spacingSmall} 0 0 0;
 
     position: relative;
-    z-index: 1;
 
     background: $colourGreyLight;
     @include boxGlow($colourBlack, 5px, 0, 0.7);
