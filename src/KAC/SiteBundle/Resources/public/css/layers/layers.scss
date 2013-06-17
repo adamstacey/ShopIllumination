@@ -1,100 +1,162 @@
+$zIndex: 0;
 
+$zIndex: $zIndex + 1;
+.content {
+    z-index: $zIndex;
+}
 
+$zIndex: $zIndex + 1;
+.unique-selling-points-container {
+    z-index: $zIndex;
+}
 
+$zIndex: $zIndex + 1;
+.accordion-header-buttons {
+    z-index: $zIndex;
+}
 
+$zIndex: $zIndex + 1;
+.ui-slider .ui-slider-range {
+    z-index: $zIndex;
+}
 
+$zIndex: $zIndex + 1;
+.ui-slider .ui-slider-handle {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
+.ui-front {
+    z-index: $zIndex;
+}
+
+.ui-selectable-helper {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
 .etalage-inset {
-    z-index: 99;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .etalage_zoom_area {
-    z-index: 996;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .etalage_zoom_area div {
-    z-index: 997;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .etalage_zoom_preview {
-    z-index: 998;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .etalage_zoom_img,
 .etalage_hint {
-    z-index: 999;
+    z-index: $zIndex;
 }
 
 div.etalage_description {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 999;
+    z-index: $zIndex;
 }
 
-
-
-
+$zIndex: $zIndex + 1;
 .slider-wrapper h1 {
-    z-index: 99;
+    z-index: $zIndex;
 }
 
 .slider-wrapper img.logo {
-    z-index: 99;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
+.rhino-btn {
+    z-index: $zIndex;
+}
 
+.rhino-bullets {
+    z-index: $zIndex;
+}
 
+$zIndex: $zIndex + 1;
+.ui-tooltip {
+    z-index: $zIndex;
+}
 
+$zIndex: $zIndex + 1;
 .select2-drop-mask {
-    z-index: 9998;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .select2-drop {
-    z-index: 9999;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .select2-search {
-    z-index: 10000;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
+.submenu-brands {
+    z-index: $zIndex;
+}
 
+$zIndex: $zIndex + 1;
+.main-menu .menu-vertical {
+    z-index: $zIndex;
+}
 
-
+$zIndex: $zIndex + 1;
 .jquery-lightbox-mode-image .jquery-lightbox-html {
-    z-index: 6998;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .jquery-lightbox-background {
-    z-index: 6999;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .jquery-lightbox-border-top-left,
 .jquery-lightbox-border-top-right,
 .jquery-lightbox-border-bottom-left,
 .jquery-lightbox-border-bottom-right {
-    z-index: 7000;
+    z-index: $zIndex;
 }
 
 .jquery-lightbox-border-top-middle {
-    z-index: 7000;
+    z-index: $zIndex;
 }
 
 .jquery-lightbox-border-bottom-middle {
-    z-index: 7000;
+    z-index: $zIndex;
 }
 
 .jquery-lightbox-title {
-    z-index: 7000;
+    z-index: $zIndex;
 }
 
 .jquery-lightbox-html {
-    z-index: 7000;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .jquery-lightbox-buttons {
-    z-index: 7001;
+    z-index: $zIndex;
 }
 
+$zIndex: $zIndex + 1;
 .jquery-lightbox-mode-image .jquery-lightbox-button-close {
-    z-index: 7002;
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
+.loading-container {
+    z-index: $zIndex;
 }
