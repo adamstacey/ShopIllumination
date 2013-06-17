@@ -3,12 +3,6 @@ $(document).ready(function() {
 
     $(".etalage").etalage();
 
-    $(".slider").nivoSlider({
-        randomStart: true,
-        effect: "fade",
-        pauseTime: 5000
-    });
-
     $(document).on("click", ".etalage_magnifier > div > img", function() {
         if ($(".etalage_small_thumbs").length > 0)
         {
