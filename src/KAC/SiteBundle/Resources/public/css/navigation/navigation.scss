@@ -215,42 +215,6 @@ nav.left-menu .ui-button-text {
     line-height: 26px;
 }
 
-.main-menu .menu-vertical {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    min-height: 288px;
-    display: none;
-    float: left;
-    min-width: 160px;
-    padding: $spacingMedium 0;
-    list-style: none;
-    border: 1px solid $colourGreyDark;
-
-    background: $colourWhite;
-    @include boxShadow($colourGreyDark, 0, 0, 10px, 0, 1);
-}
-
-.main-menu .menu-vertical li {
-    margin: 0;
-    padding: $spacingExtraSmall $spacingMedium;
-}
-
-.main-menu .menu-vertical li a {
-    line-height: 15px;
-    @include fontSize(13);
-    text-decoration: none;
-    color: $colourBlack;
-}
-
-.main-menu .menu-vertical li:hover > a {
-    font-weight: bold;
-}
-
-.main-menu .menu-vertical li a:hover {
-    text-decoration: underline;
-}
-
 .brands-button {
     float: right;
 }

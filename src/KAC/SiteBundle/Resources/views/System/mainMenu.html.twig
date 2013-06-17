@@ -1,3 +1,52 @@
+<style>
+    .submenu-container {
+        margin: 0 0 4px 0;
+        background: #fff;
+        width: 100%;
+        height: 300px;
+        border-radius: 0 0 4px 4px;
+        position: absolute;
+        left: 0;
+        top: 40px;
+        border-top: 3px solid #384246;
+        -webkit-box-shadow: 0 2px 20px 0 #384246;
+        display: none;
+    }
+
+    .main-menu .menu-vertical {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 300px;
+        display: none;
+        float: left;
+        padding: 0;
+        list-style: none;
+        background: #fff;
+    }
+
+    .main-menu .menu-vertical li {
+        margin: 0;
+        padding: 0;
+        width: 245px;
+    }
+
+    .main-menu .menu-vertical li a {
+        height: 30px;
+        display: block;
+        background: linear-gradient(to bottom, #fff 0%, #e4eaec 5%, #c5d2d6 100%);
+        line-height: 30px;
+        padding: 0 30px 0 10px;
+        font-size: 1.3rem;
+        color: #444;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .main-menu .menu-vertical li a:hover {
+        box-shadow: inset 0 0 10px 0 #384246;
+    }
+</style>
 {% macro menuItem(parentId, departments) %}
     <ul id="submenu-department-{{ parentId }}" class="menu-vertical">
         {% for department in departments %}
@@ -39,9 +88,70 @@
                     <a class="{% if loop.last %}highlighted{% endif %} dropdown-toggle" href="{{ path('routing', {'url': department.url}) }}">
                         {{ department.menuTitle|raw }}
                     </a>
-                    {{ _self.menuItem(department.id, department.children) }}
+                    <div class="submenu-container">
+                        {{ _self.menuItem(department.id, department.children) }}
+                    </div>
                 </li>
             {% endfor %}
         </ul>
     </nav>
 </div>
+<script type="text/javascript">
+    function resetSubmenu() {
+        $(".main-menu .hover").removeClass("hover");
+        $(".menu-vertical").hide();
+        $(".submenu-container").hide();
+    }
+
+    $(document).on("mousemove", "body", function(e) {
+        var minimumX = ((parseInt($(document).width()) - 980) / 2);
+        if ((e.pageY < $("div.main-menu").position().top) || ((e.pageX < minimumX) || (e.pageX > (minimumX + 980))))
+        {
+            resetSubmenu();
+        }
+    });
+
+    $(document).ready(function() {
+
+        var $menuRow = $(".main-menu .menu-horizontal");
+        $menuRow.find("> li").on("mouseenter", function() {
+            var $menuLink = $(this).find("> a");
+            if (!$menuLink.hasClass("hover"))
+            {
+                resetSubmenu();
+                var $submenu = $("#" + $(this).data("submenu"));
+                var $submenuContainer = $(this).find(".submenu-container");
+                $menuLink.addClass("hover");
+                $submenu.css({ left: 0 });
+                $submenuContainer.show();
+                $submenu.show();
+            }
+        });
+
+        $(".submenu-container").on("mouseleave", function() {
+            resetSubmenu();
+        });
+
+        var $menu = $(".main-menu .menu-vertical");
+        $menu.menuAim({
+            activate: activateSubmenu,
+            deactivate: deactivateSubmenu
+        });
+
+        function activateSubmenu(row) {
+            var $row = $(row);
+            $row.addClass("hover");
+            var $submenu = $("#" + $row.data("submenu"));
+            var left = $row.position().left + $row.outerWidth(true);
+            $submenu.css({ left: left });
+            $submenu.show();
+        }
+
+        function deactivateSubmenu(row) {
+            var $row = $(row);
+            var $submenu = $("#" + $row.data("submenu"));
+            $submenu.hide();
+        }
+
+    });
+</script>
