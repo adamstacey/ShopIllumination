@@ -125,16 +125,6 @@ class Order
     private $total;
     
     /**
-     * @ORM\Column(name="membership_card_purchased", type="boolean")
-     */
-    private $membershipCardPurchased;
-    
-    /**
-     * @ORM\Column(name="membership_card_number", type="string", length=255)
-     */
-    private $membershipCardNumber;
-    
-    /**
      * @ORM\Column(name="possible_discount", type="decimal", precision=12, scale=4)
      */
     private $possibleDiscount;
@@ -945,52 +935,6 @@ class Order
     public function getTotal()
     {
         return $this->total;
-    }
-
-    /**
-     * Set membershipCardPurchased
-     *
-     * @param boolean $membershipCardPurchased
-     * @return Order
-     */
-    public function setMembershipCardPurchased($membershipCardPurchased)
-    {
-        $this->membershipCardPurchased = $membershipCardPurchased;
-    
-        return $this;
-    }
-
-    /**
-     * Get membershipCardPurchased
-     *
-     * @return boolean 
-     */
-    public function getMembershipCardPurchased()
-    {
-        return $this->membershipCardPurchased;
-    }
-
-    /**
-     * Set membershipCardNumber
-     *
-     * @param string $membershipCardNumber
-     * @return Order
-     */
-    public function setMembershipCardNumber($membershipCardNumber)
-    {
-        $this->membershipCardNumber = $membershipCardNumber;
-    
-        return $this;
-    }
-
-    /**
-     * Get membershipCardNumber
-     *
-     * @return string 
-     */
-    public function getMembershipCardNumber()
-    {
-        return $this->membershipCardNumber;
     }
 
     /**

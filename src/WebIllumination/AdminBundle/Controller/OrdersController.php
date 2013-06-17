@@ -2072,7 +2072,7 @@ class OrdersController extends Controller
                 $itemProductObject = new Order\Product();
                 $itemProductObject->setOrder($itemObject);
                 $itemProductObject->setQuantity($newProductQuantity);
-                $itemProductObject->setBasketItemId($id.'-1');
+                $itemProductObject->setBasketItemId($variant->getProduct()->getId().'-'.$variant->getId().'-1');
                 $itemProductObject->setProduct($variant->getProduct());
                 $itemProductObject->setVariant($variant);
 
