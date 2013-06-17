@@ -1,0 +1,210 @@
+@import "compass";
+@import "../includes/base";
+
+.slider-wrapper {
+    position: relative;
+}
+
+.slider-wrapper h1 {
+    position: absolute;
+    top: $spacingLarge;
+    color: $colourWhite;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    padding: $spacingExtraLarge;
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeExtraExtraExtraLarge);
+    @include textShadow($colourBlack, 0, 1px);
+    font-weight: normal;
+}
+
+.slider-wrapper h1.left {
+    left: 0;
+    text-align: left;
+}
+
+.slider-wrapper h1.right {
+    right: 0;
+    text-align: right;
+}
+
+.slider-wrapper img.logo {
+    position: absolute;
+    top: $spacingLarge;
+    right: $spacingLarge;
+}
+
+.slider {
+    padding: 0;
+    margin: 0;
+}
+
+.rhino-btn {
+    display: block;
+
+    background-image: url("#{$cssPath}/resources/images/rhinoslider_controls_sprite.png");
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: 138px 64px;
+    text-indent: -999%;
+    @include selectNone;
+}
+
+.rhino-prev, .rhino-next {
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 0;
+
+    top: 50%;
+}
+
+.rhino-prev {
+    left: $spacingMedium;
+    background-position: 0 0;
+}
+
+.rhino-next {
+    right: $spacingMedium;
+    background-position: -32px 0;
+}
+
+.rhino-prev:hover {
+    background-position: 0 -32px;
+}
+
+.rhino-next:hover {
+    background-position: -32px -32px;
+}
+
+.rhino-toggle {
+    width: 17px;
+    height: 20px;
+
+    left: $spacingMedium;
+    top: $spacingMedium;
+}
+
+.rhino-play {
+    background-position: -64px 0;
+}
+
+.rhino-play:hover {
+    background-position: -64px -20px;
+}
+
+.rhino-pause {
+    background-position: -81px 0;
+}
+
+.rhino-pause:hover {
+    background-position: -81px -20px;
+}
+
+.rhino-container {
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+.rhino-caption {
+    padding: 10px;
+
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    background: $colourBlack;
+    color: $colourWhite;
+    text-align: right;
+    @include selectNone;
+}
+
+.rhino-bullets {
+    margin:0 0 0 -50px;
+    padding:0;
+
+    position: absolute;
+    bottom: $spacingSmall;
+    left: 50%;
+}
+
+.rhino-bullets li {
+    margin: 0;
+
+    float: left;
+    display: inline;
+}
+
+.rhino-bullets li a.rhino-bullet {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0 2px;
+
+    display: block;
+
+    overflow: hidden;
+    text-indent: -999%;
+    cursor: pointer;
+    @include fontSize($fontSizeExtraSmall);
+    text-align: center;
+    color: $colourGreyDark;
+    text-decoration: none;
+    background-image: url("#{$cssPath}/resources/images/rhinoslider_controls_sprite.png");
+    background-repeat: no-repeat;
+    background-position: -118px 0;
+    background-size: 138px 64px;
+    @include selectNone;
+}
+
+.rhino-bullets li a.rhino-bullet:hover, .rhino-bullets li a.rhino-bullet:focus {
+    background-position: -118px -20px;
+}
+
+.rhino-bullets li a.rhino-bullet.rhino-active-bullet {
+    background-position: -98px 0;
+}
+
+.slider-homepage,
+.slider-homepage .rhino-container,
+.slider-homepage .rhino-container ul,
+.slider-homepage .rhino-container ul li {
+    width: 735px;
+    height: 300px;
+}
+
+@media
+screen and (-webkit-min-device-pixel-ratio: 1.25),
+screen and (-webkit-min-device-pixel-ratio: 1.3),
+screen and (-webkit-min-device-pixel-ratio: 1.5),
+screen and (-webkit-min-device-pixel-ratio: 2),
+screen and (min--moz-device-pixel-ratio: 1.25),
+screen and (min--moz-device-pixel-ratio: 1.3),
+screen and (min--moz-device-pixel-ratio: 1.5),
+screen and (min--moz-device-pixel-ratio: 2),
+screen and (-o-min-device-pixel-ratio: 1.25/1),
+screen and (-o-min-device-pixel-ratio: 1.3/1),
+screen and (-o-min-device-pixel-ratio: 1.5/1),
+screen and (-o-min-device-pixel-ratio: 2/1),
+screen and (min-device-pixel-ratio: 1.25),
+screen and (min-device-pixel-ratio: 1.3),
+screen and (min-device-pixel-ratio: 1.5),
+screen and (min-device-pixel-ratio: 2),
+screen and (min-resolution: 120dpi),
+screen and (min-resolution: 124.8dpi),
+screen and (min-resolution: 144dpi),
+screen and (min-resolution: 192dpi),
+screen and (min-resolution: 1.25dppx),
+screen and (min-resolution: 1.3dppx),
+screen and (min-resolution: 1.5dppx),
+screen and (min-resolution: 2dppx) {
+    .rhino-btn {
+        background-image: url("#{$cssPath}/resources/images/rhinoslider_controls_sprite@2x.png");
+    }
+
+    .rhino-bullets li a.rhino-bullet {
+        background-image: url("#{$cssPath}/resources/images/rhinoslider_controls_sprite@2x.png");
+    }
+}
