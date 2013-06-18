@@ -22,29 +22,38 @@
         float: left;
         padding: 0;
         list-style: none;
-        background: #fff;
+        box-shadow: inset -2px 0 5px 0 #c5d2d6;
+        width: 244px;
+        border-right: 1px solid #6c8087;
     }
 
     .main-menu .menu-vertical li {
         margin: 0;
         padding: 0;
-        width: 245px;
     }
 
-    .main-menu .menu-vertical li a {
+    .main-menu .menu-vertical li a,
+    .main-menu .menu-vertical li a.hover {
         height: 30px;
         display: block;
         background: linear-gradient(to bottom, #fff 0%, #e4eaec 5%, #c5d2d6 100%);
         line-height: 30px;
-        padding: 0 30px 0 10px;
+        padding: 0 10px;
         font-size: 1.3rem;
         color: #444;
         text-decoration: none;
+        text-overflow: ellipsis;
+        overflow: hidden;
         white-space: nowrap;
     }
 
-    .main-menu .menu-vertical li a:hover {
+    .main-menu .menu-vertical li a.hover {
         box-shadow: inset 0 0 10px 0 #384246;
+        text-shadow: 0 1px 0 #fff;
+    }
+
+    .main-menu .menu-vertical li span.ui-icon-small {
+        margin: 3px 0 3px 10px;
     }
 </style>
 {% macro menuItem(parentId, departments) %}
@@ -52,6 +61,9 @@
         {% for department in departments %}
             <li {% if department.children|length > 0 %}data-submenu="submenu-department-{{ department.id }}"{% endif %}>
                 <a class="dropdown-toggle" href="{{ path('routing', {'url': department.url}) }}">
+                    {% if department.children|length > 0 %}
+                        <span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-471"></span>
+                    {% endif %}
                     {{ department.description.name|raw }}
                 </a>
                 {% if department.children|length > 0 %}
@@ -98,8 +110,7 @@
 </div>
 <script type="text/javascript">
     function resetSubmenu() {
-        $(".main-menu .hover").removeClass("hover");
-        $(".menu-vertical").hide();
+        $(".menu-horizontal > li > a.hover").removeClass("hover");
         $(".submenu-container").hide();
     }
 
@@ -112,20 +123,15 @@
     });
 
     $(document).ready(function() {
-
-        var $menuRow = $(".main-menu .menu-horizontal");
-        $menuRow.find("> li").on("mouseenter", function() {
+        $(".main-menu .menu-horizontal > li").hoverIntent(function() {
             var $menuLink = $(this).find("> a");
-            if (!$menuLink.hasClass("hover"))
-            {
-                resetSubmenu();
-                var $submenu = $("#" + $(this).data("submenu"));
-                var $submenuContainer = $(this).find(".submenu-container");
-                $menuLink.addClass("hover");
-                $submenu.css({ left: 0 });
-                $submenuContainer.show();
-                $submenu.show();
-            }
+            resetSubmenu();
+            var $submenu = $("#" + $(this).data("submenu"));
+            var $submenuContainer = $(this).find(".submenu-container");
+            $menuLink.addClass("hover");
+            $submenu.css({ left: 0 });
+            $submenuContainer.show();
+            $submenu.show();
         });
 
         $(".submenu-container").on("mouseleave", function() {
@@ -140,18 +146,20 @@
 
         function activateSubmenu(row) {
             var $row = $(row);
-            $row.addClass("hover");
+            $row.find("> a").addClass("hover");
+            $row.find("> a span.ui-icon-small").removeClass("icon-small-grey").addClass("icon-small-yellow");
             var $submenu = $("#" + $row.data("submenu"));
-            var left = $row.position().left + $row.outerWidth(true);
+            var left = $row.position().left + $row.outerWidth(true) + 1;
             $submenu.css({ left: left });
             $submenu.show();
         }
 
         function deactivateSubmenu(row) {
             var $row = $(row);
+            $row.find("> a").removeClass("hover");
+            $row.find("> a span.ui-icon-small").removeClass("icon-small-yellow").addClass("icon-small-grey");
             var $submenu = $("#" + $row.data("submenu"));
             $submenu.hide();
         }
-
     });
 </script>
