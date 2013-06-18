@@ -29,7 +29,12 @@ class SystemController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
-        $brands = $em->getRepository("KACSiteBundle:Brand")->findBy(array('status' => 'a'));
+
+        $brands = $em->getRepository("KACSiteBundle:Brand")->createQueryBuilder('b')
+            ->leftJoin('b.descriptions', 'd')
+            ->orderBy('d.name', 'asc')
+            ->getQuery()
+            ->getResult();
 
         return array('departments' => $departments, 'brands' => $brands);
     }
