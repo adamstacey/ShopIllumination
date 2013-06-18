@@ -1,61 +1,3 @@
-<style>
-    .submenu-container {
-        margin: 0 0 4px 0;
-        background: #fff;
-        width: 100%;
-        height: 300px;
-        border-radius: 0 0 4px 4px;
-        position: absolute;
-        left: 0;
-        top: 40px;
-        border-top: 3px solid #384246;
-        -webkit-box-shadow: 0 2px 20px 0 #384246;
-        display: none;
-    }
-
-    .main-menu .menu-vertical {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 300px;
-        display: none;
-        float: left;
-        padding: 0;
-        list-style: none;
-        box-shadow: inset -2px 0 5px 0 #c5d2d6;
-        width: 244px;
-        border-right: 1px solid #6c8087;
-    }
-
-    .main-menu .menu-vertical li {
-        margin: 0;
-        padding: 0;
-    }
-
-    .main-menu .menu-vertical li a,
-    .main-menu .menu-vertical li a.hover {
-        height: 30px;
-        display: block;
-        background: linear-gradient(to bottom, #fff 0%, #e4eaec 5%, #c5d2d6 100%);
-        line-height: 30px;
-        padding: 0 10px;
-        font-size: 1.3rem;
-        color: #444;
-        text-decoration: none;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    .main-menu .menu-vertical li a.hover {
-        box-shadow: inset 0 0 10px 0 #384246;
-        text-shadow: 0 1px 0 #fff;
-    }
-
-    .main-menu .menu-vertical li span.ui-icon-small {
-        margin: 3px 0 3px 10px;
-    }
-</style>
 {% macro menuItem(parentId, departments) %}
     <ul id="submenu-department-{{ parentId }}" class="menu-vertical">
         {% for department in departments %}
@@ -76,24 +18,6 @@
 
 <div class="main-menu">
     <nav class="container clearfix">
-        <a class="ui-button button button-turquoise uppercase" href="#">Brands</a>
-        {#<div class="brands-button">
-            <a class="ui-button button button-turquoise uppercase" data-submenu="submenu-brands" href="#">Brands</a>
-            <div class="submenu-brands padding-top-10 padding-bottom-10">
-                {% for brand in brands %}
-                    <div class="brand {% if ((loop.index % 4) == 1) %} brand-first{% endif %}{% if ((loop.index % 4) == 0) %} brand-last{% endif %}">
-                        <h4>
-                            {% if brand.logo.thumbnailPath is defined %}<a href="{{ path('routing', {'url': brand.url}) }}"><img class="fl" src="{{ asset(brand.logo.thumbnailPath) }}" border="0" alt="{{ brand.description.name|raw }}" width="48" height="23" /></a>{% endif %}
-                            <a class="text" href="{{ path('routing', {'url': brand.url}) }}">{{ brand.description.name|raw }}</a>
-                        </h4>
-                    </div>
-                    {% if ((loop.index % 4) == 0) %}
-                        <div class="clear"></div>
-                    {% endif %}
-                {% endfor %}
-                <div class="clear"></div>
-            </div>
-        </div>#}
         <ul class="clearfix menu-horizontal">
             {% for department in departments %}
                 <li data-submenu="submenu-department-{{ department.id }}">
@@ -106,60 +30,15 @@
                 </li>
             {% endfor %}
         </ul>
+        <a data-submenu="submenu-department-brands" class="ui-button button button-turquoise uppercase" href="{{ path('listing_products') }}">Brands</a>
+        <div class="submenu-container submenu-container-brands">
+            <div id="submenu-department-brands">
+                {% for brand in brands %}
+                    {% if brand.images.0.publicPath is defined %}
+                        <a class="submenu-brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ asset("/" ~ brand.images.0.publicPath) }}" border="0" alt="{{ brand.description.name|raw }}" width="77" height="39" /></a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
     </nav>
 </div>
-<script type="text/javascript">
-    function resetSubmenu() {
-        $(".menu-horizontal > li > a.hover").removeClass("hover");
-        $(".submenu-container").hide();
-    }
-
-    $(document).on("mousemove", "body", function(e) {
-        var minimumX = ((parseInt($(document).width()) - 980) / 2);
-        if ((e.pageY < $("div.main-menu").position().top) || ((e.pageX < minimumX) || (e.pageX > (minimumX + 980))))
-        {
-            resetSubmenu();
-        }
-    });
-
-    $(document).ready(function() {
-        $(".main-menu .menu-horizontal > li").hoverIntent(function() {
-            var $menuLink = $(this).find("> a");
-            resetSubmenu();
-            var $submenu = $("#" + $(this).data("submenu"));
-            var $submenuContainer = $(this).find(".submenu-container");
-            $menuLink.addClass("hover");
-            $submenu.css({ left: 0 });
-            $submenuContainer.show();
-            $submenu.show();
-        });
-
-        $(".submenu-container").on("mouseleave", function() {
-            resetSubmenu();
-        });
-
-        var $menu = $(".main-menu .menu-vertical");
-        $menu.menuAim({
-            activate: activateSubmenu,
-            deactivate: deactivateSubmenu
-        });
-
-        function activateSubmenu(row) {
-            var $row = $(row);
-            $row.find("> a").addClass("hover");
-            $row.find("> a span.ui-icon-small").removeClass("icon-small-grey").addClass("icon-small-yellow");
-            var $submenu = $("#" + $row.data("submenu"));
-            var left = $row.position().left + $row.outerWidth(true) + 1;
-            $submenu.css({ left: left });
-            $submenu.show();
-        }
-
-        function deactivateSubmenu(row) {
-            var $row = $(row);
-            $row.find("> a").removeClass("hover");
-            $row.find("> a span.ui-icon-small").removeClass("icon-small-yellow").addClass("icon-small-grey");
-            var $submenu = $("#" + $row.data("submenu"));
-            $submenu.hide();
-        }
-    });
-</script>
