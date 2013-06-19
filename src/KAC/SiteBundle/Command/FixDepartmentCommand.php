@@ -56,29 +56,37 @@ class FixDepartmentCommand extends ContainerAwareCommand
         $rootDepartment->setCreatedAt(new \DateTime());
         $rootDepartment->setUpdatedAt(new \DateTime());
 
-        $description = new Department\Description();
-        $description->setDepartment($rootDepartment);
-        $description->setLocale('en');
-        $description->setName("Root Department");
-        $description->setMenuTitle("Root Department");
-        $description->setPageTitle("Root Department");
-        $description->setHeader("Root Department");
-        $rootDepartment->addDescription($description);
-
         $em->persist($rootDepartment);
         $em->flush();
 
         foreach($departments as $department) {
             $newDepartment = $this->createTempDepartment($department, $rootDepartment);
             $em->persist($newDepartment);
-//            $repository->persistAsNextSibling($newDepartment);
-
             $this->persistChildren($newDepartment, $department, $department->getChildren());
         }
 
         $em->flush();
 
         $em->getConnection()->exec("SET FOREIGN_KEY_CHECKS = 0;TRUNCATE TABLE departments;INSERT departments SELECT * FROM departments_tmp;SET FOREIGN_KEY_CHECKS = 1;");
+
+        // Add description to root department
+        $rootDepartment = $em->getRepository("KACSiteBundle:Department")->findOneBy(array(
+            'lvl' => 0,
+        ));
+        if($rootDepartment)
+        {
+            $description = new Department\Description();
+            $description->setDepartment($rootDepartment);
+            $description->setLocale('en');
+            $description->setName("Root Department");
+            $description->setMenuTitle("Root Department");
+            $description->setPageTitle("Root Department");
+            $description->setHeader("Root Department");
+            $rootDepartment->addDescription($description);
+
+            $em->persist($rootDepartment);
+            $em->flush();
+        }
 
         $output->writeln('Finished!');
     }

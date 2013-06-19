@@ -287,6 +287,11 @@ class Department implements DescribableInterface
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     /**
      * Set status
      *
