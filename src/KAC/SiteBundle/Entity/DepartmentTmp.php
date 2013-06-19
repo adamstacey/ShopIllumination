@@ -3,7 +3,9 @@ namespace KAC\SiteBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * @ORM\Entity(repositoryClass="KAC\SiteBundle\Repository\DepartmentRepository")
@@ -31,38 +33,60 @@ class DepartmentTmp implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\DepartmentToFeature", mappedBy="department", cascade={"all"})
+     * @ORM\OrderBy({"displayOrder" = "ASC"})
      **/
     private $features;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Image", mappedBy="department", cascade={"all"})
+     */
+    private $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Document", mappedBy="department", cascade={"all"})
+     */
+    private $documents;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Routing", mappedBy="department", cascade={"all"})
+     */
+    private $routings;
+
     /**
      * @ORM\Column(name="status", type="string", length=1)
+     * @Assert\Choice(choices={"a", "h", "d"})
      */
-    private $status;
-    
+    private $status = 'a';
+
     /**
      * @ORM\Column(name="department_path", type="text")
      */
     private $departmentPath;
-    
+
+    /**
+     * @ORM\Column(name="list_product_variants", type="boolean")
+     */
+    private $listProductVariants = true;
+
     /**
      * @ORM\Column(name="hide_prices", type="boolean")
      */
-    private $hidePrices;
-    
+    private $hidePrices = false;
+
     /**
      * @ORM\Column(name="show_prices_out_of_hours", type="boolean")
      */
-    private $showPricesOutOfHours;
+    private $showPricesOutOfHours = false;
 
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
      */
-    private $deliveryBand;
-    
+    private $deliveryBand = 0.000;
+
     /**
      * @ORM\Column(name="inherited_delivery_band", type="decimal", precision=12, scale=4)
      */
-    private $inheritedDeliveryBand;
+    private $inheritedDeliveryBand = 0.0000;
 
     /**
      * @ORM\Column(name="template", type="string", length=255)
@@ -72,7 +96,7 @@ class DepartmentTmp implements DescribableInterface
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = '1';
 
     /**
      * @Gedmo\TreeLeft
@@ -112,11 +136,13 @@ class DepartmentTmp implements DescribableInterface
     private $children;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
 
     /**
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
@@ -126,27 +152,32 @@ class DepartmentTmp implements DescribableInterface
      */
     private $deletedAt;
 
+    private $imageUploads = "";
+    private $temporaryImages = "";
+    private $documentUploads = "";
+    private $temporaryDocuments = "";
+
     public function isDeleted()
     {
         return $this->getDeletedAt() !== null;
     }
-    
+
     /**
      * Get statusColour
      *
-     * @return string 
+     * @return string
      */
     public function getStatusColour()
     {
         switch ($this->status)
-    	{
-    		case 'd':
-    			return 'red';
-    		case 'a':
-    			return 'green';
-    		case 'h':
-    			return 'orange';
-    	}
+        {
+            case 'd':
+                return 'red';
+            case 'a':
+                return 'green';
+            case 'h':
+                return 'orange';
+        }
         return '';
     }
 
@@ -162,9 +193,30 @@ class DepartmentTmp implements DescribableInterface
 
     public function getIndentedName()
     {
-        if(count($this->descriptions) > 0)
+        if (count($this->descriptions) > 0)
         {
-            return str_repeat("> ", $this->getLevel()).$this->getName();
+            $indentation = "";
+            $level = ($this->getLvl() != 0?$this->getLvl() - 1:$this->getLvl());
+            if ($level > 0)
+            {
+                $indentation = str_repeat("&nbsp;&nbsp;", $level);
+            }
+            return html_entity_decode($indentation).$this->getName();
+        } else {
+            return "";
+        }
+    }
+
+    public function getIndentedNameWithRoot()
+    {
+        if (count($this->descriptions) > 0)
+        {
+            $indentation = "";
+            if ($this->getLevel() > 0)
+            {
+                $indentation = str_repeat("&nbsp;&nbsp;", $this->getLevel());
+            }
+            return html_entity_decode($indentation).$this->getName();
         } else {
             return "";
         }
@@ -218,12 +270,15 @@ class DepartmentTmp implements DescribableInterface
         $this->brands = new \Doctrine\Common\Collections\ArrayCollection();
         $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->features = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -244,14 +299,14 @@ class DepartmentTmp implements DescribableInterface
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -267,14 +322,14 @@ class DepartmentTmp implements DescribableInterface
     public function setDepartmentPath($departmentPath)
     {
         $this->departmentPath = $departmentPath;
-    
+
         return $this;
     }
 
     /**
      * Get departmentPath
      *
-     * @return string 
+     * @return string
      */
     public function getDepartmentPath()
     {
@@ -290,14 +345,14 @@ class DepartmentTmp implements DescribableInterface
     public function setHidePrices($hidePrices)
     {
         $this->hidePrices = $hidePrices;
-    
+
         return $this;
     }
 
     /**
      * Get hidePrices
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getHidePrices()
     {
@@ -313,14 +368,14 @@ class DepartmentTmp implements DescribableInterface
     public function setShowPricesOutOfHours($showPricesOutOfHours)
     {
         $this->showPricesOutOfHours = $showPricesOutOfHours;
-    
+
         return $this;
     }
 
     /**
      * Get showPricesOutOfHours
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getShowPricesOutOfHours()
     {
@@ -336,14 +391,14 @@ class DepartmentTmp implements DescribableInterface
     public function setDeliveryBand($deliveryBand)
     {
         $this->deliveryBand = $deliveryBand;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryBand
      *
-     * @return float 
+     * @return float
      */
     public function getDeliveryBand()
     {
@@ -359,14 +414,14 @@ class DepartmentTmp implements DescribableInterface
     public function setInheritedDeliveryBand($inheritedDeliveryBand)
     {
         $this->inheritedDeliveryBand = $inheritedDeliveryBand;
-    
+
         return $this;
     }
 
     /**
      * Get inheritedDeliveryBand
      *
-     * @return float 
+     * @return float
      */
     public function getInheritedDeliveryBand()
     {
@@ -382,14 +437,14 @@ class DepartmentTmp implements DescribableInterface
     public function setDisplayOrder($displayOrder)
     {
         $this->displayOrder = $displayOrder;
-    
+
         return $this;
     }
 
     /**
      * Get displayOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisplayOrder()
     {
@@ -405,14 +460,14 @@ class DepartmentTmp implements DescribableInterface
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -428,14 +483,14 @@ class DepartmentTmp implements DescribableInterface
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -451,7 +506,7 @@ class DepartmentTmp implements DescribableInterface
     public function setParent(\KAC\SiteBundle\Entity\DepartmentTmp $parent = null)
     {
         $this->parent = $parent;
-    
+
         return $this;
     }
 
@@ -475,7 +530,7 @@ class DepartmentTmp implements DescribableInterface
     {
         $children->setParent($this);
         $this->children[] = $children;
-    
+
         return $this;
     }
 
@@ -484,7 +539,7 @@ class DepartmentTmp implements DescribableInterface
      *
      * @param \KAC\SiteBundle\Entity\Department $children
      */
-    public function removeChildren(\KAC\SiteBundle\Entity\DepartmentTmp $children)
+    public function removeChildren(\KAC\SiteBundle\Entity\Department $children)
     {
         $this->children->removeElement($children);
     }
@@ -492,7 +547,7 @@ class DepartmentTmp implements DescribableInterface
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -508,7 +563,7 @@ class DepartmentTmp implements DescribableInterface
     public function addBrand(\KAC\SiteBundle\Entity\BrandToDepartment $brands)
     {
         $this->brands[] = $brands;
-    
+
         return $this;
     }
 
@@ -525,7 +580,7 @@ class DepartmentTmp implements DescribableInterface
     /**
      * Get brands
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBrands()
     {
@@ -541,7 +596,7 @@ class DepartmentTmp implements DescribableInterface
     public function addDescription(\KAC\SiteBundle\Entity\Department\Description $descriptions)
     {
         $this->descriptions[] = $descriptions;
-    
+
         return $this;
     }
 
@@ -558,7 +613,7 @@ class DepartmentTmp implements DescribableInterface
     /**
      * Get descriptions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDescriptions()
     {
@@ -589,7 +644,7 @@ class DepartmentTmp implements DescribableInterface
     public function addFeature(\KAC\SiteBundle\Entity\DepartmentToFeature $features)
     {
         $this->features[] = $features;
-    
+
         return $this;
     }
 
@@ -606,7 +661,7 @@ class DepartmentTmp implements DescribableInterface
     /**
      * Get features
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFeatures()
     {
@@ -664,25 +719,320 @@ class DepartmentTmp implements DescribableInterface
     }
 
     /**
+     * Get menuTitle
+     *
+     * @return string
+     */
+    public function getMenuTitle()
+    {
+        $menuTitle = '';
+        if ($this->getDescription())
+        {
+            $menuTitle = $this->getDescription()->getMenuTitle();
+        }
+
+        if (strpos($menuTitle, ' & ') !== false)
+        {
+            $menuTitleParts = explode(' & ', $menuTitle);
+            if (strlen($menuTitleParts[0]) > strlen($menuTitleParts[1]))
+            {
+                $menuTitle = $menuTitleParts[0].'<br />& '.$menuTitleParts[1];
+            } else {
+                $menuTitle = $menuTitleParts[0].' &<br />'.$menuTitleParts[1];
+            }
+            if (sizeof($menuTitleParts) > 2)
+            {
+                for ($menuTitlePartCount = 2; $menuTitlePartCount < sizeof($menuTitleParts); $menuTitlePartCount++)
+                {
+                    $menuTitle .= ' & '.$menuTitleParts[$menuTitlePartCount];
+                }
+            }
+        } else {
+            $menuTitleParts = explode(' ', $menuTitle);
+            $numberOfSpaces = substr_count($menuTitle, ' ');
+            $spaceToBreak = ceil($numberOfSpaces / 2);
+            $menuTitle = $menuTitleParts[0];
+            for ($menuTitlePartCount = 1; $menuTitlePartCount < sizeof($menuTitleParts); $menuTitlePartCount++)
+            {
+                if ($menuTitlePartCount == $spaceToBreak)
+                {
+                    $menuTitle .= '<br />'.$menuTitleParts[$menuTitlePartCount];
+                } else {
+                    $menuTitle .= ' '.$menuTitleParts[$menuTitlePartCount];
+                }
+            }
+        }
+
+        return $menuTitle;
+    }
+
+    /**
      * Set template
      *
      * @param string $template
-     * @return DepartmentTmp
+     * @return Department
      */
     public function setTemplate($template)
     {
         $this->template = $template;
-    
+
         return $this;
     }
 
     /**
      * Get template
      *
-     * @return string 
+     * @return string
      */
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    public function getImageUploads()
+    {
+        return $this->imageUploads;
+    }
+
+    public function setImageUploads($imageUploads)
+    {
+        $this->imageUploads = $imageUploads;
+    }
+
+    public function getTemporaryImages()
+    {
+        return $this->temporaryImages;
+    }
+
+    public function setTemporaryImages($temporaryImages)
+    {
+        $this->temporaryImages = $temporaryImages;
+    }
+
+    public function getDocumentUploads()
+    {
+        return $this->documentUploads;
+    }
+
+    public function setDocumentUploads($documentUploads)
+    {
+        $this->documentUploads = $documentUploads;
+    }
+
+    public function getTemporaryDocuments()
+    {
+        return $this->temporaryDocuments;
+    }
+
+    public function setTemporaryDocuments($temporaryDocuments)
+    {
+        $this->temporaryDocuments = $temporaryDocuments;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \KAC\SiteBundle\Entity\Department\Image
+     */
+    public function getImage()
+    {
+        if (count($this->images) > 0)
+        {
+            return $this->images[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Image $images
+     * @return Department
+     */
+    public function addImage(\KAC\SiteBundle\Entity\Department\Image $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Image $images
+     */
+    public function removeImage(\KAC\SiteBundle\Entity\Department\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get images
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Get document
+     *
+     * @return \KAC\SiteBundle\Entity\Department\Document
+     */
+    public function getDocument()
+    {
+        if (count($this->document) > 0)
+        {
+            return $this->documents[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Add documents
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Document $documents
+     * @return Department
+     */
+    public function addDocument(\KAC\SiteBundle\Entity\Department\Document $documents)
+    {
+        $this->documents[] = $documents;
+
+        return $this;
+    }
+
+    /**
+     * Remove documents
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Document $documents
+     */
+    public function removeDocument(\KAC\SiteBundle\Entity\Department\Document $documents)
+    {
+        $this->documents->removeElement($documents);
+    }
+
+    /**
+     * Get documents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
+    }
+
+    /**
+     * Get routing
+     *
+     * @return \KAC\SiteBundle\Entity\Department\Routing
+     */
+    public function getRouting()
+    {
+        if (count($this->routings) > 0)
+        {
+            return $this->routings[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        if ($this->getRouting())
+        {
+            return $this->getRouting()->getUrl();
+        }
+
+        return null;
+    }
+
+    /**
+     * Add routings
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Routing $routings
+     * @return Department
+     */
+    public function addRouting(Routing $routings)
+    {
+        $this->routings[] = $routings;
+
+        return $this;
+    }
+
+    /**
+     * Remove routings
+     *
+     * @param \KAC\SiteBundle\Entity\Department\Routing $routings
+     */
+    public function removeRouting(\KAC\SiteBundle\Entity\Department\Routing $routings)
+    {
+        $this->routings->removeElement($routings);
+    }
+
+    /**
+     * Get routings
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRoutings()
+    {
+        return $this->routings;
+    }
+
+    /**
+     * Set listProductVariants
+     *
+     * @param boolean $listProductVariants
+     * @return Department
+     */
+    public function setListProductVariants($listProductVariants)
+    {
+        $this->listProductVariants = $listProductVariants;
+
+        return $this;
+    }
+
+    /**
+     * Get listProductVariants
+     *
+     * @return boolean
+     */
+    public function getListProductVariants()
+    {
+        return $this->listProductVariants;
+    }
+
+    public function isDepartmentParentNotSelf(ExecutionContext $context)
+    {
+        if($this->getParent() === $this)
+        {
+            $context->addViolationAt("parent", "You cannot set the parent department to be itself.");
+        }
+    }
+
+    public function isDepartmentNotChildOfItsChildren(ExecutionContext $context)
+    {
+        $that = $this;
+        $func = function(Department $department) use ($that, $context, &$func) {
+            foreach($department->getChildren() as $child)
+            {
+                if($child === $this->getParent()) {
+                    $context->addViolationAt("parent", "You cannot set the parent department to be one of its children.");
+                }
+
+                $func($child);
+            }
+        };
+
+        $func($this);
     }
 }

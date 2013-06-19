@@ -361,7 +361,7 @@ class CheckoutController extends Controller
 		    $this->get('session')->getFlashBag()->add('error', 'Sorry, we could not find your order. Please contact us.');
 		    
 		    // Forward to the home page
-		    return $this->redirect($this->get('router')->generate('shop_homepage'));
+		    return $this->redirect($this->get('router')->generate('homepage'));
     	}
     	
     	// Update the payment type
@@ -482,7 +482,7 @@ class CheckoutController extends Controller
 		    $this->get('session')->getFlashBag()->add('error', 'Sorry, we could not find your order. Please contact us.');
 		    
 		    // Forward to the home page
-		    return $this->redirect($this->get('router')->generate('shop_homepage'));
+		    return $this->redirect($this->get('router')->generate('homepage'));
     	}
     	
     	// Update the payment type

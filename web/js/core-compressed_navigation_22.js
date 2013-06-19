@@ -1,67 +1,55 @@
-function showMainMenuSubMenu() {
-    if (!$(this).hasClass("hover")) {
-        resetMainMenu();
-        $(this).addClass("hover");
-        $("#mainMenuGroup"+$(this).attr("data-main-menu-group")).fadeIn(200);
-    }
-}
-
-function resetMainMenu() {
-    $(".main-menu > nav > ul > li > a").removeClass("hover");
-    $(".main-menu-group").fadeOut(100);
-}
-
-function checkMainMenuSubMenu() {
-    if ($(".main-menu-group:visible").length > 0) {
-        var $mainMenuGroupX = $(".main-menu-group:visible").offset().left;
-        var $mainMenuGroupY = $(".main-menu-group:visible").offset().top - 40;
-        var $mainMenuGroupWidth = $(".main-menu-group:visible").outerWidth(true);
-        var $mainMenuGroupHeight = $(".main-menu-group:visible").outerHeight(true) + 40;
-        var $mainMenuGroupOffsetX = event.pageX - $mainMenuGroupX;
-        var $mainMenuGroupOffsetY = event.pageY - $mainMenuGroupY;
-        if (($mainMenuGroupOffsetX < 0) || ($mainMenuGroupOffsetY < 0) || ($mainMenuGroupOffsetX > $mainMenuGroupWidth) || ($mainMenuGroupOffsetY > $mainMenuGroupHeight)) {
-            resetMainMenu();
-        }
-    }
-}
-
 $(document).ready(function() {
-    $(".main-menu > nav > ul > li > a").hoverIntent(showMainMenuSubMenu);
+    // Add events for top level navigation
+    var $menuRow = $(".main-menu .menu-horizontal");
+    $menuRow.find('> li').on('mouseenter', function() {
+        var submenuId = $(this).data("submenu"),
+            $submenu = $("#" + submenuId),
+            height = $menuRow.outerHeight();
 
-    $(document).on("mousemove", function(){
-        checkMainMenuSubMenu();
-    });
-
-    $(document).on("click", ".actionClose", function() {
-        if ($(this).attr("data-hide-class") != "") {
-            $(this).closest("."+$(this).attr("data-hide-class")).remove();
-        } else {
-            $(this).remove();
-        }
-    });
-
-    $(document).on("click", ".actionLoadPageDialog", function() {
-        var $url = $(this).attr("href");
-        var $title = $(this).attr("title");
-        var $dialogObject = $('<div class="dialog-container"></div>');
-        var $loadingObject = $(".loading-container").clone();
-        $loadingObject.removeAttr("style");
-        $loadingObject.appendTo($dialogObject);
-        var $iframeObject = $("<iframe />");
-        $iframeObject.attr({"src": $url, "width": "100%", "height": "100%"});
-        $iframeObject.appendTo($dialogObject);
-        $iframeObject.load(function() {
-            $dialogObject.find(".loading-container").fadeOut(500);
+        // Show the menu
+        $submenu.css({
+            display: "block",
+            left: $(this).position().left,
+            top: height - 2
         });
-        $dialogObject.dialog({
-            close: function(event, ui) {
-                $dialogObject.remove();
-            },
-            modal: true,
-            title: $title,
-            width: ($(window).width() * 0.8),
-            height: ($(window).height() * 0.9)
-        });
-        return false;
+    }).on('mouseleave', function() {
+        var submenuId = $(this).data("submenu"),
+            $submenu = $("#" + submenuId);
+
+        // Hide the menu and any menus that were left open
+        $submenu.css("display", "none");
+        $submenu.find('.menu-vertical').css("display", "none");
     });
+
+    // Add events for lower level navigation
+    var $menu = $(".main-menu .menu-vertical");
+    $menu.menuAim({
+        activate: activateSubmenu,
+        deactivate: deactivateSubmenu
+    });
+
+    function activateSubmenu(row) {
+        var $row = $(row),
+            submenuId = $row.data("submenu"),
+            $submenu = $("#" + submenuId),
+            height = $menu.outerHeight(),
+            width = $menu.outerWidth();
+
+        // Show the submenu
+        $submenu.css({
+            display: "block",
+            left: width - 4,
+            top: -1,
+            height: height - 22
+        });
+    }
+
+    function deactivateSubmenu(row) {
+        var $row = $(row),
+            submenuId = $row.data("submenu"),
+            $submenu = $("#" + submenuId);
+
+        // Hide the submenu and remove the row's highlighted look
+        $submenu.css("display", "none");
+    }
 });
