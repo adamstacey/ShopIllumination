@@ -268,8 +268,8 @@ CREATE TABLE users (id INT AUTO_INCREMENT NOT NULL, contact_id INT DEFAULT NULL,
 ALTER TABLE users ADD CONSTRAINT FK_1483A5E9E7A1254A FOREIGN KEY (contact_id) REFERENCES contacts (id);
 ALTER TABLE users_temp CHANGE contact_id contact_id INT DEFAULT NULL;
 UPDATE users_temp SET contact_id=NULL WHERE contact_id=0;
-INSERT INTO users (id, contact_id, username, username_canonical, email, email_canonical, enabled, salt, password, roles, last_login)
-  SELECT id, contact_id, email_address, email_address, email_address, email_address, active, salt, password, 'a:0:{}', last_logged_in
+INSERT INTO users (id, contact_id, username, username_canonical, email, email_canonical, enabled, salt, password, roles, last_login, locked, expired, credentials_expired)
+  SELECT id, contact_id, email_address, email_address, email_address, email_address, active, salt, password, 'a:0:{}', last_logged_in, false, false, false
   FROM users_temp;
 DROP TABLE users_temp;
 DROP TABLE user_keys;
@@ -427,6 +427,7 @@ DROP TABLE departments_tmp;
 DROP TABLE IF EXISTS descriptions_;
 CREATE TABLE descriptions_ LIKE department_descriptions;
 INSERT INTO descriptions_ SELECT * FROM `department_descriptions`;
+UPDATE department_descriptions SET google_department = '0';
 ALTER TABLE  `department_descriptions` CHANGE  `google_department`  `google_department` INT NOT NULL;
 
 ALTER TABLE  `taxonomies` DEFAULT CHARACTER SET utf32 COLLATE utf32_unicode_ci;
@@ -444,7 +445,7 @@ ALTER TABLE department_descriptions ADD CONSTRAINT FK_3213CC7486EE50E2 FOREIGN K
 CREATE INDEX IDX_3213CC7486EE50E2 ON department_descriptions (googleDepartment_id);
 ALTER TABLE routing ADD secondary_id INT DEFAULT NULL;
 CREATE INDEX IDX_A5F8B9FAC59D180C ON routing (secondary_id);
-INSERT INTO `routing` (`id`, `object_id`, `object_type`, `locale`, `url`, `created_at`, `updated_at`, `secondary_id`) VALUES
-(39032, 7, 'brand_with_department', 'en', 'brand/cda/kitchen-built-in-microwave-ovens', '2013-06-13 00:00:00', '2013-06-13 00:00:00', 11);
+INSERT INTO `routing` (`object_id`, `object_type`, `locale`, `url`, `created_at`, `updated_at`, `secondary_id`) VALUES
+(7, 'brand_with_department', 'en', 'brand/cda/kitchen-built-in-microwave-ovens', '2013-06-13 00:00:00', '2013-06-13 00:00:00', 11);
 ALTER TABLE redirects ADD secondary_id INT NOT NULL;
 SET FOREIGN_KEY_CHECKS = 1;
