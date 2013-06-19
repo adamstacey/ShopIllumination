@@ -51,10 +51,10 @@
 <div class="basket-summary-header">
     <a href="#"><span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-252"></span></a>
     <h2>Your basket</h2>
-    <p>Items: <strong>{{ basket.totals.items }}</strong></p>
+    <p>Items: <strong>{{ basket.totals.items|default(0) }}</strong></p>
     <p>Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
 </div>
-<div class="basket-summary-products">
+{#<div class="basket-summary-products">
 
 </div>
 {#<a title="View your basket" href="{#{{ path('basket_your_basket') }}"><img class="fr" src="{{ asset('/bundles/kacshop/images/icons/shopping-basket.png') }}" width="39" height="38" border="0" alt="Your Shopping Basket" /></a>

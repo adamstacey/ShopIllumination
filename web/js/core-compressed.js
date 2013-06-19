@@ -14024,30 +14024,40 @@ $(document).ready(function() {
     });
 });
 
+function resetSubmenu() {
+    $(".menu-horizontal > li > a.hover").removeClass("hover");
+    $(".submenu-container").hide();
+}
+
+$(document).on("mousemove", "body", function(e) {
+    if ($("div.submenu-container:visible").length > 0) {
+        var minX = (parseInt($(document).width()) - parseInt($("div.main-menu nav.container").width())) / 2;
+        var maxX = minX + parseInt($("div.main-menu nav.container").width());
+        var minY = $("div.main-menu nav.container").position().top;
+        var maxY = minY + $("div.submenu-container:visible").height() + $("div.main-menu nav.container").height();
+        if (((e.pageY < minY) || (e.pageY > maxY)) || ((e.pageX < minX) || (e.pageX > maxX))) {
+            resetSubmenu();
+        }
+    }
+});
+
 $(document).ready(function() {
-    // Add events for top level navigation
-    var $menuRow = $(".main-menu .menu-horizontal");
-    $menuRow.find('> li').on('mouseenter', function() {
-        var submenuId = $(this).data("submenu"),
-            $submenu = $("#" + submenuId),
-            height = $menuRow.outerHeight();
-
-        // Show the menu
-        $submenu.css({
-            display: "block",
-            left: $(this).position().left,
-            top: height - 2
-        });
-    }).on('mouseleave', function() {
-        var submenuId = $(this).data("submenu"),
-            $submenu = $("#" + submenuId);
-
-        // Hide the menu and any menus that were left open
-        $submenu.css("display", "none");
-        $submenu.find('.menu-vertical').css("display", "none");
+    $(".main-menu .menu-horizontal > li, .main-menu nav.container > a.ui-button").hoverIntent(function() {
+        var $menuLink = $(this).find("> a");
+        resetSubmenu();
+        var $submenu = $("#" + $(this).data("submenu"));
+        var $submenuContainer = $(this).find(".submenu-container");
+        if ($submenuContainer.length < 1) {
+            $submenuContainer = $(this).next(".submenu-container");
+        }
+        if ($menuLink.length > 0) {
+            $menuLink.addClass("hover");
+        }
+        $submenu.css({ left: 0 });
+        $submenuContainer.show();
+        $submenu.show();
     });
 
-    // Add events for lower level navigation
     var $menu = $(".main-menu .menu-vertical");
     $menu.menuAim({
         activate: activateSubmenu,
@@ -14055,30 +14065,25 @@ $(document).ready(function() {
     });
 
     function activateSubmenu(row) {
-        var $row = $(row),
-            submenuId = $row.data("submenu"),
-            $submenu = $("#" + submenuId),
-            height = $menu.outerHeight(),
-            width = $menu.outerWidth();
-
-        // Show the submenu
-        $submenu.css({
-            display: "block",
-            left: width - 4,
-            top: -1,
-            height: height - 22
-        });
+        var $row = $(row);
+        $row.find("> a").addClass("hover");
+        $row.find("> a span.ui-icon-small").removeClass("icon-small-grey").addClass("icon-small-yellow");
+        var $submenu = $("#" + $row.data("submenu"));
+        var left = $row.position().left + $row.outerWidth(true) + 1;
+        $submenu.css({ left: left });
+        $submenu.show();
     }
 
     function deactivateSubmenu(row) {
-        var $row = $(row),
-            submenuId = $row.data("submenu"),
-            $submenu = $("#" + submenuId);
-
-        // Hide the submenu and remove the row's highlighted look
-        $submenu.css("display", "none");
+        var $row = $(row);
+        $row.find("> a").removeClass("hover");
+        $row.find("> a span.ui-icon-small").removeClass("icon-small-yellow").addClass("icon-small-grey");
+        var $submenu = $("#" + $row.data("submenu"));
+        $submenu.hide();
     }
 });
+
+
 $(window).load(function() {
     $(".loading-container").fadeOut(500);
 });
@@ -14086,7 +14091,6 @@ $(window).load(function() {
 $(document).ready(function() {
     $(".action-add-to-basket").on('click', function() {
         $("#ajax-loading").show();
-        console.log("????");
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -14106,7 +14110,6 @@ $(document).ready(function() {
                 });
             },
             success: function(data) {
-                console.log("????");
                 updateBasketSummary();
                 $("html, body").animate({scrollTop: 0},'slow', function() {
                     $("#shopping-basket-popup-image").attr("src", data.thumbnailPath);
@@ -14135,5 +14138,10 @@ function updateBasketSummary() {
     });
 }
 $(document).ready(function() {
-    $(".slider").rhinoslider();
+    $(".slider").rhinoslider({
+        randomOrder: true,
+        autoPlay: true,
+        showBullets: 'always',
+        showControls: 'always'
+    });
 });

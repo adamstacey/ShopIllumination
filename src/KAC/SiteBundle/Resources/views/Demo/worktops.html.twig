@@ -1,6 +1,5 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 {% block body %}
-    <section class="product">
         <div class="widget-group clearfix mbm">
             <div class="widget widget-1-of-1">
                 <ul class="breadcrumbs" itemprop="breadcrumb">
@@ -16,15 +15,15 @@
                 <div class="ui-widget">
                     <section class="ui-widget-content ui-corner-all clearfix">
                         <div class="slider-wrapper">
-                            <div class="slider nivoSlider">
-                                <img src="/uploads/images/product/maia-vulcano-gallery-1.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-1.jpg" alt="Maia Worktops in Vulcano" />
-                                <img src="/uploads/images/product/maia-vulcano-gallery-2.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-2.jpg" alt="Maia Worktops in Vulcano" />
-                                <img src="/uploads/images/product/maia-vulcano-gallery-3.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-3.jpg" alt="Maia Worktops in Vulcano" />
-                                <img src="/uploads/images/product/maia-vulcano-gallery-4.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-4.jpg" alt="Maia Worktops in Vulcano" />
-                                <img src="/uploads/images/product/maia-vulcano-gallery-5.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-5.jpg" alt="Maia Worktops in Vulcano" />
-                                <img src="/uploads/images/product/maia-vulcano-gallery-6.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-6.jpg" alt="Maia Worktops in Vulcano" />
-                                <img src="/uploads/images/product/maia-vulcano-gallery-7.jpg" data-thumb="/uploads/images/product/maia-vulcano-gallery-7.jpg" alt="Maia Worktops in Vulcano" />
-                            </div>
+                            <ul class="slider" style="width: 920px; height: 400px;">
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-1.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-1.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-2.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-2.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-3.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-3.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-4.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-4.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-5.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-5.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-6.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-6.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-7.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-7.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                            </ul>
                             <h1>Maia Worktops in Vulcano</h1>
                         </div>
                         <div class="widget-group clearfix">
@@ -32,14 +31,14 @@
                                 <div class="widget-group clearfix">
                                     <div class="widget widget-2-of-7">
                                         <ul class="etalage etalage-inset">
-                                            <li><img class="etalage_source_image" src="/uploads/images/product/maia-vulcano-1.jpg" alt="Maia Worktops in Vulcano" /></li>
+                                            <li><img class="etalage_source_image" src="{{ asset('/uploads/demo/maia-vulcano.png') }}" alt="Maia Worktops in Vulcano" /></li>
                                         </ul>
                                     </div>
                                     <div class="widget widget-5-of-7">
                                         <div class="widget-group clearfix">
                                             <div class="widget widget-3-of-4 border-right-separator">
                                                 <div class="widget-group clearfix">
-                                                    <div class="widget widget-1-of-3"><img class="logo" src="/uploads/images/product/maia-logo.jpg" alt="Maia Worktops" /></div>
+                                                    <div class="widget widget-1-of-3"><img class="logo" src="{{ asset('/uploads/images/brand/logo/maia-original-44989.png') }}" alt="Maia Worktops" /></div>
                                                     <div class="widget widget-2-of-3 clearfix">
                                                         <div class="review-rating-small review-rating-small-4-5 fr"></div>
                                                         <div class="clear"></div>
@@ -230,5 +229,4 @@
                 </div>
             </div>
         </div>
-    </section>
 {% endblock %}

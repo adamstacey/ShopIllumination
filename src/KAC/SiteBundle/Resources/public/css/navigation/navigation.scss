@@ -300,6 +300,11 @@ a.submenu-brand:hover {
     @include boxInsetShadow($colourGreyLight, 0, 0, $spacingMedium);
 }
 
+a.submenu-brand img {
+    width: 77px;
+    height: 39px;
+}
+
 .unique-selling-points-container {
     position: relative;
 
