@@ -7,7 +7,7 @@
 
 .slider-wrapper h1 {
     position: absolute;
-    top: $spacingLarge;
+    top: 40px;
     color: $colourWhite;
     background: rgb(0, 0, 0);
     background: rgba(0, 0, 0, 0.7);
@@ -113,11 +113,13 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 0;
+    bottom: 30px;
 
-    background: $colourBlack;
+    line-height: 150%;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
     color: $colourWhite;
-    text-align: right;
+    text-align: left;
     @include selectNone;
 }
 
@@ -167,12 +169,48 @@
     background-position: -98px 0;
 }
 
+.rhino-container,
+.rhino-container ul {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 .slider-homepage,
 .slider-homepage .rhino-container,
 .slider-homepage .rhino-container ul,
 .slider-homepage .rhino-container ul li {
     width: 735px;
     height: 300px;
+}
+
+.slider-gallery {
+    border-bottom: 3px solid $colourGreyDark;
+    margin: -#{$spacingMedium} -#{$spacingMedium} $spacingExtraLarge -#{$spacingMedium};
+}
+
+.slider-gallery,
+.slider-gallery .rhino-container,
+.slider-gallery .rhino-container ul,
+.slider-gallery .rhino-container ul li {
+    width: 940px;
+    height: 400px;
+}
+
+.slider-gallery .rhino-container ul li img {
+    @include borderRadius($radiusSize, $radiusSize, 0, 0);
+}
+
+.slider-dialog-gallery {
+    border-bottom: 3px solid $colourGreyDark;
+    margin: -#{$spacingMedium} -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+}
+
+.slider-dialog-gallery,
+.slider-dialog-gallery .rhino-container,
+.slider-dialog-gallery .rhino-container ul,
+.slider-dialog-gallery .rhino-container ul li {
+    width: 800px;
+    height: 500px;
 }
 
 @media

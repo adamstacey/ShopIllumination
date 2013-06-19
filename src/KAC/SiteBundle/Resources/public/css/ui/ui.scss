@@ -424,6 +424,12 @@
     border-left-width: 1px;
 }
 
+.content-image {
+    margin: 0 auto;
+
+    @include boxGlow($colourGreyLight, 10px, 0, 1);
+}
+
 .ui-dialog {
     padding: 0;
 

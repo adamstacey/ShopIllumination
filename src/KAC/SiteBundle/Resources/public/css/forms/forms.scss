@@ -360,8 +360,8 @@ div.radio span.checked {
     width: 8px;
     height: 8px;
 
-    top: 4px;
-    left: 4px;
+    top: 3px;
+    left: 3px;
 
     @include equalBorderRadius(4px);
     @include highlightedVerticalGradientBlack;
@@ -1233,38 +1233,4 @@ table.form-table ul li {
     right: $spacingSmall;
 
     cursor: pointer;
-}
-
-input.quantity {
-    width: 40px;
-    height: 26px;
-    text-align: center;
-    padding: 4px 6px;
-    margin-top: 11px;
-
-}
-
-.quantity-buttons-container {
-    width: 17px;
-    padding: 0 5px 0 0;
-}
-
-.action-increase-quantity, .action-decrease-quantity {
-    width: 15px;
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 10px !important;
-    height: 11px;
-    margin: 0 5px 0 0;
-    padding: 0px;
-    border: 1px solid #999;
-    cursor: pointer !important;
-    color: #384246;
-    background: #C5D2D6;
-}
-
-.quantity-label {
-    line-height: 32px;
-    padding: 0 5px 0 0;
 }

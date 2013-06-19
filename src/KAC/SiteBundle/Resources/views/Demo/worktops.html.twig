@@ -1,5 +1,122 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 {% block body %}
+    <style>
+        .add-to-basket {
+            width: 110px;
+            height: 40px;
+
+            display: block;
+            position: relative;
+        }
+
+        .add-to-basket input.quantity {
+            width: 40px;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            text-align: center;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .add-to-basket .buy {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .add-to-basket .increase-quantity,
+        .add-to-basket .decrease-quantity {
+            position: absolute;
+            left: 40px;
+        }
+
+        .add-to-basket .increase-quantity .ui-button-text,
+        .add-to-basket .decrease-quantity .ui-button-text {
+            width: 10px;
+            height: 12px;
+            padding: 0 2px;
+
+            display: block;
+
+            line-height: 12px;
+            text-align: center;
+        }
+
+        .add-to-basket .increase-quantity {
+            top: 0;
+            border-radius: 0 4px 0 0;
+        }
+
+        .add-to-basket .decrease-quantity {
+            bottom: 0;
+            border-radius: 0 0 4px 0;
+        }
+
+        .add-to-basket .buy .ui-button-text {
+            padding: 0 2px;
+        }
+
+        .product .form-helper {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+        }
+
+        .product td p {
+            line-height: 150%;
+            margin: 0;
+        }
+
+        .ui-widget-content p {
+            line-height: 150%;
+        }
+    </style>
+    <script>
+        function selectWorktopThickness(worktopThickness) {
+            $("table.data-table tbody tr").hide();
+            $("table.data-table tbody tr").removeClass("even odd");
+            $("table.data-table tbody tr[data-worktop-thickness='"+worktopThickness+"']").show();
+            $("table.data-table tbody tr:visible:even").addClass("even");
+            $("table.data-table tbody tr:visible:odd").addClass("odd");
+        }
+
+        $(document).ready(function() {
+            selectWorktopThickness($("input[name='worktop-thickness']").val());
+
+            $(".actionIncreaseQuantity").on("click", function() {
+                var $quantityInput = $(this).parent().find("input.quantity");
+                $quantityInput.val(parseInt($quantityInput.val()) + 1);
+            });
+
+            $(".actionDecreaseQuantity").on("click", function() {
+                var $quantityInput = $(this).parent().find("input.quantity");
+                if (parseInt($quantityInput.val()) > 1) {
+                    $quantityInput.val(parseInt($quantityInput.val()) - 1);
+                }
+            });
+
+            $(".actionAddToBasket").on("click", function() {
+                $(this).closest("tr").find("td:not(.image)").css("background", "#ebf7eb");
+            });
+
+            $("input[name='worktop-thickness']").on("change", function() {
+                selectWorktopThickness($(this).val());
+            });
+        });
+    </script>
+    {% import _self as helpers %}
+    {% macro addToBasket() %}
+        <div class="add-to-basket">
+            <input class="quantity integer" type="number" value="1" />
+            <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+            <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+            <button class="actionAddToBasket buy button button-green uppercase">Buy</button>
+        </div>
+    {% endmacro %}
+    <section class="product">
         <div class="widget-group clearfix mbm">
             <div class="widget widget-1-of-1">
                 <ul class="breadcrumbs" itemprop="breadcrumb">
@@ -14,15 +131,14 @@
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
                     <section class="ui-widget-content ui-corner-all clearfix">
-                        <div class="slider-wrapper">
-                            <ul class="slider" style="width: 920px; height: 400px;">
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-1.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-1.png') }}" alt="Maia Worktops in Vulcano" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-2.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-2.png') }}" alt="Maia Worktops in Vulcano" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-3.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-3.png') }}" alt="Maia Worktops in Vulcano" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-4.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-4.png') }}" alt="Maia Worktops in Vulcano" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-5.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-5.png') }}" alt="Maia Worktops in Vulcano" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-6.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-6.png') }}" alt="Maia Worktops in Vulcano" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-7.png') }}" data-thumb="{{ asset('/uploads/demo/maia-gallery-7.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                        <div class="slider-wrapper slider-gallery">
+                            <ul class="slider">
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-1.jpg') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-2.jpg') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-3.jpg') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-4.jpg') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-5.jpg') }}" alt="Maia Worktops in Vulcano" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-6.jpg') }}" alt="Maia Worktops in Vulcano" /></li>
                             </ul>
                             <h1>Maia Worktops in Vulcano</h1>
                         </div>
@@ -31,12 +147,12 @@
                                 <div class="widget-group clearfix">
                                     <div class="widget widget-2-of-7">
                                         <ul class="etalage etalage-inset">
-                                            <li><img class="etalage_source_image" src="{{ asset('/uploads/demo/maia-vulcano.png') }}" alt="Maia Worktops in Vulcano" /></li>
+                                            <li><img class="etalage_source_image" src="{{ asset('/uploads/demo/maia-vulcano@2x.jpg') }}" alt="Maia Worktops in Vulcano" /></li>
                                         </ul>
                                     </div>
                                     <div class="widget widget-5-of-7">
                                         <div class="widget-group clearfix">
-                                            <div class="widget widget-3-of-4 border-right-separator">
+                                            <div class="widget widget-3-of-4 pll prl border-right-separator">
                                                 <div class="widget-group clearfix">
                                                     <div class="widget widget-1-of-3"><img class="logo" src="{{ asset('/uploads/images/brand/logo/maia-original-44989.png') }}" alt="Maia Worktops" /></div>
                                                     <div class="widget widget-2-of-3 clearfix">
@@ -60,7 +176,7 @@
                                                 <div class="price pbm">
                                                     <span class="currency-tax">(inc. VAT)</span>
                                                 </div>
-                                                <button class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</button>
+                                                <a href="#buyNow" class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</a>
                                             </div>
                                         </div>
                                     </div>
@@ -86,51 +202,32 @@
                                             <section>
                                                 <table class="data-table">
                                                     <thead>
-                                                    <tr>
-                                                        <th colspan="2">Product Feature</th>
-                                                    </tr>
+                                                        <tr>
+                                                            <th colspan="2">Product Feature</th>
+                                                        </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr class="odd">
-                                                        <td width="1" class="nowrap tar">Profile</td>
-                                                        <td><strong>Square</strong></td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td width="1" class="nowrap tar">Pre-edged Sides</td>
-                                                        <td><strong>1 Long &amp; 2 Short</strong></td>
-                                                    </tr>
-                                                    <tr class="odd">
-                                                        <td width="1" class="nowrap tar">Material Finish</td>
-                                                        <td><strong>Solid Surface</strong></td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td width="1" class="nowrap tar">Depth</td>
-                                                        <td><strong>600mm</strong></td>
-                                                    </tr>
-                                                    <tr class="odd">
-                                                        <td width="1" class="nowrap tar">Length</td>
-                                                        <td><strong>1800mm</strong></td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td width="1" class="nowrap tar">Extra Edging per Unit</td>
-                                                        <td><strong>120cm Included</strong></td>
-                                                    </tr>
-                                                    <tr class="odd">
-                                                        <td width="1" class="nowrap tar">Colour</td>
-                                                        <td><strong>Vulcano</strong></td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td width="1" class="nowrap tar">Finish Group</td>
-                                                        <td><strong>Semi Gloss</strong></td>
-                                                    </tr>
-                                                    <tr class="odd">
-                                                        <td width="1" class="nowrap tar">Item</td>
-                                                        <td><strong>Worktop</strong></td>
-                                                    </tr>
-                                                    <tr class="even">
-                                                        <td width="1" class="nowrap tar">Worktop</td>
-                                                        <td><strong>Solid Surface</strong></td>
-                                                    </tr>
+                                                        <tr class="odd">
+                                                            <td width="1" class="nowrap tar">Material Finish</td>
+                                                            <td><strong>Solid Surface</strong></td>
+                                                        </tr>
+
+                                                        <tr class="odd">
+                                                            <td width="1" class="nowrap tar">Colour</td>
+                                                            <td><strong>Vulcano</strong></td>
+                                                        </tr>
+                                                        <tr class="even">
+                                                            <td width="1" class="nowrap tar">Finish Group</td>
+                                                            <td><strong>Semi Gloss</strong></td>
+                                                        </tr>
+                                                        <tr class="odd">
+                                                            <td width="1" class="nowrap tar">Item</td>
+                                                            <td><strong>Worktop</strong></td>
+                                                        </tr>
+                                                        <tr class="even">
+                                                            <td width="1" class="nowrap tar">Worktop</td>
+                                                            <td><strong>Solid Surface</strong></td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </section>
@@ -157,18 +254,18 @@
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
                     <header class="ui-widget-header ui-corner-top">
-                        <h2>Worktop Thickness</h2>
+                        <h2>1. Select a Worktop Thickness</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom clearfix">
                         <fieldset class="man">
                             <div class="form-element widget-group clearfix">
                                 <div class="widget widget-1-of-3">
-                                    <label for="formSelect1">Worktop Thickness</label>
+                                    <label for="formWorktopThickness1">Worktop Thickness</label>
                                 </div>
                                 <div class="widget radio-group widget-2-of-3">
-                                    <input type="radio" id="formRadio1" name="radio" value="1" checked="checked" /><label for="formRadio1">28mm</label>
-                                    <input type="radio" id="formRadio2" name="radio" value="2" /><label for="formRadio2">42mm</label>
-                                    <input type="radio" id="formRadio3" name="radio" value="3" /><label for="formRadio3">54mm</label>
+                                    <input type="radio" id="formWorktopThickness28" name="worktop-thickness" value="28" checked="checked" /><label for="formWorktopThickness28">28mm</label>
+                                    <input type="radio" id="formWorktopThickness42" name="worktop-thickness" value="42" /><label for="formWorktopThickness42">42mm</label>
+                                    <input type="radio" id="formWorktopThickness54" name="worktop-thickness" value="54" /><label for="formWorktopThickness54">54mm</label>
                                 </div>
                             </div>
                         </fieldset>
@@ -176,52 +273,166 @@
                 </div>
             </div>
         </div>
+        <a name="buyNow"></a>
         <div class="widget-group clearfix">
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
                     <header class="ui-widget-header ui-corner-top">
-                        <h2>Worktops</h2>
+                        <h2>2. Pick Your Worktops</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom clearfix">
+                        <div class="ui-helper-hidden" id="dialogInformationWorktops" title="Maia Worktops">
+                            <section class="ui-widget-content ui-corner-all clearfix">
+                                <div class="slider-wrapper slider-dialog-gallery">
+                                    <ul class="slider">
+                                        <li><img src="{{ asset('/uploads/demo/information-gallery-worktops-1.jpg') }}" title="<strong>Maia Galaxy Worktop</strong><br />Galaxy's metallic flecks bring sparkle to your worktop - metallic particles catch the light and complement the deep black background." /></li>
+                                        <li><img src="{{ asset('/uploads/demo/information-gallery-worktops-2.jpg') }}" title="<strong>Maia Iceberg Worktop</strong><br />Iceberg's beauty lies in its purity. White has become a strong trend for worksurfaces - team with matching doors for a simple, calm style, or with splashes of colour to make a statement." /></li>
+                                        <li><img src="{{ asset('/uploads/demo/information-gallery-worktops-3.jpg') }}" title="<strong>Maia Sandstone Worktop</strong><br />Bringing natural warmth, Sandstone will complement both light and dark coloured kitchens." /></li>
+                                        <li><img src="{{ asset('/uploads/demo/information-gallery-worktops-4.jpg') }}" title="<strong>Maia Calcite Worktop</strong><br />Delivering a fresher look than Vanilla, Calcite contains light grey particles suspended in a creamy white background. Works well with light and medium oaks as well as black. A youthful take on a traditional classic." /></li>
+                                        <li><img src="{{ asset('/uploads/demo/information-gallery-worktops-5.jpg') }}" title="<strong>Maia Lava Worktop</strong><br />Lava is grey with small speckles of brown to create a natural stone effect. Stunning in a blue kitchen with glass, wood and white accessories, or stylishly industrial with glossy black or metallic doors." /></li>
+                                        <li><img src="{{ asset('/uploads/demo/information-gallery-worktops-6.jpg') }}" title="<strong>Maia Meteorite Worktop</strong><br />Gorgeous browns and olives combine with copper metallic particles to deliver luxurious warmth. Not as stark as black, Meteorite works well with cream, white and light coloured woods." /></li>
+                                    </ul>
+                                    <h1>Maia Worktops</h1>
+                                </div>
+                                <p>The modular worktop blanks in the maia solid surface range are designed to be simple to plan and install. They are pre-edged and the surface is factory finished so there is no need to re-sand the top once it is installed (except in the area around a joint or if you apply edging). The choice of 1.8m and 3.6m lengths helps to eliminate wastage as you only have to order as much as you need. The 600mm depth is an industry standard – the 650mm depth can be useful if you have deeper cabinets or appliances or if there is pipework to run behind the units.</p>
+                                <p>In addition to the standard range, maia also offers worktops with a curve at each end. These curved surfaces have radiused ends to match the growing trend for curved kitchen doors to create a softer look. The standard 240mm radius complements the majority of new style kitchen doors.</p>
+                                <p class="mbn">All worktops are wrapped in heavy duty shrink-wrap then boxed. Each is supplied with an additional 1200mm length of additional edging and a 3m length of heat reflective tape that is used for hob cut outs.</p>
+                            </section>
+                        </div>
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th colspan="2">Worktop</th>
-                                    <th colspan="2">Price</th>
+                                    <th colspan="3">Worktops</th>
+                                    <th class="tac">Price</th>
+                                    <th>&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd">
-                                    <td rowspan="4" width="1" class="image"><img width="150" src="/uploads/images/product/maia-diagram-worktops-square-corner-thumbnail.jpg" alt="Maia Worktops in Vulcano" /></td>
-                                    <td>1800mm &times; 600mm Worktop</td>
-                                    <td width="1" class="nowrap price">{{ 265|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                <tr class="odd" data-worktop-thickness="28">
+                                    <td width="1" rowspan="4" class="pam image">
+                                        <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
+                                    </td>
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL28/18600</strong><br />1800mm &times; 600mm &times; 28mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 285|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
                                 </tr>
-                                <tr class="even">
-                                    <td>1800mm &times; 650mm Worktop</td>
-                                    <td width="1" class="nowrap price">{{ 290|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                <tr class="even" data-worktop-thickness="28">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL28/18650</strong><br />1800mm &times; 650mm &times; 28mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 289|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
                                 </tr>
-                                <tr class="odd">
-                                    <td>3600mm &times; 600mm Worktop</td>
-                                    <td width="1" class="nowrap price">{{ 440|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                <tr class="odd" data-worktop-thickness="28">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL28/36600</strong><br />3600mm &times; 600mm &times; 28mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 485|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
                                 </tr>
-                                <tr class="even">
-                                    <td>3600mm &times; 600mm Worktop</td>
+                                <tr class="even" data-worktop-thickness="28">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL28/36650</strong><br />3600mm &times; 650mm &times; 28mm Worktop (square corners)</p></td>
                                     <td width="1" class="nowrap price">{{ 489|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
                                 </tr>
-                                <tr class="odd">
-                                    <td rowspan="2" width="1" class="image"><img width="150" src="/uploads/images/product/maia-diagram-breakfast-bars-square-corner-thumbnail.jpg" alt="Maia Worktops in Vulcano" /></td>
-                                    <td>1800mm &times; 900mm Standard Breakfast Bar</td>
-                                    <td width="1" class="nowrap price">{{ 265|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                <tr class="odd" data-worktop-thickness="28">
+                                    <td width="1" rowspan="2" class="pam image">
+                                        <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
+                                    </td>
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL28/18CR650</strong><br />1800mm &times; 650mm &times; 28mm "C-End" Worktop (240mm radius)</p></td>
+                                    <td width="1" class="nowrap price">{{ 349|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
                                 </tr>
-                                <tr class="even">
-                                    <td>3600mm &times; 900mm Standard Breakfast Bar</td>
-                                    <td width="1" class="nowrap price">{{ 290|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap"><button class="button button-small button-green uppercase">Add to Basket</button></td>
+                                <tr class="even" data-worktop-thickness="28">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL28/36CR650</strong><br />3600mm &times; 650mm &times; 28mm "C-End" Worktop (240mm radius)</p></td>
+                                    <td width="1" class="nowrap price">{{ 535|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="odd" data-worktop-thickness="42">
+                                    <td width="1" rowspan="4" class="pam image">
+                                        <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
+                                    </td>
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL/18600</strong><br />1800mm &times; 600mm &times; 42mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 295|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="even" data-worktop-thickness="42">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL/18650</strong><br />1800mm &times; 650mm &times; 42mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 299|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="odd" data-worktop-thickness="42">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL/36600</strong><br />3600mm &times; 600mm &times; 42mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 495|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="even" data-worktop-thickness="42">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL/36650</strong><br />3600mm &times; 650mm &times; 42mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 499|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="odd" data-worktop-thickness="42">
+                                    <td width="1" rowspan="2" class="pam image">
+                                        <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
+                                    </td>
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL/18CR650</strong><br />1800mm &times; 650mm &times; 42mm "C-End" Worktop (240mm radius)</p></td>
+                                    <td width="1" class="nowrap price">{{ 329|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="even" data-worktop-thickness="42">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL/36CR650</strong><br />3600mm &times; 650mm &times; 42mm "C-End" Worktop (240mm radius)</p></td>
+                                    <td width="1" class="nowrap price">{{ 525|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="odd" data-worktop-thickness="54">
+                                    <td width="1" rowspan="4" class="pam image">
+                                        <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
+                                    </td>
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL54/18600</strong><br />1800mm &times; 600mm &times; 54mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 355|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="even" data-worktop-thickness="54">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL54/18650</strong><br />1800mm &times; 650mm &times; 54mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 359|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="odd" data-worktop-thickness="54">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL/36600</strong><br />3600mm &times; 600mm &times; 54mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 615|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="even" data-worktop-thickness="54">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL54/36650</strong><br />3600mm &times; 650mm &times; 54mm Worktop (square corners)</p></td>
+                                    <td width="1" class="nowrap price">{{ 619|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="odd" data-worktop-thickness="54">
+                                    <td width="1" rowspan="2" class="pam image">
+                                        <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
+                                    </td>
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL54/18CR650</strong><br />1800mm &times; 650mm &times; 54mm "C-End" Worktop (240mm radius)</p></td>
+                                    <td width="1" class="nowrap price">{{ 399|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
+                                </tr>
+                                <tr class="even" data-worktop-thickness="54">
+                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                                    <td><p><strong>Vulcano VUL54/36CR650</strong><br />3600mm &times; 650mm &times; 54mm "C-End" Worktop (240mm radius)</p></td>
+                                    <td width="1" class="nowrap price">{{ 599|currency('GBP', true, true, '')|raw }}</td>
+                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -229,4 +440,5 @@
                 </div>
             </div>
         </div>
+    </section>
 {% endblock %}

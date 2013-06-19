@@ -35,6 +35,24 @@ $zIndex: $zIndex + 1;
 }
 
 $zIndex: $zIndex + 1;
+.slider-wrapper h1 {
+    z-index: $zIndex;
+}
+
+.slider-wrapper img.logo {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
+.rhino-btn {
+    z-index: $zIndex;
+}
+
+.rhino-bullets {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
 .etalage-inset {
     z-index: $zIndex;
 }
@@ -61,24 +79,6 @@ $zIndex: $zIndex + 1;
 }
 
 div.etalage_description {
-    z-index: $zIndex;
-}
-
-$zIndex: $zIndex + 1;
-.slider-wrapper h1 {
-    z-index: $zIndex;
-}
-
-.slider-wrapper img.logo {
-    z-index: $zIndex;
-}
-
-$zIndex: $zIndex + 1;
-.rhino-btn {
-    z-index: $zIndex;
-}
-
-.rhino-bullets {
     z-index: $zIndex;
 }
 
