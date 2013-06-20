@@ -125,7 +125,7 @@
                     <div class="widget widget-1-of-1">
                         <div class="ui-widget">
                             <section class="ui-widget-content ui-corner-all clearfix">
-                                <div class="slider-wrapper  slider-gallery {% if gallery_images | length < 0 %}slider-filler{% endif %}">
+                                <div class="slider-wrapper  slider-gallery {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
                                     {% if gallery_images | length > 0 %}
                                         <ul class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
                                             {% for image in gallery_images %}
