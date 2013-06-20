@@ -285,28 +285,3 @@
         {% endblock %}
     </section>
 {% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            {# Increase quantity #}
-            $(".action-increase-quantity").live('click', function() {
-                var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
-                var $newQuantity = parseInt($quantityObject.val()) + 1;
-                $quantityObject.val($newQuantity);
-            });
-
-            {# Decrease quantity #}
-            $(".action-decrease-quantity").live('click', function() {
-                var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
-                var $newQuantity = parseInt($quantityObject.val()) - 1;
-                if ($newQuantity < 1)
-                {
-                    $newQuantity = 1;
-                }
-                $quantityObject.val($newQuantity);
-            });
-        });
-    </script>
-{% endblock %}
