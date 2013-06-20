@@ -1,3 +1,7 @@
+_imagine:
+    resource: .
+    type:     imagine
+
 #KACShopBundle:
 #    resource: "@KACShopBundle/Resources/config/routing.yml"
 #    prefix:   /
@@ -37,7 +41,3 @@ kac_site:
     resource: "@KACSiteBundle/Controller/"
     type:     annotation
     prefix:   /
-
-_imagine:
-    resource: .
-    type:     imagine
