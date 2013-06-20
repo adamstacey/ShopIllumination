@@ -63,6 +63,40 @@ fieldset legend {
     background-image: url("#{$cssPath}/resources/images/icons/yellow_small.png");
 }
 
+@media
+screen and (-webkit-min-device-pixel-ratio: 1.25),
+screen and (-webkit-min-device-pixel-ratio: 1.3),
+screen and (-webkit-min-device-pixel-ratio: 1.5),
+screen and (-webkit-min-device-pixel-ratio: 2),
+screen and (min--moz-device-pixel-ratio: 1.25),
+screen and (min--moz-device-pixel-ratio: 1.3),
+screen and (min--moz-device-pixel-ratio: 1.5),
+screen and (min--moz-device-pixel-ratio: 2),
+screen and (-o-min-device-pixel-ratio: 1.25/1),
+screen and (-o-min-device-pixel-ratio: 1.3/1),
+screen and (-o-min-device-pixel-ratio: 1.5/1),
+screen and (-o-min-device-pixel-ratio: 2/1),
+screen and (min-device-pixel-ratio: 1.25),
+screen and (min-device-pixel-ratio: 1.3),
+screen and (min-device-pixel-ratio: 1.5),
+screen and (min-device-pixel-ratio: 2),
+screen and (min-resolution: 120dpi),
+screen and (min-resolution: 124.8dpi),
+screen and (min-resolution: 144dpi),
+screen and (min-resolution: 192dpi),
+screen and (min-resolution: 1.25dppx),
+screen and (min-resolution: 1.3dppx),
+screen and (min-resolution: 1.5dppx),
+screen and (min-resolution: 2dppx) {
+    .form-helper {
+        background-image: url("#{$cssPath}/resources/images/icons/grey_small@2x.png");
+    }
+
+    .form-helper:hover {
+        background-image: url("#{$cssPath}/resources/images/icons/yellow_small@2x.png");
+    }
+}
+
 .form-element label {
     display: block;
 
