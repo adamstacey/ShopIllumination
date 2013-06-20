@@ -3,6 +3,107 @@
 {% block title %}{{ product.description.pageTitle }} | {{ parent() }}{% endblock %}
 
 {% block body %}
+    <style>
+        .add-to-basket {
+            width: 110px;
+            height: 40px;
+
+            display: block;
+            position: relative;
+        }
+
+        .add-to-basket input.quantity {
+            width: 40px;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            text-align: center;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .add-to-basket .buy {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .add-to-basket .increase-quantity,
+        .add-to-basket .decrease-quantity {
+            position: absolute;
+            left: 40px;
+        }
+
+        .add-to-basket .increase-quantity .ui-button-text,
+        .add-to-basket .decrease-quantity .ui-button-text {
+            width: 10px;
+            height: 12px;
+            padding: 0 2px;
+
+            display: block;
+
+            line-height: 12px;
+            text-align: center;
+        }
+
+        .add-to-basket .increase-quantity {
+            top: 0;
+            border-radius: 0 4px 0 0;
+        }
+
+        .add-to-basket .decrease-quantity {
+            bottom: 0;
+            border-radius: 0 0 4px 0;
+        }
+
+        .add-to-basket .buy .ui-button-text {
+            padding: 0 2px;
+        }
+
+        .product .form-helper {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+        }
+
+        .product td p {
+            line-height: 150%;
+            margin: 0;
+        }
+
+        .ui-widget-content p {
+            line-height: 150%;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $(".actionIncreaseQuantity").on("click", function() {
+                var $quantityInput = $(this).parent().find("input.quantity");
+                $quantityInput.val(parseInt($quantityInput.val()) + 1);
+            });
+
+            $(".actionDecreaseQuantity").on("click", function() {
+                var $quantityInput = $(this).parent().find("input.quantity");
+                if (parseInt($quantityInput.val()) > 1) {
+                    $quantityInput.val(parseInt($quantityInput.val()) - 1);
+                }
+            });
+
+            $(".actionAddToBasket").on("click", function() {
+                $(this).closest("tr").find("td:not(.image)").css("background", "#ebf7eb");
+            });
+        });
+    </script>
+    {% macro addToBasket(variant) %}
+        <div class="add-to-basket" data-product-id="{{ variant.product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
+            <input class="quantity integer" type="number" value="1" />
+            <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+            <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+            <button class="actionAddToBasket buy button button-green uppercase">Buy</button>
+        </div>
+    {% endmacro %}
     <section class="product">
         {% block product_block %}
             {% block department_breadcrumb %}
@@ -24,12 +125,12 @@
                     <div class="widget widget-1-of-1">
                         <div class="ui-widget">
                             <section class="ui-widget-content ui-corner-all clearfix">
-                                <div class="slider-wrapper {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
-                                    <div class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
+                                <div class="slider-wrapper  slider-gallery {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
+                                    <ul class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
                                         {% for image in gallery_images %}
                                             <img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />
                                         {% endfor %}
-                                    </div>
+                                    </ul>
                                     <h1>{{ product.description.header }}</h1>
                                 </div>
                                 <div class="widget-group clearfix">
@@ -42,24 +143,24 @@
                                                     </ul>
                                                 {% endif %}
                                             </div>
-                                            <div class="widget widget-5-of-7 product-header">
+
+                                            <div class="widget widget-5-of-7">
                                                 <div class="widget-group clearfix">
-                                                    <div class="widget widget-3-of-4 pll">
+                                                    <div class="widget widget-3-of-4 pll prl border-right-separator">
                                                         <div class="widget-group clearfix">
                                                             <div class="widget widget-1-of-3">
                                                                 {% if product.brand.description.logoImage.publicPath %}
                                                                     <img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail') }}" alt="{{ product.brand.description.name }}" />
-                                                                {% endif %}
-                                                            </div>
+                                                                {% endif %}                                                            </div>
                                                             <div class="widget widget-2-of-3 clearfix">
-                                                                <div class="review-rating-small review-rating-small-4-5 fr"></div>
-                                                                <div class="clear"></div>
-                                                                <div class="fr review-summary"><strong>4.7</strong> out of <strong>5</strong> Customer Rating</div>
-                                                                <div class="clear"></div>
-                                                                <div class="fr review-summary"><a href="#">Read Reviews</a> (7) | <a href="#">Read Questions</a> (2)</div>
+                                                                {#<div class="review-rating-small review-rating-small-4-5 fr"></div>#}
+                                                                {#<div class="clear"></div>#}
+                                                                {#<div class="fr review-summary"><strong>4.7</strong> out of <strong>5</strong> Customer Rating</div>#}
+                                                                {#<div class="clear"></div>#}
+                                                                {#<div class="fr review-summary"><a href="#">Read Reviews</a> (0) | <a href="#">Read Questions</a> (0)</div>#}
                                                             </div>
                                                         </div>
-                                                        <p class="summary man">{{ product.description.shortDescription }}</p>
+                                                        <p class="summary man">{{ product.description.metaDescription }}</p>
                                                     </div>
                                                     <div class="widget widget-1-of-4">
                                                         <div class="price">
@@ -76,12 +177,54 @@
                                                             <span class="currency-tax">(inc. VAT)</span>
                                                         </div>
                                                         {% if product.variants | length > 1 %}
-                                                            <a class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465" href="#buynow">Buy Now</a>
+                                                            <a href="#buyNow" class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</a>
                                                         {% else %}
-                                                            {% include "KACSiteBundle:Product:Includes/buyButtons.html.twig" with {'product': product, 'variant': product.variants[0]} %}
+                                                            {{ _self.addToBasket(product.variants[0]) }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            {#<div class="widget widget-5-of-7 product-header">#}
+                                                {#<div class="widget-group clearfix">#}
+                                                    {#<div class="widget widget-3-of-4 pll">#}
+                                                        {#<div class="widget-group clearfix">#}
+                                                            {#<div class="widget widget-1-of-3">#}
+                                                                {#{% if product.brand.description.logoImage.publicPath %}#}
+                                                                    {#<img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail') }}" alt="{{ product.brand.description.name }}" />#}
+                                                                {#{% endif %}#}
+                                                            {#</div>#}
+                                                            {#<div class="widget widget-2-of-3 clearfix">#}
+                                                                {#<div class="review-rating-small review-rating-small-4-5 fr"></div>#}
+                                                                {#<div class="clear"></div>#}
+                                                                {#<div class="fr review-summary"><strong>4.7</strong> out of <strong>5</strong> Customer Rating</div>#}
+                                                                {#<div class="clear"></div>#}
+                                                                {#<div class="fr review-summary"><a href="#">Read Reviews</a> (7) | <a href="#">Read Questions</a> (2)</div>#}
+                                                            {#</div>#}
+                                                        {#</div>#}
+                                                        {#<p class="summary man">{{ product.description.shortDescription }}</p>#}
+                                                    {#</div>#}
+                                                    {#<div class="widget widget-1-of-4">#}
+                                                        {#<div class="price">#}
+                                                            {#<span class="currency-prefix">from only</span>#}
+                                                        {#</div>#}
+                                                        {#<div class="price">#}
+                                                            {#{% if lowest_price is null %}#}
+                                                                {#{{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}#}
+                                                            {#{% else %}#}
+                                                                {#{{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}#}
+                                                            {#{% endif %}#}
+                                                        {#</div>#}
+                                                        {#<div class="price pbm">#}
+                                                            {#<span class="currency-tax">(inc. VAT)</span>#}
+                                                        {#</div>#}
+                                                        {#{% if product.variants | length > 1 %}#}
+                                                            {#<a class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465" href="#buynow">Buy Now</a>#}
+                                                        {#{% else %}#}
+                                                            {#{% include "KACSiteBundle:Product:Includes/buyButtons.html.twig" with {'product': product, 'variant': product.variants[0]} %}#}
+                                                        {#{% endif %}#}
+                                                    {#</div>#}
+                                                {#</div>#}
                                             </div>
                                         </div>
                                     </div>
@@ -91,9 +234,6 @@
                                                 <ul>
                                                     <li><a href="#overview">Overview</a></li>
                                                     <li><a href="#technicalSpecification">Technical Specification</a></li>
-                                                    <li><a href="#reviews">Reviews</a></li>
-                                                    <li><a href="#questionsAndAnswers">Questions &amp; Answers</a></li>
-                                                    <li><a href="#cheaperThan">Cheaper Than</a></li>
                                                 </ul>
                                                 <div id="overview">
                                                     <section>
@@ -107,37 +247,20 @@
                                                         <table class="data-table">
                                                             <thead>
                                                             <tr>
-                                                                <th colspan="2">Product Feature</th>
+                                                                <th>Feature</th>
+                                                                <th></th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
-                                                            {% for group, feature in common_features %}
-                                                                <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
-                                                                    <td width="1" class="nowrap tar">{{ group }}</td>
-                                                                    <td><strong>{{ feature }}</strong></td>
-                                                                </tr>
+                                                                {% for group, feature in common_features %}
+                                                                    <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                                        <td width="1" class="nowrap tar">{{ group }}</td>
+                                                                        <td><strong>{{ feature }}</strong></td>
+                                                                    </tr>
                                                                 {% endfor %}
                                                             </tbody>
                                                         </table>
                                                     </section>
-                                                </div>
-                                                <div id="reviews">
-                                                    <section>
-                                                        <p>Reviews are currently not available</p>
-                                                    </section>
-                                                </div>
-                                                <div id="questionsAndAnswers">
-                                                    <section>
-                                                        <p>This section is currently not available</p>
-                                                    </section>
-                                                </div>
-                                                <div id="cheaperThan">
-                                                    {% for item in competitorPrices.items %}
-                                                        <li>
-                                                            <span class="competitor-name"><a href="{{ item.product.link }}">{{ item.product.author.name }}</a></span>
-                                                            <span class="competitor-price">{{ item.product.inventories[0].price|currency(item.product.inventories[0].currency) }}</span>
-                                                        </li>
-                                                    {% endfor %}
                                                 </div>
                                             </div>
                                         </section>
@@ -186,7 +309,7 @@
                                                 </td>
                                                 <td width="1" class="nowrap price">{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}</td>
                                                 <td width="1" class="nowrap">
-                                                    {% include "KACSiteBundle:Product:Includes/buyButtons.html.twig" with {'product': product, 'variant': variant} %}
+                                                    {{ _self.addToBasket(variant) }}
                                                 </td>
                                             </tr>
                                         {% endfor %}
