@@ -1,18 +1,19 @@
 $(document).ready(function() {
-    $(".action-add-to-basket").on('click', function() {
+    $(".actionAddToBasket").on('click', function() {
+        var $quantityInput = $(this).parent().find("input.quantity"),
+            $el = $(this).parent();
+
         $("#ajax-loading").show();
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: $(this).attr("data-basket-url"),
+            url: $el.attr("data-basket-url"),
             data: {
-                productId: $(this).attr("data-product-id"),
-                variantId: $(this).attr("data-variant-id"),
-                quantity: $("#quantity-"+$(this).attr("data-product-id")).val(),
-                selectedOptions: $("#selected-options-"+$(this).attr("data-product-id")).val()
+                productId: $el.attr("data-product-id"),
+                variantId: $el.attr("data-variant-id"),
+                quantity: $quantityInput.val()
             },
             error: function(data) {
-                console.log(data);
                 $("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
                 $("#message-error").fadeIn(function() {
                     $("html, body").animate({scrollTop: $("#message-error").offset().top - 15},'slow');
