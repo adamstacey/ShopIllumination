@@ -125,12 +125,14 @@
                     <div class="widget widget-1-of-1">
                         <div class="ui-widget">
                             <section class="ui-widget-content ui-corner-all clearfix">
-                                <div class="slider-wrapper  slider-gallery {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
-                                    <ul class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
-                                        {% for image in gallery_images %}
-                                            <img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />
-                                        {% endfor %}
-                                    </ul>
+                                <div class="slider-wrapper  slider-gallery {% if gallery_images | length < 0 %}slider-filler{% endif %}">
+                                    {% if gallery_images | length > 0 %}
+                                        <ul class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
+                                            {% for image in gallery_images %}
+                                                <img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
                                     <h1>{{ product.description.header }}</h1>
                                 </div>
                                 <div class="widget-group clearfix">
