@@ -36,11 +36,161 @@ class DemoController extends Controller
     }
 
     /**
-     * @Route("/worktops", name="demo_worktops")
+     * @Route("/maia-worktops.html", name="demo_maia_worktops")
      * @Method({"GET"})
      * @Template()
      */
-    public function worktopsAction(Request $request)
+    public function maiaWorktopsAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/ammonite.html", name="demo_maia_worktops_ammonite")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsAmmoniteAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/calcite.html", name="demo_maia_worktops_calcite")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsCalciteAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/fossil.html", name="demo_maia_worktops_fossil")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsFossilAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/meteorite.html", name="demo_maia_worktops_meteorite")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsMeteoriteAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/pearlstone.html", name="demo_maia_worktops_pearlstone")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsPearlstoneAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/sandstone.html", name="demo_maia_worktops_sandstone")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsSandstoneAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/cappucino.html", name="demo_maia_worktops_cappuccino")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsCappuccinoAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/cristallo.html", name="demo_maia_worktops_cristallo")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsCristalloAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/galaxy.html", name="demo_maia_worktops_galaxy")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsGalaxyAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/iceberg.html", name="demo_maia_worktops_iceberg")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsIcebergAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/latte.html", name="demo_maia_worktops_latte")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsLatteAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/lava.html", name="demo_maia_worktops_lava")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsLavaAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/mocha.html", name="demo_maia_worktops_mocha")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsMochaAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/vanilla.html", name="demo_maia_worktops_vanilla")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsVanillaAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/maia-worktops/vulcano.html", name="demo_maia_worktops_vulcano")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function maiaWorktopsVulcanoAction(Request $request)
     {
 
     }

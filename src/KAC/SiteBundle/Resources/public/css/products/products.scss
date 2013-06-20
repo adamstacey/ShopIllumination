@@ -323,3 +323,49 @@ table.data-table .price .currency-tax {
 .product ul.breadcrumbs li {
     padding: 4px $spacingSmall 3px 13px;
 }
+
+.product-listing {
+    margin: 0 auto;
+
+    position: relative;
+
+    border: 3px solid $colourGreyLight;
+    @include boxGlow($colourGrey, 10px, 0, 1);
+}
+
+.product-listing .name {
+    padding: 5px;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    line-height: 100%;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    @include selectNone;
+}
+
+.product-listing .new {
+    height: 28px;
+    width: 28px;
+
+    position: absolute;
+    right: -8px;
+    top: -8px;
+
+    display: block;
+
+    @include highlightedVerticalGradientDarkRed;
+    @include boxGlow($colourDarkRed, 5px);
+    border: 1px solid $colourWhite;
+    @include fontSize($fontSizeExtraSmall);
+    @include equalBorderRadius(15px);
+    line-height: 28px;
+    color: #fff;
+    text-align: center;
+    @include selectNone;
+}
