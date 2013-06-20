@@ -35,7 +35,7 @@
             <div id="submenu-department-brands">
                 {% for brand in brands %}
                     {% if brand.images.0.publicPath is defined %}
-                        <a class="submenu-brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ brand.images.0.publicPath | apply_filter('logo_thumbnail') }}" border="0" alt="{{ brand.description.name|raw }}" width="77" height="39" /></a>
+                        <a class="submenu-brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ brand.images.0.publicPath | apply_filter('logo_medium') }}" border="0" alt="{{ brand.description.name|raw }}" width="77" height="39" /></a>
                     {% endif %}
                 {% endfor %}
             </div>

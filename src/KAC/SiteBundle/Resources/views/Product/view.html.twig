@@ -139,7 +139,7 @@
                                             <div class="widget widget-2-of-7">
                                                 {% if thumbnail_image %}
                                                     <ul class="etalage etalage-inset">
-                                                        <li><img class="etalage_source_image" src="{{ thumbnail_image.publicPath | apply_filter('product_thumbnail') }}" alt="{{ product.description.header }}" /></li>
+                                                        <li><img class="etalage_source_image" src="{{ thumbnail_image.publicPath | apply_filter('product_medium') }}" alt="{{ product.description.header }}" /></li>
                                                     </ul>
                                                 {% endif %}
                                             </div>
@@ -150,7 +150,7 @@
                                                         <div class="widget-group clearfix">
                                                             <div class="widget widget-1-of-3">
                                                                 {% if product.brand.description.logoImage %}
-                                                                    <img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail') }}" alt="{{ product.brand.description.name }}" />
+                                                                    <img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_medium') }}" alt="{{ product.brand.description.name }}" />
                                                                 {% endif %}
                                                             </div>
                                                             <div class="widget widget-2-of-3 clearfix">
