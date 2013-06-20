@@ -16,6 +16,7 @@ bin/*
 composer.phar
 web/uploads/*
 web/bundles/*
+web/media/*
 
 # Generated files
 web/google-products.xml
