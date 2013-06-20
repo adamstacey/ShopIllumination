@@ -448,4 +448,5 @@ CREATE INDEX IDX_A5F8B9FAC59D180C ON routing (secondary_id);
 INSERT INTO `routing` (`object_id`, `object_type`, `locale`, `url`, `created_at`, `updated_at`, `secondary_id`) VALUES
 (7, 'brand_with_department', 'en', 'brand/cda/kitchen-built-in-microwave-ovens', '2013-06-13 00:00:00', '2013-06-13 00:00:00', 11);
 ALTER TABLE redirects ADD secondary_id INT NOT NULL;
+UPDATE images i SET object_type = 'brand' WHERE (SELECT bd.id FROM brand_descriptions bd WHERE i.id = bd.logo_image_id) > 0;
 SET FOREIGN_KEY_CHECKS = 1;
