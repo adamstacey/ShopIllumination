@@ -1,10 +1,10 @@
 set :domain, "staging.kitchenappliancecentre.co.uk"
 set :user, "root"
-set :deploy_to, "/var/www/vhosts/#{domain}/webapps"
+set :deploy_to, "/var/www/vhosts/#{domain}"
 ssh_options[:port] = 2020
 set :shared_files, [app_path + "/config/parameters.yml", web_path + "/app_dev.php"]
 
-server "staging.kitchenappliancecentre.co.uk", :app, :web, :db, :primary => true
+server "server.kitchenappliancecentre.co.uk", :app, :web, :db, :primary => true
 
 task :include_app_dev do
     capifony_pretty_print "--> Including app_dev.php"

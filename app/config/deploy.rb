@@ -33,10 +33,20 @@ set :dump_assetic_assets, true
 set :model_manager, "doctrine"
 
 # Hooks
+before 'symfony:composer:install', 'composer:copy_vendors'
+before 'symfony:composer:update', 'composer:copy_vendors'
 after "deploy:update_code", "deploy:chown_directories"
 after "deploy:update_code", "deploy:flush_apc"
 after "deploy", "deploy:cleanup"
 
+namespace :composer do
+  task :copy_vendors, :except => { :no_release => true } do
+    capifony_pretty_print "--> Copy vendor file from previous release"
+
+    run "vendorDir=#{current_path}/vendor; if [ -d $vendorDir ] || [ -h $vendorDir ]; then cp -a $vendorDir #{latest_release}/vendor; fi;"
+    capifony_puts_ok
+  end
+end
 namespace :deploy do
   desc "Set permissions"
   task :chown_directories do
