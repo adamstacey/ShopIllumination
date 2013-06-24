@@ -7,8 +7,9 @@ require 'capistrano/ext/multistage'
 # Main deployment configuration
 set :keep_releases,  5
 ssh_options[:forward_agent] = true
-set :deploy_via, :remote_cache
 default_run_options[:pty] = true
+#set :deploy_via, :remote_cache
+set :deploy_via, :copy
 
 # Permissions
 set :writable_dirs,     ["app/cache", "app/logs"]
@@ -76,4 +77,4 @@ namespace :deploy do
   end
 end
 
-#logger.level = Logger::MAX_LEVEL
+logger.level = Logger::MAX_LEVEL
