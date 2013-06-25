@@ -545,7 +545,6 @@
 
         <field name="_version_" type="long" indexed="true"  stored="true"/>
 
-
         <!-- catchall field, containing all other searchable text fields (implemented
              via copyField further on in this schema  -->
         <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
@@ -554,6 +553,35 @@
 
         <!-- Sortable fields -->
         <field name="header_sort" type="alphaOnlySort" indexed="true" stored="false" multiValued="false"/>
+
+
+        <!-- Dynamic fields -->
+        <dynamicField name="*_i"  type="int"    indexed="true"  stored="true"/>
+        <dynamicField name="*_s"  type="string"  indexed="true"  stored="true"/>
+        <dynamicField name="*_l"  type="long"   indexed="true"  stored="true"/>
+        <dynamicField name="*_t"  type="text_general"    indexed="true"  stored="true"/>
+        <dynamicField name="*_txt" type="text_general"    indexed="true"  stored="true" multiValued="true"/>
+        <dynamicField name="*_en"  type="text_en"    indexed="true"  stored="true" multiValued="true" />
+        <dynamicField name="*_b"  type="boolean" indexed="true"  stored="true"/>
+        <dynamicField name="*_f"  type="float"  indexed="true"  stored="true"/>
+        <dynamicField name="*_d"  type="double" indexed="true"  stored="true"/>
+
+        <dynamicField name="*_dt" type="date"    indexed="true"  stored="true"/>
+
+        <!-- some trie-coded dynamic fields for faster range queries -->
+        <dynamicField name="*_ti" type="tint"    indexed="true"  stored="true"/>
+        <dynamicField name="*_tl" type="tlong"   indexed="true"  stored="true"/>
+        <dynamicField name="*_tf" type="tfloat"  indexed="true"  stored="true"/>
+        <dynamicField name="*_td" type="tdouble" indexed="true"  stored="true"/>
+        <dynamicField name="*_tdt" type="tdate"  indexed="true"  stored="true"/>
+
+        <dynamicField name="*_pi"  type="pint"    indexed="true"  stored="true"/>
+        <dynamicField name="*_c"   type="currency" indexed="true"  stored="true"/>
+
+        <dynamicField name="ignored_*" type="ignored" multiValued="true"/>
+        <dynamicField name="attr_*" type="string" indexed="true" stored="true" multiValued="true"/>
+
+        <dynamicField name="random_*" type="random" />
     </fields>
 
     <!-- Field to use to determine and enforce document uniqueness.
