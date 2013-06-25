@@ -256,9 +256,9 @@
                                     <div id="filter-price" class="filter price-range-filter">
                                         <div class="range-slider-values">
                                             <span>&pound;</span>
-                                            <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0)|number_format(0), true) }}" />
+                                            <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', '%.2f'|format(stats.getResult('low_price').min|default(0)), true) }}" />
                                             <span>&nbsp;-&nbsp;</span>
-                                            <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999)|number_format(0), true) }}" />
+                                            <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', '%.2f'|format(stats.getResult('high_price').max|default(9999)), true) }}" />
                                         </div>
                                         <div class="price-range" id="price-range-slider"></div>
                                     </div>
