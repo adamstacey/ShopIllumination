@@ -48,10 +48,9 @@ class ProductIndexer extends Indexer
          */
         $em = $this->getDoctrine()->getManager();
 
-        // Fetch images
+        // Fetch    images
         $images = $em->getRepository('KAC\SiteBundle\Entity\Product\Image')->findBy(array(
-            'objectId' => $product->getId(),
-            'imageType' => 'product',
+            'product' => $product->getId(),
         ));
 
         $document->setField('id', $product->getId());
@@ -63,6 +62,14 @@ class ProductIndexer extends Indexer
         $document->setField('page_title', $product->getDescription()->getPageTitle());
         $document->setField('variants_count', count($product->getVariants()));
 
+        // Add the image for the product
+        if(count($images) > 0) {
+            $document->setField("thumbnail_path", $images[0]->getPublicPath());
+            foreach($images as $image)
+            {
+                $document->addField("image_paths", $image->getPublicPath());
+            }
+        }
 
         $document->setField('available_for_purchase', $product->getAvailableForPurchase());
         $document->setField('feature_comparison', $product->getFeatureComparison());
@@ -160,12 +167,15 @@ class ProductIndexer extends Indexer
 
             // Add the image for the variant
             $variantImages = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant\Image')->findBy(array(
-                'objectId' => $variant->getId(),
-                'imageType' => 'variant',
+                'variant' => $variant->getId(),
             ));
 
             if(count($variantImages) > 0) {
-                $document->setField("variant_image_paths", $variantImages[0]->getPublicPath());
+                $document->setField("variant_thumbnail_path", $variantImages[0]->getPublicPath());
+                foreach($variantImages as $image)
+                {
+                    $document->addField("variant_image_paths", $image->getPublicPath());
+                }
             }
 
             $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
@@ -180,11 +190,6 @@ class ProductIndexer extends Indexer
 
         // Add the brand logo
         $document->setField('brand_logo', $this->getProperty($product, 'brand.description.logoImage.originalPath'));
-
-        // Add the image for the variant
-        if(count($images) > 0) {
-            $document->setField("image_path", $images[0]->getPublicPath());
-        }
 
         return $document;
     }
