@@ -56,8 +56,10 @@ class RoutingController extends Controller
             }
         }
 
-        // If no route was found return a 404 error
-        throw $this->createNotFoundException();
+        // If no route was found return a hard 404 error
+        $twig = $this->container->get('templating');
+        $content = $twig->render('KACSiteBundle:Includes:error404.html.twig');
+        return new Response($content, 404, array('Content-Type', 'text/html'));
     }
 
     /**
@@ -68,7 +70,7 @@ class RoutingController extends Controller
     private function isObjectViewable($object)
     {
         // Check if the object is available
-        if(method_exists($object, 'getStatus') && $object->getStatus() !== 'a') {
+        if (method_exists($object, 'getStatus') && $object->getStatus() !== 'a') {
             return false;
         }
 
