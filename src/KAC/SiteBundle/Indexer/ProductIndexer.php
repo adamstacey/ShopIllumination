@@ -128,9 +128,10 @@ class ProductIndexer extends Indexer
                 if($feature && $feature->getFeatureGroup() && $feature->getFeature())
                 {
                     $document->addField(
-                        $helper->escapeTerm(htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())),
+                        $helper->escapeTerm(trim(preg_replace("/&#?[a-z0-9]{2,8};/i","", htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())))),
                         $feature->getFeature()->getName()
                     );
+//                    \Doctrine\Common\Util\Debug::dump($helper->escapeTerm(preg_replace("/&#?[a-z0-9]{2,8};/i","", 'attr_feature_'.$feature->getFeatureGroup()->getName())));
 
                     // Fetch the relevant department to feature entity
                     $departmentToFeature = $em->createQuery("
