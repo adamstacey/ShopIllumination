@@ -17,11 +17,6 @@
     <meta name="description" content="{{ department.metaDescription }}">
     <meta name="keywords" content="{{ department.metaKeywords }}">
     <meta name="fragment" content="!">
-    {#{% if departmentListing.brandId > 0 %}#}
-    {#<link rel="canonical" href="{{ asset(path('department_with_brand_view_all', {'url': url, 'brand': departmentListing.brand}), 'nocdn') }}" />#}
-    {#{% else %}#}
-    {#<link rel="canonical" href="{{ asset(path('department_view_all', {'url': url}), 'nocdn') }}" />#}
-    {#{% endif %}#}
 {% endblock %}
 
 {% block header %}
@@ -59,7 +54,6 @@
     {% endif %}
 {% endblock %}
 
-
 {% block body %}
     <section class="clearfix">
         <div class="widget-group clearfix mbm">
@@ -69,9 +63,10 @@
                         <li>{{ department.description.header }}</li>
                         {% for parent in department.parents %}
                             {% if parent.parent != null and parent.level != 1  %}
-                                <li><a href="{{ path('listing_department', {'departmentId': parent.id}) }}">{{ parent.description.header }}</a></li>
+                                <li><a href="{{ path('routing', {'url': parent.url}) }}">{{ parent.description.header }}</a></li>
                             {% endif %}
                         {% endfor %}
+                        
                     </ul>
                 </div>
             {% else %}
@@ -88,7 +83,12 @@
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget mbl">
                         <header class="ui-widget-header ui-corner-top">
-                            <h2>Found {{ pagination.totalItemCount is defined ? pagination.totalItemCount : 0 }} Products</h2>
+                            {% if pagination.totalItemCount is defined %}
+                                {% set totalItemCount = pagination.totalItemCount %}
+                            {% else %}
+                                {% set totalItemCount = 0 %}
+                            {% endif %}
+                            <h2>Found {{ totalItemCount }} Product{{ totalItemCount == 1 ? '' : 's' }}</h2>
                         </header>
                         <section class="ui-widget-content ui-corner-all">
                             <div id="product-sorting">
