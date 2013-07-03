@@ -3,13 +3,13 @@ avalanche_imagine:
         # Logos
         logo_thumbnail:
             type:   thumbnail
-            options: { size: [50, 25], mode: inset, quality: 60 }
+            options: { size: [50, 25], mode: inset }
         logo_medium:
             type:   resize
-            options: { size: [100, 50], quality: 100 }
+            options: { size: [100, 50] }
         logo_large:
             type:   resize
-            options: { size: [300, 150], quality: 100 }
+            options: { size: [300, 150] }
         # Logos
         gallery_thumbnail:
             type:   thumbnail
