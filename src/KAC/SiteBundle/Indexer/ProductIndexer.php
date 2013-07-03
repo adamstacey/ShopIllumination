@@ -23,19 +23,10 @@ class ProductIndexer extends Indexer
     {
         // If product does not contain all the required fields ignore it
         if (count($product->getDescriptions()) === 0) {
+            \Doctrine\Common\Util\Debug::dump("Nope1");
             return;
         }
 
-        // Check that the product is not disabled
-        if ($product->getStatus() !== "a")
-        {
-            return;
-        }
-        // Ensure that the product has at least one description
-        if ($product->getDescription() === null)
-        {
-            return;
-        }
         $helper = $query->getHelper();
         $document = $query->createDocument();
 

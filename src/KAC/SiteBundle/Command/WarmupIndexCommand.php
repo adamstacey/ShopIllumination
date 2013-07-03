@@ -33,10 +33,11 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $productIndexer->delete();
 
         // Load products
-        $query = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\\Product p");
+        $query = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\\Product p WHERE p.status = 'a'");
         $iterableResult = $query->iterate();
 
         // Index products
+        $i=1;
         while (($row = $iterableResult->next()) !== false) {
             try {
                 $product = $row[0];
@@ -47,12 +48,15 @@ class WarmupIndexCommand extends ContainerAwareCommand
                 if($document)
                 {
                     $buffer->addDocument($document);
+                } else {
+                    $output->writeln("Nope");
                 }
 
                 $em->detach($row[0]);
             } catch (\Exception $e) {
                 $output->writeln("An error occurred");
             }
+            $i++;
         }
 
         try {
@@ -60,6 +64,7 @@ class WarmupIndexCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $output->writeln("An error occurred");
         }
+        $output->writeln($i);
 
         $output->writeln('Finished!');
     }
