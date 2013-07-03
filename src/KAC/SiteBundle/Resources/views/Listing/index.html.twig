@@ -21,13 +21,13 @@
 
 {% block header %}
     {% if department is not null and brand is null %}
-        <h1>{{ department.description.header }}</h1>
+        <h1 class="mtl mbs">{{ department.description.header }}</h1>
     {% elseif department is null and brand is not null %}
-        <h1>{{ brand.description.header }}</h1>
+        <h1 class="mtl mbs">{{ brand.description.header }}</h1>
     {% elseif department is not null and brand is not null %}
-        <h1>{{ brand.description.header }} {{ department.description.header }}</h1>
+        <h1 class="mtl mbs">{{ brand.description.header }} {{ department.description.header }}</h1>
     {% else %}
-        <h1>Products</h1>
+        <h1 class="mtl mbs">Products</h1>
     {% endif %}
 
     {% if app.request.query.get('q', '') is not empty %}
@@ -66,7 +66,7 @@
                                 <li><a href="{{ path('routing', {'url': parent.url}) }}">{{ parent.description.header }}</a></li>
                             {% endif %}
                         {% endfor %}
-                        
+                        <li><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
                     </ul>
                 </div>
             {% else %}
