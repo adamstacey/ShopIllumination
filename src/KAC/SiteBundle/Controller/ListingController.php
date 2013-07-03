@@ -23,7 +23,6 @@ class ListingController extends Controller
 {
     /**
      * @Route("/products", name="listing_products")
-     * @Route("/all/products", name="listing_products_all", defaults={"all" = null})
      * @Route("/department/{departmentId}", name="listing_department", defaults={"departmentId" = null})
      * @Route("//brand/{brandId}", name="listing_brand", defaults={"brandId" = null})
      * @Route("/department/{departmentId}/brand/{brandId}", name="listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
