@@ -14170,6 +14170,7 @@ function updateBasketSummary() {
         }
     });
 }
+
 $(document).ready(function() {
     $(".slider").rhinoslider({
         randomOrder: true,
