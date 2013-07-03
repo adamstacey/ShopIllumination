@@ -23,12 +23,13 @@ class ListingController extends Controller
 {
     /**
      * @Route("/products", name="listing_products")
+     * @Route("/all/products", name="listing_products_all", defaults={"all" = null})
      * @Route("/department/{departmentId}", name="listing_department", defaults={"departmentId" = null})
      * @Route("//brand/{brandId}", name="listing_brand", defaults={"brandId" = null})
      * @Route("/department/{departmentId}/brand/{brandId}", name="listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
      * @Method({"GET"})
      */
-	public function indexAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
+	public function indexAction(Request $request, $departmentId=null, $brandId=null, $admin=false, $all=false)
     {
         // Ensure user has the correct permissions
         if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
@@ -139,6 +140,12 @@ class ListingController extends Controller
         }
         if($brand) {
             $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
+        }
+
+        // If all was set the limit flag
+        if($all)
+        {
+            $request->query->set('limit', 99999999);
         }
 
         // Add filters for any flags that the user has set
