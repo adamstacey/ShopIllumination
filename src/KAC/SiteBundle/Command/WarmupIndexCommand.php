@@ -33,12 +33,15 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $productIndexer->delete();
 
         // Load products
-        $query = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\\Product p");
+        $query = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\\Product p WHERE p.status = 'a'");
         $iterableResult = $query->iterate();
+        $document = null;
 
         // Index products
-        while (($row = $iterableResult->next()) !== false) {
-            try {
+        $i=1;
+
+        try {
+            while (($row = $iterableResult->next()) !== false) {
                 $product = $row[0];
 
                 // Create the document and populate the data
@@ -47,19 +50,17 @@ class WarmupIndexCommand extends ContainerAwareCommand
                 if($document)
                 {
                     $buffer->addDocument($document);
+                    $i++;
                 }
 
                 $em->detach($row[0]);
-            } catch (\Exception $e) {
-                $output->writeln("An error occurred");
             }
-        }
 
-        try {
             $buffer->flush();
         } catch (\Exception $e) {
             $output->writeln("An error occurred");
         }
+        $output->writeln($i . ' documents created');
 
         $output->writeln('Finished!');
     }

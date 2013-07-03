@@ -23,19 +23,10 @@ class ProductIndexer extends Indexer
     {
         // If product does not contain all the required fields ignore it
         if (count($product->getDescriptions()) === 0) {
+            \Doctrine\Common\Util\Debug::dump("Nope1");
             return;
         }
 
-        // Check that the product is not disabled
-        if ($product->getStatus() !== "a")
-        {
-            return;
-        }
-        // Ensure that the product has at least one description
-        if ($product->getDescription() === null)
-        {
-            return;
-        }
         $helper = $query->getHelper();
         $document = $query->createDocument();
 
@@ -137,9 +128,10 @@ class ProductIndexer extends Indexer
                 if($feature && $feature->getFeatureGroup() && $feature->getFeature())
                 {
                     $document->addField(
-                        $helper->escapeTerm(htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())),
+                        $helper->escapeTerm(trim(preg_replace("/&#?[a-z0-9]{2,8};/i","", htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())))),
                         $feature->getFeature()->getName()
                     );
+//                    \Doctrine\Common\Util\Debug::dump($helper->escapeTerm(preg_replace("/&#?[a-z0-9]{2,8};/i","", 'attr_feature_'.$feature->getFeatureGroup()->getName())));
 
                     // Fetch the relevant department to feature entity
                     $departmentToFeature = $em->createQuery("

@@ -28,7 +28,7 @@ class ListingController extends Controller
      * @Route("/department/{departmentId}/brand/{brandId}", name="listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
      * @Method({"GET"})
      */
-	public function indexAction(Request $request, $departmentId=null, $brandId=null, $admin=false)
+	public function indexAction(Request $request, $departmentId=null, $brandId=null, $admin=false, $all=false)
     {
         // Ensure user has the correct permissions
         if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
@@ -50,13 +50,12 @@ class ListingController extends Controller
 
         if($departmentId) {
             try {
-                $department = $em->getRepository('KAC\SiteBundle\Entity\Department')->findActiveDepartment($departmentId);
-                $departments[] = $department;
+                $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
             } catch(NoResultException $e) {
                 throw new NotFoundHttpException("Product not found");
             }
         } else {
-            $departments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findActiveDepartments();
+            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
         }
 
         // If brand was specified fetch from the database
@@ -139,6 +138,12 @@ class ListingController extends Controller
         }
         if($brand) {
             $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
+        }
+
+        // If all was set the limit flag
+        if($all)
+        {
+            $request->query->set('limit', 99999999);
         }
 
         // Add filters for any flags that the user has set

@@ -15,11 +15,19 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RoutingController extends Controller
 {
     /**
-     * @Route("/{url}.html", name = "routing_html", requirements = {"url": ".+"})
-     * @Route("/{url}", name = "routing", requirements = {"url": ".+"})
+     * @Route("/all/{url}.html", name = "routing_all", requirements = {"url": ".+"})
      * @Method({"GET"})
      */
-    public function routingAction(Request $request, $url)
+    public function routingAllAction(Request $request, $url)
+    {
+        return $this->routingAction($request, $url, true);
+    }
+
+    /**
+     * @Route("/{url}.html", name = "routing", requirements = {"url": ".+"})
+     * @Method({"GET"})
+     */
+    public function routingAction(Request $request, $url, $all=false)
     {
         // Tidy up URL
         $url = trim($url);
@@ -41,15 +49,23 @@ class RoutingController extends Controller
                 switch (get_class($routingObject))
                 {
                     case 'KAC\SiteBundle\Entity\Brand\Routing':
-                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId()), $request->query->all());
+                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'all' => $all), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Brand\DepartmentRouting':
-                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'departmentId' => $routingObject->getSecondaryId()), $request->query->all());
+                        return $this->forward('KACSiteBundle:Listing:index', array('brandId' => $routingObject->getObjectId(), 'departmentId' => $routingObject->getSecondaryId(), 'all' => $all), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Department\Routing':
-                        return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId()), $request->query->all());
+                        return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'all' => $all), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Product\Routing':
+                        if($all)
+                        {
+                            // All flag should be ignored for the product view page
+                            $twig = $this->container->get('templating');
+                            $content = $twig->render('KACSiteBundle:Includes:error404.html.twig');
+                            return new Response($content, 404, array('Content-Type', 'text/html'));
+                        }
+
                         return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()), $request->query->all());
                         break;
                 }
