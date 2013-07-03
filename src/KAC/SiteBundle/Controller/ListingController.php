@@ -51,6 +51,7 @@ class ListingController extends Controller
         if($departmentId) {
             try {
                 $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+                $department = $departments[0];
             } catch(NoResultException $e) {
                 throw new NotFoundHttpException("Product not found");
             }
