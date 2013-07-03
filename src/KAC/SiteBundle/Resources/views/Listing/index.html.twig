@@ -21,13 +21,13 @@
 
 {% block header %}
     {% if department is not null and brand is null %}
-        <h1 class="mtl mbs">{{ department.description.header }}</h1>
+        <h1 class="mtl mbn">{{ department.description.header }}</h1>
     {% elseif department is null and brand is not null %}
-        <h1 class="mtl mbs">{{ brand.description.header }}</h1>
+        <h1 class="mtl mbn">{{ brand.description.header }}</h1>
     {% elseif department is not null and brand is not null %}
-        <h1 class="mtl mbs">{{ brand.description.header }} {{ department.description.header }}</h1>
+        <h1 class="mtl mbn">{{ brand.description.header }} {{ department.description.header }}</h1>
     {% else %}
-        <h1 class="mtl mbs">Products</h1>
+        <h1 class="mtl mbn">Products</h1>
     {% endif %}
 
     {% if app.request.query.get('q', '') is not empty %}
@@ -57,21 +57,17 @@
 {% block body %}
     <section class="clearfix">
         <div class="widget-group clearfix mbm">
-            {% if department.parents|length > 0 %}
-                <div class="widget widget-7-of-8">
-                    <ul class="breadcrumbs" itemprop="breadcrumb">
-                        <li>{{ department.description.header }}</li>
-                        {% for parent in department.parents %}
-                            {% if parent.parent != null and parent.level != 1  %}
-                                <li><a href="{{ path('routing', {'url': parent.url}) }}">{{ parent.description.header }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-                        <li><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
-                    </ul>
-                </div>
-            {% else %}
-                <div class="widget widget-7-of-8">&nbsp;</div>
-            {% endif %}
+            <div class="widget widget-7-of-8">
+                <ul class="breadcrumbs" itemprop="breadcrumb">
+                    <li>{{ department.description.header }}</li>
+                    {% for parent in department.parents %}
+                        {% if parent.parent != null and parent.level != 1  %}
+                            <li><a href="{{ path('routing', {'url': parent.url}) }}">{{ parent.description.header }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
+                </ul>
+            </div>
             <div class="widget widget-1-of-8">
                 {% if is_granted('ROLE_ADMIN') and admin == false %}
                     {#<a href="{{ path('admin_'~app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}" class="fr button button-blue button-small">Admin Mode</a>#}
