@@ -29,7 +29,6 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $solarium = $this->getContainer()->get('solarium.client.product');
         $productIndexer = new ProductIndexer($solarium, $this->getContainer()->get('doctrine'));
         $buffer = $solarium->getPlugin('bufferedadd');
-        $buffer->setBufferSize(25);
 
         $productIndexer->delete();
 
