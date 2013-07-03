@@ -51,13 +51,12 @@ class ListingController extends Controller
 
         if($departmentId) {
             try {
-                $department = $em->getRepository('KAC\SiteBundle\Entity\Department')->findActiveDepartment($departmentId);
-                $departments[] = $department;
+                $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
             } catch(NoResultException $e) {
                 throw new NotFoundHttpException("Product not found");
             }
         } else {
-            $departments = $em->getRepository('KAC\SiteBundle\Entity\Department')->findActiveDepartments();
+            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
         }
 
         // If brand was specified fetch from the database

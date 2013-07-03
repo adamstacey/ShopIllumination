@@ -2,7 +2,6 @@
     {% set level = 1 %}
 {% endif %}
 {% for department in departments %}
-    {% if level > 1 or (rootDepartment is not null or (level == 1 and department.parent is null)) %}
         <li>
             {% if brand is null %}
                 {% set url = get_listing_url('department', department.id) %}
@@ -25,5 +24,4 @@
                 </ul>
             {% endif %}
         </li>
-    {% endif %}
 {% endfor %}
