@@ -41,13 +41,14 @@ class Basket
         $this->items[] = $item;
     }
 
-    public function removeItem(BasketItem $item)
+    public function getItem($index)
     {
-        $key = array_search($item, $this->items);
-        if($key)
-        {
-            unset($this->items[$key]);
-        }
+        return $this->items[$index];
+    }
+
+    public function removeItem($index)
+    {
+        unset($this->items[$index]);
     }
 
     public function getTotalQuantity()

@@ -2,6 +2,8 @@
 
 namespace KAC\SiteBundle\Controller;
 
+use KAC\SiteBundle\Form\Basket\BasketType;
+use KAC\SiteBundle\Form\Basket\NewBasketItemType;
 use KAC\SiteBundle\Model\BasketItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,22 +18,36 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class BasketController extends Controller
 {
     /**
+     * @Route("/small_summary.html", name="basket_small_summary")
+     */
+    public function smallSummaryAction(Request $request)
+    {
+        $manager = $this->container->get('kac_site.manager.basket');
+        $basket = $manager->getBasket();
+
+        return $this->render('KACSiteBundle:Basket:small_summary.html.twig', array(
+            'basket' => $basket,
+        ));
+    }
+
+    /**
      * @Route("/summary.html", name="basket_summary")
      */
     public function summaryAction(Request $request)
     {
-        $basket = $this->get('session')->get('basket');
+        $manager = $this->container->get('kac_site.manager.basket');
+        $basket = $manager->getBasket();
 
-        return $this->render('KACSiteBundle:Basket:summary.html.twig', array(
-            'basket' => $basket,
-        ));
-    }
-    /**
-     * @Route("/your-basket.html", name="basket_detail")
-     */
-    public function detailAction(Request $request)
-    {
-        $basket = $this->get('session')->get('basket');
+        $form = $this->createForm(new BasketType(), $basket);
+        $form->handleRequest($request);
+
+        if($form->isValid())
+        {
+            $manager->refreshBasket();
+            $manager->saveBasket();
+
+            return $this->redirect($this->generateUrl('basket_summary'));
+        }
 
         return $this->render('KACSiteBundle:Basket:summary.html.twig', array(
             'basket' => $basket,
@@ -43,29 +59,52 @@ class BasketController extends Controller
      */
     public function addAction(Request $request)
     {
-        if(!$request->query->has('productId')) {
-            throw $this->createNotFoundException('You must specify the product ID');
-        }
-
-        $productId = $request->query->get('productId');
-        $variantId = $request->query->get('variantId', $productId);
-        $quantity = $request->query->get('quantity', 1);
-
         $manager = $this->container->get('kac_site.manager.basket');
         $basket = $manager->getBasket();
 
-        // Create the item
         $item = new BasketItem();
-        $item->setProductId($productId);
-        $item->setVariantId($variantId);
-        $item->setQuantity($quantity);
+        $form = $this->createForm(new NewBasketItemType(), $item);
+        $form->handleRequest($request);
 
-        $basket->addItem($item);
-        $manager->saveBasket();
+        if($form->isValid())
+        {
+            $basket->addItem($item);
 
-        \Doctrine\Common\Util\Debug::dump($basket->getItems());
+            $manager->refreshBasket();
+            $manager->saveBasket();
 
-        return new Response('Added item');
+            return $this->redirect($this->generateUrl('basket_summary'));
+        }
+
+//        \Doctrine\Common\Util\Debug::dump($form);die();
+        return new Response('Failed to add item');
+    }
+
+    /**
+     * @Route("/remove.html", name="basket_update")
+     */
+    public function updateAction(Request $request)
+    {
+        if(!$request->query->has('item')) {
+            throw $this->createNotFoundException('You must specify the basket item');
+        }
+
+        $index = $request->query->get('item');
+        $manager = $this->container->get('kac_site.manager.basket');
+        $basket = $manager->getBasket();
+
+        $item = $basket->getItem($index);
+
+        $form = $this->createForm(new NewBasketItemType(), $item);
+        $form->handleRequest($request);
+
+        if($form->isValid())
+        {
+            $manager->refreshBasket();
+            $manager->saveBasket();
+
+            return $this->redirect($this->generateUrl('basket_summary'));
+        }
     }
 
     /**
@@ -73,7 +112,24 @@ class BasketController extends Controller
      */
     public function removeAction(Request $request)
     {
+        if(!$request->query->has('item')) {
+            throw $this->createNotFoundException('You must specify the basket item');
+        }
 
+        $index = $request->query->get('item');
+        $manager = $this->container->get('kac_site.manager.basket');
+        $basket = $manager->getBasket();
+
+        $basket->removeItem($index);
+        $manager->refreshBasket();
+        $manager->saveBasket();
+
+        if($basket->getTotalItems() > 0)
+        {
+            return $this->redirect($this->generateUrl('basket_summary'));
+        } else {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
     }
 
     /**
@@ -84,6 +140,6 @@ class BasketController extends Controller
         $manager = $this->container->get('kac_site.manager.basket');
         $manager->clearBasket();
 
-        return new Response('Cleared basket');
+        return $this->redirect($this->generateUrl('homepage'));
     }
 }
