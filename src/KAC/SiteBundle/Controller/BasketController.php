@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class BasketController extends Controller
 {
     /**
-     * @Route("/summary", name="basket_summary")
+     * @Route("/summary.html", name="basket_summary")
      */
     public function summaryAction(Request $request)
     {
@@ -24,5 +24,40 @@ class BasketController extends Controller
         return $this->render('KACSiteBundle:Basket:summary.html.twig', array(
             'basket' => $basket,
         ));
+    }
+    /**
+     * @Route("/your-basket.html", name="basket_detail")
+     */
+    public function detailAction(Request $request)
+    {
+        $basket = $this->get('session')->get('basket');
+
+        return $this->render('KACSiteBundle:Basket:summary.html.twig', array(
+            'basket' => $basket,
+        ));
+    }
+
+    /**
+     * @Route("/add.html", name="basket_add")
+     */
+    public function addAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/remove.html", name="basket_remove")
+     */
+    public function removeAction(Request $request)
+    {
+
+    }
+
+    /**
+     * @Route("/clear.html", name="basket_clear")
+     */
+    public function clearAction(Request $request)
+    {
+
     }
 }
