@@ -55,6 +55,63 @@
 {% endblock %}
 
 {% block body %}
+    <style>
+        .product-sorting-container, .product-filtering-container {
+            padding: 5px 0;
+
+            background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
+
+        }
+
+        .product-sorting-container-top, .product-filtering-container {
+            margin: -10px -10px 10px -10px;
+
+            border-bottom: 2px solid #6c8087;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .product-sorting-container-bottom {
+            margin: 10px -10px -10px -10px;
+
+            border-top: 2px solid #6c8087;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .product-sorting-container > div > span, .product-filtering-container > div > span {
+            padding: 0 5px 0 0;
+
+            line-height: 40px;
+            font-size: 11px;
+        }
+
+        .product-sorting-container .selector {
+            margin: 0 5px 0 0;
+        }
+
+        .product-sorting-container .selector span {
+            font-size: 11px;
+        }
+
+        .product-sorting-container .ui-button {
+            padding: 3px 0;
+            margin: 0 0 -4px -4px;
+        }
+
+
+        .product-sorting-container .ui-button span {
+            padding: 0 8px;
+        }
+
+        .product-sorting-container .ui-button .ui-icon {
+            padding: 0;
+        }
+
+        #filters .ui-widget header h2 {
+            letter-spacing: 0px;
+            font-size: 13px;
+            font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+        }
+    </style>
     <section class="clearfix">
         <div class="widget-group clearfix mbm">
             <div class="widget widget-7-of-8">
@@ -74,44 +131,43 @@
                 {% endif %}
             </div>
         </div>
+        {% if pagination.totalItemCount is defined %}
+            {% set totalItemCount = pagination.totalItemCount %}
+        {% else %}
+            {% set totalItemCount = 0 %}
+        {% endif %}
         <div class="widget-group clearfix">
-            <form id="form-filter" class="form" method="GET" action="{#{{ path(app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}#}">
+            <form id="formFilter" class="form" method="GET">
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            {% if pagination.totalItemCount is defined %}
-                                {% set totalItemCount = pagination.totalItemCount %}
-                            {% else %}
-                                {% set totalItemCount = 0 %}
-                            {% endif %}
-                            <h2>Found {{ totalItemCount }} Product{{ totalItemCount == 1 ? '' : 's' }}</h2>
-                        </header>
                         <section class="ui-widget-content ui-corner-all">
-                            <div id="product-sorting">
-                                <div class="fl">
-                                    <div class="product-sorting-title fl">Sort By</div>
-                                    <select name="sort_order" id="listing-sort-order" class="fl">
-                                        <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
-                                        <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
-                                        <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
-                                        <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
-                                        <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
-                                    </select>
+                            <div class="widget-group product-sorting-container product-sorting-container-top clearfix">
+                                <div class="widget widget-1-of-1">
+                                    <span class="fl">Sort By</span>
+                                    <div class="fl prs">
+                                        <select id="sortOrderTop" name="sort_order" class="fill fl">
+                                            <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
+                                            <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
+                                            <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
+                                            <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
+                                            <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
+                                        </select>
+                                    </div>
+                                    <span class="fl">Show</span>
+                                    <div class="fl prs">
+                                        <select id="limitTop" name="limit" class="fill fl">
+                                            <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
+                                            <option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
+                                            <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
+                                            <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
+                                            <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+                                        </select>
+                                    </div>
+                                    <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
+                                    <div class="fr">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div>
                                 </div>
-                                <div class="fr">
-                                    <div class="product-sorting-title fl">Per Page</div>
-                                    <select name="limit" class="fl" id="listing-max-results">
-                                        <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
-                                        <option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
-                                        <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
-                                        <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
-                                        <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
-                                    </select>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <div id="product-pagination-top" class="padding-bottom-15 padding-right-15">
-                                {{ knp_pagination_render(pagination) }}
                             </div>
                             <div id="products">
                                 {% for product in pagination %}
@@ -225,21 +281,62 @@
                                 {% endfor %}
                                 <div class="clear"></div>
                             </div>
-                            <div id="product-pagination-bottom" class="padding-bottom-15 padding-right-15">
-                                {{ knp_pagination_render(pagination) }}
+                            <div class="widget-group product-sorting-container product-sorting-container-bottom clearfix">
+                                <div class="widget widget-1-of-1">
+                                    <span class="fl">Sort By</span>
+                                    <div class="fl prs">
+                                        <select id="sortOrderBottom" class="fill fl">
+                                            <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
+                                            <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
+                                            <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
+                                            <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
+                                            <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
+                                        </select>
+                                    </div>
+                                    <span class="fl">Show</span>
+                                    <div class="fl prs">
+                                        <select id="limitBottom" class="fill fl">
+                                            <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
+                                            <option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
+                                            <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
+                                            <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
+                                            <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+                                        </select>
+                                    </div>
+                                    <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
+                                    <div class="fr">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="clear"></div>
                         </section>
                     </div>
                 </div>
 
                 <div class="widget widget-2-of-7 filters">
                     <div class="ui-widget mbl">
-                        <header class="ui-widget-header ui-corner-top">
-                            <h2>Refine Search By</h2>
-                        </header>
-                        <section class="ui-widget-content ui-corner-all ui-no-padding">
+                        <section class="ui-widget-content ui-corner-all">
+                            <div class="widget-group product-filtering-container clearfix">
+                                <div class="widget widget-1-of-1">
+                                    <span class="fl"><strong>Narrow Search By</strong></span>
+                                    <a class="button button-grey icon-grey fr" data-icon-primary="icon-1113" href="{{ path('routing', {'url': department.url}) }}">Reset All</a>
+                                </div>
+                            </div>
                             <div id="filters">
+                                <div class="ui-widget mbl">
+                                    <header class="ui-widget-header ui-corner-top">
+                                        <h2>
+                                            {% spaceless %}
+                                                Price
+                                                <button data-filter="price" class="fr button button-small button-grey icon-grey actionShowHideFilter" data-icon-primary="icon-1113">Hide</button>
+                                                <button data-filter="price" class="fr button button-small button-grey icon-grey actionResetFilter" data-icon-primary="icon-467">Reset</button>
+                                            {% endspaceless %}
+                                        </h2>
+                                    </header>
+                                    <section class="ui-widget-content ui-corner-bottom">
+                                        <p>sddsfs</p>
+                                    </section>
+                                </div>
                                 <h5 id="filter-price-header" class="no-margin no-border-top">
                                     {% spaceless %}
                                         Price
@@ -348,9 +445,21 @@
                     "icons" : false
                 }
             });
-            $(":input", "#form-settings, #form-filter").live('change', function() {
+
+            $("#sortOrderBottom").live('change', function() {
+                $("#sortOrderTop").val($("#sortOrderBottom").val());
+                $.uniform.update("#sortOrderTop");
+            });
+
+            $("#limitBottom").live('change', function() {
+                $("#limitTop").val($("#limitBottom").val());
+                $.uniform.update("#limitTop");
+            });
+
+            $(":input", "#form-settings, #formFilter").live('change', function() {
                 $(this).closest("form").submit();
             });
+
             $(".action-reset-filter").click(function() {
                 // If the price filter is being reset then reset value to min/max
                 if($(this).data('filter') === "price") {
@@ -374,6 +483,7 @@
                         .removeAttr('selected');
                 }
             });
+
             $("#price-range-slider").slider({
                 range: true,
                 min: parseInt({{ stats.getResult('low_price').min|default(0) }}, 10),
