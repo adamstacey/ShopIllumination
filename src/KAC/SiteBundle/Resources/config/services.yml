@@ -22,6 +22,9 @@ services:
   kac_site.manager.department:
       class: KAC\SiteBundle\Manager\DepartmentManager
       arguments: [@doctrine, @kac_site.manager.seo]
+  kac_site.manager.basket:
+      class: KAC\SiteBundle\Manager\BasketManager
+      arguments: [@doctrine, @session, @jms_serializer]
   kac_site.manager.file:
       class: KAC\SiteBundle\Manager\FileManager
       arguments: [@doctrine]

@@ -1,38 +1,47 @@
 <?php
 namespace KAC\SiteBundle\Model;
 
+use JMS\Serializer\Annotation as Serializer;
+
 class Basket
 {
     /**
      * @var BasketItem[]
+     * @Serializer\Type("array<KAC\SiteBundle\Model\BasketItem>")
      */
-    private $items;
-    private $totalCost;
-    private $totalItems;
-    private $totalQuantity;
-
+    private $items = array();
     /**
-     * @return mixed
+     * @var int
+     * @Serializer\Type("integer")
      */
+    private $totalCost = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $totalItems = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $totalQuantity = 0;
+
     public function getItems()
     {
         return $this->items;
     }
 
-    /**
-     * @param mixed $items
-     */
     public function setItems($items)
     {
         $this->items = $items;
     }
 
-    public function addItem($item)
+    public function addItem(BasketItem $item)
     {
         $this->items[] = $item;
     }
 
-    public function removeItem($item)
+    public function removeItem(BasketItem $item)
     {
         $key = array_search($item, $this->items);
         if($key)
@@ -41,9 +50,6 @@ class Basket
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getTotalQuantity()
     {
         return $this->totalQuantity;
@@ -57,9 +63,6 @@ class Basket
         return $this->totalItems;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTotalCost()
     {
         return $this->totalCost;

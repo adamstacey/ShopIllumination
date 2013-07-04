@@ -1,13 +1,35 @@
 <?php
 namespace KAC\SiteBundle\Model;
 
+use JMS\Serializer\Annotation as Serializer;
+
 class BasketItem
 {
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
     private $productId;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
     private $variantId;
-    private $quantity;
-    private $unitCost;
-    private $totalCost;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $quantity = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $unitCost = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $totalCost = 0;
 
     /**
      * @param mixed $productId
