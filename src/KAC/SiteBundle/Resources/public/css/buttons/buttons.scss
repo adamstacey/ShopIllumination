@@ -38,15 +38,9 @@
 
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
-    display: none;
-}
-
-.ui-button-icon-only {
-    padding: 6px;
-}
-
-.ui-button-icon-only .ui-icon {
-    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: -9999px;
+    width: 0;
 }
 
 input.ui-button {
