@@ -8,7 +8,7 @@ class Basket
 {
     /**
      * @var BasketDeliveryInfo
-     * @Serializer\Type("BasketDeliveryInfo")
+     * @Serializer\Type("KAC\SiteBundle\Model\BasketDeliveryInfo")
      */
     private $delivery = null;
     /**
@@ -49,6 +49,7 @@ class Basket
     public function setDelivery($delivery)
     {
         $this->delivery = $delivery;
+        $delivery->setBasket($this);
     }
 
     /**

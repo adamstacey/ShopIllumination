@@ -82,6 +82,7 @@ class BasketController extends Controller
             }
 
             // If an existing item was found merge the items
+            $loaded = false;
             if($existingItem !== null)
             {
                 $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
@@ -91,6 +92,13 @@ class BasketController extends Controller
                 // Load costs
                 $manager->loadProducts();
                 $item->setUnitCost($item->getVariant()->getPrice()->getListPrice());
+                $item->setRecommendedRetailPrice($item->getVariant()->getPrice()->getRecommendedRetailPrice());
+                $loaded = true;
+            }
+
+            if(!$loaded)
+            {
+                $manager->loadProducts();
             }
 
             $manager->refreshBasket();
@@ -127,6 +135,7 @@ class BasketController extends Controller
 
         if($form->isValid())
         {
+            $manager->loadProducts();
             $manager->refreshBasket();
             $manager->saveBasket();
 
@@ -153,6 +162,7 @@ class BasketController extends Controller
         $basket = $manager->getBasket();
 
         $basket->removeItem($index);
+        $manager->loadProducts();
         $manager->refreshBasket();
         $manager->saveBasket();
 

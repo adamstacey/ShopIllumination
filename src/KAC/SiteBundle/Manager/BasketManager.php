@@ -57,7 +57,7 @@ class BasketManager extends Manager
         {
             $item->calculateSavings();
         }
-        $this->basket->getDelivery()->updateInfo();
+        $this->basket->getDelivery()->updateInfo($this->basket->getItems());
         $this->basket->calculateTotals();
     }
 

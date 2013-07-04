@@ -174,7 +174,7 @@ class BasketItem
     }
 
     /**
-     * @param int $recommendedRetailPrice
+     * @param mixed $recommendedRetailPrice
      */
     public function setRecommendedRetailPrice($recommendedRetailPrice)
     {
@@ -182,7 +182,7 @@ class BasketItem
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getRecommendedRetailPrice()
     {
@@ -190,7 +190,7 @@ class BasketItem
     }
 
     /**
-     * @param int $savings
+     * @param mixed $savings
      */
     public function setSavings($savings)
     {
@@ -198,7 +198,7 @@ class BasketItem
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getSavings()
     {

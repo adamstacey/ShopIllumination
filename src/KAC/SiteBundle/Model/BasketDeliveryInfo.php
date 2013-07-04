@@ -10,21 +10,70 @@ class BasketDeliveryInfo
 
     /**
      * @var Basket
+     * @Serializer\Type("KAC\SiteBundle\Model\Basket")
      */
     private $basket = null;
 
+    /**
+     * @var array
+     * @Serializer\Type("array<string>")
+     */
     private $deliveryOptions = array();
-    private $countryCode = 'GB';
-    private $postZipCode = '';
-    private $weighting = 0;
-    private $weight = 0;
-    private $band = 0;
-    private $zone = 0;
-    private $service = '';
-    private $price = 0;
-    private $notes = '';
-    private $requestedDeliveryDate = '';
+    /**
+     * @var array
+     * @Serializer\Type("array<string>")
+     */
     private $estimatedDeliveryDays = array();
+    /**
+     * @var string
+     * @Serializer\Type("string")
+     */
+    private $requestedDeliveryDate = '';
+    /**
+     * @var string
+     * @Serializer\Type("string")
+     */
+    private $countryCode = 'GB';
+    /**
+     * @var string
+     * @Serializer\Type("string")
+     */
+    private $postZipCode = 'NG162UZ';
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $weighting = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $weight = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $band = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $zone = 0;
+    /**
+     * @var string
+     * @Serializer\Type("string")
+     */
+    private $service = '';
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $price = 0;
+    /**
+     * @var string
+     * @Serializer\Type("string")
+     */
+    private $notes = '';
 
     /**
      * @param null $basket
@@ -754,6 +803,11 @@ class BasketDeliveryInfo
                 }
                 break;
         }
+
+        if($this->getService() === '' && count($this->deliveryOptions) > 0)
+        {
+            $this->setService($this->deliveryOptions[0]['service']);
+        }
     }
 
     public function calculateEstimatedDeliveryDays()
@@ -819,17 +873,16 @@ class BasketDeliveryInfo
                 $estimatedDeliveryDays['start'] = $estimatedDeliveryDaysStart;
                 $estimatedDeliveryDays['end'] = $estimatedDeliveryDaysEnd;
                 $nextDay++;
-                $requestedDeliveryDate = date("F d, Y H:i:s", strtotime("+$nextDay day"));
+
+                $this->setRequestedDeliveryDate(date("F d, Y H:i:s", strtotime("+$nextDay day")));
+                $this->setEstimatedDeliveryDays($estimatedDeliveryDays);
             }
         }
-
-        $this->setRequestedDeliveryDate($requestedDeliveryDate);
-        $this->setEstimatedDeliveryDays($estimatedDeliveryDays);
     }
 
-    public function calculateWeighting()
+    public function calculateWeighting($items)
     {
-        foreach($this->basket->getItems() as $item)
+        foreach($items as $item)
         {
             switch ($item->getVariant()->getDeliveryBand() * 1)
             {
@@ -855,11 +908,11 @@ class BasketDeliveryInfo
         }
     }
 
-    public function calculateWeight()
+    public function calculateWeight($items)
     {
         $this->setWeight(0);
         
-        foreach($this->basket->getItems() as $item)
+        foreach($items as $item)
         {
             $this->setWeight($this->getWeight() + ($item->getVariant()->getWeight() * $item->getQuantity()));
         }
@@ -895,17 +948,17 @@ class BasketDeliveryInfo
             }
         }
 
-        $this->setPrice($deliveryOption->getPrice());
+        $this->setPrice($deliveryOption['price']);
     }
 
-    public function updateInfo()
+    public function updateInfo($items)
     {
         $this->calculateZone();
+        $this->calculateWeighting($items);
+        $this->calculateWeight($items);
+        $this->calculateBand();
         $this->calculateDeliveryOptions();
         $this->calculateEstimatedDeliveryDays();
-        $this->calculateWeighting();
-        $this->calculateWeight();
-        $this->calculateBand();
         $this->getPrice();
     }
 }

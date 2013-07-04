@@ -73,36 +73,29 @@
                                     <td class="ar"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
                                     <td width="1" class="price ar"><strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></td>
                                 </tr>
-                                {#{% if basket.delivery.service != '' %}#}
-                                    {#<tr>#}
-                                        {#<td class="ar"><strong>Delivery Charge (inc. VAT):</strong></td>#}
-                                        {#{% if basket.totals.deliveryCharge > 0 %}#}
-                                            {#<td width="1" class="price ar">&pound;{{ basket.totals.deliveryCharge|number_format(2) }}<input type="hidden" id="delivery-charge" value="&pound;{{ basket.totals.deliveryCharge|number_format(2) }}" /></td>#}
-                                        {#{% else %}#}
-                                            {#{% if basket.delivery.service == 'Collection' %}#}
-                                                {#<td width="1" class="price free ar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>#}
-                                            {#{% else %}#}
-                                                {#<td width="1" class="price free ar">FREE<input type="hidden" id="delivery-charge" value="FREE" /></td>#}
-                                            {#{% endif %}#}
-                                        {#{% endif %}#}
-                                    {#</tr>#}
-                                {#{% endif %}#}
-                                {#{% if basket.totals.discount > 0 %}#}
-                                    {#<tr>#}
-                                        {#<td class="ar"><strong>You Save:</strong></td>#}
-                                        {#<td width="1" class="discount ar">&pound;{{ basket.totals.discount|number_format(2) }}</td>#}
-                                    {#</tr>#}
-                                {#{% endif %}#}
-                                {#{% if basket.discounts|length > 0 %}#}
-                                    {#{% for discount in basket.discounts %}#}
-                                        {#{% if discount.discount > 0 %}#}
-                                            {#<tr>#}
-                                                {#<td class="ar discount-description no-wrap">{{ discount.description }}:</td>#}
-                                                {#<td width="1" class="small green ar discount-price">&pound;{{ discount.discount|number_format(2) }}</td>#}
-                                            {#</tr>#}
-                                        {#{% endif %}#}
-                                    {#{% endfor %}#}
-                                {#{% endif %}#}
+                                {% if basket.delivery.service != '' %}
+                                    <tr>
+                                        <td class="ar"><strong>Delivery Charge (inc. VAT):</strong></td>
+                                        {% if basket.delivery.price > 0 %}
+                                            <td width="1" class="price ar">
+                                                &pound;{{ basket.delivery.price|number_format(2) }}
+                                                <input type="hidden" id="delivery-charge" value="&pound;{{ basket.delivery.price|number_format(2) }}" />
+                                            </td>
+                                        {% else %}
+                                            {% if basket.delivery.service == 'Collection' %}
+                                                <td width="1" class="price free ar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>
+                                            {% else %}
+                                                <td width="1" class="price free ar">FREE<input type="hidden" id="delivery-charge" value="FREE" /></td>
+                                            {% endif %}
+                                        {% endif %}
+                                    </tr>
+                                {% endif %}
+                                {% if basket.totalSavings > 0 %}
+                                    <tr>
+                                        <td class="ar"><strong>You Save:</strong></td>
+                                        <td width="1" class="savings ar">&pound;{{ basket.totalSavings|number_format(2) }}</td>
+                                    </tr>
+                                {% endif %}
                                 <tr>
                                     <td class="ar"><strong>Total to Pay (inc. VAT):</strong></td>
                                     <td width="1" class="price ar"><strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></td>
