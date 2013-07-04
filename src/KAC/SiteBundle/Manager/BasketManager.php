@@ -53,6 +53,11 @@ class BasketManager extends Manager
 
     public function refreshBasket()
     {
+        foreach($this->basket->getItems() as $item)
+        {
+            $item->calculateSavings();
+        }
+        $this->basket->getDelivery()->updateInfo();
         $this->basket->calculateTotals();
     }
 

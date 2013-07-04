@@ -9,6 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BasketItem
 {
     /**
+     * @Serializer\Exclude
+     */
+    private $basket;
+    /**
      * @var int
      * @Serializer\Type("integer")
      * @Assert\NotBlank()
@@ -37,8 +41,17 @@ class BasketItem
      * @var int
      * @Serializer\Type("integer")
      */
+    private $recommendedRetailPrice = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
+    private $savings = 0;
+    /**
+     * @var int
+     * @Serializer\Type("integer")
+     */
     private $totalCost = 0;
-
     /**
      * @Serializer\Exclude
      */
@@ -47,6 +60,22 @@ class BasketItem
      * @Serializer\Exclude
      */
     private $variant;
+
+    /**
+     * @param null $basket
+     */
+    public function setBasket($basket)
+    {
+        $this->basket = $basket;
+    }
+
+    /**
+     * @return null
+     */
+    public function getBasket()
+    {
+        return $this->basket;
+    }
 
     /**
      * @param mixed $productId
@@ -145,6 +174,38 @@ class BasketItem
     }
 
     /**
+     * @param int $recommendedRetailPrice
+     */
+    public function setRecommendedRetailPrice($recommendedRetailPrice)
+    {
+        $this->recommendedRetailPrice = $recommendedRetailPrice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRecommendedRetailPrice()
+    {
+        return $this->recommendedRetailPrice;
+    }
+
+    /**
+     * @param int $savings
+     */
+    public function setSavings($savings)
+    {
+        $this->savings = $savings;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSavings()
+    {
+        return $this->savings;
+    }
+
+    /**
      * @param mixed $variant
      */
     public function setVariant($variant)
@@ -158,5 +219,10 @@ class BasketItem
     public function getVariant()
     {
         return $this->variant;
+    }
+
+    public function calculateSavings()
+    {
+        $this->savings = ($this->recommendedRetailPrice - $this->unitCost) * $this->quantity;
     }
 }
