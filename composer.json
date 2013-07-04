@@ -72,10 +72,6 @@
         {
             "type": "vcs",
             "url": "http://github.com/dancannon/knp-components"
-        },
-        {
-            "type": "vcs",
-            "url": "http://github.com/dancannon/TrsteelCkeditorBundle"
         }
     ]
 }
