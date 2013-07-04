@@ -1,6 +1,6 @@
 <div class="basket-summary-header">
     <a href="#"><span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-252"></span></a>
     <h2>Your basket</h2>
-    <p>Items: <strong>{{ basket.totals.items|default(0) }}</strong></p>
-    <p>Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
+    <p>Items: <strong>{{ basket.totalItems }}</strong></p>
+    <p>Total: <strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></p>
 </div>

@@ -47,11 +47,31 @@ class BasketManager extends Manager
 
     public function clearBasket()
     {
+        $this->basket = null;
         $this->session->remove('basket');
     }
 
     public function refreshBasket()
     {
         $this->basket->calculateTotals();
+    }
+
+    public function loadProducts()
+    {
+        foreach($this->getBasket()->getItems() as $index => $item)
+        {
+            $em = $this->doctrine->getManager();
+            $product = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($item->getProductId());
+            $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($item->getVariantId());
+
+            if($product && $variant)
+            {
+                $item->setProduct($product);
+                $item->setVariant($variant);
+            } else {
+                $this->getBasket()->removeItem($index);
+                $this->refreshBasket();
+            }
+        }
     }
 }

@@ -11,18 +11,8 @@ class NewBasketItemType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('productId', 'entity_id', array(
-            'class' => 'KAC\SiteBundle\Entity\Product',
-            'query_builder' => function(EntityRepository $er, $id) {
-                return $er->createQueryBuilder('p')->andWhere('p.status = \'a\'');
-            },
-        ));
-        $builder->add('variantId', 'entity_id', array(
-            'class' => 'KAC\SiteBundle\Entity\Product\Variant',
-            'query_builder' => function(EntityRepository $er, $id) {
-                return $er->createQueryBuilder('v')->andWhere('v.status = \'a\'');
-            },
-        ));
+        $builder->add('productId', 'integer');
+        $builder->add('variantId', 'integer');
         $builder->add('quantity', 'integer');
     }
 
@@ -36,6 +26,6 @@ class NewBasketItemType extends AbstractType
 
     public function getName()
     {
-        return 'site_new_basket_item';
+        return null;
     }
 }

@@ -37,6 +37,7 @@ class BasketController extends Controller
     {
         $manager = $this->container->get('kac_site.manager.basket');
         $basket = $manager->getBasket();
+        $manager->loadProducts();
 
         $form = $this->createForm(new BasketType(), $basket);
         $form->handleRequest($request);
@@ -51,6 +52,7 @@ class BasketController extends Controller
 
         return $this->render('KACSiteBundle:Basket:summary.html.twig', array(
             'basket' => $basket,
+            'form' => $form,
         ));
     }
 
@@ -68,20 +70,40 @@ class BasketController extends Controller
 
         if($form->isValid())
         {
-            $basket->addItem($item);
+            // Check if an item already exists with that variant
+            $existingItem = null;
+            foreach($basket->getItems() as $itemCheck)
+            {
+                if($item !== $itemCheck && $item->getVariantId() === $itemCheck->getVariantId())
+                {
+                    $existingItem = $itemCheck;
+                    break;
+                }
+            }
+
+            // If an existing item was found merge the items
+            if($existingItem !== null)
+            {
+                $existingItem->setQuantity($existingItem->getQuantity() + $item->getQuantity());
+            } else {
+                $basket->addItem($item);
+
+                // Load costs
+                $manager->loadProducts();
+                $item->setUnitCost($item->getVariant()->getPrice()->getListPrice());
+            }
 
             $manager->refreshBasket();
             $manager->saveBasket();
 
-            return $this->redirect($this->generateUrl('basket_summary'));
+//            return $this->redirect($this->generateUrl('basket_summary'));
         }
 
-//        \Doctrine\Common\Util\Debug::dump($form);die();
-        return new Response('Failed to add item');
+        return new Response();
     }
 
     /**
-     * @Route("/remove.html", name="basket_update")
+     * @Route("/update.html", name="basket_update")
      */
     public function updateAction(Request $request)
     {
@@ -105,6 +127,8 @@ class BasketController extends Controller
 
             return $this->redirect($this->generateUrl('basket_summary'));
         }
+
+        return new Response();
     }
 
     /**

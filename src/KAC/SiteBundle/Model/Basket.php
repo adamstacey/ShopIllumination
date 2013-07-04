@@ -2,12 +2,14 @@
 namespace KAC\SiteBundle\Model;
 
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Basket
 {
     /**
      * @var BasketItem[]
      * @Serializer\Type("array<KAC\SiteBundle\Model\BasketItem>")
+     * @Assert\Valid()
      */
     private $items = array();
     /**
@@ -75,7 +77,8 @@ class Basket
 
         foreach($this->items as $item)
         {
-            $this->totalCost += $item->getUnitCost() * $item->getQuantity();
+            $item->setTotalCost($item->getUnitCost() * $item->getQuantity());
+            $this->totalCost += $item->getTotalCost();
         }
 
     }

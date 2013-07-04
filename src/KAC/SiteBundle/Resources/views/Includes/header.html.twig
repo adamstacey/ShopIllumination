@@ -10,8 +10,8 @@
         <div class="container pr">
             {% include 'KACSiteBundle:Includes:logo.html.twig' %}
             {% include 'KACSiteBundle:Includes:search.html.twig' %}
-            <div id="basket-summary" data-url="{{ path('basket_summary') }}">
-                {% render(controller('KACSiteBundle:Basket:summary')) %}
+            <div id="basket-summary" data-url="{{ path('basket_small_summary') }}">
+                {% render(controller('KACSiteBundle:Basket:smallSummary')) %}
             </div>
             <div class="clear"></div>
         </div>
