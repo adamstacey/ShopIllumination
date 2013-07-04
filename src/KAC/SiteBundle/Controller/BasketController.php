@@ -96,10 +96,15 @@ class BasketController extends Controller
             $manager->refreshBasket();
             $manager->saveBasket();
 
-//            return $this->redirect($this->generateUrl('basket_summary'));
+            if(!$request->isXmlHttpRequest())
+            {
+                return $this->redirect($this->generateUrl('basket_summary'));
+            } else {
+                return new Response(json_encode(array('status' => 'Success')));
+            }
         }
 
-        return new Response();
+        return new Response(json_encode(array('status' => 'Failure')), 400);
     }
 
     /**
@@ -125,10 +130,13 @@ class BasketController extends Controller
             $manager->refreshBasket();
             $manager->saveBasket();
 
-            return $this->redirect($this->generateUrl('basket_summary'));
+            if(!$request->isXmlHttpRequest())
+            {
+                return $this->redirect($this->generateUrl('basket_summary'));
+            }
         }
 
-        return new Response();
+        return new Response(json_encode(array('status' => 'Failure')), 400);
     }
 
     /**
@@ -137,7 +145,7 @@ class BasketController extends Controller
     public function removeAction(Request $request)
     {
         if(!$request->query->has('item')) {
-            throw $this->createNotFoundException('You must specify the basket item');
+            return new Response(json_encode(array('status' => 'Failure')), 400);
         }
 
         $index = $request->query->get('item');
@@ -148,11 +156,16 @@ class BasketController extends Controller
         $manager->refreshBasket();
         $manager->saveBasket();
 
-        if($basket->getTotalItems() > 0)
+        if(!$request->isXmlHttpRequest())
         {
-            return $this->redirect($this->generateUrl('basket_summary'));
+            if($basket->getTotalItems() > 0)
+            {
+                return $this->redirect($this->generateUrl('basket_summary'));
+            } else {
+                return $this->redirect($this->generateUrl('homepage'));
+            }
         } else {
-            return $this->redirect($this->generateUrl('homepage'));
+            return new Response(json_encode(array('status' => 'Success')));
         }
     }
 
@@ -164,6 +177,11 @@ class BasketController extends Controller
         $manager = $this->container->get('kac_site.manager.basket');
         $manager->clearBasket();
 
-        return $this->redirect($this->generateUrl('homepage'));
+        if(!$request->isXmlHttpRequest())
+        {
+            return $this->redirect($this->generateUrl('homepage'));
+        } else {
+            return new Response(json_encode(array('status' => 'Success')));
+        }
     }
 }
