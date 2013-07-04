@@ -227,7 +227,6 @@ class ListingController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if($departmentId) {
-            \Doctrine\Common\Util\Debug::dump($departmentId);die();
             $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
         } else {
             $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
