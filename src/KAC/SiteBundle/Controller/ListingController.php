@@ -46,17 +46,9 @@ class ListingController extends Controller
 
         // If department was specified fetch from the database
         $department = null;
-        $departments = array();
 
         if($departmentId) {
-            try {
-                $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
-                $department = $departments[0];
-            } catch(NoResultException $e) {
-                throw new NotFoundHttpException("Product not found");
-            }
-        } else {
-            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
         }
 
         // If brand was specified fetch from the database
@@ -211,7 +203,6 @@ class ListingController extends Controller
             'admin' => $admin,
             'brand' => $brand,
             'department' => $department,
-            'departments' => $departments,
             'facets' => $facets,
             'featureGroups' => $featureGroups,
             'pagination' => $pagination,
@@ -229,5 +220,24 @@ class ListingController extends Controller
     public function indexAdminAction(Request $request, $departmentId=null, $brandId=null)
     {
         return $this->indexAction($request, $departmentId, $brandId, true);
+    }
+
+    public function departmentTreeAction(Request $request, $departmentId=null, $brandId=null)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if($departmentId) {
+            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
+        } else {
+            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+        }
+
+        $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
+            'departments' => $departments,
+            'brandId' => $brandId,
+        ));
+        $response->setSharedMaxAge(3600);
+
+        return $response;
     }
 }

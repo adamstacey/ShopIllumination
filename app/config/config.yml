@@ -4,7 +4,8 @@ imports:
     - { resource: imagine.yml }
 
 framework:
-    #esi:             ~
+    esi: { enabled: true }
+    fragments: { path: /_fragment }
     translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:

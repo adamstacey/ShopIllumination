@@ -357,22 +357,7 @@
                                     </div>
                                 </div>
 
-                                {% if departments|length > 0 %}
-                                    <h5 id="filter-brand-header" class="no-margin">
-                                        {% spaceless %}
-                                            Department
-                                            <button data-filter="department" class="fr button button-small button-grey action-show-hide-filter">Reset</button>
-                                            <button data-filter="department" class="fr button button-small button-grey action-reset-filter">Hide</button>
-                                        {% endspaceless %}
-                                    </h5>
-                                    <div id="filter-department-container">
-                                        <div id="filter-department" class="filter">
-                                            <ul>
-                                                {% include 'KACSiteBundle:Listing:Includes/departmentTree.html.twig' with {'rootDepartment': department, 'departments': departments, 'brand': brand} %}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                {% endif %}
+                                {{ render_esi(controller('KACSiteBundle:Listing:departmentTree', {'departmentId': department.id, 'brandId': brand.id})) }}
 
                                 {% if brand is null %}
                                     <h5 id="filter-brand-header" class="no-margin">

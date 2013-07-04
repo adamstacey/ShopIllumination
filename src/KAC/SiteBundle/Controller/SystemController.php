@@ -2,6 +2,8 @@
 
 namespace KAC\SiteBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -21,13 +23,14 @@ class SystemController extends Controller
         return array();
     }
 
-    /**
-     * @Template()
-     */
     public function mainMenuAction($locale = 'en')
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
 
+        // Fetch departments
         $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
 
         $brands = $em->getRepository("KACSiteBundle:Brand")->createQueryBuilder('b')
@@ -36,6 +39,8 @@ class SystemController extends Controller
             ->getQuery()
             ->getResult();
 
-        return array('departments' => $departments, 'brands' => $brands);
+        $response = $this->render('KACSiteBundle:System:mainMenu.html.twig', array('departments' => $departments, 'brands' => $brands));
+        $response->setSharedMaxAge(3600);
+        return $response;
     }
 }
