@@ -24,6 +24,10 @@
     float: left;
 }
 
+.button-small .ui-icon {
+    margin: 0!important;
+}
+
 .ui-button-text {
     padding: 0 $spacingMedium;
 
@@ -31,9 +35,9 @@
 }
 
 .button-small .ui-button-text {
-    padding: $spacingSmall;
+    padding: 0 $spacingSmall;
 
-    line-height: 100%;
+    line-height: 24px;
 }
 
 .ui-button-icon-only .ui-button-text,
