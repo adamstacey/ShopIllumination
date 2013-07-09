@@ -22,12 +22,6 @@ class Address
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact", inversedBy="addresses")
      */
     private $contact;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\AddressType")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
-     */
-    private $type;
         
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
@@ -45,20 +39,9 @@ class Address
     private $organisationName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Title")
-     * @ORM\JoinColumn(name="title_id", referencedColumnName="id")
-     */
-    private $contactTitle;
-
-    /**
      * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
-    
-    /**
-     * @ORM\Column(name="middle_name", type="string", length=255)
-     */
-    private $middleName;
     
     /**
      * @ORM\Column(name="last_name", type="string", length=255)
@@ -74,11 +57,6 @@ class Address
      * @ORM\Column(name="address_line_2", type="string", length=255)
      */
     private $addressLine2;
-    
-    /**
-     * @ORM\Column(name="address_line_3", type="string", length=255)
-     */
-    private $addressLine3;
     
     /**
      * @ORM\Column(name="town_city", type="string", length=100)
@@ -215,29 +193,6 @@ class Address
     }
 
     /**
-     * Set middleName
-     *
-     * @param string $middleName
-     * @return Address
-     */
-    public function setMiddleName($middleName)
-    {
-        $this->middleName = $middleName;
-    
-        return $this;
-    }
-
-    /**
-     * Get middleName
-     *
-     * @return string 
-     */
-    public function getMiddleName()
-    {
-        return $this->middleName;
-    }
-
-    /**
      * Set lastName
      *
      * @param string $lastName
@@ -304,29 +259,6 @@ class Address
     public function getAddressLine2()
     {
         return $this->addressLine2;
-    }
-
-    /**
-     * Set addressLine3
-     *
-     * @param string $addressLine3
-     * @return Address
-     */
-    public function setAddressLine3($addressLine3)
-    {
-        $this->addressLine3 = $addressLine3;
-    
-        return $this;
-    }
-
-    /**
-     * Get addressLine3
-     *
-     * @return string 
-     */
-    public function getAddressLine3()
-    {
-        return $this->addressLine3;
     }
 
     /**
@@ -488,51 +420,5 @@ class Address
     public function getContact()
     {
         return $this->contact;
-    }
-
-    /**
-     * Set type
-     *
-     * @param \KAC\SiteBundle\Entity\Contact\AddressType $type
-     * @return Address
-     */
-    public function setType(\KAC\SiteBundle\Entity\Contact\AddressType $type = null)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \KAC\SiteBundle\Entity\Contact\AddressType
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set contactTitle
-     *
-     * @param \KAC\SiteBundle\Entity\Contact\Title $contactTitle
-     * @return Address
-     */
-    public function setContactTitle(\KAC\SiteBundle\Entity\Contact\Title $contactTitle = null)
-    {
-        $this->contactTitle = $contactTitle;
-    
-        return $this;
-    }
-
-    /**
-     * Get contactTitle
-     *
-     * @return \KAC\SiteBundle\Entity\Contact\Title
-     */
-    public function getContactTitle()
-    {
-        return $this->contactTitle;
     }
 }

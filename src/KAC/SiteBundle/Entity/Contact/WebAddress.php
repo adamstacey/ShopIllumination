@@ -22,12 +22,6 @@ class WebAddress
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact", inversedBy="webAddresses")
      */
     private $contact;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\WebAddressType")
-     * @ORM\JoinColumn(name="contact_web_address_type_id", referencedColumnName="id")
-     */
-    private $type;
     
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
@@ -202,28 +196,5 @@ class WebAddress
     public function getContact()
     {
         return $this->contact;
-    }
-
-    /**
-     * Set type
-     *
-     * @param \KAC\SiteBundle\Entity\Contact\WebAddressType $type
-     * @return WebAddress
-     */
-    public function setType(\KAC\SiteBundle\Entity\Contact\WebAddressType $type = null)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \KAC\SiteBundle\Entity\Contact\WebAddressType
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

@@ -24,12 +24,6 @@ class Number
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\NumberType")
-     * @ORM\JoinColumn(name="contact_number_type_id", referencedColumnName="id")
-     */
-    private $type;
-
-    /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
@@ -43,11 +37,6 @@ class Number
      * @ORM\Column(name="number", type="string", length=255)
      */
     private $number;
-    
-    /**
-     * @ORM\Column(name="country_code", type="string", length=2)
-     */
-    private $countryCode;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -141,29 +130,6 @@ class Number
     }
 
     /**
-     * Set countryCode
-     *
-     * @param string $countryCode
-     * @return Number
-     */
-    public function setCountryCode($countryCode)
-    {
-        $this->countryCode = $countryCode;
-    
-        return $this;
-    }
-
-    /**
-     * Get countryCode
-     *
-     * @return string 
-     */
-    public function getCountryCode()
-    {
-        return $this->countryCode;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -230,28 +196,5 @@ class Number
     public function getContact()
     {
         return $this->contact;
-    }
-
-    /**
-     * Set type
-     *
-     * @param \KAC\SiteBundle\Entity\Contact\NumberType $type
-     * @return Number
-     */
-    public function setType(\KAC\SiteBundle\Entity\Contact\NumberType $type = null)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \KAC\SiteBundle\Entity\Contact\NumberType
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

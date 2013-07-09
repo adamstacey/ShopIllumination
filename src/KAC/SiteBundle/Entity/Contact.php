@@ -35,30 +35,14 @@ class Contact
     private $displayOrder;
 
     /**
-     * @ORM\Column(name="display_name", type="string", length=255)
-     */
-    private $displayName;
-
-    /**
      * @ORM\Column(name="organisation_name", type="string", length=255)
      */
     private $organisationName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Title")
-     * @ORM\JoinColumn(name="title_id", referencedColumnName="id", nullable=true)
-     */
-    private $contactTitle;
-
-    /**
      * @ORM\Column(name="first_name", type="string", length=255)
      */
     private $firstName;
-
-    /**
-     * @ORM\Column(name="middle_name", type="string", length=255)
-     */
-    private $middleName;
 
     /**
      * @ORM\Column(name="last_name", type="string", length=255)

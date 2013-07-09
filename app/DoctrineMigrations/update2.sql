@@ -1,0 +1,12 @@
+SET foreign_key_checks = 0;
+DROP TABLE `contact_address_types`, `contact_email_address_types`, `contact_number_types`, `contact_titles`, `contact_web_address_types`;
+ALTER TABLE contact_addresses DROP FOREIGN KEY FK_13B566DC54C8C93;
+ALTER TABLE contact_addresses DROP FOREIGN KEY FK_13B566DA9F87BD;
+ALTER TABLE `contact_addresses` DROP `middle_name`, DROP `address_line_3`, DROP `type_id`, DROP `title_id`;
+ALTER TABLE contact_email_addresses DROP FOREIGN KEY FK_FBD6D5035D408FBE;
+ALTER TABLE `contact_email_addresses` DROP `contact_email_address_type_id`;
+ALTER TABLE contact_numbers DROP FOREIGN KEY FK_EDB1EB78C12336C6;
+ALTER TABLE `contact_numbers` DROP `contact_number_type_id`, DROP `country_code`;
+ALTER TABLE contact_web_addresses DROP FOREIGN KEY FK_90FEF7451E44B9BB;
+ALTER TABLE `contact_web_addresses` DROP `contact_web_address_type_id`;
+SET foreign_key_checks = 1;

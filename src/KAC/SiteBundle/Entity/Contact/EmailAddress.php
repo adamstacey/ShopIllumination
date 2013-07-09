@@ -24,12 +24,6 @@ class EmailAddress
     private $contact;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact\EmailAddressType")
-     * @ORM\JoinColumn(name="contact_email_address_type_id", referencedColumnName="id")
-     */
-    private $type;
-
-    /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
     private $displayOrder;
@@ -202,28 +196,5 @@ class EmailAddress
     public function getContact()
     {
         return $this->contact;
-    }
-
-    /**
-     * Set type
-     *
-     * @param \KAC\SiteBundle\Entity\Contact\EmailAddressType $type
-     * @return EmailAddress
-     */
-    public function setType(\KAC\SiteBundle\Entity\Contact\EmailAddressType $type = null)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \KAC\SiteBundle\Entity\Contact\EmailAddressType
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }
