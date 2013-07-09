@@ -55,329 +55,6 @@
 {% endblock %}
 
 {% block body %}
-    <style>
-        .product-sorting-container, .product-filtering-container {
-            padding: 5px 0;
-
-            background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
-
-        }
-
-        .product-sorting-container-top, .product-filtering-container {
-            margin: -10px -10px 10px -10px;
-
-            border-bottom: 2px solid #6c8087;
-            border-radius: 4px 4px 0 0;
-        }
-
-        .product-sorting-container-bottom {
-            margin: 10px -10px -10px -10px;
-
-            border-top: 2px solid #6c8087;
-            border-radius: 0 0 4px 4px;
-        }
-
-        .product-sorting-container > div > span, .product-filtering-container > div > span {
-            padding: 0 5px 0 0;
-
-            line-height: 40px;
-            font-size: 11px;
-        }
-
-        .product-sorting-container .selector {
-            margin: 0 5px 0 0;
-        }
-
-        .product-sorting-container .selector span {
-            font-size: 11px;
-        }
-
-        .product-sorting-container .ui-button {
-            padding: 3px 0;
-            margin: 0 0 -4px -4px;
-        }
-
-
-        .product-sorting-container .ui-button span {
-            padding: 0 8px;
-        }
-
-        .product-sorting-container .ui-button .ui-icon {
-            padding: 0;
-        }
-
-        .filters .ui-widget header h2 {
-            letter-spacing: 0px;
-            font-size: 13px;
-            font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
-        }
-
-        .filter-header-buttons-container {
-            top: 3px;
-            right: 3px;
-
-            position: absolute;
-        }
-
-        .filter-header-buttons-container .ui-button {
-            padding: 0 2px;
-        }
-
-        .filter,
-        .price-range-filter {
-            padding: 0;
-
-            background: #F3F6F6;
-            border-radius: 0 0 4px 4px;
-        }
-
-        .price-range-filter {
-            padding: 5px 15px;
-        }
-
-        .range-slider-values {
-            text-align: center;
-        }
-
-        .range-slider-values input {
-            width: 60px;
-            text-align: center;
-        }
-
-        .price-range {
-            margin: 5px 0 5px 0;
-        }
-
-        .price-range .ui-slider-range {
-            padding: 0;
-        }
-
-        .filter ul li a.selected-filter {
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        .filter label {
-            line-height: 18px;
-        }
-
-        .filter ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .filter > ul {
-            padding: 0 0 5px 0;
-        }
-
-        .filter ul li {
-            list-style: none;
-            margin: 0;
-            display: block;
-            padding: 2px 5px 2px 28px;
-            background-colour: #F3F6F6;
-            border-bottom: 1px solid #C5D2D6;
-            color: #000;
-            position: relative;
-        }
-
-        .jstree a {
-            font-size: 11px;
-            line-height: 18px;
-        }
-
-        .jstree li,
-        .jstree ins {
-            background-image:url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.png");
-            background-repeat: no-repeat;
-            background-color: transparent;
-            background-size: 108px 18px;
-        }
-
-        .jstree li {
-            background-position: -90px 0;
-            background-repeat: repeat-y;
-        }
-
-        .jstree .jstree-open > ins {
-            background-position: -36px 0;
-        }
-
-        .jstree .jstree-closed > ins {
-            background-position: -18px 0;
-        }
-
-        .jstree .jstree-leaf > ins {
-            background-position: 0 0;
-        }
-
-        .jstree .jstree-no-dots li {
-            background-position: -108px 0;
-        }
-
-        .jstree .jstree-no-dots .jstree-open > ins {
-            background-position: -72px 0;
-        }
-
-        .jstree .jstree-no-dots .jstree-closed > ins {
-            background-position: -54px 0;
-        }
-
-        .jstree li,
-        .jstree ins {
-            _background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.gif");
-        }
-
-        .jstree .jstree-open ins {
-            _background-position: -36px 0;
-        }
-        .jstree .jstree-closed ins {
-            _background-position: -18px 0;
-        }
-        .jstree .jstree-leaf ins {
-            _background-position: 0 0;
-        }
-
-        @media
-        screen and (-webkit-min-device-pixel-ratio: 1.25),
-        screen and (-webkit-min-device-pixel-ratio: 1.3),
-        screen and (-webkit-min-device-pixel-ratio: 1.5),
-        screen and (-webkit-min-device-pixel-ratio: 2),
-        screen and (min--moz-device-pixel-ratio: 1.25),
-        screen and (min--moz-device-pixel-ratio: 1.3),
-        screen and (min--moz-device-pixel-ratio: 1.5),
-        screen and (min--moz-device-pixel-ratio: 2),
-        screen and (-o-min-device-pixel-ratio: 1.25/1),
-        screen and (-o-min-device-pixel-ratio: 1.3/1),
-        screen and (-o-min-device-pixel-ratio: 1.5/1),
-        screen and (-o-min-device-pixel-ratio: 2/1),
-        screen and (min-device-pixel-ratio: 1.25),
-        screen and (min-device-pixel-ratio: 1.3),
-        screen and (min-device-pixel-ratio: 1.5),
-        screen and (min-device-pixel-ratio: 2),
-        screen and (min-resolution: 120dpi),
-        screen and (min-resolution: 124.8dpi),
-        screen and (min-resolution: 144dpi),
-        screen and (min-resolution: 192dpi),
-        screen and (min-resolution: 1.25dppx),
-        screen and (min-resolution: 1.3dppx),
-        screen and (min-resolution: 1.5dppx),
-        screen and (min-resolution: 2dppx) {
-            .jstree li,
-            .jstree ins {
-                background-image:url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d@2x.png");
-            }
-
-
-        .department-filter ul {
-            padding: 0 0 0 18px;
-        }
-
-        .department-filter > ul {
-            padding: 10px 5px;
-        }
-
-        .department-filter ul li {
-            background-color: transparent;
-            padding: 0;
-            margin: 0;
-            border: 0;
-            width: 100%;
-        }
-
-        .department-filter > ul > li {
-            margin: 0;
-        }
-
-        .department-filter ul li a {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            border: 0 none;
-            display: block;
-            text-decoration: none;
-        }
-
-        .department-filter ul li a:hover {
-            text-decoration: underline;
-        }
-
-        .department-filter ul li ins {
-            width: 18px;
-            height: 18px;
-            background-repeat: no-repeat;
-            background-size: 108px 18px;
-            overflow: hidden;
-            cursor: pointer;
-            float: left;
-        }
-
-        .filter ul li .checker {
-            position: absolute;
-            top: 2px;
-            left: 5px;
-        }
-
-        .filter ul li.filter-sub-department {
-            padding: 2px 5px 2px 60px!important;
-        }
-
-        .filter ul li.filter-sub-department .checker {
-            left: 32px;
-        }
-
-        .filter ul li.filter-feature-group {
-            padding: 5px 26px 5px 5px!important;
-            border-bottom: 1px solid #C5D2D6!important;
-            cursor: pointer;
-            color: #143B49;
-            position: relative;
-            background: #f3f6f6; /* Old browsers */
-            /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YzZjZmNiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjNWQyZDYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-            background: -moz-linear-gradient(top,  #f3f6f6 0%, #c5d2d6 100%); /* FF3.6+ */
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3f6f6), color-stop(100%,#c5d2d6)); /* Chrome,Safari4+ */
-            background: -webkit-linear-gradient(top,  #f3f6f6 0%,#c5d2d6 100%); /* Chrome10+,Safari5.1+ */
-            background: -o-linear-gradient(top,  #f3f6f6 0%,#c5d2d6 100%); /* Opera 11.10+ */
-            background: -ms-linear-gradient(top,  #f3f6f6 0%,#c5d2d6 100%); /* IE10+ */
-            background: linear-gradient(top,  #f3f6f6 0%,#c5d2d6 100%); /* W3C */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f6f6', endColorstr='#c5d2d6',GradientType=0 ); /* IE6-8 */
-        }
-
-        .filter ul li.filter-feature-group .ui-icon {
-            position: absolute;
-            top: 4px;
-            right: 5px;
-        }
-
-        .filter ul li label {
-            font-size: 10px;
-            cursor: pointer;
-        }
-
-        .filter ul li label a {
-            color: #000;
-            cursor: pointer;
-        }
-
-        .filter ul li.filter-sub-department label {
-            font-size: 11px;
-        }
-
-        .filter ul li .checker {
-            margin: 0 5px 0 0!important;
-        }
-
-        .filter ul li span.fr {
-            line-height: 20px;
-            font-size: 10px;
-            display: block;
-            width: 30px;
-            text-align: right;
-            color: #676767;
-        }
-    </style>
     <section class="clearfix">
         <div class="widget-group clearfix mbm">
             <div class="widget widget-7-of-8">
@@ -406,8 +83,8 @@
             <form id="formFilter" class="form" method="GET">
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget mbl">
-                        <section class="ui-widget-content ui-corner-all">
-                            <div class="widget-group product-sorting-container product-sorting-container-top clearfix">
+                        <section class="ui-widget-content ui-corner-all product">
+                            <div class="widget-group product-sorting-container product-sorting-container-top mbn clearfix">
                                 <div class="widget widget-1-of-1">
                                     <span class="fl">Sort By</span>
                                     <div class="fl prs">
@@ -439,105 +116,88 @@
                                 {% for product in pagination %}
                                     {% block product_block %}
                                         <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
-                                            <div class="fl">
-                                                <img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" />
-                                            </div>
-                                            <div>
-                                                <div>
-                                                    {% if product.brand_logo != '' %}
-                                                        <a href="{{ path('routing', {'url': product.brand_logo}) }}">
-                                                            <img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" height="20" />
-                                                        </a>
-                                                    {% endif %}
+                                            <div class="widget-group border-bottom-separator ptm pbm clearfix">
+                                                <div class="widget widget-3-of-4 pll prl border-right-separator">
                                                     <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
-
-                                                    {% for feature in product.features %}
-                                                        {% if 'COLOUR:' in feature|upper %}
-                                                            {% spaceless %}
-                                                                <p class="colour">
-                                                                    {% if product.url != '' %}
-                                                                        <a href="{{ path('routing', {'url': product.url}) }}">
+                                                    <div class="product-image-container fl">
+                                                        <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
+                                                            <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                        </a>
+                                                    </div>
+                                                    <div>
+                                                        <div class="product-information">
+                                                            <ul>
+                                                                {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
+                                                                    <li class="colour">
+                                                                        {% spaceless %}
+                                                                            {% if product.url != '' %}
+                                                                                <a href="{{ path('routing', {'url': product.url}) }}">
+                                                                            {% endif %}
+                                                                            <strong>{{ product.attr_feature_Colour[0]|upper }}</strong>
+                                                                            {% if product.url != '' %}
+                                                                                </a>
+                                                                            {% endif %}
+                                                                        {% endspaceless %}
+                                                                    </li>
+                                                                {% endif %}
+                                                                {% for featureGroup in product.features|slice(1, 4) %}
+                                                                    {% set feature = product['attr_feature_'~featureGroup][0] %}
+                                                                    {% if feature != '' %}
+                                                                        <li>{{ featureGroup }}: <strong>{{ feature }}</strong></li>
                                                                     {% endif %}
-                                                                    <strong>{{ featureGroup|upper|replace({'COLOUR:': ''}) }}</strong>
-                                                                    {% if product.url != '' %}
-                                                                        </a>
-                                                                    {% endif %}
-                                                                </p>
-                                                            {% endspaceless %}
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-                                                <div class="product-options">
+                                                <div class="widget widget-1-of-4">
+                                                    {% if product.brand_logo != '' %}
+                                                        <div class="tar">
+                                                           <img class="brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" height="30" />
+                                                        </div>
+                                                    {% endif %}
                                                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                                        <p class="ar product-price">
+                                                        <div class="tar product-price">
                                                             {% spaceless %}
                                                                 {% if product.hide_price == 0 %}
                                                                     {% if product.url != '' %}
                                                                         <a href="{{ path('routing', {'url': product.url}) }}">
                                                                     {% endif %}
                                                                     {% if product.low_price == product.high_price %}
-                                                                        <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                                        <span itemprop="price" class="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
                                                                     {% else %}
-                                                                        <span itemprop="price">&pound;{{ product.low_price|number_format(2) }}</span>
+                                                                        <span class="price">
+                                                                            <span class="currency-prefix">from only</span>
+                                                                        </span>
+                                                                        <span itemprop="price" class="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
                                                                         <em> - </em>
-                                                                        <span itemprop="price">&pound;{{ product.high_price|number_format(2) }}</span>
+                                                                        <span itemprop="price" class="price">{{ product.high_price|currency('GBP', true, true, '')|raw }}</span>
                                                                     {% endif %}
                                                                     {% if product.url != '' %}
                                                                         </a>
                                                                     {% endif %}
-                                                                    <span class="product-tax"> (inc. VAT)</span>
+                                                                    <span class="price pbm">
+                                                                        <span class="currency-tax">(inc. VAT)</span>
+                                                                    </span>
                                                                 {% else %}
                                                                     <a itemprop="price" href="{#{{ path('content_contact_us') }}#}">CONTACT US</a>
                                                                 {% endif %}
                                                             {% endspaceless %}
-                                                        </p>
+                                                        </div>
                                                     </div>
-
                                                     {% if admin == true %}
                                                         <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red">Delete</a>
                                                         <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue">Edit</a>
                                                     {% else %}
-                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}" class="fr button  button-green icon-white button-small">More Info</a>
-                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}#buynow" class="fr button button-blue button-small mrs">Buy Now</a>
+                                                        <div class="add-to-basket fr">
+                                                            <input class="quantity integer" type="number" value="1" />
+                                                            <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+                                                            <button type="button" class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+                                                            <button type="button" class="actionAddToBasket buy button button-green uppercase icon-white" data-icon-secondary="icon-472">Buy</button>
+                                                        </div>
                                                     {% endif %}
                                                 </div>
-
-
-                                                {% if product.features|length > 0 %}
-                                                    <div class="product-information">
-                                                        <ul>
-                                                            {% for featureGroup in product.features|slice(1, 4) %}
-                                                                {% set feature = product['attr_feature_'~featureGroup][0] %}
-                                                                {% if feature != '' %}
-                                                                    {% if feature == 'Yes' %}
-                                                                        {% set className = 'green-tick' %}
-                                                                    {% elseif feature == 'No' %}
-                                                                        {% set className = 'red-cross' %}
-                                                                    {% else %}
-                                                                        {% set className = 'bullet' %}
-                                                                    {% endif %}
-                                                                    <li class="{{ className }}">{{ featureGroup }}: <strong>{{ feature }}</strong></li>
-                                                                {% endif %}
-                                                            {% endfor %}
-                                                        </ul>
-                                                    </div>
-                                                {% endif %}
-
-                                                {% if '|1034|1122|69|' in product.departmentIds %}
-                                                    <div class="small-floating-offer small-floating-offer-top-left">
-                                                        <p class="small-floating-offer-title">40% OFF</p>
-                                                        <p class="small-floating-offer-description">Stellar<br />Pans</p>
-                                                    </div>
-                                                {% endif %}
-                                                {% if product.brandId == '7' %}
-                                                    <div class="medium-floating-offer medium-floating-offer-bottom-left">
-                                                        <p class="medium-floating-offer-title">10% OFF</p>
-                                                        <p class="medium-floating-offer-description">When you buy 3 or more CDA items</p>
-                                                    </div>
-                                                {% endif %}
                                             </div>
-                                            <div class="clear"></div>
                                         </div>
                                     {% endblock %}
                                 {% else %}
@@ -545,7 +205,7 @@
                                 {% endfor %}
                                 <div class="clear"></div>
                             </div>
-                            <div class="widget-group product-sorting-container product-sorting-container-bottom clearfix">
+                            <div class="widget-group product-sorting-container product-sorting-container-bottom mtn clearfix">
                                 <div class="widget widget-1-of-1">
                                     <span class="fl">Sort By</span>
                                     <div class="fl prs">
@@ -583,7 +243,7 @@
                             <div class="widget-group product-filtering-container clearfix">
                                 <div class="widget widget-1-of-1">
                                     <span class="fl"><strong>Narrow Search By</strong></span>
-                                    <a class="button button-grey icon-grey fr" data-icon-primary="icon-1113" href="{#{{ path('routing', {'url': department.url}) }}#}">Reset All</a>
+                                    <a class="button button-grey icon-grey fr" data-icon-primary="icon-1113" href="{# path('routing', {'url': department.url}) #}">Reset All</a>
                                 </div>
                             </div>
                             <div class="filters">
