@@ -137,7 +137,7 @@ fos_user:
         form:
             type: kac_user_registration
     service:
-        user_manager: kac.user_manager.default
+        user_manager: kac_user.user_manager.default
 
 gregwar_form: ~
 

@@ -25,6 +25,9 @@ services:
   kac_site.manager.basket:
       class: KAC\SiteBundle\Manager\BasketManager
       arguments: [@doctrine, @session, @jms_serializer]
+  kac_site.manager.order:
+      class: KAC\SiteBundle\Manager\OrderManager
+      arguments: [@doctrine]
   kac_site.manager.file:
       class: KAC\SiteBundle\Manager\FileManager
       arguments: [@doctrine]
@@ -119,3 +122,13 @@ services:
     scope: request
     calls:
       - [ setFormType, [@kac_site.form.new_variant]]
+  kac_site.form.checkout:
+    class: KAC\SiteBundle\Form\Checkout\CheckoutType
+    tags:
+      - { name: form.type, alias: site_new_variant }
+  kac_site.form.flow.checkout:
+    class: KAC\SiteBundle\Form\Checkout\CheckoutFlow
+    parent: craue.form.flow
+    scope: request
+    calls:
+      - [ setFormType, [@kac_site.form.checkout]]

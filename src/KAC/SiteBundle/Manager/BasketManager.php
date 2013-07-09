@@ -31,7 +31,12 @@ class BasketManager extends Manager
         {
             if($this->session->has('basket'))
             {
-                $this->basket = $this->serializer->deserialize($this->session->get('basket'), 'KAC\SiteBundle\Model\Basket', 'json');
+                try {
+                    $this->basket = $this->serializer->deserialize($this->session->get('basket'), 'KAC\SiteBundle\Model\Basket', 'json');
+                } catch (\Exception $e) {
+                    $this->basket = new Basket();
+                    $this->refreshBasket();
+                }
             } else {
                 $this->basket = new Basket();
                 $this->refreshBasket();

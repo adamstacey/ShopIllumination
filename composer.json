@@ -32,11 +32,11 @@
         "knplabs/knp-paginator-bundle": "dev-master",
         "nelmio/solarium-bundle": "1.*",
         "craue/formflow-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "*",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
         "jms/serializer-bundle": "0.12.*@dev",
         "avalanche123/imagine-bundle": "dev-master",
         "gregwar/form-bundle": "dev-master",
-        "Trsteel/ckeditor-bundle": "dev-master"
+        "Trsteel/ckeditor-bundle": "1.1.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

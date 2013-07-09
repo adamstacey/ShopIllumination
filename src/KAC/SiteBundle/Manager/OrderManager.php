@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Manager;
 
+use KAC\SiteBundle\Model\Basket;
 use Knp\Snappy\Pdf;
 
 use KAC\SiteBundle\Entity\Order;
@@ -8,17 +9,27 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 
 class OrderManager extends Manager
 {
-    /**
-     * @var \Knp\Snappy\PDF;
-     */
-    protected $snappy;
-    protected $basedir;
-
-    public function __construct(Registry $doctrine, $basedir, PDF $snappy)
+    public function createOrder()
     {
-        parent::__construct($doctrine, $basedir, $snappy);
+        $order = new Order();
 
-        $this->basedir = $basedir;
-        $this->snappy = $snappy;
+        // Add note
+        $note = new Order\Note();
+        $note->setNoteType('customer');
+        $note->setNotified(false);
+        $order->addNote($note);
+
+        return $note;
+    }
+
+    public function bindBasketData(Order $order, Basket $basket)
+    {
+        // Bind delivery info
+        $order->setEstimatedDeliveryDaysStart($basket->getDelivery()->getEstimatedDeliveryDays()['start']);
+        $order->setEstimatedDeliveryDaysEnd($basket->getDelivery()->getEstimatedDeliveryDays()['end']);
+
+        // Bind basket items
+
+        return $order;
     }
 }

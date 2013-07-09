@@ -23,12 +23,12 @@ class Contact
      * @ORM\ManyToOne(targetEntity="KAC\UserBundle\Entity\User", inversedBy="contacts")
      */
     private $user;
-    
+
      /**
      * @ORM\Column(name="object_type", type="string", length=100)
-     */
+      */
     private $objectType = 'customer';
-    
+
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
