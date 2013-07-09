@@ -2,7 +2,9 @@
 
 namespace KAC\SiteBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\Expr;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -227,6 +229,66 @@ class ListingController extends Controller
     public function indexAdminAction(Request $request, $departmentId=null, $brandId=null)
     {
         return $this->indexAction($request, $departmentId, $brandId, true);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @Route("/popular_brands", name="popular_brands")
+     */
+    public function popularBrandsAction(Request $request)
+    {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+        $brands = $em->createQuery('
+            SELECT b, COUNT(op.id) AS total
+            FROM KAC\SiteBundle\Entity\Brand b
+            JOIN  KAC\SiteBundle\Entity\Product p
+                WITH p.brand = b.id
+            JOIN  KAC\SiteBundle\Entity\Order\Product op
+                WITH op.product = p.id
+            GROUP BY b.id
+            ORDER BY total ASC
+        ')->setMaxResults(5)
+            ->execute();
+
+        $response = $this->render('KACSiteBundle:Listing:popularBrands.html.twig', array(
+            'brands' => $brands,
+        ));
+        $response->setSharedMaxAge(3600);
+
+        return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @Route("/popular_products", name="popular_products")
+     */
+    public function popularProductsAction(Request $request)
+    {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+        $variants = $em->createQuery('
+        SELECT v, count(op.id) AS total
+        FROM KAC\SiteBundle\Entity\Product\Variant v
+        JOIN  KAC\SiteBundle\Entity\Order\Product op
+            WITH op.variant = v.id
+        GROUP BY op.variant
+        ORDER BY total ASC
+        ')->setMaxResults(5)
+            ->execute();
+
+        $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
+            'variants' => $variants,
+        ));
+        $response->setSharedMaxAge(3600);
+
+        return $response;
     }
 
     public function departmentTreeAction(Request $request, $departmentId=null, $brandId=null)
