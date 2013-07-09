@@ -15,7 +15,7 @@
 
 .product h4, .product h4 a, .product-title {
     @include fontSize(13);
-    line-height: 23px;
+    line-height: 30px;
     padding: 0;
     color: $colourGreyDark;
     font-weight: bold;
@@ -506,11 +506,11 @@ screen and (min-resolution: 2dppx) {
 }
 
 .department-filter ul {
-    padding: 0 0 0 18px;
+    padding: 0 0 0 18px !important;
 }
 
 .department-filter > ul {
-    padding: $spacingMedium $spacingSmall;
+    padding: $spacingMedium $spacingSmall !important;
 }
 
 .department-filter ul li {
@@ -685,7 +685,7 @@ screen and (min-resolution: 2dppx) {
 
 .product-image-container {
     padding: $spacingMedium;
-    margin: $spacingSmall $spacingMedium 0 0;
+    margin: 0 $spacingMedium 0 0;
 
     background: $colourWhite;
     @include boxShadow($colourGreyMedium, 0, 0, $spacingMedium);
