@@ -90,6 +90,8 @@ class ListingController extends Controller
 
             $query->addSort($helper->escapeTerm($sortCol), $sortDir);
         }
+        // Add secondary sort for accessory
+        $query->addSort('accessory', 'asc');
 
         $filters = $request->query->get('filter', array());
         $flags = array('brand', 'department_path');
