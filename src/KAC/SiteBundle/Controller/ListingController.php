@@ -232,27 +232,41 @@ class ListingController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return mixed
      * @Route("/popular_brands", name="popular_brands")
+     * @Route("/popular_brands/d{departmentId}", name="popular_brands_d")
      */
-    public function popularBrandsAction(Request $request)
+    public function popularBrandsAction(Request $request,  $departmentId=null)
     {
+//        SELECT b, COUNT(op.id) AS total
+//            FROM KAC\SiteBundle\Entity\Brand b
+//            JOIN  KAC\SiteBundle\Entity\Product p
+//                WITH p.brand = b.id
+//            JOIN  KAC\SiteBundle\Entity\Order\Product op
+//                WITH op.product = p.id
+//            GROUP BY b.id
+//            ORDER BY total ASC
         /**
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
-        $brands = $em->createQuery('
-            SELECT b, COUNT(op.id) AS total
-            FROM KAC\SiteBundle\Entity\Brand b
-            JOIN  KAC\SiteBundle\Entity\Product p
-                WITH p.brand = b.id
-            JOIN  KAC\SiteBundle\Entity\Order\Product op
-                WITH op.product = p.id
-            GROUP BY b.id
-            ORDER BY total ASC
-        ')->setMaxResults(5)
-            ->execute();
+        $qb = $em->createQueryBuilder();
+        $qb->select('b, count(op.id) AS total')
+            ->from('KAC\SiteBundle\Entity\Brand', 'b')
+            ->join('KAC\SiteBundle\Entity\Product', 'p', Expr\Join::WITH, $qb->expr()->eq('p.brand', 'b.id'))
+            ->join('p.departments' ,'pd')
+            ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.variant', 'b.id'))
+            ->groupBy('b.id')
+            ->orderBy('total', 'ASC');
+        if($departmentId)
+        {
+            $qb->where($qb->expr()->eq('pd.department', ':department'))
+                ->setParameter('department', $departmentId);
+        }
+
+        $query = $qb
+            ->setMaxResults(5)
+            ->getQuery();
+        $brands = $query->execute();
 
         $response = $this->render('KACSiteBundle:Listing:popularBrands.html.twig', array(
             'brands' => $brands,
@@ -263,25 +277,40 @@ class ListingController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return mixed
-     * @Route("/popular_products", name="popular_products")
+     * @Route("/popular_products}", name="popular_products_d")
+     * @Route("/popular_products/d{departmentId}", name="popular_products_d")
+     * @Route("/popular_products/b{departmentId}", name="popular_products_b")
+     * @Route("/popular_products/d{departmentId}/b{brandId}", name="popular_products_db")
      */
-    public function popularProductsAction(Request $request)
+    public function popularProductsAction(Request $request, $departmentId=null, $brandId=null)
     {
         /**
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
-        $variants = $em->createQuery('
-        SELECT v, count(op.id) AS total
-        FROM KAC\SiteBundle\Entity\Product\Variant v
-        JOIN  KAC\SiteBundle\Entity\Order\Product op
-            WITH op.variant = v.id
-        GROUP BY op.variant
-        ORDER BY total ASC
-        ')->setMaxResults(5)
-            ->execute();
+        $qb = $em->createQueryBuilder();
+        $qb->select('v, count(op.id) AS total')
+            ->from('KAC\SiteBundle\Entity\Product\Variant', 'v')
+            ->join('v.product', 'p')
+            ->join('p.departments' ,'pd')
+            ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.variant', 'v.id'))
+            ->groupBy('op.variant')
+            ->orderBy('total', 'ASC');
+        if($departmentId)
+        {
+            $qb->where($qb->expr()->eq('pd.department', ':department'))
+                ->setParameter('department', $departmentId);
+        }
+        if($brandId)
+        {
+            $qb->where($qb->expr()->eq('p.brand', ':brand'))
+                ->setParameter('brand', $brandId);
+        }
+
+        $query = $qb
+            ->setMaxResults(5)
+            ->getQuery();
+        $variants = $query->execute();
 
         $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
             'variants' => $variants,
