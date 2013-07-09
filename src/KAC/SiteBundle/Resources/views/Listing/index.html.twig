@@ -80,6 +80,14 @@
             {% set totalItemCount = 0 %}
         {% endif %}
         <div class="widget-group clearfix">
+            <div class="widget widget-1-of-2">
+                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
+            </div>
+            <div class="widget widget-1-of-2">
+                {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
+            </div>
+        </div>
+        <div class="widget-group clearfix">
             <form id="formFilter" class="form" method="GET">
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget mbl">
