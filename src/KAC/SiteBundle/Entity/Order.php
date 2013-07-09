@@ -25,16 +25,6 @@ class Order
     private $userId;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Discount", mappedBy="order")
-     */
-    private $discounts;
-
-    /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Donation", mappedBy="order")
-     */
-    private $donations;
-
-    /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Product", mappedBy="order")
      */
     private $products;
@@ -43,6 +33,11 @@ class Order
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Note", mappedBy="order")
      */
     private $notes;
+
+    /**
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact")
+     */
+    private $contact;
     
     /**
      * @ORM\Column(name="status", type="string", length=255)
@@ -128,21 +123,6 @@ class Order
      * @ORM\Column(name="possible_discount", type="decimal", precision=12, scale=4)
      */
     private $possibleDiscount;
-    
-    /**
-     * @ORM\Column(name="discounts_count", type="integer", length=11)
-     */
-    private $discountsCount;
-    
-    /**
-     * @ORM\Column(name="donations_count", type="integer", length=11)
-     */
-    private $donationsCount;
-    
-    /**
-     * @ORM\Column(name="notes_count", type="integer", length=11)
-     */
-    private $notesCount;
         
     /**
      * @ORM\Column(name="first_name", type="string", length=255)
@@ -958,75 +938,6 @@ class Order
     public function getPossibleDiscount()
     {
         return $this->possibleDiscount;
-    }
-
-    /**
-     * Set discountsCount
-     *
-     * @param integer $discountsCount
-     * @return Order
-     */
-    public function setDiscountsCount($discountsCount)
-    {
-        $this->discountsCount = $discountsCount;
-    
-        return $this;
-    }
-
-    /**
-     * Get discountsCount
-     *
-     * @return integer 
-     */
-    public function getDiscountsCount()
-    {
-        return $this->discountsCount;
-    }
-
-    /**
-     * Set donationsCount
-     *
-     * @param integer $donationsCount
-     * @return Order
-     */
-    public function setDonationsCount($donationsCount)
-    {
-        $this->donationsCount = $donationsCount;
-    
-        return $this;
-    }
-
-    /**
-     * Get donationsCount
-     *
-     * @return integer 
-     */
-    public function getDonationsCount()
-    {
-        return $this->donationsCount;
-    }
-
-    /**
-     * Set notesCount
-     *
-     * @param integer $notesCount
-     * @return Order
-     */
-    public function setNotesCount($notesCount)
-    {
-        $this->notesCount = $notesCount;
-    
-        return $this;
-    }
-
-    /**
-     * Get notesCount
-     *
-     * @return integer 
-     */
-    public function getNotesCount()
-    {
-        return $this->notesCount;
     }
 
     /**
@@ -2010,6 +1921,22 @@ class Order
     public function removeNote(\KAC\SiteBundle\Entity\Order\Note $notes)
     {
         $this->notes->removeElement($notes);
+    }
+
+    /**
+     * @param mixed $contact
+     */
+    public function setContact($contact)
+    {
+        $this->contact = $contact;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getContact()
+    {
+        return $this->contact;
     }
 
     /**

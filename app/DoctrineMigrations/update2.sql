@@ -9,4 +9,5 @@ ALTER TABLE contact_numbers DROP FOREIGN KEY FK_EDB1EB78C12336C6;
 ALTER TABLE `contact_numbers` DROP `contact_number_type_id`, DROP `country_code`;
 ALTER TABLE contact_web_addresses DROP FOREIGN KEY FK_90FEF7451E44B9BB;
 ALTER TABLE `contact_web_addresses` DROP `contact_web_address_type_id`;
+ALTER TABLE `orders` DROP `discounts_count`, DROP `donations_count`, DROP `notes_count`;
 SET foreign_key_checks = 1;
