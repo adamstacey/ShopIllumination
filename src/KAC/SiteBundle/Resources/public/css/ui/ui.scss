@@ -717,6 +717,8 @@
     width: $spacingLarge;
     height: $spacingLarge;
     cursor: default;
+
+    border: 1px solid $colourGreyDark;
 }
 
 .ui-slider .ui-slider-range {
@@ -737,7 +739,7 @@
 }
 
 .ui-slider-horizontal .ui-slider-handle {
-    top: -#{$spacingMedium};
+    top: -3px;
     margin-left: -#{$spacingMedium};
 }
 

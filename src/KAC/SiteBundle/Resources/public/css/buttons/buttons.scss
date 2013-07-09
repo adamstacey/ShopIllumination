@@ -24,6 +24,10 @@
     float: left;
 }
 
+.button-small .ui-icon {
+    margin: 0!important;
+}
+
 .ui-button-text {
     padding: 0 $spacingMedium;
 
@@ -31,22 +35,16 @@
 }
 
 .button-small .ui-button-text {
-    padding: $spacingSmall;
+    padding: 0 $spacingSmall;
 
-    line-height: 100%;
+    line-height: 24px;
 }
 
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
-    display: none;
-}
-
-.ui-button-icon-only {
-    padding: 6px;
-}
-
-.ui-button-icon-only .ui-icon {
-    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: -9999px;
+    width: 0;
 }
 
 input.ui-button {
