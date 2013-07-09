@@ -1,0 +1,8 @@
+<div class="popular_products popular_items">
+    {% for item in variants %}
+        {% set variant = item[0] %}
+        <div class="popular_product popular_item">
+            <a itemprop="name" href="{{ variant.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ variant.description.header|raw }}</a>
+        </div>
+    {% endfor %}
+</div>

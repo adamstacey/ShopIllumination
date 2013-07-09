@@ -1,0 +1,8 @@
+<div class="popular_brands popular_items">
+    {% for item in brands %}
+        {% set brand = item[0] %}
+        <div class="popular_brand popular_item">
+            <a class="submenu-brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ brand.images.0.publicPath | apply_filter('logo_medium') }}" border="0" alt="{{ brand.description.name|raw }}" width="77" height="39" /></a>
+        </div>
+    {% endfor %}
+</div>
