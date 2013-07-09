@@ -1,27 +1,29 @@
-<div class="pagination-container">
-    <div class="fr">
-        {% if first is defined and current != first %}
-            <a class="button button-grey icon-grey ui-corner-none-right ui-corner-left" data-icon-primary="icon-473" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): first})) }}">First</a>
-        {% endif %}
-
-        {% if previous is defined %}
-            <a class="button button-grey icon-grey ui-corner-none" data-icon-primary="icon-470" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">Previous</a>
-        {% endif %}
-
-        {% for page in pagesInRange %}
-            {% if page != current %}
-                <a class="button button-grey ui-corner-none" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
-            {% else %}
-                <a class="button button-turquoise {{ page == 1 ? 'ui-corner-none-right ui-corner-left' : 'ui-corner-none' }}" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+{% if pagesInRange|length > 1 %}
+    <div class="pagination-container">
+        <div class="fr">
+            {% if first is defined and current != first %}
+                <a class="button button-grey icon-grey ui-corner-none-right ui-corner-left" data-icon-primary="icon-473" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): first})) }}">First</a>
             {% endif %}
-        {% endfor %}
 
-        {% if next is defined %}
-                <a class="button button-grey icon-grey ui-corner-none" data-icon-primary="icon-471" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): next})) }}">Next</a>
-        {% endif %}
+            {% if previous is defined %}
+                <a class="button button-grey icon-grey ui-corner-none" data-icon-primary="icon-470" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">Previous</a>
+            {% endif %}
 
-        {% if last is defined and current != last %}
-            <a class="button button-grey icon-grey ui-corner-none-left ui-corner-right" data-icon-primary="icon-472" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): last})) }}">Last</a>
-        {% endif %}
+            {% for page in pagesInRange %}
+                {% if page != current %}
+                    <a class="button button-grey ui-corner-none" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                {% else %}
+                    <a class="button button-turquoise {{ page == 1 ? 'ui-corner-none-right ui-corner-left' : 'ui-corner-none' }}" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if next is defined %}
+                    <a class="button button-grey icon-grey ui-corner-none" data-icon-primary="icon-471" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): next})) }}">Next</a>
+            {% endif %}
+
+            {% if last is defined and current != last %}
+                <a class="button button-grey icon-grey ui-corner-none-left ui-corner-right" data-icon-primary="icon-472" data-icon-only="true" href="{{ path(route, query|merge({(pageParameterName): last})) }}">Last</a>
+            {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
