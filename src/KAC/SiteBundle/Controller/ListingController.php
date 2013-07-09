@@ -83,12 +83,17 @@ class ListingController extends Controller
         }
 
         // Sort results (If the user has entered a query they cannot sort)
-        $sort = explode(':', $request->query->get('sort_order', 'header_sort:asc'));
+        $sort = explode(':', $request->query->get('sort_order', 'low_price:asc'));
         if(count($sort) === 2 && in_array($sort[0], array('header_sort', 'low_price', 'high_price', 'created_at'))) {
             $sortCol = $sort[0];
             $sortDir = ($sort[1] == 'asc') ? Solarium_Query_Select::SORT_ASC : Solarium_Query_Select::SORT_DESC;
 
+            if (($sortCol == 'low_price') && ($sortDir == 'asc'))
+            {
+                $query->addSort('accessory', 'asc');
+            }
             $query->addSort($helper->escapeTerm($sortCol), $sortDir);
+
         }
 
         $filters = $request->query->get('filter', array());
