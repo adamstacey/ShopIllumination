@@ -106,7 +106,7 @@
             padding: 0;
         }
 
-        #filters .ui-widget header h2 {
+        .filters .ui-widget header h2 {
             letter-spacing: 0px;
             font-size: 13px;
             font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
@@ -128,59 +128,207 @@
             padding: 0;
 
             background: #F3F6F6;
+            border-radius: 0 0 4px 4px;
         }
 
         .price-range-filter {
             padding: 5px 15px;
         }
 
+        .range-slider-values {
+            text-align: center;
+        }
 
+        .range-slider-values input {
+            width: 60px;
+            text-align: center;
+        }
 
+        .price-range {
+            margin: 5px 0 5px 0;
+        }
 
+        .price-range .ui-slider-range {
+            padding: 0;
+        }
 
+        .filter ul li a.selected-filter {
+            font-weight: bold;
+            text-decoration: underline;
+        }
 
-
-
-
-        .filter label
-        {
+        .filter label {
             line-height: 18px;
         }
-        .filter ul
-        {
+
+        .filter ul {
             list-style: none;
-        }
-        .filter ul, .filter ul li
-        {
             margin: 0;
             padding: 0;
         }
-        .filter ul li
-        {
+
+        .filter > ul {
+            padding: 0 0 5px 0;
+        }
+
+        .filter ul li {
+            list-style: none;
+            margin: 0;
             display: block;
             padding: 2px 5px 2px 28px;
-            background: #F3F6F6;
-            border-bottom: 1px dotted #C5D2D6;
+            background-colour: #F3F6F6;
+            border-bottom: 1px solid #C5D2D6;
             color: #000;
             position: relative;
         }
-        .filter ul li .checker
-        {
+
+        .jstree a {
+            font-size: 11px;
+            line-height: 18px;
+        }
+
+        .jstree li,
+        .jstree ins {
+            background-image:url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.png");
+            background-repeat: no-repeat;
+            background-color: transparent;
+            background-size: 108px 18px;
+        }
+
+        .jstree li {
+            background-position: -90px 0;
+            background-repeat: repeat-y;
+        }
+
+        .jstree .jstree-open > ins {
+            background-position: -36px 0;
+        }
+
+        .jstree .jstree-closed > ins {
+            background-position: -18px 0;
+        }
+
+        .jstree .jstree-leaf > ins {
+            background-position: 0 0;
+        }
+
+        .jstree .jstree-no-dots li {
+            background-position: -108px 0;
+        }
+
+        .jstree .jstree-no-dots .jstree-open > ins {
+            background-position: -72px 0;
+        }
+
+        .jstree .jstree-no-dots .jstree-closed > ins {
+            background-position: -54px 0;
+        }
+
+        .jstree li,
+        .jstree ins {
+            _background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.gif");
+        }
+
+        .jstree .jstree-open ins {
+            _background-position: -36px 0;
+        }
+        .jstree .jstree-closed ins {
+            _background-position: -18px 0;
+        }
+        .jstree .jstree-leaf ins {
+            _background-position: 0 0;
+        }
+
+        @media
+        screen and (-webkit-min-device-pixel-ratio: 1.25),
+        screen and (-webkit-min-device-pixel-ratio: 1.3),
+        screen and (-webkit-min-device-pixel-ratio: 1.5),
+        screen and (-webkit-min-device-pixel-ratio: 2),
+        screen and (min--moz-device-pixel-ratio: 1.25),
+        screen and (min--moz-device-pixel-ratio: 1.3),
+        screen and (min--moz-device-pixel-ratio: 1.5),
+        screen and (min--moz-device-pixel-ratio: 2),
+        screen and (-o-min-device-pixel-ratio: 1.25/1),
+        screen and (-o-min-device-pixel-ratio: 1.3/1),
+        screen and (-o-min-device-pixel-ratio: 1.5/1),
+        screen and (-o-min-device-pixel-ratio: 2/1),
+        screen and (min-device-pixel-ratio: 1.25),
+        screen and (min-device-pixel-ratio: 1.3),
+        screen and (min-device-pixel-ratio: 1.5),
+        screen and (min-device-pixel-ratio: 2),
+        screen and (min-resolution: 120dpi),
+        screen and (min-resolution: 124.8dpi),
+        screen and (min-resolution: 144dpi),
+        screen and (min-resolution: 192dpi),
+        screen and (min-resolution: 1.25dppx),
+        screen and (min-resolution: 1.3dppx),
+        screen and (min-resolution: 1.5dppx),
+        screen and (min-resolution: 2dppx) {
+            .jstree li,
+            .jstree ins {
+                background-image:url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d@2x.png");
+            }
+
+
+        .department-filter ul {
+            padding: 0 0 0 18px;
+        }
+
+        .department-filter > ul {
+            padding: 10px 5px;
+        }
+
+        .department-filter ul li {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            width: 100%;
+        }
+
+        .department-filter > ul > li {
+            margin: 0;
+        }
+
+        .department-filter ul li a {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border: 0 none;
+            display: block;
+            text-decoration: none;
+        }
+
+        .department-filter ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .department-filter ul li ins {
+            width: 18px;
+            height: 18px;
+            background-repeat: no-repeat;
+            background-size: 108px 18px;
+            overflow: hidden;
+            cursor: pointer;
+            float: left;
+        }
+
+        .filter ul li .checker {
             position: absolute;
             top: 2px;
             left: 5px;
         }
-        .filter ul li.filter-sub-department
-        {
+
+        .filter ul li.filter-sub-department {
             padding: 2px 5px 2px 60px!important;
         }
-        .filter ul li.filter-sub-department .checker
-        {
+
+        .filter ul li.filter-sub-department .checker {
             left: 32px;
         }
-        .filter ul li.filter-feature-group
-        {
-            padding: 2px 26px 2px 5px!important;
+
+        .filter ul li.filter-feature-group {
+            padding: 5px 26px 5px 5px!important;
             border-bottom: 1px solid #C5D2D6!important;
             cursor: pointer;
             color: #143B49;
@@ -196,80 +344,38 @@
             background: linear-gradient(top,  #f3f6f6 0%,#c5d2d6 100%); /* W3C */
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f6f6', endColorstr='#c5d2d6',GradientType=0 ); /* IE6-8 */
         }
-        .filter ul li.filter-feature-group .ui-icon
-        {
+
+        .filter ul li.filter-feature-group .ui-icon {
             position: absolute;
             top: 4px;
             right: 5px;
         }
-        .filter ul li label
-        {
+
+        .filter ul li label {
             font-size: 10px;
             cursor: pointer;
         }
-        .filter ul li label a
-        {
+
+        .filter ul li label a {
             color: #000;
             cursor: pointer;
         }
-        .filter ul li.filter-sub-department label
-        {
+
+        .filter ul li.filter-sub-department label {
             font-size: 11px;
         }
-        .filter ul li .checker
-        {
+
+        .filter ul li .checker {
             margin: 0 5px 0 0!important;
         }
-        .filter ul li span.fr
-        {
+
+        .filter ul li span.fr {
             line-height: 20px;
             font-size: 10px;
             display: block;
             width: 30px;
             text-align: right;
             color: #676767;
-        }
-        .jstree.filter ul li {
-            padding-left: 0;
-            margin-left: 5px;
-            border-bottom: none;
-        }
-        .jstree.filter > ul > li {
-            padding-left: 0;
-            margin-left: 0;
-            border-bottom: 1px dotted #c5d2d6;
-        }
-        .range-slider-values
-        {
-            text-align: center;
-        }
-        .range-slider-values input
-        {
-            width: 60px;
-            text-align: center;
-        }
-
-        .price-range
-        {
-            margin: 5px 0 5px 0;
-        }
-        .price-range .ui-slider-range {
-            padding: 0;
-        }
-        .filter ul li a.selected-filter
-        {
-            font-weight: bold;
-            text-decoration: underline;
-        }
-        .jstree.filter ul li {
-            padding-left: 0;
-            margin-left: 5px;
-            border-bottom: none;
-        }
-        .jstree.filter > ul > li {
-            padding-left: 0;
-            margin-left: 0;
-            border-bottom: 1px dotted #c5d2d6;
         }
     </style>
     <section class="clearfix">
@@ -308,7 +414,7 @@
                                         <select id="sortOrderTop" name="sort_order" class="fill fl">
                                             <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
                                             <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
-                                            <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
+                                            <option{% if app.request.get('sort_order') == 'low_price:asc' or app.request.get('sort_order') is not defined or app.request.get('sort_order') is null %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
                                             <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
                                             <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
                                         </select>
@@ -317,7 +423,7 @@
                                     <div class="fl prs">
                                         <select id="limitTop" name="limit" class="fill fl">
                                             <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
-                                            <option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
+                                            <option{% if app.request.get('limit') == '20' or app.request.get('limit') is not defined or app.request.get('limit') is null %} selected="selected"{% endif %} value="20">20</option>
                                             <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
                                             <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
                                             <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
@@ -334,15 +440,13 @@
                                     {% block product_block %}
                                         <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
                                             <div class="fl">
-                                                <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
-                                                    <img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" />
-                                                </a>
+                                                <img class="fl product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                             </div>
                                             <div>
                                                 <div>
                                                     {% if product.brand_logo != '' %}
                                                         <a href="{{ path('routing', {'url': product.brand_logo}) }}">
-                                                            <img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" height="23" />
+                                                            <img class="fr brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" height="20" />
                                                         </a>
                                                     {% endif %}
                                                     <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
@@ -448,7 +552,7 @@
                                         <select id="sortOrderBottom" class="fill fl">
                                             <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
                                             <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
-                                            <option{% if app.request.get('sort_order') == 'low_price:asc' %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
+                                            <option{% if app.request.get('sort_order') == 'low_price:asc' or app.request.get('sort_order') is not defined or app.request.get('sort_order') is null %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
                                             <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
                                             <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
                                         </select>
@@ -457,7 +561,7 @@
                                     <div class="fl prs">
                                         <select id="limitBottom" class="fill fl">
                                             <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
-                                            <option{% if app.request.get('limit') == '20' %} selected="selected"{% endif %} value="20">20</option>
+                                            <option{% if app.request.get('limit') == '20' or app.request.get('limit') is not defined or app.request.get('limit') is null %} selected="selected"{% endif %} value="20">20</option>
                                             <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
                                             <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
                                             <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
@@ -473,8 +577,8 @@
                     </div>
                 </div>
 
-                <div class="widget widget-2-of-7 filters">
-                    <div class="ui-widget mbl">
+                <div class="widget widget-2-of-7">
+                    <div class="ui-widget mbn">
                         <section class="ui-widget-content ui-corner-all">
                             <div class="widget-group product-filtering-container clearfix">
                                 <div class="widget widget-1-of-1">
@@ -482,8 +586,8 @@
                                     <a class="button button-grey icon-grey fr" data-icon-primary="icon-1113" href="{{ path('routing', {'url': department.url}) }}">Reset All</a>
                                 </div>
                             </div>
-                            <div id="filters">
-                                <div class="ui-widget pr mbl">
+                            <div class="filters">
+                                <div class="ui-widget pr mtm">
                                     <header class="ui-widget-header ui-corner-top">
                                         <h2>Price</h2>
                                     </header>
@@ -491,67 +595,71 @@
                                         <div id="filterPrice" class="price-range-filter">
                                             <div class="range-slider-values">
                                                 <span>&pound;</span>
-                                                <input type="text" name="filter[low_price]" id="filter-low-price" value="{{ app.request.get('filter[low_price]', '%.2f'|format(stats.getResult('low_price').min|default(0)), true) }}" />
+                                                <input type="text" name="filter[low_price]" id="filterLowPrice" value="{{ app.request.get('filter[low_price]', '%.0f'|format(stats.getResult('low_price').min|default(0)), true) }}" />
                                                 <span>&nbsp;-&nbsp;</span>
-                                                <input type="text" name="filter[high_price]" id="filter-high-price" value="{{ app.request.get('filter[high_price]', '%.2f'|format(stats.getResult('high_price').max|default(9999)), true) }}" />
+                                                <input type="text" name="filter[high_price]" id="filterHighPrice" value="{{ app.request.get('filter[high_price]', '%.0f'|format(stats.getResult('high_price').max|default(9999)), true) }}" />
                                             </div>
-                                            <div class="price-range pan" id="priceRangeSlider"></div>
+                                            <div id="priceRangeSlider" class="price-range pan"></div>
                                         </div>
                                     </section>
                                     <div class="filter-header-buttons-container">
-                                        <button data-filter="price" class="fr button button-small button-grey icon-grey actionResetFilter" data-icon-primary="icon-467" data-icon-only="true">Reset</button>
-                                        <button data-filter="price" class="fr button button-small button-grey icon-grey actionShowHideFilter" data-icon-primary="icon-1113" data-icon-only="true">Hide</button>
+                                        <button type="button" data-filter="Price" class="fr button button-small button-grey icon-grey actionShowHideFilter" data-icon-primary="icon-467" data-icon-only="true">Hide</button>
+                                        <button type="button" data-filter="Price" class="fr button button-small button-grey icon-grey actionResetFilter" data-icon-primary="icon-1113" data-icon-only="true">Reset</button>
                                     </div>
                                 </div>
 
                                 {{ render_esi(controller('KACSiteBundle:Listing:departmentTree', {'departmentId': department.id, 'brandId': brand.id})) }}
 
                                 {% if brand is null %}
-                                    <h5 id="filter-brand-header" class="no-margin">
-                                        {% spaceless %}
-                                            Brands
-                                            <button data-filter="brand" class="fr button button-small button-grey action-show-hide-filter">Reset</button>
-                                            <button data-filter="brand" class="fr button button-small button-grey action-reset-filter">Hide</button>
-                                        {% endspaceless %}
-                                    </h5>
-                                    <div id="filter-brand-container">
-                                        <div id="filter-brand" class="filter">
-                                            <ul>
-                                                {% for brand, count in facets.facet('brands') %}
-                                                    <li>
-                                                        <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
-                                                        <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
+                                    <div class="ui-widget pr mtm">
+                                        <header class="ui-widget-header ui-corner-top">
+                                            <h2>Brand</h2>
+                                        </header>
+                                        <section class="ui-widget-content pan ui-corner-bottom">
+                                            <div id="filterBrand" class="filter">
+                                                <ul>
+                                                    {% for brand, count in facets.facet('brands') %}
+                                                        <li>
+                                                            <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
+                                                            <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </section>
+                                        <div class="filter-header-buttons-container">
+                                            <button type="button" data-filter="Brand" class="fr button button-small button-grey icon-grey actionShowHideFilter" data-icon-primary="icon-467" data-icon-only="true">Hide</button>
+                                            <button type="button" data-filter="Brand" class="fr button button-small button-grey icon-grey actionResetFilter" data-icon-primary="icon-1113" data-icon-only="true">Reset</button>
                                         </div>
                                     </div>
                                 {% endif %}
                                 {% if featureGroups|length > 0 %}
-                                    <h5 id="filter-feature-header" class="no-margin">
-                                        {% spaceless %}
-                                            Features
-                                            <button data-filter="feature" class="fr button button-small button-grey action-show-hide-filter">Reset</button>
-                                            <button data-filter="feature" class="fr button button-small button-grey action-reset-filter">Hide</button>
-                                        {% endspaceless %}
-                                    </h5>
-                                    <div id="filter-feature-container">
-                                        <div id="filter-feature" class="filter">
-                                            <ul>
-                                                {% for featureGroup in featureGroups %}
-                                                    {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
-                                                        <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
-                                                        {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}
-                                                            <li>
-                                                                <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup }}][]" type="checkbox" value="{{ feature }}" id="filter-{{ featureGroup }}-{{ loop.index }}" />
-                                                                <label for="filter-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ feature }}</label>
-                                                            </li>
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </ul>
+                                    <div class="ui-widget pr mtm">
+                                        <header class="ui-widget-header ui-corner-top">
+                                            <h2>Features</h2>
+                                        </header>
+                                        <section class="ui-widget-content pan ui-corner-bottom">
+                                            <div id="filterFeature" class="filter">
+                                                <ul>
+                                                    {% for featureGroup in featureGroups %}
+                                                        {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
+                                                            <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
+                                                            {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}
+                                                                <li>
+                                                                    <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup }}][]" type="checkbox" value="{{ feature }}" id="filter-{{ featureGroup }}-{{ loop.index }}" />
+                                                                    <label for="filter-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ feature }}</label>
+                                                                </li>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            <input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
+                                        </section>
+                                        <div class="filter-header-buttons-container">
+                                            <button type="button" data-filter="Feature" class="fr button button-small button-grey icon-grey actionShowHideFilter" data-icon-primary="icon-467" data-icon-only="true">Hide</button>
+                                            <button type="button" data-filter="Feature" class="fr button button-small button-grey icon-grey actionResetFilter" data-icon-primary="icon-1113" data-icon-only="true">Reset</button>
                                         </div>
-                                        <input type="hidden" name="filter-features" id="filter-features" value="{{ departmentListing.features }}" />
                                     </div>
                                 {% endif %}
                             </div>
@@ -569,12 +677,16 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#filter-department").jstree({
-                "plugins" : ["themes","html_data"],
-                "themes" : {
-                    "theme" : "default",
-                    "dots" : false,
-                    "icons" : false
+            var $treeView = $("#filterDepartment");
+            $treeView.jstree({
+                "core": {
+                    "initially_open": ["root"]
+                },
+                "plugins": ["themes", "html_data"],
+                "themes": {
+                    "theme": "default",
+                    "dots": true,
+                    "icons": false
                 }
             });
 
@@ -592,27 +704,43 @@
                 $(this).closest("form").submit();
             });
 
-            $(".action-reset-filter").click(function() {
-                // If the price filter is being reset then reset value to min/max
-                if($(this).data('filter') === "price") {
-                    var slider = $("#price-range-slider"),
-                        lowField = $("#filter-low-price"),
-                        highField = $("#filter-high-price");
-
-                    lowField.unbind('change');
-                    highField.unbind('change');
-
-                    lowField.val(slider.slider("option", "min"));
-                    highField.val(slider.slider("option", "max"));
-                    console.log(":(");
-
-                    $(this).closest("form").submit();
+            $(".actionResetFilter").live("click", function() {
+                // Check if the filter is a price
+                if ($(this).data("filter") === "Price") {
+                    var $priceRangeSlider = $("#priceRangeSlider");
+                    var $filterLowPrice = $("#filterLowPrice");
+                    var $filterHighPrice = $("#filterHighPrice");
+                    $filterLowPrice.unbind("change");
+                    $filterHighPrice.unbind("change");
+                    $filterLowPrice.val($priceRangeSlider.slider("option", "min"));
+                    $filterHighPrice.val($priceRangeSlider.slider("option", "max"));
                 } else {
-                    $(":input", "#filter-"+$(this).data('filter'))
-                        .not(':button, :submit, :reset, :hidden')
-                        .val('')
-                        .removeAttr('checked')
-                        .removeAttr('selected');
+                    $(":input", "#filter"+$(this).data("filter"))
+                        .not(":button, :submit, :reset, :hidden")
+                        .val("")
+                        .removeAttr("checked")
+                        .removeAttr("selected");
+                }
+                $(this).closest("form").submit();
+            });
+
+            $(".actionShowHideFilter").live("click", function() {
+                var $buttonIcon = $(this).find(".ui-icon");
+                var $widget = $(this).closest(".filter-header-buttons-container").closest(".ui-widget");
+                var $filterHeader = $widget.find("header");
+                var $filter = $widget.find("section > div");
+                if ($buttonIcon.hasClass("icon-467")) {
+                    $filter.hide();
+                    $buttonIcon.removeClass("icon-467");
+                    $buttonIcon.addClass("icon-466");
+                    $filterHeader.removeClass("ui-corner-top");
+                    $filterHeader.addClass("ui-corner-all");
+                } else {
+                    $filter.show();
+                    $buttonIcon.removeClass("icon-466");
+                    $buttonIcon.addClass("icon-467");
+                    $filterHeader.removeClass("ui-corner-all");
+                    $filterHeader.addClass("ui-corner-top");
                 }
             });
 
@@ -622,8 +750,8 @@
                 max: parseInt({{ stats.getResult('high_price').max|default(9999) }}, 10),
                 values: [parseInt('{{ app.request.get('filter[low_price]', stats.getResult('low_price').min|default(0), true) }}', 10), parseInt('{{ app.request.get('filter[high_price]', stats.getResult('high_price').max|default(9999), true) }}', 10)],
                 slide: function(event, ui) {
-                    $("#filter-low-price").val(ui.values[0]);
-                    $("#filter-high-price").val(ui.values[1]);
+                    $("#filterLowPrice").val(ui.values[0]);
+                    $("#filterHighPrice").val(ui.values[1]);
                 },
                 change: function(event, ui) {
                     $(this).closest("form").submit();
