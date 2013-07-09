@@ -81,10 +81,10 @@
         {% endif %}
         <div class="widget-group clearfix">
             <div class="widget widget-1-of-2">
-                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
+                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', {'departmentId': department.id, 'brandId': brand.id})) }}
             </div>
             <div class="widget widget-1-of-2">
-                {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
+                {#{{ render_esi(controller('KACSiteBundle:Listing:popularProducts', {'departmentId': department.id, 'brandId': brand.id})) }}#}
             </div>
         </div>
         <div class="widget-group clearfix">
