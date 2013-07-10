@@ -16,12 +16,12 @@ class BasketDeliveryInfo
 
     /**
      * @var array
-     * @Serializer\Type("array<string>")
+     * @Serializer\Type("array")
      */
     private $deliveryOptions = array();
     /**
      * @var array
-     * @Serializer\Type("array<string>")
+     * @Serializer\Type("array")
      */
     private $estimatedDeliveryDays = array();
     /**

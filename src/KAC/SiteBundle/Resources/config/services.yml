@@ -1,84 +1,84 @@
 services:
-  # Twig Extensions
-  kac_site.twig.currency_extension:
-    class: KAC\SiteBundle\Twig\CurrencyExtension
-    tags:
-      - { name: twig.extension }
-  kac_site.twig.routing_extension:
-    class: KAC\SiteBundle\Twig\RoutingExtension
-    arguments: [@doctrine, @router, @kac_site.manager.routing]
-    tags:
-      - { name: twig.extension }
+    # Twig Extensions
+    kac_site.twig.currency_extension:
+        class: KAC\SiteBundle\Twig\CurrencyExtension
+        tags:
+            - { name: twig.extension }
+    kac_site.twig.routing_extension:
+        class: KAC\SiteBundle\Twig\RoutingExtension
+        arguments: [@doctrine, @router, @kac_site.manager.routing]
+        tags:
+            - { name: twig.extension }
 
-  # Third Party services
-  kac_site.google.google:
-    class: KAC\SiteBundle\ThirdParty\Google\Google
-    arguments: [%google_api_key%, %google_dev_token%, %google_email%, %google_password%, %google_analytics_id%]
+    # Third Party services
+    kac_site.google.google:
+        class: KAC\SiteBundle\ThirdParty\Google\Google
+        arguments: [%google_api_key%, %google_dev_token%, %google_email%, %google_password%, %google_analytics_id%]
 
-  # Managers
-  kac_site.manager.product:
-    class: KAC\SiteBundle\Manager\ProductManager
-    arguments: [@doctrine, @kac_site.manager.seo, @kac_site.manager.image, @kac_site.manager.document]
-  kac_site.manager.department:
-      class: KAC\SiteBundle\Manager\DepartmentManager
-      arguments: [@doctrine, @kac_site.manager.seo]
-  kac_site.manager.basket:
-      class: KAC\SiteBundle\Manager\BasketManager
-      arguments: [@doctrine, @session, @jms_serializer]
-  kac_site.manager.order:
-      class: KAC\SiteBundle\Manager\OrderManager
-      arguments: [@doctrine]
-  kac_site.manager.file:
-      class: KAC\SiteBundle\Manager\FileManager
-      arguments: [@doctrine]
-  kac_site.manager.image:
-    class: KAC\SiteBundle\Manager\ImageManager
-    arguments: [@doctrine, @kac_site.manager.file]
-  kac_site.manager.document:
-      class: KAC\SiteBundle\Manager\DocumentManager
-      arguments: [@doctrine, @kac_site.manager.file]
-  kac_site.manager.routing:
-      class: KAC\SiteBundle\Manager\RoutingManager
-      arguments: [@doctrine]
-  kac_site.manager.seo:
-    class: KAC\SiteBundle\Manager\SeoManager
-    arguments: [@doctrine]
+    # Managers
+    kac_site.manager.product:
+        class: KAC\SiteBundle\Manager\ProductManager
+        arguments: [@doctrine, @kac_site.manager.seo, @kac_site.manager.image, @kac_site.manager.document]
+    kac_site.manager.department:
+        class: KAC\SiteBundle\Manager\DepartmentManager
+        arguments: [@doctrine, @kac_site.manager.seo]
+    kac_site.manager.basket:
+        class: KAC\SiteBundle\Manager\BasketManager
+        arguments: [@doctrine, @session, @jms_serializer]
+    kac_site.manager.order:
+        class: KAC\SiteBundle\Manager\OrderManager
+        arguments: [@doctrine, @kac_site.manager.basket, @session]
+    kac_site.manager.file:
+        class: KAC\SiteBundle\Manager\FileManager
+        arguments: [@doctrine]
+    kac_site.manager.image:
+        class: KAC\SiteBundle\Manager\ImageManager
+        arguments: [@doctrine, @kac_site.manager.file]
+    kac_site.manager.document:
+        class: KAC\SiteBundle\Manager\DocumentManager
+        arguments: [@doctrine, @kac_site.manager.file]
+    kac_site.manager.routing:
+        class: KAC\SiteBundle\Manager\RoutingManager
+        arguments: [@doctrine]
+    kac_site.manager.seo:
+        class: KAC\SiteBundle\Manager\SeoManager
+        arguments: [@doctrine]
 
-  # Indexers
-  kac_site.indexer.product:
-    class: KAC\SiteBundle\Indexer\ProductIndexer
-    arguments: [@solarium.client.product, @doctrine]
+    # Indexers
+    kac_site.indexer.product:
+        class: KAC\SiteBundle\Indexer\ProductIndexer
+        arguments: [@solarium.client.product, @doctrine]
 
-  # Listeners
-  kac_site.listener.product:
-      class: KAC\SiteBundle\EventListener\ProductListener
-      arguments: [@kac_site.manager.product, @kac_site.indexer.product]
-      tags:
-          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
-          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
-          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
-          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
-          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
-  kac_site.listener.variant:
-      class: KAC\SiteBundle\EventListener\VariantListener
-      arguments: [@kac_site.manager.product, @kac_site.indexer.product]
-      tags:
-          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
-          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
-          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
-          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
-          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
-  kac_site.listener.image:
-      class: KAC\SiteBundle\EventListener\ImageListener
-      arguments: [@kac_site.manager.image]
-      tags:
-          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
-          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
-          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
-          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
-          - { name: doctrine.event_listener, event: preRemove, method: preRemove}
-          - { name: doctrine.event_listener, event: postRemove, method: preRemove}
-  kac_site.listener.document:
+    # Listeners
+    kac_site.listener.product:
+        class: KAC\SiteBundle\EventListener\ProductListener
+        arguments: [@kac_site.manager.product, @kac_site.indexer.product]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+            - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+            - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+    kac_site.listener.variant:
+        class: KAC\SiteBundle\EventListener\VariantListener
+        arguments: [@kac_site.manager.product, @kac_site.indexer.product]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+            - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+            - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+    kac_site.listener.image:
+        class: KAC\SiteBundle\EventListener\ImageListener
+        arguments: [@kac_site.manager.image]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+            - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+            - { name: doctrine.event_listener, event: preRemove, method: preRemove}
+            - { name: doctrine.event_listener, event: postRemove, method: preRemove}
+    kac_site.listener.document:
         class: KAC\SiteBundle\EventListener\DocumentListener
         arguments: [@kac_site.manager.document]
         tags:
@@ -89,46 +89,60 @@ services:
             - { name: doctrine.event_listener, event: preRemove, method: preRemove}
             - { name: doctrine.event_listener, event: postRemove, method: preRemove}
 
-  # Form Services
-  kac_site.form.new_department:
-     class: KAC\SiteBundle\Form\Department\NewDepartmentType
-     tags:
-       - { name: form.type, alias: site_new_department }
-  kac_site.form.flow.new_department:
-      class: KAC\SiteBundle\Form\Department\NewDepartmentFlow
-      parent: craue.form.flow
-      scope: request
-      calls:
-        - [ setFormType, [@kac_site.form.new_department]]
-      arguments: [@doctrine, @kac_site.manager.seo]
-  kac_site.form.new_product:
-    class: KAC\SiteBundle\Form\Product\NewProductType
-    tags:
-      - { name: form.type, alias: site_new_product }
-  kac_site.form.flow.new_product:
-    class: KAC\SiteBundle\Form\Product\NewProductFlow
-    parent: craue.form.flow
-    scope: request
-    calls:
-      - [ setFormType, [@kac_site.form.new_product]]
-    arguments: [@kac_site.manager.seo, @kac_site.manager.product, @kac_site.google.google]
-  kac_site.form.new_variant:
-    class: KAC\SiteBundle\Form\Variant\NewVariantType
-    tags:
-      - { name: form.type, alias: site_new_variant }
-  kac_site.form.flow.new_variant:
-    class: KAC\SiteBundle\Form\Variant\NewVariantFlow
-    parent: craue.form.flow
-    scope: request
-    calls:
-      - [ setFormType, [@kac_site.form.new_variant]]
-  kac_site.form.checkout:
-    class: KAC\SiteBundle\Form\Checkout\CheckoutType
-    tags:
-      - { name: form.type, alias: site_new_variant }
-  kac_site.form.flow.checkout:
-    class: KAC\SiteBundle\Form\Checkout\CheckoutFlow
-    parent: craue.form.flow
-    scope: request
-    calls:
-      - [ setFormType, [@kac_site.form.checkout]]
+    # Form Services
+    kac_site.form.new_department:
+        class: KAC\SiteBundle\Form\Department\NewDepartmentType
+        tags:
+            - { name: form.type, alias: site_new_department }
+    kac_site.form.flow.new_department:
+        class: KAC\SiteBundle\Form\Department\NewDepartmentFlow
+        parent: craue.form.flow
+        scope: request
+        calls:
+            - [ setFormType, [@kac_site.form.new_department]]
+        arguments: [@doctrine, @kac_site.manager.seo]
+    kac_site.form.new_product:
+        class: KAC\SiteBundle\Form\Product\NewProductType
+        tags:
+            - { name: form.type, alias: site_new_product }
+    kac_site.form.flow.new_product:
+        class: KAC\SiteBundle\Form\Product\NewProductFlow
+        parent: craue.form.flow
+        scope: request
+        calls:
+            - [ setFormType, [@kac_site.form.new_product]]
+        arguments: [@kac_site.manager.seo, @kac_site.manager.product, @kac_site.google.google]
+    kac_site.form.new_variant:
+        class: KAC\SiteBundle\Form\Variant\NewVariantType
+        tags:
+            - { name: form.type, alias: site_new_variant }
+    kac_site.form.flow.new_variant:
+        class: KAC\SiteBundle\Form\Variant\NewVariantFlow
+        parent: craue.form.flow
+        scope: request
+        calls:
+            - [ setFormType, [@kac_site.form.new_variant]]
+
+    # Payment
+    kac_site.payment.factory:
+        class: Omnipay\Common\GatewayFactory
+    Kac_site.payment.paypal:
+        class: Omnipay\PayPal\ExpressGateway
+        factory_service: kac_site.payment.factory
+        factory_method: create
+        arguments:
+            - "PayPal_Express"
+        calls:
+            - [setUsername, ['daniel-facilitator_api1.danielcannon.co.uk']]
+            - [setPassword, ['1373393629']]
+            - [setSignature, ['A3jaIEorBUgjbu5T0ZP.7L-1pm77AxoH1XJZjHWFg6SIcHLxl9plsEDp']]
+            - [setTestMode, ['%kernel.debug%']]
+    Kac_site.payment.sagepay:
+        class: Omnipay\Sagepay\DirectGateway
+        factory_service: kac_site.payment.factory
+        factory_method: create
+        arguments:
+            - "SagePay_Direct"
+        calls:
+            - [setVendor, ['onefit']]
+            - [setSimulatorMode, ['%kernel.debug%']]

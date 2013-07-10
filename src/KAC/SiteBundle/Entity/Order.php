@@ -1,8 +1,11 @@
 <?php
 namespace KAC\SiteBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\UserBundle\Entity\User;
+use Omnipay\Common\CreditCard;
 
 /**
  * @ORM\Entity(repositoryClass="KAC\SiteBundle\Repository\OrderRepository")
@@ -12,292 +15,304 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Order
 {
+    const PAYMENT_STATUS_AUTHORIZED   = 'AUTHORIZED';
+    const PAYMENT_STATUS_SUCCESSFUL   = 'SUCCESSFUL';
+    const PAYMENT_STATUS_FAILED       = 'UNAUTHORIZED';
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer", length=11)
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    /**
-     * @ORM\Column(name="user_id", type="integer", length=11)
-     */
-    private $userId;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Product", mappedBy="order")
+     * @ORM\ManyToOne(targetEntity="KAC\UserBundle\Entity\User")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Product", mappedBy="order", cascade={"all"})
      */
     private $products;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Note", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Note", mappedBy="order", cascade={"all"})
      */
     private $notes;
-
-    /**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact")
-     */
-    private $contact;
     
     /**
      * @ORM\Column(name="status", type="string", length=255)
      */
     private $status;
+
+    /**
+     * @ORM\Column(name="current_step", type="string", length=255, nullable=true)
+     */
+    private $currentStep;
         
     /**
-     * @ORM\Column(name="payment_type", type="string", length=255)
+     * @ORM\Column(name="payment_type", type="string", length=255, nullable=true)
      */
     private $paymentType;
     
     /**
-     * @ORM\Column(name="payment_response", type="text")
+     * @ORM\Column(name="payment_response", type="text", nullable=true)
      */
     private $paymentResponse;
+    /**
+     * @ORM\Column(name="auth_response", type="text", nullable=true)
+     */
+    private $authResponse;
     
     /**
-     * @ORM\Column(name="delivery_type", type="string", length=255)
+     * @ORM\Column(name="delivery_type", type="string", length=255, nullable=true)
      */
     private $deliveryType;
     
     /**
-     * @ORM\Column(name="courier", type="string", length=255)
+     * @ORM\Column(name="courier", type="string", length=255, nullable=true)
      */
     private $courier;
     
     /**
-     * @ORM\Column(name="number_of_packages", type="integer", length=3)
+     * @ORM\Column(name="number_of_packages", type="integer", length=3, nullable=true)
      */
     private $numberOfPackages;
     
     /**
-     * @ORM\Column(name="tracking_number", type="string", length=255)
+     * @ORM\Column(name="tracking_number", type="string", length=255, nullable=true)
      */
     private $trackingNumber;
         
     /**
-     * @ORM\Column(name="labels_printed", type="boolean")
+     * @ORM\Column(name="labels_printed", type="boolean", nullable=true)
      */
     private $labelsPrinted;
     
     /**
-     * @ORM\Column(name="send_review_request", type="boolean")
+     * @ORM\Column(name="send_review_request", type="boolean", nullable=true)
      */
     private $sendReviewRequest;
     
     /**
-     * @ORM\Column(name="review_requested", type="boolean")
+     * @ORM\Column(name="review_requested", type="boolean", nullable=true)
      */
     private $reviewRequested;
     
     /**
-     * @ORM\Column(name="items", type="string", length=255)
+     * @ORM\Column(name="items", type="string", length=255, nullable=true)
      */
     private $items;
         
     /**
-     * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $subTotal;
         
     /**
-     * @ORM\Column(name="delivery_charge", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="delivery_charge", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $deliveryCharge;
     
     /**
-     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="discount", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $discount;
     
     /**
-     * @ORM\Column(name="vat", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="vat", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $vat;
     
     /**
-     * @ORM\Column(name="total", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="total", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $total;
     
     /**
-     * @ORM\Column(name="possible_discount", type="decimal", precision=12, scale=4)
+     * @ORM\Column(name="possible_discount", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $possibleDiscount;
         
     /**
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      */
     private $firstName;
     
     /**
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     private $lastName;
     
     /**
-     * @ORM\Column(name="organisation_name", type="string", length=255)
+     * @ORM\Column(name="organisation_name", type="string", length=255, nullable=true)
      */
     private $organisationName;
     
     /**
-     * @ORM\Column(name="email_address", type="string", length=255)
+     * @ORM\Column(name="email_address", type="string", length=255, nullable=true)
      */
     private $emailAddress;
     
     /**
-     * @ORM\Column(name="telephone_daytime", type="string", length=50)
+     * @ORM\Column(name="telephone_daytime", type="string", length=50, nullable=true)
      */
     private $telephoneDaytime;
     
     /**
-     * @ORM\Column(name="telephone_evening", type="string", length=50)
+     * @ORM\Column(name="telephone_evening", type="string", length=50, nullable=true)
      */
     private $telephoneEvening;
     
     /**
-     * @ORM\Column(name="mobile", type="string", length=50)
+     * @ORM\Column(name="mobile", type="string", length=50, nullable=true)
      */
     private $mobile;
+
+    /**
+     * @ORM\Column(name="use_billing_as_delivery", type="boolean", nullable=true)
+     */
+    private $useBillingAsDelivery = true;
     
     /**
-     * @ORM\Column(name="billing_first_name", type="string", length=255)
+     * @ORM\Column(name="billing_first_name", type="string", length=255, nullable=true)
      */
     private $billingFirstName;
     
     /**
-     * @ORM\Column(name="billing_last_name", type="string", length=255)
+     * @ORM\Column(name="billing_last_name", type="string", length=255, nullable=true)
      */
     private $billingLastName;
     
     /**
-     * @ORM\Column(name="billing_organisation_name", type="string", length=255)
+     * @ORM\Column(name="billing_organisation_name", type="string", length=255, nullable=true)
      */
     private $billingOrganisationName;
     
     /**
-     * @ORM\Column(name="billing_address_line_1", type="string", length=255)
+     * @ORM\Column(name="billing_address_line_1", type="string", length=255, nullable=true)
      */
     private $billingAddressLine1;
     
     /**
-     * @ORM\Column(name="billing_address_line_2", type="string", length=255)
+     * @ORM\Column(name="billing_address_line_2", type="string", length=255, nullable=true)
      */
     private $billingAddressLine2;
     
     /**
-     * @ORM\Column(name="billing_town_city", type="string", length=255)
+     * @ORM\Column(name="billing_town_city", type="string", length=255, nullable=true)
      */
     private $billingTownCity;
     
     /**
-     * @ORM\Column(name="billing_county_state", type="string", length=255)
+     * @ORM\Column(name="billing_county_state", type="string", length=255, nullable=true)
      */
     private $billingCountyState;
     
     /**
-     * @ORM\Column(name="billing_post_zip_code", type="string", length=255)
+     * @ORM\Column(name="billing_post_zip_code", type="string", length=255, nullable=true)
      */
     private $billingPostZipCode;
     
     /**
-     * @ORM\Column(name="billing_country_code", type="string", length=2)
+     * @ORM\Column(name="billing_country_code", type="string", length=2, nullable=true)
      */
     private $billingCountryCode;
     
    	/**
-     * @ORM\Column(name="delivery_first_name", type="string", length=255)
+     * @ORM\Column(name="delivery_first_name", type="string", length=255, nullable=true)
      */
     private $deliveryFirstName;
     
     /**
-     * @ORM\Column(name="delivery_last_name", type="string", length=255)
+     * @ORM\Column(name="delivery_last_name", type="string", length=255, nullable=true)
      */
     private $deliveryLastName;
     
     /**
-     * @ORM\Column(name="delivery_organisation_name", type="string", length=255)
+     * @ORM\Column(name="delivery_organisation_name", type="string", length=255, nullable=true)
      */
     private $deliveryOrganisationName;
     
     /**
-     * @ORM\Column(name="delivery_address_line_1", type="string", length=255)
+     * @ORM\Column(name="delivery_address_line_1", type="string", length=255, nullable=true)
      */
     private $deliveryAddressLine1;
     
     /**
-     * @ORM\Column(name="delivery_address_line_2", type="string", length=255)
+     * @ORM\Column(name="delivery_address_line_2", type="string", length=255, nullable=true)
      */
     private $deliveryAddressLine2;
     
     /**
-     * @ORM\Column(name="delivery_town_city", type="string", length=255)
+     * @ORM\Column(name="delivery_town_city", type="string", length=255, nullable=true)
      */
     private $deliveryTownCity;
     
     /**
-     * @ORM\Column(name="delivery_county_state", type="string", length=255)
+     * @ORM\Column(name="delivery_county_state", type="string", length=255, nullable=true)
      */
     private $deliveryCountyState;
     
     /**
-     * @ORM\Column(name="delivery_post_zip_code", type="string", length=255)
+     * @ORM\Column(name="delivery_post_zip_code", type="string", length=255, nullable=true)
      */
     private $deliveryPostZipCode;
     
     /**
-     * @ORM\Column(name="delivery_country_code", type="string", length=2)
+     * @ORM\Column(name="delivery_country_code", type="string", length=2, nullable=true)
      */
     private $deliveryCountryCode;
     
     /**
-     * @ORM\Column(name="estimated_delivery_days_start", type="string", length=255)
+     * @ORM\Column(name="estimated_delivery_days_start", type="string", length=255, nullable=true)
      */
     private $estimatedDeliveryDaysStart;
     
     /**
-     * @ORM\Column(name="estimated_delivery_days_end", type="string", length=255)
+     * @ORM\Column(name="estimated_delivery_days_end", type="string", length=255, nullable=true)
      */
     private $estimatedDeliveryDaysEnd;
     
     /**
      * @ORM\Column(name="order_printed", type="boolean")
      */
-    private $orderPrinted;
+    private $orderPrinted = false;
     
     /**
      * @ORM\Column(name="delivery_note_printed", type="boolean")
      */
-    private $deliveryNotePrinted;
+    private $deliveryNotePrinted = false;
     
     /**
      * @ORM\Column(name="actioned", type="boolean")
      */
-    private $actioned;
+    private $actioned = false;
     
     /**
      * @ORM\Column(name="fraud_check_customer_ordered", type="boolean")
      */
-    private $fraudCheckCustomerOrdered;
+    private $fraudCheckCustomerOrdered = false;
     
     /**
      * @ORM\Column(name="fraud_check_address_match", type="boolean")
      */
-    private $fraudCheckAddressMatch;
+    private $fraudCheckAddressMatch = false;
     
     /**
      * @ORM\Column(name="fraud_check_name_used_on_different_order", type="boolean")
      */
-    private $fraudCheckNameUsedOnDifferentOrder;
+    private $fraudCheckNameUsedOnDifferentOrder = false;
     
     /**
      * @ORM\Column(name="fraud_check_post_zip_code_used_on_different_order", type="boolean")
      */
-    private $fraudCheckPostZipCodeUsedOnDifferentOrder;
+    private $fraudCheckPostZipCodeUsedOnDifferentOrder = false;
     
     /**
      * @ORM\Column(name="fraud_check_telephone_used_on_different_order", type="boolean")
      */
-    private $fraudCheckTelephoneUsedOnDifferentOrder;
+    private $fraudCheckTelephoneUsedOnDifferentOrder = false;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -315,6 +330,8 @@ class Order
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
+
+    private $card;
 
     public function isDeleted()
     {
@@ -389,7 +406,21 @@ class Order
     	{
     		return unserialize(base64_decode($this->paymentResponse));
     	}
-     	return '';   
+     	return array();
+    }
+
+    /**
+     * Get paymentResponse
+     *
+     * @return text
+     */
+    public function getAuthResponse()
+    {
+    	if ($this->authResponse != '')
+    	{
+    		return unserialize(base64_decode($this->authResponse));
+    	}
+     	return array();
     }
     
     /**
@@ -526,6 +557,11 @@ class Order
         return 'bundles/kacadmin/images/icons/'.$iconColour.'-light-icon.png';
     }
 
+    public function getCheckoutSteps()
+    {
+        return array('Billing', 'Delivery', 'Payment', 'Confirmation', 'Complete');
+    }
+
     /**
      * Get id
      *
@@ -537,26 +573,16 @@ class Order
     }
 
     /**
-     * Set userId
-     *
-     * @param integer $userId
-     * @return Order
+     * @return User
      */
-    public function setUserId($userId)
+    public function getUser()
     {
-        $this->userId = $userId;
-    
-        return $this;
+        return $this->user;
     }
 
-    /**
-     * Get userId
-     *
-     * @return integer 
-     */
-    public function getUserId()
+    public function setUser($user)
     {
-        return $this->userId;
+        $this->user = $user;
     }
 
     /**
@@ -608,13 +634,26 @@ class Order
     /**
      * Set paymentResponse
      *
-     * @param string $paymentResponse
+     * @param object $paymentResponse
      * @return Order
      */
     public function setPaymentResponse($paymentResponse)
     {
-        $this->paymentResponse = $paymentResponse;
+        $this->paymentResponse = base64_encode(serialize($paymentResponse));
     
+        return $this;
+    }
+
+    /**
+     * Set authResponse
+     *
+     * @param object $authResponse
+     * @return Order
+     */
+    public function setAuthResponse($authResponse)
+    {
+        $this->authResponse = base64_encode(serialize($authResponse));
+
         return $this;
     }
 
@@ -1795,19 +1834,19 @@ class Order
      */
     public function __construct()
     {
-        $this->discounts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->donations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->discounts = new ArrayCollection();
+        $this->donations = new ArrayCollection();
+        $this->products = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
     
     /**
      * Add discounts
      *
-     * @param \KAC\SiteBundle\Entity\Order\Discount $discounts
+     * @param Order\Discount $discounts
      * @return Order
      */
-    public function addDiscount(\KAC\SiteBundle\Entity\Order\Discount $discounts)
+    public function addDiscount(Order\Discount $discounts)
     {
         $this->discounts[] = $discounts;
     
@@ -1817,9 +1856,9 @@ class Order
     /**
      * Remove discounts
      *
-     * @param \KAC\SiteBundle\Entity\Order\Discount $discounts
+     * @param Order\Discount $discounts
      */
-    public function removeDiscount(\KAC\SiteBundle\Entity\Order\Discount $discounts)
+    public function removeDiscount(Order\Discount $discounts)
     {
         $this->discounts->removeElement($discounts);
     }
@@ -1837,10 +1876,10 @@ class Order
     /**
      * Add donations
      *
-     * @param \KAC\SiteBundle\Entity\Order\Donation $donations
+     * @param Order\Donation $donations
      * @return Order
      */
-    public function addDonation(\KAC\SiteBundle\Entity\Order\Donation $donations)
+    public function addDonation(Order\Donation $donations)
     {
         $this->donations[] = $donations;
     
@@ -1850,9 +1889,9 @@ class Order
     /**
      * Remove donations
      *
-     * @param \KAC\SiteBundle\Entity\Order\Donation $donations
+     * @param Order\Donation $donations
      */
-    public function removeDonation(\KAC\SiteBundle\Entity\Order\Donation $donations)
+    public function removeDonation(Order\Donation $donations)
     {
         $this->donations->removeElement($donations);
     }
@@ -1870,10 +1909,10 @@ class Order
     /**
      * Add products
      *
-     * @param \KAC\SiteBundle\Entity\Order\Product $products
+     * @param Order\Product $products
      * @return Order
      */
-    public function addProduct(\KAC\SiteBundle\Entity\Order\Product $products)
+    public function addProduct(Order\Product $products)
     {
         $this->products[] = $products;
     
@@ -1883,9 +1922,9 @@ class Order
     /**
      * Remove products
      *
-     * @param \KAC\SiteBundle\Entity\Order\Product $products
+     * @param Order\Product $products
      */
-    public function removeProduct(\KAC\SiteBundle\Entity\Order\Product $products)
+    public function removeProduct(Order\Product $products)
     {
         $this->products->removeElement($products);
     }
@@ -1903,10 +1942,10 @@ class Order
     /**
      * Add notes
      *
-     * @param \KAC\SiteBundle\Entity\Order\Note $notes
+     * @param Order\Note $notes
      * @return Order
      */
-    public function addNote(\KAC\SiteBundle\Entity\Order\Note $notes)
+    public function addNote(Order\Note $notes)
     {
         $this->notes[] = $notes;
     
@@ -1916,29 +1955,12 @@ class Order
     /**
      * Remove notes
      *
-     * @param \KAC\SiteBundle\Entity\Order\Note $notes
+     * @param Order\Note $notes
      */
-    public function removeNote(\KAC\SiteBundle\Entity\Order\Note $notes)
+    public function removeNote(Order\Note $notes)
     {
         $this->notes->removeElement($notes);
     }
-
-    /**
-     * @param mixed $contact
-     */
-    public function setContact($contact)
-    {
-        $this->contact = $contact;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getContact()
-    {
-        return $this->contact;
-    }
-
     /**
      * Get notes
      *
@@ -1957,5 +1979,53 @@ class Order
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    /**
+     * @param mixed $currentStep
+     */
+    public function setCurrentStep($currentStep)
+    {
+        $this->currentStep = $currentStep;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCurrentStep()
+    {
+        return $this->currentStep;
+    }
+
+    /**
+     * @param mixed $useBillingAsDelivery
+     */
+    public function setUseBillingAsDelivery($useBillingAsDelivery)
+    {
+        $this->useBillingAsDelivery = $useBillingAsDelivery;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUseBillingAsDelivery()
+    {
+        return $this->useBillingAsDelivery;
+    }
+
+    /**
+     * @param mixed $card
+     */
+    public function setCard($card)
+    {
+        $this->card = $card;
+    }
+
+    /**
+     * @return CreditCard
+     */
+    public function getCard()
+    {
+        return $this->card;
     }
 }

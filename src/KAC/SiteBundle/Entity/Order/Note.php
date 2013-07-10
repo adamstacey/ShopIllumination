@@ -36,12 +36,12 @@ class Note
     /**
      * @ORM\Column(name="notified", type="boolean")
      */
-    private $notified;
+    private $notified = false;
 
     /**
      * @ORM\Column(name="note", type="text")
      */
-    private $note;
+    private $note = '';
 
     /**
      * @Gedmo\Timestampable(on="create")

@@ -1,0 +1,25 @@
+{% extends 'KACSiteBundle:Checkout:checkout.html.twig' %}
+{% block checkout_content %}
+    <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
+                        <h2>Billing</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                        <fieldset>
+                            {{ form_rest(form) }}
+                        </fieldset>
+                        <div class="clearfix">
+                            <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
+                            <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Continue</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

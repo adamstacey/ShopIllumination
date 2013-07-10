@@ -36,7 +36,8 @@
         "jms/serializer-bundle": "0.12.*@dev",
         "avalanche123/imagine-bundle": "dev-master",
         "gregwar/form-bundle": "dev-master",
-        "Trsteel/ckeditor-bundle": "1.1.*@dev"
+        "Trsteel/ckeditor-bundle": "1.1.*@dev",
+        "omnipay/omnipay": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

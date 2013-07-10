@@ -32,7 +32,7 @@ checkout_order_failed:
     defaults: { _controller: WebIlluminationShopBundle:Checkout:orderFailed }
     requirements:
         _scheme:  https
-    
+
 # Basket
 basket_your_basket:
     pattern:  /your-basket.html

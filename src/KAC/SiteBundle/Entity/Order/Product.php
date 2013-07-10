@@ -46,7 +46,7 @@ class Product
     /**
      * @ORM\Column(name="header", type="string", length=255)
      */
-    private $name;
+    private $header;
 
     /**
      * @ORM\Column(name="product_code", type="string", length=255)
@@ -374,14 +374,14 @@ class Product
         return $this->discount;
     }
 
-    public function setName($name)
+    public function setHeader($header)
     {
-        $this->name = $name;
+        $this->header = $header;
     }
 
-    public function getName()
+    public function getHeader()
     {
-        return $this->name;
+        return $this->header;
     }
 
     public function setProductCode($productCode)

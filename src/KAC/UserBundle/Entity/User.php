@@ -1,9 +1,11 @@
 <?php
 namespace KAC\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Entity\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
+use KAC\SiteBundle\Entity\Contact;
 
 /**
  * @ORM\Entity
@@ -19,15 +21,15 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Contact", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $contacts;
+    private $contact;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->contacts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     /**
@@ -67,48 +69,24 @@ class User extends BaseUser
     }
 
     /**
-     * Add contact
-     *
-     * @param \KAC\SiteBundle\Entity\Contact $contact
-     * @return User
-     */
-    public function addContact(\KAC\SiteBundle\Entity\Contact $contact)
-    {
-        $this->contacts[] = $contact;
-        $contact->setUser($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove contact
-     *
-     * @param \KAC\SiteBundle\Entity\Contact $contact
-     */
-    public function removeContact(\KAC\SiteBundle\Entity\Contact $contact)
-    {
-        $this->contacts->removeElement($contact);
-    }
-
-    /**
      * Get contacts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Contact
      */
-    public function getContacts()
+    public function getContact()
     {
-        return $this->contacts;
+        return $this->contact;
     }
 
     /**
      * Set contacts
      *
-     * @param \KAC\SiteBundle\Entity\Contact $contacts
+     * @param Contact $contact
      * @return User
      */
-    public function setContacts(\KAC\SiteBundle\Entity\Contact $contacts = null)
+    public function setContact(Contact $contact = null)
     {
-        $this->contacts = $contacts;
+        $this->contact = $contact;
     
         return $this;
     }

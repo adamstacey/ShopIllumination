@@ -13,9 +13,9 @@ class BasketManager extends Manager
     private $serializer;
 
     /**
-     * @var Basket
+     * @var Basket[]
      */
-    private $basket;
+    private $baskets= array();
 
     public function __construct(Registry $doctrine, SessionInterface $session, Serializer $serializer)
     {
@@ -25,63 +25,67 @@ class BasketManager extends Manager
         $this->serializer = $serializer;
     }
 
-    public function getBasket()
+    public function getBasket($key='basket')
     {
-        if(!$this->basket)
+        if(!array_key_exists($key, $this->baskets))
         {
-            if($this->session->has('basket'))
+            if($this->session->has($key))
             {
-                try {
-                    $this->basket = $this->serializer->deserialize($this->session->get('basket'), 'KAC\SiteBundle\Model\Basket', 'json');
-                } catch (\Exception $e) {
-                    $this->basket = new Basket();
-                    $this->refreshBasket();
-                }
+                $this->baskets[$key] = $this->serializer->deserialize($this->session->get($key), 'KAC\SiteBundle\Model\Basket', 'json');
             } else {
-                $this->basket = new Basket();
+                $this->baskets[$key] = new Basket();
                 $this->refreshBasket();
             }
         }
 
-        return $this->basket;
+        return $this->baskets[$key];
     }
 
-    public function saveBasket()
+    public function saveBasket($key='basket', $basket=null)
     {
-        $this->session->set('basket', $this->serializer->serialize($this->basket, 'json'));
-    }
-
-    public function clearBasket()
-    {
-        $this->basket = null;
-        $this->session->remove('basket');
-    }
-
-    public function refreshBasket()
-    {
-        foreach($this->basket->getItems() as $item)
+        if($basket || array_key_exists($key, $this->baskets))
         {
-            $item->calculateSavings();
+            $this->session->set($key, $this->serializer->serialize($basket !== null ? $basket : $this->baskets[$key], 'json'));
         }
-        $this->basket->getDelivery()->updateInfo($this->basket->getItems());
-        $this->basket->calculateTotals();
     }
 
-    public function loadProducts()
+    public function clearBasket($key='basket')
     {
-        foreach($this->getBasket()->getItems() as $index => $item)
-        {
-            $em = $this->doctrine->getManager();
-            $product = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($item->getProductId());
-            $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($item->getVariantId());
+        $this->baskets[$key] = null;
+        $this->session->remove($key);
+    }
 
-            if($product && $variant)
+    public function refreshBasket($key='basket')
+    {
+        if(array_key_exists($key, $this->baskets))
+        {
+            foreach($this->baskets[$key]->getItems() as $item)
             {
-                $item->setProduct($product);
-                $item->setVariant($variant);
-            } else {
-                $this->getBasket()->removeItem($index);
-                $this->refreshBasket();
+                $item->calculateSavings();
+            }
+            $this->baskets[$key]->getDelivery()->updateInfo($this->baskets[$key]->getItems());
+            $this->baskets[$key]->calculateTotals();
+        }
+    }
+
+    public function loadProducts($key='basket')
+    {
+        if(array_key_exists($key, $this->baskets))
+        {
+            foreach($this->getBasket($key)->getItems() as $index => $item)
+            {
+                $em = $this->doctrine->getManager();
+                $product = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($item->getProductId());
+                $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($item->getVariantId());
+
+                if($product && $variant)
+                {
+                    $item->setProduct($product);
+                    $item->setVariant($variant);
+                } else {
+                    $this->getBasket()->removeItem($index);
+                    $this->refreshBasket();
+                }
             }
         }
     }
