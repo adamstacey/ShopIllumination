@@ -1,8 +1,10 @@
-<div class="popular_brands popular_items">
+<h4 class="popular-items-header">Shop by Popular Brand</h4>
+<div class="popular-brands popular-items">
     {% for item in brands %}
         {% set brand = item[0] %}
-        <div class="popular_brand popular_item">
-            <a class="submenu-brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ brand.images.0.publicPath | apply_filter('logo_medium') }}" border="0" alt="{{ brand.description.name|raw }}" width="77" height="39" /></a>
+        <div class="popular-brand popular-item">
+            <a class="submenu-brand" href="{{ path('routing', {'url': brand.url}) }}"><img src="{{ brand.images.0.publicPath | apply_filter('logo_medium') }}" border="0" alt="{{ brand.description.name|raw }}" width="57" height="29" /></a>
         </div>
     {% endfor %}
+    <div class="clear"></div>
 </div>
