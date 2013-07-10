@@ -80,11 +80,15 @@
             {% set totalItemCount = 0 %}
         {% endif %}
         <div class="widget-group clearfix">
-            <div class="widget widget-1-of-2">
-                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
-            </div>
-            <div class="widget widget-1-of-2">
+            <div class="widget widget-1-of-1">
                 {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
+            </div>
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <section class="ui-widget-content ui-corner-all">
+                        {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
+                    </section>
+                </div>
             </div>
         </div>
         <div class="widget-group clearfix">
