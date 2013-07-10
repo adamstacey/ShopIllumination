@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Solarium_Query_Select;
 use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Entity\Brand;
 use KAC\SiteBundle\Entity\Product\Description;
 use KAC\SiteBundle\Entity\Product\Variant;
 use KAC\SiteBundle\Entity\ProductToDepartment;
@@ -232,27 +233,34 @@ class ListingController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return mixed
      * @Route("/popular_brands", name="popular_brands")
+     * @Route("/popular_brands/d{departmentId}", name="popular_brands_d")
      */
-    public function popularBrandsAction(Request $request)
+    public function popularBrandsAction(Request $request,  $departmentId=null)
     {
-        /**
-         * @var $em EntityManager
-         */
-        $em = $this->getDoctrine()->getManager();
-        $brands = $em->createQuery('
-            SELECT b, COUNT(op.id) AS total
-            FROM KAC\SiteBundle\Entity\Brand b
-            JOIN  KAC\SiteBundle\Entity\Product p
-                WITH p.brand = b.id
-            JOIN  KAC\SiteBundle\Entity\Order\Product op
-                WITH op.product = p.id
-            GROUP BY b.id
-            ORDER BY total ASC
-        ')->setMaxResults(5)
-            ->execute();
+        $products = $this->getPopularProducts($departmentId);
+        $brands = array();
+
+        foreach($products as $item)
+        {
+            /**
+             * @var $product Product
+             */
+            $product = $item[0];
+
+            $brand = $product->getBrand();
+            if(array_key_exists($brand->getId(), $brands)) {
+                $brands[$brand->getId()]['total'] += $item['total'];
+            } else {
+                $brands[$brand->getId()] = array(
+                    0 => $product->getBrand(),
+                    'total' => $item['total'],
+                );
+            }
+        }
+
+        // Remove unneeded elements
+        $brands = array_values(array_slice($brands, 0, 5));
 
         $response = $this->render('KACSiteBundle:Listing:popularBrands.html.twig', array(
             'brands' => $brands,
@@ -263,32 +271,102 @@ class ListingController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @return mixed
      * @Route("/popular_products", name="popular_products")
+     * @Route("/popular_products/d{departmentId}", name="popular_products_d")
+     * @Route("/popular_products/b{departmentId}", name="popular_products_b")
+     * @Route("/popular_products/d{departmentId}/b{brandId}", name="popular_products_db")
      */
-    public function popularProductsAction(Request $request)
+    public function popularProductsAction(Request $request, $departmentId=null, $brandId=null)
+    {
+        $products = $this->getPopularProducts($departmentId, $brandId);
+
+        // Remove unneeded elements
+        $products = array_slice($products, 0, 5);
+
+        $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
+            'products' => $products,
+        ));
+        $response->setSharedMaxAge(3600);
+
+        return $response;
+    }
+
+    private function getPopularProducts($departmentId=null, $brandId=null)
     {
         /**
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
-        $variants = $em->createQuery('
-        SELECT v, count(op.id) AS total
-        FROM KAC\SiteBundle\Entity\Product\Variant v
-        JOIN  KAC\SiteBundle\Entity\Order\Product op
-            WITH op.variant = v.id
-        GROUP BY op.variant
-        ORDER BY total ASC
-        ')->setMaxResults(5)
-            ->execute();
+        /** @var $solarium \Solarium_Client */
+        $solarium = $this->get('solarium.client');
 
-        $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
-            'variants' => $variants,
-        ));
-        $response->setSharedMaxAge(3600);
+        $query = $solarium->createSelect();
+        $helper = $query->getHelper();
+        $query->setQuery('*');
+        $query->setFields(array('id'));
 
-        return $response;
+        $department = null;
+
+        if($departmentId) {
+            $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
+        }
+
+        // If brand was specified fetch from the database
+        $brand = null;
+
+        if($brandId) {
+            $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
+            if(!$brand) {
+                throw new NotFoundHttpException("Brand not found");
+            }
+        }
+
+        if($department) {
+            // Get path
+            $departmentFilterPath = "";
+            $currDepartment = $department;
+            do {
+                $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
+                $currDepartment = $currDepartment->getParent();
+            } while ($currDepartment !== null);
+            $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
+        }
+        if($brand) {
+            $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
+        }
+        $results = $solarium->execute($query);
+
+        $products = array();
+        foreach($results as $document)
+        {
+            $qb = $em->createQueryBuilder();
+            $result = $qb->select('p, count(op.id) AS total')
+                ->from('KAC\SiteBundle\Entity\Product', 'p')
+                ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.variant', 'p.id'))
+                ->where($qb->expr()->eq('p.id', '?1'))
+                ->groupBy('op.variant')
+                ->orderBy('total', 'ASC')
+                ->setParameter(1, $document->id)
+                ->setMaxResults(1)
+                ->getQuery()
+                ->execute();
+
+
+            if($result && count($result) > 0)
+            {
+                $products[] = $result[0];
+            }
+        }
+
+        // Sort array
+        usort($products, function($a, $b) {
+            if ($a['total'] == $b['total']) {
+                return 0;
+            }
+            return ($a['total'] > $b['total']) ? -1 : 1;
+        });
+
+        return $products;
     }
 
     public function departmentTreeAction(Request $request, $departmentId=null, $brandId=null)
