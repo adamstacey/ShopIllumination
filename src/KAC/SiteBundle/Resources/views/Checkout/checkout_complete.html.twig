@@ -1,16 +1,34 @@
-{% extends 'KACSiteBundle:Checkout:checkout.html.twig' %}
-{% block checkout_content %}
-    <div class="widget-group clearfix">
-        <div class="widget widget-1-of-1">
-            <div class="ui-widget">
-                <header class="ui-widget-header ui-corner-top">
-                    <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
-                    <h2>Success</h2>
-                </header>
-                <section class="ui-widget-content ui-corner-all">
-                    Success
-                </section>
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Secure Checkout | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Secure Checkout</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="checkout_breadcrumb">
+
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="widget-group clearfix">
+                    <div class="widget widget-1-of-1">
+                        <div class="ui-widget">
+                            <header class="ui-widget-header ui-corner-top">
+                                <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
+                                <h2>Success</h2>
+                            </header>
+                            <section class="ui-widget-content ui-corner-all">
+                                Success
+                            </section>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

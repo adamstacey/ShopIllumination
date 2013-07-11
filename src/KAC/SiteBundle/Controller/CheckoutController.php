@@ -42,8 +42,6 @@ class CheckoutController extends Controller
         $manager = $this->get('kac_site.manager.order');
 
         // Create new order
-        $manager->getOpenOrder();
-        $manager->deleteOrder();
         $order = $manager->getOpenOrder();
 
         switch($order->getCurrentStep()) {
@@ -399,5 +397,17 @@ class CheckoutController extends Controller
         $manager->deleteOrder();
 
         return $this->redirect($this->generateUrl('homepage'));
+    }
+
+    /**
+     * @Secure(roles="ROLE_USER")
+     * @Route("/checkout-refresh.html", name="checkout_refresh")
+     */
+    public function checkoutRefreshAction(Request $request)
+    {
+        $manager = $this->get('kac_site.manager.order');
+        $manager->updateBasket();
+
+        return $this->redirect($request->query->has('url') ? $request->query->get('url') : $this->generateUrl('checkout'));
     }
 }

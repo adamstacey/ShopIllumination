@@ -1,26 +1,81 @@
-{% extends 'KACSiteBundle:Checkout:checkout.html.twig' %}
-{% block checkout_content %}
-    <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Secure Checkout | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Secure Checkout</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="checkout_breadcrumb">
+
+        </div>
         <div class="widget-group clearfix">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
+            <div class="widget widget-5-of-7">
+                <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
+                                    <h2>Billing</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-all">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset>
+                                        {{ form_rest(form) }}
+                                    </fieldset>
+                                    <div class="clearfix">
+                                        <a href="{{ path('checkout_payment') }}" class="button button-small mrm fl">Back</a>
+                                        <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
+                                        <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Buy</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>            </div>
+            <div class="widget widget-2-of-7">
+                <div class="ui-widget mbl">
                     <header class="ui-widget-header ui-corner-top">
-                        <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
-                        <h2>Billing</h2>
+                        <h2>Your Order</h2>
                     </header>
-                    <section class="ui-widget-content ui-corner-all">
-                        {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                        <fieldset>
-                            {{ form_rest(form) }}
-                        </fieldset>
-                        <div class="clearfix">
-                            <a href="{{ path('checkout_payment') }}" class="button button-small mrm fl">Back</a>
-                            <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
-                            <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Buy</button>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <div id="basket-contents" class="clearfix">
+                            {% if basket.items|length > 0 %}
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    {% for item in basket.items %}
+                                        <tr>
+                                            <td class="product-page-title" colspan="6">
+                                                <a href="{{ path('routing', {'url': item.product.url}) }}">{{ item.description.header }}</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ac">{{ item.quantity }}</td>
+                                            <td class="ac">&times;</td>
+                                            <td class="ac"><strong>{{ item.variant.productCode }}</strong></td>
+                                            <td class="ac">{% if item.recommendedRetailPrice > item.unitCost %}<span class="red strikethrough">&pound;{{ item.recommendedRetailPrice|number_format(2) }}</span><br /><span class="green"><strong>&pound;{{ item.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ item.unitCost|number_format(2) }}{% endif %}</td>
+                                            <td class="ac">=</td>
+                                            <td class="ar">&pound;{{ item.totalCost|number_format(2) }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                        </div>
+                        <div id="basket-totals" class="clearfix">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td class="al uppercase font-size-13"><strong>Total to Pay (inc. VAT):</strong></td>
+                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></td>
+                                </tr>
+                            </table>
                         </div>
                     </section>
                 </div>
             </div>
         </div>
-    </form>
+    </section>
 {% endblock %}

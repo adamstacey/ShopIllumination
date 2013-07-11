@@ -104,9 +104,13 @@ class OrderManager extends Manager
 
         // Freeze the basket
         $this->basketManager->saveBasket('order.basket', $this->basketManager->getBasket());
-        $this->basketManager->clearBasket('basket');
 
         return $order;
+    }
+
+    public function updateBasket()
+    {
+        $this->basketManager->saveBasket('order.basket', $this->basketManager->getBasket());
     }
 
     public function getBasket()
@@ -116,9 +120,10 @@ class OrderManager extends Manager
         return $basket;
     }
 
-    public function clearBaskets()
+    public function clearBasket()
     {
         $this->basketManager->clearBasket('order.basket');
+        $this->basketManager->clearBasket('basket');
     }
 
     public function bindBasketData(Order $order, Basket $basket)
