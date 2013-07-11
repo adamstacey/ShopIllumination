@@ -1,21 +1,32 @@
 <style>
-    .basket-summary-header {
-        height: 50px;
-        width: 230px;
-        margin: 0;
-        padding: 5px 10px;
-
+    .header {
+        padding: 10px 0;
+        height: 70px;
+    }
+    #basket-summary {
+        width: 260px;
         position: absolute;
         right: 0;
-        bottom: -5px;
+        z-index: 5;
+    }
+    #basket-summary.expanded {
+        width: 600px;
+    }
 
-        border-radius: 4px 4px 0 0;
+    .basket-summary-header {
+        min-height: 60px;
+        width: 100%;
+        margin: 0;
+        padding: 5px 10px;
+        z-index: 10;
+
+        border-radius: 4px;
         background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
         -webkit-box-shadow: 0 -2px 5px 0 #384246;
         cursor: pointer;
     }
     .basket-summary-header h2 {
-        margin: 0;
+        /*margin: 0;*/
         padding: 0;
 
         font-size: 1.4rem;
@@ -32,37 +43,64 @@
         font-size: 1rem;
         color: #6c8087;
     }
-    .basket-summary-products {
-        height: 50px;
-        width: 230px;
-        margin: 0;
-        padding: 5px 10px;
-
-        position: absolute;
-        right: 0;
-        top: 60px;
-
-        border-radius: 0 0 4px 4px;
-        background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
-        -webkit-box-shadow: 0 2px 5px 0 #384246;
-        cursor: pointer;
+    .basket-items-table {
+        background: #FFF;
+    }
+    .basket-buttons {
+        margin: 5px 0;
+    }
+    .basket-buttons .button:first-child {
+        margin-left: 5px;
     }
 </style>
+<script>
+    $(document).ready(function() {
+        $('#basket-summary').hover(function() {
+            $(this).find('.dropdown-summary').show();
+            $(this).addClass('expanded');
+        }, function() {
+            $(this).find('.dropdown-summary').hide();
+            $(this).removeClass('expanded');
+        });
+    });
+</script>
 <div class="basket-summary-header">
     <a href="#"><span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-252"></span></a>
     <h2>Your basket</h2>
     <p>Items: <strong>{{ basket.totals.items|default(0) }}</strong></p>
     <p>Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
+    <div class="dropdown-summary ui-helper-hidden">
+        {% if basket.products|length > 0 %}
+            <table class="data-table basket-items-table">
+                <tr>
+                    <th class="al">Product</th>
+                    <th class="ac">Code</th>
+                    <th class="ac">Qty</th>
+                    <th class="ac">Price</th>
+                    <th class="ac">&nbsp;</th>
+                </tr>
+                {% for product in basket.products %}
+                    <tr{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="red"{% endif %}>
+                        <td>
+                            <a class="uppercase" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
+                            {% if product.selectedOptionLabels|length > 0 %}
+                                <br />
+                                {% for selectedOptionLabel in product.selectedOptionLabels %}
+                                    {{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td class="ac"><strong>{{ product.productCode }}</strong></td>
+                        <td class="ac">{{ product.quantity }}</td>
+                        <td class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
+                        <td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="basket-buttons clearfix">
+                <a href="{{ path('checkout_secure_checkout') }}" class="button button-small uppercase button-green icon-white fr">Buy Now</a>
+                <a href="{{ path('basket_your_basket') }}" class="button button-small uppercase button-blue icon-white fr">View Basket</a>
+            </div>
+        {% endif %}
+    </div>
 </div>
-{#<div class="basket-summary-products">
-
-</div>
-{#<a title="View your basket" href="{#{{ path('basket_your_basket') }}"><img class="fr" src="{{ asset('/bundles/kacshop/images/icons/shopping-basket.png') }}" width="39" height="38" border="0" alt="Your Shopping Basket" /></a>
-<h2>Your basket</h2>
-<div id="basket-summary-content">
-    <p class="fl">Items: <strong>{{ basket.totals.items }}</strong><br />Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
-    {% if basket.totals.items > 0 %}
-        {% if basket.delivery.service != '' %}<a title="Go to checkout" href="{{ path('checkout_secure_checkout') }}" class="button ui-button-green">Pay Now</a>{% endif %}
-        <a title="View your basket" href="{{ path('basket_your_basket') }}" class="button ui-button-blue">View</a>
-    {% endif %}
-</div>#}

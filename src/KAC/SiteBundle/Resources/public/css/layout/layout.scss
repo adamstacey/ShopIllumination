@@ -32,7 +32,7 @@ html.modal body > section {
 }
 
 .header {
-    padding: $spacingSmall 0;
+    padding: $spacingMedium 0;
 
     @include verticalGradientGreyToGreyDark;
     @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
