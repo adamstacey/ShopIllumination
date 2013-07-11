@@ -255,15 +255,19 @@ table.data-table .price .currency-tax {
     @include boxGlow($colourGrey, $spacingMedium, 0, 1);
 }
 
+.product-listing img {
+    display: block;
+}
+
 .product-listing .name {
-    padding: $spacingSmall;
+    padding: 0 $spacingSmall;
 
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
 
-    line-height: 100%;
+    line-height: 150%;
     @include alphaBackground($colourBlack, 0.5);
     color: $colourWhite;
     text-align: center;
@@ -569,7 +573,7 @@ screen and (min-resolution: 2dppx) {
 
     border-bottom: 1px solid $colourGreyLight !important;
     cursor: pointer;
-    color: $colourGreyLight;
+    color: $colourGreyDark;
     @include verticalGradientWhiteToGreyLight;
 }
 
