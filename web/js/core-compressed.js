@@ -15161,11 +15161,17 @@ $(document).ready(function() {
 
     $('.search-container #formSearch').typeahead([
         {
+            name: 'listing',
+            prefetch: routes['listing_routes']
+        },
+        {
             name: 'products',
             remote: routes['listing_search_autocomplete'] + '?q=%QUERY'
-
         }
     ]);
+    $('.search-container #formSearch').on('typeahead:selected', function(event, data) {
+        window.location.replace(data.url);
+    });
 });
 
 function resetSubmenu() {

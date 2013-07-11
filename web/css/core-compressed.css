@@ -3002,6 +3002,13 @@ body .ui-tooltip {
   border-radius: 4px;
 }
 
+/* line 1200, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+.header-buttons-container {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+
 /* line 1, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/gradients/gradients.scss */
 .gradient-black {
   background: #384246;
@@ -24060,13 +24067,14 @@ div.etalage_description.rtl {
   left: 5px;
 }
 
-/* line 27, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+/* line 28, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+.search-container .twitter-typeahead,
 .search-container input,
 .search-container input:hover,
 .search-container input:focus {
-  padding-left: 50px;
-  padding-right: 65px;
+  padding: 8px 65px 8px 50px;
   width: 100%;
+  height: 38px;
   -webkit-box-sizing: border-box;
   -khtml-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -24082,6 +24090,16 @@ div.etalage_description.rtl {
 }
 
 /* line 39, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+.search-container .twitter-typeahead {
+  padding-top: 0;
+}
+
+/* line 43, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+.search-container .twitter-typeahead input {
+  padding: 0;
+}
+
+/* line 47, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .search-container .icon-dark-red {
   position: absolute;
   top: 3px;
@@ -24090,7 +24108,7 @@ div.etalage_description.rtl {
   cursor: pointer;
 }
 
-/* line 50, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+/* line 58, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .search-container .button,
 .search-container .button:hover {
   position: absolute;
@@ -24106,53 +24124,22 @@ div.etalage_description.rtl {
   box-shadow: none !important;
 }
 
-/* line 61, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+/* line 69, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .search-container .button .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 67, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
-.typeahead,
-.tt-query,
+/* line 73, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .tt-hint {
-  width: 396px;
-  height: 30px;
-  padding: 8px 12px;
-  font-size: 24px;
-  line-height: 30px;
-  border: 2px solid #ccc;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  outline: none;
+  padding: 8px 65px 8px 50px;
+  width: 440px;
+  height: 38px;
+  color: #999;
 }
 
 /* line 80, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
-.typeahead {
-  background-color: #fff;
-  width: 100%;
-}
-
-/* line 85, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
-.typeahead:focus {
-  border: 2px solid #0097cf;
-}
-
-/* line 89, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
-.tt-query {
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
-
-/* line 95, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
-.tt-hint {
-  color: #999999;
-}
-
-/* line 99, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .tt-dropdown-menu {
-  width: 422px;
+  width: 440px;
   margin-top: 12px;
   padding: 8px 0;
   background-color: #fff;
@@ -24166,20 +24153,20 @@ div.etalage_description.rtl {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* line 114, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+/* line 95, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .tt-suggestion {
   padding: 3px 20px;
   font-size: 18px;
   line-height: 24px;
 }
 
-/* line 120, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+/* line 101, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .tt-suggestion.tt-is-under-cursor {
   color: #fff;
   background-color: #0097cf;
 }
 
-/* line 126, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
+/* line 107, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/search/search.scss */
 .tt-suggestion p {
   margin: 0;
 }
@@ -25254,6 +25241,35 @@ table.data-table .price .currency-tax {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
+}
+
+/* line 699, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+h4.popular-items-header {
+  margin: 0 0 5px 0;
+  color: #444444;
+  font-weight: bold;
+  font-size: 11px;
+  font-size: 1.1rem;
+}
+
+/* line 708, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.popular-brand a.submenu-brand,
+.popular-brand a.submenu-brand img {
+  width: 50px;
+  height: 25px;
+}
+
+/* line 713, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.popular-brands {
+  border-left: 1px solid #c5d2d6;
+}
+
+/* line 717, ../var/www/kac.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.popular-brand a.submenu-brand {
+  padding: 5px 10px;
+  border-top: 1px solid #c5d2d6;
+  border-right: 1px solid #c5d2d6;
+  border-bottom: 1px solid #c5d2d6;
 }
 
 /*
