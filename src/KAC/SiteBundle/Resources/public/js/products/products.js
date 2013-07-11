@@ -35,8 +35,15 @@ $(document).ready(function() {
             }
         });
     });
-});
 
+    $('#basket-summary').hover(function() {
+        $(this).find('.dropdown-summary').show();
+        $(this).addClass('expanded');
+    }, function() {
+        $(this).find('.dropdown-summary').hide();
+        $(this).removeClass('expanded');
+    });
+});
 function updateBasketSummary() {
     var $el = $("#basket-summary");
 
@@ -45,6 +52,7 @@ function updateBasketSummary() {
         url: $el.attr("data-url"),
         success: function(data) {
             $el.html(data);
+            generateButtons($el);
         }
     });
 }
