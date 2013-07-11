@@ -1196,3 +1196,9 @@ body .ui-tooltip {
     @include boxGlow($primaryColour, 10px);
     @include equalBorderRadius($radiusSize);
 }
+
+.header-buttons-container {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
