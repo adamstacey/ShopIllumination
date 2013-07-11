@@ -6,22 +6,22 @@
             <div class="slider-wrapper slider-homepage">
                 <ul class="slider">
                     <li>
-                        <a href="{{ path('demo_maia_worktops') }}"><img src="{{ asset('/uploads/demo/maia-10pc-2013.jpg') }}" alt="10% Off Maia Solid Surface" /></a>
+                        <a href="{{ path('routing', {'url': 'built-in-single-ovens'}) }}"><img src="{{ asset('/uploads/demo/maia-10pc-2013.jpg') }}" alt="10% Off Maia Solid Surface" /></a>
                     </li>
                     <li>
-                        <img src="{{ asset('/uploads/images/demo/franke-minerva-tap-advert.jpg') }}" alt="Franke Minerva 3 in 1 Boiling Hot Water Tap: No more standing around waiting for the kettle to boil or using unnecessary energy. With the Minerva tap from Franke, you have 100°C water instantly at the twist of a lever. Save time and money today, In Stock for Fast Delivery." />
+                        <a href="{{ path('routing', {'url': 'built-in-single-ovens'}) }}"><img src="{{ asset('/uploads/images/demo/franke-minerva-tap-advert.jpg') }}" alt="Franke Minerva 3 in 1 Boiling Hot Water Tap: No more standing around waiting for the kettle to boil or using unnecessary energy. With the Minerva tap from Franke, you have 100°C water instantly at the twist of a lever. Save time and money today, In Stock for Fast Delivery." /></a>
                     </li>
                     <li>
-                        <img src="{{ asset('/uploads/images/demo/cda-10pc-off-advert.jpg') }}" alt="10% Off All CDA Appliances: When you buy 3 or more CDA items. Simply add your items to the basket and your 10% will be taken off automatically. Spend more SAVE more..." />
+                        <a href="{{ path('routing', {'url': 'built-in-single-ovens'}) }}"><img src="{{ asset('/uploads/images/demo/cda-10pc-off-advert.jpg') }}" alt="10% Off All CDA Appliances: When you buy 3 or more CDA items. Simply add your items to the basket and your 10% will be taken off automatically. Spend more SAVE more..." /></a>
                     </li>
                     <li>
-                        <img src="{{ asset('/uploads/images/demo/in-sink-erator-waste-disposals-advert.jpg') }}" alt="In Sink Erator Waste Disposals from only £85: A food waste disposer is a simply must-have appliance for the modern kitchen. A waste disposer from InSinkErator doesn't just offer practical, contemporary convenience; it provides an environmentally responsible answer to the growing problem of food waste." />
+                        <a href="{{ path('routing', {'url': 'built-in-single-ovens'}) }}"><img src="{{ asset('/uploads/images/demo/in-sink-erator-waste-disposals-advert.jpg') }}" alt="In Sink Erator Waste Disposals from only £85: A food waste disposer is a simply must-have appliance for the modern kitchen. A waste disposer from InSinkErator doesn't just offer practical, contemporary convenience; it provides an environmentally responsible answer to the growing problem of food waste." /></a>
                     </li>
                     <li>
-                        <img src="{{ asset('/uploads/images/demo/caple-10pc-off-advert.jpg') }}" alt="10% Off All Caple Appliances: Grab yourself a bargain on all Caple Appliances, no spending limit, no strings, no upto's just a straight 10% off! Don’t miss out, this offer will not be on forever..." />
+                        <a href="{{ path('routing', {'url': 'built-in-single-ovens'}) }}"><img src="{{ asset('/uploads/images/demo/caple-10pc-off-advert.jpg') }}" alt="10% Off All Caple Appliances: Grab yourself a bargain on all Caple Appliances, no spending limit, no strings, no upto's just a straight 10% off! Don’t miss out, this offer will not be on forever..." /></a>
                     </li>
                     <li>
-                        <img src="{{ asset('/uploads/images/demo/sensio-powerpod-advert.jpg') }}" alt="Sensio Powerpod: The Sensio Powerpod demonstrates Sensio's fresh approach to innovative kitchen power solutions, Offering far more than the average retractable socket the Sensio Powerpod boasts two USB ports in addition to three power sockets. It allows the user to charge their iPod or use other USB powered devices within the convenience of the kitchen." />
+                        <a href="{{ path('routing', {'url': 'built-in-single-ovens'}) }}"><img src="{{ asset('/uploads/images/demo/sensio-powerpod-advert.jpg') }}" alt="Sensio Powerpod: The Sensio Powerpod demonstrates Sensio's fresh approach to innovative kitchen power solutions, Offering far more than the average retractable socket the Sensio Powerpod boasts two USB ports in addition to three power sockets. It allows the user to charge their iPod or use other USB powered devices within the convenience of the kitchen." /></a>
                     </li>
                 </ul>
             </div>
@@ -34,67 +34,209 @@
 {% endblock %}
 {% block body %}
     <div class="widget-group mbl clearfix">
-        <div class="widget widget-1-of-5">
-            <a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/washing-machines-and-dryers.jpg') }}" border="0" alt="Washing Machines and Dryers" width="100%" /></a>
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <section class="ui-widget-content pbn ui-corner-all">
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'ovens-hobs'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/ovens.jpg') }}" border="0" alt="Ovens" width="100%" />
+                                </a>
+                                <span class="name">Ovens</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'built-in-single-ovens'}) }}">Built-in Single Ovens</a></li>
+                                <li><a href="{{ path('routing', {'url': 'built-in-double-ovens'}) }}">Built-in Double Ovens</a></li>
+                                <li><a href="{{ path('routing', {'url': 'built-in-steam-ovens-and-steam-combination-ovens'}) }}">Steam Ovens</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'kitchen-built-in-microwave-ovens-by-cda-appliances-capleaeg-neff-bosch-appliances-uk'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/microwaves.jpg') }}" border="0" alt="Microwaves" width="100%" />
+                                </a>
+                                <span class="name">Microwaves</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'ovens-and-hobs/microwave-ovens/built-in-microwave'}) }}">Built-in Microwaves</a></li>
+                                <li><a href="{{ path('routing', {'url': 'ovens-and-hobs/microwave-ovens/freestanding-microwave'}) }}">Freestanding Microwaves</a></li>
+                                <li><a href="{{ path('routing', {'url': 'ovens-and-hobs/microwave-ovens/wall-unit-microwave'}) }}">Wall Unit Microwaves</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'ovens-hobs'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/hobs.jpg') }}" border="0" alt="Hobs" width="100%" />
+                                </a>
+                                <span class="name">Hobs</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'gas-hobs'}) }}">Gas Hobs</a></li>
+                                <li><a href="{{ path('routing', {'url': 'ovens-and-hobs/electric-hobs/induction-hobs'}) }}">Induction Hobs</a></li>
+                                <li><a href="{{ path('routing', {'url': 'domino-hobs'}) }}">Domino Hobs</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/range-cookers.jpg') }}" border="0" alt="Range Cookers" width="100%" />
+                                </a>
+                                <span class="name">Range Cookers</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'range-cookers/range-cookers/dual-fuel-range-cooker'}) }}">Dual Fuel Range Cookers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'range-cookers/range-cookers/gas-range-cooker'}) }}">Gas Range Cookers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'range-cookers/range-cookers/electric-range-cooker'}) }}">Electric Range Cookers</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'cooker-hoods'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/cooker-hoods.jpg') }}" border="0" alt="Cooker Hoods" width="100%" />
+                                </a>
+                                <span class="name">Cooker Hoods</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'cooker-hoods/cooker-hoods/chimney-hoods-chimney-cooker-hoods-chimney-hood-glass'}) }}">Chimney Hoods</a></li>
+                                <li><a href="{{ path('routing', {'url': 'cooker-hoods/cooker-hoods/under-canopy-hood'}) }}">Under Canopy Hoods</a></li>
+                                <li><a href="{{ path('routing', {'url': 'cooker-hoods/cooker-hoods/integrated-hood'}) }}">Integrated Hoods</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'refrigeration-and-wine-coolers'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/refrigeration.jpg') }}" border="0" alt="Refrigeration" width="100%" />
+                                </a>
+                                <span class="name">Refrigeration</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'fridges'}) }}">Fridges</a></li>
+                                <li><a href="{{ path('routing', {'url': 'freezers'}) }}">Freezers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'fridge-freezers'}) }}">Fridge Freezers</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'refrigeration-and-wine-coolers'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/wine-coolers.jpg') }}" border="0" alt="Wine Coolers" width="100%" />
+                                </a>
+                                <span class="name">Wine Coolers</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'refrigeration-and-wine-coolers/wine-coolers/under-counter-wine-cooler'}) }}">Under Counter Wine Coolers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'built-in-wine-coolers'}) }}">Built-in Wine Coolers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'accessories-1-2'}) }}">Wine Cooler Accessories</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'integrated-and-built-in-dishwashers-uk'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/dishwashers.jpg') }}" border="0" alt="Dishwashers" width="100%" />
+                                </a>
+                                <span class="name">Dishwashers</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'dishwashers-and-laundry/integrated-and-built-in-dishwashers-uk/integrated-dishwasher-fully-integrated-and-built-in-dishwashers'}) }}">Integrated Dishwashers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'dishwashers-and-laundry/dishwashers/semi-integrated-dishwasher'}) }}">Semi-integrated Dishwashers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'dishwashers-and-laundry/dishwashers/slimline-integrated-dishwasher'}) }}">Slimline Integrated Dishwashers</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/washers-and-dryers.jpg') }}" border="0" alt="Washers and Dryers" width="100%" />
+                                </a>
+                                <span class="name">Washers and Dryers</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'dishwashers-and-laundry/washing-machines/integrated-washer-dryer'}) }}">Integrated Washer Dryers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'dishwashers-and-laundry/washing-machines/integrated-washing-machine'}) }}">Integrated Washing Machines</a></li>
+                                <li><a href="{{ path('routing', {'url': 'dishwashers-and-laundry/tumble-dryers/integrated-tumble-dryer'}) }}">Integrated Tumble Dryers</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'compact-appliances'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/compact-appliances.jpg') }}" border="0" alt="Compact Appliances" width="100%" />
+                                </a>
+                                <span class="name">Compact Appliances</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'compact-appliances/coffee-machines/built-in-coffee-machine'}) }}">Built-in Coffee Machines</a></li>
+                                <li><a href="{{ path('routing', {'url': 'compact-appliances/ice-makers/built-in-ice-maker'}) }}">Built-in Ice Makers</a></li>
+                                <li><a href="{{ path('routing', {'url': 'compact-appliances/warming-drawers/built-in-warming-drawer'}) }}">Built-in Warming Drawers</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'franke-sinks-taps-schock-sink-franke-sink-abode-tap-perrin-rowe-taps-franke-tap-uk'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/kitchen-sinks.jpg') }}" border="0" alt="Kitchen Sinks" width="100%" />
+                                </a>
+                                <span class="name">Kitchen Sinks</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'sinks-and-taps/kitchen-sinks/stainless-steel-kitchen-sinks'}) }}">Stainless Steel Sinks</a></li>
+                                <li><a href="{{ path('routing', {'url': 'sinks-and-taps/kitchen-sinks/ceramic-kitchen-sinks'}) }}">Ceramic Sinks</a></li>
+                                <li><a href="{{ path('routing', {'url': 'sinks-and-taps/kitchen-sinks/granite-kitchen-sinks'}) }}">Granite Sinks</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'kitchen-taps'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/kitchen-taps.jpg') }}" border="0" alt="Kitchen Taps" width="100%" />
+                                </a>
+                                <span class="name">Kitchen Taps</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'sinks-and-taps/kitchen-taps/water-filter-tap'}) }}">Water Filter Taps</a></li>
+                                <li><a href="{{ path('routing', {'url': 'sinks-and-taps/kitchen-taps/chilled-water-tap'}) }}">Chilled Water Taps</a></li>
+                                <li><a href="{{ path('routing', {'url': 'sinks-and-taps/kitchen-taps/boiling-hot-water-tap-kitchen-kettle-taps'}) }}">Boiling Hot Water Taps</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'kitchen-worktops-countertops-solid-surfaces-kitchen-worktops-uk'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/worktops-and-splashbacks.jpg') }}" border="0" alt="Worktops &amp; Splashbacks" width="100%" />
+                                </a>
+                                <span class="name">Worktops &amp; Splashbacks</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'solid-surface-worktops-solid-surface-kitchen-worktop-apollo-slab-tech-solid-surface-uk'}) }}">Solid Surface Worktops</a></li>
+                                <li><a href="{{ path('routing', {'url': 'laminate-worktops'}) }}">Laminate Worktops</a></li>
+                                <li><a href="{{ path('routing', {'url': 'worktops-and-splashbacks/kitchen-splashbacks'}) }}">Kitchen Splashbacks</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'kitchen-ducting'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/kitchen-ducting.jpg') }}" border="0" alt="Kitchen Ducting" width="100%" />
+                                </a>
+                                <span class="name">Kitchen Ducting</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'kitchen-ducting/ducting-kits'}) }}">Ducting Kits</a></li>
+                                <li><a href="{{ path('routing', {'url': 'kitchen-ducting/ducting-parts'}) }}">Ducting Parts</a></li>
+                                <li><a href="{{ path('routing', {'url': 'kitchen-ducting/tumble-dryer-kit'}) }}">Tumble Dryer Kits</a></li>
+                            </ul>
+                        </div>
+                        <div class="widget widget-1-of-5">
+                            <div class="product-listing">
+                                <a href="{{ path('routing', {'url': 'heating-and-lighting'}) }}">
+                                    <img src="{{ asset('/bundles/kacsite/images/departments/heating-and-lighting.jpg') }}" border="0" alt="Heating &amp; Lighting" width="100%" />
+                                </a>
+                                <span class="name">Heating &amp; Lighting</span>
+                            </div>
+                            <ul class="button-list mts">
+                                <li><a href="{{ path('routing', {'url': 'heating-and-lighting/plinth-heaters'}) }}">Plinth Heaters</a></li>
+                                <li><a href="{{ path('routing', {'url': 'heating-and-lighting/kitchen-lighting'}) }}">Kitchen Lighting</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-        <div class="widget widget-1-of-5">
-            <a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/washing-machines-and-dryers.jpg') }}" border="0" alt="Washing Machines and Dryers" width="100%" /></a>
-        </div>
-        <div class="widget widget-1-of-5">
-            <a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/washing-machines-and-dryers.jpg') }}" border="0" alt="Washing Machines and Dryers" width="100%" /></a>
-        </div>
-        <div class="widget widget-1-of-5">
-            <a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/washing-machines-and-dryers.jpg') }}" border="0" alt="Washing Machines and Dryers" width="100%" /></a>
-        </div>
-        <div class="widget widget-1-of-5">
-            <a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/washing-machines-and-dryers.jpg') }}" border="0" alt="Washing Machines and Dryers" width="100%" /></a>
-        </div>
-    </div>
-
-		<div class="grid_6 leading">
-			<div class="portlet">
-				<header>
-	                <h2>Popular Departments</h2>
-	            </header>
-				<section class="no-padding-bottom">
-					<div class="department">
-		        		<h4><a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}">Washing Machines and Dryers</a></h4>
-		        		<a href="{{ path('routing', {'url': 'dishwashers-and-laundry'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/washing-machines-and-dryers.jpg') }}" border="0" alt="Washing Machines and Dryers" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="department">
-		        		<h4><a href="{{ path('routing', {'url': 'refrigeration-and-wine-coolers'}) }}">Fridges and Freezers</a></h4>
-		        		<a href="{{ path('routing', {'url': 'refrigeration-and-wine-coolers'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/fridges-and-freezers.jpg') }}" border="0" alt="Fridges and Freezers" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="department">
-		        		<h4><a href="{{ path('routing', {'url': 'dishwashers-and-laundry/integrated-and-built-in-dishwashers-uk'}) }}">Dishwashers</a></h4>
-		        		<a href="{{ path('routing', {'url': 'dishwashers-and-laundry/integrated-and-built-in-dishwashers-uk'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/dishwashers.jpg') }}" border="0" alt="Dishwashers" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="department no-margin-right">
-		        		<h4><a href="{{ path('routing', {'url': 'ovens-hobs'}) }}">Cookers and Ovens</a></h4>
-		        		<a href="{{ path('routing', {'url': 'ovens-hobs'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/cookers-and-ovens.jpg') }}" border="0" alt="Cookers and Ovens" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="department">
-		        		<h4><a href="{{ path('routing', {'url': 'ovens-hobs'}) }}">Hobs</a></h4>
-		        		<a href="{{ path('routing', {'url': 'ovens-hobs'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/hobs.jpg') }}" border="0" alt="Hobs" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="department">
-		        		<h4><a href="{{ path('routing', {'url': 'cooker-hoods'}) }}">Cooker Hoods</a></h4>
-		        		<a href="{{ path('routing', {'url': 'cooker-hoods'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/cooker-hoods.jpg') }}" border="0" alt="Cooker Hoods" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="department">
-		        		<h4><a href="{{ path('routing', {'url': 'sinks-and-taps'}) }}">Sinks and Taps</a></h4>
-		        		<a href="{{ path('routing', {'url': 'sinks-and-taps'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/sinks-and-taps.jpg') }}" border="0" alt="Sinks and Taps" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="department no-margin-right">
-		        		<h4><a href="{{ path('routing', {'url': 'compact-appliances'}) }}">Compact Appliances</a></h4>
-		        		<a href="{{ path('routing', {'url': 'compact-appliances'}) }}"><img src="{{ asset('/bundles/webilluminationshop/images/departments/compact-appliances.jpg') }}" border="0" alt="Compact Appliances" width="191" height="191" /></a>
-		        	</div>
-		        	<div class="clear"></div>
-				</section>
-	        </div>
-	    </div>
-	   	<div class="clear"></div>
-	</section>
+	</div>
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}
