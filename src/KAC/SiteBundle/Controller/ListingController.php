@@ -72,18 +72,7 @@ class ListingController extends Controller
         $helper = $query->getHelper();
 
         // Set query string
-        if($request->query->get('q')) {
-            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
-
-            $dismax = $query->getDisMax();
-            $dismax->setQueryFields(array('product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
-            $dismax->setPhraseFields(array('short_description^30'));
-            $dismax->setQueryParser('edismax');
-
-            $query->setQuery($escapedQuery);
-        } else {
-            $query->setQuery('*');
-        }
+        $query->setQuery('*');
 
         // Sort results (If the user has entered a query they cannot sort)
         $sort = explode(':', $request->query->get('sort_order', 'low_price:asc'));
@@ -213,6 +202,127 @@ class ListingController extends Controller
             'admin' => $admin,
             'brand' => $brand,
             'department' => $department,
+            'facets' => $facets,
+            'featureGroups' => $featureGroups,
+            'pagination' => $pagination,
+            'stats' => $stats,
+        ));
+    }
+    /**
+     * @Route("/search.html", name="listing_search")
+     * @Method({"GET"})
+     */
+	public function searchAction(Request $request, $departmentId=null, $brandId=null, $admin=false, $all=false)
+    {
+        // Ensure user has the correct permissions
+        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+            throw new AccessDeniedException();
+        }
+
+        /**
+         * Define variable types
+         * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
+         */
+
+        // Fetch products from solr
+        /** @var $solarium \Solarium_Client */
+        $solarium = $this->get('solarium.client');
+
+        $query = $solarium->createSelect();
+        $helper = $query->getHelper();
+
+        // Set query string
+        if($request->query->get('q')) {
+            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
+
+            $dismax = $query->getDisMax();
+            $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
+            $dismax->setPhraseFields(array('short_description^30'));
+            $dismax->setQueryParser('edismax');
+
+            $query->setQuery($escapedQuery);
+        } else {
+            $query->setQuery('*');
+        }
+
+        $filters = $request->query->get('filter', array());
+        $flags = array('brand', 'department_path');
+
+        // Facets
+        $facetSet = $query->getFacetSet();
+        $featureGroups = array();
+        $facetSet->createFacetField('departments')->setField('department')->setSort('index')->setMinCount(1)->setPrefix($request->query->get('filter[department_path]', '', true));
+        // Add brand facet if user is not on the brand listing
+        $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1)->addExclude('brand');
+
+        // If all was set the limit flag
+        if($all)
+        {
+            $request->query->set('limit', 99999999);
+        }
+
+        // Add filters for any flags that the user has set
+        foreach($flags as $flag)
+        {
+            if(array_key_exists($flag, $filters))
+            {
+                $filter = $filters[$flag];
+                if(is_array($filter))
+                {
+                    array_walk($filter, function(&$item) use ($flag, $helper) {
+                        if(!empty($item)) {
+                            $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
+                        }
+                    });
+                    $query->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
+                } else {
+                    if(!empty($filter)) {
+                        $query->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
+                    }
+                }
+
+            }
+        }
+
+        // Create stats query, clone query so that
+        $statsQuery = clone $query;
+        $statsQuery->setRows(0);
+
+        $stats = $statsQuery->getStats();
+        $stats->createField('low_price');
+        $stats->createField('high_price');
+
+        // Deal with price filtering separately
+        if(array_key_exists('low_price', $filters)) {
+            if(!empty($filters['low_price'])) {
+                $query->createFilterQuery('low_price')->addTag('low_price')->setQuery($helper->escapeTerm('low_price').':['.$helper->escapeTerm($filters['low_price']).' TO *]');
+            }
+        }
+        if(array_key_exists('high_price', $filters)) {
+            if(!empty($filters['low_price'])) {
+                $query->createFilterQuery('high_price')->addTag('high_price')->setQuery($helper->escapeTerm('high_price').':[* TO '.$helper->escapeTerm($filters['high_price']).']');
+            }
+        }
+
+        try {
+            // Setup paginator
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                array($solarium, $query),
+                $request->query->get('page', 1),
+                $request->query->get('limit', 20)
+            );
+            $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
+            $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
+
+            $facets = $pagination->getCustomParameter('result')->getFacetSet();
+            $stats = $solarium->select($statsQuery)->getStats();
+        } catch (\Solarium_Client_HttpException $e) {
+            throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
+        }
+
+        return $this->render('KACSiteBundle:Listing:search.html.twig', array(
+            'admin' => $admin,
             'facets' => $facets,
             'featureGroups' => $featureGroups,
             'pagination' => $pagination,

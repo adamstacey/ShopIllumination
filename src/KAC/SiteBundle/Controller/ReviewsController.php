@@ -42,7 +42,7 @@ class ReviewsController extends Controller
         }
 
         $response = $this->render('KACSiteBundle:Reviews:trustpilot.html.twig', array('result' => $result));
-        $response->setSharedMaxAge(3600);
+        $response->setSharedMaxAge(86400);
         return $response;
     }
 }

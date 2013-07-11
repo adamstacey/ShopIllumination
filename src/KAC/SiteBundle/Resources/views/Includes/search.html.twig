@@ -1,11 +1,5 @@
-{% if app.request.get('_route') in ['listing_products', 'listing_department', 'listing_brand', 'listing_department_brand'] %}
-    {% set action = path(app.request.get('_route'), app.request.get('_route_params')|merge(app.request.query.all)) %}
-{% else %}
-    {% set action = path('listing_products') %}
-{% endif %}
-
 <div class="search-container">
-    <form class="search-box" method="GET" action="{{ action }}">
+    <form class="search-box" method="GET" action="{{ path('listing_search') }}">
         <label for="formSearch"><span class="ui-button-icon-primary ui-icon icon-grey icon-370"></span></label>
 		<input id="formSearch" name="q" type="text" placeholder="Product Code, Brand, Name..." autocomplete="off" value="{{ app.request.query.get('q', '') }}" />
         <span class="ui-button-icon-primary ui-icon icon-dark-red icon-1117"></span>
