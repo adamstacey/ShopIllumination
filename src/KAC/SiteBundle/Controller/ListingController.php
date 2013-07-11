@@ -471,12 +471,12 @@ class ListingController extends Controller
         }
 
         // Remove unneeded elements
-        $brands = array_values(array_slice($brands, 0, 5));
+        $brands = array_values(array_slice($brands, 0, 10));
 
         $response = $this->render('KACSiteBundle:Listing:popularBrands.html.twig', array(
             'brands' => $brands,
         ));
-        $response->setSharedMaxAge(3600);
+        //$response->setSharedMaxAge(3600);
 
         return $response;
     }
@@ -491,7 +491,7 @@ class ListingController extends Controller
         $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
             'products' => $products,
         ));
-        $response->setSharedMaxAge(3600);
+        //$response->setSharedMaxAge(3600);
 
         return $response;
     }
@@ -529,6 +529,7 @@ class ListingController extends Controller
         $helper = $query->getHelper();
         $query->setQuery('*');
         $query->setFields(array('id'));
+        $query->setRows(99999999);
 
         $department = null;
 
