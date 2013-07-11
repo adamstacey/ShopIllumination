@@ -1202,3 +1202,32 @@ body .ui-tooltip {
     top: 3px;
     right: 3px;
 }
+
+ul.button-list,
+ul.button-list li {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+ul.button-list {
+    padding: 0 0 $spacingMedium 0;
+}
+
+ul.button-list li a {
+    padding: 0 $spacingSmall;
+
+    display: block;
+    line-height: $spacingExtraLarge;
+    @include verticalGradientWhiteToGreyLight;
+    border: 1px solid $colourGreyLight;
+    text-decoration: none;
+    color: $textColour;
+    @include fontSize($fontSizeSmall);
+    @include ellipsis;
+}
+
+ul.button-list li a:hover {
+    text-decoration: underline;
+}
