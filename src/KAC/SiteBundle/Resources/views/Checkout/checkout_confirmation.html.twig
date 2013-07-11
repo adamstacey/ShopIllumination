@@ -30,19 +30,27 @@
                                             {% if order.products|length > 0 %}
                                                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
                                                     {% for product in order.products %}
-                                                        {#<tr>#}
-                                                            {#<td class="product-page-title" colspan="6">#}
-                                                                {#<a href="{{ path('routing', {'url': item.product.url}) }}">{{ item.description.header }}</a>#}
-                                                            {#</td>#}
-                                                        {#</tr>#}
-                                                        {#<tr>#}
-                                                            {#<td class="ac">{{ item.quantity }}</td>#}
-                                                            {#<td class="ac">&times;</td>#}
-                                                            {#<td class="ac"><strong>{{ item.variant.productCode }}</strong></td>#}
-                                                            {#<td class="ac">{% if item.recommendedRetailPrice > item.unitCost %}<span class="red strikethrough">&pound;{{ item.recommendedRetailPrice|number_format(2) }}</span><br /><span class="green"><strong>&pound;{{ item.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ item.unitCost|number_format(2) }}{% endif %}</td>#}
-                                                            {#<td class="ac">=</td>#}
-                                                            {#<td class="ar">&pound;{{ item.totalCost|number_format(2) }}</td>#}
-                                                        {#</tr>#}
+                                                        <tr>
+                                                            <td class="product-page-title" colspan="6">
+                                                                <a href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="ac">{{ product.quantity }}</td>
+                                                            <td class="ac">&times;</td>
+                                                            <td class="ac"><strong>{{ product.productCode }}</strong></td>
+                                                            <td class="ac">
+                                                                {% if product.recommendedRetailPrice > product.unitCost %}
+                                                                    <span class="red strikethrough">&pound;{{ product.recommendedRetailPrice|number_format(2) }}</span>
+                                                                    <br />
+                                                                    <span class="green"><strong>&pound;{{ product.unitCost|number_format(2) }}</strong></span>
+                                                                {% else %}
+                                                                    &pound;{{ product.unitCost|number_format(2) }}
+                                                                {% endif %}
+                                                            </td>
+                                                            <td class="ac">=</td>
+                                                            <td class="ar">&pound;{{ product.subTotal|number_format(2) }}</td>
+                                                        </tr>
                                                     {% endfor %}
                                                 </table>
                                             {% endif %}
