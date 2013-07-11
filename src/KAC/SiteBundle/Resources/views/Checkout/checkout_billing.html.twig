@@ -14,7 +14,7 @@
 
         </div>
         <div class="widget-group clearfix">
-            <div class="widget widget-5-of-7">
+            <div class="widget widget-3-of-5">
                 <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-1">
@@ -38,11 +38,11 @@
                     </div>
                 </form>
             </div>
-            <div class="widget widget-2-of-7">
+            <div class="widget widget-2-of-5">
                 <div class="ui-widget mbl">
                     <header class="ui-widget-header ui-corner-top">
                         <h2>Your Order</h2>
-                        <a class="button button-grey icon-grey fr" data-icon-primary="icon-1113"
+                        <a class="button button-grey icon-grey fr" data-icon-primary="icon-1113" data-icon-only="true"
                            href="{{ path('checkout_refresh', {'url': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))}) }}"></a>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
@@ -52,7 +52,7 @@
                                     {% for item in basket.items %}
                                         <tr>
                                             <td class="product-page-title" colspan="6">
-                                                <a href="{{ path('routing', {'url': item.product.url}) }}">{{ item.description.header }}</a>
+                                                <a href="{{ path('routing', {'url': item.product.url}) }}">{{ item.variant.description.header }}</a>
                                             </td>
                                         </tr>
                                         <tr>

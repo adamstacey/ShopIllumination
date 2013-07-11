@@ -14,7 +14,7 @@
 
         </div>
         <div class="widget-group clearfix">
-            <div class="widget widget-5-of-7">
+            <div class="widget widget-1-of-1">
                 <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-1">
@@ -26,7 +26,43 @@
                                 <section class="ui-widget-content ui-corner-all">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
-                                        {{ form_rest(form) }}
+                                        <div id="basket-contents" class="clearfix">
+                                            {% if order.products|length > 0 %}
+                                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                    {% for product in order.products %}
+                                                        {#<tr>#}
+                                                            {#<td class="product-page-title" colspan="6">#}
+                                                                {#<a href="{{ path('routing', {'url': item.product.url}) }}">{{ item.description.header }}</a>#}
+                                                            {#</td>#}
+                                                        {#</tr>#}
+                                                        {#<tr>#}
+                                                            {#<td class="ac">{{ item.quantity }}</td>#}
+                                                            {#<td class="ac">&times;</td>#}
+                                                            {#<td class="ac"><strong>{{ item.variant.productCode }}</strong></td>#}
+                                                            {#<td class="ac">{% if item.recommendedRetailPrice > item.unitCost %}<span class="red strikethrough">&pound;{{ item.recommendedRetailPrice|number_format(2) }}</span><br /><span class="green"><strong>&pound;{{ item.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ item.unitCost|number_format(2) }}{% endif %}</td>#}
+                                                            {#<td class="ac">=</td>#}
+                                                            {#<td class="ar">&pound;{{ item.totalCost|number_format(2) }}</td>#}
+                                                        {#</tr>#}
+                                                    {% endfor %}
+                                                </table>
+                                            {% endif %}
+                                        </div>
+                                        <div id="basket-totals" class="clearfix">
+                                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                <tr>
+                                                    <td class="al uppercase font-size-13"><strong>Subtotal before Delivery (inc. VAT):</strong></td>
+                                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.subTotal|number_format(2) }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="al uppercase font-size-13"><strong>Delivery Charge (inc. VAT):</strong></td>
+                                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.deliveryCharge|number_format(2) }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="al uppercase font-size-13"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
+                                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </fieldset>
                                     <div class="clearfix">
                                         <a href="{{ path('checkout_payment') }}" class="button button-small mrm fl">Back</a>
@@ -37,44 +73,7 @@
                             </div>
                         </div>
                     </div>
-                </form>            </div>
-            <div class="widget widget-2-of-7">
-                <div class="ui-widget mbl">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Your Order</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom">
-                        <div id="basket-contents" class="clearfix">
-                            {% if basket.items|length > 0 %}
-                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                    {% for item in basket.items %}
-                                        <tr>
-                                            <td class="product-page-title" colspan="6">
-                                                <a href="{{ path('routing', {'url': item.product.url}) }}">{{ item.description.header }}</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="ac">{{ item.quantity }}</td>
-                                            <td class="ac">&times;</td>
-                                            <td class="ac"><strong>{{ item.variant.productCode }}</strong></td>
-                                            <td class="ac">{% if item.recommendedRetailPrice > item.unitCost %}<span class="red strikethrough">&pound;{{ item.recommendedRetailPrice|number_format(2) }}</span><br /><span class="green"><strong>&pound;{{ item.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ item.unitCost|number_format(2) }}{% endif %}</td>
-                                            <td class="ac">=</td>
-                                            <td class="ar">&pound;{{ item.totalCost|number_format(2) }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            {% endif %}
-                        </div>
-                        <div id="basket-totals" class="clearfix">
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                <tr>
-                                    <td class="al uppercase font-size-13"><strong>Total to Pay (inc. VAT):</strong></td>
-                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </section>
-                </div>
+                </form>
             </div>
         </div>
     </section>
