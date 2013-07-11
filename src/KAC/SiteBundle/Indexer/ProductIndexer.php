@@ -23,7 +23,6 @@ class ProductIndexer extends Indexer
     {
         // If product does not contain all the required fields ignore it
         if (count($product->getDescriptions()) === 0) {
-            \Doctrine\Common\Util\Debug::dump("Nope1");
             return;
         }
 
@@ -101,6 +100,8 @@ class ProductIndexer extends Indexer
             if ($variant->getStatus() !== "a") {
                 continue;
             }
+
+            $document->addField('variant_ids', $variant->getId());
 
             // Add all product codes
             $productCodes = explode(',', $variant->getAlternativeProductCodes());

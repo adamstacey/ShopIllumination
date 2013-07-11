@@ -161,6 +161,12 @@ class BasketController extends Controller
         // Get the product
         $product = $productService->getProduct($productId, 'en', 'GBP');
         $variant = $productService->getVariant($variantId, 'en', 'GBP');
+
+        if(!$product || !$variant)
+        {
+            throw $this->createNotFoundException();
+        }
+
         $header = $product['pageTitle'];
         $url = $product['url'];
         if(count($product['images']) > 0)
