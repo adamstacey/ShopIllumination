@@ -13,4 +13,12 @@ $(document).ready(function() {
         $(this).hide();
         $(".search-container input").focus();
     });
+
+    $('.search-container #formSearch').typeahead([
+        {
+            name: 'products',
+            remote: routes['listing_search_autocomplete'] + '?q=%QUERY'
+
+        }
+    ]);
 });

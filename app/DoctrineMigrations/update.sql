@@ -451,4 +451,5 @@ ALTER TABLE redirects ADD secondary_id INT NOT NULL;
 UPDATE images i SET object_type = 'brand' WHERE (SELECT bd.id FROM brand_descriptions bd WHERE i.id = bd.logo_image_id) > 0;
 UPDATE `images` SET `object_type`='product' WHERE image_type='product';
 UPDATE order_products SET variant_id = product_id WHERE variant_id IS NULL;
+DELETE FROM `routing` WHERE object_type =  'department' AND 0 = ( SELECT COUNT( * ) FROM departments d  WHERE object_id = d.id )
 SET FOREIGN_KEY_CHECKS = 1;

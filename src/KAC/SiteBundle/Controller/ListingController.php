@@ -5,7 +5,9 @@ namespace KAC\SiteBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr;
+use KAC\SiteBundle\Entity\Department;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -208,6 +210,19 @@ class ListingController extends Controller
             'stats' => $stats,
         ));
     }
+
+    /**
+     * @Route("/admin/products", name="admin_listing_products")
+     * @Route("/admin/department/{departmentId}", name="admin_listing_department", defaults={"departmentId" = null})
+     * @Route("/admin/brand/{brandId}", name="admin_listing_brand", defaults={"brandId" = null})
+     * @Route("/admin/department/{departmentId}/brand/{brandId}", name="admin_listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
+     * @Method({"GET"})
+     */
+    public function indexAdminAction(Request $request, $departmentId=null, $brandId=null)
+    {
+        return $this->indexAction($request, $departmentId, $brandId, true);
+    }
+
     /**
      * @Route("/search.html", name="listing_search")
      * @Method({"GET"})
@@ -329,23 +344,109 @@ class ListingController extends Controller
             'stats' => $stats,
         ));
     }
-
     /**
-     * @Route("/admin/products", name="admin_listing_products")
-     * @Route("/admin/department/{departmentId}", name="admin_listing_department", defaults={"departmentId" = null})
-     * @Route("/admin/brand/{brandId}", name="admin_listing_brand", defaults={"brandId" = null})
-     * @Route("/admin/department/{departmentId}/brand/{brandId}", name="admin_listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
+     * @Route("/search-autocomplete.html", name="listing_search_autocomplete")
      * @Method({"GET"})
      */
-    public function indexAdminAction(Request $request, $departmentId=null, $brandId=null)
+	public function searchAutocompleteAction(Request $request, $departmentId=null, $brandId=null, $admin=false, $all=false)
     {
-        return $this->indexAction($request, $departmentId, $brandId, true);
+        // Ensure user has the correct permissions
+        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+            throw new AccessDeniedException();
+        }
+
+        /**
+         * Define variable types
+         * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
+         * @var $product Product
+         */
+        $data = array();
+
+        // Set query string
+        if($request->query->has('q')) {
+            /** @var $solarium \Solarium_Client */
+            $solarium = $this->get('solarium.client');
+
+            $query = $solarium->createSelect();
+            $helper = $query->getHelper();
+            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
+
+            $dismax = $query->getDisMax();
+            $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
+            $dismax->setPhraseFields(array('short_description^30'));
+            $dismax->setQueryParser('edismax');
+
+            $query->setQuery($escapedQuery);
+
+            $filters = $request->query->get('filter', array());
+            $flags = array('brand', 'department_path');
+
+            try {
+                $resultSet = $solarium->select($query);
+            } catch (\Solarium_Client_HttpException $e) {
+                throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
+            }
+
+            foreach($resultSet as $document)
+            {
+                $data[] = array(
+                    'header' => $document->header,
+                    'url' => $this->generateUrl('routing', array('url' => $document->url)),
+                    'price' => $document->low_price,
+                    'thumbnail' => $document->thumbnail_path,
+                    'value' => $document->header,
+                    'tokens' => array_merge(explode(' ', $document->header), $document->product_code),
+                );
+            }
+        }
+
+        return new JsonResponse($data);
     }
 
     /**
-     * @Route("/popular_brands", name="popular_brands")
-     * @Route("/popular_brands/d{departmentId}", name="popular_brands_d")
+     * @Route("/listing-routes.json", name="listing_routes")
      */
+    public function departmentFeedAction()
+    {
+        $data = array();
+        $em = $this->getDoctrine()->getManager();
+
+        // Fetch the departments
+        $routing = $em->getRepository("KAC\SiteBundle\Entity\Routing")->findAll();
+        foreach($routing as $route)
+        {
+            if($route instanceof Brand\Routing) {
+                $data[] = array(
+                    'header' => $route->getBrand()->getDescription()->getHeader(),
+                    'url' => $this->generateUrl('routing', array('url' => $route->getUrl())),
+                    'type' => 'brand',
+                    'value' => $route->getBrand()->getDescription()->getHeader(),
+                    'tokens' => explode(' ', $route->getBrand()->getDescription()->getHeader()),
+                );
+            } elseif ($route instanceof Brand\DepartmentRouting) {
+                $data[] = array(
+                    'header' => $route->getBrand()->getDescription()->getHeader() . ' ' . $route->getDepartment()->getDescription()->getHeader(),
+                    'url' => $this->generateUrl('routing', array('url' => $route->getUrl())),
+                    'type' => 'brand_with_department',
+                    'value' => $route->getBrand()->getDescription()->getHeader() . ' ' . $route->getDepartment()->getDescription()->getHeader(),
+                    'tokens' => explode(' ', $route->getBrand()->getDescription()->getHeader() . ' ' . $route->getDepartment()->getDescription()->getHeader()),
+                );
+            } elseif ($route instanceof Department\Routing) {
+                $data[] = array(
+                    'header' => $route->getDepartment()->getDescription()->getHeader(),
+                    'url' => $this->generateUrl('routing', array('url' => $route->getUrl())),
+                    'type' => 'department',
+                    'value' => $route->getDepartment()->getDescription()->getHeader(),
+                    'tokens' => explode(' ', $route->getDepartment()->getDescription()->getHeader()),
+                );
+            }
+        }
+
+        $response = new JsonResponse($data);
+        $response->setSharedMaxAge(3600);
+        return $response;
+    }
+
     public function popularBrandsAction(Request $request,  $departmentId=null)
     {
         $products = $this->getPopularProducts($departmentId);
@@ -380,12 +481,6 @@ class ListingController extends Controller
         return $response;
     }
 
-    /**
-     * @Route("/popular_products", name="popular_products")
-     * @Route("/popular_products/d{departmentId}", name="popular_products_d")
-     * @Route("/popular_products/b{departmentId}", name="popular_products_b")
-     * @Route("/popular_products/d{departmentId}/b{brandId}", name="popular_products_db")
-     */
     public function popularProductsAction(Request $request, $departmentId=null, $brandId=null)
     {
         $products = $this->getPopularProducts($departmentId, $brandId);
@@ -400,6 +495,26 @@ class ListingController extends Controller
 
         return $response;
     }
+
+    public function departmentTreeAction(Request $request, $departmentId=null, $brandId=null)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if($departmentId) {
+            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
+        } else {
+            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+        }
+
+        $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
+            'departments' => $departments,
+            'brandId' => $brandId,
+        ));
+        $response->setSharedMaxAge(3600);
+
+        return $response;
+    }
+
 
     private function getPopularProducts($departmentId=null, $brandId=null)
     {
@@ -477,24 +592,5 @@ class ListingController extends Controller
         });
 
         return $products;
-    }
-
-    public function departmentTreeAction(Request $request, $departmentId=null, $brandId=null)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        if($departmentId) {
-            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
-        } else {
-            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
-        }
-
-        $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
-            'departments' => $departments,
-            'brandId' => $brandId,
-        ));
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 }

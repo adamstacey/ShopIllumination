@@ -5,6 +5,7 @@ namespace KAC\SiteBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,5 +43,13 @@ class SystemController extends Controller
         $response = $this->render('KACSiteBundle:System:mainMenu.html.twig', array('departments' => $departments, 'brands' => $brands));
         $response->setSharedMaxAge(3600);
         return $response;
+    }
+
+    /**
+     * @Route("/routes.js", name="routes_script")
+     */
+    public function routesAction()
+    {
+        return $this->render('KACSiteBundle:System:routes.js.twig');
     }
 }

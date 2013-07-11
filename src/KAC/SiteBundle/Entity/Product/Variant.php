@@ -633,7 +633,7 @@ class Variant implements DescribableInterface
     /**
      * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Price[]
      */
     public function getPrices()
     {

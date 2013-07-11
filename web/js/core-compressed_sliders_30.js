@@ -3,6 +3,7 @@ $(document).ready(function() {
         randomOrder: true,
         autoPlay: true,
         showBullets: 'always',
-        showControls: 'always'
+        showControls: 'always',
+        showCaptions: 'always'
     });
 });

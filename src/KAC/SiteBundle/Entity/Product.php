@@ -1,8 +1,10 @@
 <?php
 namespace KAC\SiteBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\SiteBundle\Entity\Product\Variant;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\ExecutionContext;
@@ -175,14 +177,14 @@ class Product implements DescribableInterface
      */
     public function __construct()
     {
-        $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->links = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->variants = new ArrayCollection();
+        $this->descriptions = new ArrayCollection();
+        $this->departments = new ArrayCollection();
+        $this->links = new ArrayCollection();
+        $this->features = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->routings = new ArrayCollection();
     }
 
     public function __toString()
@@ -193,6 +195,29 @@ class Product implements DescribableInterface
         } else {
             return "";
         }
+    }
+
+    public function getPriceRange()
+    {
+        $lowestPrice = -1;
+        $highestPrice = -1;
+
+        foreach($this->getVariants() as $variant)
+        {
+            foreach ($variant->getPrices() as $price) {
+                if ($lowestPrice === -1 || $price->getListPrice() < $lowestPrice) {
+                    $lowestPrice = $price->getListPrice();
+                }
+                if ($highestPrice === -1 || $price->getListPrice() > $highestPrice) {
+                    $highestPrice = $price->getListPrice();
+                }
+            }
+        }
+
+        return array(
+            'low' => $lowestPrice,
+            'high' => $highestPrice,
+        );
     }
 
     public function isDeleted()
@@ -585,10 +610,10 @@ class Product implements DescribableInterface
     /**
      * Add variants
      *
-     * @param \KAC\SiteBundle\Entity\Product\Variant $variants
+     * @param Variant $variants
      * @return Product
      */
-    public function addVariant(\KAC\SiteBundle\Entity\Product\Variant $variants)
+    public function addVariant(Variant $variants)
     {
         $this->variants[] = $variants;
         $variants->setProduct($this);
@@ -599,9 +624,9 @@ class Product implements DescribableInterface
     /**
      * Remove variants
      *
-     * @param \KAC\SiteBundle\Entity\Product\Variant $variants
+     * @param Variant $variants
      */
-    public function removeVariant(\KAC\SiteBundle\Entity\Product\Variant $variants)
+    public function removeVariant(Variant $variants)
     {
         $this->variants->removeElement($variants);
     }
@@ -609,7 +634,7 @@ class Product implements DescribableInterface
     /**
      * Get variants
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Variant[]
      */
     public function getVariants()
     {
