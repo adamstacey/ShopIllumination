@@ -19,7 +19,7 @@ class Type
     private $id;
 
     /**
-     * @ORM\Column(name="name", type="text")
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 

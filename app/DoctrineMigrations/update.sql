@@ -464,6 +464,19 @@ ALTER TABLE brands ADD template VARCHAR(255) NOT NULL;
 DROP TABLE product_to_option;
 UPDATE brands SET template='standard';
 UPDATE brands SET template='maia' WHERE id = 15;
-ALTER TABLE order_products DROP FOREIGN KEY FK_5242B8EB3B69A9AF;
-ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id) ON DELETE SET NULL;
+ALTER TABLE order_products DROP FOREIGN KEY FK_5242B8EB4584665A;
+ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB4584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE SET NULL;
+CREATE TABLE types (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, object_type VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE product_variants ADD type_id INT DEFAULT NULL;
+ALTER TABLE product_variants ADD CONSTRAINT FK_78283976C54C8C93 FOREIGN KEY (type_id) REFERENCES types (id);
+CREATE INDEX IDX_78283976C54C8C93 ON product_variants (type_id);
+ALTER TABLE orders DROP membership_card_purchased, DROP membership_card_number;
+INSERT INTO `types` (`id`, `name`, `object_type`, `created_at`, `updated_at`) VALUES
+(1, 'Default', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'Worktops', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 'Breakfast Bars', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(4, 'Island Worktops', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(5, 'Sink Modules', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(6, 'Edging', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(7, 'Finishing Touch', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00');
 SET FOREIGN_KEY_CHECKS = 1;
