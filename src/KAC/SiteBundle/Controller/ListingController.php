@@ -453,11 +453,12 @@ class ListingController extends Controller
         return $response;
     }
 
-    public function departmentTreeAction(Request $request, $departmentId=null, $brandId=null)
+    public function departmentTreeAction(Request $request, $departmentId = null, $brandId = null)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if($departmentId) {
+        if ($departmentId)
+        {
             $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
         } else {
             $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
