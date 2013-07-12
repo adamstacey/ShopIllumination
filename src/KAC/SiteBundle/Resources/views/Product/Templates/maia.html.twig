@@ -25,7 +25,7 @@
         </td>
         <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
         <td>{{ variant.description.header|raw }}</td>
-        <td width="1" class="nowrap price">{{ variant.price.listPrice|currency('GBP', true, true, '')|raw }}</td>
+        <td width="95" class="nowrap price">{{ variant.price.listPrice|currency('GBP', true, true, '')|raw }}</td>
         <td width="1" class="nowrap">{{ _self.addToBasket(variant) }}</td>
     </tr>
 {% endmacro %}
@@ -49,7 +49,7 @@
             <thead>
             <tr>
                 <th colspan="3">
-                    {% if category is defined or category != 'Default' %}
+                    {% if category is defined and category != 'Default' %}
                         {{ category }}
                     {% endif %}
                 </th>
