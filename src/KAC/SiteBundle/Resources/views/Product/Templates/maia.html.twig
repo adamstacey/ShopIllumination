@@ -1,5 +1,70 @@
 {% extends 'KACSiteBundle:Product:view.html.twig' %}
-{% import 'KACSiteBundle:Product/Includes:helpers.html.twig' as helpers %}
+{% import 'KACSiteBundle:Product:Includes/helpers.html.twig' as helpers %}
+
+{% macro addToBasket(variant) %}
+    <div class="add-to-basket" data-product-id="{{ variant.product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
+        <input class="quantity integer" type="number" value="1" />
+        <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+        <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+        <button class="actionAddToBasket buy button button-green uppercase">Buy</button>
+    </div>
+{% endmacro %}
+
+{% macro variantInfo(variant) %}
+    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}" data-worktop-thickness="{{ variant.featureValue('thickness') }}">
+        <td width="1" class="pam image">
+            {% if product.image %}
+                <a href="{{ variant.image.publicPath | apply_filter('product_large') }}" class="lightbox">
+                    <img width="180" height="95" src="{{ variant.image.publicPath | apply_filter('variant_thumbnail')  }}" alt="{{ variant.description.header|raw }}" />
+                </a>
+            {% else  %}
+                <a href="{{ 'images/no-image.jpg' | apply_filter('product_large') }}" class="lightbox">
+                    <img width="180" height="95" src="{{ 'images/no-image.jpg' | apply_filter('variant_thumbnail') }}" alt="{{ variant.description.header|raw }}" />
+                </a>
+            {% endif  %}
+        </td>
+        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+        <td>{{ variant.description.header|raw }}</td>
+        <td width="1" class="nowrap price">{{ variant.price.listPrice|currency('GBP', true, true, '')|raw }}</td>
+        <td width="1" class="nowrap">{{ _self.addToBasket(variant) }}</td>
+    </tr>
+{% endmacro %}
+
+{% macro variantInfoCategory(variants, category) %}
+    {% set categoryVariants = [] %}
+    {% for variant in variants %}
+        {% set isValid = false %}
+        {% if category is not defined or category == 'Default' %}
+            {% set isValid = variant.type is null or variant.type.name == 'Default' %}
+        {% else %}
+            {% set isValid = variant.type and variant.type.name == category %}
+        {% endif %}
+        {% if isValid %}
+            {% set categoryVariants = categoryVariants|merge([variant]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if categoryVariants|length > 0 %}
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th colspan="3">
+                    {% if category is defined or category != 'Default' %}
+                        {{ category }}
+                    {% endif %}
+                </th>
+                <th class="tac">Price</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody class="updatable">
+            {% for variant in categoryVariants %}
+                {{ _self.variantInfo(variant) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endmacro %}
 
 {% block product_info_tab_headers %}
     {{ parent() }}
@@ -64,38 +129,52 @@
                     <h2>2. Select Your Worktops</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom clearfix">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th colspan="3">Worktops</th>
-                                <th class="tac">Price</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody class="updatable">
-                            {% for variant in product.variants %}
-                                <tr class="{{ cycle(['odd', 'even'], loop.index0) }}" data-worktop-thickness="{{ variant.featureValue('thickness') }}">
-                                    <td width="1" class="pam image">
-                                        {% if product.image %}
-                                            <a href="{{ variant.image.publicPath | apply_filter('product_large') }}" class="lightbox">
-                                                <img width="180" height="95" src="{{ variant.image.publicPath | apply_filter('variant_thumbnail')  }}" alt="{{ variant.description.header|raw }}" />
-                                            </a>
-                                        {% else  %}
-                                            <a href="{{ 'images/no-image.jpg' | apply_filter('product_large') }}" class="lightbox">
-                                                <img width="180" height="95" src="{{ 'images/no-image.jpg' | apply_filter('variant_thumbnail') }}" alt="{{ product.description.header|raw }}" />
-                                            </a>
-                                        {% endif  %}
-                                    </td>
-                                    <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                                    <td>{{ variant.description.header|raw }}</td>
-                                    <td width="1" class="nowrap price">{{ variant.price.listPrice|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap">{{ helpers.addToBasket(variant) }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    {{ _self.variantInfoCategory(product.variants, 'Worktops') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Breakfast Bars') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Island Worktops') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Sink Modules') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Edging') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Finishing Touch') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Default') }}
                 </section>
             </div>
         </div>
     </div>
+
+    {% set accessories = [] %}
+    {% for link in product.links %}
+        {%  if link.linkType == 'accessory' %}
+            {% for variant in link.linkedProduct.variants %}
+                {% set accessories = accessories|merge([variant]) %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% if accessories|length > 0 %}
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>3. Accessories</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="3"></th>
+                                    <th class="tac">Price</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for variant in accessories %}
+                                    {{ _self.variantInfo(variant) }}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
