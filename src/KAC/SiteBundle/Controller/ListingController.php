@@ -105,12 +105,15 @@ class ListingController extends Controller
             {
                 if ($departmentToFeature->getDisplayOnFilter())
                 {
-                    $flags[] = 'attr_feature_'.str_replace(' ', '', $departmentToFeature->getFeatureGroup()->getName());
-                    $featureGroups[] = $departmentToFeature->getFeatureGroup()->getName();
-                    $facetSet->createFacetField($helper->escapeTerm('feature_'.str_replace(' ', '', $departmentToFeature->getFeatureGroup()->getName())))
-                        ->setField('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName())
+                    $flags[] = trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName())));
+                    $featureGroups[] = array(
+                        trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", $departmentToFeature->getFeatureGroup()->getName())),
+                        $departmentToFeature->getFeatureGroup()->getName()
+                    );
+                    $facetSet->createFacetField($helper->escapeTerm(trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('feature_'.$departmentToFeature->getFeatureGroup()->getName())))))
+                        ->setField(trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName()))))
                         ->setMinCount(1)
-                        ->addExclude('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName());
+                        ->addExclude(trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('attr_feature_'.$departmentToFeature->getFeatureGroup()->getName()))));
                 }
             }
         }

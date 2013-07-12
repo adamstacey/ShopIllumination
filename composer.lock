@@ -114,12 +114,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/craue/CraueFormFlowBundle.git",
-                "reference": "5ac5e657e7036f33c828d953a7944a6b0f5e9dad"
+                "reference": "2.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/5ac5e657e7036f33c828d953a7944a6b0f5e9dad",
-                "reference": "5ac5e657e7036f33c828d953a7944a6b0f5e9dad",
+                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/2.0.1",
+                "reference": "2.0.1",
                 "shasum": ""
             },
             "require": {
@@ -159,7 +159,7 @@
                 "Symfony2",
                 "form"
             ],
-            "time": "2013-06-15 08:12:26"
+            "time": "2013-07-12 14:32:22"
         },
         {
             "name": "doctrine/annotations",
@@ -261,7 +261,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -574,12 +574,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineMigrationsBundle.git",
-                "reference": "d950535e30434dc2521e5e434c19d666f4917245"
+                "reference": "a9796ce33152754e4dbc7d251da5c1c0a739189c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/d950535e30434dc2521e5e434c19d666f4917245",
-                "reference": "d950535e30434dc2521e5e434c19d666f4917245",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/a9796ce33152754e4dbc7d251da5c1c0a739189c",
+                "reference": "a9796ce33152754e4dbc7d251da5c1c0a739189c",
                 "shasum": ""
             },
             "require": {
@@ -619,7 +619,7 @@
                 "migrations",
                 "schema"
             ],
-            "time": "2013-07-05 09:22:36"
+            "time": "2013-07-10 12:55:18"
         },
         {
             "name": "doctrine/inflector",
@@ -1305,7 +1305,7 @@
                     "JMS\\AopBundle": ""
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache"
             ],
@@ -1347,7 +1347,7 @@
                     "CG\\": "src/"
                 }
             },
-            "notification-url": "http://packagist.org/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache"
             ],
@@ -1355,7 +1355,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1420,7 +1420,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1575,7 +1575,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1849,22 +1849,24 @@
         },
         {
             "name": "knplabs/knp-snappy",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "git://github.com/KnpLabs/snappy.git",
-                "reference": "0.1.0"
+                "url": "https://github.com/KnpLabs/snappy.git",
+                "reference": "0.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/KnpLabs/snappy/archive/0.1.0.zip",
-                "reference": "0.1.0",
+                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/0.1.1",
+                "reference": "0.1.1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "suggest": {
+                "google/wkhtmltopdf-amd64": "Provide wkhtmltopdf-amd64 binary, use version `0.11.0-RC1` as dependency",
+                "google/wkhtmltopdf-i386": "Provide wkhtmltopdf-i386 binary, use version `0.11.0-RC1` as dependency",
                 "symfony/process": "Process Component of Symfony2."
             },
             "type": "library",
@@ -1894,9 +1896,10 @@
                 "knplabs",
                 "pdf",
                 "snapshot",
-                "thumbnail"
+                "thumbnail",
+                "wkhtmltopdf"
             ],
-            "time": "2012-11-07 09:48:01"
+            "time": "2013-04-10 07:21:56"
         },
         {
             "name": "knplabs/knp-snappy-bundle",
@@ -1905,12 +1908,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpSnappyBundle.git",
-                "reference": "9915a8d7b7e7fa4c6037259afc2b2947c352e307"
+                "reference": "7540f32c2d0cf0a1932ff8c7228e6637556f1014"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpSnappyBundle/zipball/9915a8d7b7e7fa4c6037259afc2b2947c352e307",
-                "reference": "9915a8d7b7e7fa4c6037259afc2b2947c352e307",
+                "url": "https://api.github.com/repos/KnpLabs/KnpSnappyBundle/zipball/7540f32c2d0cf0a1932ff8c7228e6637556f1014",
+                "reference": "7540f32c2d0cf0a1932ff8c7228e6637556f1014",
                 "shasum": ""
             },
             "require": {
@@ -1947,7 +1950,7 @@
                 "pdf",
                 "snappy"
             ],
-            "time": "2013-02-19 21:24:36"
+            "time": "2013-07-10 09:09:18"
         },
         {
             "name": "kriswallsmith/assetic",

@@ -344,11 +344,11 @@
                                             <div id="filterFeature" class="filter">
                                                 <ul>
                                                     {% for featureGroup in featureGroups %}
-                                                        {% if facets.facet('feature_'~featureGroup|replace({' ': ''})) is not null and facets.facet('feature_'~featureGroup|replace({' ': ''})).count > 0 %}
-                                                            <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup }}</li>
-                                                            {% for feature, count in facets.facet('feature_'~featureGroup|replace({' ': ''})) %}
+                                                        {% if facets.facet('feature_'~featureGroup[0]) is not null and facets.facet('feature_'~featureGroup[0]).count > 0 %}
+                                                            <li data-feature-group="{{ loop.index }}" class="filter-feature-group"><span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>{{ featureGroup[1] }}</li>
+                                                            {% for feature, count in facets.facet('feature_'~featureGroup[0]) %}
                                                                 <li>
-                                                                    <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup }}][]" type="checkbox" value="{{ feature }}" id="filter-{{ featureGroup }}-{{ loop.index }}" />
+                                                                    <input{% if feature in app.request.get('filter[attr_feature_'~featureGroup[0]~']', null, true) %} checked="checked"{% endif %} name="filter[attr_feature_{{ featureGroup[0] }}][]" type="checkbox" value="{{ feature }}" id="filter-{{ featureGroup[0] }}-{{ loop.index }}" />
                                                                     <label for="filter-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ feature }}</label>
                                                                 </li>
                                                             {% endfor %}
