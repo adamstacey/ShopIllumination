@@ -95,7 +95,7 @@ table.data-table .price .currency-decimal {
 }
 
 table.data-table .price .currency-tax {
-    @include fontSize($fontSizeExtraSmall);
+    @include fontSize($fontSizeExtraExtraSmall);
 }
 
 .product .logo {
@@ -698,4 +698,30 @@ screen and (min-resolution: 2dppx) {
 .product .border-bottom-separator {
     border-bottom: 1px solid $colourGreyExtraLight;
     @include noBoxShadow;
+}
+
+.product-listing-header {
+    @include verticalGradientGreyExtraLightToWhite;
+}
+
+.product-listing-header h1 {
+    padding: $spacingMedium;
+    margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+
+    float: left;
+
+    color: $colourWhite;
+    @include alphaBackground($colourGreyDark, 0.8);
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeExtraExtraExtraLarge);
+    @include textShadow($colourBlack, 0, 1px);
+    font-weight: normal;
+}
+
+.product-listing-header p {
+    padding: 0 0 $spacingMedium 0;
+    margin: 0;
+
+    @include fontSize($fontSizeSmall);
+    line-height: 16px;
 }
