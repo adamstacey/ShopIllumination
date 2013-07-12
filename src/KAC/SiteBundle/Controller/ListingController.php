@@ -33,10 +33,11 @@ class ListingController extends Controller
      * @Route("/department/{departmentId}/brand/{brandId}", name="listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
      * @Method({"GET"})
      */
-	public function indexAction(Request $request, $departmentId=null, $brandId=null, $admin=false, $all=false)
+	public function indexAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
     {
         // Ensure user has the correct permissions
-        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        {
             throw new AccessDeniedException();
         }
 
@@ -46,30 +47,25 @@ class ListingController extends Controller
          * @var $brand \KAC\SiteBundle\Entity\Brand
          * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
          */
-
         $em = $this->getDoctrine()->getManager();
 
         // If department was specified fetch from the database
         $department = null;
-
-        if($departmentId) {
+        if ($departmentId)
+        {
             $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
         }
 
         // If brand was specified fetch from the database
         $brand = null;
-
-        if($brandId) {
+        if ($brandId)
+        {
             $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
-            if(!$brand) {
-                throw new NotFoundHttpException("Brand not found");
-            }
         }
 
         // Fetch products from solr
         /** @var $solarium \Solarium_Client */
         $solarium = $this->get('solarium.client');
-
         $query = $solarium->createSelect();
         $helper = $query->getHelper();
 
@@ -78,20 +74,16 @@ class ListingController extends Controller
 
         // Sort results (If the user has entered a query they cannot sort)
         $sort = explode(':', $request->query->get('sort_order', 'low_price:asc'));
-        if(count($sort) === 2 && in_array($sort[0], array('header_sort', 'low_price', 'high_price', 'created_at'))) {
+        if (count($sort) === 2 && in_array($sort[0], array('header_sort', 'low_price', 'high_price', 'created_at')))
+        {
             $sortCol = $sort[0];
             $sortDir = ($sort[1] == 'asc') ? Solarium_Query_Select::SORT_ASC : Solarium_Query_Select::SORT_DESC;
-
             if (($sortCol == 'low_price') && ($sortDir == 'asc'))
             {
                 $query->addSort('accessory', 'asc');
             }
             $query->addSort($helper->escapeTerm($sortCol), $sortDir);
-
         }
-        // Add secondary sort for accessory
-        $query->addSort('accessory', 'asc');
-
         $filters = $request->query->get('filter', array());
         $flags = array('brand', 'department_path');
 
@@ -99,15 +91,19 @@ class ListingController extends Controller
         $facetSet = $query->getFacetSet();
         $featureGroups = array();
         $facetSet->createFacetField('departments')->setField('department_path')->setSort('index')->setMinCount(1)->setPrefix($request->query->get('filter[department_path]', '', true));
+
         // Add brand facet if user is not on the brand listing
-        if(!$brand) {
+        if (!$brand)
+        {
             $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1)->addExclude('brand');
         }
+
         // Add feature facets if it should be displayed
-        if($department) {
+        if ($department)
+        {
             foreach($department->getFeatures() as $departmentToFeature)
             {
-                if($departmentToFeature->getDisplayOnFilter())
+                if ($departmentToFeature->getDisplayOnFilter())
                 {
                     $flags[] = 'attr_feature_'.str_replace(' ', '', $departmentToFeature->getFeatureGroup()->getName());
                     $featureGroups[] = $departmentToFeature->getFeatureGroup()->getName();
@@ -120,7 +116,8 @@ class ListingController extends Controller
         }
 
         // Filtering
-        if($department) {
+        if ($department)
+        {
             // Get path
             $departmentFilterPath = "";
             $currDepartment = $department;
@@ -130,55 +127,60 @@ class ListingController extends Controller
             } while ($currDepartment !== null);
             $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
         }
-        if($brand) {
+        if ($brand)
+        {
             $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
         }
 
         // If all was set the limit flag
-        if($all)
+        if ($all)
         {
             $request->query->set('limit', 99999999);
         }
 
         // Add filters for any flags that the user has set
-        foreach($flags as $flag)
+        foreach ($flags as $flag)
         {
-            if(array_key_exists($flag, $filters))
+            if (array_key_exists($flag, $filters))
             {
                 $filter = $filters[$flag];
-                if(is_array($filter))
+                if (is_array($filter))
                 {
                     array_walk($filter, function(&$item) use ($flag, $helper) {
-                        if(!empty($item)) {
+                        if (!empty($item))
+                        {
                             $item = $helper->escapeTerm($flag).':'.$helper->escapePhrase($item);
                         }
                     });
                     $query->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
                 } else {
-                    if(!empty($filter)) {
+                    if (!empty($filter))
+                    {
                         $query->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
                     }
                 }
-
             }
         }
 
         // Create stats query, clone query so that
         $statsQuery = clone $query;
         $statsQuery->setRows(0);
-
         $stats = $statsQuery->getStats();
         $stats->createField('low_price');
         $stats->createField('high_price');
 
         // Deal with price filtering separately
-        if(array_key_exists('low_price', $filters)) {
-            if(!empty($filters['low_price'])) {
+        if (array_key_exists('low_price', $filters))
+        {
+            if (!empty($filters['low_price']))
+            {
                 $query->createFilterQuery('low_price')->addTag('low_price')->setQuery($helper->escapeTerm('low_price').':['.$helper->escapeTerm($filters['low_price']).' TO *]');
             }
         }
-        if(array_key_exists('high_price', $filters)) {
-            if(!empty($filters['low_price'])) {
+        if (array_key_exists('high_price', $filters))
+        {
+            if (!empty($filters['low_price']))
+            {
                 $query->createFilterQuery('high_price')->addTag('high_price')->setQuery($helper->escapeTerm('high_price').':[* TO '.$helper->escapeTerm($filters['high_price']).']');
             }
         }
@@ -193,7 +195,6 @@ class ListingController extends Controller
             );
             $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
             $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
-
             $facets = $pagination->getCustomParameter('result')->getFacetSet();
             $stats = $solarium->select($statsQuery)->getStats();
         } catch (\Solarium_Client_HttpException $e) {
@@ -218,7 +219,7 @@ class ListingController extends Controller
      * @Route("/admin/department/{departmentId}/brand/{brandId}", name="admin_listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
      * @Method({"GET"})
      */
-    public function indexAdminAction(Request $request, $departmentId=null, $brandId=null)
+    public function indexAdminAction(Request $request, $departmentId = null, $brandId = null)
     {
         return $this->indexAction($request, $departmentId, $brandId, true);
     }
@@ -227,10 +228,11 @@ class ListingController extends Controller
      * @Route("/search.html", name="listing_search")
      * @Method({"GET"})
      */
-	public function searchAction(Request $request, $departmentId=null, $brandId=null, $admin=false, $all=false)
+	public function searchAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
     {
         // Ensure user has the correct permissions
-        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        {
             throw new AccessDeniedException();
         }
 
@@ -242,24 +244,21 @@ class ListingController extends Controller
         // Fetch products from solr
         /** @var $solarium \Solarium_Client */
         $solarium = $this->get('solarium.client');
-
         $query = $solarium->createSelect();
         $helper = $query->getHelper();
 
         // Set query string
-        if($request->query->get('q')) {
+        if ($request->query->get('q'))
+        {
             $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
-
             $dismax = $query->getDisMax();
             $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
             $dismax->setPhraseFields(array('short_description^30'));
             $dismax->setQueryParser('edismax');
-
             $query->setQuery($escapedQuery);
         } else {
             $query->setQuery('*');
         }
-
         $filters = $request->query->get('filter', array());
         $flags = array('brand', 'department_path');
 
@@ -271,18 +270,18 @@ class ListingController extends Controller
         $facetSet->createFacetField('brands')->setField('brand')->setSort('index')->setMinCount(1)->addExclude('brand');
 
         // If all was set the limit flag
-        if($all)
+        if ($all)
         {
             $request->query->set('limit', 99999999);
         }
 
         // Add filters for any flags that the user has set
-        foreach($flags as $flag)
+        foreach ($flags as $flag)
         {
-            if(array_key_exists($flag, $filters))
+            if (array_key_exists($flag, $filters))
             {
                 $filter = $filters[$flag];
-                if(is_array($filter))
+                if (is_array($filter))
                 {
                     array_walk($filter, function(&$item) use ($flag, $helper) {
                         if(!empty($item)) {
@@ -291,7 +290,8 @@ class ListingController extends Controller
                     });
                     $query->createFilterQuery($flag)->addTag($flag)->setQuery(implode(' OR ', $filter));
                 } else {
-                    if(!empty($filter)) {
+                    if (!empty($filter))
+                    {
                         $query->createFilterQuery($flag)->addTag($flag)->setQuery($helper->escapeTerm($flag).':'.$helper->escapePhrase($filter));
                     }
                 }
@@ -302,19 +302,22 @@ class ListingController extends Controller
         // Create stats query, clone query so that
         $statsQuery = clone $query;
         $statsQuery->setRows(0);
-
         $stats = $statsQuery->getStats();
         $stats->createField('low_price');
         $stats->createField('high_price');
 
         // Deal with price filtering separately
-        if(array_key_exists('low_price', $filters)) {
-            if(!empty($filters['low_price'])) {
+        if (array_key_exists('low_price', $filters))
+        {
+            if (!empty($filters['low_price']))
+            {
                 $query->createFilterQuery('low_price')->addTag('low_price')->setQuery($helper->escapeTerm('low_price').':['.$helper->escapeTerm($filters['low_price']).' TO *]');
             }
         }
-        if(array_key_exists('high_price', $filters)) {
-            if(!empty($filters['low_price'])) {
+        if (array_key_exists('high_price', $filters))
+        {
+            if (!empty($filters['low_price']))
+            {
                 $query->createFilterQuery('high_price')->addTag('high_price')->setQuery($helper->escapeTerm('high_price').':[* TO '.$helper->escapeTerm($filters['high_price']).']');
             }
         }
@@ -329,7 +332,6 @@ class ListingController extends Controller
             );
             $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
             $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
-
             $facets = $pagination->getCustomParameter('result')->getFacetSet();
             $stats = $solarium->select($statsQuery)->getStats();
         } catch (\Solarium_Client_HttpException $e) {
@@ -344,14 +346,16 @@ class ListingController extends Controller
             'stats' => $stats,
         ));
     }
+
     /**
      * @Route("/search-autocomplete.html", name="listing_search_autocomplete")
      * @Method({"GET"})
      */
-	public function searchAutocompleteAction(Request $request, $departmentId=null, $brandId=null, $admin=false, $all=false)
+	public function searchAutocompleteAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
     {
         // Ensure user has the correct permissions
-        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false) {
+        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        {
             throw new AccessDeniedException();
         }
 
@@ -363,7 +367,8 @@ class ListingController extends Controller
         $data = array();
 
         // Set query string
-        if($request->query->has('q')) {
+        if ($request->query->has('q'))
+        {
             /** @var $solarium \Solarium_Client */
             $solarium = $this->get('solarium.client');
 
@@ -413,9 +418,10 @@ class ListingController extends Controller
 
         // Fetch the departments
         $routing = $em->getRepository("KAC\SiteBundle\Entity\Routing")->findAll();
-        foreach($routing as $route)
+        foreach ($routing as $route)
         {
-            if($route instanceof Brand\Routing) {
+            if ($route instanceof Brand\Routing)
+            {
                 $data[] = array(
                     'header' => $route->getBrand()->getDescription()->getHeader(),
                     'url' => $this->generateUrl('routing', array('url' => $route->getUrl())),
@@ -447,55 +453,6 @@ class ListingController extends Controller
         return $response;
     }
 
-    public function popularBrandsAction(Request $request,  $departmentId=null)
-    {
-        $products = $this->getPopularProducts($departmentId);
-        $brands = array();
-
-        foreach($products as $item)
-        {
-            /**
-             * @var $product Product
-             */
-            $product = $item[0];
-
-            $brand = $product->getBrand();
-            if(array_key_exists($brand->getId(), $brands)) {
-                $brands[$brand->getId()]['total'] += $item['total'];
-            } else {
-                $brands[$brand->getId()] = array(
-                    0 => $product->getBrand(),
-                    'total' => $item['total'],
-                );
-            }
-        }
-
-        // Remove unneeded elements
-        $brands = array_values(array_slice($brands, 0, 10));
-
-        $response = $this->render('KACSiteBundle:Listing:popularBrands.html.twig', array(
-            'brands' => $brands,
-        ));
-        //$response->setSharedMaxAge(3600);
-
-        return $response;
-    }
-
-    public function popularProductsAction(Request $request, $departmentId=null, $brandId=null)
-    {
-        $products = $this->getPopularProducts($departmentId, $brandId);
-
-        // Remove unneeded elements
-        $products = array_slice($products, 0, 5);
-
-        $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
-            'products' => $products,
-        ));
-        //$response->setSharedMaxAge(3600);
-
-        return $response;
-    }
-
     public function departmentTreeAction(Request $request, $departmentId=null, $brandId=null)
     {
         $em = $this->getDoctrine()->getManager();
@@ -515,13 +472,89 @@ class ListingController extends Controller
         return $response;
     }
 
+    public function popularDepartmentBrandsAction(Request $request, $departmentId = null)
+    {
+        // Check for a department
+        if (!$departmentId) return false;
 
-    private function getPopularProducts($departmentId=null, $brandId=null)
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
+
+        $products = $this->getPopularDepartmentProducts($departmentId);
+        $brands = array();
+
+        foreach ($products as $item)
+        {
+            /**
+             * @var $product Product
+             */
+            $product = $item[0];
+
+            $brand = $product->getBrand();
+            if (array_key_exists($brand->getId(), $brands))
+            {
+                $brands[$brand->getId()]['total'] += $item['total'];
+            } else {
+                $brands[$brand->getId()] = array(
+                    0 => $product->getBrand(),
+                    'total' => $item['total'],
+                );
+            }
+        }
+
+        // Remove unneeded elements
+        $brands = array_values(array_slice($brands, 0, 8));
+
+        $response = $this->render('KACSiteBundle:Listing:popularDepartmentBrands.html.twig', array(
+            'brands' => $brands, 'department' => $department,
+        ));
+        $response->setSharedMaxAge(432000);
+
+        return $response;
+    }
+
+    public function popularDepartmentProductsAction(Request $request, $departmentId = null, $brandId = null)
+    {
+        // Check for a department
+        if (!$departmentId) return false;
+
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
+
+        $brand = null;
+        if ($brandId)
+        {
+            $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
+        }
+
+        $products = $this->getPopularDepartmentProducts($departmentId, $brandId);
+
+        // Remove unneeded elements
+        $products = array_slice($products, 0, 5);
+
+        $response = $this->render('KACSiteBundle:Listing:popularDepartmentProducts.html.twig', array(
+            'products' => $products, 'department' => $department, 'brand' => $brand,
+        ));
+        $response->setSharedMaxAge(432000);
+
+        return $response;
+    }
+
+    private function getPopularDepartmentProducts($departmentId = null, $brandId = null)
     {
         /**
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
+
         /** @var $solarium \Solarium_Client */
         $solarium = $this->get('solarium.client');
 
@@ -531,23 +564,22 @@ class ListingController extends Controller
         $query->setFields(array('id'));
         $query->setRows(99999999);
 
+        // Get the department
         $department = null;
-
-        if($departmentId) {
+        if ($departmentId)
+        {
             $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
         }
 
         // If brand was specified fetch from the database
         $brand = null;
-
-        if($brandId) {
+        if ($brandId)
+        {
             $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
-            if(!$brand) {
-                throw new NotFoundHttpException("Brand not found");
-            }
         }
 
-        if($department) {
+        if ($department)
+        {
             // Get path
             $departmentFilterPath = "";
             $currDepartment = $department;
@@ -557,13 +589,15 @@ class ListingController extends Controller
             } while ($currDepartment !== null);
             $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
         }
-        if($brand) {
+
+        if ($brand)
+        {
             $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
         }
         $results = $solarium->execute($query);
 
         $products = array();
-        foreach($results as $document)
+        foreach ($results as $document)
         {
             $qb = $em->createQueryBuilder();
             $result = $qb->select('p, count(op.id) AS total')
@@ -577,8 +611,7 @@ class ListingController extends Controller
                 ->getQuery()
                 ->execute();
 
-
-            if($result && count($result) > 0)
+            if ($result && count($result) > 0)
             {
                 $products[] = $result[0];
             }
