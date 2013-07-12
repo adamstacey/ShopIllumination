@@ -6,12 +6,13 @@
 }
 
 .slider-wrapper h1 {
+    padding: $spacingExtraLarge;
+
     position: absolute;
     top: 40px;
+
     color: $colourWhite;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.7);
-    padding: $spacingExtraLarge;
+    @include alphaBackground($colourBlack, 0.7);
     font-family: $primaryFontFamily;
     @include fontSize($fontSizeExtraExtraExtraLarge);
     @include textShadow($colourBlack, 0, 1px);
