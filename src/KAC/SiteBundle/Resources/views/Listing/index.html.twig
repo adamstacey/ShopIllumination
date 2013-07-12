@@ -20,27 +20,18 @@
 {% endblock %}
 
 {% block header %}
-    {% if department is not null and brand is null %}
-        <h1 class="mtl mbn">{{ department.description.header }}</h1>
-    {% elseif department is null and brand is not null %}
-        <h1 class="mtl mbn">{{ brand.description.header }}</h1>
-    {% elseif department is not null and brand is not null %}
-        <h1 class="mtl mbn">{{ brand.description.header }} {{ department.description.header }}</h1>
-    {% else %}
-        <h1 class="mtl mbn">Products</h1>
-    {% endif %}
-
-    {% if app.request.query.get('q', '') is not empty %}
-        <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
-    {% endif %}
-
     <div class="widget-group clearfix mbm">
         <div class="widget widget-7-of-8">
-            <ul class="breadcrumbs" itemprop="breadcrumb">
-                <li>{{ department.description.header }}</li>
+            <ul class="breadcrumbs mtn" itemprop="breadcrumb">
+                <li>{{ brand ? brand.description.header ~ " " : "" }}{{ department.description.header }}</li>
                 {% for parent in department.parents %}
-                    {% if parent.parent != null and parent.level != 1  %}
-                        <li><a href="{{ path('routing', {'url': parent.url}) }}">{{ parent.description.header }}</a></li>
+                    {% if parent.parent != null and parent.level != 0  %}
+                        {% if brand %}
+                            {% set url = get_listing_url('brand_with_department', brand.id, parent.id) %}
+                            <li><a href="{{ path('routing', {'url': url}|merge(app.request.query.all)) }}">{{ brand ? brand.description.header ~ " " : "" }}{{ parent.description.header }}</a></li>
+                        {% else %}
+                            <li><a href="{{ path('routing', {'url': parent.url}) }}">{{ parent.description.header }}</a></li>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 <li><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
@@ -54,23 +45,61 @@
     </div>
 
     {% if department is not null and brand is null and department.description.description %}
-        <div class="department-description">
-            {{ department.description.description|raw }}
-        </div>
+        {% set overview = department.description.description %}
     {% elseif department is null and brand is not null and brand.description.description %}
-        <div class="department-description">
-            {{ brand.description.description|raw }}
-        </div>
+        {% set overview = brand.description.description %}
     {% elseif department is not null and brand is not null and (brand.description.description or department.description.description) %}
-        <div class="department-description">
+        {% set overview = "" %}
             {% if brand.description.description %}
-                {{ brand.description.description|raw }}
+                {% set overview = overview ~ brand.description.description %}
             {% endif %}
             {% if department.description.description %}
-                {{ brand.description.description|raw }}
+                {% set overview = overview ~ department.description.description %}
             {% endif %}
-        </div>
+    {% else %}
+        {% set overview = "" %}
     {% endif %}
+
+    <div class="widget-group clearfix mbl">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <section class="product-listing-header ui-widget-content ui-corner-all clearfix pbn">
+                    <div class="fr">
+                        <a href="#viewNow" class="button button-green uppercase icon-white mtm mll fr" data-icon-secondary="icon-472">View Now</a>
+                    </div>
+                    <div class="fr product">
+                        <div class="fr">
+                            <div class="price">
+                                <span class="currency-prefix">from only</span>
+                            </div>
+                            <div class="price">
+                                {{ pagination[0].low_price|currency('GBP', true, true, '')|raw }}
+                            </div>
+                            <div class="price pbm">
+                                <span class="currency-tax">(inc. VAT)</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% if department is not null and brand is null %}
+                        <h1>{{ department.description.header }}</h1>
+                    {% elseif department is null and brand is not null %}
+                        <h1>{{ brand.description.header }}</h1>
+                    {% elseif department is not null and brand is not null %}
+                        <h1>{{ brand.description.header }} {{ department.description.header }}</h1>
+                    {% else %}
+                        <h1>Products</h1>
+                    {% endif %}
+                    <div class="clear"></div>
+                    {% if app.request.query.get('q', '') is not empty %}
+                        <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
+                    {% endif %}
+                    {% if overview and overview != "" %}
+                        {{ overview|raw }}
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block body %}
@@ -80,14 +109,17 @@
         {% else %}
             {% set totalItemCount = 0 %}
         {% endif %}
-        {{ render_esi(controller('KACSiteBundle:Listing:popularDepartmentProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
-        {% if not brand %}
+        {% if brand %}
+            {{ render(controller('KACSiteBundle:Listing:popularDepartmentProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
+        {% else %}
+            {{ render_esi(controller('KACSiteBundle:Listing:popularDepartmentProducts', { 'departmentId': department.id })) }}
             {{ render_esi(controller('KACSiteBundle:Listing:popularDepartmentBrands', { 'departmentId': department.id })) }}
         {% endif %}
         <div class="widget-group clearfix">
             <form id="formFilter" class="form" method="GET">
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget mbl">
+                        <a name="viewNow"></a>
                         <section class="ui-widget-content ui-corner-all product">
                             <div class="widget-group product-sorting-container product-sorting-container-top mbn clearfix">
                                 <div class="widget widget-1-of-1">
