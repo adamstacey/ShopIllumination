@@ -479,7 +479,7 @@ class ListingController extends Controller
     public function popularDepartmentBrandsAction(Request $request, $departmentId = null)
     {
         // Check for a department
-        if (!$departmentId) return false;
+        if (!$departmentId) return new Response();
 
         /**
          * @var $em EntityManager
@@ -524,7 +524,7 @@ class ListingController extends Controller
     public function popularDepartmentProductsAction(Request $request, $departmentId = null, $brandId = null)
     {
         // Check for a department
-        if (!$departmentId) return false;
+        if (!$departmentId) return new Response();
 
         /**
          * @var $em EntityManager
