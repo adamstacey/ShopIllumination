@@ -34,14 +34,45 @@ class FixMaia2ProductsCommand extends ContainerAwareCommand
          */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        // Fetch Department
-        $brand = $em->getRepository('KACSiteBundle:Brand')->find(15);
-        $department = $em->getRepository('KACSiteBundle:Department')->find(41);
-        $oldProducts = $em->getRepository('KAC\SiteBundle\Entity\Product')->findBy(array('brand' => 15, 'template' => 'maia'));
+        // Delete all the old products
+        $qb = $em->createQueryBuilder();
 
-        $output->writeln('Starting to delete old products');
+        $variants = $qb->select('v')
+            ->from('KAC\SiteBundle\Entity\Product\Variant', 'v')
+            ->join('v.product', 'p')
+            ->where('p.template = \'maia\'')
+            ->getQuery()
+            ->execute();
 
-        $output->writeln('Deleted old products');
+        // Get types
+        $types = $em->getRepository('KACSiteBundle:Type')->findAll();
+
+        foreach($variants as $variant)
+        {
+            /**
+             * @var $variant Variant
+             */
+            if($variant->getDescription())
+            {
+                if(strpos($variant->getDescription()->getHeader(), 'Breakfast Bar') !== false) {
+                    $variant->setType($types[2]);
+                } elseif(strpos($variant->getDescription()->getHeader(), 'Island Worktop') !== false) {
+                    $variant->setType($types[3]);
+                } elseif(strpos($variant->getDescription()->getHeader(), 'Sink Module') !== false) {
+                    $variant->setType($types[4]);
+                } elseif(strpos($variant->getDescription()->getHeader(), 'Edging') !== false) {
+                    $variant->setType($types[5]);
+                } elseif(strpos($variant->getDescription()->getHeader(), 'Worktop') !== false) {
+                    $variant->setType($types[1]);
+                }  elseif(strpos($variant->getDescription()->getHeader(), 'Chopping Board') !== false || strpos($variant->getDescription()->getHeader(), 'Hot Rod') !== false) {
+                    $variant->setType($types[6]);
+                } else {
+                    $variant->setType($types[0]);
+                }
+                $em->persist($variant);
+                $em->flush();
+            }
+        }
 
         $output->writeln('Finished!');
     }
