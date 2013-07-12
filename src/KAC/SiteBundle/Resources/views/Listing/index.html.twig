@@ -158,7 +158,9 @@
                                                     <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
                                                     <div class="product-image-container fl">
                                                         <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
-                                                            <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                            {% if product.thumbnail_path %}
+                                                            <img class="product-image" itemprop="image" src="{{ product.thumbnail_path | apply_filter('product_thumbnail') }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                            {% endif  %}
                                                         </a>
                                                     </div>
                                                     <div>

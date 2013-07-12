@@ -92,7 +92,11 @@
                             <div class="widget mbl widget-1-of-6">
                                 <div class="product-listing">
                                     <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
-                                        <img width="127" height="127" src="{{ product.thumbnail_path | apply_filter('product_thumbnail') }}" alt="{{ product.header|raw }}" />
+                                        {% if product.thumbnail_path %}
+                                            <img width="127" height="127" src="{{ product.thumbnail_path | apply_filter('product_thumbnail') }}" alt="{{ product.header|raw }}" />
+                                        {% else  %}
+                                            <img width="127" height="127" src="{{ 'images/no-image.jpg' | apply_filter('product_thumbnail') }}" alt="{{ product.header|raw }}" />
+                                        {% endif  %}
                                         <span class="name">{{ product.attr_feature_Colour[0]|raw }}</span>
                                         {% if product.new %}<span class="new">NEW</span>{% endif %}
                                     </a>
