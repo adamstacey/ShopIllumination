@@ -204,7 +204,17 @@ class ListingController extends Controller
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
 
-        return $this->render('KACSiteBundle:Listing:index.html.twig', array(
+        // Get the correct template
+        if($brand && !$department && $brand->getTemplate())
+        {
+            $template = 'KACSiteBundle:Listing:Templates/'.$brand->getTemplate().'.html.twig';
+        } elseif (!$brand && $department && $department->getTemplate()) {
+            $template = 'KACSiteBundle:Listing:Templates/'.$department->getTemplate().'..html.twig';
+        } else {
+            $template = 'KACSiteBundle:Listing:Templates/standard.html.twig';
+        }
+
+        return $this->render($template, array(
             'admin' => $admin,
             'brand' => $brand,
             'department' => $department,
