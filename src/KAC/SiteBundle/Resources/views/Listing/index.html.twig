@@ -159,7 +159,9 @@
                                                     <div class="product-image-container fl">
                                                         <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                                                             {% if product.thumbnail_path %}
-                                                            <img class="product-image" itemprop="image" src="{{ product.thumbnail_path | apply_filter('product_thumbnail') }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                                <img class="product-image" itemprop="image" src="{{ product.thumbnail_path | apply_filter('product_thumbnail') }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                            {% else  %}
+                                                                <img class="product-image" itemprop="image" src="{{ 'images/no-image.jpg' | apply_filter('product_thumbnail') }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                                             {% endif  %}
                                                         </a>
                                                     </div>
@@ -207,10 +209,8 @@
                                                                     {% else %}
                                                                         <span class="price">
                                                                             <span class="currency-prefix">from only</span>
+                                                                            <span itemprop="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
                                                                         </span>
-                                                                        <span itemprop="price" class="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
-                                                                        <em> - </em>
-                                                                        <span itemprop="price" class="price">{{ product.high_price|currency('GBP', true, true, '')|raw }}</span>
                                                                     {% endif %}
                                                                     {% if product.url != '' %}
                                                                         </a>
