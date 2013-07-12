@@ -1,0 +1,67 @@
+<div class="widget-group product clearfix">
+    <div class="widget widget-1-of-1">
+        <div class="ui-widget mbl">
+            <section class="ui-widget-content ui-corner-all">
+                <h3 class="popular-items-header">Our Top 5 {{ brand ? brand.description.name ~ " " : "" }}{{ department.name }}</h3>
+                <div class="popular-products popular-items">
+                    <table class="data-table">
+                        <tbody>
+                            {% set productCount = 0 %}
+                            {% for item in products %}
+                                {% set productCount = productCount + 1 %}
+                                {% set product = item[0] %}
+                                <tr itemscope itemtype="http://schema.org/Product" class="{{ productCount % 2 == 0 ? "even" : "odd" }}">
+                                    <td width="1" class="pas">{{ productCount }}</td>
+                                    <td width="1" class="pas image">
+                                        <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
+                                            <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath) }}" border="0" alt="{{ product.description.header|raw }}" width="60" />
+                                        </a>
+                                    </td>
+                                    <td class="pas">
+                                        <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}"><strong>{{ product.description.header|raw }}</strong></a></h4>
+                                        {% for feature in product.variants[0].features %}
+                                            {% if feature.featureGroup.name == "Colour" %}
+                                                <p>{{ feature.feature.name }}</p>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td width="1" class="pas nowrap price">
+                                        {% spaceless %}
+                                            {% if product.hidePrices == 0 %}
+                                                {% if product.url != '' %}
+                                                    <a href="{{ path('routing', {'url': product.url}) }}">
+                                                {% endif %}
+                                                {% if product.priceRange.low == product.priceRange.high %}
+                                                    <span itemprop="price" class="price">{{ product.priceRange.low|currency('GBP', true, true, '')|raw }}</span>
+                                                {% else %}
+                                                    <span class="price">
+                                                        <span class="currency-prefix">from only</span>
+                                                    </span>
+                                                    <span itemprop="price" class="price">{{ product.priceRange.low|currency('GBP', true, true, '')|raw }}</span>
+                                                    <em> - </em>
+                                                    <span itemprop="price" class="price">{{ product.priceRange.high|currency('GBP', true, true, '')|raw }}</span>
+                                                {% endif %}
+                                                {% if product.url != '' %}
+                                                    </a>
+                                                {% endif %}
+                                                <br />
+                                                <span class="price pbm">
+                                                    <span class="currency-tax">(inc. VAT)</span>
+                                                </span>
+                                            {% else %}
+                                                <a itemprop="price" href="{#{{ path('content_contact_us') }}#}">CONTACT US</a>
+                                            {% endif %}
+                                        {% endspaceless %}
+                                    </td>
+                                    <td width="102" class="pas">
+                                        <a class="button button-small icon-grey" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">More Info</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
