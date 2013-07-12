@@ -312,7 +312,7 @@
                                     </div>
                                 </div>
 
-                                {{ render_esi(controller('KACSiteBundle:Listing:departmentTree', {'departmentId': department.id, 'brandId': brand.id})) }}
+                                {{ render_esi(controller('KACSiteBundle:Listing:departmentTree', {'admin': true, 'departmentId': department.id, 'brandId': brand.id})) }}
 
                                 {% if brand is null %}
                                     <div class="ui-widget pr mtm">

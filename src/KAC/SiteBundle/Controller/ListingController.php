@@ -471,7 +471,7 @@ class ListingController extends Controller
         return $response;
     }
 
-    public function departmentTreeAction(Request $request, $departmentId = null, $brandId = null)
+    public function departmentTreeAction(Request $request, $departmentId = null, $brandId = null, $admin=false)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -485,6 +485,7 @@ class ListingController extends Controller
         $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
             'departments' => $departments,
             'brandId' => $brandId,
+            'admin' => $admin,
         ));
         $response->setSharedMaxAge(3600);
 
