@@ -117,6 +117,20 @@ class FixMaiaProductsCommand extends ContainerAwareCommand
             foreach($oldProducts as $oldProduct)
             {
                 $variant = $oldProduct->getVariant();
+
+                // Update variant description
+                $oldDescription = $oldProduct->getDescription();
+                $description = new Variant\Description();
+                $description->setVariant($variant);
+                $description->setOverride(true);
+                $description->setDescription($oldDescription->getDescription());
+                $description->setBrandDescription($oldDescription->getBrandDescription());
+                $description->setPageTitle($oldDescription->getPageTitle());
+                $description->setHeader($oldDescription->getHeader());
+                $description->setMetaDescription($oldDescription->getMetaDescription());
+                $description->setMetaKeywords($oldDescription->getMetaKeywords());
+                $variant->addDescription($description);
+
                 $product->addVariant($variant);
                 $i++;
             }
