@@ -4,6 +4,8 @@ namespace KAC\SiteBundle\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Entity\Type;
 use Symfony\Component\Validator\Constraints as Assert;
 use KAC\SiteBundle\Entity\DescribableInterface;
 use Symfony\Component\Validator\ExecutionContext;
@@ -25,21 +27,23 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="variants")
+     * @var Product
      */
     private $product;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Description", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Description[]
      */
     private $descriptions;
 
     /**
-     * @var VariantToFeature[]
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "DESC"})
      * @Assert\Valid()
+     * @var VariantToFeature[]
      */
     private $features;
 
@@ -48,6 +52,7 @@ class Variant implements DescribableInterface
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "DESC"})
      * @Assert\Valid()
+     * @var VariantToOption[]
      */
     private $options;
 
@@ -56,30 +61,35 @@ class Variant implements DescribableInterface
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Count(min="1", groups={"flow_site_new_product_step3"}, minMessage="Enter a valid price.")
      * @Assert\Valid()
+     * @var Price[]
      */
     private $prices;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Image", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Image
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Document", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Document[]
      */
     private $documents;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Routing", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Routing[]
      */
     private $routings;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Link", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Link[]
      */
     private $links;
 
@@ -89,6 +99,12 @@ class Variant implements DescribableInterface
      * @Assert\Choice(choices={"a", "h", "d"})
      */
     private $status = 'a';
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Type")
+     * @var Type
+     */
+    private $type;
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
@@ -1062,5 +1078,21 @@ class Variant implements DescribableInterface
     public function setLinks($links)
     {
         $this->links = $links;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }
