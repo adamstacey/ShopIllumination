@@ -232,14 +232,14 @@ class BrandsController extends Controller
 		if ($brandDeleted)
 		{
 			// Set success message
-		    $this->get('session')->setFlash('success', 'The brand was successfully deleted.');
+		    $this->get('session')->getFlashBag()->add('success', 'The brand was successfully deleted.');
 		    
 		    // Forward to the brands
 		    return $this->redirect($this->get('router')->generate('admin_brands', array()));
 		}
         
         // Set error message
-	    $this->get('session')->setFlash('error', 'Sorry there was a problem deleting the brand. Please try again.');
+	    $this->get('session')->getFlashBag()->add('error', 'Sorry there was a problem deleting the brand. Please try again.');
 	    
 	    // Forward to the brand
 	    return $this->redirect($this->get('router')->generate('admin_brands_update', array('id' => $id)));
@@ -334,7 +334,7 @@ class BrandsController extends Controller
 			$em->flush();
 		
 			// Set success message
-		    $this->get('session')->setFlash('success', 'The brand "'.$brand.'" has been added.');
+		    $this->get('session')->getFlashBag()->add('success', 'The brand "'.$brand.'" has been added.');
 		    
 		    // Forward to the product
 		    return $this->redirect($this->get('router')->generate('admin_brands_update', array('id' => $brandObject->getId())));

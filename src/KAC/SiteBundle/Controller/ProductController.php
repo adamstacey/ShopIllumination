@@ -299,7 +299,7 @@ class ProductController extends Controller {
                 }
 
                 // Notify user
-                $this->get('session')->setFlash('notice', sizeof($featureGroups).' new feature group'.(sizeof($featureGroups) == 1?' has':'s have').' been added.');
+                $this->get('session')->getFlashBag()->add('notice', sizeof($featureGroups).' new feature group'.(sizeof($featureGroups) == 1?' has':'s have').' been added.');
 
                 // Check if request is modal
                 if ($request->query->get('modal') == true)
@@ -354,7 +354,7 @@ class ProductController extends Controller {
                 }
 
                 // Notify user
-                $this->get('session')->setFlash('notice', sizeof($features).' new feature'.(sizeof($features) == 1?' has':'s have').' been added.');
+                $this->get('session')->getFlashBag()->add('notice', sizeof($features).' new feature'.(sizeof($features) == 1?' has':'s have').' been added.');
 
                 // Check if request is modal
                 if ($request->query->get('modal') == true)

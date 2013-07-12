@@ -89,7 +89,7 @@ class DepartmentController extends Controller
                 $flow->reset();
 
                 // Notify user
-                $this->get('session')->setFlash('notice', 'The new department "'.$department->getName().'" has been added.');
+                $this->get('session')->getFlashBag()->add('notice', 'The new department "'.$department->getName().'" has been added.');
 
                 // Check if request is modal
                 if ($request->query->get('modal') == true)
