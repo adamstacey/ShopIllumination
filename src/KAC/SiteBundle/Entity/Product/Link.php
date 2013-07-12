@@ -42,6 +42,11 @@ class Link
      * @Assert\Choice(choices={"cheaper", "related", "series"}, groups={"flow_site_new_product_step12"})
      */
     private $linkType;
+
+    /**
+     * @ORM\Column(name="category", type="string", length=255, nullable=true)
+     */
+    private $category;
             
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
@@ -229,5 +234,21 @@ class Link
     public function getLinkedProduct()
     {
         return $this->linkedProduct;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 }
