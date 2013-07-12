@@ -990,9 +990,9 @@ body .ui-tooltip {
     padding: $spacingMedium;
 
     @include textShadow($colourBlack, 0, 1px);
-    letter-spacing: 2px;
+    letter-spacing: 0;
     color: $colourWhite;
-    font-family: $complimentaryFontFamily;
+    font-family: $primaryFontFamily;
 }
 
 .ui-widget-header a {
