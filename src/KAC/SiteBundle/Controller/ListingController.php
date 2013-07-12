@@ -62,6 +62,15 @@ class ListingController extends Controller
         {
             $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
         }
+        // Get the correct template
+        if($brand && !$department && $brand->getTemplate())
+        {
+            $template = $brand->getTemplate();
+        } elseif (!$brand && $department && $department->getTemplate()) {
+            $template = $department->getTemplate();
+        } else {
+            $template = 'standard';
+        }
 
         // Fetch products from solr
         /** @var $solarium \Solarium_Client */
@@ -165,6 +174,12 @@ class ListingController extends Controller
             }
         }
 
+        // Template specific filtering/sorting
+        if(in_array($template, array('maia'))) {
+            // Force alphabetical sort
+            $query->addSort('header_sort', 'asc');
+        }
+
         // Create stats query, clone query so that
         $statsQuery = clone $query;
         $statsQuery->setRows(0);
@@ -204,17 +219,7 @@ class ListingController extends Controller
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
 
-        // Get the correct template
-        if($brand && !$department && $brand->getTemplate())
-        {
-            $template = 'KACSiteBundle:Listing:Templates/'.$brand->getTemplate().'.html.twig';
-        } elseif (!$brand && $department && $department->getTemplate()) {
-            $template = 'KACSiteBundle:Listing:Templates/'.$department->getTemplate().'..html.twig';
-        } else {
-            $template = 'KACSiteBundle:Listing:Templates/standard.html.twig';
-        }
-
-        return $this->render($template, array(
+        return $this->render('KACSiteBundle:Listing:Templates/'.$template.'.html.twig', array(
             'admin' => $admin,
             'brand' => $brand,
             'department' => $department,

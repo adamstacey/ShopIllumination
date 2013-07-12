@@ -1,4 +1,5 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
+{% import 'KACSiteBundle:Product/Includes:helpers.html.twig' as helpers %}
 
 {% block title %}{{ product.description.pageTitle }} | {{ parent() }}{% endblock %}
 
@@ -96,14 +97,6 @@
             });
         });
     </script>
-    {% macro addToBasket(variant) %}
-        <div class="add-to-basket" data-product-id="{{ variant.product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
-            <input class="quantity integer" type="number" value="1" />
-            <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
-            <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
-            <button class="actionAddToBasket buy button button-green uppercase">Buy</button>
-        </div>
-    {% endmacro %}
     <section class="product">
         {% block product_block %}
             {% block department_breadcrumb %}
@@ -119,7 +112,6 @@
                     </div>
                 </div>
             {% endblock %}
-
             {% block product_info %}
                 <div class="widget-group clearfix mbl">
                     <div class="widget widget-1-of-1">
@@ -187,44 +179,46 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="widget widget-1-of-1">
                                         <section>
                                             <div class="tabs">
                                                 <ul>
-                                                    <li><a href="#overview">Overview</a></li>
-                                                    <li><a href="#technicalSpecification">Technical Specification</a></li>
+                                                    {% block product_info_tab_headers %}
+                                                        <li><a href="#overview">Overview</a></li>
+                                                        <li><a href="#technicalSpecification">Technical Specification</a></li>
+                                                    {% endblock %}
                                                 </ul>
-                                                <div id="overview">
-                                                    <section>
-                                                        <p class="summary">
-                                                        {{ product.description.description }}
-                                                        </p>
-                                                    </section>
-                                                </div>
-                                                <div id="technicalSpecification">
-                                                    <section>
-                                                        <table class="data-table">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>Feature</th>
-                                                                <th></th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {% for group, feature in common_features %}
-                                                                    <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
-                                                                        <td width="1" class="nowrap tar">{{ group }}</td>
-                                                                        <td><strong>{{ feature }}</strong></td>
-                                                                    </tr>
-                                                                {% endfor %}
-                                                            </tbody>
-                                                        </table>
-                                                    </section>
-                                                </div>
+                                                {% block product_info_tab_content %}
+                                                    <div id="overview">
+                                                        <section>
+                                                            <p class="summary">
+                                                            {{ product.description.description }}
+                                                            </p>
+                                                        </section>
+                                                    </div>
+                                                    <div id="technicalSpecification">
+                                                        <section>
+                                                            <table class="data-table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Feature</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for group, feature in common_features %}
+                                                                        <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                                            <td width="1" class="nowrap tar">{{ group }}</td>
+                                                                            <td><strong>{{ feature }}</strong></td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                </tbody>
+                                                            </table>
+                                                        </section>
+                                                    </div>
+                                                {% endblock %}
                                             </div>
                                         </section>
                                     </div>
@@ -236,11 +230,11 @@
             {% endblock %}
             {% block product_variants%}
                 {% if product.variants|length > 1 %}
+                    <a name="buynow_variants"></a>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-1">
                             <div class="ui-widget">
                                 <header class="ui-widget-header ui-corner-top">
-                                    <a name="buynow"></a>
                                     <h2>Variations</h2>
                                 </header>
                                 <section class="ui-widget-content ui-corner-bottom clearfix">
@@ -272,7 +266,7 @@
                                                 </td>
                                                 <td width="1" class="nowrap price">{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}</td>
                                                 <td width="1" class="nowrap">
-                                                    {{ _self.addToBasket(variant) }}
+                                                    {{ helpers.addToBasket(variant) }}
                                                 </td>
                                             </tr>
                                         {% endfor %}

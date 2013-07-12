@@ -43,6 +43,20 @@ $(document).ready(function() {
         $(this).find('.dropdown-summary').hide();
         $(this).removeClass('expanded');
     });
+
+    function selectWorktopThickness(worktopThickness) {
+        $("table.data-table tbody.updatable tr").hide();
+        $("table.data-table tbody.updatable tr").removeClass("even odd");
+        $("table.data-table tbody.updatable tr[data-worktop-thickness='"+worktopThickness+"']").show();
+        $("table.data-table tbody.updatable tr:visible:even").addClass("even");
+        $("table.data-table tbody.updatable tr:visible:odd").addClass("odd");
+    }
+
+    selectWorktopThickness($("input[name='worktop-thickness']").val());
+
+    $("input[name='worktop-thickness']").on("change", function() {
+        selectWorktopThickness($(this).val());
+    });
 });
 function updateBasketSummary() {
     var $el = $("#basket-summary");

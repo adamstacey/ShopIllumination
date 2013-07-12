@@ -35,6 +35,7 @@ class Variant implements DescribableInterface
     private $descriptions;
 
     /**
+     * @var VariantToFeature[]
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "DESC"})
@@ -618,6 +619,19 @@ class Variant implements DescribableInterface
     public function getFeatures()
     {
         return $this->features;
+    }
+
+    public function getFeatureValue($groupName)
+    {
+        foreach($this->features as $vtf)
+        {
+            if(strtolower($vtf->getFeatureGroup()->getName()) === strtolower($groupName))
+            {
+                return $vtf->getFeature()->getName();
+            }
+        }
+
+        return '';
     }
 
     /**
