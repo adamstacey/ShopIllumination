@@ -50,6 +50,11 @@ class Brand
     private $status = 'a';
 
     /**
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    private $template = 'standard';
+
+    /**
      * @ORM\Column(name="request_a_brochure", type="boolean")
      */
     private $requestABrochure = false;
@@ -656,5 +661,21 @@ class Brand
     public function getRoutings()
     {
         return $this->routings;
+    }
+
+    /**
+     * @param mixed $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }

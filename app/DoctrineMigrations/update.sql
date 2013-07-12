@@ -457,4 +457,7 @@ CREATE TABLE product_variant_links (id INT AUTO_INCREMENT NOT NULL, variant_id I
 ALTER TABLE product_variant_links ADD CONSTRAINT FK_8BE522B73B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
 ALTER TABLE product_variant_links ADD CONSTRAINT FK_8BE522B7D240BD1D FOREIGN KEY (linked_product_id) REFERENCES products (id);
 ALTER TABLE routing ADD key0 VARCHAR(255) DEFAULT NULL, ADD value0 VARCHAR(255) DEFAULT NULL;
+ALTER TABLE brands ADD template VARCHAR(255) NOT NULL;
+UPDATE brands SET template='standard';
+UPDATE brands SET template='maia' WHERE id = 15;
 SET FOREIGN_KEY_CHECKS = 1;
