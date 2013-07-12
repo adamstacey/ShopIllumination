@@ -48,8 +48,20 @@ $(document).ready(function() {
         $("table.data-table tbody.updatable tr").hide();
         $("table.data-table tbody.updatable tr").removeClass("even odd");
         $("table.data-table tbody.updatable tr[data-worktop-thickness='"+worktopThickness+"']").show();
+        $("table.data-table tbody.updatable tr[data-worktop-thickness='']").show();
         $("table.data-table tbody.updatable tr:visible:even").addClass("even");
         $("table.data-table tbody.updatable tr:visible:odd").addClass("odd");
+
+        // Check to see if any of the categories should be hidden
+        $("table.data-table").each(function(index, el) {
+            var $el = $(el);
+            console.log($el.find("tbody.updatable tr:visible"));
+            if($el.find("tbody.updatable tr:visible").length <= 0) {
+                $el.hide();
+            } else {
+                $el.show();
+            }
+        });
     }
 
     selectWorktopThickness($("input[name='worktop-thickness']").val());
