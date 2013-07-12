@@ -29,12 +29,14 @@ class Product
     private $basketItemId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", cascade={"detach"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $product;
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product\Variant")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $variant;
 

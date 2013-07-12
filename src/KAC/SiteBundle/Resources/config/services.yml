@@ -52,7 +52,7 @@ services:
           - { name: doctrine.event_listener, event: postPersist, method: postPersist }
           - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
           - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
-          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+#          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
   kac_site.listener.variant:
       class: KAC\SiteBundle\EventListener\VariantListener
       arguments: [@kac_site.manager.product, @kac_site.indexer.product]
@@ -61,7 +61,7 @@ services:
           - { name: doctrine.event_listener, event: postPersist, method: postPersist }
           - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
           - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
-          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+#          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
   kac_site.listener.image:
       class: KAC\SiteBundle\EventListener\ImageListener
       arguments: [@kac_site.manager.image]

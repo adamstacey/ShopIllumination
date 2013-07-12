@@ -483,7 +483,7 @@
 
     <fields>
         <field name="id" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
-        <field name="variant_ids" type="string" indexed="true" stored="true" multiValued="true" required="true"/>
+        <field name="variant_ids" type="string" indexed="true" stored="true" multiValued="true" />
         <field name="group_id" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="brand_id" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="department_ids" type="string" indexed="true" stored="true" multiValued="true"/>

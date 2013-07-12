@@ -44,7 +44,7 @@ class Routing
     /**
      * @ORM\Column(name="locale", type="string", length=5)
      */
-    private $locale = "en_GB";
+    private $locale = "en";
     
 	/**
      * @ORM\Column(name="url", type="string", length=255, unique=true)

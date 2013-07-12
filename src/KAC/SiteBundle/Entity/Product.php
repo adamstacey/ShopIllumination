@@ -31,42 +31,49 @@ class Product implements DescribableInterface
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
      * @Serializer\Exclude()
      */
     private $departments;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Serializer\Exclude()
      * @Assert\Valid()
      */
     private $links;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Image", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Image", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Document", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Document", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
     private $variants;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Routing", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Routing", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $routings;
 
@@ -191,7 +198,7 @@ class Product implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0]->getName();
+            return $this->descriptions[0]->getHeader();
         } else {
             return "";
         }

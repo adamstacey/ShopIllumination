@@ -21,26 +21,31 @@ class Brand
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Description", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\BrandToDepartment", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      **/
     private $departments;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Routing", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $routings;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Image", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Document", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $documents;
 

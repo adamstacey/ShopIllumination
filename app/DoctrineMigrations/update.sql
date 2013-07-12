@@ -104,6 +104,8 @@ ALTER TABLE product_to_option ENGINE=InnoDB;
 ALTER TABLE routing ENGINE=InnoDB;
 DROP TABLE brand_index;
 DROP TABLE department_index;
+DROP TABLE product_index_copy;
+DROP TABLE product_index_copy2;
 DROP TABLE keyword_suggestions;
 DROP TABLE product_indexs;
 DROP TABLE product_searchs;
@@ -450,6 +452,7 @@ INSERT INTO `routing` (`object_id`, `object_type`, `locale`, `url`, `created_at`
 ALTER TABLE redirects ADD secondary_id INT NOT NULL;
 UPDATE images i SET object_type = 'brand' WHERE (SELECT bd.id FROM brand_descriptions bd WHERE i.id = bd.logo_image_id) > 0;
 UPDATE `images` SET `object_type`='product' WHERE image_type='product';
+ALTER TABLE orders DROP membership_card_purchased, DROP membership_card_number;
 UPDATE order_products SET variant_id = product_id WHERE variant_id IS NULL;
 DELETE FROM `routing` WHERE object_type =  'department' AND 0 = ( SELECT COUNT( * ) FROM departments d  WHERE object_id = d.id );
 ALTER TABLE product_links ADD category VARCHAR(255) DEFAULT NULL;
@@ -458,6 +461,9 @@ ALTER TABLE product_variant_links ADD CONSTRAINT FK_8BE522B73B69A9AF FOREIGN KEY
 ALTER TABLE product_variant_links ADD CONSTRAINT FK_8BE522B7D240BD1D FOREIGN KEY (linked_product_id) REFERENCES products (id);
 ALTER TABLE routing ADD key0 VARCHAR(255) DEFAULT NULL, ADD value0 VARCHAR(255) DEFAULT NULL;
 ALTER TABLE brands ADD template VARCHAR(255) NOT NULL;
+DROP TABLE product_to_option;
 UPDATE brands SET template='standard';
 UPDATE brands SET template='maia' WHERE id = 15;
+ALTER TABLE order_products DROP FOREIGN KEY FK_5242B8EB3B69A9AF;
+ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB3B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id) ON DELETE SET NULL;
 SET FOREIGN_KEY_CHECKS = 1;

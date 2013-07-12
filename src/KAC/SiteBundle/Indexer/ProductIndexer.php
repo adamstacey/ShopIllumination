@@ -14,16 +14,19 @@ class ProductIndexer extends Indexer
     {
         $query = $this->getSolarium()->createUpdate();
         $document = $this->createDocument($query, $product);
-        $query->addDocument($document);
-        $query->addCommit();
-        $this->getSolarium()->update($query);
+        if($document)
+        {
+            $query->addDocument($document);
+            $query->addCommit();
+            $this->getSolarium()->update($query);
+        }
     }
 
     public function createDocument(\Solarium_Query_Update $query, Product $product)
     {
         // If product does not contain all the required fields ignore it
         if (count($product->getDescriptions()) === 0) {
-            return;
+            return null;
         }
 
         $helper = $query->getHelper();
@@ -95,11 +98,14 @@ class ProductIndexer extends Indexer
 
         /** @var $variant Product\Variant */
         // Add product codes from each variant
+        $numVariants = 0;
         foreach ($product->getVariants() as $variant) {
             // Check that the variant is not disabled
             if ($variant->getStatus() !== "a") {
                 continue;
             }
+
+            $numVariants++;
 
             $document->addField('variant_ids', $variant->getId());
 
@@ -183,6 +189,12 @@ class ProductIndexer extends Indexer
 
         // Add the brand logo
         $document->setField('brand_logo', $this->getProperty($product, 'brand.description.logoImage.originalPath'));
+
+        // If there were no variants then do not create document
+        if($numVariants == 0)
+        {
+            return null;
+        }
 
         return $document;
     }

@@ -30,11 +30,13 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Description", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "DESC"})
      * @Assert\Valid()
      */
@@ -42,6 +44,7 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToOption", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "DESC"})
      * @Assert\Valid()
      */
@@ -49,6 +52,7 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Count(min="1", groups={"flow_site_new_product_step3"}, minMessage="Enter a valid price.")
      * @Assert\Valid()
      */
@@ -56,21 +60,25 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Image", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Document", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $documents;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Routing", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $routings;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Link", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $links;
 
@@ -834,6 +842,7 @@ class Variant implements DescribableInterface
     public function addRouting(\KAC\SiteBundle\Entity\Product\Variant\Routing $routings)
     {
         $this->routings[] = $routings;
+        $routings->setVariant($this);
     
         return $this;
     }
@@ -882,6 +891,7 @@ class Variant implements DescribableInterface
     public function addImage(\KAC\SiteBundle\Entity\Product\Variant\Image $images)
     {
         $this->images[] = $images;
+        $images->setVariant($this);
 
         return $this;
     }
@@ -930,6 +940,7 @@ class Variant implements DescribableInterface
     public function addDocument(\KAC\SiteBundle\Entity\Product\Variant\Document $documents)
     {
         $this->documents[] = $documents;
+        $documents->setVariant($this);
 
         return $this;
     }
