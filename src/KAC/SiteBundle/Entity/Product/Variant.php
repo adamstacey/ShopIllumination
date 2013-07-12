@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Entity\Product;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -67,6 +68,11 @@ class Variant implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Routing", mappedBy="variant", cascade={"all"})
      */
     private $routings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $links;
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
@@ -184,13 +190,13 @@ class Variant implements DescribableInterface
      */
     public function __construct()
     {
-        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->descriptions = new ArrayCollection();
+        $this->options = new ArrayCollection();
+        $this->features = new ArrayCollection();
+        $this->prices = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->routings = new ArrayCollection();
     }
 
     public function isDeleted()
@@ -1015,5 +1021,21 @@ class Variant implements DescribableInterface
     public function getDeliveryCost()
     {
         return $this->deliveryCost;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @param mixed $links
+     */
+    public function setLinks($links)
+    {
+        $this->links = $links;
     }
 }
