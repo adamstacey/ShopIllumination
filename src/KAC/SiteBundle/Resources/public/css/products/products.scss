@@ -699,30 +699,3 @@ screen and (min-resolution: 2dppx) {
     border-bottom: 1px solid $colourGreyExtraLight;
     @include noBoxShadow;
 }
-
-h4.popular-items-header {
-    margin: 0 0 $spacingSmall 0;
-
-    color: $textColour;
-    font-weight: bold;
-    @include fontSize($fontSizeSmall);
-}
-
-.popular-brand a.submenu-brand,
-.popular-brand a.submenu-brand img {
-    width: 50px;
-    height: 25px;
-}
-
-.popular-brands {
-    border-left: 1px solid $colourGreyLight;
-}
-
-.popular-brand a.submenu-brand {
-    padding: $spacingSmall $spacingMedium;
-
-    border-top: 1px solid $colourGreyLight;
-    border-right: 1px solid $colourGreyLight;
-    border-bottom: 1px solid $colourGreyLight;
-}
-
