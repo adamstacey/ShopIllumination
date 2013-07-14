@@ -80,18 +80,6 @@
     </style>
     <script>
         $(document).ready(function() {
-            $(".actionIncreaseQuantity").on("click", function() {
-                var $quantityInput = $(this).parent().find("input.quantity");
-                $quantityInput.val(parseInt($quantityInput.val()) + 1);
-            });
-
-            $(".actionDecreaseQuantity").on("click", function() {
-                var $quantityInput = $(this).parent().find("input.quantity");
-                if (parseInt($quantityInput.val()) > 1) {
-                    $quantityInput.val(parseInt($quantityInput.val()) - 1);
-                }
-            });
-
             $(".actionAddToBasket").on("click", function() {
                 $(this).closest("tr").find("td:not(.image)").css("background", "#ebf7eb");
             });
