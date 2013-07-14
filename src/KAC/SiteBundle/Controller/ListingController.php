@@ -350,8 +350,21 @@ class ListingController extends Controller
             );
             $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
             $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
-            $facets = $pagination->getCustomParameter('result')->getFacetSet();
+
+            /**
+             * @var $result \Solarium_Result_Select
+             */
+            $result = $pagination->getCustomParameter('result');
+            $facets = $result->getFacetSet();
             $stats = $solarium->select($statsQuery)->getStats();
+
+            // Check to see if only a single result is returned
+            if($result->getNumFound() === 1)
+            {
+                return $this->redirect($this->generateUrl('routing', array(
+                    'url' => $result->getDocuments()[0]->url,
+                )));
+            }
         } catch (\Solarium_Client_HttpException $e) {
             throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
         }
