@@ -13,14 +13,16 @@ $(document).ready(function() {
                 variantId: $el.attr("data-variant-id"),
                 quantity: $quantityInput.val()
             },
-            error: function(data) {
+            error: function(a, b, c) {
+                console.log('error', a, b,c );
                 $("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
                 $("#message-error").fadeIn(function() {
                     $("html, body").animate({scrollTop: $("#message-error").offset().top - 15},'slow');
                     $("#ajax-loading").hide();
                 });
             },
-            success: function(data) {
+            success: function(a, b, c) {
+                console.log('success', a, b,c );
                 updateBasketSummary();
                 $("html, body").animate({scrollTop: 0},'slow', function() {
                     $('.dropdown-summary').show();
