@@ -8,7 +8,7 @@ require_once __DIR__.'/../app/AppDevCache.php';
 
 $kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
-//$kernel = new AppDevCache($kernel);
+$kernel = new AppDevCache($kernel);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
