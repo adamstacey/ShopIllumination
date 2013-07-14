@@ -953,7 +953,7 @@ class BasketService {
     	$basket = $this->container->get('session')->get('basket');
     	
     	// Calulate the weightings and overall band
-    	$estimatedDeliveryDays = array();
+    	$estimatedDeliveryDays = array('start' => '', 'end' => '');
 		
 		// Get the default delivery charge
 		foreach ($basket['delivery']['deliveryOptions'] as $deliveryOption)
