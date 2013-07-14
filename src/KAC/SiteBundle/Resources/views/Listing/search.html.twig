@@ -38,6 +38,7 @@
         {% endif %}
         <div class="widget-group clearfix">
             <form id="formFilter" class="form" method="GET">
+                <input type="hidden" name="q" value="{{ app.request.query.get('q') }}" />
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget mbl">
                         <section class="ui-widget-content ui-corner-all product">
@@ -115,10 +116,8 @@
                                                                     {% else %}
                                                                         <span class="price">
                                                                             <span class="currency-prefix">from only</span>
+                                                                            <span itemprop="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
                                                                         </span>
-                                                                        <span itemprop="price" class="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
-                                                                        <em> - </em>
-                                                                        <span itemprop="price" class="price">{{ product.high_price|currency('GBP', true, true, '')|raw }}</span>
                                                                     {% endif %}
                                                                     {% if product.url != '' %}
                                                                         </a>
