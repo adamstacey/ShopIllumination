@@ -226,8 +226,10 @@
                                                         </div>
                                                     </div>
                                                     {% if app.session.get('admin') == true %}
-                                                        <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red">Delete</a>
-                                                        <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue">Edit</a>
+                                                        <div class="mas">
+                                                            <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red mls">Delete</a>
+                                                            <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue">Edit</a>
+                                                        </div>
                                                     {% else %}
                                                         {% if product.variants_count == 1 %}
                                                         <div class="add-to-basket fr" data-product-id="{{ product.id }}" data-variant-id="{{ product.variant_ids[0] }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
