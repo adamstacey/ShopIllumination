@@ -41,6 +41,7 @@
                 <input type="hidden" name="q" value="{{ app.request.query.get('q') }}" />
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget mbl">
+                        <a name="viewNow"></a>
                         <section class="ui-widget-content ui-corner-all product">
                             <div class="widget-group product-sorting-container product-sorting-container-top mbn clearfix">
                                 <div class="widget widget-1-of-1">
@@ -273,6 +274,13 @@
 	{{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
+            {# If the user has selected a filter then scroll directly to the results #}
+            {% if app.request.query.has('filter') %}
+            var $target = $("a[name=viewNow]");
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            });
+            {% endif %}
             $("#sortOrderBottom").live('change', function() {
                 $("#sortOrderTop").val($("#sortOrderBottom").val());
                 $.uniform.update("#sortOrderTop");

@@ -396,6 +396,15 @@
                 }
             });
 
+            {# If the user has selected a filter then scroll directly to the results #}
+            {% if app.request.query.has('filter') %}
+            var $target = $("a[name=viewNow]");
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            });
+            {% endif %}
+
+
             $("#sortOrderBottom").live('change', function() {
                 $("#sortOrderTop").val($("#sortOrderBottom").val());
                 $.uniform.update("#sortOrderTop");
