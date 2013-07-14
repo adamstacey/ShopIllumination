@@ -497,35 +497,7 @@ class ListingController extends Controller
 
     public function popularBrandsAction(Request $request, $departmentId = null)
     {
-        /**
-         * @var $em EntityManager
-         */
-        $em = $this->getDoctrine()->getManager();
-
-        $products = $this->getPopularProducts($departmentId);
-        $brands = array();
-
-        foreach ($products as $item)
-        {
-            /**
-             * @var $product Product
-             */
-            $product = $item[0];
-
-            $brand = $product->getBrand();
-            if (array_key_exists($brand->getId(), $brands))
-            {
-                $brands[$brand->getId()]['total'] += $item['total'];
-            } else {
-                $brands[$brand->getId()] = array(
-                    0 => $product->getBrand(),
-                    'total' => $item['total'],
-                );
-            }
-        }
-
-        // Remove unneeded elements
-        $brands = array_values(array_slice($brands, 0, 8));
+        $brands = $this->getPopularBrands($departmentId, 8);
 
         $response = $this->render('KACSiteBundle:Listing:popularDepartmentBrands.html.twig', array(
             'brands' => $brands,
@@ -567,6 +539,67 @@ class ListingController extends Controller
         $response->setSharedMaxAge(432000);
 
         return $response;
+    }
+
+    private function getPopularBrands($departmentId = null, $num=null)
+    {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $solarium \Solarium_Client */
+        $solarium = $this->get('solarium.client');
+
+        // If not department was specified we can fetch the popular products just using SQL
+        if(!$departmentId)
+        {
+            $qb = $em->createQueryBuilder();
+            $qb->select('b, count(op.id) AS total')
+                ->from('KAC\SiteBundle\Entity\Brand', 'b')
+                ->join('KAC\SiteBundle\Entity\Product', 'p', Expr\Join::WITH, $qb->expr()->eq('p.brand', 'b.id'))
+                ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
+                ->groupBy('op.product')
+                ->orderBy('total', 'ASC');
+            if($num)
+            {
+                $qb->setMaxResults($num);
+            }
+
+            return $qb->getQuery()->execute();
+        } else {
+            $products = $this->getPopularProducts($departmentId);
+            $brands = array();
+
+            foreach ($products as $item)
+            {
+                /**
+                 * @var $product Product
+                 */
+                $product = $item[0];
+
+                $brand = $product->getBrand();
+                if (array_key_exists($brand->getId(), $brands))
+                {
+                    $brands[$brand->getId()]['total'] += $item['total'];
+                } else {
+                    $brands[$brand->getId()] = array(
+                        0 => $product->getBrand(),
+                        'total' => $item['total'],
+                    );
+                }
+            }
+
+            // Remove unneeded elements
+
+
+            if($num)
+            {
+                $brands = array_values(array_slice($brands, 0, $num));
+            }
+
+            return $brands;
+        }
     }
 
     private function getPopularProducts($departmentId = null, $brandId = null, $num=null)
