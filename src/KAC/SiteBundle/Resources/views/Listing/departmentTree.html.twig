@@ -1,9 +1,9 @@
-{% macro render_departments(departments, brandId, admin, level) %}
+{% macro render_departments(departments, brandId, level) %}
     {% for department in departments %}
         <li{% if level == 1 %} id="root"{% endif %}>
             {% if brandId is null %}
                 {% set url = get_listing_url('department', department.id) %}
-                {% if admin  %}
+                {% if app.session.get('admin')  %}
                     <a href="{{ path('listing_department', {'departmentId': department.id, 'admin': true}|merge(app.request.query.all)) }}">{{ department.description.header }}</a>
                 {% elseif not url%}
                     <a href="{{ path('listing_department', {'departmentId': department.id}|merge(app.request.query.all)) }}">{{ department.description.header }}</a>
@@ -12,7 +12,7 @@
                 {% endif %}
             {% else %}
                 {% set url = get_listing_url('brand_with_department', brandId, department.id) %}
-                {% if admin %}
+                {% if app.session.get('admin') %}
                     <a href="{{ path('listing_department_brand', {'departmentId': department.id, 'brandId': brandId, 'admin': true}|merge(app.request.query.all)) }}">{{ department.description.header }}</a>
                 {% elseif not url%}
                     <a href="{{ path('listing_department_brand', {'departmentId': department.id, 'brandId': brandId}|merge(app.request.query.all)) }}">{{ department.description.header }}</a>
@@ -36,7 +36,7 @@
         <section class="ui-widget-content pan ui-corner-bottom">
             <div id="filterDepartment" class="filter pls prs department-filter">
                 <ul>
-                    {{  _self.render_departments(departments, brandId, admin, 1) }}
+                    {{  _self.render_departments(departments, brandId, 1) }}
                 </ul>
             </div>
         </section>

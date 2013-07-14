@@ -46,6 +46,33 @@ class SystemController extends Controller
     }
 
     /**
+     * @Route("/admin-toggle", name="admin_toggle")
+     */
+    public function adminAction(Request $request, $admin=null)
+    {
+        // Ensure user has the correct permissions
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        {
+            throw new AccessDeniedException();
+        }
+
+        // Set admin mode
+        if($admin === null)
+        {
+            $admin = $this->get('session')->get('admin', true) ? false : true;
+        }
+        $this->get('session')->set('admin', $admin);
+
+        // Redirect to page is specified else redirect to admin home page
+        if($request->query->has('url'))
+        {
+            return $this->redirect($request->query->get('url'));
+        } else {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+    }
+
+    /**
      * @Route("/routes.js", name="routes_script")
      */
     public function routesAction()

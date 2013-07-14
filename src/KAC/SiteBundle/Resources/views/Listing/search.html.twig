@@ -132,7 +132,7 @@
                                                             {% endspaceless %}
                                                         </div>
                                                     </div>
-                                                    {% if admin == true %}
+                                                    {% if app.session.get('admin') == true %}
                                                         <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red">Delete</a>
                                                         <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue">Edit</a>
                                                     {% else %}

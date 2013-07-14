@@ -36,7 +36,7 @@ class ListingController extends Controller
 	public function indexAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
     {
         // Ensure user has the correct permissions
-        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
         {
             throw new AccessDeniedException();
         }
@@ -150,6 +150,12 @@ class ListingController extends Controller
             $request->query->set('limit', 99999999);
         }
 
+        // Ensure that only the correct products are shown
+        if(!$this->get('session')->get('admin'))
+        {
+            $query->createFilterQuery('status')->setQuery('status:a');
+        }
+
         // Add filters for any flags that the user has set
         foreach ($flags as $flag)
         {
@@ -220,7 +226,7 @@ class ListingController extends Controller
         }
 
         return $this->render('KACSiteBundle:Listing:Templates/'.$template.'.html.twig', array(
-            'admin' => $admin,
+            'admin' => $this->get('session')->get('admin'),
             'brand' => $brand,
             'department' => $department,
             'facets' => $facets,
@@ -231,25 +237,13 @@ class ListingController extends Controller
     }
 
     /**
-     * @Route("/admin/products", name="admin_listing_products")
-     * @Route("/admin/department/{departmentId}", name="admin_listing_department", defaults={"departmentId" = null})
-     * @Route("/admin/brand/{brandId}", name="admin_listing_brand", defaults={"brandId" = null})
-     * @Route("/admin/department/{departmentId}/brand/{brandId}", name="admin_listing_department_brand", defaults={"departmentId" = null, "brandId" = null})
-     * @Method({"GET"})
-     */
-    public function indexAdminAction(Request $request, $departmentId = null, $brandId = null)
-    {
-        return $this->indexAction($request, $departmentId, $brandId, true);
-    }
-
-    /**
      * @Route("/search.html", name="listing_search")
      * @Method({"GET"})
      */
-	public function searchAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
+	public function searchAction(Request $request, $departmentId = null, $brandId = null, $all = false)
     {
         // Ensure user has the correct permissions
-        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
         {
             throw new AccessDeniedException();
         }
@@ -291,6 +285,12 @@ class ListingController extends Controller
         if ($all)
         {
             $request->query->set('limit', 99999999);
+        }
+
+        // Ensure that only the correct products are shown
+        if(!$this->get('session')->get('admin'))
+        {
+            $query->createFilterQuery('status')->setQuery('status:a');
         }
 
         // Add filters for any flags that the user has set
@@ -357,7 +357,7 @@ class ListingController extends Controller
         }
 
         return $this->render('KACSiteBundle:Listing:search.html.twig', array(
-            'admin' => $admin,
+            'admin' => $this->get('session')->get('admin'),
             'facets' => $facets,
             'featureGroups' => $featureGroups,
             'pagination' => $pagination,
@@ -369,10 +369,10 @@ class ListingController extends Controller
      * @Route("/search-autocomplete.html", name="listing_search_autocomplete")
      * @Method({"GET"})
      */
-	public function searchAutocompleteAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
+	public function searchAutocompleteAction(Request $request, $departmentId = null, $brandId = null, $all = false)
     {
         // Ensure user has the correct permissions
-        if ($admin === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
         {
             throw new AccessDeniedException();
         }
@@ -401,8 +401,11 @@ class ListingController extends Controller
 
             $query->setQuery($escapedQuery);
 
-            $filters = $request->query->get('filter', array());
-            $flags = array('brand', 'department_path');
+            // Ensure that only the correct products are shown
+            if(!$this->get('session')->get('admin'))
+            {
+                $query->createFilterQuery('status')->setQuery('status:a');
+            }
 
             try {
                 $resultSet = $solarium->select($query);
@@ -471,7 +474,7 @@ class ListingController extends Controller
         return $response;
     }
 
-    public function departmentTreeAction(Request $request, $departmentId = null, $brandId = null, $admin=false)
+    public function departmentTreeAction(Request $request, $departmentId = null, $brandId = null)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -485,7 +488,7 @@ class ListingController extends Controller
         $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
             'departments' => $departments,
             'brandId' => $brandId,
-            'admin' => $admin,
+            'admin' => $this->get('session')->get('admin'),
         ));
         $response->setSharedMaxAge(3600);
 
