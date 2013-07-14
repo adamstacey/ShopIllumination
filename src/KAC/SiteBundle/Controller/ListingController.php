@@ -499,7 +499,7 @@ class ListingController extends Controller
     {
         $brands = $this->getPopularBrands($departmentId, 8);
 
-        $response = $this->render('KACSiteBundle:Listing:popularDepartmentBrands.html.twig', array(
+        $response = $this->render('KACSiteBundle:Listing:popularBrands.html.twig', array(
             'brands' => $brands,
             'departmentId' => $departmentId,
         ));
@@ -531,7 +531,7 @@ class ListingController extends Controller
 
         // Remove unneeded elements
 
-        $response = $this->render('KACSiteBundle:Listing:popularDepartmentProducts.html.twig', array(
+        $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
             'products' => $products,
             'department' => $department,
             'brand' => $brand,
