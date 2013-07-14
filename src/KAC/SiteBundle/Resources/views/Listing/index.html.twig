@@ -110,10 +110,10 @@
             {% set totalItemCount = 0 %}
         {% endif %}
         {% if brand %}
-            {{ render(controller('KACSiteBundle:Listing:popularDepartmentProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
+            {{ render(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
         {% else %}
-            {{ render_esi(controller('KACSiteBundle:Listing:popularDepartmentProducts', { 'departmentId': department.id })) }}
-            {{ render_esi(controller('KACSiteBundle:Listing:popularDepartmentBrands', { 'departmentId': department.id })) }}
+            {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id })) }}
+            {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentId': department.id })) }}
         {% endif %}
         <div class="widget-group clearfix">
             <form id="formFilter" class="form" method="GET">
