@@ -6,8 +6,8 @@
         <a title="Click here if you would like to toggle admin mode." class="account" href="{{ path('admin_toggle', {'url': app.request.getRequestURI}) }}"><strong>Toggle Admin</strong></a>&nbsp;|&nbsp;
     {% endif %}
     {% if is_granted("ROLE_USER") %}
-		<a title="Click here if you would like to securely logout." class="account" href="{{ path('fos_user_registration_register') }}"><strong>Securely Logout</strong></a>&nbsp;|&nbsp;
-		<a title="Click here to update your account." class="account" href="{{ path('fos_user_registration_register') }}"><strong>Your Account</strong></a>
+		<a title="Click here if you would like to securely logout." class="account" href="{{ path('fos_user_security_logout') }}"><strong>Securely Logout</strong></a>&nbsp;|&nbsp;
+		<a title="Click here to update your account." class="account" href="{{ path('fos_user_profile_show') }}"><strong>Your Account</strong></a>
 	{% else %}
 		<a title="If you already have an account log in here" class="account" href="{{ path('fos_user_security_login') }}"><strong>Secure Login</strong></a>&nbsp;|&nbsp;
 		<a title="If you don't already have an account and would like to register one click here" class="account" href="{{ path('fos_user_registration_register') }}"><strong>Register</strong></a>

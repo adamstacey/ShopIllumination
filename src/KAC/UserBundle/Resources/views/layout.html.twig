@@ -1,34 +1,19 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 
-{% block header %}
+{% block body %}
     <header>
         <h1>Security</h1>
     </header>
-{% endblock %}
-
-{% block body %}
-    <section class="container_6 clearfix">
-        <div class="grid_6">
-            <div class="portlet">
-                {% block content %}
-                    <header>
-                        <h2>{% block page_header %}Security{% endblock %}</h2>
-                    </header>
-                    <section>
-                        {% for key, message in app.session.getFlashes() %}
-                            <div class="{{ key }}">
-                                {{ message|trans({}, 'FOSUserBundle') }}
-                            </div>
-                        {% endfor %}
-
-                        {% block fos_user_content %}{% endblock %}
-                    </section>
-                {% endblock %}
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>{% block page_header %}{% endblock %}</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    {% block fos_user_content %}{% endblock %}
+                </section>
             </div>
         </div>
-    </section>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    {#{% include 'KACAdminBundle:Security:script.js.twig' %}#}
+    </div>
 {% endblock %}
