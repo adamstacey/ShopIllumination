@@ -3,7 +3,11 @@
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
+                    {% if department %}
                     <h2>Our Top 5 {{ brand ? brand.description.name ~ " " : "" }}{{ department.name }}</h2>
+                    {% else %}
+                        <h2>Our Top 5 Products</h2>
+                    {% endif %}
                 </header>
                 <section class="ui-widget-content ui-corner-all">
                     <div class="popular-products popular-items">

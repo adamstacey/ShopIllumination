@@ -109,10 +109,10 @@
             {% set totalItemCount = 0 %}
         {% endif %}
         {% if brand %}
-            {{ render(controller('KACSiteBundle:Listing:popularDepartmentProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
+            {{ render(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
         {% else %}
-            {{ render_esi(controller('KACSiteBundle:Listing:popularDepartmentProducts', { 'departmentId': department.id })) }}
-            {{ render_esi(controller('KACSiteBundle:Listing:popularDepartmentBrands', { 'departmentId': department.id })) }}
+            {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id })) }}
+            {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentId': department.id })) }}
         {% endif %}
         <div class="widget-group clearfix">
             <form id="formFilter" class="form" method="GET">
@@ -288,7 +288,8 @@
                             <div class="widget-group product-filtering-container clearfix">
                                 <div class="widget widget-1-of-1">
                                     <span class="fl"><strong>Narrow Search By</strong></span>
-                                    <a class="button button-grey icon-grey fr" data-icon-primary="icon-1113" href="{# path('routing', {'url': department.url}) #}">Reset All</a>
+                                    <button type="button" class="fr button button-grey icon-grey actionResetAllFilters" data-icon-primary="icon-1113">Reset All</button>
+
                                 </div>
                             </div>
                             <div class="filters">
@@ -297,7 +298,7 @@
                                         <h2>Price</h2>
                                     </header>
                                     <section class="ui-widget-content pan ui-corner-bottom">
-                                        <div id="filterPrice" class="price-range-filter">
+                                        <div id="filterPrice" class="filter price-range-filter">
                                             <div class="range-slider-values">
                                                 <span>&pound;</span>
                                                 <input type="text" name="filter[low_price]" id="filterLowPrice" value="{{ app.request.get('filter[low_price]', '%.0f'|format(stats.getResult('low_price').min|default(0)), true) }}" />
@@ -395,6 +396,15 @@
                 }
             });
 
+            {# If the user has selected a filter then scroll directly to the results #}
+            {% if app.request.query.has('filter') %}
+            var $target = $("a[name=viewNow]");
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            });
+            {% endif %}
+
+
             $("#sortOrderBottom").live('change', function() {
                 $("#sortOrderTop").val($("#sortOrderBottom").val());
                 $.uniform.update("#sortOrderTop");
@@ -405,28 +415,17 @@
                 $.uniform.update("#limitTop");
             });
 
-            $(":input", "#form-settings, #formFilter").live('change', function() {
+            $(":input", "#formFilter").live('change', function() {
                 $(this).closest("form").submit();
             });
-
-            $(".actionResetFilter").live("click", function() {
-                // Check if the filter is a price
-                if ($(this).data("filter") === "Price") {
-                    var $priceRangeSlider = $("#priceRangeSlider");
-                    var $filterLowPrice = $("#filterLowPrice");
-                    var $filterHighPrice = $("#filterHighPrice");
-                    $filterLowPrice.unbind("change");
-                    $filterHighPrice.unbind("change");
-                    $filterLowPrice.val($priceRangeSlider.slider("option", "min"));
-                    $filterHighPrice.val($priceRangeSlider.slider("option", "max"));
-                } else {
-                    $(":input", "#filter"+$(this).data("filter"))
-                        .not(":button, :submit, :reset, :hidden")
-                        .val("")
-                        .removeAttr("checked")
-                        .removeAttr("selected");
-                }
+            $(".actionResetAllFilters", "#formFilter").live("click", function() {
+                $(".filter").each(function(key, el) {
+                    resetFilterWithoutSubmit($(el));
+                });
                 $(this).closest("form").submit();
+            });
+            $(".actionResetFilter", "#formFilter").live("click", function() {
+                resetFilter($("#filter"+$(this).data("filter")));
             });
 
             $(".actionShowHideFilter").live("click", function() {
@@ -462,6 +461,32 @@
                     $(this).closest("form").submit();
                 }
             });
+
+            function resetFilter($filterContainer)
+            {
+                resetFilterWithoutSubmit($filterContainer);
+                $(this).closest("form").submit();
+            }
+
+            function resetFilterWithoutSubmit($filterContainer)
+            {
+                // Check if the filter is a price
+                if ($filterContainer.attr("id") === "filterPrice") {
+                    var $priceRangeSlider = $("#priceRangeSlider", $filterContainer);
+                    var $filterLowPrice = $("#filterLowPrice", $filterContainer);
+                    var $filterHighPrice = $("#filterHighPrice", $filterContainer);
+                    $filterLowPrice.unbind("change");
+                    $filterHighPrice.unbind("change");
+                    $filterLowPrice.val($priceRangeSlider.slider("option", "min"));
+                    $filterHighPrice.val($priceRangeSlider.slider("option", "max"));
+                } else {
+                    $(":input", $filterContainer)
+                            .not(":button, :submit, :reset, :hidden")
+                            .val("")
+                            .removeAttr("checked")
+                            .removeAttr("selected");
+                }
+            }
         });
     </script>
 {% endblock %}

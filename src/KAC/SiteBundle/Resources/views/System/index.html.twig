@@ -30,6 +30,8 @@
     </div>
 {% endblock %}
 {% block body %}
+    {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
+    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
     <div class="widget-group mbl clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget">

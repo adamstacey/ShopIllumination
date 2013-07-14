@@ -150,6 +150,9 @@ class BasketController extends Controller
     	$basketService = $this->get('web_illumination_admin.basket_service');
     	$productService = $this->get('web_illumination_admin.product_service');
 
+        // Initialise the session
+        $basketService->initialiseBasketSession();
+
         // Get submitted data
         $productId = $request->query->get('productId');
         $variantId = $request->query->get('variantId', $productId);

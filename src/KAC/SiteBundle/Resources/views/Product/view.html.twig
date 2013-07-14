@@ -80,18 +80,6 @@
     </style>
     <script>
         $(document).ready(function() {
-            $(".actionIncreaseQuantity").on("click", function() {
-                var $quantityInput = $(this).parent().find("input.quantity");
-                $quantityInput.val(parseInt($quantityInput.val()) + 1);
-            });
-
-            $(".actionDecreaseQuantity").on("click", function() {
-                var $quantityInput = $(this).parent().find("input.quantity");
-                if (parseInt($quantityInput.val()) > 1) {
-                    $quantityInput.val(parseInt($quantityInput.val()) - 1);
-                }
-            });
-
             $(".actionAddToBasket").on("click", function() {
                 $(this).closest("tr").find("td:not(.image)").css("background", "#ebf7eb");
             });
@@ -158,23 +146,33 @@
                                                         <p class="summary man">{{ product.description.metaDescription }}</p>
                                                     </div>
                                                     <div class="widget widget-1-of-4">
-                                                        <div class="price">
-                                                            <span class="currency-prefix">from only</span>
-                                                        </div>
-                                                        <div class="price">
-                                                            {% if lowest_price is null %}
-                                                                {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
-                                                            {% else %}
-                                                                {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
-                                                            {% endif %}
-                                                        </div>
-                                                        <div class="price pbm">
-                                                            <span class="currency-tax">(inc. VAT)</span>
-                                                        </div>
-                                                        {% if product.variants | length > 1 %}
+                                                        {% if product.variants|length > 1 %}
+                                                            <div class="price">
+                                                                <span class="currency-prefix">from only</span>
+                                                            </div>
+                                                            <div class="price">
+                                                                {% if lowest_price is null %}
+                                                                    {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                {% else %}
+                                                                    {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="price pbm">
+                                                                <span class="currency-tax">(inc. VAT)</span>
+                                                            </div>
                                                             <a href="#buyNow" class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</a>
                                                         {% else %}
-                                                            {{ _self.addToBasket(product.variants[0]) }}
+                                                            <div class="price">
+                                                                {% if lowest_price is null %}
+                                                                    {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                {% else %}
+                                                                    {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="price pbm">
+                                                                <span class="currency-tax">(inc. VAT)</span>
+                                                            </div>
+                                                            {{ helpers.addToBasket(product.variants[0]) }}
                                                         {% endif %}
                                                     </div>
                                                 </div>
