@@ -79,6 +79,11 @@ function updateBasketSummary() {
         success: function(data) {
             $el.html(data);
             generateButtons($el);
+            if(parseInt($el.find('.dropdown-summary').attr("data-items"), 10) <= 0)
+            {
+                $el.find('.dropdown-summary').hide();
+                $el.removeClass('expanded');
+            }
         }
     });
 }

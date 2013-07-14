@@ -27,7 +27,7 @@
                         <td class="ac"><strong>{{ product.productCode }}</strong></td>
                         <td class="ac">{{ product.quantity }}</td>
                         <td class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
-                        <td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
+                        <td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
                     </tr>
                 {% endfor %}
             </table>
