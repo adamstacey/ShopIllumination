@@ -4,9 +4,9 @@
     font-size: 13px;
 }
 #basket-summary {
-    width: 260px;
+    width: 230px;
     position: absolute;
-    right: 0;
+    right: 20px;
     z-index: 5;
 }
 #basket-summary.expanded {
@@ -14,9 +14,9 @@
 }
 
 .basket-summary-header {
-    min-height: 60px;
+    min-height: 50px;
     width: 100%;
-    margin: 0;
+    margin: 0 0 -10px 0;
     padding: 5px 10px;
     z-index: 10;
 
@@ -26,7 +26,7 @@
     cursor: pointer;
 }
 .basket-summary-header h2 {
-    /*margin: 0;*/
+    margin: 0;
     padding: 0;
 
     font-size: 1.4rem;
