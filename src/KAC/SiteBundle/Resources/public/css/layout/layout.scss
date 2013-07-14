@@ -33,7 +33,7 @@ html.modal body > section {
 
 .header {
     padding: $spacingMedium 0;
-    height: 70px;
+    height: 60px;
 
     @include verticalGradientGreyToGreyDark;
     @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
@@ -64,6 +64,54 @@ html.modal body > section {
 
     background: $colourGreyLight;
     @include boxGlow($colourBlack, 5px, 0, 0.7);
+}
+
+.footer {
+    padding: $spacingMedium 0;
+
+    @include verticalGradientGreyToGreyDark;
+    @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
+    border-top: 3px solid $colourGrey;
+}
+
+.footer h4 {
+    margin: 0 0 $spacingMedium 0;
+    padding: 0 0 $spacingMedium 0;
+
+    color: $colourGreyExtraExtraLight;
+    @include fontSize($fontSizeLarge);
+    border-bottom: 1px solid $colourGreyLight;
+}
+
+.footer span {
+    line-height: 150%;
+    color: $colourGreyLight;
+    @include fontSize($fontSizeSmall);
+}
+
+.footer ul,
+.footer ul li {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.footer ul {
+    margin: 0 0 $spacingMedium 0;
+}
+
+.footer ul li {
+    line-height: 150%;
+}
+
+.footer a {
+    color: $colourGreyMedium;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
 }
 
 @media
