@@ -37,37 +37,37 @@ $(document).ready(function() {
     });
 
     $('#basket-summary').hover(function() {
-        $(this).find('.dropdown-summary').show();
-        $(this).addClass('expanded');
+        if(parseInt($(this).find('.dropdown-summary').attr("data-items"), 10) > 0)
+        {
+            $(this).find('.dropdown-summary').show();
+            $(this).addClass('expanded');
+        }
     }, function() {
         $(this).find('.dropdown-summary').hide();
         $(this).removeClass('expanded');
     });
 
-    function selectWorktopThickness(worktopThickness) {
-        $("table.data-table tbody.updatable tr").hide();
-        $("table.data-table tbody.updatable tr").removeClass("even odd");
-        $("table.data-table tbody.updatable tr[data-worktop-thickness='"+worktopThickness+"']").show();
-        $("table.data-table tbody.updatable tr[data-worktop-thickness='']").show();
-        $("table.data-table tbody.updatable tr:visible:even").addClass("even");
-        $("table.data-table tbody.updatable tr:visible:odd").addClass("odd");
-
-        // Check to see if any of the categories should be hidden
-        $("table.data-table").each(function(index, el) {
-            var $el = $(el);
-            console.log($el.find("tbody.updatable tr:visible"));
-            if($el.find("tbody.updatable tr:visible").length <= 0) {
-                $el.hide();
-            } else {
-                $el.show();
+    $(".action-delete-basket-item").on('click', function() {
+        $.ajax({
+            type: "GET",
+            url: $(this).attr("data-url"),
+            data: {
+                basketItemId: $(this).attr("data-basket-item-id")
+            },
+            success: function(data) {
+                updateBasketSummary();
             }
         });
-    }
+    });
 
-    selectWorktopThickness($("input[name='worktop-thickness']").val());
-
-    $("input[name='worktop-thickness']").on("change", function() {
-        selectWorktopThickness($(this).val());
+    $("#basket-summary .action-clear-basket").on('click', function() {
+        $.ajax({
+            type: "GET",
+            url: $(this).attr("data-url"),
+            success: function(data) {
+                updateBasketSummary();
+            }
+        });
     });
 });
 function updateBasketSummary() {

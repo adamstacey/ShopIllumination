@@ -3,7 +3,7 @@
     <h2>Your basket</h2>
     <p>Items: <strong>{{ basket.totals.items|default(0) }}</strong></p>
     <p>Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
-    <div class="dropdown-summary ui-helper-hidden">
+    <div class="dropdown-summary ui-helper-hidden" data-items="{{ basket.products|length }}">
         {% if basket.products|length > 0 %}
             <table class="data-table basket-items-table">
                 <tr>
@@ -34,6 +34,7 @@
             <div class="basket-buttons clearfix">
                 <a href="{{ path('checkout_secure_checkout') }}" class="button button-small uppercase button-green icon-white fr">Buy Now</a>
                 <a href="{{ path('basket_your_basket') }}" class="button button-small uppercase button-blue icon-white fr">View Basket</a>
+                <a href="#" data-url="{{ path('basket_ajax_clear_basket') }}" class="action-clear-basket button button-small uppercase button-blue icon-white fl">Clear Basket</a>
             </div>
         {% endif %}
     </div>
