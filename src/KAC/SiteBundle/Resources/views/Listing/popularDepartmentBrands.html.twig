@@ -15,6 +15,10 @@
                                     <div class="widget widget-1-of-{{ brands|length }} popular-item popular-brand tac">
                                         <a href="{{ path('routing', {'url': url}|merge(app.request.query.all)) }}"><img src="{{ brand.images.0.publicPath | apply_filter('logo_medium') }}" border="0" alt="{{ brand.description.name|raw }}" width="75" /></a>
                                     </div>
+                                {% else %}
+                                    <div class="widget widget-1-of-{{ brands|length }} popular-item popular-brand tac">
+                                        <a href="{{ path('listing_department_brand', {'brandId': brand.id, 'departmentId': departmentId}|merge(app.request.query.all)) }}"><img src="{{ brand.images.0.publicPath | apply_filter('logo_medium') }}" border="0" alt="{{ brand.description.name|raw }}" width="75" /></a>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
                         </div>
