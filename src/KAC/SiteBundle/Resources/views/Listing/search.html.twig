@@ -20,11 +20,19 @@
 {% endblock %}
 
 {% block header %}
-    <h1 class="mtl mbn">Search Results</h1>
-
-    {% if app.request.query.get('q', '') is not empty %}
-        <h2>Searching for "{{ app.request.query.get('q', '') }}"</h2>
-    {% endif %}
+    <div class="widget-group clearfix mbl">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <section class="product-listing-header ui-widget-content ui-corner-all clearfix pbn">
+                    <h1>Search Results</h1>
+                    <div class="clear"></div>
+                    {% if app.request.query.get('q', '') is not empty %}
+                        <h2 class="pbm">Searching for "{{ app.request.query.get('q', '') }}"</h2>
+                    {% endif %}
+                </section>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block body %}
@@ -40,7 +48,7 @@
             <form id="formFilter" class="form" method="GET">
                 <input type="hidden" name="q" value="{{ app.request.query.get('q') }}" />
                 <div class="widget widget-5-of-7 listing">
-                    <div class="ui-widget mbl">
+                    <div class="ui-widget">
                         <section class="ui-widget-content ui-corner-all product">
                             <div class="widget-group product-sorting-container product-sorting-container-top mbn clearfix">
                                 <div class="widget widget-1-of-1">
