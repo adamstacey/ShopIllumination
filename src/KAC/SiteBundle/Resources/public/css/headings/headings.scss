@@ -1,8 +1,6 @@
 h1,
 .h1 {
     @include fontSize($fontSizeExtraExtraLarge);
-    font-family: $complimentaryFontFamily;
-    letter-spacing: 1px;
     font-weight: normal;
     font-style: normal;
     color: $colourGreyDark;
@@ -15,7 +13,7 @@ h2,
     font-weight: normal;
     font-style: normal;
     color: $colourGreyDark;
-    @include textShadow($colourGreyExtraLight, 0, 1px);
+    @include textShadow($colourWhite, 0, 1px);
 }
 
 h3,
