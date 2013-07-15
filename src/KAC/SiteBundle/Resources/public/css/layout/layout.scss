@@ -128,15 +128,20 @@ table.listing td a {
     color: $colourBlack !important;
 }
 
-.ui-widget-content h4 {
-    padding: $spacingMedium;
+.widget-content h4 {
+    padding: 0 $spacingMedium;
 
+    line-height: 42px;
     @include fontSize(13);
     @include highlightedVerticalGradientGreyLight;
     font-weight: bold;
     color: $colourBlack;
     @include textShadow($colourWhite, 0, 1px);
     @include equalBorderRadius($radiusSize);
+}
+
+.widget-content h4 .ui-icon {
+    margin: $spacingSmall $spacingMedium $spacingSmall 0;
 }
 
 .ui-widget-content ul {
