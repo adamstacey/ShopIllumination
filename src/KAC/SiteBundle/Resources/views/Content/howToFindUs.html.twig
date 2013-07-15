@@ -25,7 +25,7 @@
                 <header class="ui-widget-header ui-corner-top">
                     <h2>Location</h2>
                 </header>
-                <section class="ui-widget-content ui-corner-all">
+                <section class="ui-widget-content content ui-corner-all">
                     <div class="google-map">
                         <iframe width="597" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?q=ng16+2uz&amp;ie=UTF8&amp;hq=&amp;hnear=Giltbrook,+NG16+2UZ,+United+Kingdom&amp;gl=uk&amp;t=m&amp;ll=53.010652,-1.279907&amp;spn=0.020657,0.051155&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
                     </div>
@@ -37,7 +37,7 @@
                 <header class="ui-widget-header ui-corner-top">
                     <h2>Get Directions</h2>
                 </header>
-                <section class="ui-widget-content ui-corner-all">
+                <section class="ui-widget-content widget-content ui-corner-all">
                     <div class="clearfix">
                         <div class="message message-help">
                             <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-763"></span>
@@ -63,19 +63,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
-{% block javascripts %}
-	{{ parent() }}
-	<script defer="defer" type="text/javascript">
-		$(document).ready(function() {
-			$("#contact-directions").height($("#contact-location").height());
-			$("#contact-get-in-touch").height($("#contact-secure-message").height());
-			$("#form-secure-message, #form-directions").validator({
-    			position : 'bottom left', 
-    			offset : [0, 0], 
-    			messageClass : 'form-error', 
-        		message : '<div><em/></div>'
-			});
-		});
-	</script>
 {% endblock %}
