@@ -1,27 +1,24 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
-{% block title %}How to Find Ride Direct in Derby{% endblock %}
+{% block title %}How to Find Kitchen Appliance Centre in Nottingham{% endblock %}
 {% block metatags %}
-	<meta name="description" content="Ride Direct are based in Derby. 119a Nun's Street, Derby, Derbyshire DE1 3LS">
-	<meta name="keywords" content="ride direct, 119a nuns street, nuns street, derby, derbyshire, de1 3ls, de13ls, directions, map, how to find us, satellite navigation, sat nav, get directions">
-{% endblock %}
-{% block slider %}
-	<div class="container_8 clearfix">
-		<header>
-			<div class="slider-gallery-container">
-				<div class="slider-gallery">
-					<div class="slider-element">
-						<img src="{{ asset('/bundles/webilluminationshop/images/headers/the-kitchen-appliance-centre-warehouse.jpg') }}" alt="The Kitchen Appliance Centre Showroom" />
-						<h3 class="left">Come and see us!</h3>
-					</div>
-				</div>
-			</div>
-		</header>
-	</div>
+	<meta name="description" content="Kitchen Appliance Centre are based in Nottingham. Unit3 Pentrich Road, Giltbrook Industrial Park, Giltbrook NG16 2UZ">
+	<meta name="keywords" content="kitchen appliance centre, unit 3 pentrich road, pentrich road, nottingham, ng16 2uz, ng162uz, directions, map, how to find us, satellite navigation, sat nav, get directions">
 {% endblock %}
 {% block body %}
-	<header>
-		<h1>Where are we?</h1>
-	</header>
+    <div class="widget-group clearfix">
+        <div class="widget mtl mbl widget-1-of-1">
+            <div class="ui-widget">
+                <section class="ui-widget-content ui-corner-all clearfix">
+                    <div class="header-image">
+                        <img src="{{ asset('/bundles/webilluminationshop/images/headers/the-kitchen-appliance-centre-warehouse.jpg') }}" alt="The Kitchen Appliance Centre Warehouse" width="940" />
+                        <h1>Where are we?</h1>
+                        <p>To get the directions to the Kitchen Appliance Centre showroom in Nottingham, simply enter your postcode and click the <strong>"Get Directions"</strong> button.</p>
+                        <p class="mbn">Your directions will then be displayed externally in Google Maps.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
     <div class="widget-group clearfix">
         <div class="widget widget-2-of-3">
             <div class="ui-widget">
@@ -42,25 +39,24 @@
                 </header>
                 <section class="ui-widget-content ui-corner-all">
                     <div class="clearfix">
-                        <div class="info-message ui-status-highlight">
-                            <span class="info-message-icon ui-icon ui-icon-info"></span>
-                            <p>To get the directions to the Kitchen Appliance Centre showroom in Nottingham, simply enter your postcode and click the <strong>"Get Directions"</strong> button.<br /><br />Your directions will then be displayed externally in Google Maps.</p>
-                            <div class="clear"></div>
+                        <div class="message message-help">
+                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-763"></span>
+                            <p>Enter your postcode and click the <strong>"Get Directions"</strong> button.</</p>
                         </div>
                         <form class="form has-validation" id="form-directions" action="http://maps.google.co.uk/maps" target="_blank">
                             <input type="hidden" value="Kitchen Appliance Centre @53.004093,-1.288233" name="daddr">
-                            <p class="ac no-margin-bottom">
+                            <p class="tac mbn">
                                 <label for="form-name">Your Postcode</label>
                             </p>
-                            <p class="ac no-margin-top">
+                            <p class="tac mtn">
                                 <input data-message="Please enter your postcode." type="text" id="form-name" name="saddr" required="required" value="" />
                             </p>
                             <p>
-                            <div class="ac buttons no-margin-bottom">
-                                <button type="submit" class="button action-save-about-you ui-button-green" data-icon-primary="ui-icon-extlink">Get Directions</button>
+                            <div class="tac">
+                                <button type="submit" class="button icon-grey" data-icon-primary="icon-226">Get Directions</button>
                             </div>
                             </p>
-                            <p class="ac no-margin-bottom"><a href="{{ path('content_the_shop') }}">Click here</a> for our opening hours.</p>
+                            <p class="tac no-margin-bottom"><a href="{{ path('content_the_shop') }}">Click here</a> for our opening hours.</p>
                         </form>
                     </div>
                 </section>
