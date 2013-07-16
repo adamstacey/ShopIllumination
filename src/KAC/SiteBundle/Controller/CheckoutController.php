@@ -90,7 +90,7 @@ class CheckoutController extends Controller
         }
 
         // Skip this step if the user has already registered before and has entered the required information
-        if($order->getUser() && !!$order->getUser()->getContact())
+        if($order->getUser() && !!$order->getUser()->getContact() && !!$order->getUser()->getContact()->getTelephoneDaytime())
         {
             // Update order status
             $manager->updateCheckoutStep($order, 'Billing');
