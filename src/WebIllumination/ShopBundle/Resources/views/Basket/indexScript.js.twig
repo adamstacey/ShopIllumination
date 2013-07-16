@@ -65,11 +65,13 @@
 				$("#basket-contents").fadeIn(function() {
 					if ($("#basket-contents table tr").length == 0)
 					{
-						window.location = '{{ backUrl }}';
+						window.history.go(-1);
 					}
 					$basketContentsLoaded = true;
 					checkBasketLoaded();
 				});
+                generateButtons($("#basket-contents"));
+                generateFormElements($("#basket-contents"));
 			}
 		});
 	}
@@ -98,6 +100,8 @@
 					$basketTotalsLoaded = true;
 					checkBasketLoaded();
 				});
+                generateButtons($("#basket-totals"));
+                generateFormElements($("#basket-totals"));
 			}
 		});
 	}
@@ -126,6 +130,11 @@
 					$basketDeliveryOptionsLoaded = true;
 					checkBasketLoaded();
 				});
+                generateButtons($("#basket-delivery-options"));
+                generateFormElements($("#basket-delivery-options"));
+                $("img[title], span[title], th[title], .button[title]").tooltip({
+                    track: true
+                });
 			}
 		});
 	}
@@ -198,28 +207,15 @@
 	{
 		if ($("#form-delivery-country-code").val() == 'GB')
 		{
+            if ($("#form-delivery-post-zip-code").val() == '000') {
+                $("#form-delivery-post-zip-code").val('');
+            }
 			$("#delivery-post-zip-code-container").show();
-			if (($("#form-delivery-post-zip-code").val() == '') || ($("#form-delivery-post-zip-code").val() == '000'))
-			{
-				loadDeliveryOptions();
-			} else {
-				var checkDeliveryPostZipCodeValidator = $("#delivery-post-zip-code-container :input").validator({
-					position : 'center right', 
-					offset : [0, -150], 
-					messageClass : 'form-error-small', 
-		    		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
-				});
-				if (checkDeliveryPostZipCodeValidator.data("validator").checkValidity())
-				{
-					loadDeliveryOptions();
-				} else {
-					$("#form-delivery-post-zip-code").focus();
-				}
-			}
+			loadDeliveryOptions();
 		} else {
 			if ($("#form-delivery-country-code").val() == 'GB')
 			{
-				$("#form-delivery-post-zip-code").val('000');
+				$("#form-delivery-post-zip-code").val('');
 			}
 			$("#delivery-post-zip-code-container").hide();
 			loadDeliveryOptions();
