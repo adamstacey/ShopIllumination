@@ -463,7 +463,7 @@ class CheckoutController extends Controller
                 $manager->saveOrder();
 
                 // Clear the baskets
-                $manager->clearBaskets();
+                $manager->clearBasket();
 
                 return $this->redirect($this->generateUrl('checkout_complete'));
             } else {
