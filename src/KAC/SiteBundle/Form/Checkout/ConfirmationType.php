@@ -9,7 +9,7 @@ class ConfirmationType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('Buy', 'button');
+        $builder->add('buy', 'button');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -76,11 +76,13 @@
                                         <a href="{{ path('checkout_payment') }}" class="button button-small mrm fl">Back</a>
                                         <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
                                         <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Buy</button>
+                                        {% do form.buy.setRendered(true) %}
                                     </div>
                                 </section>
                             </div>
                         </div>
                     </div>
+                    {{ form_rest(form) }}
                 </form>
             </div>
         </div>
