@@ -1,0 +1,48 @@
+<div class="main-menu clearfix">
+	<nav class="container_8">
+		<div class="brands-button">
+		    <a data-department-id="brands" class="button sub-department-link ui-button-dark-grey ui-corner-none ui-corner-top main-menu-button fr" href="Javascript:void(0);">Brands</a>
+		</div>
+	    <ul class="sf-menu clearfix">
+	    	{% for department in departments %}
+				<li><a data-department-id="{{ department.id }}" class="sub-department-link{% if loop.last %} special{% endif %}" href="{{ path('page_request', {'url': department.url}) }}">{{ department.menuTitle|raw }}</a></li>
+			{% endfor %}
+	    </ul>
+	    {% for department in departments %}
+	    	{% if department.departments is defined %}
+	    		<div id="sub-department-{{ department.id }}" class="sub-departments">
+	    			{% for subDepartment in department.departments %}
+	    				<div class="sub-department{% if ((loop.index % 4) == 0) %} sub-department-last{% endif %}">
+		    				<h4><a href="{{ path('page_request', {'url': subDepartment.url}) }}">{{ subDepartment.menuTitle|raw }}</a></h4>
+		    				{% if subDepartment.departments is defined %}
+		    					<ul>
+			    					{% for subSubDepartment in subDepartment.departments %}
+										<li><a href="{{ path('page_request', {'url': subSubDepartment.url}) }}">{{ subSubDepartment.menuTitle|raw }}</a></li>
+			    					{% endfor %}
+		    					</ul>
+		    				{% endif %}	
+		    			</div>
+		    			{% if ((loop.index % 4) == 0) %}
+		    				<div class="clear"></div>
+		    			{% endif %}	
+	    			{% endfor %}
+	    			<div class="clear"></div>
+	    		</div>
+	    	{% endif %}	
+		{% endfor %}
+		<div id="sub-department-brands" class="sub-departments brands padding-top-10 padding-bottom-10">
+			{% for brand in brands %}
+				<div class="brand {% if ((loop.index % 4) == 1) %} brand-first{% endif %}{% if ((loop.index % 4) == 0) %} brand-last{% endif %}">
+    				<h4>
+    					{% if brand.logo.thumbnailPath is defined %}<a href="{{ path('page_request', {'url': brand.url}) }}"><img class="fl" src="{{ asset(brand.logo.thumbnailPath) }}" border="0" alt="{{ brand.brand|raw }}" width="48" height="23" /></a>{% endif %}
+    					<a class="text" href="{{ path('page_request', {'url': brand.url}) }}">{{ brand.brand|raw }}</a>
+    				</h4>
+    			</div>
+    			{% if ((loop.index % 4) == 0) %}
+    				<div class="clear"></div>
+    			{% endif %}
+			{% endfor %}
+			<div class="clear"></div>
+		</div>
+	</nav>
+</div>
