@@ -1,0 +1,42 @@
+{% extends "KACSiteBundle::base.html.twig" %}
+
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1><a href="{{ path('profile_overview') }}">Your Account</a> > Account Details</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Edit Address - {{ address.displayName }}</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
+                            {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                            <fieldset>
+                                {{ form_row(form.email) }}
+                                {{ form_row(form.contact.firstName) }}
+                                {{ form_row(form.contact.lastName) }}
+                                {{ form_row(form.contact.organisationName) }}
+                                {{ form_row(form.contact.telephoneDaytime.number) }}
+                                {{ form_row(form.contact.telephoneEvening.number) }}
+                                {{ form_row(form.contact.telephoneMobile.number) }}
+                            </fieldset>
+                            <div class="clearfix">
+                                <a href="{{ path('profile_overview') }}" class="button button-small mrm fl">Back</a>
+                                <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Save</button>
+                            </div>
+
+                            {{ form_rest(form) }}
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

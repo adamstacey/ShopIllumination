@@ -21,5 +21,12 @@ ALTER TABLE contacts DROP title_id, DROP object_type, DROP middle_name, DROP dis
 ALTER TABLE contacts CHANGE organisation_name organisation_name VARCHAR(255) DEFAULT NULL, CHANGE first_name first_name VARCHAR(255) DEFAULT NULL, CHANGE last_name last_name VARCHAR(255) DEFAULT NULL;
 ALTER TABLE contact_addresses CHANGE organisation_name organisation_name VARCHAR(255) DEFAULT NULL, CHANGE address_line_2 address_line_2 VARCHAR(255) DEFAULT NULL;
 ALTER TABLE contact_numbers CHANGE display_name display_name VARCHAR(255) DEFAULT NULL;
+ALTER TABLE contacts ADD telephoneDaytime_id INT DEFAULT NULL, ADD telephoneEvening_id INT DEFAULT NULL, ADD telephoneMobile_id INT DEFAULT NULL;
+ALTER TABLE contacts ADD CONSTRAINT FK_334015733111D8B5 FOREIGN KEY (telephoneDaytime_id) REFERENCES contact_numbers (id);
+ALTER TABLE contacts ADD CONSTRAINT FK_334015731361C98C FOREIGN KEY (telephoneEvening_id) REFERENCES contact_numbers (id);
+ALTER TABLE contacts ADD CONSTRAINT FK_33401573C0817DE5 FOREIGN KEY (telephoneMobile_id) REFERENCES contact_numbers (id);
+CREATE UNIQUE INDEX UNIQ_334015733111D8B5 ON contacts (telephoneDaytime_id);
+CREATE UNIQUE INDEX UNIQ_334015731361C98C ON contacts (telephoneEvening_id);
+CREATE UNIQUE INDEX UNIQ_33401573C0817DE5 ON contacts (telephoneMobile_id);
 
 SET foreign_key_checks = 1;

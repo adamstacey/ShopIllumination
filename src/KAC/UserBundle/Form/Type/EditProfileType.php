@@ -1,24 +1,24 @@
 <?php
-namespace KAC\SiteBundle\Form\Contact;
+namespace KAC\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class NumberType extends AbstractType
-{
+class EditProfileType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('number', 'text', array(
-            'label' => $options['label'],
-            'required' => $options['required'],
+        $builder->add('email', 'email', array(
+            'label' => 'E-Mail Address',
+            'required' => true,
         ));
+        $builder->add('contact', new EditContactType());
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'KAC\SiteBundle\Entity\Contact\Number',
+            'data_class' => 'KAC\UserBundle\Entity\User',
         ));
     }
 
@@ -29,6 +29,6 @@ class NumberType extends AbstractType
      */
     public function getName()
     {
-        return 'contact_number';
+        return 'user_edit_profile';
     }
 }

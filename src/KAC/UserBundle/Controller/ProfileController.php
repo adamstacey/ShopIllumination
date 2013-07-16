@@ -20,6 +20,8 @@ use FOS\UserBundle\Model\UserInterface;
 use KAC\SiteBundle\Entity\Contact;
 use KAC\SiteBundle\Form\Contact\AddressType;
 use KAC\UserBundle\Entity\User;
+use KAC\UserBundle\Form\Type\EditProfileType;
+use KAC\UserBundle\Form\Type\EditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -84,6 +86,36 @@ class ProfileController extends Controller
         return $this->render('KACUserBundle:Profile:orders.html.twig', array(
             'orders' => $orders,
             'user' => $user,
+        ));
+    }
+
+    /**
+     * @Secure(roles="ROLE_USER")
+     * @Route("/profile/edit.html", name="profile_edit")
+     */
+    public function editAction(Request $request)
+    {
+        /**
+         * @var $em EntityManager
+         * @var $user User
+         */
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+
+        $form = $this->createForm(new EditProfileType(), $user);
+        $form->handleRequest($request);
+
+        if($form->isValid())
+        {
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('profile_edit'));
+        }
+
+        return $this->render('KACUserBundle:Profile:edit.html.twig', array(
+            'user' => $user,
+            'form' => $form->createView(),
         ));
     }
 

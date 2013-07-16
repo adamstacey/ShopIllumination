@@ -46,17 +46,17 @@ class Contact
     private $addresses;
 
     /**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", cascade={"all"})
      */
     private $telephoneDaytime;
 
     /**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", cascade={"all"})
      */
     private $telephoneEvening;
 
     /**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact", cascade={"all"})
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", cascade={"all"})
      */
     private $telephoneMobile;
 
