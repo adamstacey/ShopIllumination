@@ -1,8 +1,10 @@
 <?php
 namespace KAC\SiteBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\UserBundle\Entity\User;
 
 /**
  * @ORM\Entity
@@ -18,20 +20,10 @@ class Contact
      */
     private $id;
 
-	/**
+    /**
      * @ORM\ManyToOne(targetEntity="KAC\UserBundle\Entity\User", inversedBy="contacts")
      */
     private $user;
-
-     /**
-     * @ORM\Column(name="object_type", type="string", length=100)
-      */
-    private $objectType = 'customer';
-
-    /**
-     * @ORM\Column(name="display_order", type="integer", length=11)
-     */
-    private $displayOrder;
 
     /**
      * @ORM\Column(name="organisation_name", type="string", length=255)
@@ -54,19 +46,19 @@ class Contact
     private $addresses;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Contact\EmailAddress", mappedBy="contact")
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact")
      */
-    private $emails;
+    private $telephoneDaytime;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact")
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact")
      */
-    private $numbers;
+    private $telephoneEvening;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Contact\WebAddress", mappedBy="contact")
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact")
      */
-    private $webAddresses;
+    private $telephoneMobile;
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -84,21 +76,12 @@ class Contact
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
-
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->emails = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->numbers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->webAddresses = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    public function isDeleted()
-    {
-        return $this->getDeletedAt() !== null;
+        $this->addresses = new ArrayCollection();
     }
 
     /**
@@ -109,74 +92,6 @@ class Contact
     public function getId()
     {
         return $this->id;
-    }
-    /**
-     * Set objectType
-     *
-     * @param string $objectType
-     * @return Contact
-     */
-    public function setObjectType($objectType)
-    {
-        $this->objectType = $objectType;
-
-        return $this;
-    }
-
-    /**
-     * Get objectType
-     *
-     * @return string
-     */
-    public function getObjectType()
-    {
-        return $this->objectType;
-    }
-
-    /**
-     * Set displayOrder
-     *
-     * @param integer $displayOrder
-     * @return Contact
-     */
-    public function setDisplayOrder($displayOrder)
-    {
-        $this->displayOrder = $displayOrder;
-
-        return $this;
-    }
-
-    /**
-     * Get displayOrder
-     *
-     * @return integer
-     */
-    public function getDisplayOrder()
-    {
-        return $this->displayOrder;
-    }
-
-    /**
-     * Set displayName
-     *
-     * @param string $displayName
-     * @return Contact
-     */
-    public function setDisplayName($displayName)
-    {
-        $this->displayName = $displayName;
-
-        return $this;
-    }
-
-    /**
-     * Get displayName
-     *
-     * @return string
-     */
-    public function getDisplayName()
-    {
-        return $this->displayName;
     }
 
     /**
@@ -223,29 +138,6 @@ class Contact
     public function getFirstName()
     {
         return $this->firstName;
-    }
-
-    /**
-     * Set middleName
-     *
-     * @param string $middleName
-     * @return Contact
-     */
-    public function setMiddleName($middleName)
-    {
-        $this->middleName = $middleName;
-
-        return $this;
-    }
-
-    /**
-     * Get middleName
-     *
-     * @return string
-     */
-    public function getMiddleName()
-    {
-        return $this->middleName;
     }
 
     /**
@@ -318,35 +210,58 @@ class Contact
     }
 
     /**
-     * Set contactTitle
+     * Set deletedAt
      *
-     * @param \KAC\SiteBundle\Entity\Contact\Title $contactTitle
+     * @param \DateTime $deletedAt
      * @return Contact
      */
-    public function setContactTitle(\KAC\SiteBundle\Entity\Contact\Title $contactTitle = null)
+    public function setDeletedAt($deletedAt)
     {
-        $this->contactTitle = $contactTitle;
+        $this->deletedAt = $deletedAt;
 
         return $this;
     }
 
     /**
-     * Get contactTitle
+     * Get deletedAt
      *
-     * @return \KAC\SiteBundle\Entity\Contact\Title
+     * @return \DateTime
      */
-    public function getContactTitle()
+    public function getDeletedAt()
     {
-        return $this->contactTitle;
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     * @return Contact
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**
      * Add addresses
      *
-     * @param \KAC\SiteBundle\Entity\Contact\Address $addresses
+     * @param Contact\Address $addresses
      * @return Contact
      */
-    public function addAddresse(\KAC\SiteBundle\Entity\Contact\Address $addresses)
+    public function addAddress(Contact\Address $addresses)
     {
         $this->addresses[] = $addresses;
 
@@ -356,9 +271,9 @@ class Contact
     /**
      * Remove addresses
      *
-     * @param \KAC\SiteBundle\Entity\Contact\Address $addresses
+     * @param Contact\Address $addresses
      */
-    public function removeAddresse(\KAC\SiteBundle\Entity\Contact\Address $addresses)
+    public function removeAddress(Contact\Address $addresses)
     {
         $this->addresses->removeElement($addresses);
     }
@@ -366,7 +281,7 @@ class Contact
     /**
      * Get addresses
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Contact\Address[]
      */
     public function getAddresses()
     {
@@ -374,121 +289,71 @@ class Contact
     }
 
     /**
-     * Add emails
+     * Set telephoneDaytime
      *
-     * @param \KAC\SiteBundle\Entity\Contact\EmailAddress $emails
+     * @param Contact\Number $telephoneDaytime
      * @return Contact
      */
-    public function addEmail(\KAC\SiteBundle\Entity\Contact\EmailAddress $emails)
+    public function setTelephoneDaytime(Contact\Number $telephoneDaytime = null)
     {
-        $this->emails[] = $emails;
+        $this->telephoneDaytime = $telephoneDaytime;
 
         return $this;
     }
 
     /**
-     * Remove emails
+     * Get telephoneDaytime
      *
-     * @param \KAC\SiteBundle\Entity\Contact\EmailAddress $emails
+     * @return Contact\Number
      */
-    public function removeEmail(\KAC\SiteBundle\Entity\Contact\EmailAddress $emails)
+    public function getTelephoneDaytime()
     {
-        $this->emails->removeElement($emails);
+        return $this->telephoneDaytime;
     }
 
     /**
-     * Get emails
+     * Set telephoneEvening
      *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEmails()
-    {
-        return $this->emails;
-    }
-
-    /**
-     * Add numbers
-     *
-     * @param \KAC\SiteBundle\Entity\Contact\Number $numbers
+     * @param Contact\Number $telephoneEvening
      * @return Contact
      */
-    public function addNumber(\KAC\SiteBundle\Entity\Contact\Number $numbers)
+    public function setTelephoneEvening(Contact\Number $telephoneEvening = null)
     {
-        $this->numbers[] = $numbers;
+        $this->telephoneEvening = $telephoneEvening;
 
         return $this;
     }
 
     /**
-     * Remove numbers
+     * Get telephoneEvening
      *
-     * @param \KAC\SiteBundle\Entity\Contact\Number $numbers
+     * @return Contact\Number
      */
-    public function removeNumber(\KAC\SiteBundle\Entity\Contact\Number $numbers)
+    public function getTelephoneEvening()
     {
-        $this->numbers->removeElement($numbers);
+        return $this->telephoneEvening;
     }
 
     /**
-     * Get numbers
+     * Set telephoneMobile
      *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getNumbers()
-    {
-        return $this->numbers;
-    }
-
-    /**
-     * Add webAddresses
-     *
-     * @param \KAC\SiteBundle\Entity\Contact\WebAddress $webAddresses
+     * @param Contact\Number $telephoneMobile
      * @return Contact
      */
-    public function addWebAddresse(\KAC\SiteBundle\Entity\Contact\WebAddress $webAddresses)
+    public function setTelephoneMobile(Contact\Number $telephoneMobile = null)
     {
-        $this->webAddresses[] = $webAddresses;
+        $this->telephoneMobile = $telephoneMobile;
 
         return $this;
     }
 
     /**
-     * Remove webAddresses
+     * Get telephoneMobile
      *
-     * @param \KAC\SiteBundle\Entity\Contact\WebAddress $webAddresses
+     * @return Contact\Number
      */
-    public function removeWebAddresse(\KAC\SiteBundle\Entity\Contact\WebAddress $webAddresses)
+    public function getTelephoneMobile()
     {
-        $this->webAddresses->removeElement($webAddresses);
-    }
-
-    /**
-     * Get webAddresses
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWebAddresses()
-    {
-        return $this->webAddresses;
-    }
-
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    public function setUser($user)
-    {
-        $this->user = $user;
-    }
-
-    public function getDeletedAt()
-    {
-        return $this->deletedAt;
-    }
-
-    public function setDeletedAt($deletedAt)
-    {
-        $this->deletedAt = $deletedAt;
+        return $this->telephoneMobile;
     }
 }
