@@ -1,20 +1,20 @@
-.basket-message
-{
-    color: #FF2300;
-    font-size: 13px;
+.basket-message {
+    color: $colourRed;
+    @include fontSize(13);
 }
+
 #basket-summary {
     width: 230px;
-    position: absolute;
-    right: 20px;
-    z-index: 5;
-    overflow: hidden;
-    border-radius: 4px;
-    background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
-    -webkit-box-shadow: 0 -2px 5px 0 #384246;
     margin: 0;
-    padding: 5px 10px;
-    z-index: 10;
+    padding: $spacingSmall $spacingMedium;
+
+    position: absolute;
+    right: 0;
+
+    overflow: hidden;
+    @include equalBorderRadius($radiusSize);
+    @include verticalGradientWhiteToGreyLight;
+    @include boxShadow($colourGreyDark, 0, -2px, 5px);
 }
 
 #basket-summary.expanded {
@@ -23,32 +23,52 @@
 
 .basket-summary-header {
     min-height: 50px;
+
     cursor: pointer;
 }
+
 .basket-summary-header h2 {
     margin: 0;
     padding: 0;
 
-    font-size: 1.4rem;
-    color: #384246;
+    @include fontSize($fontSizeLarge);
+    color: $colourGreyDark;
     line-height: 24px;
     letter-spacing: 1px;
-    text-shadow: 0 1px 0 white;
+    @include textShadow($colourWhite, 0, 1px);
 }
+
 .basket-summary-header p {
     margin: 0;
     padding: 0;
 
     line-height: 13px;
-    font-size: 1rem;
-    color: #6c8087;
+    @include fontSize($fontSizeExtraSmall);
+    color: $colourGrey;
 }
+
 .basket-items-table {
-    background: #FFF;
+    background: $colourWhite;
 }
+
 .basket-buttons {
-    margin: 5px 0;
+    margin: $spacingSmall 0;
 }
+
 .basket-buttons .button:first-child {
-    margin-left: 5px;
+    margin-left: $spacingSmall;
+}
+
+#basket-contents .add-to-basket {
+    width: 63px;
+    margin: 0;
+}
+
+#basket-totals td {
+    padding: $spacingSmall $spacingMedium;
+}
+
+#basket-delivery-options .form-helper {
+    top: 0;
+    right: 10px;
 }
