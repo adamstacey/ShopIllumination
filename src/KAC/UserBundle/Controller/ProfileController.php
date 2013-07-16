@@ -89,7 +89,7 @@ class ProfileController extends Controller
 
     /**
      * @Secure(roles="ROLE_USER")
-     * @Route("/profile-addresses.html", name="profile_addresses")
+     * @Route("/profile/addresses.html", name="profile_addresses")
      */
     public function addressesAction()
     {
@@ -115,7 +115,7 @@ class ProfileController extends Controller
 
     /**
      * @Secure(roles="ROLE_USER")
-     * @Route("/profile-new-address.html", name="profile_new_address")
+     * @Route("/profile/addresses/new.html", name="profile_new_address")
      */
     public function newAddressAction(Request $request)
     {
@@ -153,5 +153,70 @@ class ProfileController extends Controller
             'user' => $user,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Secure(roles="ROLE_USER")
+     * @Route("/profile/addresses/{id}/edit.html", name="profile_edit_address")
+     */
+    public function editAddressAction(Request $request, $id)
+    {
+        /**
+         * @var $em EntityManager
+         * @var $user User
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var \KAC\SiteBundle\Entity\Contact\Address $address
+         */
+        $address = $em->getRepository("KAC\SiteBundle\Entity\Contact\Address")->find($id);
+        if (!$address)
+        {
+            throw new NotFoundHttpException("Address not found");
+        }
+
+        $form = $this->createForm(new AddressType(), $address);
+        $form->handleRequest($request);
+
+        if($form->isValid())
+        {
+            $em->persist($address);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('profile_addresses'));
+        }
+
+        return $this->render('KACUserBundle:Profile:edit_address.html.twig', array(
+            'address' => $address,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Secure(roles="ROLE_USER")
+     * @Route("/profile/addresses/{id}/delete.html", name="profile_delete_address")
+     */
+    public function deleteAddressAction(Request $request)
+    {
+        /**
+         * @var $em EntityManager
+         * @var $user User
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var \KAC\SiteBundle\Entity\Contact\Address $address
+         */
+        $address = $em->getRepository("KAC\SiteBundle\Entity\Contact\Address")->find($id);
+        if (!$address)
+        {
+            throw new NotFoundHttpException("Address not found");
+        }
+
+        $em->remove($address);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('profile_addresses'));
     }
 }

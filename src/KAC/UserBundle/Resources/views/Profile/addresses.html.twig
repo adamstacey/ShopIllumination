@@ -29,12 +29,12 @@
                                 <tbody>
                                     {% for address in user.contact.addresses %}
                                         <tr>
-                                            <td>{{ address.displayName }}</td>
+                                            <td><a href="{{ path('profile_edit_address', {'id': address.id}) }}">{{ address.displayName }}</a></td>
                                             <td>{{ address.firstName }} {{ address.lastName }}</td>
                                             <td>{{ address.addressLine1 }}</td>
                                             <td>
-                                                <a href="">Edit</a> <em>|</em>
-                                                <a href="">Delete</a>
+                                                <a href="{{ path('profile_edit_address', {'id': address.id}) }}">Edit</a> <em>|</em>
+                                                <a href="{{ path('profile_delete_address', {'id': address.id}) }}">Delete</a>
                                             </td>
                                         </tr>
                                     {% endfor %}
