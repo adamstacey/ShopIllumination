@@ -22,18 +22,26 @@
     left: 5px;
 }
 
+.search-container .twitter-typeahead,
 .search-container input,
 .search-container input:hover,
 .search-container input:focus{
-    padding-left: 50px;
-    padding-right: 65px;
+    padding: 8px 65px 8px 50px;
     width: 100%;
+    height: 38px;
 
     @include borderBox;
     @include fontSize(13);
     background: none;
     border: 0 none;
     @include noBoxShadow;
+}
+.search-container .twitter-typeahead {
+    padding-top: 0;
+}
+
+.search-container .twitter-typeahead input {
+    padding: 0;
 }
 
 .search-container .icon-dark-red {
@@ -50,7 +58,7 @@
 .search-container .button:hover {
     position: absolute;
     top: 0;
-    right: -2px;
+    right: -1px;
 
     @include borderRadius(0, $radiusSize, $radiusSize, 0);
     border: 0 none;
@@ -60,4 +68,42 @@
 
 .search-container .button .ui-button-text {
     padding: 0 $spacingSmall;
+}
+
+.tt-hint {
+    padding: 8px 65px 8px 50px !important;
+    width: 440px;
+    height: 38px;
+    color: #999;
+}
+
+.tt-dropdown-menu {
+    width: 440px;
+    margin-top: 10px;
+    padding: 5px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+    color: #fff;
+    background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+    margin: 0;
 }

@@ -112,7 +112,7 @@ class ContentController extends Controller
     }
 
     /**
-     * @Route("/contact-us", name="content_contact_us", schemes={"https"}))
+     * @Route("/contact-us.html", name="content_contact_us", schemes={"https"}))
      * @Route("/contact-kitchen-appliance-centre.html", name="content_contact_us_long", schemes={"https"}))
      */
     public function contactUsAction(Request $request)

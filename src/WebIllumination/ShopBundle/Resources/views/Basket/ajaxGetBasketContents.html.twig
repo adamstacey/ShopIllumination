@@ -51,7 +51,7 @@
 				<td class="ac">{% if product.recommendedRetailPrice > product.unitCost %}<span class="red strikethrough">&pound;{{ product.recommendedRetailPrice|number_format(2) }}</span><br /><span class="green"><strong>&pound;{{ product.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ product.unitCost|number_format(2) }}{% endif %}</td>
 				<td class="ac">=</td>
 				<td class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
-				<td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
+				<td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
 			</tr>
 			{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %}
 				<tr>

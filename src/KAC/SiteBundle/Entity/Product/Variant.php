@@ -1,8 +1,11 @@
 <?php
 namespace KAC\SiteBundle\Entity\Product;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Entity\Type;
 use Symfony\Component\Validator\Constraints as Assert;
 use KAC\SiteBundle\Entity\DescribableInterface;
 use Symfony\Component\Validator\ExecutionContext;
@@ -24,49 +27,71 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="variants")
+     * @var Product
      */
     private $product;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Description", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Description[]
      */
     private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToFeature", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "DESC"})
      * @Assert\Valid()
+     * @var VariantToFeature[]
      */
     private $features;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\VariantToOption", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "DESC"})
      * @Assert\Valid()
+     * @var VariantToOption[]
      */
     private $options;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\Count(min="1", groups={"flow_site_new_product_step3"}, minMessage="Enter a valid price.")
      * @Assert\Valid()
+     * @var Price[]
      */
     private $prices;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Image", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Image
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Document", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Document[]
      */
     private $documents;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Routing", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Variant\Routing[]
      */
     private $routings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Link", mappedBy="variant", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Link[]
+     */
+    private $links;
 
     /**
      * @ORM\Column(name="status", type="string", length=1)
@@ -74,6 +99,12 @@ class Variant implements DescribableInterface
      * @Assert\Choice(choices={"a", "h", "d"})
      */
     private $status = 'a';
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Type")
+     * @var Type
+     */
+    private $type;
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
@@ -184,13 +215,13 @@ class Variant implements DescribableInterface
      */
     public function __construct()
     {
-        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->prices = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->descriptions = new ArrayCollection();
+        $this->options = new ArrayCollection();
+        $this->features = new ArrayCollection();
+        $this->prices = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->routings = new ArrayCollection();
     }
 
     public function isDeleted()
@@ -606,6 +637,19 @@ class Variant implements DescribableInterface
         return $this->features;
     }
 
+    public function getFeatureValue($groupName)
+    {
+        foreach($this->features as $vtf)
+        {
+            if(strtolower($vtf->getFeatureGroup()->getName()) === strtolower($groupName))
+            {
+                return $vtf->getFeature()->getName();
+            }
+        }
+
+        return '';
+    }
+
     /**
      * Add prices
      *
@@ -633,7 +677,7 @@ class Variant implements DescribableInterface
     /**
      * Get prices
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Price[]
      */
     public function getPrices()
     {
@@ -827,6 +871,7 @@ class Variant implements DescribableInterface
     public function addRouting(\KAC\SiteBundle\Entity\Product\Variant\Routing $routings)
     {
         $this->routings[] = $routings;
+        $routings->setVariant($this);
     
         return $this;
     }
@@ -875,6 +920,7 @@ class Variant implements DescribableInterface
     public function addImage(\KAC\SiteBundle\Entity\Product\Variant\Image $images)
     {
         $this->images[] = $images;
+        $images->setVariant($this);
 
         return $this;
     }
@@ -923,6 +969,7 @@ class Variant implements DescribableInterface
     public function addDocument(\KAC\SiteBundle\Entity\Product\Variant\Document $documents)
     {
         $this->documents[] = $documents;
+        $documents->setVariant($this);
 
         return $this;
     }
@@ -1014,5 +1061,37 @@ class Variant implements DescribableInterface
     public function getDeliveryCost()
     {
         return $this->deliveryCost;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @param mixed $links
+     */
+    public function setLinks($links)
+    {
+        $this->links = $links;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 }

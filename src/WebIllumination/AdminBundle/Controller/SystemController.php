@@ -122,7 +122,7 @@ class SystemController extends Controller
 	    	$data['pricesUpdated'] = $pricesUpdated;
 						
 			// Set success message
-		    $this->get('session')->setFlash('success', 'The prices have been successfully imported.');
+		    $this->get('session')->getFlashBag()->add('success', 'The prices have been successfully imported.');
     	}
     	    	
     	return $this->render('WebIlluminationAdminBundle:Products:priceImport.html.twig', array('data' => $data));

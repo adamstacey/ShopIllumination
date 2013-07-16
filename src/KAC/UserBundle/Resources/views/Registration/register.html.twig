@@ -5,34 +5,15 @@
 
 {% block fos_user_content %}
     <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="form" id="form-register">
-        <div class="clearfix">
-            {{ form_label(form.email, 'Email', {'help': 'Enter a valid email address'}) }}
-            <div class="form-input">
-                {{ form_widget(form.email) }}
-                {{ form_errors(form.email) }}
-            </div>
-        </div>
-        <div class="clearfix">
-            {{ form_label(form.plainPassword.first, 'Password', {'help': 'Enter a password'}) }}
-            <div class="form-input no-margin-bottom">
-                {{ form_widget(form.plainPassword.first) }}
-                {{ form_errors(form.plainPassword.first) }}
-            </div>
-        </div>
-        <div class="clearfix">
-            {{ form_label(form.plainPassword.second, 'Confirm Password', {'help': 'Confirm your password'}) }}
-            <div class="form-input">
-                {{ form_widget(form.plainPassword.second) }}
-                {{ form_errors(form.plainPassword.second) }}
-            </div>
-        </div>
-
-        {{ form_rest(form) }}
+        <fieldset>
+            {{ form_row(form.email, {'label': 'E-Mail Address', 'help': 'Enter a valid email address'}) }}
+            {{ form_row(form.plainPassword.first, {'label': 'Password', 'help': 'Enter a password'}) }}
+            {{ form_row(form.plainPassword.second, {'label' : 'Confirm Password', 'help': 'Confirm your password'}) }}
+            {{ form_rest(form) }}
+        </fieldset>
 
         <div class="clearfix">
-            <div class="form-input buttons no-margin-bottom">
-                <button class="button action-create-user ui-button-green" data-icon-primary="ui-icon-check">Create Your Account</button>
-            </div>
+            <button class="button button-green fr">Create Your Account</button>
         </div>
     </form>
 {% endblock %}

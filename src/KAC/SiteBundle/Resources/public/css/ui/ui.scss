@@ -990,9 +990,9 @@ body .ui-tooltip {
     padding: $spacingMedium;
 
     @include textShadow($colourBlack, 0, 1px);
-    letter-spacing: 2px;
+    letter-spacing: 0;
     color: $colourWhite;
-    font-family: $complimentaryFontFamily;
+    font-family: $primaryFontFamily;
 }
 
 .ui-widget-header a {
@@ -1195,4 +1195,39 @@ body .ui-tooltip {
     padding: $spacingSmall;
     @include boxGlow($primaryColour, 10px);
     @include equalBorderRadius($radiusSize);
+}
+
+.header-buttons-container {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
+ul.button-list,
+ul.button-list li {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+ul.button-list {
+    padding: 0 0 $spacingMedium 0;
+}
+
+ul.button-list li a {
+    padding: 0 $spacingSmall;
+
+    display: block;
+    line-height: $spacingExtraLarge;
+    @include verticalGradientWhiteToGreyLight;
+    border: 1px solid $colourGreyLight;
+    text-decoration: none;
+    color: $textColour;
+    @include fontSize($fontSizeSmall);
+    @include ellipsis;
+}
+
+ul.button-list li a:hover {
+    text-decoration: underline;
 }

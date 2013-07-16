@@ -21,26 +21,31 @@ class Brand
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Description", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\BrandToDepartment", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      **/
     private $departments;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Routing", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $routings;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Image", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Brand\Document", mappedBy="brand", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $documents;
 
@@ -48,6 +53,11 @@ class Brand
      * @ORM\Column(name="status", type="string", length=1)
      */
     private $status = 'a';
+
+    /**
+     * @ORM\Column(name="template", type="string", length=255)
+     */
+    private $template = 'standard';
 
     /**
      * @ORM\Column(name="request_a_brochure", type="boolean")
@@ -656,5 +666,21 @@ class Brand
     public function getRoutings()
     {
         return $this->routings;
+    }
+
+    /**
+     * @param mixed $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }

@@ -14,17 +14,19 @@ class ProductIndexer extends Indexer
     {
         $query = $this->getSolarium()->createUpdate();
         $document = $this->createDocument($query, $product);
-        $query->addDocument($document);
-        $query->addCommit();
-        $this->getSolarium()->update($query);
+        if($document)
+        {
+            $query->addDocument($document);
+            $query->addCommit();
+            $this->getSolarium()->update($query);
+        }
     }
 
     public function createDocument(\Solarium_Query_Update $query, Product $product)
     {
         // If product does not contain all the required fields ignore it
         if (count($product->getDescriptions()) === 0) {
-            \Doctrine\Common\Util\Debug::dump("Nope1");
-            return;
+            return null;
         }
 
         $helper = $query->getHelper();
@@ -96,11 +98,16 @@ class ProductIndexer extends Indexer
 
         /** @var $variant Product\Variant */
         // Add product codes from each variant
+        $numVariants = 0;
         foreach ($product->getVariants() as $variant) {
             // Check that the variant is not disabled
             if ($variant->getStatus() !== "a") {
                 continue;
             }
+
+            $numVariants++;
+
+            $document->addField('variant_ids', $variant->getId());
 
             // Add all product codes
             $productCodes = explode(',', $variant->getAlternativeProductCodes());
@@ -128,10 +135,9 @@ class ProductIndexer extends Indexer
                 if($feature && $feature->getFeatureGroup() && $feature->getFeature())
                 {
                     $document->addField(
-                        $helper->escapeTerm(trim(preg_replace("/&#?[a-z0-9]{2,8};/i","", htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())))),
+                        $helper->escapeTerm(trim(preg_replace("/(&#?[a-z0-9]{2,8};)|(\s)/i","", htmlentities('attr_feature_'.$feature->getFeatureGroup()->getName())))),
                         $feature->getFeature()->getName()
                     );
-//                    \Doctrine\Common\Util\Debug::dump($helper->escapeTerm(preg_replace("/&#?[a-z0-9]{2,8};/i","", 'attr_feature_'.$feature->getFeatureGroup()->getName())));
 
                     // Fetch the relevant department to feature entity
                     $departmentToFeature = $em->createQuery("
@@ -182,6 +188,12 @@ class ProductIndexer extends Indexer
 
         // Add the brand logo
         $document->setField('brand_logo', $this->getProperty($product, 'brand.description.logoImage.originalPath'));
+
+        // If there were no variants then do not create document
+        if($numVariants == 0)
+        {
+            return null;
+        }
 
         return $document;
     }

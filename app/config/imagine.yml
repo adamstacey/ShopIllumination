@@ -3,57 +3,34 @@ avalanche_imagine:
         # Logos
         logo_thumbnail:
             type:   thumbnail
-            options: { size: [50, 25], mode: inset, quality: 60 }
+            options: { size: [50, 25], mode: inset, quality: 80 }
         logo_medium:
             type:   resize
             options: { size: [100, 50], quality: 100 }
         logo_large:
             type:   resize
             options: { size: [300, 150], quality: 100 }
-        logo_thumbnail_retina:
-            type:   thumbnail
-            options: { size: [100, 50], mode: inset, quality: 60 }
-        logo_medium_retina:
-            type:   resize
-            options: { size: [200, 100], quality: 100 }
-        logo_large_retina:
-            type:   resize
-            options: { size: [600, 300], quality: 100 }
-        # Logos
+        # Gallery
         gallery_thumbnail:
             type:   thumbnail
-            options: { size: [170, 50], mode: inset, quality: 60 }
+            options: { size: [170, 50], mode: inset, quality: 80 }
         gallery_medium:
             type:   resize
             options: { size: [300, 86], quality: 100 }
         gallery_large:
             type:   resize
             options: { size: [978, 400], quality: 100 }
-        gallery_thumbnail_retina:
-            type:   thumbnail
-            options: { size: [340, 100], mode: inset, quality: 60 }
-        gallery_medium_retina:
-            type:   resize
-            options: { size: [600, 172], quality: 100 }
-        gallery_large_retina:
-            type:   resize
-            options: { size: [1956, 800], quality: 100 }
-        # Logos
+        # Product
         product_thumbnail:
             type:   thumbnail
-            options: { size: [100, 100], mode: inset, quality: 60 }
+            options: { size: [100, 100], mode: inset, quality: 80 }
         product_medium:
             type:   resize
             options: { size: [300, 300], quality: 100 }
         product_large:
             type:   resize
             options: { size: [800, 600], quality: 100 }
-        product_thumbnail_retina:
+        # Variant
+        variant_thumbnail:
             type:   thumbnail
-            options: { size: [200, 200], mode: inset, quality: 60 }
-        product_medium_retina:
-            type:   resize
-            options: { size: [600, 600], quality: 100 }
-        product_large_retina:
-            type:   resize
-            options: { size: [1600, 1200], quality: 100 }
+            options: { size: [180, 95], mode: inset, quality: 80 }

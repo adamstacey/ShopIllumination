@@ -12,7 +12,7 @@
                         <p>Setup what product features you want this department to include. Any product directly added to this department will then automatically include these product features.</p>
                     </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                    <table class="form-table sortable mbm" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
+                    <table id="featureList" class="form-table sortable mbm" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
                         <thead>
                             <tr>
                                 <th>&nbsp;</th>

@@ -1,16 +1,28 @@
-.basket-summary-header {
-    height: 50px;
+.basket-message
+{
+    color: #FF2300;
+    font-size: 13px;
+}
+#basket-summary {
     width: 230px;
-    margin: 0;
-    padding: 5px 10px;
-
     position: absolute;
-    right: 0;
-    bottom: -5px;
-
-    border-radius: 4px 4px 0 0;
+    right: 20px;
+    z-index: 5;
+    overflow: hidden;
+    border-radius: 4px;
     background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
     -webkit-box-shadow: 0 -2px 5px 0 #384246;
+    margin: 0;
+    padding: 5px 10px;
+    z-index: 10;
+}
+
+#basket-summary.expanded {
+    width: 600px;
+}
+
+.basket-summary-header {
+    min-height: 50px;
     cursor: pointer;
 }
 .basket-summary-header h2 {
@@ -31,23 +43,12 @@
     font-size: 1rem;
     color: #6c8087;
 }
-.basket-summary-products {
-    height: 50px;
-    width: 230px;
-    margin: 0;
-    padding: 5px 10px;
-
-    position: absolute;
-    right: 0;
-    top: 60px;
-
-    border-radius: 0 0 4px 4px;
-    background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
-    -webkit-box-shadow: 0 2px 5px 0 #384246;
-    cursor: pointer;
+.basket-items-table {
+    background: #FFF;
 }
-.basket-message
-{
-    color: #FF2300;
-    font-size: 13px;
+.basket-buttons {
+    margin: 5px 0;
+}
+.basket-buttons .button:first-child {
+    margin-left: 5px;
 }

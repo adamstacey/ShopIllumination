@@ -4,40 +4,34 @@
 	<meta name="description" content="Kitchen Appliance Centre take security and customer service very seriously and appreciate the trust placed in us by you our customers when providing us your card details.">
 	<meta name="keywords" content="kitchen appliance centre, security, trust, customer service, card details, fraud, 3d secure, online shopping, safe">
 {% endblock %}
-{% block slider %}
-	<div class="container_8 clearfix">
-		<header>
-			<div class="slider-gallery-container">
-				<div class="slider-gallery">
-					<div class="slider-element">
-						<img src="{{ asset('/bundles/webilluminationshop/images/headers/bank-safe.jpg') }}" alt="A bank safe" />
-						<h3 class="right">Locked Down!</h3>
-					</div>
-				</div>
-			</div>
-		</header>
-	</div>
-{% endblock %}
 {% block body %}
-	<header>
-		<h1>Security</h1>
-	</header>
+    <div class="widget-group clearfix">
+        <div class="widget mtl mbl widget-1-of-1">
+            <div class="ui-widget">
+                <section class="ui-widget-content ui-corner-all clearfix">
+                    <div class="header-image">
+                        <img src="{{ asset('/bundles/webilluminationshop/images/headers/bank-safe.jpg') }}" alt="A bank safe" width="940" />
+                        <h1>Security</h1>
+                        <p>We take security and customer service very seriously and appreciate the trust placed in us by you our customers when providing us your card details.</p>
+                        <p class="mbn">Our security procedures are constantly reviewed and updated to take account of any new threats.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget">
                 <header class="ui-widget-header ui-corner-top">
                     <h2>Security</h2>
                 </header>
-                <section class="ui-widget-content ui-corner-all">
+                <section class="ui-widget-content widget-content ui-corner-bottom">
                     <div class="clearfix">
-                        <h5>Our Commitment to You</h5>
-                        <p>We take security and customer service very seriously and appreciate the trust placed in us by you our customers when providing us your card details.</p>
-                        <p>Our security procedures are constantly reviewed and updated to take account of any new threats.</p>
-                        <h5>What measures do we take?</h5>
+                        <h4>What measures do we take?</h4>
                         <p>We have in place a number of measures to ensure our site and your details are as secure as possible.</p>
                         <p>When you send us any of your personal information, the link between your computer or device and our server is encrypted using Industry standard methods (SSL).</p>
                         <p>When your information reaches our server, the card details are encrypted again before being stored on our secure server behind a locked down firewall.</p>
-                        <h5>What else can you the customer do?</h5>
+                        <h4 class="mtl">What else can you the customer do?</h4>
                         <p>Although most online transactions are completed safely and efficiently there are some things you can do to minimise the chances of fraud. Everyone using the Internet should follow the tips below:</p>
                         <ul>
                             <li>It is essential that your computer or device is kept up to date with the latest anti-virus software, as the weakest point of any Internet transaction is often the computer or device.</li>
@@ -45,7 +39,7 @@
                             <li>If you receive a suspected fake email or if anything raises your suspicions, please <a href="{{ path('content_contact_us') }}">report it to us</a>.</li>
                             <li>If you are using a public computer always make sure you log off when you are finished.</li>
                         </ul>
-                        <h5>Secure Site</h5>
+                        <h4 class="mtl">Secure Site</h4>
                         <p>Make sure whenever you are entering any personal details you are using the secure Kitchen Appliance Centre site. This can be done by checking that https:// is visible in the address bar at the top and also looking out for the yellow padlock.</p>
                     </div>
                 </section>

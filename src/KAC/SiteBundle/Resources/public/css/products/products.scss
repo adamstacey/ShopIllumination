@@ -2,12 +2,11 @@
 @import "../includes/base";
 
 .product-container {
-    border: 1px solid #E4EAEC;
-    padding: 10px;
-    -webkit-box-shadow: 0 0 10px #E4EAEC;
-    -moz-box-shadow: 0 0 10px #E4EAEC;
-    box-shadow: 0 0 10px #E4EAEC;
-    margin: 0 15px 15px 0;
+    padding: $spacingMedium;
+    margin: 0 $spacingLarge $spacingLarge 0;
+
+    border: 1px solid $colourGreyExtraLight;
+    @include boxShadow($colourGreyExtraLight, 0, 0, $spacingMedium);
 }
 
 .product a {
@@ -15,10 +14,10 @@
 }
 
 .product h4, .product h4 a, .product-title {
-    font-size: 13px;
-    line-height: 23px;
+    @include fontSize(13);
+    line-height: 30px;
     padding: 0;
-    color: #143B49;
+    color: $colourGreyDark;
     font-weight: bold;
     margin: 0;
 }
@@ -28,23 +27,21 @@
 }
 
 .product ul li {
-    font-size: 10px;
+    @include fontSize($fontSizeExtraSmall);
     line-height: 120%;
 }
 
-.product img.product-image {
-    float: left;
-    border: 1px solid #E4EAEC;
-    margin: 0 10px 0 0;
-}
-
 .product img.brand-logo-image {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 $spacingMedium;
 }
 
 .product .price {
     text-align: right;
-    color: $colourRed;
+    color: $colourRed !important;
+}
+
+.product .price a {
+    color: $colourRed !important;
 }
 
 .product .price span {
@@ -58,9 +55,10 @@
 }
 
 .product .price .currency-sign {
+    padding-top: $spacingExtraSmall;
+
     font-family: $impactFontFamily;
-    @include fontSize(24);
-    padding-top: 2px;
+    @include fontSize($fontSizeExtraExtraLarge);
 }
 
 .product .price .currency-integer {
@@ -69,9 +67,10 @@
 }
 
 .product .price .currency-decimal {
+    padding-top: $spacingExtraSmall;
+
     font-family: $impactFontFamily;
-    @include fontSize(18);
-    padding-top: 2px;
+    @include fontSize($fontSizeExtraLarge);
 }
 
 .product .price .currency-tax {
@@ -80,7 +79,7 @@
 }
 
 table.data-table .price .currency-prefix {
-    @include fontSize(12);
+    @include fontSize($fontSizeMedium);
 }
 
 table.data-table .price .currency-sign {
@@ -92,41 +91,24 @@ table.data-table .price .currency-integer {
 }
 
 table.data-table .price .currency-decimal {
-    @include fontSize(14);
+    @include fontSize($fontSizeLarge);
 }
 
 table.data-table .price .currency-tax {
-    @include fontSize(10);
+    @include fontSize($fontSizeExtraExtraSmall);
 }
 
 .product .logo {
     height: 50px;
     margin: 0 $spacingMedium $spacingMedium 0;
 
-    @include boxGlow($colourGreyLight, 10px, 0, 1);
+    @include boxGlow($colourGreyLight, $spacingMedium, 0, 1);
 }
 
 .product .summary {
     @include fontSize(13);
     color: $textColour;
     line-height: 150%;
-}
-
-.energy-rating {
-    background: #569E6C;
-    border-left: 5px solid #0E7F30;
-    padding: 3px 5px !important;
-    margin: 5px 0 !important;
-    -webkit-border-radius: 0 4px 4px 0;
-    -moz-border-radius: 0 4px 4px 0;
-    border-radius: 0 4px 4px 0;
-    color: #FFF;
-    text-shadow: 0 1px 0 #FFD980;
-    text-shadow: 0 1px 0 rgb(0, 0, 0);
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
-    font-weight: normal;
-    font-size: 11px !important;
-    line-height: 100%;
 }
 
 .product-back-button {
@@ -136,60 +118,42 @@ table.data-table .price .currency-tax {
 }
 
 .product-information {
+    margin: 0 $spacingLarge 0 0;
+    padding: $spacingSmall 0 0 0;
+
     float: left;
-    margin: 0 15px 0 0;
-    padding: 5px 0 0 0;
 }
 
 .product-information ul {
-    margin: 0 0 0 10px;
+    margin: 0 0 0 $spacingMedium;
     padding: 0;
 }
 
 .product-information ul li {
-    list-style: none;
+    padding: 0;
     margin: 0;
-    line-height: 16px;
-    padding: 0 0 0 25px;
-    font-size: 12px;
-    color: #000;
-}
 
-.product-information ul li.bullet {
-    background: url(/bundles/kacshop/images/icons/small-bullet.png) top left no-repeat;
-}
-
-.product-information ul li.green-tick {
-    background: url(/bundles/kacshop/images/icons/small-green-tick.png) top left no-repeat;
-}
-
-.product-information ul li.red-cross {
-    background: url(/bundles/kacshop/images/icons/small-red-cross.png) top left no-repeat;
+    list-style: none;
+    line-height: 18px;
+    @include fontSize($fontSizeMedium);
+    color: $colourBlack;
 }
 
 .product-options {
     float: right;
-    padding: 5px 0 0 0;
+    padding: $spacingSmall 0 0 0;
 }
 
 .product p, .product-description p {
-    line-height: 120%;
+    margin: 0 0 $spacingMedium 0;
     padding: 0px;
-    margin: 0 0 10px 0;
-    font-size: 10px;
-}
 
-.product p.product-code, .product p.product-code a, p.product-code, .product p.colour, .product p.colour a, p.colour {
-    font-size: 11px;
-    color: #4EC0E3 !important;
-}
-
-#product-price .product-code {
-    font-size: 18px !important;
+    line-height: 120%;
+    @include fontSize($fontSizeExtraSmall);
 }
 
 .product .product-description li {
-    color: #676767;
+    color: $colourGrey;
     line-height: 100%;
 }
 
@@ -198,66 +162,20 @@ table.data-table .price .currency-tax {
 }
 
 .product .product-description ul {
-    margin-bottom: 10px;
-}
-
-.product .product-was-price, .product-was-price {
-    color: #FF2300 !important;
-    font-size: 11px !important;
-    padding: 0 !important;
-}
-
-.product .product-tax, .product-tax {
-    color: #FF2300 !important;
-    font-size: 9px !important;
-    padding: 0 !important;
-}
-
-.product .membership-card-price, .membership-card-price {
-    color: #000 !important;
-    font-size: 11px !important;
-    padding: 0 0 10px 0 !important;
-}
-
-.product .product-was-price span, .product-was-price span {
-    text-decoration: line-through !important;
-}
-
-.product .product-tax, .product-tax {
-    padding: 0 0 5px 0 !important;
-}
-
-.product .product-price, .product .product-price a, .product-price, .product-price a {
-    font-size: 24px !important;
-    color: #FF2300 !important;
-    letter-spacing: 0px !important;
-    font-weight: 900 !important;
-    padding: 0 !important;
+    margin-bottom: $spacingMedium;
 }
 
 .product .features-link {
-    padding: 5px 10px;
+    padding: $spacingSmall $spacingMedium;
+    margin: $spacingMedium 0;
+
+    @include boxShadow($colourBlack, 0, 0, 2px, 0, 0.3);
     line-height: 100%;
-    margin: 10px 0;
-    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
-    background: #83939c; /* Old browsers */
-    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzgzOTM5YyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0NTRkNTIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-    background: -moz-linear-gradient(top, #83939c 0%, #454d52 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #83939c), color-stop(100%, #454d52)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #83939c 0%, #454d52 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #83939c 0%, #454d52 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #83939c 0%, #454d52 100%); /* IE10+ */
-    background: linear-gradient(top, #83939c 0%, #454d52 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#83939c', endColorstr='#454d52', GradientType=0); /* IE6-8 */
-    color: #FFF;
-    text-shadow: 0 1px 0 #000;
-    text-shadow: 0 1px 0 rgb(0, 0, 0);
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+    @include verticalGradientGreyToGreyDark;
+    color: $colourWhite;
+    @include textShadow($colourBlack, 0, 1px);
     cursor: pointer;
-    border: 1px solid #454D52;
+    border: 1px solid $colourGrey;
 }
 
 .product .features {
@@ -266,44 +184,47 @@ table.data-table .price .currency-tax {
 }
 
 .product dt {
-    float: left;
     width: 99px;
-    padding: 5px;
     margin: 0 0 3px 0;
-    font-size: 11px;
+    padding: $spacingSmall;
+
+    float: left;
+
+    @include fontSize($fontSizeSmall);
     line-height: 100%;
-    border-left: 1px solid #D5D5D5;
-    border-top: 1px solid #D5D5D5;
-    border-bottom: 1px solid #D5D5D5;
+    border-left: 1px solid $colourGreyLight;
+    border-top: 1px solid $colourGreyLight;
+    border-bottom: 1px solid $colourGreyLight;
     text-align: right;
 }
 
 .product dt.even {
-    background: #EDEDED;
+    background: $colourGreyExtraExtraLight;
 }
 
 .product dt.odd {
-    background: #D5D5D5;
+    background: $colourGreyExtraLight;
 }
 
 .product dd {
+    width: 136px;
+    padding: $spacingSmall;
+    margin: 0 0 3px 0;
+
     float: left;
     line-height: 100%;
-    width: 136px;
-    padding: 5px;
-    margin: 0 0 3px 0;
-    font-size: 11px;
-    border-right: 1px solid #D5D5D5;
-    border-top: 1px solid #D5D5D5;
-    border-bottom: 1px solid #D5D5D5;
+    @include fontSize($fontSizeSmall);
+    border-right: 1px solid $colourGreyLight;
+    border-top: 1px solid $colourGreyLight;
+    border-bottom: 1px solid $colourGreyLight;
 }
 
 .product .product-compare {
-    margin: 10px 0;
+    margin: $spacingMedium 0;
 }
 
 .product .product-short-description {
-    padding: 10px 0 0 0;
+    padding: $spacingMedium 0 0 0;
 }
 
 .product .product-short-description p {
@@ -311,13 +232,14 @@ table.data-table .price .currency-tax {
     margin: 0 !important;
     width: 180px;
     height: 24px;
+
     line-height: 12px !important;
-    font-size: 11px !important;
+    @include fontSize($fontSizeSmall);
     overflow: hidden;
 }
 
 .product-header {
-    padding-left: 20px;
+    padding-left: $spacingExtraLarge;
 }
 
 .product ul.breadcrumbs li {
@@ -330,21 +252,24 @@ table.data-table .price .currency-tax {
     position: relative;
 
     border: 3px solid $colourGreyLight;
-    @include boxGlow($colourGrey, 10px, 0, 1);
+    @include boxGlow($colourGrey, $spacingMedium, 0, 1);
+}
+
+.product-listing img {
+    display: block;
 }
 
 .product-listing .name {
-    padding: 5px;
+    padding: 0 $spacingSmall;
 
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
 
-    line-height: 100%;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    line-height: 150%;
+    @include alphaBackground($colourBlack, 0.5);
+    color: $colourWhite;
     text-align: center;
     @include selectNone;
 }
@@ -360,12 +285,443 @@ table.data-table .price .currency-tax {
     display: block;
 
     @include highlightedVerticalGradientDarkRed;
-    @include boxGlow($colourDarkRed, 5px);
+    @include boxGlow($colourRed, 5px);
     border: 1px solid $colourWhite;
     @include fontSize($fontSizeExtraSmall);
     @include equalBorderRadius(15px);
     line-height: 28px;
-    color: #fff;
+    color: $colourWhite;
     text-align: center;
     @include selectNone;
+}
+
+.product-sorting-container, .product-filtering-container {
+    padding: $spacingSmall 0;
+
+    @include verticalGradientWhiteToGreyLight;
+}
+
+.product-sorting-container-top, .product-filtering-container {
+    margin: -#{$spacingMedium} -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+
+    border-bottom: 2px solid $colourGrey;
+    border-radius: 4px 4px 0 0;
+}
+
+.product-sorting-container-bottom {
+    margin: $spacingMedium -#{$spacingMedium} -#{$spacingMedium} -#{$spacingMedium};
+
+    border-top: 2px solid $colourGrey;
+    border-radius: 0 0 4px 4px;
+}
+
+.product-sorting-container > div > span, .product-filtering-container > div > span {
+    padding: 0 $spacingSmall 0 0;
+
+    line-height: 40px;
+    @include fontSize($fontSizeSmall);
+}
+
+.product-sorting-container .selector {
+    margin: 0 $spacingSmall 0 0;
+}
+
+.product-sorting-container .selector span {
+    @include fontSize($fontSizeSmall);
+}
+
+.product-sorting-container .ui-button {
+    padding: 3px 0;
+    margin: 0 0 -4px -4px;
+}
+
+.product-sorting-container .ui-button span {
+    padding: 0 8px;
+}
+
+.product-sorting-container .ui-button .ui-icon {
+    padding: 0;
+}
+
+.filters .ui-widget header h2 {
+    letter-spacing: 0;
+    @include fontSize(13);
+    font-family: $primaryFontFamily;
+}
+
+.filter-header-buttons-container {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+}
+
+.filter-header-buttons-container .ui-button {
+    padding: 0 2px;
+}
+
+.filter,
+.price-range-filter {
+    padding: 0;
+
+    background: $colourGreyExtraLight;
+    border-radius: 0 0 4px 4px;
+}
+
+.price-range-filter {
+    padding: $spacingSmall $spacingLarge;
+}
+
+.range-slider-values {
+    text-align: center;
+}
+
+.range-slider-values input {
+    width: 60px;
+    text-align: center;
+}
+
+.price-range {
+    margin: $spacingSmall 0 $spacingSmall 0;
+}
+
+.price-range .ui-slider-range {
+    padding: 0;
+}
+
+.filter ul li a.selected-filter {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.filter label {
+    line-height: 18px;
+}
+
+.filter ul {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.filter > ul {
+    padding: 0 0 $spacingSmall 0;
+}
+
+.filter ul li {
+    padding: $spacingExtraSmall $spacingSmall $spacingExtraSmall 28px;
+    margin: 0;
+
+    display: block;
+
+    list-style: none;
+    background-colour: $colourGreyExtraLight;
+    border-bottom: 1px solid $colourGreyLight;
+    color: $colourBlack;
+    position: relative;
+}
+
+.jstree a {
+    font-size: 11px;
+    line-height: 18px;
+}
+
+.jstree li,
+.jstree ins {
+    background-image: url("#{$pluginsPath}/jstree/resources/images/jstree_d.png");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 108px 18px;
+}
+
+.jstree li {
+    background-position: -90px 0;
+    background-repeat: repeat-y;
+}
+
+.jstree .jstree-open > ins {
+    background-position: -36px 0;
+}
+
+.jstree .jstree-closed > ins {
+    background-position: -18px 0;
+}
+
+.jstree .jstree-leaf > ins {
+    background-position: 0 0;
+}
+
+.jstree .jstree-no-dots li {
+    background-position: -108px 0;
+}
+
+.jstree .jstree-no-dots .jstree-open > ins {
+    background-position: -72px 0;
+}
+
+.jstree .jstree-no-dots .jstree-closed > ins {
+    background-position: -54px 0;
+}
+
+.jstree li,
+.jstree ins {
+    _background-image: url("#{$pluginsPath}/jstree/resources/images/jstree_d.gif");
+}
+
+.jstree .jstree-open ins {
+    _background-position: -36px 0;
+}
+.jstree .jstree-closed ins {
+    _background-position: -18px 0;
+}
+.jstree .jstree-leaf ins {
+    _background-position: 0 0;
+}
+
+@media
+screen and (-webkit-min-device-pixel-ratio: 1.25),
+screen and (-webkit-min-device-pixel-ratio: 1.3),
+screen and (-webkit-min-device-pixel-ratio: 1.5),
+screen and (-webkit-min-device-pixel-ratio: 2),
+screen and (min--moz-device-pixel-ratio: 1.25),
+screen and (min--moz-device-pixel-ratio: 1.3),
+screen and (min--moz-device-pixel-ratio: 1.5),
+screen and (min--moz-device-pixel-ratio: 2),
+screen and (-o-min-device-pixel-ratio: 1.25/1),
+screen and (-o-min-device-pixel-ratio: 1.3/1),
+screen and (-o-min-device-pixel-ratio: 1.5/1),
+screen and (-o-min-device-pixel-ratio: 2/1),
+screen and (min-device-pixel-ratio: 1.25),
+screen and (min-device-pixel-ratio: 1.3),
+screen and (min-device-pixel-ratio: 1.5),
+screen and (min-device-pixel-ratio: 2),
+screen and (min-resolution: 120dpi),
+screen and (min-resolution: 124.8dpi),
+screen and (min-resolution: 144dpi),
+screen and (min-resolution: 192dpi),
+screen and (min-resolution: 1.25dppx),
+screen and (min-resolution: 1.3dppx),
+screen and (min-resolution: 1.5dppx),
+screen and (min-resolution: 2dppx) {
+    .jstree li,
+    .jstree ins {
+        background-image:url("#{$pluginsPath}/jstree/resources/images/jstree_d@2x.png");
+    }
+}
+
+.department-filter ul {
+    padding: 0 0 0 18px !important;
+}
+
+.department-filter > ul {
+    padding: $spacingMedium $spacingSmall !important;
+}
+
+.department-filter ul li {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    background-color: transparent;
+    border: 0;
+}
+
+.department-filter > ul > li {
+    margin: 0;
+}
+
+.department-filter ul li a {
+    border: 0 none;
+    @include ellipsis;
+    text-decoration: none;
+}
+
+.department-filter ul li a:hover {
+    text-decoration: underline;
+}
+
+.department-filter ul li ins {
+    width: 18px;
+    height: 18px;
+
+    float: left;
+    overflow: hidden;
+
+    background-repeat: no-repeat;
+    background-size: 108px 18px;
+    cursor: pointer;
+}
+
+.filter ul li .checker {
+    position: absolute;
+    top: $spacingExtraSmall;
+    left: $spacingSmall;
+}
+
+.filter ul li.filter-sub-department {
+    padding: $spacingExtraSmall $spacingSmall $spacingExtraSmall 60px !important;
+}
+
+.filter ul li.filter-sub-department .checker {
+    left: 32px;
+}
+
+.filter ul li.filter-feature-group {
+    padding: $spacingSmall 26px $spacingSmall $spacingSmall !important;
+
+    position: relative;
+
+    border-bottom: 1px solid $colourGreyLight !important;
+    cursor: pointer;
+    color: $colourGreyDark;
+    @include verticalGradientWhiteToGreyLight;
+}
+
+.filter ul li.filter-feature-group .ui-icon {
+    position: absolute;
+    top: 4px;
+    right: $spacingSmall;
+}
+
+.filter ul li label {
+    @include fontSize($fontSizeExtraSmall);
+    cursor: pointer;
+}
+
+.filter ul li label a {
+    color: $colourBlack;
+    cursor: pointer;
+}
+
+.filter ul li.filter-sub-department label {
+    @include fontSize($fontSizeSmall);
+}
+
+.filter ul li .checker {
+    margin: 0 $spacingSmall 0 0 !important;
+}
+
+.filter ul li span.fr {
+    width: 30px;
+
+    line-height: 20px;
+    @include fontSize($fontSizeMedium);
+    display: block;
+    text-align: right;
+    color: $colourGrey;
+}
+
+.add-to-basket {
+    width: 136px;
+    height: 40px;
+    margin: $spacingSmall;
+
+    display: block;
+    position: relative;
+}
+
+.add-to-basket input.quantity {
+    width: 40px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    text-align: center;
+    @include borderRadius($radiusSize, 0, 0, $radiusSize);
+}
+
+.add-to-basket .buy {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.add-to-basket .increase-quantity,
+.add-to-basket .decrease-quantity {
+    position: absolute;
+    left: 40px;
+}
+
+.add-to-basket .increase-quantity .ui-button-text,
+.add-to-basket .decrease-quantity .ui-button-text {
+    width: 10px;
+    height: 12px;
+    padding: 0 $spacingExtraSmall;
+
+    display: block;
+
+    line-height: 12px;
+    text-align: center;
+}
+
+.add-to-basket .increase-quantity {
+    top: 0;
+
+    @include borderRadius(0, $radiusSize, 0, 0);
+}
+
+.add-to-basket .decrease-quantity {
+    bottom: 0;
+
+    @include borderRadius(0, 0, $radiusSize, 0);
+}
+
+.add-to-basket .buy .ui-button-text {
+    padding: 0 $spacingSmall;
+}
+
+.product td .form-helper {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+}
+
+.product td p {
+    line-height: 150%;
+    margin: 0;
+}
+
+.ui-widget-content p {
+    line-height: 150%;
+}
+
+.product-image-container {
+    padding: $spacingMedium;
+    margin: 0 $spacingMedium 0 0;
+
+    background: $colourWhite;
+    @include boxShadow($colourGreyMedium, 0, 0, $spacingMedium);
+}
+
+.product .border-bottom-separator {
+    border-bottom: 1px solid $colourGreyExtraLight;
+    @include noBoxShadow;
+}
+
+.product-listing-header {
+    @include verticalGradientGreyExtraLightToWhite;
+}
+
+.product-listing-header h1 {
+    padding: $spacingMedium;
+    margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+
+    float: left;
+
+    color: $colourWhite;
+    @include alphaBackground($colourGreyDark, 0.8);
+    font-family: $primaryFontFamily;
+    @include fontSize($fontSizeExtraExtraExtraLarge);
+    @include textShadow($colourBlack, 0, 1px);
+    font-weight: normal;
+}
+
+.product-listing-header p {
+    padding: 0 0 $spacingMedium 0;
+    margin: 0;
+
+    @include fontSize($fontSizeSmall);
+    line-height: 16px;
 }

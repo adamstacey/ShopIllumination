@@ -131,7 +131,7 @@ class BugsController extends Controller
     			if (!$this->listing['sortable'])
     			{
 		    		// Notify user
-		    		$this->get('session')->setFlash('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
+		    		$this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
 		    		
 		    		// Forward
 		    		return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath']));
@@ -141,9 +141,9 @@ class BugsController extends Controller
     		// Notify user
     		if ($delete > 0)
 	    	{
-    			$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
+    			$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been deleted.');
     		} else {
-	    		$this->get('session')->setFlash('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
+	    		$this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
     		}
     		
     		// Forward
@@ -520,7 +520,7 @@ class BugsController extends Controller
     		$em->flush();
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'Thank you, the bug has been reported and assigned to the development team.');
+    		$this->get('session')->getFlashBag()->add('success', 'Thank you, the bug has been reported and assigned to the development team.');
     		
     		// Forward
     		if ($addAnother > 0)
@@ -587,7 +587,7 @@ class BugsController extends Controller
     		$em->flush();
     		
     		// Notify user
-    		$this->get('session')->setFlash('success', 'Bug #'.$id.' has been updated.');
+    		$this->get('session')->getFlashBag()->add('success', 'Bug #'.$id.' has been updated.');
     		
     		// Forward
     		if ($goBack > 0)

@@ -6,6 +6,11 @@ $zIndex: $zIndex + 1;
 }
 
 $zIndex: $zIndex + 1;
+.footer {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
 .unique-selling-points-container {
     z-index: $zIndex;
 }

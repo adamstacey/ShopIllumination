@@ -104,6 +104,8 @@ ALTER TABLE product_to_option ENGINE=InnoDB;
 ALTER TABLE routing ENGINE=InnoDB;
 DROP TABLE brand_index;
 DROP TABLE department_index;
+DROP TABLE product_index_copy;
+DROP TABLE product_index_copy2;
 DROP TABLE keyword_suggestions;
 DROP TABLE product_indexs;
 DROP TABLE product_searchs;
@@ -450,5 +452,31 @@ INSERT INTO `routing` (`object_id`, `object_type`, `locale`, `url`, `created_at`
 ALTER TABLE redirects ADD secondary_id INT NOT NULL;
 UPDATE images i SET object_type = 'brand' WHERE (SELECT bd.id FROM brand_descriptions bd WHERE i.id = bd.logo_image_id) > 0;
 UPDATE `images` SET `object_type`='product' WHERE image_type='product';
+ALTER TABLE orders DROP membership_card_purchased, DROP membership_card_number;
 UPDATE order_products SET variant_id = product_id WHERE variant_id IS NULL;
+DELETE FROM `routing` WHERE object_type =  'department' AND 0 = ( SELECT COUNT( * ) FROM departments d  WHERE object_id = d.id );
+ALTER TABLE product_links ADD category VARCHAR(255) DEFAULT NULL;
+CREATE TABLE product_variant_links (id INT AUTO_INCREMENT NOT NULL, variant_id INT DEFAULT NULL, linked_product_id INT DEFAULT NULL, active TINYINT(1) NOT NULL, link_type VARCHAR(255) NOT NULL, category VARCHAR(255) DEFAULT NULL, display_order INT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_8BE522B73B69A9AF (variant_id), INDEX IDX_8BE522B7D240BD1D (linked_product_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE product_variant_links ADD CONSTRAINT FK_8BE522B73B69A9AF FOREIGN KEY (variant_id) REFERENCES product_variants (id);
+ALTER TABLE product_variant_links ADD CONSTRAINT FK_8BE522B7D240BD1D FOREIGN KEY (linked_product_id) REFERENCES products (id);
+ALTER TABLE routing ADD key0 VARCHAR(255) DEFAULT NULL, ADD value0 VARCHAR(255) DEFAULT NULL;
+ALTER TABLE brands ADD template VARCHAR(255) NOT NULL;
+DROP TABLE product_to_option;
+UPDATE brands SET template='standard';
+UPDATE brands SET template='maia' WHERE id = 15;
+ALTER TABLE order_products DROP FOREIGN KEY FK_5242B8EB4584665A;
+ALTER TABLE order_products ADD CONSTRAINT FK_5242B8EB4584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE SET NULL;
+CREATE TABLE types (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, object_type VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+ALTER TABLE product_variants ADD type_id INT DEFAULT NULL;
+ALTER TABLE product_variants ADD CONSTRAINT FK_78283976C54C8C93 FOREIGN KEY (type_id) REFERENCES types (id);
+CREATE INDEX IDX_78283976C54C8C93 ON product_variants (type_id);
+ALTER TABLE orders DROP membership_card_purchased, DROP membership_card_number;
+INSERT INTO `types` (`id`, `name`, `object_type`, `created_at`, `updated_at`) VALUES
+(1, 'Default', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'Worktops', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 'Breakfast Bars', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(4, 'Island Worktops', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(5, 'Sink Modules', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(6, 'Edging', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
+(7, 'Finishing Touch', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00');
 SET FOREIGN_KEY_CHECKS = 1;

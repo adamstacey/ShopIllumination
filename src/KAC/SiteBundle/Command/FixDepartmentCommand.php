@@ -103,10 +103,10 @@ class FixDepartmentCommand extends ContainerAwareCommand
             }
         }
     }
-    
+
     private function createTempDepartment(Department $department, $parent) {
         $new = new DepartmentTmp();
-        
+
         $new->setId($department->getId());
         $new->setParent($parent);
         $new->setStatus($department->getStatus());
@@ -119,7 +119,7 @@ class FixDepartmentCommand extends ContainerAwareCommand
         $new->setDisplayOrder($department->getDisplayOrder());
         $new->setCreatedAt($department->getCreatedAt());
         $new->setUpdatedAt($department->getUpdatedAt());
-        
+
         return $new;
     }
 }

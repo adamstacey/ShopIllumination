@@ -493,7 +493,10 @@ class Image
     {
         foreach ($this->filesForRemoval as $fileForRemoval)
         {
-            unlink($fileForRemoval);
+            if(file_exists($fileForRemoval))
+            {
+                unlink($fileForRemoval);
+            }
         }
     }
 

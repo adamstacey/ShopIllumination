@@ -150,6 +150,9 @@ class BasketController extends Controller
     	$basketService = $this->get('web_illumination_admin.basket_service');
     	$productService = $this->get('web_illumination_admin.product_service');
 
+        // Initialise the session
+        $basketService->initialiseBasketSession();
+
         // Get submitted data
         $productId = $request->query->get('productId');
         $variantId = $request->query->get('variantId', $productId);
@@ -161,6 +164,12 @@ class BasketController extends Controller
         // Get the product
         $product = $productService->getProduct($productId, 'en', 'GBP');
         $variant = $productService->getVariant($variantId, 'en', 'GBP');
+
+        if(!$product || !$variant)
+        {
+            throw $this->createNotFoundException();
+        }
+
         $header = $product['pageTitle'];
         $url = $product['url'];
         if(count($product['images']) > 0)

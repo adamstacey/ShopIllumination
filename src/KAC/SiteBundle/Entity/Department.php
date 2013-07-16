@@ -25,32 +25,38 @@ class Department implements DescribableInterface
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\BrandToDepartment", mappedBy="department", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      **/
     private $brands;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Description", mappedBy="department", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      **/
     private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\DepartmentToFeature", mappedBy="department", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      **/
     private $features;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Image", mappedBy="department", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $images;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Document", mappedBy="department", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $documents;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Department\Routing", mappedBy="department", cascade={"all"})
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $routings;
 

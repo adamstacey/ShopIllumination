@@ -5,34 +5,32 @@
 
 {% block fos_user_content %}
     <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="form" id="form-request-password">
-        <div class="clearfix">
+        <fieldset>
             {% if invalid_username is defined %}
-                <div class="info-message ui-status-highlight">
-                    <span class="info-message-icon ui-icon ui-icon-info"></span>
-                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
-                    <div class="clear"></div>
+                <div class="message message-help">
+                    <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
+                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
                 </div>
             {% else %}
-                <div class="info-message ui-status-highlight">
-                    <span class="info-message-icon ui-icon ui-icon-info"></span>
+                <div class="message message-help">
+                    <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
                     <p>If you have forgotten your password enter your email address and we will email you instructions on how to reset your password.</p>
-                    <div class="clear"></div>
                 </div>
             {% endif %}
-            <div class="clearfix">
-                <label for="username" class="form-label">
-                    <em>*</em> Your Email Address<small>Enter a valid email address</small>
-                </label>
-                <div class="form-input">
-                    <input class="full email" required="required" data-message="Enter a valid email address" type="email" id="username" name="username"  />
+            <div class="form-element widget-group clearfix">
+                <span title="Enter a valid email address" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                <div class="widget widget-1-of-3">
+                    <label for="username"><em class="required" title="This field is required">*</em>&nbsp;Your Email Address</label>
+                </div>
+                <div class="widget widget-2-of-3">
+                    <input class="fill username text" required="required" type="email" id="username" name="username" />
                 </div>
             </div>
+        </fieldset>
 
-            <div class="clearfix">
-                <div class="form-input buttons no-margin-bottom">
-                    <button type="submit" class="button action-reset-password ui-button-green" data-icon-primary="ui-icon-key">Reset Password</button>
-                    <a href="{{ path('fos_user_security_login') }}" class="button action-secure-login ui-button-blue" data-icon-primary="ui-icon-key">Back to Login</a>
-                </div>
-            </div>
+        <div class="clearfix">
+            <button type="submit" class="button button-green fr">Reset Password</button>
+            <a href="{{ path('fos_user_security_login') }}" class="button button-blue mrs fr">Back to Login</a>
+        </div>
     </form>
 {% endblock fos_user_content %}

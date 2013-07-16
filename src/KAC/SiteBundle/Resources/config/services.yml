@@ -49,6 +49,7 @@ services:
         class: KAC\SiteBundle\Indexer\ProductIndexer
         arguments: [@solarium.client.product, @doctrine]
 
+<<<<<<< HEAD
     # Listeners
     kac_site.listener.product:
         class: KAC\SiteBundle\EventListener\ProductListener
@@ -79,6 +80,36 @@ services:
             - { name: doctrine.event_listener, event: preRemove, method: preRemove}
             - { name: doctrine.event_listener, event: postRemove, method: preRemove}
     kac_site.listener.document:
+  # Listeners
+  kac_site.listener.product:
+      class: KAC\SiteBundle\EventListener\ProductListener
+      arguments: [@kac_site.manager.product, @kac_site.indexer.product]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+  kac_site.listener.variant:
+      class: KAC\SiteBundle\EventListener\VariantListener
+      arguments: [@kac_site.manager.product, @kac_site.indexer.product]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: postRemove, method: postRemove}
+  kac_site.listener.image:
+      class: KAC\SiteBundle\EventListener\ImageListener
+      arguments: [@kac_site.manager.image]
+      tags:
+          - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+          - { name: doctrine.event_listener, event: postPersist, method: postPersist }
+          - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+          - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
+          - { name: doctrine.event_listener, event: preRemove, method: preRemove}
+          - { name: doctrine.event_listener, event: postRemove, method: preRemove}
+  kac_site.listener.document:
         class: KAC\SiteBundle\EventListener\DocumentListener
         arguments: [@kac_site.manager.document]
         tags:

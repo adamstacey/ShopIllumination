@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\DiscriminatorColumn(name="object_type", type="string")
  * @ORM\DiscriminatorMap({
  *     "product" = "KAC\SiteBundle\Entity\Product\Routing",
+ *     "product_with_feature" = "KAC\SiteBundle\Entity\Product\FeatureRouting",
  *     "product_variant" = "KAC\SiteBundle\Entity\Product\Variant\Routing",
  *     "department" = "KAC\SiteBundle\Entity\Department\Routing",
  *     "brand" = "KAC\SiteBundle\Entity\Brand\Routing",
@@ -43,7 +44,7 @@ class Routing
     /**
      * @ORM\Column(name="locale", type="string", length=5)
      */
-    private $locale = "en_GB";
+    private $locale = "en";
     
 	/**
      * @ORM\Column(name="url", type="string", length=255, unique=true)

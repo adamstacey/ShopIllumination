@@ -133,9 +133,11 @@ class ProductController extends Controller {
         }
 
         // Find template from the departments
-        $template = 'default';
+        $template = 'standard';
         $departments = array();
-        if($product->getDepartment()) {
+        if($product->getTemplate()) {
+            $template = $product->getTemplate();
+        } elseif($product->getDepartment()) {
             // Check the department tree
             $currDepartment = $product->getDepartment()->getDepartment();
             do {
@@ -150,10 +152,10 @@ class ProductController extends Controller {
         }
 
         // Find competitors prices
-        $googleApi = $this->get('kac_site.google.google');
-        $competitorPrices = $googleApi->findMoreExpensiveProducts($cheapestVariant->getProductCode(), $lowestPrice !== null ? $lowestPrice->getListPrice() : $highestPrice->getListPrice(), 5);
+//        $googleApi = $this->get('kac_site.google.google');
+//        $competitorPrices = $googleApi->findMoreExpensiveProducts($cheapestVariant->getProductCode(), $lowestPrice !== null ? $lowestPrice->getListPrice() : $highestPrice->getListPrice(), 5);
 
-        return $this->render('KACSiteBundle:Product:view\\'.$template.'.html.twig', array(
+        return $this->render('KACSiteBundle:Product:Templates/'.$template.'.html.twig', array(
             'product' => $product,
             'departments' => $departments,
             'gallery_images' => $galleryImages,
@@ -162,7 +164,7 @@ class ProductController extends Controller {
             'highest_price' => $highestPrice,
             'common_features' => $commonFeatures,
             'variant_features' => $variantFeatures,
-            'competitorPrices' => $competitorPrices,
+//            'competitorPrices' => $competitorPrices,
         ));
     }
 
@@ -299,7 +301,7 @@ class ProductController extends Controller {
                 }
 
                 // Notify user
-                $this->get('session')->setFlash('notice', sizeof($featureGroups).' new feature group'.(sizeof($featureGroups) == 1?' has':'s have').' been added.');
+                $this->get('session')->getFlashBag()->add('notice', sizeof($featureGroups).' new feature group'.(sizeof($featureGroups) == 1?' has':'s have').' been added.');
 
                 // Check if request is modal
                 if ($request->query->get('modal') == true)
@@ -354,7 +356,7 @@ class ProductController extends Controller {
                 }
 
                 // Notify user
-                $this->get('session')->setFlash('notice', sizeof($features).' new feature'.(sizeof($features) == 1?' has':'s have').' been added.');
+                $this->get('session')->getFlashBag()->add('notice', sizeof($features).' new feature'.(sizeof($features) == 1?' has':'s have').' been added.');
 
                 // Check if request is modal
                 if ($request->query->get('modal') == true)

@@ -1,8 +1,10 @@
 <?php
 namespace KAC\SiteBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\SiteBundle\Entity\Product\Variant;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\ExecutionContext;
@@ -29,42 +31,49 @@ class Product implements DescribableInterface
     private $brand;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $descriptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
      * @Serializer\Exclude()
      */
     private $departments;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Serializer\Exclude()
      * @Assert\Valid()
      */
     private $links;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Image", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Image", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Document", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Document", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $documents;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "ASC"})
      */
     private $variants;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Routing", mappedBy="product", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Routing", mappedBy="product", cascade={"all"}, orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $routings;
 
@@ -175,24 +184,47 @@ class Product implements DescribableInterface
      */
     public function __construct()
     {
-        $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->descriptions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->departments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->links = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->features = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->routings = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->variants = new ArrayCollection();
+        $this->descriptions = new ArrayCollection();
+        $this->departments = new ArrayCollection();
+        $this->links = new ArrayCollection();
+        $this->features = new ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->routings = new ArrayCollection();
     }
 
     public function __toString()
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0]->getName();
+            return $this->descriptions[0]->getHeader();
         } else {
             return "";
         }
+    }
+
+    public function getPriceRange()
+    {
+        $lowestPrice = -1;
+        $highestPrice = -1;
+
+        foreach($this->getVariants() as $variant)
+        {
+            foreach ($variant->getPrices() as $price) {
+                if ($lowestPrice === -1 || $price->getListPrice() < $lowestPrice) {
+                    $lowestPrice = $price->getListPrice();
+                }
+                if ($highestPrice === -1 || $price->getListPrice() > $highestPrice) {
+                    $highestPrice = $price->getListPrice();
+                }
+            }
+        }
+
+        return array(
+            'low' => $lowestPrice,
+            'high' => $highestPrice,
+        );
     }
 
     public function isDeleted()
@@ -585,10 +617,10 @@ class Product implements DescribableInterface
     /**
      * Add variants
      *
-     * @param \KAC\SiteBundle\Entity\Product\Variant $variants
+     * @param Variant $variants
      * @return Product
      */
-    public function addVariant(\KAC\SiteBundle\Entity\Product\Variant $variants)
+    public function addVariant(Variant $variants)
     {
         $this->variants[] = $variants;
         $variants->setProduct($this);
@@ -599,9 +631,9 @@ class Product implements DescribableInterface
     /**
      * Remove variants
      *
-     * @param \KAC\SiteBundle\Entity\Product\Variant $variants
+     * @param Variant $variants
      */
-    public function removeVariant(\KAC\SiteBundle\Entity\Product\Variant $variants)
+    public function removeVariant(Variant $variants)
     {
         $this->variants->removeElement($variants);
     }
@@ -609,7 +641,7 @@ class Product implements DescribableInterface
     /**
      * Get variants
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Variant[]
      */
     public function getVariants()
     {

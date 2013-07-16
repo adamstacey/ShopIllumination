@@ -20,6 +20,7 @@
                                 <section class="ui-widget-content ui-corner-all">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
+                                        {{ form_row(form.type) }}
                                         {% for description in form.descriptions %}
                                             {{ form_rest(description) }}
                                         {% endfor %}

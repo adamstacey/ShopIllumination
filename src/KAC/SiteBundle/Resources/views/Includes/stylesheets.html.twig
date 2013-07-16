@@ -1,7 +1,6 @@
 {% stylesheets
     '@KACSiteBundle/Resources/public/css/reset.scss'
-    '@KACSiteBundle/Resources/public/css/core.scss'
-    output='css/core-compressed.css'
+    output='css/reset-compressed.css'
     filter='compass,?yui_css'
 %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
@@ -12,6 +11,13 @@
     '@KACSiteBundle/Resources/public/plugins/treetable/stylesheets/jquery.treetable.css'
     output='css/plugins-compressed.css'
     filter='?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/core.scss'
+    output='css/core-compressed.css'
+    filter='compass,?yui_css'
 %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 {% endstylesheets %}
