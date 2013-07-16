@@ -1,19 +1,24 @@
 <?php
 namespace KAC\SiteBundle\Manager;
 
+use FOS\UserBundle\Model\UserManagerInterface;
 use KAC\SiteBundle\Model\Basket;
+use KAC\UserBundle\Entity\User;
 use Knp\Snappy\Pdf;
 
 use KAC\SiteBundle\Entity\Order;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Omnipay\Common\CreditCard;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class OrderManager extends Manager
 {
 
     private $session;
     private $basketManager;
+    private $userManager;
+    private $securityContext;
 
     /**
      * @var Order
@@ -24,12 +29,14 @@ class OrderManager extends Manager
      */
     private $basket;
 
-    public function __construct(Registry $doctrine, BasketManager $basketManager, SessionInterface $session)
+    public function __construct(Registry $doctrine, BasketManager $basketManager, SessionInterface $session, UserManagerInterface $userManager, SecurityContext $securityContext)
     {
         parent::__construct($doctrine);
 
         $this->session = $session;
         $this->basketManager = $basketManager;
+        $this->userManager = $userManager;
+        $this->securityContext = $securityContext;
     }
 
     public function getOrder()
@@ -97,7 +104,7 @@ class OrderManager extends Manager
 
         $order = new Order();
         $order->setStatus('Checkout');
-        $order->setCurrentStep('Billing');
+        $order->setCurrentStep('About');
 
         // Add note
         $note = new Order\Note();
@@ -105,6 +112,22 @@ class OrderManager extends Manager
         $note->setNoteType('customer');
         $note->setNotified(false);
         $order->addNote($note);
+
+        // Add user information if logged in
+        if($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+            /**
+             * @var $user User
+             */
+            $user = $this->securityContext->getToken()->getUser();
+
+            $order->setUser($user);
+            $order->setEmailAddress($user->getEmail());
+
+            if($user->getContact())
+            {
+//                $order->setTelephoneDaytime($user->getContact()->get)
+            }
+        }
 
         // Freeze the basket
         $this->bindBasketData($order, $basket);

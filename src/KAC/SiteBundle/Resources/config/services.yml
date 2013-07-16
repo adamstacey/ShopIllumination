@@ -27,7 +27,7 @@ services:
         arguments: [@doctrine, @session, @jms_serializer]
     kac_site.manager.order:
         class: KAC\SiteBundle\Manager\OrderManager
-        arguments: [@doctrine, @kac_site.manager.basket, @session]
+        arguments: [@doctrine, @kac_site.manager.basket, @session, @fos_user.user_manager, @security.context]
     kac_site.manager.file:
         class: KAC\SiteBundle\Manager\FileManager
         arguments: [@doctrine]

@@ -5,6 +5,8 @@ namespace KAC\SiteBundle\Controller;
 use KAC\SiteBundle\Entity\Order;
 use KAC\SiteBundle\Form\Basket\BasketType;
 use KAC\SiteBundle\Form\Basket\NewBasketItemType;
+use KAC\SiteBundle\Form\Checkout\AboutType;
+use KAC\SiteBundle\Form\Checkout\AboutYouType;
 use KAC\SiteBundle\Form\Checkout\BillingAddressType;
 use KAC\SiteBundle\Form\Checkout\CheckoutFlow;
 use KAC\SiteBundle\Form\Checkout\ConfirmationType;
@@ -46,6 +48,8 @@ class CheckoutController extends Controller
         $order = $manager->getOpenOrder();
 
         switch($order->getCurrentStep()) {
+            case 'About':
+                return $this->redirect($this->generateUrl('checkout_about'));
             case 'Billing':
                 return $this->redirect($this->generateUrl('checkout_billing'));
             case 'Delivery':
@@ -57,6 +61,67 @@ class CheckoutController extends Controller
             default:
                 return $this->redirect($this->generateUrl('homepage'));
         }
+    }
+
+    /**
+     * @Secure(roles="ROLE_USER")
+     * @Route("/checkout-about.html", name="checkout_about")
+     */
+    public function checkoutAboutAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $manager = $this->get('kac_site.manager.order');
+
+        // Get order
+        $order = $manager->getOpenOrder();
+        $basket = $manager->getBasket();
+
+        // Ensure that the basket has more than 1 item
+        if($basket->getTotalItems() === 0)
+        {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
+        // Check order status
+        if(!in_array($order->getCurrentStep(), array('About', 'Billing', 'Delivery', 'Payment', 'Confirmation')))
+        {
+            return $this->checkoutAction($request);
+        }
+
+        // Skip this step if the user has already registered before and has entered the required information
+        if($order->getUser() && !!$order->getUser()->getContact())
+        {
+            // Update order status
+            $manager->updateCheckoutStep($order, 'Billing');
+            $manager->saveOrder();
+
+            return $this->redirect($this->generateUrl('checkout_billing'));
+        }
+
+        $form = $this->createForm(new AboutType($basket->getDelivery()->getDeliveryOptions()), $order);
+        $form->handleRequest($request);
+
+        if($form->isValid())
+        {
+            if ($form->get('updateDelivery')->isClicked()) {
+                $manager->updateDeliveryInfo($order, $basket);
+                $manager->saveOrder();
+
+                return $this->redirect($this->generateUrl('checkout_about'));
+            } else {
+                // Update order status
+                $manager->updateCheckoutStep($order, 'Billing');
+                $manager->saveOrder();
+
+                return $this->redirect($this->generateUrl('checkout_billing'));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Checkout:checkout_about.html.twig', array(
+            'order' => $order,
+            'basket' => $basket,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
