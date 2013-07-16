@@ -19,12 +19,12 @@ class Basket
     private $items = array();
     /**
      * @var int
-     * @Serializer\Type("integer")
+     * @Serializer\Type("double")
      */
     private $totalCost = 0;
     /**
      * @var int
-     * @Serializer\Type("integer")
+     * @Serializer\Type("double")
      */
     private $totalSavings = 0;
     /**

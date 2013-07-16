@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class BasketManager extends Manager
 {
+    private $deliveryManager;
     private $session;
     private $serializer;
 
@@ -17,10 +18,11 @@ class BasketManager extends Manager
      */
     private $baskets= array();
 
-    public function __construct(Registry $doctrine, SessionInterface $session, Serializer $serializer)
+    public function __construct(Registry $doctrine, DeliveryManager $deliveryManager, SessionInterface $session, Serializer $serializer)
     {
         parent::__construct($doctrine);
 
+        $this->deliveryManager = $deliveryManager;
         $this->session = $session;
         $this->serializer = $serializer;
     }
@@ -59,11 +61,26 @@ class BasketManager extends Manager
     {
         if(array_key_exists($key, $this->baskets))
         {
-            foreach($this->baskets[$key]->getItems() as $item)
+            $basket = $this->baskets[$key];
+            foreach($basket->getItems() as $item)
             {
                 $item->calculateSavings();
             }
-            $this->baskets[$key]->getDelivery()->updateInfo($this->baskets[$key]->getItems());
+
+            $basket->getDelivery()->setZone($this->deliveryManager->calculateZone($basket->getDelivery()->getCountryCode(), $basket->getDelivery()->getPostZipCode()));
+            $basket->getDelivery()->setWeighting($this->deliveryManager->calculateWeighting($basket->getItems()));
+            $basket->getDelivery()->setWeight($this->deliveryManager->calculateWeight($basket->getItems()));
+            $basket->getDelivery()->setBand($this->deliveryManager->calculateBand($basket->getDelivery()->getWeighting()));
+            $basket->getDelivery()->setDeliveryOptions($this->deliveryManager->calculateDeliveryOptions($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()));
+
+            if($basket->getDelivery()->getService() === '' && count($basket->getDelivery()->getDeliveryOptions()) > 0)
+            {
+                $basket->getDelivery()->setService($basket->getDelivery()->getDeliveryOptions()[0]['service']);
+            }
+
+            $basket->getDelivery()->setEstimatedDeliveryDays($this->deliveryManager->calculateEstimatedDeliveryDays($basket->getDelivery()->getDeliveryOptions(), $basket->getDelivery()->getService()));
+            $basket->getDelivery()->setPrice($this->deliveryManager->calculatePrice($basket->getDelivery()->getDeliveryOptions(), $basket->getDelivery()->getService()));
+
             $this->baskets[$key]->calculateTotals();
         }
     }

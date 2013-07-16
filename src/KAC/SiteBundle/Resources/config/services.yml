@@ -24,10 +24,13 @@ services:
         arguments: [@doctrine, @kac_site.manager.seo]
     kac_site.manager.basket:
         class: KAC\SiteBundle\Manager\BasketManager
-        arguments: [@doctrine, @session, @jms_serializer]
+        arguments: [@doctrine, @kac_site.manager.delivery, @session, @jms_serializer]
     kac_site.manager.order:
         class: KAC\SiteBundle\Manager\OrderManager
         arguments: [@doctrine, @kac_site.manager.basket, @session, @fos_user.user_manager, @security.context]
+    kac_site.manager.delivery:
+        class: KAC\SiteBundle\Manager\DeliveryManager
+        arguments: [@doctrine]
     kac_site.manager.file:
         class: KAC\SiteBundle\Manager\FileManager
         arguments: [@doctrine]

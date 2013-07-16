@@ -34,22 +34,22 @@ class BasketItem
     private $quantity = 0;
     /**
      * @var int
-     * @Serializer\Type("integer")
+     * @Serializer\Type("double")
      */
     private $unitCost = 0;
     /**
      * @var int
-     * @Serializer\Type("integer")
+     * @Serializer\Type("double")
      */
     private $recommendedRetailPrice = 0;
     /**
      * @var int
-     * @Serializer\Type("integer")
+     * @Serializer\Type("double")
      */
     private $savings = 0;
     /**
      * @var int
-     * @Serializer\Type("integer")
+     * @Serializer\Type("double")
      */
     private $totalCost = 0;
     /**
