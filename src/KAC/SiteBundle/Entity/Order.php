@@ -1932,7 +1932,7 @@ class Order
     /**
      * Get products
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Order\Product[]
      */
     public function getProducts()
     {

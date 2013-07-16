@@ -59,6 +59,7 @@ class CheckoutController extends Controller
             case 'Confirmation':
                 return $this->redirect($this->generateUrl('checkout_confirmation'));
             default:
+                $manager->deleteOrder();
                 return $this->redirect($this->generateUrl('homepage'));
         }
     }
@@ -80,6 +81,7 @@ class CheckoutController extends Controller
         // Ensure that the basket has more than 1 item
         if($basket->getTotalItems() === 0)
         {
+            $manager->deleteOrder();
             return $this->redirect($this->generateUrl('homepage'));
         }
         // Check order status
@@ -140,6 +142,7 @@ class CheckoutController extends Controller
         // Ensure that the basket has more than 1 item
         if($basket->getTotalItems() === 0)
         {
+            $manager->deleteOrder();
             return $this->redirect($this->generateUrl('homepage'));
         }
         // Check order status
@@ -214,6 +217,7 @@ class CheckoutController extends Controller
         // Ensure that the basket has more than 1 item
         if($basket->getTotalItems() === 0)
         {
+            $manager->deleteOrder();
             return $this->redirect($this->generateUrl('homepage'));
         }
         // Check order status
@@ -275,6 +279,7 @@ class CheckoutController extends Controller
         // Ensure that the basket has more than 1 item
         if($basket->getTotalItems() === 0)
         {
+            $manager->deleteOrder();
             return $this->redirect($this->generateUrl('homepage'));
         }
         // Check order status
@@ -318,21 +323,34 @@ class CheckoutController extends Controller
 
                 return $this->redirect($this->generateUrl('checkout_payment'));
             } else {
+                $data = array();
+                foreach($order->getProducts() as $item)
+                {
+                    $product = array();
+                    $product['name'] = $item->getHeader();
+                    $product['productCode'] = $item->getProductCode();
+                    $product['description'] = $item->getDescription();
+                    $product['unitCost'] = number_format($item->getUnitCost(), 2, '.', '');
+                    $product["quantity"] = $item->getQuantity();
+                    $data['products'][] = $product;
+                }
+
+                $data["subTotal"] = number_format($order->getSubTotal(), 2, '.', '');
+                $data["deliveryCharge"] = number_format($order->getDeliveryCharge(), 2, '.', '');
                 /**
                  * Authorize payment
                  * @var $gateway AbstractGateway
                  * @var $paymentRequest AbstractRequest
                  */
                 $gateway = $this->get('kac_site.payment.' . $order->getPaymentType());
-                $paymentRequest = $gateway->authorize(array(
+                $paymentRequest = $gateway->authorize(array_merge($data, array(
                     'transactionId' => $order->getId(),
                     'card' => $order->getPaymentType() === 'sagepay' ? $order->getCard() : null,
-                    'amount' => '6.00',
-    //                'amount' => number_format($order->getTotal(), 2, '.', ''),
+                    'amount' => number_format($order->getTotal(), 2, '.', ''),
                     'currency' => 'GBP',
                     'returnUrl' => $this->generateUrl('checkout_confirmation', array(), true),
                     'cancelUrl' => $this->generateUrl('checkout_billing', array(), true),
-                ));
+                )));
                 try {
                     $paymentResponse = $paymentRequest->send();
                 } catch (\Exception $e) {
@@ -394,6 +412,7 @@ class CheckoutController extends Controller
         // Ensure that the basket has more than 1 item
         if($basket->getTotalItems() === 0)
         {
+            $manager->deleteOrder();
             return $this->redirect($this->generateUrl('homepage'));
         }
         // Check order status
@@ -420,8 +439,7 @@ class CheckoutController extends Controller
             $paymentRequest = $gateway->completePurchase(array(
                 'transactionId' => $order->getId(),
                 'card' => $order->getPaymentType() === 'card' ? $order->getCard() : null,
-                'amount' => '6.00',
-//                'amount' => number_format($order->getTotal(), 2, '.', ''),
+                'amount' => number_format($order->getTotal(), 2, '.', ''),
                 'currency' => 'GBP',
             ));
             try {

@@ -131,7 +131,7 @@ services:
         factory_service: kac_site.payment.factory
         factory_method: create
         arguments:
-            - "PayPal_Express"
+            - "\\KAC\\SiteBundle\\Payment\\PayPal\\ExpressGateway"
         calls:
             - [setUsername, ['daniel-facilitator_api1.danielcannon.co.uk']]
             - [setPassword, ['1373393629']]
