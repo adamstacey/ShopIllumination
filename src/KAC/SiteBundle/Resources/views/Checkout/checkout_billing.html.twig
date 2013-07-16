@@ -45,8 +45,9 @@
                         </div>
                     </div>
                 </div>
-                {% include 'KACSiteBundle:Checkout:orderSummary.html.twig' %}
-                {% include 'KACSiteBundle:Checkout:deliveryOptions.html.twig' %}
+                {% include 'KACSiteBundle:Checkout:orderSummary.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
+                {% include 'KACSiteBundle:Checkout:deliveryOptions.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
+            </div>
             {{ form_rest(form) }}
         </form>
     </section>

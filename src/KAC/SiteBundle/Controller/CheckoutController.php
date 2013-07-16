@@ -121,8 +121,8 @@ class CheckoutController extends Controller
         }
 
         return $this->render('KACSiteBundle:Checkout:checkout_billing.html.twig', array(
-            'basket' => $basket,
             'order' => $order,
+            'basket' => $basket,
             'form' => $form->createView(),
         ));
     }
@@ -175,6 +175,7 @@ class CheckoutController extends Controller
         }
 
         return $this->render('KACSiteBundle:Checkout:checkout_delivery.html.twig', array(
+            'order' => $order,
             'basket' => $basket,
             'form' => $form->createView(),
         ));
@@ -297,8 +298,8 @@ class CheckoutController extends Controller
         }
 
         return $this->render('KACSiteBundle:Checkout:checkout_payment.html.twig', array(
-            'basket' => $basket,
             'order' => $order,
+            'basket' => $basket,
             'form' => $form->createView(),
         ));
     }

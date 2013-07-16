@@ -16,11 +16,11 @@
                         {% endfor %}
 
                         <div class="delivery-option clearfix{% if loop.first %} no-margin-top{% endif %}">
-                            <span class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                            {#<span class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>#}
                             <label>
                                 {{ form_widget(field) }}
                                 <span class="delivery-service">
-                                                    {{ deliveryInfo.service|replace({'FREE DELIVERY': '<span class="free"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}
+                                    {{ deliveryInfo.service|replace({'FREE DELIVERY': '<span class="free"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}
                                     {% if deliveryInfo.price != 0 %}
                                         - <span class="delivery-price">&pound;{{ deliveryInfo.price|number_format(2) }}</span>
                                     {% endif %}
