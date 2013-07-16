@@ -1,31 +1,27 @@
-<div id="basket-message-error" class="info-message ui-status-error ui-helper-hidden margin-bottom-5">
-	<span class="info-message-icon ui-icon ui-icon-alert"></span>
-	<p id="basket-message-error-text"></p>
-	<div class="clear"></div>
+<div id="basket-message-error" class="message message-error ui-helper-hidden">
+    <span class="ui-button-icon-primary ui-icon icon-white icon-851"></span>
+    <p id="basket-message-error-text"></p>
 </div>
-<div id="basket-message-notice" class="info-message ui-status-highlight ui-helper-hidden margin-bottom-5">
-	<span class="info-message-icon ui-icon ui-icon-info"></span>
-	<p id="basket-message-notice-text"></p>
-	<div class="clear"></div>
+<div id="basket-message-notice" class="message message-notice ui-helper-hidden">
+    <span id="basket-message-notice-text" class="ui-button-icon-primary ui-icon icon-white icon-703"></span>
+    <p></p>
 </div>
-<div id="basket-message-success" class="info-message ui-status-success ui-helper-hidden margin-bottom-5">
-	<span class="info-message-icon ui-icon ui-icon-circle-check"></span>
-	<p id="basket-message-success-text"></p>
-	<div class="clear"></div>
+<div id="basket-message-success" class="message message-success ui-helper-hidden">
+    <span class="ui-button-icon-primary ui-icon icon-white icon-1119"></span>
+    <p id="basket-message-success-text"></p>
 </div>
 {% if basket.products|length > 0 %}
-	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<table class="data-table" width="100%" cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<th class="al">Product</th>
-			<th class="ac">Code</th>
-			<th class="ac" colspan="2">Qty</th>
-			<th class="ac" colspan="3">Price</th>
-			<th class="ac">&nbsp;</th>
+			<th class="tal">Product</th>
+			<th class="tac" colspan="2">Qty</th>
+			<th class="tac" colspan="3">Price</th>
+			<th width="62" class="tac">&nbsp;</th>
 		</tr>
 		{% for product in basket.products %}
-			<tr{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="red"{% endif %}>
-				<td>
-					<a class="uppercase" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
+			<tr>
+				<td class="tal">
+					<a class="uppercase{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="background-red colour-white"{% endif %}" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
 					{% if product.selectedOptionLabels|length > 0 %}
 						<br />
 						{% for selectedOptionLabel in product.selectedOptionLabels %}
@@ -33,25 +29,18 @@
 						{% endfor %}
 					{% endif %}
 				</td>
-				<td class="ac"><strong>{{ product.productCode }}</strong></td>
-				<td>
-					<table class="no-padding no-border" cellpadding="0" cellspacing="0" border="0">
-						<tr>
-							<td class="no-padding no-border"><input id="quantity-{{ product.variantId }}" data-selected-options="{{ product.selectedOptions }}" data-product-id="{{ product.productId }}" data-variant-id="{{ product.variantId }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="{{ product.quantity }}" /></td>
-							<td class="no-padding no-border">
-								<div class="quantity-buttons-container no-padding">
-									<div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ product.variantId }}">+</div>
-									<div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ product.variantId }}">-</div>
-								</div>
-							</td>
-						</tr>
-					</table>
+				<td width="63">
+                    <div class="add-to-basket fr" data-product-id="{{ product.id }}" data-variant-id="{{ product.variant_ids[0] }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
+                        <input id="quantity-{{ product.variantId }}" data-selected-options="{{ product.selectedOptions }}" data-product-id="{{ product.productId }}" data-variant-id="{{ product.variantId }}" class="quantity integer" type="number" value="{{ product.quantity }}" />
+                        <button type="button" class="action-increase-quantity increase-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.variantId }}">+</button>
+                        <button type="button" class="action-decrease-quantity decrease-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.variantId }}">-</button>
+                    </div>
 				</td>
-				<td class="ac">&times;</td>
-				<td class="ac">{% if product.recommendedRetailPrice > product.unitCost %}<span class="red strikethrough">&pound;{{ product.recommendedRetailPrice|number_format(2) }}</span><br /><span class="green"><strong>&pound;{{ product.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ product.unitCost|number_format(2) }}{% endif %}</td>
-				<td class="ac">=</td>
-				<td class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
-				<td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
+				<td width="1" class="tac">&times;</td>
+				<td width="1" class="tac">{% if product.recommendedRetailPrice > product.unitCost %}<span class="colour-red strikethrough">&pound;{{ product.recommendedRetailPrice|number_format(2) }}</span><br /><span class="colour-green"><strong>&pound;{{ product.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ product.unitCost|number_format(2) }}{% endif %}</td>
+				<td width="1" class="tac">=</td>
+				<td width="1" class="tac">{{ product.subTotal|currency('GBP', true, true, '')|raw }}</td>
+				<td width="62" class="tac"><button data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="button button-small link action-delete-basket-item">Remove</button></td>
 			</tr>
 			{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %}
 				<tr>
