@@ -1,21 +1,20 @@
 <div class="basket-summary-header">
-    <a href="#"><span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-252"></span></a>
+    <span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-252"></span>
     <h2>Your basket</h2>
     <p>Items: <strong>{{ basket.totals.items|default(0) }}</strong></p>
-    <p>Total: <strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></p>
+    <p>Total: <strong>{{ basket.totals.subTotal|currency('GBP', true, true, '')|raw }}</strong></p>
     <div class="dropdown-summary ui-helper-hidden" data-items="{{ basket.products|length }}">
         {% if basket.products|length > 0 %}
-            <table class="data-table basket-items-table">
+            <table class="mtm data-table basket-items-table">
                 <tr>
-                    <th class="al">Product</th>
-                    <th class="ac">Code</th>
-                    <th class="ac">Qty</th>
-                    <th class="ac">Price</th>
-                    <th class="ac">&nbsp;</th>
+                    <th class="tal">Product</th>
+                    <th width="1" class="tac">Qty</th>
+                    <th width="1" class="tac">Price</th>
+                    <th width="62" class="ac">&nbsp;</th>
                 </tr>
                 {% for product in basket.products %}
                     <tr{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="red"{% endif %}>
-                        <td>
+                        <td class="tal">
                             <a class="uppercase" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
                             {% if product.selectedOptionLabels|length > 0 %}
                                 <br />
@@ -24,17 +23,16 @@
                                 {% endfor %}
                             {% endif %}
                         </td>
-                        <td class="ac"><strong>{{ product.productCode }}</strong></td>
-                        <td class="ac">{{ product.quantity }}</td>
-                        <td class="ac">&pound;{{ product.subTotal|number_format(2) }}</td>
-                        <td class="ac"><img data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></td>
+                        <td width="1" class="tac{% if product.quantity > 1 %} gradient-turquoise colour-white {% endif %}">{{ product.quantity }}</td>
+                        <td width="1" class="tac">{{ product.subTotal|currency('GBP', true, true, '')|raw }}</td>
+                        <td width="62" class="tac"><button type="button" data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="button button-small link action-delete-basket-item">Remove</button></td>
                     </tr>
                 {% endfor %}
             </table>
-            <div class="basket-buttons clearfix">
-                <a href="{{ path('checkout_secure_checkout') }}" class="button button-small uppercase button-green icon-white fr">Buy Now</a>
-                <a href="{{ path('basket_your_basket') }}" class="button button-small uppercase button-blue icon-white fr">View Basket</a>
-                <a href="#" data-url="{{ path('basket_ajax_clear_basket') }}" class="action-clear-basket button button-small uppercase button-blue icon-white fl">Clear Basket</a>
+            <div class="mtm mbs clearfix">
+                <a href="{{ path('checkout_secure_checkout') }}" class="button button-green uppercase icon-white fr" data-icon-secondary="icon-472">Pay Now</a>
+                <a href="{{ path('basket_your_basket') }}" class="button button-small button-grey mrm fr">View Basket</a>
+                <button type="button" data-url="{{ path('basket_ajax_clear_basket') }}" class="action-clear-basket button button-small button-grey fl">Clear Basket</button>
             </div>
         {% endif %}
     </div>
