@@ -559,7 +559,7 @@ class Order
 
     public function getCheckoutSteps()
     {
-        return array('Billing', 'Delivery', 'Payment', 'Confirmation', 'Complete');
+        return array('About', 'Billing', 'Delivery', 'Payment', 'Confirmation', 'Complete');
     }
 
     /**
