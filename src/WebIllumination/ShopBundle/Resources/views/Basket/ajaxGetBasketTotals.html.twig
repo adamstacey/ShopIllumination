@@ -1,18 +1,18 @@
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<table class="mbm" width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td class="ar"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
-		<td width="1" class="price ar"><strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></td>
+		<td width="1" class="colour-red tar"><strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></td>
 	</tr>
 	{% if basket.delivery.service != '' %}
 		<tr>
 			<td class="ar"><strong>Delivery Charge (inc. VAT):</strong></td>
 			{% if basket.totals.deliveryCharge > 0 %}
-				<td width="1" class="price ar">&pound;{{ basket.totals.deliveryCharge|number_format(2) }}<input type="hidden" id="delivery-charge" value="&pound;{{ basket.totals.deliveryCharge|number_format(2) }}" /></td>
+				<td width="1" class="vam colour-red tar">{{ basket.totals.deliveryCharge|currency('GBP', true, true, '')|raw }}<input type="hidden" id="delivery-charge" value="{{ basket.totals.deliveryCharge|currency('GBP', false, true, '')|raw }}" /></td>
 			{% else %}
 				{% if basket.delivery.service == 'Collection' %}
-					<td width="1" class="price free ar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>
+					<td width="1" class="vam colour-green tar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>
 				{% else %}
-					<td width="1" class="price free ar">FREE<input type="hidden" id="delivery-charge" value="FREE" /></td>
+					<td width="1" class="vam colour-green tar">FREE<input type="hidden" id="delivery-charge" value="FREE" /></td>
 				{% endif %}
 			{% endif %}
 		</tr>
@@ -21,31 +21,31 @@
 		{% for donationType, donation in basket.donations %}
 			{% if donation.donation > 0 %}
 				<tr>
-					<td class="ar no-wrap">{% if donationType == 'customer' %}<img data-donation="0" class="pointer action-make-donation margin-right-10" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" height="12" alt="remove Donation" />{% endif %}<img class="movember-offer margin-right-10" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" height="10" /><strong>{{ donation.description }}:</strong></td>
-					<td width="1" class="discount ar">&pound;{{ donation.donation|number_format(2) }}</td>
+					<td class="vam tar no-wrap">{% if donationType == 'customer' %}<img data-donation="0" class="pointer action-make-donation margin-right-10" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" height="12" alt="remove Donation" />{% endif %}<img class="movember-offer margin-right-10" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" height="10" /><strong>{{ donation.description }}:</strong></td>
+					<td width="1" class="vam colour-green tar">{{ donation.donation|currency('GBP', true, true, '')|raw }}</td>
 				</tr>
 			{% endif %}
 		{% endfor %}
 	{% endif %}
 	{% if basket.totals.discount > 0 %}
 		<tr>
-			<td class="ar"><strong>You Save:</strong></td>
-			<td width="1" class="discount ar">&pound;{{ basket.totals.discount|number_format(2) }}</td>
+			<td class="vam tar"><strong>You Save:</strong></td>
+			<td width="1" class="vam colour-green tar">{{ basket.totals.discount|currency('GBP', true, true, '')|raw }}</td>
 		</tr>
 	{% endif %}
 	{% if basket.discounts|length > 0 %}
 		{% for discount in basket.discounts %}
 			{% if discount.discount > 0 %}
 				<tr>
-					<td class="ar discount-description no-wrap">{{ discount.description }}:</td>
-					<td width="1" class="small green ar discount-price">&pound;{{ discount.discount|number_format(2) }}</td>
+					<td class="vam tar discount-description no-wrap">{{ discount.description }}:</td>
+					<td class="vam" width="1" class="colour-green tar">{{ discount.discount|currency('GBP', true, true, '')|raw }}</td>
 				</tr>
 			{% endif %}
 		{% endfor %}
 	{% endif %}
-	<tr>
-		<td class="ar"><strong>Total to Pay (inc. VAT):</strong></td>
-		<td width="1" class="price ar"><strong>&pound;{{ basket.totals.total|number_format(2) }}</strong></td>
+	<tr class="product">
+		<td class="tar vam"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
+		<td width="130" class="vam price colour-red no-wrap tar"><strong>{{ basket.totals.total|currency('GBP', true, true, '')|raw }}</strong></td>
 	</tr>
 </table>
 <div class="clear"></div>
@@ -58,10 +58,9 @@
 {% endif %}
 {% if basket.numberOfCdaAppliances is defined %}
 	{% if (basket.numberOfCdaAppliances > 0) and (basket.numberOfCdaAppliances < 3) %}
-		<div class="info-message ui-status-highlight no-margin margin-top-10">
-			<span class="info-message-icon ui-icon ui-icon-info"></span>
-			<p class="al">You currently have <strong>{{ basket.numberOfCdaAppliances }}</strong> CDA appliance{% if basket.numberOfCdaAppliances > 1 %}s{% endif %} in your basket. If you add another <strong>{% if basket.numberOfCdaAppliances == 1 %}2 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliances</a>{% else %}1 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliance</a>{% endif %}</strong> to your basket you will receive <strong>10% off each CDA appliance ordered</strong>.</p>
-			<div class="clear"></div>
-		</div>
+        <div class="message message-help">
+            <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
+            <p class="tal">You currently have <strong>{{ basket.numberOfCdaAppliances }}</strong> CDA appliance{% if basket.numberOfCdaAppliances > 1 %}s{% endif %} in your basket. If you add another <strong>{% if basket.numberOfCdaAppliances == 1 %}2 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliances</a>{% else %}1 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliance</a>{% endif %}</strong> to your basket you will receive <strong>10% off each CDA appliance ordered</strong>.</p>
+        </div>
 	{% endif %}
 {% endif %}
