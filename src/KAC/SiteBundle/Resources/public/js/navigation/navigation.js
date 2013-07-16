@@ -50,6 +50,14 @@ $(document).on("click", ".actionLoadDialog", function() {
     return false;
 });
 
+$(document).on("click", ".actionClose", function() {
+    if ($(this).attr("data-hide-class") != "") {
+        $(this).closest("."+$(this).attr("data-hide-class")).remove();
+    } else {
+        $(this).remove();
+    }
+});
+
 $(document).ready(function() {
     $(".main-menu .menu-horizontal > li, .main-menu nav.container > a.ui-button").hoverIntent(function() {
         var $menuLink = $(this).find("> a");
