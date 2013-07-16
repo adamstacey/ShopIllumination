@@ -148,10 +148,6 @@ class CheckoutController extends Controller
             return $this->checkoutAction($request);
         }
 
-        // Fetch user
-        $user = $this->get('security.context')->getToken()->getUser();
-        $order->setUser($user);
-
         $form = $this->createForm(new BillingAddressType($basket->getDelivery()->getDeliveryOptions()), $order);
         $form->handleRequest($request);
 
@@ -177,11 +173,21 @@ class CheckoutController extends Controller
 
                 return $this->redirect($this->generateUrl('checkout_billing'));
             } else {
-                // Update order status
-                $manager->updateCheckoutStep($order, 'Delivery');
-                $manager->saveOrder();
+                // Skip this step if the user has selected to use billing address as delivery address
+                if($order->getUseBillingAsDelivery())
+                {
+                    // Update order status
+                    $manager->updateCheckoutStep($order, 'Payment');
+                    $manager->saveOrder();
 
-                return $this->redirect($this->generateUrl('checkout_delivery'));
+                    return $this->redirect($this->generateUrl('checkout_payment'));
+                } else {
+                    // Update order status
+                    $manager->updateCheckoutStep($order, 'Delivery');
+                    $manager->saveOrder();
+
+                    return $this->redirect($this->generateUrl('checkout_delivery'));
+                }
             }
         }
 
@@ -216,9 +222,16 @@ class CheckoutController extends Controller
             return $this->checkoutAction($request);
         }
 
-        // Fetch user
-        $user = $this->get('security.context')->getToken()->getUser();
-        $order->setUser($user);
+        // Skip this step if the user has selected to use billing address as delivery address
+        if($order->getUseBillingAsDelivery())
+        {
+            // Update order status
+            $manager->updateCheckoutStep($order, 'Payment');
+            $manager->saveOrder();
+
+            return $this->redirect($this->generateUrl('checkout_payment'));
+        }
+
 
         $form = $this->createForm(new DeliveryAddressType($basket->getDelivery()->getDeliveryOptions()), $order);
         $form->handleRequest($request);
@@ -269,10 +282,6 @@ class CheckoutController extends Controller
         {
             return $this->checkoutAction($request);
         }
-
-        // Fetch user
-        $user = $this->get('security.context')->getToken()->getUser();
-        $order->setUser($user);
 
         $form = $this->createForm(new PaymentType($basket->getDelivery()->getDeliveryOptions()), $order);
         $form->handleRequest($request);
