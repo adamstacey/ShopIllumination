@@ -8,6 +8,7 @@ use KAC\SiteBundle\Form\Basket\NewBasketItemType;
 use KAC\SiteBundle\Form\Checkout\BillingAddressType;
 use KAC\SiteBundle\Form\Checkout\CheckoutFlow;
 use KAC\SiteBundle\Form\Checkout\ConfirmationType;
+use KAC\SiteBundle\Form\Checkout\DeliveryAddressType;
 use KAC\SiteBundle\Form\Checkout\DeliveryType;
 use KAC\SiteBundle\Form\Checkout\PaymentType;
 use KAC\SiteBundle\Model\BasketItem;
@@ -86,7 +87,7 @@ class CheckoutController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $order->setUser($user);
 
-        $form = $this->createForm(new BillingAddressType(), $order);
+        $form = $this->createForm(new BillingAddressType($basket->getDelivery()->getDeliveryOptions()), $order);
         $form->handleRequest($request);
 
         if($form->isValid())
@@ -105,11 +106,18 @@ class CheckoutController extends Controller
                 $order->setDeliveryCountryCode($order->getBillingCountryCode());
             }
 
-            // Update order status
-            $manager->updateCheckoutStep($order, 'Delivery');
-            $manager->saveOrder();
+            if ($form->get('updateDelivery')->isClicked()) {
+                $manager->updateDeliveryInfo($order, $basket);
+                $manager->saveOrder();
 
-            return $this->redirect($this->generateUrl('checkout_delivery'));
+                return $this->redirect($this->generateUrl('checkout_billing'));
+            } else {
+                // Update order status
+                $manager->updateCheckoutStep($order, 'Delivery');
+                $manager->saveOrder();
+
+                return $this->redirect($this->generateUrl('checkout_delivery'));
+            }
         }
 
         return $this->render('KACSiteBundle:Checkout:checkout_billing.html.twig', array(
@@ -147,16 +155,23 @@ class CheckoutController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $order->setUser($user);
 
-        $form = $this->createForm(new DeliveryType(), $order);
+        $form = $this->createForm(new DeliveryAddressType($basket->getDelivery()->getDeliveryOptions()), $order);
         $form->handleRequest($request);
 
         if($form->isValid())
         {
-            // Update order status
-            $manager->updateCheckoutStep($order, 'Payment');
-            $manager->saveOrder();
+            if ($form->get('updateDelivery')->isClicked()) {
+                $manager->updateDeliveryInfo($order, $basket);
+                $manager->saveOrder();
 
-            return $this->redirect($this->generateUrl('checkout_payment'));
+                return $this->redirect($this->generateUrl('checkout_delivery'));
+            } else {
+                // Update order status
+                $manager->updateCheckoutStep($order, 'Payment');
+                $manager->saveOrder();
+
+                return $this->redirect($this->generateUrl('checkout_payment'));
+            }
         }
 
         return $this->render('KACSiteBundle:Checkout:checkout_delivery.html.twig', array(
@@ -193,13 +208,11 @@ class CheckoutController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $order->setUser($user);
 
-        $form = $this->createForm(new PaymentType(), $order);
+        $form = $this->createForm(new PaymentType($basket->getDelivery()->getDeliveryOptions()), $order);
         $form->handleRequest($request);
 
         if($form->isValid())
         {
-            // Add products to order and clear basket
-            $manager->bindBasketData($order, $basket);
 
             // Update cc details if needed
             if($order->getPaymentType() === 'card')
@@ -224,55 +237,62 @@ class CheckoutController extends Controller
                 $order->getCard()->setShippingCountry($order->getDeliveryCountryCode());
             }
 
-            /**
-             * Authorize payment
-             * @var $gateway AbstractGateway
-             * @var $paymentRequest AbstractRequest
-             */
-            $gateway = $this->get('kac_site.payment.' . $order->getPaymentType());
-            $paymentRequest = $gateway->authorize(array(
-                'transactionId' => $order->getId(),
-                'card' => $order->getPaymentType() === 'sagepay' ? $order->getCard() : null,
-                'amount' => '6.00',
-//                'amount' => number_format($order->getTotal(), 2, '.', ''),
-                'currency' => 'GBP',
-                'returnUrl' => $this->generateUrl('checkout_confirmation', array(), true),
-                'cancelUrl' => $this->generateUrl('checkout_billing', array(), true),
-            ));
-            try {
-                $paymentResponse = $paymentRequest->send();
-            } catch (\Exception $e) {
-                $paymentResponse = null;
-            }
-
-            // Update order status and redirect if needed
-            if($paymentResponse === null)
-            {
-                $order->setStatus('Payment Failed');
-                $order->setAuthResponse($paymentResponse);
+            if ($form->get('updateDelivery')->isClicked()) {
+                $manager->updateDeliveryInfo($order, $basket);
                 $manager->saveOrder();
 
-                $form->addError(new FormError('There was an error processing your payment, please try again later.'));
-            } elseif ($paymentResponse->isSuccessful()) {
-                $manager->updateCheckoutStep($order, 'Confirmation');
-                $order->setStatus('Open Payment');
-                $order->setAuthResponse($paymentResponse);
-                $manager->saveOrder();
-
-                return $this->redirect($this->generateUrl('checkout_confirmation'));
-            } elseif ($paymentResponse->isRedirect()) {
-                $manager->updateCheckoutStep($order, 'Confirmation');
-                $order->setStatus('Open Payment');
-                $order->setAuthResponse($paymentResponse);
-                $manager->saveOrder();
-
-                return new RedirectResponse($paymentResponse->getRedirectUrl());
+                return $this->redirect($this->generateUrl('checkout_payment'));
             } else {
-                $order->setStatus('Payment Failed');
-                $order->setAuthResponse($paymentResponse);
-                $manager->saveOrder();
+                /**
+                 * Authorize payment
+                 * @var $gateway AbstractGateway
+                 * @var $paymentRequest AbstractRequest
+                 */
+                $gateway = $this->get('kac_site.payment.' . $order->getPaymentType());
+                $paymentRequest = $gateway->authorize(array(
+                    'transactionId' => $order->getId(),
+                    'card' => $order->getPaymentType() === 'sagepay' ? $order->getCard() : null,
+                    'amount' => '6.00',
+    //                'amount' => number_format($order->getTotal(), 2, '.', ''),
+                    'currency' => 'GBP',
+                    'returnUrl' => $this->generateUrl('checkout_confirmation', array(), true),
+                    'cancelUrl' => $this->generateUrl('checkout_billing', array(), true),
+                ));
+                try {
+                    $paymentResponse = $paymentRequest->send();
+                } catch (\Exception $e) {
+                    $paymentResponse = null;
+                }
 
-                $form->addError(new FormError($paymentResponse->getMessage()));
+                // Update order status and redirect if needed
+                if($paymentResponse === null)
+                {
+                    $order->setStatus('Payment Failed');
+                    $order->setAuthResponse($paymentResponse);
+                    $manager->saveOrder();
+
+                    $form->addError(new FormError('There was an error processing your payment, please try again later.'));
+                } elseif ($paymentResponse->isSuccessful()) {
+                    $manager->updateCheckoutStep($order, 'Confirmation');
+                    $order->setStatus('Open Payment');
+                    $order->setAuthResponse($paymentResponse);
+                    $manager->saveOrder();
+
+                    return $this->redirect($this->generateUrl('checkout_confirmation'));
+                } elseif ($paymentResponse->isRedirect()) {
+                    $manager->updateCheckoutStep($order, 'Confirmation');
+                    $order->setStatus('Open Payment');
+                    $order->setAuthResponse($paymentResponse);
+                    $manager->saveOrder();
+
+                    return new RedirectResponse($paymentResponse->getRedirectUrl());
+                } else {
+                    $order->setStatus('Payment Failed');
+                    $order->setAuthResponse($paymentResponse);
+                    $manager->saveOrder();
+
+                    $form->addError(new FormError($paymentResponse->getMessage()));
+                }
             }
         }
 

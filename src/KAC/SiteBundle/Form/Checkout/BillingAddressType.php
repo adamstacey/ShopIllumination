@@ -6,6 +6,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BillingAddressType extends AbstractType {
+    private $deliveryOptions;
+
+    function __construct($deliveryOptions)
+    {
+        $this->deliveryOptions = $deliveryOptions;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -48,11 +54,16 @@ class BillingAddressType extends AbstractType {
                 'GB'
             )
         ));
-
         $builder->add('useBillingAsDelivery', 'checkbox', array(
             'label' => 'Use billing address for delivery?',
             'required' => false,
         ));
+        $builder->add('deliveryType', 'choice', array(
+            'choices' => $this->getDeliveryChoices(),
+            'expanded' => true,
+            'multiple' => false,
+        ));
+        $builder->add('updateDelivery', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -70,5 +81,14 @@ class BillingAddressType extends AbstractType {
     public function getName()
     {
         return 'checkout_billing_address';
+    }
+
+    private function getDeliveryChoices()
+    {
+        $services = array_map(function($element) {
+            return $element['service'];
+        }, $this->deliveryOptions);
+
+        return array_combine($services, $services);
     }
 }

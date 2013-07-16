@@ -3,60 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1f6302f0ff038f4de1b784ba9396ffd6",
+    "hash": "9345551e6eef052ed61cd970083135f6",
     "packages": [
-        {
-            "name": "Trsteel/ckeditor-bundle",
-            "version": "dev-master",
-            "target-dir": "Trsteel/CkeditorBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dancannon/TrsteelCkeditorBundle.git",
-                "reference": "c33aab4bbcc474b04cf22ad5cc000ecc5ae2e604"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dancannon/TrsteelCkeditorBundle/zipball/c33aab4bbcc474b04cf22ad5cc000ecc5ae2e604",
-                "reference": "c33aab4bbcc474b04cf22ad5cc000ecc5ae2e604",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "symfony/form": ">=2.1",
-                "symfony/framework-bundle": "2.*",
-                "twig/twig": ">=1.1,<2.0-dev"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Trsteel\\CkeditorBundle": ""
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Trent Steel",
-                    "email": "trsteel88@gmail.com"
-                }
-            ],
-            "description": "Symfony2 bundle for easy integration of the CKEditor WYSIWYG",
-            "keywords": [
-                "ckeditor",
-                "editor",
-                "wysiwyg"
-            ],
-            "support": {
-                "source": "https://github.com/dancannon/TrsteelCkeditorBundle/tree/master"
-            },
-            "time": "2013-06-03 13:56:03"
-        },
         {
             "name": "avalanche123/imagine-bundle",
             "version": "dev-master",
@@ -114,12 +62,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/craue/CraueFormFlowBundle.git",
-                "reference": "2.0.1"
+                "reference": "6c659b9558ba466df7ea07ddaa59345b6ccb3a70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/2.0.1",
-                "reference": "2.0.1",
+                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/6c659b9558ba466df7ea07ddaa59345b6ccb3a70",
+                "reference": "6c659b9558ba466df7ea07ddaa59345b6ccb3a70",
                 "shasum": ""
             },
             "require": {
@@ -128,10 +76,10 @@
                 "symfony/framework-bundle": "~2.1"
             },
             "require-dev": {
-                "doctrine/common": ">=2.3,<3.0",
-                "phpunit/phpunit": ">=3.7.10.0,<3.8",
-                "sensio/framework-extra-bundle": ">=2.1,<3.0",
-                "symfony/symfony": ">=2.1,<3.0"
+                "doctrine/common": "~2.3",
+                "phpunit/phpunit": "~3.7.10",
+                "sensio/framework-extra-bundle": "~2.1",
+                "symfony/symfony": "~2.1"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -159,7 +107,7 @@
                 "Symfony2",
                 "form"
             ],
-            "time": "2013-07-12 14:32:22"
+            "time": "2013-07-13 08:13:28"
         },
         {
             "name": "doctrine/annotations",
@@ -436,38 +384,31 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "2.4.0-RC2",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "2.4.0-RC2"
+                "reference": "2.3.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/2.4.0-RC2",
-                "reference": "2.4.0-RC2",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/2.3.4",
+                "reference": "2.3.4",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": "2.4.*@beta",
+                "doctrine/common": ">=2.3.0,<2.5-dev",
                 "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*",
-                "symfony/console": "2.*"
-            },
-            "suggest": {
-                "symfony/console": "Allows use of the command line interface"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.3.x-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Doctrine\\DBAL\\": "lib/"
+                    "Doctrine\\DBAL": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -502,7 +443,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-06-25 17:49:29"
+            "time": "2013-05-11 07:45:37"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -799,28 +740,23 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.4.0-RC2",
+            "version": "2.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "2.4.0-RC2"
+                "reference": "2.3.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2.4.0-RC2",
-                "reference": "2.4.0-RC2",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/2.3.4",
+                "reference": "2.3.4",
                 "shasum": ""
             },
             "require": {
-                "doctrine/collections": ">=1.1,<2.0",
-                "doctrine/dbal": ">=2.4-beta,<2.5-dev",
+                "doctrine/dbal": "2.3.*",
                 "ext-pdo": "*",
                 "php": ">=5.3.2",
                 "symfony/console": "2.*"
-            },
-            "require-dev": {
-                "satooshi/php-coveralls": "dev-master",
-                "symfony/yaml": "2.1"
             },
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
@@ -832,12 +768,12 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.3.x-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Doctrine\\ORM\\": "lib/"
+                    "Doctrine\\ORM": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -870,7 +806,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-06-30 08:38:02"
+            "time": "2013-05-11 07:51:12"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -918,30 +854,31 @@
         },
         {
             "name": "friendsofsymfony/user-bundle",
-            "version": "v1.3.2",
+            "version": "dev-master",
             "target-dir": "FOS/UserBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "v1.3.2"
+                "reference": "71ab148085ac8f30ba4eaaefab593dcd1c40579d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/v1.3.2",
-                "reference": "v1.3.2",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/71ab148085ac8f30ba4eaaefab593dcd1c40579d",
+                "reference": "71ab148085ac8f30ba4eaaefab593dcd1c40579d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "symfony/framework-bundle": ">=2.1,<3.0",
-                "symfony/security-bundle": ">=2.1,<3.0"
+                "symfony/form": "~2.1",
+                "symfony/framework-bundle": "~2.1",
+                "symfony/security-bundle": "~2.1"
             },
             "require-dev": {
                 "doctrine/doctrine-bundle": "*",
-                "swiftmailer/swiftmailer": ">=4.3,<5.0",
-                "symfony/validator": ">=2.1,<3.0",
-                "symfony/yaml": ">=2.1,<3.0",
-                "twig/twig": ">=1.5,<2.0",
+                "swiftmailer/swiftmailer": ">=4.3, <6.0",
+                "symfony/validator": "~2.1",
+                "symfony/yaml": "~2.1",
+                "twig/twig": "~1.5",
                 "willdurand/propel-typehintable-behavior": "dev-master"
             },
             "suggest": {
@@ -982,7 +919,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-05-25 12:08:24"
+            "time": "2013-07-08 14:36:01"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1144,6 +1081,204 @@
             ],
             "description": "Provides the \"entity_id\" type (read \"entity identifier\")",
             "time": "2013-06-17 06:32:46"
+        },
+        {
+            "name": "guzzle/common",
+            "version": "v3.7.1",
+            "target-dir": "Guzzle/Common",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/common.git",
+                "reference": "v3.7.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/common/zipball/v3.7.1",
+                "reference": "v3.7.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/event-dispatcher": ">=2.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Common": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Common libraries used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "collection",
+                "common",
+                "event",
+                "exception"
+            ],
+            "time": "2013-07-05 20:17:54"
+        },
+        {
+            "name": "guzzle/http",
+            "version": "v3.7.1",
+            "target-dir": "Guzzle/Http",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/http.git",
+                "reference": "v3.7.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/http/zipball/v3.7.1",
+                "reference": "v3.7.1",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/common": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/stream": "self.version",
+                "php": ">=5.3.2"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Http": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "HTTP libraries used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "client",
+                "curl",
+                "http",
+                "http client"
+            ],
+            "time": "2013-07-02 19:53:26"
+        },
+        {
+            "name": "guzzle/parser",
+            "version": "v3.7.1",
+            "target-dir": "Guzzle/Parser",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/parser.git",
+                "reference": "v3.7.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/parser/zipball/v3.7.1",
+                "reference": "v3.7.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Parser": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Interchangeable parsers used by Guzzle",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "URI Template",
+                "cookie",
+                "http",
+                "message",
+                "url"
+            ],
+            "time": "2013-06-11 00:24:07"
+        },
+        {
+            "name": "guzzle/stream",
+            "version": "v3.7.1",
+            "target-dir": "Guzzle/Stream",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/stream.git",
+                "reference": "v3.7.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/stream/zipball/v3.7.1",
+                "reference": "v3.7.1",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/common": "self.version",
+                "php": ">=5.3.2"
+            },
+            "suggest": {
+                "guzzle/http": "To convert Guzzle request objects to PHP streams"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Stream": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle stream wrapper component",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "component",
+                "stream"
+            ],
+            "time": "2013-06-27 00:50:43"
         },
         {
             "name": "imagine/imagine",
@@ -2153,6 +2288,91 @@
             "time": "2013-01-07 10:35:43"
         },
         {
+            "name": "omnipay/omnipay",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adrianmacneil/omnipay.git",
+                "reference": "6f1e6207936bd1ac456afb6f52a61a35c11a2c00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adrianmacneil/omnipay/zipball/6f1e6207936bd1ac456afb6f52a61a35c11a2c00",
+                "reference": "6f1e6207936bd1ac456afb6f52a61a35c11a2c00",
+                "shasum": ""
+            },
+            "require": {
+                "guzzle/http": "~3.1",
+                "php": ">=5.3.2",
+                "symfony/http-foundation": "~2.1"
+            },
+            "require-dev": {
+                "guzzle/plugin-mock": "~3.1",
+                "mockery/mockery": "~0.7",
+                "phpunit/phpunit": "~3.7.16",
+                "silex/silex": "1.0.*@dev",
+                "squizlabs/php_codesniffer": "~1.4.4",
+                "twig/twig": "~1.12"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Omnipay": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adrian Macneil",
+                    "email": "adrian@adrianmacneil.com"
+                }
+            ],
+            "description": "A framework agnostic, multi-gateway payment processing library",
+            "homepage": "https://github.com/adrianmacneil/omnipay",
+            "keywords": [
+                "2checkout",
+                "2co",
+                "auth.net",
+                "authorize",
+                "authorize.net",
+                "buckaroo",
+                "cardsave",
+                "commweb",
+                "dps",
+                "egate",
+                "eway",
+                "express",
+                "gateway",
+                "gocardless",
+                "ideal",
+                "merchant",
+                "migs",
+                "mollie",
+                "netaxept",
+                "netbanx",
+                "pay",
+                "payfast",
+                "payflow",
+                "payment",
+                "paymentexpress",
+                "paypal",
+                "pin",
+                "purchase",
+                "rapid",
+                "sagepay",
+                "securepay",
+                "stripe",
+                "tala",
+                "tala-payments",
+                "twocheckout",
+                "worldpay"
+            ],
+            "time": "2013-07-15 10:03:37"
+        },
+        {
             "name": "phpcollection/phpcollection",
             "version": "0.2.0",
             "source": {
@@ -2916,6 +3136,56 @@
             "time": "2013-06-11 11:46:38"
         },
         {
+            "name": "trsteel/ckeditor-bundle",
+            "version": "dev-master",
+            "target-dir": "Trsteel/CkeditorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/trsteel88/TrsteelCkeditorBundle.git",
+                "reference": "b88154cdc598b7b341421e9b06e9b63a043310e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/trsteel88/TrsteelCkeditorBundle/zipball/b88154cdc598b7b341421e9b06e9b63a043310e8",
+                "reference": "b88154cdc598b7b341421e9b06e9b63a043310e8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/form": ">=2.1,<2.4-dev",
+                "symfony/framework-bundle": "2.*,<2.4",
+                "twig/twig": ">=1.1,<2.0-dev"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Trsteel\\CkeditorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Trent Steel",
+                    "email": "trsteel88@gmail.com"
+                }
+            ],
+            "description": "Symfony2 bundle for easy integration of the CKEditor WYSIWYG",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "wysiwyg"
+            ],
+            "time": "2013-06-23 05:37:14"
+        },
+        {
             "name": "twig/extensions",
             "version": "v1.0.0",
             "source": {
@@ -3031,10 +3301,12 @@
         "knplabs/knp-snappy-bundle": 20,
         "knplabs/knp-paginator-bundle": 20,
         "craue/formflow-bundle": 20,
+        "friendsofsymfony/user-bundle": 20,
         "jms/serializer-bundle": 20,
         "avalanche123/imagine-bundle": 20,
         "gregwar/form-bundle": 20,
-        "trsteel/ckeditor-bundle": 20
+        "trsteel/ckeditor-bundle": 20,
+        "omnipay/omnipay": 20
     },
     "platform": {
         "php": ">=5.3.3"

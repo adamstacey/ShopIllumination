@@ -87,10 +87,14 @@ class OrderManager extends Manager
         }
         $this->order = null;
         $this->session->remove('order.id');
+        $this->basketManager->clearBasket('order.basket');
     }
 
     public function createOrder()
     {
+        $basket = $this->basketManager->getBasket();
+        $this->basketManager->loadProducts();
+
         $order = new Order();
         $order->setStatus('Checkout');
         $order->setCurrentStep('Billing');
@@ -103,7 +107,8 @@ class OrderManager extends Manager
         $order->addNote($note);
 
         // Freeze the basket
-        $this->basketManager->saveBasket('order.basket', $this->basketManager->getBasket());
+        $this->bindBasketData($order, $basket);
+        $this->basketManager->saveBasket('order.basket', $basket);
 
         return $order;
     }
@@ -126,11 +131,31 @@ class OrderManager extends Manager
         $this->basketManager->clearBasket('basket');
     }
 
+    public function updateDeliveryInfo(Order $order, Basket $basket)
+    {
+        if(!$order->getDeliveryType())
+        {
+            $order->setDeliveryType($basket->getDelivery()->getService());
+            $order->setDeliveryCharge($basket->getDelivery()->getPrice());
+            $order->setEstimatedDeliveryDaysStart($basket->getDelivery()->getEstimatedDeliveryDays()['start']);
+            $order->setEstimatedDeliveryDaysEnd($basket->getDelivery()->getEstimatedDeliveryDays()['end']);
+        } else {
+            foreach($basket->getDelivery()->getDeliveryOptions() as $deliveryOption)
+            {
+                if($deliveryOption['service'] == $order->getDeliveryType())
+                {
+                    $order->setDeliveryCharge($deliveryOption['price']);
+                    $order->setEstimatedDeliveryDaysStart($deliveryOption['estimatedDeliveryDaysStart']);
+                    $order->setEstimatedDeliveryDaysEnd($deliveryOption['estimatedDeliveryDaysEnd']);
+                }
+            }
+        }
+    }
+
     public function bindBasketData(Order $order, Basket $basket)
     {
-        // Bind delivery info
-        $order->setEstimatedDeliveryDaysStart($basket->getDelivery()->getEstimatedDeliveryDays()['start']);
-        $order->setEstimatedDeliveryDaysEnd($basket->getDelivery()->getEstimatedDeliveryDays()['end']);
+        // Update delivery info
+        $this->updateDeliveryInfo($order, $basket);
 
         // Bind basket items
         foreach($basket->getItems() as $item)
