@@ -24,7 +24,7 @@
                 <header class="ui-widget-header ui-corner-top">
                     <h2>Send Us a Secure Message</h2>
                 </header>
-                <section class="ui-widget-content ui-corner-all">
+                <section id="contact-secure-message" class="ui-widget-content ui-corner-bottom">
                     <div class="clearfix">
                         <div class="message message-help">
                             <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-763"></span>
@@ -33,12 +33,12 @@
                         <form id="form-secure-message" method="post" action="{{ path('content_contact_us') }}" class="form has-validation">
                             <fieldset>
                                 <div class="form-element widget-group clearfix">
-                                    <span title="What is your enquiry about?" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                                    <span title="What is your enquiry about?" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
                                     <div class="widget widget-1-of-3">
                                         <label for="formEnquiry"><span class="required">*</span> Enquiry</label>
                                     </div>
                                     <div class="widget widget-2-of-3">
-                                        <select id="formEnquiry" required="required" name="enquiry" class="fill">
+                                        <select id="formEnquiry" data-message="What is your enquiry about?" required="required" name="enquiry" class="fill">
                                             <option value="">- Please Select -</option>
                                             <option value="sales@kitchenappliancecentre.co.uk">Quotes and product information</option>
                                             <option value="delivery@kitchenappliancecentre.co.uk">Information about my delivery</option>
@@ -48,39 +48,39 @@
                                     </div>
                                 </div>
                                 <div class="form-element widget-group clearfix">
-                                    <span title="Enter your full name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                                    <span title="Enter your full name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
                                     <div class="widget widget-1-of-3">
                                         <label for="formName"><span class="required">*</span> Your Name</label>
                                     </div>
                                     <div class="widget widget-2-of-3">
-                                        <input type="text" id="formName" required="required" name="name" class="fill" value="" />
+                                        <input type="text" id="formName" data-message="Enter your full name." required="required" name="name" class="fill" value="" />
                                     </div>
                                 </div>
                                 <div class="form-element widget-group clearfix">
-                                    <span title="Enter a valid email address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                                    <span title="Enter a valid email address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
                                     <div class="widget widget-1-of-3">
                                         <label for="formEmailAddress"><span class="required">*</span> Your Email Address</label>
                                     </div>
                                     <div class="widget widget-2-of-3">
-                                        <input type="email" id="formEmailAddress" required="required" name="email-address" class="fill" value="" />
+                                        <input type="email" id="formEmailAddress" data-message="Enter a valid email address." required="required" name="email-address" class="fill" value="" />
                                     </div>
                                 </div>
                                 <div class="form-element widget-group clearfix">
-                                    <span title="Enter a contact number." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                                    <span title="Enter a contact number." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
                                     <div class="widget widget-1-of-3">
                                         <label for="formContactNumber"><span class="required">*</span> Your Contact Number</label>
                                     </div>
                                     <div class="widget widget-2-of-3">
-                                        <input type="text" id="formContactNumber" required="required" name="contact-number" class="fill" value="" />
+                                        <input type="text" id="formContactNumber" data-message="Enter a contact number." required="required" name="contact-number" class="fill" value="" />
                                     </div>
                                 </div>
                                 <div class="form-element widget-group clearfix">
-                                    <span title="Enter a message." class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                                    <span title="Enter a message." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
                                     <div class="widget widget-1-of-3">
                                         <label for="formMessage"><span class="required">*</span> Your Message</label>
                                     </div>
                                     <div class="widget widget-2-of-3">
-                                        <textarea id="formMessage" name="message" class="fill" rows="5"></textarea>
+                                        <textarea id="formMessage" data-message="Enter a message." required="required" name="message" class="fill" rows="5"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
@@ -97,15 +97,15 @@
                 <header class="ui-widget-header ui-corner-top">
                     <h2>Get in Touch</h2>
                 </header>
-                <section class="ui-widget-content widget-content ui-corner-all">
+                <section id="contact-get-in-touch" class="ui-widget-content widget-content ui-corner-bottom">
                     <div class="clearfix" itemscope itemtype="http://schema.org/Organization">
-                        <p class="no-margin-top">If you need any help or advice please do not hesitate to contact us using one of the methods below. We are here to help!</p>
-                        <h4><span class="fl ui-button-icon-primary ui-icon icon-grey icon-318"></span>By Phone</h4>
+                        <p>If you need any help or advice please do not hesitate to contact us using one of the methods below. We are here to help!</p>
+                        <h4><span class="fl ui-button-icon-primary ui-icon-small icon-grey icon-small-318"></span>By Phone</h4>
                         <p><a itemprop="telephone" href="tel:+441159385111">01159 385 111</a></p>
-                            <h4><span class="fl ui-button-icon-primary ui-icon icon-grey icon-1052"></span>By Email</h4>
+                            <h4><span class="fl ui-button-icon-primary ui-icon-small icon-grey icon-small-1052"></span>By Email</h4>
                         <p><a class="contact-detail" itemprop="email" href="mailto:sales@kitchenappliancecentre.co.uk">sales@kitchenappliancecentre.co.uk</a></p>
-                        <h4><span class="fl ui-button-icon-primary ui-icon icon-grey icon-711"></span>By Post</h4>
-                        <p class="contact-detail separator">
+                        <h4><span class="fl ui-button-icon-primary ui-icon-small icon-grey icon-small-711"></span>By Post</h4>
+                        <p>
                             <span itemprop="name">Kitchen Appliance Centre</span><br />
 							<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 								<span itemprop="streetAddress">Unit 3 Pentrich Road<br />Giltbrook Industrial Park</span><br />
@@ -114,11 +114,21 @@
 								<span itemprop="postalCode">NG16 2UZ</span>
 							</span>
                         </p>
-                        <h4><span class="fl ui-button-icon-primary ui-icon icon-grey icon-229"></span>By Visiting</h4>
-                        <p><a class="contact-detail" href="{{ path('content_how_to_find_us') }}">Click here for directions</a></p>
+                        <h4><span class="fl ui-button-icon-primary ui-icon-small icon-grey icon-small-229"></span>By Visiting</h4>
+                        <p><a href="{{ path('content_how_to_find_us') }}">Click here for directions</a></p>
                     </div>
                 </section>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script defer="defer" type="text/javascript">
+        $(document).ready(function() {
+            $("#form-secure-message").validator({
+                messageClass: 'inline-error'
+            });
+        });
+    </script>
 {% endblock %}
