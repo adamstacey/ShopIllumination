@@ -31,7 +31,7 @@ class Type
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @Gedmo\Timestampable(on="create")

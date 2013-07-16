@@ -58,7 +58,7 @@ class VariantToOption
     /**
      * @ORM\Column(name="display_order", type="integer", length=11, nullable=true)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @Gedmo\Timestampable(on="create")

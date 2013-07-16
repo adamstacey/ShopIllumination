@@ -87,6 +87,7 @@ class User extends BaseUser
     public function setContact(Contact $contact = null)
     {
         $this->contact = $contact;
+        $contact->setUser($this);
     
         return $this;
     }

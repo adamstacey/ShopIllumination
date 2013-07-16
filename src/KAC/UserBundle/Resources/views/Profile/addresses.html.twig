@@ -1,0 +1,51 @@
+{% extends "KACSiteBundle::base.html.twig" %}
+
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1><a href="{{ path('profile_overview') }}">Your Account</a> > Orders</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Orders</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        {% if user.contact.addresses|length > 0 %}
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Recipient</th>
+                                        <th>Location</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for address in user.contact.addresses %}
+                                        <tr>
+                                            <td>{{ address.displayName }}</td>
+                                            <td>{{ address.firstName }} {{ address.lastName }}</td>
+                                            <td>{{ address.addressLine1 }}</td>
+                                            <td>
+                                                <a href="">Edit</a> <em>|</em>
+                                                <a href="">Delete</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No addresses found. <a href="{{ path('profile_new_address') }}">Create one?</a></p>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

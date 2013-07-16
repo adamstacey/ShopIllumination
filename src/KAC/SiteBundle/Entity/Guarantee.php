@@ -31,7 +31,7 @@ class Guarantee
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Guarantee\Type")

@@ -26,37 +26,37 @@ class Contact
     private $user;
 
     /**
-     * @ORM\Column(name="organisation_name", type="string", length=255)
+     * @ORM\Column(name="organisation_name", type="string", length=255, nullable=true)
      */
     private $organisationName;
 
     /**
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(name="last_name", type="string", length=255)
+     * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     private $lastName;
 
     /**
-     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Contact\Address", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Contact\Address", mappedBy="contact", cascade={"all"})
      */
     private $addresses;
 
     /**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact")
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact", cascade={"all"})
      */
     private $telephoneDaytime;
 
     /**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact")
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact", cascade={"all"})
      */
     private $telephoneEvening;
 
     /**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact")
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Contact\Number", mappedBy="contact", cascade={"all"})
      */
     private $telephoneMobile;
 
@@ -261,9 +261,10 @@ class Contact
      * @param Contact\Address $addresses
      * @return Contact
      */
-    public function addAddress(Contact\Address $addresses)
+    public function addAddress(Contact\Address $address)
     {
-        $this->addresses[] = $addresses;
+        $this->addresses[] = $address;
+        $address->setContact($this);
 
         return $this;
     }
@@ -297,6 +298,7 @@ class Contact
     public function setTelephoneDaytime(Contact\Number $telephoneDaytime = null)
     {
         $this->telephoneDaytime = $telephoneDaytime;
+        $telephoneDaytime->setContact($this);
 
         return $this;
     }
@@ -320,6 +322,7 @@ class Contact
     public function setTelephoneEvening(Contact\Number $telephoneEvening = null)
     {
         $this->telephoneEvening = $telephoneEvening;
+        $telephoneEvening->setContact($this);
 
         return $this;
     }
@@ -343,6 +346,7 @@ class Contact
     public function setTelephoneMobile(Contact\Number $telephoneMobile = null)
     {
         $this->telephoneMobile = $telephoneMobile;
+        $telephoneMobile->setContact($this);
 
         return $this;
     }

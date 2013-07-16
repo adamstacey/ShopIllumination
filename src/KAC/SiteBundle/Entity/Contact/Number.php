@@ -26,10 +26,10 @@ class Number
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
     
     /**
-     * @ORM\Column(name="display_name", type="string", length=255)
+     * @ORM\Column(name="display_name", type="string", length=255, nullable=true)
      */
     private $displayName;
     

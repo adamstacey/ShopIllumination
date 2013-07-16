@@ -1,0 +1,50 @@
+{% extends "KACSiteBundle::base.html.twig" %}
+
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1><a href="{{ path('profile_overview') }}">Your Account</a> > Orders</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Orders</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        {% if orders|length > 0 %}
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Order Placed</th>
+                                        <th>Num Items</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                        <tr>
+                                            <td>{{ order.id }}</td>
+                                            <td>{{ order.createdAt|date('d/m/y') }}</td>
+                                            <td>{{ order.products|length }}</td>
+                                            <td>{{ order.status }}</td>
+                                            <td>{{ order.total }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No orders found</p>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

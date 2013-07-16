@@ -66,7 +66,7 @@ class Link
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
 
     /**
      * @ORM\Column(name="original_path", type="string", length=255, nullable=true)

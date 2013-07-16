@@ -21,10 +21,6 @@ fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
     prefix: /resetting
 
-fos_user_profile:
-    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /account
-
 fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /account
@@ -41,3 +37,16 @@ kac_site:
     resource: "@KACSiteBundle/Controller/"
     type:     annotation
     prefix:   /
+
+kac_user:
+    resource: "@KACUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+routing_all:
+    pattern:  /all/{url}.html
+    requirements: { url: '.+' }
+
+routing:
+    pattern:  /{url}.html
+    requirements: { url: '.+' }

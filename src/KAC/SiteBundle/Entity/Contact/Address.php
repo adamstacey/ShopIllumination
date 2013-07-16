@@ -26,7 +26,7 @@ class Address
     /**
      * @ORM\Column(name="display_order", type="integer", length=11)
      */
-    private $displayOrder;
+    private $displayOrder = 1;
     
     /**
      * @ORM\Column(name="display_name", type="string", length=255)
@@ -34,7 +34,7 @@ class Address
     private $displayName;
     
     /**
-     * @ORM\Column(name="organisation_name", type="string", length=255)
+     * @ORM\Column(name="organisation_name", type="string", length=255, nullable=true)
      */
     private $organisationName;
 
@@ -54,7 +54,7 @@ class Address
     private $addressLine1;
     
     /**
-     * @ORM\Column(name="address_line_2", type="string", length=255)
+     * @ORM\Column(name="address_line_2", type="string", length=2555, nullable=true)
      */
     private $addressLine2;
     

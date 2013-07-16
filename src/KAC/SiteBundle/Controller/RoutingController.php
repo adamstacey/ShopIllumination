@@ -9,24 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-/**
- * @Route("/")
- */
 class RoutingController extends Controller
 {
-    /**
-     * @Route("/all/{url}.html", name = "routing_all", requirements = {"url": ".+"})
-     * @Method({"GET"})
-     */
     public function routingAllAction(Request $request, $url)
     {
         return $this->routingAction($request, $url, true);
     }
 
-    /**
-     * @Route("/{url}.html", name = "routing", requirements = {"url": ".+"})
-     * @Method({"GET"})
-     */
     public function routingAction(Request $request, $url, $all=false)
     {
         // Tidy up URL
