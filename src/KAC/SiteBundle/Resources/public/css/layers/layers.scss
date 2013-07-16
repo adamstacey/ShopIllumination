@@ -16,6 +16,11 @@ $zIndex: $zIndex + 1;
 }
 
 $zIndex: $zIndex + 1;
+.flash-message {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
 .accordion-header-buttons {
     z-index: $zIndex;
 }
@@ -88,6 +93,11 @@ div.etalage_description {
 }
 
 $zIndex: $zIndex + 1;
+#basket-summary {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
 .ui-tooltip {
     z-index: $zIndex;
 }
@@ -104,6 +114,11 @@ $zIndex: $zIndex + 1;
 
 $zIndex: $zIndex + 1;
 .select2-search {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
+.inline-error {
     z-index: $zIndex;
 }
 
