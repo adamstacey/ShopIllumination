@@ -30,6 +30,7 @@
         {% if app.request.query.get('modal') != true %}
             <div class="document clearfix">
                 {% include 'KACSiteBundle:Includes:header.html.twig' %}
+                {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
                 <section class="container">
                     <div class="content">
                         {% block slider %}{% endblock %}
