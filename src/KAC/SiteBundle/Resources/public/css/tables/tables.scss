@@ -15,6 +15,11 @@ table.data-table th {
     @include highlightedVerticalGradientGrey;
 }
 
+table.data-table th a {
+    color: $colourBlack;
+    @include textShadow($colourGreyExtraExtraLight, 0, 1px);
+}
+
 table.data-table td {
     border-collapse: collapse;
     padding: $spacingMedium;
