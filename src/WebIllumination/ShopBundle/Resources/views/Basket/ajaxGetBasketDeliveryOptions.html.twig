@@ -16,7 +16,7 @@
     </div>
 </div>
 <h4>Available Options</h4>
-<div class="clearfix separator">
+<div class="clearfix">
 	{% if basket.delivery.postZipCode == '' %}
         <div class="message message-help">
             <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
@@ -40,7 +40,10 @@
             </div>
         </div>
 	{% else %}
-		<div class="form-input delivery-option"><label><span class="service"><strong>There are no delivery options available.</strong></span></label></div>
+        <div class="message message-warning">
+            <span class="ui-button-icon-primary ui-icon icon-yellow icon-695"></span>
+            <p>Sorry, there are no delivery options available.</p>
+        </div>
 	{% endfor %}
 </div>
 {% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.end is defined) %}
