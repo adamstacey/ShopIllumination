@@ -50,11 +50,10 @@
 </table>
 <div class="clear"></div>
 {% if basket.delivery.service == '' %}
-	<div class="info-message ui-status-highlight no-margin">
-		<span class="info-message-icon ui-icon ui-icon-info"></span>
-		<p>Sorry, we are currently unable to deliver the selected items to your area.</p>
-		<div class="clear"></div>
-	</div>
+    <div class="message message-warning">
+        <span class="ui-button-icon-primary ui-icon icon-white icon-695"></span>
+        <p class="tal">Sorry, we are currently unable to deliver the selected items to your area.</p>
+    </div>
 {% endif %}
 {% if basket.numberOfCdaAppliances is defined %}
 	{% if (basket.numberOfCdaAppliances > 0) and (basket.numberOfCdaAppliances < 3) %}
