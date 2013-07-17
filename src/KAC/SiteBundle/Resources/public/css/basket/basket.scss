@@ -68,7 +68,8 @@
     padding: $spacingSmall $spacingMedium;
 }
 
-#basket-delivery-options .form-helper {
+#basket-delivery-options .form-helper,
+#order-information .form-helper {
     top: 0;
     right: 10px;
 }
