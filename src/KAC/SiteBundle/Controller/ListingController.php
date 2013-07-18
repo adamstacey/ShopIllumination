@@ -489,13 +489,43 @@ class ListingController extends Controller
 
     public function departmentTreeAction(Request $request, $departmentId = null, $brandId = null)
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
 
         if ($departmentId)
         {
-            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            if($brandId)
+            {
+                $qb = $em->getRepository("KACSiteBundle:Department")->createQueryBuilder('d');
+                $departments = $qb->join('KAC\SiteBundle\Entity\BrandToDepartment', 'btd', Expr\Join::WITH, $qb->expr()->eq('btd.department', 'd.id'))
+                    ->where($qb->expr()->eq('btd.brand', '?1'))
+                    ->andWhere($qb->expr()->eq('d.id', '?2'))
+                    ->andWhere($qb->expr()->eq('d.status', $qb->expr()->literal('a')))
+                    ->orderBy('d.displayOrder')
+                    ->setParameter(1, $brandId)
+                    ->setParameter(2, $departmentId)
+                    ->getQuery()
+                    ->execute();
+            } else {
+                $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            }
         } else {
-            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            if($brandId)
+            {
+                $qb = $em->getRepository("KACSiteBundle:Department")->createQueryBuilder('d');
+                $departments = $qb->join('KAC\SiteBundle\Entity\BrandToDepartment', 'btd', Expr\Join::WITH, $qb->expr()->eq('btd.department', 'd.id'))
+                    ->where($qb->expr()->eq('btd.brand', '?1'))
+                    ->andWhere($qb->expr()->eq('d.lvl', $qb->expr()->literal(1)))
+                    ->andWhere($qb->expr()->eq('d.status', $qb->expr()->literal('a')))
+                    ->orderBy('d.displayOrder')
+                    ->setParameter(1, $brandId)
+                    ->getQuery()
+                    ->execute();
+            } else {
+                $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            }
         }
 
         $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
