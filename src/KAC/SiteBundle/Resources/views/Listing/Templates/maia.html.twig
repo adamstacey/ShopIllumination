@@ -93,9 +93,9 @@
                                 <div class="product-listing">
                                     <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                                         {% if product.thumbnail_path %}
-                                            <img width="127" height="127" src="{{ product.thumbnail_path | apply_filter('product_thumbnail') }}" alt="{{ product.header|raw }}" />
+                                            <img width="127" height="127" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" alt="{{ product.header|raw }}" />
                                         {% else  %}
-                                            <img width="127" height="127" src="{{ 'images/no-image.jpg' | apply_filter('product_thumbnail') }}" alt="{{ product.header|raw }}" />
+                                            <img width="127" height="127" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" alt="{{ product.header|raw }}" />
                                         {% endif  %}
                                         <span class="name">{{ product.attr_feature_Colour[0]|raw }}</span>
                                         {% if product.new %}<span class="new">NEW</span>{% endif %}

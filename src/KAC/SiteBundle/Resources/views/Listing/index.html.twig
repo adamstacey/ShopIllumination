@@ -158,9 +158,9 @@
                                                     <div class="product-image-container fl">
                                                         <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                                                             {% if product.thumbnail_path %}
-                                                                <img class="product-image" itemprop="image" src="{{ product.thumbnail_path | apply_filter('product_thumbnail') }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                                <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                                             {% else  %}
-                                                                <img class="product-image" itemprop="image" src="{{ 'images/no-image.jpg' | apply_filter('product_thumbnail') }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                                <img class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                                             {% endif  %}
                                                         </a>
                                                     </div>
