@@ -22,12 +22,14 @@ class ProductToDepartment
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="departments")
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      **/
     private $product;
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department")
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
      **/
     private $department;
 

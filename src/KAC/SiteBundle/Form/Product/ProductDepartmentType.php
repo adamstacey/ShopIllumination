@@ -25,6 +25,7 @@ class ProductDepartmentType extends AbstractType
                         ->leftJoin('node.descriptions', 'd');
                 }
             },
+            'empty_value' => '- Select a Department -',
             'label' => 'Main Department',
             'required' => true,
             'attr' => array(

@@ -39,9 +39,5 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("select.select-brand").select2();
-        $("select.select-department").prepend('<option value="">- Select a Department -</option>').select2();
-        if ($("select.select-department option[value!=''][selected='selected']").length == 0) {
-            $("select.select-department").select2('val', ['- Select a Department -']);
-        }
     })
 </script>
