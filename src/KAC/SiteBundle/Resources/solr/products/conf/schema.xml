@@ -194,6 +194,19 @@
         </fieldType>
         -->
 
+        <filter class="solr.NGramFilterFactory" maxgramsize="25" mingramsize="3"/>
+        <fieldType name="word" class="solr.TextField">
+            <analyzer type="index">
+                <tokenizer class="solr.LowerCaseTokenizerFactory"/>
+                <filter class="solr.NGramFilterFactory" minGramSize="2" maxGramSize="15"/>
+                <filter class="solr.TrimFilterFactory" />
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.LowerCaseTokenizerFactory"/>
+                <filter class="solr.TrimFilterFactory" />
+            </analyzer>
+        </fieldType>
+
         <!-- A text field that only splits on whitespace for exact matching of words -->
         <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">
             <analyzer>
@@ -506,7 +519,7 @@
         <field name="additional_product_colours" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="additional_products" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="short_description" type="text_en" indexed="true" stored="true" multiValued="false"/>
-        <field name="product_code" type="text_ws" indexed="true" stored="true" multiValued="true"/>
+        <field name="product_code" type="word" indexed="true" stored="true" multiValued="true"/>
         <field name="search_words" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="variants_count" type="int" indexed="true" stored="true" multiValued="false"/>
 
