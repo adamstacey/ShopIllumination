@@ -470,7 +470,6 @@ CREATE TABLE types (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, 
 ALTER TABLE product_variants ADD type_id INT DEFAULT NULL;
 ALTER TABLE product_variants ADD CONSTRAINT FK_78283976C54C8C93 FOREIGN KEY (type_id) REFERENCES types (id);
 CREATE INDEX IDX_78283976C54C8C93 ON product_variants (type_id);
-ALTER TABLE orders DROP membership_card_purchased, DROP membership_card_number;
 INSERT INTO `types` (`id`, `name`, `object_type`, `created_at`, `updated_at`) VALUES
 (1, 'Default', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 'Worktops', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
