@@ -79,7 +79,7 @@
 				$("#message-error").slideDown(function() {
 					setTimeout("resetMessages()", 5000);
 				});
-				$("html, body").animate({scrollTop: $(".form-error-3-5:first").offset().top - 50}, 'slow');
+//				$("html, body").animate({scrollTop: $(".form-element:nth-child(14)").offset().top - 50}, 'slow');
 			}
 		}
 	}
@@ -152,7 +152,7 @@
 			$("#message-error").slideDown(function() {
 				setTimeout("resetMessages()", 5000);
 			});
-			$("html, body").animate({scrollTop: $(".form-error-3-5:first").offset().top - 50}, 'slow');
+//			$("html, body").animate({scrollTop: $(".form-error-3-5:first").offset().top - 50}, 'slow');
 		}
 	}
 	
@@ -395,7 +395,7 @@
 		
 		{# Submit payment #}
 		$(".action-submit-payment").live('click', function() {
-			var $paymentType = $(this).attr("data-payment-type");
+			var $paymentType = $(".action-submit-payment").attr("data-payment-type");
 			saveOrder($paymentType);
 		});
 	});

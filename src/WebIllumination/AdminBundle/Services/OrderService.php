@@ -674,8 +674,8 @@ class OrderService {
             {
                 $orderDiscountObject = new Order\Discount();
                 $orderDiscountObject->setOrder($orderObject);
-                $orderDiscountObject->setVoucherCode(($discount['voucherCode']?$discount['voucherCode']:''));
-                $orderDiscountObject->setGiftVoucherCode(($discount['giftVoucherCode']?$discount['giftVoucherCode']:''));
+                $orderDiscountObject->setVoucherCode('');
+                $orderDiscountObject->setGiftVoucherCode('');
                 $orderDiscountObject->setDescription(($discount['description']?$discount['description']:''));
                 $orderDiscountObject->setDiscount(($discount['discount']?$discount['discount']:0));
                 $em->persist($orderDiscountObject);
