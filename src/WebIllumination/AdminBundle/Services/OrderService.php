@@ -445,10 +445,10 @@ class OrderService {
         $copyOrderDocument = $this->getUploadRootDir().'/copy-order-'.$id.'.pdf';
         $invoiceDocument = $this->getUploadRootDir().'/invoice-'.$id.'.pdf';
         $deliveryNoteDocument = $this->getUploadRootDir().'/delivery-note-'.$id.'.pdf';
-        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
-        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
-        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
-        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
         return true;
     }
 
