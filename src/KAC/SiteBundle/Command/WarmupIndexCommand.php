@@ -33,7 +33,7 @@ class WarmupIndexCommand extends ContainerAwareCommand
         $productIndexer->delete();
 
         // Load products
-        $query = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\\Product p WHERE p.status = 'a'");
+        $query = $em->createQuery('SELECT p FROM KAC\SiteBundle\Entity\Product p');
         $iterableResult = $query->iterate();
         $document = null;
 
