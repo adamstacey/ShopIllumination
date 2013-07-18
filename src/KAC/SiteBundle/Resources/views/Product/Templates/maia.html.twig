@@ -14,12 +14,12 @@
     <tr class="{{ cycle(['odd', 'even'], loop.index0) }}" data-worktop-thickness="{{ variant.featureValue('thickness') }}">
         <td width="1" class="pam image">
             {% if product.image %}
-                <a href="{{ variant.image.publicPath | apply_filter('product_large') }}" class="lightbox">
-                    <img width="180" height="95" src="{{ variant.image.publicPath | apply_filter('variant_thumbnail')  }}" alt="{{ variant.description.header|raw }}" />
+                <a href="{{ asset(variant.image.publicPath | apply_filter('product_large')) }}" class="lightbox">
+                    <img width="180" height="95" src="{{ asset(variant.image.publicPath | apply_filter('variant_thumbnail')) }}" alt="{{ variant.description.header|raw }}" />
                 </a>
             {% else  %}
-                <a href="{{ 'images/no-image.jpg' | apply_filter('product_large') }}" class="lightbox">
-                    <img width="180" height="95" src="{{ 'images/no-image.jpg' | apply_filter('variant_thumbnail') }}" alt="{{ variant.description.header|raw }}" />
+                <a href="{{ asset('images/no-image.jpg' | apply_filter('product_large')) }}" class="lightbox">
+                    <img width="180" height="95" src="{{ asset('images/no-image.jpg' | apply_filter('variant_thumbnail')) }}" alt="{{ variant.description.header|raw }}" />
                 </a>
             {% endif  %}
         </td>

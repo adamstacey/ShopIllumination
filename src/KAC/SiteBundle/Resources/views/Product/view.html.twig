@@ -109,7 +109,7 @@
                                     {% if gallery_images | length > 0 %}
                                         <ul class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
                                             {% for image in gallery_images %}
-                                                <img src="{{ image.publicPath | apply_filter('gallery_large') }}" data-thumb="{{ image.publicPath | apply_filter('gallery_thumbnail') }}" alt="{{ product.description.header }}" />
+                                                <img src="{{ asset(image.publicPath | apply_filter('gallery_large')) }}" data-thumb="{{ asset(image.publicPath | apply_filter('gallery_thumbnail')) }}" alt="{{ product.description.header }}" />
                                             {% endfor %}
                                         </ul>
                                     {% endif %}
@@ -121,7 +121,7 @@
                                             <div class="widget widget-2-of-7">
                                                 {% if thumbnail_image %}
                                                     <ul class="etalage etalage-inset">
-                                                        <li><img class="etalage_source_image" src="{{ thumbnail_image.publicPath | apply_filter('product_medium') }}" alt="{{ product.description.header }}" /></li>
+                                                        <li><img class="etalage_source_image" src="{{ asset(thumbnail_image.publicPath | apply_filter('product_medium')) }}" alt="{{ product.description.header }}" /></li>
                                                     </ul>
                                                 {% endif %}
                                             </div>
@@ -132,7 +132,7 @@
                                                         <div class="widget-group clearfix">
                                                             <div class="widget widget-1-of-3">
                                                                 {% if product.brand.description.logoImage %}
-                                                                    <img class="logo" src="{{ product.brand.description.logoImage.publicPath | apply_filter('logo_medium') }}" alt="{{ product.brand.description.name }}" />
+                                                                    <img class="logo" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_medium')) }}" alt="{{ product.brand.description.name }}" />
                                                                 {% endif %}
                                                             </div>
                                                             <div class="widget widget-2-of-3 clearfix">

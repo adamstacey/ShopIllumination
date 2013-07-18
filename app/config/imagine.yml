@@ -3,34 +3,34 @@ avalanche_imagine:
         # Logos
         logo_thumbnail:
             type:   thumbnail
-            options: { size: [50, 25], mode: inset, quality: 80 }
+            options: { size: [50, 25], mode: inset, quality: 80, cache_type: public, cache_expires: 2 weeks }
         logo_medium:
             type:   resize
-            options: { size: [100, 50], quality: 100 }
+            options: { size: [100, 50], quality: 100, cache_type: public, cache_expires: 2 weeks }
         logo_large:
             type:   resize
-            options: { size: [300, 150], quality: 100 }
+            options: { size: [300, 150], quality: 100, cache_type: public, cache_expires: 2 weeks }
         # Gallery
         gallery_thumbnail:
             type:   thumbnail
-            options: { size: [170, 50], mode: inset, quality: 80 }
+            options: { size: [170, 50], mode: inset, quality: 80, cache_type: public, cache_expires: 2 weeks }
         gallery_medium:
             type:   resize
-            options: { size: [300, 86], quality: 100 }
+            options: { size: [300, 86], quality: 100, cache_type: public, cache_expires: 2 weeks }
         gallery_large:
             type:   resize
-            options: { size: [978, 400], quality: 100 }
+            options: { size: [978, 400], quality: 100, cache_type: public, cache_expires: 2 weeks }
         # Product
         product_thumbnail:
             type:   thumbnail
-            options: { size: [150, 150], mode: inset, quality: 80 }
+            options: { size: [150, 150], mode: inset, quality: 80, cache_type: public, cache_expires: 2 weeks }
         product_medium:
             type:   resize
-            options: { size: [300, 300], quality: 100 }
+            options: { size: [300, 300], quality: 100, cache_type: public, cache_expires: 2 weeks }
         product_large:
             type:   resize
-            options: { size: [800, 600], quality: 100 }
+            options: { size: [800, 600], quality: 100, cache_type: public, cache_expires: 2 weeks }
         # Variant
         variant_thumbnail:
             type:   thumbnail
-            options: { size: [180, 95], mode: inset, quality: 80 }
+            options: { size: [180, 95], mode: inset, quality: 80, cache_type: public, cache_expires: 2 weeks }
