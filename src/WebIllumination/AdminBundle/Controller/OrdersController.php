@@ -2222,7 +2222,7 @@ class OrdersController extends Controller
                     if ($itemNote)
                     {
                         $itemNoteObject = new Order\Note();
-                        $itemNoteObject->setOrder($itemObject->getId());
+                        $itemNoteObject->setOrder($itemObject);
                         $itemNoteObject->setNoteType($itemNoteType);
                         $itemNoteObject->setNotified($itemNotified);
                         $itemNoteObject->setNote($itemNote);
