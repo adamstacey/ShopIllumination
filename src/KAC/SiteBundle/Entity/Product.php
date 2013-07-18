@@ -33,9 +33,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\All({
-     *      @Assert\Valid
-     * })
+     * @Assert\Valid
      */
     private $descriptions;
 
@@ -43,9 +41,7 @@ class Product implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
-     * @Assert\All({
-     *      @Assert\Valid
-     * })
+     * @Assert\Valid
      * @Serializer\Exclude()
      */
     private $departments;
@@ -54,9 +50,7 @@ class Product implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Serializer\Exclude()
-     * @Assert\All({
-     *      @Assert\Valid
-     * })
+     * @Assert\Valid
      */
     private $links;
 
@@ -76,9 +70,7 @@ class Product implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "ASC"})
-     * @Assert\All({
-     *      @Assert\Valid
-     * })
+     * @Assert\Valid
      */
     private $variants;
 
