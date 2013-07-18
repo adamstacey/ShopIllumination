@@ -33,7 +33,6 @@ class GenerateDocsCommand extends ContainerAwareCommand
          * @var $em EntityManager
          * @var $order Order
          */
-        $i=0;
         $em = $this->getContainer()->get('doctrine')->getManager();        // Get the services
         $systemService = $this->getContainer()->get('web_illumination_admin.system_service');
         $orderService = $this->getContainer()->get('web_illumination_admin.order_service');
@@ -43,6 +42,7 @@ class GenerateDocsCommand extends ContainerAwareCommand
         $query = $em->createQuery("SELECT o FROM KAC\\SiteBundle\\Entity\\Order o");
         $query->setFirstResult($input->getArgument('start'));
         $query->setMaxResults($input->getArgument('batchSize'));
+        $i = $input->getArgument('start');
 
         $iterableResult = $query->iterate();
 
