@@ -72,6 +72,11 @@ class ProductManager extends Manager
         $variants = $product->getVariants();
         if (sizeof($variants) < 1) return;
 
+        $commonPageTitle = $description->getPageTitle();
+        $commonHeader = $description->getHeader();
+        $commonMetaDescription = $description->getMetaDescription();
+        $commonMetaKeywords = $description->getMetaKeywords();
+
         // Go through variants and put together the description data
         if (sizeof($variants) == 1)
         {
