@@ -267,7 +267,7 @@ class ListingController extends Controller
             $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
             $dismax->setPhraseFields(array('short_description^30'));
             $dismax->setQueryParser('edismax');
-            $query->setQuery($escapedQuery);
+            $query->setQuery($escapedQuery . '*');
         } else {
             $query->setQuery('*');
         }
@@ -412,7 +412,7 @@ class ListingController extends Controller
             $dismax->setPhraseFields(array('short_description^30'));
             $dismax->setQueryParser('edismax');
 
-            $query->setQuery($escapedQuery);
+            $query->setQuery($escapedQuery . '*');
 
             // Ensure that only the correct products are shown
             if(!$this->get('session')->get('admin'))
