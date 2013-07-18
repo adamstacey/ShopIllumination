@@ -1221,10 +1221,10 @@ class OrdersController extends Controller
     public function processDeliveriesAction(Request $request)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.order_service');
+        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         // Update
         if ($request->getMethod() == 'POST')
@@ -1244,12 +1244,31 @@ class OrdersController extends Controller
             {
                 // Setup DPD import file
                 $dpdImportFile = "Account|AddressCode|Name|Address 1|Address 2|Town|County|PostCode|Service|Qty of Labels|Contact|Telephone|Email|Email2|Additional Info\n";
+                $dpdImportFileName = '/var/www/staging.kitchenappliancecentre.co.uk/current/web/uploads/imports/dpd/import-'.date('dmYHis').'.txt';
+                $dpdLabels = 0;
+
+                // Setup Royal Mail import file
+                $royalMailImportFileName = '/var/www/staging.kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Data.txt';
+                $royalMailLockFileName = '/var/www/staging.kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Lock.txt';
+                $royalMailImportLine = 1;
+                if (file_exists($royalMailImportFileName))
+                {
+                    $royalMailImportFile = "";
+                    $royalMailImportLine--;
+                    $fileHandle = fopen($royalMailImportFileName, 'r');
+                    while (!feof($fileHandle))
+                    {
+                        $line = fgets($fileHandle);
+                        $royalMailImportLine++;
+                    }
+                } else {
+                    $royalMailImportFile = "ADD Standard\n";
+                }
+                $royalMailLabels = 0;
 
                 foreach ($select as $itemId => $item)
                 {
-                    /**
-                     * @var $itemObject Order
-                     */
+                    // Get the item
                     $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($itemId);
                     if ($itemObject)
                     {
@@ -1295,61 +1314,96 @@ class OrdersController extends Controller
                         switch ($itemCourier)
                         {
                             case 'Royal Mail':
-                                // Add the new note
-                                if ($itemTrackingNumber != '')
+                                // TO DO: Move this, so the post code is cleaned at entry
+                                // Tidy up the post code
+                                $postCode = strtoupper($itemObject->getDeliveryPostZipCode());
+                                if (strpos($postCode, ' ') === false)
                                 {
-                                    $htmlNote = "Your item has been dispatched for recorded delivery with Royal Mail. Your consignment number is ".$itemTrackingNumber.".\n\n";
-                                    $htmlNote .= "<a href=\"http://track2.royalmail.com/portal/rm/track?trackNumber=".$itemTrackingNumber."\">Click here to track your delivery.</a>";
-                                    $plainTextNote = "Your item has been dispatched for recorded delivery with Royal Mail. Your consignment number is ".$itemTrackingNumber.".\n\n";
-                                    $plainTextNote .= "Go to http://track2.royalmail.com/portal/rm/track?trackNumber=".$itemTrackingNumber." to track your delivery.";
-                                } else {
-                                    $htmlNote = "Your item has been dispatched for standard delivery with Royal Mail.\n\n";
-                                    $htmlNote .= "There is no consignment number provided for standard delivery, so there is no tracking information available.";
-                                    $plainTextNote = "Your item has been dispatched for standard delivery with Royal Mail.\n\n";
-                                    $plainTextNote .= "There is no consignment number provided for standard delivery, so there is no tracking information available.";
-                                }
-                                $orderNoteObject = new Order\Note();
-                                $orderNoteObject->setOrder($itemObject);
-                                $orderNoteObject->setNoteType('customer');
-                                $orderNoteObject->setNotified(1);
-                                $orderNoteObject->setNote($plainTextNote);
-                                $orderNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
-                                $em->persist($orderNoteObject);
-                                $em->flush();
-
-                                // Update notes count on order
-                                $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
-                                $em->persist($itemObject);
-                                $em->flush();
-
-                                // Send the email
-                                try
-                                {
-                                    $email = \Swift_Message::newInstance();
-                                    $email->setSubject('You have a new Message from Kitchen Appliance Centre about your Order: '.$itemObject->getId());
-                                    $email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
-                                    $email->setTo(array($itemObject->getEmailAddress() => $itemObject->getFirstName().' '.$itemObject->getLastName()));
-                                    if ($itemObject->getSendReviewRequest() > 0)
+                                    if (strlen($postCode) == 6)
                                     {
-                                        $email->setBcc(array('0cbe3042@trustpilotservice.com'));
+                                        $postCode = substr($postCode, 0, 3).' '.substr($postCode, 3, 3);
+                                    } elseif (strlen($postCode) == 7) {
+                                        $postCode = substr($postCode, 0, 4).' '.substr($postCode, 4, 3);
                                     }
-                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
-                                    $this->get('mailer')->send($email);
-
-                                    // Set the review as requested
-                                    $itemObject->setReviewRequested(1);
-                                    $em->persist($itemObject);
-                                    $em->flush();
-                                } catch (\Exception $exception) {
-                                    error_log('Error sending email!');
                                 }
+
+                                // Service Reference
+                                $royalMailImportFile .= 'SR1|';
+                                // Service
+                                $royalMailImportFile .= 'STANDARD|';
+                                // Service Enhancement
+                                $royalMailImportFile .= '|';
+                                // Service Format
+                                $royalMailImportFile .= 'N|';
+                                // Service Class
+                                $royalMailImportFile .= 'T|';
+                                // Recipient
+                                $royalMailImportFile .= strtoupper($itemObject->getDeliveryFirstName().' '.$itemObject->getDeliveryLastName()).'|';
+                                // Recipient Complementary Name
+                                $royalMailImportFile .= '|';
+                                if ($itemObject->getDeliveryOrganisationName() != '')
+                                {
+                                    // Recipient Address Line 1
+                                    $royalMailImportFile .= ($itemObject->getDeliveryOrganisationName()?strtoupper($itemObject->getDeliveryOrganisationName()):'').'|';
+                                    // Recipient Address Line 2
+                                    $royalMailImportFile .= ($itemObject->getDeliveryAddressLine1()?strtoupper($itemObject->getDeliveryAddressLine1()):'').'|';
+                                    // Recipient Address Line 3
+                                    $royalMailImportFile .= ($itemObject->getDeliveryAddressLine2()?strtoupper($itemObject->getDeliveryAddressLine2()):'').'|';
+                                    // Recipient Postcode
+                                    $royalMailImportFile .= ($postCode?$postCode:'').'|';
+                                    // Recipient Post Town
+                                    $royalMailImportFile .= ($itemObject->getDeliveryTownCity()?strtoupper($itemObject->getDeliveryTownCity()):'').'|';
+                                    // Recipient Country Code
+                                    $royalMailImportFile .= ($itemObject->getDeliveryCountryCode()?strtoupper($itemObject->getDeliveryCountryCode()):'GB').'|';
+                                } else {
+                                    // Recipient Address Line 1
+                                    $royalMailImportFile .= ($itemObject->getDeliveryAddressLine1()?strtoupper($itemObject->getDeliveryAddressLine1()):'').'|';
+                                    // Recipient Address Line 2
+                                    $royalMailImportFile .= ($itemObject->getDeliveryAddressLine2()?strtoupper($itemObject->getDeliveryAddressLine2()):'').'|';
+                                    // Recipient Address Line 3
+                                    $royalMailImportFile .= '|';
+                                    // Recipient Postcode
+                                    $royalMailImportFile .= ($postCode?$postCode:'').'|';
+                                    // Recipient Post Town
+                                    $royalMailImportFile .= ($itemObject->getDeliveryTownCity()?strtoupper($itemObject->getDeliveryTownCity()):'').'|';
+                                    // Recipient Country Code
+                                    $royalMailImportFile .= ($itemObject->getDeliveryCountryCode()?strtoupper($itemObject->getDeliveryCountryCode()):'GB').'|';
+                                }
+                                // Recipient Zone Code
+                                $royalMailImportFile .= '|';
+                                // Recipient Contact Name
+                                $royalMailImportFile .= strtoupper($itemObject->getDeliveryFirstName().' '.$itemObject->getDeliveryLastName()).'|';
+                                // Recipient Tel #
+                                $royalMailImportFile .= ($itemObject->getMobile()?str_replace(array(' ', '-'), '', $itemObject->getMobile()):'').'|';
+                                // Recipient Email Address
+                                $royalMailImportFile .= ($itemObject->getEmailAddress()?strtolower($itemObject->getEmailAddress()):'').'|';
+                                // Shipping Date
+                                $royalMailImportFile .= date("dmY").'|';
+                                // Reference
+                                $royalMailImportFile .= $itemObject->getId().'|';
+                                // Items
+                                $royalMailImportFile .= '1|';
+                                // Weight (kgs)
+                                $royalMailImportFile .= '1.0|';
+                                // Nature of goods
+                                $royalMailImportFile .= '|';
+                                // Safe Place
+                                $royalMailImportFile .= '|';
+                                // Signature
+                                $royalMailImportFile .= '';
+                                $royalMailImportFile .= "\n";
+                                $royalMailLabels++;
 
                                 // Update the order status
-                                $itemObject->setStatus('Order Completed');
+                                $itemObject->setStatus('Order with Delivery Company');
+                                $itemObject->setRoyalMailImportLine($royalMailImportLine);
                                 $itemObject->setLabelsPrinted(1);
                                 $em->persist($itemObject);
                                 $em->flush();
+
+                                // Next Royal Mail import line
+                                $royalMailImportLine++;
+
                                 break;
                             case 'DPD':
                                 // Account
@@ -1396,6 +1450,7 @@ class OrdersController extends Controller
                                 $dpdImportFile .= '"'.($itemObject->getMobile()?str_replace(array(' ', '-'), '', $itemObject->getMobile()):' ').'"|';
                                 $dpdImportFile .= '"FRAGILE HANDLE WITH CARE"';
                                 $dpdImportFile .= "\n";
+                                $dpdLabels++;
 
                                 // Update the order status
                                 $itemObject->setStatus('Order with Delivery Company');
@@ -1411,7 +1466,7 @@ class OrdersController extends Controller
                                 $plainTextNote = "Your item has been dispatched for signed delivery with Parcelforce. Your consignment number is ".$itemTrackingNumber.".\n\n";
                                 $plainTextNote .= "Go to http://www.parcelforce.com/track-trace?trackNumber=".$itemTrackingNumber." to track your delivery.";
                                 $plainTextNote .= "Tracking will be active after 5.30pm today.";
-                                $orderNoteObject = new Order\Note();
+                                $orderNoteObject = new OrderNote();
                                 $orderNoteObject->setOrder($itemObject);
                                 $orderNoteObject->setNoteType('customer');
                                 $orderNoteObject->setNotified(1);
@@ -1436,15 +1491,15 @@ class OrdersController extends Controller
                                     {
                                         $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                     }
-                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                     $this->get('mailer')->send($email);
 
                                     // Set the review as requested
                                     $itemObject->setReviewRequested(1);
                                     $em->persist($itemObject);
                                     $em->flush();
-                                } catch (\Exception $exception) {
+                                } catch (Exception $exception) {
                                     error_log('Error sending email!');
                                 }
 
@@ -1479,7 +1534,7 @@ class OrdersController extends Controller
                                         $plainTextNote = "Your item has been dispatched for delivery with Palletways.\n\n";
                                         $plainTextNote .= "Palletways will call you within <strong>24-48 hours</strong> to arrange delivery delivery.";
                                     }
-                                    $orderNoteObject = new Order\Note();
+                                    $orderNoteObject = new OrderNote();
                                     $orderNoteObject->setOrder($itemObject);
                                     $orderNoteObject->setNoteType('customer');
                                     $orderNoteObject->setNotified(1);
@@ -1504,15 +1559,15 @@ class OrdersController extends Controller
                                         {
                                             $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                         }
-                                        $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                        $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                        $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                        $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                         $this->get('mailer')->send($email);
 
                                         // Set the review as requested
                                         $itemObject->setReviewRequested(1);
                                         $em->persist($itemObject);
                                         $em->flush();
-                                    } catch (\Exception $exception) {
+                                    } catch (Exception $exception) {
                                         error_log('Error sending email!');
                                     }
 
@@ -1526,13 +1581,13 @@ class OrdersController extends Controller
                             case 'GHD Transport':
                                 // Add the new note
 
-                                $htmlNote = "GHD Transport Limited will be contacting you with your delivery date soon.\n\n";
-                                $htmlNote .= "For Delivery Enquiries Tel: 0115 944 3702 (GHD Transport Limited).\n\n";
+                                $htmlNote = "GHD Rob Dexter will be contacting you with your delivery date soon.\n\n";
+                                $htmlNote .= "For Delivery Enquiries Tel: 0115 930 9337 (GHD Rob Dexter).\n\n";
                                 $htmlNote .= "Please check all items before signing. Thank you.";
-                                $plainTextNote = "GHD Transport Limited will be contacting you with your delivery date soon.\n\n";
-                                $plainTextNote .= "For Delivery Enquiries Tel: 0115 944 3702 (GHD Transport Limited).\n\n";
+                                $plainTextNote = "GHD Rob Dexter will be contacting you with your delivery date soon.\n\n";
+                                $plainTextNote .= "For Delivery Enquiries Tel: 0115 930 9337 (GHD Rob Dexter).\n\n";
                                 $plainTextNote .= "Please check all items before signing. Thank you.";
-                                $orderNoteObject = new Order\Note();
+                                $orderNoteObject = new OrderNote();
                                 $orderNoteObject->setOrder($itemObject);
                                 $orderNoteObject->setNoteType('customer');
                                 $orderNoteObject->setNotified(1);
@@ -1557,15 +1612,15 @@ class OrdersController extends Controller
                                     {
                                         $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                     }
-                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                     $this->get('mailer')->send($email);
 
                                     // Set the review as requested
                                     $itemObject->setReviewRequested(1);
                                     $em->persist($itemObject);
                                     $em->flush();
-                                } catch (\Exception $exception) {
+                                } catch (Exception $exception) {
                                     error_log('Error sending email!');
                                 }
 
@@ -1579,26 +1634,41 @@ class OrdersController extends Controller
                     }
                 }
 
+                // Notification message
+                $notificationMessage = 'The selected '.$this->settings['multipleDescription'].' have been updated.';
+
                 // Check if we need to save the DPD import file
-                if ($dpdImportFile != "Account|AddressCode|Name|Address 1|Address 2|Town|County|PostCode|Service|Qty of Labels|Contact|Telephone|Email|Email2|Additional Info\n")
+                if ($dpdLabels > 0)
                 {
-                    $dpdImportFileName = $this->get('kernel')->getRootDir() . '/../web/uploads/imports/dpd/import-'.date('dmYHis').'.txt';
                     $fileHandle = fopen($dpdImportFileName, 'w');
                     fwrite($fileHandle, $dpdImportFile);
                     fclose($fileHandle);
 
                     // Notify user
-                    $this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated and '.sizeof($select).' DPD '.(sizeof($select) == 1?'order has':'orders have').' have been sent to the label printer.');
-
-                    // Forward
-                    return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
-                } else {
-                    // Notify user
-                    $this->get('session')->getFlashBag()->add('success', 'The selected '.$this->settings['multipleDescription'].' have been updated.');
-
-                    // Forward
-                    return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
+                    $notificationMessage .= ' '.$dpdLabels.' DPD '.($dpdLabels == 1?'order has':'orders have').' been sent to the label printer.';
                 }
+
+                // Check if we need to save the Royal Mail import file
+                if ($royalMailLabels > 0)
+                {
+                    $fileHandle = fopen($royalMailImportFileName, 'a');
+                    fwrite($fileHandle, $royalMailImportFile);
+                    fclose($fileHandle);
+
+                    // Also generate lock file for Royal Mail
+                    $fileHandle = fopen($royalMailLockFileName, 'w');
+                    fwrite($fileHandle, "1");
+                    fclose($fileHandle);
+
+                    // Notify user
+                    $notificationMessage .= ' '.$royalMailLabels.' Royal Mail '.($royalMailLabels == 1?'order has':'orders have').' been sent to the label printer.';
+                }
+
+                // Notify user
+                $this->get('session')->getFlashBag()->add('success', $notificationMessage);
+
+                // Forward
+                return $this->redirect($this->get('router')->generate('admin_'.$this->settings['multiplePath'].'_process_deliveries'));
             } else {
                 // Notify user
                 $this->get('session')->getFlashBag()->add('notice', 'You did not select any '.$this->settings['multipleDescription'].' to update.');
@@ -1622,28 +1692,29 @@ class OrdersController extends Controller
         $items = $qb->getQuery()->getResult();
         $data['items'] = $items;
 
-        return $this->render('WebIlluminationAdminBundle:Orders:processDeliveries.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':processDeliveries.html.twig', array('data' => $data));
+
     }
 
     // Import tracking
     public function importTrackingAction(Request $request)
     {
         // Get the services
-        $service = $this->get('web_illumination_admin.order_service');
+        $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
         // Set the number of orders updated
         $ordersUpdated = 0;
 
-        // Get tracking data
-        $trackingFileName = $this->get('kernel')->getRootDir() . '/../web/uploads/exports/dpd/EXPORT.TXT';
-        $renamedTrackingFileName = $this->get('kernel')->getRootDir() . '/../web/uploads/exports/dpd/export-'.date("dmYHis").'.txt';
-        if (file_exists($trackingFileName))
+        // Get DPD tracking data
+        $dpdTrackingFileName = '/var/www/staging.kitchenappliancecentre.co.uk/current/web/uploads/exports/dpd/EXPORT.TXT';
+        $renamedDpdTrackingFileName = '/var/www/staging.kitchenappliancecentre.co.uk/current/web/uploads/exports/dpd/export-'.date("dmYHis").'.txt';
+        if (file_exists($dpdTrackingFileName))
         {
-            $fileHandle = fopen($trackingFileName, "r");
-            $trackingFileContents = fread($fileHandle, filesize($trackingFileName));
+            $fileHandle = fopen($dpdTrackingFileName, "r");
+            $trackingFileContents = fread($fileHandle, filesize($dpdTrackingFileName));
             foreach (explode("\n", $trackingFileContents) as $line)
             {
                 $orderInfo = explode(",", $line);
@@ -1651,9 +1722,7 @@ class OrdersController extends Controller
                 {
                     $orderId = $orderInfo[3];
 
-                    /**
-                     * @var $itemObject Order
-                     */
+                    // Get the item
                     $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($orderId);
                     if ($itemObject)
                     {
@@ -1668,8 +1737,6 @@ class OrdersController extends Controller
                             $itemObject->setStatus('Order Completed');
                             $em->persist($itemObject);
                             $em->flush();
-                            // Get the admin
-                            $admin = $this->get('session')->get('admin');
 
                             // Add the new note
                             $htmlNote = "Your item has been dispatched for signed delivery with DPD. Your consignment number is ".$trackingNumber.".\n\n";
@@ -1678,7 +1745,7 @@ class OrdersController extends Controller
                             $plainTextNote = "Your item has been dispatched for signed delivery with DPD. Your consignment number is ".$trackingNumber.".\n\n";
                             $plainTextNote .= "Go to http://www.dpd.co.uk/service/tracking?parcel=".$trackingNumber." to track your delivery.\n\n";
                             $plainTextNote .= "Tracking will be active after 5.30pm today.";
-                            $orderNoteObject = new Order\Note();
+                            $orderNoteObject = new OrderNote();
                             $orderNoteObject->setOrder($itemObject);
                             $orderNoteObject->setNoteType('customer');
                             $orderNoteObject->setNotified(1);
@@ -1703,15 +1770,15 @@ class OrdersController extends Controller
                                 {
                                     $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                 }
-                                $email->setBody($this->renderView('WebIlluminationAdminBundle:Orders:message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                $email->addPart($this->renderView('WebIlluminationAdminBundle:Orders:message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                                $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                                $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
                                 $this->get('mailer')->send($email);
 
                                 // Set the review as requested
                                 $itemObject->setReviewRequested(1);
                                 $em->persist($itemObject);
                                 $em->flush();
-                            } catch (\Exception $exception) {
+                            } catch (Exception $exception) {
                                 error_log('Error sending email!');
                             }
 
@@ -1724,11 +1791,141 @@ class OrdersController extends Controller
             }
 
             // Rename the tracking import file
-            if ($ordersUpdated > 0)
+            rename($dpdTrackingFileName, $renamedDpdTrackingFileName);
+            fclose($fileHandle);
+        }
+
+        // Get Royal Mail tracking data
+        $royalMailTrackingFileName = '/var/www/staging.kitchenappliancecentre.co.uk/current/web/uploads/exports/royal-mail/Result.txt';
+        $renamedRoyalMailTrackingFileName = '/var/www/staging.kitchenappliancecentre.co.uk/current/web/uploads/exports/royal-mail/export-'.date("dmYHis").'.txt';
+        if (file_exists($royalMailTrackingFileName))
+        {
+            $fileHandle = fopen($royalMailTrackingFileName, "r");
+            $trackingFileContents = fread($fileHandle, filesize($royalMailTrackingFileName));
+            $lineCount = 1;
+            $trackingNumbers = array();
+            $errors = '';
+            $statusCode = 0;
+            foreach (explode("\n", $trackingFileContents) as $line)
             {
-                rename($trackingFileName, $renamedTrackingFileName);
+                if ($lineCount == 1)
+                {
+                    $statusCode = intval($line);
+                }
+                if ($lineCount == 2)
+                {
+                    if ($statusCode > 0)
+                    {
+                        $trackingNumbers[] = 'ERROR';
+                        if ($statusCode == 99)
+                        {
+                            $lineCount = 0;
+                            $statusCode = 0;
+                        }
+                    } else {
+                        $trackingNumbers[] = $line;
+                    }
+                }
+                if ($lineCount == 3)
+                {
+                    $lineCount = 0;
+                    $statusCode = 0;
+                }
+                $lineCount++;
             }
             fclose($fileHandle);
+
+            $trackingNumberCount = 1;
+            foreach ($trackingNumbers as $trackingNumber)
+            {
+                // Get the item
+                $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->findOneBy(array('royalMailImportLine' => $trackingNumberCount));
+                if ($itemObject)
+                {
+                    // Make sure there is no tracking number already set
+                    if ($trackingNumber == 'ERROR')
+                    {
+                        // Send an email
+                        try
+                        {
+                            $email = \Swift_Message::newInstance();
+                            $email->setSubject('An error occurred when importing the tracking information for order '.$itemObject->getId().'.');
+                            $email->setFrom(array('support@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
+                            $email->setTo(array('me@adamstacey.co.uk' => 'Adam Stacey'));
+                            $email->setBody('An error occurred when importing the tracking information for order '.$itemObject->getId().'.');
+                            $this->get('mailer')->send($email);
+
+                            // Set the review as requested
+                            $itemObject->setReviewRequested(1);
+                            $em->persist($itemObject);
+                            $em->flush();
+                        } catch (Exception $exception) {
+                            error_log('Error sending email!');
+                        }
+                    } elseif (($itemObject->getTrackingNumber() == '') || ($itemObject->getTrackingNumber() != $trackingNumber)) {
+                        // Update the tracking number
+                        $itemObject->setTrackingNumber($trackingNumber);
+                        $itemObject->setRoyalMailImportLine(0);
+                        $itemObject->setStatus('Order Completed');
+                        $em->persist($itemObject);
+                        $em->flush();
+
+                        $htmlNote = "Your item has been dispatched for recorded delivery with Royal Mail. Your consignment number is ".$trackingNumber.".\n\n";
+                        $htmlNote .= "<a href=\"http://track2.royalmail.com/portal/rm/track?trackNumber=".$trackingNumber."\">Click here to track your delivery.</a>";
+                        $plainTextNote = "Your item has been dispatched for recorded delivery with Royal Mail. Your consignment number is ".$trackingNumber.".\n\n";
+                        $plainTextNote .= "Go to http://track2.royalmail.com/portal/rm/track?trackNumber=".$trackingNumber." to track your delivery.";
+                        $orderNoteObject = new OrderNote();
+                        $orderNoteObject->setOrder($itemObject);
+                        $orderNoteObject->setNoteType('customer');
+                        $orderNoteObject->setNotified(1);
+                        $orderNoteObject->setNote($plainTextNote);
+                        $orderNoteObject->setCreator('Automated');
+                        $em->persist($orderNoteObject);
+                        $em->flush();
+
+                        // Update notes count on order
+                        $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
+                        $em->persist($itemObject);
+                        $em->flush();
+
+                        // Send the email
+                        try
+                        {
+                            $email = \Swift_Message::newInstance();
+                            $email->setSubject('You have a new Message from Kitchen Appliance Centre about your Order: '.$itemObject->getId());
+                            $email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
+                            $email->setTo(array($itemObject->getEmailAddress() => $itemObject->getFirstName().' '.$itemObject->getLastName()));
+                            if ($itemObject->getSendReviewRequest() > 0)
+                            {
+                                $email->setBcc(array('0cbe3042@trustpilotservice.com'));
+                            }
+                            $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
+                            $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
+                            $this->get('mailer')->send($email);
+
+                            // Set the review as requested
+                            $itemObject->setReviewRequested(1);
+                            $em->persist($itemObject);
+                            $em->flush();
+                        } catch (Exception $exception) {
+                            error_log('Error sending email!');
+                        }
+
+                        // Update the order status
+                        $itemObject->setStatus('Order Completed');
+                        $itemObject->setLabelsPrinted(1);
+                        $em->persist($itemObject);
+                        $em->flush();
+
+                        // Set that importing has occurred
+                        $ordersUpdated++;
+                    }
+                }
+                $trackingNumberCount++;
+            }
+
+            // Rename the tracking import file
+            rename($royalMailTrackingFileName, $renamedRoyalMailTrackingFileName);
         }
 
         // Setup the data
@@ -1736,7 +1933,7 @@ class OrdersController extends Controller
         $data['settings'] = $this->settings;
         $data['ordersUpdated'] = $ordersUpdated;
 
-        return $this->render('WebIlluminationAdminBundle:Orders:importTracking.html.twig', array('data' => $data));
+        return $this->render('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':importTracking.html.twig', array('data' => $data));
     }
 
     // Add
@@ -1825,6 +2022,8 @@ class OrdersController extends Controller
 
         return $this->render('WebIlluminationAdminBundle:Orders:item.html.twig', array('data' => $data));
     }
+
+
 
     // Update payment
     public function updatePaymentAction(Request $request, $id)
