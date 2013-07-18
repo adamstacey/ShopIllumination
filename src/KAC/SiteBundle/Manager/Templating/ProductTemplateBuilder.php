@@ -6,9 +6,9 @@ use Symfony\Component\PropertyAccess\PropertyPath;
 class ProductTemplateBuilder extends TemplateBuilder
 {
     protected $aliases = array(
-        'brand' => 'variant.product.brand.description.name',
-        'productCode' => 'variant.productCode',
-        'department' => 'variant.product.department.description.name',
+        'brand' => 'product.brand.description.name',
+        'productCode' => 'product.productCode',
+        'department' => 'product.department.department.description.name',
     );
 
     function getEntity($object, $alias, $id)

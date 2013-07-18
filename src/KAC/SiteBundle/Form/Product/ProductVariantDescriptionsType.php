@@ -14,7 +14,7 @@ class ProductVariantDescriptionsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('type', 'entity', array(
-            'empty_value' => 'Choose a type',
+            'empty_value' => 'Choose a type (Optional)',
             'required'  => false,
             'label' => 'Type',
             'attr' => array(

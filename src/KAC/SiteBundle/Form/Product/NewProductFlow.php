@@ -400,51 +400,52 @@ class NewProductFlow extends FormFlow
 
         if (($step == 8) || ($step == 9))
         {
-            // Update the variant descriptions
-            foreach ($formData->getVariants() as $variant)
-            {
-                $this->productManager->updateVariantDescription($variant->getDescription());
-            }
-
             // Update the product description
             foreach ($formData->getDescriptions() as $description)
             {
                 $this->productManager->updateProductDescription($description);
             }
 
-            // Check the URLs
-            $duplicateUrlsCheck = array();
-
-            // Check the variant URLs
+            // Update the variant descriptions
             foreach ($formData->getVariants() as $variant)
             {
-                foreach ($variant->getRoutings() as $routing)
-                {
-                    $url = $this->seoManager->createUrl($routing->getUrl());
-                    $duplicateCount = 0;
-                    while (in_array($url, $duplicateUrlsCheck))
-                    {
-                        $duplicateCount++;
-                        $url = $this->seoManager->createUrl($url.'-'.$duplicateCount);
-                    }
-                    $duplicateUrlsCheck[] = $url;
-                    $routing->setUrl($url);
-                }
+                $this->productManager->updateVariantDescription($variant->getDescription());
             }
 
-            // Check the product URLs
-            foreach ($formData->getRoutings() as $routing)
-            {
-                $url = $this->seoManager->createUrl($routing->getUrl());
-                $duplicateCount = 0;
-                while (in_array($url, $duplicateUrlsCheck))
-                {
-                    $duplicateCount++;
-                    $url = $this->seoManager->createUrl($url.'-'.$duplicateCount);
-                }
-                $duplicateUrlsCheck[] = $url;
-                $routing->setUrl($url);
-            }
+            // Check the URLs
+//            $duplicateUrlsCheck = array();
+
+//            // Check the variant URLs
+//            foreach ($formData->getVariants() as $variant)
+//            {
+//                foreach ($variant->getRoutings() as $routing)
+//                {
+//                    $newUrl = $url = $this->seoManager->createUrl($routing->getUrl());
+//                    $duplicateCount = 0;
+//                    while (in_array($url, $duplicateUrlsCheck))
+//                    {
+//                        $duplicateCount++;
+//                        $newUrl = $this->seoManager->createUrl($url.'-'.$duplicateCount);
+//                    }
+//                    $duplicateUrlsCheck[] = $newUrl;
+//                    $routing->setUrl($newUrl);
+//                }
+//            }
+
+//            // Check the product URLs
+//            foreach ($formData->getRoutings() as $routing)
+//            {
+//                $newUrl = $url = $this->seoManager->createUrl($routing->getUrl());
+//                $duplicateCount = 0;
+//                while (in_array($newUrl, $duplicateUrlsCheck))
+//                {
+//                    $duplicateCount++;
+//                    $newUrl = $this->seoManager->createUrl($url.'-'.$duplicateCount);
+//                }
+//                $duplicateUrlsCheck[] = $newUrl;
+//                $routing->setUrl($newUrl);
+//            }
+//            var_dump($formData->getRoutings(),3);die();
         }
 
         return $options;

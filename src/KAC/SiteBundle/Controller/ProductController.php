@@ -199,6 +199,8 @@ class ProductController extends Controller {
                 $manager->updateImages($product);
                 // Update the documents
                 $manager->updateDocuments($product);
+                // Update the routes
+                $manager->updateRoutes($product);
 
                 $em->persist($product);
                 $em->flush();
@@ -439,7 +441,34 @@ class ProductController extends Controller {
      */
     public function editSeoAction(Request $request, $productId)
     {
-        return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_seo.html.twig', new EditProductSeoType());
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        $form = $this->createForm(new EditProductSeoType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                // Update the routes
+                $manager->updateRoutes($product);
+
+                $em->persist($product);
+                $em->flush();
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:edit_seo.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
     }
 
     /**

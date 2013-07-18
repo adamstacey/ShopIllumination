@@ -230,6 +230,29 @@ class Product implements DescribableInterface
         );
     }
 
+    public function getProductCode()
+    {
+        // Calculate common product code
+        $pl = 0;
+        $n = count($this->getVariants());
+        $l = strlen($this->getVariants()[0]->getProductCode());
+        while ($pl < $l) {
+            $c = $this->getVariants()[0]->getProductCode()[$pl];
+            for ($i=1; $i<$n; $i++) {
+                if ($this->getVariants()[$i]->getProductCode()[$pl] !== $c) break 2;
+            }
+            $pl++;
+        }
+        $productCode = substr($this->getVariants()[0]->getProductCode(), 0, $pl);
+
+        if($productCode === '')
+        {
+            return $this->getVariants()[0]->getProductCode();
+        } else {
+            return $productCode;
+        }
+    }
+
     public function isDeleted()
     {
         return $this->getDeletedAt() !== null;
@@ -791,7 +814,7 @@ class Product implements DescribableInterface
     /**
      * Get routing
      *
-     * @return \KAC\SiteBundle\Entity\Product\Routing
+     * @return Product\Routing
      */
     public function getRouting()
     {
@@ -819,32 +842,33 @@ class Product implements DescribableInterface
     }
 
     /**
-     * Add routings
+     * Add routing
      *
-     * @param \KAC\SiteBundle\Entity\Product\Routing $routings
+     * @param Product\Routing $routing
      * @return Product
      */
-    public function addRouting(\KAC\SiteBundle\Entity\Product\Routing $routings)
+    public function addRouting(Product\Routing $routing)
     {
-        $this->routings[] = $routings;
+        $this->routings[] = $routing;
+        $routing->setProduct($this);
     
         return $this;
     }
 
     /**
-     * Remove routings
+     * Remove routing
      *
-     * @param \KAC\SiteBundle\Entity\Product\Routing $routings
+     * @param Product\Routing $routing
      */
-    public function removeRouting(\KAC\SiteBundle\Entity\Product\Routing $routings)
+    public function removeRouting(Product\Routing $routing)
     {
-        $this->routings->removeElement($routings);
+        $this->routings->removeElement($routing);
     }
 
     /**
-     * Get routings
+     * Get routing
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Product\Routing[]
      */
     public function getRoutings()
     {
