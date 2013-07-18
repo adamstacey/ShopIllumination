@@ -560,8 +560,8 @@ class OrderService {
         $orderObject->setVat($basket['totals']['vat']);
         $orderObject->setTotal($basket['totals']['total']);
         $orderObject->setPossibleDiscount($basket['possibleDiscount']);
-        $orderObject->setFirstName($order['firstName']);
-        $orderObject->setLastName($order['lastName']);
+        $orderObject->setFirstName($order['billingFirstName']);
+        $orderObject->setLastName($order['billingLastName']);
         $orderObject->setOrganisationName($order['organisationName']);
         $orderObject->setEmailAddress($order['emailAddress']);
         $orderObject->setTelephoneDaytime($order['telephoneDaytime']);
