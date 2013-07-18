@@ -205,7 +205,7 @@ class ProductController extends Controller {
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('admin_listing_products'));
+                return $this->redirect($this->generateUrl('listing_products'));
             }
         }
 

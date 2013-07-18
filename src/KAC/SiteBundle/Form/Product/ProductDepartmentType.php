@@ -31,8 +31,6 @@ class ProductDepartmentType extends AbstractType
             'attr' => array(
                 'class' => 'select-department fill no-uniform',
                 'data-help' => 'Select the department you want this department to fall under.',
-                'data-placeholder' => '- Select a Department -',
-                'placeholder' => '- Select a Department -',
             ),
         ));
     }
