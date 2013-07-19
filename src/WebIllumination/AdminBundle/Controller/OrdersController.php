@@ -1224,7 +1224,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Update
         if ($request->getMethod() == 'POST')
@@ -1466,7 +1466,7 @@ class OrdersController extends Controller
                                 $plainTextNote = "Your item has been dispatched for signed delivery with Parcelforce. Your consignment number is ".$itemTrackingNumber.".\n\n";
                                 $plainTextNote .= "Go to http://www.parcelforce.com/track-trace?trackNumber=".$itemTrackingNumber." to track your delivery.";
                                 $plainTextNote .= "Tracking will be active after 5.30pm today.";
-                                $orderNoteObject = new OrderNote();
+                                $orderNoteObject = new Order\Note();
                                 $orderNoteObject->setOrder($itemObject);
                                 $orderNoteObject->setNoteType('customer');
                                 $orderNoteObject->setNotified(1);
@@ -1534,7 +1534,7 @@ class OrdersController extends Controller
                                         $plainTextNote = "Your item has been dispatched for delivery with Palletways.\n\n";
                                         $plainTextNote .= "Palletways will call you within <strong>24-48 hours</strong> to arrange delivery delivery.";
                                     }
-                                    $orderNoteObject = new OrderNote();
+                                    $orderNoteObject = new Order\Note();
                                     $orderNoteObject->setOrder($itemObject);
                                     $orderNoteObject->setNoteType('customer');
                                     $orderNoteObject->setNotified(1);
@@ -1587,7 +1587,7 @@ class OrdersController extends Controller
                                 $plainTextNote = "GHD Rob Dexter will be contacting you with your delivery date soon.\n\n";
                                 $plainTextNote .= "For Delivery Enquiries Tel: 0115 930 9337 (GHD Rob Dexter).\n\n";
                                 $plainTextNote .= "Please check all items before signing. Thank you.";
-                                $orderNoteObject = new OrderNote();
+                                $orderNoteObject = new Order\Note();
                                 $orderNoteObject->setOrder($itemObject);
                                 $orderNoteObject->setNoteType('customer');
                                 $orderNoteObject->setNotified(1);
@@ -1703,7 +1703,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Set the number of orders updated
         $ordersUpdated = 0;
@@ -1745,7 +1745,7 @@ class OrdersController extends Controller
                             $plainTextNote = "Your item has been dispatched for signed delivery with DPD. Your consignment number is ".$trackingNumber.".\n\n";
                             $plainTextNote .= "Go to http://www.dpd.co.uk/service/tracking?parcel=".$trackingNumber." to track your delivery.\n\n";
                             $plainTextNote .= "Tracking will be active after 5.30pm today.";
-                            $orderNoteObject = new OrderNote();
+                            $orderNoteObject = new Order\Note();
                             $orderNoteObject->setOrder($itemObject);
                             $orderNoteObject->setNoteType('customer');
                             $orderNoteObject->setNotified(1);
@@ -1874,7 +1874,7 @@ class OrdersController extends Controller
                         $htmlNote .= "<a href=\"http://track2.royalmail.com/portal/rm/track?trackNumber=".$trackingNumber."\">Click here to track your delivery.</a>";
                         $plainTextNote = "Your item has been dispatched for recorded delivery with Royal Mail. Your consignment number is ".$trackingNumber.".\n\n";
                         $plainTextNote .= "Go to http://track2.royalmail.com/portal/rm/track?trackNumber=".$trackingNumber." to track your delivery.";
-                        $orderNoteObject = new OrderNote();
+                        $orderNoteObject = new Order\Note();
                         $orderNoteObject->setOrder($itemObject);
                         $orderNoteObject->setNoteType('customer');
                         $orderNoteObject->setNotified(1);

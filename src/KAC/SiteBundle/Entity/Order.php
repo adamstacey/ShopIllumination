@@ -320,6 +320,11 @@ class Order
     private $fraudCheckTelephoneUsedOnDifferentOrder;
 
     /**
+     * @ORM\Column(name="royal_mail_import_line", type="integer", length=11)
+     */
+    private $royalMailImportLine;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
@@ -2030,5 +2035,28 @@ class Order
     public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
+    }
+
+    /**
+     * Set royalMailImportLine
+     *
+     * @param integer $royalMailImportLine
+     * @return Order
+     */
+    public function setRoyalMailImportLine($royalMailImportLine)
+    {
+        $this->royalMailImportLine = $royalMailImportLine;
+    
+        return $this;
+    }
+
+    /**
+     * Get royalMailImportLine
+     *
+     * @return integer 
+     */
+    public function getRoyalMailImportLine()
+    {
+        return $this->royalMailImportLine;
     }
 }
