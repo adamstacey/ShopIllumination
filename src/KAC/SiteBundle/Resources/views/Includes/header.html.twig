@@ -13,11 +13,15 @@
                     {% include 'KACSiteBundle:Includes:logo.html.twig' %}
                 </div>
                 <div class="widget widget-1-of-2">
-                    {% include 'KACSiteBundle:Includes:search.html.twig' %}
+                    <div class="mll mrl">
+                        {% include 'KACSiteBundle:Includes:search.html.twig' %}
+                    </div>
                 </div>
                 <div class="widget widget-1-of-4">
                     <div id="basket-summary" data-url="{{ path('basket_summary') }}">
-                        {% render(controller('KACSiteBundle:Basket:summary')) %}
+                        <div class="pts pbs plm prm">
+                            {% render(controller('KACSiteBundle:Basket:summary')) %}
+                        </div>
                     </div>
                 </div>
             </div>
