@@ -1224,7 +1224,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Update
         if ($request->getMethod() == 'POST')
@@ -1703,7 +1703,7 @@ class OrdersController extends Controller
         $service = $this->get('web_illumination_admin.'.$this->settings['singleClass'].'_service');
 
         // Get the entity manager
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // Set the number of orders updated
         $ordersUpdated = 0;
