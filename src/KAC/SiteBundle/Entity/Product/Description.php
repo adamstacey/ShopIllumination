@@ -296,29 +296,6 @@ class Description implements DescriptionInterface
     }
 
     /**
-     * Set variant
-     *
-     * @param \KAC\SiteBundle\Entity\Product\Variant $variant
-     * @return Description
-     */
-    public function setVariant(\KAC\SiteBundle\Entity\Product\Variant $variant = null)
-    {
-        $this->variant = $variant;
-
-        return $this;
-    }
-
-    /**
-     * Get variant
-     *
-     * @return \KAC\SiteBundle\Entity\Product\Variant
-     */
-    public function getVariant()
-    {
-        return $this->variant;
-    }
-
-    /**
      * Set brandDescription
      *
      * @param string $brandDescription

@@ -23,7 +23,7 @@
                                 <div class="accordion-item">
                                     <h3>Descriptions for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
                                     <div class="pbm">
-                                        {{ form_row(form.type) }}
+                                        {{ form_row(variant.type) }}
                                         {{ form_rest(variant) }}
                                     </div>
                                 </div>

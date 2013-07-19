@@ -31,7 +31,7 @@ class NewProductType extends AbstractType
                     'label' => 'Brand',
                     'attr' => array(
                         'class' => 'fill no-uniform select-brand',
-                        'data-help' => 'Select the department you want this department to fall under.',
+                        'data-help' => 'Select the brand you want this department to fall under.',
                         'data-placeholder' => '- Select a Brand -',
                         'placeholder' => '- Select a Brand -',
                     ),
