@@ -116,7 +116,7 @@ swiftmailer:
 knp_snappy:
     pdf:
         enabled:    true
-        binary:     /usr/bin/wkhtmltopdf-i386
+        binary:     /usr/bin/wkhtmltopdf-amd64
         options:    []
 
 nelmio_solarium:
