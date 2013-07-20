@@ -22,10 +22,10 @@ define('DB_NAME', 'kacblog');
 define('DB_USER', 'kacblog');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'D3rbysh1r3');
+define('DB_PASSWORD', 'Kacentre02');
 
 /** MySQL hostname */
-define('DB_HOST', 'www.kitchenappliancecentre.co.uk');
+define('DB_HOST', 'localhost');
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
