@@ -29,7 +29,7 @@ avalanche_imagine:
             options: { size: [300, 300], quality: 100, cache_type: public, cache_expires: 2 weeks }
         product_large:
             type:   resize
-            options: { size: [800, 600], quality: 100, cache_type: public, cache_expires: 2 weeks }
+            options: { size: [800, 800], mode: outbound, quality: 100, cache_type: public, cache_expires: 2 weeks }
         # Variant
         variant_thumbnail:
             type:   thumbnail
