@@ -1082,13 +1082,6 @@ class BasketService {
 					{
 						$numberOfCdaAppliances += $product['quantity'];
 					}
-					
-					// Check for Movember products
-					if (($variantEntity->getProductCode() == 'KHCH') || ($variantEntity->getProductCode() == 'EVOLUTION200') || ($variantEntity->getProductCode() == 'SE80050SS') || ($variantEntity->getProductCode() == 'C95030') || ($variantEntity->getProductCode() == '119.0179.532') || ($variantEntity->getProductCode() == 'PH01SS') || ($variantEntity->getProductCode() == 'FWC302SS'))
-					{
-						$basket['donations']['company']['description'] = 'Movember Donation from Kitchen Appliance Centre';
-						$basket['donations']['company']['donation'] = $product['quantity'];
-					}
 				}
 			}
 			$basket['numberOfCdaAppliances'] = $numberOfCdaAppliances;
@@ -1251,24 +1244,7 @@ class BasketService {
 		// Calculate the total and vat
 		$total = $subTotal + $deliveryCharge;
 		$vat = $total - ($total / 1.2);
-		
-		// Update the donations
-		if (isset($basket['donations']['customer']['donation']))
-		{
-			if ($basket['donations']['customer']['donation'] > 0)
-			{
-				$total = $total + $basket['donations']['customer']['donation'];
-				$messages['success'][] = 'Thank you for donating <strong>&pound;'.$basket['donations']['customer']['donation'].'</strong> to Movember.';
-			}
-		}
-		if (isset($basket['donations']['company']['donation']))
-		{
-			if ($basket['donations']['company']['donation'] > 0)
-			{
-				$messages['success'][] = 'You have Movember products in your basket! We will donate <strong>&pound;'.$basket['donations']['company']['donation'].'</strong> to Movember on your behalf.';
-			}
-		}
-		
+
 		// Save the totals
 		$basket['totals']['items'] = $items;
 		$basket['totals']['subTotal'] = $subTotal;
