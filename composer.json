@@ -34,7 +34,8 @@
         "craue/formflow-bundle": "dev-master",
         "friendsofsymfony/user-bundle": "*",
         "jms/serializer-bundle": "0.12.*@dev",
-        "avalanche123/imagine-bundle": "dev-master",
+        "imagine/imagine": "dev-master",
+        "avalanche123/imagine-bundle": "dev-develop",
         "gregwar/form-bundle": "dev-master",
         "Trsteel/ckeditor-bundle": "dev-master"
     },
