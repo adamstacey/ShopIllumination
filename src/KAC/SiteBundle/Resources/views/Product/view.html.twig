@@ -5,83 +5,23 @@
 
 {% block body %}
     <style>
-        .add-to-basket {
-            width: 110px;
-            height: 40px;
-
-            display: block;
-            position: relative;
+        .etalage, .etalage ul, .etalage li {
+            margin: 0 !important;
         }
-
-        .add-to-basket input.quantity {
-            width: 40px;
-
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            text-align: center;
-            border-radius: 4px 0 0 4px;
+        .etalage_small_thumbs {
+            padding-top: 5px !important;
         }
-
-        .add-to-basket .buy {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-
-        .add-to-basket .increase-quantity,
-        .add-to-basket .decrease-quantity {
-            position: absolute;
-            left: 40px;
-        }
-
-        .add-to-basket .increase-quantity .ui-button-text,
-        .add-to-basket .decrease-quantity .ui-button-text {
-            width: 10px;
-            height: 12px;
-            padding: 0 2px;
-
-            display: block;
-
-            line-height: 12px;
-            text-align: center;
-        }
-
-        .add-to-basket .increase-quantity {
-            top: 0;
-            border-radius: 0 4px 0 0;
-        }
-
-        .add-to-basket .decrease-quantity {
-            bottom: 0;
-            border-radius: 0 0 4px 0;
-        }
-
-        .add-to-basket .buy .ui-button-text {
-            padding: 0 2px;
-        }
-
-        .product .form-helper {
-            position: relative;
-            top: auto;
-            left: auto;
-            right: auto;
-        }
-
-        .product td p {
-            line-height: 150%;
-            margin: 0;
-        }
-
-        .ui-widget-content p {
-            line-height: 150%;
+        .summary-specification li {
+            margin: 0 0 0 20px !important;
+            font-size: 12px !important;
+            font-size: 1.2rem !important;
+            line-height: 150% !important;
         }
     </style>
     <script>
         $(document).ready(function() {
-            $(".actionAddToBasket").on("click", function() {
-                $(this).closest("tr").find("td:not(.image)").css("background", "#ebf7eb");
+            $(".actionViewFullTechnicalSpecification").on("click", function() {
+                $(".tabs").tabs("option", "active", 0);
             });
         });
     </script>
@@ -101,122 +41,117 @@
                 </div>
             {% endblock %}
             {% block product_info %}
-                <div class="widget-group clearfix mbl">
+                <div class="widget-group clearfix">
                     <div class="widget widget-1-of-1">
                         <div class="ui-widget">
                             <section class="ui-widget-content ui-corner-all clearfix">
-                                <div class="slider-wrapper  slider-gallery {% if gallery_images | length <= 0 %}slider-filler{% endif %}">
-                                    {% if gallery_images | length > 0 %}
-                                        <ul class="slider {% if gallery_images | length > 0 %}nivoSlider{% endif %}">
-                                            {% for image in gallery_images %}
-                                                <img src="{{ asset(image.publicPath | apply_filter('gallery_large')) }}" data-thumb="{{ asset(image.publicPath | apply_filter('gallery_thumbnail')) }}" alt="{{ product.description.header }}" />
-                                            {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                    <h1>{{ product.description.header }}</h1>
-                                </div>
                                 <div class="widget-group clearfix">
+                                    <div class="widget widget-1-of-1 border-bottom-separator mbl">
+                                        <h1>{{ product.description.header }}</h1>
+                                    </div>
                                     <div class="widget widget-1-of-1 border-bottom-separator pbl mbl">
                                         <div class="widget-group clearfix">
                                             <div class="widget widget-2-of-7">
-                                                {% if thumbnail_image %}
-                                                    <ul class="etalage etalage-inset">
-                                                        <li><img class="etalage_source_image" src="{{ asset(thumbnail_image.publicPath | apply_filter('product_medium')) }}" alt="{{ product.description.header }}" /></li>
+                                                {% if product_images | length > 0 %}
+                                                    <ul class="etalage">
+                                                        {% for image in product_images %}
+                                                            <li><img class="etalage_source_image" src="{{ asset(image.publicPath | apply_filter('product_large')) }}" alt="{{ product.description.header }}" width="238" /></li>
+                                                        {% endfor %}
                                                     </ul>
                                                 {% endif %}
                                             </div>
-
-                                            <div class="widget widget-5-of-7">
+                                            <div class="widget widget-5-of-7 pll">
                                                 <div class="widget-group clearfix">
-                                                    <div class="widget widget-3-of-4 pll prl border-right-separator">
-                                                        <div class="widget-group clearfix">
-                                                            <div class="widget widget-1-of-3">
-                                                                {% if product.brand.description.logoImage %}
-                                                                    <img class="logo" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_medium')) }}" alt="{{ product.brand.description.name }}" />
-                                                                {% endif %}
-                                                            </div>
-                                                            <div class="widget widget-2-of-3 clearfix">
-                                                                {#<div class="review-rating-small review-rating-small-4-5 fr"></div>#}
-                                                                {#<div class="clear"></div>#}
-                                                                {#<div class="fr review-summary"><strong>4.7</strong> out of <strong>5</strong> Customer Rating</div>#}
-                                                                {#<div class="clear"></div>#}
-                                                                {#<div class="fr review-summary"><a href="#">Read Reviews</a> (0) | <a href="#">Read Questions</a> (0)</div>#}
-                                                            </div>
-                                                        </div>
-                                                        <p class="summary man">{{ product.description.metaDescription }}</p>
-                                                    </div>
                                                     <div class="widget widget-1-of-4">
+                                                        <img class="logo man" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_medium')) }}" alt="{{ product.brand.description.name }}" />
+                                                    </div>
+                                                    <div class="widget widget-3-of-4">
                                                         {% if product.variants|length > 1 %}
-                                                            <div class="price">
-                                                                <span class="currency-prefix">from only</span>
-                                                            </div>
-                                                            <div class="price">
-                                                                {% if lowest_price is null %}
-                                                                    {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
-                                                                {% else %}
-                                                                    {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
-                                                                {% endif %}
-                                                            </div>
-                                                            <div class="price pbm">
-                                                                <span class="currency-tax">(inc. VAT)</span>
-                                                            </div>
                                                             <a href="#buyNow" class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</a>
+                                                            <div class="fr prl">
+                                                                <div class="price">
+                                                                    <span class="currency-prefix">from only</span>
+                                                                </div>
+                                                                <div class="price">
+                                                                    {% if lowest_price is null %}
+                                                                        {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                    {% else %}
+                                                                        {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="price pbm">
+                                                                    <span class="currency-tax">(inc. VAT)</span>
+                                                                </div>
+                                                            </div>
                                                         {% else %}
-                                                            <div class="price">
-                                                                {% if lowest_price is null %}
-                                                                    {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
-                                                                {% else %}
-                                                                    {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
-                                                                {% endif %}
-                                                            </div>
-                                                            <div class="price pbm">
-                                                                <span class="currency-tax">(inc. VAT)</span>
-                                                            </div>
                                                             {{ helpers.addToBasket(product.variants[0]) }}
+                                                            <div class="fr">
+                                                                <div class="price">
+                                                                    {% if lowest_price is null %}
+                                                                        {{ highest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                    {% else %}
+                                                                        {{ lowest_price.listPrice | currency(lowest_price.currencyCode, true) | raw }}
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="price pbm">
+                                                                    <span class="currency-tax">(inc. VAT)</span>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="widget-group clearfix">
+                                                    <div class="widget widget-1-of-1 mtl">
+                                                        <p class="summary man">{{ product.description.metaDescription }}</p>
+                                                        <ul class="summary-specification">
+                                                            {% for feature in product.departments[0].department.features %}
+                                                                {% if feature.displayOnListing %}
+                                                                    <li>{{ feature.featureGroup.name }}: <strong>{{ common_features[feature.featureGroup.name] }}</strong></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                        <p class="mtm"><a class="actionViewFullTechnicalSpecification" href="#tabs">View full technical specification</a></p>
+                                                        {% if guarantees|length > 0 %}
+                                                            <div class="widget-group clearfix">
+                                                                <div class="widget widget-2-of-5">
+                                                                    {% for guarantee in guarantees %}
+                                                                       <button type="button" class="mbs fill button icon-turquoise" data-icon-primary="icon-826"><strong>{{ guarantee.length.displayName }}:</strong> {{ guarantee.type.guaranteeType }}</button>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
                                                         {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <a name="tabs"></a>
                                     <div class="widget widget-1-of-1">
                                         <section>
                                             <div class="tabs">
                                                 <ul>
-                                                    {% block product_info_tab_headers %}
-                                                        <li><a href="#overview">Overview</a></li>
-                                                        <li><a href="#technicalSpecification">Technical Specification</a></li>
-                                                    {% endblock %}
+                                                    <li><a href="#technicalSpecification">Technical Specification</a></li>
                                                 </ul>
-                                                {% block product_info_tab_content %}
-                                                    <div id="overview">
-                                                        <section>
-                                                            <p class="summary">
-                                                            {{ product.description.description|raw }}
-                                                            </p>
-                                                        </section>
-                                                    </div>
-                                                    <div id="technicalSpecification">
-                                                        <section>
-                                                            <table class="data-table">
-                                                                <thead>
-                                                                <tr>
-                                                                    <th>Feature</th>
-                                                                    <th></th>
+                                                <div id="technicalSpecification">
+                                                    <section>
+                                                        <table class="data-table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Feature</th>
+                                                                <th></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for group, feature in common_features %}
+                                                                <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                                    <td width="1" class="nowrap tar">{{ group }}</td>
+                                                                    <td><strong>{{ feature }}</strong></td>
                                                                 </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {% for group, feature in common_features %}
-                                                                        <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
-                                                                            <td width="1" class="nowrap tar">{{ group }}</td>
-                                                                            <td><strong>{{ feature }}</strong></td>
-                                                                        </tr>
-                                                                    {% endfor %}
-                                                                </tbody>
-                                                            </table>
-                                                        </section>
-                                                    </div>
-                                                {% endblock %}
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </section>
+                                                </div>
                                             </div>
                                         </section>
                                     </div>
