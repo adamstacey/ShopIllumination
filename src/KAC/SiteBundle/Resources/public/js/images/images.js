@@ -1,7 +1,9 @@
 $(document).ready(function() {
     $(".lightbox").lightbox();
 
-    $(".etalage").etalage();
+    $(".etalage").etalage({
+        autoplay: false
+    });
 
     $(document).on("click", ".etalage_magnifier > div > img", function() {
         if ($(".etalage_small_thumbs").length > 0)
