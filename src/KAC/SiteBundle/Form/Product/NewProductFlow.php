@@ -2,6 +2,7 @@
 
 namespace KAC\SiteBundle\Form\Product;
 
+use Craue\FormFlowBundle\Form\FormFlowInterface;
 use KAC\SiteBundle\ThirdParty\Google\Google;
 use Craue\FormFlowBundle\Form\FormFlow;
 use KAC\SiteBundle\Entity\Product\Variant;
@@ -45,6 +46,9 @@ class NewProductFlow extends FormFlow
             array(
                 'label' => '2. Build Combinations',
                 'type' => $this->formType,
+                'skip' => function($estimatedStepNumber, FormFlowInterface $flow) {
+                    return $estimatedStepNumber > 1 && (!$flow->getFormData()->getDepartment() || !$flow->getFormData()->getDepartment()->getDepartment() || count($flow->getFormData()->getDepartment()->getDepartment()->getFeatures()) < 1);
+                },
             ),
             array(
                 'label' => '3. Prices',
@@ -61,6 +65,9 @@ class NewProductFlow extends FormFlow
             array(
                 'label' => '6. Features',
                 'type' => $this->formType,
+                'skip' => function($estimatedStepNumber, FormFlowInterface $flow) {
+                    return $estimatedStepNumber > 5 && (!$flow->getFormData()->getDepartment() || !$flow->getFormData()->getDepartment()->getDepartment() || count($flow->getFormData()->getDepartment()->getDepartment()->getFeatures()) < 1);
+                },
             ),
             array(
                 'label' => '7. Descriptions',
@@ -95,9 +102,12 @@ class NewProductFlow extends FormFlow
         $options['cascade_validation'] = true;
         $options['flowStep'] = $step;
 
+        /**
+         * @var $formData Product
+         */
         $formData = $this->getFormData();
 
-        if ($step > 1)
+        if ($step === 1)
         {
             $departments = $formData->getDepartments();
             if (count($departments) > 0 && $departments[0]->getDepartment() !== null)
@@ -108,7 +118,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step > 2)
+        if ($step === 2)
         {
             // Go through the variants and update any zero recommended retail prices
             foreach ($formData->getVariants() as $variant)
@@ -129,7 +139,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 3)
+        if ($step === 3)
         {
             // Generate combinations
             $combinations = array();
@@ -398,7 +408,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if (($step == 8) || ($step == 9))
+        if ($step == 8)
         {
             // Update the product description
             foreach ($formData->getDescriptions() as $description)
@@ -410,42 +420,14 @@ class NewProductFlow extends FormFlow
             foreach ($formData->getVariants() as $variant)
             {
                 $this->productManager->updateVariantDescription($variant->getDescription());
+
+                // Delete the route if the resulting URL is the same as the products URL
+                if($variant->getRouting()->getUrl() === $formData->getRouting()->getUrl())
+                {
+                    $variant->getRouting()->setUrl('');
+                }
             }
-
-            // Check the URLs
-//            $duplicateUrlsCheck = array();
-
-//            // Check the variant URLs
-//            foreach ($formData->getVariants() as $variant)
-//            {
-//                foreach ($variant->getRoutings() as $routing)
-//                {
-//                    $newUrl = $url = $this->seoManager->createUrl($routing->getUrl());
-//                    $duplicateCount = 0;
-//                    while (in_array($url, $duplicateUrlsCheck))
-//                    {
-//                        $duplicateCount++;
-//                        $newUrl = $this->seoManager->createUrl($url.'-'.$duplicateCount);
-//                    }
-//                    $duplicateUrlsCheck[] = $newUrl;
-//                    $routing->setUrl($newUrl);
-//                }
-//            }
-
-//            // Check the product URLs
-//            foreach ($formData->getRoutings() as $routing)
-//            {
-//                $newUrl = $url = $this->seoManager->createUrl($routing->getUrl());
-//                $duplicateCount = 0;
-//                while (in_array($newUrl, $duplicateUrlsCheck))
-//                {
-//                    $duplicateCount++;
-//                    $newUrl = $this->seoManager->createUrl($url.'-'.$duplicateCount);
-//                }
-//                $duplicateUrlsCheck[] = $newUrl;
-//                $routing->setUrl($newUrl);
-//            }
-//            var_dump($formData->getRoutings(),3);die();
+            $this->productManager->updateRoutes($formData);
         }
 
         return $options;

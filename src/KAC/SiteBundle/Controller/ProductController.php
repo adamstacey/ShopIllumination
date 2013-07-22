@@ -212,7 +212,8 @@ class ProductController extends Controller {
                 // Update the documents
                 $manager->updateDocuments($product);
                 // Update the routes
-                $manager->updateRoutes($product);
+                $manager->updateRoutes($product, true);
+
 
                 $em->persist($product);
                 $em->flush();

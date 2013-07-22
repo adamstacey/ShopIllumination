@@ -75,10 +75,6 @@ class ProductManager extends Manager
         // Check if we should automatically update the description
         if ($description->getOverride()) return;
 
-        // Get the product variants
-        $variants = $product->getVariants();
-        if (sizeof($variants) < 1) return;
-
         // Get objects
         $brand = $description->getProduct()->getBrand();
         $department = $description->getProduct()->getDepartment()->getDepartment();
@@ -226,25 +222,41 @@ class ProductManager extends Manager
         $this->documentManager->removeTemporaryDocuments($variant);
     }
 
-    public function updateRoutes(Product $product)
+    public function updateRoutes(Product $product, $removeEmpty=false)
     {
         $urls = array();
 
         foreach($product->getRoutings() as $route)
         {
-            $this->checkDuplicateUrl($route, $urls);
+            if($route->getUrl() !== '')
+            {
+                if($removeEmpty)
+                {
+                    $product->removeRouting($route);
+                } else {
+                    $this->checkDuplicateUrl($route, $urls);
+                }
+            }
         }
 
         foreach($product->getVariants() as $variant)
         {
             foreach($variant->getRoutings() as $route)
             {
-                $this->checkDuplicateUrl($route, $urls);
+                if($route->getUrl() !== '')
+                {
+                    if($removeEmpty)
+                    {
+                        $variant->removeRouting($route);
+                    } else {
+                        $this->checkDuplicateUrl($route, $urls);
+                    }
+                }
             }
         }
     }
 
-    private function checkDuplicateUrl(Routing $route, &$urls=array(), $n=0)
+    private function checkDuplicateUrl(Routing $route, &$urls=array(), $n=1)
     {
         /**
          * @var $em EntityManager
