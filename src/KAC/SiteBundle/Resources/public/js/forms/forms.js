@@ -210,18 +210,18 @@ var fixHelper = function(e, ui) {
 };
 
 function loadFormFunctions() {
-    $("tr.no-data").each(function() {
-        if ($(this).closest("tbody").find("tr").length == 1) {
-            var $addFormRowObject = $(this).closest("form").find(".actionAddFormRow");
-            if ($addFormRowObject.length > 0) {
-                $addFormRowObject.click();
-            } else {
-                $(this).show();
-            }
-        } else {
-            $(this).hide();
-        }
-    });
+//    $("tr.no-data").each(function() {
+//        if ($(this).closest("tbody").find("tr").length == 1) {
+//            var $addFormRowObject = $(this).closest("form").find(".actionAddFormRow");
+//            if ($addFormRowObject.length > 0) {
+//                $addFormRowObject.click();
+//            } else {
+//                $(this).show();
+//            }
+//        } else {
+//            $(this).hide();
+//        }
+//    });
 
     $(".recommended-characters").each(function() {
         updateRecommendedCharacters($(this));
