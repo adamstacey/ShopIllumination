@@ -58,6 +58,7 @@ class RoutingController extends Controller
                         return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'all' => $all), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Product\Routing':
+                    case 'KAC\SiteBundle\Entity\Product\Variant\Routing':
                         if($all)
                         {
                             // All flag should be ignored for the product view page

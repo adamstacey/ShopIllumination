@@ -138,7 +138,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\Column(name="template", type="string", length=255)
      */
-    private $template = "default";
+    private $template = "standard";
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -821,6 +821,10 @@ class Product implements DescribableInterface
         if (count($this->routings) > 0)
         {
             return $this->routings[0];
+        }
+        if($this->getVariant())
+        {
+            return $this->getVariant()->getRouting();
         }
 
         return null;

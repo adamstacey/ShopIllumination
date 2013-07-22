@@ -45,7 +45,6 @@ class ProductManager extends Manager
 
         $product->addDescription(new ProductDescription());
         $product->addDepartment(new ProductToDepartment());
-        $product->addRouting(new ProductRouting());
 
         return $product;
     }
@@ -97,26 +96,6 @@ class ProductManager extends Manager
         $description->setHeader($header);
         $description->setMetaDescription($metaDescription);
         $description->setMetaKeywords($metaKeywords);
-
-        // Update the URL
-        if (sizeof($product->getRoutings()) > 0)
-        {
-            foreach ($product->getRoutings() as $routing)
-            {
-                if (!$routing->getUrl())
-                {
-                    $url = $this->seoManager->createUrl($pageTitle);
-                    $routing->setUrl($url);
-                }
-            }
-        } else {
-            $url = $this->seoManager->createUrl($pageTitle);
-            $routing = new ProductRouting();
-            $routing->setProduct($product);
-            $routing->setLocale($description->getLocale());
-            $routing->setUrl($url);
-            $product->addRouting($routing);
-        }
     }
 
     public function updateVariantDescription(VariantDescription $description)
@@ -152,21 +131,14 @@ class ProductManager extends Manager
             $metaKeywords = $this->seoManager->generateKeywords($pageTitle);
 
             // Update the URL
-            if (sizeof($variant->getRoutings()) > 0)
+            if ($variant->getRouting())
             {
-                foreach ($variant->getRoutings() as $routing)
-                {
-                    if (!$routing->getUrl())
-                    {
-                        $url = $this->seoManager->createUrl($pageTitle);
-                        $routing->setUrl($url);
-                    }
-                }
+                $url = $this->seoManager->createUrl($pageTitle);
+                $variant->getRouting()->setUrl($url);
             } else {
                 $url = $this->seoManager->createUrl($pageTitle);
                 $routing = new ProductVariantRouting();
                 $routing->setVariant($variant);
-                $routing->setLocale($description->getLocale());
                 $routing->setUrl($url);
                 $variant->addRouting($routing);
             }
@@ -224,36 +196,6 @@ class ProductManager extends Manager
 
     public function updateRoutes(Product $product, $removeEmpty=false)
     {
-        $urls = array();
-
-        foreach($product->getRoutings() as $route)
-        {
-            if($route->getUrl() !== '')
-            {
-                if($removeEmpty)
-                {
-                    $product->removeRouting($route);
-                } else {
-                    $this->checkDuplicateUrl($route, $urls);
-                }
-            }
-        }
-
-        foreach($product->getVariants() as $variant)
-        {
-            foreach($variant->getRoutings() as $route)
-            {
-                if($route->getUrl() !== '')
-                {
-                    if($removeEmpty)
-                    {
-                        $variant->removeRouting($route);
-                    } else {
-                        $this->checkDuplicateUrl($route, $urls);
-                    }
-                }
-            }
-        }
     }
 
     private function checkDuplicateUrl(Routing $route, &$urls=array(), $n=1)
