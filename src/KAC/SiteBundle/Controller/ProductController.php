@@ -57,7 +57,7 @@ class ProductController extends Controller {
         $commonFeatures = array();
         $variantFeatures = array();
 
-        foreach($product->getVariants() as $variant)
+        foreach ($product->getVariants() as $variant)
         {
             $variantFeatures[$variant->getId()] = array();
 
@@ -109,13 +109,24 @@ class ProductController extends Controller {
 
         // Get all images
         $galleryImages = array();
-        $thumbnailImage = null;
+        $productImages = array();
 
         $images = $em->getRepository("KAC\SiteBundle\Entity\Product\Image")->findBy(array(
             'objectId' => $id
         ), array(
             'displayOrder' => 'ASC'
         ));
+
+        $guarantees = array();
+        if ($product->getBrand())
+        {
+            $guarantees = $em->getRepository("KAC\SiteBundle\Entity\Guarantee")->findBy(array(
+                'objectId' => $product->getBrand()->getId(),
+                'objectType' => 'brand'
+            ), array(
+                'displayOrder' => 'ASC'
+            ));
+        }
 
         /**
          * @var Image $image
@@ -128,7 +139,7 @@ class ProductController extends Controller {
                 $galleryImages[] = $image;
             // Get the thumbnail image
             } else if ($image->getImageType() === 'product') {
-                $thumbnailImage = $image;
+                $productImages[] = $image;
             }
         }
 
@@ -158,8 +169,9 @@ class ProductController extends Controller {
         return $this->render('KACSiteBundle:Product:Templates/'.$template.'.html.twig', array(
             'product' => $product,
             'departments' => $departments,
+            'guarantees' => $guarantees,
             'gallery_images' => $galleryImages,
-            'thumbnail_image' => $thumbnailImage,
+            'product_images' => $productImages,
             'lowest_price' => $lowestPrice,
             'highest_price' => $highestPrice,
             'common_features' => $commonFeatures,
