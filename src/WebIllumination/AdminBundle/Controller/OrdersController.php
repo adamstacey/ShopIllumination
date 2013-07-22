@@ -184,7 +184,7 @@ class OrdersController extends Controller
                                     // Generate the PDF
                                     if (file_exists($ordersHtmlFilePath))
                                     {
-                                        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
+                                        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
                                         unlink($ordersHtmlFilePath);
                                     }
 
@@ -253,7 +253,7 @@ class OrdersController extends Controller
                                     // Generate the PDF
                                     if (file_exists($ordersHtmlFilePath))
                                     {
-                                        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
+                                        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
                                         unlink($ordersHtmlFilePath);
                                     }
 
@@ -340,7 +340,7 @@ class OrdersController extends Controller
                                     // Generate the PDF
                                     if (file_exists($ordersHtmlFilePath))
                                     {
-                                        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
+                                        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
                                         unlink($ordersHtmlFilePath);
                                     }
 
@@ -409,7 +409,7 @@ class OrdersController extends Controller
                                     // Generate the PDF
                                     if (file_exists($ordersHtmlFilePath))
                                     {
-                                        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
+                                        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
                                         unlink($ordersHtmlFilePath);
                                     }
 
@@ -1202,7 +1202,7 @@ class OrdersController extends Controller
                 $fileHandle = fopen($ordersHtmlFilePath, 'w');
                 fwrite($fileHandle, $orderHtml);
                 fclose($fileHandle);
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$ordersHtmlFilePath.' '.$ordersPdfFilePath.' 2>&1');
                 unlink($ordersHtmlFilePath);
 
                 // Forward
