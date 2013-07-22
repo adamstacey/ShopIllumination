@@ -459,7 +459,7 @@ class OrderService {
 
         // Create the PDF documents
         $invoicesDocument = $this->getUploadRootDir().'/orders-'.str_replace(',', '-', $ids).'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewOrders/'.$ids.' '.$invoicesDocument.' 2>&1 > /dev/null 2>/dev/null &');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewOrders/'.$ids.' '.$invoicesDocument.' 2>&1 > /dev/null 2>/dev/null &');
 
         return '/'.$this->getUploadDir().'/orders-'.str_replace(',', '-', $ids).'.pdf';
     }
@@ -471,7 +471,7 @@ class OrderService {
 
         // Create the PDF documents
         $deliveryNotesDocument = $this->getUploadRootDir().'/delivery-notes-'.str_replace(',', '-', $ids).'.pdf';
-        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewDeliveryNotes/'.$ids.' '.$deliveryNotesDocument.' 2>&1 > /dev/null 2>/dev/null &');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewDeliveryNotes/'.$ids.' '.$deliveryNotesDocument.' 2>&1 > /dev/null 2>/dev/null &');
 
         return '/'.$this->getUploadDir().'/delivery-notes-'.str_replace(',', '-', $ids).'.pdf';
     }
@@ -818,19 +818,19 @@ class OrderService {
             $deliveryNoteDocument = $this->getUploadRootDir().'/delivery-note-'.$order->getId().'.pdf';
             if (!file_exists($invoiceDocument))
             {
-                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1 > /dev/null 2>/dev/null &');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
             if (!file_exists($copyInvoiceDocument))
             {
-                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1 > /dev/null 2>/dev/null &');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
             if (!file_exists($invoiceDocument))
             {
-                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1 > /dev/null 2>/dev/null &');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
             if (!file_exists($deliveryNoteDocument))
             {	
-                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1 > /dev/null 2>/dev/null &');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
         }*/
 
