@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Type;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use KAC\SiteBundle\Entity\DescribableInterface;
 use Symfony\Component\Validator\ExecutionContext;
 
@@ -14,7 +15,7 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\Entity
  * @ORM\Table(name="product_variants")
  * @ORM\HasLifecycleCallbacks()
-
+ * @UniqueEntity(fields={"productCode"}, groups={"Default", "flow_site_new_product_step3"})
  */
 class Variant implements DescribableInterface
 {
@@ -83,6 +84,7 @@ class Variant implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant\Routing", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Variant\Routing[]
+     * @Assert\Valid()
      */
     private $routings;
 
