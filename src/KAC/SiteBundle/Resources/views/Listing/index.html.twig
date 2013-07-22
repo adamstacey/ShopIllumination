@@ -158,9 +158,9 @@
                                                     <div class="product-image-container fl">
                                                         <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                                                             {% if product.thumbnail_path %}
-                                                                <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                                <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                                             {% else  %}
-                                                                <img class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                                <img class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg') }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                                             {% endif  %}
                                                         </a>
                                                     </div>
@@ -235,7 +235,7 @@
                                                             <input class="quantity integer" type="number" value="1" />
                                                             <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
                                                             <button type="button" class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
-                                                            <button type="button" class="actionAddToBasket buy button button-green uppercase icon-white" data-icon-secondary="icon-472">Buy</button>
+                                                                <button type="button" class="actionAddToBasket buy button button-green uppercase icon-white" data-icon-secondary="icon-472">Buy</button>
                                                         </div>
                                                         {% else %}
                                                             <a href="{{ path('routing', {'url': product.url}) }}" class="fr button button-green">More Info</a>
