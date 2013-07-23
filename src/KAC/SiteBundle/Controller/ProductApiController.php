@@ -43,7 +43,7 @@ class ProductApiController extends Controller
 
         // Get the paginator results
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($query, $this->get('request')->query->get('page', 1), 20, array('distinct' => false));
+        $pagination = $paginator->paginate($query, $this->get('request')->query->get('page', 1), 5, array('distinct' => false));
 
         $serializer = $this->get('serializer');
         $data = $serializer->serialize(array(

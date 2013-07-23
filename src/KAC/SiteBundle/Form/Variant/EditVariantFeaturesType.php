@@ -19,6 +19,7 @@ class EditVariantFeaturesType extends AbstractType
             'type' => new ProductFeatureCombinationType($options['departmentId']),
             'allow_add' => true,
             'allow_delete' => true,
+            'by_reference' => false,
         ));
     }
 

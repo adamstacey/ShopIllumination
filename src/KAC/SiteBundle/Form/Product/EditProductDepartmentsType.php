@@ -7,12 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
-class EditProductLinksType extends AbstractType
+class EditProductDepartmentsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('links', 'collection', array(
-            'type' => new ProductLinkType(),
+        $builder->add('departments', 'collection', array(
+            'type' => new ProductDepartmentType(),
             'allow_add' => true,
             'allow_delete' => true,
             'by_reference' => false,
@@ -28,6 +28,6 @@ class EditProductLinksType extends AbstractType
 
     public function getName()
     {
-        return 'site_edit_product_links';
+        return 'site_edit_product_departments';
     }
 }

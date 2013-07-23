@@ -42,6 +42,12 @@
                     </a>
                 </li>
                 <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_departments') }} icon-944"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_departments') }} icon-{{ helpers.getStatusIconColour('products_edit_departments') }}" href="{{ path('products_edit_departments', {'productId': product.id}) }}">
+                        Departments
+                    </a>
+                </li>
+                <li class="clearfix grey">
                     <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('products_edit_description') }} icon-944"></span>
                     <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('products_edit_description') }} icon-{{ helpers.getStatusIconColour('products_edit_description') }}" href="{{ path('products_edit_description', {'productId': product.id}) }}">
                         Description

@@ -1,0 +1,66 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Departments | {{ product.description.pageTitle }}{% endblock %}
+
+{% block body %}
+    <div class="widget-group clearfix">
+        <div class="widget widget-2-of-7">
+            {% include 'KACSiteBundle:Product:editLeftMenu.html.twig' %}
+        </div>
+        <div class="widget widget-5-of-7">
+            <section>
+                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': product.id}) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                    <h2>Departments</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-bottom">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset class="pbm">
+                                        <table class="form-table sortable" id="departmentList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.departments.vars.prototype} %}{% endfilter %}">
+                                            <thead>
+                                                <tr>
+                                                    <th width="1">&nbsp;</th>
+                                                    <th>Department</th>
+                                                    <th width="1">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="no-data">
+                                                    <td colspan="5">
+                                                        <div class="message message-help mas">
+                                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                            <p>There are no departments currently setup. Add a department using the "Add" button below.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {{ form_rest(form) }}
+                                            </tbody>
+                                        </table>
+                                        {% do form.departments.setRendered() %}
+                                    </fieldset>
+
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Save</button>
+                                        <button type="button" data-table-object="departmentList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        $("select.select-department").select2();
+                        $("#departmentList").on("rowadded", function() {
+                            $("select.select-department").select2();
+                        });
+                    })
+                </script>
+            </section>
+        </div>
+    </div>
+{% endblock %}

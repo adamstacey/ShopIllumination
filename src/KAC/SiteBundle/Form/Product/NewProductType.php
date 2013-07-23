@@ -114,6 +114,7 @@ class NewProductType extends AbstractType
                     'type' => new ProductFeatureCombinationType($options['departmentId']),
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -122,6 +123,7 @@ class NewProductType extends AbstractType
                     'type' => new ProductDepartmentType(),
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -132,6 +134,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -142,6 +145,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -152,6 +156,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -162,6 +167,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -172,6 +178,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_descriptions',
@@ -179,6 +186,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -189,6 +197,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
                 $builder->add('variants', 'collection', array(
                     'block_name' => 'variants_seo',
@@ -196,6 +205,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -212,6 +222,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
                 break;
             case 12:
@@ -223,6 +234,7 @@ class NewProductType extends AbstractType
                     'required'  => false,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
                 break;
             case 13:
@@ -230,6 +242,7 @@ class NewProductType extends AbstractType
                     'type' => new ProductLinkType(),
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
                 break;
         }

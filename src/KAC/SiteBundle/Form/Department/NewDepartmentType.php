@@ -72,6 +72,7 @@ class NewDepartmentType extends AbstractType
                     'type' => new DepartmentFeatureType(),
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
                 break;
             case 5:

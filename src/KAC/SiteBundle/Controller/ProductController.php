@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\DepartmentToFeature;
+use KAC\SiteBundle\Form\Product\EditProductDepartmentsType;
 use KAC\SiteBundle\Form\Product\EditProductDocumentsType;
 use KAC\SiteBundle\Form\Product\EditProductImagesType;
 use KAC\SiteBundle\Form\Product\EditProductDescriptionType;
@@ -448,39 +449,70 @@ class ProductController extends Controller {
     }
 
     /**
-     * @Route("/admin/products/{productId}/seo", name="products_edit_seo")
+     * @Route("/admin/products/{productId}/departments", name="products_edit_departments")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function editSeoAction(Request $request, $productId)
+    public function editDepartmentsAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
+        $originalDepartments = array();
 
+        /**
+         * @var $product Product
+         */
         $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
         if(!$product)
         {
             throw new NotFoundHttpException("Product not found");
         }
 
-        $form = $this->createForm(new EditProductSeoType(), $product);
+        foreach($product->getDepartments() as $department)
+        {
+            $originalDepartments[] = $department;
+        }
+
+        $form = $this->createForm(new EditProductDepartmentsType(), $product);
 
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
-                // Update the routes
-                $manager->updateRoutes($product);
+                // Remove all links from the to delete array that have not been deleted
+                foreach($product->getDepartments() as $department) {
+                    foreach ($originalDepartments as $key => $toDel) {
+                        if ($toDel->getId() === $department->getId()) {
+                            unset($originalDepartments[$key]);
+                        }
+                    }
+
+                    $department->setProduct($product);
+                }
+
+                foreach ($originalDepartments as $department) {
+                    $em->remove($department);
+                }
 
                 $em->persist($product);
                 $em->flush();
+
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
                     'productId' => $product->getId(),
                 )));
             }
         }
 
-        return $this->render('KACSiteBundle:Product:edit_seo.html.twig', array(
+        return $this->render('KACSiteBundle:Product:edit_departments.html.twig', array(
             'product' => $product,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/seo", name="products_edit_seo")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editSeoAction(Request $request, $productId)
+    {
+        return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_seo.html.twig', new EditProductSeoType());
     }
 
     /**
@@ -590,6 +622,7 @@ class ProductController extends Controller {
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
+                $i = 0;
                 // Remove all links from the to delete array that have not been deleted
                 foreach($product->getLinks() as $link) {
                     foreach ($originalLinks as $key => $toDel) {
@@ -599,6 +632,9 @@ class ProductController extends Controller {
                     }
 
                     $link->setProduct($product);
+                    $link->setDisplayOrder($i);
+
+                    $i++;
                 }
 
                 foreach ($originalLinks as $link) {

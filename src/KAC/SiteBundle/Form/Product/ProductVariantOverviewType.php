@@ -38,6 +38,7 @@ class ProductVariantOverviewType extends AbstractType
         $builder->add('prices', 'collection', array(
             'type' => new ProductPriceType(),
             'allow_add' => true,
+            'by_reference' => false,
         ));
     }
 
