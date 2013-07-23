@@ -1,17 +1,17 @@
-<form class="form" id="formStep11" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" id="formStep10" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-51"></span>
-                    <h2>11. Product Documents</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-1305"></span>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
-                            <div class="accordion-item documentupload">
-                                <h3>Documents for Product</h3>
+                            <div class="accordion-item imageupload">
+                                <h3>Images for Product</h3>
                                 <div>
                                     <table class="form-table sortable files mbm">
                                         <tbody>
@@ -19,18 +19,18 @@
                                                 <td colspan="4">
                                                     <div class="message message-help mas">
                                                         <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                                        <p>There are no documents currently uploaded. Go back and upload a document.</p>
+                                                        <p>There are no images currently uploaded. Go back and upload an image.</p>
                                                     </div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    {{ form_widget(form.temporaryDocuments) }}
+                                    {{ form_widget(form.temporaryImages) }}
                                 </div>
                             </div>
                             {% for variant in form.variants %}
-                                <div class="accordion-item documentupload">
-                                    <h3>Documents for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                <div class="accordion-item imageupload">
+                                    <h3>Images for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
                                     <div>
                                         <table class="form-table sortable files mbm">
                                             <tbody>
@@ -38,7 +38,7 @@
                                                     <td colspan="4">
                                                         <div class="message message-help mas">
                                                             <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                                            <p>There are no documents currently uploaded. Go back and upload a document.</p>
+                                                            <p>There are no images currently uploaded. Go back and upload an image.</p>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -60,15 +60,23 @@
     </div>
 </form>
 {% raw %}
-    <script id="templateDocumentRow" type="text/x-template">
+    <script id="templateImageRow" type="text/x-template">
         {% for (var i = 0, file; file = o.files[i]; i++) { %}
-            <tr class="document-row" data-id="{%=file.id %}">
+            <tr class="image-row" data-id="{%=file.id %}">
                 <td width="1"><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
                 <td width="1"><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
                 <td width="1" class="name">
-                    <a href="{%=file.url%}" target="_blank"><span class="fn image-preview ui-button-icon-primary ui-icon icon-turquoise icon-53"></span></a>
+                    <a class="lightbox" href="{%=file.url%}" target="_blank"><img width="100" src="{%=file.url%}" /></a>
                 </td>
-                <td class="title">{%=file.title%}</td>
+                <td class="type">
+                    {% if (file.type == 'gallery') { %}
+                        Gallery Image
+                    {% } else if (file.type == 'product') { %}
+                        Product Image
+                    {% } else { %}
+                        -
+                    {% } %}
+                </td>
             </tr>
         {% } %}
     </script>
@@ -76,10 +84,10 @@
 <script>
     $(function () {
         "use strict";
-        var $documents = "{{ form.vars.value.documentUploads }}";
-        if ($documents) {
-            var $documentData = $.getJSON('{{ path('api_documents_get_multiple', {'ids': '-1'}) }}'.replace('-1', $documents), function(data) {
-                var template = tmpl("templateDocumentRow");
+        var $images = "{{ form.vars.value.imageUploads }}";
+        if ($images) {
+            var $imageData = $.getJSON('{{ path('api_images_get_multiple', {'ids': '-1'}) }}'.replace('-1', $images), function(data) {
+                var template = tmpl("templateImageRow");
                 var result = template({
                     files: data.files,
                     formatFileSize: this._formatFileSize,
@@ -89,17 +97,17 @@
                 $(".files tbody").find(".no-files").remove();
             });
         }
-        $("#formStep11").submit(function() {
-            $(".documentupload").each(function() {
-                var $documents = [];
-                var $documentsHiddenInputObject = $(this).find("input[type='hidden']");
+        $("#formStep10").submit(function() {
+            $(".imageupload").each(function() {
+                var $images = [];
+                var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
                 $(this).find(".files tbody tr").each(function() {
                     var $checkBoxObject = $(this).find("input");
                     if($checkBoxObject.is(":checked")) {
-                        $documents.push($checkBoxObject.attr("data-id"));
+                        $images.push($checkBoxObject.attr("data-id"));
                     }
                 });
-                $documentsHiddenInputObject.val($documents.join(","));
+                $imagesHiddenInputObject.val($images.join(","));
             });
             return true;
         });
@@ -108,13 +116,13 @@
         });
     });
     $(window).load(function() {
-        $(".documentupload").each(function() {
-            var $documentsHiddenInputObject = $(this).find("input[type='hidden']");
+        $(".imageupload").each(function() {
+            var $imagesHiddenInputObject = $(this).find("input[type='hidden']");
             var $tableBodyObject = $(this).find(".files tbody");
-            var $documents = $documentsHiddenInputObject.val().split(",");
+            var $images = $imagesHiddenInputObject.val().split(",");
             var $reOrderedRows = new Array();
-            for (var $index = 0; $index < $documents.length; $index++) {
-                var $row = $tableBodyObject.find("tr[data-id='"+$documents[$index]+"']");
+            for (var $index = 0; $index < $images.length; $index++) {
+                var $row = $tableBodyObject.find("tr[data-id='"+$images[$index]+"']");
                 $reOrderedRows.push($row);
                 $row.remove();
             }
@@ -128,8 +136,8 @@
             }
             generateButtons($tableBodyObject);
             generateFormElements($tableBodyObject);
-            for (var $index = 0; $index < $documents.length; $index++) {
-                $tableBodyObject.find("input[type='checkbox'][data-id='"+$documents[$index]+"']").attr("checked", "checked");
+            for (var $index = 0; $index < $images.length; $index++) {
+                $tableBodyObject.find("input[type='checkbox'][data-id='"+$images[$index]+"']").attr("checked", "checked");
             }
         });
         $.uniform.update();

@@ -4,7 +4,7 @@
             <div class="ui-widget">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
-                    <h2>1. Overview</h2>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-all">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}

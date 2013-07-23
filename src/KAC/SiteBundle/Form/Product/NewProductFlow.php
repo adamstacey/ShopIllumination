@@ -44,53 +44,57 @@ class NewProductFlow extends FormFlow
                 'type' => $this->formType,
             ),
             array(
-                'label' => '2. Build Combinations',
+                'label' => '2. Departments',
+                'type' => $this->formType,
+            ),
+            array(
+                'label' => '3. Build Combinations',
                 'type' => $this->formType,
                 'skip' => function($estimatedStepNumber, FormFlowInterface $flow) {
                     return $estimatedStepNumber > 1 && (!$flow->getFormData()->getDepartment() || !$flow->getFormData()->getDepartment()->getDepartment() || count($flow->getFormData()->getDepartment()->getDepartment()->getFeatures()) < 1);
                 },
             ),
             array(
-                'label' => '3. Prices',
+                'label' => '4. Prices',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '4. Delivery',
+                'label' => '5. Delivery',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '5. Unique Identifiers',
+                'label' => '6. Unique Identifiers',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '6. Features',
+                'label' => '7. Features',
                 'type' => $this->formType,
                 'skip' => function($estimatedStepNumber, FormFlowInterface $flow) {
                     return $estimatedStepNumber > 5 && (!$flow->getFormData()->getDepartment() || !$flow->getFormData()->getDepartment()->getDepartment() || count($flow->getFormData()->getDepartment()->getDepartment()->getFeatures()) < 1);
                 },
             ),
             array(
-                'label' => '7. Descriptions',
+                'label' => '8. Descriptions',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '8. SEO',
+                'label' => '9. SEO',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '9. Uploads',
+                'label' => '10. Uploads',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '10. Images',
+                'label' => '11. Images',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '11. Documents',
+                'label' => '12. Documents',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '12. Links',
+                'label' => '13. Links',
                 'type' => $this->formType,
             ),
         );

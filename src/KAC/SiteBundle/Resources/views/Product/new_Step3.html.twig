@@ -1,51 +1,41 @@
-2<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-700"></span>
-                    <h2>3. Prices</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     <div class="message message-help">
                         <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
-                        <p><strong>NOTE:</strong> The first combination will be the default combination displayed in a product, so it is important that you order the combinations below to reflect this.</p>
+                        <p>Here you need to select the features that will be used to build the product combinations that make up the product you are adding.</p>
+                        <p>This is NOT where you are setting the product features and in most cases will simply be what features are different across the combinations.</p>
                     </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset class="pbm">
-                        <table class="form-table sortable">
+                        <table class="form-table" id="combinationList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
                             <thead>
                                 <tr>
                                     <th width="1">&nbsp;</th>
-                                    <th width="1">&nbsp;</th>
-                                    <th class="tal" title="The features that make up the combination.">Combination</th>
-                                    <th title="Enter the unique product code supplied by the manufacturer or supplier.">Product Code</th>
-                                    <th title="Enter the price of the product at the cost we but it in at.">Cost Price</th>
-                                    <th title="Enter the recommended retail price (RRP) of the product. Leave it blank if you want the RRP to be the list price.">RRP</th>
-                                    <th title="Enter the list price. This is the price the product will sell for.">List Price</th>
+                                    <th title="Select a feature group.">Group</th>
+                                    <th title="Select a corresponding feature.">Feature</th>
                                     <th width="1">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for variant in form.variants %}
-                                    <tr>
-                                        <td><img class="handle" src="{{ asset('bundles/kacsite/images/icons/handle.png') }}" border="0" />{{ form_widget(variant.displayOrder) }}</td>
-                                        <td class="row-count tar">{{ loop.index }}</td>
-                                        <td>
-                                            <ul>
-                                                {% for feature in variant.get('value').features %}
-                                                    <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
-                                                {% else %}
-                                                    <li>Single Combination</li>
-                                                {% endfor %}
-                                            </ul>
-                                        </td>
-                                        {{ form_widget(variant) }}
-                                    </tr>
-                                {% endfor %}
+                                <tr class="no-data">
+                                    <td colspan="4">
+                                        <div class="message message-help mas">
+                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                            <p>There are no combinations currently setup. Add a combination using the "Add" button below.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{ form_rest(form) }}
                             </tbody>
                         </table>
-                        {{ form_rest(form) }}
+                        {% do form.features.setRendered() %}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
@@ -54,3 +44,20 @@
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).on('change', '.feature-group', function() {
+            var $featureGroupId = $(this).val();
+            var $selectObject = $(this).closest("tr").find(".feature");
+            $selectObject.prev("span").html("Loading Features...");
+            $.getJSON('{{ path('api_features', {'featureGroupId': '-1'}) }}'.replace(/-1/, $featureGroupId), function(data) {
+                $selectObject.val([]).empty();
+                for (var $feature = 0; $feature < data.features.length; $feature++) {
+                    var $option = $('<option/>', { value: data.features[$feature]['id'] }).text(data.features[$feature]['name']).prop('selected', $feature == 0);
+                    $option.appendTo($selectObject);
+                }
+                $.uniform.update($selectObject);
+            });
+        });
+    });
+</script>

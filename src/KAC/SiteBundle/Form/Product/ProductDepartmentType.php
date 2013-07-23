@@ -26,7 +26,7 @@ class ProductDepartmentType extends AbstractType
                 }
             },
             'empty_value' => '- Select a Department -',
-            'label' => 'Main Department',
+            'label' => 'Department',
             'required' => true,
             'attr' => array(
                 'class' => 'select-department fill no-uniform',

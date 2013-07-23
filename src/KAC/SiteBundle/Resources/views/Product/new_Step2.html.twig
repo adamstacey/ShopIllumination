@@ -4,22 +4,16 @@
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
-                    <h2>2. Build Combinations</h2>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
-                    <div class="message message-help">
-                        <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
-                        <p>Here you need to select the features that will be used to build the product combinations that make up the product you are adding.</p>
-                        <p>This is NOT where you are setting the product features and in most cases will simply be what features are different across the combinations.</p>
-                    </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset class="pbm">
-                        <table class="form-table" id="combinationList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.features.vars.prototype} %}{% endfilter %}">
+                        <table class="form-table" id="departmentList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.departments.vars.prototype} %}{% endfilter %}">
                             <thead>
                                 <tr>
                                     <th width="1">&nbsp;</th>
-                                    <th title="Select a feature group.">Group</th>
-                                    <th title="Select a corresponding feature.">Feature</th>
+                                    <th>Department</th>
                                     <th width="1">&nbsp;</th>
                                 </tr>
                             </thead>
@@ -28,14 +22,14 @@
                                     <td colspan="4">
                                         <div class="message message-help mas">
                                             <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                            <p>There are no combinations currently setup. Add a combination using the "Add" button below.</p>
+                                            <p>There are no departments. Add a combination using the "Add" button below.</p>
                                         </div>
                                     </td>
                                 </tr>
                                 {{ form_rest(form) }}
                             </tbody>
                         </table>
-                        {% do form.features.setRendered() %}
+                        {% do form.departments.setRendered() %}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
                     {% include 'KACSiteBundle:Product:newControls.html.twig' %}
@@ -46,18 +40,9 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
-        $(document).on('change', '.feature-group', function() {
-            var $featureGroupId = $(this).val();
-            var $selectObject = $(this).closest("tr").find(".feature");
-            $selectObject.prev("span").html("Loading Features...");
-            $.getJSON('{{ path('api_features', {'featureGroupId': '-1'}) }}'.replace(/-1/, $featureGroupId), function(data) {
-                $selectObject.val([]).empty();
-                for (var $feature = 0; $feature < data.features.length; $feature++) {
-                    var $option = $('<option/>', { value: data.features[$feature]['id'] }).text(data.features[$feature]['name']).prop('selected', $feature == 0);
-                    $option.appendTo($selectObject);
-                }
-                $.uniform.update($selectObject);
-            });
+        $("select.select-department").select2();
+        $("#departmentList").on("rowadded", function() {
+            $("select.select-department").select2();
         });
-    });
+    })
 </script>

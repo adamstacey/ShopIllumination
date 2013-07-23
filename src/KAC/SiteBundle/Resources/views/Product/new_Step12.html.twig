@@ -1,35 +1,55 @@
-<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" id="formStep11" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-1249"></span>
-                    <h2>12. Product Links</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-51"></span>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                    <fieldset class="pbm">
-                        <table class="form-table sortable" id="linkList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.links.vars.prototype} %}{% endfilter %}">
-                            <thead>
-                                <tr>
-                                    <th width="1">&nbsp;</th>
-                                    <th width="1">&nbsp;</th>
-                                    <th width="50%">Product</th>
-                                    <th>Link Type</th>
-                                    <th width="1">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="no-data">
-                                    <td colspan="5">
-                                        <div class="message message-help mas">
-                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                            <p>There are no product links currently setup. Add a link using the "Add" button below.</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <fieldset>
+                        <div class="accordion mbm">
+                            <div class="accordion-item documentupload">
+                                <h3>Documents for Product</h3>
+                                <div>
+                                    <table class="form-table sortable files mbm">
+                                        <tbody>
+                                            <tr class="no-files">
+                                                <td colspan="4">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no documents currently uploaded. Go back and upload a document.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    {{ form_widget(form.temporaryDocuments) }}
+                                </div>
+                            </div>
+                            {% for variant in form.variants %}
+                                <div class="accordion-item documentupload">
+                                    <h3>Documents for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div>
+                                        <table class="form-table sortable files mbm">
+                                            <tbody>
+                                                <tr class="no-files">
+                                                    <td colspan="4">
+                                                        <div class="message message-help mas">
+                                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                            <p>There are no documents currently uploaded. Go back and upload a document.</p>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        {{ form_rest(variant) }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% do form.variants.setRendered() %}
+                        </div>
                         {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
@@ -39,56 +59,79 @@
         </div>
     </div>
 </form>
-<script type="text/javascript">
-    var productsUrl = "{{ path('api_products_get') }}";
-    var productUrl = "{{ path('api_products_get_product', {'id': -1}) }}";
-
-    function generateProductSelect($element) {
-        $element.select2({
-            placeholder: "- Select a Product -",
-            minimumInputLength: 1,
-            quietMillis: 100,
-            ajax: {
-                url: productsUrl,
-                dataType: 'json',
-                data: function (term, page) {
-                    return {
-                        q: term,
-                        page: page
-                    };
-                },
-                results: function (data, page) {
-                    var more = (page * 10) < data.total;
-                    return {results: data.products, more: more};
-                }
-            },
-            initSelection: function(element, callback) {
-                var id = $(element).val();
-                if (id !== "") {
-                    $.ajax(productUrl.replace(/-1/, id), {
-                        dataType: "json"
-                    }).done(function(data) { callback(data); });
-                }
-            },
-            formatResult: function(product) {
-                if (product.descriptions.length > 0) {
-                    return product.descriptions[0].page_title;
-                }
-                return "";
-            },
-            formatSelection: function(product) {
-                if (product.descriptions.length > 0) {
-                    return product.descriptions[0].page_title;
-                }
-                return "";
+{% raw %}
+    <script id="templateDocumentRow" type="text/x-template">
+        {% for (var i = 0, file; file = o.files[i]; i++) { %}
+            <tr class="document-row" data-id="{%=file.id %}">
+                <td width="1"><img class="handle" src="/bundles/kacsite/images/icons/handle.png" border="0" /></td>
+                <td width="1"><input type="checkbox" name="select[{%=file.id %}]" data-id="{%=file.id %}" /></td>
+                <td width="1" class="name">
+                    <a href="{%=file.url%}" target="_blank"><span class="fn image-preview ui-button-icon-primary ui-icon icon-turquoise icon-53"></span></a>
+                </td>
+                <td class="title">{%=file.title%}</td>
+            </tr>
+        {% } %}
+    </script>
+{% endraw %}
+<script>
+    $(function () {
+        "use strict";
+        var $documents = "{{ form.vars.value.documentUploads }}";
+        if ($documents) {
+            var $documentData = $.getJSON('{{ path('api_documents_get_multiple', {'ids': '-1'}) }}'.replace('-1', $documents), function(data) {
+                var template = tmpl("templateDocumentRow");
+                var result = template({
+                    files: data.files,
+                    formatFileSize: this._formatFileSize,
+                    options: this.options
+                });
+                $(".files tbody").append(result);
+                $(".files tbody").find(".no-files").remove();
+            });
+        }
+        $("#formStep11").submit(function() {
+            $(".documentupload").each(function() {
+                var $documents = [];
+                var $documentsHiddenInputObject = $(this).find("input[type='hidden']");
+                $(this).find(".files tbody tr").each(function() {
+                    var $checkBoxObject = $(this).find("input");
+                    if($checkBoxObject.is(":checked")) {
+                        $documents.push($checkBoxObject.attr("data-id"));
+                    }
+                });
+                $documentsHiddenInputObject.val($documents.join(","));
+            });
+            return true;
+        });
+        $(document).bind('drop dragover', function (e) {
+            e.preventDefault();
+        });
+    });
+    $(window).load(function() {
+        $(".documentupload").each(function() {
+            var $documentsHiddenInputObject = $(this).find("input[type='hidden']");
+            var $tableBodyObject = $(this).find(".files tbody");
+            var $documents = $documentsHiddenInputObject.val().split(",");
+            var $reOrderedRows = new Array();
+            for (var $index = 0; $index < $documents.length; $index++) {
+                var $row = $tableBodyObject.find("tr[data-id='"+$documents[$index]+"']");
+                $reOrderedRows.push($row);
+                $row.remove();
+            }
+            $tableBodyObject.find("tr").each(function() {
+                $reOrderedRows.push($(this));
+                $(this).remove();
+            });
+            $tableBodyObject.empty();
+            for (var $index = 0; $index < $reOrderedRows.length; $index++) {
+                $tableBodyObject.append($reOrderedRows[$index]);
+            }
+            generateButtons($tableBodyObject);
+            generateFormElements($tableBodyObject);
+            for (var $index = 0; $index < $documents.length; $index++) {
+                $tableBodyObject.find("input[type='checkbox'][data-id='"+$documents[$index]+"']").attr("checked", "checked");
             }
         });
-    }
-
-    $(document).ready(function() {
-        generateProductSelect($(".select-product"));
-        $("#linkList").on("rowadded", function() {
-            generateProductSelect($(".select-product"));
-        });
+        $.uniform.update();
     });
 </script>

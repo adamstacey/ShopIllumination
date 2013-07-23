@@ -1,0 +1,94 @@
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget mbl">
+                <header class="ui-widget-header ui-corner-top">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-1249"></span>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom">
+                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                    <fieldset class="pbm">
+                        <table class="form-table sortable" id="linkList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.links.vars.prototype} %}{% endfilter %}">
+                            <thead>
+                                <tr>
+                                    <th width="1">&nbsp;</th>
+                                    <th width="1">&nbsp;</th>
+                                    <th width="50%">Product</th>
+                                    <th>Link Type</th>
+                                    <th width="1">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="no-data">
+                                    <td colspan="5">
+                                        <div class="message message-help mas">
+                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                            <p>There are no product links currently setup. Add a link using the "Add" button below.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {{ form_rest(form) }}
+                    </fieldset>
+                    {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}
+                    {% include 'KACSiteBundle:Product:newControls.html.twig' %}
+                </section>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    var productsUrl = "{{ path('api_products_get') }}";
+    var productUrl = "{{ path('api_products_get_product', {'id': -1}) }}";
+
+    function generateProductSelect($element) {
+        $element.select2({
+            placeholder: "- Select a Product -",
+            minimumInputLength: 1,
+            quietMillis: 100,
+            ajax: {
+                url: productsUrl,
+                dataType: 'json',
+                data: function (term, page) {
+                    return {
+                        q: term,
+                        page: page
+                    };
+                },
+                results: function (data, page) {
+                    var more = (page * 10) < data.total;
+                    return {results: data.products, more: more};
+                }
+            },
+            initSelection: function(element, callback) {
+                var id = $(element).val();
+                if (id !== "") {
+                    $.ajax(productUrl.replace(/-1/, id), {
+                        dataType: "json"
+                    }).done(function(data) { callback(data); });
+                }
+            },
+            formatResult: function(product) {
+                if (product.descriptions.length > 0) {
+                    return product.descriptions[0].page_title;
+                }
+                return "";
+            },
+            formatSelection: function(product) {
+                if (product.descriptions.length > 0) {
+                    return product.descriptions[0].page_title;
+                }
+                return "";
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        generateProductSelect($(".select-product"));
+        $("#linkList").on("rowadded", function() {
+            generateProductSelect($(".select-product"));
+        });
+    });
+</script>
