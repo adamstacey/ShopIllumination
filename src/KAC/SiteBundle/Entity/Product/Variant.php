@@ -15,7 +15,7 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\Entity
  * @ORM\Table(name="product_variants")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity(fields={"productCode"}, groups={"Default", "flow_site_new_product_step3"})
+ * @UniqueEntity(fields={"productCode"}, groups={"Default", "flow_site_new_product_step4"})
  */
 class Variant implements DescribableInterface
 {
@@ -60,7 +60,7 @@ class Variant implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Price", mappedBy="variant", cascade={"all"})
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\Count(min="1", groups={"flow_site_new_product_step3"}, minMessage="Enter a valid price.")
+     * @Assert\Count(min="1", groups={"flow_site_new_product_step4"}, minMessage="Enter a valid price.")
      * @Assert\Valid()
      * @var Price[]
      */
@@ -110,8 +110,8 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\Column(name="product_code", type="string", length=100)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step3", "site_edit_product_overview"}, message="Enter a product code.")
-     * @Assert\Type(type="string", groups={"flow_site_new_product_step3", "site_edit_product_overview"}, message="Enter a valid product code.")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step4", "site_edit_product_overview"}, message="Enter a product code.")
+     * @Assert\Type(type="string", groups={"flow_site_new_product_step4", "site_edit_product_overview"}, message="Enter a valid product code.")
      */
     private $productCode = '';
 
@@ -176,7 +176,7 @@ class Variant implements DescribableInterface
 
     /**
      * @ORM\Column(name="delivery_band", type="decimal", precision=12, scale=4)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step4"}, message="Select a delivery band.")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step5"}, message="Select a delivery band.")
      */
     private $deliveryBand;
 
@@ -695,7 +695,7 @@ class Variant implements DescribableInterface
     {
         if(count($this->prices) > 0)
         {
-            return $this->prices[0];
+            return $this->prices->first();
         }
 
         return null;
@@ -767,7 +767,7 @@ class Variant implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0];
+            return $this->descriptions->first();
         } else {
             if($this->getProduct()->getDescription() !== null) {
                 $description = new Variant\Description();
@@ -844,7 +844,7 @@ class Variant implements DescribableInterface
     {
         if (count($this->routings) > 0)
         {
-            return $this->routings[0];
+            return $this->routings->first();
         }
 
         return null;
@@ -908,7 +908,7 @@ class Variant implements DescribableInterface
     {
         if (count($this->images) > 0)
         {
-            return $this->images[0];
+            return $this->images->first();
         }
 
         return null;
@@ -957,7 +957,7 @@ class Variant implements DescribableInterface
     {
         if (count($this->document) > 0)
         {
-            return $this->documents[0];
+            return $this->documents->first();
         }
 
         return null;

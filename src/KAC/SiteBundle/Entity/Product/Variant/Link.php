@@ -32,14 +32,14 @@ class Link
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product")
      * @ORM\JoinColumn(name="linked_product_id", referencedColumnName="id")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step12"}, message="Select a product.")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step13"}, message="Select a product.")
      */
     private $linkedProduct;
 
     /**
      * @ORM\Column(name="link_type", type="string", length=255)
-     * @Assert\NotBlank(groups={"flow_site_new_product_step12"}, message="Select a link type.")
-     * @Assert\Choice(choices={"cheaper", "related", "series"}, groups={"flow_site_new_product_step12"})
+     * @Assert\NotBlank(groups={"flow_site_new_product_step13"}, message="Select a link type.")
+     * @Assert\Choice(choices={"cheaper", "related", "series"}, groups={"flow_site_new_product_step13"})
      */
     private $linkType;
 

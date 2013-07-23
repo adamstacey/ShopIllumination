@@ -424,12 +424,6 @@ class NewProductFlow extends FormFlow
             foreach ($formData->getVariants() as $variant)
             {
                 $this->productManager->updateVariantDescription($variant->getDescription());
-
-                // Delete the route if the resulting URL is the same as the products URL
-                if($variant->getRouting()->getUrl() === $formData->getRouting()->getUrl())
-                {
-                    $variant->getRouting()->setUrl('');
-                }
             }
             $this->productManager->updateRoutes($formData);
         }

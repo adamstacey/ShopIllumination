@@ -193,7 +193,7 @@ class Department implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0]->getName();
+            return $this->descriptions->first()->getName();
         } else {
             return "";
         }
@@ -234,7 +234,7 @@ class Department implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0]->getName();
+            return $this->descriptions->first()->getName();
         } else {
             return "";
         }
@@ -637,7 +637,7 @@ class Department implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0];
+            return $this->descriptions->first();
         }
 
         return null;
@@ -846,7 +846,7 @@ class Department implements DescribableInterface
     {
         if (count($this->images) > 0)
         {
-            return $this->images[0];
+            return $this->images->first();
         }
 
         return null;
@@ -894,7 +894,7 @@ class Department implements DescribableInterface
     {
         if (count($this->document) > 0)
         {
-            return $this->documents[0];
+            return $this->documents->first();
         }
 
         return null;
@@ -942,7 +942,7 @@ class Department implements DescribableInterface
     {
         if (count($this->routings) > 0)
         {
-            return $this->routings[0];
+            return $this->routings->first();
         }
 
         return null;

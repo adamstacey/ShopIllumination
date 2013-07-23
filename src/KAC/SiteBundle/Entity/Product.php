@@ -40,7 +40,8 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview"}, message="Select a department.")
+     * @Assert\Count(min = "1", groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview"}, minMessage="Select at least one department.")
      * @Assert\Valid
      * @Serializer\Exclude()
      */
@@ -201,7 +202,7 @@ class Product implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0]->getHeader();
+            return $this->descriptions->first()->getHeader();
         } else {
             return "";
         }
@@ -235,19 +236,19 @@ class Product implements DescribableInterface
         // Calculate common product code
         $pl = 0;
         $n = count($this->getVariants());
-        $l = strlen($this->getVariants()[0]->getProductCode());
+        $l = strlen($this->getVariants()->first()->getProductCode());
         while ($pl < $l) {
-            $c = $this->getVariants()[0]->getProductCode()[$pl];
+            $c = $this->getVariants()->first()->getProductCode()[$pl];
             for ($i=1; $i<$n; $i++) {
                 if ($this->getVariants()[$i]->getProductCode()[$pl] !== $c) break 2;
             }
             $pl++;
         }
-        $productCode = substr($this->getVariants()[0]->getProductCode(), 0, $pl);
+        $productCode = substr($this->getVariants()->first()->getProductCode(), 0, $pl);
 
         if($productCode === '')
         {
-            return $this->getVariants()[0]->getProductCode();
+            return $this->getVariants()->first()->getProductCode();
         } else {
             return $productCode;
         }
@@ -587,7 +588,7 @@ class Product implements DescribableInterface
     {
         if(count($this->departments) > 0)
         {
-            return $this->departments[0];
+            return $this->departments->first();
         }
 
         return null;
@@ -683,7 +684,7 @@ class Product implements DescribableInterface
     {
         if(count($this->variants) > 0)
         {
-            return $this->variants[0];
+            return $this->variants->first();
         }
 
         return null;
@@ -732,7 +733,7 @@ class Product implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0];
+            return $this->descriptions->first();
         }
 
         return null;
@@ -820,7 +821,7 @@ class Product implements DescribableInterface
     {
         if (count($this->routings) > 0)
         {
-            return $this->routings[0];
+            return $this->routings->first();
         }
         if($this->getVariant())
         {
@@ -888,7 +889,7 @@ class Product implements DescribableInterface
     {
         if (count($this->images) > 0)
         {
-            return $this->images[0];
+            return $this->images->first();
         }
 
         return null;
@@ -936,7 +937,7 @@ class Product implements DescribableInterface
     {
         if (count($this->document) > 0)
         {
-            return $this->documents[0];
+            return $this->documents->first();
         }
 
         return null;

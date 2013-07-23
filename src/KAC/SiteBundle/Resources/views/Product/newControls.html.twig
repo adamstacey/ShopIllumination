@@ -7,8 +7,8 @@
 
     {% if flow.getCurrentStepNumber() == 1 %}
         <a href="{{ path('departments_new', {'modal': true}) }}" class="actionLoadPageDialog mrm fl button button-small" title="Add New Department">Add Department</a>
-    {% elseif flow.getCurrentStepNumber() == 2 %}
-        <a href="{{ path('departments_edit_features', {'departmentId': form.vars.value.departments.0.department.id, 'modal': true}) }}" class="actionLoadPageDialog mrm fl button button-small" title="Manage Features">Manage Features</a>
+    {% elseif flow.getCurrentStepNumber() == 3 %}
+        <a href="{{ path('departments_edit_features', {'departmentId': form.vars.value.departments.first.department.id, 'modal': true}) }}" class="actionLoadPageDialog mrm fl button button-small" title="Manage Features">Manage Features</a>
     {% endif %}
 
     <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="reset" formnovalidate="formnovalidate" class="button button-small button-red mrm fl">Reset</button>
