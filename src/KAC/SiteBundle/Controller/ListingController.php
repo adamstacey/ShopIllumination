@@ -68,6 +68,10 @@ class ListingController extends Controller
             $template = $brand->getTemplate();
         } elseif (!$brand && $department && $department->getTemplate()) {
             $template = $department->getTemplate();
+        } elseif ($brand && $department && $brand->getTemplate()) {
+            $template = $brand->getTemplate();
+        } elseif ($brand && $department && $department->getTemplate()) {
+            $template = $department->getTemplate();
         } else {
             $template = 'standard';
         }
