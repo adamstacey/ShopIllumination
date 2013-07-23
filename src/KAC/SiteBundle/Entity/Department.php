@@ -794,6 +794,11 @@ class Department implements DescribableInterface
      */
     public function getTemplate()
     {
+        if($this->parent !== null && $this->template === '')
+        {
+            return $this->parent->getTemplate();
+        }
+
         return $this->template;
     }
 
