@@ -40,8 +40,8 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview"}, message="Select a department.")
-     * @Assert\Count(min = "1", groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview"}, minMessage="Select at least one department.")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, message="Select a department.")
+     * @Assert\Count(min = "1", groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, minMessage="Select at least one department.")
      * @Assert\Valid
      * @Serializer\Exclude()
      */
