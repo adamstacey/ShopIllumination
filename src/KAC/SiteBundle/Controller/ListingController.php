@@ -586,7 +586,7 @@ class ListingController extends Controller
                 ->join('KAC\SiteBundle\Entity\Product', 'p', Expr\Join::WITH, $qb->expr()->eq('p.brand', 'b.id'))
                 ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
                 ->groupBy('op.product')
-                ->orderBy('total', 'ASC');
+                ->orderBy('total', 'DESC');
             if($num)
             {
                 $qb->setMaxResults($num);
@@ -617,8 +617,6 @@ class ListingController extends Controller
             }
 
             // Remove unneeded elements
-
-
             if($num)
             {
                 $brands = array_values(array_slice($brands, 0, $num));
@@ -646,7 +644,7 @@ class ListingController extends Controller
                 ->from('KAC\SiteBundle\Entity\Product', 'p')
                 ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
                 ->groupBy('op.product')
-                ->orderBy('total', 'ASC');
+                ->orderBy('total', 'DESC');
             if($brandId)
             {
                 $qb->where($qb->expr()->eq('p.brand', ':brand'))
@@ -666,11 +664,7 @@ class ListingController extends Controller
             $query->setRows(99999999);
 
             // Get the department
-            $department = null;
-            if ($departmentId)
-            {
-                $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
-            }
+            $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
 
             // If brand was specified fetch from the database
             $brand = null;
@@ -697,34 +691,22 @@ class ListingController extends Controller
             }
             $results = $solarium->execute($query);
 
-            $products = array();
+            $ids = array();
             foreach ($results as $document)
             {
-                $qb = $em->createQueryBuilder();
-                $result = $qb->select('p, count(op.id) AS total')
-                    ->from('KAC\SiteBundle\Entity\Product', 'p')
-                    ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.variant', 'p.id'))
-                    ->where($qb->expr()->eq('p.id', '?1'))
-                    ->groupBy('op.variant')
-                    ->orderBy('total', 'ASC')
-                    ->setParameter(1, $document->id)
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->execute();
-
-                if ($result && count($result) > 0)
-                {
-                    $products[] = $result[0];
-                }
+                $ids[] = $document->id;
             }
 
-            // Sort array
-            usort($products, function($a, $b) {
-                if ($a['total'] == $b['total']) {
-                    return 0;
-                }
-                return ($a['total'] > $b['total']) ? -1 : 1;
-            });
+            $qb = $em->createQueryBuilder();
+            $products = $qb->select('p, count(op.id) AS total')
+                ->from('KAC\SiteBundle\Entity\Product', 'p')
+                ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
+                ->where($qb->expr()->in('p.id', '?1'))
+                ->groupBy('op.product')
+                ->orderBy('total', 'DESC')
+                ->setParameter(1, $ids)
+                ->getQuery()
+                ->execute();
 
             if($num)
             {
