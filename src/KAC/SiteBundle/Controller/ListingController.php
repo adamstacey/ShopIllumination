@@ -555,8 +555,6 @@ class ListingController extends Controller
 
         $products = $this->getPopularProducts($departmentId, $brandId, 5);
 
-        // Remove unneeded elements
-
         $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
             'products' => $products,
             'department' => $department,
