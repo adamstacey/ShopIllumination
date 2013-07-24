@@ -1093,6 +1093,8 @@ class BasketService {
 				uasort($basket['products'], array($this, "sortBasketProductsByPrice"));
 				foreach ($basket['products'] as $product)
 				{
+                    $skipProduct = false;
+
                     /**
                      * @var Product $productEntity
                      * @var Product\Variant $variantEntity
@@ -1100,7 +1102,16 @@ class BasketService {
                     $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
                     $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
 
-					if ($stellarPanSetDiscountsAvailable > 0)
+                    // Ensure that the product is not in the discount department
+                    foreach($productEntity->getDepartments() as $department)
+                    {
+                        if($department->getId() === 158 || $department->getId() === 918)
+                        {
+                            $skipProduct = true;
+                        }
+                    }
+
+					if (!$skipProduct && $stellarPanSetDiscountsAvailable > 0)
 					{
 						if (($product['productCode'] == 'S7C1D') || ($product['productCode'] == 'S7A1D'))
 						{
@@ -1161,6 +1172,8 @@ class BasketService {
 			$totalCdaDiscount = 0;	
 			foreach ($basket['products'] as $product)
 			{
+                $skipProduct = false;
+
                 /**
                  * @var Product $productEntity
                  * @var Product\Variant $variantEntity
@@ -1170,7 +1183,16 @@ class BasketService {
 
 	 			if ($productEntity && $variantEntity)
 	 			{
-					if ($productEntity->getBrand()->getId() == '7')
+                    // Ensure that the product is not in the discount department
+                    foreach($productEntity->getDepartments() as $department)
+                    {
+                        if($department->getId() === 158 || $department->getId() === 918)
+                        {
+                            $skipProduct = true;
+                        }
+                    }
+
+					if (!$skipProduct && $productEntity->getBrand()->getId() == '7')
 					{
                         $prices = $variantEntity->getPrices();
                         if(count($prices) > 0) {
