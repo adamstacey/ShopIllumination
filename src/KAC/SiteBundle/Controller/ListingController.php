@@ -584,7 +584,8 @@ class ListingController extends Controller
                 ->join('KAC\SiteBundle\Entity\Product', 'p', Expr\Join::WITH, $qb->expr()->eq('p.brand', 'b.id'))
                 ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
                 ->groupBy('op.product')
-                ->orderBy('total', 'DESC');
+                ->orderBy('p.accessory', 'ASC')
+                ->addOrderBy('total', 'DESC');
             if($num)
             {
                 $qb->setMaxResults($num);
@@ -642,7 +643,8 @@ class ListingController extends Controller
                 ->from('KAC\SiteBundle\Entity\Product', 'p')
                 ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
                 ->groupBy('op.product')
-                ->orderBy('total', 'DESC');
+                ->orderBy('p.accessory', 'ASC')
+                ->addOrderBy('total', 'DESC');
             if($brandId)
             {
                 $qb->where($qb->expr()->eq('p.brand', ':brand'))
@@ -701,7 +703,8 @@ class ListingController extends Controller
                 ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
                 ->where($qb->expr()->in('p.id', '?1'))
                 ->groupBy('op.product')
-                ->orderBy('total', 'DESC')
+                ->orderBy('p.accessory', 'ASC')
+                ->addOrderBy('total', 'DESC')
                 ->setParameter(1, $ids)
                 ->getQuery()
                 ->execute();
