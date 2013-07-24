@@ -69,6 +69,11 @@
                                                         <img class="logo man" src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_medium')) }}" alt="{{ product.brand.description.name }}" />
                                                     </div>
                                                     <div class="widget widget-3-of-4">
+                                                        {% if is_granted('ROLE_ADMIN') %}
+                                                            <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red mls mts mbs">Delete</a>
+                                                            <a href="{{ path('products_clone', {'productId': product.id}) }}" class="fr button button-blue mls mts mbs">Clone</a>
+                                                            <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue mts mbs">Edit</a>
+                                                        {% endif %}
                                                         {% if product.variants|length > 1 %}
                                                             <a href="#buyNow" class="button uppercase button-green icon-white fr" data-icon-secondary="icon-465">Buy Now</a>
                                                             <div class="fr prl">
