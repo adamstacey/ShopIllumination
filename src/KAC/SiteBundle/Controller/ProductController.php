@@ -8,6 +8,7 @@ use KAC\SiteBundle\Form\Product\EditProductDocumentsType;
 use KAC\SiteBundle\Form\Product\EditProductImagesType;
 use KAC\SiteBundle\Form\Product\EditProductDescriptionType;
 use KAC\SiteBundle\Form\Product\EditProductSeoType;
+use KAC\SiteBundle\Model\ImportPriceData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -387,6 +388,141 @@ class ProductController extends Controller {
 
         return $this->render('KACSiteBundle:Product:newFeatures.html.twig', array(
             'form' => $form->createView(),
+        ));
+    }
+
+
+    /**
+     * @Route("/admin/products/importPrices", name="products_import_prices")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function importPricesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $data = new ImportPriceData();
+        $priceIssuesFound = array();
+        $noUpdatesRequired = array();
+        $pricesNeedConfirmation = array();
+        $pricesUpdated = array();
+        $totalImports = 0;
+        $processed = false;
+        $requiresConfirmation = false;
+
+        $form = $this->createFormBuilder($data)
+            ->add('file', 'file', array(
+                'label' => 'Upload File',
+                'attr' => array(
+                    'class' => 'fill',
+                    'data-help' => 'Upload a CSV or TXT file',
+                )
+            ))
+            ->add('action', 'choice', array(
+                'label' => 'Action',
+                'choices' => array(
+                    'check' => 'Check Prices',
+                    'update' => 'Update Prices'
+                ),
+                'required' => true,
+                'attr' => array(
+                    'class' => 'fill',
+                    'data-help' => 'Select the action of the import.',
+                ),
+            ))
+            ->add('rrp', 'checkbox', array(
+                'required' => false,
+                'label' => 'Reset RRP',
+                'attr' => array(
+                    'data-help' => 'Do you want to reset the RRP?',
+                ),
+            ))
+            ->add('confirm', 'submit', array(
+                'label' => 'Confirm',
+                'attr' => array(
+                    'class' => 'button button-green icon-white fr',
+                    'data-icon-secondary' => 'icon-1118',
+                )
+            ))
+            ->add('save', 'submit', array(
+                'label' => 'Import',
+                'attr' => array(
+                    'class' => 'button button-green icon-white fr',
+                    'data-icon-secondary' => 'icon-1118',
+                )
+            ))
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                // Read file
+                $file = $data->getFile()->openFile();
+                $file->setFlags(\SplFileObject::READ_CSV);
+                foreach ($file as $line) {
+                    if (sizeof($line) >= 2)
+                    {
+                        $importContent = array();
+                        $importContent['productCode'] = $line[0];
+                        $importContent['newPrice'] = number_format(floatval($line[1]), 4, '.', '');
+                        if ($importContent['productCode'] && ($importContent['newPrice'] > 0))
+                        {
+                            $totalImports++;
+
+                            /**
+                             * @var $variant Variant
+                             */
+                            $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->findOneBy(array('productCode' => $importContent['productCode']));
+                            if ($variant)
+                            {
+                                $importContent['productId'] = $variant->getId();
+                                $importContent['pageTitle'] = $variant->getDescription()->getPageTitle();
+                                $importContent['existingPrice'] = $variant->getPrice()->getListPrice();
+
+                                if ($importContent['existingPrice'] == $importContent['newPrice'])
+                                {
+                                    $noUpdatesRequired[] = $importContent;
+                                } elseif ($importContent['existingPrice'] > $importContent['newPrice'] && !$form->get('confirm')->isClicked()) {
+                                    $pricesNeedConfirmation[] = $importContent;
+                                    if($data->getAction() == 'update')
+                                    {
+                                        $requiresConfirmation = true;
+                                    }
+                                } else {
+                                    $pricesUpdated[] = $importContent;
+
+                                    // Check if prices need to be updated
+                                    if ($data->getAction() == 'update')
+                                    {
+                                        $variant->getPrice()->setListPrice($importContent['newPrice']);
+                                        if ($data->getRrp())
+                                        {
+                                            $variant->getPrice()->setRecommendedRetailPrice($importContent['newPrice']);
+                                        }
+
+                                        $em->persist($variant);
+                                        $em->flush();
+                                    }
+                                    }
+                            } else {
+                                $priceIssuesFound[] = $importContent;
+                            }
+                        }
+                    }
+                }
+
+                $processed = true;
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:importPrices.html.twig', array(
+            'form' => $form->createView(),
+            'processed' => $processed,
+            'requiresConfirmation' => $requiresConfirmation,
+            'totalImports' => $totalImports,
+            'priceIssuesFound' => $priceIssuesFound,
+            'noUpdatesRequired' => $noUpdatesRequired,
+            'pricesNeedConfirmation' => $pricesNeedConfirmation,
+            'pricesUpdated' => $pricesUpdated,
         ));
     }
 

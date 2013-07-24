@@ -23,9 +23,20 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof ProductToDepartment)
+        if($entity instanceof ProductToDepartment
+            || $entity instanceof Product\Description
+            || $entity instanceof Product\Routing
+            || $entity instanceof Product\Link
+            || $entity instanceof Variant)
         {
             $entity = $entity->getProduct();
+        } elseif($entity instanceof Product\VariantToFeature
+            || $entity instanceof Variant\Description
+            || $entity instanceof Variant\Routing
+            || $entity instanceof Product\Price
+            || $entity instanceof Variant\Link)
+        {
+            $entity = $entity->getVariant()->getProduct();
         }
 
         if($entity instanceof Product)
@@ -52,9 +63,20 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof ProductToDepartment)
+        if($entity instanceof ProductToDepartment
+            || $entity instanceof Product\Description
+            || $entity instanceof Product\Routing
+            || $entity instanceof Product\Link
+            || $entity instanceof Variant)
         {
             $entity = $entity->getProduct();
+        } elseif($entity instanceof Product\VariantToFeature
+            || $entity instanceof Variant\Description
+            || $entity instanceof Variant\Routing
+            || $entity instanceof Product\Price
+            || $entity instanceof Variant\Link)
+        {
+            $entity = $entity->getVariant()->getProduct();
         }
 
         if($entity instanceof Product)
@@ -82,15 +104,24 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof ProductToDepartment)
+        if($entity instanceof ProductToDepartment
+            || $entity instanceof Product\Description
+            || $entity instanceof Product\Routing
+            || $entity instanceof Product\Link
+            || $entity instanceof Variant)
         {
             $entity = $entity->getProduct();
+        } elseif($entity instanceof Product\VariantToFeature
+            || $entity instanceof Variant\Description
+            || $entity instanceof Variant\Routing
+            || $entity instanceof Product\Price
+            || $entity instanceof Variant\Link)
+        {
+            $entity = $entity->getVariant()->getProduct();
         }
 
         if($entity instanceof Product)
         {
-//            $this->manager->addRoute($entity);
-
             $this->indexer->index($entity);
         }
     }
@@ -99,9 +130,20 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof ProductToDepartment)
+        if($entity instanceof ProductToDepartment
+            || $entity instanceof Product\Description
+            || $entity instanceof Product\Routing
+            || $entity instanceof Product\Link
+            || $entity instanceof Variant)
         {
             $entity = $entity->getProduct();
+        } elseif($entity instanceof Product\VariantToFeature
+            || $entity instanceof Variant\Description
+            || $entity instanceof Variant\Routing
+            || $entity instanceof Product\Price
+            || $entity instanceof Variant\Link)
+        {
+            $entity = $entity->getVariant()->getProduct();
         }
 
         if($entity instanceof Product)

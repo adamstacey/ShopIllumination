@@ -209,6 +209,10 @@
     {% endspaceless %}
 {% endblock collection_row %}
 
+{% block button_errors %}
+    {{ block('form_errors') }}
+{% endblock %}
+
 {# CONFIRMED BLOCKS IN USE IN ORDER THEY ARE USED #}
 {# This block needs to be in this file so that it has access to the widget attributes block #}
 {% block _site_new_product_departments_entry_department_widget %}

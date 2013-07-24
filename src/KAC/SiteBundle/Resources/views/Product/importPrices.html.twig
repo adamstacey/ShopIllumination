@@ -1,0 +1,154 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Import Prices | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <section>
+                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route')) }}" {{ form_enctype(form) }}>
+                    {% if processed %}
+                        <div class="widget-group clearfix">
+                            <div class="widget widget-1-of-1">
+                                <div class="ui-widget">
+                                    <header class="ui-widget-header ui-corner-top">
+                                        <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                        <h2>Results</h2>
+                                    </header>
+                                    <section class="ui-widget-content ui-corner-all">
+                                        <ul class="ui-helper-reset">
+                                            <li class="dash-order">
+                                                <a class="button button-red button-small" href="#priceIssuesFound">
+                                                    <strong>{{ priceIssuesFound|length }}/{{ totalImports }}</strong>
+                                                    <span>Price Issues Found</span>
+                                                </a>
+                                            </li>
+                                            <li class="dash-order">
+                                                <a class="button button-orange button-small" href="#noUpdatesRequired">
+                                                    <strong>{{ pricesNeedConfirmation|length }}/{{ totalImports }}</strong>
+                                                    <span>Confirmation Required</span>
+                                                </a>
+                                            </li>
+                                            <li class="dash-order">
+                                                <a class="button button-orange button-small" href="#noUpdatesRequired">
+                                                    <strong>{{ noUpdatesRequired|length }}/{{ totalImports }}</strong>
+                                                    <span>No Updates Required</span>
+                                                </a>
+                                            </li>
+                                            <li class="dash-order">
+                                                <a class="button button-green button-small" href="#pricesUpdated">
+                                                    <strong>{{ pricesUpdated|length }}/{{ totalImports }}</strong>
+                                                    <span>Prices Updated</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="clear"></div>
+                                        <a name="priceIssuesFound"></a>
+                                        <h2 class="separator red">Price Issues Found</h2>
+                                        {% if priceIssuesFound|length > 0 %}
+                                            <ul>
+                                                {% for priceIssueFound in priceIssuesFound %}
+                                                    <li class="red"><strong>Product Not Found:</strong> {{ priceIssueFound.productCode }} (&pound;{{ priceIssueFound.newPrice|number_format(2) }})</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <ul>
+                                                <li>No price issues were found.</li>
+                                            </ul>
+                                        {% endif %}
+                                        <div class="spacer"></div>
+                                        <a name="noUpdatesRequired"></a>
+                                        <h2 class="separator orange">No Updates Required</h2>
+                                        {% if noUpdatesRequired|length > 0 %}
+                                            <ul>
+                                                {% for noUpdateRequired in noUpdatesRequired %}
+                                                    <li class="orange"><strong>{{ noUpdateRequired.pageTitle }}</strong><br />No update required as prices have not changed (Existing Price: &pound;{{ noUpdateRequired.existingPrice|number_format(2) }}, New Price: &pound;{{ noUpdateRequired.newPrice|number_format(2) }})</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <ul>
+                                                <li>There were no prices found that did not require updating or action.</li>
+                                            </ul>
+                                        {% endif %}
+                                        <div class="spacer"></div>
+                                        <a name="noUpdatesRequired"></a>
+                                        <h2 class="separator orange">Requires confirmation</h2>
+                                        {% if pricesNeedConfirmation|length > 0 %}
+                                            <ul>
+                                                {% for priceNeedConfirmation in pricesNeedConfirmation %}
+                                                    <li class="orange"><strong>{{ priceNeedConfirmation.pageTitle }}</strong><br />The price is lower than the existing price(Existing Price: &pound;{{ priceNeedConfirmation.existingPrice|number_format(2) }}, New Price: &pound;{{ priceNeedConfirmation.newPrice|number_format(2) }})</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <ul>
+                                                <li>There were no prices found that did required confirmation.</li>
+                                            </ul>
+                                        {% endif %}
+                                        <div class="spacer"></div>
+                                        <a name="pricesUpdated"></a>
+                                        <h2 class="separator">Prices Updated</h2>
+                                        {% if pricesUpdated|length > 0 %}
+                                            <ul>
+                                                {% for priceUpdated in pricesUpdated %}
+                                                    <li><strong>{{ priceUpdated.pageTitle }}</strong><br />Prices have been updated from &pound;{{ priceUpdated.existingPrice|number_format(2) }} to &pound;{{ priceUpdated.newPrice|number_format(2) }}.</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <ul>
+                                                <li>There were no prices that required updating.</li>
+                                            </ul>
+                                        {% endif %}
+                                        <div class="spacer"></div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
+                                    <h2>Import Prices</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-all">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    {% if requiresConfirmation %}
+                                        <div class="message message-notice">
+                                            <span class="ui-button-icon-primary ui-icon icon-white icon-702"></span>
+                                            <p>Please confirm that you want to make these changes.</p>
+                                        </div>
+                                    {% endif %}
+                                    <fieldset>
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label>Options</label>
+                                            </div>
+                                            <div class="widget checker-group widget-2-of-3">
+                                                {{ form_row(form.rrp) }}
+                                            </div>
+                                        </div>
+                                        {{ form_row(form.action) }}
+                                        {{ form_row(form.file) }}
+                                    </fieldset>
+
+                                    <div class="clearfix">
+                                        {% if requiresConfirmation %}
+                                            {{ form_widget(form.confirm) }}
+                                        {% else %}
+                                            {{ form_widget(form.save) }}
+                                        {% endif %}
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% do form.save.setRendered %}
+                    {% do form.confirm.setRendered %}
+                    {{ form_rest(form) }}
+                </form>
+            </section>
+        </div>
+    </div>
+{% endblock %}
