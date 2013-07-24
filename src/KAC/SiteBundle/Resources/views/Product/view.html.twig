@@ -33,7 +33,7 @@
                         <ul class="breadcrumbs" itemprop="breadcrumb">
                             {% for department in departments %}
                                 {% if department.level != 0  %}
-                                    <li><a href="{{ path('listing_department', {'departmentId': department.id}) }}">{{ department.description.header }}</a></li>
+                                    <li><a href="{{ path('routing', {'url': department.url}) }}">{{ department.description.header }}</a></li>
                                 {% endif %}
                             {% endfor %}
                         </ul>
