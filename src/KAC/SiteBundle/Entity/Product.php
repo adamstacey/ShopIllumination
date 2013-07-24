@@ -198,6 +198,53 @@ class Product implements DescribableInterface
         $this->routings = new ArrayCollection();
     }
 
+    public function __clone() {
+        if ($this->id) {
+            $oldVariants = $this->variants;
+            $oldDepartments = $this->departments;
+            $oldDescriptions = $this->descriptions;
+            $oldLinks = $this->links;
+            $oldImages = $this->images;
+            $oldDocuments = $this->documents;
+
+            // Clear old collections
+            $this->variants = new ArrayCollection();
+            $this->descriptions = new ArrayCollection();
+            $this->departments = new ArrayCollection();
+            $this->links = new ArrayCollection();
+            $this->images = new ArrayCollection();
+            $this->documents = new ArrayCollection();
+            $this->routings = new ArrayCollection();
+
+
+            $this->id = null;
+            foreach($oldVariants as $entity)
+            {
+                $this->addVariant(clone $entity);
+            }
+            foreach($oldDepartments as $entity)
+            {
+                $this->addDepartment(clone $entity);
+            }
+            foreach($oldDescriptions as $entity)
+            {
+                $this->addDescription(clone $entity);
+            }
+            foreach($oldLinks as $entity)
+            {
+                $this->addLink(clone $entity);
+            }
+            foreach($oldImages as $entity)
+            {
+                $this->addImage(clone $entity);
+            }
+            foreach($oldDocuments as $entity)
+            {
+                $this->addDocument(clone $entity);
+            }
+        }
+    }
+
     public function __toString()
     {
         if(count($this->descriptions) > 0)
@@ -904,6 +951,7 @@ class Product implements DescribableInterface
     public function addImage(\KAC\SiteBundle\Entity\Product\Image $images)
     {
         $this->images[] = $images;
+        $images->setProduct($this);
 
         return $this;
     }
@@ -952,6 +1000,7 @@ class Product implements DescribableInterface
     public function addDocument(\KAC\SiteBundle\Entity\Product\Document $documents)
     {
         $this->documents[] = $documents;
+        $documents->setProduct($this);
 
         return $this;
     }

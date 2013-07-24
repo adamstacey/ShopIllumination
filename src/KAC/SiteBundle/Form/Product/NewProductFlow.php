@@ -412,7 +412,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 8)
+        if ($step == 8 || $step == 9)
         {
             // Update the product description
             foreach ($formData->getDescriptions() as $description)
@@ -425,7 +425,6 @@ class NewProductFlow extends FormFlow
             {
                 $this->productManager->updateVariantDescription($variant->getDescription());
             }
-            $this->productManager->updateRoutes($formData);
         }
 
         return $options;

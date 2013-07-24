@@ -220,8 +220,6 @@ class ProductController extends Controller {
                 $manager->updateImages($product);
                 // Update the documents
                 $manager->updateDocuments($product);
-                // Update the routes
-                $manager->updateRoutes($product, true);
 
                 $em->persist($product);
                 $em->flush();
@@ -235,6 +233,69 @@ class ProductController extends Controller {
         return $this->render('KACSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/clone", name="products_clone")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function cloneAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getManager();
+
+        $originalProduct = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
+        if(!$originalProduct)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        /**
+         * @var $product Product
+         */
+        $product = clone $originalProduct;
+        foreach($product->getVariants() as $variant)
+        {
+            if(!$variant->getDescription())
+            {
+                $variant->addDescription(new Variant\Description());
+            }
+        }
+
+        $flow = $this->get('kac_site.form.flow.new_product');
+        $flow->bind($product);
+
+        // Get current form step
+        $form = $flow->createForm();
+
+        if ($flow->isValid($form))
+        {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep())
+            {
+                // Get next form step
+                $form = $flow->createForm();
+            } else {
+                // Update the images
+                $manager->updateImages($product);
+                // Update the documents
+                $manager->updateDocuments($product);
+
+                $em->persist($product);
+                $em->flush();
+
+                $flow->reset();
+
+                return $this->redirect($this->generateUrl('listing_products'));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:clone.html.twig', array(
+            'form' => $form->createView(),
+            'flow' => $flow,
+            'originalProduct' => $originalProduct,
         ));
     }
 

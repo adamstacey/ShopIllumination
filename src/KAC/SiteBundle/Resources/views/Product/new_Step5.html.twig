@@ -4,7 +4,7 @@
 {% elseif form.vars.value.department.department.inheritedDeliveryBand > 0 %}
     {% set departmentDeliveryBand = form.vars.value.department.department.inheritedDeliveryBand %}
 {% endif %}
-<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">

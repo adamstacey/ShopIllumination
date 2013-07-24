@@ -226,6 +226,53 @@ class Variant implements DescribableInterface
         $this->routings = new ArrayCollection();
     }
 
+    public function __clone() {
+        if ($this->id) {
+            $oldDescriptions = $this->descriptions;
+            $oldFeatures = $this->features;
+            $oldOptions = $this->options;
+            $oldPrices = $this->prices;
+            $oldImages = $this->images;
+            $oldDocuments = $this->documents;
+
+            // Clear old collections
+            $this->descriptions = new ArrayCollection();
+            $this->features = new ArrayCollection();
+            $this->options = new ArrayCollection();
+            $this->prices = new ArrayCollection();
+            $this->images = new ArrayCollection();
+            $this->documents = new ArrayCollection();
+            $this->routings = new ArrayCollection();
+
+
+            $this->id = null;
+            foreach($oldDescriptions as $entity)
+            {
+                $this->addDescription(clone $entity);
+            }
+            foreach($oldFeatures as $entity)
+            {
+                $this->addFeature(clone $entity);
+            }
+            foreach($oldOptions as $entity)
+            {
+                $this->addOption(clone $entity);
+            }
+            foreach($oldPrices as $entity)
+            {
+                $this->addPrice(clone $entity);
+            }
+            foreach($oldImages as $entity)
+            {
+                $this->addImage(clone $entity);
+            }
+            foreach($oldDocuments as $entity)
+            {
+                $this->addDocument(clone $entity);
+            }
+        }
+    }
+
     public function isDeleted()
     {
         return $this->getDeletedAt() !== null;
