@@ -27,8 +27,14 @@
                 {% for parent in department.parents %}
                     {% if parent.parent != null and parent.level != 0  %}
                         {% if brand %}
+                            <li>
                             {% set url = get_listing_url('brand_with_department', brand.id, parent.id) %}
-                            <li><a href="{{ path('routing', {'url': url}|merge(app.request.query.all)) }}">{{ brand ? brand.description.header ~ " " : "" }}{{ parent.description.header }}</a></li>
+                            {% if not url%}
+                                <a href="{{ path('listing_department_brand', {'departmentId': department.id, 'brandId': brandId}|merge(app.request.query.all)) }}">{{ department.description.header }}</a>
+                            {% else %}
+                                <a href="{{ path('routing', {'url': url}|merge(app.request.query.all)) }}">{{ department.description.header }}</a>
+                            {% endif %}
+                            </li>
                         {% else %}
                             <li><a href="{{ path('routing', {'url': parent.url}) }}">{{ parent.description.header }}</a></li>
                         {% endif %}
