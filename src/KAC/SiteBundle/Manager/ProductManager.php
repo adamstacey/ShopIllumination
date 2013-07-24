@@ -194,10 +194,6 @@ class ProductManager extends Manager
         $this->documentManager->removeTemporaryDocuments($variant);
     }
 
-    public function updateRoutes(Product $product, $removeEmpty=false)
-    {
-    }
-
     private function checkDuplicateUrl(Routing $route, &$urls=array(), $n=1)
     {
         /**

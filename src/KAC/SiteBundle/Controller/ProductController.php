@@ -52,6 +52,13 @@ class ProductController extends Controller {
         {
             throw new NotFoundHttpException("Product not found");
         }
+        // Check if product is enabled
+        if($product->getStatus() !== 'a')
+        {
+            return $this->redirect($this->generateUrl('routing', array(
+                'url' => $product->getDepartment()->getDepartment()->getUrl()
+            )));
+        }
 
         $cheapestVariant = null;
         $lowestPrice = null;
