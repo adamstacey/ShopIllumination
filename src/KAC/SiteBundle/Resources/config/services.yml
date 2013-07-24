@@ -10,6 +10,12 @@ services:
     tags:
       - { name: twig.extension }
 
+  # Imagine Filters
+  kac_site.filter.loader.square_thumbnail:
+    class: KAC\SiteBundle\Imagine\Filter\Loader\SquareThumbnailFilterLoader
+    tags:
+      - { name: imagine.filter.loader, filter: square_thumbnail}
+
   # Third Party services
   kac_site.google.google:
     class: KAC\SiteBundle\ThirdParty\Google\Google

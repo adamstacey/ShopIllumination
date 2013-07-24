@@ -52,12 +52,14 @@
                                     <div class="widget widget-1-of-1 border-bottom-separator pbl mbl">
                                         <div class="widget-group clearfix">
                                             <div class="widget widget-2-of-7">
-                                                {% if thumbnail_image %}
-                                                    <ul class="etalage etalage-inset">
-                                                        <li>
-                                                            <img class="etalage_thumb_image" src="{{ asset(thumbnail_image.publicPath | apply_filter('product_medium')) }}" alt="{{ product.description.header }}"  width="238"/>
-                                                            <img class="etalage_source_image" src="{{ asset(thumbnail_image.publicPath) }}" alt="{{ product.description.header }}" width="238" />
-                                                        </li>
+                                                {% if product_images | length > 0 %}
+                                                    <ul class="etalage">
+                                                        {% for image in product_images %}
+                                                            <li>
+                                                                <img class="etalage_thumb_image" src="{{ asset(image.publicPath | apply_filter('product_medium')) }}" data-src="{{ asset(image.publicPath | apply_filter('product_large')) }}" alt="{{ product.description.header }}"  width="238"/>
+                                                                <img class="etalage_source_image" src="{{ asset(image.publicPath | apply_filter('product_large')) }}" alt="{{ product.description.header }}" width="238" />
+                                                            </li>
+                                                        {% endfor %}
                                                     </ul>
                                                 {% endif %}
                                             </div>
