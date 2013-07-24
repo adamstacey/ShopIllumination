@@ -35,12 +35,6 @@ class ListingController extends Controller
      */
 	public function indexAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
     {
-        // Ensure user has the correct permissions
-        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
-        {
-            throw new AccessDeniedException();
-        }
-
         /**
          * Define variable types
          * @var $department \KAC\SiteBundle\Entity\Department
@@ -155,7 +149,7 @@ class ListingController extends Controller
         }
 
         // Ensure that only the correct products are shown
-        if(!$this->get('session')->get('admin'))
+        if($this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $query->createFilterQuery('status')->setQuery('status:a');
         }
@@ -230,7 +224,6 @@ class ListingController extends Controller
         }
 
         return $this->render('KACSiteBundle:Listing:Templates/'.$template.'.html.twig', array(
-            'admin' => $this->get('session')->get('admin'),
             'brand' => $brand,
             'department' => $department,
             'facets' => $facets,
@@ -246,12 +239,6 @@ class ListingController extends Controller
      */
 	public function searchAction(Request $request, $departmentId = null, $brandId = null, $all = false)
     {
-        // Ensure user has the correct permissions
-        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
-        {
-            throw new AccessDeniedException();
-        }
-
         /**
          * Define variable types
          * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
@@ -292,7 +279,7 @@ class ListingController extends Controller
         }
 
         // Ensure that only the correct products are shown
-        if(!$this->get('session')->get('admin'))
+        if(!$this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $query->createFilterQuery('status')->setQuery('status:a');
         }
@@ -374,7 +361,6 @@ class ListingController extends Controller
         }
 
         return $this->render('KACSiteBundle:Listing:search.html.twig', array(
-            'admin' => $this->get('session')->get('admin'),
             'facets' => $facets,
             'featureGroups' => $featureGroups,
             'pagination' => $pagination,
@@ -388,12 +374,6 @@ class ListingController extends Controller
      */
 	public function searchAutocompleteAction(Request $request, $departmentId = null, $brandId = null, $all = false)
     {
-        // Ensure user has the correct permissions
-        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
-        {
-            throw new AccessDeniedException();
-        }
-
         /**
          * Define variable types
          * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
@@ -419,7 +399,7 @@ class ListingController extends Controller
             $query->setQuery($escapedQuery . '*');
 
             // Ensure that only the correct products are shown
-            if(!$this->get('session')->get('admin'))
+            if($this->get('security.context')->isGranted('ROLE_ADMIN'))
             {
                 $query->createFilterQuery('status')->setQuery('status:a');
             }
@@ -535,7 +515,6 @@ class ListingController extends Controller
         $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
             'departments' => $departments,
             'brandId' => $brandId,
-            'admin' => $this->get('session')->get('admin'),
         ));
         $response->setSharedMaxAge(3600);
 

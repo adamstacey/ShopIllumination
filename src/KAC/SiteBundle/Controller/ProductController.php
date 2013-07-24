@@ -53,7 +53,7 @@ class ProductController extends Controller {
             throw new NotFoundHttpException("Product not found");
         }
         // Check if product is enabled
-        if($product->getStatus() !== 'a')
+        if($product->getStatus() !== 'a' && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             return $this->redirect($this->generateUrl('routing', array(
                 'url' => $product->getDepartment()->getDepartment()->getUrl()

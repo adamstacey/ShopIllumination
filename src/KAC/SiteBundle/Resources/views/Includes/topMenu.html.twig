@@ -1,9 +1,6 @@
 <div class="top-menu-links">
 	<a title="Start shopping for kitchen appliances" href="{{ path('homepage') }}">Shopping</a>&nbsp;|&nbsp;
 	<a target="_blank" title="Check out the latest kitchen appliance news and articles at our blog" href="http://www.kitchenappliancecentre.co.uk/blog/">Read our Blog</a>&nbsp;|&nbsp;
-    {% if is_granted('ROLE_ADMIN') %}
-        <a title="Click here if you would like to toggle admin mode." class="account" href="{{ path('admin_toggle', {'url': app.request.getRequestURI}) }}"><strong>Toggle Admin</strong></a>&nbsp;|&nbsp;
-    {% endif %}
     {% if is_granted("ROLE_USER") %}
 		<a title="Click here if you would like to securely logout." class="account" href="{{ path('fos_user_security_logout') }}"><strong>Securely Logout</strong></a>&nbsp;|&nbsp;
 		<a title="Click here to update your account." class="account" href="{{ path('fos_user_profile_show') }}"><strong>Your Account</strong></a>

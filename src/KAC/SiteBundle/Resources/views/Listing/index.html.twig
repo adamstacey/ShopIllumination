@@ -43,11 +43,6 @@
                 <li><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
             </ul>
         </div>
-        <div class="widget widget-1-of-8">
-            {% if is_granted('ROLE_ADMIN') and admin == false %}
-                {#<a href="{{ path('admin_'~app.request.get('_route'), (app.request.query.all?app.request.get('_route_params')|merge(app.request.query.all):app.request.get('_route_params'))) }}" class="fr button button-blue button-small">Admin Mode</a>#}
-            {% endif %}
-        </div>
     </div>
 
     {% if department is not null and brand is null and department.description.description %}
@@ -230,22 +225,21 @@
                                                             {% endspaceless %}
                                                         </div>
                                                     </div>
-                                                    {% if app.session.get('admin') == true %}
+                                                    {% if product.variants_count == 1 %}
+                                                    <div class="add-to-basket fr" data-product-id="{{ product.id }}" data-variant-id="{{ product.variant_ids[0] }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
+                                                        <input class="quantity integer" type="number" value="1" />
+                                                        <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+                                                        <button type="button" class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+                                                            <button type="button" class="actionAddToBasket buy button button-green uppercase icon-white" data-icon-secondary="icon-472">Buy</button>
+                                                    </div>
+                                                    {% else %}
+                                                        <a href="{{ path('routing', {'url': product.url}) }}" class="fr button button-green">More Info</a>
+                                                    {% endif %}
+                                                    {% if is_granted('ROLE_ADMIN') %}
                                                         <div class="mas">
                                                             <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red mls">Delete</a>
                                                             <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue">Edit</a>
                                                         </div>
-                                                    {% else %}
-                                                        {% if product.variants_count == 1 %}
-                                                        <div class="add-to-basket fr" data-product-id="{{ product.id }}" data-variant-id="{{ product.variant_ids[0] }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
-                                                            <input class="quantity integer" type="number" value="1" />
-                                                            <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
-                                                            <button type="button" class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
-                                                                <button type="button" class="actionAddToBasket buy button button-green uppercase icon-white" data-icon-secondary="icon-472">Buy</button>
-                                                        </div>
-                                                        {% else %}
-                                                            <a href="{{ path('routing', {'url': product.url}) }}" class="fr button button-green">More Info</a>
-                                                        {% endif %}
                                                     {% endif %}
                                                 </div>
                                             </div>
