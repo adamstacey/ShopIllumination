@@ -710,6 +710,11 @@ class ListingController extends Controller
                 $ids[] = $document->id;
             }
 
+            if(count($ids) <= 0)
+            {
+                return array();
+            }
+
             $qb = $em->createQueryBuilder();
             $products = $qb->select('p, count(op.id) AS total')
                 ->from('KAC\SiteBundle\Entity\Product', 'p')
