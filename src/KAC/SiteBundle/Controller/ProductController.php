@@ -216,6 +216,9 @@ class ProductController extends Controller {
                 // Get next form step
                 $form = $flow->createForm();
             } else {
+                $em->persist($product);
+                $em->flush();
+
                 // Update the images
                 $manager->updateImages($product);
                 // Update the documents
