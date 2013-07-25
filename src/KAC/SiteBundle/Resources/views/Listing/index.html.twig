@@ -65,6 +65,9 @@
             <div class="ui-widget">
                 <section class="product-listing-header ui-widget-content ui-corner-all clearfix pbn">
                     <div class="fr">
+                        {% if is_granted('ROLE_ADMIN') and department is not null %}
+                            <a href="{{ path('departments_edit', {'departmentId': department.id}) }}" class="button button-blue uppercase icon-white mtm mls fr" data-icon-secondary="icon-472">Edit</a>
+                        {% endif %}
                         <a href="#viewNow" class="button button-green uppercase icon-white mtm mll fr" data-icon-secondary="icon-472">View Now</a>
                     </div>
                     <div class="fr product">
