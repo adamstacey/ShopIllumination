@@ -149,7 +149,7 @@ class ListingController extends Controller
         }
 
         // Ensure that only the correct products are shown
-        if($this->get('security.context')->isGranted('ROLE_ADMIN'))
+        if(!$this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $query->createFilterQuery('status')->setQuery('status:a');
         }
