@@ -684,7 +684,7 @@ class Variant implements DescribableInterface
     /**
      * Get features
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return VariantToFeature[]
      */
     public function getFeatures()
     {

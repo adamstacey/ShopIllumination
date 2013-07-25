@@ -619,7 +619,7 @@ class Product implements DescribableInterface
     /**
      * Get departments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ProductToDepartment[]
      */
     public function getDepartments()
     {
