@@ -164,7 +164,7 @@
                                                 <div class="widget widget-3-of-4 pll prl border-right-separator">
                                                     <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
                                                     <div class="product-image-container fl">
-                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
+                                                        <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                                                             {% if product.thumbnail_path %}
                                                                 <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                                             {% else  %}
@@ -204,7 +204,7 @@
                                                             <img class="brand-logo-image" src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" border="0" alt="{{ product.brand|raw }}" height="25" />
                                                         </div>
                                                     {% endif %}
-                                                    <div itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
+                                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                                         <div class="tar product-price">
                                                             {% spaceless %}
                                                                 {% if product.hide_price == 0 %}
@@ -216,8 +216,7 @@
                                                                     {% else %}
                                                                         <span class="price">
                                                                             <span class="currency-prefix">from only</span>
-                                                                            <span itemprop="lowPrice">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
-                                                                            <meta itemprop="highPrice" content="{{ product.high_price|currency('GBP', true, true, '')|raw }}" />
+                                                                            <span itemprop="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
                                                                         </span>
                                                                     {% endif %}
                                                                     {% if product.url != '' %}
@@ -228,7 +227,7 @@
                                                                         <span class="currency-tax">(inc. VAT)</span>
                                                                     </span>
                                                                 {% else %}
-                                                                    <a href="{{ path('content_contact_us') }}">CONTACT US</a>
+                                                                    <a itemprop="price" href="{{ path('content_contact_us') }}">CONTACT US</a>
                                                                 {% endif %}
                                                             {% endspaceless %}
                                                         </div>
