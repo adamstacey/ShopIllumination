@@ -255,15 +255,9 @@ class ProductController extends Controller {
          * @var $product Product
          */
         $product = clone $originalProduct;
-        foreach($product->getVariants() as $variant)
-        {
-            if(!$variant->getDescription())
-            {
-                $variant->addDescription(new Variant\Description());
-            }
-        }
 
         $flow = $this->get('kac_site.form.flow.new_product');
+
         $flow->bind($product);
 
         // Get current form step

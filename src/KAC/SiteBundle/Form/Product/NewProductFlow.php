@@ -423,7 +423,10 @@ class NewProductFlow extends FormFlow
             // Update the variant descriptions
             foreach ($formData->getVariants() as $variant)
             {
-                $this->productManager->updateVariantDescription($variant->getDescription());
+                foreach($variant->getDescriptions() as $description)
+                {
+                    $this->productManager->updateVariantDescription($description);
+                }
             }
         }
 

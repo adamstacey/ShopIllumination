@@ -246,9 +246,14 @@ class Variant implements DescribableInterface
 
 
             $this->id = null;
-            foreach($oldDescriptions as $entity)
+            if(count($this->descriptions) <= 0)
             {
-                $this->addDescription(clone $entity);
+                $this->addDescription(new Variant\Description());
+            } else {
+                foreach($oldDescriptions as $entity)
+                {
+                    $this->addDescription(clone $entity);
+                }
             }
             foreach($oldFeatures as $entity)
             {
