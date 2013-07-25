@@ -20,8 +20,8 @@
                                     <tr itemscope itemtype="http://schema.org/Product" class="{{ productCount % 2 == 0 ? "even" : "odd" }}">
                                         <td width="1" class="pas">{{ productCount }}</td>
                                         <td width="1" class="pas image">
-                                            <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
-                                                <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath) }}" border="0" alt="{{ product.description.header|raw }}" width="60" />
+                                            <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
+                                                <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.description.header|raw }}" width="60" />
                                             </a>
                                         </td>
                                         <td class="pas">
@@ -32,7 +32,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                         </td>
-                                        <td width="1" class="pas nowrap price">
+                                        <td width="1" class="pas nowrap price" itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
                                             {% spaceless %}
                                                 {% if product.hidePrices == 0 %}
                                                     {% if product.url != '' %}
@@ -44,9 +44,9 @@
                                                         <span class="price">
                                                             <span class="currency-prefix">from only</span>
                                                         </span>
-                                                        <span itemprop="price" class="price">{{ product.priceRange.low|currency('GBP', true, true, '')|raw }}</span>
+                                                        <span itemprop="lowPrice" class="price">{{ product.priceRange.low|currency('GBP', true, true, '')|raw }}</span>
                                                         <em> - </em>
-                                                        <span itemprop="price" class="price">{{ product.priceRange.high|currency('GBP', true, true, '')|raw }}</span>
+                                                        <span itemprop="highPrice" class="price">{{ product.priceRange.high|currency('GBP', true, true, '')|raw }}</span>
                                                     {% endif %}
                                                     {% if product.url != '' %}
                                                         </a>
@@ -56,7 +56,7 @@
                                                         <span class="currency-tax">(inc. VAT)</span>
                                                     </span>
                                                 {% else %}
-                                                    <a itemprop="price" href="{{ path('content_contact_us') }}">CONTACT US</a>
+                                                    <a href="{{ path('content_contact_us') }}">CONTACT US</a>
                                                 {% endif %}
                                             {% endspaceless %}
                                         </td>
