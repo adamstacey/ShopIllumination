@@ -70,7 +70,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         $xmlWriter->startElement('items');
 
         // Get the products
-        $result = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\Product p")->iterate();
+        $result = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\Product p WHERE p.status = 'a'")->iterate();
         while (($row = $result->next()) !== false) {
             $product = $row[0];
 
@@ -105,16 +105,76 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 $xmlWriter->writeElement('g:condition', 'new');
                 $xmlWriter->writeElement('g:price', number_format($variant->getPrice()->getListPrice(), 2));
                 $xmlWriter->writeElement('g:availability', 'in stock');
+                $xmlWriter->writeElement('g:image_link', $this->getContainer()->get('templating.helper.assets')->getUrl($product->getImage()->getPublicPath()));
+
                 $xmlWriter->startElement('g:shipping');
                 $xmlWriter->writeElement('g:country', 'GB');
                 $xmlWriter->writeElement('g:service', 'Standard Delivery');
                 $xmlWriter->writeElement('g:price', number_format($variant->getDeliveryCost(), 2));
                 $xmlWriter->endElement();
+
                 $xmlWriter->writeElement('g:shipping_weight', $variant->getWeight());
                 $xmlWriter->writeElement('g:mpn', $variant->getProductCode());
                 $xmlWriter->writeElement('g:brand', $product->getBrand()->getDescription()->getName());
                 $xmlWriter->writeElement('g:google_product_category', $product->getDepartment()->getDepartment()->getDescription()->getGoogleDepartment()->getName());
                 $xmlWriter->writeElement('g:product_type', $product->getDepartment()->getDepartment()->getDescription()->getName());
+
+                // Adword labels
+                // Delivery
+                switch ($variant->getDeliveryBand())
+                {
+                    case 1:
+                        $xmlWriter->writeElement('g:adwords_labels', 'small package');
+                        break;
+                    case 2:
+                        $xmlWriter->writeElement('g:adwords_labels', 'medium package');
+                        break;
+                    case 3:
+                    case 4:
+                        $xmlWriter->writeElement('g:adwords_labels', 'large package');
+                        break;
+                    case 5:
+                    case 6:
+                        $xmlWriter->writeElement('g:adwords_labels', 'extra large package');
+                        break;
+                }
+
+                if($variant->getDeliveryCost() == 0)
+                {
+                    $xmlWriter->writeElement('g:adwords_labels', 'free delivery');
+                }
+
+                // Departments
+                foreach(array_slice($product->getDepartments()->toArray(), 0, 4) as $department)
+                {
+                    $xmlWriter->writeElement('g:adwords_labels', strtolower($department->getDepartment()->getDescription()->getHeader()));
+                }
+
+                // Features
+                foreach (array_slice($variant->getFeatures()->toArray(), 0, 4) as $feature)
+                {
+                    $xmlWriter->writeElement('g:adwords_labels', strtolower($feature->getFeatureGroup()->getName() . ' ' . $feature->getFeature()->getName()));
+                }
+
+                // Price
+                if ($variant->getPrice()->getListPrice() > 0 && $variant->getPrice()->getListPrice() <= 50)
+                {
+                    $xmlWriter->writeElement('g:adwords_labels', 'price 1-50');
+                } elseif ($variant->getPrice()->getListPrice() > 50 && $variant->getPrice()->getListPrice() <= 100) {
+                    $xmlWriter->writeElement('g:adwords_labels', 'price 51-100');
+                } elseif ($variant->getPrice()->getListPrice() > 100 && $variant->getPrice()->getListPrice() <= 200) {
+                    $xmlWriter->writeElement('g:adwords_labels', 'price 101-200');
+                } elseif ($variant->getPrice()->getListPrice() > 200 && $variant->getPrice()->getListPrice() <= 500) {
+                    $xmlWriter->writeElement('g:adwords_labels', 'price 201-500');
+                } elseif ($variant->getPrice()->getListPrice() > 500 && $variant->getPrice()->getListPrice() <= 1000) {
+                    $xmlWriter->writeElement('g:adwords_labels', 'price 501-1000');
+                } elseif ($variant->getPrice()->getListPrice() > 1000) {
+                    $xmlWriter->writeElement('g:adwords_labels', 'price 1000+');
+                }
+                if ($variant->getPrice()->getRecommendedRetailPrice() > $variant->getPrice()->getListPrice())
+                {
+                    $xmlWriter->writeElement('g:adwords_labels', 'special offer');
+                }
 
                 $xmlWriter->endElement();
             }
