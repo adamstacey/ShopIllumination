@@ -253,12 +253,19 @@ class ListingController extends Controller
         // Set query string
         if ($request->query->get('q'))
         {
-            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
+//            if($this->get('security.context')->isGranted('ROLE_ADMIN'))
+//            {
+//                $queryString = $request->query->get('q');
+//            } else {
+//                $queryString = $query->getHelper()->escapeTerm($request->query->get('q'));
+//            }
+            $queryString = $request->query->get('q');
+
             $dismax = $query->getDisMax();
             $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
             $dismax->setPhraseFields(array('short_description^30'));
             $dismax->setQueryParser('edismax');
-            $query->setQuery($escapedQuery . '*');
+            $query->setQuery($queryString . '*');
         } else {
             $query->setQuery('*');
         }
@@ -389,14 +396,20 @@ class ListingController extends Controller
 
             $query = $solarium->createSelect();
             $helper = $query->getHelper();
-            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
+
+//            if($this->get('security.context')->isGranted('ROLE_ADMIN'))
+//            {
+//                $queryString = $request->query->get('q');
+//            } else {
+//                $queryString = $query->getHelper()->escapeTerm($request->query->get('q'));
+//            }
+            $queryString = $request->query->get('q');
 
             $dismax = $query->getDisMax();
             $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
             $dismax->setPhraseFields(array('short_description^30'));
             $dismax->setQueryParser('edismax');
-
-            $query->setQuery($escapedQuery . '*');
+            $query->setQuery($queryString . '*');
 
             // Ensure that only the correct products are shown
             if($this->get('security.context')->isGranted('ROLE_ADMIN'))
