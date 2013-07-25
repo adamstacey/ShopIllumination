@@ -204,7 +204,7 @@
                                                             <img class="brand-logo-image" src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" border="0" alt="{{ product.brand|raw }}" height="25" />
                                                         </div>
                                                     {% endif %}
-                                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                                    <div itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
                                                         <div class="tar product-price">
                                                             {% spaceless %}
                                                                 {% if product.hide_price == 0 %}
@@ -216,7 +216,8 @@
                                                                     {% else %}
                                                                         <span class="price">
                                                                             <span class="currency-prefix">from only</span>
-                                                                            <span itemprop="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
+                                                                            <span itemprop="lowPrice">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
+                                                                            <meta itemprop="highPrice" content="{{ product.high_price|currency('GBP', true, true, '')|raw }}" />
                                                                         </span>
                                                                     {% endif %}
                                                                     {% if product.url != '' %}
@@ -227,7 +228,7 @@
                                                                         <span class="currency-tax">(inc. VAT)</span>
                                                                     </span>
                                                                 {% else %}
-                                                                    <a itemprop="price" href="{{ path('content_contact_us') }}">CONTACT US</a>
+                                                                    <a href="{{ path('content_contact_us') }}">CONTACT US</a>
                                                                 {% endif %}
                                                             {% endspaceless %}
                                                         </div>
