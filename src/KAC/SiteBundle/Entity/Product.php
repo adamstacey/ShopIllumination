@@ -287,7 +287,7 @@ class Product implements DescribableInterface
         while ($pl < $l) {
             $c = $this->getVariants()->first()->getProductCode()[$pl];
             for ($i=1; $i<$n; $i++) {
-                if ($this->getVariants()[$i]->getProductCode()[$pl] !== $c) break 2;
+                if ($this->getVariants()[$i] && $this->getVariants()[$i]->getProductCode()[$pl] !== $c) break 2;
             }
             $pl++;
         }

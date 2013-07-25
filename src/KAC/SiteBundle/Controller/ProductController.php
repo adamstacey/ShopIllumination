@@ -155,7 +155,7 @@ class ProductController extends Controller {
         // Find template from the departments
         $template = 'standard';
         $departments = array();
-        if($product->getTemplate()) {
+        if($product->getTemplate() && $product->getTemplate() !== 'default') {
             $template = $product->getTemplate();
         } elseif($product->getDepartment()) {
             // Check the department tree
