@@ -72,7 +72,7 @@
                             <div id="products">
                                 {% for product in pagination %}
                                     {% block product_block %}
-                                        <div itemscope itemtype="http://schema.org/Product" class="product relative" data-product-id="{{ product.id }}" id="product-{{ product.id }}">
+                                        <div itemscope itemtype="http://schema.org/Product" data-product-id="{{ product.id }}" id="product-{{ product.id }}" class="product relative {% if product.status == 'd' %}background-red-extra-extra-light{% elseif product.status == 'h' %}background-yellow-extra-light{% endif %}">
                                             <div class="widget-group border-bottom-separator ptm pbm clearfix">
                                                 <div class="widget widget-3-of-4 pll prl border-right-separator">
                                                     <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
