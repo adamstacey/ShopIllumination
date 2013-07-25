@@ -101,10 +101,6 @@ class ProductIndexer extends Indexer
         $numVariants = 0;
         foreach ($product->getVariants() as $variant) {
             // Check that the variant is not disabled
-            if ($variant->getStatus() !== "a") {
-                continue;
-            }
-
             $numVariants++;
 
             $document->addField('variant_ids', $variant->getId());

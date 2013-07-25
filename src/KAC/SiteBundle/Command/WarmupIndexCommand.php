@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Command;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,6 +25,7 @@ class WarmupIndexCommand extends ContainerAwareCommand
         /**
          * @var $iterableResult IterableResult
          * @var $buffer \Solarium_Plugin_BufferedAdd
+         * @var $em EntityManager
          */
         $em = $this->getContainer()->get('doctrine')->getManager();
         $solarium = $this->getContainer()->get('solarium.client.product');
