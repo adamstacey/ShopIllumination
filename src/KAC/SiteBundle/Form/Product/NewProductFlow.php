@@ -122,7 +122,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step === 2)
+        if ($step === 3)
         {
             // Go through the variants and update any zero recommended retail prices
             foreach ($formData->getVariants() as $variant)
@@ -143,7 +143,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step === 3)
+        if ($step === 4)
         {
             // Generate combinations
             $combinations = array();
@@ -307,7 +307,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 4)
+        if ($step == 5)
         {
             // Sort the variants in their display order
             if (sizeof($formData->getVariants()) > 1)
@@ -334,7 +334,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 5)
+        if ($step == 6)
         {
             // Attempt to load variant UIDs from google
             foreach ($formData->getVariants() as $variant)
@@ -372,7 +372,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 6)
+        if ($step == 7)
         {
             // Get the department features
             $departmentFeatures = $formData->getDepartment()->getDepartment()->getFeatures();
