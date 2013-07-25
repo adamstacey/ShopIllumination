@@ -78,7 +78,7 @@
                                                     <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">{{ product.header|raw }}</a></h4>
                                                     <div class="product-image-container fl">
                                                         <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
-                                                            <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path) }}" border="0" alt="{{ product.header|raw }}" width="150" />
+                                                            <img class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="150" />
                                                         </a>
                                                     </div>
                                                     <div>
@@ -110,7 +110,7 @@
                                                 <div class="widget widget-1-of-4">
                                                     {% if product.brand_logo != '' %}
                                                         <div class="tar">
-                                                           <img class="brand-logo-image" src="{{ asset(product.brand_logo) }}" border="0" alt="{{ product.brand|raw }}" height="30" />
+                                                           <img class="brand-logo-image" src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" border="0" alt="{{ product.brand|raw }}" height="30" />
                                                         </div>
                                                     {% endif %}
                                                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
