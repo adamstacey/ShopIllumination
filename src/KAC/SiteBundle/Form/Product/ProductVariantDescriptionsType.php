@@ -18,8 +18,8 @@ class ProductVariantDescriptionsType extends AbstractType
             'required'  => false,
             'label' => 'Type',
             'attr' => array(
-                'class' => 'fill ui-corner-none-br',
-                'data-help' => 'The variant type, (TODO add help message)',
+                'class' => 'fill',
+                'data-help' => 'Choose a type.',
             ),
             'class' => 'KAC\SiteBundle\Entity\Type',
             'property' => 'name',
