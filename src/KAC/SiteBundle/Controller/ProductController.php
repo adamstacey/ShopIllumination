@@ -229,7 +229,9 @@ class ProductController extends Controller {
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl('routing', array(
+                    'url' => $product->getUrl(),
+                )));
             }
         }
 
