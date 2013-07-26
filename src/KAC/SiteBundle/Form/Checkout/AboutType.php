@@ -27,12 +27,12 @@ class AboutType extends AbstractType {
             'required' => true,
         ));
 
-        $builder->add('telephoneEvening', 'number', array(
+        $builder->add('telephoneEvening', 'text', array(
             'label' => 'Telephone (Evening)',
             'required' => false,
         ));
 
-        $builder->add('mobile', 'number', array(
+        $builder->add('mobile', 'text', array(
             'label' => 'Mobile',
             'required' => false,
         ));

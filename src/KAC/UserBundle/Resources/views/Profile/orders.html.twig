@@ -16,7 +16,16 @@
                         <h2>Orders</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
-                        {% if orders|length > 0 %}
+                        {% if pagination|length > 0 %}
+                            {% if pagination.totalItemCount > pagination.itemNumberPerPage %}
+                                <div class="widget-group pagination-top mtn clearfix">
+                                    <div class="widget widget-1-of-1">
+                                        <div class="fr">
+                                            {{ knp_pagination_render(pagination) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <table class="data-table">
                                 <thead>
                                     <tr>
@@ -28,9 +37,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for order in orders %}
+                                    {% for order in pagination %}
                                         <tr>
-                                            <td>{{ order.id }}</td>
+                                            <td><a href="{{ path('orders_customer_view', {'id': order.id}) }}">{{ order.id }}</a></td>
                                             <td>{{ order.createdAt|date('d/m/y') }}</td>
                                             <td>{{ order.products|length }}</td>
                                             <td>{{ order.status }}</td>
@@ -39,6 +48,15 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                            {% if pagination.totalItemCount > pagination.itemNumberPerPage %}
+                                <div class="widget-group pagination-bottom mtn clearfix">
+                                    <div class="widget widget-1-of-1">
+                                        <div class="fr">
+                                            {{ knp_pagination_render(pagination) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
                         {% else %}
                             <p>No orders found</p>
                         {% endif %}

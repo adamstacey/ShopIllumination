@@ -60,13 +60,6 @@ class BasketController extends Controller
 		// Get the basket
 		$basket = $this->get('session')->get('basket');
 
-		// Check if there are products in the basket
-		if (sizeof($basket['products']) > 0)
-		{
-			// Set notice message
-			$this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
-		}
-
 		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketContents.html.twig', array('departmentHistory' => $departmentHistory, 'basket' => $basket, 'messages' => $messages));
     }
     // Update delivery options

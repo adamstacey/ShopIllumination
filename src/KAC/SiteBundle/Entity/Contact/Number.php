@@ -19,7 +19,7 @@ class Number
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact", inversedBy="numbers")
+     * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Contact")
      */
     private $contact;
 
@@ -49,6 +49,13 @@ class Number
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    function __construct($number)
+    {
+        $this->displayName = $number;
+        $this->number = $number;
+    }
+
 
     /**
      * Get id

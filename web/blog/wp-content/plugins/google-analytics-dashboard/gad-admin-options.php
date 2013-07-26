@@ -269,7 +269,7 @@ class GADAdminOptions
 
       if( isset($_POST['gad_login_type']) && $_POST['gad_login_type'] == 'client' )
       {
-        if( $this->admin_handle_clientlogin_login_options(&$ui, $info_message) )
+        if( $this->admin_handle_clientlogin_login_options($ui, $info_message) )
         {
           return;
         }

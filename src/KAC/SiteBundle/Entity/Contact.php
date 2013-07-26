@@ -21,7 +21,7 @@ class Contact
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KAC\UserBundle\Entity\User", inversedBy="contacts")
+     * @ORM\OneToOne(targetEntity="KAC\UserBundle\Entity\User", inversedBy="contact")
      */
     private $user;
 

@@ -1,0 +1,65 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}Login | {{ parent() }}{% endblock %}
+{% block page_header %}Login{% endblock %}
+
+{% block fos_user_content %}
+    <div class="form-element widget-group clearfix">
+        <div class="widget widget-1-of-2">
+            <a class="button button-blue" href="{{ path('fos_user_registration_register') }}">Register</a>
+            <a class="button button-blue" href="{{ path('checkout_about', {'guest': true}) }}">Checkout as guest</a>
+        </div>
+        <div class="widget widget-1-of-2">
+            <form id="secure-login" class="form has-validation" action="{{ path("fos_user_security_check") }}" method="post">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                <div class="clearfix">
+                    {% if error %}
+                        <div class="message message-error">
+                            <span class="ui-button-icon-primary ui-icon-small icon-small-white icon-small-850"></span>
+                            <p>{{ error|trans({}, 'FOSUserBundle') }}</p>
+                        </div>
+                    {% else %}
+                        <div class="message message-help">
+                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
+                            <p>To login to Kitchen Appliance Centre please enter your email address and password.</p>
+                        </div>
+                    {% endif %}
+
+                    <div class="form-element widget-group clearfix">
+                        <span title="Enter a valid email address" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                        <div class="widget widget-1-of-3">
+                            <label for="username"><em class="required" title="This field is required">*</em>&nbsp;Your Email Address</label>
+                        </div>
+                        <div class="widget widget-2-of-3">
+                            <input class="fill email text" type="email" id="username" name="_username" required="required" value="{{ last_username }}" />
+                        </div>
+                    </div>
+                    <div class="form-element widget-group clearfix">
+                        <span title="Enter a valid email address" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>
+                        <div class="widget widget-1-of-3">
+                            <label for="username"><em class="required" title="This field is required">*</em>&nbsp;Your Password</label>
+                        </div>
+                        <div class="widget widget-2-of-3">
+                            <input class="fill password text" type="password" id="password" name="_password" required="required" autocomplete="off" value="" />
+                        </div>
+                    </div>
+                    <div class="form-element widget-group clearfix">
+                        <div class="widget widget-1-of-3">
+                            <label for="username"><em class="required" title="This field is required">*</em>&nbsp;Remember Me</label>
+                        </div>
+                        <div class="widget widget-2-of-3">
+                            <div class="clearfix mtm">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <a href="{{ path('fos_user_resetting_request') }}" class="action-forgotten-your-password">Have you forgotten your password?</a>
+                        <button type="submit" name="_submit" id="_submit" class="button button-green fr">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock fos_user_content %}

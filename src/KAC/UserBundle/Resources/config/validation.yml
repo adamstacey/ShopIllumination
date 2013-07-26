@@ -1,0 +1,37 @@
+KAC\UserBundle\Entity\User:
+    properties:
+        username:
+            - NotBlank:
+                message: fos_user.username.blank
+                groups: [KacRegistration]
+            - Length:
+                min: 2
+                minMessage: fos_user.username.short
+                max: 255
+                maxMessage: fos_user.username.long
+                groups: [KacRegistration]
+        email:
+            - NotBlank:
+                message: fos_user.email.blank
+                groups: [KacRegistration]
+            - Length:
+                min: 2
+                minMessage: fos_user.email.short
+                max: 254
+                maxMessage: fos_user.email.long
+                groups: [KacRegistration]
+            - Email:
+                message: fos_user.email.invalid
+                groups: [KacRegistration]
+        plainPassword:
+            - NotBlank:
+                message: fos_user.password.blank
+                groups: [KacRegistration]
+            - Length:
+                min: 2
+                minMessage: fos_user.password.short
+                groups: [KacRegistration]
+    constraints:
+        - KAC\UserBundle\Validator\UniqueEmail:
+            message: fos_user.email.already_used
+            groups: [KacRegistration]

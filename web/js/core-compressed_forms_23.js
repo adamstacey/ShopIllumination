@@ -299,6 +299,7 @@ $(document).ready(function() {
         }
     });
 
+
     $(document).on("click", ".actionDeleteParent", function() {
         $(this).parent().remove();
     });
@@ -462,6 +463,18 @@ $(document).ready(function() {
             }
         } else {
             $(".loading-container").fadeOut(500);
+        }
+    });
+
+    $(document).on("click", ".actionIncreaseQuantity", function() {
+        var $quantityInput = $(this).parent().find("input.quantity");
+        $quantityInput.val(parseInt($quantityInput.val()) + 1);
+    });
+
+    $(document).on("click", ".actionDecreaseQuantity", function() {
+        var $quantityInput = $(this).parent().find("input.quantity");
+        if (parseInt($quantityInput.val()) > 1) {
+            $quantityInput.val(parseInt($quantityInput.val()) - 1);
         }
     });
 

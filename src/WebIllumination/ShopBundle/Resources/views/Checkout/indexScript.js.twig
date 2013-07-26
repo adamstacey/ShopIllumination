@@ -27,10 +27,7 @@
 			$("html, body").animate({scrollTop: $("#form-accept-terms-and-conditions").offset().top - 50}, 'slow');
 		} else {
 			var saveOrderValidator = $("#checkout-details :input").validator({
-				position : 'center right', 
-				offset : [0, -200], 
-				messageClass : 'form-error-3-5', 
-	    		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
+                messageClass: 'inline-error'
 			});
 			if (saveOrderValidator.data("validator").checkValidity())
 			{
@@ -82,7 +79,7 @@
 				$("#message-error").slideDown(function() {
 					setTimeout("resetMessages()", 5000);
 				});
-				$("html, body").animate({scrollTop: $(".form-error-3-5:first").offset().top - 50}, 'slow');
+//				$("html, body").animate({scrollTop: $(".form-element:nth-child(14)").offset().top - 50}, 'slow');
 			}
 		}
 	}
@@ -114,21 +111,12 @@
 				$("#order-information tr:even").addClass("even");
 				$("#order-information tr:odd").addClass("odd");
 				$("#order-information-loading").hide();
-				$("#order-information").fadeIn();
-				$("#order-information .button").each(function () {
-			        $(this).button({
-			        	icons: {
-			            	primary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-primary'):null, 
-			                secondary: $(this).attr('data-icon-primary')?$(this).attr('data-icon-secondary'):null
-			            }, 
-			           	text: $(this).attr('data-icon-only') === 'true'?false:true
-			    	});
-			    	var $dataNotification = $(this).attr("data-notification");
-			    	if (($(this).attr("data-notification") != "") && ($(this).attr("data-notification") != undefined))
-			    	{
-			    		$(this).prepend('<div class="button-notification">'+$(this).attr("data-notification")+'</div>');
-			    	}
-			    });
+                $("#order-information").fadeIn();
+                generateButtons($("#order-information"));
+                generateFormElements($("#order-information"));
+                $("img[title], span[title], th[title], .button[title]").tooltip({
+                    track: true
+                });
 			}
 		});
 	}
@@ -137,10 +125,7 @@
 	function submitPayment($paymentType)
 	{		
 		var saveOrderValidator = $("#checkout-details :input").validator({
-			position : 'center right', 
-			offset : [0, -200], 
-			messageClass : 'form-error-3-5', 
-    		message : '<div><span class="ui-icon ui-icon-closethick"></span></div>'
+            messageClass: 'inline-error'
 		});
 		if (saveOrderValidator.data("validator").checkValidity())
 		{
@@ -167,7 +152,7 @@
 			$("#message-error").slideDown(function() {
 				setTimeout("resetMessages()", 5000);
 			});
-			$("html, body").animate({scrollTop: $(".form-error-3-5:first").offset().top - 50}, 'slow');
+//			$("html, body").animate({scrollTop: $(".form-error-3-5:first").offset().top - 50}, 'slow');
 		}
 	}
 	
@@ -410,7 +395,7 @@
 		
 		{# Submit payment #}
 		$(".action-submit-payment").live('click', function() {
-			var $paymentType = $(this).attr("data-payment-type");
+			var $paymentType = $(".action-submit-payment").attr("data-payment-type");
 			saveOrder($paymentType);
 		});
 	});

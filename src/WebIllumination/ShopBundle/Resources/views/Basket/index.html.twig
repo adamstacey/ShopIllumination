@@ -4,92 +4,56 @@
 	<header>
 		<h1>Your Shopping Basket</h1>
 	</header>
-	<section class="container_6 clearfix">
-		<div class="grid_4"> 
-			<div class="portlet">
-				<header>
-	                <h2 id="products-found">Your Basket Contents</h2>
-	            </header>
-				<section id="basket-contents-section">
-					<div class="clearfix separator">
-						<a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
-						{#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
-						<a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
-						{% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>{% endif %}
-						<div class="clear"></div>
-					</div>
-					<div class="clear"></div>
-					<div id="basket-contents" class="clearfix separator">
-                        {{ basket.items|dump }}
-                        {% if basket.items|length > 0 %}
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                <tr>
-                                    <th class="al">Product</th>
-                                    <th class="ac">Code</th>
-                                    <th class="ac" colspan="2">Qty</th>
-                                    <th class="ac" colspan="3">Price</th>
-                                    <th class="ac">&nbsp;</th>
-                                </tr>
-                                {% for item in basket.items %}
-                                    <tr>
-                                        <td>
-                                            <a class="uppercase" href="{{ path('routing', {'url': item.variant.url}) }}">{{ item.variant.header }}</a>
-                                        </td>
-                                        <td class="ac"><strong>{{ item.variant.productCode }}</strong></td>
-                                        <td>
-                                            <div class="add-to-basket" data-product-id="{{ item.productId }}" data-variant-id="{{ item.variantId }}">
-                                                <input class="quantity integer" type="number" value="1" />
-                                                <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
-                                                <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
-                                            </div>
-                                        </td>
-                                        <td class="ac">&times;</td>
-                                        <td class="ac">
-                                            {% if item.variant.price.recommendedRetailPrice > item.variant.price..unitCost %}
-                                                <span class="red strikethrough">&pound;{{ item.variant.price..recommendedRetailPrice|number_format(2) }}</span>
-                                                <br />
-                                                <span class="green"><strong>&pound;{{ item.variant.price..unitCost|number_format(2) }}</strong></span>
-                                            {% else %}
-                                                &pound;{{ item.variant.price..unitCost|number_format(2) }}
-                                            {% endif %}
-                                        </td>
-                                        <td class="ac">=</td>
-                                        <td class="ac">&pound;{{ item.unitCost|number_format(2) }}</td>
-                                        <td class="ac"><a href="{{ path('basket_remove', {'item': loop.index0}) }}"><img class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></a></td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        {% else %}
-                            <p>You currently have no items in your basket</p>
+	<section class="clearfix">
+        <div class="widget-group clearfix">
+            <div class="widget widget-3-of-5">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Your Basket Contents</h2>
+                    </header>
+                    <section id="basket-contents-section" class="ui-widget-content widget-content ui-corner-bottom">
+                        <div id="basket-contents-loading" class="clearfix">
+                            <img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                            <p>Loading your basket contents&hellip;</p>
                             <div class="clear"></div>
-                        {% endif %}
-					</div>
-					<div id="basket-totals" class="ar clearfix separator">
-
-					</div>
-					<div class="clear"></div>
-					<div class="clearfix">
-						<a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
-						{#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
-						<a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
-						{% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>{% endif %}
-						<div class="clear"></div>
-					</div>
-					<div class="clear"></div>
-				</section>
-	        </div>
-	    </div>
-	    <div class="grid_2 fr"> 
-			<div class="portlet">
-				<header>
-	                <h2>Your Delivery</h2>
-	            </header>
-				<section id="your-delivery-section">
-					<div id="basket-delivery-options" class="clearfix">
-					</div>
-				</section>
-	        </div>
-	    </div>
-	   	<div class="clear"></div>
+                        </div>
+                        <div id="basket-contents" class="clearfix ui-helper-hidden"></div>
+                        <div id="basket-totals-loading" class="clearfix">
+                            <img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                            <p>Loading the totals of your basket&hellip;</p>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="basket-totals" class="tar clearfix ui-helper-hidden"></div>
+                        <div class="clear"></div>
+                        <div class="clearfix">
+                            <a href="Javascript:window.history.go(-1);" class="fl action-continue-shopping button button-small icon-grey" data-icon-primary="icon-473">Continue Shopping</a>
+                            <a href="Javascript:void(0);" class="fl mlm action-clear-basket button button-small">Clear Basket</a>
+                            {% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" class="fr action-pay-securely-now button button-green icon-white uppercase" data-icon-secondary="icon-472">Pay Securely Now</a>{% endif %}
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-2-of-5">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Your Delivery</h2>
+                    </header>
+                    <section id="your-delivery-section" class="ui-widget-content widget-content ui-corner-bottom">
+                        <div id="basket-delivery-options-loading" class="tac clearfix">
+                            <img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                            <p>Loading your delivery options&hellip;</p>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="basket-delivery-options" class="clearfix ui-helper-hidden"></div>
+                    </section>
+                </div>
+            </div>
+        </div>
 	</section>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{% include 'WebIlluminationShopBundle:Basket:indexScript.js.twig' with {'backUrl': backUrl, 'basket': basket} %}
 {% endblock %}

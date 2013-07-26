@@ -136,6 +136,7 @@ fos_user:
     registration:
         form:
             type: kac_user_registration
+            validation_groups:  [KacRegistration]
     service:
         user_manager: kac_user.user_manager.default
 

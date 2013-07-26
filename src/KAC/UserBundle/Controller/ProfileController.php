@@ -21,7 +21,6 @@ use KAC\SiteBundle\Entity\Contact;
 use KAC\SiteBundle\Form\Contact\AddressType;
 use KAC\UserBundle\Entity\User;
 use KAC\UserBundle\Form\Type\EditProfileType;
-use KAC\UserBundle\Form\Type\EditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -49,7 +48,9 @@ class ProfileController extends Controller
         $orders = $qb->select('o')
             ->from('KAC\SiteBundle\Entity\Order', 'o')
             ->where($qb->expr()->eq('o.user', '?1'))
+            ->andWhere($qb->expr()->in('o.status', '?2'))
             ->setParameter(1, $user->getId())
+            ->setParameter(2, array('Order Completed', 'Payment Received', 'Processing Your Order', 'Cancelled', 'Refunded', 'Order Ready for Collection', 'Order with Delivery Company', 'Part Delivered'))
             ->setMaxResults(5)
             ->getQuery()
             ->execute();
@@ -75,16 +76,18 @@ class ProfileController extends Controller
 
         // Fetch orders
         $qb = $em->createQueryBuilder();
-        $orders = $qb->select('o')
+        $query = $qb->select('o')
             ->from('KAC\SiteBundle\Entity\Order', 'o')
             ->where($qb->expr()->eq('o.user', '?1'))
+            ->andWhere($qb->expr()->in('o.status', '?2'))
             ->setParameter(1, $user->getId())
-            ->setMaxResults(5)
-            ->getQuery()
-            ->execute();
+            ->setParameter(2, array('Order Completed', 'Payment Received', 'Processing Your Order', 'Cancelled', 'Refunded', 'Order Ready for Collection', 'Order with Delivery Company', 'Part Delivered'));
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($query, $this->get('request')->query->get('page', 1), 10);
 
         return $this->render('KACUserBundle:Profile:orders.html.twig', array(
-            'orders' => $orders,
+            'pagination' => $pagination,
             'user' => $user,
         ));
     }
@@ -229,7 +232,7 @@ class ProfileController extends Controller
      * @Secure(roles="ROLE_USER")
      * @Route("/profile/addresses/{id}/delete.html", name="profile_delete_address")
      */
-    public function deleteAddressAction(Request $request)
+    public function deleteAddressAction(Request $request, $id)
     {
         /**
          * @var $em EntityManager

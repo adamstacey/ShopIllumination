@@ -4,6 +4,10 @@ services:
         class: KAC\SiteBundle\Twig\CurrencyExtension
         tags:
             - { name: twig.extension }
+    kac_site.twig.util:
+        class: KAC\SiteBundle\Twig\UtilExtension
+        tags:
+            - { name: twig.extension }
     kac_site.twig.routing_extension:
         class: KAC\SiteBundle\Twig\RoutingExtension
         arguments: [@doctrine, @router, @kac_site.manager.routing]

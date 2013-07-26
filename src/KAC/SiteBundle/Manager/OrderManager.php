@@ -125,9 +125,9 @@ class OrderManager extends Manager
 
             if($user->getContact())
             {
-                $order->setTelephoneDaytime($user->getContact()->getTelephoneDaytime()->getNumber());
-                $order->setTelephoneEvening($user->getContact()->getTelephoneEvening()->getNumber());
-                $order->setMobile($user->getContact()->getTelephoneMobile()->getNumber());
+                $order->setTelephoneDaytime($user->getContact()->getTelephoneDaytime() ? $user->getContact()->getTelephoneDaytime()->getNumber() : '');
+                $order->setTelephoneEvening($user->getContact()->getTelephoneEvening() ? $user->getContact()->getTelephoneEvening()->getNumber() : '');
+                $order->setMobile($user->getContact()->getTelephoneMobile() ? $user->getContact()->getTelephoneMobile()->getNumber() : '');
             }
         }
 

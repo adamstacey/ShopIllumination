@@ -1,0 +1,153 @@
+{% extends "KACSiteBundle::base.html.twig" %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Order #{{ order.id }}</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Products</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        {% if order.products|length > 0 %}
+                            <table class="data-table">
+                                <thead>
+                                <tr>
+                                    <th>QTY</th>
+                                    <th>Product Code</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in order.products %}
+                                        <tr>
+                                            <td>{{ product.quantity }}</td>
+                                            <td><a href="{{ path('routing', {'url': product.url}) }}">{{ product.productCode }}</a></td>
+                                            <td>{{ product.header }}</td>
+                                            <td>{{ product.unitCost|currency }}</td>
+                                            <td>{{ product.subTotal|currency }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td class="ar"><strong>Subtotal:</strong></td>
+                                        <td class="price ar"><strong>&pound;{{ order.subTotal|number_format(2) }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td class="ar"><strong>Delivery:</strong></td>
+                                        <td class="price ar"><strong>&pound;{{ order.deliveryCharge|number_format(2) }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"></td>
+                                        <td class="ar"><strong>Total:</strong></td>
+                                        <td class="price ar"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <p>No products in this order</p>
+                        {% endif %}
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-3">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Contact Details</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p>
+                            {{ order.billingFirstName }} {{ order.billingLastName }}<br />
+                            {{ order.emailAddress }}<br />
+                            {{ order.telephoneDaytime }} (Daytime)<br />
+                            {% if order.telephoneEvening %}{{ order.telephoneEvening }} (Evening)<br />{% endif %}
+                            {% if order.mobile %}{{ order.mobile }} (Mobile)<br />{% endif %}
+
+                        </p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-3">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Delivery Details</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p>
+                            {{ order.deliveryFirstName }}<br />
+                            {{ order.deliveryLastName }}<br />
+                            {% if order.deliveryOrganisationName %}{{ order.deliveryOrganisationName }}<br />{% endif %}
+                            {{ order.deliveryAddressLine1 }}<br />
+                            {% if order.deliveryAddressLine2 %}{{ order.deliveryAddressLine2 }}<br />{% endif %}
+                            {{ order.deliveryTownCity }}<br />
+                            {{ order.deliveryCountyState }}<br />
+                            {{ order.deliveryPostZipCode }}<br />
+                            {{ order.deliveryCountryCode|country }}<br />
+                        </p>
+                        <p>
+                            Estimated Delivery: Estimated {% if order.deliveryType == 'Collection' %}collection available{% else %}Delivery{% endif %} between <strong class="important">{{ order.estimatedDeliveryDaysStart }}</strong> and <strong class="important">{{ order.estimatedDeliveryDaysEnd }}</strong> subject to availability.<br />
+                            Delivery Type: {{ order.deliveryType }}<br />
+                            {% if order.deliveryType != 'Collection' %}
+                            Courier: {{ order.courier|default('Not Assigned Yet') }}<br />
+                            Number of Packages: {{ (order.numberOfPackages > 0 ? order.numberOfPackages:'1') }}<br />
+                            {% endif %}
+                        </p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-3">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Payment Details</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <p>
+                            Method: {% if order.paymentType == 'sagepay' %}Credit/Debit Card{% elseif order.paymentType == 'paypal' %}PayPal{% else %}{{ order.paymentType }}{% endif %}<br />
+                            Cardholder Name: {{ order.billingFirstName }} {{ order.billingLastName }}
+                        </p>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Notes</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Creator</th>
+                                    <th>Created</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            {% for note in order.notes %}
+                                {% if note.noteType == 'customer' %}
+                                    <tr class="note">
+                                        <td>{{ note.creator }}</td>
+                                        <td>{{ note.createdAt|date }}</td>
+                                        <td>{{ note.note }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

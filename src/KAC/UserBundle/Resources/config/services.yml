@@ -7,8 +7,18 @@ services:
     kac_user.user_manager.default:
         class: KAC\UserBundle\Entity\UserManager
         arguments: [@security.encoder_factory, @fos_user.util.username_canonicalizer, @fos_user.util.email_canonicalizer, @doctrine.orm.entity_manager, %fos_user.model.user.class%]
-    kac_user.registration_completed:
+    kac_user.registration_complete:
         class: KAC\UserBundle\EventListener\RegistrationCompletedListener
+        arguments: [@security.context]
+        tags:
+            - { name: kernel.event_subscriber }
+    kac_user.registration_success:
+        class: KAC\UserBundle\EventListener\RegistrationSuccessListener
         arguments: [@session]
         tags:
             - { name: kernel.event_subscriber }
+    unique_email_validator:
+        class: KAC\UserBundle\Validator\UniqueEmailValidator
+        arguments: ["@doctrine"]
+        tags:
+            - { name: validator.constraint_validator,  alias: unique_email }

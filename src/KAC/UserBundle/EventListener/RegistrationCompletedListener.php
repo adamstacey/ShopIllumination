@@ -1,20 +1,22 @@
 <?php
 namespace KAC\UserBundle\EventListener;
 
+use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Event\FormEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class RegistrationCompletedListener implements EventSubscriberInterface
 {
-    private $session;
+    private $securityContext;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(SecurityContext $securityContext)
     {
-        $this->session = $session;
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -27,14 +29,10 @@ class RegistrationCompletedListener implements EventSubscriberInterface
         );
     }
 
-    public function onRegistrationCompleted(FormEvent $event)
+    public function onRegistrationCompleted(FilterUserResponseEvent $event)
     {
-        if($this->session->has('_security.main.target_path'))
-        {
-            $url = $this->session->get('_security.main.target_path');
-            $this->session->remove('_security.main.target_path');
+        $token = new UsernamePasswordToken($event->getUser(), $event->getUser()->getPassword(), 'main', $event->getUser()->getRoles());
 
-            $event->setResponse(new RedirectResponse($url));
-        }
+        $this->securityContext->setToken($token);
     }
 }

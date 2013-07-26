@@ -1,218 +1,341 @@
-{% extends ':Old:shop.html.twig' %}
+{% extends 'KACSiteBundle::base.html.twig' %}
 {% block title %}Secure Checkout{% endblock %}
 {% block body %}
-	<section class="container_6 clearfix">
-		<div class="grid_3_5 margin-top-10">
-            <div class="portlet">
-                <header>
-                    <h2>Secure Checkout</h2>
-                </header>
-                <section id="checkout-details" class="form novalidate no-validate">
-                	{% if order.paymentAttempt > 1 and orderObject is defined %}
-                		<p class="no-margin-top"><strong>Sorry, there was a problem placing your order. No money has been taken from your card. Please try again or <a href="{{ path('content_contact_us') }}">contact us</a> if you have any questions.</strong></p>
-	                	{% if (orderObject.paymentType == 'PayPal through SagePay') or (orderObject.paymentType == 'SagePay') %}
-	                		<div class="info-message ui-status-error">
-								<span class="info-message-icon ui-icon ui-icon-alert"></span>
-								<p><strong>{{ orderObject.paymentResponse.Status }}:</strong> {{ orderObject.paymentResponse.StatusDetail }}</p>
-								<div class="clear"></div>
-							</div>
-						{% endif %}
-						<div class="info-message ui-status-highlight">
-							<span class="info-message-icon ui-icon ui-icon-info"></span>
-							<p class="small-message">We have noticed you may be having problems placing the order. Please ensure the billing details match that of the cardholder below and make any required changes. If you have any problems please <a href="{{ path('content_contact_us') }}">contact us</a>.</p>
-							<div class="clear"></div>
-						</div>
-					{% endif %}
-					<h5>Your Details</h5>
-				    <div class="clearfix">
-				        <label for="form-email-address" class="form-label"><em>*</em> Email Address<small>Enter a valid email address</small></label>
-				        <div class="form-input no-margin-bottom"><input class="email-address" data-message="Enter a valid email" type="email" id="form-email-address" name="email-address" required="required" value="{{ order.emailAddress|default('') }}" /></div>
-				    </div>
-				    <div class="clearfix">
-				        <label for="form-confirm-email-address" class="form-label"><em>*</em> Confirm Email Address<small>Confirm your email address</small></label>
-				        <div class="form-input"><input class="email-address" data-message="Confirm your email" data-equals="email-address" type="email" id="form-confirm-email-address" name="confirm-email-address" required="required" value="{{ order.emailAddress|default('') }}" /></div>
-				    </div>
-				    <div class="clearfix">
-				        <label for="form-telephone-daytime" class="form-label"><em>*</em> Telephone (Daytime)<small>Enter a valid telephone number</small></label>
-				        <div class="form-input no-margin-bottom"><input{% if order.billingCountryCode == 'GB' %} data-validation-type="telephone"{% endif %} class="telephone" data-message="Enter a valid number" type="text" id="form-telephone-daytime" name="telephone-daytime" required="required" value="{{ order.telephoneDaytime|default('') }}" /></div>
-				    </div>
-				    <div class="clearfix">
-				        <label for="form-telephone-evening" class="form-label">Telephone (Evening)<small>Enter a valid telephone number</small></label>
-				        <div class="form-input margin-bottom-5"><input{% if order.billingCountryCode == 'GB' %} data-validation-type="telephone"{% endif %} data-message="Enter a valid number" class="telephone" type="text" id="form-telephone-evening" name="telephone-evening" value="{{ order.telephoneEvening|default('') }}" /></div>
-				    </div>
-				    <div class="info-message ui-status-highlight margin-bottom-5">
-						<span class="info-message-icon ui-icon ui-icon-info"></span>
-						<p class="small-message">Although we do not require your mobile number, we would be able to keep you up-to-date with your order progress by text message if you did supply your mobile number.</p>
-						<div class="clear"></div>
-					</div>
-				    <div class="clearfix">
-				        <label for="form-mobile" class="form-label">Mobile<small>Enter a valid mobile number</small></label>
-				        <div class="form-input margin-bottom-15"><input data-validation-type="mobile" class="telephone" data-message="Enter a valid mobile" type="text" id="form-mobile" name="mobile" value="{{ order.mobile|default('') }}" /></div>
-				    </div>
-				    <div id="checkout-billing-address">
-					    <h5>Billing Address</h5>
-					    <div class="info-message ui-status-highlight margin-bottom-5">
-							<span class="info-message-icon ui-icon ui-icon-info"></span>
-							<p class="small-message">Please enter the card holders name and address. This is the name and address on the statement of the card you want to pay with. You can select a different delivery address.</p>
-							<div class="clear"></div>
-						</div>
-					    <div class="clearfix">
-					        <label for="form-billing-first-name" class="form-label"><em>*</em> First Name<small>Enter your first name</small></label>
-						    <div class="form-input no-margin-bottom"><input data-message="Enter your first name" type="text" id="form-billing-first-name" name="billing-first-name" required="required" value="{{ order.billingFirstName|default('') }}" /><input type="hidden" id="form-first-name" name="first-name" value="{{ order.firstName|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-billing-last-name" class="form-label"><em>*</em> Last Name<small>Enter your last name</small></label>
-					        <div class="form-input"><input data-message="Enter your last name" type="text" id="form-billing-last-name" name="billing-last-name" required="required" value="{{ order.billingLastName|default('') }}" /><input type="hidden" id="form-last-name" name="last-name" value="{{ order.lastName|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-billing-organisation-name" class="form-label">Company<small>Enter the company name</small></label>
-					        <div class="form-input"><input type="text" id="form-billing-organisation-name" name="billing-organisation-name" value="{{ order.billingOrganisationName|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-billing-country-code" class="form-label"><em>*</em> Country</label>
-					        <div class="form-input no-margin-bottom">
-					        	<select id="form-billing-country-code" name="billing-country-code">
-					        		<option value="GB"{% if order.billingCountryCode == 'GB' %} selected="selected"{% endif %}>United Kingdom</option>
-					        		<option value="IE"{% if order.billingCountryCode == 'IE' %} selected="selected"{% endif %}>Republic of Ireland</option>
-					        	</select>
-					        </div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-billing-address-line-1" class="form-label"><em>*</em> Address Line 1</label>
-					        <div class="form-input no-margin-bottom"><input data-message="Enter the address" type="text" id="form-billing-address-line-1" name="billing-address-line-1" required="required" value="{{ order.billingAddressLine1|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-billing-address-line-2" class="form-label">Address Line 2</label>
-					        <div class="form-input no-margin-bottom"><input type="text" id="form-billing-address-line-2" name="billing-address-line-2" value="{{ order.billingAddressLine2|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-billing-town-city" class="form-label"><em>*</em> Town/City</label>
-					        <div class="form-input no-margin-bottom"><input data-message="Enter your Town or City" type="text" id="form-billing-town-city" name="billing-town-city" required="required" value="{{ order.billingTownCity|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-billing-county-state" class="form-label">County</label>
-					        <div class="form-input no-margin-bottom"><input type="text" id="form-billing-county-state" name="billing-county-state" value="{{ order.billingCountyState|default('') }}" /></div>
-					    </div>
-					     <div id="billing-post-zip-code-container" class="clearfix{% if order.billingCountryCode != 'GB' %} ui-helper-hidden{% endif %}">
-					        <label for="form-billing-post-zip-code" class="form-label"><em>*</em> Post Code</label>
-                            <div class="form-input no-margin-bottom"><input class="postcode" {% if app.enviroment == 'prod' %}data-validation-type="postcode" data-message="Enter a valid post code"{% endif %} type="text" id="form-billing-post-zip-code" name="billing-post-zip-code" required="required" value="{{ order.billingPostZipCode|default('') }}" /></div>
-					    </div>
-					    <div id="same-address-billing" class="same-addresses clearfix{% if order.billingCountryCode == 'IE' %} ui-helper-hidden{% endif %}">
-							<label for="form-same-delivery-address" class="form-label">&nbsp;</label>
-							<div class="form-input margin-bottom-15"><input type="checkbox"{% if order.sameDeliveryAddress < 1 %} checked="checked"{% endif %} id="form-same-delivery-address" name="same-delivery-address" value="1" />Do you want to deliver to a different address?</div>
-						</div>
-						<div id="republic-of-ireland-billing-address-message" class="clearfix margin-bottom-5 republic-of-ireland-address-message{% if order.billingCountryCode != 'IE' %} ui-helper-hidden{% endif %}">
-					        <div class="form-input no-margin-bottom">
-					        	<div class="info-message ui-status-highlight">
-									<span class="info-message-icon ui-icon ui-icon-info"></span>
-									<p class="small-message">Please note that the billing and delivery address need to be the same for all orders from the Republic of Ireland.</p>
-									<div class="clear"></div>
-								</div>
-					        </div>
-					    </div>
-					</div>
-					<div id="checkout-delivery-address"{% if (order.billingCountryCode == 'IE') or (order.sameDeliveryAddress > 0) %} class="ui-helper-hidden"{% endif %}>
-						<h5>Delivery Address</h5>
-						<div class="clearfix">
-					        <label for="form-delivery-first-name" class="form-label"><em>*</em> First Name<small>Enter your first name</small></label>
-						    <div class="form-input no-margin-bottom"><input{% if order.sameDeliveryAddress < 1 %} data-message="Enter your first name" required="required"{% endif %} type="text" id="form-delivery-first-name" name="delivery-first-name" value="{{ order.deliveryFirstName|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-delivery-last-name" class="form-label"><em>*</em> Last Name<small>Enter your last name</small></label>
-					        <div class="form-input no-margin-bottom"><input{% if order.sameDeliveryAddress < 1 %} data-message="Enter your last name" required="required"{% endif %} type="text" id="form-delivery-last-name" name="delivery-last-name" value="{{ order.deliveryLastName|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-delivery-organisation-name" class="form-label">Company<small>Enter the company name</small></label>
-					        <div class="form-input no-margin-bottom"><input type="text" id="form-delivery-organisation-name" name="delivery-organisation-name" value="{{ order.deliveryOrganisationName|default('') }}" /></div>
-					    </div>
-						<div class="clearfix">
-					        <label for="form-delivery-country-code" class="form-label"><em>*</em> Country</label>
-					        <div class="form-input no-margin-bottom">
-					        	<select id="form-delivery-country-code" name="delivery-country-code">
-					        		<option value="GB"{% if order.deliveryCountryCode == 'GB' %} selected="selected"{% endif %}>United Kingdom</option>
-					        		<option value="IE"{% if order.deliveryCountryCode == 'IE' %} selected="selected"{% endif %}>Republic of Ireland</option>
-					        	</select>
-					        </div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-delivery-address-line-1" class="form-label"><em>*</em> Address Line 1</label>
-					        <div class="form-input no-margin-bottom"><input{% if order.sameDeliveryAddress < 1 %} data-message="Enter the address" required="required"{% endif %} type="text" id="form-delivery-address-line-1" name="delivery-address-line-1" value="{{ order.deliveryAddressLine1|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-delivery-address-line-2" class="form-label">Address Line 2</label>
-					        <div class="form-input no-margin-bottom"><input type="text" id="form-delivery-address-line-2" name="delivery-address-line-2" value="{{ order.deliveryAddressLine2|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-delivery-town-city" class="form-label"><em>*</em> Town/City</label>
-					        <div class="form-input no-margin-bottom"><input{% if order.sameDeliveryAddress < 1 %} data-message="Enter your Town or City" required="required"{% endif %} type="text" id="form-delivery-town-city" name="delivery-town-city" value="{{ order.deliveryTownCity|default('') }}" /></div>
-					    </div>
-					    <div class="clearfix">
-					        <label for="form-delivery-county-state" class="form-label">County</label>
-					        <div class="form-input no-margin-bottom"><input type="text" id="form-delivery-county-state" name="delivery-county-state" value="{{ order.deliveryCountyState|default('') }}" /></div>
-					    </div>
-					    <div id="delivery-post-zip-code-container" class="clearfix{% if order.deliveryCountryCode != 'GB' %} ui-helper-hidden{% endif %}">
-					        <label for="form-delivery-post-zip-code" class="form-label"><em>*</em> Post Code</label>
-					        <div class="form-input margin-bottom-15"><input{% if order.sameDeliveryAddress < 1 and app.enviroment == 'prod' %}data-validation-type="postcode" data-message="Enter a valid post code" required="required"{% endif %} class="postcode" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" value="{{ order.deliveryPostZipCode|default('') }}" /></div>
-					    </div>
-					</div>
-					<h5>Special Instructions</h5>
-					{% if basket.delivery.band > 3 %}
-						<div class="info-message ui-status-highlight margin-bottom-5">
-							<span class="info-message-icon ui-icon ui-icon-info"></span>
-							<p class="small-message">If you need your items delivered at a later date we can store them in our secure warehouse at no extra cost. Just let us know a week commencing date below.</p>
-							<div class="clear"></div>
-						</div>
-						<div id="checkout-requested-delivery-date" class="clearfix">
-					        <label id="label-requested-delivery-date" for="form-requested-delivery-date" class="form-label al">Week Commencing Date<small class="al">Select week commencing date</small></label>
-						    <div class="form-input margin-bottom-5"><input type="text" id="form-requested-delivery-date" name="requested-delivery-date" value="{% if (basket.delivery.requestedDeliveryDate != "") and (basket.delivery.requestedDeliveryDate != "Deliver ASAP") and (basket.delivery.requestedDeliveryDate != "Collect ASAP") %}{{ basket.delivery.requestedDeliveryDate|date("l j F Y") }}{% else %}{% if basket.delivery.service == 'Collection' %}Collect{% else %}Deliver{% endif %} ASAP{% endif %}" /></div>
-					    </div>
-					{% endif %}
-					<div class="clearfix">
-				        <label for="form-notes" class="form-label full al">Special Requirements<small class="full al">If you have any special delivery requirements please enter them</small></label>
-				    </div>
-				    <div class="clearfix">
-					    <div class="form-input no-margin-left no-margin-bottom"><textarea id="form-notes" rows="6" name="notes">{{ basket.delivery.notes|default('') }}</textarea></div>
-				    </div>
-				    <div class="clearfix">
-						<div class="form-input no-margin-left ac"><input type="checkbox" id="form-accept-terms-and-conditions" name="accept-terms-and-conditions" checked="checked" />I have read and agreed to your <a target="_blank" href="{{ path('content_terms_and_conditions') }}">Terms and Conditions</a>.</div>
-					</div>
-					<div id="payment-type-sagePay" class="clearfix">
-                        {% if app.enviroment != 'prod' %}
-                        <form id="submit-payment-sagePay" method="POST" action="https://test.sagepay.com/gateway/service/vspform-register.vsp">
-                        {% else %}
-                        <form id="submit-payment-sagePay" method="POST" action="https://live.sagepay.com/gateway/service/vspform-register.vsp">
+    <header>
+        <h1>Secure Checkout</h1>
+    </header>
+    <section class="clearfix">
+        <div class="widget-group clearfix">
+            <div class="widget widget-3-of-5">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Your Details</h2>
+                    </header>
+                    <section id="checkout-details" class="ui-widget-content widget-content ui-corner-bottom">
+                        {% if order.paymentAttempt > 1 and orderObject is defined %}
+                            <p><strong>Sorry, there was a problem placing your order. No money has been taken from your card. Please try again or <a href="{{ path('content_contact_us') }}">contact us</a> if you have any questions.</strong></p>
+                            {% if (orderObject.paymentType == 'PayPal through SagePay') or (orderObject.paymentType == 'SagePay') %}
+                                <div class="message message-error">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-851"></span>
+                                    <p><strong>{{ orderObject.paymentResponse.Status }}:</strong> {{ orderObject.paymentResponse.StatusDetail }}</p>
+                                </div>
+                            {% endif %}
+                            <div class="message message-help">
+                                <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
+                                <p>We have noticed you may be having problems placing the order. Please ensure the billing details match that of the cardholder below and make any required changes. If you have any problems please <a href="{{ path('content_contact_us') }}">contact us</a>.</p>
+                            </div>
                         {% endif %}
-							<input type="hidden" id="sage-pay-vsp-protocol" name="VPSProtocol" value="{{ order.paymentProcess.vspProtocol|default('') }}"/>
-							<input type="hidden" id="sage-pay-vendor" name="Vendor" value="{{ order.paymentProcess.vendor|default('') }}"/>
-							<input type="hidden" id="sage-pay-tx-type" name="TxType" value="{{ order.paymentProcess.txType|default('') }}"/>
-							<input type="hidden" id="sage-pay-crypt" name="Crypt" value="{{ order.paymentProcess.crypt|default('') }}"/>
-						</form>
-			        </div>
-			        <div id="float-save-order" class="no-margin">
-				        <div id="float-save-order-content" class="float-save-order-sticky ac clearfix buttons">
-					        <button data-payment-type="sagePay" class="action-submit-payment button ui-button-green" data-icon-primary="ui-icon-check">Confirm Your Order and Pay Securely Through SagePay or PayPal</button>
-					    </div>
-					</div>
-                </section>
+                        <div class="message message-error ui-helper-hidden"></div>
+                        <h4>Your Details</h4>
+                        <div class="form-element widget-group clearfix">
+                            <span title="Enter a valid email address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="form-email-address"><span class="required">*</span> Email Address</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <input type="email" id="form-email-address" data-message="Enter a valid email address." required="required" name="email-address" class="fill" value="{{ order.emailAddress|default('') }}" />
+                            </div>
+                        </div>
+                        <div class="form-element mbl widget-group clearfix">
+                            <span title="Confirm your email address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="form-confirm-email-address"><span class="required">*</span> Confirm Email Address</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <input type="email" id="form-confirm-email-address" data-message="Confirm your email address." required="required" name="confirm-email-address" class="fill" value="{{ order.emailAddress|default('') }}" />
+                            </div>
+                        </div>
+                        <div class="form-element widget-group clearfix">
+                            <span title="Enter a valid telephone number." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="form-telephone-daytime"><span class="required">*</span> Telephone (Daytime)</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <input type="text" id="form-telephone-daytime" data-message="Enter a valid telephone number." required="required" name="telephone-daytime" class="fill integer" value="{{ order.telephoneDaytime|default('') }}" />
+                            </div>
+                        </div>
+                        <div class="form-element mbl widget-group clearfix">
+                            <span title="Enter a valid telephone number." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="form-telephone-evening">Telephone (Evening)</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <input type="text" id="form-telephone-evening" data-message="Enter a valid telephone number." name="telephone-evening" class="fill integer" value="{{ order.telephoneEvening|default('') }}" />
+                            </div>
+                        </div>
+                        <div class="message message-help">
+                            <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
+                            <p>Although we do not require your mobile number, we would be able to keep you up-to-date with your order progress by text message if you did supply your mobile number.</p>
+                        </div>
+                        <div class="form-element widget-group clearfix">
+                            <span title="Enter a valid mobile number." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="form-mobile">Mobile</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <input type="text" id="form-mobile" data-message="Enter a valid mobile number." name="mobile" class="fill integer" value="{{ order.mobile|default('') }}" />
+                            </div>
+                        </div>
+                        <div class="mtl" id="checkout-billing-address">
+                            <h4>Billing Address</h4>
+                            <div class="message message-help">
+                                <span class="ui-button-icon-primary ui-icon icon-orange icon-695"></span>
+                                <p>Please enter the card holders name and address. This is the name and address on the statement of the card you want to pay with. You can select a different delivery address.</p>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter your first name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-first-name"><span class="required">*</span> First Name</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-first-name" data-message="Enter your first name." required="required" name="billing-first-name" class="fill" value="{{ order.firstName|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element mbl widget-group clearfix">
+                                <span title="Enter your last name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-last-name"><span class="required">*</span> Last Name</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-last-name" data-message="Enter your last name." required="required" name="billing-last-name" class="fill" value="{{ order.lastName|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element mbl widget-group clearfix">
+                                <span title="Enter the company name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-organisation-name">Company</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-organisation-name" data-message="Enter the company name." name="billing-organisation-name" class="fill" value="{{ order.billingOrganisationName|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Select a country." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-country-code"><span class="required">*</span> Country</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select id="form-billing-country-code" data-message="Select a country." name="billing-country-code" class="fill" >
+                                        <option value="GB"{% if order.billingCountryCode == 'GB' %} selected="selected"{% endif %}>United Kingdom</option>
+                                        <option value="IE"{% if order.billingCountryCode == 'IE' %} selected="selected"{% endif %}>Republic of Ireland</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter the address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-address-line-1"><em>*</em> Address Line 1</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-address-line-1" data-message="Enter the address." required="required" name="billing-address-line-1" class="fill" value="{{ order.billingAddressLine1|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter the address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-address-line-2">Address Line 2</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-address-line-2" data-message="Enter the address." name="billing-address-line-2" class="fill" value="{{ order.billingAddressLine2|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter your town or city." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-town-city"><em>*</em> Town/City</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-town-city" data-message="Enter your town or city." required="required" name="billing-town-city" class="fill" value="{{ order.billingTownCity|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter the county." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-county-state">County</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-county-state" data-message="Enter the county." name="billing-county-state" class="fill" value="{{ order.billingCountyState|default('') }}" />
+                                </div>
+                            </div>
+                            <div id="billing-post-zip-code-container" class="form-element widget-group clearfix{% if order.billingCountryCode != 'GB' %} ui-helper-hidden{% endif %}">
+                                <span title="Enter a valid post code." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-billing-post-zip-code"><em>*</em> Postcode</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-billing-post-zip-code" data-message="Enter a valid postcode." required="required" name="billing-post-zip-code" value="{{ order.billingPostZipCode|default('') }}" />
+                                </div>
+                            </div>
+                            <div id="same-address-billing" class="form-element same-addresses widget-group clearfix{% if order.billingCountryCode == 'IE' %} ui-helper-hidden{% endif %}">
+                                <div class="widget widget-1-of-3">
+                                    <label>&nbsp;</label>
+                                </div>
+                                <div class="widget checker-group widget-2-of-3">
+                                    <div class="clearfix">
+                                        <input{% if order.sameDeliveryAddress < 1 %} checked="checked"{% endif %} type="checkbox" id="form-same-delivery-address" name="same-delivery-address" value="1" />
+                                        <label for="form-same-delivery-address">Do you want to deliver to a different address?</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="republic-of-ireland-billing-address-message" class="message message-help{% if order.billingCountryCode != 'IE' %} ui-helper-hidden{% endif %}">
+                                <span class="ui-button-icon-primary ui-icon icon-orange icon-695"></span>
+                                <p>Please note that the billing and delivery address need to be the same for all orders from the Republic of Ireland.</p>
+                            </div>
+                        </div>
+                        <div class="mtl{% if (order.billingCountryCode == 'IE') or (order.sameDeliveryAddress > 0) %} ui-helper-hidden{% endif %}" id="checkout-delivery-address">
+                            <h4>Delivery Address</h4>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter your first name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-first-name"><span class="required">*</span> First Name</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-first-name" data-message="Enter your first name." required="required" name="delivery-first-name" class="fill" value="{{ order.deliveryFirstName|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element mbl widget-group clearfix">
+                                <span title="Enter your last name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-last-name"><span class="required">*</span> Last Name</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-last-name" data-message="Enter your last name." required="required" name="delivery-last-name" class="fill" value="{{ order.deliveryLastName|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element mbl widget-group clearfix">
+                                <span title="Enter the company name." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-organisation-name">Company</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-organisation-name" data-message="Enter the company name." name="delivery-organisation-name" class="fill" value="{{ order.deliveryOrganisationName|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Select a country." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-country-code"><span class="required">*</span> Country</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <select id="form-delivery-country-code" data-message="Select a country." name="delivery-country-code" class="fill" >
+                                        <option value="GB"{% if order.deliveryCountryCode == 'GB' %} selected="selected"{% endif %}>United Kingdom</option>
+                                        <option value="IE"{% if order.deliveryCountryCode == 'IE' %} selected="selected"{% endif %}>Republic of Ireland</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter the address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-address-line-1"><em>*</em> Address Line 1</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-address-line-1" data-message="Enter the address." required="required" name="delivery-address-line-1" class="fill" value="{{ order.deliveryAddressLine1|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter the address." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-address-line-2">Address Line 2</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-address-line-2" data-message="Enter the address." name="delivery-address-line-2" class="fill" value="{{ order.deliveryAddressLine2|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter your town or city." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-town-city"><em>*</em> Town/City</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-town-city" data-message="Enter your town or city." required="required" name="delivery-town-city" class="fill" value="{{ order.deliveryTownCity|default('') }}" />
+                                </div>
+                            </div>
+                            <div class="form-element widget-group clearfix">
+                                <span title="Enter the county." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-county-state">County</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-county-state" data-message="Enter the county." name="delivery-county-state" class="fill" value="{{ order.deliveryCountyState|default('') }}" />
+                                </div>
+                            </div>
+                            <div id="delivery-post-zip-code-container" class="form-element widget-group clearfix{% if order.deliveryCountryCode != 'GB' %} ui-helper-hidden{% endif %}">
+                                <span title="Enter a valid post code." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label for="form-delivery-post-zip-code"><em>*</em> Postcode</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-delivery-post-zip-code" data-message="Enter a valid postcode." required="required" name="delivery-post-zip-code" value="{{ order.deliveryPostZipCode|default('') }}" />
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mtl">Special Instructions</h4>
+                        {% if basket.delivery.band > 3 %}
+                            <div class="message message-help">
+                                <span class="ui-button-icon-primary ui-icon icon-orange icon-695"></span>
+                                <p>If you need your items delivered at a later date we can store them in our secure warehouse at no extra cost. Just let us know a week commencing date below.</p>
+                            </div>
+                            <div id="checkout-requested-delivery-date" class="form-element widget-group clearfix">
+                                <span title="Select a week commencing date." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                <div class="widget widget-1-of-3">
+                                    <label id="label-requested-delivery-date" for="form-requested-delivery-date">Week Commencing Date</label>
+                                </div>
+                                <div class="widget widget-2-of-3">
+                                    <input type="text" id="form-requested-delivery-date" data-message="Enter the address." name="requested-delivery-date" class="fill" value="{% if (basket.delivery.requestedDeliveryDate != "") and (basket.delivery.requestedDeliveryDate != "Deliver ASAP") and (basket.delivery.requestedDeliveryDate != "Collect ASAP") %}{{ basket.delivery.requestedDeliveryDate|date("l j F Y") }}{% else %}{% if basket.delivery.service == 'Collection' %}Collect{% else %}Deliver{% endif %} ASAP{% endif %}" />
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="form-element widget-group clearfix">
+                            <span title="If you have any special delivery requirements enter them below." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                            <div class="widget widget-1-of-3">
+                                <label for="form-notes">Special Requirements</label>
+                            </div>
+                            <div class="widget widget-2-of-3">
+                                <textarea id="form-notes" data-message="If you have any special delivery requirements enter them below." name="notes" class="fill" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-element widget-group clearfix">
+                            <div class="widget widget-1-of-3">
+                                <label>&nbsp;</label>
+                            </div>
+                            <div class="widget checker-group widget-2-of-3">
+                                <div class="clearfix">
+                                    <input checked="checked" type="checkbox" required="required" data-message="To proceed you need to accept that you have read and agreed to our Terms and Conditions." id="form-accept-terms-and-conditions" name="accept-terms-and-conditions" value="1" />
+                                    <label for="form-accept-terms-and-conditions">I have read and agreed to your<br /><a target="_blank" href="{{ path('content_terms_and_conditions') }}">Terms and Conditions</a>.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="payment-type-sagePay" class="clearfix">
+                            <form id="submit-payment-sagePay" method="POST" action="https://live.sagepay.com/gateway/service/vspform-register.vsp">
+                                <input type="hidden" id="sage-pay-vsp-protocol" name="VPSProtocol" value="{{ order.paymentProcess.vspProtocol|default('') }}"/>
+                                <input type="hidden" id="sage-pay-vendor" name="Vendor" value="{{ order.paymentProcess.vendor|default('') }}"/>
+                                <input type="hidden" id="sage-pay-tx-type" name="TxType" value="{{ order.paymentProcess.txType|default('') }}"/>
+                                <input type="hidden" id="sage-pay-crypt" name="Crypt" value="{{ order.paymentProcess.crypt|default('') }}"/>
+                            </form>
+                        </div>
+                        <div class="tac clearfix">
+                            <button data-payment-type="sagePay" class="action-submit-payment button button-green icon-white" data-icon-secondary="icon-472">Confirm Your Order and Pay Securely Through SagePay or PayPal</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-2-of-5">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Your Basket</h2>
+                    </header>
+                    <section class="ui-widget-content widget-content ui-corner-bottom">
+                        <div id="order-information-loading" class="clearfix ac">
+                            <img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                            <p>Loading your order details&hellip;</p>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="order-information" class="ui-helper-hidden"></div>
+                    </section>
+                </div>
             </div>
         </div>
-        <div id="float-your-order" class="grid_2_5 margin-top-10">
-        	<div class="portlet">
-                <header>
-                    <h2>Your Order</h2>
-                </header>
-                <section>
-                	<div id="order-information-loading" class="clearfix ac">
-						<img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
-						<p>Loading your order details&hellip;</p>
-						<div class="clear"></div>
-					</div>
-					<div id="order-information" class="ui-helper-hidden"></div>
-                </section>
-        	</div>
-        </div>
-	   	<div class="clear"></div>
-	</section>
+    </section>
 {% endblock %}
 {% block javascripts %}
 	{{ parent() }}

@@ -25,12 +25,10 @@ class User extends BaseUser
      */
     private $contact;
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->contacts = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type = 'standard';
 
     /**
      * Sets the email.
@@ -90,5 +88,21 @@ class User extends BaseUser
         $contact->setUser($this);
     
         return $this;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

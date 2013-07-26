@@ -2,6 +2,7 @@
 
 namespace KAC\SiteBundle\Controller;
 
+use KAC\SiteBundle\Entity\Contact;
 use KAC\SiteBundle\Entity\Order;
 use KAC\SiteBundle\Form\Basket\BasketType;
 use KAC\SiteBundle\Form\Basket\NewBasketItemType;
@@ -29,6 +30,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/")
@@ -36,7 +39,6 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 class CheckoutController extends Controller
 {
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout.html", name="checkout")
      */
     public function checkoutAction(Request $request)
@@ -64,14 +66,19 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-about.html", name="checkout_about")
      */
     public function checkoutAboutAction(Request $request)
     {
+        // Check if the user is logged in or if the user is trying to checkout as guest
+        if(!$request->query->get('guest') && !$this->get('security.context')->isGranted('ROLE_USER'))
+        {
+            return $this->redirectToLogin();
+        }
 
         $em = $this->getDoctrine()->getManager();
         $manager = $this->get('kac_site.manager.order');
+        $userManager = $this->container->get('fos_user.user_manager');
 
         // Get order
         $order = $manager->getOpenOrder();
@@ -102,8 +109,63 @@ class CheckoutController extends Controller
         $form = $this->createForm(new AboutType($basket->getDelivery()->getDeliveryOptions()), $order);
         $form->handleRequest($request);
 
+        $user = null;
+        if($order->getEmailAddress() && ($user = $userManager->findUserByEmail($order->getEmailAddress())))
+        {
+            // Check that the account is a guest account otherwise do not let the user use this email address
+            if($user->getType() !== 'guest')
+            {
+                $form->addError(new FormError('That E-Mail address is already being used, please use another email address or login.'));
+            }
+        }
+
         if($form->isValid())
         {
+            // If user is guest create a new account with the given email address
+            if(!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') && $request->query->get('guest', true))
+            {
+                /**
+                 * Check that the user has not already use this email address to register
+                 * @var $user User
+                 */
+                if(($user = $userManager->findUserByEmail($order->getEmailAddress())))
+                {
+                    $order->setUser($user);
+                    $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
+
+                    $context = $this->container->get('security.context');
+                    $context->setToken($token);
+                } else {
+                    $user = $userManager->createUser();
+                    $user->setUsername($order->getEmailAddress());
+                    $user->setEmail($order->getEmailAddress());
+                    $user->setPlainPassword('password');
+                    $user->setEnabled(false);
+                    $user->setSuperAdmin(false);
+                    $user->setRoles(array('ROLE_GUEST'));
+                    $user->setType('guest');
+
+                    $contact = new Contact();
+                    if($order->getTelephoneDaytime()) {
+                        $contact->setTelephoneDaytime(new Contact\Number($order->getTelephoneDaytime()));
+                    }
+                    if($order->getTelephoneEvening()) {
+                        $contact->setTelephoneEvening(new Contact\Number($order->getTelephoneDaytime()));
+                    }
+                    if($order->getMobile()) {
+                        $contact->setTelephoneMobile(new Contact\Number($order->getTelephoneDaytime()));
+                    }
+                    $user->setContact($contact);
+                    $userManager->updateUser($user);
+                    $order->setUser($user);
+
+                    $token = new UsernamePasswordToken($user, $user->getPassword(), 'checkout', $user->getRoles());
+
+                    $context = $this->container->get('security.context');
+                    $context->setToken($token);
+                }
+            }
+
             if ($form->get('updateDelivery')->isClicked()) {
                 $manager->updateDeliveryInfo($order, $basket);
                 $manager->saveOrder();
@@ -126,11 +188,16 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-billing.html", name="checkout_billing")
      */
     public function checkoutBillingAction(Request $request)
     {
+        // Check if the user is logged in and has the correct permissions
+        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
+        {
+            return $this->redirectToLogin();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $manager = $this->get('kac_site.manager.order');
 
@@ -201,11 +268,16 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-delivery.html", name="checkout_delivery")
      */
     public function checkoutDeliveryAction(Request $request)
     {
+        // Check if the user is logged in and has the correct permissions
+        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
+        {
+            return $this->redirectToLogin();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $manager = $this->get('kac_site.manager.order');
 
@@ -263,11 +335,16 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-payment.html", name="checkout_payment")
      */
     public function checkoutPaymentAction(Request $request)
     {
+        // Check if the user is logged in and has the correct permissions
+        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
+        {
+            return $this->redirectToLogin();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $manager = $this->get('kac_site.manager.order');
 
@@ -396,11 +473,16 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-confirm.html", name="checkout_confirmation")
      */
     public function checkoutConfirmationAction(Request $request)
     {
+        // Check if the user is logged in and has the correct permissions
+        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
+        {
+            return $this->redirectToLogin();
+        }
+
         $em = $this->getDoctrine()->getManager();
         $manager = $this->get('kac_site.manager.order');
 
@@ -481,11 +563,16 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-complete.html", name="checkout_complete")
      */
     public function checkoutCompleteAction(Request $request)
     {
+        // Check if the user is logged in and has the correct permissions
+        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
+        {
+            return $this->redirectToLogin();
+        }
+
         $manager = $this->get('kac_site.manager.order');
 
         // Get order
@@ -497,7 +584,6 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-cancel.html", name="checkout_cancel")
      */
     public function checkoutCancelAction(Request $request)
@@ -512,7 +598,6 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_USER")
      * @Route("/checkout-refresh.html", name="checkout_refresh")
      */
     public function checkoutRefreshAction(Request $request)
@@ -521,5 +606,12 @@ class CheckoutController extends Controller
         $manager->updateBasket();
 
         return $this->redirect($request->query->has('url') ? $request->query->get('url') : $this->generateUrl('checkout'));
+    }
+
+    protected function redirectToLogin()
+    {
+        $this->getRequest()->getSession()->set('_security.main.target_path', $this->getRequest()->getUri());
+
+        return new RedirectResponse($this->generateUrl('checkout_login'));
     }
 }
