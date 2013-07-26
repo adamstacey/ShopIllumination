@@ -471,11 +471,17 @@ table.data-table .price .currency-tax {
 .jstree .jstree-open ins {
     _background-position: -36px 0;
 }
+
 .jstree .jstree-closed ins {
     _background-position: -18px 0;
 }
+
 .jstree .jstree-leaf ins {
     _background-position: 0 0;
+}
+
+.jstree a > ins {
+    display: none;
 }
 
 @media
