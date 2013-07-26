@@ -293,7 +293,7 @@ div.border-spacer
   	-moz-box-shadow: 0 1px 2px #26292E;
   	box-shadow: 0 1px 2px #26292E;
 }
-#wrapper > header > .unique-selling-points-container
+#wrapper > header > .sub-menu
 {
 	width: 100%;
 	height: 30px;
@@ -315,7 +315,7 @@ div.border-spacer
 	overflow: hidden;
 }
 
-#wrapper > header > .unique-selling-points-container .unique-selling-point
+#wrapper > header > .sub-menu .unique-selling-point
 {
 	width: 296px;
 	height: 30px;
@@ -326,18 +326,18 @@ div.border-spacer
 	-moz-box-shadow: inset -1px 0 #CCC;
 	box-shadow: inset -1px 0 #CCC;
 }
-#wrapper > header > .unique-selling-points-container .last-unique-selling-point
+#wrapper > header > .sub-menu .last-unique-selling-point
 {
 	height: 30px;
 	float: left;
 	padding: 0 0 0 15px;
 	width: 311px;
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point img, #wrapper > header > .unique-selling-points-container .last-unique-selling-point img
+#wrapper > header > .sub-menu .unique-selling-point img, #wrapper > header > .sub-menu .last-unique-selling-point img
 {
 	float: left;
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point > h3, #wrapper > header > .unique-selling-points-container .last-unique-selling-point h3
+#wrapper > header > .sub-menu .unique-selling-point > h3, #wrapper > header > .sub-menu .last-unique-selling-point h3
 {
 	float: left;
 	padding: 0 0 0 15px;
@@ -352,7 +352,7 @@ div.border-spacer
 	text-shadow: 0 1px 0 rgb(238,238,238);
 	text-shadow: 0 1px 0 rgba(238,238,238,1);
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point > h3 a, #wrapper > header > .unique-selling-points-container .last-unique-selling-point h3 a
+#wrapper > header > .sub-menu .unique-selling-point > h3 a, #wrapper > header > .sub-menu .last-unique-selling-point h3 a
 {
 	line-height: 16px;
 	font-size: 13px;
@@ -365,7 +365,7 @@ div.border-spacer
 	text-shadow: 0 1px 0 rgb(238,238,238);
 	text-shadow: 0 1px 0 rgba(238,238,238,1);
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point > p, #wrapper > header > .unique-selling-points-container .last-unique-selling-point p
+#wrapper > header > .sub-menu .unique-selling-point > p, #wrapper > header > .sub-menu .last-unique-selling-point p
 {
 	float: left;
 	padding: 0 0 0 15px;
@@ -377,7 +377,7 @@ div.border-spacer
 	text-shadow: 0 1px 0 rgb(238,238,238);
 	text-shadow: 0 1px 0 rgba(238,238,238,1);
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point > p a, #wrapper > header > .unique-selling-points-container .last-unique-selling-point p a
+#wrapper > header > .sub-menu .unique-selling-point > p a, #wrapper > header > .sub-menu .last-unique-selling-point p a
 {
 	line-height: 14px;
 	font-size: 10px;

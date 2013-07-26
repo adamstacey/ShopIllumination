@@ -1,0 +1,46 @@
+<div class="sub-menu">
+	<div class="container">
+        <div class="widget-group clearfix">
+            {% block submenu %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-93"></span></a>
+                        <h2><a href="{{ path('departments_index') }}">Departments</a></h2>
+                    </div>
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('admin_brands') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1020"></span></a>
+                        <h2><a href="{{ path('admin_brands') }}">Brands</a></h2>
+                    </div>
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('listing_products') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1020"></span></a>
+                        <h2><a href="{{ path('listing_products') }}">Products</a></h2>
+                    </div>
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('admin_orders') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-250"></span></a>
+                        <h2><a href="{{ path('admin_orders') }}">Orders</a></h2>
+                    </div>
+                {% else %}
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('content_contact_us') }}"><span title="If you need any help or advice we are on hand to help you" class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-297"></span></a>
+                        <h3><a href="{{ path('content_contact_us') }}">Need Help or Advice?</a></h3>
+                        <p><a href="{{ path('content_contact_us') }}">For any advice call our UK call centre</a></p>
+                    </div>
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('content_delivery') }}"><span title="Free UK Delivery - Find out more about our delivery" class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-543"></span></a>
+                        <h3><a href="{{ path('content_delivery') }}">Free Delivery Offer <span class="colour-red">*</span></a></h3>
+                        <p><a href="{{ path('content_delivery') }}"><span class="colour-red">*</span> To most UK areas on selected items</a></p>
+                    </div>
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('content_contact_us') }}"><span title="Save with our package deals" class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1114"></span></a>
+                        <h3><a href="{{ path('content_contact_us') }}">Save with our Packages</a></h3>
+                        <p><a href="{{ path('content_contact_us') }}">Need 3+ large appliances? Contact us</a></p>
+                    </div>
+                    <div class="widget widget-1-of-4">
+                        <a class="fl" href="{{ path('content_contact_us') }}"><span title="Call 01159 385 111 - For any advice call our UK call centre" class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-318"></span></a>
+                        <h2><a href="{{ path('content_contact_us') }}">01159 385 111</a></h2>
+                    </div>
+                {% endif %}
+            {% endblock %}
+        </div>
+	</div>
+</div>
