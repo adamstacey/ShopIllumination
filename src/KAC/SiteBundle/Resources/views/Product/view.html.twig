@@ -3,7 +3,7 @@
 
 {% block title %}{{ product.description.pageTitle }} | {{ parent() }}{% endblock %}
 
-{% block submenu %}
+{% block admin_submenu %}
     {{ parent() }}
     <div class="widget widget-1-of-4">
         <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-95"></span></a>
