@@ -3,15 +3,20 @@
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-399"></span>
                     <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
+                        <p>If you need the product to appear in any additional departments you can add the additional departments below.</p>
+                    </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset class="pbm">
-                        <table class="form-table" id="departmentList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.departments.vars.prototype} %}{% endfilter %}">
+                        <table class="form-table sortable" id="departmentList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.departments.vars.prototype} %}{% endfilter %}">
                             <thead>
                                 <tr>
+                                    <th width="1">&nbsp;</th>
                                     <th width="1">&nbsp;</th>
                                     <th>Department</th>
                                     <th width="1">&nbsp;</th>
@@ -21,8 +26,8 @@
                                 <tr class="no-data">
                                     <td colspan="4">
                                         <div class="message message-help mas">
-                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                            <p>There are no departments. Add a combination using the "Add" button below.</p>
+                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-1130"></span>
+                                            <p>There are no departments. Add a department using the "Add" button below.</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -40,9 +45,18 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
+        var $placholderOption = $('<option value="">- Select a Department -</option>');
         $("select.select-department").select2();
         $("#departmentList").on("rowadded", function() {
-            $("select.select-department").select2();
+            $("select.select-department").each(function() {
+                $(this).select2();
+                if ($(this).find("option[value='']").length < 1) {
+                    $(this).prepend($placholderOption).select2();
+                }
+                if ($(this).find("option[selected='selected']").length < 1) {
+                    $(this).select2("val", "");
+                }
+            });
         });
     })
 </script>

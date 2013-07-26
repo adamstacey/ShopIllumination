@@ -1,14 +1,14 @@
-2<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-700"></span>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-701"></span>
                     <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     <div class="message message-help">
-                        <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
+                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
                         <p><strong>NOTE:</strong> The first combination will be the default combination displayed in a product, so it is important that you order the combinations below to reflect this.</p>
                     </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
