@@ -479,4 +479,6 @@ INSERT INTO `types` (`id`, `name`, `object_type`, `created_at`, `updated_at`) VA
 (6, 'Edging', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
 (7, 'Finishing Touch', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00');
 ALTER TABLE orders ADD royal_mail_import_line INT DEFAULT 0;
+ALTER TABLE  `order_products` DROP FOREIGN KEY  `FK_5242B8EB4584665A` ;
+ALTER TABLE  `order_products` DROP FOREIGN KEY  `FK_5242B8EB3B69A9AF` ;
 SET FOREIGN_KEY_CHECKS = 1;
