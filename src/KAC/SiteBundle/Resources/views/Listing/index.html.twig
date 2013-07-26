@@ -19,8 +19,9 @@
     <meta name="fragment" content="!">
 {% endblock %}
 
-{% if department is null and brand is null %}
-    {% block submenu %}
+
+{% block submenu %}
+    {% if department is null and brand is null %}
         <div class="widget widget-1-of-4">
             <a class="fl" href="{{ path('listing_products') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-947"></span></a>
             <h3 class="pts pbs"><a href="{{ path('listing_products') }}">View Products</a></h3>
@@ -29,9 +30,7 @@
             <a class="fl" href="{{ path('products_new') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1121"></span></a>
             <h3 class="pts pbs"><a href="{{ path('products_new') }}">New Product</a></h3>
         </div>
-    {% endblock %}
-{% elseif department is null and brand is not null %}
-    {% block submenu %}
+    {% elseif department is null and brand is not null %}
         <div class="widget widget-1-of-4">
             <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-947"></span></a>
             <h3 class="pts pbs"><a href="{{ path('departments_index') }}">View Departments</a></h3>
@@ -40,9 +39,7 @@
             <a class="fl" href="{{ path('departments_new') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1121"></span></a>
             <h3 class="pts pbs"><a href="{{ path('departments_new') }}">New Department</a></h3>
         </div>
-    {% endblock %}
-{% elseif brand is null and department is not null %}
-    {% block submenu %}
+    {% elseif brand is null and department is not null %}
         <div class="widget widget-1-of-4">
             <a class="fl" href="{{ path('admin_brands') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-947"></span></a>
             <h3 class="pts pbs"><a href="{{ path('admin_brands') }}">View Brands</a></h3>
@@ -51,8 +48,10 @@
             <a class="fl" href="{{ path('admin_brands_add') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1121"></span></a>
             <h3 class="pts pbs"><a href="{{ path('admin_brands_add') }}">New Brand</a></h3>
         </div>
-    {% endblock %}
-{% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
 
 {% block header %}
     <div class="widget-group clearfix mbm">
