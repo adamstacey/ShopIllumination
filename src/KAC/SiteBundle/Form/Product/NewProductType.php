@@ -31,7 +31,7 @@ class NewProductType extends AbstractType
                     'label' => 'Brand',
                     'attr' => array(
                         'class' => 'fill no-uniform select-brand',
-                        'data-help' => 'Select the brand you want this department to fall under.',
+                        'data-help' => 'Select the brand you want this product to fall under.',
                         'data-placeholder' => '- Select a Brand -',
                         'placeholder' => '- Select a Brand -',
                     ),
@@ -56,13 +56,6 @@ class NewProductType extends AbstractType
                     'attr' => array(
                         'class' => 'fill',
                         'data-help' => 'Select the template the product will use when a user visits the product.',
-                    ),
-                ));
-                $builder->add('availableForPurchase', 'checkbox', array(
-                    'required' => false,
-                    'label' => 'Available',
-                    'attr' => array(
-                        'data-help' => 'Is the product available to purchase?',
                     ),
                 ));
                 $builder->add('featureComparison', 'checkbox', array(
@@ -109,18 +102,17 @@ class NewProductType extends AbstractType
                 ));
 
                 break;
-            case 3:
-                $builder->add('features', 'collection', array(
-                    'type' => new ProductFeatureCombinationType($options['departmentId']),
+            case 2:
+                $builder->add('departments', 'collection', array(
+                    'type' => new ProductDepartmentType(),
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
                 ));
-
                 break;
-            case 2:
-                $builder->add('departments', 'collection', array(
-                    'type' => new ProductDepartmentType(),
+            case 3:
+                $builder->add('features', 'collection', array(
+                    'type' => new ProductFeatureCombinationType($options['departmentId']),
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
