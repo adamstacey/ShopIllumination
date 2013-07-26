@@ -144,22 +144,22 @@ table.listing td a {
     margin: $spacingSmall $spacingMedium $spacingSmall 0;
 }
 
-.ui-widget-content ul {
+.widget-content ul {
     margin: 0 0 $spacingMedium $spacingExtraLarge;
     color: $primaryColour !important;
 }
 
-.ui-widget-content ul li {
+.widget-content ul li {
     margin: 0 0 0 $spacingMedium;
     color: $textColour !important;
     line-height: 150%;
 }
 
-.ui-widget-content dl {
+.widget-content dl {
     margin: 0 0 $spacingMedium 0;
 }
 
-.ui-widget-content dt {
+.widget-content dt {
     width: 40%;
     padding: $spacingSmall;
     margin: 0 0 $spacingExtraSmall 0;
@@ -177,7 +177,7 @@ table.listing td a {
     color: $colourGreyDark;
 }
 
-.ui-widget-content dd {
+.widget-content dd {
     width: 60%;
     padding: $spacingSmall;
     margin: 0 0 $spacingExtraSmall 0;
