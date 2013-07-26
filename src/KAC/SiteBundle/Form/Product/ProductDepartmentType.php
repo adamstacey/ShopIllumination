@@ -17,7 +17,8 @@ class ProductDepartmentType extends AbstractType
             'class' => 'KAC\SiteBundle\Entity\Department',
             'query_builder' => function(DepartmentRepository $er) {
                 $rootNodes = $er->getRootNodes();
-                if(count($rootNodes) != 1) {
+                if (count($rootNodes) != 1)
+                {
                     return $er->createQueryBuilder('d');
                 } else {
                     return $er->childrenQueryBuilder($rootNodes[0])
@@ -29,10 +30,13 @@ class ProductDepartmentType extends AbstractType
             'label' => 'Department',
             'required' => true,
             'attr' => array(
-                'class' => 'select-department fill no-uniform',
-                'data-help' => 'Select the department you want this department to fall under.',
+                'class' => 'fill no-uniform select-department',
+                'data-help' => 'Select a department you want the product to fall under.',
+                'data-placeholder' => '- Select a Department -',
+                'placeholder' => '- Select a Department -',
             ),
         ));
+        $builder->add('displayOrder', 'hidden');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
