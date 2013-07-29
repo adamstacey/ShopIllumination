@@ -11,15 +11,15 @@
 	margin-right: -4px!important;
 	float: none!important;
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point > h3 a, #wrapper > header > .unique-selling-points-container .last-unique-selling-point h3 a
+#wrapper > header > .sub-menu .unique-selling-point > h3 a, #wrapper > header > .sub-menu .last-unique-selling-point h3 a
 {
 	font-size: 12px;
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point > p, #wrapper > header > .unique-selling-points-container .last-unique-selling-point p
+#wrapper > header > .sub-menu .unique-selling-point > p, #wrapper > header > .sub-menu .last-unique-selling-point p
 {
 	white-space: nowrap;
 }
-#wrapper > header > .unique-selling-points-container .unique-selling-point > p a, #wrapper > header > .unique-selling-points-container .last-unique-selling-point p a
+#wrapper > header > .sub-menu .unique-selling-point > p a, #wrapper > header > .sub-menu .last-unique-selling-point p a
 {
 	letter-spacing: -1px;
 }

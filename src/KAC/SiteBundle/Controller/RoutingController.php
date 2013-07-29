@@ -58,7 +58,6 @@ class RoutingController extends Controller
                         return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'all' => $all), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Product\Routing':
-                    case 'KAC\SiteBundle\Entity\Product\Variant\Routing':
                         if($all)
                         {
                             // All flag should be ignored for the product view page
@@ -68,6 +67,17 @@ class RoutingController extends Controller
                         }
 
                         return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()), $request->query->all());
+                        break;
+                    case 'KAC\SiteBundle\Entity\Product\Variant\Routing':
+                        if($all)
+                        {
+                            // All flag should be ignored for the product view page
+                            $twig = $this->container->get('templating');
+                            $content = $twig->render('KACSiteBundle:Includes:error404.html.twig');
+                            return new Response($content, 404, array('Content-Type', 'text/html'));
+                        }
+
+                        return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getVariant()->getProduct()->getId()), $request->query->all());
                         break;
                 }
             }
@@ -86,8 +96,14 @@ class RoutingController extends Controller
      */
     private function isObjectViewable($object)
     {
+        if($this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            return true;
+        }
+
         // Check if the object is available
-        if (method_exists($object, 'getStatus') && $object->getStatus() !== 'a') {
+        if (method_exists($object, 'getStatus') && $object->getStatus() !== 'a')
+        {
             return false;
         }
 

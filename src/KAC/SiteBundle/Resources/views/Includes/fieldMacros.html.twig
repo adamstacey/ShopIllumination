@@ -46,6 +46,9 @@
 {% endmacro %}
 
 {% macro table_prices_row(form) %}
+    <td{% if form.costPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
+        {{ form_widget(form.costPrice) }}
+    </td>
     <td{% if form.recommendedRetailPrice.vars.valid is sameas(false) %} class="error"{% endif %}>
         {{ form_widget(form.recommendedRetailPrice) }}
     </td>

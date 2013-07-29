@@ -223,13 +223,17 @@ class ProductController extends Controller {
                 $manager->updateImages($product);
                 // Update the documents
                 $manager->updateDocuments($product);
+                // Update the variant order based on the product code
+                $manager->updateVariantOrder($product);
 
                 $em->persist($product);
                 $em->flush();
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('listing_products'));
+                return $this->redirect($this->generateUrl('routing', array(
+                    'url' => $product->getUrl(),
+                )));
             }
         }
 
