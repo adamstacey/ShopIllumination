@@ -15,7 +15,7 @@ class ProductFeatureCombinationType extends AbstractType
 {
     private $departmentId;
 
-    public function __construct($departmentId)
+    public function __construct($departmentId=null)
     {
         $this->departmentId = $departmentId;
     }
@@ -37,9 +37,6 @@ class ProductFeatureCombinationType extends AbstractType
                     ->from('KAC\SiteBundle\Entity\DepartmentToFeature', 'df')
                     ->where('df.featureGroup = fg2')
                     ->orderBy('df.displayOrder');
-                if($departmentId) {
-                    $qb2->andWhere($qb2->expr()->eq('df.department', $departmentId));
-                }
                 $qb->andWhere($qb->expr()->in('fg.id', $qb2->getDQL()));
                 return $qb;
             },
