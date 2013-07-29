@@ -380,17 +380,17 @@ class Order
     	switch ($this->paymentType)
     	{
     		case 'SagePay':
-    			return 'bundles/kacadmin/images/logos/sage-pay-small.png';
+    			return 'bundles/kacsite/images/logos/sage-pay-small.png';
     		case 'PayPal through SagePay':
-    			return 'bundles/kacadmin/images/logos/pay-pal-through-sage-pay-small.png';
+    			return 'bundles/kacsite/images/logos/pay-pal-through-sage-pay-small.png';
     		case 'PayPal':
-    			return 'bundles/kacadmin/images/logos/pay-pal-small.png';
+    			return 'bundles/kacsite/images/logos/pay-pal-small.png';
     		case 'Google Wallet':
-    			return 'bundles/kacadmin/images/logos/google-wallet-small.png';
+    			return 'bundles/kacsite/images/logos/google-wallet-small.png';
     		case 'Voucher Code':
-    			return 'bundles/kacadmin/images/logos/voucher-code-small.png';
+    			return 'bundles/kacsite/images/logos/voucher-code-small.png';
     		case 'Gift Voucher':
-    			return 'bundles/kacadmin/images/logos/gift-voucher-small.png';
+    			return 'bundles/kacsite/images/logos/gift-voucher-small.png';
     	}
         return '';
     }

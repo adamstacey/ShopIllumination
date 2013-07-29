@@ -532,7 +532,7 @@ class CheckoutController extends Controller
             // Update order status and redirect if needed
             if($paymentResponse === null)
             {
-                $order->setStatus('Payment Received');
+                $order->setStatus('Payment Failed');
                 $order->setPaymentResponse($paymentResponse);
                 $manager->saveOrder();
 
@@ -541,6 +541,7 @@ class CheckoutController extends Controller
                 $manager->updateCheckoutStep($order, 'Complete');
                 $order->setStatus('Payment Received');
                 $order->setPaymentResponse($paymentResponse);
+                $order->setCreatedAt(new \DateTime());
                 $manager->saveOrder();
 
                 // Clear the baskets
