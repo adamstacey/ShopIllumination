@@ -242,11 +242,16 @@
                                                         <div class="tar product-price">
                                                             {% spaceless %}
                                                                 {% if product.hide_price == 0 %}
-                                                                    {% if product.url != '' %}
+                                                                    {% if product.url != '' and not (product.variants_count == 1 and is_granted("ROLE_ADMIN")) %}
                                                                         <a href="{{ path('routing', {'url': product.url}) }}">
                                                                     {% endif %}
                                                                     {% if product.low_price == product.high_price %}
-                                                                        <span itemprop="price" class="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
+                                                                        {% if product.variants_count == 1 and is_granted("ROLE_ADMIN") %}
+                                                                            <input type="text" class="product_price_update" value="{{ product.low_price }}" />
+                                                                            <button class="button button-blue actionPriceUpdate" data-id="{{ product.id }}" data-url="{{ path('api_products_post_price', {'id': product.id}) }}">Update</button>
+                                                                        {% else %}
+                                                                            <span itemprop="price" class="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
+                                                                        {% endif %}
                                                                     {% else %}
                                                                         <span class="price">
                                                                             <span class="currency-prefix">from only</span>
@@ -254,7 +259,7 @@
                                                                             <meta itemprop="highPrice" content="{{ product.high_price|currency('GBP', true, true, '')|raw }}" />
                                                                         </span>
                                                                     {% endif %}
-                                                                    {% if product.url != '' %}
+                                                                    {% if product.url != '' and not (product.variants_count == 1 and is_granted("ROLE_ADMIN")) %}
                                                                         </a>
                                                                     {% endif %}
                                                                     <br />
@@ -488,6 +493,18 @@
                     $filterHeader.removeClass("ui-corner-all");
                     $filterHeader.addClass("ui-corner-top");
                 }
+            });
+            $(document).on('click', 'button.actionPriceUpdate', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var $el = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: $el.attr("data-url"),
+                    data: {
+                        price: $el.parent().find('input').val()
+                    }
+                });
             });
 
             $("#priceRangeSlider").slider({

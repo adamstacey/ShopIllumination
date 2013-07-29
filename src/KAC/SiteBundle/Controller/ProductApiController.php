@@ -14,10 +14,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use KAC\SiteBundle\Entity\Product;
-use KAC\SiteBundle\Manager\Productmanager;
+use KAC\SiteBundle\Manager\ProductManager;
 
 /**
  * @Route("/api/products")
