@@ -687,4 +687,35 @@ class DeliveryManager extends Manager
 
         return 0;
     }
+
+    public function getCouriers($deliveryType)
+    {
+        if(strpos($deliveryType, 'Royal Mail'))
+        {
+            return array(
+                'Royal Mail' => 'Royal Mail'
+            );
+        } elseif(strpos($deliveryType, 'Parcel')) {
+            return array(
+                'Parcelforce' => 'Parcelforce',
+                'DPD' => 'DPD',
+            );
+        } elseif(strpos($deliveryType, 'Pallet')) {
+            return array(
+                'Palletways' => 'Palletways',
+            );
+        } elseif(strpos($deliveryType, 'Home Delivery')) {
+            return array(
+                'GHD Transport',
+            );
+        } else {
+            return array(
+                'Royal Mail' => 'Royal Mail',
+                'Parcelforce' => 'Parcelforce',
+                'DPD' => 'DPD',
+                'Palletways' => 'Palletways',
+                'GHD Transport',
+            );
+        }
+    }
 }
