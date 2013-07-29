@@ -248,7 +248,7 @@
                                                                     {% if product.low_price == product.high_price %}
                                                                         {% if product.variants_count == 1 and is_granted("ROLE_ADMIN") %}
                                                                             <input type="text" class="product_price_update" value="{{ product.low_price }}" />
-                                                                            <button class="button button-blue actionPriceUpdate" data-id="{{ product.id }}" data-url="{{ path('api_products_post_price', {'id': product.id}) }}">Update</button>
+                                                                            <button type="button" class="button button-blue actionPriceUpdate" data-id="{{ product.id }}" data-url="{{ path('api_products_post_price', {'id': product.id}) }}">Update</button>
                                                                         {% else %}
                                                                             <span itemprop="price" class="price">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
                                                                         {% endif %}
