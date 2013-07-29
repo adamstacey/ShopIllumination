@@ -96,7 +96,11 @@ class VariantController extends Controller {
     public function editBaseAction(Request $request, $variantId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
+        $productManger = $this->get('kac_site.manager.product');
 
+        /**
+         * @var $variant Variant
+         */
         $variant = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->find($variantId);
         if(!$variant)
         {
@@ -113,7 +117,10 @@ class VariantController extends Controller {
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
-                $em->persist($variant);
+                // Update the variant order based on the product code
+                $productManger->updateVariantOrder($variant->getProduct());
+
+                $em->persist($variant->getProduct());
                 $em->flush();
 
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(

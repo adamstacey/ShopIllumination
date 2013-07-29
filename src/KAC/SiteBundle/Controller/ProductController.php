@@ -223,6 +223,8 @@ class ProductController extends Controller {
                 $manager->updateImages($product);
                 // Update the documents
                 $manager->updateDocuments($product);
+                // Update the variant order based on the product code
+                $manager->updateVariantOrder($product);
 
                 $em->persist($product);
                 $em->flush();

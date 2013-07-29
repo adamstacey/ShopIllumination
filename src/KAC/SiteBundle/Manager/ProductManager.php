@@ -194,6 +194,28 @@ class ProductManager extends Manager
         $this->documentManager->removeTemporaryDocuments($variant);
     }
 
+    public function updateVariantOrder(Product $product)
+    {
+        // Sort the variants by product code
+        $variantsIterator = $product->getVariants()->getIterator();
+
+        $variantsIterator->uasort(function (Variant $first, Variant $second) {
+            if ($first === $second || $first->getProductCode() === $second->getProductCode()) {
+                return 0;
+            }
+
+            return (float) $first->getProductCode() < (float) $second->getProductCode() ? -1 : 1;
+        });
+
+        // Update the display order
+        $i = 0;
+        foreach($product->getVariants() as $variant)
+        {
+            $variant->setDisplayOrder($i);
+            $i++;
+        }
+    }
+
     private function checkDuplicateUrl(Routing $route, &$urls=array(), $n=1)
     {
         /**
