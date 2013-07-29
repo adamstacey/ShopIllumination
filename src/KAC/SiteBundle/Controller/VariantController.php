@@ -387,7 +387,7 @@ class VariantController extends Controller {
      * @Route("/admin/products/{productId}/variants/{variantId}/delete", name="variants_delete")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function deleteAction($variantId)
+    public function deleteAction($productId, $variantId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -400,7 +400,9 @@ class VariantController extends Controller {
         $em->remove($variant);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('products_edit_variants'));
+        return $this->redirect($this->generateUrl('products_edit_variants', array(
+            'productId' => $productId
+        )));
     }
 
     /**
