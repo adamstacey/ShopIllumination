@@ -188,8 +188,8 @@
                                                                         {% endspaceless %}
                                                                     </li>
                                                                 {% endif %}
-                                                                {% for featureGroup in product.features|slice(1, 4) %}
-                                                                    {% set feature = product['attr_feature_'~featureGroup][0] %}
+                                                                {% for featureGroup in product.features|slice(0, 4) %}
+                                                                    {% set feature = product['attr_feature_'~featureGroup|replace({" ": ""})][0] %}
                                                                     {% if feature != '' %}
                                                                         <li>{{ featureGroup }}: <strong>{{ feature }}</strong></li>
                                                                     {% endif %}
