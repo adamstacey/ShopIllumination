@@ -38,7 +38,7 @@
                                                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                                         <p class="ar product-price">
                                                             {% spaceless %}
-                                                                <span itemprop="price">&pound;{{ variant.prices[0].list_price|number_format(2) }}</span>
+                                                                <span itemprop="price">&pound;{{ variant.price.listPrice|number_format(2) }}</span>
                                                                 <span class="product-tax"> (inc. VAT)</span>
                                                             {% endspaceless %}
                                                         </p>
