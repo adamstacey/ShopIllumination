@@ -33,7 +33,7 @@
                                         <td class="row-count tar">{{ loop.index }}</td>
                                         <td>
                                             <ul>
-                                                {% for feature in variant.get('value').features %}
+                                                {% for feature in variant.vars.value.features %}
                                                     <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
                                                 {% else %}
                                                     <li>Single Combination</li>

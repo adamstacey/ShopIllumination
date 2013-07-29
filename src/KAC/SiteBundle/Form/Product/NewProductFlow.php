@@ -307,33 +307,6 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 5)
-        {
-            // Sort the variants in their display order
-            if (sizeof($formData->getVariants()) > 1)
-            {
-                $sortedVariants = array();
-                foreach ($formData->getVariants() as $variant)
-                {
-                    if ($variant)
-                    {
-                        $displayOrder = $variant->getDisplayOrder();
-                        while (isset($sortedVariants[$displayOrder]))
-                        {
-                            $displayOrder++;
-                        }
-                        $sortedVariants[$displayOrder] = $variant;
-                        $formData->removeVariant($variant);
-                    }
-                }
-                ksort($sortedVariants);
-                foreach ($sortedVariants as $variant)
-                {
-                    $formData->addVariant($variant);
-                }
-            }
-        }
-
         if ($step == 6)
         {
             // Attempt to load variant UIDs from google
