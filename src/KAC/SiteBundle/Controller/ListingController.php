@@ -600,7 +600,7 @@ class ListingController extends Controller
                 ->orderBy('p.accessory', 'ASC')
                 ->addOrderBy('total', 'DESC');
             $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
-                ->setParameter('unitCost', 150);
+                ->setParameter('unitCost', 200);
             if($num)
             {
                 $qb->setMaxResults($num);
@@ -661,7 +661,7 @@ class ListingController extends Controller
                 ->orderBy('p.accessory', 'ASC')
                 ->addOrderBy('total', 'DESC');
             $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
-                ->setParameter('unitCost', 150);
+                ->setParameter('unitCost', 200);
             if($brandId)
             {
                 $qb->where($qb->expr()->eq('p.brand', ':brand'))
