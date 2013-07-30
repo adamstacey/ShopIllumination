@@ -9,7 +9,10 @@ function loadUiFunctions() {
     $(".tabs").tabs();
 
     $("img[title], span[title], th[title], .button[title]").tooltip({
-        track: true
+        track: true,
+        content: function () {
+            return $(this).prop('title');
+        }
     });
 }
 
