@@ -658,6 +658,8 @@ class ListingController extends Controller
                 ->groupBy('op.product')
                 ->orderBy('p.accessory', 'ASC')
                 ->addOrderBy('total', 'DESC');
+            $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
+                ->setParameter('unitCost', 100);
             if($brandId)
             {
                 $qb->where($qb->expr()->eq('p.brand', ':brand'))
