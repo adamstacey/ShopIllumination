@@ -137,7 +137,7 @@
             </div>
         </div>
         <div class="widget-group clearfix">
-            <form class="form" method="GET">
+            <form id="formFilter" class="form" method="GET">
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget">
                         <a name="viewNow"></a>
@@ -209,7 +209,7 @@
                                                                     <a href="{{ path('routing', {'url': product.url}) }}">
                                                                 {% endif %}
                                                                     {% if product.variants_count == 1 and is_granted("ROLE_ADMIN") %}
-                                                                        <input type="text" class="product-price-update" value="{{ product.low_price }}" />
+                                                                        <input type="text" class="no-filter product-price-update" value="{{ product.low_price }}" />
                                                                     {% else %}
                                                                         {% if product.low_price != product.high_price %}
                                                                             <span class="price-small">
@@ -415,7 +415,7 @@
                 $.uniform.update("#limitTop");
             });
 
-            $(":input", "#formFilter").live('change', function() {
+            $(":input:not(.no-filter)", "#formFilter").live('change', function() {
                 $(this).closest("form").submit();
             });
             $(".actionResetAllFilters", "#formFilter").live("click", function() {
