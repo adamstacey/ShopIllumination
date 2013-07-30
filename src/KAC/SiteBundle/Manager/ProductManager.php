@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Manager;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Product\Variant\Description as VariantDescription;
 use KAC\SiteBundle\Entity\Product\Description as ProductDescription;
@@ -200,12 +201,9 @@ class ProductManager extends Manager
         $variantsIterator = $product->getVariants()->getIterator();
 
         $variantsIterator->uasort(function (Variant $first, Variant $second) {
-            if ($first === $second || $first->getProductCode() === $second->getProductCode()) {
-                return 0;
-            }
-
-            return (float) $first->getProductCode() < (float) $second->getProductCode() ? -1 : 1;
+            return strcmp($first->getProductCode(), $second->getProductCode());
         });
+        $product->setVariants(new ArrayCollection($variantsIterator->getArrayCopy()));
 
         // Update the display order
         $i = 0;

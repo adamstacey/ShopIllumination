@@ -723,6 +723,19 @@ class Product implements DescribableInterface
     }
 
     /**
+     * set variants
+     *
+     * @param $variants Variant[]
+     * @return $this
+     */
+    public function setVariants($variants)
+    {
+        $this->variants = $variants;
+
+        return $this;
+    }
+
+    /**
      * Get variant
      *
      * @return Product\Variant

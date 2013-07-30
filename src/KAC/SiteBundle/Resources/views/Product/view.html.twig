@@ -267,7 +267,7 @@
                         <meta itemprop="description" content="{{ variant.description.metaDescription }}"/>
                         <meta itemprop="brand" content="{{ variant.product.brand.description.header }}"/>
                         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                            <meta itemprop="price" content="{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}"/>
+                            <meta itemprop="price" content="{{ variant.prices[0].listPrice }}"/>
                             <meta itemprop="priceCurrency" content="{{ variant.prices[0].currencyCode | raw }}"/>
                         </div>
                     </div>
