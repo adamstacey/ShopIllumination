@@ -107,7 +107,7 @@
         <div class="widget-group clearfix mbl">
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
-                    <section class="ui-widget-content ui-corner-all clearfix">
+                    <section class="ui-widget-content ui-corner-all pbn clearfix">
                         {% if department is not null and brand is null and department.description.description %}
                             {% set overview = department.description.description %}
                         {% elseif department is null and brand is not null and brand.description.description %}
@@ -124,7 +124,7 @@
                             {% set overview = "" %}
                         {% endif %}
                         {% if overview and overview != "" %}
-                            <div>{{ overview|raw }}</div>
+                            <div class="mtm">{{ overview|raw }}</div>
                         {% endif %}
                         {% if brand %}
                             {{ render(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
@@ -137,7 +137,7 @@
             </div>
         </div>
         <div class="widget-group clearfix">
-            <form id="formFilter" class="form" method="GET">
+            <form class="form" method="GET">
                 <div class="widget widget-5-of-7 listing">
                     <div class="ui-widget">
                         <a name="viewNow"></a>
@@ -204,19 +204,27 @@
                                                             {% endif %}
                                                         {% endif %}
                                                         <div itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
-                                                            {% if product.hide_price == 0 %}
-                                                                <a href="{{ path('routing', {'url': product.url}) }}">
-                                                                    {% if product.low_price != product.high_price %}
+                                                            {% if product.hide_price == 0 or is_granted("ROLE_ADMIN") %}
+                                                                {% if not is_granted("ROLE_ADMIN") %}
+                                                                    <a href="{{ path('routing', {'url': product.url}) }}">
+                                                                {% endif %}
+                                                                    {% if product.variants_count == 1 and is_granted("ROLE_ADMIN") %}
+                                                                        <input type="text" class="product-price-update" value="{{ product.low_price }}" />
+                                                                    {% else %}
+                                                                        {% if product.low_price != product.high_price %}
+                                                                            <span class="price-small">
+                                                                                <span class="currency-prefix">from </span>
+                                                                            </span>
+                                                                        {% endif %}
+                                                                        <span itemprop="price" class="price-small">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
+                                                                        <br />
                                                                         <span class="price-small">
-                                                                            <span class="currency-prefix">from </span>
+                                                                            <span class="currency-tax">(inc. VAT)</span>
                                                                         </span>
                                                                     {% endif %}
-                                                                    <span itemprop="price" class="price-small">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
-                                                                    <br />
-                                                                    <span class="price-small">
-                                                                        <span class="currency-tax">(inc. VAT)</span>
-                                                                    </span>
-                                                                </a>
+                                                                {% if not is_granted("ROLE_ADMIN") %}
+                                                                    </a>
+                                                                {% endif %}
                                                             {% else %}
                                                                 <a href="{{ path('content_contact_us') }}">CONTACT US</a>
                                                             {% endif %}
@@ -224,7 +232,15 @@
                                                         <div class="product-listing-name mbs">
                                                             <a itemprop="name" href="{{ path('routing', {'url': product.url}) }}">{{ product.header|raw }}</a>
                                                         </div>
-                                                        <a class="button button-small icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">View</a>
+                                                        {% if is_granted("ROLE_ADMIN") %}
+                                                            <div class="mbl">
+                                                                <div><button type="button" class="button button-small icon-grey actionPriceUpdate" data-icon-primary="icon-701" data-id="{{ product.id }}" data-url="{{ path('api_products_post_price', {'id': product.id}) }}">Update Price</button></div>
+                                                                <div><a href="{{ path('products_edit', {'productId': product.id}) }}" class="button button-small icon-grey" data-icon-primary="icon-94">Edit</a></div>
+                                                                <div><a href="{{ path('products_delete', {'productId': product.id}) }}" class="button button-small button-red icon-white" data-icon-primary="icon-851">Delete</a></div>
+                                                            </div>
+                                                        {% else %}
+                                                            <a class="button button-small icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">View</a>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -431,7 +447,7 @@
                     $filterHeader.addClass("ui-corner-top");
                 }
             });
-            $(document).on('click', 'button.actionPriceUpdate', function(e) {
+            $(document).on('click', '.actionPriceUpdate', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
                 var $el = $(this);
@@ -439,7 +455,7 @@
                     type: "POST",
                     url: $el.attr("data-url"),
                     data: {
-                        price: $el.parent().find('input').val()
+                        price: $el.parent().parent().parent().find("input.product-price-update").val()
                     }
                 });
             });
