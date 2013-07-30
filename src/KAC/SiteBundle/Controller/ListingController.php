@@ -213,7 +213,7 @@ class ListingController extends Controller
             $pagination = $paginator->paginate(
                 array($solarium, $query),
                 $request->query->get('page', 1),
-                $request->query->get('limit', 20)
+                $request->query->get('limit', 21)
             );
             $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
             $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
