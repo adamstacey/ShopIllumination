@@ -23,7 +23,7 @@ avalanche_imagine:
         # Product
         product_thumbnail:
             type:   square_thumbnail
-            options: { size: [150, 150], mode: inset, quality: 80, cache_type: public, cache_expires: 2 weeks }
+            options: { size: [182, 182], mode: inset, quality: 80, cache_type: public, cache_expires: 2 weeks }
         product_medium:
             type:   square_thumbnail
             options: { size: [238, 238], mode: outbound, quality: 100, cache_type: public, cache_expires: 2 weeks }
