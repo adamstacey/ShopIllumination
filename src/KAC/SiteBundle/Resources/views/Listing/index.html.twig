@@ -431,6 +431,18 @@
                     $filterHeader.addClass("ui-corner-top");
                 }
             });
+            $(document).on('click', 'button.actionPriceUpdate', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var $el = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: $el.attr("data-url"),
+                    data: {
+                        price: $el.parent().find('input').val()
+                    }
+                });
+            });
 
             $("#priceRangeSlider").slider({
                 range: true,

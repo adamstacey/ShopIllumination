@@ -26,6 +26,8 @@ class ProductListener
         if($entity instanceof ProductToDepartment
             || $entity instanceof Product\Description
             || $entity instanceof Product\Routing
+            || $entity instanceof Product\Image
+            || $entity instanceof Product\Document
             || $entity instanceof Product\Link
             || $entity instanceof Variant)
         {
@@ -33,6 +35,8 @@ class ProductListener
         } elseif($entity instanceof Product\VariantToFeature
             || $entity instanceof Variant\Description
             || $entity instanceof Variant\Routing
+            || $entity instanceof Variant\Image
+            || $entity instanceof Variant\Document
             || $entity instanceof Product\Price
             || $entity instanceof Variant\Link)
         {
