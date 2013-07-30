@@ -20,8 +20,8 @@
         .etalage, .etalage ul, .etalage li {
             margin: 0 !important;
         }
-        .etalage_small_thumbs {
-            padding-top: 5px !important;
+        .etalage_thumb {
+            margin-left: 10px !important;
         }
         .summary-specification li {
             margin: 0 0 0 20px !important;
@@ -50,7 +50,7 @@
                 <div class="widget-group clearfix mbm">
                     <div class="widget widget-7-of-8">
                         <ul class="breadcrumbs" itemprop="breadcrumb">
-                            <li style="z-index: {{ department.parents|length }};"><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
+                            <li style="z-index: {{ departments|length }};"><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
                             {% for department in departments|reverse %}
                                 {% if department.level != 0  %}
                                     <li style="z-index: {{ loop.revindex }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
@@ -65,6 +65,36 @@
             {% block product_info %}
                 <div itemscope itemtype="http://schema.org/Product">
                     <div class="widget-group clearfix product">
+                        <div class="widget widget-3-of-5">
+                            <div class="ui-widget">
+                                <section class="ui-widget-content ui-corner-all clearfix">
+                                    <div class="border-bottom-separator mbl">
+                                        <h1 itemprop="name">{{ product.description.header }}</h1>
+                                    </div>
+                                    <div>
+                                        {% if product_images | length > 0 %}
+                                            <ul class="etalage">
+                                                {% for image in product_images %}
+                                                    <li>
+                                                        <img class="etalage_thumb_image" src="{{ asset(image.publicPath | apply_filter('product_medium')) }}" data-src="{{ asset(image.publicPath | apply_filter('product_large')) }}" alt="{{ product.description.header }}"  width="238"/>
+                                                        <img class="etalage_source_image" src="{{ asset(image.publicPath | apply_filter('product_large')) }}" alt="{{ product.description.header }}" width="238" />
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="widget widget-2-of-5">
+                            <div class="ui-widget">
+                                <section class="ui-widget-content ui-corner-all clearfix">
+
+                                </section>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+
                         <div class="widget widget-1-of-1">
                             <div class="ui-widget">
                                 <section class="ui-widget-content ui-corner-all clearfix">
