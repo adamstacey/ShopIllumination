@@ -30,12 +30,13 @@
     </div>
 {% endblock %}
 {% block body %}
-    {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
-    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget">
                 <section class="ui-widget-content pbn ui-corner-all">
+                    {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
+                    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
+                    <h3 class="separator">Shop by Popular Department</h3>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-5">
                             <div class="product-listing">
