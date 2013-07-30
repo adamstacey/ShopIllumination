@@ -50,10 +50,10 @@
                 <div class="widget-group clearfix mbm">
                     <div class="widget widget-7-of-8">
                         <ul class="breadcrumbs" itemprop="breadcrumb">
-                            <li><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
+                            <li style="z-index: {{ department.parents|length }};"><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
                             {% for department in departments|reverse %}
                                 {% if department.level != 0  %}
-                                    <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <li style="z-index: {{ loop.revindex }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                                         <a href="{{ path('routing', {'url': department.url}) }}" itemprop="url"><span itemprop="title">{{ department.description.header }}</span></a>
                                     </li>
                                 {% endif %}
