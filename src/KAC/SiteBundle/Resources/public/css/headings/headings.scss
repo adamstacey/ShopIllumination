@@ -25,7 +25,7 @@ h3,
 }
 h3.separator {
     padding: $spacingMedium;
-    margin: $spacingMedium -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+    margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
     @include verticalGradientWhiteToGreyLight;
     color: $colourGrey;
     @include textShadow($colourWhite, 0, 1px);
