@@ -134,10 +134,10 @@ class ProductManager extends Manager
             // Update the URL
             if ($variant->getRouting())
             {
-                $url = $this->seoManager->createUrl($pageTitle);
+                $url = $this->seoManager->createUrl($pageTitle, $variant->getRouting()->getUrl());
                 $variant->getRouting()->setUrl($url);
             } else {
-                $url = $this->seoManager->createUrl($pageTitle);
+                $url = $this->seoManager->createUrl($pageTitle, $variant->getRouting()->getUrl());
                 $routing = new ProductVariantRouting();
                 $routing->setVariant($variant);
                 $routing->setUrl($url);
@@ -214,7 +214,7 @@ class ProductManager extends Manager
         }
     }
 
-    private function checkDuplicateUrl(Routing $route, &$urls=array(), $n=1)
+    private function checkDuplicateUrl(Routing $route, $baseUrl, &$urls=array(), $n=1)
     {
         /**
          * @var $em EntityManager
@@ -225,7 +225,7 @@ class ProductManager extends Manager
         if(in_array($route->getUrl(), $urls))
         {
             $route->setUrl($this->seoManager->generateUrl($route->getUrl().'-'.$n));
-            $this->checkDuplicateUrl($route, $urls, $n + 1);
+            $this->checkDuplicateUrl($route, $baseUrl, $urls, $n + 1);
             $urls[] = $route->getUrl();
             return;
         }
@@ -247,7 +247,7 @@ class ProductManager extends Manager
         if(count($duplicateRoutes) > 0)
         {
             $route->setUrl($this->seoManager->generateUrl($route->getUrl().'-'.($duplicateRoutes+$n)));
-            $this->checkDuplicateUrl($route, $urls, $n + 1);
+            $this->checkDuplicateUrl($route, $baseUrl, $urls, $n + 1);
             $urls[] = $route->getUrl();
             return;
         }

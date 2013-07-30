@@ -89,10 +89,12 @@ class SeoManager extends Manager {
         // Check if the URL already exist
         if ($url != $existingUrl)
         {
+            $baseUrl = $url;
+
             while ($this->doesUrlExist($url, $existingUrl))
             {
                 $duplicate_count++;
-                $url = $url.'-'.$duplicate_count;
+                $url = $baseUrl.'-'.$duplicate_count;
             }
         }
         return $url;
