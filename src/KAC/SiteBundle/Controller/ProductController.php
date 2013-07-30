@@ -107,9 +107,20 @@ class ProductController extends Controller {
                         {
                             unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
                         }
-                    }
+                    } elseif (!$departmentToFeature || count($departmentToFeature) <= 0) {
+                        if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        {
+                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        }
+                        else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
+                        {
+                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                        }                    }
+
                     if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
                     {
+                        $variantFeatures[$variant->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                    } elseif (!$departmentToFeature || count($departmentToFeature) <= 0) {
                         $variantFeatures[$variant->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
                     }
                 }
