@@ -137,7 +137,7 @@ class ProductManager extends Manager
                 $url = $this->seoManager->createUrl($pageTitle, $variant->getRouting()->getUrl());
                 $variant->getRouting()->setUrl($url);
             } else {
-                $url = $this->seoManager->createUrl($pageTitle, $variant->getRouting()->getUrl());
+                $url = $this->seoManager->createUrl($pageTitle, '');
                 $routing = new ProductVariantRouting();
                 $routing->setVariant($variant);
                 $routing->setUrl($url);
