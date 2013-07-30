@@ -2,7 +2,11 @@ $(document).ready(function() {
     $(".lightbox").lightbox();
 
     $(".etalage").etalage({
-        autoplay: false
+        autoplay: false,
+        smallthumbs_position: 'left',
+        thumb_image_width: 370,
+        thumb_image_height: 370,
+        small_thumbs: 3
     });
 
     $(document).on("click", ".etalage_magnifier > div > img", function() {
