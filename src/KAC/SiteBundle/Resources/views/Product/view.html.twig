@@ -162,12 +162,14 @@
                                             </div>
                                         </div>
                                         <a name="tabs"></a>
+                                        {% if common_features|length > 0 %}
                                         <div class="widget widget-1-of-1">
                                             <section>
                                                 <div class="tabs">
                                                     <ul>
-                                                        <li><a href="#technicalSpecification">Technical Specification</a></li>
+                                                        {% if common_features|length > 0 %}<li><a href="#technicalSpecification">Technical Specification</a></li>{% endif %}
                                                     </ul>
+                                                    {% if common_features|length > 0 %}
                                                     <div id="technicalSpecification">
                                                         <section>
                                                             <table class="data-table">
@@ -188,9 +190,11 @@
                                                             </table>
                                                         </section>
                                                     </div>
+                                                    {% endif %}
                                                 </div>
                                             </section>
                                         </div>
+                                        {% endif %}
                                     </div>
                                 </section>
                             </div>
@@ -267,7 +271,7 @@
                         <meta itemprop="description" content="{{ variant.description.metaDescription }}"/>
                         <meta itemprop="brand" content="{{ variant.product.brand.description.header }}"/>
                         <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                            <meta itemprop="price" content="{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}"/>
+                            <meta itemprop="price" content="{{ variant.prices[0].listPrice }}"/>
                             <meta itemprop="priceCurrency" content="{{ variant.prices[0].currencyCode | raw }}"/>
                         </div>
                     </div>
