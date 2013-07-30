@@ -26,12 +26,13 @@ class Link
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product", inversedBy="links")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $product;
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product")
-     * @ORM\JoinColumn(name="linked_product_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="linked_product_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank(groups={"flow_site_new_product_step13"}, message="Select a product.")
      */
     private $linkedProduct;

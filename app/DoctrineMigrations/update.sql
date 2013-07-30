@@ -479,6 +479,25 @@ INSERT INTO `types` (`id`, `name`, `object_type`, `created_at`, `updated_at`) VA
 (6, 'Edging', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
 (7, 'Finishing Touch', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00');
 ALTER TABLE orders ADD royal_mail_import_line INT DEFAULT 0;
+UPDATE order_products SET product_id = NULL, variant_id = NULL WHERE (SELECT COUNT(*) FROM products WHERE id = product_id) <= 0 OR (SELECT COUNT(*) FROM product_variants WHERE id = variant_id) <= 0;
 ALTER TABLE  `order_products` DROP FOREIGN KEY  `FK_5242B8EB4584665A` ;
+ALTER TABLE  `order_products` ADD CONSTRAINT  `FK_5242B8EB4584665A` FOREIGN KEY (  `product_id` ) REFERENCES  `kacstaging`.`products` (
+  `id`
+) ON DELETE SET NULL ON UPDATE SET NULL ;
 ALTER TABLE  `order_products` DROP FOREIGN KEY  `FK_5242B8EB3B69A9AF` ;
+ALTER TABLE  `order_products` ADD CONSTRAINT  `FK_5242B8EB3B69A9AF` FOREIGN KEY (  `variant_id` ) REFERENCES  `kacstaging`.`product_variants` (
+  `id`
+) ON DELETE SET NULL ON UPDATE SET NULL ;
+ALTER TABLE  `product_links` DROP FOREIGN KEY  `FK_70DEDA444584665A` ;
+
+ALTER TABLE  `product_links` ADD CONSTRAINT  `FK_70DEDA444584665A` FOREIGN KEY (  `product_id` ) REFERENCES  `kacstaging`.`products` (
+  `id`
+) ON DELETE CASCADE ON UPDATE RESTRICT ;
+
+ALTER TABLE  `product_links` DROP FOREIGN KEY  `FK_70DEDA44D240BD1D` ;
+
+ALTER TABLE  `product_links` ADD CONSTRAINT  `FK_70DEDA44D240BD1D` FOREIGN KEY (  `linked_product_id` ) REFERENCES  `kacstaging`.`products` (
+  `id`
+) ON DELETE CASCADE ON UPDATE RESTRICT ;
+
 SET FOREIGN_KEY_CHECKS = 1;
