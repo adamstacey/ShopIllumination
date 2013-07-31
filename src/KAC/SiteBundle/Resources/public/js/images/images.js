@@ -13,6 +13,18 @@ $(document).ready(function() {
         zoom_area_height: 398
     });
 
+    $(".etalage-inset").etalage({
+        autoplay: false,
+        smallthumbs_position: 'left',
+        thumb_image_width: 238,
+        thumb_image_height: 238,
+        source_image_width: 600,
+        source_image_height: 600,
+        small_thumbs: 3,
+        zoom_area_width: 260,
+        zoom_area_height: 260
+    });
+
     $(document).on("click", ".etalage_magnifier > div > img", function() {
         if ($(".etalage_small_thumbs").length > 0)
         {
