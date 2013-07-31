@@ -36,15 +36,17 @@ $(document).ready(function() {
         });
     });
 
-    $('#basket-summary').hover(function() {
-        if(parseInt($(this).find('.dropdown-summary').attr("data-items"), 10) > 0)
-        {
-            $(this).find('.dropdown-summary').show();
-            $(this).addClass('expanded');
+    $('#basket-summary').hoverIntent({
+        timeout: 500,
+        over: function() {
+            if(parseInt($(this).find('.dropdown-summary').attr("data-items"), 10) > 0)
+            {
+                $(this).addClass('expanded').find('.dropdown-summary').show();
+            }
+        },
+        out: function() {
+            $(this).removeClass('expanded').find('.dropdown-summary').hide();
         }
-    }, function() {
-        $(this).find('.dropdown-summary').hide();
-        $(this).removeClass('expanded');
     });
 
     $(".action-delete-basket-item").on('click', function() {
