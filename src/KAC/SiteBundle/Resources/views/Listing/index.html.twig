@@ -56,7 +56,7 @@
     <div class="widget-group clearfix mbm">
         <div class="widget widget-7-of-8">
             <ul class="breadcrumbs mtn">
-                <li style="z-index: {{ department.parents|length }};"><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
+                <li style="z-index: {{ department.parents|length }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ path('homepage') }}"><span itemprop="title">Kitchen Appliances</span></a></li>
                 {% for parent in department.parents %}
                     {% if parent.parent != null and parent.level != 0  %}
                         {% if brand %}
