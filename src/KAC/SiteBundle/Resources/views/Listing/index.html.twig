@@ -260,7 +260,7 @@
                                             <option{% if app.request.get('sort_order') == 'low_price:asc' or app.request.get('sort_order') is not defined or app.request.get('sort_order') is null %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
                                             <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
                                             <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
-                                        </select>render
+                                        </select>
                                     </div>
                                     <span class="fl">Show</span>
                                     <div class="fl prs">
