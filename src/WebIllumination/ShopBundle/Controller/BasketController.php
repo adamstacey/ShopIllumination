@@ -266,17 +266,17 @@ class BasketController extends Controller
         $productService = $this->get('web_illumination_admin.product_service');
 
         // Get submitted data
-        $productId = $request->query->get('productId');
-        $variantId = $request->query->get('variantId', $productId);
-        $quantity = ($request->query->get('quantity')?$request->query->get('quantity'):1);
-        $deliveryBand = $request->query->get('deliveryBand');
-        $url = $request->query->get('url');
-        $unitCost = $request->query->get('unitCost');
-        $productCode = $request->query->get('productCode');
-        $header = $request->query->get('header');
-        $brand = $request->query->get('brand');
-        $description = $request->query->get('description');
-        $selectedOptions = ($request->query->get('selectedOptions')?$request->query->get('selectedOptions'):'');
+        $productId = $request->request->get('productId');
+        $variantId = $request->request->get('variantId', $productId);
+        $quantity = ($request->request->get('quantity')?$request->request->get('quantity'):1);
+        $deliveryBand = $request->request->get('deliveryBand');
+        $url = $request->request->get('url');
+        $unitCost = $request->request->get('unitCost');
+        $productCode = $request->request->get('productCode');
+        $header = $request->request->get('header');
+        $brand = $request->request->get('brand');
+        $description = $request->request->get('description');
+        $selectedOptions = ($request->request->get('selectedOptions')?$request->request->get('selectedOptions'):'');
         $price = 0;
         $subTotal = 0;
 
