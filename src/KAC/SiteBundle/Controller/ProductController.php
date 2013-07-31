@@ -37,7 +37,7 @@ use KAC\SiteBundle\Manager\ProductManager;
 use KAC\SiteBundle\Manager\SeoManager;
 
 class ProductController extends Controller {
-    public function viewAction(Request $request, $id)
+    public function viewAction(Request $request, $id, $variant=null)
     {
         /**
          * @var EntityManager $em
@@ -64,17 +64,18 @@ class ProductController extends Controller {
         $lowestPrice = null;
         $highestPrice = null;
         $commonFeatures = array();
+        $differentiatingFeatures = array();
         $variantFeatures = array();
 
-        foreach ($product->getVariants() as $variant)
+        foreach ($product->getVariants() as $entity)
         {
-            $variantFeatures[$variant->getId()] = array();
+            $variantFeatures[$entity->getId()] = array();
 
             // Calculate price range
-            foreach ($variant->getPrices() as $price) {
+            foreach ($entity->getPrices() as $price) {
                 if ($lowestPrice === null || $price->getListPrice() < $lowestPrice->getListPrice()) {
                     $lowestPrice = $price;
-                    $cheapestVariant = $variant;
+                    $cheapestVariant = $entity;
                 }
                 if ($highestPrice === null || $price->getListPrice() > $highestPrice->getListPrice()) {
                     $highestPrice = $price;
@@ -83,7 +84,7 @@ class ProductController extends Controller {
 
             // Get features
             /** @var $feature VariantToFeature */
-            foreach ($variant->getFeatures() as $feature)
+            foreach ($entity->getFeatures() as $feature)
             {
                 if($feature && $feature->getFeatureGroup() && $feature->getFeature())
                 {
@@ -115,15 +116,34 @@ class ProductController extends Controller {
                         else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
                         {
                             unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
-                        }                    }
+                        }
+                    }
 
                     if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
                     {
-                        $variantFeatures[$variant->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        $variantFeatures[$entity->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        if(!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()])) {
+                            $differentiatingFeatures[$feature->getFeatureGroup()->getName()] = array();
+                        }
+                        $differentiatingFeatures[$feature->getFeatureGroup()->getName()][] = $feature->getFeature()->getName();
                     } elseif (!$departmentToFeature || count($departmentToFeature) <= 0) {
-                        $variantFeatures[$variant->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        $variantFeatures[$entity->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        if(!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()])) {
+                            $differentiatingFeatures[$feature->getFeatureGroup()->getName()] = array();
+                        }
+                        $differentiatingFeatures[$feature->getFeatureGroup()->getName()][] = $feature->getFeature()->getName();
                     }
                 }
+            }
+        }
+
+        // Calculate the differentiating features
+        foreach($differentiatingFeatures as $key => &$features)
+        {
+            $features = array_unique($features);
+            if(count($features) <= 1)
+            {
+                unset($differentiatingFeatures[$key]);
             }
         }
 
@@ -182,9 +202,22 @@ class ProductController extends Controller {
             } while ($currDepartment !== null);
         }
 
-        // Find competitors prices
-//        $googleApi = $this->get('kac_site.google.google');
-//        $competitorPrices = $googleApi->findMoreExpensiveProducts($cheapestVariant->getProductCode(), $lowestPrice !== null ? $lowestPrice->getListPrice() : $highestPrice->getListPrice(), 5);
+        // Create variant array
+        $variants = array();
+        foreach($product->getVariants() as $entity)
+        {
+            $array = array(
+                'productId' => $product->getId(),
+                'variantId' => $entity->getId(),
+                'url' => $entity->getUrl(),
+                'features' => $commonFeatures,
+            );
+            foreach($entity->getFeatures() as $vtf)
+            {
+                $array['features'][$vtf->getFeatureGroup()->getName()] = $vtf->getFeature()->getName();
+            }
+            $variants[] = $array;
+        }
 
         return $this->render('KACSiteBundle:Product:Templates/'.$template.'.html.twig', array(
             'product' => $product,
@@ -196,8 +229,26 @@ class ProductController extends Controller {
             'highest_price' => $highestPrice,
             'common_features' => $commonFeatures,
             'variant_features' => $variantFeatures,
-//            'competitorPrices' => $competitorPrices,
+            'differentiating_features' => $differentiatingFeatures,
+            'variants' => $variants,
+            'variant' => $variant,
         ));
+    }
+
+    /**
+     * @Route("/products/view/variant/{id}", name="products_variant_view")
+     */
+    public function viewWithVariantAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $variant = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->find($id);
+        if(!$variant)
+        {
+            throw new NotFoundHttpException("Variant not found");
+        }
+
+        return $this->viewAction($request, $variant->getProduct()->getId(), $variant);
     }
 
     /**
@@ -380,14 +431,14 @@ class ProductController extends Controller {
                     {
                         // Go through the variants of the product
                         $variants = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->findBy(array('product' => $product));
-                        foreach ($variants as $variant)
+                        foreach ($variants as $entity)
                         {
                             // Get the other feature groups
-                            $variantToFeatures = $em->getRepository("KAC\SiteBundle\Entity\Product\VariantToFeature")->findBy(array('variant' => $variant));
+                            $variantToFeatures = $em->getRepository("KAC\SiteBundle\Entity\Product\VariantToFeature")->findBy(array('variant' => $entity));
 
                             // Assign the feature to the variant
                             $variantToFeature = new VariantToFeature();
-                            $variantToFeature->setVariant($variant);
+                            $variantToFeature->setVariant($entity);
                             $variantToFeature->setFeatureGroup($featureGroup);
                             $variantToFeature->setDisplayOrder(sizeof($variantToFeatures) + 1);
                             $em->persist($variantToFeature);
