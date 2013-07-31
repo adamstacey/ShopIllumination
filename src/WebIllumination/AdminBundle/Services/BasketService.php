@@ -1061,28 +1061,31 @@ class BasketService {
     		// Check if there are any stellar pan set discounts available
     		foreach ($basket['products'] as $product)
 			{
-                /**
-                 * @var Product $productEntity
-                 * @var Product\Variant $variantEntity
-                 */
-                $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
-                $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
-				if ($productEntity && $variantEntity)
-				{
-					// Check for Stellar Pans
-                    foreach($productEntity->getDepartments() as $department) {
-                        if ($department->getId() == 69)
+                if ($product['validProduct'] > 0)
+                {
+                    /**
+                     * @var Product $productEntity
+                     * @var Product\Variant $variantEntity
+                     */
+                    $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+                    $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+                    if ($productEntity && $variantEntity)
+                    {
+                        // Check for Stellar Pans
+                        foreach($productEntity->getDepartments() as $department) {
+                            if ($department->getId() == 69)
+                            {
+                                $stellarPanSetDiscountsAvailable += $product['quantity'];
+                            }
+                        }
+
+                        // Check for CDA products
+                        if ($productEntity->getBrand()->getId() == '7')
                         {
-                            $stellarPanSetDiscountsAvailable += $product['quantity'];
+                            $numberOfCdaAppliances += $product['quantity'];
                         }
                     }
-					
-					// Check for CDA products
-					if ($productEntity->getBrand()->getId() == '7')
-					{
-						$numberOfCdaAppliances += $product['quantity'];
-					}
-				}
+                }
 			}
 			$basket['numberOfCdaAppliances'] = $numberOfCdaAppliances;
 			
