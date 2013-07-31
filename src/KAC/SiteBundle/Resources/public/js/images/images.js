@@ -4,9 +4,13 @@ $(document).ready(function() {
     $(".etalage").etalage({
         autoplay: false,
         smallthumbs_position: 'left',
-        thumb_image_width: 370,
-        thumb_image_height: 370,
-        small_thumbs: 3
+        thumb_image_width: 376,
+        thumb_image_height: 376,
+        source_image_width: 800,
+        source_image_height: 800,
+        small_thumbs: 3,
+        zoom_area_width: 398,
+        zoom_area_height: 398
     });
 
     $(document).on("click", ".etalage_magnifier > div > img", function() {
