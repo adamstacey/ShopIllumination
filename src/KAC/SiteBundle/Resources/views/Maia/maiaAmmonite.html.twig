@@ -1,148 +1,18 @@
 {% set worktopColour = "Ammonite" %}
 {% set worktopDescription = "Ammonite is a dark grey with silver and brown metallic particles. Developed to look stunning with contemporary white and grey kitchens, and also a modern twist on a more traditional look to work with light and medium oaks." %}
-{% set fromPrice = 285 %}
+{% set productCodePrefix = 'AMM' %}
+{% set fromPrice = 349 %}
 {% set worktopNumber = 1 %}
 {% set startingId = 10000 + (1000 * worktopNumber) %}
 {% set currentId = startingId %}
 {% extends 'KACSiteBundle::base.html.twig' %}
 {% block title %}maia Worktops in {{ worktopColour }} from Kitchen Appliance Centre{% endblock %}
 {% block body %}
-
-    {% import _self as helpers %}
-    {% macro addToBasket() %}
-        <div class="add-to-basket">
-            <input class="quantity integer" type="number" value="1" />
-            <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
-            <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
-            <button class="actionAddToBasket buy button button-green uppercase">Buy</button>
-        </div>
-    {% endmacro %}
     <section class="product">
         {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <section class="ui-widget-content ui-corner-all clearfix">
-                        <div class="slider-wrapper slider-gallery">
-                            <ul class="slider">
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-1.jpg') }}" alt="maia Worktops" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-2.jpg') }}" alt="maia Worktops" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-3.jpg') }}" alt="maia Worktops" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-4.jpg') }}" alt="maia Worktops" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-5.jpg') }}" alt="maia Worktops" /></li>
-                                <li><img src="{{ asset('/uploads/demo/maia-gallery-6.jpg') }}" alt="maia Worktops" /></li>
-                            </ul>
-                            <h1>maia Worktops in {{ worktopColour }}</h1>
-                        </div>
-                        <div class="widget-group clearfix">
-                            <div class="widget widget-1-of-1 border-bottom-separator pbl mbl">
-                                <div class="widget-group clearfix">
-                                    <div class="widget widget-2-of-7">
-                                        <ul class="etalage-inset">
-                                            <li><img class="etalage_source_image" src="{{ asset('/uploads/demo/maia-' ~ worktopColour|lower ~ '@2x.jpg') }}" alt="Maia Worktops in {{ worktopColour }}" /></li>
-                                        </ul>
-                                    </div>
-                                    <div class="widget widget-5-of-7">
-                                        <div class="widget-group clearfix">
-                                            <div class="widget widget-3-of-4 pll prl border-right-separator">
-                                                <div class="widget-group clearfix">
-                                                    <div class="widget widget-1-of-1"><img class="logo" src="{{ asset('/uploads/images/brand/logo/maia-original-44989.png') }}" alt="maia Worktops" /></div>
-                                                </div>
-                                                <p class="summary man">{{ worktopDescription }}</p>
-                                            </div>
-                                            <div class="widget widget-1-of-4">
-                                                <div class="price">
-                                                    <span class="currency-prefix">from only</span>
-                                                </div>
-                                                <div class="price">
-                                                    {{ fromPrice|currency('GBP', true, true, '')|raw }}
-                                                </div>
-                                                <div class="price pbm">
-                                                    <span class="currency-tax">(inc. VAT)</span>
-                                                </div>
-                                                <a href="#buyNow" class="button uppercase button-green icon-white fr" data-icon-secondary="icon-472">Buy Now</a>
-                                                <button class="actionRequestASample button mts button-small button-grey icon-black fr">Request a Sample</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-1-of-1">
-                                <section>
-                                    <div class="tabs">
-                                        <ul>
-                                            <li><a href="#overview">Overview</a></li>
-                                            <li><a href="#technicalSpecification">Technical Specification</a></li>
-                                            <li><a href="#requestASample">Request a Sample</a></li>
-                                            <li><a href="#maiaCare">maia Care</a></li>
-                                            <li><a href="#maiaTechnology">maia Technology</a></li>
-                                        </ul>
-                                        <div id="overview">
-                                            {% include 'KACSiteBundle:Maia:maiaColourOverview.html.twig' with {'worktopColour': worktopColour} %}
-                                        </div>
-                                        <div id="technicalSpecification">
-                                            {% include 'KACSiteBundle:Maia:maiaColourTechnicalSpecification.html.twig' with {'worktopColour': worktopColour} %}
-                                        </div>
-                                        <div id="requestASample">
-                                            {% include 'KACSiteBundle:Maia:maiaRequestASample.html.twig' %}
-                                        </div>
-                                        <div id="maiaCare">
-                                            {% include 'KACSiteBundle:Maia:maiaCare.html.twig' %}
-                                        </div>
-                                        <div id="maiaTechnology">
-                                            {% include 'KACSiteBundle:Maia:maiaTechnology.html.twig' %}
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <a name="buyNow"></a>
+        {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
         {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
-        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand1.html.twig' with {'worktopColour': worktopColour, 'currentId': currentId} %}
-        <div class="widget-group clearfix mbl">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>3. Select Your Finishing Touches</h2>
-                    </header>
-                    <section class="ui-widget-content ui-corner-bottom clearfix">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Finishing Touch</th>
-                                    <th class="tac">Price</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="even">
-                                    <td width="1" class="pam image">
-                                        <a href="{{ asset('/uploads/demo/chopping-board@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/chopping-board.jpg') }}" alt="Chopping Board" /></a>
-                                    </td>
-                                    <td width="1" class="nowrap"><span title="Protect your worksurface using this matching chopping board. 375mm x 290mm x 10mm" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                                    <td><p><strong>Ammonite AMM/CB</strong><br />Chopping Board</p></td>
-                                    <td width="1" class="nowrap price">{{ 59|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                                </tr>
-                                <tr class="odd">
-                                    <td width="1" class="pam image">
-                                        <a href="{{ asset('/uploads/demo/hot-rods@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/hot-rods.jpg') }}" alt="Hot Rods (Worktop Protector)" /></a>
-                                    </td>
-                                    <td width="1" class="nowrap"><span title="These stainless steel finish worktop protectors are a convenient way to enable you to remove a hot pan from the hob without extreme heat damaging your worktop. The half round rods have a self adhesive backing so they are easy to apply, no cutting or routing is required." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                                    <td><p><strong>MAIA/HROD</strong><br />Hot Rods (Worktop Protector)</p></td>
-                                    <td width="1" class="nowrap price">{{ 38|currency('GBP', true, true, '')|raw }}</td>
-                                    <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                </div>
-            </div>
-        </div>
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand1.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
         {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
         {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
     </section>

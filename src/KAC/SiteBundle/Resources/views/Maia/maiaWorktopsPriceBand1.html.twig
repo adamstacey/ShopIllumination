@@ -5,717 +5,670 @@
                 <h2>2. Select Your Worktops</h2>
             </header>
             <section class="ui-widget-content ui-corner-bottom clearfix">
-            <table class="data-table">
-                <thead>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th colspan="3">Worktops</th>
+                            <th class="tac">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody class="updatable">
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="4" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 325, 'productCode': productCodePrefix ~ '28/18600', 'deliveryBand': 6, 'header': '1800mm × 600mm × 28mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 360, 'productCode': productCodePrefix ~ '28/18650', 'deliveryBand': 6, 'header': '1800mm × 650mm × 28mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 545, 'productCode': productCodePrefix ~ '28/36600', 'deliveryBand': 6, 'header': '3600mm × 600mm × 28mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 605, 'productCode': productCodePrefix ~ '28/36650', 'deliveryBand': 6, 'header': '3600mm × 650mm × 28mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 425, 'productCode': productCodePrefix ~ '28/18CR650', 'deliveryBand': 6, 'header': '1800mm × 650mm × 28mm "C-End" Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 699, 'productCode': productCodePrefix ~ '28/36CR650', 'deliveryBand': 6, 'header': '3600mm × 650mm × 28mm "C-End" Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="4" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 349, 'productCode': productCodePrefix ~ '/18600', 'deliveryBand': 6, 'header': '1800mm × 600mm × 42mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 385, 'productCode': productCodePrefix ~ '/18650', 'deliveryBand': 6, 'header': '1800mm × 650mm × 42mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 580, 'productCode': productCodePrefix ~ '/36600', 'deliveryBand': 6, 'header': '3600mm × 600mm × 42mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 659, 'productCode': productCodePrefix ~ '/36650', 'deliveryBand': 6, 'header': '3600mm × 650mm × 42mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 435, 'productCode': productCodePrefix ~ '/18CR650', 'deliveryBand': 6, 'header': '1800mm × 650mm × 42mm "C-End" Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 715, 'productCode': productCodePrefix ~ '/36CR650', 'deliveryBand': 6, 'header': '3600mm × 650mm × 42mm "C-End" Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="4" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 399, 'productCode': productCodePrefix ~ '54/18600', 'deliveryBand': 6, 'header': '1800mm × 600mm × 54mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 430, 'productCode': productCodePrefix ~ '54/18650', 'deliveryBand': 6, 'header': '1800mm × 650mm × 54mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 580, 'productCode': productCodePrefix ~ '/36600', 'deliveryBand': 6, 'header': '3600mm × 600mm × 54mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 759, 'productCode': productCodePrefix ~ '54/36650', 'deliveryBand': 6, 'header': '3600mm × 650mm × 54mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 485, 'productCode': productCodePrefix ~ '54/18CR650', 'deliveryBand': 6, 'header': '1800mm × 650mm × 54mm "C-End" Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 825, 'productCode': productCodePrefix ~ '54/36CR650', 'deliveryBand': 6, 'header': '3600mm × 650mm × 54mm "C-End" Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Breakfast Bars</th>
+                            <th class="tac">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody class="updatable">
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 445, 'productCode': productCodePrefix ~ '28/189', 'deliveryBand': 6, 'header': '1800mm × 900mm × 28mm Breakfast Bar (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 739, 'productCode': productCodePrefix ~ '28/369', 'deliveryBand': 6, 'header': '3600mm × 900mm × 28mm Breakfast Bar (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 475, 'productCode': productCodePrefix ~ '/189', 'deliveryBand': 6, 'header': '1800mm × 900mm × 42mm Breakfast Bar (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 790, 'productCode': productCodePrefix ~ '/369', 'deliveryBand': 6, 'header': '3600mm × 900mm × 42mm Breakfast Bar (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 565, 'productCode': productCodePrefix ~ '54/189', 'deliveryBand': 6, 'header': '1800mm × 900mm × 54mm Breakfast Bar (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 965, 'productCode': productCodePrefix ~ '54/369', 'deliveryBand': 6, 'header': '3600mm × 900mm × 54mm Breakfast Bar (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 475, 'productCode': productCodePrefix ~ '28/9DR18', 'deliveryBand': 6, 'header': '1800mm × 900mm × 28mm "D-Radius" Breakfast Bar (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 815, 'productCode': productCodePrefix ~ '28/9DR36', 'deliveryBand': 6, 'header': '3600mm × 900mm × 28mm "D-Radius" Breakfast Bar (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 489, 'productCode': productCodePrefix ~ '/9DR18', 'deliveryBand': 6, 'header': '1800mm × 900mm × 42mm "D-Radius" Breakfast Bar (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 840, 'productCode': productCodePrefix ~ '/9DR36', 'deliveryBand': 6, 'header': '3600mm × 900mm × 42mm "D-Radius" Breakfast Bar (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 595, 'productCode': productCodePrefix ~ '54/9DR18', 'deliveryBand': 6, 'header': '1800mm × 900mm × 54mm "D-Radius" Breakfast Bar (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1045, 'productCode': productCodePrefix ~ '54/9DR36', 'deliveryBand': 6, 'header': '3600mm × 900mm × 54mm "D-Radius" Breakfast Bar (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Island Worktops</th>
+                            <th class="tac">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody class="updatable">
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" alt="Islands (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 670, 'productCode': productCodePrefix ~ '28/1812', 'deliveryBand': 6, 'header': '1800mm × 1200mm × 28mm Island Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" alt="Islands (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 735, 'productCode': productCodePrefix ~ '/1812', 'deliveryBand': 6, 'header': '1800mm × 1200mm × 42mm Island Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" alt="Islands (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 855, 'productCode': productCodePrefix ~ '54/1812', 'deliveryBand': 6, 'header': '1800mm × 1200mm × 54mm Island Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" alt="Islands (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 749, 'productCode': productCodePrefix ~ '28/12DR18', 'deliveryBand': 6, 'header': '1800mm × 1200mm × 28mm "D-Radius" Island Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" alt="Islands (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 815, 'productCode': productCodePrefix ~ '/12DR18', 'deliveryBand': 6, 'header': '1800mm × 1200mm × 42mm "D-Radius" Island Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" alt="Islands (square corners)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 935, 'productCode': productCodePrefix ~ '54/12DR18', 'deliveryBand': 6, 'header': '1800mm × 1200mm × 54mm "D-Radius" Island Worktop (240mm radius)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Sink Modules</th>
+                            <th class="tac">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody class="updatable">
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl.jpg') }}" alt="Sink Module - Single Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 835, 'productCode': productCodePrefix ~ '28/SM1B2/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 28mm Sink Module - Single Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1075, 'productCode': productCodePrefix ~ '28/SM1B2/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 28mm Sink Module - Single Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl.jpg') }}" alt="Sink Module - Single Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 849, 'productCode': productCodePrefix ~ '/SM1B2/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 42mm Sink Module - Single Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1110, 'productCode': productCodePrefix ~ '/SM1B2/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 42mm Sink Module - Single Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl.jpg') }}" alt="Sink Module - Single Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 909, 'productCode': productCodePrefix ~ '54/SM1B2/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 54mm Sink Module - Single Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1220, 'productCode': productCodePrefix ~ '54/SM1B2/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 54mm Sink Module - Single Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl.jpg') }}" alt="Sink Module - Super Large Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 870, 'productCode': productCodePrefix ~ '28/SMSUP/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 28mm Sink Module - Super Large Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1110, 'productCode': productCodePrefix ~ '28/SMSUP/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 28mm Sink Module - Super Large Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl.jpg') }}" alt="Sink Module - Super Large Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 890, 'productCode': productCodePrefix ~ '/SMSUP/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 42mm Sink Module - Super Large Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1149, 'productCode': productCodePrefix ~ '/SMSUP/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 42mm Sink Module - Super Large Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl.jpg') }}" alt="Sink Module - Super Large Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 945, 'productCode': productCodePrefix ~ '54/SMSUP/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 54mm Sink Module - Super Large Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1259, 'productCode': productCodePrefix ~ '54/SMSUP/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 54mm Sink Module - Super Large Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl.jpg') }}" alt="Sink Module - Duo 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 899, 'productCode': productCodePrefix ~ '28/SM15B2/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 28mm Sink Module - Duo 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1139, 'productCode': productCodePrefix ~ '28/SM15B2/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 28mm Sink Module - Duo 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl.jpg') }}" alt="Sink Module - Duo 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 920, 'productCode': productCodePrefix ~ '/SM15B2/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 42mm Sink Module - Duo 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1179, 'productCode': productCodePrefix ~ '/SM15B2/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 42mm Sink Module - Duo 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl.jpg') }}" alt="Sink Module - Duo 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 975, 'productCode': productCodePrefix ~ '54/SM15B2/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 54mm Sink Module - Duo 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1285, 'productCode': productCodePrefix ~ '54/SM15B2/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 54mm Sink Module - Duo 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="4" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl.jpg') }}" alt="Sink Module - Designer 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 919, 'productCode': productCodePrefix ~ '28/SM15DLH/65', 'deliveryBand': 6, 'header': '1800mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1180, 'productCode': productCodePrefix ~ '28/SM15DLH/365', 'deliveryBand': 6, 'header': '3600mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 919, 'productCode': productCodePrefix ~ '28/SM15DRH/65', 'deliveryBand': 6, 'header': '1800mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1180, 'productCode': productCodePrefix ~ '28/SM15DRH/365', 'deliveryBand': 6, 'header': '3600mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="4" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl.jpg') }}" alt="Sink Module - Designer 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 940, 'productCode': productCodePrefix ~ '/SM15DLH/65', 'deliveryBand': 6, 'header': '1800mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1220, 'productCode': productCodePrefix ~ '/SM15DLH/365', 'deliveryBand': 6, 'header': '3600mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 940, 'productCode': productCodePrefix ~ '/SM15DRH/65', 'deliveryBand': 6, 'header': '1800mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1220, 'productCode': productCodePrefix ~ '/SM15DRH/365', 'deliveryBand': 6, 'header': '3600mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="4" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl.jpg') }}" alt="Sink Module - Designer 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 995, 'productCode': productCodePrefix ~ '54/SM15DLH/65', 'deliveryBand': 6, 'header': '1800mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1335, 'productCode': productCodePrefix ~ '54/SM15DLH/365', 'deliveryBand': 6, 'header': '3600mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 995, 'productCode': productCodePrefix ~ '54/SM15DRH/65', 'deliveryBand': 6, 'header': '1800mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1335, 'productCode': productCodePrefix ~ '54/SM15DRH/365', 'deliveryBand': 6, 'header': '3600mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink.jpg') }}" alt="Sink Module - Large Flush Mount Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 659, 'productCode': productCodePrefix ~ '28/SMF1B/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 28mm Sink Module - Large Flush Mount Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 899, 'productCode': productCodePrefix ~ '28/SMF1B/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 28mm Sink Module - Large Flush Mount Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink.jpg') }}" alt="Sink Module - Large Flush Mount Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 675, 'productCode': productCodePrefix ~ '/SMF1B/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 42mm Sink Module - Large Flush Mount Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 929, 'productCode': productCodePrefix ~ '/SMF1B/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 42mm Sink Module - Large Flush Mount Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink.jpg') }}" alt="Sink Module - Large Flush Mount Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 735, 'productCode': productCodePrefix ~ '54/SMF1B/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 54mm Sink Module - Large Flush Mount Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1049, 'productCode': productCodePrefix ~ '54/SMF1B/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 54mm Sink Module - Large Flush Mount Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink.jpg') }}" alt="Sink Module - Flush Mount 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 670, 'productCode': productCodePrefix ~ '28/SMF15B/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 28mm Sink Module - Flush Mount 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="28">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 910, 'productCode': productCodePrefix ~ '28/SMF15B/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 28mm Sink Module - Flush Mount 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink.jpg') }}" alt="Sink Module - Flush Mount 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 689, 'productCode': productCodePrefix ~ '/SMF15B/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 42mm Sink Module - Flush Mount 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="42">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 939, 'productCode': productCodePrefix ~ '/SMF15B/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 42mm Sink Module - Flush Mount 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" rowspan="2" class="pam image">
+                                <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink.jpg') }}" alt="Sink Module - Flush Mount 1.5 Bowl" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 749, 'productCode': productCodePrefix ~ '54/SMF15B/6', 'deliveryBand': 6, 'header': '1800mm × 600mm × 54mm Sink Module - Flush Mount 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even" data-worktop-thickness="54">
+                            <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1059, 'productCode': productCodePrefix ~ '54/SMF15B/36', 'deliveryBand': 6, 'header': '3600mm × 600mm × 54mm Sink Module - Flush Mount 1.5 Bowl', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Edging</th>
+                            <th class="tac">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody class="updatable">
+                        <tr class="odd" data-worktop-thickness="28">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/edging-strip@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/edging-strip.jpg') }}" alt="Edging Strip" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="Additional length of edging 1200mm x 3mm. Available in 3 depths to suit different depths of worktop - 57mm edging is for the 54mm worktop, 45mm edging is for the 42mm worktop and 31mm edging is for the 28mm worktop. Please note that adhesive will also be required to complete the installation." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 20, 'productCode': productCodePrefix ~ '28/EDG', 'deliveryBand': 1, 'header': '1200mm × 31mm (for 28mm) Edging Strip', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="42">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/edging-strip@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/edging-strip.jpg') }}" alt="Edging Strip" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="Additional length of edging 1200mm x 3mm. Available in 3 depths to suit different depths of worktop - 57mm edging is for the 54mm worktop, 45mm edging is for the 42mm worktop and 31mm edging is for the 28mm worktop. Please note that adhesive will also be required to complete the installation." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 20, 'productCode': productCodePrefix ~ '/EDG', 'deliveryBand': 1, 'header': '1200mm × 45mm (for 42mm) Edging Strip', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd" data-worktop-thickness="54">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/edging-strip@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/edging-strip.jpg') }}" alt="Edging Strip" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="Additional length of edging 1200mm x 3mm. Available in 3 depths to suit different depths of worktop - 57mm edging is for the 54mm worktop, 45mm edging is for the 42mm worktop and 31mm edging is for the 28mm worktop. Please note that adhesive will also be required to complete the installation." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 25, 'productCode': productCodePrefix ~ '54/EDG', 'deliveryBand': 1, 'header': '1200mm × 57mm (for 54mm) Edging Strip', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="3">Accessories</th>
+                            <th class="tac">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/maia-installation-dvd@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/maia-installation-dvd.jpg') }}" alt="Maia Installation DVD" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="This 20 minute DVD covers the full installation of maia worktop blanks and accessories. Care & maintenance is also explained with handy tips for installers and users." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 1.99, 'productCode': 'MAIADVD', 'deliveryBand': 1, 'header': 'Maia Installation DVD', 'worktopColour': '', 'id': 20000} %}
+                        </tr>
+                        <tr class="even">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/jointing-kit@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/jointing-kit.jpg') }}" alt="Jointing Kit" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="All materials required for the completion of one maia joint. Kit contains 75ml adhesive sachet, 3 tongues, 3 jointing bolts, 2 isopropyl alcohol wipes, 3 grades of sandpaper (120 grit, 240 grit & 320 grit), red abrasive pad." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 33, 'productCode': productCodePrefix ~ '/JKIT', 'deliveryBand': 1, 'header': 'Jointing Kit', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/75ml-adhesive-sachet@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/75ml-adhesive-sachet.jpg') }}" alt="75ml Adhesive Sachet" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="Two part sachet of adhesive sufficient for the application of up to 1.2m of additional edging." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 20, 'productCode': productCodePrefix ~ '/GLUE', 'deliveryBand': 1, 'header': '75ml Adhesive Sachet', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/250ml-cartridge-gun@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/250ml-cartridge-gun.jpg') }}" alt="250ml Cartridge Gun" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="Durable construction, trigger action gun for use with 250ml adhesive cartridges." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 119, 'productCode': 'MAIAGUN250', 'deliveryBand': 1, 'header': '250ml Cartridge Gun', 'worktopColour': '', 'id': 20001} %}
+                        </tr>
+                        <tr class="odd">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/250ml-adhesive-cartridge@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/250ml-adhesive-cartridge.jpg') }}" alt="250ml Adhesive Cartridge" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="For larger installations or regular users, this convenient cartridge can save time and money on site. Should be used in conjunction with 250ml cartridge gun." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 45, 'productCode': productCodePrefix ~ '/250GLUE', 'deliveryBand': 1, 'header': '50ml Adhesive Cartridge', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="even">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/care-kit@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/care-kit.jpg') }}" alt="Care Kit" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="A boxed set of items to help maintain your maia worksurfaces. The kit consists of: 414ml Countertop Magic – 1 x Ergonomic Foam Sanding Block – 2 x Sanding Discs – 1 x Microfibre Cleaning Cloth – 2 x red abrasive pads – Instructions" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 30, 'productCode': 'MAIA/CAREKIT', 'deliveryBand': 1, 'header': 'Care Kit', 'worktopColour': '', 'id': 20002} %}
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+<div class="widget-group clearfix mbl">
+    <div class="widget widget-1-of-1">
+        <div class="ui-widget">
+            <header class="ui-widget-header ui-corner-top">
+                <h2>3. Select Your Finishing Touches</h2>
+            </header>
+            <section class="ui-widget-content ui-corner-bottom clearfix">
+                <table class="data-table">
+                    <thead>
                     <tr>
-                        <th colspan="3">Worktops</th>
+                        <th colspan="3">Finishing Touch</th>
                         <th class="tac">Price</th>
                         <th>&nbsp;</th>
                     </tr>
-                </thead>
-                <tbody class="updatable">
-                    <tr class="odd" data-worktop-thickness="28">
-                        <td width="1" rowspan="4" class="pam image">
-                            <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
+                    </thead>
+                    <tbody>
+                    <tr class="even">
+                        <td width="1" class="pam image">
+                            <a href="{{ asset('/uploads/demo/chopping-board@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/chopping-board.jpg') }}" alt="Chopping Board" /></a>
                         </td>
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                        <td width="1" class="nowrap"><span title="Protect your worksurface using this matching chopping board. 375mm x 290mm x 10mm" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
                         {% set currentId = currentId + 1 %}
-                        {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 285, 'productCode': 'AMM28/18600', 'deliveryBand': 6, 'header': '1800mm × 600mm × 28mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 59, 'productCode': productCodePrefix ~ '/CB', 'deliveryBand': 1, 'header': 'Chopping Board', 'worktopColour': worktopColour, 'id': currentId} %}
                     </tr>
-                    <tr class="even" data-worktop-thickness="28">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                    <tr class="odd">
+                        <td width="1" class="pam image">
+                            <a href="{{ asset('/uploads/demo/hot-rods@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/hot-rods.jpg') }}" alt="Hot Rods (Worktop Protector)" /></a>
+                        </td>
+                        <td width="1" class="nowrap"><span title="These stainless steel finish worktop protectors are a convenient way to enable you to remove a hot pan from the hob without extreme heat damaging your worktop. The half round rods have a self adhesive backing so they are easy to apply, no cutting or routing is required." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
                         {% set currentId = currentId + 1 %}
-                        {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 289, 'productCode': 'AMM28/18650', 'deliveryBand': 6, 'header': '1800mm × 650mm × 28mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
+                        {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 38, 'productCode': 'MAIA/HROD', 'deliveryBand': 1, 'header': 'Hot Rods (Worktop Protector)', 'worktopColour': '', 'id': 20003} %}
                     </tr>
-                    <tr class="odd" data-worktop-thickness="28">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        {% set currentId = currentId + 1 %}
-                        {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 485, 'productCode': 'AMM28/36600', 'deliveryBand': 6, 'header': '3600mm × 600mm × 28mm Worktop (square corners)', 'worktopColour': worktopColour, 'id': currentId} %}
-                    </tr>
-                    <tr class="even" data-worktop-thickness="28">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM28/36650</strong><br />3600mm × 650mm × 28mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 489|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="odd" data-worktop-thickness="28">
-                        <td width="1" rowspan="2" class="pam image">
-                            <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
-                        </td>
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM28/18CR650</strong><br />1800mm × 650mm × 28mm "C-End" Worktop (240mm radius)</p></td>
-                        <td width="1" class="nowrap price">{{ 349|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="even" data-worktop-thickness="28">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM28/36CR650</strong><br />3600mm × 650mm × 28mm "C-End" Worktop (240mm radius)</p></td>
-                        <td width="1" class="nowrap price">{{ 535|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="odd" data-worktop-thickness="42">
-                        <td width="1" rowspan="4" class="pam image">
-                            <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
-                        </td>
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM/18600</strong><br />1800mm × 600mm × 42mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 295|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="even" data-worktop-thickness="42">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM/18650</strong><br />1800mm × 650mm × 42mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 299|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="odd" data-worktop-thickness="42">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM/36600</strong><br />3600mm × 600mm × 42mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 495|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="even" data-worktop-thickness="42">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM/36650</strong><br />3600mm × 650mm × 42mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 499|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="odd" data-worktop-thickness="42">
-                        <td width="1" rowspan="2" class="pam image">
-                            <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
-                        </td>
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM/18CR650</strong><br />1800mm × 650mm × 42mm "C-End" Worktop (240mm radius)</p></td>
-                        <td width="1" class="nowrap price">{{ 329|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="even" data-worktop-thickness="42">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM/36CR650</strong><br />3600mm × 650mm × 42mm "C-End" Worktop (240mm radius)</p></td>
-                        <td width="1" class="nowrap price">{{ 525|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="odd" data-worktop-thickness="54">
-                        <td width="1" rowspan="4" class="pam image">
-                            <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" alt="Worktop (square corners)" /></a>
-                        </td>
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM54/18600</strong><br />1800mm × 600mm × 54mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 355|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="even" data-worktop-thickness="54">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM54/18650</strong><br />1800mm × 650mm × 54mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 359|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="odd" data-worktop-thickness="54">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM/36600</strong><br />3600mm × 600mm × 54mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 615|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="even" data-worktop-thickness="54">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM54/36650</strong><br />3600mm × 650mm × 54mm Worktop (square corners)</p></td>
-                        <td width="1" class="nowrap price">{{ 619|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="odd" data-worktop-thickness="54">
-                        <td width="1" rowspan="2" class="pam image">
-                            <a href="{{ asset('/uploads/demo/diagram-worktops-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-worktops-240mm-radius.jpg') }}" alt="Worktop (240mm radius)" /></a>
-                        </td>
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM54/18CR650</strong><br />1800mm × 650mm × 54mm "C-End" Worktop (240mm radius)</p></td>
-                        <td width="1" class="nowrap price">{{ 399|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-                    <tr class="even" data-worktop-thickness="54">
-                        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        <td><p><strong>Ammonite AMM54/36CR650</strong><br />3600mm × 650mm × 54mm "C-End" Worktop (240mm radius)</p></td>
-                        <td width="1" class="nowrap price">{{ 599|currency('GBP', true, true, '')|raw }}</td>
-                        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-                    </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th colspan="3">Breakfast Bars</th>
-        <th class="tac">Price</th>
-        <th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody class="updatable">
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/189</strong><br />1800mm × 900mm × 28mm Breakfast Bar (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 389|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/369</strong><br />3600mm × 900mm × 28mm Breakfast Bar (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 599|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/189</strong><br />1800mm × 900mm × 42mm Breakfast Bar (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 399|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/369</strong><br />3600mm × 900mm × 42mm Breakfast Bar (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 659|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-square-corners.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/189</strong><br />1800mm × 900mm × 54mm Breakfast Bar (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 459|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/369</strong><br />3600mm × 900mm × 54mm Breakfast Bar (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 739|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/9DR18</strong><br />1800mm × 900mm × 28mm "D-Radius" Breakfast Bar (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 396|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/9DR36</strong><br />3600mm × 900mm × 28mm "D-Radius" Breakfast Bar (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 716|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/9DR18</strong><br />1800mm × 900mm × 42mm "D-Radius" Breakfast Bar (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 410|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/9DR36</strong><br />3600mm × 900mm × 42mm "D-Radius" Breakfast Bar (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 739|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-breakfast-bars-240mm-radius.jpg') }}" alt="Breakfast Bars (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/9DR18</strong><br />1800mm × 900mm × 54mm "D-Radius" Breakfast Bar (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 479|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationBreakfastBars" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/9DR36</strong><br />3600mm × 900mm × 54mm "D-Radius" Breakfast Bar (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 896|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th colspan="3">Island Worktops</th>
-        <th class="tac">Price</th>
-        <th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody class="updatable">
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" alt="Islands (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/1812</strong><br />1800mm × 1200mm × 28mm Island Worktop (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 545|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" alt="Islands (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/1812</strong><br />1800mm × 1200mm × 42mm Island Worktop (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 595|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-square-corners.jpg') }}" alt="Islands (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/1812</strong><br />1800mm × 1200mm × 54mm Island Worktop (square corners)</p></td>
-        <td width="1" class="nowrap price">{{ 715|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" alt="Islands (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/12DR18</strong><br />1800mm × 1200mm × 28mm "D-Radius" Island Worktop (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 615|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" alt="Islands (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/12DR18</strong><br />1800mm × 1200mm × 42mm "D-Radius" Island Worktop (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 675|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-island-240mm-radius.jpg') }}" alt="Islands (square corners)" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/12DR18</strong><br />1800mm × 1200mm × 54mm "D-Radius" Island Worktop (240mm radius)</p></td>
-        <td width="1" class="nowrap price">{{ 795|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th colspan="3">Sink Modules</th>
-        <th class="tac">Price</th>
-        <th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody class="updatable">
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl.jpg') }}" alt="Sink Module - Single Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM1B2/6</strong><br />1800mm × 600mm × 28mm Sink Module - Single Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 885|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM1B2/36</strong><br />3600mm × 600mm × 28mm Sink Module - Single Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1110|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl.jpg') }}" alt="Sink Module - Single Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM1B2/6</strong><br />1800mm × 600mm × 42mm Sink Module - Single Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 895|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM1B2/36</strong><br />3600mm × 600mm × 42mm Sink Module - Single Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1120|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-single-bowl.jpg') }}" alt="Sink Module - Single Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSingleBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM1B2/6</strong><br />1800mm × 600mm × 54mm Sink Module - Single Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 925|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationIslandWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM1B2/36</strong><br />3600mm × 600mm × 54mm Sink Module - Single Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1150|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl.jpg') }}" alt="Sink Module - Super Large Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SMSUP/6</strong><br />1800mm × 600mm × 28mm Sink Module - Super Large Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 919|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SMSUP/36</strong><br />3600mm × 600mm × 28mm Sink Module - Super Large Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1144|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl.jpg') }}" alt="Sink Module - Super Large Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SMSUP/6</strong><br />1800mm × 600mm × 42mm Sink Module - Super Large Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 929|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SMSUP/36</strong><br />3600mm × 600mm × 42mm Sink Module - Super Large Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1154|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-super-large-bowl.jpg') }}" alt="Sink Module - Super Large Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SMSUP/6</strong><br />1800mm × 600mm × 54mm Sink Module - Super Large Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 919|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesSuperLargeBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SMSUP/36</strong><br />3600mm × 600mm × 54mm Sink Module - Super Large Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1144|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl.jpg') }}" alt="Sink Module - Duo 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM15B2/6</strong><br />1800mm × 600mm × 28mm Sink Module - Duo 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 929|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM15B2/36</strong><br />3600mm × 600mm × 28mm Sink Module - Duo 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1154|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl.jpg') }}" alt="Sink Module - Duo 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM15B2/6</strong><br />1800mm × 600mm × 42mm Sink Module - Duo 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 939|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM15B2/36</strong><br />3600mm × 600mm × 42mm Sink Module - Duo 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1164|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-bowl.jpg') }}" alt="Sink Module - Duo 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM15B2/6</strong><br />1800mm × 600mm × 54mm Sink Module - Duo 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 969|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDuo15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM15B2/36</strong><br />3600mm × 600mm × 54mm Sink Module - Duo 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 1194|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="4" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl.jpg') }}" alt="Sink Module - Designer 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM15DLH/65</strong><br />1800mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 959|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM15DLH/365</strong><br />3600mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1184|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM15DRH/65</strong><br />1800mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 959|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SM15DRH/365</strong><br />3600mm × 650mm × 28mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1184|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="4" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl.jpg') }}" alt="Sink Module - Designer 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM15DLH/65</strong><br />1800mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 969|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM15DLH/365</strong><br />3600mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1194|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM15DRH/65</strong><br />1800mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 969|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SM15DRH/365</strong><br />3600mm × 650mm × 42mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1194|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="4" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-designer-bowl.jpg') }}" alt="Sink Module - Designer 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM15DLH/65</strong><br />1800mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1017|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM15DLH/365</strong><br />3600mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Left Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1242|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM15DRH/65</strong><br />1800mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1017|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesDesigner15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SM15DRH/365</strong><br />3600mm × 650mm × 54mm Sink Module - Designer 1.5 Bowl (Right Hand Bowl)</p></td>
-        <td width="1" class="nowrap price">{{ 1242|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink.jpg') }}" alt="Sink Module - Large Flush Mount Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SMF1B/6</strong><br />1800mm × 600mm × 28mm Sink Module - Large Flush Mount Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 590|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SMF1B/36</strong><br />3600mm × 600mm × 28mm Sink Module - Large Flush Mount Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 779|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink.jpg') }}" alt="Sink Module - Large Flush Mount Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SMF1B/6</strong><br />1800mm × 600mm × 42mm Sink Module - Large Flush Mount Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 579|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SMF1B/36</strong><br />3600mm × 600mm × 42mm Sink Module - Large Flush Mount Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 795|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-large-flush-mount-sink.jpg') }}" alt="Sink Module - Large Flush Mount Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SMF1B/6</strong><br />1800mm × 600mm × 54mm Sink Module - Large Flush Mount Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 665|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesLargeFlushMountBowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SMF1B/36</strong><br />3600mm × 600mm × 54mm Sink Module - Large Flush Mount Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 899|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink.jpg') }}" alt="Sink Module - Flush Mount 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SMF15B/6</strong><br />1800mm × 600mm × 28mm Sink Module - Flush Mount 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 605|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="28">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/SMF15B/36</strong><br />3600mm × 600mm × 28mm Sink Module - Flush Mount 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 779|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink.jpg') }}" alt="Sink Module - Flush Mount 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SMF15B/6</strong><br />1800mm × 600mm × 42mm Sink Module - Flush Mount 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 595|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="42">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/SMF15B/36</strong><br />3600mm × 600mm × 42mm Sink Module - Flush Mount 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 815|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" rowspan="2" class="pam image">
-            <a href="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/diagram-sink-modules-1-5-flush-mount-sink.jpg') }}" alt="Sink Module - Flush Mount 1.5 Bowl" /></a>
-        </td>
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SMF15B/6</strong><br />1800mm × 600mm × 54mm Sink Module - Flush Mount 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 680|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even" data-worktop-thickness="54">
-        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationSinkModulesFlushMount15Bowl" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/SMF15B/36</strong><br />3600mm × 600mm × 54mm Sink Module - Flush Mount 1.5 Bowl</p></td>
-        <td width="1" class="nowrap price">{{ 925|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th colspan="3">Edging</th>
-        <th class="tac">Price</th>
-        <th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody class="updatable">
-    <tr class="odd" data-worktop-thickness="28">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/edging-strip@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/edging-strip.jpg') }}" alt="Edging Strip" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="Additional length of edging 1200mm x 3mm. Available in 3 depths to suit different depths of worktop - 57mm edging is for the 54mm worktop, 45mm edging is for the 42mm worktop and 31mm edging is for the 28mm worktop. Please note that adhesive will also be required to complete the installation." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM28/EDG</strong><br />1200mm × 31mm (for 28mm) Edging Strip</p></td>
-        <td width="1" class="nowrap price">{{ 18|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="42">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/edging-strip@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/edging-strip.jpg') }}" alt="Edging Strip" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="Additional length of edging 1200mm x 3mm. Available in 3 depths to suit different depths of worktop - 57mm edging is for the 54mm worktop, 45mm edging is for the 42mm worktop and 31mm edging is for the 28mm worktop. Please note that adhesive will also be required to complete the installation." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/EDG</strong><br />1200mm × 45mm (for 42mm) Edging Strip</p></td>
-        <td width="1" class="nowrap price">{{ 18|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd" data-worktop-thickness="54">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/edging-strip@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/edging-strip.jpg') }}" alt="Edging Strip" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="Additional length of edging 1200mm x 3mm. Available in 3 depths to suit different depths of worktop - 57mm edging is for the 54mm worktop, 45mm edging is for the 42mm worktop and 31mm edging is for the 28mm worktop. Please note that adhesive will also be required to complete the installation." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM54/EDG</strong><br />1200mm × 57mm (for 54mm) Edging Strip</p></td>
-        <td width="1" class="nowrap price">{{ 25|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th colspan="3">Accessories</th>
-        <th class="tac">Price</th>
-        <th>&nbsp;</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="odd">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/maia-installation-dvd@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/maia-installation-dvd.jpg') }}" alt="Maia Installation DVD" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="This 20 minute DVD covers the full installation of maia worktop blanks and accessories. Care & maintenance is also explained with handy tips for installers and users." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>MAIADVD</strong><br />Maia Installation DVD</p></td>
-        <td width="1" class="nowrap price">{{ 1.99|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/jointing-kit@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/jointing-kit.jpg') }}" alt="Jointing Kit" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="All materials required for the completion of one maia joint. Kit contains 75ml adhesive sachet, 3 tongues, 3 jointing bolts, 2 isopropyl alcohol wipes, 3 grades of sandpaper (120 grit, 240 grit & 320 grit), red abrasive pad." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/JKIT</strong><br />Jointing Kit</p></td>
-        <td width="1" class="nowrap price">{{ 33|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/75ml-adhesive-sachet@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/75ml-adhesive-sachet.jpg') }}" alt="75ml Adhesive Sachet" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="Two part sachet of adhesive sufficient for the application of up to 1.2m of additional edging." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/GLUE</strong><br />75ml Adhesive Sachet</p></td>
-        <td width="1" class="nowrap price">{{ 20.00|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/250ml-cartridge-gun@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/250ml-cartridge-gun.jpg') }}" alt="250ml Cartridge Gun" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="Durable construction, trigger action gun for use with 250ml adhesive cartridges." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>MAIAGUN250</strong><br />250ml Cartridge Gun</p></td>
-        <td width="1" class="nowrap price">{{ 119.00|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="odd">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/250ml-adhesive-cartridge@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/250ml-adhesive-cartridge.jpg') }}" alt="250ml Adhesive Cartridge" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="For larger installations or regular users, this convenient cartridge can save time and money on site. Should be used in conjunction with 250ml cartridge gun." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>Ammonite AMM/250GLUE</strong><br />50ml Adhesive Cartridge</p></td>
-        <td width="1" class="nowrap price">{{ 45|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    <tr class="even">
-        <td width="1" class="pam image">
-            <a href="{{ asset('/uploads/demo/care-kit@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/care-kit.jpg') }}" alt="Care Kit" /></a>
-        </td>
-        <td width="1" class="nowrap"><span title="A boxed set of items to help maintain your maia worksurfaces. The kit consists of: 414ml Countertop Magic – 1 x Ergonomic Foam Sanding Block – 2 x Sanding Discs – 1 x Microfibre Cleaning Cloth – 2 x red abrasive pads – Instructions" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-        <td><p><strong>MAIA/CAREKIT</strong><br />Care Kit</p></td>
-        <td width="1" class="nowrap price">{{ 30.00|currency('GBP', true, true, '')|raw }}</td>
-        <td width="1" class="nowrap">{{ helpers.addToBasket() }}</td>
-    </tr>
-    </tbody>
-    </table>
-    </section>
-    </div>
+                    </tbody>
+                </table>
+            </section>
+        </div>
     </div>
 </div>
