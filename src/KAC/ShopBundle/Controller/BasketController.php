@@ -271,6 +271,113 @@ class BasketController extends Controller
     	
     	return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'thumbnailPath' => $thumbnailPath, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));	    	   		    	
     }
+
+    // Add to basket
+    public function ajaxAddNonProductToBasketAction(Request $request)
+    {
+        // Get the services
+        $basketService = $this->get('kac_admin.basket_service');
+        $productService = $this->get('kac_admin.product_service');
+
+        // Get submitted data
+        $productId = $request->query->get('productId');
+        $variantId = $request->query->get('variantId', $productId);
+        $quantity = ($request->query->get('quantity')?$request->query->get('quantity'):1);
+        $deliveryBand = $request->query->get('deliveryBand');
+        $url = $request->query->get('url');
+        $unitCost = $request->query->get('unitCost');
+        $productCode = $request->query->get('productCode');
+        $header = $request->query->get('header');
+        $brand = $request->query->get('brand');
+        $description = $request->query->get('description');
+        $selectedOptions = ($request->query->get('selectedOptions')?$request->query->get('selectedOptions'):'');
+        $price = 0;
+        $subTotal = 0;
+
+        // Get the basket
+        $basket = $this->get('session')->get('basket');
+
+        // Check if product already exists in the basket
+        $addNewProduct = true;
+        if (is_array($basket['products']))
+        {
+            foreach ($basket['products'] as $key => $basketProduct)
+            {
+                if ($basketProduct['productId'] == $productId)
+                {
+                    if ($basketProduct['selectedOptions'] == $selectedOptions)
+                    {
+                        $basket['products'][$key]['quantity'] += $quantity;
+                        $basket['products'][$key]['subTotal'] = $basket['products'][$key]['quantity'] * $basket['products'][$key]['unitCost'];
+                        $basket['products'][$key]['vat'] = $basket['products'][$key]['subTotal'] - ($basket['products'][$key]['subTotal'] / 1.2);
+                        $price = $basket['products'][$key]['unitCost'];
+                        $subTotal = $price * $quantity;
+                        $addNewProduct = false;
+                    }
+                }
+            }
+        }
+
+        // Add new product if it does not exist
+        if ($addNewProduct)
+        {
+            // Get basket item id
+            $productCount = 1;
+            if (is_array($basket['products']))
+            {
+                foreach ($basket['products'] as $key => $basketProduct)
+                {
+                    if ($basketProduct['productId'] == $productId)
+                    {
+                        $productCount++;
+                    }
+                }
+            }
+            $basketItemId = $productId.'-'.$productCount;
+            $newProduct = array();
+            $price = $unitCost;
+            $recommendedRetailPrice = $unitCost;
+            $discount = 0;
+
+            // Get selected options
+            $savings = 0;
+            $newProduct['basketItemId'] = $basketItemId;
+            $newProduct['productId'] = $productId;
+            $newProduct['product'] = $description;
+            $newProduct['url'] = $url;
+            $newProduct['header'] = $header;
+            $newProduct['productCode'] = $productCode;
+            $newProduct['brand'] = $brand;
+            $newProduct['description'] = $description;
+            $newProduct['weight'] = 0;
+            $newProduct['deliveryBand'] = $deliveryBand;
+            $newProduct['weight'] = 0;
+            $newProduct['height'] = 0;
+            $newProduct['length'] = 0;
+            $newProduct['width'] = 0;
+            $newProduct['quantity'] = $quantity;
+            $newProduct['unitCost'] = $price;
+            $newProduct['recommendedRetailPrice'] = $recommendedRetailPrice;
+            $newProduct['discount'] = $discount;
+            $newProduct['savings'] = $savings;
+            $newProduct['subTotal'] = $quantity * $price;
+            $newProduct['vat'] = $newProduct['subTotal'] - ($newProduct['subTotal'] / 1.2);
+            $newProduct['selectedOptions'] = array();
+            $newProduct['selectedOptionLabels'] = array();
+
+            $basket['products'][$basketItemId] = $newProduct;
+
+            $subTotal = $price * $quantity;
+        }
+
+        // Update the basket session
+        $this->get('session')->set('basket', $basket);
+
+        // Update the basket totals
+        $basketService->updateBasketTotals();
+
+        return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));
+    }
     
     // Redeem membership card number
 	public function ajaxRedeemMembershipCardNumberAction(Request $request)
