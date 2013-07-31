@@ -1095,19 +1095,24 @@ class BasketService {
 				{
                     $skipProduct = false;
 
-                    /**
-                     * @var Product $productEntity
-                     * @var Product\Variant $variantEntity
-                     */
-                    $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
-                    $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
-
-                    // Ensure that the product is not in the discount department
-                    foreach($productEntity->getDepartments() as $department)
+                    if ($product['validProduct'] > 0)
                     {
-                        if($department->getId() === 158 || $department->getId() === 918)
+                        /**
+                         * @var Product $productEntity
+                         * @var Product\Variant $variantEntity
+                         */
+                        $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+                        $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+                        if ($productEntity && $variantEntity)
                         {
-                            $skipProduct = true;
+                            // Ensure that the product is not in the discount department
+                            foreach($productEntity->getDepartments() as $department)
+                            {
+                                if ($department->getId() === 158 || $department->getId() === 918)
+                                {
+                                    $skipProduct = true;
+                                }
+                            }
                         }
                     }
 
@@ -1174,48 +1179,51 @@ class BasketService {
 			{
                 $skipProduct = false;
 
-                /**
-                 * @var Product $productEntity
-                 * @var Product\Variant $variantEntity
-                 */
-                $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
-                $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+                if ($product['validProduct'] > 0)
+                {
+                    /**
+                     * @var Product $productEntity
+                     * @var Product\Variant $variantEntity
+                     */
+                    $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+                    $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
 
-	 			if ($productEntity && $variantEntity)
-	 			{
-                    // Ensure that the product is not in the discount department
-                    foreach($productEntity->getDepartments() as $department)
+                    if ($productEntity && $variantEntity)
                     {
-                        if($department->getId() === 158 || $department->getId() === 918)
+                        // Ensure that the product is not in the discount department
+                        foreach($productEntity->getDepartments() as $department)
                         {
-                            $skipProduct = true;
-                        }
-                    }
-
-					if (!$skipProduct && $productEntity->getBrand()->getId() == '7')
-					{
-                        $prices = $variantEntity->getPrices();
-                        if(count($prices) > 0) {
-                            $price = $prices[0];
-                            if ($numberOfCdaAppliances >= 3)
+                            if($department->getId() === 158 || $department->getId() === 918)
                             {
-                                $cdaDiscount = $price->getListPrice() * 0.1;
-                                if ($price->getListPrice() < $price->getRecommendedRetailPrice())
-                                {
-                                    $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getListPrice();
-                                }
-                                $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $cdaDiscount;
-                                $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
-                                $totalDiscount += ($cdaDiscount * $product['quantity']);
-                                $totalCdaDiscount += ($cdaDiscount * $product['quantity']);
-                            } else {
-                                $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getRecommendedRetailPrice();
-                                $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice();
-                                $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                $skipProduct = true;
                             }
                         }
-					}
-				}
+
+                        if (!$skipProduct && $productEntity->getBrand()->getId() == '7')
+                        {
+                            $prices = $variantEntity->getPrices();
+                            if(count($prices) > 0) {
+                                $price = $prices[0];
+                                if ($numberOfCdaAppliances >= 3)
+                                {
+                                    $cdaDiscount = $price->getListPrice() * 0.1;
+                                    if ($price->getListPrice() < $price->getRecommendedRetailPrice())
+                                    {
+                                        $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getListPrice();
+                                    }
+                                    $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $cdaDiscount;
+                                    $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                    $totalDiscount += ($cdaDiscount * $product['quantity']);
+                                    $totalCdaDiscount += ($cdaDiscount * $product['quantity']);
+                                } else {
+                                    $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getRecommendedRetailPrice();
+                                    $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice();
+                                    $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                }
+                            }
+                        }
+                    }
+                }
 			}
 			if ($totalCdaDiscount > 0)
 			{
