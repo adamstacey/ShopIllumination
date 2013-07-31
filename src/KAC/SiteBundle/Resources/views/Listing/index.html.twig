@@ -127,10 +127,10 @@
                             <div class="mtm">{{ overview|raw }}</div>
                         {% endif %}
                         {% if brand %}
-                            {{ render(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
+                            {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
                         {% else %}
-                            {{ render(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id })) }}
-                            {{ render(controller('KACSiteBundle:Listing:popularBrands', { 'departmentId': department.id })) }}
+                            {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id })) }}
+                            {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentId': department.id })) }}
                         {% endif %}
                     </section>
                 </div>
@@ -260,7 +260,7 @@
                                             <option{% if app.request.get('sort_order') == 'low_price:asc' or app.request.get('sort_order') is not defined or app.request.get('sort_order') is null %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
                                             <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
                                             <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
-                                        </select>
+                                        </select>render
                                     </div>
                                     <span class="fl">Show</span>
                                     <div class="fl prs">

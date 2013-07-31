@@ -237,12 +237,11 @@ class BasketController extends Controller
     		$newProduct['basketItemId'] = $basketItemId;
     		$newProduct['productId'] = $productId;
     		$newProduct['product'] = $product['pageTitle'];
-    		$newProduct['url'] = $product['url'];
-    		$newProduct['header'] = str_replace(' '.$variant['productCode'].' ', ' ', $product['pageTitle']);
+    		$newProduct['url'] = $variant['url'];
+    		$newProduct['header'] = $variant['pageTitle'];
     		$newProduct['productCode'] = $variant['productCode'];
     		$newProduct['brand'] = $product['brand'];
-    		$newProduct['description'] = $product['description'];
-    		$newProduct['weight'] = $product['weight'];
+    		$newProduct['description'] = $variant['description'];
     		$newProduct['deliveryBand'] = $variant['deliveryBand'];
     		$newProduct['weight'] = $variant['weight'];
     		$newProduct['height'] = $variant['height'];

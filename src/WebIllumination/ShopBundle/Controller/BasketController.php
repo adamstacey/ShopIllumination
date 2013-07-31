@@ -163,8 +163,8 @@ class BasketController extends Controller
             throw $this->createNotFoundException();
         }
 
-        $header = $product['pageTitle'];
-        $url = $product['url'];
+        $header = $variant['pageTitle'];
+        $url = $variant['url'];
         if(count($product['images']) > 0)
         {
             $thumbnailPath = $product['images'][0]['thumbnailPath'];
@@ -181,7 +181,7 @@ class BasketController extends Controller
         {
             foreach ($basket['products'] as $key => $basketProduct)
             {
-                if ($basketProduct['productId'] == $productId)
+                if ($basketProduct['variantId'] == $variantId)
                 {
                     if ($basketProduct['selectedOptions'] == $selectedOptions)
                     {
@@ -205,7 +205,7 @@ class BasketController extends Controller
             {
                 foreach ($basket['products'] as $key => $basketProduct)
                 {
-                    if ($basketProduct['productId'] == $productId)
+                    if ($basketProduct['variantId'] == $variantId)
                     {
                         $productCount++;
                     }
@@ -221,12 +221,12 @@ class BasketController extends Controller
     		$newProduct['basketItemId'] = $basketItemId;
     		$newProduct['productId'] = $productId;
             $newProduct['variantId'] = $variantId;
-    		$newProduct['product'] = $product['pageTitle'];
-    		$newProduct['url'] = $product['url'];
-    		$newProduct['header'] = $product['header'];
+    		$newProduct['product'] = $variant['pageTitle'];
+    		$newProduct['url'] = $variant['url'];
+    		$newProduct['header'] = $variant['header'];
     		$newProduct['productCode'] = $variant['productCode'];
     		$newProduct['brand'] = $product['brand'];
-    		$newProduct['shortDescription'] = $product['metaDescription'];
+    		$newProduct['shortDescription'] = $variant['metaDescription'];
     		$newProduct['weight'] = $variant['weight'];
             $newProduct['deliveryBand'] = $variant['deliveryBand'];
             $newProduct['weight'] = $variant['weight'];

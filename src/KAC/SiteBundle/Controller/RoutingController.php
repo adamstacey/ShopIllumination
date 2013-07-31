@@ -77,7 +77,7 @@ class RoutingController extends Controller
                             return new Response($content, 404, array('Content-Type', 'text/html'));
                         }
 
-                        return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getVariant()->getProduct()->getId()), $request->query->all());
+                        return $this->forward('KACSiteBundle:Product:viewWithVariant', array('id' => $routingObject->getVariant()->getId()), $request->query->all());
                         break;
                 }
             }

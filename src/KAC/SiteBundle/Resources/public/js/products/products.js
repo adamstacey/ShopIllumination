@@ -22,11 +22,8 @@ $(document).ready(function() {
                 });
             },
             success: function(a, b, c) {
-                console.log('success', a, b,c );
                 updateBasketSummary();
                 $("html, body").animate({scrollTop: 0},'slow', function() {
-                    $('.dropdown-summary').show();
-                    $('#basket-summary').addClass('expanded');
                     setTimeout(function() {
                         $('.dropdown-summary').hide();
                         $('#basket-summary').removeClass('expanded');
@@ -80,18 +77,20 @@ $(document).ready(function() {
         });
     });
 
-    $('#basket-summary').hover(function() {
-        if(parseInt($(this).find('.dropdown-summary').attr("data-items"), 10) > 0)
-        {
-            $(this).find('.dropdown-summary').show();
-            $(this).addClass('expanded');
+    $('#basket-summary').hoverIntent({
+        timeout: 500,
+        over: function() {
+            if(parseInt($(this).find('.dropdown-summary').attr("data-items"), 10) > 0)
+            {
+                $(this).addClass('expanded').find('.dropdown-summary').show();
+            }
+        },
+        out: function() {
+            $(this).removeClass('expanded').find('.dropdown-summary').hide();
         }
-    }, function() {
-        $(this).find('.dropdown-summary').hide();
-        $(this).removeClass('expanded');
     });
 
-    $(".action-delete-basket-item").on('click', function() {
+    $(document).on('click', ".action-delete-basket-item", function() {
         $.ajax({
             type: "GET",
             url: $(this).attr("data-url"),
@@ -104,7 +103,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#basket-summary .action-clear-basket").on('click', function() {
+    $(document).on('click', "#basket-summary .action-clear-basket", function() {
         $.ajax({
             type: "GET",
             url: $(this).attr("data-url"),
@@ -123,10 +122,11 @@ function updateBasketSummary() {
         success: function(data) {
             $el.html(data);
             generateButtons($el);
-            if(parseInt($el.find('.dropdown-summary').attr("data-items"), 10) <= 0)
+            if(parseInt($(this).find('.dropdown-summary').attr("data-items"), 10) > 0)
             {
-                $el.find('.dropdown-summary').hide();
-                $el.removeClass('expanded');
+                $(this).addClass('expanded').find('.dropdown-summary').show();
+            } else {
+                $el.removeClass('expanded').find('.dropdown-summary').hide();
             }
         }
     });
