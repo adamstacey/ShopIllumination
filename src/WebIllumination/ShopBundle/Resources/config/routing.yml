@@ -60,6 +60,9 @@ basket_ajax_update_delivery_options:
 basket_ajax_add_to_basket:
     pattern:  /basket/ajaxAddToBasket
     defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxAddToBasket }
+basket_ajax_add_non_product_to_basket:
+    pattern:  /basket/ajaxAddNonProductToBasket
+    defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxAddNonProductToBasket }
 basket_ajax_update_basket_item:
     pattern:  /basket/ajaxUpdateBasketItem
     defaults: { _controller: WebIlluminationShopBundle:Basket:ajaxUpdateBasketItem }
