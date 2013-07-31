@@ -9,6 +9,14 @@
     @include boxShadow($colourGreyExtraLight, 0, 0, $spacingMedium);
 }
 
+.product h1 {
+    padding: 0 $spacingMedium $spacingMedium $spacingMedium;
+    margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+
+    border-bottom: 1px solid $colourGreyExtraLight;
+    @include fontSize($fontSizeExtraLarge);
+}
+
 .product a {
     text-decoration: none !important;
 }
