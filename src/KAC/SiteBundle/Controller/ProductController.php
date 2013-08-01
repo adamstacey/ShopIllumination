@@ -214,7 +214,10 @@ class ProductController extends Controller {
             );
             foreach($entity->getFeatures() as $vtf)
             {
-                $array['features'][$vtf->getFeatureGroup()->getName()] = $vtf->getFeature()->getName();
+                if($vtf && $vtf->getFeatureGroup() && $vtf->getFeature())
+                {
+                    $array['features'][$vtf->getFeatureGroup()->getName()] = $vtf->getFeature()->getName();
+                }
             }
             $variants[] = $array;
         }
