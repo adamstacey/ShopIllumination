@@ -173,7 +173,6 @@ class ProductListener
         $entity = $args->getEntity();
         if($entity instanceof Product)
         {
-            $this->indexer->delete($entity);
         } else {
             $entity = $args->getEntity();
 

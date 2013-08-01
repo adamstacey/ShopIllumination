@@ -1018,6 +1018,7 @@ class ProductController extends Controller {
 
         $em->remove($product);
         $em->flush();
+        $this->get('kac_site.indexer.product')->deleteById($productId);
 
         return $this->redirect($this->generateUrl('listing_products'));
     }
