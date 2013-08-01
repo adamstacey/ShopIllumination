@@ -1,7 +1,7 @@
 {% set worktopColour = "Mocha" %}
 {% set worktopDescription = "Mocha brings a deep brown to the maia range. As neutral door colours such as latte and cream grow in popularity, so Mocha really comes into its own." %}
 {% set productCodePrefix = 'MOC' %}
-{% set fromPrice = 349 %}
+{% set fromPrice = 285 %}
 {% set worktopNumber = 13 %}
 {% set startingId = 10000 + (1000 * worktopNumber) %}
 {% set currentId = startingId %}
@@ -12,7 +12,7 @@
         {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
         {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
         {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
-        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand1.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand2.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
         {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
         {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
     </section>

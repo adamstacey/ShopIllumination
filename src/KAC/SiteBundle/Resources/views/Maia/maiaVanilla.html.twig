@@ -1,7 +1,7 @@
 {% set worktopColour = "Vanilla" %}
 {% set worktopDescription = "Vanilla is an elegant colour which complements many kitchen designs. Its coloured flecks make it the perfect match for a range of door colours. Contrast with black for added drama." %}
 {% set productCodePrefix = 'VAN' %}
-{% set fromPrice = 349 %}
+{% set fromPrice = 285 %}
 {% set worktopNumber = 14 %}
 {% set startingId = 10000 + (1000 * worktopNumber) %}
 {% set currentId = startingId %}
@@ -12,7 +12,7 @@
         {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
         {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
         {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
-        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand1.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand2.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
         {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
         {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
     </section>

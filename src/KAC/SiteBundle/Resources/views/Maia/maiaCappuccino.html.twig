@@ -1,7 +1,7 @@
 {% set worktopColour = "Cappuccino" %}
 {% set worktopDescription = "Cappuccino is a stylish choice to complement woods and plain doors. Add dark doors, cream and brown for a relaxed feel, or vibrant zebrano doors to make a real impact." %}
 {% set productCodePrefix = 'CAP' %}
-{% set fromPrice = 349 %}
+{% set fromPrice = 285 %}
 {% set worktopNumber = 7 %}
 {% set startingId = 10000 + (1000 * worktopNumber) %}
 {% set currentId = startingId %}
@@ -12,7 +12,7 @@
         {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
         {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
         {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
-        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand1.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand2.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
         {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
         {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
     </section>
