@@ -32,8 +32,6 @@ class ProductDepartmentType extends AbstractType
             'attr' => array(
                 'class' => 'fill no-uniform select-department',
                 'data-help' => 'Select a department you want the product to fall under.',
-                'data-placeholder' => '- Select a Department -',
-                'placeholder' => '- Select a Department -',
             ),
         ));
         $builder->add('displayOrder', 'hidden');

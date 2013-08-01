@@ -78,6 +78,13 @@ class Description implements DescriptionInterface
      */
     private $updatedAt;
 
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
+
     /**
      * Get id
      *

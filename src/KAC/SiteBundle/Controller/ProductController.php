@@ -705,7 +705,58 @@ class ProductController extends Controller {
      */
     public function editOverviewAction(Request $request, $productId)
     {
-        return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var $product Product
+         */
+        $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        if (count($product->getDepartments()) > 0)
+        {
+            $product->setMainDepartment($product->getDepartments()[0]);
+        }
+
+        $form = $this->createForm(new EditProductOverviewType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                if($product->getMainDepartment())
+                {
+                    $depAlreadyExists = false;
+                    // Check to see if the department already exists in the departments collection
+                    foreach($product->getDepartments() as $department)
+                    {
+                        if($department == $product->getMainDepartment())
+                        {
+                            $department->setDepartment($product->getMainDepartment()->getDepartment());
+                            $depAlreadyExists = true;
+                        }
+                    }
+
+                    if(!$depAlreadyExists)
+                    {
+                        $product->addDepartment($product->getMainDepartment());
+                    }
+                }
+
+                $em->persist($product);
+                $em->flush();
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:edit_overview.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
     }
 
     /**

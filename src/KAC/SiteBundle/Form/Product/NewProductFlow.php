@@ -111,8 +111,38 @@ class NewProductFlow extends FormFlow
          */
         $formData = $this->getFormData();
 
-        if ($step === 1)
+        if ($step <= 1)
         {
+            $departments = $formData->getDepartments();
+            if (count($departments) > 0)
+            {
+                $formData->setMainDepartment($departments[0]);
+            } else {
+                $formData->setMainDepartment(null);
+            }
+        }
+
+        if($step === 2)
+        {
+            if($formData->getMainDepartment())
+            {
+                $depAlreadyExists = false;
+                // Check to see if the department already exists in the departments collection
+                foreach($formData->getDepartments() as $department)
+                {
+                    if($department == $formData->getMainDepartment())
+                    {
+                        $department->setDepartment($formData->getMainDepartment()->getDepartment());
+                        $depAlreadyExists = true;
+                    }
+                }
+
+                if(!$depAlreadyExists)
+                {
+                    $formData->addDepartment($formData->getMainDepartment());
+                }
+            }
+
             $departments = $formData->getDepartments();
             if (count($departments) > 0 && $departments[0]->getDepartment() !== null)
             {

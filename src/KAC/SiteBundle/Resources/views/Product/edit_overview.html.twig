@@ -21,7 +21,7 @@
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
                                         {{ form_row(form.brand) }}
-                                        {{ form_row(form.departments[0], {'label': 'Main Department'}) }}
+                                        {{ form_row(form.mainDepartment, {'label': 'Main Department'}) }}
                                         {% do form.departments.setRendered(true) %}
                                         {{ form_row(form.template) }}
                                         {{ form_row(form.status) }}

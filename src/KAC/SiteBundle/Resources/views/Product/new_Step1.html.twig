@@ -10,7 +10,7 @@
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         {{ form_row(form.brand) }}
-                        {{ form_row(form.departments[0], {'label': 'Main Department', 'help': 'Select the main department you want the product to fall under.'}) }}
+                        {{ form_row(form.mainDepartment, {'label': 'Main Department', 'help': 'Select the main department you want the product to fall under.'}) }}
                         {% do form.departments.setRendered(true) %}
                         {{ form_row(form.template) }}
                         {{ form_row(form.status) }}
@@ -38,9 +38,8 @@
 </form>
 <script type="text/javascript">
     $(document).ready(function() {
-        var $placholderOption = $('<option value="">- Select a Main Department -</option>');
         $("select.select-brand").select2();
-        $("select.select-department").prepend($placholderOption).select2();
+        $("select.select-department").select2();
         if ($("select.select-department option[selected='selected']").length < 1) {
             $("select.select-department").select2("val", "");
         }
