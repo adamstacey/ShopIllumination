@@ -111,7 +111,7 @@ class ImageManager extends Manager
             ->save($image->getUploadPath().$image->getPublicPath());
 
         // Get the updated file size
-        $fileSize = filesize($filePath);
+        $fileSize = filesize($image->getUploadPath().$image->getPublicPath());
         $image->setFileSize($fileSize);
     }
 
