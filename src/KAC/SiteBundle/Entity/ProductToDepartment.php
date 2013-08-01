@@ -28,8 +28,7 @@ class ProductToDepartment
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Department")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview", "flow_site_new_product_step2", "site_edit_product_departments"}, message="Select a department.")
-     * @Assert\NotNull(groups={"flow_site_new_product_step1", "site_edit_product_overview", "flow_site_new_product_step2", "site_edit_product_departments"}, message="Select a department.")
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, message="Select a department.")
      **/
     private $department;
 
@@ -49,6 +48,13 @@ class ProductToDepartment
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
 
     public function __toString()
     {

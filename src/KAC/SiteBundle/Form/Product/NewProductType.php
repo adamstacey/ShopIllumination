@@ -38,9 +38,7 @@ class NewProductType extends AbstractType
                     'required' => true,
                     'empty_value' => '- Select a Brand -',
                 ), array());
-                $builder->add('departments', 'collection', array(
-                    'type' => new ProductDepartmentType(),
-                ));
+                $builder->add('mainDepartment', new ProductDepartmentType());
                 $builder->add('status', 'choice', array(
                     'label' => 'Status',
                     'choices' => array('a' => 'Available', 'h' => 'Hidden', 'd' => 'Disabled'),

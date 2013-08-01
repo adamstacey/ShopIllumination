@@ -25,7 +25,7 @@ class Product implements DescribableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Brand")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a brand.")
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a brand.")
      * @Serializer\Exclude()
      */
     private $brand;
@@ -40,7 +40,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, message="Select a department.")
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, message="Select a department.")
      * @Assert\Count(min = "1", groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, minMessage="Select at least one department.")
      * @Assert\Valid
      * @Serializer\Exclude()
@@ -158,6 +158,10 @@ class Product implements DescribableInterface
      */
     private $deletedAt;
 
+    /**
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, message="Select a department.")
+     */
+    private $mainDepartment = null;
     private $imageUploads = "";
     private $temporaryImages = "";
     private $documentUploads = "";
@@ -200,6 +204,7 @@ class Product implements DescribableInterface
 
     public function __clone() {
         if ($this->id) {
+            $this->id = null;
             $oldVariants = $this->variants;
             $oldDepartments = $this->departments;
             $oldDescriptions = $this->descriptions;
@@ -216,8 +221,6 @@ class Product implements DescribableInterface
             $this->documents = new ArrayCollection();
             $this->routings = new ArrayCollection();
 
-
-            $this->id = null;
             foreach($oldVariants as $entity)
             {
                 $this->addVariant(clone $entity);
@@ -1060,6 +1063,22 @@ class Product implements DescribableInterface
         {
             unset($this->features[$key]);
         }
+    }
+
+    /**
+     * @return ProductToDepartment
+     */
+    public function getMainDepartment()
+    {
+        return $this->mainDepartment;
+    }
+
+    /**
+     * @param ProductToDepartment $mainDepartment
+     */
+    public function setMainDepartment($mainDepartment)
+    {
+        $this->mainDepartment = $mainDepartment;
     }
 
 }
