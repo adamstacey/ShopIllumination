@@ -629,43 +629,30 @@
                             {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 30, 'productCode': 'MAIA/CAREKIT', 'deliveryBand': 1, 'header': 'Care Kit', 'worktopColour': '', 'id': 20002} %}
                         </tr>
                     </tbody>
-                </table>
-            </section>
-        </div>
-    </div>
-</div>
-<div class="widget-group clearfix mbl">
-    <div class="widget widget-1-of-1">
-        <div class="ui-widget">
-            <header class="ui-widget-header ui-corner-top">
-                <h2>3. Select Your Finishing Touches</h2>
-            </header>
-            <section class="ui-widget-content ui-corner-bottom clearfix">
-                <table class="data-table">
                     <thead>
-                    <tr>
-                        <th colspan="3">Finishing Touch</th>
-                        <th class="tac">Price</th>
-                        <th>&nbsp;</th>
-                    </tr>
+                        <tr>
+                            <th colspan="3">Finishing Touch</th>
+                            <th class="tac">Price</th>
+                            <th>&nbsp;</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr class="even">
-                        <td width="1" class="pam image">
-                            <a href="{{ asset('/uploads/demo/chopping-board@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/chopping-board.jpg') }}" alt="Chopping Board" /></a>
-                        </td>
-                        <td width="1" class="nowrap"><span title="Protect your worksurface using this matching chopping board. 375mm x 290mm x 10mm" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        {% set currentId = currentId + 1 %}
-                        {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 59, 'productCode': productCodePrefix ~ '/CB', 'deliveryBand': 1, 'header': 'Chopping Board', 'worktopColour': worktopColour, 'id': currentId} %}
-                    </tr>
-                    <tr class="odd">
-                        <td width="1" class="pam image">
-                            <a href="{{ asset('/uploads/demo/hot-rods@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/hot-rods.jpg') }}" alt="Hot Rods (Worktop Protector)" /></a>
-                        </td>
-                        <td width="1" class="nowrap"><span title="These stainless steel finish worktop protectors are a convenient way to enable you to remove a hot pan from the hob without extreme heat damaging your worktop. The half round rods have a self adhesive backing so they are easy to apply, no cutting or routing is required." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                        {% set currentId = currentId + 1 %}
-                        {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 38, 'productCode': 'MAIA/HROD', 'deliveryBand': 1, 'header': 'Hot Rods (Worktop Protector)', 'worktopColour': '', 'id': 20003} %}
-                    </tr>
+                        <tr class="even">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/chopping-board@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/chopping-board.jpg') }}" alt="Chopping Board" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="Protect your worksurface using this matching chopping board. 375mm x 290mm x 10mm" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 59, 'productCode': productCodePrefix ~ '/CB', 'deliveryBand': 1, 'header': 'Chopping Board', 'worktopColour': worktopColour, 'id': currentId} %}
+                        </tr>
+                        <tr class="odd">
+                            <td width="1" class="pam image">
+                                <a href="{{ asset('/uploads/demo/hot-rods@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/hot-rods.jpg') }}" alt="Hot Rods (Worktop Protector)" /></a>
+                            </td>
+                            <td width="1" class="nowrap"><span title="These stainless steel finish worktop protectors are a convenient way to enable you to remove a hot pan from the hob without extreme heat damaging your worktop. The half round rods have a self adhesive backing so they are easy to apply, no cutting or routing is required." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+                            {% set currentId = currentId + 1 %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 38, 'productCode': 'MAIA/HROD', 'deliveryBand': 1, 'header': 'Hot Rods (Worktop Protector)', 'worktopColour': '', 'id': 20003} %}
+                        </tr>
                     </tbody>
                 </table>
             </section>
