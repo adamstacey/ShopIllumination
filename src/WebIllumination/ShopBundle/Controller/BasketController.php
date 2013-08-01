@@ -267,7 +267,6 @@ class BasketController extends Controller
 
         // Get submitted data
         $productId = $request->request->get('productId');
-        $variantId = $request->request->get('variantId', $productId);
         $quantity = ($request->request->get('quantity')?$request->request->get('quantity'):1);
         $deliveryBand = $request->request->get('deliveryBand');
         $url = $request->request->get('url');
@@ -349,7 +348,7 @@ class BasketController extends Controller
             $newProduct['subTotal'] = $quantity * $price;
             $newProduct['vat'] = $newProduct['subTotal'] - ($newProduct['subTotal'] / 1.2);
             $newProduct['validProduct']= 0;
-            $newProduct['selectedOptions'] = array();
+            $newProduct['selectedOptions'] = '';
             $newProduct['selectedOptionLabels'] = array();
 
             $basket['products'][$basketItemId] = $newProduct;
