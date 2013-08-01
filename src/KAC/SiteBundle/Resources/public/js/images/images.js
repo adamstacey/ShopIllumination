@@ -10,7 +10,8 @@ $(document).ready(function() {
         source_image_height: 800,
         small_thumbs: 3,
         zoom_area_width: 398,
-        zoom_area_height: 398
+        zoom_area_height: 398,
+        smallthumb_hide_single: false
     });
 
     $(".etalage-inset").etalage({
