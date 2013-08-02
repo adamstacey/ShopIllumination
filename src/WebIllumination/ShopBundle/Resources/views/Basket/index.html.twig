@@ -23,6 +23,21 @@
                             <p>Loading the totals of your basket&hellip;</p>
                             <div class="clear"></div>
                         </div>
+                        <div id="voucher-code-membership-card-number" class="fr clearfix separator mtm mbm">
+                            <table class="basic-table" align="right" width="50%" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td id="delete-voucher-code" class="ar {% if basket.voucherCodes[0] is not defined %}ui-helper-hidden{% endif %}">
+                                        <a href="#"><img width="18" height="18" class="link action-delete-voucher-code" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Delete Voucher Code" /></a>
+                                    </td>
+                                    <td>
+                                        <input class="uppercase small fill" type="text" id="form-voucher-code" name="voucher-code" placeholder="Voucher Code" value="{{ basket.voucherCodes[0] }}" />
+                                    </td>
+                                    <td>
+                                        <a href="Javascript:void(0);" rel="nofollow" class="small action-redeem-voucher-code button ui-button-green">Redeem</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                         <div id="basket-totals" class="tar clearfix ui-helper-hidden"></div>
                         <div class="clear"></div>
                         <div class="clearfix">

@@ -1,6 +1,7 @@
 <?php
 
 namespace WebIllumination\ShopBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -9,139 +10,139 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BasketController extends Controller
 {
-	// Index page
-	public function indexAction(Request $request)
+    // Index page
+    public function indexAction(Request $request)
     {
-    	// Get the services
-	    $systemService = $this->get('web_illumination_admin.system_service');
-    	$basketService = $this->get('web_illumination_admin.basket_service');
+        // Get the services
+        $systemService = $this->get('web_illumination_admin.system_service');
+        $basketService = $this->get('web_illumination_admin.basket_service');
 
-	    // Initialise the session
-	    $systemService->initialiseSession();
+        // Initialise the session
+        $systemService->initialiseSession();
 
-   		// Update the basket totals
-    	$basketService->updateBasketTotals();
+        // Update the basket totals
+        $basketService->updateBasketTotals();
 
-    	// Get the basket
-   		$basket = $this->get('session')->get('basket');
+        // Get the basket
+        $basket = $this->get('session')->get('basket');
 
-   		// Get the back url
-    	$backUrl = $systemService->getLastDepartmentUrl();
-    	if (!$backUrl)
-    	{
-	    	$backUrl = $this->generateUrl('homepage');
-    	}
+        // Get the back url
+        $backUrl = $systemService->getLastDepartmentUrl();
+        if (!$backUrl)
+        {
+            $backUrl = $this->generateUrl('homepage');
+        }
 
-   		// Check that items have been added to the basket
-   		if ($basket['totals']['items'] < 1)
-   		{
-   			// Set notice message
-		    $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
+        // Check that items have been added to the basket
+        if ($basket['totals']['items'] < 1)
+        {
+            // Set notice message
+            $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 
-		    // Forward to the last catalogue page
-		    return $this->redirect($backUrl);
-   		}
+            // Forward to the last catalogue page
+            return $this->redirect($backUrl);
+        }
 
         return $this->render('WebIlluminationShopBundle:Basket:index.html.twig', array('backUrl' => $backUrl, 'basket' => $basket));
     }
 
     // Get basket contents
-	public function ajaxGetBasketContentsAction(Request $request)
+    public function ajaxGetBasketContentsAction(Request $request)
     {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
+        // Get the services
+        $basketService = $this->get('web_illumination_admin.basket_service');
 
-    	// Get the catalogue page history
-    	$departmentHistory = $this->get('session')->get('departmentHistory');
+        // Get the catalogue page history
+        $departmentHistory = $this->get('session')->get('departmentHistory');
 
-    	// Update the basket totals
-    	$messages = $basketService->updateBasketTotals();
+        // Update the basket totals
+        $messages = $basketService->updateBasketTotals();
 
-		// Get the basket
-		$basket = $this->get('session')->get('basket');
+        // Get the basket
+        $basket = $this->get('session')->get('basket');
 
-		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketContents.html.twig', array('departmentHistory' => $departmentHistory, 'basket' => $basket, 'messages' => $messages));
+        return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketContents.html.twig', array('departmentHistory' => $departmentHistory, 'basket' => $basket, 'messages' => $messages));
     }
     // Update delivery options
-	public function ajaxUpdateDeliveryOptionsAction(Request $request)
+    public function ajaxUpdateDeliveryOptionsAction(Request $request)
     {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
+        // Get the services
+        $basketService = $this->get('web_illumination_admin.basket_service');
 
-		// Get submitted data
-		$countryCode = $request->query->get('countryCode');
-		$postZipCode = $request->query->get('postZipCode');
-		$deliveryOption = $request->query->get('deliveryOption');
+        // Get submitted data
+        $countryCode = $request->query->get('countryCode');
+        $postZipCode = $request->query->get('postZipCode');
+        $deliveryOption = $request->query->get('deliveryOption');
 
-		// Get the basket
-		$basket = $this->get('session')->get('basket');
+        // Get the basket
+        $basket = $this->get('session')->get('basket');
 
-		// Get the order
-		$order = $this->get('session')->get('order');
+        // Get the order
+        $order = $this->get('session')->get('order');
 
-		// Update the delivery options
-		$basket['delivery']['countryCode'] = $countryCode;
-		$basket['delivery']['postZipCode'] = $postZipCode;
-		$basket['delivery']['service'] = $deliveryOption;
-		if (($order['deliveryCountryCode'] != $countryCode) || ($order['deliveryPostZipCode'] != $postZipCode))
-		{
-   			$order['deliveryFirstName'] = $order['firstName'];
-    		$order['deliveryLastName'] = $order['lastName'];
-    		$order['deliveryOrganisationName'] = $order['organisationName'];
-    		$order['deliveryAddressLine1'] = '';
-    		$order['deliveryAddressLine2'] = '';
-    		$order['deliveryTownCity'] = '';
-    		$order['deliveryCountyState'] = '';
-    		$order['deliveryPostZipCode'] = $postZipCode;
-    		$order['deliveryCountryCode'] = $countryCode;
-    		if ($order['sameDeliveryAddress'] > 0)
-    		{
-	    		$order['billingFirstName'] = $order['firstName'];
-	    		$order['billingLastName'] = $order['lastName'];
-	    		$order['billingOrganisationName'] = $order['organisationName'];
-	    		$order['billingAddressLine1'] = '';
-	    		$order['billingAddressLine2'] = '';
-	    		$order['billingTownCity'] = '';
-	    		$order['billingCountyState'] = '';
-	    		$order['billingPostZipCode'] = $postZipCode;
-	    		$order['billingCountryCode'] = $countryCode;
-    		}
-		}
+        // Update the delivery options
+        $basket['delivery']['countryCode'] = $countryCode;
+        $basket['delivery']['postZipCode'] = $postZipCode;
+        $basket['delivery']['service'] = $deliveryOption;
+        if (($order['deliveryCountryCode'] != $countryCode) || ($order['deliveryPostZipCode'] != $postZipCode))
+        {
+            $order['deliveryFirstName'] = $order['firstName'];
+            $order['deliveryLastName'] = $order['lastName'];
+            $order['deliveryOrganisationName'] = $order['organisationName'];
+            $order['deliveryAddressLine1'] = '';
+            $order['deliveryAddressLine2'] = '';
+            $order['deliveryTownCity'] = '';
+            $order['deliveryCountyState'] = '';
+            $order['deliveryPostZipCode'] = $postZipCode;
+            $order['deliveryCountryCode'] = $countryCode;
+            if ($order['sameDeliveryAddress'] > 0)
+            {
+                $order['billingFirstName'] = $order['firstName'];
+                $order['billingLastName'] = $order['lastName'];
+                $order['billingOrganisationName'] = $order['organisationName'];
+                $order['billingAddressLine1'] = '';
+                $order['billingAddressLine2'] = '';
+                $order['billingTownCity'] = '';
+                $order['billingCountyState'] = '';
+                $order['billingPostZipCode'] = $postZipCode;
+                $order['billingCountryCode'] = $countryCode;
+            }
+        }
 
-		// Update the session
-    	$this->get('session')->set('basket', $basket);
-    	$this->get('session')->set('order', $order);
+        // Update the session
+        $this->get('session')->set('basket', $basket);
+        $this->get('session')->set('order', $order);
 
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
+        // Update the basket totals
+        $basketService->updateBasketTotals();
 
-		return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+        return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
     }
 
     // Get basket totals
-	public function ajaxGetBasketTotalsAction(Request $request)
+    public function ajaxGetBasketTotalsAction(Request $request)
     {
-		// Get the basket
-		$basket = $this->get('session')->get('basket');
+        // Get the basket
+        $basket = $this->get('session')->get('basket');
 
-		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketTotals.html.twig', array('basket' => $basket));
+        return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketTotals.html.twig', array('basket' => $basket));
     }
 
     // Get basket totals
-	public function ajaxGetBasketDeliveryOptionsAction(Request $request)
+    public function ajaxGetBasketDeliveryOptionsAction(Request $request)
     {
-		// Get the basket
-		$basket = $this->get('session')->get('basket');
+        // Get the basket
+        $basket = $this->get('session')->get('basket');
 
-		return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketDeliveryOptions.html.twig', array('basket' => $basket));
+        return $this->render('WebIlluminationShopBundle:Basket:ajaxGetBasketDeliveryOptions.html.twig', array('basket' => $basket));
     }
 
     // Add to basket
-	public function ajaxAddToBasketAction(Request $request)
+    public function ajaxAddToBasketAction(Request $request)
     {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
-    	$productService = $this->get('web_illumination_admin.product_service');
+        // Get the services
+        $basketService = $this->get('web_illumination_admin.basket_service');
+        $productService = $this->get('web_illumination_admin.product_service');
 
         // Initialise the session
         $basketService->initialiseBasketSession();
@@ -217,45 +218,45 @@ class BasketController extends Controller
             $recommendedRetailPrice = $variant['prices'][0]['recommendedRetailPrice'];
             $discount = $variant['prices'][0]['discount'];
 
-    		$savings = $recommendedRetailPrice - $price;
-    		$newProduct['basketItemId'] = $basketItemId;
-    		$newProduct['productId'] = $productId;
+            $savings = $recommendedRetailPrice - $price;
+            $newProduct['basketItemId'] = $basketItemId;
+            $newProduct['productId'] = $productId;
             $newProduct['variantId'] = $variantId;
-    		$newProduct['product'] = $variant['pageTitle'];
-    		$newProduct['url'] = $variant['url'];
-    		$newProduct['header'] = $variant['header'];
-    		$newProduct['productCode'] = $variant['productCode'];
-    		$newProduct['brand'] = $product['brand'];
-    		$newProduct['shortDescription'] = $variant['metaDescription'];
-    		$newProduct['weight'] = $variant['weight'];
+            $newProduct['product'] = $variant['pageTitle'];
+            $newProduct['url'] = $variant['url'];
+            $newProduct['header'] = $variant['header'];
+            $newProduct['productCode'] = $variant['productCode'];
+            $newProduct['brand'] = $product['brand'];
+            $newProduct['shortDescription'] = $variant['metaDescription'];
+            $newProduct['weight'] = $variant['weight'];
             $newProduct['deliveryBand'] = $variant['deliveryBand'];
             $newProduct['weight'] = $variant['weight'];
             $newProduct['height'] = $variant['height'];
             $newProduct['length'] = $variant['length'];
             $newProduct['width'] = $variant['width'];
-    		$newProduct['quantity'] = $quantity;
-    		$newProduct['unitCost'] = $price;
-    		$newProduct['recommendedRetailPrice'] = $recommendedRetailPrice;
-    		$newProduct['discount'] = $discount;
-    		$newProduct['savings'] = $savings;
-    		$newProduct['subTotal'] = $quantity * $price;
-    		$newProduct['vat'] = $newProduct['subTotal'] - ($newProduct['subTotal'] / 1.2);
+            $newProduct['quantity'] = $quantity;
+            $newProduct['unitCost'] = $price;
+            $newProduct['recommendedRetailPrice'] = $recommendedRetailPrice;
+            $newProduct['discount'] = $discount;
+            $newProduct['savings'] = $savings;
+            $newProduct['subTotal'] = $quantity * $price;
+            $newProduct['vat'] = $newProduct['subTotal'] - ($newProduct['subTotal'] / 1.2);
             $newProduct['validProduct']= 1;
-    		$newProduct['selectedOptions'] = $selectedOptions;
+            $newProduct['selectedOptions'] = $selectedOptions;
             $newProduct['selectedOptionLabels'] = array();
 
-    		$basket['products'][$basketItemId] = $newProduct;
+            $basket['products'][$basketItemId] = $newProduct;
 
-	    	$subTotal = $price * $quantity;
-    	}
+            $subTotal = $price * $quantity;
+        }
 
-    	// Update the basket session
-    	$this->get('session')->set('basket', $basket);
+        // Update the basket session
+        $this->get('session')->set('basket', $basket);
 
-    	// Update the basket totals
-    	$basketService->updateBasketTotals();
+        // Update the basket totals
+        $basketService->updateBasketTotals();
 
-    	return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'thumbnailPath' => $thumbnailPath, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));
+        return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'thumbnailPath' => $thumbnailPath, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));
     }
 
     // Add to basket
@@ -365,25 +366,84 @@ class BasketController extends Controller
         return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));
     }
 
-    // Update basket item
-	public function ajaxUpdateBasketItemAction(Request $request)
+    // Redeem voucher code
+    public function ajaxRedeemVoucherCodeAction(Request $request)
     {
-		// Get the services
-    	$basketService = $this->get('web_illumination_admin.basket_service');
+        // Get the services
+        $basketService = $this->get('web_illumination_admin.basket_service');
 
-		// Get submitted data
-		$productId = $request->query->get('productId');
-		$variantId = $request->query->get('variantId');
-		$quantity = ($request->query->get('quantity')?$request->query->get('quantity'):1);
-		$selectedOptions = $request->query->get('selectedOptions');
+        // Get the entity manager
+        $em = $this->getDoctrine()->getManager();
 
-		// Get the basket
-		$basket = $this->get('session')->get('basket');
+        // Get the basket session
+        $basket = $this->get('session')->get('basket');
 
-    	// Check if product already exists in the basket
-    	foreach ($basket['products'] as $key => $product)
-    	{
-    		if ($product['variantId'] == $variantId)
+        // Get submitted data
+        $voucherCode = strtoupper(trim($request->query->get('voucherCode')));
+
+        // Check if voucher was already added
+        foreach($basket['voucherCodes'] as $index => $checkCode)
+        {
+            if($checkCode === $voucherCode)
+            {
+                return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+            }
+        }
+
+        // Check if voucher code is valid
+        $basket['voucherCodes'][0] = $voucherCode;
+
+        // Update the basket session
+        $this->get('session')->set('basket', $basket);
+
+        // Update the basket totals
+        $basketService->updateBasketTotals();
+        return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+    }
+
+    // Delete voucher code
+    public function ajaxDeleteVoucherCodeAction(Request $request)
+    {
+        // Get the services
+        $basketService = $this->get('web_illumination_admin.basket_service');
+
+        // Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+
+        // Get the basket session
+        $basket = $this->get('session')->get('basket');
+
+        // Update the membership card number
+        unset($basket['voucherCodes'][0]);
+
+        // Update the basket session
+        $this->get('session')->set('basket', $basket);
+
+        // Update the basket totals
+        $basketService->updateBasketTotals();
+
+        return new Response(htmlspecialchars(json_encode(array('response' => 'success')), ENT_NOQUOTES));
+    }
+
+    // Update basket item
+    public function ajaxUpdateBasketItemAction(Request $request)
+    {
+        // Get the services
+        $basketService = $this->get('web_illumination_admin.basket_service');
+
+        // Get submitted data
+        $productId = $request->query->get('productId');
+        $variantId = $request->query->get('variantId');
+        $quantity = ($request->query->get('quantity')?$request->query->get('quantity'):1);
+        $selectedOptions = $request->query->get('selectedOptions');
+
+        // Get the basket
+        $basket = $this->get('session')->get('basket');
+
+        // Check if product already exists in the basket
+        foreach ($basket['products'] as $key => $product)
+        {
+            if ($product['variantId'] == $variantId)
     		{
     			if ($product['selectedOptions'] == $selectedOptions)
     			{
