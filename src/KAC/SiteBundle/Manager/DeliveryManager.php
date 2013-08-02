@@ -73,7 +73,7 @@ class DeliveryManager extends Manager
         return $zone;
     }
 
-    public function calculateDeliveryOptions($zone, $band)
+    public function calculateDeliveryOptions($zone=0, $band=0)
     {
         $deliveryOptions = array();
         switch ($zone)
@@ -530,6 +530,7 @@ class DeliveryManager extends Manager
                         break;
                 }
                 break;
+            default:
         }
 
         return $deliveryOptions;
