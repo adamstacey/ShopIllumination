@@ -115,6 +115,13 @@
     {% endspaceless %}
 {% endblock form_rows %}
 
+{% block repeated_row %}
+    {% spaceless %}
+        {{ form_row(form.first) }}
+        {{ form_row(form.second) }}
+    {% endspaceless %}
+{% endblock repeated_row %}
+
 {% block collection_row %}
     {% spaceless %}
         {% if prototype is defined %}

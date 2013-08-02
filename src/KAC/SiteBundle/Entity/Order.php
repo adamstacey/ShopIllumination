@@ -371,9 +371,35 @@ class Order
     }
     
     /**
-     * Get paymentTypeLogo
+     * Get paymentType name
      *
      * @return string 
+     */
+    public function getPaymentTypeName()
+    {
+    	switch ($this->paymentType)
+    	{
+    		case 'SagePay':
+    		case 'sagepay':
+    			return 'SagePay';
+    		case 'PayPal through SagePay':
+    			return 'PayPal through SagePay';
+    		case 'PayPal':
+    			return 'PayPal';
+    		case 'Google Wallet':
+    		case 'google':
+    			return 'Google Wallet';
+    		case 'Voucher Code':
+    			return 'Voucher Code';
+    		case 'Gift Voucher':
+    			return 'Gift Voucher';
+    	}
+        return '';
+    }
+    /**
+     * Get paymentTypeLogo
+     *
+     * @return string
      */
     public function getPaymentTypeLogo()
     {

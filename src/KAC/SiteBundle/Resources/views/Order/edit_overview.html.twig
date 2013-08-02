@@ -18,7 +18,7 @@
                             <div class="ui-widget mbl">
                                 <header class="ui-widget-header ui-corner-top">
                                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
-                                    <h2>Delivery Address</h2>
+                                    <h2>Edit Order {{ order.id }}</h2>
                                 </header>
                                 <section class="ui-widget-content ui-corner-bottom">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
@@ -27,6 +27,7 @@
                                     </fieldset>
                                     <div class="clearfix">
                                         <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                        <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fr" data-icon-secondary="icon-1118">Back</a>
                                     </div>
                                 </section>
                             </div>

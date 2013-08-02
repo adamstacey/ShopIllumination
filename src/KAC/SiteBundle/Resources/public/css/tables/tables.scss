@@ -35,6 +35,10 @@ table.data-table ul li {
     line-height: 14px;
 }
 
+table .data.table tr {
+    background: $colourWhite;
+}
+
 table.data-table tr.odd {
     background: $colourGreyExtraExtraLight;
 }

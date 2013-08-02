@@ -1,0 +1,354 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }} | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }}</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix mbm mts">
+            <div class="widget widget-1-of-1">
+                <a href="{{ path('orders_delete', {'id': order.id}) }}" class="button button-red fr mls">Delete</a>
+                <a href="{{ path('orders_refund', {'id': order.id}) }}" class="button button-orange fr mls">Refund</a>
+                <a href="{{ path('orders_edit_overview', {'id': order.id}) }}" class="button button-blue fr">Edit</a>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-2">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Overview</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom">
+                        <table class="data-table">
+                            <tr>
+                                <td>Order ID</td>
+                                <td>#{{ order.id }}</td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td>{{ order.status }}</td>
+                            </tr>
+                            <tr>
+                                <td>Items</td>
+                                <td>{{ order.products|length }}</td>
+                            </tr>
+                            <tr>
+                                <td>Sub Total</td>
+                                <td>{{ order.subTotal|currency }}</td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Charges</td>
+                                <td>{{ order.deliveryCharge|currency }}</td>
+                            </tr>
+                            <tr>
+                                <td>Savings</td>
+                                <td>{{ order.discount|currency }}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>{{ order.total|currency }}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Customer</th>
+                            </tr>
+                            <tr>
+                                <td>User ID</td>
+                                <td>#{{ order.user.id }}</td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td>{{ order.firstName }} {{ order.lastName }}</td>
+                            </tr>
+                            <tr>
+                                <td>E-Mail</td>
+                                <td>{{ order.emailAddress }}</td>
+                            </tr>
+                            <tr>
+                                <td>Telephone</td>
+                                <td>
+                                    <ul>
+                                        {% if order.telephoneDaytime %}<li>Daytime - {{ order.telephoneDaytime }}</li>{% endif %}
+                                        {% if order.telephoneEvening %}<li>Evening - {{ order.telephoneEvening }}</li>{% endif %}
+                                        {% if order.mobile %}<li>Mobile - {{ order.mobile }}</li>{% endif %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-2">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Delivery Info</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        <table class="data-table">
+                            <tr>
+                                <td>Estimated Delivery</td>
+                                <td>
+                                    Estimated {% if order.deliveryType == 'Collection' %}collection available{% else %}Delivery{% endif %}
+                                    between <strong class="important">{{ order.estimatedDeliveryDaysStart }}</strong> and
+                                    <strong class="important">{{ order.estimatedDeliveryDaysEnd }}</strong> subject to availability.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Type</td>
+                                <td{% if order.deliveryType == 'Collection' %} class="gradient-red"{% endif %}>
+                                    {% if order.deliveryType == 'Collection' %}
+                                        <strong>COLLECTION</strong>
+                                    {% else %}
+                                        {{ order.deliveryType }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Charge</td>
+                                <td>{{
+                                    order.deliveryCharge|currency }}</td>
+                            </tr>
+                            <tr>
+                                <td>Courier</td>
+                                <td>{{ order.courier|default('Not Assigned Yet') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Courier labels printed?</td>
+                                <td>
+                                    {{ (order.labelsPrinted > 0?'YES':'NO') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tracking Number</td>
+                                <td>
+                                    {{ order.trackingNumber|default(' - ') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>No. of Packages</td>
+                                <td>{{ order.numberOfPackages > 0 ? order.numberOfPackages: '  - ' }}</td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-2">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Addresses</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        <h4>Delivery Address</h4>
+                        <p>
+                            {{ order.deliveryFirstName }} {{ order.deliveryLastName }}<br />
+                            {% if order.deliveryOrganisationName %}{{ order.deliveryOrganisationName }}<br />{% endif %}
+                            {{ order.deliveryAddressLine1 }}<br />
+                            {% if order.deliveryOrganisationName %}{{ order.deliveryAddressLine2 }}<br />{% endif %}
+                            {{ order.deliveryTownCity }}<br />
+                            {{ order.deliveryCountyState }}<br />
+                            {{ order.deliveryPostZipCode }}<br />
+                            {{ order.deliveryCountryCode|country }}
+                        </p>
+                        <h4>Billing Address</h4>
+                        <p>
+                            {{ order.billingFirstName }} {{ order.billingLastName }}<br />
+                            {% if order.billingOrganisationName %}{{ order.billingOrganisationName }}<br />{% endif %}
+                            {{ order.billingAddressLine1 }}<br />
+                            {% if order.billingOrganisationName %}{{ order.billingAddressLine2 }}<br />{% endif %}
+                            {{ order.billingTownCity }}<br />
+                            {{ order.billingCountyState }}<br />
+                            {{ order.billingPostZipCode }}<br />
+                            {{ order.billingCountryCode|country }}
+                        </p>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-2">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Payment</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        <table class="data-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                            {% if order.paymentType != '' %}
+                                <tr>
+                                    <td class="label">Payment Type</td>
+                                    <td>{% if order.paymentType == '' %}&nbsp;-&nbsp;{% else %}<img class="no-border" src="{{ asset(order.paymentTypeLogo) }}" border="0" alt="{{ order.paymentType }}" />{% endif %}</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td class="label">Total Amount</td>
+                                <td>&pound;{{ order.total|number_format(2)|default('0.00') }}</td>
+                            </tr>
+                            {% if (order.paymentType == 'sagepay' or order.paymentType == 'SagePay') and order.paymentResponse != '' %}
+                                <tr>
+                                    <td class="label">Transaction Status</td>
+                                    <td{% if order.paymentResponse.Status is defined %} class="gradient-background-{% if order.paymentResponse.Status|upper == 'SUCCESS' %}green{% else %}red{% endif %}"{% endif %}>{{ (order.paymentResponse.Status is defined?item.paymentResponse.Status|default('-'):'-') }}</td>
+                                </tr>
+                                {% if order.paymentResponse.TxAuthNo is defined %}
+                                    <tr>
+                                        <td class="label">Authorisation Code</td>
+                                        <td>{{ order.paymentResponse.TxAuthNo|default('-') }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if order.paymentResponse.StatusDetail is defined %}
+                                    <tr>
+                                        <td class="label">Status Information</td>
+                                        <td>{{ order.paymentResponse.StatusDetail|default('-') }}</td>
+                                    </tr>
+                                {% endif %}
+                                {% if order.paymentResponse.VPSTxId is defined %}
+                                    <tr>
+                                        <td class="label">Unique Transaction ID</td>
+                                        <td>{{ order.paymentResponse.VPSTxId|default('-') }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% elseif order.paymentType != '' and order.paymentResponse is empty %}
+                                <tr>
+                                    <td class="label">Transaction Status</td>
+                                    <td class="gradient-background-red">NO PAYMENT TAKEN</td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td colspan="2">
+                                    <a href="#" class="button button-blue fr">More Info</a>
+                                    <a href="#" class="button button-blue fr mls">Documents</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Products</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        <table class="data-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product Code</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in order.products %}
+                                {% set variant = item.variant %}
+                                {% set product = item.product %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>
+                                        <a href="{{ path('routing', {'url': variant.url}) }}">{{ variant.productCode }}</a>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            <a href="{{ path('routing', {'url': variant.url}) }}">{{ variant.description.header }}</a>
+                                        </p>
+                                    </td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>{{ item.unitCost|currency }}</td>
+                                    <td>{{ item.subTotal|currency }}</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="message message-help mas">
+                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                            <p>There are no product in this order.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <span class="fr"><strong>Sub-Total</strong>: {{ order.subTotal|currency }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <span class="fr"><strong>Delivery Charge</strong>: {{ order.deliveryCharge|currency }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6" class="">
+                                    <span class="fr"><strong>Discount</strong>: {{ order.discount|currency }}</span>
+                                </td>
+                            </tr>
+                            <tr style="background-color: #f1f1f1;">
+                                <td colspan="6">
+                                    <span class="fr"><strong>Total</strong>: {{ order.total|currency }}</span>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <div class="clearfix mtm">
+                            <a href="#" class="button button-blue fr">Edit Products</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget mbl">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Notes</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        <table class="data-table" id="listing-notes" width="100%">
+                            <thead>
+                            <tr>
+                                <th width="1" class="ar">#</th>
+                                <th width="1" class="ac">Type</th>
+                                <th width="1" class="ac">Notified?</th>
+                                <th class="ac">Creator</th>
+                                <th class="ac">Date</th>
+                                <th class="al">Note</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in order.notes %}
+                                <tr class="item{% if item.noteType == 'staff' %} blue{% endif %}" id="item-{{ item.id }}" data-note-type="{{ item.noteType }}">                                            <td width="1" class="ar small">{{ loop.index }}</td>
+                                    <td class="{% if item.noteType == 'staff' %} blue{% endif %}">
+                                        {% if item.noteType == 'staff' %}
+                                            Staff
+                                        {% elseif item.noteType == 'customer' %}
+                                            Customer
+                                        {% else %}
+                                            {{ item.noteType }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="{% if item.noteType == 'customer' %} gradient-{{ (item.notified > 0?'orange':'green') }}{% endif %}">{% if item.noteType == 'customer' %}{{ (item.notified > 0?'YES':'NO') }}{% else %}-{% endif %}</td>
+                                    <td><strong>{{ item.creator }}</strong></td>
+                                    <td>{{ item.createdAt|date("d/m/Y h:iA") }}</td>
+                                    <td>
+                                        <p>{{ item.note|raw|nl2br }}</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="clearfix mtm">
+                            <a href="#" class="button button-blue fr">Edit Notes</a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

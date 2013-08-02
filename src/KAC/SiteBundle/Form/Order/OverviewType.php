@@ -1,20 +1,21 @@
 <?php
-namespace KAC\SiteBundle\Form\Checkout;
+namespace KAC\SiteBundle\Form\Order;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AboutType extends AbstractType {
-    private $deliveryOptions;
-
-    function __construct($deliveryOptions)
-    {
-        $this->deliveryOptions = $deliveryOptions;
-    }
-
+class OverviewType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->add('firstName', 'text', array(
+            'label' => 'First Name',
+            'required' => true,
+        ));
+        $builder->add('lastName', 'text', array(
+            'label' => 'Last Name',
+            'required' => true,
+        ));
         $builder->add('emailAddress', 'repeated', array(
             'type' => 'email',
             'invalid_message' => 'Your emails must match.',
@@ -36,13 +37,6 @@ class AboutType extends AbstractType {
             'label' => 'Mobile',
             'required' => false,
         ));
-
-        $builder->add('deliveryType', 'choice', array(
-            'choices' => $this->getDeliveryChoices(),
-            'expanded' => true,
-            'multiple' => false,
-        ));
-        $builder->add('updateDelivery', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -59,15 +53,6 @@ class AboutType extends AbstractType {
      */
     public function getName()
     {
-        return 'checkout_about';
-    }
-
-    private function getDeliveryChoices()
-    {
-        $services = array_map(function($element) {
-            return $element['service'];
-        }, $this->deliveryOptions);
-
-        return array_combine($services, $services);
+        return 'order_overview';
     }
 }

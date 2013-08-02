@@ -3,8 +3,10 @@ namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Order;
+use KAC\SiteBundle\Form\Order\AddressesType;
 use KAC\SiteBundle\Form\Order\DeliveryType;
 use KAC\SiteBundle\Form\Order\PaymentType;
+use KAC\SiteBundle\Form\Order\OverviewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -15,7 +17,7 @@ class OrderController extends Controller
 {
     /**
      * @Secure(roles="ROLE_ADMIN")
-     * @Route("/orders", name="orders_index")
+     * @Route("/admin/orders", name="orders_index")
      */
     public function indexAction(Request $request)
     {
@@ -75,9 +77,29 @@ class OrderController extends Controller
     }
 
     /**
-     * @Secure(roles="ROLE_ADMIN")
-     * @Route("/orders/{id}/edit", name="orders_edit")
+     * @Route("/admin/orders/{id}", name="orders_view")
      */
+    public function viewAction($id)
+    {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var \KAC\SiteBundle\Entity\Order $order
+         */
+        $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
+        if (!$order)
+        {
+            throw new NotFoundHttpException("Order not found");
+        }
+
+        return $this->render('KACSiteBundle:Order:view.html.twig', array(
+            'order' => $order
+        ));
+    }
+
     public function baseEditAction(Request $request, $id, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
@@ -96,7 +118,7 @@ class OrderController extends Controller
                 $em->persist($order);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                return $this->redirect($this->generateUrl('orders_view', array(
                     'id' => $order->getId(),
                 )));
             }
@@ -109,68 +131,24 @@ class OrderController extends Controller
     }
 
     /**
-     * @Route("/orders/{id}/edit", name="orders_edit")
+     * @Route("/admin/orders/{id}/edit", name="orders_edit_overview")
      */
-    public function editAction($id)
+    public function editOverviewAction(Request $request, $id)
     {
-        return $this->redirect($this->generateUrl('orders_edit_delivery', array(
-            'id' => $id
-        )));
+        return $this->baseEditAction($request, $id, 'KACSiteBundle:Order:edit_overview.html.twig', new OverviewType());
+    }
+
+    /**
+     * @Route("/admin/orders/{id}/addresses", name="orders_edit_addresses")
+     */
+    public function editAddressesAction(Request $request, $id)
+    {
+        return $this->baseEditAction($request, $id, 'KACSiteBundle:Order:edit_addresses.html.twig', new AddressesType());
     }
 
     /**
      * @Secure(roles="ROLE_ADMIN")
-     * @Route("/orders/{id}/edit/delivery", name="orders_edit_delivery")
-     */
-    public function viewDeliveryAction(Request $request, $id)
-    {
-        $deliveryManager = $this->get('kac_site.manager.delivery');
-        $em = $this->getDoctrine()->getManager();
-
-        /**
-         * @var $order Order
-         */
-        $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
-        if(!$order)
-        {
-            throw new NotFoundHttpException("Order not found");
-        }
-
-        $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
-        $band = $deliveryManager->calculateBand($deliveryManager->calculateWeighting($order->getProducts()));
-
-        $form = $this->createForm(new DeliveryType($deliveryManager->getCouriers($order->getDeliveryType())), $order);
-
-        if ($request->isMethod('POST')) {
-            $form->submit($request);
-            if($form->isValid()) {
-                $em->persist($order);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
-                    'id' => $order->getId(),
-                )));
-            }
-        }
-
-        return $this->render('KACSiteBundle:Order:edit_delivery.html.twig', array(
-            'order' => $order,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * @Secure(roles="ROLE_ADMIN")
-     * @Route("/orders/{id}/edit/payment", name="orders_edit_payment")
-     */
-    public function viewPaymentAction(Request $request, $id)
-    {
-        return $this->baseEditAction($request, $id, 'KACSiteBundle:Order:edit_payment.html.twig', new PaymentType());
-    }
-
-    /**
-     * @Secure(roles="ROLE_ADMIN")
-     * @Route("/orders/{id}/edit/products", name="orders_edit_products")
+     * @Route("/orders/{id}/products", name="orders_edit_products")
      */
     public function viewProductsAction($id)
     {
@@ -241,6 +219,24 @@ class OrderController extends Controller
         return $this->render('KACSiteBundle:Order:edit_notes.html.twig', array(
             'order' => $order
         ));
+    }
+
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     * @Route("/admin/orders/{id}/refund", name="orders_refund")
+     */
+    public function refundAction($id)
+    {
+
+    }
+
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     * @Route("/admin/orders/{id}/delete", name="orders_delete")
+     */
+    public function deleteAction($id)
+    {
+
     }
 
     /**
@@ -315,10 +311,5 @@ class OrderController extends Controller
         return $this->render('KACSiteBundle:Order:track_order.html.twig', array(
             'order' => $orders[0]
         ));
-    }
-
-    public function deleteAction($id)
-    {
-
     }
 }

@@ -17,7 +17,7 @@
             </div>
         </div>
         <fieldset class="pbm">
-            <table class="form-table treetable" id="departments">
+            <table class="data-table treetable" id="departments">
                 <tr>
                     {# sorting of properties based on query components #}
                     <th{% if pagination.isSorted('o.id') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, '#', 'o.id') }}</th>
@@ -30,8 +30,8 @@
 
                 {# table body #}
                 {% for order in pagination %}
-                    <tr>
-                        <td>{{ order.id }}</td>
+                    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                        <td><a href="{{ path('orders_view', {'id': order.id}) }}">{{ order.id }}</a></td>
                         <td>{{ order.total }}</td>
                         <td>
                             {% if order.paymentType == '' %}
