@@ -4,9 +4,10 @@ namespace KAC\SiteBundle\Model;
 use JMS\Serializer\Annotation as Serializer;
 use KAC\SiteBundle\Entity\Product\Variant;
 use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class BasketItem
+class BasketItem implements ShippableInterface
 {
     /**
      * @Serializer\Exclude
@@ -224,5 +225,20 @@ class BasketItem
     public function calculateSavings()
     {
         $this->savings = ($this->recommendedRetailPrice - $this->unitCost) * $this->quantity;
+    }
+
+    function getWeight()
+    {
+        if($this->getVariant())
+        {
+            return $this->getVariant()->getWeight();
+        }
+
+        return 0;
+    }
+
+    function getBaseDeliveryBand()
+    {
+        return $this->getVariant()->getDeliveryBand();
     }
 }

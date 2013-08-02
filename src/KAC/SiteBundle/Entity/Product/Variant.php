@@ -6,6 +6,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\Type;
+use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use KAC\SiteBundle\Entity\DescribableInterface;
 use Symfony\Component\Validator\ExecutionContext;
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\HasLifecycleCallbacks()
 
  */
-class Variant implements DescribableInterface
+class Variant implements DescribableInterface, ShippableInterface
 {
     /**
      * @ORM\Id
@@ -1015,6 +1016,11 @@ class Variant implements DescribableInterface
     public function getDeliveryBand()
     {
         return $this->deliveryBand;
+    }
+
+    public function getBaseDeliveryBand()
+    {
+        return $this->getDeliveryBand();
     }
 
     /**

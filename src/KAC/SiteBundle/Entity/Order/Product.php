@@ -3,13 +3,14 @@ namespace KAC\SiteBundle\Entity\Order;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="order_products")
  * @ORM\HasLifecycleCallbacks()
  */
-class Product
+class Product implements ShippableInterface
 {
     /**
      * @ORM\Id
@@ -456,5 +457,13 @@ class Product
         return $this->vat;
     }
 
+    function getWeight()
+    {
+        $this->getVariant()->getWeight();
+    }
 
+    function getBaseDeliveryBand()
+    {
+        return $this->getVariant()->getDeliveryBand();
+    }
 }

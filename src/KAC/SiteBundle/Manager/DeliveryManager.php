@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Manager;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMS\Serializer\Serializer;
+use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 use KAC\SiteBundle\Model\Basket;
 use KAC\SiteBundle\Model\BasketItem;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -607,13 +608,65 @@ class DeliveryManager extends Manager
         return $estimatedDeliveryDays;
     }
 
-    public function calculateWeighting($items)
+    /**
+     * Calculate the total order weight
+     *
+     * @param ShippableInterface[] $items
+     * @return int
+     */
+    protected function calculateWeight($items)
+    {
+        $weight = 0;
+
+        foreach($items as $item)
+        {
+            $weight = $weight + ($item->getWeight() * $item->getQuantity());
+        }
+
+        return $weight;
+    }
+
+    /**
+     * Calculate the delivery band
+     *
+     * @param ShippableInterface[] $items
+     * @return int
+     */
+    protected function calculateBand($items)
+    {
+        $weighting = $this->calculateWeighting($items);
+
+        if ($weighting < 5)
+        {
+            return 1;
+        } elseif (($weighting >= 5) && ($weighting < 25)) {
+            return 2;
+        } elseif (($weighting >= 25) && ($weighting < 75)) {
+            return 3;
+        } elseif (($weighting >= 75) && ($weighting < 75000)) {
+            return 4;
+        } elseif (($weighting >= 75000) && ($weighting < 75000000)) {
+            return 5;
+        } elseif ($weighting >= 75000000) {
+            return 6;
+        }
+
+        return 0;
+    }
+
+    /**
+     * Calculate the weighting of the delivery
+     *
+     * @param ShippableInterface[] $items
+     * @return int
+     */
+    private function calculateWeighting($items)
     {
         $weighting = 0;
 
         foreach($items as $item)
         {
-            switch ($item->getVariant()->getDeliveryBand() * 1)
+            switch ($item->getBaseDeliveryBand() * 1)
             {
                 case 1:
                     $weighting = $weighting + 1 * $item->getQuantity();
@@ -637,38 +690,6 @@ class DeliveryManager extends Manager
         }
 
         return $weighting;
-    }
-
-    public function calculateWeight($items)
-    {
-        $weight = 0;
-
-        foreach($items as $item)
-        {
-            $weight = $weight + ($item->getVariant()->getWeight() * $item->getQuantity());
-        }
-
-        return $weight;
-    }
-
-    public function calculateBand($weighting)
-    {
-        if ($weighting < 5)
-        {
-            return 1;
-        } elseif (($weighting >= 5) && ($weighting < 25)) {
-            return 2;
-        } elseif (($weighting >= 25) && ($weighting < 75)) {
-            return 3;
-        } elseif (($weighting >= 75) && ($weighting < 75000)) {
-            return 4;
-        } elseif (($weighting >= 75000) && ($weighting < 75000000)) {
-            return 5;
-        } elseif ($weighting >= 75000000) {
-            return 6;
-        }
-
-        return 0;
     }
 
     public function calculatePrice($deliveryOptions, $service)
