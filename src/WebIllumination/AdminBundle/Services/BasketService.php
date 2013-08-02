@@ -1236,6 +1236,85 @@ class BasketService {
 				$basket['discounts'][] = $basketDiscount;
 				$messages['success'][] = 'Congratulations your order has qualified for our 10% Off CDA Appliances.';
 			}
+
+            // Discount the order if the user entered either the YOUSAVE or USAVE voucher code
+            $totalUSaveDiscount = 0;
+            if($basket['voucherCode'] === 'YOUSAVE' || $basket['voucherCode'] === 'USAVE')
+            {
+                // Only discount the order if it was not part of the CDA discount
+                if($totalCdaDiscount < 0)
+                {
+                    foreach ($basket['products'] as $product)
+                    {
+                        $skipProduct = false;
+
+                        if ($product['validProduct'] > 0)
+                        {
+                            /**
+                             * @var Product $productEntity
+                             * @var Product\Variant $variantEntity
+                             */
+                            $productEntity = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($product['productId']);
+                            $variantEntity = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
+
+                            if ($productEntity && $variantEntity)
+                            {
+                                // Ensure that the product is not in the discount department
+                                foreach($productEntity->getDepartments() as $department)
+                                {
+                                    if($department->getId() === 158 || $department->getId() === 918)
+                                    {
+                                        $skipProduct = true;
+                                    }
+                                }
+
+                                if (!$skipProduct)
+                                {
+                                    $discountPercent = 0;
+
+                                    // 10% discount for ducting
+                                    $ductingDepartmentIds = array(93, 94, 95, 928, 929, 930, 931, 924, 925, 926, 927, 928);
+                                    foreach($productEntity->getDepartments() as $ptd)
+                                    {
+                                        if(in_array($ptd->getDepartment()->getId(), $ductingDepartmentIds))
+                                        {
+                                            $discountPercent = 0.1;
+                                            break;
+                                        }
+                                    }
+
+                                    // 5% discount for maia products
+                                    if($discountPercent === 0 && $productEntity->getBrand()->getId() === 15)
+                                    {
+                                        $discountPercent = 0.05;
+                                    }
+
+                                    // 2% discount for anything else
+                                    if($discountPercent === 0)
+                                    {
+                                        $discountPercent = 0.02;
+                                    }
+
+
+                                    $prices = $variantEntity->getPrices();
+                                    if(count($prices) > 0) {
+                                        $price = $prices[0];
+                                        $discount = $price->getListPrice() * $discountPercent;
+                                        if ($price->getListPrice() < $price->getRecommendedRetailPrice())
+                                        {
+                                            $basket['products'][$product['basketItemId']]['recommendedRetailPrice'] = $price->getListPrice();
+                                        }
+                                        $basket['products'][$product['basketItemId']]['unitCost'] = $price->getListPrice() - $discount;
+                                        $basket['products'][$product['basketItemId']]['subTotal'] = $basket['products'][$product['basketItemId']]['unitCost'] * $product['quantity'];
+                                        $totalDiscount += ($discount * $product['quantity']);
+                                        $totalUSaveDiscount += ($discount * $product['quantity']);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 			
 			// Update the basket
 			foreach ($basket['products'] as $product)
@@ -1259,6 +1338,10 @@ class BasketService {
 			if ($totalCdaDiscount > 0)
 			{
 				$savings -= $totalCdaDiscount;
+			}
+			if ($totalUSaveDiscount > 0)
+			{
+				$savings -= $totalUSaveDiscount;
 			}
 			$basketDiscount['discount'] = $savings;
 			$basket['discounts'][] = $basketDiscount;

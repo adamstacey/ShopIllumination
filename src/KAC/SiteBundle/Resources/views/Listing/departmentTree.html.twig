@@ -1,6 +1,6 @@
 {% macro render_departments(departments, brandId, level) %}
     {% for department in departments %}
-        <li{% if level == 1 %} id="root"{% endif %}>
+        <li{% if level == 1 %} id="root"{% endif %} data-id="{{ department.id }}">
             {% if brandId is null %}
                 {% set url = get_listing_url('department', department.id) %}
                 {% if not url%}
