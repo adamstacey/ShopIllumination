@@ -23,11 +23,43 @@
                                 <section class="ui-widget-content ui-corner-bottom">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset class="pbm">
-                                        {{ form_rest(form) }}
+                                        {{ form_row(form.firstName) }}
+                                        {{ form_row(form.lastName) }}
+                                        {{ form_row(form.emailAddress) }}
+                                        {{ form_row(form.telephoneDaytime) }}
+                                        {{ form_row(form.telephoneEvening) }}
+                                        {{ form_row(form.mobile) }}
                                     </fieldset>
+                                    <fieldset class="pbm">
+                                        <legend>Billing Address</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.billingFirstName) }}
+                                        {{ form_row(form.billingLastName) }}
+                                        {{ form_row(form.billingOrganisationName) }}
+                                        {{ form_row(form.billingAddressLine1) }}
+                                        {{ form_row(form.billingAddressLine2) }}
+                                        {{ form_row(form.billingTownCity) }}
+                                        {{ form_row(form.billingCountyState) }}
+                                        {{ form_row(form.billingPostZipCode) }}
+                                        {{ form_row(form.billingCountryCode) }}
+                                    </fieldset>
+                                    <fieldset class="pbm">
+                                        <legend>Delivery Address</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.deliveryFirstName) }}
+                                        {{ form_row(form.deliveryLastName) }}
+                                        {{ form_row(form.deliveryOrganisationName) }}
+                                        {{ form_row(form.deliveryAddressLine1) }}
+                                        {{ form_row(form.deliveryAddressLine2) }}
+                                        {{ form_row(form.deliveryTownCity) }}
+                                        {{ form_row(form.deliveryCountyState) }}
+                                        {{ form_row(form.deliveryPostZipCode) }}
+                                        {{ form_row(form.deliveryCountryCode) }}
+                                    </fieldset>
+                                    {{ form_rest(form) }}
                                     <div class="clearfix">
                                         <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
-                                        <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fr" data-icon-secondary="icon-1118">Back</a>
+                                        <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
                                     </div>
                                 </section>
                             </div>

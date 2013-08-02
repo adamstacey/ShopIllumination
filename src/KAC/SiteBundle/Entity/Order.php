@@ -1865,6 +1865,39 @@ class Order
         $this->products = new ArrayCollection();
         $this->notes = new ArrayCollection();
     }
+
+    public function calculateTotalItems()
+    {
+        $this->items = count($this->items);
+    }
+
+    public function calculateVat()
+    {
+        $this->vat = $this->getSubTotal() - ($this->getSubTotal() / 1.2);
+    }
+
+    public function calculateSubTotal()
+    {
+        $this->total = 0;
+
+        foreach($this->getProducts() as $item)
+        {
+            $this->subTotal += $item->getSubTotal();
+        }
+    }
+
+    public function calculateTotal()
+    {
+        $this->total = $this->subTotal + $this->deliveryCharge;
+    }
+
+    public function calculateTotals()
+    {
+        $this->calculateTotalItems();
+        $this->calculateSubTotal();
+        $this->calculateTotal();
+        $this->calculateVat();
+    }
     
     /**
      * Add discounts

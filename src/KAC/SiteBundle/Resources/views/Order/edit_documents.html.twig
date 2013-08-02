@@ -1,0 +1,33 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }} | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }}</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Payment Information</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    {% if documents|length > 0 %}
+                        <ul>
+
+                        </ul>
+                    {% endif %}
+
+                    <div class="clearfix mtl">
+                        <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
+                        <a href="{{ path('orders_generate_documents', {'id': order.id}) }}" class="button button-green icon-white mlm fl" data-icon-secondary="icon-1118">Generate Documents</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+{% endblock %}

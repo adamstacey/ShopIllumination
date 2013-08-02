@@ -1,52 +1,54 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 
-{% block title %}Links | {{ product.description.pageTitle }}{% endblock %}
+{% block title %}Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }} | {{ parent() }}{% endblock %}
 
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }}</h1>
+    </header>
+{% endblock %}
 {% block body %}
-    <div class="widget-group clearfix">
-        <div class="widget widget-2-of-7">
-            {% include 'KACSiteBundle:Product:editLeftMenu.html.twig' %}
-        </div>
-        <div class="widget widget-5-of-7">
-            <section>
-                <form class="form" id="form-edit" novalidate="novalidate" method="post" action="{{ path(app.request.attributes.get('_route'), {'productId': product.id}) }}" {{ form_enctype(form) }}>
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-1">
-                            <div class="ui-widget">
+                            <div class="ui-widget mbl">
                                 <header class="ui-widget-header ui-corner-top">
-                                    <span class="ui-button-icon-primary ui-icon icon-white icon-276"></span>
-                                    <h2>Product Links</h2>
+                                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                                    <h2>Edit Order {{ order.id }}</h2>
                                 </header>
                                 <section class="ui-widget-content ui-corner-bottom">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset class="pbm">
-                                        <table class="form-table sortable" id="linkList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.links.vars.prototype} %}{% endfilter %}">
+                                        <table class="form-table sortable" id="productList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.products.vars.prototype} %}{% endfilter %}">
                                             <thead>
                                             <tr>
                                                 <th width="1">&nbsp;</th>
-                                                <th width="1">&nbsp;</th>
-                                                <th width="50%">Product</th>
-                                                <th>Link Type</th>
+                                                <th>Product</th>
+                                                <th width="1">Quantity</th>
                                                 <th width="1">&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                <tr class="no-data ui-helper-hidden">
-                                                    <td colspan="5">
-                                                        <div class="message message-help mas">
-                                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                                            <p>There are no product links currently setup. Add a link using the "Add" button below.</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                {{ form_rest(form) }}
+                                            <tr class="no-data ui-helper-hidden">
+                                                <td colspan="5">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no product products. Add a product using the "Add" button below.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {{ form_rest(form) }}
                                             </tbody>
                                         </table>
                                     </fieldset>
-
                                     <div class="clearfix">
-                                        <button type="submit" class="button button-turquoise icon-white fr" data-icon-secondary="icon-471">Save</button>
-                                        <button type="button" data-table-object="linkList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1121">Add</button>
+                                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                        <button type="button" data-table-object="productList" class="actionAddFormRow mlm fr button icon-black" data-icon-secondary="icon-1121">Add</button>
+                                        <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
                                     </div>
                                 </section>
                             </div>
@@ -101,12 +103,12 @@
 
                     $(document).ready(function() {
                         generateProductSelect($(".select-product"));
-                        $("#linkList").on("rowadded", function() {
+                        $("#productList").on("rowadded", function() {
                             generateProductSelect($(".select-product"));
                         });
                     });
                 </script>
-            </section>
+            </div>
         </div>
-    </div>
+    </section>
 {% endblock %}

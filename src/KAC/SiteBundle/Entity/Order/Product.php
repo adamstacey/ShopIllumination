@@ -68,7 +68,7 @@ class Product
     /**
      * @ORM\Column(name="quantity", type="integer", length=11)
      */
-    private $quantity;
+    private $quantity = 1;
 
     /**
      * @ORM\Column(name="unit_cost", type="decimal", precision=12, scale=4)

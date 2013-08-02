@@ -16,12 +16,9 @@ class OverviewType extends AbstractType {
             'label' => 'Last Name',
             'required' => true,
         ));
-        $builder->add('emailAddress', 'repeated', array(
-            'type' => 'email',
-            'invalid_message' => 'Your emails must match.',
+        $builder->add('emailAddress', 'email', array(
+            'label' => 'Email Address',
             'required' => true,
-            'first_options'  => array('label' => 'Email Address'),
-            'second_options' => array('label' => 'Confirm Email Address'),
         ));
         $builder->add('telephoneDaytime', 'text', array(
             'label' => 'Telephone (Daytime)',
@@ -36,6 +33,86 @@ class OverviewType extends AbstractType {
         $builder->add('mobile', 'text', array(
             'label' => 'Mobile',
             'required' => false,
+        ));
+
+        $builder->add('billingFirstName', 'text', array(
+            'label' => 'First Name',
+            'required' => true,
+        ));
+        $builder->add('billingLastName', 'text', array(
+            'label' => 'Last Name',
+            'required' => true,
+        ));
+        $builder->add('billingOrganisationName', 'text', array(
+            'label' => 'Organisation',
+            'required' => false,
+        ));
+        $builder->add('billingAddressLine1', 'text', array(
+            'label' => 'Address Line 1',
+            'required' => true,
+        ));
+        $builder->add('billingAddressLine2', 'text', array(
+            'label' => 'Address Line 2',
+            'required' => false,
+        ));
+        $builder->add('billingTownCity', 'text', array(
+            'label' => 'Town/City',
+            'required' => true,
+        ));
+        $builder->add('billingCountyState', 'text', array(
+            'label' => 'County',
+            'required' => true,
+        ));
+        $builder->add('billingPostZipCode', 'text', array(
+            'label' => 'Post Code',
+            'required' => true,
+        ));
+        $builder->add('billingCountryCode', 'country', array(
+            'label' => 'Country',
+            'required' => true,
+            'preferred_choices' => array(
+                'GB'
+            )
+        ));
+
+        $builder->add('deliveryFirstName', 'text', array(
+            'label' => 'First Name',
+            'required' => true,
+        ));
+        $builder->add('deliveryLastName', 'text', array(
+            'label' => 'Last Name',
+            'required' => true,
+        ));
+        $builder->add('deliveryOrganisationName', 'text', array(
+            'label' => 'Organisation',
+            'required' => false,
+        ));
+        $builder->add('deliveryAddressLine1', 'text', array(
+            'label' => 'Address Line 1',
+            'required' => true,
+        ));
+        $builder->add('deliveryAddressLine2', 'text', array(
+            'label' => 'Address Line 2',
+            'required' => false,
+        ));
+        $builder->add('deliveryTownCity', 'text', array(
+            'label' => 'Town/City',
+            'required' => true,
+        ));
+        $builder->add('deliveryCountyState', 'text', array(
+            'label' => 'County',
+            'required' => true,
+        ));
+        $builder->add('deliveryPostZipCode', 'text', array(
+            'label' => 'Post Code',
+            'required' => true,
+        ));
+        $builder->add('deliveryCountryCode', 'country', array(
+            'label' => 'Country',
+            'required' => true,
+            'preferred_choices' => array(
+                'GB'
+            )
         ));
     }
 

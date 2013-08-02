@@ -189,31 +189,38 @@ class OrderManager extends Manager
             $orderProduct->setOrder($order);
             $orderProduct->setProduct($item->getProduct());
             $orderProduct->setVariant($item->getVariant());
-            $orderProduct->setBasketItemId($item->getProductId() . '-' . $item->getVariantId());
-            $orderProduct->setUrl($item->getVariant()->getUrl());
-            $orderProduct->setHeader($item->getVariant()->getDescription()->getHeader());
-            $orderProduct->setProductCode($item->getVariant()->getProductCode());
-            $orderProduct->setBrand($item->getProduct()->getBrand()->getDescription()->getHeader());
-            $orderProduct->setDescription($item->getVariant()->getDescription()->getDescription());
-            $orderProduct->setSelectedOptions('');
-            $orderProduct->setSelectedOptionLabels('');
-            $orderProduct->setQuantity($item->getQuantity());
-            $orderProduct->setUnitCost($item->getVariant()->getPrice()->getListPrice());
-            $orderProduct->setRecommendedRetailPrice($item->getVariant()->getPrice()->getRecommendedRetailPrice());
-            $orderProduct->setDiscount(0);
-            $orderProduct->setSavings($item->getVariant()->getPrice()->getRecommendedRetailPrice() - $item->getVariant()->getPrice()->getListPrice());
-            $orderProduct->setSubTotal($orderProduct->getSubTotal() * $orderProduct->getQuantity());
-            $orderProduct->setVat($orderProduct->getSubTotal() - ($orderProduct->getSubTotal() / 1.2));
+
             $order->addProduct($orderProduct);
         }
-        $order->setItems($basket->getTotalItems());
 
-        // Bind costs
+        $this->updateProductInfo($order);
+    }
+
+    public function updateProductInfo(Order $order)
+    {
+        // Bind basket items
+        foreach($order->getProducts() as $orderProduct)
+        {
+            $orderProduct->setBasketItemId($orderProduct->getProduct()->getId() . '-' . $orderProduct->getVariant()->getId());
+            $orderProduct->setUrl($orderProduct->getVariant()->getUrl());
+            $orderProduct->setHeader($orderProduct->getVariant()->getDescription()->getHeader());
+            $orderProduct->setProductCode($orderProduct->getVariant()->getProductCode());
+            $orderProduct->setBrand($orderProduct->getProduct()->getBrand()->getDescription()->getHeader());
+            $orderProduct->setDescription($orderProduct->getVariant()->getDescription()->getDescription());
+            $orderProduct->setSelectedOptions('');
+            $orderProduct->setSelectedOptionLabels('');
+            $orderProduct->setQuantity($orderProduct->getQuantity());
+            $orderProduct->setUnitCost($orderProduct->getVariant()->getPrice()->getListPrice());
+            $orderProduct->setRecommendedRetailPrice($orderProduct->getVariant()->getPrice()->getRecommendedRetailPrice());
+            $orderProduct->setDiscount(0);
+            $orderProduct->setSavings($orderProduct->getVariant()->getPrice()->getRecommendedRetailPrice() - $orderProduct->getVariant()->getPrice()->getListPrice());
+            $orderProduct->setSubTotal($orderProduct->getVariant()->getPrice()->getListPrice() * $orderProduct->getQuantity());
+            $orderProduct->setVat($orderProduct->getSubTotal() - ($orderProduct->getSubTotal() / 1.2));
+        }
+
         $order->setDiscount(0);
         $order->setPossibleDiscount(0);
-        $order->setSubTotal($basket->getTotalCost());
-        $order->setVat($order->getSubTotal() - ($order->getSubTotal() / 1.2));
-        $order->setTotal($order->getSubTotal() + $order->getDeliveryCharge());
+        $order->calculateTotals();
     }
 
     public function updateCheckoutStep(Order $order, $step)

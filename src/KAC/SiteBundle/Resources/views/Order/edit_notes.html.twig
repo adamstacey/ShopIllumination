@@ -1,0 +1,63 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }} | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }}</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget mbl">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                                    <h2>Edit Order {{ order.id }}</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-bottom">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset class="pbm">
+                                        <table class="form-table sortable" id="noteList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.notes.vars.prototype} %}{% endfilter %}">
+                                            <thead>
+                                            <tr>
+                                                <th width="1">&nbsp;</th>
+                                                <th>Creator</th>
+                                                <th>Notified?</th>
+                                                <th>Note Type</th>
+                                                <th width="45%">Note</th>
+                                                <th width="1">&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="no-data ui-helper-hidden">
+                                                <td colspan="5">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no product notes. Add a note using the "Add" button below.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {{ form_rest(form) }}
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                        <button type="button" data-table-object="noteList" class="actionAddFormRow mlm fr button icon-black" data-icon-secondary="icon-1121">Add</button>
+                                        <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

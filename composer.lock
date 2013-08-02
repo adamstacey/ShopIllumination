@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9345551e6eef052ed61cd970083135f6",
+    "hash": "08268d148c8f6d6d6d2663bac535de30",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -167,7 +167,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -295,7 +295,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -618,7 +618,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -672,7 +672,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -814,12 +814,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "af7107e8304e0ac0ad6fc2dfbecc9062d90e0b17"
+                "reference": "19eee1489965d9bc6eded80f847ced2382127261"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/af7107e8304e0ac0ad6fc2dfbecc9062d90e0b17",
-                "reference": "af7107e8304e0ac0ad6fc2dfbecc9062d90e0b17",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/19eee1489965d9bc6eded80f847ced2382127261",
+                "reference": "19eee1489965d9bc6eded80f847ced2382127261",
                 "shasum": ""
             },
             "require": {
@@ -850,7 +850,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2013-07-18 17:22:45"
+            "time": "2013-07-27 04:54:53"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -859,12 +859,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "be211eced9820a7ed4cb5bd80b0774e00eef1845"
+                "reference": "f82149141bedbb966ae409e54f4c6fdeaaab2080"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/be211eced9820a7ed4cb5bd80b0774e00eef1845",
-                "reference": "be211eced9820a7ed4cb5bd80b0774e00eef1845",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/f82149141bedbb966ae409e54f4c6fdeaaab2080",
+                "reference": "f82149141bedbb966ae409e54f4c6fdeaaab2080",
                 "shasum": ""
             },
             "require": {
@@ -919,7 +919,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2013-07-25 15:37:42"
+            "time": "2013-07-31 06:42:13"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1463,7 +1463,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1570,7 +1570,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1621,7 +1621,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1725,7 +1725,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1792,7 +1792,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1814,16 +1814,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "66d2fe197bacb82f7b476099144f03596719b24d"
+                "reference": "c7f57e622ec4ad531f59ac79b2536b0cb5681559"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/66d2fe197bacb82f7b476099144f03596719b24d",
-                "reference": "66d2fe197bacb82f7b476099144f03596719b24d",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/c7f57e622ec4ad531f59ac79b2536b0cb5681559",
+                "reference": "c7f57e622ec4ad531f59ac79b2536b0cb5681559",
                 "shasum": ""
             },
             "require": {
-                "jms/di-extra-bundle": "~1.3",
                 "jms/serializer": "~0.11",
                 "php": ">=5.3.2",
                 "symfony/framework-bundle": "~2.1"
@@ -1840,6 +1839,9 @@
                 "symfony/twig-bundle": "*",
                 "symfony/validator": "*",
                 "symfony/yaml": "*"
+            },
+            "suggest": {
+                "jms/di-extra-bundle": "Required to get lazy loading (de)serialization visitors, ~1.3"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1873,7 +1875,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2013-06-10 06:27:25"
+            "time": "2013-07-29 12:32:39"
         },
         {
             "name": "knplabs/knp-components",
@@ -1945,12 +1947,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
-                "reference": "e798c5689ff63edfb22df2b65d5094485c0e6bd2"
+                "reference": "2.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/e798c5689ff63edfb22df2b65d5094485c0e6bd2",
-                "reference": "e798c5689ff63edfb22df2b65d5094485c0e6bd2",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/2.3.3",
+                "reference": "2.3.3",
                 "shasum": ""
             },
             "require": {
@@ -1995,7 +1997,7 @@
                 "pagination",
                 "paginator"
             ],
-            "time": "2013-04-23 07:46:41"
+            "time": "2013-07-30 20:36:09"
         },
         {
             "name": "knplabs/knp-snappy",
@@ -2175,26 +2177,26 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1.5.0"
+                "reference": "1.6.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.5.0",
-                "reference": "1.5.0",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.6.0",
+                "reference": "1.6.0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "psr/log": ">=1.0,<2.0"
+                "psr/log": "~1.0"
             },
             "require-dev": {
                 "doctrine/couchdb": "dev-master",
                 "mlehner/gelf-php": "1.0.*",
-                "raven/raven": "0.3.*"
+                "raven/raven": "0.5.*"
             },
             "suggest": {
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
@@ -2206,7 +2208,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.4.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -2233,7 +2235,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-04-23 10:09:48"
+            "time": "2013-07-28 22:38:30"
         },
         {
             "name": "nelmio/solarium-bundle",
@@ -2296,12 +2298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/adrianmacneil/omnipay.git",
-                "reference": "6b2ade6a33371854d847d82e8c594b1dddeb0630"
+                "reference": "bab644e695ef6e38b0b8077c1ef490aa0678125d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adrianmacneil/omnipay/zipball/6b2ade6a33371854d847d82e8c594b1dddeb0630",
-                "reference": "6b2ade6a33371854d847d82e8c594b1dddeb0630",
+                "url": "https://api.github.com/repos/adrianmacneil/omnipay/zipball/bab644e695ef6e38b0b8077c1ef490aa0678125d",
+                "reference": "bab644e695ef6e38b0b8077c1ef490aa0678125d",
                 "shasum": ""
             },
             "require": {
@@ -2373,7 +2375,7 @@
                 "twocheckout",
                 "worldpay"
             ],
-            "time": "2013-07-25 16:41:10"
+            "time": "2013-08-01 14:28:43"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -2411,7 +2413,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2461,7 +2463,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2813,16 +2815,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/AsseticBundle.git",
-                "reference": "v2.3.0-beta1"
+                "reference": "v2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/v2.3.0-beta1",
-                "reference": "v2.3.0-beta1",
+                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/v2.3.0",
+                "reference": "v2.3.0",
                 "shasum": ""
             },
             "require": {
-                "kriswallsmith/assetic": ">=1.1-beta1,<1.2",
+                "kriswallsmith/assetic": ">=1.1,<2.0",
                 "php": ">=5.3.0",
                 "symfony/framework-bundle": ">=2.1,<3.0"
             },
@@ -2867,7 +2869,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2013-05-13 15:39:47"
+            "time": "2013-05-16 05:32:23"
         },
         {
             "name": "symfony/icu",
@@ -3145,12 +3147,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/trsteel88/TrsteelCkeditorBundle.git",
-                "reference": "b88154cdc598b7b341421e9b06e9b63a043310e8"
+                "reference": "7df6502fe8ced1dbc29783c18975d535ea80853d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/trsteel88/TrsteelCkeditorBundle/zipball/b88154cdc598b7b341421e9b06e9b63a043310e8",
-                "reference": "b88154cdc598b7b341421e9b06e9b63a043310e8",
+                "url": "https://api.github.com/repos/trsteel88/TrsteelCkeditorBundle/zipball/7df6502fe8ced1dbc29783c18975d535ea80853d",
+                "reference": "7df6502fe8ced1dbc29783c18975d535ea80853d",
                 "shasum": ""
             },
             "require": {
@@ -3162,7 +3164,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -3186,7 +3188,7 @@
                 "editor",
                 "wysiwyg"
             ],
-            "time": "2013-06-23 05:37:14"
+            "time": "2013-07-29 02:33:50"
         },
         {
             "name": "twig/extensions",

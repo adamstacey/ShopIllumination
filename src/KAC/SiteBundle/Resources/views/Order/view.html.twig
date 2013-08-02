@@ -217,8 +217,8 @@
                             {% endif %}
                             <tr>
                                 <td colspan="2">
-                                    <a href="#" class="button button-blue fr">More Info</a>
-                                    <a href="#" class="button button-blue fr mls">Documents</a>
+                                    <a href="{{ path('orders_edit_payment', {'id': order.id}) }}" class="button button-blue fr mls">More Info</a>
+                                    <a href="{{ path('orders_edit_documents', {'id': order.id}) }}" class="button button-blue fr">Documents</a>
                                 </td>
                             </tr>
                         </table>
@@ -297,7 +297,7 @@
                             </tfoot>
                         </table>
                         <div class="clearfix mtm">
-                            <a href="#" class="button button-blue fr">Edit Products</a>
+                            <a href="{{ path('orders_edit_products', {'id': order.id}) }}" class="button button-blue fr">Edit Products</a>
                         </div>
                     </section>
                 </div>
@@ -344,7 +344,7 @@
                             </tbody>
                         </table>
                         <div class="clearfix mtm">
-                            <a href="#" class="button button-blue fr">Edit Notes</a>
+                            <a href="{{ path('orders_edit_notes', {'id': order.id}) }}" class="button button-blue fr">Edit Notes</a>
                         </div>
                     </section>
                 </div>
