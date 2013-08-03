@@ -31,7 +31,7 @@
                             </tr>
                             <tr>
                                 <td>Status</td>
-                                <td>{{ order.status }}</td>
+                                <td class="{{ order.statusColour }}">{{ order.status }}</td>
                             </tr>
                             <tr>
                                 <td>Items</td>
@@ -58,7 +58,7 @@
                             </tr>
                             <tr>
                                 <td>User ID</td>
-                                <td>#{{ order.user.id }}</td>
+                                <td>{% if user is null %} - {% else %}#{{ order.user.id }}{% endif %}</td>
                             </tr>
                             <tr>
                                 <td>Name</td>
@@ -338,6 +338,15 @@
                                     <td>{{ item.createdAt|date("d/m/Y h:iA") }}</td>
                                     <td>
                                         <p>{{ item.note|raw|nl2br }}</p>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="message message-help mas">
+                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                            <p>There are no notes for this order.</p>
+                                        </div>
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -369,6 +369,23 @@ class Order
     	}
         return '';
     }
+
+    public static function getStatuses()
+    {
+        return array(
+            'Checkout',
+            'Open Payment',
+            'Payment Received',
+            'Payment Failed',
+            'Processing Your Order',
+            'Order Ready for Collection',
+            'Order with Delivery Company',
+            'Part Delivered',
+            'Order Completed',
+            'Refunded',
+            'Cancelled',
+        );
+    }
     
     /**
      * Get paymentType name

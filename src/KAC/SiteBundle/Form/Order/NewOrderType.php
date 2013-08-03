@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Form\Order;
 
+use KAC\SiteBundle\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -45,19 +46,7 @@ class NewOrderType extends AbstractType {
 
         // Order info
         $builder->add('status', 'choice', array(
-            'choices' => array(
-                'Checkout',
-                'Open Payment',
-                'Payment Received',
-                'Payment Failed',
-                'Processing Your Order',
-                'Order Ready for Collection',
-                'Order with Delivery Company',
-                'Part Delivered',
-                'Order Completed',
-                'Refunded',
-                'Cancelled',
-            ),
+            'choices' => array_combine(Order::getStatuses(), Order::getStatuses()),
             'label' => 'Status',
             'required' => true,
         ));
