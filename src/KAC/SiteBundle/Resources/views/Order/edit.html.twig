@@ -1,11 +1,11 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 
-{% block title %}New Order | {{ parent() }}{% endblock %}
+{% block title %}Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }} | {{ parent() }}{% endblock %}
 
 {% block header %}
     <header>
         {{ parent() }}
-        <h1>New Order</h1>
+        <h1>Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }}</h1>
     </header>
 {% endblock %}
 {% block body %}
@@ -18,7 +18,7 @@
                             <div class="ui-widget mbl">
                                 <header class="ui-widget-header ui-corner-top">
                                     <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
-                                    <h2>New Order</h2>
+                                    <h2>Edit Order {{ order.id }}</h2>
                                 </header>
                                 <section class="ui-widget-content ui-corner-bottom">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
@@ -50,7 +50,6 @@
                                         {{ form_row(form.billingCountyState) }}
                                         {{ form_row(form.billingPostZipCode) }}
                                         {{ form_row(form.billingCountryCode) }}
-                                        {{ form_row(form.useBillingAsDelivery) }}
                                     </fieldset>
                                     <fieldset class="pbm delivery-address {% if form.vars.value.useBillingAsDelivery %}ui-helper-hidden{% endif %}">
                                         <legend>Delivery Address</legend>
@@ -132,9 +131,9 @@
                                         </table>
                                     </fieldset>
                                     {{ form_rest(form) }}
-                                    <div class="clearfix notes">
+                                    <div class="clearfix">
                                         <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
-                                        <a href="{{ path('orders_index') }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
+                                        <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
                                     </div>
                                 </section>
                             </div>
@@ -200,7 +199,7 @@
                                 // Replace all values with the values from the billing address
                                 for(var i=1;i<9;i++) {
                                     var $billingInput   = $(".billing-address > :eq(" + i + ") :input"),
-                                        $deliveryInput   = $(".delivery-address > :eq(" + i + ") :input");
+                                            $deliveryInput   = $(".delivery-address > :eq(" + i + ") :input");
 
                                     $deliveryInput.val($billingInput.val());
                                 }
@@ -214,7 +213,7 @@
                                 // Get index of changed field
                                 var index = $(this).parent().parent().index(),
                                 // Get related delivery address field
-                                    $el   = $(".delivery-address > :eq(" + index + ")").find(":input");
+                                        $el   = $(".delivery-address > :eq(" + index + ")").find(":input");
 
                                 // Update field with the value from the billing address
                                 $el.val($(this).val());

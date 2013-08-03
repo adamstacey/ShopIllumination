@@ -65,6 +65,7 @@ class DeliveryMethodFactory {
             'KAC\SiteBundle\Manager\Delivery\Method\Collection',
             'KAC\SiteBundle\Manager\Delivery\Method\FreePalletExpress',
             'KAC\SiteBundle\Manager\Delivery\Method\FreeParcelExpress',
+            'KAC\SiteBundle\Manager\Delivery\Method\FreeRoyalMail',
             'KAC\SiteBundle\Manager\Delivery\Method\HomeDelivery',
             'KAC\SiteBundle\Manager\Delivery\Method\PalletDeliveryEconomy',
             'KAC\SiteBundle\Manager\Delivery\Method\PalletDeliveryExpress',

@@ -5,8 +5,10 @@ use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Order;
 use KAC\SiteBundle\Form\Order\AddressesType;
 use KAC\SiteBundle\Form\Order\DeliveryType;
+use KAC\SiteBundle\Form\Order\EditOrderType;
 use KAC\SiteBundle\Form\Order\NewOrderType;
 use KAC\SiteBundle\Form\Order\NotesType;
+use KAC\SiteBundle\Form\Order\OrderType;
 use KAC\SiteBundle\Form\Order\PaymentType;
 use KAC\SiteBundle\Form\Order\OverviewType;
 use KAC\SiteBundle\Form\Order\ProductsType;
@@ -139,63 +141,16 @@ class OrderController extends Controller
         ));
     }
 
-    public function baseEditAction(Request $request, $id, $template, $formClass)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
-        if(!$order)
-        {
-            throw new NotFoundHttpException("Order not found");
-        }
-
-        $form = $this->createForm($formClass, $order);
-
-        if ($request->isMethod('POST')) {
-            $form->submit($request);
-            if($form->isValid()) {
-                $em->persist($order);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('orders_view', array(
-                    'id' => $order->getId(),
-                )));
-            }
-        }
-
-        return $this->render($template, array(
-            'order' => $order,
-            'form' => $form->createView(),
-        ));
-    }
-
     /**
-     * @Route("/admin/orders/{id}/edit", name="orders_edit_overview")
+     * @Route("/admin/orders/{id}/edit", name="orders_edit")
      */
-    public function editOverviewAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
-        return $this->baseEditAction($request, $id, 'KACSiteBundle:Order:edit_overview.html.twig', new OverviewType());
-    }
-
-    /**
-     * @Route("/admin/orders/{id}/payment", name="orders_edit_payment")
-     */
-    public function editPaymentAction(Request $request, $id)
-    {
-        return $this->baseEditAction($request, $id, 'KACSiteBundle:Order:edit_payment.html.twig', new OverviewType());
-    }
-
-    /**
-     * @Route("/admin/orders/{id}/notes", name="orders_edit_notes")
-     */
-    public function editNotesAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
         $originalNotes = array();
+        $originalProducts = array();
 
-        /**
-         * @var $order Order
-         */
+        $em = $this->getDoctrine()->getManager();
+
         $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
         if(!$order)
         {
@@ -206,8 +161,14 @@ class OrderController extends Controller
         {
             $originalNotes[] = $note;
         }
+        foreach($order->getProducts() as $product)
+        {
+            $originalProducts[] = $product;
+        }
 
-        $form = $this->createForm(new NotesType(), $order);
+
+        $deliveryMethods = DeliveryMethodFactory::getAllMethods();
+        $form = $this->createForm(new EditOrderType($deliveryMethods), $order);
 
         if ($request->isMethod('POST')) {
             $form->submit($request);
@@ -226,50 +187,6 @@ class OrderController extends Controller
                 foreach ($originalNotes as $note) {
                     $em->remove($note);
                 }
-
-                $em->persist($order);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('orders_view', array(
-                    'id' => $order->getId(),
-                )));
-            }
-        }
-
-        return $this->render('KACSiteBundle:Order:edit_notes.html.twig', array(
-            'order' => $order,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * @Route("/admin/orders/{id}/products", name="orders_edit_products")
-     */
-    public function editProductsAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $originalProducts = array();
-
-        /**
-         * @var $order Order
-         */
-        $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
-        if(!$order)
-        {
-            throw new NotFoundHttpException("Order not found");
-        }
-
-        foreach($order->getProducts() as $product)
-        {
-            $originalProducts[] = $product;
-        }
-
-        $form = $this->createForm(new ProductsType(), $order);
-
-        if ($request->isMethod('POST')) {
-            $form->submit($request);
-            if($form->isValid()) {
-                // Remove all products from the to delete array that have not been deleted
                 foreach($order->getProducts() as $product) {
                     foreach ($originalProducts as $key => $toDel) {
                         if ($toDel->getId() === $product->getId()) {
@@ -286,7 +203,6 @@ class OrderController extends Controller
                 }
 
                 $this->getManager()->updateProductInfo($order);
-
                 $em->persist($order);
                 $em->flush();
 
@@ -296,10 +212,18 @@ class OrderController extends Controller
             }
         }
 
-        return $this->render('KACSiteBundle:Order:edit_products.html.twig', array(
+        return $this->render('KACSiteBundle:Order:edit.html.twig', array(
             'order' => $order,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/admin/orders/{id}/payment", name="orders_edit_payment")
+     */
+    public function editPaymentAction(Request $request, $id)
+    {
+        return $this->baseEditAction($request, $id, 'KACSiteBundle:Order:edit_payment.html.twig', new OverviewType());
     }
 
     /**

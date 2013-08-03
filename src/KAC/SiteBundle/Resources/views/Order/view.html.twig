@@ -14,7 +14,7 @@
             <div class="widget widget-1-of-1">
                 <a href="{{ path('orders_delete', {'id': order.id}) }}" class="button button-red fr mls">Delete</a>
                 <a href="{{ path('orders_refund', {'id': order.id}) }}" class="button button-orange fr mls">Refund</a>
-                <a href="{{ path('orders_edit_overview', {'id': order.id}) }}" class="button button-blue fr">Edit</a>
+                <a href="{{ path('orders_edit', {'id': order.id}) }}" class="button button-blue fr">Edit</a>
             </div>
         </div>
         <div class="widget-group clearfix">
@@ -296,9 +296,6 @@
                             </tr>
                             </tfoot>
                         </table>
-                        <div class="clearfix mtm">
-                            <a href="{{ path('orders_edit_products', {'id': order.id}) }}" class="button button-blue fr">Edit Products</a>
-                        </div>
                     </section>
                 </div>
             </div>
@@ -352,9 +349,6 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="clearfix mtm">
-                            <a href="{{ path('orders_edit_notes', {'id': order.id}) }}" class="button button-blue fr">Edit Notes</a>
-                        </div>
                     </section>
                 </div>
             </div>
