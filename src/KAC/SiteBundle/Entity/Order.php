@@ -1968,13 +1968,14 @@ class Order
     /**
      * Add products
      *
-     * @param Order\Product $products
+     * @param Order\Product $product
      * @return Order
      */
-    public function addProduct(Order\Product $products)
+    public function addProduct(Order\Product $product)
     {
-        $this->products[] = $products;
-    
+        $this->products[] = $product;
+        $product->setOrder($this);
+
         return $this;
     }
 
@@ -2001,12 +2002,13 @@ class Order
     /**
      * Add notes
      *
-     * @param Order\Note $notes
+     * @param Order\Note $note
      * @return Order
      */
-    public function addNote(Order\Note $notes)
+    public function addNote(Order\Note $note)
     {
-        $this->notes[] = $notes;
+        $this->notes[] = $note;
+        $note->setOrder($this);
     
         return $this;
     }

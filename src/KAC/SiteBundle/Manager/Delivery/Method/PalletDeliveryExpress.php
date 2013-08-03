@@ -1,10 +1,10 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class PalletDeliveryEconomy extends AbstractDeliveryMethod
+class PalletDeliveryExpress extends AbstractDeliveryMethod
 {
     /**
      * Check if the delivery method supports a location
@@ -16,7 +16,7 @@ class PalletDeliveryEconomy extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 3 && in_array($band, array(3, 4))) {
+        if($zone === 3 && in_array($band, array(3, 4, 5))) {
             return true;
         } else {
             return false;
@@ -34,9 +34,9 @@ class PalletDeliveryEconomy extends AbstractDeliveryMethod
     {
         if($zone === 3) {
             if($band == 3) {
-                return 19;
-            } elseif ($band == 4) {
-                return 29.95;
+                return 39;
+            } elseif ($band == 4 || $band = 5) {
+                return 45;
             }
         }
 
@@ -55,8 +55,8 @@ class PalletDeliveryEconomy extends AbstractDeliveryMethod
     function calculateEstimatedDeliveryDays($zone, $band)
     {
         return array(
-            'start' => 7,
-            'end' => 12,
+            'start' => 2,
+            'end' => 7,
         );
     }
 
@@ -67,7 +67,7 @@ class PalletDeliveryEconomy extends AbstractDeliveryMethod
      */
     function getName()
     {
-        return 'Pallet Delivery Economy';
+        return 'Pallet Delivery Express';
     }
 
     /**
@@ -77,6 +77,6 @@ class PalletDeliveryEconomy extends AbstractDeliveryMethod
      */
     function getDescription()
     {
-        return 'Pallet sent Economy service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+        return 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
     }
 }

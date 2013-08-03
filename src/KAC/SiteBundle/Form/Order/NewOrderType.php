@@ -6,8 +6,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class NewOrderType extends AbstractType {
+    private $deliveryMethods;
+
+    function __construct($deliveryMethods)
+    {
+        $this->deliveryMethods = $deliveryMethods;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // Customer Info
         $builder->add('firstName', 'text', array(
             'label' => 'First Name',
             'required' => true,
@@ -35,6 +43,32 @@ class NewOrderType extends AbstractType {
             'required' => false,
         ));
 
+        // Order info
+        $builder->add('status', 'choice', array(
+            'choices' => array(
+                'Checkout',
+                'Open Payment',
+                'Payment Received',
+                'Payment Failed',
+                'Processing Your Order',
+                'Order Ready for Collection',
+                'Order with Delivery Company',
+                'Part Delivered',
+                'Order Completed',
+                'Refunded',
+                'Cancelled',
+            ),
+            'label' => 'Status',
+            'required' => true,
+        ));
+        $builder->add('deliveryType', 'choice', array(
+            'choices' => array_combine($this->deliveryMethods, $this->deliveryMethods),
+            'label' => 'Delivery Method',
+            'required' => true,
+        ));
+
+
+        // Billing address
         $builder->add('billingFirstName', 'text', array(
             'label' => 'First Name',
             'required' => true,
@@ -78,11 +112,8 @@ class NewOrderType extends AbstractType {
             'label' => 'Use billing address for delivery?',
             'required' => false,
         ));
-        $builder->add('deliveryType', 'choice', array(
-            'choices' => array(),
-            'expanded' => true,
-            'multiple' => false,
-        ));
+
+        // Delivery address
         $builder->add('deliveryFirstName', 'text', array(
             'label' => 'First Name',
             'required' => true,

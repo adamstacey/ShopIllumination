@@ -1,10 +1,10 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class FreeParcelExpress extends AbstractDeliveryMethod
+class PalletDeliveryEconomy extends AbstractDeliveryMethod
 {
     /**
      * Check if the delivery method supports a location
@@ -16,9 +16,7 @@ class FreeParcelExpress extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 1 && in_array($band, array(2))) {
-            return true;
-        } elseif($zone === 2 && in_array($band, array(2))) {
+        if($zone === 3 && in_array($band, array(3, 4))) {
             return true;
         } else {
             return false;
@@ -34,6 +32,14 @@ class FreeParcelExpress extends AbstractDeliveryMethod
      */
     function calculateCost($zone, $band, $items)
     {
+        if($zone === 3) {
+            if($band == 3) {
+                return 19;
+            } elseif ($band == 4) {
+                return 29.95;
+            }
+        }
+
         return 0;
     }
 
@@ -49,8 +55,8 @@ class FreeParcelExpress extends AbstractDeliveryMethod
     function calculateEstimatedDeliveryDays($zone, $band)
     {
         return array(
-            'start' => 1,
-            'end' => 5,
+            'start' => 7,
+            'end' => 12,
         );
     }
 
@@ -61,7 +67,7 @@ class FreeParcelExpress extends AbstractDeliveryMethod
      */
     function getName()
     {
-        return 'FREE DELIVERY Parcel Express';
+        return 'Pallet Delivery Economy';
     }
 
     /**
@@ -71,7 +77,6 @@ class FreeParcelExpress extends AbstractDeliveryMethod
      */
     function getDescription()
     {
-        return 'Package sent express service by courier DPD.';
+        return 'Pallet sent Economy service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
     }
-
 }

@@ -1,0 +1,162 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}New Order | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>New Order</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget mbl">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                                    <h2>New Order</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-bottom">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset class="pbm">
+                                        {{ form_row(form.firstName) }}
+                                        {{ form_row(form.lastName) }}
+                                        {{ form_row(form.emailAddress) }}
+                                        {{ form_row(form.telephoneDaytime) }}
+                                        {{ form_row(form.telephoneEvening) }}
+                                        {{ form_row(form.mobile) }}
+                                    </fieldset>
+                                    <fieldset class="pbm">
+                                        <legend>Order Info</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.status) }}
+                                        {{ form_row(form.deliveryType) }}
+                                    </fieldset>
+                                    <fieldset class="pbm">
+                                        <legend>Billing Address</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.billingFirstName) }}
+                                        {{ form_row(form.billingLastName) }}
+                                        {{ form_row(form.billingOrganisationName) }}
+                                        {{ form_row(form.billingAddressLine1) }}
+                                        {{ form_row(form.billingAddressLine2) }}
+                                        {{ form_row(form.billingTownCity) }}
+                                        {{ form_row(form.billingCountyState) }}
+                                        {{ form_row(form.billingPostZipCode) }}
+                                        {{ form_row(form.billingCountryCode) }}
+                                        {{ form_row(form.useBillingAsDelivery) }}
+                                    </fieldset>
+                                    <fieldset class="pbm">
+                                        <legend>Delivery Address</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.deliveryFirstName) }}
+                                        {{ form_row(form.deliveryLastName) }}
+                                        {{ form_row(form.deliveryOrganisationName) }}
+                                        {{ form_row(form.deliveryAddressLine1) }}
+                                        {{ form_row(form.deliveryAddressLine2) }}
+                                        {{ form_row(form.deliveryTownCity) }}
+                                        {{ form_row(form.deliveryCountyState) }}
+                                        {{ form_row(form.deliveryPostZipCode) }}
+                                        {{ form_row(form.deliveryCountryCode) }}
+                                    </fieldset>
+                                    <fieldset class="pbm">
+                                        <table class="form-table sortable" id="productList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.products.vars.prototype} %}{% endfilter %}">
+                                            <thead>
+                                            <tr>
+                                                <th width="1">&nbsp;</th>
+                                                <th>Product</th>
+                                                <th width="1">Quantity</th>
+                                                <th width="1">&nbsp;</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr class="no-data ui-helper-hidden">
+                                                <td colspan="5">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no product products. Add a product using the "Add" button below.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {{ form_rest(form) }}
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <button type="button" data-table-object="productList" class="actionAddFormRow mlm fr button icon-black" data-icon-secondary="icon-1121">Add Product</button>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </fieldset>
+                                    {{ form_rest(form) }}
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                        <a href="{{ path('orders_index') }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <script type="text/javascript">
+                    var productsUrl = "{{ path('api_products_get') }}";
+                    var productUrl = "{{ path('api_products_get_product', {'id': -1}) }}";
+
+                    function generateProductSelect($element) {
+                        $element.select2({
+                            placeholder: "- Select a Product -",
+                            minimumInputLength: 1,
+                            quietMillis: 100,
+                            ajax: {
+                                url: productsUrl,
+                                dataType: 'json',
+                                data: function (term, page) {
+                                    return {
+                                        q: term,
+                                        page: page
+                                    };
+                                },
+                                results: function (data, page) {
+                                    var more = (page * 10) < data.total;
+                                    return {results: data.products, more: more};
+                                }
+                            },
+                            initSelection: function(element, callback) {
+                                var id = $(element).val();
+                                if (id !== "") {
+                                    $.ajax(productUrl.replace(/-1/, id), {
+                                        dataType: "json"
+                                    }).done(function(data) { callback(data); });
+                                }
+                            },
+                            formatResult: function(product) {
+                                if (product.descriptions.length > 0) {
+                                    return product.descriptions[0].page_title;
+                                }
+                                return "";
+                            },
+                            formatSelection: function(product) {
+                                if (product.descriptions.length > 0) {
+                                    return product.descriptions[0].page_title;
+                                }
+                                return "";
+                            }
+                        });
+                    }
+
+                    $(document).ready(function() {
+                        generateProductSelect($(".select-product"));
+                        $("#productList").on("rowadded", function() {
+                            generateProductSelect($(".select-product"));
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,5 +1,5 @@
 <?php
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 

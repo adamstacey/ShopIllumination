@@ -70,7 +70,7 @@ class BasketManager extends Manager
             $basket->getDelivery()->setZone($this->deliveryManager->calculateZone($basket->getDelivery()->getCountryCode(), $basket->getDelivery()->getPostZipCode()));
             $basket->getDelivery()->setWeighting($this->deliveryManager->calculateWeighting($basket->getItems()));
             $basket->getDelivery()->setWeight($this->deliveryManager->calculateWeight($basket->getItems()));
-            $basket->getDelivery()->setBand($this->deliveryManager->calculateBand($basket->getDelivery()->getWeighting()));
+            $basket->getDelivery()->setBand($this->deliveryManager->calculateBand($basket->getItems()));
             $basket->getDelivery()->setDeliveryOptions($this->deliveryManager->calculateDeliveryOptions($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()));
 
             if($basket->getDelivery()->getService() === '' && count($basket->getDelivery()->getDeliveryOptions()) > 0)

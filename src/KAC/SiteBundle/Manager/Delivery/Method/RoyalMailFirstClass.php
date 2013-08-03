@@ -1,11 +1,10 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class RoyalMailEconomy extends AbstractDeliveryMethod
-{
+class RoyalMailFirstClass extends AbstractDeliveryMethod {
     /**
      * Check if the delivery method supports a location
      *
@@ -16,9 +15,17 @@ class RoyalMailEconomy extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 1 && in_array($band, array(2))) {
+        if($zone === 1 && in_array($band, array(1))) {
             return true;
-        } elseif($zone === 2 && in_array($band, array(2))) {
+        } elseif($zone === 2 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 3 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 4 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 5 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 6 && in_array($band, array(1))) {
             return true;
         } else {
             return false;
@@ -35,11 +42,11 @@ class RoyalMailEconomy extends AbstractDeliveryMethod
     function calculateCost($zone, $band, $items)
     {
         if($zone === 1 || $zone === 2) {
-            return 1.95;
-        } elseif($zone === 3) {
-            return 2.95;
-        } elseif($zone === 4 || $zone === 5 || $zone === 6) {
             return 3.95;
+        } elseif($zone === 3) {
+            return 4.95;
+        } elseif($zone === 4 || $zone === 5 || $zone === 6) {
+            return 7.95;
         }
 
         return 0;
@@ -58,33 +65,33 @@ class RoyalMailEconomy extends AbstractDeliveryMethod
     {
         if ($zone === 1) {
             return array(
-                'start' => 3,
-                'end' => 7,
+                'start' => 1,
+                'end' => 4,
             );
         } elseif ($zone === 2) {
             return array(
-                'start' => 3,
-                'end' => 7,
+                'start' => 1,
+                'end' => 4,
             );
         } elseif ($zone === 3) {
             return array(
-                'start' => 4,
-                'end' => 8,
+                'start' => 2,
+                'end' => 5,
             );
         } elseif ($zone === 4) {
             return array(
-                'start' => 5,
-                'end' => 9,
+                'start' => 3,
+                'end' => 6,
             );
         } elseif ($zone === 5) {
             return array(
-                'start' => 5,
-                'end' => 10,
+                'start' => 3,
+                'end' => 6,
             );
         } elseif ($zone === 6) {
             return array(
-                'start' => 6,
-                'end' => 12,
+                'start' => 3,
+                'end' => 7,
             );
         } else {
             return array(
@@ -96,19 +103,21 @@ class RoyalMailEconomy extends AbstractDeliveryMethod
 
     /**
      * Get the name of the courier
+     *
      * @return string
      */
     function getName()
     {
-        return 'Royal Mail Economy';
+        return 'Royal Mail 1st Class';
     }
 
     /**
      * Get the description of the courier
+     *
      * @return string
      */
     function getDescription()
     {
-        return 'Small package sent recorded Economy by Royal Mail.';
+        return 'Small package sent recorded 1st Class by Royal Mail.';
     }
 }

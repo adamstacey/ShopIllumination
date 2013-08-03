@@ -1,10 +1,10 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class HomeDelivery extends AbstractDeliveryMethod
+class RoyalMailEconomy extends AbstractDeliveryMethod
 {
     /**
      * Check if the delivery method supports a location
@@ -16,9 +16,9 @@ class HomeDelivery extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 1 && in_array($band, array(3, 4, 5, 6))) {
+        if($zone === 1 && in_array($band, array(2))) {
             return true;
-        } elseif($zone === 2 && in_array($band, array(3, 4, 5, 6))) {
+        } elseif($zone === 2 && in_array($band, array(2))) {
             return true;
         } else {
             return false;
@@ -34,18 +34,12 @@ class HomeDelivery extends AbstractDeliveryMethod
      */
     function calculateCost($zone, $band, $items)
     {
-        if($zone === 1) {
-            if($band == 3 || $band == 4) {
-                return 19.95;
-            } elseif ($band == 5 || $band == 6) {
-                return 35;
-            }
-        } elseif($zone === 2) {
-            if($band == 3 || $band == 4) {
-                return 29;
-            } elseif ($band == 5 || $band == 6) {
-                return 45;
-            }
+        if($zone === 1 || $zone === 2) {
+            return 1.95;
+        } elseif($zone === 3) {
+            return 2.95;
+        } elseif($zone === 4 || $zone === 5 || $zone === 6) {
+            return 3.95;
         }
 
         return 0;
@@ -62,25 +56,35 @@ class HomeDelivery extends AbstractDeliveryMethod
      */
     function calculateEstimatedDeliveryDays($zone, $band)
     {
-        if ($zone === 1 && in_array($band, array(3, 4, 5))) {
+        if ($zone === 1) {
+            return array(
+                'start' => 3,
+                'end' => 7,
+            );
+        } elseif ($zone === 2) {
+            return array(
+                'start' => 3,
+                'end' => 7,
+            );
+        } elseif ($zone === 3) {
+            return array(
+                'start' => 4,
+                'end' => 8,
+            );
+        } elseif ($zone === 4) {
+            return array(
+                'start' => 5,
+                'end' => 9,
+            );
+        } elseif ($zone === 5) {
             return array(
                 'start' => 5,
                 'end' => 10,
             );
-        } elseif ($zone === 1 && in_array($band, array(6))) {
+        } elseif ($zone === 6) {
             return array(
-                'start' => 5,
+                'start' => 6,
                 'end' => 12,
-            );
-        } elseif ($zone === 2 && in_array($band, array(3, 4, 5))) {
-            return array(
-                'start' => 5,
-                'end' => 14,
-            );
-        } elseif ($zone === 2 && in_array($band, array(6))) {
-            return array(
-                'start' => 7,
-                'end' => 16,
             );
         } else {
             return array(
@@ -92,21 +96,19 @@ class HomeDelivery extends AbstractDeliveryMethod
 
     /**
      * Get the name of the courier
-     *
      * @return string
      */
     function getName()
     {
-        return 'Home Delivery Service';
+        return 'Royal Mail Economy';
     }
 
     /**
      * Get the description of the courier
-     *
      * @return string
      */
     function getDescription()
     {
-        return 'Goods sent home delivery service by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.';
+        return 'Small package sent recorded Economy by Royal Mail.';
     }
 }

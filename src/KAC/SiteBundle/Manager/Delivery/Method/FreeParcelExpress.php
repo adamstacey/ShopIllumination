@@ -1,10 +1,10 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class PalletDeliveryExpress extends AbstractDeliveryMethod
+class FreeParcelExpress extends AbstractDeliveryMethod
 {
     /**
      * Check if the delivery method supports a location
@@ -16,7 +16,9 @@ class PalletDeliveryExpress extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 3 && in_array($band, array(3, 4, 5))) {
+        if($zone === 1 && in_array($band, array(2))) {
+            return true;
+        } elseif($zone === 2 && in_array($band, array(2))) {
             return true;
         } else {
             return false;
@@ -32,14 +34,6 @@ class PalletDeliveryExpress extends AbstractDeliveryMethod
      */
     function calculateCost($zone, $band, $items)
     {
-        if($zone === 3) {
-            if($band == 3) {
-                return 39;
-            } elseif ($band == 4 || $band = 5) {
-                return 45;
-            }
-        }
-
         return 0;
     }
 
@@ -55,8 +49,8 @@ class PalletDeliveryExpress extends AbstractDeliveryMethod
     function calculateEstimatedDeliveryDays($zone, $band)
     {
         return array(
-            'start' => 2,
-            'end' => 7,
+            'start' => 1,
+            'end' => 5,
         );
     }
 
@@ -67,7 +61,7 @@ class PalletDeliveryExpress extends AbstractDeliveryMethod
      */
     function getName()
     {
-        return 'Pallet Delivery Express';
+        return 'FREE DELIVERY Parcel Express';
     }
 
     /**
@@ -77,6 +71,7 @@ class PalletDeliveryExpress extends AbstractDeliveryMethod
      */
     function getDescription()
     {
-        return 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
+        return 'Package sent express service by courier DPD.';
     }
+
 }

@@ -614,7 +614,7 @@ class DeliveryManager extends Manager
      * @param ShippableInterface[] $items
      * @return int
      */
-    protected function calculateWeight($items)
+    public function calculateWeight($items)
     {
         $weight = 0;
 
@@ -632,7 +632,7 @@ class DeliveryManager extends Manager
      * @param ShippableInterface[] $items
      * @return int
      */
-    protected function calculateBand($items)
+    public function calculateBand($items)
     {
         $weighting = $this->calculateWeighting($items);
 
@@ -660,7 +660,7 @@ class DeliveryManager extends Manager
      * @param ShippableInterface[] $items
      * @return int
      */
-    private function calculateWeighting($items)
+    public function calculateWeighting($items)
     {
         $weighting = 0;
 

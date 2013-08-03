@@ -17,7 +17,7 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\HasLifecycleCallbacks()
 
  */
-class Variant implements DescribableInterface, ShippableInterface
+class Variant implements DescribableInterface
 {
     /**
      * @ORM\Id

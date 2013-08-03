@@ -1,10 +1,11 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class RoyalMail extends AbstractDeliveryMethod {
+class ParcelDeliveryEconomy extends AbstractDeliveryMethod
+{
     /**
      * Check if the delivery method supports a location
      *
@@ -15,17 +16,13 @@ class RoyalMail extends AbstractDeliveryMethod {
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 1 && in_array($band, array(1))) {
+        if($zone === 3 && in_array($band, array(2))) {
             return true;
-        } elseif($zone === 2 && in_array($band, array(1))) {
+        } elseif($zone === 4 && in_array($band, array(2))) {
             return true;
-        } elseif($zone === 3 && in_array($band, array(1))) {
+        } elseif($zone === 5 && in_array($band, array(2))) {
             return true;
-        } elseif($zone === 4 && in_array($band, array(1))) {
-            return true;
-        } elseif($zone === 5 && in_array($band, array(1))) {
-            return true;
-        } elseif($zone === 6 && in_array($band, array(1))) {
+        } elseif($zone === 6 && in_array($band, array(2))) {
             return true;
         } else {
             return false;
@@ -41,11 +38,9 @@ class RoyalMail extends AbstractDeliveryMethod {
      */
     function calculateCost($zone, $band, $items)
     {
-        if($zone === 1 || $zone === 2) {
-            return 3.95;
-        } elseif($zone === 3) {
+        if($zone === 3 || $zone === 4) {
             return 4.95;
-        } elseif($zone === 4 || $zone === 5 || $zone === 6) {
+        } elseif($zone === 6 || $zone === 5) {
             return 7.95;
         }
 
@@ -63,35 +58,25 @@ class RoyalMail extends AbstractDeliveryMethod {
      */
     function calculateEstimatedDeliveryDays($zone, $band)
     {
-        if ($zone === 1) {
+        if ($zone === 3 && in_array($band, array(2))) {
             return array(
-                'start' => 1,
-                'end' => 4,
+                'start' => 5,
+                'end' => 8,
             );
-        } elseif ($zone === 2) {
+        } elseif ($zone === 4 && in_array($band, array(2))) {
             return array(
-                'start' => 1,
-                'end' => 4,
+                'start' => 5,
+                'end' => 10,
             );
-        } elseif ($zone === 3) {
+        } elseif ($zone === 5 && in_array($band, array(2))) {
             return array(
-                'start' => 2,
-                'end' => 5,
+                'start' => 7,
+                'end' => 12,
             );
-        } elseif ($zone === 4) {
+        } elseif ($zone === 6 && in_array($band, array(2))) {
             return array(
-                'start' => 3,
-                'end' => 6,
-            );
-        } elseif ($zone === 5) {
-            return array(
-                'start' => 3,
-                'end' => 6,
-            );
-        } elseif ($zone === 6) {
-            return array(
-                'start' => 3,
-                'end' => 7,
+                'start' => 7,
+                'end' => 12,
             );
         } else {
             return array(
@@ -108,7 +93,7 @@ class RoyalMail extends AbstractDeliveryMethod {
      */
     function getName()
     {
-        return 'Royal Mail 1st Class';
+        return 'Parcel Delivery Express';
     }
 
     /**
@@ -118,6 +103,6 @@ class RoyalMail extends AbstractDeliveryMethod {
      */
     function getDescription()
     {
-        return 'Small package sent recorded 1st Class by Royal Mail.';
+        return 'Package sent economy service by courier DPD.';
     }
 }

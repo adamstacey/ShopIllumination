@@ -5,10 +5,12 @@ use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Order;
 use KAC\SiteBundle\Form\Order\AddressesType;
 use KAC\SiteBundle\Form\Order\DeliveryType;
+use KAC\SiteBundle\Form\Order\NewOrderType;
 use KAC\SiteBundle\Form\Order\NotesType;
 use KAC\SiteBundle\Form\Order\PaymentType;
 use KAC\SiteBundle\Form\Order\OverviewType;
 use KAC\SiteBundle\Form\Order\ProductsType;
+use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -75,6 +77,41 @@ class OrderController extends Controller
 
         return $this->render('KACSiteBundle:Order:index.html.twig', array(
             'pagination' => $pagination
+        ));
+    }
+
+    /**
+     * @Route("/admin/orders/new", name="orders_new")
+     */
+    public function newAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $order = new Order();
+        $deliveryMethods = DeliveryMethodFactory::getAllMethods();
+        $form = $this->createForm(new NewOrderType($deliveryMethods), $order);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                foreach($order->getProducts() as $orderProduct)
+                {
+                    $orderProduct->setProduct($orderProduct->getVariant()->getProduct());
+                }
+                $this->getManager()->updateProductInfo($order);
+
+                $em->persist($order);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('orders_view', array(
+                    'id' => $order->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Order:new.html.twig', array(
+            'order' => $order,
+            'form' => $form->createView(),
         ));
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class ParcelDeliveryEconomy extends AbstractDeliveryMethod
+class HomeDelivery extends AbstractDeliveryMethod
 {
     /**
      * Check if the delivery method supports a location
@@ -16,13 +16,9 @@ class ParcelDeliveryEconomy extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 3 && in_array($band, array(2))) {
+        if($zone === 1 && in_array($band, array(3, 4, 5, 6))) {
             return true;
-        } elseif($zone === 4 && in_array($band, array(2))) {
-            return true;
-        } elseif($zone === 5 && in_array($band, array(2))) {
-            return true;
-        } elseif($zone === 6 && in_array($band, array(2))) {
+        } elseif($zone === 2 && in_array($band, array(3, 4, 5, 6))) {
             return true;
         } else {
             return false;
@@ -38,10 +34,18 @@ class ParcelDeliveryEconomy extends AbstractDeliveryMethod
      */
     function calculateCost($zone, $band, $items)
     {
-        if($zone === 3 || $zone === 4) {
-            return 4.95;
-        } elseif($zone === 6 || $zone === 5) {
-            return 7.95;
+        if($zone === 1) {
+            if($band == 3 || $band == 4) {
+                return 19.95;
+            } elseif ($band == 5 || $band == 6) {
+                return 35;
+            }
+        } elseif($zone === 2) {
+            if($band == 3 || $band == 4) {
+                return 29;
+            } elseif ($band == 5 || $band == 6) {
+                return 45;
+            }
         }
 
         return 0;
@@ -58,25 +62,25 @@ class ParcelDeliveryEconomy extends AbstractDeliveryMethod
      */
     function calculateEstimatedDeliveryDays($zone, $band)
     {
-        if ($zone === 3 && in_array($band, array(2))) {
-            return array(
-                'start' => 5,
-                'end' => 8,
-            );
-        } elseif ($zone === 4 && in_array($band, array(2))) {
+        if ($zone === 1 && in_array($band, array(3, 4, 5))) {
             return array(
                 'start' => 5,
                 'end' => 10,
             );
-        } elseif ($zone === 5 && in_array($band, array(2))) {
+        } elseif ($zone === 1 && in_array($band, array(6))) {
             return array(
-                'start' => 7,
+                'start' => 5,
                 'end' => 12,
             );
-        } elseif ($zone === 6 && in_array($band, array(2))) {
+        } elseif ($zone === 2 && in_array($band, array(3, 4, 5))) {
+            return array(
+                'start' => 5,
+                'end' => 14,
+            );
+        } elseif ($zone === 2 && in_array($band, array(6))) {
             return array(
                 'start' => 7,
-                'end' => 12,
+                'end' => 16,
             );
         } else {
             return array(
@@ -93,7 +97,7 @@ class ParcelDeliveryEconomy extends AbstractDeliveryMethod
      */
     function getName()
     {
-        return 'Parcel Delivery Express';
+        return 'Home Delivery Service';
     }
 
     /**
@@ -103,6 +107,6 @@ class ParcelDeliveryEconomy extends AbstractDeliveryMethod
      */
     function getDescription()
     {
-        return 'Package sent economy service by courier DPD.';
+        return 'Goods sent home delivery service by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.';
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class Collection extends AbstractDeliveryMethod
+class FreePalletExpress extends AbstractDeliveryMethod
 {
     /**
      * Check if the delivery method supports a location
@@ -16,7 +16,13 @@ class Collection extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        return $zone === 1;
+        if($zone === 1 && in_array($band, array(3, 4, 5))) {
+            return true;
+        } elseif($zone === 2 && in_array($band, array(3, 4, 5))) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -43,8 +49,8 @@ class Collection extends AbstractDeliveryMethod
     function calculateEstimatedDeliveryDays($zone, $band)
     {
         return array(
-            'start' => 0,
-            'end' => 0,
+            'start' => 1,
+            'end' => 6,
         );
     }
 
@@ -55,7 +61,7 @@ class Collection extends AbstractDeliveryMethod
      */
     function getName()
     {
-        return 'Collection';
+        return 'FREE DELIVERY Pallet Express';
     }
 
     /**
@@ -65,6 +71,7 @@ class Collection extends AbstractDeliveryMethod
      */
     function getDescription()
     {
-        return 'You will need to collect your order from our shop in Nottingham. We will contact you as soon as your order is ready for collection.';
+        return 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
     }
+
 }

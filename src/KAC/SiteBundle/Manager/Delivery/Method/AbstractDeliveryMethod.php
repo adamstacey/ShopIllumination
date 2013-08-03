@@ -1,6 +1,6 @@
 <?php
 
-namespace KAC\SiteBundle\Manager\Delivery\Courier;
+namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
 {
