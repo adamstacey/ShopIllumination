@@ -22,7 +22,9 @@
                                 </header>
                                 <section class="ui-widget-content ui-corner-bottom">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                                    <fieldset class="pbm">
+                                    <fieldset class="pbm customer-info">
+                                        <legend>Customer Info</legend>
+                                        <div class="clear"></div>
                                         {{ form_row(form.firstName) }}
                                         {{ form_row(form.lastName) }}
                                         {{ form_row(form.emailAddress) }}
@@ -30,13 +32,13 @@
                                         {{ form_row(form.telephoneEvening) }}
                                         {{ form_row(form.mobile) }}
                                     </fieldset>
-                                    <fieldset class="pbm">
+                                    <fieldset class="pbm order-info">
                                         <legend>Order Info</legend>
                                         <div class="clear"></div>
                                         {{ form_row(form.status) }}
                                         {{ form_row(form.deliveryType) }}
                                     </fieldset>
-                                    <fieldset class="pbm">
+                                    <fieldset class="pbm billing-address">
                                         <legend>Billing Address</legend>
                                         <div class="clear"></div>
                                         {{ form_row(form.billingFirstName) }}
@@ -50,7 +52,7 @@
                                         {{ form_row(form.billingCountryCode) }}
                                         {{ form_row(form.useBillingAsDelivery) }}
                                     </fieldset>
-                                    <fieldset class="pbm">
+                                    <fieldset class="pbm delivery-address {% if form.vars.value.useBillingAsDelivery %}ui-helper-hidden{% endif %}">
                                         <legend>Delivery Address</legend>
                                         <div class="clear"></div>
                                         {{ form_row(form.deliveryFirstName) }}
@@ -63,7 +65,7 @@
                                         {{ form_row(form.deliveryPostZipCode) }}
                                         {{ form_row(form.deliveryCountryCode) }}
                                     </fieldset>
-                                    <fieldset class="pbm">
+                                    <fieldset class="pbm order-products">
                                         <table class="form-table sortable" id="productList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.products.vars.prototype} %}{% endfilter %}">
                                             <thead>
                                             <tr>
@@ -94,7 +96,7 @@
                                         </table>
                                     </fieldset>
                                     {{ form_rest(form) }}
-                                    <div class="clearfix">
+                                    <div class="clearfix notes">
                                         <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
                                         <a href="{{ path('orders_index') }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
                                     </div>
@@ -153,6 +155,34 @@
                         generateProductSelect($(".select-product"));
                         $("#productList").on("rowadded", function() {
                             generateProductSelect($(".select-product"));
+                        });
+
+                        $(".billing-as-delivery-input").change(function() {
+                            if($(this).is(':checked')) {
+                                $(".delivery-address").hide();
+
+                                // Replace all values with the values from the billing address
+                                for(var i=1;i<9;i++) {
+                                    var $billingInput   = $(".billing-address > :eq(" + i + ") :input"),
+                                        $deliveryInput   = $(".delivery-address > :eq(" + i + ") :input");
+
+                                    $deliveryInput.val($billingInput.val());
+                                }
+                            } else {
+                                $(".delivery-address").show();
+                                generateFormElements($(".delivery-address"));
+                            }
+                        });
+                        $(".billing-address :input").change(function() {
+                            if($(".billing-as-delivery-input").is(':checked')) {
+                                // Get index of changed field
+                                var index = $(this).parent().parent().index(),
+                                // Get related delivery address field
+                                    $el   = $(".delivery-address > :eq(" + index + ")").find(":input");
+
+                                // Update field with the value from the billing address
+                                $el.val($(this).val());
+                            }
                         });
                     });
                 </script>

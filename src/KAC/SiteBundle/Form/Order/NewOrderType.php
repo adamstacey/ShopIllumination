@@ -95,11 +95,14 @@ class NewOrderType extends AbstractType {
             'required' => true,
             'preferred_choices' => array(
                 'GB'
-            )
+            ),
         ));
         $builder->add('useBillingAsDelivery', 'checkbox', array(
             'label' => 'Use billing address for delivery?',
             'required' => false,
+            'attr' => array(
+                'class' => 'billing-as-delivery-input'
+            )
         ));
 
         // Delivery address
