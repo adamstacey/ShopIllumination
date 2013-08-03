@@ -61,7 +61,7 @@ class RoyalMailFirstClass extends AbstractDeliveryMethod {
      *
      * @return array
      */
-    function calculateEstimatedDeliveryDays($zone, $band)
+    function getBaseEstimatedDeliveryDays($zone, $band)
     {
         if ($zone === 1) {
             return array(

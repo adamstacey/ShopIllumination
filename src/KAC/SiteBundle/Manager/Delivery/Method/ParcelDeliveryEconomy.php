@@ -56,7 +56,7 @@ class ParcelDeliveryEconomy extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function calculateEstimatedDeliveryDays($zone, $band)
+    function getBaseEstimatedDeliveryDays($zone, $band)
     {
         if ($zone === 3 && in_array($band, array(2))) {
             return array(

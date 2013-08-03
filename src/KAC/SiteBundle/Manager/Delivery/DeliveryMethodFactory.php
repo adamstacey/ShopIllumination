@@ -2,9 +2,14 @@
 
 namespace KAC\SiteBundle\Manager\Delivery;
 
-use KAC\SiteBundle\Manager\Delivery\Courier\DeliveryMethodInterface;
+use KAC\SiteBundle\Manager\Delivery\Method\DeliveryMethodInterface;
 
 class DeliveryMethodFactory {
+    /**
+     * @param $name
+     *
+     * @return DeliveryMethodInterface|null
+     */
     public static function getMethod($name)
     {
         foreach(self::getMethodClasses() as $class)
@@ -25,6 +30,10 @@ class DeliveryMethodFactory {
         return null;
     }
 
+    /**
+     * @param $zone
+     * @param $band
+     */
     public static function getMethods($zone, $band)
     {
         $methods = array();
@@ -43,6 +52,9 @@ class DeliveryMethodFactory {
         }
     }
 
+    /**
+     * @return DeliveryMethodInterface[]
+     */
     public static function getAllMethods()
     {
         $names = array();
@@ -59,6 +71,9 @@ class DeliveryMethodFactory {
         return $names;
     }
 
+    /**
+     * @return array
+     */
     private static function getMethodClasses()
     {
         return array(

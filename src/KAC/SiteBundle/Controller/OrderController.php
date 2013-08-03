@@ -101,6 +101,7 @@ class OrderController extends Controller
                     $orderProduct->setProduct($orderProduct->getVariant()->getProduct());
                 }
                 $this->getManager()->updateProductInfo($order);
+                $this->getManager()->updateDeliveryInfo($order);
 
                 $em->persist($order);
                 $em->flush();
@@ -194,7 +195,6 @@ class OrderController extends Controller
                         }
                     }
 
-                    $product->setOrder($order);
                     $product->setProduct($product->getVariant()->getProduct());
                 }
 
@@ -203,6 +203,8 @@ class OrderController extends Controller
                 }
 
                 $this->getManager()->updateProductInfo($order);
+                $this->getManager()->updateDeliveryInfo($order);
+
                 $em->persist($order);
                 $em->flush();
 

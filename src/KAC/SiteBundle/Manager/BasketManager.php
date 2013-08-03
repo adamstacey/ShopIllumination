@@ -71,14 +71,14 @@ class BasketManager extends Manager
             $basket->getDelivery()->setWeighting($this->deliveryManager->calculateWeighting($basket->getItems()));
             $basket->getDelivery()->setWeight($this->deliveryManager->calculateWeight($basket->getItems()));
             $basket->getDelivery()->setBand($this->deliveryManager->calculateBand($basket->getItems()));
-            $basket->getDelivery()->setDeliveryOptions($this->deliveryManager->calculateDeliveryOptions($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()));
+//            $basket->getDelivery()->setDeliveryOptions($this->deliveryManager->calculateDeliveryOptions($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()));
 
             if($basket->getDelivery()->getService() === '' && count($basket->getDelivery()->getDeliveryOptions()) > 0)
             {
                 $basket->getDelivery()->setService($basket->getDelivery()->getDeliveryOptions()[0]['service']);
             }
 
-            $basket->getDelivery()->setEstimatedDeliveryDays($this->deliveryManager->calculateEstimatedDeliveryDays($basket->getDelivery()->getDeliveryOptions(), $basket->getDelivery()->getService()));
+//            $basket->getDelivery()->setEstimatedDeliveryDays($this->deliveryManager->calculateEstimatedDeliveryDays($basket->getDelivery()->getDeliveryOptions(), $basket->getDelivery()->getService()));
             $basket->getDelivery()->setPrice($this->deliveryManager->calculatePrice($basket->getDelivery()->getDeliveryOptions(), $basket->getDelivery()->getService()));
 
             $this->baskets[$key]->calculateTotals();

@@ -31,7 +31,7 @@ services:
         arguments: [@doctrine, @kac_site.manager.delivery, @session, @jms_serializer]
     kac_site.manager.order:
         class: KAC\SiteBundle\Manager\OrderManager
-        arguments: [@doctrine, @kac_site.manager.basket, @session, @fos_user.user_manager, @security.context]
+        arguments: [@doctrine, @kac_site.manager.basket, @kac_site.manager.delivery, @session, @fos_user.user_manager, @security.context]
     kac_site.manager.delivery:
         class: KAC\SiteBundle\Manager\DeliveryManager
         arguments: [@doctrine]

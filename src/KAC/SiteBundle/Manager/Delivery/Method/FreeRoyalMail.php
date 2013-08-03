@@ -40,7 +40,7 @@ class FreeRoyalMail extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function calculateEstimatedDeliveryDays($zone, $band)
+    function getBaseEstimatedDeliveryDays($zone, $band)
     {
         return array(
             'start' => 0,

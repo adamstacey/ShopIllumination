@@ -46,7 +46,7 @@ class FreePalletExpress extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function calculateEstimatedDeliveryDays($zone, $band)
+    function getBaseEstimatedDeliveryDays($zone, $band)
     {
         return array(
             'start' => 1,

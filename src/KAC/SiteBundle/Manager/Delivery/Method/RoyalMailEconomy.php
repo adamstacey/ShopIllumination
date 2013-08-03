@@ -16,9 +16,17 @@ class RoyalMailEconomy extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 1 && in_array($band, array(2))) {
+        if($zone === 1 && in_array($band, array(1))) {
             return true;
-        } elseif($zone === 2 && in_array($band, array(2))) {
+        } elseif($zone === 2 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 3 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 4 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 5 && in_array($band, array(1))) {
+            return true;
+        } elseif($zone === 6 && in_array($band, array(1))) {
             return true;
         } else {
             return false;
@@ -54,7 +62,7 @@ class RoyalMailEconomy extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function calculateEstimatedDeliveryDays($zone, $band)
+    function getBaseEstimatedDeliveryDays($zone, $band)
     {
         if ($zone === 1) {
             return array(
