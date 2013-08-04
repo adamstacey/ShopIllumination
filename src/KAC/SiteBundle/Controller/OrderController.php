@@ -90,7 +90,7 @@ class OrderController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $order = new Order();
-        $deliveryMethods = DeliveryMethodFactory::getAllMethods();
+        $deliveryMethods = DeliveryMethodFactory::getAllMethodNames();
         $form = $this->createForm(new NewOrderType($deliveryMethods), $order);
 
         if ($request->isMethod('POST')) {
@@ -168,7 +168,7 @@ class OrderController extends Controller
         }
 
 
-        $deliveryMethods = DeliveryMethodFactory::getAllMethods();
+        $deliveryMethods = DeliveryMethodFactory::getAllMethodNames();
         $form = $this->createForm(new EditOrderType($deliveryMethods), $order);
 
         if ($request->isMethod('POST')) {

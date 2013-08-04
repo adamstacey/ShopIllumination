@@ -14,6 +14,7 @@ use KAC\SiteBundle\Form\Checkout\ConfirmationType;
 use KAC\SiteBundle\Form\Checkout\DeliveryAddressType;
 use KAC\SiteBundle\Form\Checkout\DeliveryType;
 use KAC\SiteBundle\Form\Checkout\PaymentType;
+use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
 use KAC\SiteBundle\Model\BasketItem;
 use KAC\UserBundle\Entity\User;
 use Omnipay\Common\AbstractGateway;
@@ -106,7 +107,7 @@ class CheckoutController extends Controller
             return $this->redirect($this->generateUrl('checkout_billing'));
         }
 
-        $form = $this->createForm(new AboutType($basket->getDelivery()->getDeliveryOptions()), $order);
+        $form = $this->createForm(new AboutType(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())), $order);
         $form->handleRequest($request);
 
         $user = null;
@@ -217,7 +218,7 @@ class CheckoutController extends Controller
             return $this->checkoutAction($request);
         }
 
-        $form = $this->createForm(new BillingAddressType($basket->getDelivery()->getDeliveryOptions()), $order);
+        $form = $this->createForm(new BillingAddressType(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())), $order);
         $form->handleRequest($request);
 
         if($form->isValid())
@@ -308,7 +309,7 @@ class CheckoutController extends Controller
         }
 
 
-        $form = $this->createForm(new DeliveryAddressType($basket->getDelivery()->getDeliveryOptions()), $order);
+        $form = $this->createForm(new DeliveryAddressType(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())), $order);
         $form->handleRequest($request);
 
         if($form->isValid())
@@ -364,7 +365,7 @@ class CheckoutController extends Controller
             return $this->checkoutAction($request);
         }
 
-        $form = $this->createForm(new PaymentType($basket->getDelivery()->getDeliveryOptions()), $order);
+        $form = $this->createForm(new PaymentType(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())), $order);
         $form->handleRequest($request);
 
         if($form->isValid())

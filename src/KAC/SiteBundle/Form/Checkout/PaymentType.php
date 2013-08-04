@@ -6,11 +6,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PaymentType extends AbstractType {
-    private $deliveryOptions;
+    private $deliveryMethods;
 
-    function __construct($deliveryOptions)
+    function __construct($deliveryMethods)
     {
-        $this->deliveryOptions = $deliveryOptions;
+        $this->deliveryMethods = $deliveryMethods;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -26,7 +26,7 @@ class PaymentType extends AbstractType {
         $builder->add('card', new CardType());
 
         $builder->add('deliveryType', 'choice', array(
-            'choices' => $this->getDeliveryChoices(),
+            'choices' => array_combine($this->deliveryMethods, $this->deliveryMethods),
             'expanded' => true,
             'multiple' => false,
         ));
@@ -48,14 +48,5 @@ class PaymentType extends AbstractType {
     public function getName()
     {
         return 'checkout_payment';
-    }
-
-    private function getDeliveryChoices()
-    {
-        $services = array_map(function($element) {
-            return $element['service'];
-        }, $this->deliveryOptions);
-
-        return array_combine($services, $services);
     }
 }

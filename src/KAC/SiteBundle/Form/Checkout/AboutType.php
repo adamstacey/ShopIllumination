@@ -6,11 +6,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AboutType extends AbstractType {
-    private $deliveryOptions;
+    private $deliveryMethods;
 
-    function __construct($deliveryOptions)
+    function __construct($deliveryMethods)
     {
-        $this->deliveryOptions = $deliveryOptions;
+        $this->deliveryMethods = $deliveryMethods;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -38,7 +38,7 @@ class AboutType extends AbstractType {
         ));
 
         $builder->add('deliveryType', 'choice', array(
-            'choices' => $this->getDeliveryChoices(),
+            'choices' => array_combine($this->deliveryMethods, $this->deliveryMethods),
             'expanded' => true,
             'multiple' => false,
         ));
@@ -60,14 +60,5 @@ class AboutType extends AbstractType {
     public function getName()
     {
         return 'checkout_about';
-    }
-
-    private function getDeliveryChoices()
-    {
-        $services = array_map(function($element) {
-            return $element['service'];
-        }, $this->deliveryOptions);
-
-        return array_combine($services, $services);
     }
 }

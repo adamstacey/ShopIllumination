@@ -33,7 +33,9 @@ class DeliveryMethodFactory {
     /**
      * @param $zone
      * @param $band
-     */
+     *
+     * @return DeliveryMethodInterface[]
+    */
     public static function getMethods($zone, $band)
     {
         $methods = array();
@@ -50,12 +52,40 @@ class DeliveryMethodFactory {
                 $methods[] = $method;
             }
         }
+
+        return $methods;
     }
 
     /**
-     * @return DeliveryMethodInterface[]
+     * @param $zone
+     * @param $band
+     *
+     * @return string[]
+    */
+    public static function getMethodNames($zone, $band)
+    {
+        $names = array();
+
+        foreach(self::getMethodClasses() as $class)
+        {
+            /**
+             * @var DeliveryMethodInterface $method
+             */
+            $method = new $class;
+
+            if ($method->supportsLocation($zone, $band))
+            {
+                $names[] = $method->getName();
+            }
+        }
+
+        return $names;
+    }
+
+    /**
+     * @return string[]
      */
-    public static function getAllMethods()
+    public static function getAllMethodNames()
     {
         $names = array();
 
