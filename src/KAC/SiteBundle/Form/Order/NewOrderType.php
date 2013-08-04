@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Form\Order;
 
+use Doctrine\ORM\EntityRepository;
 use KAC\SiteBundle\Entity\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,6 +18,20 @@ class NewOrderType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // Customer Info
+        $builder->add('user', 'entity_id', array(
+            'class' => 'KAC\UserBundle\Entity\User',
+            'query_builder' => function(EntityRepository $er, $id) {
+                return $er->createQueryBuilder('v')
+                    ->where("v.id = ?1")
+                    ->setParameter(1, $id);
+            },
+            'attr' => array(
+                'class' => 'fill no-uniform select-user',
+                'data-placeholder' => '- Search for a user by E-Mail or ID -',
+                'placeholder' => '- Search for a user by E-Mail or ID -',
+            ),
+            'required' => true,
+        ));
         $builder->add('firstName', 'text', array(
             'label' => 'First Name',
             'required' => true,

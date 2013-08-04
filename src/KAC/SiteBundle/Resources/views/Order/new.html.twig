@@ -25,6 +25,7 @@
                                     <fieldset class="pbm customer-info">
                                         <legend>Customer Info</legend>
                                         <div class="clear"></div>
+                                        {{ form_row(form.user) }}
                                         {{ form_row(form.firstName) }}
                                         {{ form_row(form.lastName) }}
                                         {{ form_row(form.emailAddress) }}
@@ -144,6 +145,8 @@
                 <script type="text/javascript">
                     var productsUrl = "{{ path('api_products_get') }}";
                     var productUrl = "{{ path('api_products_get_product', {'id': -1}) }}";
+                    var usersUrl = "{{ path('api_users') }}";
+                    var userUrl = "{{ path('api_users_get_user', {'id': -1}) }}";
 
                     function generateProductSelect($element) {
                         $element.select2({
@@ -186,12 +189,55 @@
                             }
                         });
                     }
+                    function generateUserSelect($element) {
+                        $element.select2({
+                            placeholder: "- Search for a user by E-Mail or ID -",
+                            minimumInputLength: 1,
+                            quietMillis: 100,
+                            ajax: {
+                                url: usersUrl,
+                                dataType: 'json',
+                                data: function (term, page) {
+                                    return {
+                                        q: term,
+                                        page: page
+                                    };
+                                },
+                                results: function (data, page) {
+                                    var more = (page * 10) < data.total;
+
+                                    // Add a "No User" option
+                                    data.users.push({
+                                        'id': null,
+                                        'email': 'No User'
+                                    });
+                                    
+                                    return {results: data.users, more: more};
+                                }
+                            },
+                            initSelection: function(element, callback) {
+                                var id = $(element).val();
+                                if (id !== "") {
+                                    $.ajax(userUrl.replace(/-1/, id), {
+                                        dataType: "json"
+                                    }).done(function(data) { callback(data); });
+                                }
+                            },
+                            formatResult: function(user) {
+                                return user.email;
+                            },
+                            formatSelection: function(user) {
+                                return user.email;
+                            }
+                        });
+                    }
 
                     $(document).ready(function() {
                         generateProductSelect($(".select-product"));
                         $("#productList").on("rowadded", function() {
                             generateProductSelect($(".select-product"));
                         });
+                        generateUserSelect($(".select-user"));
 
                         $(".billing-as-delivery-input").change(function() {
                             if($(this).is(':checked')) {

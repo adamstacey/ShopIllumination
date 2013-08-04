@@ -155,3 +155,11 @@ trsteel_ckeditor:
     ui_color: '#c5d2d6'
     startup_outline_blocks: false
     language: 'en-gb'
+
+jms_serializer:
+  metadata:
+    auto_detection: true
+    directories:
+      FOSUserBundle:
+        namespace_prefix: "FOS\\UserBundle"
+        path: "@KACUserBundle/Resources/config/serializer/fos"
