@@ -22,7 +22,7 @@ set :repository,  "git@github.com:adamstacey/KitchenApplianceCentre.git"
 set :scm, :git
 
 # Symfony2 configuration
-set :shared_files, ["app/config/parameters.yml"]
+set :shared_files, ["app/config/parameters.yml", "web/sitemap.xml", "web/google-products.xml"]
 set :shared_children, [app_path + "/logs", web_path + "/uploads", app_path + "/sessions"]
 set :use_composer, true
 set :copy_vendors, true
@@ -35,16 +35,15 @@ after "deploy:update_code", "deploy:flush_apc"
 after "deploy", "deploy:cleanup"
 
 namespace :deploy do
-  desc "Clear APC bytecode cache"
-  task :flush_apc do
-    capifony_pretty_print "--> APC bytecode cache flush"
-    run "#{try_sudo} php -r 'apc_clear_cache() ? exit( 0 ) : exit( -1 );'"
-    capifony_puts_ok
-  end
-  desc "Gracefully restart Apache"
-  task :flush_apc do
-    capifony_pretty_print "--> Restart apache"
-    run "#{try_sudo} apachectl graceful"
-    capifony_puts_ok
-  end
+    desc "Clear APC bytecode cache"
+    task :flush_apc do
+        capifony_pretty_print "--> APC bytecode cache flush"
+        run "#{try_sudo} php -r 'apc_clear_cache() ? exit( 0 ) : exit( -1 );'"
+        capifony_puts_ok
+    end
+    desc "Restart Apache"
+    task :restart, :except => { :no_release => true }, :roles => :app do
+        run "sudo service apache2 restart"
+        puts "--> Apache successfully restarted".green
+    end
 end

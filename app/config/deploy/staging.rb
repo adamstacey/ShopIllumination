@@ -1,8 +1,7 @@
 set :domain, "staging.kitchenappliancecentre.co.uk"
 set :user, "root"
-set :deploy_to, "/var/www/#{domain}"
+set :deploy_to, "/home/sites/#{domain}"
 ssh_options[:port] = 2020
-set :shared_files, [app_path + "/config/parameters.yml"]
 
 server "server.kitchenappliancecentre.co.uk", :app, :web, :db, :primary => true
 
