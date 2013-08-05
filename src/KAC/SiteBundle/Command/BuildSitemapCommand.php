@@ -88,7 +88,7 @@ class BuildSitemapCommand extends ContainerAwareCommand
             $xmlWriter->endElement();
 
             if (($i % $batchSize) === 0) {
-//                file_put_contents($filename, $xmlWriter->flush(true), FILE_APPEND);
+                file_put_contents($filename, $xmlWriter->flush(true), FILE_APPEND);
             }
 
             $em->detach($row[0]);
