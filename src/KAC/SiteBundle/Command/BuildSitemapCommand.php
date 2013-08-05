@@ -152,7 +152,7 @@ class BuildSitemapCommand extends ContainerAwareCommand
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('routing', array(
-            'url' => 'maia-cappucino',
+            'url' => 'maia-cappuccino',
         ), true));
         $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');

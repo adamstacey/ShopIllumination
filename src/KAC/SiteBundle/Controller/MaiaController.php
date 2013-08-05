@@ -84,7 +84,8 @@ class MaiaController extends Controller
     }
 
     /**
-     * @Route("/maia-cappucino.html", name="maia_cappuccino")
+     * @Route("/maia-cappuccino.html", name="maia_cappuccino")
+     * @Route("/maia-cappucino.html", name="maia_cappucino")
      * @Method({"GET"})
      * @Template()
      */
