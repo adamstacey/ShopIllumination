@@ -28,7 +28,7 @@ class WarmupIndexCommand extends ContainerAwareCommand
          * @var $em EntityManager
          */
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $solarium = $this->getContainer()->get('solarium.client.product');
+        $solarium = $this->getContainer()->get('solarium.client.products_tmp');
         $productIndexer = new ProductIndexer($solarium, $this->getContainer()->get('doctrine'));
         $buffer = $solarium->getPlugin('bufferedadd');
 

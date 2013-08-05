@@ -26,7 +26,7 @@ class DeleteProductFromIndexCommand extends ContainerAwareCommand
     {
         $id = $input->getArgument('id');
 
-        $solariumProductClient = $this->getContainer()->get('solarium.client.product');
+        $solariumProductClient = $this->getContainer()->get('solarium.client.products');
 
         $delete = $solariumProductClient->createUpdate();
         $delete->addDeleteById($id);
