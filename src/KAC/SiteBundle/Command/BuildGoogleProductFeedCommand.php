@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class BuildGoogleProductFeedCommand extends ContainerAwareCommand
 {
@@ -26,6 +27,9 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
     {
         // Get filename
         $filename = $this->getContainer()->get('kernel')->getRootDir() . '/../' . $input->getArgument('filename');
+
+        $this->getContainer()->enterScope('request');
+        $this->getContainer()->set('request', new Request(), 'request');
 
         /**
          * @var $em EntityManager
@@ -105,7 +109,10 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 $xmlWriter->writeElement('g:condition', 'new');
                 $xmlWriter->writeElement('g:price', number_format($variant->getPrice()->getListPrice(), 2));
                 $xmlWriter->writeElement('g:availability', 'in stock');
-                $xmlWriter->writeElement('g:image_link', $this->getContainer()->get('templating.helper.assets')->getUrl($product->getImage()->getPublicPath()));
+                if($product->getImage())
+                {
+                    $xmlWriter->writeElement('g:image_link', $this->getContainer()->get('templating.helper.assets')->getUrl($product->getImage()->getPublicPath()));
+                }
 
                 $xmlWriter->startElement('g:shipping');
                 $xmlWriter->writeElement('g:country', 'GB');
@@ -153,7 +160,10 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 // Features
                 foreach (array_slice($variant->getFeatures()->toArray(), 0, 4) as $feature)
                 {
-                    $xmlWriter->writeElement('g:adwords_labels', strtolower($feature->getFeatureGroup()->getName() . ' ' . $feature->getFeature()->getName()));
+                    if($feature->getFeatureGroup() !== null && $feature->getFeature() !== null && is_object($feature->getFeatureGroup()) && is_object($feature->getFeature()))
+                    {
+                        $xmlWriter->writeElement('g:adwords_labels', strtolower($feature->getFeatureGroup()->getName() . ' ' . $feature->getFeature()->getName()));
+                    }
                 }
 
                 // Price
