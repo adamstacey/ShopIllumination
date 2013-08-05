@@ -122,13 +122,18 @@ knp_snappy:
 nelmio_solarium:
     default_client: products
     clients:
+        admin:
+            host: "%solr_host%"
+            port: "%solr_port%"
+            path: "%solr_path%"
+            core: admin
+            timeout: 5
         products:
             host: "%solr_host%"
             port: "%solr_port%"
             path: "%solr_path%"
             core: products
             timeout: 5
-
         products_tmp:
             host: "%solr_host%"
             port: "%solr_port%"

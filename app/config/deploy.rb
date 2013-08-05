@@ -47,3 +47,25 @@ namespace :deploy do
         puts "--> Apache successfully restarted".green
     end
 end
+namespace :solr do
+    task :deploy do
+        deploy.update_solr_config
+        deploy.solr_reindex
+    end
+    task :update_config do
+        capifony_pretty_print "--> Updating solr schema.xml"
+
+        origin_file = shared_path + "/cached-copy/src/KAC/SiteBundle/Resources/solr/products/conf/schema.xml"
+        destination_file = solr_dir + "/products/conf/schema.xml"
+
+        try_sudo "mkdir -p #{File.dirname(destination_file)}"
+        try_sudo "cp -f #{origin_file} #{destination_file}"
+
+        capifony_puts_ok
+    end
+    task :reindex do
+        capifony_pretty_print "--> Warming up solr index"
+        run "#{try_sudo} sh -c 'cd #{latest_release} && #{php_bin} #{symfony_console} admin:index:warmup --env=#{symfony_env_prod}'"
+        capifony_puts_ok
+    end
+end
