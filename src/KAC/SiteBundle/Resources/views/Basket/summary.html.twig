@@ -5,180 +5,210 @@
         <h1>Your Shopping Basket</h1>
     </header>
     <div class="widget-group clearfix">
-        <div class="widget widget-2-of-3">
-            <div class="ui-widget">
-                <header class="ui-widget-header ui-corner-top">
-                    <h2 id="products-found">Your Basket Contents</h2>
-                </header>
-                <section class="ui-widget-content ui-corner-all">
-                    <div class="clearfix">					<div class="clearfix separator">
-                            <a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
-                            {#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
-                            <a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
-                            {% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>{% endif %}
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div id="basket-contents" class="clearfix separator">
-                            {% if basket.items|length > 0 %}
-                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                    <tr>
-                                        <th class="al">Product</th>
-                                        <th class="ac">Code</th>
-                                        <th class="ac" colspan="2">Qty</th>
-                                        <th class="ac" colspan="3">Price</th>
-                                        <th class="ac">&nbsp;</th>
-                                    </tr>
-                                    {% for item in basket.items %}
-                                        <tr>
-                                            <td>
-                                                {% if item.variant.url %}
-                                                    <a class="uppercase" href="{{ path('routing', {'url': item.variant.url}) }}">{{ item.variant.description.header }}</a>
-                                                {% else %}
-                                                    <span>{{ item.variant.header }}</span>
+        <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}">
+            <div class="widget widget-2-of-3">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2 id="products-found">Your Basket Contents</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                            <div class="clearfix">
+                                <div id="basket-contents" class="clearfix separator">
+                                    {% if basket.items|length > 0 %}
+                                        <table class="data-table mbm" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <th class="tal">Product</th>
+                                                <th class="tac" colspan="2">Qty</th>
+                                                <th class="tac" colspan="3">Price</th>
+                                                <th width="62" class="tac">&nbsp;</th>
+                                            </tr>
+                                            {% for item in basket.items %}
+                                                <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                                                    <td class="tal">
+                                                        {% if item.variant.url %}
+                                                            <a class="uppercase {% if (item.deliveryBand == 6) and (basket.delivery.service == '') %} background-red colour-white{% endif %}" href="{{ path('routing', {'url': item.variant.url}) }}">
+                                                                {{ item.variant.description.header }}
+                                                            </a>
+                                                        {% else %}
+                                                            <span class="uppercase {% if (item.deliveryBand == 6) and (basket.delivery.service == '') %} background-red colour-white{% endif %}">{{ item.variant.header }}</span>
+                                                        {% endif %}
+
+                                                        {% if item.selectedOptionLabels|length > 0 %}
+                                                            <br />
+                                                            {% for selectedOptionLabel in item.selectedOptionLabels %}
+                                                                {{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td width="63">
+                                                        <div class="add-to-basket" data-product-id="{{ item.productId }}" data-variant-id="{{ item.variantId }}">
+                                                            <input class="quantity integer number" type="number" name="{{ form.items[loop.index0].quantity.vars.full_name }}" value="{{ form.items[loop.index0].quantity.vars.value }}" />
+                                                            <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+                                                            <button type="button" class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+                                                        </div>
+                                                    </td>
+                                                    <td width="1" class="tac">&times;</td>
+                                                    <td width="1" class="tac">{% if item.recommendedRetailPrice > item.unitCost %}<span class="colour-red strikethrough">&pound;{{ item.recommendedRetailPrice|number_format(2) }}</span><br /><span class="colour-green"><strong>&pound;{{ item.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ item.unitCost|number_format(2) }}{% endif %}</td>
+                                                    <td width="1" class="tac">=</td>
+                                                    <td width="1" class="tac">{{ item.totalCost|currency('GBP', true, true, '')|raw }}</td>
+                                                    <td width="62" class="tac"><a href="{{ path('basket_remove', {'item': loop.index0}) }}" class="button button-small link action-delete-basket-item">Remove</a></td>
+                                                </tr>
+                                                {% if (item.deliveryBand == 6) and (basket.delivery.service == '') %}
+                                                    <tr>
+                                                        <td colspan="8">
+                                                            <div class="info-message ui-status-highlight no-margin">
+                                                                <span class="info-message-icon ui-icon ui-icon-info"></span>
+                                                                <p>Sorry, we are currently unable to deliver large worktop products to your selected delivery area. We can deliver all our other products to your selected delivery area. Please remove products highlighted in <span clas="red">RED</span> to continue with your order for delivery.</p>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 {% endif %}
-                                            </td>
-                                            <td class="ac"><strong>{{ item.variant.productCode }}</strong></td>
-                                            <td>
-                                                <div class="add-to-basket" data-product-id="{{ item.productId }}" data-variant-id="{{ item.variantId }}">
-                                                    <input class="quantity integer" type="number" value="{{ item.quantity }}" />
-                                                    <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
-                                                    <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
-                                                </div>
-                                            </td>
-                                            <td class="ac">&times;</td>
-                                            <td class="ac">
-                                                {% if item.variant.price.recommendedRetailPrice > item.variant.price.unitCost %}
-                                                    <span class="red strikethrough">&pound;{{ item.variant.price.recommendedRetailPrice|number_format(2) }}</span>
-                                                    <br />
-                                                    <span class="green"><strong>&pound;{{ item.variant.price.listPrice|number_format(2) }}</strong></span>
-                                                {% else %}
-                                                    &pound;{{ item.variant.price.listPrice|number_format(2) }}
-                                                {% endif %}
-                                            </td>
-                                            <td class="ac">=</td>
-                                            <td class="ac">&pound;{{ item.totalCost|number_format(2) }}</td>
-                                            <td class="ac"><a href="{{ path('basket_remove', {'item': loop.index0}) }}"><img class="link action-delete-basket-item" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" alt="Delete Item" /></a></td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            {% else %}
-                                <p>You currently have no items in your basket</p>
-                                <div class="clear"></div>
-                            {% endif %}
-                        </div>
-                        <div id="basket-totals" class="ar clearfix separator">
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                <tr>
-                                    <td class="ar"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
-                                    <td width="1" class="price ar"><strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></td>
-                                </tr>
-                                {% if basket.delivery.service != '' %}
-                                    <tr>
-                                        <td class="ar"><strong>Delivery Charge (inc. VAT):</strong></td>
-                                        {% if basket.delivery.price > 0 %}
-                                            <td width="1" class="price ar">
-                                                &pound;{{ basket.delivery.price|number_format(2) }}
-                                                <input type="hidden" id="delivery-charge" value="&pound;{{ basket.delivery.price|number_format(2) }}" />
-                                            </td>
-                                        {% else %}
-                                            {% if basket.delivery.service == 'Collection' %}
-                                                <td width="1" class="price free ar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>
-                                            {% else %}
-                                                <td width="1" class="price free ar">FREE<input type="hidden" id="delivery-charge" value="FREE" /></td>
-                                            {% endif %}
-                                        {% endif %}
-                                    </tr>
-                                {% endif %}
-                                {% if basket.totalSavings > 0 %}
-                                    <tr>
-                                        <td class="ar"><strong>You Save:</strong></td>
-                                        <td width="1" class="savings ar">&pound;{{ basket.totalSavings|number_format(2) }}</td>
-                                    </tr>
-                                {% endif %}
-                                <tr>
-                                    <td class="ar"><strong>Total to Pay (inc. VAT):</strong></td>
-                                    <td width="1" class="price ar"><strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></td>
-                                </tr>
-                            </table>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                        <div class="clearfix">
-                            <a href="{{ backUrl }}" data-icon-primary="ui-icon-arrowthick-1-w" class="fl action-continue-shopping button ui-button-blue">Continue Shopping</a>
-                            {#<a href="Javascript:void(0);" data-icon-primary="ui-icon-refresh" class="fl button-margin action-update-basket button ui-button-orange">Update Basket</a>#}
-                            <a href="Javascript:void(0);" data-icon-primary="ui-icon-closethick" class="fl button-margin action-clear-basket button ui-button-red">Clear Basket</a>
-                            {% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" data-icon-primary="ui-icon-locked" class="fr action-pay-securely-now button ui-button-green">Pay Securely Now</a>{% endif %}
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </div>
-                </section>
-            </div>
-        </div>
-        <div class="widget widget-1-of-3">
-            <div class="ui-widget">
-                <header class="ui-widget-header ui-corner-top">
-                    <h2>Your Delivery</h2>
-                </header>
-                <section class="ui-widget-content ui-corner-all">
-                    <div class="clearfix">
-                        <div id="basket-delivery-options" class="clearfix">
-                            <h5>Available Locations</h5>
-                            <div class="clearfix separator">
-                                <div class="clearfix">
-                                    <div class="form-input">
-                                        <select class="full" name="delivery-country-code" id="form-delivery-country-code">
-                                            <option{% if basket.delivery.countryCode == 'GB' %} selected="selected"{% endif %} value="GB">United Kingdom</option>
-                                            <option{% if basket.delivery.countryCode == 'IE' %} selected="selected"{% endif %} value="IE">Republic of Ireland</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div id="delivery-post-zip-code-container" class="clearfix{% if basket.delivery.countryCode != 'GB' %} ui-helper-hidden{% endif %}">
-                                    <div class="form-input"><input class="full" data-validation-type="postcode" placeholder="Postcode..." data-message="Invalid postcode" type="text" id="form-delivery-post-zip-code" name="delivery-post-zip-code" required="required" value="{% if basket.delivery.countryCode == 'IE' %}000{% else %}{{ basket.delivery.postZipCode|default('') }}{% endif %}" /></div>
-                                </div>
-                                <div class="clearfix ac margin-top-5">
-                                    <a href="Javascript:void(0);" rel="nofollow" class="small full action-update-delivery-options button ui-button-green">Update Delivery Options</a>
-                                </div>
-                            </div>
-                            <h5>Available Options</h5>
-                            <div class="clearfix separator">
-                                {% if basket.delivery.postZipCode == '' %}
-                                    <div class="info-message ui-status-highlight margin-bottom-5">
-                                        <span class="info-message-icon ui-icon ui-icon-info"></span>
-                                        <p>Your options are currently based on delivery to our <a href="{{ path('content_delivery') }}">standard area</a>.</p>
+                                            {% endfor %}
+                                        </table>
+                                    {% else %}
+                                        <p>You currently have no items in your basket</p>
                                         <div class="clear"></div>
+                                    {% endif %}
+                                </div>
+                                <div id="basket-totals" class="tar clearfix separator">
+                                    <table class="mbl" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                        <tr>
+                                            <td class="ar"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
+                                            <td width="1" class="colour-red tar"><strong>{{ totalCost|currency('GBP') }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="ar"><strong>Delivery Charge (inc. VAT):</strong></td>
+                                            {% if basket.delivery.price > 0 %}
+                                                <td width="1" class="vam colour-red tar">{{ basket.delivery.price|currency('GBP', true, true, '')|raw }}<input type="hidden" id="delivery-charge" value="{{ basket.totals.deliveryCharge|currency('GBP', false, true, '')|raw }}" /></td>
+                                            {% else %}
+                                                {% if basket.delivery.service == 'Collection' %}
+                                                    <td width="1" class="vam colour-green tar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>
+                                                {% else %}
+                                                    <td width="1" class="vam colour-green tar">FREE<input type="hidden" id="delivery-charge" value="FREE" /></td>
+                                                {% endif %}
+                                            {% endif %}
+                                        </tr>
+                                        {% if basket.totalSavings > 0 %}
+                                            <tr>
+                                                <td class="vam tar"><strong>You Save:</strong></td>
+                                                <td width="1" class="vam colour-green tar">{{ basket.totalSavings|currency('GBP', true, true, '')|raw }}</td>
+                                            </tr>
+                                        {% endif %}
+                                        <tr class="product">
+                                            <td class="tar vam"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
+                                            <td width="170" class="vam price colour-red no-wrap tar"><strong>{{ (basket.totalCost + basket.delivery.price)|currency('GBP', true, true, '')|raw }}</strong></td>
+                                        </tr>
+                                    </table>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="clearfix">
+                                    <a href="Javascript:window.history.go(-1);" class="fl action-continue-shopping button button-small icon-grey" data-icon-primary="icon-473">Continue Shopping</a>
+                                    <a href="{{ path('basket_clear') }}" class="fl mlm action-clear-basket button button-small">Clear Basket</a>
+                                    <a href="{{ path('checkout') }}" class="fr mlm action-pay-securely-now button button-small button-green icon-white uppercase" data-icon-secondary="icon-472">Pay Securely Now</a>
+                                    <button name="{{ form.updateBasket.vars.full_name }}" class="fr action-pay-securely-now button button-small" data-icon-primary="icon-1113">Update Basket</button>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                    </section>
+                </div>
+            </div>
+            <div class="widget widget-1-of-3">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>Your Delivery</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-all">
+                        <div class="clearfix">
+                            <div id="basket-delivery-options" class="clearfix">
+                                <h4>Available Locations</h4>
+                                <div class="clearfix separator">
+                                    <div class="clearfix mbs">
+                                        <div class="form-input">
+                                            <select class="fill" name="{{ form.delivery.countryCode.vars.full_name }}" id="form-delivery-country-code">
+                                                <option{% if basket.delivery.countryCode == 'GB' %} selected="selected"{% endif %} value="GB">United Kingdom</option>
+                                                <option{% if basket.delivery.countryCode == 'IE' %} selected="selected"{% endif %} value="IE">Republic of Ireland</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="delivery-post-zip-code-container" class="clearfix mbs{% if basket.delivery.countryCode != 'GB' %} ui-helper-hidden{% endif %}">
+                                        <div class="form-input">
+                                            <input class="fill" data-validation-type="postcode" placeholder="Postcode..." data-message="Invalid postcode" type="text" id="form-delivery-post-zip-code" name="{{ form.delivery.postZipCode.vars.full_name }}" required="required" value="{% if basket.delivery.countryCode == 'IE' %}000{% else %}{{ basket.delivery.postZipCode|default('') }}{% endif %}" />
+                                        </div>
+                                    </div>
+                                    <div class="clearfix tac mts mbl">
+                                        <button class="action-update-delivery-options button button-small icon-grey" data-icon-primary="icon-1113">Update Delivery Options</button>
+                                    </div>
+                                </div>
+                                <h4>Available Options</h4>
+                                <div class="clearfix">
+                                    {% if basket.delivery.postZipCode == '' and basket.delivery.methods|length > 0 %}
+                                        <div class="message message-help">
+                                            <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
+                                            <p>Your options are currently based on delivery to our <a href="{{ path('content_delivery') }}">standard area</a>.</p>
+                                        </div>
+                                    {% endif %}
+
+                                    {% for method in basket.delivery.methods %}
+                                        <div data-delivery-option="{{ loop.index }}" class="form-element mlm delivery-option widget-group clearfix">
+                                            <span title="{{ method.description|raw }}" class="form-helper pbn ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                            <div class="widget radio-group man widget-1-of-1">
+                                                <div class="clearfix">
+                                                    <input{% if basket.delivery.method == method.name %} checked="checked"{% endif %} type="radio" id="deliveryOption{{ loop.index }}" name="{{ form.delivery.method.vars.full_name }}" value="{{ method.name }}" />
+                                                    <label for="deliveryOption{{ loop.index }}">
+                                                        <span class="delivery-service">
+                                                            {{ method.name|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}
+                                                            <em> - </em>
+                                                            {% set price = method.calculatePrice(basket.delivery.zone, basket.delivery.band, basket.items) %}
+                                                            {% if price != 0 %}
+                                                                <span class="colour-red"><strong>{{ price|currency('GBP', true, true, '')|raw }}</strong></span>
+                                                            {% endif %}
+                                                        </span>
+                                                        <br />
+                                                        <span class="small">
+                                                            <em>
+                                                                {% if method.estimatedDeliveryDaysStart > 0 %}
+                                                                    ({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days)
+                                                                {% else %}
+                                                                    &nbsp;
+                                                                {% endif %}
+                                                            </em>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="message message-warning">
+                                            <span class="ui-button-icon-primary ui-icon icon-yellow icon-695"></span>
+                                            <p>Sorry, there are no delivery options available.</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.end is defined) %}
+                                    <h4>Estimated Delivery Between</h4>
+                                    <div class="clearfix">
+                                        <p class="tac">
+                                            <span class="colour-red"><strong>{{ basket.estimatedDeliveryDays.start }}</strong></span><br /><span class="colour-red"><strong>{{ basket.estimatedDeliveryDays.end }}</strong></span>
+                                        </p>
+                                        <p class="tac small">Estimated delivery times are subject to availability, selected delivery options and locations.</p>
                                     </div>
                                 {% endif %}
-                                {% for deliveryOption in basket.delivery.deliveryOptions %}
-                                    <div data-delivery-option="{{ loop.index }}" class="form-input delivery-option{% if loop.first %} no-margin-top{% endif %}">
-                                        <span data-delivery-option="{{ loop.index }}" class="fr action-show-delivery-option-description ui-button-icon-primary ui-icon ui-icon-help"></span>
-                                        <label>
-                                            <input{% if basket.delivery.service == deliveryOption.service %} checked="checked"{% endif %} type="radio" name="delivery-option" value="{{ deliveryOption.service }}" />
-                                            <span class="delivery-service">{{ deliveryOption.service|replace({'FREE DELIVERY': '<span class="free"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}{% if deliveryOption.price != 0 %} - <span class="delivery-price">&pound;{{ deliveryOption.price|number_format(2) }}</span>{% endif %}</span>
-                                            {% if deliveryOption.estimatedDeliveryDaysStart > 0 %}
-                                                <br /><span class="delivery-timeframes"><em>({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days)</em></span>
-                                            {% endif %}
-                                        </label>
-                                    </div>
-                                    <div data-delivery-option="{{ loop.index }}" class="ui-helper-hidden delivery-option-description{% if loop.last %} no-margin-bottom{% endif %}">{{ deliveryOption.description|raw }}</div>
-                                {% else %}
-                                    <div class="form-input delivery-option no-margin-top"><label><span class="no-padding delivery-service"><strong>There are no delivery options available.</strong></span></label></div>
-                                {% endfor %}
                             </div>
-                            {% if (basket.delivery.estimatedDeliveryDays.start is defined) and (basket.delivery.estimatedDeliveryDays.end is defined) %}
-                                <h5>Estimated Delivery Between</h5>
-                                <div class="clearfix">
-                                    <p class="delivery-time"><strong>{{ basket.delivery.estimatedDeliveryDays.start }}</strong></p>
-                                    <p class="delivery-time">-</p>
-                                    <p class="delivery-time"><strong>{{ basket.delivery.estimatedDeliveryDays.end }}</strong></p>
-                                    <p class="ac small-info no-margin-bottom">Estimated delivery times are subject to availability, selected delivery options and locations.</p>
-                                </div>
-                            {% endif %}
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
-        </div>
+        {{ form_widget(form._token) }}
+        </form>
     </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+    $(".delivery-option :input").change(function() {
+        $(this).closest("form").submit();
+    })
+</script>
 {% endblock %}

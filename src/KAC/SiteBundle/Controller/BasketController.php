@@ -37,6 +37,7 @@ class BasketController extends Controller
     public function summaryAction(Request $request)
     {
         $manager = $this->container->get('kac_site.manager.basket');
+        $deliveryManager = $this->container->get('kac_site.manager.delivery');
         $basket = $manager->getBasket();
         $manager->loadProducts();
 
@@ -48,13 +49,23 @@ class BasketController extends Controller
             $manager->refreshBasket();
             $manager->saveBasket();
 
-            return $this->redirect($this->generateUrl('basket_summary'));
+            if(!$request->isXmlHttpRequest())
+            {
+                return $this->redirect($this->generateUrl('basket_summary'));
+            } else {
+                return new Response(json_encode(array('status' => 'Success')));
+            }
         }
 
-        return $this->render('KACSiteBundle:Basket:summary.html.twig', array(
-            'basket' => $basket,
-            'form' => $form,
-        ));
+        if(!$request->isXmlHttpRequest())
+        {
+            return $this->render('KACSiteBundle:Basket:summary.html.twig', array(
+                'basket' => $basket,
+                'form' => $form->createView(),
+            ));
+        } else {
+            return new Response(json_encode(array('status' => 'Failure')));
+        }
     }
 
     /**

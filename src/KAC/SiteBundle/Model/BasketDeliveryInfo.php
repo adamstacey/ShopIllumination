@@ -2,6 +2,7 @@
 namespace KAC\SiteBundle\Model;
 
 use JMS\Serializer\Annotation as Serializer;
+use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class BasketDeliveryInfo
@@ -16,7 +17,7 @@ class BasketDeliveryInfo
      * @var array
      * @Serializer\Type("array")
      */
-    private $deliveryOptions = array();
+    private $methods = array();
     /**
      * @var array
      * @Serializer\Type("array")
@@ -31,7 +32,7 @@ class BasketDeliveryInfo
      * @var string
      * @Serializer\Type("string")
      */
-    private $postZipCode = 'NG162UZ';
+    private $postZipCode = '';
     /**
      * @var int
      * @Serializer\Type("integer")
@@ -56,7 +57,7 @@ class BasketDeliveryInfo
      * @var string
      * @Serializer\Type("string")
      */
-    private $service = '';
+    private $method = '';
     /**
      * @var int
      * @Serializer\Type("double")
@@ -67,6 +68,37 @@ class BasketDeliveryInfo
      * @Serializer\Type("string")
      */
     private $notes = '';
+
+    /**
+     * @Serializer\PreSerialize
+     */
+    public function preSerialize()
+    {
+        $methods = $this->methods;
+        $this->methods = array();
+
+        foreach($methods as $method)
+        {
+            $this->methods[] = $method->getName();
+        }
+    }
+
+    /**
+     * @Serializer\PostDeserialize
+     */
+    public function postDeserialize()
+    {
+        $methods = $this->methods;
+        $this->methods = array();
+
+        foreach($methods as $methodName)
+        {
+            if(($method = DeliveryMethodFactory::getMethod($methodName)) !== null)
+            {
+                $this->methods[] = $method;
+            }
+        }
+    }
 
     /**
      * @param null $basket
@@ -119,17 +151,17 @@ class BasketDeliveryInfo
     /**
      * @param array $deliveryOptions
      */
-    public function setDeliveryOptions($deliveryOptions)
+    public function setMethods($deliveryOptions)
     {
-        $this->deliveryOptions = $deliveryOptions;
+        $this->methods = $deliveryOptions;
     }
 
     /**
      * @return array
      */
-    public function getDeliveryOptions()
+    public function getMethods()
     {
-        return $this->deliveryOptions;
+        return $this->methods;
     }
 
     /**
@@ -199,17 +231,17 @@ class BasketDeliveryInfo
     /**
      * @param string $service
      */
-    public function setService($service)
+    public function setMethod($service)
     {
-        $this->service = $service;
+        $this->method = $service;
     }
 
     /**
      * @return string
      */
-    public function getService()
+    public function getMethod()
     {
-        return $this->service;
+        return $this->method;
     }
 
     /**

@@ -12,6 +12,11 @@ class DeliveryManager extends Manager
 {
     public function calculateZone($country, $postcode)
     {
+        if($postcode === '')
+        {
+            $postcode = 'NG162UZ';
+        }
+
         switch ($country)
         {
             case 'GB':
@@ -158,18 +163,18 @@ class DeliveryManager extends Manager
 
     public function calculatePrice($deliveryOptions, $service)
     {
-        if($service === '' && count($deliveryOptions) > 0)
-        {
-            return $deliveryOptions[0]['price'];
-        } else {
-            foreach($deliveryOptions as $item)
-            {
-                if($item['service'] === $service)
-                {
-                    return $item['price'];
-                }
-            }
-        }
+//        if($service === '' && count($deliveryOptions) > 0)
+//        {
+//            return $deliveryOptions[0]['price'];
+//        } else {
+//            foreach($deliveryOptions as $item)
+//            {
+//                if($item['service'] === $service)
+//                {
+//                    return $item['price'];
+//                }
+//            }
+//        }
 
         return 0;
     }

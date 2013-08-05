@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Manager;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use JMS\Serializer\Serializer;
+use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
 use KAC\SiteBundle\Model\Basket;
 use KAC\SiteBundle\Model\BasketItem;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -71,13 +72,14 @@ class BasketManager extends Manager
             $basket->getDelivery()->setWeighting($this->deliveryManager->calculateWeighting($basket->getItems()));
             $basket->getDelivery()->setWeight($this->deliveryManager->calculateWeight($basket->getItems()));
             $basket->getDelivery()->setBand($this->deliveryManager->calculateBand($basket->getItems()));
+            $basket->getDelivery()->setMethods(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()));
 
-            if($basket->getDelivery()->getService() === '' && count($basket->getDelivery()->getDeliveryOptions()) > 0)
+            if($basket->getDelivery()->getMethod() === '' && count($basket->getDelivery()->getMethods()) > 0)
             {
-                $basket->getDelivery()->setService($basket->getDelivery()->getDeliveryOptions()[0]['service']);
+                $basket->getDelivery()->setMethod($basket->getDelivery()->getMethods()[0]->getName());
             }
 
-            $basket->getDelivery()->setPrice($this->deliveryManager->calculatePrice($basket->getDelivery()->getDeliveryOptions(), $basket->getDelivery()->getService()));
+            $basket->getDelivery()->setPrice($this->deliveryManager->calculatePrice($basket->getDelivery()->getMethods(), $basket->getDelivery()->getMethod()));
 
             $this->baskets[$key]->calculateTotals();
         }
