@@ -1591,11 +1591,14 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 }
 
                 // Features
-                foreach (array_slice($variant->getFeatures()->toArray(), 0, 4) as $feature)
+                if ($variant->getFeatures())
                 {
-                    if($feature->getFeatureGroup() !== null && $feature->getFeature() !== null && is_object($feature->getFeatureGroup()) && is_object($feature->getFeature()))
+                    foreach (array_slice($variant->getFeatures()->toArray(), 0, 4) as $feature)
                     {
-                        $xmlWriter->writeElement('g:adwords_labels', strtolower($feature->getFeatureGroup()->getName() . ' ' . $feature->getFeature()->getName()));
+                        if ($feature->getFeatureGroup() !== null && $feature->getFeature() !== null && is_object($feature->getFeatureGroup()) && is_object($feature->getFeature()))
+                        {
+                            $xmlWriter->writeElement('g:adwords_labels', strtolower($feature->getFeatureGroup()->getName() . ' ' . $feature->getFeature()->getName()));
+                        }
                     }
                 }
 
