@@ -1,7 +1,7 @@
 function loadUiFunctions() {
     $(".accordion").accordion({
         header: "div.accordion-item h3",
-        icons: { "header": "icon-black icon-465", "activeHeader": "icon-grey icon-466", "headerSelected": "icon-black icon-466" },
+        icons: { "header": "icon-black icon-466", "activeHeader": "icon-grey icon-467", "headerSelected": "icon-black icon-467" },
         heightStyle: "content",
         collapsible: true
     });
@@ -9,7 +9,10 @@ function loadUiFunctions() {
     $(".tabs").tabs();
 
     $("img[title], span[title], th[title], .button[title]").tooltip({
-        track: true
+        track: true,
+        content: function () {
+            return $(this).prop('title');
+        }
     });
 }
 

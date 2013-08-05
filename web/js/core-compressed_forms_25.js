@@ -213,7 +213,7 @@ function loadFormFunctions() {
     $("tr.no-data").each(function() {
         if ($(this).closest("tbody").find("tr").length == 1) {
             var $addFormRowObject = $(this).closest("form").find(".actionAddFormRow");
-            if ($addFormRowObject.length > 0) {
+            if ($addFormRowObject.length > 0 && $(this).closest("table").attr("data-required")) {
                 $addFormRowObject.click();
             } else {
                 $(this).show();

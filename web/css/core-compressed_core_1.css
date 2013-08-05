@@ -3,6 +3,176 @@
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
+/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 297, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -349,12 +519,12 @@ table dl {
 
 /* line 296, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/spacing/spacing.scss */
 .fl {
-  float: left;
+  float: left !important;
 }
 
 /* line 300, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/spacing/spacing.scss */
 .fr {
-  float: right;
+  float: right !important;
 }
 
 /* line 304, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/spacing/spacing.scss */
@@ -597,25 +767,25 @@ table.listing td a {
 }
 
 /* line 147, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/layout/layout.scss */
-.ui-widget-content ul {
+.widget-content ul {
   margin: 0 0 10px 20px;
   color: #4ec0e3 !important;
 }
 
 /* line 152, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/layout/layout.scss */
-.ui-widget-content ul li {
+.widget-content ul li {
   margin: 0 0 0 10px;
   color: #444444 !important;
   line-height: 150%;
 }
 
 /* line 158, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/layout/layout.scss */
-.ui-widget-content dl {
+.widget-content dl {
   margin: 0 0 10px 0;
 }
 
 /* line 162, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/layout/layout.scss */
-.ui-widget-content dt {
+.widget-content dt {
   width: 40%;
   padding: 5px;
   margin: 0 0 2px 0;
@@ -633,7 +803,7 @@ table.listing td a {
 }
 
 /* line 180, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/layout/layout.scss */
-.ui-widget-content dd {
+.widget-content dd {
   width: 60%;
   padding: 5px;
   margin: 0 0 2px 0;
@@ -1004,7 +1174,7 @@ table.listing td a {
 }
 
 /* line 1, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
-table.data-table {
+table.basic-table {
   width: 100%;
   border-collapse: collapse;
   border: 0 none;
@@ -1014,6 +1184,51 @@ table.data-table {
 }
 
 /* line 9, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+table.basic-table th {
+  border-collapse: collapse;
+  padding: 10px 5px;
+  text-align: left;
+  color: black;
+}
+
+/* line 16, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+table.basic-table td {
+  border-collapse: collapse;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+/* line 22, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+table.basic-table ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 27, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+table.basic-table ul li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 10px;
+  line-height: 14px;
+}
+
+/* line 35, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+table.basic-table td.nowrap {
+  white-space: nowrap !important;
+}
+
+/* line 39, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0 none;
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+}
+
+/* line 47, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table th {
   border-collapse: collapse;
   border: 1px solid #6c8087;
@@ -1038,7 +1253,15 @@ table.data-table th {
   background-repeat: no-repeat;
 }
 
-/* line 18, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 56, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+table.data-table th a {
+  color: black;
+  text-shadow: 0 1px 0 #ededed;
+  text-shadow: 0 1px 0 #ededed;
+  filter: dropshadow(color=#ededed, offx=0, offy=1px);
+}
+
+/* line 61, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table td {
   border-collapse: collapse;
   padding: 10px;
@@ -1046,13 +1269,13 @@ table.data-table td {
   vertical-align: middle;
 }
 
-/* line 25, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 68, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 30, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 73, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table ul li {
   margin: 0;
   padding: 0;
@@ -1061,68 +1284,68 @@ table.data-table ul li {
   line-height: 14px;
 }
 
-/* line 38, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 81, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table tr.odd {
   background: #ededed;
 }
 
-/* line 42, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 85, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table tr.even {
   background: white;
 }
 
-/* line 46, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 89, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table td.nowrap {
   white-space: nowrap !important;
 }
 
-/* line 50, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 93, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 table.data-table td.image {
   padding: 0;
   background: white;
 }
 
-/* line 57, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 100, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 .tac,
 table .tac,
 table tr .tac {
   text-align: center;
 }
 
-/* line 61, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 104, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 td.tac .image-preview {
   margin: 0 auto;
 }
 
-/* line 67, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 110, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 .tal,
 table .tal,
 table tr .tal {
   text-align: left;
 }
 
-/* line 73, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 116, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 .tar,
 table .tar,
 table tr .tar {
   text-align: right;
 }
 
-/* line 79, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 122, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 .vat,
 table .vat,
 table tr .vat {
   vertical-align: top;
 }
 
-/* line 85, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 128, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 .vab,
 table .vab,
 table tr .vab {
   vertical-align: bottom;
 }
 
-/* line 91, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
+/* line 134, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/tables/tables.scss */
 .vam,
 table .vam,
 table tr .vam {
@@ -1165,7 +1388,35 @@ h3,
   color: #4ec0e3;
 }
 
-/* line 28, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/headings/headings.scss */
+/* line 26, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/headings/headings.scss */
+h3.separator {
+  padding: 10px;
+  margin: 0 -10px 10px -10px;
+  background: white;
+  background: -moz-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #c5d2d6));
+  background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -o-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -ms-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: linear-gradient(top, #ffffff 0%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = 'white', endColorstr = '#c5d2d6', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #c5d2d6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -moz-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -o-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: linear-gradient(top, #ffffff, #c5d2d6);
+  background-repeat: no-repeat;
+  color: #6c8087;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
+  filter: dropshadow(color=white, offx=0, offy=1px);
+  border-top: 1px solid #c5d2d6;
+  border-bottom: 1px solid #c5d2d6;
+}
+
+/* line 37, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/headings/headings.scss */
 h4,
 .h4 {
   font-size: 14px;
@@ -1175,7 +1426,7 @@ h4,
   color: #4ec0e3;
 }
 
-/* line 36, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/headings/headings.scss */
+/* line 45, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/headings/headings.scss */
 h5,
 .h5 {
   font-size: 14px;
@@ -1184,7 +1435,7 @@ h5,
   font-style: normal;
 }
 
-/* line 43, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/headings/headings.scss */
+/* line 52, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/headings/headings.scss */
 h6,
 .h6 {
   font-size: 14px;
@@ -1642,7 +1893,7 @@ a.submenu-brand img {
 }
 
 /* line 308, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container {
+.sub-menu {
   position: relative;
   background: white;
   background: -moz-linear-gradient(top, white 0%, #c5d2d6 100%);
@@ -1670,24 +1921,24 @@ a.submenu-brand img {
 }
 
 /* line 316, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container .widget {
+.sub-menu .widget {
   padding: 8px 10px;
 }
 
 /* line 320, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container .ui-icon-small {
+.sub-menu .ui-icon-small {
   margin: 0 10px 0 0;
 }
 
 /* line 324, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container h2 {
+.sub-menu h2 {
   margin: 0;
   padding: 0;
 }
 
 /* line 330, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container h2,
-.unique-selling-points-container h2 a {
+.sub-menu h2,
+.sub-menu h2 a {
   font-size: 24px;
   font-size: 2.4rem;
   color: #384246;
@@ -1699,14 +1950,14 @@ a.submenu-brand img {
 }
 
 /* line 338, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container h3 {
+.sub-menu h3 {
   margin: 0;
   padding: 0;
 }
 
 /* line 344, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container h3,
-.unique-selling-points-container h3 a {
+.sub-menu h3,
+.sub-menu h3 a {
   font-size: 14px;
   font-size: 1.4rem;
   color: #384246;
@@ -1719,14 +1970,14 @@ a.submenu-brand img {
 }
 
 /* line 353, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container p {
+.sub-menu p {
   padding: 2px 0 0 0;
   margin: 0;
 }
 
 /* line 359, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/navigation/navigation.scss */
-.unique-selling-points-container p,
-.unique-selling-points-container p a {
+.sub-menu p,
+.sub-menu p a {
   font-size: 10px;
   font-size: 1rem;
   color: #6c8087;
@@ -2285,9 +2536,7 @@ a.submenu-brand img {
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
   filter: dropshadow(color=black, offx=0, offy=1px);
-  letter-spacing: 2px;
   color: white;
-  font-family: "Stag Medium", "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
   display: block;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
@@ -2298,7 +2547,7 @@ a.submenu-brand img {
   font-size: 1.8rem;
 }
 
-/* line 472, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 470, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-dialog-titlebar-close {
   width: 38px;
   height: 38px;
@@ -2317,21 +2566,21 @@ a.submenu-brand img {
   border: 0 none;
 }
 
-/* line 486, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 484, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick {
   position: absolute;
   top: 7px;
   right: 7px;
 }
 
-/* line 492, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 490, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick:hover {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
   box-shadow: none !important;
 }
 
-/* line 496, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 494, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-dialog-content {
   position: relative;
   border: 0;
@@ -2340,7 +2589,7 @@ a.submenu-brand img {
   overflow: auto;
 }
 
-/* line 504, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 502, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-dialog-buttonpane {
   margin: 0 0 -2px 0;
   padding: 5px 0 5px 5px;
@@ -2372,19 +2621,19 @@ a.submenu-brand img {
   border-top: 3px solid #384246;
 }
 
-/* line 515, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 513, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
   float: right;
 }
 
-/* line 519, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 517, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-dialog-buttonpane button {
   margin: 0 5px 0 0;
   cursor: pointer;
   outline: none !important;
 }
 
-/* line 525, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 523, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog .ui-resizable-se {
   width: 12px;
   height: 12px;
@@ -2393,12 +2642,12 @@ a.submenu-brand img {
   background-position: 16px 16px;
 }
 
-/* line 533, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 531, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-draggable .ui-dialog-titlebar {
   cursor: move;
 }
 
-/* line 537, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 535, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu {
   list-style: none;
   padding: 2px;
@@ -2407,20 +2656,20 @@ a.submenu-brand img {
   outline: none;
 }
 
-/* line 545, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 543, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-menu {
   margin-top: -3px;
   position: absolute;
 }
 
-/* line 550, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 548, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-menu-item {
   margin: 0;
   padding: 0;
   width: 100%;
 }
 
-/* line 556, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 554, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-menu-divider {
   margin: 5px -2px 5px -2px;
   height: 0;
@@ -2429,7 +2678,7 @@ a.submenu-brand img {
   border-width: 1px 0 0 0;
 }
 
-/* line 564, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 562, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-menu-item a {
   text-decoration: none;
   display: block;
@@ -2439,38 +2688,38 @@ a.submenu-brand img {
   font-weight: normal;
 }
 
-/* line 574, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 572, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-menu-item a.ui-state-focus,
 .ui-menu .ui-menu-item a.ui-state-active {
   font-weight: normal;
   margin: -1px;
 }
 
-/* line 579, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 577, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-state-disabled {
   font-weight: normal;
   margin: 5px 0 5px 0;
   line-height: 1.5;
 }
 
-/* line 585, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 583, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-state-disabled a {
   cursor: default;
 }
 
-/* line 589, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 587, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu-icons {
   position: relative;
 }
 
-/* line 593, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 591, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu-icons .ui-menu-item a {
   position: relative;
   padding-left: 20px;
 }
 
 /* left-aligned */
-/* line 599, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 597, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-icon {
   position: absolute;
   top: 5px;
@@ -2478,26 +2727,26 @@ a.submenu-brand img {
 }
 
 /* right-aligned */
-/* line 606, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 604, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-menu .ui-menu-icon {
   position: static;
   float: right;
 }
 
-/* line 611, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 609, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-progressbar {
   height: 20px;
   text-align: left;
   overflow: hidden;
 }
 
-/* line 617, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 615, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-progressbar .ui-progressbar-value {
   margin: -1px;
   height: 100%;
 }
 
-/* line 622, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 620, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-progressbar .ui-progressbar-overlay {
   background: url("images/animated-overlay.gif");
   height: 100%;
@@ -2505,12 +2754,12 @@ a.submenu-brand img {
   opacity: 0.25;
 }
 
-/* line 629, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 627, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-progressbar-indeterminate .ui-progressbar-value {
   background-image: none;
 }
 
-/* line 633, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 631, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .progress-bar {
   position: relative;
   margin: 0;
@@ -2528,7 +2777,7 @@ a.submenu-brand img {
   box-shadow: inset 0 5px 0 0 #384246;
 }
 
-/* line 644, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 642, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .progress-bar div {
   display: inline-block;
   height: 100%;
@@ -2566,14 +2815,14 @@ a.submenu-brand img {
   transition: animate-stripes 3s linear infinite;
 }
 
-/* line 678, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 676, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .progress-bar-caption-container {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-/* line 684, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 682, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .progress-bar-caption {
   padding: 5px 15px;
   overflow: hidden;
@@ -2590,7 +2839,7 @@ a.submenu-brand img {
   white-space: nowrap;
 }
 
-/* line 696, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 694, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .progress-error {
   color: #cc0000;
   font-size: 11px;
@@ -2599,36 +2848,36 @@ a.submenu-brand img {
 }
 
 @-webkit-keyframes animate-stripes {
-  /* line 703, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+  /* line 701, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
   0% {
     background-position: 0 0;
   }
 
-  /* line 703, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+  /* line 701, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
   100% {
     background-position: 76px 0;
   }
 }
 
 @-moz-keyframes animate-stripes {
-  /* line 707, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+  /* line 705, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
   0% {
     background-position: 0 0;
   }
 
-  /* line 707, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+  /* line 705, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
   100% {
     background-position: 76px 0;
   }
 }
 
-/* line 710, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 708, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider {
   position: relative;
   text-align: left;
 }
 
-/* line 715, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 713, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider .ui-slider-handle {
   position: absolute;
   width: 15px;
@@ -2637,7 +2886,7 @@ a.submenu-brand img {
   border: 1px solid #384246;
 }
 
-/* line 724, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 722, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider .ui-slider-range {
   position: absolute;
   font-size: 12px;
@@ -2647,69 +2896,69 @@ a.submenu-brand img {
   background-position: 0 0;
 }
 
-/* line 733, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 731, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider.ui-state-disabled .ui-slider-handle,
 .ui-slider.ui-state-disabled .ui-slider-range {
   filter: inherit;
 }
 
-/* line 737, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 735, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-horizontal {
   height: 10px;
 }
 
-/* line 741, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 739, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-horizontal .ui-slider-handle {
   top: -3px;
   margin-left: -10px;
 }
 
-/* line 746, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 744, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-horizontal .ui-slider-range {
   top: 0;
   height: 100%;
 }
 
-/* line 751, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 749, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-horizontal .ui-slider-range-min {
   left: 0;
 }
 
-/* line 755, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 753, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-horizontal .ui-slider-range-max {
   right: 0;
 }
 
-/* line 759, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 757, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-vertical {
   width: 10px;
   height: 100px;
 }
 
-/* line 764, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 762, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-vertical .ui-slider-handle {
   left: -10px;
   margin-left: 0;
   margin-bottom: -10px;
 }
 
-/* line 770, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 768, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-vertical .ui-slider-range {
   left: 0;
   width: 100%;
 }
 
-/* line 775, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 773, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-vertical .ui-slider-range-min {
   bottom: 0;
 }
 
-/* line 779, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 777, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-slider-vertical .ui-slider-range-max {
   top: 0;
 }
 
-/* line 783, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 781, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner {
   position: relative;
   display: inline-block;
@@ -2718,7 +2967,7 @@ a.submenu-brand img {
   vertical-align: middle;
 }
 
-/* line 791, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 789, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner-input {
   border: none;
   background: none;
@@ -2730,7 +2979,7 @@ a.submenu-brand img {
   margin-right: 20px;
 }
 
-/* line 802, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 800, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner-button {
   width: 16px;
   height: 50%;
@@ -2747,7 +2996,7 @@ a.submenu-brand img {
 }
 
 /* more specificity required here to overide default borders */
-/* line 816, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 814, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner a.ui-spinner-button {
   border-top: none;
   border-bottom: none;
@@ -2755,7 +3004,7 @@ a.submenu-brand img {
 }
 
 /* vertical centre icon */
-/* line 822, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 820, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner .ui-icon {
   position: absolute;
   margin-top: -8px;
@@ -2763,31 +3012,31 @@ a.submenu-brand img {
   left: 0;
 }
 
-/* line 829, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 827, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner-up {
   top: 0;
 }
 
-/* line 833, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 831, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner-down {
   bottom: 0;
 }
 
 /* TR overrides */
-/* line 838, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 836, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-spinner .ui-icon-triangle-1-s {
   /* need to fix icons sprite */
   background-position: -65px -16px;
 }
 
-/* line 843, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 841, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs {
   position: relative;
   /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
   padding: 10px;
 }
 
-/* line 848, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 846, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs .ui-tabs-nav {
   margin: -10px -10px 0 -10px;
   padding: 10px 10px 0;
@@ -2799,7 +3048,7 @@ a.submenu-brand img {
   border-bottom-left-radius: 0;
 }
 
-/* line 860, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 858, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs .ui-tabs-nav li {
   list-style: none;
   float: left;
@@ -2811,33 +3060,33 @@ a.submenu-brand img {
   white-space: nowrap;
 }
 
-/* line 871, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 869, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs .ui-tabs-nav li a {
   float: left;
   padding: 10px;
   text-decoration: none;
 }
 
-/* line 877, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 875, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
   margin-top: -1px;
   border-bottom: 3px solid #4ec0e3;
 }
 
-/* line 884, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 882, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs .ui-tabs-nav li.ui-tabs-active a,
 .ui-tabs .ui-tabs-nav li.ui-state-disabled a,
 .ui-tabs .ui-tabs-nav li.ui-tabs-loading a {
   cursor: text;
 }
 
-/* line 889, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 887, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs .ui-tabs-nav li a,
 .ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active a {
   cursor: pointer;
 }
 
-/* line 893, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 891, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs .ui-tabs-panel {
   display: block;
   border-width: 0;
@@ -2845,19 +3094,19 @@ a.submenu-brand img {
   background: none;
 }
 
-/* line 900, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 898, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs-vertical {
   width: 55em;
 }
 
-/* line 904, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 902, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs-vertical .ui-tabs-nav {
   padding: 0.2em 0.1em 0.2em 0.2em;
   float: left;
   width: 12em;
 }
 
-/* line 910, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 908, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs-vertical .ui-tabs-nav li {
   clear: left;
   width: 100%;
@@ -2866,12 +3115,12 @@ a.submenu-brand img {
   margin: 0 -1px 0.2em 0;
 }
 
-/* line 918, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 916, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs-vertical .ui-tabs-nav li a {
   display: block;
 }
 
-/* line 922, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 920, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
   padding-bottom: 0;
   padding-right: .1em;
@@ -2879,14 +3128,14 @@ a.submenu-brand img {
   border-right-width: 1px;
 }
 
-/* line 929, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 927, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tabs-vertical .ui-tabs-panel {
   padding: 1em;
   float: right;
   width: 40em;
 }
 
-/* line 935, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 933, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-tooltip {
   padding: 10px;
   position: absolute;
@@ -2904,12 +3153,12 @@ a.submenu-brand img {
   border: 0 none;
 }
 
-/* line 948, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 946, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 body .ui-tooltip {
   border-width: 2px;
 }
 
-/* line 952, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 950, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget {
   -webkit-box-shadow: 0 0 10px 0 #384246;
   -webkit-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.7);
@@ -2922,30 +3171,30 @@ body .ui-tooltip {
   border-radius: 4px;
 }
 
-/* line 957, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 955, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget .ui-widget {
   font-size: 12px;
   font-size: 1.2rem;
 }
 
-/* line 961, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 959, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-content {
   background: white;
   color: #444444;
   padding: 10px;
 }
 
-/* line 967, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 965, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-dialog.ui-widget-content {
   padding: 0;
 }
 
-/* line 971, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 969, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-content a {
   color: #4ec0e3;
 }
 
-/* line 975, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 973, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-header {
   position: relative;
   background: #6c8087;
@@ -2972,14 +3221,14 @@ body .ui-tooltip {
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
 }
 
-/* line 982, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 980, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-header > .ui-icon {
   position: absolute;
   top: 3px;
   right: 10px;
 }
 
-/* line 988, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 986, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-header h2 {
   margin: 0;
   padding: 10px;
@@ -2991,12 +3240,12 @@ body .ui-tooltip {
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 }
 
-/* line 998, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 996, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-header a {
   color: #ffffff;
 }
 
-/* line 1002, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1000, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .accordion {
   -webkit-box-shadow: none !important;
   -moz-box-shadow: none !important;
@@ -3006,24 +3255,24 @@ body .ui-tooltip {
   border-radius: 0;
 }
 
-/* line 1007, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1005, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .accordion-item {
   position: relative;
 }
 
-/* line 1011, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1009, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .accordion-header-buttons {
   position: absolute;
   top: 4px;
   right: 52px;
 }
 
-/* line 1017, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1015, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .accordion-header-buttons button {
   padding: 0 3px;
 }
 
-/* line 1021, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1019, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-default {
   background: #c5d2d6;
   background: -moz-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
@@ -3048,7 +3297,7 @@ body .ui-tooltip {
   filter: dropshadow(color=#c5d2d6, offx=0, offy=1px);
 }
 
-/* line 1030, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1028, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-default a,
 .ui-state-default a:link,
 .ui-state-default a:visited {
@@ -3059,7 +3308,7 @@ body .ui-tooltip {
   text-decoration: none;
 }
 
-/* line 1037, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1035, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-hover,
 .ui-state-focus {
   font-weight: bold;
@@ -3069,7 +3318,7 @@ body .ui-tooltip {
   filter: dropshadow(color=#c5d2d6, offx=0, offy=1px);
 }
 
-/* line 1046, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1044, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-hover a,
 .ui-state-hover a:hover,
 .ui-state-hover a:link,
@@ -3081,7 +3330,7 @@ body .ui-tooltip {
   text-decoration: none;
 }
 
-/* line 1052, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1050, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-active {
   background: #e4eaec;
   background: -moz-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
@@ -3106,7 +3355,7 @@ body .ui-tooltip {
   filter: dropshadow(color=white, offx=0, offy=1px);
 }
 
-/* line 1061, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1059, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-active a,
 .ui-state-active a:link,
 .ui-state-active a:visited {
@@ -3119,55 +3368,55 @@ body .ui-tooltip {
 
 /* Interaction Cues
 ----------------------------------*/
-/* line 1069, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1067, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-highlight {
   border: 1px solid #fed22f;
   background: #ffe45c url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png) 50% top repeat-x;
   color: #363636;
 }
 
-/* line 1075, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1073, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-highlight a {
   color: #363636;
 }
 
-/* line 1079, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1077, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-error {
   border: 1px solid #cd0a0a;
   background: #b81900 url(images/ui-bg_diagonals-thick_18_b81900_40x40.png) 50% 50% repeat;
   color: #ffffff;
 }
 
-/* line 1085, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1083, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-error a {
   color: #ffffff;
 }
 
-/* line 1089, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1087, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-error-text {
   color: #ffffff;
 }
 
-/* line 1093, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1091, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-priority-primary {
   font-weight: bold;
 }
 
-/* line 1097, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1095, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-priority-secondary {
   opacity: .7;
   filter: Alpha(Opacity=70);
   font-weight: normal;
 }
 
-/* line 1103, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1101, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-disabled {
   opacity: .35;
   filter: Alpha(Opacity=35);
   background-image: none;
 }
 
-/* line 1109, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1107, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-state-disabled .ui-icon {
   filter: Alpha(Opacity=35);
   /* For IE8 - See #6059 */
@@ -3176,7 +3425,7 @@ body .ui-tooltip {
 /* Icons
 ----------------------------------*/
 /* states and images */
-/* line 1120, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1118, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-all,
 .ui-corner-top,
 .ui-corner-left,
@@ -3186,7 +3435,7 @@ body .ui-tooltip {
   border-top-left-radius: 4px;
 }
 
-/* line 1129, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1127, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-all,
 .ui-corner-top,
 .ui-corner-right,
@@ -3196,7 +3445,7 @@ body .ui-tooltip {
   border-top-right-radius: 4px;
 }
 
-/* line 1138, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1136, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-all,
 .ui-corner-bottom,
 .ui-corner-left,
@@ -3206,7 +3455,7 @@ body .ui-tooltip {
   border-bottom-left-radius: 4px;
 }
 
-/* line 1147, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1145, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-all,
 .ui-corner-bottom,
 .ui-corner-right,
@@ -3216,7 +3465,7 @@ body .ui-tooltip {
   border-bottom-right-radius: 4px;
 }
 
-/* line 1156, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1154, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-none,
 .ui-corner-none-top,
 .ui-corner-none-left,
@@ -3226,7 +3475,7 @@ body .ui-tooltip {
   border-top-left-radius: 0 !important;
 }
 
-/* line 1165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1163, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-none,
 .ui-corner-none-top,
 .ui-corner-none-right,
@@ -3236,7 +3485,7 @@ body .ui-tooltip {
   border-top-right-radius: 0 !important;
 }
 
-/* line 1174, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1172, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-none,
 .ui-corner-none-bottom,
 .ui-corner-none-left,
@@ -3246,7 +3495,7 @@ body .ui-tooltip {
   border-bottom-left-radius: 0 !important;
 }
 
-/* line 1183, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-corner-none,
 .ui-corner-none-bottom,
 .ui-corner-none-right,
@@ -3256,13 +3505,13 @@ body .ui-tooltip {
   border-bottom-right-radius: 0 !important;
 }
 
-/* line 1189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1187, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-overlay {
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiOAMAANUAz5n+TlUAAAAASUVORK5CYII=');
   background: rgba(0, 0, 0, 0.8);
 }
 
-/* line 1193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1191, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .ui-widget-shadow {
   margin: -5px 0 0 -5px;
   padding: 5px;
@@ -3277,14 +3526,14 @@ body .ui-tooltip {
   border-radius: 4px;
 }
 
-/* line 1200, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1198, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 .header-buttons-container {
   position: absolute;
   top: 3px;
   right: 3px;
 }
 
-/* line 1207, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 ul.button-list,
 ul.button-list li {
   margin: 0;
@@ -3292,12 +3541,12 @@ ul.button-list li {
   list-style: none;
 }
 
-/* line 1214, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1212, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 ul.button-list {
   padding: 0 0 10px 0;
 }
 
-/* line 1218, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1216, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 ul.button-list li a {
   padding: 0 5px;
   display: block;
@@ -3331,7 +3580,7 @@ ul.button-list li a {
   white-space: nowrap;
 }
 
-/* line 1231, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
+/* line 1229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/ui/ui.scss */
 ul.button-list li a:hover {
   text-decoration: underline;
 }
@@ -23454,7 +23703,7 @@ ul.breadcrumbs li {
   padding: 0 5px 0 13px;
   margin: 0;
   position: relative;
-  float: right;
+  float: left;
   display: block;
   list-style: none;
   font-size: 11px;
@@ -23521,7 +23770,7 @@ ul.breadcrumbs li:before {
 }
 
 /* line 64, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/breadcrumbs/breadcrumbs.scss */
-ul.breadcrumbs > :last-child {
+ul.breadcrumbs > :first-child {
   padding-left: 5px;
   -webkit-border-radius: 4px 0 0 4px;
   -moz-border-radius: 4px 0 0 4px;
@@ -23529,15 +23778,15 @@ ul.breadcrumbs > :last-child {
 }
 
 /* line 69, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/breadcrumbs/breadcrumbs.scss */
-ul.breadcrumbs > :first-child {
+ul.breadcrumbs > :last-child {
   -webkit-border-radius: 0 4px 4px 0;
   -moz-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
 }
 
 /* line 74, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/breadcrumbs/breadcrumbs.scss */
-ul.breadcrumbs > :first-child:before,
-ul.breadcrumbs > :first-child:after {
+ul.breadcrumbs > :last-child:before,
+ul.breadcrumbs > :last-child:after {
   display: none;
 }
 
@@ -24652,8 +24901,9 @@ div.etalage_description.rtl {
   padding: 5px 10px;
 }
 
-/* line 71, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/basket/basket.scss */
-#basket-delivery-options .form-helper {
+/* line 72, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/basket/basket.scss */
+#basket-delivery-options .form-helper,
+#order-information .form-helper {
   top: 0;
   right: 10px;
 }
@@ -24833,6 +25083,176 @@ div.etalage_description.rtl {
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
+/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 297, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -24855,11 +25275,20 @@ div.etalage_description.rtl {
 }
 
 /* line 12, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product h1 {
+  padding: 0 10px 10px 10px;
+  margin: 0 -10px 10px -10px;
+  border-bottom: 1px solid #e4eaec;
+  font-size: 18px;
+  font-size: 1.8rem;
+}
+
+/* line 20, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product a {
   text-decoration: none !important;
 }
 
-/* line 16, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 24, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product h4, .product h4 a, .product-title {
   font-size: 13px;
   font-size: 1.3rem;
@@ -24870,108 +25299,166 @@ div.etalage_description.rtl {
   margin: 0;
 }
 
-/* line 25, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 33, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product ul {
   margin: 5px 0 0 0;
 }
 
-/* line 29, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 37, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product ul li {
   font-size: 10px;
   font-size: 1rem;
   line-height: 120%;
 }
 
-/* line 34, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 42, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product img.brand-logo-image {
   margin: 0 0 0 10px;
 }
 
-/* line 38, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
-.product .price {
+/* line 47, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price,
+.product .price-small {
   text-align: right;
   color: #cc0000 !important;
 }
 
-/* line 43, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
-.product .price a {
+/* line 53, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price a,
+.product .price-small a {
   color: #cc0000 !important;
 }
 
-/* line 47, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
-.product .price span {
+/* line 58, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price span,
+.product .price-small span {
   display: inline-block;
   vertical-align: top;
   line-height: 100%;
 }
 
-/* line 53, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 64, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .price .currency-prefix {
   font-size: 14px;
   font-size: 1.4rem;
 }
 
-/* line 57, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
-.product .price .currency-sign {
+/* line 68, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price-small .currency-prefix {
+  font-size: 11px;
+  font-size: 1.1rem;
+}
+
+/* line 73, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price .currency-sign,
+.product .price-small .currency-sign {
   padding-top: 2px;
   font-family: "Arial Black", Arial, Verdana, sans-serif;
+}
+
+/* line 79, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price .currency-sign {
   font-size: 24px;
   font-size: 2.4rem;
 }
 
-/* line 64, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
-.product .price .currency-integer {
+/* line 83, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price-small .currency-sign {
+  font-size: 14px;
+  font-size: 1.4rem;
+}
+
+/* line 88, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price .currency-integer,
+.product .price-small .currency-integer {
   font-family: "Arial Black", Arial, Verdana, sans-serif;
+}
+
+/* line 92, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price .currency-integer {
   font-size: 32px;
   font-size: 3.2rem;
 }
 
-/* line 69, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
-.product .price .currency-decimal {
+/* line 96, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price-small .currency-integer {
+  font-size: 24px;
+  font-size: 2.4rem;
+}
+
+/* line 101, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price .currency-decimal,
+.product .price-small .currency-decimal {
   padding-top: 2px;
   font-family: "Arial Black", Arial, Verdana, sans-serif;
+}
+
+/* line 107, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price .currency-decimal {
   font-size: 18px;
   font-size: 1.8rem;
 }
 
-/* line 76, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
-.product .price .currency-tax {
-  font-size: 9px;
-  font-size: 0.9rem;
-  color: #6c8087;
+/* line 111, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price-small .currency-decimal {
+  font-size: 12px;
+  font-size: 1.2rem;
 }
 
-/* line 81, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 116, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product .price .currency-tax,
+.product .price-small .currency-tax {
+  color: #6c8087;
+  font-size: 9px;
+  font-size: 0.9rem;
+}
+
+/* line 121, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 table.data-table .price .currency-prefix {
   font-size: 12px;
   font-size: 1.2rem;
 }
 
-/* line 85, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 125, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 table.data-table .price .currency-sign {
   font-size: 20px;
   font-size: 2rem;
 }
 
-/* line 89, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 129, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 table.data-table .price .currency-integer {
   font-size: 28px;
   font-size: 2.8rem;
 }
 
-/* line 93, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 133, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 table.data-table .price .currency-decimal {
   font-size: 14px;
   font-size: 1.4rem;
 }
 
-/* line 97, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 137, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 table.data-table .price .currency-tax {
   font-size: 9px;
   font-size: 0.9rem;
 }
 
-/* line 101, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 141, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product-listing-name {
+  height: 28px;
+  overflow: hidden;
+}
+
+/* line 147, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.product-listing-name,
+.product-listing-name a {
+  font-size: 11px;
+  font-size: 1.1rem;
+  color: #6c8087;
+  line-height: 14px;
+}
+
+/* line 153, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .logo {
   height: 50px;
   margin: 0 10px 10px 0;
@@ -24983,7 +25470,7 @@ table.data-table .price .currency-tax {
   box-shadow: 0 0 10px 0 #c5d2d6;
 }
 
-/* line 108, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 160, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .summary {
   font-size: 13px;
   font-size: 1.3rem;
@@ -24991,27 +25478,27 @@ table.data-table .price .currency-tax {
   line-height: 150%;
 }
 
-/* line 114, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 166, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-back-button {
   position: absolute;
   top: 0px;
   left: 0px;
 }
 
-/* line 120, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 172, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information {
   margin: 0 15px 0 0;
   padding: 5px 0 0 0;
   float: left;
 }
 
-/* line 127, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 179, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information ul {
   margin: 0 0 0 10px;
   padding: 0;
 }
 
-/* line 132, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 184, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-information ul li {
   padding: 0;
   margin: 0;
@@ -25022,13 +25509,13 @@ table.data-table .price .currency-tax {
   color: black;
 }
 
-/* line 142, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 194, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-options {
   float: right;
   padding: 5px 0 0 0;
 }
 
-/* line 147, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 199, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product p, .product-description p {
   margin: 0 0 10px 0;
   padding: 0px;
@@ -25037,23 +25524,23 @@ table.data-table .price .currency-tax {
   font-size: 1rem;
 }
 
-/* line 155, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 207, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-description li {
   color: #6c8087;
   line-height: 100%;
 }
 
-/* line 160, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 212, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .buy-now {
   text-align: right;
 }
 
-/* line 164, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 216, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-description ul {
   margin-bottom: 10px;
 }
 
-/* line 168, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 220, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .features-link {
   padding: 5px 10px;
   margin: 10px 0;
@@ -25088,13 +25575,13 @@ table.data-table .price .currency-tax {
   border: 1px solid #6c8087;
 }
 
-/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .features {
   padding: 0 0 10px 0;
   display: none;
 }
 
-/* line 186, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 238, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dt {
   width: 99px;
   margin: 0 0 3px 0;
@@ -25109,17 +25596,17 @@ table.data-table .price .currency-tax {
   text-align: right;
 }
 
-/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dt.even {
   background: #ededed;
 }
 
-/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dt.odd {
   background: #e4eaec;
 }
 
-/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product dd {
   width: 136px;
   padding: 5px;
@@ -25133,17 +25620,17 @@ table.data-table .price .currency-tax {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 222, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 274, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-compare {
   margin: 10px 0;
 }
 
-/* line 226, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 278, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-short-description {
   padding: 10px 0 0 0;
 }
 
-/* line 230, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 282, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .product-short-description p {
   padding: 0;
   margin: 0 !important;
@@ -25155,17 +25642,17 @@ table.data-table .price .currency-tax {
   overflow: hidden;
 }
 
-/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-header {
   padding-left: 20px;
 }
 
-/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 297, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product ul.breadcrumbs li {
   padding: 4px 5px 3px 13px;
 }
 
-/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 301, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-listing {
   margin: 0 auto;
   position: relative;
@@ -25178,12 +25665,12 @@ table.data-table .price .currency-tax {
   box-shadow: 0 0 10px 0 #6c8087;
 }
 
-/* line 258, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 310, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-listing img {
   display: block;
 }
 
-/* line 262, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 314, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-listing .name {
   padding: 0 5px;
   position: absolute;
@@ -25202,7 +25689,7 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 329, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-listing .new {
   height: 28px;
   width: 28px;
@@ -25248,7 +25735,53 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 298, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 350, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.listing-top-item {
+  height: 28px;
+  width: 28px;
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  display: block;
+  background: #d93637;
+  background: -moz-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fdadae), color-stop(5%, #d93637), color-stop(100%, #9a0000));
+  background: -webkit-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
+  background: -o-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
+  background: -ms-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
+  background: linear-gradient(to bottom, #fdadae 0%, #d93637 5%, #9a0000 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#d93637', endColorstr = '#9a0000', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZkYWRhZSIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNkOTM2MzciLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5YTAwMDAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fdadae), color-stop(5%, #d93637), color-stop(100%, #9a0000));
+  background-image: -webkit-linear-gradient(top, #fdadae, #d93637 5%, #9a0000 100%);
+  background-image: -moz-linear-gradient(top, #fdadae, #d93637 5%, #9a0000 100%);
+  background-image: -o-linear-gradient(top, #fdadae, #d93637 5%, #9a0000 100%);
+  background-image: linear-gradient(top, #fdadae, #d93637 5%, #9a0000 100%);
+  background-repeat: no-repeat;
+  -webkit-box-shadow: 0 0 5px 0 #cc0000;
+  -webkit-box-shadow: 0 0 5px 0 #cc0000;
+  -moz-box-shadow: 0 0 5px 0 #cc0000;
+  -moz-box-shadow: 0 0 5px 0 #cc0000;
+  box-shadow: 0 0 5px 0 #cc0000;
+  box-shadow: 0 0 5px 0 #cc0000;
+  border: 1px solid white;
+  font-size: 12px;
+  font-size: 1.2rem;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  line-height: 28px;
+  color: white;
+  text-align: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* line 371, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container, .product-filtering-container {
   padding: 5px 0;
   background: white;
@@ -25269,21 +25802,21 @@ table.data-table .price .currency-tax {
   background-repeat: no-repeat;
 }
 
-/* line 304, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 377, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container-top, .product-filtering-container {
   margin: -10px -10px 10px -10px;
   border-bottom: 2px solid #6c8087;
   border-radius: 4px 4px 0 0;
 }
 
-/* line 311, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 384, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container-bottom {
   margin: 10px -10px -10px -10px;
   border-top: 2px solid #6c8087;
   border-radius: 0 0 4px 4px;
 }
 
-/* line 318, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 391, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container > div > span, .product-filtering-container > div > span {
   padding: 0 5px 0 0;
   line-height: 40px;
@@ -25291,34 +25824,34 @@ table.data-table .price .currency-tax {
   font-size: 1.1rem;
 }
 
-/* line 325, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 398, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container .selector {
   margin: 0 5px 0 0;
 }
 
-/* line 329, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 402, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container .selector span {
   font-size: 11px;
   font-size: 1.1rem;
 }
 
-/* line 333, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 406, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container .ui-button {
   padding: 3px 0;
   margin: 0 0 -4px -4px;
 }
 
-/* line 338, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 411, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container .ui-button span {
   padding: 0 8px;
 }
 
-/* line 342, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 415, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-sorting-container .ui-button .ui-icon {
   padding: 0;
 }
 
-/* line 346, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 419, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filters .ui-widget header h2 {
   letter-spacing: 0;
   font-size: 13px;
@@ -25326,19 +25859,19 @@ table.data-table .price .currency-tax {
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 }
 
-/* line 352, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 425, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter-header-buttons-container {
   position: absolute;
   top: 3px;
   right: 3px;
 }
 
-/* line 358, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 431, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter-header-buttons-container .ui-button {
   padding: 0 2px;
 }
 
-/* line 363, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 436, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter,
 .price-range-filter {
   padding: 0;
@@ -25346,56 +25879,56 @@ table.data-table .price .currency-tax {
   border-radius: 0 0 4px 4px;
 }
 
-/* line 370, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 443, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .price-range-filter {
   padding: 5px 15px;
 }
 
-/* line 374, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 447, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .range-slider-values {
   text-align: center;
 }
 
-/* line 378, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 451, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .range-slider-values input {
   width: 60px;
   text-align: center;
 }
 
-/* line 383, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 456, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .price-range {
   margin: 5px 0 5px 0;
 }
 
-/* line 387, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 460, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .price-range .ui-slider-range {
   padding: 0;
 }
 
-/* line 391, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 464, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li a.selected-filter {
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 396, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 469, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter label {
   line-height: 18px;
 }
 
-/* line 400, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 473, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 407, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 480, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter > ul {
   padding: 0 0 5px 0;
 }
 
-/* line 411, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 484, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li {
   padding: 2px 5px 2px 28px;
   margin: 0;
@@ -25407,13 +25940,13 @@ table.data-table .price .currency-tax {
   position: relative;
 }
 
-/* line 424, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 497, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree a {
   font-size: 11px;
   line-height: 18px;
 }
 
-/* line 430, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 503, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree li,
 .jstree ins {
   background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.png");
@@ -25422,81 +25955,86 @@ table.data-table .price .currency-tax {
   background-size: 108px 18px;
 }
 
-/* line 437, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 510, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree li {
   background-position: -90px 0;
   background-repeat: repeat-y;
 }
 
-/* line 442, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 515, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-open > ins {
   background-position: -36px 0;
 }
 
-/* line 446, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 519, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-closed > ins {
   background-position: -18px 0;
 }
 
-/* line 450, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 523, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-leaf > ins {
   background-position: 0 0;
 }
 
-/* line 454, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 527, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-no-dots li {
   background-position: -108px 0;
 }
 
-/* line 458, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 531, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-no-dots .jstree-open > ins {
   background-position: -72px 0;
 }
 
-/* line 462, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 535, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-no-dots .jstree-closed > ins {
   background-position: -54px 0;
 }
 
-/* line 467, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 540, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree li,
 .jstree ins {
   _background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.gif");
 }
 
-/* line 471, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 544, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-open ins {
   _background-position: -36px 0;
 }
 
-/* line 474, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 548, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-closed ins {
   _background-position: -18px 0;
 }
 
-/* line 477, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 552, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .jstree .jstree-leaf ins {
   _background-position: 0 0;
 }
 
+/* line 556, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+.jstree a > ins {
+  display: none;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 507, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+  /* line 586, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
   .jstree li,
   .jstree ins {
     background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d@2x.png");
   }
 }
-/* line 512, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 591, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .department-filter ul {
   padding: 0 0 0 18px !important;
 }
 
-/* line 516, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 595, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .department-filter > ul {
   padding: 10px 5px !important;
 }
 
-/* line 520, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 599, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .department-filter ul li {
   width: 100%;
   padding: 0;
@@ -25505,12 +26043,12 @@ table.data-table .price .currency-tax {
   border: 0;
 }
 
-/* line 529, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 608, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .department-filter > ul > li {
   margin: 0;
 }
 
-/* line 533, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 612, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .department-filter ul li a {
   border: 0 none;
   display: block;
@@ -25522,12 +26060,12 @@ table.data-table .price .currency-tax {
   text-decoration: none;
 }
 
-/* line 539, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 618, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .department-filter ul li a:hover {
   text-decoration: underline;
 }
 
-/* line 543, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 622, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .department-filter ul li ins {
   width: 18px;
   height: 18px;
@@ -25538,24 +26076,24 @@ table.data-table .price .currency-tax {
   cursor: pointer;
 }
 
-/* line 555, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 634, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li .checker {
   position: absolute;
   top: 2px;
   left: 5px;
 }
 
-/* line 561, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 640, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li.filter-sub-department {
   padding: 2px 5px 2px 60px !important;
 }
 
-/* line 565, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 644, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li.filter-sub-department .checker {
   left: 32px;
 }
 
-/* line 569, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 648, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li.filter-feature-group {
   padding: 5px 26px 5px 5px !important;
   position: relative;
@@ -25580,38 +26118,38 @@ table.data-table .price .currency-tax {
   background-repeat: no-repeat;
 }
 
-/* line 580, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 659, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li.filter-feature-group .ui-icon {
   position: absolute;
   top: 4px;
   right: 5px;
 }
 
-/* line 586, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 665, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li label {
   font-size: 10px;
   font-size: 1rem;
   cursor: pointer;
 }
 
-/* line 591, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 670, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li label a {
   color: black;
   cursor: pointer;
 }
 
-/* line 596, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 675, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li.filter-sub-department label {
   font-size: 11px;
   font-size: 1.1rem;
 }
 
-/* line 600, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 679, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li .checker {
   margin: 0 5px 0 0 !important;
 }
 
-/* line 604, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 683, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .filter ul li span.fr {
   width: 30px;
   line-height: 20px;
@@ -25622,7 +26160,7 @@ table.data-table .price .currency-tax {
   color: #6c8087;
 }
 
-/* line 614, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 693, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket {
   width: 136px;
   height: 40px;
@@ -25631,7 +26169,7 @@ table.data-table .price .currency-tax {
   position: relative;
 }
 
-/* line 623, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 702, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket input.quantity {
   width: 40px;
   position: absolute;
@@ -25643,21 +26181,21 @@ table.data-table .price .currency-tax {
   border-radius: 4px 0 0 4px;
 }
 
-/* line 634, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 713, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket .buy {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-/* line 641, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 720, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket .increase-quantity,
 .add-to-basket .decrease-quantity {
   position: absolute;
   left: 40px;
 }
 
-/* line 647, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 726, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket .increase-quantity .ui-button-text,
 .add-to-basket .decrease-quantity .ui-button-text {
   width: 10px;
@@ -25668,7 +26206,7 @@ table.data-table .price .currency-tax {
   text-align: center;
 }
 
-/* line 658, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 737, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket .increase-quantity {
   top: 0;
   -webkit-border-radius: 0 4px 0 0;
@@ -25676,7 +26214,7 @@ table.data-table .price .currency-tax {
   border-radius: 0 4px 0 0;
 }
 
-/* line 664, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 743, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket .decrease-quantity {
   bottom: 0;
   -webkit-border-radius: 0 0 4px 0;
@@ -25684,12 +26222,12 @@ table.data-table .price .currency-tax {
   border-radius: 0 0 4px 0;
 }
 
-/* line 670, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 749, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .add-to-basket .buy .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 674, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 753, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product td .form-helper {
   position: relative;
   top: auto;
@@ -25697,18 +26235,18 @@ table.data-table .price .currency-tax {
   right: auto;
 }
 
-/* line 681, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 760, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product td p {
   line-height: 150%;
   margin: 0;
 }
 
-/* line 686, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 765, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .ui-widget-content p {
   line-height: 150%;
 }
 
-/* line 690, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 769, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-image-container {
   padding: 10px;
   margin: 0 10px 0 0;
@@ -25721,7 +26259,7 @@ table.data-table .price .currency-tax {
   box-shadow: 0 0 10px 0 #9fbdc8;
 }
 
-/* line 698, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 777, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product .border-bottom-separator {
   border-bottom: 1px solid #e4eaec;
   -webkit-box-shadow: none !important;
@@ -25729,7 +26267,7 @@ table.data-table .price .currency-tax {
   box-shadow: none !important;
 }
 
-/* line 703, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 782, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-listing-header {
   background: #e4eaec;
   background: -moz-linear-gradient(top, #e4eaec 0%, white 100%);
@@ -25749,7 +26287,7 @@ table.data-table .price .currency-tax {
   background-repeat: no-repeat;
 }
 
-/* line 707, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 786, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-listing-header h1 {
   padding: 10px;
   margin: 0 -10px 10px -10px;
@@ -25766,7 +26304,7 @@ table.data-table .price .currency-tax {
   font-weight: normal;
 }
 
-/* line 721, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
+/* line 800, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/products/products.scss */
 .product-listing-header p {
   padding: 0 0 10px 0;
   margin: 0;
@@ -25779,6 +26317,176 @@ table.data-table .price .currency-tax {
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
+/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 297, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -26171,6 +26879,176 @@ table.data-table .price .currency-tax {
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
+/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 297, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -26182,13 +27060,15 @@ table.data-table .price .currency-tax {
 /* line 4, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-wrapper {
   position: relative;
+  overflow: hidden;
 }
 
-/* line 8, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 9, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-wrapper h1 {
   padding: 20px;
   position: absolute;
   top: 40px;
+  border: 0 none !important;
   color: white;
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNi2AwAALwAtgXXY6AAAAAASUVORK5CYII=');
   background: rgba(0, 0, 0, 0.7);
@@ -26201,32 +27081,32 @@ table.data-table .price .currency-tax {
   font-weight: normal;
 }
 
-/* line 22, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 24, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-wrapper h1.left {
   left: 0;
   text-align: left;
 }
 
-/* line 27, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 29, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-wrapper h1.right {
   right: 0;
   text-align: right;
 }
 
-/* line 32, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 34, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-wrapper img.logo {
   position: absolute;
   top: 15px;
   right: 15px;
 }
 
-/* line 38, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 40, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider {
   padding: 0;
   margin: 0;
 }
 
-/* line 43, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 45, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-btn {
   display: block;
   background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite.png");
@@ -26241,7 +27121,7 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 54, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 56, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-prev, .rhino-next {
   width: 32px;
   height: 32px;
@@ -26249,29 +27129,29 @@ table.data-table .price .currency-tax {
   top: 50%;
 }
 
-/* line 62, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 64, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-prev {
   left: 10px;
   background-position: 0 0;
 }
 
-/* line 67, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 69, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-next {
   right: 10px;
   background-position: -32px 0;
 }
 
-/* line 72, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 74, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-prev:hover {
   background-position: 0 -32px;
 }
 
-/* line 76, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 78, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-next:hover {
   background-position: -32px -32px;
 }
 
-/* line 80, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 82, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-toggle {
   width: 17px;
   height: 20px;
@@ -26279,34 +27159,34 @@ table.data-table .price .currency-tax {
   top: 10px;
 }
 
-/* line 88, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 90, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-play {
   background-position: -64px 0;
 }
 
-/* line 92, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 94, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-play:hover {
   background-position: -64px -20px;
 }
 
-/* line 96, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 98, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-pause {
   background-position: -81px 0;
 }
 
-/* line 100, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 102, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-pause:hover {
   background-position: -81px -20px;
 }
 
-/* line 104, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 106, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-container {
   position: relative;
   padding: 0;
   margin: 0;
 }
 
-/* line 110, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 112, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-caption {
   padding: 10px;
   display: none;
@@ -26326,7 +27206,7 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 127, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 129, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-bullets {
   margin: 0 0 0 -50px;
   padding: 0;
@@ -26335,14 +27215,14 @@ table.data-table .price .currency-tax {
   left: 50%;
 }
 
-/* line 136, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 138, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-bullets li {
   margin: 0;
   float: left;
   display: inline;
 }
 
-/* line 143, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 145, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-bullets li a.rhino-bullet {
   width: 20px;
   height: 20px;
@@ -26368,24 +27248,24 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 167, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-bullets li a.rhino-bullet:hover, .rhino-bullets li a.rhino-bullet:focus {
   background-position: -118px -20px;
 }
 
-/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 171, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-bullets li a.rhino-bullet.rhino-active-bullet {
   background-position: -98px 0;
 }
 
-/* line 174, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 176, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .rhino-container,
 .rhino-container ul {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 182, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 184, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-homepage,
 .slider-homepage .rhino-container,
 .slider-homepage .rhino-container ul,
@@ -26394,13 +27274,13 @@ table.data-table .price .currency-tax {
   height: 300px;
 }
 
-/* line 187, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 20px -10px;
 }
 
-/* line 195, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-gallery,
 .slider-gallery .rhino-container,
 .slider-gallery .rhino-container ul,
@@ -26409,20 +27289,20 @@ table.data-table .price .currency-tax {
   height: 400px;
 }
 
-/* line 200, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 202, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-gallery .rhino-container ul li img {
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
   border-radius: 4px 4px 0 0;
 }
 
-/* line 204, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 206, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-dialog-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 10px -10px;
 }
 
-/* line 212, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+/* line 214, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
 .slider-dialog-gallery,
 .slider-dialog-gallery .rhino-container,
 .slider-dialog-gallery .rhino-container ul,
@@ -26432,12 +27312,12 @@ table.data-table .price .currency-tax {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 242, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+  /* line 244, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
   .rhino-btn {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }
 
-  /* line 246, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
+  /* line 248, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/sliders/sliders.scss */
   .rhino-bullets li a.rhino-bullet {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }
@@ -26453,7 +27333,7 @@ table.data-table .price .currency-tax {
 }
 
 /* line 14, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/layers/layers.scss */
-.unique-selling-points-container {
+.sub-menu {
   z-index: 3;
 }
 
@@ -26634,4 +27514,216 @@ div.etalage_description {
 /* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/layers/layers.scss */
 .loading-container {
   z-index: 30;
+}
+
+/*
+  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
+  rgba-background mixin can now be passed an option $dir variable
+*/
+/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 297, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
+@font-face {
+  font-family: "Stag Medium";
+  src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
+  src: local("☺"), url("/bundles/kacsite/css/resources/fonts/stag-medium.woff") format("woff"), url("/bundles/kacsite/css/resources/fonts/stag-medium.ttf") format("truetype"), url("/bundles/kacsite/css/resources/fonts/stag-medium.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 4, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/listing/listing.scss */
+.admin-container {
+  padding: 10px;
+  background: #29a3cc;
+  background: -moz-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #baebfc), color-stop(5%, #29a3cc), color-stop(100%, #007398));
+  background: -webkit-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -o-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -ms-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: linear-gradient(to bottom, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#29a3cc', endColorstr = '#007398', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JhZWJmYyIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiMyOWEzY2MiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDczOTgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #baebfc), color-stop(5%, #29a3cc), color-stop(100%, #007398));
+  background-image: -webkit-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: -moz-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: -o-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-repeat: no-repeat;
+  -webkit-box-shadow: inset 0 1px 5px 0 black;
+  -webkit-box-shadow: inset 0 1px 5px 0 black;
+  -moz-box-shadow: inset 0 1px 5px 0 black;
+  -moz-box-shadow: inset 0 1px 5px 0 black;
+  box-shadow: inset 0 1px 5px 0 black;
+  box-shadow: inset 0 1px 5px 0 black;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
