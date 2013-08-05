@@ -12,7 +12,7 @@ ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 
 # Permissions
-set :writable_dirs,     [app_path + "/cache", app_path + "/logs", web_path + "/uploads"]
+set :writable_dirs,     [app_path + "/cache", app_path + "/logs", web_path + "/uploads", web_path + "/media"]
 set :permission_method,   :acl
 set :use_set_permissions, true
 set :use_sudo , false
@@ -23,7 +23,7 @@ set :scm, :git
 
 # Symfony2 configuration
 set :shared_files, ["app/config/parameters.yml", "web/sitemap.xml", "web/google-products.xml"]
-set :shared_children, [app_path + "/logs", web_path + "/uploads", app_path + "/sessions"]
+set :shared_children, [app_path + "/logs", web_path + "/uploads", web_path + "/media"]
 set :use_composer, true
 set :copy_vendors, true
 set :dump_assetic_assets, true
