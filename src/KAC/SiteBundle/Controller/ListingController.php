@@ -240,15 +240,18 @@ class ListingController extends Controller
 	public function searchAction(Request $request, $departmentId = null, $brandId = null, $all = false)
     {
         // Check if there is an exact match with the product code
-        $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->findOneBy(array(
-            'productCode' => $request->query->get('q')
-        ));
-        if($product)
+        if (!$request->isXmlHttpRequest())
         {
-            return $this->redirect($this->generateUrl('routing', array(
-                'url' => $product->getUrl()
-            )));
+            $em = $this->getDoctrine()->getManager();
+            $product = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->findOneBy(array(
+                'productCode' => $request->query->get('q')
+            ));
+            if($product)
+            {
+                return $this->redirect($this->generateUrl('routing', array(
+                    'url' => $product->getUrl()
+                )));
+            }
         }
 
         // Fetch products from solr
@@ -363,66 +366,17 @@ class ListingController extends Controller
             $facets = $result->getFacetSet();
             $stats = $solarium->select($statsQuery)->getStats();
         } catch (\Solarium_Client_HttpException $e) {
-            throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
+            $msg = 'There seems to be an issue with our search engine. Please check later.';
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(array('status' => 'error', 'message' => $msg), 500);
+            } else  {
+                throw new HttpException(500, $msg);
+            }
         }
 
-        return $this->render('KACSiteBundle:Listing:search.html.twig', array(
-            'facets' => $facets,
-            'featureGroups' => $featureGroups,
-            'pagination' => $pagination,
-            'stats' => $stats,
-        ));
-    }
-
-    /**
-     * @Route("/search-autocomplete.html", name="listing_search_autocomplete")
-     * @Method({"GET"})
-     */
-	public function searchAutocompleteAction(Request $request, $departmentId = null, $brandId = null, $all = false)
-    {
-        /**
-         * Define variable types
-         * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
-         * @var $product Product
-         */
-        $data = array();
-
-        // Set query string
-        if ($request->query->has('q'))
-        {
-            /** @var $solarium \Solarium_Client */
-            $solarium = $this->get('solarium.client');
-
-            $query = $solarium->createSelect();
-            $helper = $query->getHelper();
-
-//            if($this->get('security.context')->isGranted('ROLE_ADMIN'))
-//            {
-//                $queryString = $request->query->get('q');
-//            } else {
-//                $queryString = $query->getHelper()->escapeTerm($request->query->get('q'));
-//            }
-            $queryString = $query->getHelper()->escapeTerm($request->query->get('q'));
-
-            $dismax = $query->getDisMax();
-            $dismax->setQueryFields(array('product_code^5', 'header^2', 'brand^3.5', 'page_title', 'short_description', 'search_words', 'text'));
-            $dismax->setPhraseFields(array('product_code^5', 'short_description^30'));
-            $dismax->setQueryParser('edismax');
-            $query->setQuery($queryString);
-
-            // Ensure that only the correct products are shown
-            if(!$this->get('security.context')->isGranted('ROLE_ADMIN'))
-            {
-                $query->createFilterQuery('status')->setQuery('status:a');
-            }
-
-            try {
-                $resultSet = $solarium->select($query);
-            } catch (\Solarium_Client_HttpException $e) {
-                throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
-            }
-
-            foreach($resultSet as $document)
+        if ($request->isXmlHttpRequest()) {
+            $data = array();
+            foreach($pagination as $document)
             {
                 $data[] = array(
                     'header' => $document->header,
@@ -433,9 +387,17 @@ class ListingController extends Controller
                     'tokens' => array_merge(explode(' ', $document->header), $document->product_code),
                 );
             }
-        }
 
-        return new JsonResponse($data);
+            return new JsonResponse($data);
+        } else {
+            return $this->render('KACSiteBundle:Listing:search.html.twig', array(
+                'query' => $query,
+                'facets' => $facets,
+                'featureGroups' => $featureGroups,
+                'pagination' => $pagination,
+                'stats' => $stats,
+            ));
+        }
     }
 
     /**
