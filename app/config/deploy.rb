@@ -32,6 +32,7 @@ set :model_manager, "doctrine"
 
 # Hooks
 after "deploy:update_code", "deploy:flush_apc"
+after "deploy:update_code", "deploy:solr"
 after "deploy", "deploy:cleanup"
 
 namespace :deploy do
@@ -41,6 +42,11 @@ namespace :deploy do
         run "#{try_sudo} php -r 'apc_clear_cache() ? exit( 0 ) : exit( -1 );'"
         capifony_puts_ok
     end
+    desc "Update the solr schema and run the reindex command"
+    task :solr do
+        solr.update_config
+        solr.reindex
+    end
     desc "Restart Apache"
     task :restart, :except => { :no_release => true }, :roles => :app do
         run "sudo service apache2 restart"
@@ -48,10 +54,7 @@ namespace :deploy do
     end
 end
 namespace :solr do
-    task :deploy do
-        deploy.update_solr_config
-        deploy.solr_reindex
-    end
+    desc "Update the solr schema file"
     task :update_config do
         capifony_pretty_print "--> Updating solr schema.xml"
 
@@ -63,6 +66,7 @@ namespace :solr do
 
         capifony_puts_ok
     end
+    desc "Warm up the solr index"
     task :reindex do
         capifony_pretty_print "--> Warming up solr index"
         run "#{try_sudo} sh -c 'cd #{latest_release} && #{php_bin} #{symfony_console} admin:index:warmup --env=#{symfony_env_prod}'"
