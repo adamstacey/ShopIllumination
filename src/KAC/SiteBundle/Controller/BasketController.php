@@ -4,6 +4,7 @@ namespace KAC\SiteBundle\Controller;
 
 use KAC\SiteBundle\Form\Basket\BasketType;
 use KAC\SiteBundle\Form\Basket\NewBasketItemType;
+use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
 use KAC\SiteBundle\Model\BasketItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -193,5 +194,38 @@ class BasketController extends Controller
         } else {
             return new Response(json_encode(array('status' => 'Success')));
         }
+    }
+
+    /**
+     * @Route("/delivery-methods.html", name="basket_delivery_methods")
+     */
+    public function deliveryMethodsAction(Request $request)
+    {
+        $manager = $this->container->get('kac_site.manager.basket');
+        $deliveryManager = $this->container->get('kac_site.manager.delivery');
+
+        $basket = $manager->getBasket();
+
+        $form = $this->createFormBuilder()
+            ->add('countryCode', 'country')
+            ->add('postZipCode', 'text')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+            $data = $form->getData();
+
+            // Calculate zone and band
+            $zone = $deliveryManager->calculateZone($data['countryCode'], $data['postZipCode']);
+            $band = $deliveryManager->calculateBand($basket->getItems());
+
+            // Get available methods
+            $methods = DeliveryMethodFactory::getMethods($zone, $band);
+
+            return new Response(json_encode(array('status' => 'Success', 'methods' => $methods)));
+        }
+
+        return new Response(json_encode(array('status' => 'Failure')), 400);
     }
 }
