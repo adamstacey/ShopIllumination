@@ -32,7 +32,7 @@ set :model_manager, "doctrine"
 
 # Hooks
 after "deploy:update_code", "deploy:flush_apc"
-after "deploy:update_code", "deploy:solr"
+# after "deploy:update_code", "deploy:solr"
 after "deploy", "deploy:cleanup"
 
 namespace :deploy do
