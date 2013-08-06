@@ -5,10 +5,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PaymentType extends AbstractType {
+class PaymentTypeType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('card', new CardType());
+        $builder->add('paymentType', 'choice', array(
+            'choices' => array(
+                'sagepay' => 'Credit/Debit Card',
+                'paypal' => 'Paypal',
+                'google' => 'Google Wallet'
+            ),
+            'label' => 'Payment Method',
+            'required' => true,
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -25,6 +33,6 @@ class PaymentType extends AbstractType {
      */
     public function getName()
     {
-        return 'checkout_payment';
+        return 'checkout_payment_type';
     }
 }

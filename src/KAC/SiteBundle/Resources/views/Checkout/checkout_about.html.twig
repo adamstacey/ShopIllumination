@@ -32,6 +32,9 @@
                                         {{ form_row(form.mobile) }}
                                     </fieldset>
                                     <div class="clearfix">
+                                        {% if app.request.get('guest') %}
+                                            <a href="{{ path('checkout_login') }}" class="button button-small mrm fl">Back</a>
+                                        {% endif %}
                                         <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
                                         <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Continue</button>
                                     </div>
@@ -41,7 +44,6 @@
                     </div>
                 </div>
                 {% include 'KACSiteBundle:Checkout:orderSummary.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
-                {% include 'KACSiteBundle:Checkout:deliveryOptions.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
             </div>
             {{ form_rest(form) }}
         </form>

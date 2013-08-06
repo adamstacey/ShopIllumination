@@ -1,0 +1,102 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Secure Checkout | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Secure Checkout</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all) }}" {{ form_enctype(form) }}>
+            <div class="checkout_breadcrumb">
+            </div>
+            <div class="widget-group clearfix">
+                <div class="widget widget-3-of-5">
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
+                                    <h2>Billing</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-all">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset class="pbm billing-address">
+                                        <legend>Billing Address</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.billingFirstName) }}
+                                        {{ form_row(form.billingLastName) }}
+                                        {{ form_row(form.billingOrganisationName) }}
+                                        {{ form_row(form.billingAddressLine1) }}
+                                        {{ form_row(form.billingAddressLine2) }}
+                                        {{ form_row(form.billingTownCity) }}
+                                        {{ form_row(form.billingCountyState) }}
+                                        {{ form_row(form.billingPostZipCode) }}
+                                        {{ form_row(form.billingCountryCode) }}
+                                        {{ form_row(form.useBillingAsDelivery) }}
+                                    </fieldset>
+                                    <fieldset class="pbm delivery-address {% if form.vars.value.useBillingAsDelivery %}ui-helper-hidden{% endif %}">
+                                        <legend>Delivery Address</legend>
+                                        <div class="clear"></div>
+                                        {{ form_row(form.deliveryFirstName) }}
+                                        {{ form_row(form.deliveryLastName) }}
+                                        {{ form_row(form.deliveryOrganisationName) }}
+                                        {{ form_row(form.deliveryAddressLine1) }}
+                                        {{ form_row(form.deliveryAddressLine2) }}
+                                        {{ form_row(form.deliveryTownCity) }}
+                                        {{ form_row(form.deliveryCountyState) }}
+                                        {{ form_row(form.deliveryPostZipCode) }}
+                                        {{ form_row(form.deliveryCountryCode) }}
+                                    </fieldset>
+                                    <div class="clearfix">
+                                        {% if app.request.get('guest') %}
+                                            <a href="{{ path('checkout_about') }}" class="button button-small mrm fl">Back</a>
+                                        {% endif %}
+                                        <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
+                                        <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Continue</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% include 'KACSiteBundle:Checkout:orderSummary.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
+            </div>
+            {{ form_rest(form) }}
+        </form>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".billing-as-delivery-input").change(function() {
+                    if($(this).is(':checked')) {
+                        $(".delivery-address").hide();
+
+                        // Replace all values with the values from the billing address
+                        for(var i=1;i<9;i++) {
+                            var $billingInput   = $(".billing-address > :eq(" + i + ") :input"),
+                                    $deliveryInput   = $(".delivery-address > :eq(" + i + ") :input");
+
+                            $deliveryInput.val($billingInput.val());
+                        }
+                    } else {
+                        $(".delivery-address").show();
+                        generateFormElements($(".delivery-address"));
+                    }
+                });
+                $(".billing-address :input").change(function() {
+                    if($(".billing-as-delivery-input").is(':checked')) {
+                        // Get index of changed field
+                        var index = $(this).parent().parent().index(),
+                        // Get related delivery address field
+                                $el   = $(".delivery-address > :eq(" + index + ")").find(":input");
+
+                        // Update field with the value from the billing address
+                        $el.val($(this).val());
+                    }
+                });
+            });
+        </script>
+    </section>
+{% endblock %}

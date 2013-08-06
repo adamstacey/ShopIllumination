@@ -1,6 +1,7 @@
 {% import _self as helpers %}
 
 {% macro errorList(formElements) %}
+    {{ form_errors(formElements) }}
     {% for formElement in formElements %}
         {{ form_errors(formElement) }}
         {{ _self.errorList(formElement) }}

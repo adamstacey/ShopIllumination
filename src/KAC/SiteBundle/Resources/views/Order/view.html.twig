@@ -233,68 +233,7 @@
                         <h2>Products</h2>
                     </header>
                     <section class="ui-widget-content ui-corner-all">
-                        <table class="data-table">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Product Code</th>
-                                <th>Product</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for item in order.products %}
-                                {% set variant = item.variant %}
-                                {% set product = item.product %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>
-                                        <a href="{{ path('routing', {'url': variant.url}) }}">{{ variant.productCode }}</a>
-                                    </td>
-                                    <td>
-                                        <p>
-                                            <a href="{{ path('routing', {'url': variant.url}) }}">{{ variant.description.header }}</a>
-                                        </p>
-                                    </td>
-                                    <td>{{ item.quantity }}</td>
-                                    <td>{{ item.unitCost|currency }}</td>
-                                    <td>{{ item.subTotal|currency }}</td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="6">
-                                        <div class="message message-help mas">
-                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
-                                            <p>There are no product in this order.</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td colspan="6">
-                                    <span class="fr"><strong>Sub-Total</strong>: {{ order.subTotal|currency }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">
-                                    <span class="fr"><strong>Delivery Charge</strong>: {{ order.deliveryCharge|currency }}</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="6" class="">
-                                    <span class="fr"><strong>Discount</strong>: {{ order.discount|currency }}</span>
-                                </td>
-                            </tr>
-                            <tr style="background-color: #f1f1f1;">
-                                <td colspan="6">
-                                    <span class="fr"><strong>Total</strong>: {{ order.total|currency }}</span>
-                                </td>
-                            </tr>
-                            </tfoot>
+                        form.method
                         </table>
                     </section>
                 </div>

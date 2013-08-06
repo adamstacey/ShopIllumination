@@ -6,13 +6,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AboutType extends AbstractType {
-    private $deliveryMethods;
-
-    function __construct($deliveryMethods)
-    {
-        $this->deliveryMethods = $deliveryMethods;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('emailAddress', 'repeated', array(
@@ -36,13 +29,6 @@ class AboutType extends AbstractType {
             'label' => 'Mobile',
             'required' => false,
         ));
-
-        $builder->add('deliveryType', 'choice', array(
-            'choices' => array_combine($this->deliveryMethods, $this->deliveryMethods),
-            'expanded' => true,
-            'multiple' => false,
-        ));
-        $builder->add('updateDelivery', 'submit');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

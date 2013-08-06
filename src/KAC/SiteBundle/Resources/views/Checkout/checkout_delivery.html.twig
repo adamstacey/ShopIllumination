@@ -21,23 +21,41 @@
                             <div class="ui-widget">
                                 <header class="ui-widget-header ui-corner-top">
                                     <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
-                                    <h2>Delivery</h2>
+                                    <h2>Choose Delivery Method</h2>
                                 </header>
                                 <section class="ui-widget-content ui-corner-all">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
-                                        {{ form_row(form.deliveryFirstName) }}
-                                        {{ form_row(form.deliveryLastName) }}
-                                        {{ form_row(form.deliveryOrganisationName) }}
-                                        {{ form_row(form.deliveryAddressLine1) }}
-                                        {{ form_row(form.deliveryAddressLine2) }}
-                                        {{ form_row(form.deliveryTownCity) }}
-                                        {{ form_row(form.deliveryCountyState) }}
-                                        {{ form_row(form.deliveryPostZipCode) }}
-                                        {{ form_row(form.deliveryCountryCode) }}
+                                        <table class="delivery-methods data-table" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                            {% for field in form.method %}
+                                                {% set method = deliveryMethods[loop.index0] %}
+                                                {% set price = method.calculateCost(basket.delivery.zone, basket.delivery.band, basket.items) %}
+                                                <tr class="{{ cycle(['odd', 'even'], loop.index) }}" data-name="{{ method.name }}" data-price="{{ price|currency('GBP', true, true, '') }}">
+                                                    <td>
+                                                    <span class="delivery-service">
+                                                        <span>{{ method.name|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}</span><br />
+                                                    </span>
+                                                    </td>
+                                                    <td>
+                                                        {% set estimatedDeliveryDays = method.calculateEstimatedDeliveryDays(basket.delivery.zone, basket.delivery.band) %}
+                                                        {% if estimatedDeliveryDays.start > 0 %}
+                                                            ({{ estimatedDeliveryDays.start }} - {{ estimatedDeliveryDays.end }} working days)
+                                                        {% else %}
+                                                            &nbsp;
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="tac">
+                                                        {{ form_widget(field) }}
+                                                    </td>
+                                                    <td class="tac">
+                                                        <span class="{% if price != 0 %}colour-red{% endif %}"><strong>{{ price|currency('GBP', true, true, '')|raw }}</strong></span>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
                                     </fieldset>
                                     <div class="clearfix">
-                                        <a href="{{ path('checkout_billing') }}" class="button button-small mrm fl">Back</a>
+                                        <a href="{{ path('checkout_delivery') }}" class="button button-small mrm fl">Back</a>
                                         <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
                                         <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Continue</button>
                                     </div>
@@ -47,9 +65,17 @@
                     </div>
                 </div>
                 {% include 'KACSiteBundle:Checkout:orderSummary.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
-                {% include 'KACSiteBundle:Checkout:deliveryOptions.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
             </div>
             {{ form_rest(form) }}
         </form>
+        <script>
+            $(".delivery-methods tr").click(function() {
+                var input = $(this).find(":input");
+                input.prop("checked", true);
+                $(".delivery-methods :input").uniform.update();
+                var price = input.closest("tr").data("price");
+                $(".delivery-price strong").html(price);
+            });
+        </script>
     </section>
 {% endblock %}

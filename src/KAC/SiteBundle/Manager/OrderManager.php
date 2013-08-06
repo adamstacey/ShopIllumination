@@ -64,6 +64,7 @@ class OrderManager extends Manager
         return $this->order;
     }
 
+
     public function getOpenOrder()
     {
         $order = $this->getOrder();
@@ -74,6 +75,8 @@ class OrderManager extends Manager
         $this->deleteOrder();
         $this->getOrder();
         $this->saveOrder();
+
+        return $this->order;
     }
 
     public function saveOrder()
@@ -179,7 +182,8 @@ class OrderManager extends Manager
     public function bindBasketData(Order $order, Basket $basket)
     {
         // Update delivery info
-        $this->updateDeliveryInfo($order, $basket);
+        $order->setDeliveryType($basket->getDelivery()->getMethod()->getName());
+        $this->updateDeliveryInfo($order);
 
         // Bind basket items
         foreach($basket->getItems() as $item)

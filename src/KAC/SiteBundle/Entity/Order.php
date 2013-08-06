@@ -331,6 +331,7 @@ class Order
      */
     private $deletedAt;
 
+    private $method;
     private $card;
 
     public function isDeleted()
@@ -602,7 +603,7 @@ class Order
 
     public function getCheckoutSteps()
     {
-        return array('About', 'Billing', 'Delivery', 'Payment', 'Confirmation', 'Complete');
+        return array('About', 'PaymentType', 'Address', 'Delivery', 'Payment', 'Confirmation', 'Complete');
     }
 
     /**
@@ -2105,5 +2106,21 @@ class Order
     public function getCard()
     {
         return $this->card;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param mixed $method
+     */
+    public function setMethod($method)
+    {
+        $this->method = $method;
     }
 }
