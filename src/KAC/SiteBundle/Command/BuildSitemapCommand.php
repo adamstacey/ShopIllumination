@@ -54,7 +54,8 @@ class BuildSitemapCommand extends ContainerAwareCommand
         // Add all dynamic routes
         $routeManager = $this->getContainer()->get('kac_site.manager.routing');
         $result = $em->createQuery("SELECT r FROM KAC\\SiteBundle\\Entity\Routing r")->iterate();
-        while (($row = $result->next()) !== false) {
+        while (($row = $result->next()) !== false)
+        {
             $route = $row[0];
 
             // Fetch the relevant object
@@ -87,7 +88,8 @@ class BuildSitemapCommand extends ContainerAwareCommand
             $xmlWriter->writeElement('priority', $priority);
             $xmlWriter->endElement();
 
-            if (($i % $batchSize) === 0) {
+            if (($i % $batchSize) === 0)
+            {
                 file_put_contents($filename, $xmlWriter->flush(true), FILE_APPEND);
             }
 
