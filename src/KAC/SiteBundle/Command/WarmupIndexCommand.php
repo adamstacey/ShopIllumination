@@ -3,6 +3,7 @@ namespace KAC\SiteBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
+use Solarium_Client_Request;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +17,9 @@ class WarmupIndexCommand extends ContainerAwareCommand
     {
         $this
             ->setName('admin:index:warmup')
-            ->setDescription('Load data into Solr index');
+            ->setDescription('Load data into Solr index')
+            ->addOption('no-swap', null, InputOption::VALUE_NONE, 'Do not swap the live and temporary cores')
+            ->addOption('no-reload', null, InputOption::VALUE_NONE, 'Do not reload the cores');
         ;
     }
 
@@ -28,7 +31,7 @@ class WarmupIndexCommand extends ContainerAwareCommand
          * @var $em EntityManager
          */
         $em = $this->getContainer()->get('doctrine')->getManager();
-        $solarium = $this->getContainer()->get('solarium.client.product');
+        $solarium = $this->getContainer()->get('solarium.client.products_tmp');
         $productIndexer = new ProductIndexer($solarium, $this->getContainer()->get('doctrine'));
         $buffer = $solarium->getPlugin('bufferedadd');
 
@@ -63,6 +66,33 @@ class WarmupIndexCommand extends ContainerAwareCommand
             $output->writeln("An error occurred");
         }
         $output->writeln($i . ' documents created');
+
+        // Reload products_tmp core
+        if(!$input->getOption('no-reload'))
+        {
+            $request = new Solarium_Client_Request(array(
+                'param' => array('core' => 'products_tmp', 'action' => 'RELOAD')
+            ));
+            $request->setHandler('cores');
+            $this->getContainer()->get('solarium.client.adapter.admin')->execute($request);
+            $request = new Solarium_Client_Request(array(
+                'param' => array('core' => 'products', 'action' => 'RELOAD')
+            ));
+            $request->setHandler('cores');
+            $this->getContainer()->get('solarium.client.adapter.admin')->execute($request);
+            $output->writeln("Reloaded cores");
+        }
+
+        // Swap products and products_tmp cores
+        if(!$input->getOption('no-swap'))
+        {
+            $request = new Solarium_Client_Request(array(
+                'param' => array('core' => 'products', 'other' => 'products_tmp', 'action' => 'SWAP')
+            ));
+            $request->setHandler('cores');
+            $this->getContainer()->get('solarium.client.adapter.admin')->execute($request);
+            $output->writeln("Swapped temporary core with live core");
+        }
 
         $output->writeln('Finished!');
     }

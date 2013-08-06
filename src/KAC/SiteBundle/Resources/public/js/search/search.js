@@ -21,7 +21,7 @@ $(document).ready(function() {
         },
         {
             name: 'products',
-            remote: routes['listing_search_autocomplete'] + '?q=%QUERY'
+            remote: routes['listing_search'] + '?q=%QUERY'
         }
     ]);
     $('.search-container #formSearch').on('typeahead:selected', function(event, data) {

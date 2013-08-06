@@ -47,7 +47,7 @@ services:
   # Indexers
   kac_site.indexer.product:
     class: KAC\SiteBundle\Indexer\ProductIndexer
-    arguments: [@solarium.client.product, @doctrine]
+    arguments: [@solarium.client.products, @doctrine]
 
   # Listeners
   kac_site.listener.product:

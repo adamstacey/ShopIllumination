@@ -3,6 +3,10 @@ set :user, "root"
 set :deploy_to, "/home/sites/#{domain}"
 ssh_options[:port] = 2020
 
+# Solr options
+set :solr_path, "http://kitchenappliancecentre.co.uk:8080/solrstaging"
+set :solr_dir, "/var/solrstaging"
+
 server "server.kitchenappliancecentre.co.uk", :app, :web, :db, :primary => true
 
 task :include_app_dev do
