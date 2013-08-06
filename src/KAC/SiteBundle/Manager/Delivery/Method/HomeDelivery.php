@@ -60,7 +60,7 @@ class HomeDelivery extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function getBaseEstimatedDeliveryDays($zone, $band)
+    function calculateEstimatedDeliveryDays($zone, $band)
     {
         if ($zone === 1 && in_array($band, array(3, 4, 5))) {
             return array(

@@ -36,6 +36,17 @@ interface DeliveryMethodInterface
     function calculateEstimatedDeliveryDays($zone, $band);
 
     /**
+     * Return an array containing the start and end of the range of days estimated
+     * to complete the delivery
+     *
+     * @param $zone
+     * @param $band
+     *
+     * @return array
+     */
+    function calculateEstimatedDeliveryDates($zone, $band);
+
+    /**
      * Get the name of the courier
      *
      * @return string

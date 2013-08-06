@@ -160,17 +160,18 @@
                                                     <label for="deliveryOption{{ loop.index }}">
                                                         <span class="delivery-service">
                                                             {{ method.name|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}
-                                                            <em> - </em>
-                                                            {% set price = method.calculatePrice(basket.delivery.zone, basket.delivery.band, basket.items) %}
+                                                            {% set price = method.getCost(basket.delivery.zone, basket.delivery.band, basket.items) %}
                                                             {% if price != 0 %}
+                                                                <em> - </em>
                                                                 <span class="colour-red"><strong>{{ price|currency('GBP', true, true, '')|raw }}</strong></span>
                                                             {% endif %}
                                                         </span>
                                                         <br />
                                                         <span class="small">
                                                             <em>
-                                                                {% if method.estimatedDeliveryDaysStart > 0 %}
-                                                                    ({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days)
+                                                                {% set estimatedDeliveryDays = method.calculateEstimatedDeliveryDays(basket.delivery.zone, basket.delivery.band) %}
+                                                                {% if estimatedDeliveryDays.start > 0 %}
+                                                                    ({{ estimatedDeliveryDays.start }} - {{ estimatedDeliveryDays.end }} working days)
                                                                 {% else %}
                                                                     &nbsp;
                                                                 {% endif %}
@@ -187,11 +188,13 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                {% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.end is defined) %}
+                                {% set estimatedDeliveryDates = method.calculateEstimatedDeliveryDays(basket.delivery.zone, basket.delivery.band) %}
+                                {% if (estimatedDeliveryDates.start is defined) and (estimatedDeliveryDates.end is defined) %}
                                     <h4>Estimated Delivery Between</h4>
                                     <div class="clearfix">
                                         <p class="tac">
-                                            <span class="colour-red"><strong>{{ basket.estimatedDeliveryDays.start }}</strong></span><br /><span class="colour-red"><strong>{{ basket.estimatedDeliveryDays.end }}</strong></span>
+                                            <span class="colour-red"><strong>{{ estimatedDeliveryDates.start }}</strong></span><br />
+                                            <span class="colour-red"><strong>{{ estimatedDeliveryDates.end }}</strong></span>
                                         </p>
                                         <p class="tac small">Estimated delivery times are subject to availability, selected delivery options and locations.</p>
                                     </div>

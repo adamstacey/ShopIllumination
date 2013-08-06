@@ -62,7 +62,7 @@ class RoyalMailEconomy extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function getBaseEstimatedDeliveryDays($zone, $band)
+    function calculateEstimatedDeliveryDays($zone, $band)
     {
         if ($zone === 1) {
             return array(

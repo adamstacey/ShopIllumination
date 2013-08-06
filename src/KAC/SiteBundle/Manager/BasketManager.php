@@ -74,8 +74,11 @@ class BasketManager extends Manager
             $basket->getDelivery()->setBand($this->deliveryManager->calculateBand($basket->getItems()));
             $basket->getDelivery()->setMethods(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()));
 
-            if($basket->getDelivery()->getMethod() === '' && count($basket->getDelivery()->getMethods()) > 0)
-            {
+            if ((
+                    $basket->getDelivery()->getMethod() === ''
+                    || !DeliveryMethodFactory::getMethod($basket->getDelivery()->getMethod())->supportsLocation($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())
+                )
+                && count($basket->getDelivery()->getMethods()) > 0) {
                 $basket->getDelivery()->setMethod($basket->getDelivery()->getMethods()[0]->getName());
             }
 

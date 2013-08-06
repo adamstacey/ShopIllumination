@@ -12,7 +12,7 @@ class DeliveryManager extends Manager
 {
     public function calculateZone($country, $postcode)
     {
-        if($postcode === '')
+        if(!$postcode)
         {
             $postcode = 'NG162UZ';
         }
@@ -138,22 +138,22 @@ class DeliveryManager extends Manager
             switch ($item->getBaseDeliveryBand() * 1)
             {
                 case 1:
-                    $weighting = $weighting + 1 * $item->getQuantity();
+                    $weighting += (1 * $item->getQuantity());
                     break;
                 case 2:
-                    $weighting = $weighting + 5 * $item->getQuantity();
+                    $weighting += (5 * $item->getQuantity());
                     break;
                 case 3:
-                    $weighting = $weighting + 25 * $item->getQuantity();
+                    $weighting += (25 * $item->getQuantity());
                     break;
                 case 4:
-                    $weighting = $weighting + 75 * $item->getQuantity();
+                    $weighting += (75 * $item->getQuantity());
                     break;
                 case 5:
-                    $weighting = $weighting + 75000 * $item->getQuantity();
+                    $weighting += (75000 * $item->getQuantity());
                     break;
                 case 6:
-                    $weighting = $weighting + 75000000 * $item->getQuantity();
+                    $weighting += (75000000 * $item->getQuantity());
                     break;
             }
         }

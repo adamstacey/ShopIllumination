@@ -56,7 +56,7 @@ class ParcelDeliveryExpress extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function getBaseEstimatedDeliveryDays($zone, $band)
+    function calculateEstimatedDeliveryDays($zone, $band)
     {
         if ($zone === 3 && in_array($band, array(2))) {
             return array(

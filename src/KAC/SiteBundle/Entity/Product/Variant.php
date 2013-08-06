@@ -1015,7 +1015,12 @@ class Variant implements DescribableInterface
      */
     public function getDeliveryBand()
     {
-        return $this->deliveryBand;
+        if($this->deliveryBand == 0)
+        {
+            return $this->getProduct()->getDepartment()->getDepartment()->getDeliveryBand();
+        } else {
+            return $this->deliveryBand;
+        }
     }
 
     public function getBaseDeliveryBand()

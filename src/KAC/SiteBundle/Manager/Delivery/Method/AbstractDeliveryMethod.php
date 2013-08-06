@@ -6,10 +6,10 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
 {
     const CUT_OFF_TIME = 12;
 
-    public function calculateEstimatedDeliveryDays($zone, $band)
+    public function calculateEstimatedDeliveryDates($zone, $band)
     {
         // Calculate the weightings and overall band
-        $baseEstimatedDeliveryDays = $this->getBaseEstimatedDeliveryDays($zone, $band);
+        $baseEstimatedDeliveryDays = $this->calculateEstimatedDeliveryDays($zone, $band);
         $estimatedDeliveryDays = array('start' => '', 'end' => '', 'requested' => '');
 
         // Work out next day for delivery option
@@ -69,13 +69,5 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
         $estimatedDeliveryDays['requested'] = date("F d, Y H:i:s", strtotime("+$nextDay day"));
 
         return $estimatedDeliveryDays;
-    }
-
-    protected function getBaseEstimatedDeliveryDays($zone, $band)
-    {
-        return array(
-            'start' => 0,
-            'end' => 0,
-        );
     }
 } 

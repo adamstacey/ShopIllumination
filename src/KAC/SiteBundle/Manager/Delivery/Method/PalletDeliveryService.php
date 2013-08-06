@@ -62,7 +62,7 @@ class PalletDeliveryService extends AbstractDeliveryMethod
      *
      * @return array
      */
-    function getBaseEstimatedDeliveryDays($zone, $band)
+    function calculateEstimatedDeliveryDays($zone, $band)
     {
         if ($zone === 4 && in_array($band, array(3))) {
             return array(
