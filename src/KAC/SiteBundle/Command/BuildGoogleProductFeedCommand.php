@@ -1479,6 +1479,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         // Create XML writer
         $xmlWriter = new \XMLWriter();
         $xmlWriter->openMemory();
+        $xmlWriter->setIndent(true);
         $xmlWriter->startDocument('1.0', 'UTF-8');
 
         $batchSize = 20;
@@ -1512,7 +1513,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
             $product = $row[0];
 
             // Write each variant
-            foreach($product->getVariants() as $variant)
+            foreach ($product->getVariants() as $variant)
             {
                 if (!$product->getDescription() || !$variant->getDescription() || !$product->getDepartment())
                 {
@@ -1527,15 +1528,8 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
 
                 // Build item
                 $xmlWriter->startElement('item');
-
-                $xmlWriter->startElement('title');
-                $xmlWriter->writeCdata($variant->getDescription()->getPageTitle());
-                $xmlWriter->endElement();
-                $xmlWriter->startElement('link');
-                $xmlWriter->writeCdata($router->generate('routing', array(
-                    'url' => $url,
-                ), true));
-                $xmlWriter->endElement();
+                $xmlWriter->writeElement('title', $variant->getDescription()->getPageTitle());
+                $xmlWriter->writeElement('link', $router->generate('routing', array('url' => $url), true));
                 $xmlWriter->startElement('description');
                 $xmlWriter->writeCdata(
                     $variant->getDescription()->getHeader() . ' ' .
@@ -1552,13 +1546,11 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 {
                     $xmlWriter->writeElement('g:image_link', $this->getContainer()->get('templating.helper.assets')->getUrl($product->getImage()->getPublicPath()));
                 }
-
                 $xmlWriter->startElement('g:shipping');
                 $xmlWriter->writeElement('g:country', 'GB');
                 $xmlWriter->writeElement('g:service', 'Standard Delivery');
                 $xmlWriter->writeElement('g:price', number_format($variant->getDeliveryCost(), 2));
                 $xmlWriter->endElement();
-
                 $xmlWriter->writeElement('g:shipping_weight', $variant->getWeight());
                 $xmlWriter->writeElement('g:mpn', $variant->getProductCode());
                 $xmlWriter->writeElement('g:brand', $product->getBrand()->getDescription()->getName());
@@ -1593,9 +1585,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 // Departments
                 foreach(array_slice($product->getDepartments()->toArray(), 0, 4) as $department)
                 {
-                    $xmlWriter->startElement('g:adwords_labels');
-                    $xmlWriter->writeCdata(strtolower($department->getDepartment()->getDescription()->getHeader()));
-                    $xmlWriter->endElement();
+                    $xmlWriter->writeElement('g:adwords_labels', preg_replace("/[\r\n\t\s]+/s", " ", preg_replace("/[^a-zA-Z0-9\-\/\ ]?/", "", strtolower($department->getDepartment()->getDescription()->getHeader()))));
                 }
 
                 // Features
@@ -1605,9 +1595,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                     {
                         if ($feature->getFeatureGroup() !== null && $feature->getFeature() !== null && is_object($feature->getFeatureGroup()) && is_object($feature->getFeature()))
                         {
-                            $xmlWriter->startElement('g:adwords_labels');
-                            $xmlWriter->writeCdata(strtolower($feature->getFeatureGroup()->getName() . ' ' . $feature->getFeature()->getName()));
-                            $xmlWriter->endElement();
+                            $xmlWriter->writeElement('g:adwords_labels', preg_replace("/[\r\n\t\s]+/s", " ", preg_replace("/[^a-zA-Z0-9\-\/\ ]?/", "", strtolower($feature->getFeatureGroup()->getName() . ' ' . $feature->getFeature()->getName()))));
                         }
                     }
                 }
@@ -1649,14 +1637,8 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         {
             $maiaProductCount++;
             $xmlWriter->startElement('item');
-            $xmlWriter->startElement('title');
-            $xmlWriter->writeCdata('maia '.$maiaProduct['worktopColour'].' '.$maiaProduct['productCode'].' '.str_replace('"', '', $maiaProduct['header']));
-            $xmlWriter->endElement();
-            $xmlWriter->startElement('link');
-            $xmlWriter->writeCdata($router->generate('routing', array(
-                'url' => $maiaProduct['url'],
-            ), true));
-            $xmlWriter->endElement();
+            $xmlWriter->writeElement('title', 'maia '.$maiaProduct['worktopColour'].' '.$maiaProduct['productCode'].' '.str_replace('"', '', $maiaProduct['header']));
+            $xmlWriter->writeElement('link', $router->generate('routing', array('url' => $maiaProduct['url']), true));
             $xmlWriter->startElement('description');
             $xmlWriter->writeCdata('maia '.$maiaProduct['worktopColour'].' '.$maiaProduct['productCode'].' '.str_replace('"', '', $maiaProduct['header']));
             $xmlWriter->endElement();
