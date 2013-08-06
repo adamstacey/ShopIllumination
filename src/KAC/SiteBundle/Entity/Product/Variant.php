@@ -898,7 +898,7 @@ class Variant implements DescribableInterface
         {
             return $this->routings->first();
         }
-        return $this->getProduct()->getRouting();
+        return $this->getProduct()->getRouting(true);
     }
 
     /**

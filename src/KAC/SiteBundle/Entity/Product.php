@@ -880,13 +880,13 @@ class Product implements DescribableInterface
      *
      * @return Product\Routing
      */
-    public function getRouting()
+    public function getRouting($ignoreVariant=false)
     {
         if (count($this->routings) > 0)
         {
             return $this->routings->first();
         }
-        if($this->getVariant())
+        if($this->getVariant() && !$ignoreVariant)
         {
             return $this->getVariant()->getRouting();
         }
