@@ -33,8 +33,8 @@
                                                 <tr class="{{ cycle(['odd', 'even'], loop.index) }}" data-name="{{ method.name }}" data-price="{{ price|currency('GBP', true, true, '') }}">
                                                     <td>
                                                     <span class="delivery-service">
-                                                        <span>{{ method.name|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}</span><br />
-                                                    </span>
+                                                        <span>{{ method.name|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}</span>
+                                                        {#<span title="{{ method.description|raw }}" class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>                                                    </span>#}
                                                     </td>
                                                     <td>
                                                         {% set estimatedDeliveryDays = method.calculateEstimatedDeliveryDays(basket.delivery.zone, basket.delivery.band) %}

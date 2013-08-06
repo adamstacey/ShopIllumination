@@ -8,12 +8,12 @@
                 {% if order.products|length > 0 %}
                     <table class="data-table">
                         {% for item in order.products %}
-                            <tr>
-                                <td class="product-page-title" colspan="6">
+                            <tr class="even">
+                                <th class="product-page-title" colspan="6">
                                     <a href="{{ path('routing', {'url': item.url}) }}">{{ item.header }}</a>
-                                </td>
+                                </th>
                             </tr>
-                            <tr>
+                            <tr class="odd">
                                 <td class="ac">{{ item.quantity }}</td>
                                 <td class="ac">&times;</td>
                                 <td class="ac"><strong>{{ item.productCode }}</strong></td>
@@ -28,16 +28,22 @@
             <div id="basket-totals" class="clearfix">
                 <table width="100%" cellpadding="0" cellspacing="0" border="0">
                     <tr>
-                        <td class="al uppercase font-size-13"><strong>Subtotal before Delivery (inc. VAT):</strong></td>
-                        <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.subTotal|number_format(2) }}</strong></td>
+                        <td class="al"><strong>Subtotal before Delivery:</strong><br /><span class="small">(inc. VAT)</span></td>
+                        <td width="150" class="colour-red tar"><strong>{{ order.subTotal|currency('GBP', true, true, '')|raw }}</strong></td>
                     </tr>
                     <tr>
-                        <td class="al uppercase font-size-13"><strong>Delivery Charge (inc. VAT):</strong></td>
-                        <td width="1" class="delivery-price price ar font-size-13"><strong>&pound;{{ order.deliveryCharge|number_format(2) }}</strong></td>
+                        <td class="al"><strong>Delivery Charge:</strong><br /><span class="small">(inc. VAT)</span></td>
+                        <td width="150" class="tar">{{ order.deliveryCharge|currency('GBP', true, true, '')|raw }}</td>
                     </tr>
-                    <tr>
-                        <td class="al uppercase font-size-13"><strong>Total to Pay (inc. VAT):</strong></td>
-                        <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
+                    {% if basket.savings > 0 %}
+                        <tr>
+                            <td class="tal"><strong>You Save:</strong></td>
+                            <td width="150" class="nowarp colour-green tar">{{ basket.savings|currency('GBP', true, true, '')|raw }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr class="product">
+                        <td class="tal"><strong>TOTAL TO PAY:<br /></strong><span class="small">(inc. VAT)</span></td>
+                        <td width="150" class="nowrap price tar"><strong>{{ order.total|currency('GBP', true, true, '')|raw }}</strong></td>
                     </tr>
                 </table>
             </div>
