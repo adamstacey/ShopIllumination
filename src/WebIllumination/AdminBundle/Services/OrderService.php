@@ -617,13 +617,14 @@ class OrderService {
                 $orderProductObject->setProduct($variant->getProduct());
                 $orderProductObject->setVariant($variant);
                 $orderProductObject->setBrand($product['brand']['brand']);
+                $orderProductObject->setDescription($product['shortDescription']);
             } else {
                 $orderProductObject->setBrand($product['brand']);
+                $orderProductObject->setDescription($product['header']);
             }
             $orderProductObject->setUrl($product['url']);
             $orderProductObject->setName($product['header']);
             $orderProductObject->setProductCode($product['productCode']);
-            $orderProductObject->setDescription($product['shortDescription']);
             $orderProductObject->setUnitCost($product['unitCost']);
             $orderProductObject->setRecommendedRetailPrice($product['recommendedRetailPrice']);
             $orderProductObject->setDiscount($product['discount']);
