@@ -74,15 +74,12 @@ class BasketManager extends Manager
             $basket->getDelivery()->setBand($this->deliveryManager->calculateBand($basket->getItems()));
             $basket->getDelivery()->setMethods(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()));
 
-            if ((
-                    $basket->getDelivery()->getMethod() === ''
-                    || !DeliveryMethodFactory::getMethod($basket->getDelivery()->getMethod())->supportsLocation($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())
-                )
+            if ((!$basket->getDelivery()->getMethod() || !$basket->getDelivery()->getMethod()->supportsLocation($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()))
                 && count($basket->getDelivery()->getMethods()) > 0) {
-                $basket->getDelivery()->setMethod($basket->getDelivery()->getMethods()[0]->getName());
+                $basket->getDelivery()->setMethod($basket->getDelivery()->getMethods()[0]);
             }
 
-            $basket->getDelivery()->setPrice($this->deliveryManager->calculatePrice($basket->getDelivery()->getMethods(), $basket->getDelivery()->getMethod()));
+            $basket->getDelivery()->setPrice($basket->getDelivery()->getMethod()->calculateCost($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand(), $basket->getItems()));
 
             $this->baskets[$key]->calculateTotals();
         }

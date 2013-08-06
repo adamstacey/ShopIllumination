@@ -102,6 +102,21 @@ class DeliveryMethodFactory {
     }
 
     /**
+     * @return DeliveryMethodInterface[]
+     */
+    public static function getAllMethods()
+    {
+        $methods = array();
+
+        foreach(self::getMethodClasses() as $class)
+        {
+            $methods[] = new $class;
+        }
+
+        return $methods;
+    }
+
+    /**
      * @return array
      */
     private static function getMethodClasses()

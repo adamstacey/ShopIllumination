@@ -4,17 +4,26 @@ namespace KAC\SiteBundle\Form\Basket;
 
 use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
+use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BasketDeliveryType extends AbstractType
 {
+    private $deliveryMethods;
+
+    function __construct($deliveryMethods)
+    {
+        $this->deliveryMethods = $deliveryMethods;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('postZipCode', 'text');
         $builder->add('countryCode', 'country');
         $builder->add('method', 'choice', array(
-            'choices' => array_combine(DeliveryMethodFactory::getAllMethodNames(), DeliveryMethodFactory::getAllMethodNames()),
+            'choice_list' => new ObjectChoiceList($this->deliveryMethods, 'name')
         ));
     }
 

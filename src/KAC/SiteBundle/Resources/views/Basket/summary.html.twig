@@ -156,11 +156,11 @@
                                             <span title="{{ method.description|raw }}" class="form-helper pbn ui-button-icon-primary ui-icon-small icon-small-763"></span>
                                             <div class="widget radio-group man widget-1-of-1">
                                                 <div class="clearfix">
-                                                    <input{% if basket.delivery.method == method.name %} checked="checked"{% endif %} type="radio" id="deliveryOption{{ loop.index }}" name="{{ form.delivery.method.vars.full_name }}" value="{{ method.name }}" />
+                                                    <input{% if basket.delivery.method.name == method.name %} checked="checked"{% endif %} type="radio" id="deliveryOption{{ loop.index }}" name="{{ form.delivery.method.vars.full_name }}" value="{{ loop.index0 }}" />
                                                     <label for="deliveryOption{{ loop.index }}">
                                                         <span class="delivery-service">
                                                             {{ method.name|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}
-                                                            {% set price = method.getCost(basket.delivery.zone, basket.delivery.band, basket.items) %}
+                                                            {% set price = method.calculateCost(basket.delivery.zone, basket.delivery.band, basket.items) %}
                                                             {% if price != 0 %}
                                                                 <em> - </em>
                                                                 <span class="colour-red"><strong>{{ price|currency('GBP', true, true, '')|raw }}</strong></span>
@@ -188,7 +188,7 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-                                {% set estimatedDeliveryDates = method.calculateEstimatedDeliveryDays(basket.delivery.zone, basket.delivery.band) %}
+                                {% set estimatedDeliveryDates = basket.delivery.method.calculateEstimatedDeliveryDates(basket.delivery.zone, basket.delivery.band) %}
                                 {% if (estimatedDeliveryDates.start is defined) and (estimatedDeliveryDates.end is defined) %}
                                     <h4>Estimated Delivery Between</h4>
                                     <div class="clearfix">

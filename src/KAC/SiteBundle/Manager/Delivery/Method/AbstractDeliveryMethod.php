@@ -10,7 +10,7 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
     {
         // Calculate the weightings and overall band
         $baseEstimatedDeliveryDays = $this->calculateEstimatedDeliveryDays($zone, $band);
-        $estimatedDeliveryDays = array('start' => '', 'end' => '', 'requested' => '');
+        $estimatedDeliveryDates = array('start' => '', 'end' => '', 'requested' => '');
 
         // Work out next day for delivery option
         $nextDay = $baseEstimatedDeliveryDays['start'];
@@ -41,7 +41,7 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
         }
 
         $deliveryStartDate = $nextDay;
-        $estimatedDeliveryDaysStart = date("l, jS F Y", strtotime("+$nextDay day"));
+        $estimatedDeliveryDatesStart = date("l, jS F Y", strtotime("+$nextDay day"));
         $nextDay = $nextDay + ($baseEstimatedDeliveryDays['end'] - 1);
         $weekendDaysToAdd = 0;
         for ($deliveryDateCount = $deliveryStartDate; $deliveryDateCount <= $nextDay; $deliveryDateCount++)
@@ -61,13 +61,13 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
             $nextDay++;
         }
 
-        $estimatedDeliveryDaysEnd = date("l, jS F Y", strtotime("+$nextDay day"));
-        $estimatedDeliveryDays['start'] = $estimatedDeliveryDaysStart;
-        $estimatedDeliveryDays['end'] = $estimatedDeliveryDaysEnd;
+        $estimatedDeliveryDatesEnd = date("l, jS F Y", strtotime("+$nextDay day"));
+        $estimatedDeliveryDates['start'] = $estimatedDeliveryDatesStart;
+        $estimatedDeliveryDates['end'] = $estimatedDeliveryDatesEnd;
         $nextDay++;
 
-        $estimatedDeliveryDays['requested'] = date("F d, Y H:i:s", strtotime("+$nextDay day"));
+        $estimatedDeliveryDates['requested'] = date("F d, Y H:i:s", strtotime("+$nextDay day"));
 
-        return $estimatedDeliveryDays;
+        return $estimatedDeliveryDates;
     }
 } 

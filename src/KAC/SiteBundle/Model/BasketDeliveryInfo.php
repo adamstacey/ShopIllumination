@@ -81,6 +81,10 @@ class BasketDeliveryInfo
         {
             $this->methods[] = $method->getName();
         }
+        if($this->method && is_object($this->method))
+        {
+            $this->method = $this->method->getName();
+        }
     }
 
     /**
@@ -97,6 +101,10 @@ class BasketDeliveryInfo
             {
                 $this->methods[] = $method;
             }
+        }
+        if(($method = DeliveryMethodFactory::getMethod($this->method)) !== null)
+        {
+            $this->method = $method;
         }
     }
 

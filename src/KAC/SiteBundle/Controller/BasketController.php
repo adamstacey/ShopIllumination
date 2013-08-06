@@ -41,7 +41,7 @@ class BasketController extends Controller
         $basket = $manager->getBasket();
         $manager->loadProducts();
 
-        $form = $this->createForm(new BasketType(), $basket);
+        $form = $this->createForm(new BasketType($basket->getDelivery()->getMethods()), $basket);
         $form->handleRequest($request);
 
         if($form->isValid())
