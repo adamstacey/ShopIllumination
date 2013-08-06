@@ -5,7 +5,7 @@ $(document).ready(function() {
 
         $("#ajax-loading").show();
         $.ajax({
-            type: "GET",
+            type: "POST",
             dataType: "json",
             url: $el.attr("data-basket-url"),
             data: {

@@ -2,7 +2,7 @@
 {% import 'KACSiteBundle:Product:Includes/helpers.html.twig' as helpers %}
 
 {% macro addToBasket(variant) %}
-    <div class="add-to-basket" data-product-id="{{ variant.product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
+    <div class="add-to-basket" data-product-id="{{ variant.product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_add') }}">
         <input class="quantity integer" type="number" value="1" />
         <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
         <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
