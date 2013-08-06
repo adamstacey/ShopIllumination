@@ -44,8 +44,8 @@ namespace :deploy do
     end
     desc "Update the solr schema and run the reindex command"
     task :solr do
-        solr.update_config
-        solr.reindex
+        after "deploy:solr", "solr:update_config"
+        after "deploy:solr", "solr:reindex"
     end
     desc "Restart Apache"
     task :restart, :except => { :no_release => true }, :roles => :app do
