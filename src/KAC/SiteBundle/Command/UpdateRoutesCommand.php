@@ -145,31 +145,72 @@ class UpdateRoutesCommand extends ContainerAwareCommand
         $routes = $em->getRepository("KAC\\SiteBundle\\Entity\\Brand\\DepartmentRouting")->findAll();
         foreach($routes as $route)
         {
-            // Check if a redirect already exists
-            $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
-                'redirectFrom' => $route->getUrl(),
-            ));
+            $brands = array();
+            $departments = array();
 
-            // If no routes were found create a new route
-            if(count($redirects) <= 0)
+            // Get all brand URLs
+            foreach($route->getBrand()->getRoutings() as $brandRoute)
             {
-                $redirect = new Redirect();
-                $redirect->setObjectId($route->getBrand()->getId());
-                $redirect->setSecondaryId($route->getDepartment()->getId());
-                $redirect->setObjectType($route->getObjectType());
-                $redirect->setRedirectCode(301);
-                $redirect->setRedirectFrom($seo->generateUrl('brand/'.$route->getBrand()->getRouting()->getUrl().'/'.$route->getDepartment()->getRouting()->getUrl()));
-                $redirect->setRedirectTo($route->getUrl());
-
-
-                $em->persist($redirect);
-
-                $i++;
+                $brands[] = $brandRoute->getUrl();
+            }
+            $brandRedirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
+                'objectType' => 'brand',
+                'objectId' => $route->getBrand()->getId()
+            ));
+            foreach($brandRedirects as $redirect)
+            {
+                $brands[] = $redirect->getRedirectFrom();
             }
 
-            if (($i % $batchSize) === 0) {
-                $em->flush();
+            // Get all department URLs
+            foreach($route->getDepartment()->getRoutings() as $departmentRoute)
+            {
+                $departments[] = $departmentRoute->getUrl();
+            }
+            $brandRedirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
+                'objectType' => 'department',
+                'objectId' => $route->getDepartment()->getId()
+            ));
+            foreach($brandRedirects as $redirect)
+            {
+                $departments[] = $redirect->getRedirectFrom();
+            }
+
+            foreach($brands as $brandUrl)
+            {
+                foreach($departments as $departmentUrl)
+                {
+                    $url = $seo->generateUrl('brand/'.$brandUrl.'/'.$departmentUrl);
+
+                    // Check if a redirect already exists
+                    $redirects = $em->getRepository("KAC\\SiteBundle\\Entity\\Redirect")->findBy(array(
+                        'redirectFrom' => $url,
+                    ));
+
+                    // If no routes were found create a new route
+                    if(count($redirects) <= 0)
+                    {
+                        $redirect = new Redirect();
+                        $redirect->setObjectId($route->getBrand()->getId());
+                        $redirect->setSecondaryId($route->getDepartment()->getId());
+                        $redirect->setObjectType($route->getObjectType());
+                        $redirect->setRedirectCode(301);
+                        $redirect->setRedirectFrom($url);
+                        $redirect->setRedirectTo($route->getUrl());
+
+
+                        $em->persist($redirect);
+
+                        $i++;
+                    }
+
+                    if (($i % $batchSize) === 0) {
+                        $em->flush();
+                    }
+                }
             }
         }
+
+        $em->flush();
     }
 }

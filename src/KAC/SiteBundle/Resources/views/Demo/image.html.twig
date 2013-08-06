@@ -37,7 +37,7 @@
                     </header>
                     <section class="ui-widget-content ui-corner-bottom">
                         <fieldset>
-                            <img src="{{ image.originalPath | apply_filter('product_thumbnail') }}" />
+                            <img src="{{ asset(image.originalPath | apply_filter('product_thumbnail')) }}" />
                         </fieldset>
                     </section>
                 </div>

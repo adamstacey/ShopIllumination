@@ -32,6 +32,7 @@ class ProductLinkType extends AbstractType
             'choices' => array(
                 'cheaper' => 'Cheaper Alternative',
                 'related' => 'Related Product',
+                'accessory' => 'Accessory',
                 'series' => 'Series',
             ),
             'attr' => array(

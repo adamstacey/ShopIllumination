@@ -19,6 +19,12 @@ services:
         class: KAC\SiteBundle\ThirdParty\Google\Google
         arguments: [%google_api_key%, %google_dev_token%, %google_email%, %google_password%, %google_analytics_id%]
 
+    # Imagine Filters
+    kac_site.filter.loader.square_thumbnail:
+        class: KAC\SiteBundle\Imagine\Filter\Loader\SquareThumbnailFilterLoader
+        tags:
+            - { name: imagine.filter.loader, filter: square_thumbnail}
+
     # Managers
     kac_site.manager.product:
         class: KAC\SiteBundle\Manager\ProductManager
@@ -54,7 +60,7 @@ services:
     # Indexers
     kac_site.indexer.product:
         class: KAC\SiteBundle\Indexer\ProductIndexer
-        arguments: [@solarium.client.product, @doctrine]
+        arguments: [@solarium.client.products, @doctrine]
 
     # Listeners
     kac_site.listener.product:

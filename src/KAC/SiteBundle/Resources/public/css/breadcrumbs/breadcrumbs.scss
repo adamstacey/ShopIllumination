@@ -8,7 +8,7 @@ ul.breadcrumbs li {
     margin: 0;
 
     position: relative;
-    float: right;
+    float: left;
     display: block;
 
     list-style: none;
@@ -61,16 +61,16 @@ ul.breadcrumbs li:before {
     margin-top: -11px;
 }
 
-ul.breadcrumbs > :last-child {
+ul.breadcrumbs > :first-child {
     padding-left: $spacingSmall;
     @include borderRadius($radiusSize, 0, 0, $radiusSize);
 }
 
-ul.breadcrumbs > :first-child {
+ul.breadcrumbs > :last-child {
     @include borderRadius(0, $radiusSize, $radiusSize, 0);
 }
 
-ul.breadcrumbs > :first-child:before,
-ul.breadcrumbs > :first-child:after {
+ul.breadcrumbs > :last-child:before,
+ul.breadcrumbs > :last-child:after {
     display: none;
 }

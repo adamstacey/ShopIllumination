@@ -1,76 +1,53 @@
 {% if products|length >= 5 %}
-    <div class="widget-group product clearfix">
-        <div class="widget widget-1-of-1">
-            <div class="ui-widget mbl">
-                <header class="ui-widget-header ui-corner-top">
-                    {% if department %}
-                    <h2>Our Top 5 {{ brand ? brand.description.name ~ " " : "" }}{{ department.name }}</h2>
-                    {% else %}
-                        <h2>Our Top 5 Products</h2>
-                    {% endif %}
-                </header>
-                <section class="ui-widget-content ui-corner-all">
-                    <div class="popular-products popular-items">
-                        <table class="data-table">
-                            <tbody>
-                                {% set productCount = 0 %}
-                                {% for item in products %}
-                                    {% set productCount = productCount + 1 %}
-                                    {% set product = item[0] %}
-                                    <tr itemscope itemtype="http://schema.org/Product" class="{{ productCount % 2 == 0 ? "even" : "odd" }}">
-                                        <td width="1" class="pas">{{ productCount }}</td>
-                                        <td width="1" class="pas image">
-                                            <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
-                                                <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath) }}" border="0" alt="{{ product.description.header|raw }}" width="60" />
-                                            </a>
-                                        </td>
-                                        <td class="pas">
-                                            <h4><a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}"><strong>{{ product.description.header|raw }}</strong></a></h4>
-                                            {% for feature in product.variants[0].features %}
-                                                {% if feature.featureGroup.name == "Colour" %}
-                                                    <p>{{ feature.feature.name }}</p>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td width="1" class="pas nowrap price">
-                                            {% spaceless %}
-                                                {% if product.hidePrices == 0 %}
-                                                    {% if product.url != '' %}
-                                                        <a href="{{ path('routing', {'url': product.url}) }}">
-                                                    {% endif %}
-                                                    {% if product.priceRange.low == product.priceRange.high %}
-                                                        <span itemprop="price" class="price">{{ product.priceRange.low|currency('GBP', true, true, '')|raw }}</span>
-                                                    {% else %}
-                                                        <span class="price">
-                                                            <span class="currency-prefix">from only</span>
-                                                        </span>
-                                                        <span itemprop="price" class="price">{{ product.priceRange.low|currency('GBP', true, true, '')|raw }}</span>
-                                                        <em> - </em>
-                                                        <span itemprop="price" class="price">{{ product.priceRange.high|currency('GBP', true, true, '')|raw }}</span>
-                                                    {% endif %}
-                                                    {% if product.url != '' %}
-                                                        </a>
-                                                    {% endif %}
-                                                    <br />
-                                                    <span class="price">
-                                                        <span class="currency-tax">(inc. VAT)</span>
-                                                    </span>
-                                                {% else %}
-                                                    <a itemprop="price" href="{{ path('content_contact_us') }}">CONTACT US</a>
-                                                {% endif %}
-                                            {% endspaceless %}
-                                        </td>
-                                        <td width="102" class="pas">
-                                            <a class="button button-small icon-grey" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">More Info</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+    {% if department %}
+        <h3 class="separator">Our Top 5 {{ brand ? brand.description.name ~ " " : "" }}{{ department.name }}</h3>
+    {% else %}
+        <h3 class="separator">Our Top 5 Products</h3>
+    {% endif %}
+    <div class="widget-group product pbm clearfix">
+        {% for item in products %}
+            {% set product = item[0] %}
+            <div itemscope itemtype="http://schema.org/Product" class="widget widget-1-of-5 product">
+                <div class="pr">
+                    <div class="product-image-container man">
+                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
+                            <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.description.header|raw }}" width="100%" />
+                        </a>
                     </div>
-                </section>
+                    <span class="listing-top-item">{{ loop.index }}</span>
+                    <div class="pts">
+                        {% if not brand %}
+                            {% if product.brand.description.logoImage.publicPath != '' %}
+                                <div class="fr">
+                                    <img src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand.description.name }}" height="25" />
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        <div itemprop="offers" itemscope itemtype="{% if product.priceRange.low == product.priceRange.high %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
+                            {% if product.hidePrices == 0 %}
+                                <a href="{{ path('routing', {'url': product.url}) }}">
+                                    {% if product.priceRange.low != product.priceRange.high %}
+                                        <span class="price-small">
+                                            <span class="currency-prefix">from </span>
+                                        </span>
+                                    {% endif %}
+                                    <span itemprop="price" class="price-small">{{ product.priceRange.low|currency('GBP', true, true, '')|raw }}</span>
+                                    <br />
+                                    <span class="price-small">
+                                        <span class="currency-tax">(inc. VAT)</span>
+                                    </span>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('content_contact_us') }}">CONTACT US</a>
+                            {% endif %}
+                        </div>
+                        <div class="product-listing-name mbs">
+                            <a itemprop="name" href="{{ path('routing', {'url': product.url}) }}">{{ product.description.header|raw }}</a>
+                        </div>
+                        <a class="button button-small icon-grey" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">View</a>
+                    </div>
+                </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
 {% endif %}
-

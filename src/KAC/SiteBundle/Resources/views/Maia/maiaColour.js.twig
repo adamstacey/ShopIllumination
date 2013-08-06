@@ -1,0 +1,25 @@
+<script type="text/javascript" defer="defer">
+    function selectWorktopThickness(worktopThickness) {
+        $("table.data-table tbody.updatable tr").hide();
+        $("table.data-table tbody.updatable tr").removeClass("even odd");
+        $("table.data-table tbody.updatable tr[data-worktop-thickness='"+worktopThickness+"']").show();
+        $("table.data-table tbody.updatable tr:visible:even").addClass("even");
+        $("table.data-table tbody.updatable tr:visible:odd").addClass("odd");
+    }
+
+    $(document).ready(function() {
+        selectWorktopThickness($("input[name='worktop-thickness']").val());
+
+        $(".actionRequestASample").on("click", function() {
+            $(".tabs").tabs("option", "active", 2);
+        });
+
+        $(".actionAddToBasket").on("click", function() {
+            $(this).closest("tr").find("td:not(.image)").css("background", "#ebf7eb");
+        });
+
+        $("input[name='worktop-thickness']").on("change", function() {
+            selectWorktopThickness($(this).val());
+        });
+    });
+</script>

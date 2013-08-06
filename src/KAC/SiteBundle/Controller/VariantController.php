@@ -96,7 +96,11 @@ class VariantController extends Controller {
     public function editBaseAction(Request $request, $variantId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
+        $productManger = $this->get('kac_site.manager.product');
 
+        /**
+         * @var $variant Variant
+         */
         $variant = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->find($variantId);
         if(!$variant)
         {
@@ -113,7 +117,10 @@ class VariantController extends Controller {
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
-                $em->persist($variant);
+                // Update the variant order based on the product code
+                $productManger->updateVariantOrder($variant->getProduct());
+
+                $em->persist($variant->getProduct());
                 $em->flush();
 
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
@@ -387,7 +394,7 @@ class VariantController extends Controller {
      * @Route("/admin/products/{productId}/variants/{variantId}/delete", name="variants_delete")
      * @Secure(roles="ROLE_ADMIN")
      */
-    public function deleteAction($variantId)
+    public function deleteAction($productId, $variantId)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -400,7 +407,9 @@ class VariantController extends Controller {
         $em->remove($variant);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('products_edit_variants'));
+        return $this->redirect($this->generateUrl('products_edit_variants', array(
+            'productId' => $productId
+        )));
     }
 
     /**

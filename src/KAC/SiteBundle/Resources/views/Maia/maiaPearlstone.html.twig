@@ -1,0 +1,20 @@
+{% set worktopColour = "Pearlstone" %}
+{% set worktopDescription = "Bright and crisp with the look of stone, Pearlstone is a pearl white colour with clear granular particles. Works well with truffle, taupe, blacks and browns." %}
+{% set productCodePrefix = 'PEA' %}
+{% set fromPrice = 369 %}
+{% set worktopNumber = 5 %}
+{% set startingId = 10000 + (1000 * worktopNumber) %}
+{% set currentId = startingId %}
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}maia Worktops in {{ worktopColour }} from Kitchen Appliance Centre{% endblock %}
+{% block body %}
+    <section class="product">
+        {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand1.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
+    </section>
+    {% include 'KACSiteBundle:Maia:maiaColour.js.twig' %}
+{% endblock %}

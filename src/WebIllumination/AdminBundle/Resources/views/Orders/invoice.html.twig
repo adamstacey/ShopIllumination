@@ -198,14 +198,6 @@
 												{% endif %}
 											{% endif %}
 										</tr>
-										{% for donation in order.donations %}
-											{% if donation.donation > 0 %}
-												<tr>
-													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right"><img style="margin-right: 10px;" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" height="10" /><strong>{{ donation.description }}:</strong></td>
-													<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #000000; font-weight: bold; color: #FFFFFF; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right" width="1">&pound;{{ donation.donation|number_format(2) }}</td>
-												</tr>
-											{% endif %}
-										{% endfor %}
 										{% if order.discount > 0 %}
 											<tr>
 												<td valign="top" style="border: 1px solid #CCC; line-height: 120%; background: #FFFFFF; color: #000; font-size: 11px; font-family: Arial; padding: 5px 10px; text-align: right;" align="right"><strong>You Saved:</strong></td>

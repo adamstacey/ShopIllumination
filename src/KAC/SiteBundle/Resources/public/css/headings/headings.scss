@@ -23,6 +23,15 @@ h3,
     font-style: normal;
     color: $primaryColour;
 }
+h3.separator {
+    padding: $spacingMedium;
+    margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+    @include verticalGradientWhiteToGreyLight;
+    color: $colourGrey;
+    @include textShadow($colourWhite, 0, 1px);
+    border-top: 1px solid $colourGreyLight;
+    border-bottom: 1px solid $colourGreyLight;
+}
 
 h4,
 .h4 {

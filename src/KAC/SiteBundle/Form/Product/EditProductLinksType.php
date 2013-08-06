@@ -15,6 +15,7 @@ class EditProductLinksType extends AbstractType
             'type' => new ProductLinkType(),
             'allow_add' => true,
             'allow_delete' => true,
+            'by_reference' => false,
         ));
     }
 

@@ -1,0 +1,20 @@
+{% set worktopColour = "Lava" %}
+{% set worktopDescription = "Lava is grey with small speckles of brown to create a natural stone effect. Stunning in a blue kitchen with glass, wood and white accessories, or stylishly industrial with glossy black or metallic doors." %}
+{% set productCodePrefix = 'LAV' %}
+{% set fromPrice = 295 %}
+{% set worktopNumber = 12 %}
+{% set startingId = 10000 + (1000 * worktopNumber) %}
+{% set currentId = startingId %}
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}maia Worktops in {{ worktopColour }} from Kitchen Appliance Centre{% endblock %}
+{% block body %}
+    <section class="product">
+        {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand2.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
+    </section>
+    {% include 'KACSiteBundle:Maia:maiaColour.js.twig' %}
+{% endblock %}

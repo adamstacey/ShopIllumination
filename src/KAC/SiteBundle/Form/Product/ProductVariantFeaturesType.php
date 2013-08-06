@@ -22,6 +22,7 @@ class ProductVariantFeaturesType extends AbstractType
             'type' => new ProductFeatureCombinationType($this->departmentId),
             'allow_add' => true,
             'allow_delete' => false,
+            'by_reference' => false,
         ));
     }
 

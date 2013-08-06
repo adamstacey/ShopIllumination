@@ -25,6 +25,7 @@ class BasketController extends Controller
     {
         $manager = $this->container->get('kac_site.manager.basket');
         $basket = $manager->getBasket();
+        $manager->loadProducts();
 
         return $this->render('KACSiteBundle:Basket:small_summary.html.twig', array(
             'basket' => $basket,

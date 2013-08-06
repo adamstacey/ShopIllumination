@@ -1,43 +1,50 @@
-{% set departmentName = form.vars.value.department.department.name %}
-{% if form.vars.value.department.department.deliveryBand > 0 %}
-    {% set departmentDeliveryBand = form.vars.value.department.department.deliveryBand %}
-{% elseif form.vars.value.department.department.inheritedDeliveryBand > 0 %}
-    {% set departmentDeliveryBand = form.vars.value.department.department.inheritedDeliveryBand %}
-{% endif %}
-<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-874"></span>
-                    <h2>4. Delivery</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-701"></span>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
-                    {% if departmentDeliveryBand %}
-                        <div class="message message-help">
-                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-762"></span>
-                            <p>The default delivery band set is <strong>"{{ departmentDeliveryBand|number_format(0) }}"</strong>, which has been set by default from the department <strong>"{{ departmentName }}"</strong>.</p>
-                        </div>
-                    {% else %}
-                        <div class="message message-help">
-                            <span class="ui-button-icon-primary ui-icon-small icon-top icon-small-yellow icon-small-694"></span>
-                            <p>The default delivery band cannot be set as the department <strong>"{{ departmentName }}"</strong> has no default delivery band set.</p>
-                            <p><strong>Please check the delivery bands below and make sure you set them.</strong></p>
-                        </div>
-                    {% endif %}
+                    <div class="message message-help">
+                        <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
+                        <p><strong>NOTE:</strong> The first combination will be the default combination displayed in a product, so it is important that you order the combinations below to reflect this.</p>
+                    </div>
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                    <fieldset>
-                        <div class="accordion mbm">
-                            {% for variant in form.variants %}
-                                <div class="accordion-item">
-                                    <h3>Delivery for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
-                                    <div class="pbm">
-                                        {{ form_rest(variant) }}
-                                    </div>
-                                </div>
-                            {% endfor %}
-                            {% do form.variants.setRendered() %}
-                        </div>
+                    <fieldset class="pbm">
+                        <table class="form-table sortable">
+                            <thead>
+                                <tr>
+                                    <th width="1">&nbsp;</th>
+                                    <th width="1">&nbsp;</th>
+                                    <th class="tal" title="The features that make up the combination.">Combination</th>
+                                    <th title="Enter the unique product code supplied by the manufacturer or supplier.">Product Code</th>
+                                    <th title="Enter the price of the product at the cost we but it in at.">Cost Price</th>
+                                    <th title="Enter the recommended retail price (RRP) of the product. Leave it blank if you want the RRP to be the list price.">RRP</th>
+                                    <th title="Enter the list price. This is the price the product will sell for.">List Price</th>
+                                    <th width="1">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for variant in form.variants %}
+                                    <tr>
+                                        <td><img class="handle" src="{{ asset('bundles/kacsite/images/icons/handle.png') }}" border="0" />{{ form_widget(variant.displayOrder) }}</td>
+                                        <td class="row-count tar">{{ loop.index }}</td>
+                                        <td>
+                                            <ul>
+                                                {% for feature in variant.vars.value.features %}
+                                                    <li>{{ feature.featureGroup }}: <strong>{{ feature.feature }}</strong></li>
+                                                {% else %}
+                                                    <li>Single Combination</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        {{ form_widget(variant) }}
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                         {{ form_rest(form) }}
                     </fieldset>
                     {% include 'CraueFormFlowBundle:FormFlow:stepField.html.twig' %}

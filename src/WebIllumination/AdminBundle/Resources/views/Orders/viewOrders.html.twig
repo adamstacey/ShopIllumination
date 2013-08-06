@@ -3,10 +3,6 @@
 {% block body %}
 	{% for order in orders %}
 		{% include 'WebIlluminationAdminBundle:Orders:order.html.twig' with {'order': order} %}
-		{% if 'Royal Mail' in order.deliveryType %}
-			<div style="page-break-before: always;"></div>
-			{% include 'WebIlluminationAdminBundle:Orders:deliveryNote.html.twig' with {'order': order} %}
-		{% endif %}
 		<div style="page-break-before: always;"></div>
 	{% endfor %}
 {% endblock %}

@@ -462,9 +462,7 @@
     padding: $spacingMedium;
 
     @include textShadow($colourBlack, 0, 1px);
-    letter-spacing: 2px;
     color: $colourWhite;
-    font-family: $complimentaryFontFamily;
     @include ellipsis;
     @include fontSize($fontSizeExtraLarge);
 }

@@ -1,4 +1,4 @@
-{% extends 'KACSiteBundle::base.html.twig' %}
+{% extends 'KACSiteBundle:Product:base.html.twig' %}
 
 {% block title %}Overview | {{ product.description.pageTitle }}{% endblock %}
 
@@ -21,7 +21,8 @@
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
                                         {{ form_row(form.brand) }}
-                                        {{ form_row(form.departments) }}
+                                        {{ form_row(form.mainDepartment, {'label': 'Main Department'}) }}
+                                        {% do form.departments.setRendered(true) %}
                                         {{ form_row(form.template) }}
                                         {{ form_row(form.status) }}
                                         <div class="form-element widget-group clearfix">
@@ -52,9 +53,6 @@
                 <script>
                     $(document).ready(function() {
                         $("#site_new_product_brand").select2();
-                        $("select.select-department").prepend('<option value="">- Select a Department -</option>');
-                        $("select.select-department:selected").removeAttr("selected");
-                        $("select.select-department :nth-child(1)").attr("selected", "selected");
                         $("select.select-department").select2({
                             matcher: function(term, text) {
                                 return text.replace(/^[\s&nbsp;]+/,'').toUpperCase().indexOf(term.toUpperCase())>=0;

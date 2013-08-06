@@ -28,6 +28,7 @@ class NewProductFeatureGroupsType extends AbstractType
             'type' => new NewProductFeatureGroupType(),
             'allow_add' => true,
             'allow_delete' => true,
+            'by_reference' => false,
         ));
 
         $builder->add('department', 'entity', array(

@@ -21,16 +21,17 @@ class NewDepartmentType extends AbstractType
                     'label' => 'Department',
                     'property' => 'indentedName',
                     'class' => 'KAC\SiteBundle\Entity\Department',
-                    'query_builder' => function(DepartmentRepository $er) {
-                        $rootNodes = $er->getRootNodes();
-                        if(count($rootNodes) != 1) {
-                            return $er->createQueryBuilder('d');
-                        } else {
-                            return $er->childrenQueryBuilder($rootNodes[0])
-                                ->addSelect('d')
-                                ->leftJoin('node.descriptions', 'd');
-                        }
-                    },
+                    'empty_value' => '- Select  Department -',
+//                    'query_builder' => function(DepartmentRepository $er) {
+//                        $rootNodes = $er->getRootNodes();
+//                        if(count($rootNodes) != 1) {
+//                            return $er->createQueryBuilder('d');
+//                        } else {
+//                            return $er->childrenQueryBuilder($rootNodes[0])
+//                                ->addSelect('d')
+//                                ->leftJoin('node.descriptions', 'd');
+//                        }
+//                    },
                     'attr' => array(
                         'class' => 'select-department fill no-uniform',
                         'data-help' => 'Select the department you want this department to fall under.',
@@ -72,6 +73,7 @@ class NewDepartmentType extends AbstractType
                     'type' => new DepartmentFeatureType(),
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
                 break;
             case 5:

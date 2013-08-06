@@ -25,7 +25,7 @@ class Product implements DescribableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Brand")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a brand.")
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a brand.")
      * @Serializer\Exclude()
      */
     private $brand;
@@ -33,13 +33,16 @@ class Product implements DescribableInterface
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Description", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @Assert\Valid
      */
     private $descriptions;
 
     /**
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\ProductToDepartment", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step1", "site_edit_product_overview"}, message="Select a department.")
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, message="Select a department.")
+     * @Assert\Count(min = "1", groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, minMessage="Select at least one department.")
+     * @Assert\Valid
      * @Serializer\Exclude()
      */
     private $departments;
@@ -48,7 +51,7 @@ class Product implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Link", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @Serializer\Exclude()
-     * @Assert\Valid()
+     * @Assert\Valid
      */
     private $links;
 
@@ -68,6 +71,7 @@ class Product implements DescribableInterface
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Product\Variant", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="CASCADE")
      * @ORM\OrderBy({"displayOrder" = "ASC"})
+     * @Assert\Valid
      */
     private $variants;
 
@@ -135,7 +139,7 @@ class Product implements DescribableInterface
     /**
      * @ORM\Column(name="template", type="string", length=255)
      */
-    private $template = "default";
+    private $template = "standard";
 
     /**
      * @Gedmo\Timestampable(on="create")
@@ -154,6 +158,10 @@ class Product implements DescribableInterface
      */
     private $deletedAt;
 
+    /**
+     * @Assert\NotNull(groups={"flow_site_new_product_step1", "flow_site_new_product_step2", "site_edit_product_overview", "site_edit_product_departments"}, message="Select a department.")
+     */
+    private $mainDepartment = null;
     private $imageUploads = "";
     private $temporaryImages = "";
     private $documentUploads = "";
@@ -194,11 +202,57 @@ class Product implements DescribableInterface
         $this->routings = new ArrayCollection();
     }
 
+    public function __clone() {
+        if ($this->id) {
+            $this->id = null;
+            $oldVariants = $this->variants;
+            $oldDepartments = $this->departments;
+            $oldDescriptions = $this->descriptions;
+            $oldLinks = $this->links;
+            $oldImages = $this->images;
+            $oldDocuments = $this->documents;
+
+            // Clear old collections
+            $this->variants = new ArrayCollection();
+            $this->descriptions = new ArrayCollection();
+            $this->departments = new ArrayCollection();
+            $this->links = new ArrayCollection();
+            $this->images = new ArrayCollection();
+            $this->documents = new ArrayCollection();
+            $this->routings = new ArrayCollection();
+
+            foreach($oldVariants as $entity)
+            {
+                $this->addVariant(clone $entity);
+            }
+            foreach($oldDepartments as $entity)
+            {
+                $this->addDepartment(clone $entity);
+            }
+            foreach($oldDescriptions as $entity)
+            {
+                $this->addDescription(clone $entity);
+            }
+            foreach($oldLinks as $entity)
+            {
+                $this->addLink(clone $entity);
+            }
+            foreach($oldImages as $entity)
+            {
+                $this->addImage(clone $entity);
+            }
+            foreach($oldDocuments as $entity)
+            {
+                $this->addDocument(clone $entity);
+            }
+        }
+    }
+
     public function __toString()
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0]->getHeader();
+            return $this->descriptions->first()->getHeader();
         } else {
             return "";
         }
@@ -225,6 +279,29 @@ class Product implements DescribableInterface
             'low' => $lowestPrice,
             'high' => $highestPrice,
         );
+    }
+
+    public function getProductCode()
+    {
+        // Calculate common product code
+        $pl = 0;
+        $n = count($this->getVariants());
+        $l = strlen($this->getVariants()->first()->getProductCode());
+        while ($pl < $l) {
+            $c = $this->getVariants()->first()->getProductCode()[$pl];
+            for ($i=1; $i<$n; $i++) {
+                if ($this->getVariants()[$i] && $this->getVariants()[$i]->getProductCode()[$pl] !== $c) break 2;
+            }
+            $pl++;
+        }
+        $productCode = substr($this->getVariants()->first()->getProductCode(), 0, $pl);
+
+        if($productCode === '')
+        {
+            return $this->getVariants()->first()->getProductCode();
+        } else {
+            return $productCode;
+        }
     }
 
     public function isDeleted()
@@ -545,7 +622,7 @@ class Product implements DescribableInterface
     /**
      * Get departments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ProductToDepartment[]
      */
     public function getDepartments()
     {
@@ -561,7 +638,7 @@ class Product implements DescribableInterface
     {
         if(count($this->departments) > 0)
         {
-            return $this->departments[0];
+            return $this->departments->first();
         }
 
         return null;
@@ -649,6 +726,19 @@ class Product implements DescribableInterface
     }
 
     /**
+     * set variants
+     *
+     * @param $variants Variant[]
+     * @return $this
+     */
+    public function setVariants($variants)
+    {
+        $this->variants = $variants;
+
+        return $this;
+    }
+
+    /**
      * Get variant
      *
      * @return Product\Variant
@@ -657,7 +747,7 @@ class Product implements DescribableInterface
     {
         if(count($this->variants) > 0)
         {
-            return $this->variants[0];
+            return $this->variants->first();
         }
 
         return null;
@@ -706,7 +796,7 @@ class Product implements DescribableInterface
     {
         if(count($this->descriptions) > 0)
         {
-            return $this->descriptions[0];
+            return $this->descriptions->first();
         }
 
         return null;
@@ -788,13 +878,17 @@ class Product implements DescribableInterface
     /**
      * Get routing
      *
-     * @return \KAC\SiteBundle\Entity\Product\Routing
+     * @return Product\Routing
      */
-    public function getRouting()
+    public function getRouting($ignoreVariant=false)
     {
         if (count($this->routings) > 0)
         {
-            return $this->routings[0];
+            return $this->routings->first();
+        }
+        if($this->getVariant() && !$ignoreVariant)
+        {
+            return $this->getVariant()->getRouting();
         }
 
         return null;
@@ -816,32 +910,33 @@ class Product implements DescribableInterface
     }
 
     /**
-     * Add routings
+     * Add routing
      *
-     * @param \KAC\SiteBundle\Entity\Product\Routing $routings
+     * @param Product\Routing $routing
      * @return Product
      */
-    public function addRouting(\KAC\SiteBundle\Entity\Product\Routing $routings)
+    public function addRouting(Product\Routing $routing)
     {
-        $this->routings[] = $routings;
+        $this->routings[] = $routing;
+        $routing->setProduct($this);
     
         return $this;
     }
 
     /**
-     * Remove routings
+     * Remove routing
      *
-     * @param \KAC\SiteBundle\Entity\Product\Routing $routings
+     * @param Product\Routing $routing
      */
-    public function removeRouting(\KAC\SiteBundle\Entity\Product\Routing $routings)
+    public function removeRouting(Product\Routing $routing)
     {
-        $this->routings->removeElement($routings);
+        $this->routings->removeElement($routing);
     }
 
     /**
-     * Get routings
+     * Get routing
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Product\Routing[]
      */
     public function getRoutings()
     {
@@ -857,7 +952,7 @@ class Product implements DescribableInterface
     {
         if (count($this->images) > 0)
         {
-            return $this->images[0];
+            return $this->images->first();
         }
 
         return null;
@@ -872,6 +967,7 @@ class Product implements DescribableInterface
     public function addImage(\KAC\SiteBundle\Entity\Product\Image $images)
     {
         $this->images[] = $images;
+        $images->setProduct($this);
 
         return $this;
     }
@@ -905,7 +1001,7 @@ class Product implements DescribableInterface
     {
         if (count($this->document) > 0)
         {
-            return $this->documents[0];
+            return $this->documents->first();
         }
 
         return null;
@@ -920,6 +1016,7 @@ class Product implements DescribableInterface
     public function addDocument(\KAC\SiteBundle\Entity\Product\Document $documents)
     {
         $this->documents[] = $documents;
+        $documents->setProduct($this);
 
         return $this;
     }
@@ -966,6 +1063,22 @@ class Product implements DescribableInterface
         {
             unset($this->features[$key]);
         }
+    }
+
+    /**
+     * @return ProductToDepartment
+     */
+    public function getMainDepartment()
+    {
+        return $this->mainDepartment;
+    }
+
+    /**
+     * @param ProductToDepartment $mainDepartment
+     */
+    public function setMainDepartment($mainDepartment)
+    {
+        $this->mainDepartment = $mainDepartment;
     }
 
 }

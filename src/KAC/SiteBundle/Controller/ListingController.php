@@ -35,12 +35,6 @@ class ListingController extends Controller
      */
 	public function indexAction(Request $request, $departmentId = null, $brandId = null, $admin = false, $all = false)
     {
-        // Ensure user has the correct permissions
-        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
-        {
-            throw new AccessDeniedException();
-        }
-
         /**
          * Define variable types
          * @var $department \KAC\SiteBundle\Entity\Department
@@ -67,6 +61,10 @@ class ListingController extends Controller
         {
             $template = $brand->getTemplate();
         } elseif (!$brand && $department && $department->getTemplate()) {
+            $template = $department->getTemplate();
+        } elseif ($brand && $department && $brand->getTemplate()) {
+            $template = $brand->getTemplate();
+        } elseif ($brand && $department && $department->getTemplate()) {
             $template = $department->getTemplate();
         } else {
             $template = 'standard';
@@ -151,7 +149,7 @@ class ListingController extends Controller
         }
 
         // Ensure that only the correct products are shown
-        if(!$this->get('session')->get('admin'))
+        if(!$this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $query->createFilterQuery('status')->setQuery('status:a');
         }
@@ -215,7 +213,7 @@ class ListingController extends Controller
             $pagination = $paginator->paginate(
                 array($solarium, $query),
                 $request->query->get('page', 1),
-                $request->query->get('limit', 20)
+                $request->query->get('limit', 21)
             );
             $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
             $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
@@ -226,7 +224,6 @@ class ListingController extends Controller
         }
 
         return $this->render('KACSiteBundle:Listing:Templates/'.$template.'.html.twig', array(
-            'admin' => $this->get('session')->get('admin'),
             'brand' => $brand,
             'department' => $department,
             'facets' => $facets,
@@ -242,16 +239,20 @@ class ListingController extends Controller
      */
 	public function searchAction(Request $request, $departmentId = null, $brandId = null, $all = false)
     {
-        // Ensure user has the correct permissions
-        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
+        // Check if there is an exact match with the product code
+        if (!$request->isXmlHttpRequest())
         {
-            throw new AccessDeniedException();
+            $em = $this->getDoctrine()->getManager();
+            $product = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->findOneBy(array(
+                'productCode' => $request->query->get('q')
+            ));
+            if($product)
+            {
+                return $this->redirect($this->generateUrl('routing', array(
+                    'url' => $product->getUrl()
+                )));
+            }
         }
-
-        /**
-         * Define variable types
-         * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
-         */
 
         // Fetch products from solr
         /** @var $solarium \Solarium_Client */
@@ -262,12 +263,19 @@ class ListingController extends Controller
         // Set query string
         if ($request->query->get('q'))
         {
-            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
+//            if($this->get('security.context')->isGranted('ROLE_ADMIN'))
+//            {
+//                $queryString = $request->query->get('q');
+//            } else {
+//                $queryString = $query->getHelper()->escapeTerm($request->query->get('q'));
+//            }
+            $queryString = trim($request->query->get('q'));
+
             $dismax = $query->getDisMax();
-            $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
-            $dismax->setPhraseFields(array('short_description^30'));
+            $dismax->setQueryFields(array('product_code^5', 'header^2', 'brand^3.5', 'page_title', 'short_description', 'search_words', 'text'));
+            $dismax->setPhraseFields(array('product_code^5', 'short_description^30'));
             $dismax->setQueryParser('edismax');
-            $query->setQuery($escapedQuery);
+            $query->setQuery($queryString);
         } else {
             $query->setQuery('*');
         }
@@ -288,7 +296,7 @@ class ListingController extends Controller
         }
 
         // Ensure that only the correct products are shown
-        if(!$this->get('session')->get('admin'))
+        if(!$this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
             $query->createFilterQuery('status')->setQuery('status:a');
         }
@@ -357,76 +365,18 @@ class ListingController extends Controller
             $result = $pagination->getCustomParameter('result');
             $facets = $result->getFacetSet();
             $stats = $solarium->select($statsQuery)->getStats();
-
-            // Check to see if only a single result is returned
-            if($result->getNumFound() === 1)
-            {
-                return $this->redirect($this->generateUrl('routing', array(
-                    'url' => $result->getDocuments()[0]->url,
-                )));
-            }
         } catch (\Solarium_Client_HttpException $e) {
-            throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
+            $msg = 'There seems to be an issue with our search engine. Please check later.';
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse(array('status' => 'error', 'message' => $msg), 500);
+            } else  {
+                throw new HttpException(500, $msg);
+            }
         }
 
-        return $this->render('KACSiteBundle:Listing:search.html.twig', array(
-            'admin' => $this->get('session')->get('admin'),
-            'facets' => $facets,
-            'featureGroups' => $featureGroups,
-            'pagination' => $pagination,
-            'stats' => $stats,
-        ));
-    }
-
-    /**
-     * @Route("/search-autocomplete.html", name="listing_search_autocomplete")
-     * @Method({"GET"})
-     */
-	public function searchAutocompleteAction(Request $request, $departmentId = null, $brandId = null, $all = false)
-    {
-        // Ensure user has the correct permissions
-        if ($this->get('session')->get('admin') === true && $this->get('security.context')->isGranted('ROLE_ADMIN') === false)
-        {
-            throw new AccessDeniedException();
-        }
-
-        /**
-         * Define variable types
-         * @var $departmentToFeature \KAC\SiteBundle\Entity\DepartmentToFeature
-         * @var $product Product
-         */
-        $data = array();
-
-        // Set query string
-        if ($request->query->has('q'))
-        {
-            /** @var $solarium \Solarium_Client */
-            $solarium = $this->get('solarium.client');
-
-            $query = $solarium->createSelect();
-            $helper = $query->getHelper();
-            $escapedQuery = $query->getHelper()->escapeTerm($request->query->get('q'));
-
-            $dismax = $query->getDisMax();
-            $dismax->setQueryFields(array('product_code^5', 'product_code^5', 'header^2', 'brand^1.5', 'page_title', 'short_description', 'search_words', 'text'));
-            $dismax->setPhraseFields(array('short_description^30'));
-            $dismax->setQueryParser('edismax');
-
-            $query->setQuery($escapedQuery);
-
-            // Ensure that only the correct products are shown
-            if(!$this->get('session')->get('admin'))
-            {
-                $query->createFilterQuery('status')->setQuery('status:a');
-            }
-
-            try {
-                $resultSet = $solarium->select($query);
-            } catch (\Solarium_Client_HttpException $e) {
-                throw new HttpException(500, 'There seems to be an issue with our search engine. Please check later.');
-            }
-
-            foreach($resultSet as $document)
+        if ($request->isXmlHttpRequest()) {
+            $data = array();
+            foreach($pagination as $document)
             {
                 $data[] = array(
                     'header' => $document->header,
@@ -437,9 +387,17 @@ class ListingController extends Controller
                     'tokens' => array_merge(explode(' ', $document->header), $document->product_code),
                 );
             }
-        }
 
-        return new JsonResponse($data);
+            return new JsonResponse($data);
+        } else {
+            return $this->render('KACSiteBundle:Listing:search.html.twig', array(
+                'query' => $query,
+                'facets' => $facets,
+                'featureGroups' => $featureGroups,
+                'pagination' => $pagination,
+                'stats' => $stats,
+            ));
+        }
     }
 
     /**
@@ -489,19 +447,48 @@ class ListingController extends Controller
 
     public function departmentTreeAction(Request $request, $departmentId = null, $brandId = null)
     {
+        /**
+         * @var $em EntityManager
+         */
         $em = $this->getDoctrine()->getManager();
 
         if ($departmentId)
         {
-            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            if($brandId)
+            {
+                $qb = $em->getRepository("KACSiteBundle:Department")->createQueryBuilder('d');
+                $departments = $qb->join('KAC\SiteBundle\Entity\BrandToDepartment', 'btd', Expr\Join::WITH, $qb->expr()->eq('btd.department', 'd.id'))
+                    ->where($qb->expr()->eq('btd.brand', '?1'))
+                    ->andWhere($qb->expr()->eq('d.id', '?2'))
+                    ->andWhere($qb->expr()->eq('d.status', $qb->expr()->literal('a')))
+                    ->orderBy('d.displayOrder')
+                    ->setParameter(1, $brandId)
+                    ->setParameter(2, $departmentId)
+                    ->getQuery()
+                    ->execute();
+            } else {
+                $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('id' => $departmentId, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            }
         } else {
-            $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            if($brandId)
+            {
+                $qb = $em->getRepository("KACSiteBundle:Department")->createQueryBuilder('d');
+                $departments = $qb->join('KAC\SiteBundle\Entity\BrandToDepartment', 'btd', Expr\Join::WITH, $qb->expr()->eq('btd.department', 'd.id'))
+                    ->where($qb->expr()->eq('btd.brand', '?1'))
+                    ->andWhere($qb->expr()->eq('d.lvl', $qb->expr()->literal(1)))
+                    ->andWhere($qb->expr()->eq('d.status', $qb->expr()->literal('a')))
+                    ->orderBy('d.displayOrder')
+                    ->setParameter(1, $brandId)
+                    ->getQuery()
+                    ->execute();
+            } else {
+                $departments = $em->getRepository("KACSiteBundle:Department")->findBy(array('lvl' => 1, 'status' => 'a'), array('displayOrder' => 'ASC'));
+            }
         }
 
         $response = $this->render('KACSiteBundle:Listing:departmentTree.html.twig', array(
             'departments' => $departments,
             'brandId' => $brandId,
-            'admin' => $this->get('session')->get('admin'),
         ));
         $response->setSharedMaxAge(3600);
 
@@ -542,8 +529,6 @@ class ListingController extends Controller
 
         $products = $this->getPopularProducts($departmentId, $brandId, 5);
 
-        // Remove unneeded elements
-
         $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
             'products' => $products,
             'department' => $department,
@@ -573,7 +558,10 @@ class ListingController extends Controller
                 ->join('KAC\SiteBundle\Entity\Product', 'p', Expr\Join::WITH, $qb->expr()->eq('p.brand', 'b.id'))
                 ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
                 ->groupBy('op.product')
-                ->orderBy('total', 'ASC');
+                ->orderBy('p.accessory', 'ASC')
+                ->addOrderBy('total', 'DESC');
+            $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
+                ->setParameter('unitCost', 200);
             if($num)
             {
                 $qb->setMaxResults($num);
@@ -604,8 +592,6 @@ class ListingController extends Controller
             }
 
             // Remove unneeded elements
-
-
             if($num)
             {
                 $brands = array_values(array_slice($brands, 0, $num));
@@ -633,7 +619,10 @@ class ListingController extends Controller
                 ->from('KAC\SiteBundle\Entity\Product', 'p')
                 ->join('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
                 ->groupBy('op.product')
-                ->orderBy('total', 'ASC');
+                ->orderBy('p.accessory', 'ASC')
+                ->addOrderBy('total', 'DESC');
+            $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
+                ->setParameter('unitCost', 200);
             if($brandId)
             {
                 $qb->where($qb->expr()->eq('p.brand', ':brand'))
@@ -653,11 +642,7 @@ class ListingController extends Controller
             $query->setRows(99999999);
 
             // Get the department
-            $department = null;
-            if ($departmentId)
-            {
-                $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
-            }
+            $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
 
             // If brand was specified fetch from the database
             $brand = null;
@@ -684,34 +669,28 @@ class ListingController extends Controller
             }
             $results = $solarium->execute($query);
 
-            $products = array();
+            $ids = array();
             foreach ($results as $document)
             {
-                $qb = $em->createQueryBuilder();
-                $result = $qb->select('p, count(op.id) AS total')
-                    ->from('KAC\SiteBundle\Entity\Product', 'p')
-                    ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.variant', 'p.id'))
-                    ->where($qb->expr()->eq('p.id', '?1'))
-                    ->groupBy('op.variant')
-                    ->orderBy('total', 'ASC')
-                    ->setParameter(1, $document->id)
-                    ->setMaxResults(1)
-                    ->getQuery()
-                    ->execute();
-
-                if ($result && count($result) > 0)
-                {
-                    $products[] = $result[0];
-                }
+                $ids[] = $document->id;
             }
 
-            // Sort array
-            usort($products, function($a, $b) {
-                if ($a['total'] == $b['total']) {
-                    return 0;
-                }
-                return ($a['total'] > $b['total']) ? -1 : 1;
-            });
+            if(count($ids) <= 0)
+            {
+                return array();
+            }
+
+            $qb = $em->createQueryBuilder();
+            $products = $qb->select('p, count(op.id) AS total')
+                ->from('KAC\SiteBundle\Entity\Product', 'p')
+                ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
+                ->where($qb->expr()->in('p.id', '?1'))
+                ->groupBy('op.product')
+                ->orderBy('p.accessory', 'ASC')
+                ->addOrderBy('total', 'DESC')
+                ->setParameter(1, $ids)
+                ->getQuery()
+                ->execute();
 
             if($num)
             {

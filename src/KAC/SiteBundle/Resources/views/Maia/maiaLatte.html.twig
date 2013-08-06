@@ -1,0 +1,20 @@
+{% set worktopColour = "Latte" %}
+{% set worktopDescription = "Latte is another ‘natural neutral’ in the maia range. Lighter than Mocha but with deeper tones than maia’s original coffee décor, Cappuccino, Latte has quickly become a popular choice." %}
+{% set productCodePrefix = 'LAT' %}
+{% set fromPrice = 295 %}
+{% set worktopNumber = 11 %}
+{% set startingId = 10000 + (1000 * worktopNumber) %}
+{% set currentId = startingId %}
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}maia Worktops in {{ worktopColour }} from Kitchen Appliance Centre{% endblock %}
+{% block body %}
+    <section class="product">
+        {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand2.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
+    </section>
+    {% include 'KACSiteBundle:Maia:maiaColour.js.twig' %}
+{% endblock %}

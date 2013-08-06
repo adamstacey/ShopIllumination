@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Manager;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Product\Variant\Description as VariantDescription;
 use KAC\SiteBundle\Entity\Product\Description as ProductDescription;
@@ -15,12 +16,14 @@ use KAC\SiteBundle\Entity\Product\Routing as ProductRouting;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Entity\Image;
+use KAC\SiteBundle\Entity\Routing;
 use KAC\SiteBundle\Manager\Templating\ProductTemplateBuilder;
 use KAC\SiteBundle\Manager\Templating\TemplateBuilder;
 use KAC\SiteBundle\Manager\Templating\VariantTemplateBuilder;
 use KAC\SiteBundle\Entity\Product\Variant\Routing as ProductVariantRouting;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Intl\Intl;
 
 class ProductManager extends Manager
 {
@@ -43,7 +46,6 @@ class ProductManager extends Manager
 
         $product->addDescription(new ProductDescription());
         $product->addDepartment(new ProductToDepartment());
-        $product->addRouting(new ProductRouting());
 
         return $product;
     }
@@ -62,90 +64,48 @@ class ProductManager extends Manager
 
     public function updateProductDescription(ProductDescription $description)
     {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->doctrine->getManager();
+
         $product = $description->getProduct();
         if (!$product) return;
 
         // Check if we should automatically update the description
         if ($description->getOverride()) return;
 
-        // Get the product variants
-        $variants = $product->getVariants();
-        if (sizeof($variants) < 1) return;
+        // Get objects
+        $brand = $description->getProduct()->getBrand();
+        $department = $description->getProduct()->getDepartment()->getDepartment();
 
-        // Go through variants and put together the description data
-        if (sizeof($variants) == 1)
-        {
-            $variant = $product->getVariant();
-            foreach ($variant->getDescriptions() as $variantDescription)
-            {
-                if ($variantDescription->getLocale() == $description->getlocale())
-                {
-                    $searches = array($variant->getProductCode(), "  ");
-                    $replacements = array("", " ");
-                    $commonPageTitle = str_replace($searches, $replacements, $variantDescription->getPageTitle());
-                    $commonHeader = str_replace($searches, $replacements, $variantDescription->getHeader());
-                    $commonMetaDescription = str_replace($searches, $replacements, $variantDescription->getMetaDescription());
-                    $commonMetaKeywords = $variantDescription->getMetaKeywords();
-                }
-            }
-        } else {
-            $pageTitles = array();
-            $headers = array();
-            $metaDescriptions = array();
-            $metaKeywords = array();
-            foreach ($variants as $variant)
-            {
-                foreach ($variant->getDescriptions() as $variantDescription)
-                {
-                    if ($variantDescription->getLocale() == $description->getlocale())
-                    {
-                        $pageTitles[] = explode(' ', $variantDescription->getPageTitle());
-                        $headers[] = explode(' ', $variantDescription->getHeader());
-                        $metaDescriptions[] = explode(' ', $variantDescription->getMetaDescription());
-                        foreach (explode(',', $variantDescription->getMetaKeywords()) as $metaKeyword)
-                        {
-                            $metaKeywords[] = trim($metaKeyword);
-                        }
-                    }
-                }
-            }
+        // Get the SEO data from the department templates
+        $titleTemplate = '^brand ^productCode ^department';
+        $descriptionTemplate = '"Find out more about the amazing" ^brand ^productCode ^department "available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."';
 
-            // Get the common data
-            $commonPageTitle = implode(' ', call_user_func_array('array_intersect', $pageTitles));
-            $commonHeader = implode(' ', call_user_func_array('array_intersect', $headers));
-            $commonMetaDescription = implode(' ', call_user_func_array('array_intersect', $metaDescriptions));
-            $commonMetaKeywords = implode(', ',array_unique($metaKeywords));
-        }
+        $pageTitleBuilder = new ProductTemplateBuilder($em);
+        $headerBuilder = new ProductTemplateBuilder($em);
+        $metaDescriptionBuilder = new ProductTemplateBuilder($em);
+
+        $pageTitle = $pageTitleBuilder->buildString($description, $department->getDescription()->getPageTitleTemplate() ? $department->getDescription()->getPageTitleTemplate() : $titleTemplate);
+        $header = $headerBuilder->buildString($description, $department->getDescription()->getHeaderTemplate() ? $department->getDescription()->getHeaderTemplate() : $titleTemplate);
+        $metaDescription = $metaDescriptionBuilder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate() ? $department->getDescription()->getMetaDescriptionTemplate() : $descriptionTemplate);
+        $metaKeywords = $this->seoManager->generateKeywords($pageTitle);
 
         // Update the description
-        $description->setPageTitle($commonPageTitle);
-        $description->setHeader($commonHeader);
-        $description->setMetaDescription($commonMetaDescription);
-        $description->setMetaKeywords($commonMetaKeywords);
-
-        // Update the URL
-        if (sizeof($product->getRoutings()) > 0)
-        {
-            foreach ($product->getRoutings() as $routing)
-            {
-                if ($routing->getLocale() == $description->getLocale())
-                {
-                    $url = $this->seoManager->createUrl($commonPageTitle, $routing->getUrl());
-                    $routing->setUrl($url);
-                }
-            }
-        } else {
-            $url = $this->seoManager->createUrl($commonPageTitle);
-            $routing = new ProductRouting();
-            $routing->setProduct($product);
-            $routing->setLocale($description->getLocale());
-            $routing->setUrl($url);
-            $product->addRouting($routing);
-        }
+        $description->setPageTitle($pageTitle);
+        $description->setHeader($header);
+        $description->setMetaDescription($metaDescription);
+        $description->setMetaKeywords($metaKeywords);
     }
 
     public function updateVariantDescription(VariantDescription $description)
     {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->doctrine->getManager();
+
         $variant = $description->getVariant();
         if (!$variant) return;
 
@@ -159,29 +119,27 @@ class ProductManager extends Manager
         if ($brand && $department)
         {
             // Get the SEO data from the department templates
-            $pageTitleBuilder = new VariantTemplateBuilder($this->doctrine->getManager());
-            $pageTitle = $pageTitleBuilder->buildString($description, $department->getDescription()->getPageTitleTemplate());
-            $headerBuilder = new VariantTemplateBuilder($this->doctrine->getManager());
-            $header = $headerBuilder->buildString($description, $department->getDescription()->getHeaderTemplate());
-            $metaDescriptionBuilder = new VariantTemplateBuilder($this->doctrine->getManager());
-            $metaDescription = $metaDescriptionBuilder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate());
+            $titleTemplate = '^brand ^productCode ^department';
+            $descriptionTemplate = '"Find out more about the amazing" ^brand ^productCode ^department "available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."';
+
+            $pageTitleBuilder = new VariantTemplateBuilder($em);
+            $headerBuilder = new VariantTemplateBuilder($em);
+            $metaDescriptionBuilder = new VariantTemplateBuilder($em);
+
+            $pageTitle = $pageTitleBuilder->buildString($description, $department->getDescription()->getPageTitleTemplate() ? $department->getDescription()->getPageTitleTemplate() : $titleTemplate);
+            $header = $headerBuilder->buildString($description, $department->getDescription()->getHeaderTemplate() ? $department->getDescription()->getHeaderTemplate() : $titleTemplate);
+            $metaDescription = $metaDescriptionBuilder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate() ? $department->getDescription()->getMetaDescriptionTemplate() : $descriptionTemplate);
+            $metaKeywords = $this->seoManager->generateKeywords($pageTitle);
 
             // Update the URL
-            if (sizeof($variant->getRoutings()) > 0)
+            if ($variant->getRouting())
             {
-                foreach ($variant->getRoutings() as $routing)
-                {
-                    if ($routing->getLocale() == $description->getLocale())
-                    {
-                        $url = $this->seoManager->createUrl($pageTitle, $routing->getUrl());
-                        $routing->setUrl($url);
-                    }
-                }
+                $url = $this->seoManager->createUrl($pageTitle, $variant->getRouting()->getUrl());
+                $variant->getRouting()->setUrl($url);
             } else {
-                $url = $this->seoManager->createUrl($pageTitle);
+                $url = $this->seoManager->createUrl($pageTitle, '');
                 $routing = new ProductVariantRouting();
                 $routing->setVariant($variant);
-                $routing->setLocale($description->getLocale());
                 $routing->setUrl($url);
                 $variant->addRouting($routing);
             }
@@ -190,7 +148,7 @@ class ProductManager extends Manager
             $description->setPageTitle($pageTitle);
             $description->setHeader($header);
             $description->setMetaDescription($metaDescription);
-            $description->setMetaKeywords($this->seoManager->generateKeywords($pageTitle));
+            $description->setMetaKeywords($metaKeywords);
         }
     }
 
@@ -235,5 +193,65 @@ class ProductManager extends Manager
     {
         $this->documentManager->persistDocuments($variant, 'product_variant');
         $this->documentManager->removeTemporaryDocuments($variant);
+    }
+
+    public function updateVariantOrder(Product $product)
+    {
+        // Sort the variants by product code
+        $variantsIterator = $product->getVariants()->getIterator();
+
+        $variantsIterator->uasort(function (Variant $first, Variant $second) {
+            return strcmp($first->getProductCode(), $second->getProductCode());
+        });
+        $product->setVariants(new ArrayCollection($variantsIterator->getArrayCopy()));
+
+        // Update the display order
+        $i = 0;
+        foreach($product->getVariants() as $variant)
+        {
+            $variant->setDisplayOrder($i);
+            $i++;
+        }
+    }
+
+    private function checkDuplicateUrl(Routing $route, $baseUrl, &$urls=array(), $n=1)
+    {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->doctrine->getManager();
+
+        // Search the new urls for duplicates
+        if(in_array($route->getUrl(), $urls))
+        {
+            $route->setUrl($this->seoManager->generateUrl($route->getUrl().'-'.$n));
+            $this->checkDuplicateUrl($route, $baseUrl, $urls, $n + 1);
+            $urls[] = $route->getUrl();
+            return;
+        }
+
+        // Search the database for duplicates
+        $qb = $em->createQueryBuilder();
+        $qb->addSelect('r.id')
+            ->from('KAC\SiteBundle\Entity\Routing', 'r')
+            ->where($qb->expr()->eq('r.url', '?1'))
+            ->setParameter(1, $route->getUrl());
+        if($route->getId())
+        {
+            $qb->andWhere('r.id != \'?2\'');
+            $qb->setParameter(2, $route->getId());
+        }
+        $duplicateRoutes = $qb->getQuery()
+            ->execute();
+
+        if(count($duplicateRoutes) > 0)
+        {
+            $route->setUrl($this->seoManager->generateUrl($route->getUrl().'-'.($duplicateRoutes+$n)));
+            $this->checkDuplicateUrl($route, $baseUrl, $urls, $n + 1);
+            $urls[] = $route->getUrl();
+            return;
+        }
+
+        $urls[] = $route->getUrl();
     }
 }

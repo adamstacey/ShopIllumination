@@ -27,7 +27,7 @@ class Description implements DescriptionInterface
 
     /**
      * @ORM\Column(name="locale", type="string", length=5   )
-     * @Assert\Locale(groups={"flow_site_new_product_step3", "site_edit_product_description"})
+     * @Assert\Locale(groups={"flow_site_new_product_step4", "site_edit_product_description"})
      */
     private $locale = "en_GB";
 
@@ -87,6 +87,13 @@ class Description implements DescriptionInterface
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
 
     /**
      * Get id

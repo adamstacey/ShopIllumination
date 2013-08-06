@@ -33,14 +33,14 @@ class VariantToFeature
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product\FeatureGroup")
      * @ORM\JoinColumn(name="feature_group_id", referencedColumnName="id")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step6", "flow_site_new_product_step2"}, message="Select a feature group.")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step7", "flow_site_new_product_step4"}, message="Select a feature group.")
      **/
     private $featureGroup;
 
     /**
      * @ORM\ManyToOne(targetEntity="KAC\SiteBundle\Entity\Product\Feature")
      * @ORM\JoinColumn(name="feature_id", referencedColumnName="id")
-     * @Assert\NotBlank(groups={"flow_site_new_product_step6", "flow_site_new_product_step2"}, message="Select a feature.")
+     * @Assert\NotBlank(groups={"flow_site_new_product_step7", "flow_site_new_product_step4"}, message="Select a feature.")
      **/
     private $feature;
         

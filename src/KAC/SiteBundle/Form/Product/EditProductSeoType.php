@@ -18,13 +18,6 @@ class EditProductSeoType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
         ));
-        $builder->add('routings', 'collection', array(
-            'block_name' => 'descriptions_routing',
-            'type' => new ProductRoutingType(),
-            'required'  => false,
-            'allow_add' => true,
-            'allow_delete' => true,
-        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

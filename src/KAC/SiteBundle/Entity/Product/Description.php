@@ -78,6 +78,13 @@ class Description implements DescriptionInterface
      */
     private $updatedAt;
 
+    public function __clone()
+    {
+        if ($this->id) {
+            $this->id = null;
+        }
+    }
+
     /**
      * Get id
      *
@@ -293,29 +300,6 @@ class Description implements DescriptionInterface
     public function getProduct()
     {
         return $this->product;
-    }
-
-    /**
-     * Set variant
-     *
-     * @param \KAC\SiteBundle\Entity\Product\Variant $variant
-     * @return Description
-     */
-    public function setVariant(\KAC\SiteBundle\Entity\Product\Variant $variant = null)
-    {
-        $this->variant = $variant;
-
-        return $this;
-    }
-
-    /**
-     * Get variant
-     *
-     * @return \KAC\SiteBundle\Entity\Product\Variant
-     */
-    public function getVariant()
-    {
-        return $this->variant;
     }
 
     /**

@@ -8,7 +8,7 @@ class VariantTemplateBuilder extends TemplateBuilder
     protected $aliases = array(
         'brand' => 'variant.product.brand.description.name',
         'productCode' => 'variant.productCode',
-        'department' => 'variant.product.department.description.name',
+        'department' => 'variant.product.department.department.description.name',
     );
 
     function getEntity($object, $alias, $id)

@@ -2,10 +2,27 @@
     text-transform: uppercase;
 }
 
+.strikethrough {
+    text-decoration: line-through;
+}
+
 .important {
     text-transform: uppercase;
     color: $colourRed;
     font-weight: bold;
+}
+
+.small {
+    color: $colourGreyDark;
+    @include fontSize($fontSizeExtraSmall);
+}
+
+.colour-black {
+    color: $colourBlack;
+}
+
+.colour-white {
+    color: $colourWhite;
 }
 
 .colour-grey {

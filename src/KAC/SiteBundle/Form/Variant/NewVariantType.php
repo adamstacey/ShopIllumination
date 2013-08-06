@@ -36,6 +36,7 @@ class NewVariantType extends AbstractType
                     'type' => new ProductFeatureCombinationType($options['departmentId']),
                     'allow_add' => true,
                     'allow_delete' => false,
+                    'by_reference' => false,
                 ));
 
                 break;
@@ -60,6 +61,7 @@ class NewVariantType extends AbstractType
                     'type' => new ProductPriceType(),
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'by_reference' => false,
                 ));
 
                 break;

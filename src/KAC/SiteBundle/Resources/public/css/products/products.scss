@@ -9,6 +9,14 @@
     @include boxShadow($colourGreyExtraLight, 0, 0, $spacingMedium);
 }
 
+.product h1 {
+    padding: 0 $spacingMedium $spacingMedium $spacingMedium;
+    margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
+
+    border-bottom: 1px solid $colourGreyExtraLight;
+    @include fontSize($fontSizeExtraLarge);
+}
+
 .product a {
     text-decoration: none !important;
 }
@@ -35,16 +43,19 @@
     margin: 0 0 0 $spacingMedium;
 }
 
-.product .price {
+.product .price,
+.product .price-small {
     text-align: right;
     color: $colourRed !important;
 }
 
-.product .price a {
+.product .price a,
+.product .price-small a {
     color: $colourRed !important;
 }
 
-.product .price span {
+.product .price span,
+.product .price-small span {
     display: inline-block;
     vertical-align: top;
     line-height: 100%;
@@ -54,28 +65,57 @@
     @include fontSize($fontSizeLarge);
 }
 
-.product .price .currency-sign {
+.product .price-small .currency-prefix {
+  @include fontSize($fontSizeSmall);
+}
+
+.product .price .currency-sign,
+.product .price-small .currency-sign {
     padding-top: $spacingExtraSmall;
 
     font-family: $impactFontFamily;
-    @include fontSize($fontSizeExtraExtraLarge);
+}
+
+.product .price .currency-sign {
+  @include fontSize($fontSizeExtraExtraLarge);
+}
+
+.product .price-small .currency-sign {
+  @include fontSize($fontSizeLarge);
+}
+
+.product .price .currency-integer,
+.product .price-small .currency-integer {
+    font-family: $impactFontFamily;
 }
 
 .product .price .currency-integer {
-    font-family: $impactFontFamily;
-    @include fontSize(32);
+  @include fontSize(32);
 }
 
-.product .price .currency-decimal {
+.product .price-small .currency-integer {
+  @include fontSize($fontSizeExtraExtraLarge);
+}
+
+.product .price .currency-decimal,
+.product .price-small .currency-decimal {
     padding-top: $spacingExtraSmall;
 
     font-family: $impactFontFamily;
-    @include fontSize($fontSizeExtraLarge);
 }
 
-.product .price .currency-tax {
-    @include fontSize($fontSizeExtraExtraSmall);
+.product .price .currency-decimal {
+  @include fontSize($fontSizeExtraLarge);
+}
+
+.product .price-small .currency-decimal {
+  @include fontSize($fontSizeMedium);
+}
+
+.product .price .currency-tax,
+.product .price-small .currency-tax {
     color: $colourGrey;
+    @include fontSize($fontSizeExtraExtraSmall);
 }
 
 table.data-table .price .currency-prefix {
@@ -96,6 +136,18 @@ table.data-table .price .currency-decimal {
 
 table.data-table .price .currency-tax {
     @include fontSize($fontSizeExtraExtraSmall);
+}
+
+.product-listing-name {
+    height: 28px;
+    overflow: hidden;
+}
+
+.product-listing-name,
+.product-listing-name a {
+    @include fontSize($fontSizeSmall);
+    color: $colourGrey;
+    line-height: 14px;
 }
 
 .product .logo {
@@ -295,6 +347,27 @@ table.data-table .price .currency-tax {
     @include selectNone;
 }
 
+.listing-top-item {
+  height: 28px;
+  width: 28px;
+
+  position: absolute;
+  left: -4px;
+  top: -4px;
+
+  display: block;
+
+  @include highlightedVerticalGradientDarkRed;
+  @include boxGlow($colourRed, 5px);
+  border: 1px solid $colourWhite;
+  @include fontSize($fontSizeMedium);
+  @include equalBorderRadius(15px);
+  line-height: 28px;
+  color: $colourWhite;
+  text-align: center;
+  @include selectNone;
+}
+
 .product-sorting-container, .product-filtering-container {
     padding: $spacingSmall 0;
 
@@ -471,11 +544,17 @@ table.data-table .price .currency-tax {
 .jstree .jstree-open ins {
     _background-position: -36px 0;
 }
+
 .jstree .jstree-closed ins {
     _background-position: -18px 0;
 }
+
 .jstree .jstree-leaf ins {
     _background-position: 0 0;
+}
+
+.jstree a > ins {
+    display: none;
 }
 
 @media

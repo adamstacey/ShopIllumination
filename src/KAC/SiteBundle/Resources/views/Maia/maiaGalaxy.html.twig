@@ -1,0 +1,20 @@
+{% set worktopColour = "Galaxy" %}
+{% set worktopDescription = "Galaxy’s metallic flecks bring sparkle to your worktop – metallic particles catch the light and complement the deep black background." %}
+{% set productCodePrefix = 'GAL' %}
+{% set fromPrice = 369 %}
+{% set worktopNumber = 9 %}
+{% set startingId = 10000 + (1000 * worktopNumber) %}
+{% set currentId = startingId %}
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}maia Worktops in {{ worktopColour }} from Kitchen Appliance Centre{% endblock %}
+{% block body %}
+    <section class="product">
+        {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand1.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
+    </section>
+    {% include 'KACSiteBundle:Maia:maiaColour.js.twig' %}
+{% endblock %}

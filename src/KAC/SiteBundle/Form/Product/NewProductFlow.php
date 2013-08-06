@@ -2,6 +2,7 @@
 
 namespace KAC\SiteBundle\Form\Product;
 
+use Craue\FormFlowBundle\Form\FormFlowInterface;
 use KAC\SiteBundle\ThirdParty\Google\Google;
 use Craue\FormFlowBundle\Form\FormFlow;
 use KAC\SiteBundle\Entity\Product\Variant;
@@ -43,47 +44,57 @@ class NewProductFlow extends FormFlow
                 'type' => $this->formType,
             ),
             array(
-                'label' => '2. Build Combinations',
+                'label' => '2. Departments',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '3. Prices',
+                'label' => '3. Build Combinations',
+                'type' => $this->formType,
+                'skip' => function($estimatedStepNumber, FormFlowInterface $flow) {
+                    return $estimatedStepNumber > 1 && (!$flow->getFormData()->getDepartment() || !$flow->getFormData()->getDepartment()->getDepartment() || count($flow->getFormData()->getDepartment()->getDepartment()->getFeatures()) < 1);
+                },
+            ),
+            array(
+                'label' => '4. Prices',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '4. Delivery',
+                'label' => '5. Delivery',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '5. Unique Identifiers',
+                'label' => '6. Unique Identifiers',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '6. Features',
+                'label' => '7. Features',
+                'type' => $this->formType,
+                'skip' => function($estimatedStepNumber, FormFlowInterface $flow) {
+                    return $estimatedStepNumber > 5 && (!$flow->getFormData()->getDepartment() || !$flow->getFormData()->getDepartment()->getDepartment() || count($flow->getFormData()->getDepartment()->getDepartment()->getFeatures()) < 1);
+                },
+            ),
+            array(
+                'label' => '8. Descriptions',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '7. Descriptions',
+                'label' => '9. SEO',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '8. SEO',
+                'label' => '10. Uploads',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '9. Uploads',
+                'label' => '11. Images',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '10. Images',
+                'label' => '12. Documents',
                 'type' => $this->formType,
             ),
             array(
-                'label' => '11. Documents',
-                'type' => $this->formType,
-            ),
-            array(
-                'label' => '12. Links',
+                'label' => '13. Links',
                 'type' => $this->formType,
             ),
         );
@@ -95,10 +106,43 @@ class NewProductFlow extends FormFlow
         $options['cascade_validation'] = true;
         $options['flowStep'] = $step;
 
+        /**
+         * @var $formData Product
+         */
         $formData = $this->getFormData();
 
-        if ($step > 1)
+        if ($step <= 1)
         {
+            $departments = $formData->getDepartments();
+            if (count($departments) > 0)
+            {
+                $formData->setMainDepartment($departments[0]);
+            } else {
+                $formData->setMainDepartment(null);
+            }
+        }
+
+        if($step === 2)
+        {
+            if($formData->getMainDepartment())
+            {
+                $depAlreadyExists = false;
+                // Check to see if the department already exists in the departments collection
+                foreach($formData->getDepartments() as $department)
+                {
+                    if($department == $formData->getMainDepartment())
+                    {
+                        $department->setDepartment($formData->getMainDepartment()->getDepartment());
+                        $depAlreadyExists = true;
+                    }
+                }
+
+                if(!$depAlreadyExists)
+                {
+                    $formData->addDepartment($formData->getMainDepartment());
+                }
+            }
+
             $departments = $formData->getDepartments();
             if (count($departments) > 0 && $departments[0]->getDepartment() !== null)
             {
@@ -108,7 +152,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step > 2)
+        if ($step === 3)
         {
             // Go through the variants and update any zero recommended retail prices
             foreach ($formData->getVariants() as $variant)
@@ -129,7 +173,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 3)
+        if ($step === 4)
         {
             // Generate combinations
             $combinations = array();
@@ -293,34 +337,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 4)
-        {
-            // Sort the variants in their display order
-            if (sizeof($formData->getVariants()) > 1)
-            {
-                $sortedVariants = array();
-                foreach ($formData->getVariants() as $variant)
-                {
-                    if ($variant)
-                    {
-                        $displayOrder = $variant->getDisplayOrder();
-                        while (isset($sortedVariants[$displayOrder]))
-                        {
-                            $displayOrder++;
-                        }
-                        $sortedVariants[$displayOrder] = $variant;
-                        $formData->removeVariant($variant);
-                    }
-                }
-                ksort($sortedVariants);
-                foreach ($sortedVariants as $variant)
-                {
-                    $formData->addVariant($variant);
-                }
-            }
-        }
-
-        if ($step == 5)
+        if ($step == 6)
         {
             // Attempt to load variant UIDs from google
             foreach ($formData->getVariants() as $variant)
@@ -358,7 +375,7 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if ($step == 6)
+        if ($step == 7)
         {
             // Get the department features
             $departmentFeatures = $formData->getDepartment()->getDepartment()->getFeatures();
@@ -398,52 +415,21 @@ class NewProductFlow extends FormFlow
             }
         }
 
-        if (($step == 8) || ($step == 9))
+        if ($step == 8 || $step == 9)
         {
-            // Update the variant descriptions
-            foreach ($formData->getVariants() as $variant)
-            {
-                $this->productManager->updateVariantDescription($variant->getDescription());
-            }
-
             // Update the product description
             foreach ($formData->getDescriptions() as $description)
             {
                 $this->productManager->updateProductDescription($description);
             }
 
-            // Check the URLs
-            $duplicateUrlsCheck = array();
-
-            // Check the variant URLs
+            // Update the variant descriptions
             foreach ($formData->getVariants() as $variant)
             {
-                foreach ($variant->getRoutings() as $routing)
+                foreach($variant->getDescriptions() as $description)
                 {
-                    $url = $this->seoManager->createUrl($routing->getUrl());
-                    $duplicateCount = 0;
-                    while (in_array($url, $duplicateUrlsCheck))
-                    {
-                        $duplicateCount++;
-                        $url = $this->seoManager->createUrl($url.'-'.$duplicateCount);
-                    }
-                    $duplicateUrlsCheck[] = $url;
-                    $routing->setUrl($url);
+                    $this->productManager->updateVariantDescription($description);
                 }
-            }
-
-            // Check the product URLs
-            foreach ($formData->getRoutings() as $routing)
-            {
-                $url = $this->seoManager->createUrl($routing->getUrl());
-                $duplicateCount = 0;
-                while (in_array($url, $duplicateUrlsCheck))
-                {
-                    $duplicateCount++;
-                    $url = $this->seoManager->createUrl($url.'-'.$duplicateCount);
-                }
-                $duplicateUrlsCheck[] = $url;
-                $routing->setUrl($url);
             }
         }
 

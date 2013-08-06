@@ -20,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * })
  * @ORM\Table(name="routing")
  * @ORM\HasLifecycleCallbacks()
- * @UniqueEntity("url")
+ * @UniqueEntity(fields={"url"}, groups={"Default", "flow_site_new_department_step2", "site_edit_variant_seo", "flow_site_new_product_step9"})
  */
 class Routing
 {

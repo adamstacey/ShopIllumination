@@ -9,13 +9,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * @Route("/")
+ */
 class RoutingController extends Controller
 {
+    /**
+     * @Route("/all/{url}.html", name = "routing_all", requirements = {"url": ".+"})
+     * @Method({"GET"})
+     */
     public function routingAllAction(Request $request, $url)
     {
         return $this->routingAction($request, $url, true);
     }
 
+    /**
+     * @Route("/{url}.html", name = "routing", requirements = {"url": ".+"})
+     * @Method({"GET"})
+     */
     public function routingAction(Request $request, $url, $all=false)
     {
         // Tidy up URL
@@ -57,6 +68,17 @@ class RoutingController extends Controller
 
                         return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()), $request->query->all());
                         break;
+                    case 'KAC\SiteBundle\Entity\Product\Variant\Routing':
+                        if($all)
+                        {
+                            // All flag should be ignored for the product view page
+                            $twig = $this->container->get('templating');
+                            $content = $twig->render('KACSiteBundle:Includes:error404.html.twig');
+                            return new Response($content, 404, array('Content-Type', 'text/html'));
+                        }
+
+                        return $this->forward('KACSiteBundle:Product:viewWithVariant', array('id' => $routingObject->getVariant()->getId()), $request->query->all());
+                        break;
                 }
             }
         }
@@ -74,8 +96,14 @@ class RoutingController extends Controller
      */
     private function isObjectViewable($object)
     {
+        if($this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            return true;
+        }
+
         // Check if the object is available
-        if (method_exists($object, 'getStatus') && $object->getStatus() !== 'a') {
+        if (method_exists($object, 'getStatus') && $object->getStatus() !== 'a')
+        {
             return false;
         }
 

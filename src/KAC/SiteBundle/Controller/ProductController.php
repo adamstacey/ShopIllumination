@@ -3,10 +3,12 @@ namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\DepartmentToFeature;
+use KAC\SiteBundle\Form\Product\EditProductDepartmentsType;
 use KAC\SiteBundle\Form\Product\EditProductDocumentsType;
 use KAC\SiteBundle\Form\Product\EditProductImagesType;
 use KAC\SiteBundle\Form\Product\EditProductDescriptionType;
 use KAC\SiteBundle\Form\Product\EditProductSeoType;
+use KAC\SiteBundle\Model\ImportPriceData;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +37,7 @@ use KAC\SiteBundle\Manager\ProductManager;
 use KAC\SiteBundle\Manager\SeoManager;
 
 class ProductController extends Controller {
-    public function viewAction(Request $request, $id)
+    public function viewAction(Request $request, $id, $variant=null)
     {
         /**
          * @var EntityManager $em
@@ -50,22 +52,30 @@ class ProductController extends Controller {
         {
             throw new NotFoundHttpException("Product not found");
         }
+        // Check if product is enabled
+        if($product->getStatus() !== 'a' && !$this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            return $this->redirect($this->generateUrl('routing', array(
+                'url' => $product->getDepartment()->getDepartment()->getUrl()
+            )));
+        }
 
         $cheapestVariant = null;
         $lowestPrice = null;
         $highestPrice = null;
         $commonFeatures = array();
+        $differentiatingFeatures = array();
         $variantFeatures = array();
 
-        foreach($product->getVariants() as $variant)
+        foreach ($product->getVariants() as $entity)
         {
-            $variantFeatures[$variant->getId()] = array();
+            $variantFeatures[$entity->getId()] = array();
 
             // Calculate price range
-            foreach ($variant->getPrices() as $price) {
+            foreach ($entity->getPrices() as $price) {
                 if ($lowestPrice === null || $price->getListPrice() < $lowestPrice->getListPrice()) {
                     $lowestPrice = $price;
-                    $cheapestVariant = $variant;
+                    $cheapestVariant = $entity;
                 }
                 if ($highestPrice === null || $price->getListPrice() > $highestPrice->getListPrice()) {
                     $highestPrice = $price;
@@ -74,7 +84,7 @@ class ProductController extends Controller {
 
             // Get features
             /** @var $feature VariantToFeature */
-            foreach ($variant->getFeatures() as $feature)
+            foreach ($entity->getFeatures() as $feature)
             {
                 if($feature && $feature->getFeatureGroup() && $feature->getFeature())
                 {
@@ -98,24 +108,65 @@ class ProductController extends Controller {
                         {
                             unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
                         }
+                    } elseif (!$departmentToFeature || count($departmentToFeature) <= 0) {
+                        if(!array_key_exists($feature->getFeatureGroup()->getName(), $commonFeatures))
+                        {
+                            $commonFeatures[$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        }
+                        else if ($commonFeatures[$feature->getFeatureGroup()->getName()] != $feature->getFeature()->getName())
+                        {
+                            unset ($commonFeatures[$feature->getFeatureGroup()->getName()]);
+                        }
                     }
+
                     if($departmentToFeature && count($departmentToFeature) >= 1 && $departmentToFeature[0]->getDisplayOnProduct())
                     {
-                        $variantFeatures[$variant->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        $variantFeatures[$entity->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        if(!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()])) {
+                            $differentiatingFeatures[$feature->getFeatureGroup()->getName()] = array();
+                        }
+                        $differentiatingFeatures[$feature->getFeatureGroup()->getName()][] = $feature->getFeature()->getName();
+                    } elseif (!$departmentToFeature || count($departmentToFeature) <= 0) {
+                        $variantFeatures[$entity->getId()][$feature->getFeatureGroup()->getName()] = $feature->getFeature()->getName();
+                        if(!isset($differentiatingFeatures[$feature->getFeatureGroup()->getName()])) {
+                            $differentiatingFeatures[$feature->getFeatureGroup()->getName()] = array();
+                        }
+                        $differentiatingFeatures[$feature->getFeatureGroup()->getName()][] = $feature->getFeature()->getName();
                     }
                 }
             }
         }
 
+        // Calculate the differentiating features
+        foreach($differentiatingFeatures as $key => &$features)
+        {
+            $features = array_unique($features);
+            if(count($features) <= 1)
+            {
+                unset($differentiatingFeatures[$key]);
+            }
+        }
+
         // Get all images
         $galleryImages = array();
-        $thumbnailImage = null;
+        $productImages = array();
 
         $images = $em->getRepository("KAC\SiteBundle\Entity\Product\Image")->findBy(array(
             'objectId' => $id
         ), array(
             'displayOrder' => 'ASC'
         ));
+
+        $guarantees = array();
+        if ($product->getBrand())
+        {
+            $guarantees = $em->getRepository("KAC\SiteBundle\Entity\Guarantee")->findBy(array(
+                'objectId' => $product->getBrand()->getId(),
+                'objectType' => 'brand'
+            ), array(
+                'displayOrder' => 'ASC'
+            ));
+        }
 
         /**
          * @var Image $image
@@ -128,14 +179,14 @@ class ProductController extends Controller {
                 $galleryImages[] = $image;
             // Get the thumbnail image
             } else if ($image->getImageType() === 'product') {
-                $thumbnailImage = $image;
+                $productImages[] = $image;
             }
         }
 
         // Find template from the departments
         $template = 'standard';
         $departments = array();
-        if($product->getTemplate()) {
+        if($product->getTemplate() && $product->getTemplate() !== 'default') {
             $template = $product->getTemplate();
         } elseif($product->getDepartment()) {
             // Check the department tree
@@ -151,21 +202,56 @@ class ProductController extends Controller {
             } while ($currDepartment !== null);
         }
 
-        // Find competitors prices
-//        $googleApi = $this->get('kac_site.google.google');
-//        $competitorPrices = $googleApi->findMoreExpensiveProducts($cheapestVariant->getProductCode(), $lowestPrice !== null ? $lowestPrice->getListPrice() : $highestPrice->getListPrice(), 5);
+        // Create variant array
+        $variants = array();
+        foreach($product->getVariants() as $entity)
+        {
+            $array = array(
+                'productId' => $product->getId(),
+                'variantId' => $entity->getId(),
+                'url' => $entity->getUrl(),
+                'features' => $commonFeatures,
+            );
+            foreach($entity->getFeatures() as $vtf)
+            {
+                if($vtf && $vtf->getFeatureGroup() && $vtf->getFeature())
+                {
+                    $array['features'][$vtf->getFeatureGroup()->getName()] = $vtf->getFeature()->getName();
+                }
+            }
+            $variants[] = $array;
+        }
 
         return $this->render('KACSiteBundle:Product:Templates/'.$template.'.html.twig', array(
             'product' => $product,
             'departments' => $departments,
+            'guarantees' => $guarantees,
             'gallery_images' => $galleryImages,
-            'thumbnail_image' => $thumbnailImage,
+            'product_images' => $productImages,
             'lowest_price' => $lowestPrice,
             'highest_price' => $highestPrice,
             'common_features' => $commonFeatures,
             'variant_features' => $variantFeatures,
-//            'competitorPrices' => $competitorPrices,
+            'differentiating_features' => $differentiatingFeatures,
+            'variants' => $variants,
+            'variant' => $variant,
         ));
+    }
+
+    /**
+     * @Route("/products/view/variant/{id}", name="products_variant_view")
+     */
+    public function viewWithVariantAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $variant = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->find($id);
+        if(!$variant)
+        {
+            throw new NotFoundHttpException("Variant not found");
+        }
+
+        return $this->viewAction($request, $variant->getProduct()->getId(), $variant);
     }
 
     /**
@@ -195,23 +281,89 @@ class ProductController extends Controller {
                 // Get next form step
                 $form = $flow->createForm();
             } else {
+                $em->persist($product);
+                $em->flush();
+
                 // Update the images
                 $manager->updateImages($product);
                 // Update the documents
                 $manager->updateDocuments($product);
+                // Update the variant order based on the product code
+                $manager->updateVariantOrder($product);
 
                 $em->persist($product);
                 $em->flush();
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('admin_listing_products'));
+                return $this->redirect($this->generateUrl('routing', array(
+                    'url' => $product->getUrl(),
+                )));
             }
         }
 
         return $this->render('KACSiteBundle:Product:new.html.twig', array(
             'form' => $form->createView(),
             'flow' => $flow,
+        ));
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/clone", name="products_clone")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function cloneAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $manager = $this->getManager();
+
+        $originalProduct = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
+        if(!$originalProduct)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        /**
+         * @var $product Product
+         */
+        $product = clone $originalProduct;
+
+        $flow = $this->get('kac_site.form.flow.new_product');
+
+        $flow->bind($product);
+
+        // Get current form step
+        $form = $flow->createForm();
+
+        if ($flow->isValid($form))
+        {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep())
+            {
+                // Get next form step
+                $form = $flow->createForm();
+            } else {
+                // Update the images
+                $manager->updateImages($product);
+                // Update the documents
+                $manager->updateDocuments($product);
+                // Update the variant order based on the product code
+                $manager->updateVariantOrder($product);
+
+                $em->persist($product);
+                $em->flush();
+
+                $flow->reset();
+
+                return $this->redirect($this->generateUrl('listing_products'));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:clone.html.twig', array(
+            'form' => $form->createView(),
+            'flow' => $flow,
+            'originalProduct' => $originalProduct,
         ));
     }
 
@@ -282,14 +434,14 @@ class ProductController extends Controller {
                     {
                         // Go through the variants of the product
                         $variants = $em->getRepository("KAC\SiteBundle\Entity\Product\Variant")->findBy(array('product' => $product));
-                        foreach ($variants as $variant)
+                        foreach ($variants as $entity)
                         {
                             // Get the other feature groups
-                            $variantToFeatures = $em->getRepository("KAC\SiteBundle\Entity\Product\VariantToFeature")->findBy(array('variant' => $variant));
+                            $variantToFeatures = $em->getRepository("KAC\SiteBundle\Entity\Product\VariantToFeature")->findBy(array('variant' => $entity));
 
                             // Assign the feature to the variant
                             $variantToFeature = new VariantToFeature();
-                            $variantToFeature->setVariant($variant);
+                            $variantToFeature->setVariant($entity);
                             $variantToFeature->setFeatureGroup($featureGroup);
                             $variantToFeature->setDisplayOrder(sizeof($variantToFeatures) + 1);
                             $em->persist($variantToFeature);
@@ -375,6 +527,141 @@ class ProductController extends Controller {
         ));
     }
 
+
+    /**
+     * @Route("/admin/products/importPrices", name="products_import_prices")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function importPricesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $data = new ImportPriceData();
+        $priceIssuesFound = array();
+        $noUpdatesRequired = array();
+        $pricesNeedConfirmation = array();
+        $pricesUpdated = array();
+        $totalImports = 0;
+        $processed = false;
+        $requiresConfirmation = false;
+
+        $form = $this->createFormBuilder($data)
+            ->add('file', 'file', array(
+                'label' => 'Upload File',
+                'attr' => array(
+                    'class' => 'fill',
+                    'data-help' => 'Upload a CSV or TXT file',
+                )
+            ))
+            ->add('action', 'choice', array(
+                'label' => 'Action',
+                'choices' => array(
+                    'check' => 'Check Prices',
+                    'update' => 'Update Prices'
+                ),
+                'required' => true,
+                'attr' => array(
+                    'class' => 'fill',
+                    'data-help' => 'Select the action of the import.',
+                ),
+            ))
+            ->add('rrp', 'checkbox', array(
+                'required' => false,
+                'label' => 'Reset RRP',
+                'attr' => array(
+                    'data-help' => 'Do you want to reset the RRP?',
+                ),
+            ))
+            ->add('confirm', 'submit', array(
+                'label' => 'Confirm',
+                'attr' => array(
+                    'class' => 'button button-green icon-white fr',
+                    'data-icon-secondary' => 'icon-1118',
+                )
+            ))
+            ->add('save', 'submit', array(
+                'label' => 'Import',
+                'attr' => array(
+                    'class' => 'button button-green icon-white fr',
+                    'data-icon-secondary' => 'icon-1118',
+                )
+            ))
+            ->getForm();
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                // Read file
+                $file = $data->getFile()->openFile();
+                $file->setFlags(\SplFileObject::READ_CSV);
+                foreach ($file as $line) {
+                    if (sizeof($line) >= 2)
+                    {
+                        $importContent = array();
+                        $importContent['productCode'] = $line[0];
+                        $importContent['newPrice'] = number_format(floatval($line[1]), 4, '.', '');
+                        if ($importContent['productCode'] && ($importContent['newPrice'] > 0))
+                        {
+                            $totalImports++;
+
+                            /**
+                             * @var $variant Variant
+                             */
+                            $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->findOneBy(array('productCode' => $importContent['productCode']));
+                            if ($variant)
+                            {
+                                $importContent['productId'] = $variant->getId();
+                                $importContent['pageTitle'] = $variant->getDescription()->getPageTitle();
+                                $importContent['existingPrice'] = $variant->getPrice()->getListPrice();
+
+                                if ($importContent['existingPrice'] == $importContent['newPrice'])
+                                {
+                                    $noUpdatesRequired[] = $importContent;
+                                } elseif ($importContent['existingPrice'] > $importContent['newPrice'] && !$form->get('confirm')->isClicked()) {
+                                    $pricesNeedConfirmation[] = $importContent;
+                                    if($data->getAction() == 'update')
+                                    {
+                                        $requiresConfirmation = true;
+                                    }
+                                } else {
+                                    $pricesUpdated[] = $importContent;
+
+                                    // Check if prices need to be updated
+                                    if ($data->getAction() == 'update')
+                                    {
+                                        $variant->getPrice()->setListPrice($importContent['newPrice']);
+                                        if ($data->getRrp())
+                                        {
+                                            $variant->getPrice()->setRecommendedRetailPrice($importContent['newPrice']);
+                                        }
+
+                                        $em->persist($variant);
+                                        $em->flush();
+                                    }
+                                    }
+                            } else {
+                                $priceIssuesFound[] = $importContent;
+                            }
+                        }
+                    }
+                }
+
+                $processed = true;
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:importPrices.html.twig', array(
+            'form' => $form->createView(),
+            'processed' => $processed,
+            'requiresConfirmation' => $requiresConfirmation,
+            'totalImports' => $totalImports,
+            'priceIssuesFound' => $priceIssuesFound,
+            'noUpdatesRequired' => $noUpdatesRequired,
+            'pricesNeedConfirmation' => $pricesNeedConfirmation,
+            'pricesUpdated' => $pricesUpdated,
+        ));
+    }
+
     public function baseEditAction(Request $request, $productId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
@@ -421,7 +708,58 @@ class ProductController extends Controller {
      */
     public function editOverviewAction(Request $request, $productId)
     {
-        return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_overview.html.twig', new EditProductOverviewType());
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var $product Product
+         */
+        $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        if (count($product->getDepartments()) > 0)
+        {
+            $product->setMainDepartment($product->getDepartments()[0]);
+        }
+
+        $form = $this->createForm(new EditProductOverviewType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                if($product->getMainDepartment())
+                {
+                    $depAlreadyExists = false;
+                    // Check to see if the department already exists in the departments collection
+                    foreach($product->getDepartments() as $department)
+                    {
+                        if($department == $product->getMainDepartment())
+                        {
+                            $department->setDepartment($product->getMainDepartment()->getDepartment());
+                            $depAlreadyExists = true;
+                        }
+                    }
+
+                    if(!$depAlreadyExists)
+                    {
+                        $product->addDepartment($product->getMainDepartment());
+                    }
+                }
+
+                $em->persist($product);
+                $em->flush();
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:edit_overview.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -431,6 +769,64 @@ class ProductController extends Controller {
     public function editDescriptionAction(Request $request, $productId)
     {
         return $this->baseEditAction($request, $productId, 'KACSiteBundle:Product:edit_description.html.twig', new EditProductDescriptionType());
+    }
+
+    /**
+     * @Route("/admin/products/{productId}/departments", name="products_edit_departments")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editDepartmentsAction(Request $request, $productId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $originalDepartments = array();
+
+        /**
+         * @var $product Product
+         */
+        $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
+        if(!$product)
+        {
+            throw new NotFoundHttpException("Product not found");
+        }
+
+        foreach($product->getDepartments() as $department)
+        {
+            $originalDepartments[] = $department;
+        }
+
+        $form = $this->createForm(new EditProductDepartmentsType(), $product);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                // Remove all links from the to delete array that have not been deleted
+                foreach($product->getDepartments() as $department) {
+                    foreach ($originalDepartments as $key => $toDel) {
+                        if ($toDel->getId() === $department->getId()) {
+                            unset($originalDepartments[$key]);
+                        }
+                    }
+
+                    $department->setProduct($product);
+                }
+
+                foreach ($originalDepartments as $department) {
+                    $em->remove($department);
+                }
+
+                $em->persist($product);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'productId' => $product->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Product:edit_departments.html.twig', array(
+            'product' => $product,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -549,6 +945,7 @@ class ProductController extends Controller {
         if ($request->isMethod('POST')) {
             $form->submit($request);
             if($form->isValid()) {
+                $i = 0;
                 // Remove all links from the to delete array that have not been deleted
                 foreach($product->getLinks() as $link) {
                     foreach ($originalLinks as $key => $toDel) {
@@ -558,6 +955,9 @@ class ProductController extends Controller {
                     }
 
                     $link->setProduct($product);
+                    $link->setDisplayOrder($i);
+
+                    $i++;
                 }
 
                 foreach ($originalLinks as $link) {
@@ -593,6 +993,10 @@ class ProductController extends Controller {
             throw new NotFoundHttpException("Product not found");
         }
 
+        $this->getManager()->updateVariantOrder($product);
+        $em->persist($product);
+        $em->flush();
+
         return $this->render('KACSiteBundle:Product:edit_variants.html.twig', array(
             'product' => $product,
         ));
@@ -614,6 +1018,7 @@ class ProductController extends Controller {
 
         $em->remove($product);
         $em->flush();
+        $this->get('kac_site.indexer.product')->deleteById($productId);
 
         return $this->redirect($this->generateUrl('listing_products'));
     }

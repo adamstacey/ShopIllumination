@@ -1,0 +1,20 @@
+{% set worktopColour = "Vulcano" %}
+{% set worktopDescription = "Vulcano is the most popular colour in the maia range. Its sophisticated black background is interspersed with contrasting white flecks and subtle hints of yellow." %}
+{% set productCodePrefix = 'VUL' %}
+{% set fromPrice = 295 %}
+{% set worktopNumber = 15 %}
+{% set startingId = 10000 + (1000 * worktopNumber) %}
+{% set currentId = startingId %}
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}maia Worktops in {{ worktopColour }} from Kitchen Appliance Centre{% endblock %}
+{% block body %}
+    <section class="product">
+        {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaColourIntroduction.html.twig' with {'worktopColour': worktopColour, 'worktopDescription': worktopDescription, 'fromPrice': fromPrice} %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopThickness.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaWorktopsPriceBand2.html.twig' with {'worktopColour': worktopColour, 'productCodePrefix': productCodePrefix, 'currentId': currentId} %}
+        {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
+        {% include 'KACSiteBundle:Maia:maiaInformationDialogues.html.twig' %}
+    </section>
+    {% include 'KACSiteBundle:Maia:maiaColour.js.twig' %}
+{% endblock %}

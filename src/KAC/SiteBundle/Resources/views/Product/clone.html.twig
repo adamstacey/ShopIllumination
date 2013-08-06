@@ -1,0 +1,22 @@
+{% extends 'KACSiteBundle:Product:base.html.twig' %}
+
+{% block title %}Cloning {{ originalProduct.description.header }} | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Cloning {{ originalProduct.description.header }}</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-2-of-7">
+                {% include 'KACSiteBundle:Product:newLeftMenu.html.twig' %}
+            </div>
+            <div class="widget widget-5-of-7">
+                {% include 'KACSiteBundle:Product:new_Step'~flow.getCurrentStepNumber()~'.html.twig' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

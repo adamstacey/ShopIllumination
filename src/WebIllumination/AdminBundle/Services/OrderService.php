@@ -445,10 +445,10 @@ class OrderService {
         $copyOrderDocument = $this->getUploadRootDir().'/copy-order-'.$id.'.pdf';
         $invoiceDocument = $this->getUploadRootDir().'/invoice-'.$id.'.pdf';
         $deliveryNoteDocument = $this->getUploadRootDir().'/delivery-note-'.$id.'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1 > /dev/null 2>/dev/null &');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1 > /dev/null 2>/dev/null &');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1 > /dev/null 2>/dev/null &');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1 > /dev/null 2>/dev/null &');
         return true;
     }
 
@@ -459,7 +459,7 @@ class OrderService {
 
         // Create the PDF documents
         $invoicesDocument = $this->getUploadRootDir().'/orders-'.str_replace(',', '-', $ids).'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewOrders/'.$ids.' '.$invoicesDocument.' 2>&1');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewOrders/'.$ids.' '.$invoicesDocument.' 2>&1 > /dev/null 2>/dev/null &');
 
         return '/'.$this->getUploadDir().'/orders-'.str_replace(',', '-', $ids).'.pdf';
     }
@@ -471,7 +471,7 @@ class OrderService {
 
         // Create the PDF documents
         $deliveryNotesDocument = $this->getUploadRootDir().'/delivery-notes-'.str_replace(',', '-', $ids).'.pdf';
-        $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewDeliveryNotes/'.$ids.' '.$deliveryNotesDocument.' 2>&1');
+        $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewDeliveryNotes/'.$ids.' '.$deliveryNotesDocument.' 2>&1 > /dev/null 2>/dev/null &');
 
         return '/'.$this->getUploadDir().'/delivery-notes-'.str_replace(',', '-', $ids).'.pdf';
     }
@@ -560,8 +560,8 @@ class OrderService {
         $orderObject->setVat($basket['totals']['vat']);
         $orderObject->setTotal($basket['totals']['total']);
         $orderObject->setPossibleDiscount($basket['possibleDiscount']);
-        $orderObject->setFirstName($order['firstName']);
-        $orderObject->setLastName($order['lastName']);
+        $orderObject->setFirstName($order['billingFirstName']);
+        $orderObject->setLastName($order['billingLastName']);
         $orderObject->setOrganisationName($order['organisationName']);
         $orderObject->setEmailAddress($order['emailAddress']);
         $orderObject->setTelephoneDaytime($order['telephoneDaytime']);
@@ -603,21 +603,28 @@ class OrderService {
         foreach ($basket['products'] as $product)
         {
             // Get variant
-            $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
-            if(!$variant) {
-                break;
+            $variant =  false;
+            if (isset($product['variantId']))
+            {
+                $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
             }
 
             $orderProductObject = new Order\Product();
             $orderProductObject->setOrder($orderObject);
             $orderProductObject->setBasketItemId($product['basketItemId']);
-            $orderProductObject->setProduct($variant->getProduct());
-            $orderProductObject->setVariant($variant);
+            if ($variant)
+            {
+                $orderProductObject->setProduct($variant->getProduct());
+                $orderProductObject->setVariant($variant);
+                $orderProductObject->setBrand($product['brand']['brand']);
+                $orderProductObject->setDescription($product['shortDescription']);
+            } else {
+                $orderProductObject->setBrand($product['brand']);
+                $orderProductObject->setDescription($product['header']);
+            }
             $orderProductObject->setUrl($product['url']);
             $orderProductObject->setName($product['header']);
             $orderProductObject->setProductCode($product['productCode']);
-            $orderProductObject->setBrand($product['brand']['brand']);
-            $orderProductObject->setDescription($product['shortDescription']);
             $orderProductObject->setUnitCost($product['unitCost']);
             $orderProductObject->setRecommendedRetailPrice($product['recommendedRetailPrice']);
             $orderProductObject->setDiscount($product['discount']);
@@ -674,8 +681,8 @@ class OrderService {
             {
                 $orderDiscountObject = new Order\Discount();
                 $orderDiscountObject->setOrder($orderObject);
-                $orderDiscountObject->setVoucherCode(($discount['voucherCode']?$discount['voucherCode']:''));
-                $orderDiscountObject->setGiftVoucherCode(($discount['giftVoucherCode']?$discount['giftVoucherCode']:''));
+                $orderDiscountObject->setVoucherCode('');
+                $orderDiscountObject->setGiftVoucherCode('');
                 $orderDiscountObject->setDescription(($discount['description']?$discount['description']:''));
                 $orderDiscountObject->setDiscount(($discount['discount']?$discount['discount']:0));
                 $em->persist($orderDiscountObject);
@@ -818,19 +825,19 @@ class OrderService {
             $deliveryNoteDocument = $this->getUploadRootDir().'/delivery-note-'.$order->getId().'.pdf';
             if (!file_exists($invoiceDocument))
             {
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewOrder/'.$id.' '.$orderDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
             if (!file_exists($copyInvoiceDocument))
             {
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewCopyOrder/'.$id.' '.$copyOrderDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
             if (!file_exists($invoiceDocument))
             {
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewInvoice/'.$id.' '.$invoiceDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
             if (!file_exists($deliveryNoteDocument))
             {	
-                $systemService->pipeExec('/usr/bin/wkhtmltopdf-i386 '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1');
+                $systemService->pipeExec('xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64 '.$this->pdfUrl.'/admin/orders/viewDeliveryNote/'.$id.' '.$deliveryNoteDocument.' 2>&1 > /dev/null 2>/dev/null &');
             }
         }*/
 
@@ -1169,9 +1176,11 @@ class OrderService {
             $newProduct = array();
             $newProduct['basketItemId'] = $orderProductObject->getBasketItemId();
             $newProduct['productId'] = $orderProductObject->getProduct()->getId();
-            if($orderProductObject->getVariant())
+            if ($orderProductObject->getVariant())
             {
                 $newProduct['variantId'] = $orderProductObject->getVariant()->getId();
+            } else {
+                $newProduct['variantId'] = 0;
             }
             $newProduct['product'] = $orderProductObject->getProduct();
             $newProduct['url'] = $orderProductObject->getUrl();

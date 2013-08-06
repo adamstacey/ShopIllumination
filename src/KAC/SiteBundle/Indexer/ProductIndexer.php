@@ -101,10 +101,6 @@ class ProductIndexer extends Indexer
         $numVariants = 0;
         foreach ($product->getVariants() as $variant) {
             // Check that the variant is not disabled
-            if ($variant->getStatus() !== "a") {
-                continue;
-            }
-
             $numVariants++;
 
             $document->addField('variant_ids', $variant->getId());
@@ -203,10 +199,20 @@ class ProductIndexer extends Indexer
      */
     public function delete($product = null)
     {
-        $delete = $this->getSolarium()->createUpdate();
-        if($product !== null)
+        if($product !== null && $product->getId() !== null)
         {
-            $delete->addDeleteById($product->getId());
+            $this->deleteById($product->getId());
+        } else {
+            $this->deleteById(null);
+        }
+    }
+
+    public function deleteById($productId=null)
+    {
+        $delete = $this->getSolarium()->createUpdate();
+        if($productId !== null)
+        {
+            $delete->addDeleteById($productId);
         } else {
             $delete->addDeleteQuery("*:*");
         }

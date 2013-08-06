@@ -48,31 +48,34 @@ class BuildSitemapCommand extends ContainerAwareCommand
         $batchSize = 20;
         $i = 0;
 
-        $xmlWriter->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-
         $xmlWriter->startElement('urlset');
+        $xmlWriter->writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
 
         // Add all dynamic routes
         $routeManager = $this->getContainer()->get('kac_site.manager.routing');
         $result = $em->createQuery("SELECT r FROM KAC\\SiteBundle\\Entity\Routing r")->iterate();
-        while (($row = $result->next()) !== false) {
+        while (($row = $result->next()) !== false)
+        {
             $route = $row[0];
 
             // Fetch the relevant object
             try {
                 $object = $routeManager->getObject($route);
 
-                $lastChanged = $object->getUpdatedAt()->format('Y-m-d');
+                $lastmodd = $object->getUpdatedAt()->format('Y-m-d');
 
                 // Calculate priority
-                if (get_class($route) === 'KAC\\SiteBundle\\Entity\\Brand\\Routing' || get_class($route) === 'KAC\\SiteBundle\\Entity\\Product\\Routing')
+                if (get_class($route) === 'KAC\\SiteBundle\\Entity\\Brand\\Routing' ||
+                    get_class($route) === 'KAC\\SiteBundle\\Entity\\Product\\Routing' ||
+                    get_class($route) === 'KAC\\SiteBundle\\Entity\\Product\\Variant\\Routing')
                 {
                     $priority = '1.0';
                 } else {
                     $priority = '0.8';
                 }
             } catch (\Exception $e) {
-                break;
+//                var_dump($e);die();
+//                break;
             }
 
             // Build url
@@ -80,12 +83,13 @@ class BuildSitemapCommand extends ContainerAwareCommand
             $xmlWriter->writeElement('loc', $router->generate('routing', array(
                 'url' => $route->getUrl(),
             ), true));
-            $xmlWriter->writeElement('lastchange', $lastChanged);
+            $xmlWriter->writeElement('lastmod', $lastmodd);
             $xmlWriter->writeElement('changefreq', 'weekly');
             $xmlWriter->writeElement('priority', $priority);
             $xmlWriter->endElement();
 
-            if (($i % $batchSize) === 0) {
+            if (($i % $batchSize) === 0)
+            {
                 file_put_contents($filename, $xmlWriter->flush(true), FILE_APPEND);
             }
 
@@ -93,87 +97,223 @@ class BuildSitemapCommand extends ContainerAwareCommand
             ++$i;
         }
 
+        // Add maia urls
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-ammonite',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-calcite',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-fossil',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-meteorite',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-pearlstone',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-sandstone',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-cappuccino',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-cristallo',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-galaxy',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-iceberg',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-latte',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-lava',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-mocha',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-vanilla',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
+        $xmlWriter->startElement('url');
+        $xmlWriter->writeElement('loc', $router->generate('routing', array(
+            'url' => 'maia-vulcano',
+        ), true));
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
+        $xmlWriter->writeElement('changefreq', 'weekly');
+        $xmlWriter->writeElement('priority', '0.1');
+        $xmlWriter->endElement();
+
         // Add misc urls
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_the_shop', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_contact_us', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_how_to_find_us', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_returns', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_installation_guides', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_water_pressure_information', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_privacy_policy', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_terms_and_conditions', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_delivery', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_security', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', $router->generate('content_fraud_prevention', array(), true));
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();
 
         $xmlWriter->startElement('url');
         $xmlWriter->writeElement('loc', 'http://' . $input->getArgument('host') . '/blog/');
-        $xmlWriter->writeElement('lastchange', '2012-05-01');
+        $xmlWriter->writeElement('lastmod', date("Y-m-d"));
         $xmlWriter->writeElement('changefreq', 'weekly');
         $xmlWriter->writeElement('priority', '0.4');
         $xmlWriter->endElement();

@@ -3,6 +3,7 @@
 
 .slider-wrapper {
     position: relative;
+    overflow: hidden;
 }
 
 .slider-wrapper h1 {
@@ -11,6 +12,7 @@
     position: absolute;
     top: 40px;
 
+    border: 0 none !important;
     color: $colourWhite;
     @include alphaBackground($colourBlack, 0.7);
     font-family: $primaryFontFamily;

@@ -6,7 +6,7 @@ class Lexer
 {
     // Define token constants
     protected static $terminals = array(
-        '/^(\@)/'    => 'T_AT',
+        '/^(\@)/'   => 'T_AT',
         '/^(\^)/'   => 'T_CARET',
         '/^(\|)/'   => 'T_PIPE',
         '/^(\s+)/'  => 'T_WHITESPACE',

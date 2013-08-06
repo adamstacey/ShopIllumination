@@ -1,5 +1,5 @@
 {# Forms #}
-{% extends 'KACSiteBundle::base.html.twig' %}
+{% extends 'KACSiteBundle:Department:base.html.twig' %}
 
 {% block title %}Departments | {{ parent() }}{% endblock %}
 
@@ -30,7 +30,7 @@
                             <td>{{ department.description.name }}</td>
                             <td>
                                 <a href="{{ path('departments_edit', {'departmentId': department.id}) }}" class="button button-blue">Edit</a>
-                                <a href="{{ path('departments_delete', {'departmentId': department.id}) }}" class="button button-red icon-white" data-icon-primary="icon-1117" data-icon-only="true">Delete</a>
+                                <a href="{{ path('departments_delete', {'departmentId': department.id}) }}" class="button button-red icon-white" data-icon-primary="icon-1118" data-icon-only="true">Delete</a>
                             </td>
                         </tr>
                     {% endif %}

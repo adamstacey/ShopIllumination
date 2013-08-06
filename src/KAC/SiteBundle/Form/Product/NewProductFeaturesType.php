@@ -23,6 +23,7 @@ class NewProductFeaturesType extends AbstractType
             'type' => new NewProductFeatureType($departmentId),
             'allow_add' => true,
             'allow_delete' => true,
+            'by_reference' => false,
         ));
     }
 

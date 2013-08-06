@@ -14,12 +14,12 @@ class ProductVariantDescriptionsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('type', 'entity', array(
-            'empty_value' => 'Choose a type',
+            'empty_value' => 'Choose a type (Optional)',
             'required'  => false,
             'label' => 'Type',
             'attr' => array(
-                'class' => 'fill ui-corner-none-br',
-                'data-help' => 'The variant type, (TODO add help message)',
+                'class' => 'fill',
+                'data-help' => 'Choose a type.',
             ),
             'class' => 'KAC\SiteBundle\Entity\Type',
             'property' => 'name',

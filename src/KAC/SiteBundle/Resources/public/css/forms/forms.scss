@@ -1268,3 +1268,21 @@ table.form-table ul li {
 
     cursor: pointer;
 }
+
+.inline-error {
+    height: 30px;
+    padding: 0 $spacingMedium;
+
+    @include fontSize($fontSizeSmall);
+    color: $colourWhite;
+    display: none;
+    border: 1px solid $colourDarkRed;
+    @include highlightedVerticalGradientDarkRed;
+    @include boxGlow($colourRed, 5px, 0, 0.5);
+    @include borderRadius(0, $radiusSize, $radiusSize, 0);
+}
+
+.inline-error p {
+    margin: 0;
+    line-height: 30px;
+}

@@ -739,14 +739,17 @@ class ProductService {
          */
         foreach ($variantObject->getFeatures() as $variantToFeatureObject)
         {
-            $variantFeature = array();
-            $variantFeature['id'] = $variantToFeatureObject->getId();
-            $variantFeature['productFeatureGroupId'] = $variantToFeatureObject->getFeatureGroup()->getId();
-            $variantFeature['productFeatureGroup'] = $variantToFeatureObject->getFeatureGroup()->getName();
-            $variantFeature['filter'] = $variantToFeatureObject->getFeatureGroup()->getFilter();
-            $variantFeature['productFeatureId'] = $variantToFeatureObject->getFeatureGroup()->getId();
-            $variantFeature['productFeature'] = $variantToFeatureObject->getFeature()->getName();
-            $variantFeatures[$variantToFeatureObject->getFeatureGroup()->getName()][] = $variantFeature;
+            if($variantToFeatureObject->getFeatureGroup() && $variantToFeatureObject->getFeature())
+            {
+                $variantFeature = array();
+                $variantFeature['id'] = $variantToFeatureObject->getId();
+                $variantFeature['productFeatureGroupId'] = $variantToFeatureObject->getFeatureGroup()->getId();
+                $variantFeature['productFeatureGroup'] = $variantToFeatureObject->getFeatureGroup()->getName();
+                $variantFeature['filter'] = $variantToFeatureObject->getFeatureGroup()->getFilter();
+                $variantFeature['productFeatureId'] = $variantToFeatureObject->getFeatureGroup()->getId();
+                $variantFeature['productFeature'] = $variantToFeatureObject->getFeature()->getName();
+                $variantFeatures[$variantToFeatureObject->getFeatureGroup()->getName()][] = $variantFeature;
+            }
         }
         $variant['productFeatures'] = $variantFeatures;
 

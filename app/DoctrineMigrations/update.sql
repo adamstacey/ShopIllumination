@@ -470,7 +470,6 @@ CREATE TABLE types (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, 
 ALTER TABLE product_variants ADD type_id INT DEFAULT NULL;
 ALTER TABLE product_variants ADD CONSTRAINT FK_78283976C54C8C93 FOREIGN KEY (type_id) REFERENCES types (id);
 CREATE INDEX IDX_78283976C54C8C93 ON product_variants (type_id);
-ALTER TABLE orders DROP membership_card_purchased, DROP membership_card_number;
 INSERT INTO `types` (`id`, `name`, `object_type`, `created_at`, `updated_at`) VALUES
 (1, 'Default', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 'Worktops', 'variant', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -479,4 +478,26 @@ INSERT INTO `types` (`id`, `name`, `object_type`, `created_at`, `updated_at`) VA
 (5, 'Sink Modules', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
 (6, 'Edging', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00'),
 (7, 'Finishing Touch', 'variant', '2013-07-12 00:00:00', '2013-07-12 00:00:00');
+ALTER TABLE orders ADD royal_mail_import_line INT DEFAULT 0;
+UPDATE order_products SET product_id = NULL, variant_id = NULL WHERE (SELECT COUNT(*) FROM products WHERE id = product_id) <= 0 OR (SELECT COUNT(*) FROM product_variants WHERE id = variant_id) <= 0;
+ALTER TABLE  `order_products` DROP FOREIGN KEY  `FK_5242B8EB4584665A` ;
+ALTER TABLE  `order_products` ADD CONSTRAINT  `FK_5242B8EB4584665A` FOREIGN KEY (  `product_id` ) REFERENCES  `kacstaging`.`products` (
+  `id`
+) ON DELETE SET NULL ON UPDATE SET NULL ;
+ALTER TABLE  `order_products` DROP FOREIGN KEY  `FK_5242B8EB3B69A9AF` ;
+ALTER TABLE  `order_products` ADD CONSTRAINT  `FK_5242B8EB3B69A9AF` FOREIGN KEY (  `variant_id` ) REFERENCES  `kacstaging`.`product_variants` (
+  `id`
+) ON DELETE SET NULL ON UPDATE SET NULL ;
+ALTER TABLE  `product_links` DROP FOREIGN KEY  `FK_70DEDA444584665A` ;
+
+ALTER TABLE  `product_links` ADD CONSTRAINT  `FK_70DEDA444584665A` FOREIGN KEY (  `product_id` ) REFERENCES  `kacstaging`.`products` (
+  `id`
+) ON DELETE CASCADE ON UPDATE RESTRICT ;
+
+ALTER TABLE  `product_links` DROP FOREIGN KEY  `FK_70DEDA44D240BD1D` ;
+
+ALTER TABLE  `product_links` ADD CONSTRAINT  `FK_70DEDA44D240BD1D` FOREIGN KEY (  `linked_product_id` ) REFERENCES  `kacstaging`.`products` (
+  `id`
+) ON DELETE CASCADE ON UPDATE RESTRICT ;
+
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,3 +1,8 @@
+<!--[if lt IE 9]>
+    <script src="{{ asset('bundles/kacsite/plugins/html5shiv/html5shiv.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/kacsite/plugins/ie7/IE9.js') }}" type="text/javascript">IE7_PNG_SUFFIX=".png";</script>
+    <script src="{{ asset('bundles/kacsite/plugins/ie7/ie7-squish.js') }}" type="text/javascript"></script>
+<![endif]-->
 {% javascripts
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.js'
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.tmpl.js'
@@ -14,12 +19,14 @@
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.etalage.js'
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.lightbox.js'
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.menu-aim.js'
+    '@KACSiteBundle/Resources/public/plugins/jquery/jquery.tools.js'
     '@KACSiteBundle/Resources/public/plugins/upload/js/jquery.iframe-transport.js'
     '@KACSiteBundle/Resources/public/plugins/upload/js/jquery.fileupload.js'
     '@KACSiteBundle/Resources/public/plugins/upload/js/jquery.fileupload-ui.js'
     '@KACSiteBundle/Resources/public/plugins/upload/js/jquery.fileupload-jui.js'
     '@KACSiteBundle/Resources/public/plugins/treetable/javascripts/src/jquery.treetable.js'
     '@KACSiteBundle/Resources/public/plugins/typeahead/typeahead.js'
+    '@KACSiteBundle/Resources/public/plugins/waypoints/waypoints.js'
     '@KACSiteBundle/Resources/public/js/ui/ui.js'
     '@KACSiteBundle/Resources/public/js/forms/forms.js'
     '@KACSiteBundle/Resources/public/js/buttons/buttons.js'

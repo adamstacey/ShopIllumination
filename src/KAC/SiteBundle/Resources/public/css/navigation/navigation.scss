@@ -305,7 +305,7 @@ a.submenu-brand img {
     height: 39px;
 }
 
-.unique-selling-points-container {
+.sub-menu {
     position: relative;
 
     @include verticalGradientWhiteToGreyLight;
@@ -313,21 +313,21 @@ a.submenu-brand img {
     border-bottom: 3px solid $colourGrey;
 }
 
-.unique-selling-points-container .widget {
+.sub-menu .widget {
     padding: 8px $spacingMedium;
 }
 
-.unique-selling-points-container .ui-icon-small {
+.sub-menu .ui-icon-small {
     margin: 0 $spacingMedium 0 0;
 }
 
-.unique-selling-points-container h2 {
+.sub-menu h2 {
     margin: 0;
     padding: 0;
 }
 
-.unique-selling-points-container h2,
-.unique-selling-points-container h2 a {
+.sub-menu h2,
+.sub-menu h2 a {
     @include fontSize($fontSizeExtraExtraLarge);
     color: $colourGreyDark;
     line-height: 100%;
@@ -335,13 +335,13 @@ a.submenu-brand img {
     text-decoration: none;
 }
 
-.unique-selling-points-container h3 {
+.sub-menu h3 {
     margin: 0;
     padding: 0;
 }
 
-.unique-selling-points-container h3,
-.unique-selling-points-container h3 a {
+.sub-menu h3,
+.sub-menu h3 a {
     @include fontSize($fontSizeLarge);
     color: $colourGreyDark;
     line-height: 100%;
@@ -350,13 +350,13 @@ a.submenu-brand img {
     text-decoration: none;
 }
 
-.unique-selling-points-container p {
+.sub-menu p {
     padding: 2px 0 0 0;
     margin: 0;
 }
 
-.unique-selling-points-container p,
-.unique-selling-points-container p a {
+.sub-menu p,
+.sub-menu p a {
     @include fontSize($fontSizeExtraSmall);
     color: $colourGrey;
     line-height: 100%;

@@ -1,32 +1,29 @@
-<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" id="form-add" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
-            <div class="ui-widget">
+            <div class="ui-widget mbl">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="ui-button-icon-primary ui-icon icon-white icon-369"></span>
-                    <h2>8. Search Engine Optimisation</h2>
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-945"></span>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-bottom">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         <div class="accordion mbm">
                             <div class="accordion-item">
-                                <h3>Search Engine Optimisation for Product</h3>
+                                <h3>Descriptions for Product</h3>
                                 <div class="pbm">
                                     {% for description in form.descriptions %}
                                         {{ form_rest(description) }}
                                     {% endfor %}
                                     {% do form.descriptions.setRendered() %}
-                                    {% for routing in form.routings %}
-                                        {{ form_rest(routing) }}
-                                    {% endfor %}
-                                    {% do form.routings.setRendered() %}
                                 </div>
                             </div>
                             {% for variant in form.variants %}
                                 <div class="accordion-item">
-                                    <h3>Search Engine Optimisation for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
-                                    <div>
+                                    <h3>Descriptions for {{ variant.vars.value.productCode }} ({{ variant.vars.value.prices.0.listPrice|currency(variant.vars.value.prices.0.currencyCode, false, true, '') }})</h3>
+                                    <div class="pbm">
+                                        {{ form_row(variant.type) }}
                                         {{ form_rest(variant) }}
                                     </div>
                                 </div>

@@ -1,5 +1,5 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
-{% block title %}Worktops, Charcoal Filters, Cooker Hoods, Built-in Microwaves, Integrated Dishwashers, Integrated Washing Machines, Refrigeration, Cleaning Products, Glass Splashbacks, Waste Disposer, Sinks, Taps, Plinth Heaters, Range Cookers, Ducting, Hobs, Ovens, Coffee Machines, Solid Surface Worktops, Kitchen Appliances{% endblock %}
+{% block title %}Worktops, Cooker Hoods, Built-in Microwaves, Integrated Dishwashers, Integrated Washing Machines, Refrigeration, Cleaning Products, Glass Splashbacks, Waste Disposer, Sinks, Taps, Plinth Heaters, Range Cookers, Ducting, Hobs, Ovens, Coffee Machines, Solid Surface Worktops, Kitchen Appliances{% endblock %}
 {% block slider %}
     <div class="widget-group flush-widget-group separator-widget mbl clearfix">
         <div class="widget widget-3-of-4">
@@ -30,12 +30,13 @@
     </div>
 {% endblock %}
 {% block body %}
-    {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
-    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget">
                 <section class="ui-widget-content pbn ui-corner-all">
+                    {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
+                    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
+                    <h3 class="separator">Shop by Popular Department</h3>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-5">
                             <div class="product-listing">

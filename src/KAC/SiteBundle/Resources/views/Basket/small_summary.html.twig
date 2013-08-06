@@ -1,6 +1,46 @@
 <div class="basket-summary-header">
-    <a href="#"><span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-252"></span></a>
+    <span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-252"></span>
     <h2>Your basket</h2>
-    <p>Items: <strong>{{ basket.totalItems }}</strong></p>
-    <p>Total: <strong>&pound;{{ basket.totalCost|number_format(2) }}</strong></p>
+    <p>Items: <strong>{{ basket.totalItems|default(0) }}</strong></p>
+    <p>Total: <strong>{{ basket.totalCost|currency('GBP', true, true, '')|raw }}</strong></p>
+    <div class="dropdown-summary ui-helper-hidden" data-items="{{ basket.items|length }}">
+        {% if basket.items|length > 0 %}
+            <table class="mtm data-table basket-items-table">
+                <tr>
+                    <th class="tal">Product</th>
+                    <th width="1" class="tac">Qty</th>
+                    <th width="1" class="tac">Price</th>
+                    <th width="62" class="ac">&nbsp;</th>
+                </tr>
+                {% for item in basket.items %}
+                    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                        <td class="tal">
+                            {% if item.variant.url %}
+                                <a class="uppercase {% if (item.deliveryBand == 6) and (basket.delivery.service == '') %} background-red colour-white{% endif %}" href="{{ path('routing', {'url': item.variant.url}) }}">
+                                    {{ item.variant.description.header }}
+                                </a>
+                            {% else %}
+                                <span class="uppercase {% if (item.deliveryBand == 6) and (basket.delivery.service == '') %} background-red colour-white{% endif %}">{{ item.variant.header }}</span>
+                            {% endif %}
+
+                            {% if item.selectedOptionLabels|length > 0 %}
+                                <br />
+                                {% for selectedOptionLabel in item.selectedOptionLabels %}
+                                    {{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td width="1" class="tac{% if item.quantity > 1 %} gradient-turquoise colour-white {% endif %}">{{ item.quantity }}</td>
+                        <td width="1" class="tac">{{ item.totalCost|currency('GBP', true, true, '')|raw }}</td>
+                        <td width="62" class="tac"><a href="{{ path('basket_remove', {'item': loop.index0}) }}" class="button button-small link action-delete-basket-item">Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="mtm mbs clearfix">
+                <a href="{{ path('checkout') }}" class="button button-green uppercase icon-white fr" data-icon-secondary="icon-472">Pay Now</a>
+                <a href="{{ path('basket_summary') }}" class="button button-small button-grey mrm fr">View Basket</a>
+                <a href="{{ path('basket_clear') }}" class="fl mlm action-clear-basket button button-small">Clear Basket</a>
+            </div>
+        {% endif %}
+    </div>
 </div>

@@ -1,0 +1,10 @@
+<td><p><strong>{{ worktopColour|raw }} {{ productCode|raw }}</strong><br />{{ header|raw }}</p></td>
+<td width="1" class="nowrap price">{{ price|currency('GBP', true, true, '')|raw }}</td>
+<td width="1" class="nowrap">
+    <div class="add-to-basket" data-basket-url="{{ path('basket_ajax_add_non_product_to_basket') }}" data-id="{{ id }}" data-delivery-band="{{ deliveryBand }}" data-url="maia-{{ worktopColour|lower }}" data-unit-cost="{{ price }}" data-product-code="{{ productCode|raw }}" data-header="maia {{ worktopColour|raw }} {{ header|raw }}" data-brand="maia" data-description="maia {{ worktopColour|raw }} {{ productCode|raw }} {{ header|raw }}">
+        <input class="quantity integer" type="number" value="1" />
+        <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+        <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+        <button class="actionAddNonProductToBasket buy button button-green uppercase icon-white" data-icon-secondary="icon-472">Buy</button>
+    </div>
+</td>

@@ -1,0 +1,49 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}maia Worktops from Kitchen Appliance Centre{% endblock %}
+{% block body %}
+    <section class="product">
+        {% include 'KACSiteBundle:Maia:maiaBreadcrumbs.html.twig' %}
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <section class="ui-widget-content ui-corner-all clearfix">
+                        <div class="slider-wrapper slider-gallery">
+                            <ul class="slider">
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-1.jpg') }}" alt="maia Worktops" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-2.jpg') }}" alt="maia Worktops" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-3.jpg') }}" alt="maia Worktops" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-4.jpg') }}" alt="maia Worktops" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-5.jpg') }}" alt="maia Worktops" /></li>
+                                <li><img src="{{ asset('/uploads/demo/maia-gallery-6.jpg') }}" alt="maia Worktops" /></li>
+                            </ul>
+                            <h1>maia Worktops</h1>
+                        </div>
+                        <div class="widget-group clearfix">
+                            <div class="widget widget-1-of-1">
+                                <section>
+                                    <div class="tabs">
+                                        <ul>
+                                            <li><a href="#overview">Overview</a></li>
+                                            <li><a href="#maiaCare">maia Care</a></li>
+                                            <li><a href="#maiaTechnology">maia Technology</a></li>
+                                        </ul>
+                                        <div id="overview">
+                                            {% include 'KACSiteBundle:Maia:maiaOverview.html.twig' %}
+                                        </div>
+                                        <div id="maiaCare">
+                                            {% include 'KACSiteBundle:Maia:maiaCare.html.twig' %}
+                                        </div>
+                                        <div id="maiaTechnology">
+                                            {% include 'KACSiteBundle:Maia:maiaTechnology.html.twig' %}
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
+    </section>
+{% endblock %}

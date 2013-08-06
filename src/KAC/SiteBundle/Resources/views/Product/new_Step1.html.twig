@@ -1,16 +1,17 @@
-<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.query.all | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
+<form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params') | craue_removeDynamicStepNavigationParameter(flow)) }}" {{ form_enctype(form) }}>
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget">
                 <header class="ui-widget-header ui-corner-top">
-                    <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
-                    <h2>1. Overview</h2>
+                    <span class="ui-button-icon-primary ui-icon icon-white icon-947"></span>
+                    <h2>{{ flow.getCurrentStepLabel() }}</h2>
                 </header>
                 <section class="ui-widget-content ui-corner-all">
                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                     <fieldset>
                         {{ form_row(form.brand) }}
-                        {{ form_row(form.departments) }}
+                        {{ form_row(form.mainDepartment, {'label': 'Main Department', 'help': 'Select the main department you want the product to fall under.'}) }}
+                        {% do form.departments.setRendered(true) %}
                         {{ form_row(form.template) }}
                         {{ form_row(form.status) }}
                         <div class="form-element widget-group clearfix">
@@ -18,7 +19,6 @@
                                 <label>Listing Options</label>
                             </div>
                             <div class="widget checker-group widget-2-of-3">
-                                {{ form_row(form.availableForPurchase) }}
                                 {{ form_row(form.featureComparison) }}
                                 {{ form_row(form.downloadable) }}
                                 {{ form_row(form.specialOffer) }}
@@ -39,9 +39,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("select.select-brand").select2();
-        $("select.select-department").prepend('<option value="">- Select a Department -</option>').select2();
-        if ($("select.select-department option[value!=''][selected='selected']").length == 0) {
-            $("select.select-department").select2('val', ['- Select a Department -']);
+        $("select.select-department").select2();
+        if ($("select.select-department option[selected='selected']").length < 1) {
+            $("select.select-department").select2("val", "");
         }
     })
 </script>
