@@ -64,6 +64,7 @@ class WarmupIndexCommand extends ContainerAwareCommand
             $buffer->flush();
         } catch (\Exception $e) {
             $output->writeln("An error occurred");
+            return;
         }
         $output->writeln($i . ' documents created');
 
