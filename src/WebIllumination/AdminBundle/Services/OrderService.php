@@ -603,16 +603,20 @@ class OrderService {
         foreach ($basket['products'] as $product)
         {
             // Get variant
-            $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
-            if(!$variant) {
-                break;
+            $variant =  false;
+            if ($product['variantId'])
+            {
+                $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
             }
 
             $orderProductObject = new Order\Product();
             $orderProductObject->setOrder($orderObject);
             $orderProductObject->setBasketItemId($product['basketItemId']);
-            $orderProductObject->setProduct($variant->getProduct());
-            $orderProductObject->setVariant($variant);
+            if ($variant)
+            {
+                $orderProductObject->setProduct($variant->getProduct());
+                $orderProductObject->setVariant($variant);
+            }
             $orderProductObject->setUrl($product['url']);
             $orderProductObject->setName($product['header']);
             $orderProductObject->setProductCode($product['productCode']);
