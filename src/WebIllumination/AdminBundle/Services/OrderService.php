@@ -604,7 +604,7 @@ class OrderService {
         {
             // Get variant
             $variant =  false;
-            if ($product['variantId'])
+            if (isset($product['variantId']))
             {
                 $variant = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->find($product['variantId']);
             }
@@ -1173,9 +1173,11 @@ class OrderService {
             $newProduct = array();
             $newProduct['basketItemId'] = $orderProductObject->getBasketItemId();
             $newProduct['productId'] = $orderProductObject->getProduct()->getId();
-            if($orderProductObject->getVariant())
+            if ($orderProductObject->getVariant())
             {
                 $newProduct['variantId'] = $orderProductObject->getVariant()->getId();
+            } else {
+                $newProduct['variantId'] = 0;
             }
             $newProduct['product'] = $orderProductObject->getProduct();
             $newProduct['url'] = $orderProductObject->getUrl();
