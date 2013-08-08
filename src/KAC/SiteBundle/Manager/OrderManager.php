@@ -64,6 +64,23 @@ class OrderManager extends Manager
         return $this->order;
     }
 
+    public function hasOrder()
+    {
+        if(!$this->order)
+        {
+            if($this->session->has('order.id'))
+            {
+                $order = $this->doctrine->getManager()->getRepository('KAC\SiteBundle\Entity\Order')->find($this->session->get('order.id'));
+                if($order)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 
     public function getOpenOrder()
     {
@@ -102,6 +119,13 @@ class OrderManager extends Manager
         $this->basketManager->clearBasket('order.basket');
     }
 
+    public function finishOrder()
+    {
+        $this->order = null;
+        $this->session->remove('order.id');
+        $this->basketManager->clearBasket('order.basket');
+    }
+
     public function createOrder()
     {
         $basket = $this->basketManager->getBasket();
@@ -110,13 +134,6 @@ class OrderManager extends Manager
         $order = new Order();
         $order->setStatus('Checkout');
         $order->setCurrentStep('About');
-
-        // Add note
-        $note = new Order\Note();
-        $note->setCreator($order->getUser() !== null && $order->getUser()->getContact() !== null ? $order->getUser()->getContact()->getFirstName() . ' ' . $order->getUser()->getContact()->getFirstName()  : '');
-        $note->setNoteType('customer');
-        $note->setNotified(false);
-        $order->addNote($note);
 
         // Add user information if logged in
         if($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -170,11 +187,11 @@ class OrderManager extends Manager
             {
                 $zone = $this->deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
                 $band = $this->deliveryManager->calculateBand($order->getProducts());
-                $estimatedDeliveryDays = $deliveryMethod->calculateEstimatedDeliveryDays($zone, $band);
+                $estimatedDeliveryDates = $deliveryMethod->calculateEstimatedDeliveryDates($zone, $band);
 
                 $order->setDeliveryCharge($deliveryMethod->calculateCost($zone, $band, $order->getProducts()));
-                $order->setEstimatedDeliveryDaysStart($estimatedDeliveryDays['start']);
-                $order->setEstimatedDeliveryDaysEnd($estimatedDeliveryDays['end']);
+                $order->setEstimatedDeliveryDaysStart($estimatedDeliveryDates['start']);
+                $order->setEstimatedDeliveryDaysEnd($estimatedDeliveryDates['end']);
             }
         }
     }

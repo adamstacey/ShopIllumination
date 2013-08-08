@@ -39,14 +39,14 @@
             <h3 class="pts pbs"><a href="{{ path('departments_new') }}">New Department</a></h3>
         </div>
     {% elseif brand is null and department is not null %}
-        <div class="widget widget-1-of-4">
-            <a class="fl" href="{{ path('admin_brands') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-947"></span></a>
-            <h3 class="pts pbs"><a href="{{ path('admin_brands') }}">View Brands</a></h3>
-        </div>
-        <div class="widget widget-1-of-4">
-            <a class="fl" href="{{ path('admin_brands_add') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1121"></span></a>
-            <h3 class="pts pbs"><a href="{{ path('admin_brands_add') }}">New Brand</a></h3>
-        </div>
+        {#<div class="widget widget-1-of-4">#}
+            {#<a class="fl" href="{{ path('admin_brands') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-947"></span></a>#}
+            {#<h3 class="pts pbs"><a href="{{ path('admin_brands') }}">View Brands</a></h3>#}
+        {#</div>#}
+        {#<div class="widget widget-1-of-4">#}
+            {#<a class="fl" href="{{ path('admin_brands_add') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1121"></span></a>#}
+            {#<h3 class="pts pbs"><a href="{{ path('admin_brands_add') }}">New Brand</a></h3>#}
+        {#</div>#}
     {% else %}
         {{ parent() }}
     {% endif %}

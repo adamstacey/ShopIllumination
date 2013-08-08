@@ -20,10 +20,34 @@
                         <div class="ui-widget">
                             <header class="ui-widget-header ui-corner-top">
                                 <span class="ui-button-icon-primary ui-icon icon-white icon-946"></span>
-                                <h2>Success</h2>
+                                <h2>Order: {{ order.id }} | {{ order.createdAt|date("l, jS F Y h:ia") }} | &pound;{{ order.total|number_format(2)|default('0.00') }} | {{ order.firstName }} {{ order.lastName }} | {{ order.status }}</h2>
                             </header>
                             <section class="ui-widget-content ui-corner-all">
-                                Success
+                                {% if (order.paymentType == 'PayPal through SagePay') or (order.paymentType == 'SagePay') %}
+                                    <div class="info-message ui-status-success">
+                                        <span class="info-message-icon ui-icon ui-icon-circle-check"></span>
+                                        <p><strong>{{ order.paymentResponse.Status }}:</strong> {{ order.paymentResponse.StatusDetail }}</p>
+                                        <div class="clear"></div>
+                                    </div>
+                                {% endif %}
+                                <p>Thank you for ordering from Kitchen Appliance Centre.</p>
+                                <p>The details of your order can be found below. Please take a quick look and check the details. If anything's wrong, please <a href="{{ path('content_contact_us') }}">contact us</a>.</p>
+                                <p>We'll let you know what's happening with your order by email.</p>
+                                {% if order.user %}
+                                    <p>You can also track the status of your order from your <a href="{{ path('profile_overview') }}">account page</a></p>
+                                {% endif %}
+                                {% if order.deliveryType == 'Collection' %}
+                                    <p class="separator important">PLEASE NOTE: You have chosen to collect your order.<br />We will contact you as soon as your order is ready for collection.</p>
+                                {% else %}
+                                    <h5>Estimated Delivery</h5>
+                                    <p class="separator">We estimate that your items will be delivered between <strong>{{ order.estimatedDeliveryDaysStart }} - {{ order.estimatedDeliveryDaysEnd }}</strong>.<br /><span class="small-info">Any estimated delivery times are subject to availabilty.</span></p>
+                                {% endif %}
+                                <div class="clearfix no-margin-bottom">
+                                    <a target="_blank" href="/uploads/documents/order/invoice-{{ order.id }}.pdf" data-icon-primary="ui-icon-document" class="fr left-button-margin button ui-button-green">Download Invoice</a>
+                                    <a target="_blank" href="/uploads/documents/order/invoice-{{ order.id }}.pdf" data-icon-primary="ui-icon-print" class="fr left-button-margin button ui-button-green mrs">Print Invoice</a>
+                                    <a href="{{ path('orders_track', {'id': order.id, 'email': order.emailAddress}) }}" class="fr left-button-margin button ui-button-green mrs">Track Order</a>
+                                    <p class="no-margin-bottom">We recommend keeping a copy of your order for your records.</p>
+                                </div>
                             </section>
                         </div>
                     </div>

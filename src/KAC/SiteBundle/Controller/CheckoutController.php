@@ -208,6 +208,10 @@ class CheckoutController extends Controller
 
         if($form->isValid())
         {
+            $order->setFirstName($order->getBillingFirstName());
+            $order->setLastName($order->getBillingLastName());
+            $order->setOrganisationName($order->getBillingOrganisationName());
+
             // Update order status
             $manager->updateCheckoutStep($order, 'Delivery');
             $manager->saveOrder();
@@ -428,8 +432,11 @@ class CheckoutController extends Controller
 
                 // Clear the baskets
                 $manager->clearBasket();
+                $manager->finishOrder();
 
-                return $this->redirect($this->generateUrl('checkout_complete'));
+                return $this->redirect($this->generateUrl('checkout_complete', array(
+                    'id' => $order->getId(),
+                )));
             } else {
                 $order->setStatus('Payment Failed');
                 $order->setPaymentResponse($paymentResponse);
@@ -450,16 +457,18 @@ class CheckoutController extends Controller
      */
     public function checkoutCompleteAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $manager = $this->get('kac_site.manager.order');
+
         // Check if the user is logged in and has the correct permissions
         if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
         {
             return $this->redirectToLogin();
         }
-
-        $manager = $this->get('kac_site.manager.order');
-
-        // Get order
-        $order = $manager->getOrder();
+        if(!$request->query->get('id') || false === $order = $em->getRepository('KACSiteBundle:Order')->find($request->query->get('id')))
+        {
+            throw $this->createNotFoundException();
+        }
 
         return $this->render('KACSiteBundle:Checkout:checkout_complete.html.twig', array(
             'order' => $order
