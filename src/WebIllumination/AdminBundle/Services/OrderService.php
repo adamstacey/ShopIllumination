@@ -1175,7 +1175,12 @@ class OrderService {
         {
             $newProduct = array();
             $newProduct['basketItemId'] = $orderProductObject->getBasketItemId();
-            $newProduct['productId'] = $orderProductObject->getProduct()->getId();
+            if ($orderProductObject->getProduct())
+            {
+                $newProduct['productId'] = $orderProductObject->getProduct()->getId();
+            } else {
+                $newProduct['productId'] = 0;
+            }
             if ($orderProductObject->getVariant())
             {
                 $newProduct['variantId'] = $orderProductObject->getVariant()->getId();
