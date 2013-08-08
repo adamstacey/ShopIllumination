@@ -11,11 +11,47 @@
 {% endblock %}
 {% block body %}
     <section>
-        <div class="widget-group clearfix">
-            <div class="widget widget-1-of-1">
-
+        <form class="form" method="get" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
+            <div class="widget-group clearfix">
+                <div class="widget widget-1-of-1">
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-3">
+                            {{ form_row(form.id) }}
+                        </div>
+                        <div class="widget widget-1-of-3">
+                            {{ form_row(form.name) }}
+                        </div>
+                        <div class="widget widget-1-of-3">
+                            {{ form_row(form.emailAddress) }}
+                        </div>
+                    </div>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-3">
+                            {{ form_row(form.status) }}
+                        </div>
+                        <div class="widget widget-1-of-3">
+                            {{ form_row(form.paymentType) }}
+                        </div>
+                        <div class="widget widget-1-of-3">
+                            {{ form_row(form.deliveryType) }}
+                        </div>
+                    </div>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-2">
+                            {{ form_row(form.createdAtFrom) }}
+                        </div>
+                        <div class="widget widget-1-of-2">
+                            {{ form_row(form.createdAtTo) }}
+                        </div>
+                    </div>
+                    {{ form_rest(form) }}
+                    <div class="clearfix">
+                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Update</button>
+                        <button type="reset" class="button button-red icon-white mlm fr" data-icon-secondary="icon-1118">Clear</button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
         <fieldset class="pbm">
             <table class="data-table treetable" id="departments">
                 <tr>

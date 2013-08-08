@@ -8,6 +8,7 @@ use KAC\SiteBundle\Form\Order\DeliveryType;
 use KAC\SiteBundle\Form\Order\EditOrderType;
 use KAC\SiteBundle\Form\Order\NewOrderType;
 use KAC\SiteBundle\Form\Order\NotesType;
+use KAC\SiteBundle\Form\Order\OrderFilterType;
 use KAC\SiteBundle\Form\Order\OrderType;
 use KAC\SiteBundle\Form\Order\PaymentType;
 use KAC\SiteBundle\Form\Order\OverviewType;
@@ -35,34 +36,50 @@ class OrderController extends Controller
         $qb->select('o')
             ->from('KAC\SiteBundle\Entity\Order', 'o');
 
-        // Add filters for any flags that the user has set
-        $filters = $request->query->get('filter', array());
-        $flags = array('id', 'name', 'email', 'status', 'deliveryType');
-        foreach ($flags as $flag)
-        {
-            if (array_key_exists($flag, $filters))
+        $form = $this->createForm(new OrderFilterType(), array());
+
+        $form->submit($request);
+        if($form->isValid()) {
+            // Add filters for any flags that the user has set
+            $filters = $form->getData();
+            foreach ($filters as $flag => $filter)
             {
-                $filter = $filters[$flag];
                 if (is_array($filter))
                 {
-                    $qb2 = $em->createQueryBuilder();
-                    array_walk($filter, function(&$item) use ($flag, $qb2) {
+                    $parts = array();
+                    $i=0;
+                    array_walk($filter, function(&$item) use ($flag, $qb, &$parts, &$i) {
                         if (!empty($item))
                         {
-                            $qb2->andWhere($qb2->expr()->eq($flag, $qb2->expr()->literal(":$flag")));
-                            $qb2->setParameter($flag, $item);
+                            if($flag === 'paymentType')
+                            {
+                                $parts[] = $qb->expr()->like('o.'.$flag, ":lc$flag$i");
+                                $qb->setParameter('lc'.$flag.$i, strtolower($item));
+                            }
+                            $parts[] = $qb->expr()->like('o.'.$flag, ":$flag$i");
+                            $qb->setParameter($flag.$i, $item);
                         }
+                        $i++;
                     });
-                    $qb->andWhere($qb2->getDQL());
+                    if(count($parts) > 0)
+                    {
+                        $qb->andWhere(call_user_func_array(array($qb->expr(), 'orX'), $parts));
+                    }
                 } else {
                     if (!empty($filter))
                     {
                         if($flag === 'name')
                         {
-                            $qb->andWhere($qb->expr()->eq($qb->expr()->concat('o.firstName', $qb->expr()->concat($qb->expr()->literal(' '), 'o.lastName')), $qb->expr()->literal(":$flag")));
+                            $qb->andWhere($qb->expr()->like($qb->expr()->concat('o.firstName', $qb->expr()->concat($qb->expr()->literal(' '), 'o.lastName')), ":$flag"));
+                            $qb->setParameter($flag, $filter);
+                        } elseif($flag === 'createdAtFrom') {
+                            $qb->andWhere($qb->expr()->gte('o.createdAt', ":$flag"));
+                            $qb->setParameter($flag, $filter);
+                        } elseif($flag === 'createdAtTo') {
+                            $qb->andWhere($qb->expr()->lte('o.createdAt', ":$flag"));
                             $qb->setParameter($flag, $filter);
                         } else {
-                            $qb->andWhere($qb->expr()->eq($flag, $qb->expr()->literal(":$flag")));
+                            $qb->andWhere($qb->expr()->like('o.'.$flag, ":$flag"));
                             $qb->setParameter($flag, $filter);
                         }
                     }
@@ -78,7 +95,8 @@ class OrderController extends Controller
         );
 
         return $this->render('KACSiteBundle:Order:index.html.twig', array(
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            'form' => $form->createView(),
         ));
     }
 

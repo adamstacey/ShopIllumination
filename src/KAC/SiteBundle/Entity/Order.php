@@ -429,10 +429,12 @@ class Order
     	switch ($this->paymentType)
     	{
     		case 'SagePay':
+    		case 'sagepay':
     			return 'bundles/kacsite/images/logos/sage-pay-small.png';
     		case 'PayPal through SagePay':
     			return 'bundles/kacsite/images/logos/pay-pal-through-sage-pay-small.png';
     		case 'PayPal':
+    		case 'paypal':
     			return 'bundles/kacsite/images/logos/pay-pal-small.png';
     		case 'Google Wallet':
     			return 'bundles/kacsite/images/logos/google-wallet-small.png';

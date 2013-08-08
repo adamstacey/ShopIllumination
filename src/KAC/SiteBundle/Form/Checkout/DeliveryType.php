@@ -21,7 +21,6 @@ class DeliveryType extends AbstractType
             'choice_list' => new ObjectChoiceList(array_combine(array_map(function($method) {
                 return $method->getName();
             }, $this->deliveryMethods), $this->deliveryMethods), 'name', array(), null, 'name'),
-//            'choices' => $this->deliveryMethods,
             'expanded' => true,
         ));
     }
