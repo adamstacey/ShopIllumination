@@ -608,7 +608,7 @@ class Order
 
     public function getCheckoutSteps()
     {
-        return array('About', 'PaymentType', 'Address', 'Delivery', 'Payment', 'Confirmation', 'Complete');
+        return array('About', 'Address', 'Delivery', 'Payment', 'Confirmation', 'Complete');
     }
 
     /**

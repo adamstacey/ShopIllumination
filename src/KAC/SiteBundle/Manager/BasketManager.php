@@ -77,6 +77,7 @@ class BasketManager extends Manager
             if ((!$basket->getDelivery()->getMethod() || !$basket->getDelivery()->getMethod()->supportsLocation($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand()))
                 && count($basket->getDelivery()->getMethods()) > 0) {
                 $basket->getDelivery()->setMethod($basket->getDelivery()->getMethods()[0]);
+                var_dump($basket->getDelivery()->getMethods());die();
             }
 
             $basket->getDelivery()->setPrice($basket->getDelivery()->getMethod()->calculateCost($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand(), $basket->getItems()));

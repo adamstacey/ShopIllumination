@@ -9,6 +9,14 @@ class PaymentType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('card', new CardType());
+        $builder->add('paymentType', 'choice', array(
+            'choices' => array(
+                'sagepay' => 'Credit/Debit Card',
+                'paypal' => 'Paypal',
+            ),
+            'label' => 'Payment Method',
+            'required' => true,
+        ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

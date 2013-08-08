@@ -29,14 +29,6 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /account
 
-WebIlluminationAdminBundle:
-    resource: "@WebIlluminationAdminBundle/Resources/config/routing.yml"
-    prefix:   /
-
-WebIlluminationShopBundle:
-    resource: "@WebIlluminationShopBundle/Resources/config/routing.yml"
-    prefix:   /
-
 kac_site:
     resource: "@KACSiteBundle/Controller/"
     type:     annotation

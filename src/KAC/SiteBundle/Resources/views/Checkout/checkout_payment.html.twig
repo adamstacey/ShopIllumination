@@ -26,7 +26,13 @@
                                 <section class="ui-widget-content ui-corner-all">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
+                                        <legend>Payment Type</legend>
+                                        <div class="clear"></div>
                                         {{ form_row(form.paymentType) }}
+                                    </fieldset>
+                                    <fieldset class="card-details {% if form.paymentType.vars.value != "sagepay" and form.paymentType.vars.value != "" %}ui-helper-hidden{% endif %}">
+                                        <legend>Card Details</legend>
+                                        <div class="clear"></div>
                                         {{ form_row(form.card.number) }}
                                         {{ form_row(form.card.expiryMonth) }}
                                         {{ form_row(form.card.expiryYear) }}
@@ -44,9 +50,18 @@
                     </div>
                 </div>
                 {% include 'KACSiteBundle:Checkout:orderSummary.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
-                {% include 'KACSiteBundle:Checkout:deliveryOptions.html.twig' with {'order': order, 'basket': basket, 'form': form} %}
             </div>
             {{ form_rest(form) }}
         </form>
+        <script>
+            $("#checkout_payment_paymentType").change(function() {
+                if($(this).val() == 'sagepay')
+                {
+                    $(".card-details").show();
+                } else {
+                    $(".card-details").hide();
+                }
+            });
+        </script>
     </section>
 {% endblock %}
