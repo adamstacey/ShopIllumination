@@ -50,6 +50,13 @@ class ListingController extends Controller
             $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
         }
 
+        $showMaiaPromotion = false;
+        $maiaDepartments = array(1, 1038, 41, 146, 1215, 1158, 1159, 1048, 1154, 43, 1129, 1168, 1130, 985, 1152, 1153, 1160, 1161, 1163, 1167, 1166, 1162);
+        if (in_array($departmentId, $maiaDepartments))
+        {
+            $showMaiaPromotion = true;
+        }
+
         // If brand was specified fetch from the database
         $brand = null;
         if ($brandId)
@@ -230,6 +237,7 @@ class ListingController extends Controller
             'featureGroups' => $featureGroups,
             'pagination' => $pagination,
             'stats' => $stats,
+            'showMaiaPromotion' => $showMaiaPromotion,
         ));
     }
 
@@ -625,7 +633,7 @@ class ListingController extends Controller
                 ->setParameter('unitCost', 200);
             if($brandId)
             {
-                $qb->where($qb->expr()->eq('p.brand', ':brand'))
+                $qb->andWhere($qb->expr()->eq('p.brand', ':brand'))
                     ->setParameter('brand', $brandId);
             }
             if($num)
