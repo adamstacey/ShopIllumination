@@ -98,10 +98,10 @@
                     </div>
                 </header>
                 {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
+                {% include 'KACSiteBundle:Includes:leftAdvertisingBoard.html.twig' %}
                 <section class="container">
                     <div class="content">
                         {% block slider %}{% endblock %}
-                        {{ render_esi(url('reviews_trustpilot')) }}
                         {% block header %}{% endblock %}
         {% endif %}
             {% block body %}{% endblock %}
@@ -109,6 +109,7 @@
         {% if app.request.query.get('modal') != true %}
                     </div>
                 </section>
+                {% include 'KACSiteBundle:Includes:rightAdvertisingBoard.html.twig' %}
             </div>
         {% endif %}
         {% include 'KACSiteBundle:Includes:footer.html.twig' %}
