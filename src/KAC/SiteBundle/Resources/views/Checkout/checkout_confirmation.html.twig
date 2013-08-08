@@ -25,57 +25,73 @@
                                 </header>
                                 <section class="ui-widget-content ui-corner-all">
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                                    <fieldset>
-                                        <div id="basket-contents" class="clearfix">
-                                            {% if order.products|length > 0 %}
-                                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                                    {% for product in order.products %}
-                                                        <tr>
-                                                            <td class="product-page-title" colspan="6">
-                                                                <a href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="ac">{{ product.quantity }}</td>
-                                                            <td class="ac">&times;</td>
-                                                            <td class="ac"><strong>{{ product.productCode }}</strong></td>
-                                                            <td class="ac">
-                                                                {% if product.recommendedRetailPrice > product.unitCost %}
-                                                                    <span class="red strikethrough">&pound;{{ product.recommendedRetailPrice|number_format(2) }}</span>
-                                                                    <br />
-                                                                    <span class="green"><strong>&pound;{{ product.unitCost|number_format(2) }}</strong></span>
-                                                                {% else %}
-                                                                    &pound;{{ product.unitCost|number_format(2) }}
-                                                                {% endif %}
-                                                            </td>
-                                                            <td class="ac">=</td>
-                                                            <td class="ar">&pound;{{ product.subTotal|number_format(2) }}</td>
-                                                        </tr>
-                                                    {% endfor %}
-                                                </table>
-                                            {% endif %}
-                                        </div>
-                                        <div id="basket-totals" class="clearfix">
-                                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-                                                <tr>
-                                                    <td class="al uppercase font-size-13"><strong>Subtotal before Delivery (inc. VAT):</strong></td>
-                                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.subTotal|number_format(2) }}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="al uppercase font-size-13"><strong>Delivery Charge (inc. VAT):</strong></td>
-                                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.deliveryCharge|number_format(2) }}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="al uppercase font-size-13"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
-                                                    <td width="1" class="price ar font-size-13"><strong>&pound;{{ order.total|number_format(2) }}</strong></td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </fieldset>
-                                    <div class="clearfix">
+                                    <table class="data-table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Product Code</th>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in order.products %}
+                                            {% set variant = item.variant %}
+                                            {% set product = item.product %}
+                                            <tr>
+                                                <td>{{ loop.index }}</td>
+                                                <td>
+                                                    <a href="{{ path('routing', {'url': variant.url}) }}">{{ variant.productCode }}</a>
+                                                </td>
+                                                <td>
+                                                    <p>
+                                                        <a href="{{ path('routing', {'url': variant.url}) }}">{{ variant.description.header }}</a>
+                                                    </p>
+                                                </td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>{{ item.unitCost|currency }}</td>
+                                                <td>{{ item.subTotal|currency }}</td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="6">
+                                                    <div class="message message-help mas">
+                                                        <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-383"></span>
+                                                        <p>There are no product in this order.</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="6">
+                                                <span class="fr"><strong>Sub-Total</strong>: {{ order.subTotal|currency }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6">
+                                                <span class="fr"><strong>Delivery Charge</strong>: {{ order.deliveryCharge|currency }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="">
+                                                <span class="fr"><strong>Discount</strong>: {{ order.discount|currency }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color: #f1f1f1;">
+                                            <td colspan="6">
+                                                <span class="fr"><strong>Total</strong>: {{ order.total|currency }}</span>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="clearfix mtm">
                                         <a href="{{ path('checkout_payment') }}" class="button button-small mrm fl">Back</a>
                                         <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
-                                        <button type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Buy</button>
+                                        <button name="{{ form.buy.vars.full_name }}" type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Buy</button>
                                         {% do form.buy.setRendered(true) %}
                                     </div>
                                 </section>
