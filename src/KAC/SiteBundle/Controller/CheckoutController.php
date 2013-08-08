@@ -413,6 +413,12 @@ class CheckoutController extends Controller
 
         if($form->isValid())
         {
+            // Remove note if it is blank
+            if($order->getNotes()[0]->getNote() === '')
+            {
+                $order->removeNote($order->getNotes()[0]);
+            }
+            
             $paymentResponse = $this->completePayment($order);
 
             // Update order status and redirect if needed

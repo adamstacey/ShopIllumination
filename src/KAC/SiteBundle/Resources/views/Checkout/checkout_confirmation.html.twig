@@ -89,6 +89,17 @@
                                         </tfoot>
                                     </table>
                                     <div class="clearfix mtm">
+                                        {{ form_row(form.notes) }}
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <label>&nbsp;</label>
+                                            </div>
+                                            <div class="widget checker-group widget-2-of-3">
+                                                {{ form_row(form.terms) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix mtm">
                                         <a href="{{ path('checkout_payment') }}" class="button button-small mrm fl">Back</a>
                                         <a href="{{ path('checkout_cancel') }}" class="button button-small mrm fl">Cancel</a>
                                         <button name="{{ form.buy.vars.full_name }}" type="submit" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Buy</button>

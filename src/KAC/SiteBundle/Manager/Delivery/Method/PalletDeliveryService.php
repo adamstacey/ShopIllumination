@@ -16,9 +16,7 @@ class PalletDeliveryService extends AbstractDeliveryMethod
      */
     function supportsLocation($zone, $band)
     {
-        if($zone === 1 && in_array($band, array(2))) {
-            return true;
-        } elseif($zone === 2 && in_array($band, array(2))) {
+        if(in_array($zone, array(4, 5, 6)) && in_array($band, array(3, 4, 5))) {
             return true;
         } else {
             return false;

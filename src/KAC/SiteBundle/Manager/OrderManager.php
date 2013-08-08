@@ -135,6 +135,13 @@ class OrderManager extends Manager
         $order->setStatus('Checkout');
         $order->setCurrentStep('About');
 
+        // Add note
+        $note = new Order\Note();
+        $note->setCreator($order->getUser() !== null && $order->getUser()->getContact() !== null ? $order->getUser()->getContact()->getFirstName() . ' ' . $order->getUser()->getContact()->getFirstName()  : '');
+        $note->setNoteType('customer');
+        $note->setNotified(false);
+        $order->addNote($note);
+
         // Add user information if logged in
         if($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
             /**
