@@ -7,7 +7,7 @@
                         {% if department.children|length > 0 %}
                             <span class="fr ui-button-icon-primary ui-icon-small icon-small-grey icon-small-471"></span>
                         {% endif %}
-                        {{ department.description.name|raw }}
+                        {{ department.menuTitle|raw }}
                     </a>
                     {% if department.children|length > 0 %}
                         {{ _self.menuItem(department.id, department.children) }}
