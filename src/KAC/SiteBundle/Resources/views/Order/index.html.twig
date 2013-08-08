@@ -56,6 +56,7 @@
             <table class="data-table treetable" id="departments">
                 <tr>
                     {# sorting of properties based on query components #}
+                    <th></th>
                     <th{% if pagination.isSorted('o.id') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, '#', 'o.id') }}</th>
                     <th colspan="2"{% if pagination.isSorted('o.total') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Total', 'o.total') }}</th>
                     <th{% if pagination.isSorted('o.lastName') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Customer', 'o.firstName,o.lastName') }}</th>
@@ -67,7 +68,8 @@
                 {# table body #}
                 {% for order in pagination %}
                     <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
-                        <td><a href="{{ path('orders_view', {'id': order.id}) }}">{{ order.id }}</a></td>
+                        <td width="1"><input type="checkbox" name="selected[{{ order.id }}]" class="selected" /></td>
+                        <td width="1"><a href="{{ path('orders_view', {'id': order.id}) }}">{{ order.id }}</a></td>
                         <td>{{ order.total }}</td>
                         <td>
                             {% if order.paymentType == '' %}
@@ -99,10 +101,20 @@
                             {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_notes', {'id': order.id}) }}" class="button tooltip-preview-right icon-set-white ui-button-black ui-corner-none" data-icon-primary="ui-icon-written-speech-bubble" data-icon-only="true"{% if order.notesCount > 0 %} data-notification="{{ order.notesCount }}" data-tooltip-id="#tooltip-notes-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_notes') }}" data-id="{{ order.id }}"{% endif %}>Customer Notes</a>#}
                             {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_products', {'id': order.id}) }}" class="button icon-set-white ui-button-black ui-corner-none tooltip-preview-right" data-icon-primary="ui-icon-shopping-basket" data-icon-only="true" data-notification="{{ order.items }}" data-tooltip-id="#tooltip-products-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_products') }}" data-id="{{ order.id }}">Shopping Basket</a>#}
                             {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_delivery', {'id': order.id}) }}" class="button icon-set-white ui-button-black ui-corner-left" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>#}
+                            <a href="{{ path('orders_delete', {'id': order.id}) }}" class="button button-red button-small fr mls">Delete</a>
+                            <a href="{{ path('orders_edit', {'id': order.id}) }}" class="button button-blue button-small fr">Edit</a>
                         </td>
                     </tr>
                 {% endfor %}
             </table>
         </fieldset>
+        <div class="widget-group product-sorting-container product-sorting-container-bottom mbn clearfix">
+            <div class="widget widget-1-of-1">
+                <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
+                <div class="fr">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
     </section>
 {% endblock %}

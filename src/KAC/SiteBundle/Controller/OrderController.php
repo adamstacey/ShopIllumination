@@ -93,6 +93,8 @@ class OrderController extends Controller
             $this->get('request')->query->get('page', 1),
             20
         );
+        $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
+        $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
 
         return $this->render('KACSiteBundle:Order:index.html.twig', array(
             'pagination' => $pagination,
