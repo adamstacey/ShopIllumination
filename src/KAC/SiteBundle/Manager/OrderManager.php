@@ -121,6 +121,21 @@ class OrderManager extends Manager
 
     public function finishOrder()
     {
+        $order = $this->getOrder();
+        if($order)
+        {
+            $repository = $this->doctrine->getRepository('KACSiteBundle:Order');
+            // Run fraud checks
+            $order->setFraudCheckCustomerOrdered($repository->findNumOrdersWithSameEmail($order->getEmailAddress()));
+            $order->setFraudCheckAddressMatch($repository->findNumOrdersWithSameAddress($order->getBillingPostZipCode(), $order->getEmailAddress()));
+            $order->setFraudCheckNameUsedOnDifferentOrder($repository->findNumOrdersWithSameName($order->getFirstName(), $order->getLastName(), $order->getEmailAddress()));
+            $order->setFraudCheckPostZipCodeUsedOnDifferentOrder($repository->findNumOrdersWithSameAddress($order->getBillingPostZipCode(), $order->getEmailAddress()));
+            $order->setFraudCheckTelephoneUsedOnDifferentOrder($repository->findNumOrdersWithSameTelephone($order->getTelephoneDaytime(), $order->getEmailAddress()));
+
+            $this->doctrine->getManager()->persist($this->order);
+            $this->doctrine->getManager()->flush();
+        }
+
         $this->order = null;
         $this->session->remove('order.id');
         $this->basketManager->clearBasket('order.basket');

@@ -30,7 +30,7 @@ class OrderRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
-    public function findNumOrdersWithSameName($firstName, $lastName, $billingFirstName, $billingLastName, $deliveryFirstName, $deliveryLastName)
+    public function findNumOrdersWithSameName($firstName, $lastName, $email)
     {
         return $this->getEntityManager()
             ->createQuery('
@@ -39,29 +39,28 @@ class OrderRepository extends EntityRepository
                 WHERE
                     (o.firstName = :firstName AND o.lastName = :lastName)
                     OR
-                    (o.billingFirstName = :billingFirstName AND o.billingLastName = :billingLastName)
+                    (o.billingFirstName = :firstName AND o.billingLastName = :lastName)
                     OR
-                    (o.deliveryFirstName = :billingFirstName AND o.billingLastName = :billingLastName)
+                    (o.deliveryFirstName = :firstName AND o.billingLastName = :lastName)
+                    AND o.emailAddress != :email
             ')
             ->setParameter("firstName", $firstName)
             ->setParameter("lastName", $lastName)
-            ->setParameter("billingFirstName", $billingFirstName)
-            ->setParameter("billingLastName", $billingLastName)
-            ->setParameter("deliveryFirstName", $deliveryFirstName)
-            ->setParameter("billingLastName", $deliveryLastName)
+            ->setParameter("email", $email)
             ->getSingleScalarResult();
     }
 
-    public function findNumOrdersWithSameTelephone($telephone)
+    public function findNumOrdersWithSameTelephone($telephone, $email)
     {
         return $this->getEntityManager()
             ->createQuery('
                 SELECT COUNT(o)
                 FROM KAC\SiteBundle\Entity\Order o
                 WHERE
-                    o.telephoneDaytime = :telephone OR o.telephoneEvening = :telephone OR mobile = :telephone
+                    o.telephoneDaytime = :telephone OR o.telephoneEvening = :telephone OR mobile = :telephone AND o.emailAddress != :email
             ')
             ->setParameter("telephone", $telephone)
+            ->setParameter("email", $email)
             ->getSingleScalarResult();
     }
 }

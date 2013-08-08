@@ -418,7 +418,7 @@ class CheckoutController extends Controller
             {
                 $order->removeNote($order->getNotes()[0]);
             }
-            
+
             $paymentResponse = $this->completePayment($order);
 
             // Update order status and redirect if needed
