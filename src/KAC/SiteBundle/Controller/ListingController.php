@@ -633,7 +633,7 @@ class ListingController extends Controller
                 ->setParameter('unitCost', 200);
             if($brandId)
             {
-                $qb->where($qb->expr()->eq('p.brand', ':brand'))
+                $qb->andWhere($qb->expr()->eq('p.brand', ':brand'))
                     ->setParameter('brand', $brandId);
             }
             if($num)
