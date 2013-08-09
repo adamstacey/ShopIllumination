@@ -609,8 +609,11 @@ class ListingController extends Controller
         }
     }
 
-    private function getPopularProducts($departmentIds = null, $brandId = null, $num=null)
+    private function getPopularProducts($departmentIds = null, $brandIds = null, $num=null)
     {
+        // Ensure that department and brand ids are arrays
+        if($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
+        if($brandIds !== null && !is_array($brandIds)) $brandIds = array($brandIds);
         /**
          * @var $em EntityManager
          */
@@ -631,10 +634,10 @@ class ListingController extends Controller
                 ->addOrderBy('total', 'DESC');
             $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
                 ->setParameter('unitCost', 200);
-            if($brandId)
+            if($brandIds)
             {
-                $qb->andWhere($qb->expr()->eq('p.brand', ':brand'))
-                    ->setParameter('brand', $brandId);
+                $qb->andWhere($qb->expr()->in('p.brand', ':brands'))
+                    ->setParameter('brands', $brandIds);
             }
             if($num)
             {
@@ -648,43 +651,46 @@ class ListingController extends Controller
 
             foreach($departmentIds as $departmentId)
             {
-                $query = $solarium->createSelect();
-                $helper = $query->getHelper();
-                $query->setQuery('*');
-                $query->setFields(array('id'));
-                $query->setRows(99999999);
-
-                // Get the department
-                $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
-
-                // If brand was specified fetch from the database
-                $brand = null;
-                if ($brandId)
+                foreach($brandIds as $brandId)
                 {
-                    $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
-                }
+                    $query = $solarium->createSelect();
+                    $helper = $query->getHelper();
+                    $query->setQuery('*');
+                    $query->setFields(array('id'));
+                    $query->setRows(99999999);
 
-                if ($department)
-                {
-                    // Get path
-                    $departmentFilterPath = "";
-                    $currDepartment = $department;
-                    do {
-                        $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
-                        $currDepartment = $currDepartment->getParent();
-                    } while ($currDepartment !== null);
-                    $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
-                }
+                    // Get the department
+                    $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
 
-                if ($brand)
-                {
-                    $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
-                }
-                $results = $solarium->execute($query);
+                    // If brand was specified fetch from the database
+                    $brand = null;
+                    if ($brandIds)
+                    {
+                        $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
+                    }
 
-                foreach ($results as $document)
-                {
-                    $ids[] = $document->id;
+                    if ($department)
+                    {
+                        // Get path
+                        $departmentFilterPath = "";
+                        $currDepartment = $department;
+                        do {
+                            $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
+                            $currDepartment = $currDepartment->getParent();
+                        } while ($currDepartment !== null);
+                        $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
+                    }
+
+                    if ($brand)
+                    {
+                        $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
+                    }
+                    $results = $solarium->execute($query);
+
+                    foreach ($results as $document)
+                    {
+                        $ids[] = $document->id;
+                    }
                 }
             }
 
