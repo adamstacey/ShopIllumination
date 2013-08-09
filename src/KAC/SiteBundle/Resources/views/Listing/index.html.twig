@@ -127,13 +127,13 @@
                             <div class="mtm">{{ overview|raw }}</div>
                         {% endif %}
                         {% if brand %}
-                            {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id, 'brandId': brand.id })) }}
+                            {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': department.id, 'brandIds': brand.id })) }}
                         {% else %}
                             {% if showMaiaPromotion %}
                                 {% include 'KACSiteBundle:Maia:maiaPromotion.html.twig' %}
                             {% else %}
-                                {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentId': department.id })) }}
-                                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentId': department.id })) }}
+                                {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': department.id })) }}
+                                {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentIds': department.id })) }}
                             {% endif %}
                         {% endif %}
                     </section>
