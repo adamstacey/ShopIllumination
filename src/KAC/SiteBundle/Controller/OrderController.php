@@ -28,6 +28,8 @@ class OrderController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $queue = $this->container->get('kac_site.manager.order_queue');
+
         /**
          * @var $em EntityManager
          */
@@ -36,52 +38,77 @@ class OrderController extends Controller
         $qb->select('o')
             ->from('KAC\SiteBundle\Entity\Order', 'o');
 
-        $form = $this->createForm(new OrderFilterType(), array());
+        $form = $this->createFormBuilder(array('filters' => array()))
+            ->add('filters', new OrderFilterType())
+            ->add('queue', 'submit')
+            ->add('update', 'submit')
+            ->add('selected', 'collection', array(
+                'type' => 'text',
+                'allow_add' => true,
+            ))->getForm();
 
         $form->submit($request);
         if($form->isValid()) {
-            // Add filters for any flags that the user has set
-            $filters = $form->getData();
-            foreach ($filters as $flag => $filter)
+            $data = $form->getData();
+
+            if($form->get('update')->isClicked())
             {
-                if (is_array($filter))
+                $filters = $data['filters'];
+                // Add filters for any flags that the user has set
+                foreach ($filters as $flag => $filter)
                 {
-                    $parts = array();
-                    $i=0;
-                    array_walk($filter, function(&$item) use ($flag, $qb, &$parts, &$i) {
-                        if (!empty($item))
-                        {
-                            if($flag === 'paymentType')
+                    if (is_array($filter))
+                    {
+                        $parts = array();
+                        $i=0;
+                        array_walk($filter, function(&$item) use ($flag, $qb, &$parts, &$i) {
+                            if (!empty($item))
                             {
-                                $parts[] = $qb->expr()->like('o.'.$flag, ":lc$flag$i");
-                                $qb->setParameter('lc'.$flag.$i, strtolower($item));
+                                if($flag === 'paymentType')
+                                {
+                                    $parts[] = $qb->expr()->like('o.'.$flag, ":lc$flag$i");
+                                    $qb->setParameter('lc'.$flag.$i, strtolower($item));
+                                }
+                                $parts[] = $qb->expr()->like('o.'.$flag, ":$flag$i");
+                                $qb->setParameter($flag.$i, $item);
                             }
-                            $parts[] = $qb->expr()->like('o.'.$flag, ":$flag$i");
-                            $qb->setParameter($flag.$i, $item);
-                        }
-                        $i++;
-                    });
-                    if(count($parts) > 0)
-                    {
-                        $qb->andWhere(call_user_func_array(array($qb->expr(), 'orX'), $parts));
-                    }
-                } else {
-                    if (!empty($filter))
-                    {
-                        if($flag === 'name')
+                            $i++;
+                        });
+                        if(count($parts) > 0)
                         {
-                            $qb->andWhere($qb->expr()->like($qb->expr()->concat('o.firstName', $qb->expr()->concat($qb->expr()->literal(' '), 'o.lastName')), ":$flag"));
-                            $qb->setParameter($flag, $filter);
-                        } elseif($flag === 'createdAtFrom') {
-                            $qb->andWhere($qb->expr()->gte('o.createdAt', ":$flag"));
-                            $qb->setParameter($flag, $filter);
-                        } elseif($flag === 'createdAtTo') {
-                            $qb->andWhere($qb->expr()->lte('o.createdAt', ":$flag"));
-                            $qb->setParameter($flag, $filter);
-                        } else {
-                            $qb->andWhere($qb->expr()->like('o.'.$flag, ":$flag"));
-                            $qb->setParameter($flag, $filter);
+                            $qb->andWhere(call_user_func_array(array($qb->expr(), 'orX'), $parts));
                         }
+                    } else {
+                        if (!empty($filter))
+                        {
+                            if($flag === 'name')
+                            {
+                                $qb->andWhere($qb->expr()->like($qb->expr()->concat('o.firstName', $qb->expr()->concat($qb->expr()->literal(' '), 'o.lastName')), ":$flag"));
+                                $qb->setParameter($flag, $filter);
+                            } elseif($flag === 'createdAtFrom') {
+                                $qb->andWhere($qb->expr()->gte('o.createdAt', ":$flag"));
+                                $qb->setParameter($flag, $filter);
+                            } elseif($flag === 'createdAtTo') {
+                                $qb->andWhere($qb->expr()->lte('o.createdAt', ":$flag"));
+                                $qb->setParameter($flag, $filter);
+                            } else {
+                                $qb->andWhere($qb->expr()->like('o.'.$flag, ":$flag"));
+                                $qb->setParameter($flag, $filter);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Add orders to the processing queue
+            if($form->get('queue')->isClicked())
+            {
+                foreach($data['selected'] as $selectedId)
+                {
+                    // Ensure that the order exists
+                    if(null !== $order = $em->getRepository('KACSiteBundle:Order')->find($selectedId))
+                    {
+                        $queue[] = intval($selectedId);
                     }
                 }
             }
@@ -98,6 +125,7 @@ class OrderController extends Controller
 
         return $this->render('KACSiteBundle:Order:index.html.twig', array(
             'pagination' => $pagination,
+            'queue' => $queue->all(),
             'form' => $form->createView(),
         ));
     }
