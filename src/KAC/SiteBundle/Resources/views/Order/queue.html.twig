@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="clearfix mts mbs">
-                    <button type="reset" class="button button-red icon-white mlm fr" data-icon-secondary="icon-1118">Process</button>
+                    <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Process</button>
                 </div>
             </form>
         </fieldset>
@@ -52,7 +52,7 @@
                             {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_notes', {'id': order.id}) }}" class="button tooltip-preview-right icon-set-white ui-button-black ui-corner-none" data-icon-primary="ui-icon-written-speech-bubble" data-icon-only="true"{% if order.notesCount > 0 %} data-notification="{{ order.notesCount }}" data-tooltip-id="#tooltip-notes-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_notes') }}" data-id="{{ order.id }}"{% endif %}>Customer Notes</a>#}
                             {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_products', {'id': order.id}) }}" class="button icon-set-white ui-button-black ui-corner-none tooltip-preview-right" data-icon-primary="ui-icon-shopping-basket" data-icon-only="true" data-notification="{{ order.items }}" data-tooltip-id="#tooltip-products-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_products') }}" data-id="{{ order.id }}">Shopping Basket</a>#}
                             {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_delivery', {'id': order.id}) }}" class="button icon-set-white ui-button-black ui-corner-left" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>#}
-                            {#<a href="{{ path('orders_queue_delete', {'id': order.id}) }}" class="button button-red button-small fr mls">Delete</a>#}
+                            <a href="{{ path('orders_queue_remove', {'id': order.id}) }}" class="button button-red button-small fr mls">Delete</a>
                         </td>
                     </tr>
                 {% else %}

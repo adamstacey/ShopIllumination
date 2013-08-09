@@ -172,6 +172,18 @@ class OrderController extends Controller
     }
 
     /**
+     * @Secure(roles="ROLE_ADMIN")
+     * @Route("/admin/orders/queue/{id}/remove", name="orders_queue_remove")
+     */
+    public function queueRemoveAction(Request $request, $id)
+    {
+        $queue = $this->container->get('kac_site.manager.order_queue');
+        unset($queue[$id]);
+
+        $this->redirect($this->generateUrl('orders_queue'));
+    }
+
+    /**
      * @Route("/admin/orders/new", name="orders_new")
      */
     public function newAction(Request $request)
