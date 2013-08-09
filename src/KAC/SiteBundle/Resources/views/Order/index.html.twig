@@ -73,7 +73,7 @@
                         <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
                             <td width="1"><input type="checkbox" name="{{ form.selected.vars.full_name }}[]" class="selected" value="{{ order.id }}" {% if order.id in queue %}checked="checked"{% endif %}/></td>
                             <td width="1"><a href="{{ path('orders_view', {'id': order.id}) }}">{{ order.id }}</a></td>
-                            <td>{{ order.total }}</td>
+                            <td>{{ order.total|currency }}</td>
                             <td>
                                 {% if order.paymentType == '' %}
                                     &nbsp;-&nbsp;
