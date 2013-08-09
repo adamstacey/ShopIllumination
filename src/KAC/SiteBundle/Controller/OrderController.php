@@ -131,6 +131,47 @@ class OrderController extends Controller
     }
 
     /**
+     * @Secure(roles="ROLE_ADMIN")
+     * @Route("/admin/orders/queue", name="orders_queue")
+     */
+    public function queueAction(Request $request)
+    {
+        $queue = $this->container->get('kac_site.manager.order_queue');
+
+        $form = $this->createFormBuilder()
+            ->add('action', 'choice', array(
+                'choices' => array(
+                    'deliveries' => 'Process Deliveries',
+                    'tracking' => 'Import Tracking Data',
+                    'printOrders' => 'Print Orders',
+                    'printCopyOrders' => 'Print Copy Orders',
+                    'printDeliveryNotes' => 'Print Delivery Notes',
+                    'printCustomerInvoices' => 'Print Customer Orders',
+                    'emailCustomerInvoices' => 'Email Customer Orders',
+                )
+            ))
+            ->add('clear', 'checkbox', array(
+                'label' => 'Clear queue after processing',
+            ))
+        ->getForm();
+
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('KACSiteBundle:Order')->createQueryBuilder('o');
+        $orders = $qb->where($qb->expr()->in('o.id', '?1'))
+            ->setParameter(1, $queue->all())
+            ->getQuery()
+            ->execute();
+
+        return $this->render('KACSiteBundle:Order:queue.html.twig', array(
+            'orders' => $orders,
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
      * @Route("/admin/orders/new", name="orders_new")
      */
     public function newAction(Request $request)

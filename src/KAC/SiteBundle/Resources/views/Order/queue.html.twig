@@ -1,0 +1,68 @@
+{# Forms #}
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Orders | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Processing Queue</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <fieldset class="pbm">
+            <form class="form" method="get" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
+                {{ form_row(form.action) }}
+                <div class="form-element widget-group clearfix">
+                    <div class="widget widget-1-of-3">
+                        {{ form_label(form.clear) }}
+                    </div>
+                    <div class="widget checker-group widget-2-of-3">
+                        {{ form_widget(form.clear) }}
+                    </div>
+                </div>
+                <div class="clearfix mts mbs">
+                    <button type="reset" class="button button-red icon-white mlm fr" data-icon-secondary="icon-1118">Process</button>
+                </div>
+            </form>
+        </fieldset>
+        <fieldset class="pbm">
+            <table class="data-table treetable" id="departments">
+                <tr>
+                    {# sorting of properties based on query components #}
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+
+                {# table body #}
+                {% for order in orders %}
+                    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                        <td width="1"><a href="{{ path('orders_view', {'id': order.id}) }}">{{ order.id }}</a></td>
+                        <td>{{ order.firstName }} {{ order.lastName }}</td>
+                        <td>{{ order.createdAt|date("d/m/Y h:iA") }}</td>
+                        <td>{{ order.status }}</td>
+                        <td width="1" class="buttons-container ac no-wrap">
+                            {#<a data-id="{{ order.id }}" href="/uploads/documents/order/order-{{ order.id }}.pdf" target="_blank" class="button icon-set-white ui-button-{{ (order.orderPrinted == 1?'green':'red') }} action-print-order ui-corner-right tooltip-preview-right" data-icon-primary="ui-icon-document" data-icon-only="true" data-tooltip-id="#tooltip-documents-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_documents') }}" data-id="{{ order.id }}">Order</a>#}
+                            {#<a{% if (order.trackingNumber != '') and (order.courier != '') %} target="_blank"{% endif %} href="{{ path('admin_'~data.settings.multiplePath~'_update_delivery', {'id': order.id}) }}" class="button icon-set-white ui-button-{% if order.deliveryType == 'Collection' %}red{% elseif order.deliveryCharge == 0 %}green{% else %}black{% endif %} ui-corner-none tooltip-preview-right" data-icon-primary="ui-icon-delivery-truck" data-icon-only="true" data-tooltip-id="#tooltip-delivery-information-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_delivery_information') }}" data-id="{{ order.id }}">Delivery Information</a>#}
+                            {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_payment', {'id': order.id}) }}" class="button icon-set-white ui-button-{% if order.paymentType == '' %}red{% else %}{{ order.paymentResponseFraudColour }}{% endif %} ui-corner-none tooltip-preview-right" data-icon-primary="ui-icon-credit-card-back" data-icon-only="true" data-tooltip-id="#tooltip-payment-information-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_payment_information') }}" data-id="{{ order.id }}">Payment Information</a>#}
+                            {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_notes', {'id': order.id}) }}" class="button tooltip-preview-right icon-set-white ui-button-black ui-corner-none" data-icon-primary="ui-icon-written-speech-bubble" data-icon-only="true"{% if order.notesCount > 0 %} data-notification="{{ order.notesCount }}" data-tooltip-id="#tooltip-notes-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_notes') }}" data-id="{{ order.id }}"{% endif %}>Customer Notes</a>#}
+                            {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_products', {'id': order.id}) }}" class="button icon-set-white ui-button-black ui-corner-none tooltip-preview-right" data-icon-primary="ui-icon-shopping-basket" data-icon-only="true" data-notification="{{ order.items }}" data-tooltip-id="#tooltip-products-{{ order.id }}" data-ajax-path="{{ path('admin_orders_ajax_get_products') }}" data-id="{{ order.id }}">Shopping Basket</a>#}
+                            {#<a href="{{ path('admin_'~data.settings.multiplePath~'_update_delivery', {'id': order.id}) }}" class="button icon-set-white ui-button-black ui-corner-left" data-icon-primary="ui-icon-pencil" data-icon-only="true">Edit</a>#}
+                            {#<a href="{{ path('orders_queue_delete', {'id': order.id}) }}" class="button button-red button-small fr mls">Delete</a>#}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">
+                            <p>No orders are currently queued</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+    </section>
+{% endblock %}
