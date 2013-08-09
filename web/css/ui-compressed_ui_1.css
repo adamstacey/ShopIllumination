@@ -1,0 +1,1782 @@
+@charset "UTF-8";
+/*
+  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
+  rgba-background mixin can now be passed an option $dir variable
+*/
+/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 297, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
+@font-face {
+  font-family: "Stag Medium";
+  src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
+  src: local("☺"), url("/bundles/kacsite/css/resources/fonts/stag-medium.woff") format("woff"), url("/bundles/kacsite/css/resources/fonts/stag-medium.ttf") format("truetype"), url("/bundles/kacsite/css/resources/fonts/stag-medium.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 4, assetic_compassoXkYRe.scss */
+.ui-helper-hidden {
+  display: none;
+}
+
+/* line 8, assetic_compassoXkYRe.scss */
+.ui-helper-hidden-accessible {
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+/* line 21, assetic_compassoXkYRe.scss */
+.ui-helper-reset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  line-height: 100%;
+  text-decoration: none;
+  font-size: 100%;
+  list-style: none;
+}
+
+/* line 34, assetic_compassoXkYRe.scss */
+.ui-helper-clearfix:before,
+.ui-helper-clearfix:after {
+  display: table;
+  content: "";
+}
+
+/* line 40, assetic_compassoXkYRe.scss */
+.ui-helper-clearfix:after {
+  clear: both;
+}
+
+/* line 44, assetic_compassoXkYRe.scss */
+.ui-helper-clearfix {
+  min-height: 0;
+}
+
+/* line 48, assetic_compassoXkYRe.scss */
+.ui-helper-zfix {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity = 0)";
+  filter: alpha(opacity = 0);
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  opacity: 0;
+}
+
+/* line 59, assetic_compassoXkYRe.scss */
+.ui-state-disabled {
+  cursor: default !important;
+}
+
+/* line 65, assetic_compassoXkYRe.scss */
+.ui-widget-overlay {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* line 74, assetic_compassoXkYRe.scss */
+.ui-resizable {
+  position: relative;
+}
+
+/* line 78, assetic_compassoXkYRe.scss */
+.ui-resizable-handle {
+  position: absolute;
+  display: block;
+  font-size: 0.1px;
+}
+
+/* line 86, assetic_compassoXkYRe.scss */
+.ui-resizable-disabled .ui-resizable-handle,
+.ui-resizable-autohide .ui-resizable-handle {
+  display: none;
+}
+
+/* line 90, assetic_compassoXkYRe.scss */
+.ui-resizable-n {
+  width: 100%;
+  height: 7px;
+  top: -5px;
+  left: 0;
+  cursor: n-resize;
+}
+
+/* line 100, assetic_compassoXkYRe.scss */
+.ui-resizable-s {
+  width: 100%;
+  height: 7px;
+  bottom: -5px;
+  left: 0;
+  cursor: s-resize;
+}
+
+/* line 110, assetic_compassoXkYRe.scss */
+.ui-resizable-e {
+  width: 7px;
+  height: 100%;
+  top: 0;
+  right: -5px;
+  cursor: e-resize;
+}
+
+/* line 120, assetic_compassoXkYRe.scss */
+.ui-resizable-w {
+  width: 7px;
+  height: 100%;
+  top: 0;
+  left: -5px;
+  cursor: w-resize;
+}
+
+/* line 130, assetic_compassoXkYRe.scss */
+.ui-resizable-se {
+  width: 12px;
+  height: 12px;
+  bottom: 1px;
+  right: 1px;
+  cursor: se-resize;
+}
+
+/* line 140, assetic_compassoXkYRe.scss */
+.ui-resizable-sw {
+  width: 9px;
+  height: 9px;
+  bottom: -5px;
+  left: -5px;
+  cursor: sw-resize;
+}
+
+/* line 150, assetic_compassoXkYRe.scss */
+.ui-resizable-nw {
+  width: 9px;
+  height: 9px;
+  top: -5px;
+  left: -5px;
+  cursor: nw-resize;
+}
+
+/* line 160, assetic_compassoXkYRe.scss */
+.ui-resizable-ne {
+  width: 9px;
+  height: 9px;
+  top: -5px;
+  right: -5px;
+  cursor: ne-resize;
+}
+
+/* line 170, assetic_compassoXkYRe.scss */
+.ui-selectable-helper {
+  position: absolute;
+  border: 1px dotted black;
+}
+
+/* line 176, assetic_compassoXkYRe.scss */
+.accordion-item {
+  -webkit-box-shadow: 0 0 10px 0 #384246;
+  -webkit-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.5);
+  -moz-box-shadow: 0 0 10px 0 #384246;
+  -moz-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.5);
+  box-shadow: 0 0 10px 0 #384246;
+  box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.5);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+/* line 181, assetic_compassoXkYRe.scss */
+.ui-accordion .ui-accordion-header {
+  min-height: 0;
+  margin-top: 2px;
+  padding: 15px;
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+/* line 192, assetic_compassoXkYRe.scss */
+.ui-accordion h3.ui-state-active {
+  border-bottom: 3px solid #4ec0e3;
+}
+
+/* line 196, assetic_compassoXkYRe.scss */
+.ui-accordion .ui-accordion-noicons {
+  padding-left: 5px;
+}
+
+/* line 200, assetic_compassoXkYRe.scss */
+.ui-accordion .ui-accordion-icons .ui-accordion-icons {
+  padding-left: 20px;
+}
+
+/* line 204, assetic_compassoXkYRe.scss */
+.ui-accordion .ui-accordion-header .ui-accordion-header-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -16px;
+}
+
+/* line 211, assetic_compassoXkYRe.scss */
+.ui-accordion .ui-accordion-content {
+  padding: 15px 15px 5px 15px;
+  border-top: 0;
+}
+
+/* line 216, assetic_compassoXkYRe.scss */
+.ui-accordion .ui-accordion-content ul {
+  margin-left: 15px;
+}
+
+/* line 219, assetic_compassoXkYRe.scss */
+.ui-autocomplete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: default;
+}
+
+/* line 226, assetic_compassoXkYRe.scss */
+.ui-datepicker {
+  width: 100px;
+  padding: 10px 10px 0;
+  display: none;
+}
+
+/* line 232, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-header {
+  position: relative;
+  padding: 10px 0;
+}
+
+/* line 238, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {
+  position: absolute;
+  top: 2px;
+  width: 15px;
+  height: 15px;
+}
+
+/* line 246, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-prev-hover,
+.ui-datepicker .ui-datepicker-next-hover {
+  top: 1px;
+}
+
+/* line 250, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-prev {
+  left: 2px;
+}
+
+/* line 254, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-next {
+  right: 2px;
+}
+
+/* line 258, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-prev-hover {
+  left: 1px;
+}
+
+/* line 262, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-next-hover {
+  right: 1px;
+}
+
+/* line 267, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-prev span,
+.ui-datepicker .ui-datepicker-next span {
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -8px;
+  top: 50%;
+  margin-top: -8px;
+}
+
+/* line 276, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-title {
+  margin: 0 20px;
+  line-height: 20px;
+  text-align: center;
+}
+
+/* line 282, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-title select {
+  font-size: 12px;
+  font-size: 1.2rem;
+  margin: 2px 0;
+}
+
+/* line 287, assetic_compassoXkYRe.scss */
+.ui-datepicker select.ui-datepicker-month-year {
+  width: 100%;
+}
+
+/* line 292, assetic_compassoXkYRe.scss */
+.ui-datepicker select.ui-datepicker-month,
+.ui-datepicker select.ui-datepicker-year {
+  width: 49%;
+}
+
+/* line 296, assetic_compassoXkYRe.scss */
+.ui-datepicker table {
+  width: 100%;
+  font-size: 11px;
+  font-size: 1.1rem;
+  border-collapse: collapse;
+  margin: 0 0 10px;
+}
+
+/* line 303, assetic_compassoXkYRe.scss */
+.ui-datepicker th {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  border: 0;
+}
+
+/* line 310, assetic_compassoXkYRe.scss */
+.ui-datepicker td {
+  border: 0;
+  padding: 2px;
+}
+
+/* line 316, assetic_compassoXkYRe.scss */
+.ui-datepicker td span,
+.ui-datepicker td a {
+  display: block;
+  padding: 10px;
+  text-align: right;
+  text-decoration: none;
+}
+
+/* line 323, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-buttonpane {
+  background-image: none;
+  margin: 5px 0 0 0;
+  padding: 0 5px;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+/* line 332, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-buttonpane button {
+  float: right;
+  margin: 5px;
+  cursor: pointer;
+  padding: 5px;
+  width: auto;
+  overflow: visible;
+}
+
+/* line 341, assetic_compassoXkYRe.scss */
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current {
+  float: left;
+}
+
+/* with multiple calendars */
+/* line 346, assetic_compassoXkYRe.scss */
+.ui-datepicker.ui-datepicker-multi {
+  width: auto;
+}
+
+/* line 350, assetic_compassoXkYRe.scss */
+.ui-datepicker-multi .ui-datepicker-group {
+  float: left;
+}
+
+/* line 354, assetic_compassoXkYRe.scss */
+.ui-datepicker-multi .ui-datepicker-group table {
+  width: 95%;
+  margin: 0 auto 5px;
+}
+
+/* line 359, assetic_compassoXkYRe.scss */
+.ui-datepicker-multi-2 .ui-datepicker-group {
+  width: 50%;
+}
+
+/* line 363, assetic_compassoXkYRe.scss */
+.ui-datepicker-multi-3 .ui-datepicker-group {
+  width: 33.3%;
+}
+
+/* line 367, assetic_compassoXkYRe.scss */
+.ui-datepicker-multi-4 .ui-datepicker-group {
+  width: 25%;
+}
+
+/* line 372, assetic_compassoXkYRe.scss */
+.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header,
+.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header {
+  border-left-width: 0;
+}
+
+/* line 376, assetic_compassoXkYRe.scss */
+.ui-datepicker-multi .ui-datepicker-buttonpane {
+  clear: left;
+}
+
+/* line 380, assetic_compassoXkYRe.scss */
+.ui-datepicker-row-break {
+  clear: both;
+  width: 100%;
+  font-size: 0;
+}
+
+/* RTL support */
+/* line 387, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl {
+  direction: rtl;
+}
+
+/* line 391, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-prev {
+  right: 2px;
+  left: auto;
+}
+
+/* line 396, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-next {
+  left: 2px;
+  right: auto;
+}
+
+/* line 401, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-prev:hover {
+  right: 1px;
+  left: auto;
+}
+
+/* line 406, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-next:hover {
+  left: 1px;
+  right: auto;
+}
+
+/* line 411, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-buttonpane {
+  clear: right;
+}
+
+/* line 415, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-buttonpane button {
+  float: left;
+}
+
+/* line 420, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current,
+.ui-datepicker-rtl .ui-datepicker-group {
+  float: right;
+}
+
+/* line 425, assetic_compassoXkYRe.scss */
+.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header,
+.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header {
+  border-right-width: 0;
+  border-left-width: 1px;
+}
+
+/* line 430, assetic_compassoXkYRe.scss */
+.content-image {
+  margin: 0 auto;
+  -webkit-box-shadow: 0 0 10px 0 #c5d2d6;
+  -webkit-box-shadow: 0 0 10px 0 #c5d2d6;
+  -moz-box-shadow: 0 0 10px 0 #c5d2d6;
+  -moz-box-shadow: 0 0 10px 0 #c5d2d6;
+  box-shadow: 0 0 10px 0 #c5d2d6;
+  box-shadow: 0 0 10px 0 #c5d2d6;
+}
+
+/* line 436, assetic_compassoXkYRe.scss */
+.ui-dialog {
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #c5d2d6;
+  outline: 0;
+  -webkit-box-shadow: 0 0 10px 0 #4ec0e3;
+  -webkit-box-shadow: 0 0 10px 0 #4ec0e3;
+  -moz-box-shadow: 0 0 10px 0 #4ec0e3;
+  -moz-box-shadow: 0 0 10px 0 #4ec0e3;
+  box-shadow: 0 0 10px 0 #4ec0e3;
+  box-shadow: 0 0 10px 0 #4ec0e3;
+}
+
+/* line 448, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-titlebar {
+  position: relative;
+  background: #6c8087;
+  background: -moz-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6c8087), color-stop(100%, #384246));
+  background: -webkit-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: -o-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: -ms-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: linear-gradient(top, #6c8087 0%, #384246 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#6c8087', endColorstr = '#384246', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZjODA4NyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM4NDI0NiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c8087), color-stop(100%, #384246));
+  background-image: -webkit-linear-gradient(top, #6c8087, #384246);
+  background-image: -moz-linear-gradient(top, #6c8087, #384246);
+  background-image: -o-linear-gradient(top, #6c8087, #384246);
+  background-image: linear-gradient(top, #6c8087, #384246);
+  background-repeat: no-repeat;
+  -webkit-box-shadow: inset 0 1px 0 0 white;
+  -webkit-box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  -moz-box-shadow: inset 0 1px 0 0 white;
+  -moz-box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 0 white;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 3px solid #4ec0e3;
+}
+
+/* line 457, assetic_compassoXkYRe.scss */
+.ui-widget-header .ui-icon {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+}
+
+/* line 463, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-title {
+  margin: 0;
+  padding: 10px;
+  text-shadow: 0 1px 0 black;
+  text-shadow: 0 1px 0 black;
+  filter: dropshadow(color=black, offx=0, offy=1px);
+  color: white;
+  display: block;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 18px;
+  font-size: 1.8rem;
+}
+
+/* line 473, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-titlebar-close {
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  outline: none!important;
+  -webkit-border-radius: 0 4px 0 0;
+  -moz-border-radius: 0 4px 0 0;
+  border-radius: 0 4px 0 0;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 0 none;
+}
+
+/* line 487, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+}
+
+/* line 493, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick:hover {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+/* line 497, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-content {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: #c5d2d6;
+  overflow: auto;
+}
+
+/* line 505, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-buttonpane {
+  margin: 0 0 -2px 0;
+  padding: 5px 0 5px 5px;
+  background: #c5d2d6;
+  background: -moz-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(5%, #c5d2d6), color-stop(100%, #6c8087));
+  background: -webkit-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: -o-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: -ms-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: linear-gradient(to bottom, #ffffff 0%, #c5d2d6 5%, #6c8087 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#c5d2d6', endColorstr = '#6c8087', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNjNWQyZDYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2YzgwODciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(5%, #c5d2d6), color-stop(100%, #6c8087));
+  background-image: -webkit-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-image: -moz-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-image: -o-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-image: linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-repeat: no-repeat;
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+  -webkit-box-shadow: inset 0 0 10px 0 #384246;
+  -webkit-box-shadow: inset 0 0 10px 0 #384246;
+  -moz-box-shadow: inset 0 0 10px 0 #384246;
+  -moz-box-shadow: inset 0 0 10px 0 #384246;
+  box-shadow: inset 0 0 10px 0 #384246;
+  box-shadow: inset 0 0 10px 0 #384246;
+  border-top: 3px solid #384246;
+}
+
+/* line 516, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+  float: right;
+}
+
+/* line 520, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-dialog-buttonpane button {
+  margin: 0 5px 0 0;
+  cursor: pointer;
+  outline: none !important;
+}
+
+/* line 526, assetic_compassoXkYRe.scss */
+.ui-dialog .ui-resizable-se {
+  width: 12px;
+  height: 12px;
+  right: -5px;
+  bottom: -5px;
+  background-position: 16px 16px;
+}
+
+/* line 534, assetic_compassoXkYRe.scss */
+.ui-draggable .ui-dialog-titlebar {
+  cursor: move;
+}
+
+/* line 538, assetic_compassoXkYRe.scss */
+.ui-menu {
+  list-style: none;
+  padding: 2px;
+  margin: 0;
+  display: block;
+  outline: none;
+}
+
+/* line 546, assetic_compassoXkYRe.scss */
+.ui-menu .ui-menu {
+  margin-top: -3px;
+  position: absolute;
+}
+
+/* line 551, assetic_compassoXkYRe.scss */
+.ui-menu .ui-menu-item {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+/* line 557, assetic_compassoXkYRe.scss */
+.ui-menu .ui-menu-divider {
+  margin: 5px -2px 5px -2px;
+  height: 0;
+  font-size: 0;
+  line-height: 0;
+  border-width: 1px 0 0 0;
+}
+
+/* line 565, assetic_compassoXkYRe.scss */
+.ui-menu .ui-menu-item a {
+  text-decoration: none;
+  display: block;
+  padding: 2px 5px;
+  line-height: 1.5;
+  min-height: 0;
+  font-weight: normal;
+}
+
+/* line 575, assetic_compassoXkYRe.scss */
+.ui-menu .ui-menu-item a.ui-state-focus,
+.ui-menu .ui-menu-item a.ui-state-active {
+  font-weight: normal;
+  margin: -1px;
+}
+
+/* line 580, assetic_compassoXkYRe.scss */
+.ui-menu .ui-state-disabled {
+  font-weight: normal;
+  margin: 5px 0 5px 0;
+  line-height: 1.5;
+}
+
+/* line 586, assetic_compassoXkYRe.scss */
+.ui-menu .ui-state-disabled a {
+  cursor: default;
+}
+
+/* line 590, assetic_compassoXkYRe.scss */
+.ui-menu-icons {
+  position: relative;
+}
+
+/* line 594, assetic_compassoXkYRe.scss */
+.ui-menu-icons .ui-menu-item a {
+  position: relative;
+  padding-left: 20px;
+}
+
+/* left-aligned */
+/* line 600, assetic_compassoXkYRe.scss */
+.ui-menu .ui-icon {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+/* right-aligned */
+/* line 607, assetic_compassoXkYRe.scss */
+.ui-menu .ui-menu-icon {
+  position: static;
+  float: right;
+}
+
+/* line 612, assetic_compassoXkYRe.scss */
+.ui-progressbar {
+  height: 20px;
+  text-align: left;
+  overflow: hidden;
+}
+
+/* line 618, assetic_compassoXkYRe.scss */
+.ui-progressbar .ui-progressbar-value {
+  margin: -1px;
+  height: 100%;
+}
+
+/* line 623, assetic_compassoXkYRe.scss */
+.ui-progressbar .ui-progressbar-overlay {
+  background: url("images/animated-overlay.gif");
+  height: 100%;
+  filter: alpha(opacity=25);
+  opacity: 0.25;
+}
+
+/* line 630, assetic_compassoXkYRe.scss */
+.ui-progressbar-indeterminate .ui-progressbar-value {
+  background-image: none;
+}
+
+/* line 634, assetic_compassoXkYRe.scss */
+.progress-bar {
+  position: relative;
+  margin: 0;
+  padding: 5px !important;
+  height: 30px;
+  background-color: #384246 !important;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 5px 0 0 #384246;
+  -webkit-box-shadow: inset 0 5px 0 0 #384246;
+  -moz-box-shadow: inset 0 5px 0 0 #384246;
+  -moz-box-shadow: inset 0 5px 0 0 #384246;
+  box-shadow: inset 0 5px 0 0 #384246;
+  box-shadow: inset 0 5px 0 0 #384246;
+}
+
+/* line 645, assetic_compassoXkYRe.scss */
+.progress-bar div {
+  display: inline-block;
+  height: 100%;
+  margin: 0 !important;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 0 5px 0 black;
+  -webkit-box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: inset 0 0 5px 0 black;
+  -moz-box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0 0 5px 0 black;
+  box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, 0.7);
+  background-color: #4ec0e3;
+  -webkit-transition: width 0.4s ease-in-out;
+  -moz-transition: width 0.4s ease-in-out;
+  -ms-transition: width 0.4s ease-in-out;
+  -o-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  -webkit-background-size: 40px 40px;
+  -moz-background-size: 40px 40px;
+  -o-background-size: 40px 40px;
+  background-size: 40px 40px;
+  background-repeat: repeat !important;
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  -webkit-transition: animate-stripes 3s linear infinite;
+  -moz-transition: animate-stripes 3s linear infinite;
+  -ms-transition: animate-stripes 3s linear infinite;
+  -o-transition: animate-stripes 3s linear infinite;
+  transition: animate-stripes 3s linear infinite;
+}
+
+/* line 679, assetic_compassoXkYRe.scss */
+.progress-bar-caption-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* line 685, assetic_compassoXkYRe.scss */
+.progress-bar-caption {
+  padding: 5px 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 40px;
+  color: white;
+  font-size: 10px;
+  font-size: 1rem;
+  display: block;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* line 697, assetic_compassoXkYRe.scss */
+.progress-error {
+  color: #cc0000;
+  font-size: 11px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+@-webkit-keyframes animate-stripes {
+  /* line 704, assetic_compassoXkYRe.scss */
+  0% {
+    background-position: 0 0;
+  }
+
+  /* line 704, assetic_compassoXkYRe.scss */
+  100% {
+    background-position: 76px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  /* line 708, assetic_compassoXkYRe.scss */
+  0% {
+    background-position: 0 0;
+  }
+
+  /* line 708, assetic_compassoXkYRe.scss */
+  100% {
+    background-position: 76px 0;
+  }
+}
+
+/* line 711, assetic_compassoXkYRe.scss */
+.ui-slider {
+  position: relative;
+  text-align: left;
+}
+
+/* line 716, assetic_compassoXkYRe.scss */
+.ui-slider .ui-slider-handle {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  cursor: default;
+  border: 1px solid #384246;
+}
+
+/* line 725, assetic_compassoXkYRe.scss */
+.ui-slider .ui-slider-range {
+  position: absolute;
+  font-size: 12px;
+  font-size: 1.2rem;
+  display: block;
+  border: 0;
+  background-position: 0 0;
+}
+
+/* line 734, assetic_compassoXkYRe.scss */
+.ui-slider.ui-state-disabled .ui-slider-handle,
+.ui-slider.ui-state-disabled .ui-slider-range {
+  filter: inherit;
+}
+
+/* line 738, assetic_compassoXkYRe.scss */
+.ui-slider-horizontal {
+  height: 10px;
+}
+
+/* line 742, assetic_compassoXkYRe.scss */
+.ui-slider-horizontal .ui-slider-handle {
+  top: -3px;
+  margin-left: -10px;
+}
+
+/* line 747, assetic_compassoXkYRe.scss */
+.ui-slider-horizontal .ui-slider-range {
+  top: 0;
+  height: 100%;
+}
+
+/* line 752, assetic_compassoXkYRe.scss */
+.ui-slider-horizontal .ui-slider-range-min {
+  left: 0;
+}
+
+/* line 756, assetic_compassoXkYRe.scss */
+.ui-slider-horizontal .ui-slider-range-max {
+  right: 0;
+}
+
+/* line 760, assetic_compassoXkYRe.scss */
+.ui-slider-vertical {
+  width: 10px;
+  height: 100px;
+}
+
+/* line 765, assetic_compassoXkYRe.scss */
+.ui-slider-vertical .ui-slider-handle {
+  left: -10px;
+  margin-left: 0;
+  margin-bottom: -10px;
+}
+
+/* line 771, assetic_compassoXkYRe.scss */
+.ui-slider-vertical .ui-slider-range {
+  left: 0;
+  width: 100%;
+}
+
+/* line 776, assetic_compassoXkYRe.scss */
+.ui-slider-vertical .ui-slider-range-min {
+  bottom: 0;
+}
+
+/* line 780, assetic_compassoXkYRe.scss */
+.ui-slider-vertical .ui-slider-range-max {
+  top: 0;
+}
+
+/* line 784, assetic_compassoXkYRe.scss */
+.ui-spinner {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0;
+  vertical-align: middle;
+}
+
+/* line 792, assetic_compassoXkYRe.scss */
+.ui-spinner-input {
+  border: none;
+  background: none;
+  color: inherit;
+  padding: 0;
+  margin: 10px 0;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+
+/* line 803, assetic_compassoXkYRe.scss */
+.ui-spinner-button {
+  width: 16px;
+  height: 50%;
+  font-size: 12px;
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  position: absolute;
+  cursor: default;
+  display: block;
+  overflow: hidden;
+  right: 0;
+}
+
+/* more specificity required here to overide default borders */
+/* line 817, assetic_compassoXkYRe.scss */
+.ui-spinner a.ui-spinner-button {
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+}
+
+/* vertical centre icon */
+/* line 823, assetic_compassoXkYRe.scss */
+.ui-spinner .ui-icon {
+  position: absolute;
+  margin-top: -8px;
+  top: 50%;
+  left: 0;
+}
+
+/* line 830, assetic_compassoXkYRe.scss */
+.ui-spinner-up {
+  top: 0;
+}
+
+/* line 834, assetic_compassoXkYRe.scss */
+.ui-spinner-down {
+  bottom: 0;
+}
+
+/* TR overrides */
+/* line 839, assetic_compassoXkYRe.scss */
+.ui-spinner .ui-icon-triangle-1-s {
+  /* need to fix icons sprite */
+  background-position: -65px -16px;
+}
+
+/* line 844, assetic_compassoXkYRe.scss */
+.ui-tabs {
+  position: relative;
+  /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+  padding: 10px;
+}
+
+/* line 849, assetic_compassoXkYRe.scss */
+.ui-tabs .ui-tabs-nav {
+  margin: -10px -10px 0 -10px;
+  padding: 10px 10px 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* line 861, assetic_compassoXkYRe.scss */
+.ui-tabs .ui-tabs-nav li {
+  list-style: none;
+  float: left;
+  position: relative;
+  top: 0;
+  margin: 2px 2px 0 0;
+  border-bottom: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* line 872, assetic_compassoXkYRe.scss */
+.ui-tabs .ui-tabs-nav li a {
+  float: left;
+  padding: 10px;
+  text-decoration: none;
+}
+
+/* line 878, assetic_compassoXkYRe.scss */
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+  margin-top: -1px;
+  border-bottom: 3px solid #4ec0e3;
+}
+
+/* line 885, assetic_compassoXkYRe.scss */
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a,
+.ui-tabs .ui-tabs-nav li.ui-state-disabled a,
+.ui-tabs .ui-tabs-nav li.ui-tabs-loading a {
+  cursor: text;
+}
+
+/* line 890, assetic_compassoXkYRe.scss */
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-active a {
+  cursor: pointer;
+}
+
+/* line 894, assetic_compassoXkYRe.scss */
+.ui-tabs .ui-tabs-panel {
+  display: block;
+  border-width: 0;
+  padding: 10px 0 0 0;
+  background: none;
+}
+
+/* line 901, assetic_compassoXkYRe.scss */
+.ui-tabs-vertical {
+  width: 55em;
+}
+
+/* line 905, assetic_compassoXkYRe.scss */
+.ui-tabs-vertical .ui-tabs-nav {
+  padding: 0.2em 0.1em 0.2em 0.2em;
+  float: left;
+  width: 12em;
+}
+
+/* line 911, assetic_compassoXkYRe.scss */
+.ui-tabs-vertical .ui-tabs-nav li {
+  clear: left;
+  width: 100%;
+  border-bottom-width: 1px !important;
+  border-right-width: 0 !important;
+  margin: 0 -1px 0.2em 0;
+}
+
+/* line 919, assetic_compassoXkYRe.scss */
+.ui-tabs-vertical .ui-tabs-nav li a {
+  display: block;
+}
+
+/* line 923, assetic_compassoXkYRe.scss */
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+  padding-bottom: 0;
+  padding-right: .1em;
+  border-right-width: 1px;
+  border-right-width: 1px;
+}
+
+/* line 930, assetic_compassoXkYRe.scss */
+.ui-tabs-vertical .ui-tabs-panel {
+  padding: 1em;
+  float: right;
+  width: 40em;
+}
+
+/* line 936, assetic_compassoXkYRe.scss */
+.ui-tooltip {
+  padding: 10px;
+  position: absolute;
+  max-width: 400px;
+  -webkit-box-shadow: 0 0 10px 0 #384246;
+  -webkit-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.7);
+  -moz-box-shadow: 0 0 10px 0 #384246;
+  -moz-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.7);
+  box-shadow: 0 0 10px 0 #384246;
+  box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.7);
+  font-size: 12px;
+  font-size: 1.2rem;
+  background: #ffea99;
+  line-height: 150%;
+  border: 0 none;
+}
+
+/* line 949, assetic_compassoXkYRe.scss */
+body .ui-tooltip {
+  border-width: 2px;
+}
+
+/* line 953, assetic_compassoXkYRe.scss */
+.ui-widget {
+  -webkit-box-shadow: 0 0 10px 0 #384246;
+  -webkit-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.7);
+  -moz-box-shadow: 0 0 10px 0 #384246;
+  -moz-box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.7);
+  box-shadow: 0 0 10px 0 #384246;
+  box-shadow: 0 0 10px 0 rgba(56, 66, 70, 0.7);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+/* line 958, assetic_compassoXkYRe.scss */
+.ui-widget .ui-widget {
+  font-size: 12px;
+  font-size: 1.2rem;
+}
+
+/* line 962, assetic_compassoXkYRe.scss */
+.ui-widget-content {
+  background: white;
+  color: #444444;
+  padding: 10px;
+}
+
+/* line 968, assetic_compassoXkYRe.scss */
+.ui-dialog.ui-widget-content {
+  padding: 0;
+}
+
+/* line 972, assetic_compassoXkYRe.scss */
+.ui-widget-content a {
+  color: #4ec0e3;
+}
+
+/* line 976, assetic_compassoXkYRe.scss */
+.ui-widget-header {
+  position: relative;
+  background: #6c8087;
+  background: -moz-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6c8087), color-stop(100%, #384246));
+  background: -webkit-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: -o-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: -ms-linear-gradient(top, #6c8087 0%, #384246 100%);
+  background: linear-gradient(top, #6c8087 0%, #384246 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#6c8087', endColorstr = '#384246', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZjODA4NyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM4NDI0NiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c8087), color-stop(100%, #384246));
+  background-image: -webkit-linear-gradient(top, #6c8087, #384246);
+  background-image: -moz-linear-gradient(top, #6c8087, #384246);
+  background-image: -o-linear-gradient(top, #6c8087, #384246);
+  background-image: linear-gradient(top, #6c8087, #384246);
+  background-repeat: no-repeat;
+  -webkit-box-shadow: inset 0 1px 0 0 white;
+  -webkit-box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  -moz-box-shadow: inset 0 1px 0 0 white;
+  -moz-box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 0 white;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+}
+
+/* line 983, assetic_compassoXkYRe.scss */
+.ui-widget-header > .ui-icon {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+}
+
+/* line 989, assetic_compassoXkYRe.scss */
+.ui-widget-header h2 {
+  margin: 0;
+  padding: 10px;
+  text-shadow: 0 1px 0 black;
+  text-shadow: 0 1px 0 black;
+  filter: dropshadow(color=black, offx=0, offy=1px);
+  letter-spacing: 0;
+  color: white;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+}
+
+/* line 999, assetic_compassoXkYRe.scss */
+.ui-widget-header a {
+  color: #ffffff;
+}
+
+/* line 1003, assetic_compassoXkYRe.scss */
+.accordion {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 1008, assetic_compassoXkYRe.scss */
+.accordion-item {
+  position: relative;
+}
+
+/* line 1012, assetic_compassoXkYRe.scss */
+.accordion-header-buttons {
+  position: absolute;
+  top: 4px;
+  right: 52px;
+}
+
+/* line 1018, assetic_compassoXkYRe.scss */
+.accordion-header-buttons button {
+  padding: 0 3px;
+}
+
+/* line 1022, assetic_compassoXkYRe.scss */
+.ui-state-default {
+  background: #c5d2d6;
+  background: -moz-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(5%, #c5d2d6), color-stop(100%, #6c8087));
+  background: -webkit-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: -o-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: -ms-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
+  background: linear-gradient(to bottom, #ffffff 0%, #c5d2d6 5%, #6c8087 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#c5d2d6', endColorstr = '#6c8087', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNjNWQyZDYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2YzgwODciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(5%, #c5d2d6), color-stop(100%, #6c8087));
+  background-image: -webkit-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-image: -moz-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-image: -o-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-image: linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-repeat: no-repeat;
+  font-weight: bold;
+  color: #384246;
+  text-shadow: 0 1px 0 #c5d2d6;
+  text-shadow: 0 1px 0 #c5d2d6;
+  filter: dropshadow(color=#c5d2d6, offx=0, offy=1px);
+}
+
+/* line 1031, assetic_compassoXkYRe.scss */
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+  color: #384246;
+  text-shadow: 0 1px 0 #c5d2d6;
+  text-shadow: 0 1px 0 #c5d2d6;
+  filter: dropshadow(color=#c5d2d6, offx=0, offy=1px);
+  text-decoration: none;
+}
+
+/* line 1038, assetic_compassoXkYRe.scss */
+.ui-state-hover,
+.ui-state-focus {
+  font-weight: bold;
+  color: black;
+  text-shadow: 0 1px 0 #c5d2d6;
+  text-shadow: 0 1px 0 #c5d2d6;
+  filter: dropshadow(color=#c5d2d6, offx=0, offy=1px);
+}
+
+/* line 1047, assetic_compassoXkYRe.scss */
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited {
+  color: black;
+  text-shadow: 0 1px 0 #c5d2d6;
+  text-shadow: 0 1px 0 #c5d2d6;
+  filter: dropshadow(color=#c5d2d6, offx=0, offy=1px);
+  text-decoration: none;
+}
+
+/* line 1053, assetic_compassoXkYRe.scss */
+.ui-state-active {
+  background: #e4eaec;
+  background: -moz-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(5%, #e4eaec), color-stop(100%, #c5d2d6));
+  background: -webkit-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: -o-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: -ms-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: linear-gradient(to bottom, #ffffff 0%, #e4eaec 5%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = '#c5d2d6', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNlNGVhZWMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjNWQyZDYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(5%, #e4eaec), color-stop(100%, #c5d2d6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
+  background-image: -moz-linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
+  background-image: -o-linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
+  background-image: linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
+  background-repeat: no-repeat;
+  font-weight: bold;
+  color: black;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
+  filter: dropshadow(color=white, offx=0, offy=1px);
+}
+
+/* line 1062, assetic_compassoXkYRe.scss */
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+  color: black;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
+  filter: dropshadow(color=white, offx=0, offy=1px);
+  text-decoration: none;
+}
+
+/* Interaction Cues
+----------------------------------*/
+/* line 1070, assetic_compassoXkYRe.scss */
+.ui-state-highlight {
+  border: 1px solid #fed22f;
+  background: #ffe45c url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png) 50% top repeat-x;
+  color: #363636;
+}
+
+/* line 1076, assetic_compassoXkYRe.scss */
+.ui-state-highlight a {
+  color: #363636;
+}
+
+/* line 1080, assetic_compassoXkYRe.scss */
+.ui-state-error {
+  border: 1px solid #cd0a0a;
+  background: #b81900 url(images/ui-bg_diagonals-thick_18_b81900_40x40.png) 50% 50% repeat;
+  color: #ffffff;
+}
+
+/* line 1086, assetic_compassoXkYRe.scss */
+.ui-state-error a {
+  color: #ffffff;
+}
+
+/* line 1090, assetic_compassoXkYRe.scss */
+.ui-state-error-text {
+  color: #ffffff;
+}
+
+/* line 1094, assetic_compassoXkYRe.scss */
+.ui-priority-primary {
+  font-weight: bold;
+}
+
+/* line 1098, assetic_compassoXkYRe.scss */
+.ui-priority-secondary {
+  opacity: .7;
+  filter: Alpha(Opacity=70);
+  font-weight: normal;
+}
+
+/* line 1104, assetic_compassoXkYRe.scss */
+.ui-state-disabled {
+  opacity: .35;
+  filter: Alpha(Opacity=35);
+  background-image: none;
+}
+
+/* line 1110, assetic_compassoXkYRe.scss */
+.ui-state-disabled .ui-icon {
+  filter: Alpha(Opacity=35);
+  /* For IE8 - See #6059 */
+}
+
+/* Icons
+----------------------------------*/
+/* states and images */
+/* line 1121, assetic_compassoXkYRe.scss */
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-left,
+.ui-corner-tl {
+  -webkit-border-top-left-radius: 4px;
+  -moz-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+/* line 1130, assetic_compassoXkYRe.scss */
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-right,
+.ui-corner-tr {
+  -webkit-border-top-right-radius: 4px;
+  -moz-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+/* line 1139, assetic_compassoXkYRe.scss */
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-left,
+.ui-corner-bl {
+  -webkit-border-bottom-left-radius: 4px;
+  -moz-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+/* line 1148, assetic_compassoXkYRe.scss */
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+  -webkit-border-bottom-right-radius: 4px;
+  -moz-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 1157, assetic_compassoXkYRe.scss */
+.ui-corner-none,
+.ui-corner-none-top,
+.ui-corner-none-left,
+.ui-corner-none-tl {
+  -webkit-border-top-left-radius: 0 !important;
+  -moz-border-top-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
+/* line 1166, assetic_compassoXkYRe.scss */
+.ui-corner-none,
+.ui-corner-none-top,
+.ui-corner-none-right,
+.ui-corner-none-tr {
+  -webkit-border-top-right-radius: 0 !important;
+  -moz-border-top-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+/* line 1175, assetic_compassoXkYRe.scss */
+.ui-corner-none,
+.ui-corner-none-bottom,
+.ui-corner-none-left,
+.ui-corner-none-bl {
+  -webkit-border-bottom-left-radius: 0 !important;
+  -moz-border-bottom-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/* line 1184, assetic_compassoXkYRe.scss */
+.ui-corner-none,
+.ui-corner-none-bottom,
+.ui-corner-none-right,
+.ui-corner-none-br {
+  -webkit-border-bottom-right-radius: 0 !important;
+  -moz-border-bottom-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+/* line 1190, assetic_compassoXkYRe.scss */
+.ui-widget-overlay {
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiOAMAANUAz5n+TlUAAAAASUVORK5CYII=');
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* line 1194, assetic_compassoXkYRe.scss */
+.ui-widget-shadow {
+  margin: -5px 0 0 -5px;
+  padding: 5px;
+  -webkit-box-shadow: 0 0 10px 0 #4ec0e3;
+  -webkit-box-shadow: 0 0 10px 0 #4ec0e3;
+  -moz-box-shadow: 0 0 10px 0 #4ec0e3;
+  -moz-box-shadow: 0 0 10px 0 #4ec0e3;
+  box-shadow: 0 0 10px 0 #4ec0e3;
+  box-shadow: 0 0 10px 0 #4ec0e3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+/* line 1201, assetic_compassoXkYRe.scss */
+.header-buttons-container {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+
+/* line 1208, assetic_compassoXkYRe.scss */
+ul.button-list,
+ul.button-list li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* line 1215, assetic_compassoXkYRe.scss */
+ul.button-list {
+  padding: 0 0 10px 0;
+}
+
+/* line 1219, assetic_compassoXkYRe.scss */
+ul.button-list li a {
+  padding: 0 5px;
+  display: block;
+  line-height: 20px;
+  background: white;
+  background: -moz-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #c5d2d6));
+  background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -o-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -ms-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: linear-gradient(top, #ffffff 0%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = 'white', endColorstr = '#c5d2d6', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #c5d2d6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -moz-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -o-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: linear-gradient(top, #ffffff, #c5d2d6);
+  background-repeat: no-repeat;
+  border: 1px solid #c5d2d6;
+  text-decoration: none;
+  color: #444444;
+  font-size: 11px;
+  font-size: 1.1rem;
+  display: block;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* line 1232, assetic_compassoXkYRe.scss */
+ul.button-list li a:hover {
+  text-decoration: underline;
+}
