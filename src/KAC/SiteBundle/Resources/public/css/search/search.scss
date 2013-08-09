@@ -1,10 +1,12 @@
 .search-container {
     padding: 0;
-    margin: 12px 0 0 50px;
+    margin: 0;
     width: 440px;
+    height: 38px;
 
-    float: left;
-    position: relative;
+    position: absolute;
+    top: 12px;
+    left: 239px;
 
     @include equalBorderRadius($radiusSize);
     @include boxGlow($colourBlack, 5px, 0, 0.7);
