@@ -41,6 +41,9 @@ services:
     kac_site.manager.order_queue:
         class: KAC\SiteBundle\Manager\Order\Queue
         arguments: [@session, @jms_serializer]
+    kac_site.manager.order_document_generator:
+        class: KAC\SiteBundle\Manager\Order\DocumentGenerator
+        arguments: [@twig]
     kac_site.manager.delivery:
         class: KAC\SiteBundle\Manager\DeliveryManager
         arguments: [@doctrine]

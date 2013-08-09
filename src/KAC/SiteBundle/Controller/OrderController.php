@@ -142,18 +142,27 @@ class OrderController extends Controller
             ->add('action', 'choice', array(
                 'choices' => array(
                     'deliveries' => 'Process Deliveries',
-                    'tracking' => 'Import Tracking Data',
-                    'printOrders' => 'Print Orders',
-                    'printCopyOrders' => 'Print Copy Orders',
-                    'printDeliveryNotes' => 'Print Delivery Notes',
-                    'printCustomerInvoices' => 'Print Customer Orders',
-                    'emailCustomerInvoices' => 'Email Customer Orders',
+                    'document-print-order' => 'Print Orders',
+                    'document-print-copyorder' => 'Print Copy Orders',
+                    'document-print-deliverynote' => 'Print Delivery Notes',
+                    'document-print-invoice' => 'Print Customer Orders',
+                    'document-email-invoice' => 'Email Customer Orders',
                 )
             ))
             ->add('clear', 'checkbox', array(
                 'label' => 'Clear queue after processing',
             ))
         ->getForm();
+
+        $form->submit($request);
+        if($form->isValid()) {
+            $data = $form->getData();
+
+            return $this->redirect($this->generateUrl('orders_process', array(
+                'action' => $data['action'],
+                'clear' => $data['clear'],
+            )));
+        }
 
         /**
          * @var $em EntityManager
@@ -169,6 +178,104 @@ class OrderController extends Controller
             'orders' => $orders,
             'form' => $form->createView()
         ));
+    }
+
+    /**
+     * @Secure(roles="ROLE_ADMIN")
+     * @Route("/admin/orders/process", name="orders_process")
+     */
+    public function processAction(Request $request)
+    {
+        $queue = $this->container->get('kac_site.manager.order_queue');
+
+        if(!$request->query->get('action'))
+        {
+            throw $this->createNotFoundException();
+        }
+
+        // If the user choose to process deliveries then create the form and show the user the template
+        $action = explode('-', $request->query->get('action'));
+
+        if($action[0] === 'delivery')
+        {
+            $form = $this->createFormBuilder()
+                ->add('action', 'choice', array(
+                    'choices' => array(
+                        'deliveries' => 'Process Deliveries',
+                        'printOrders' => 'Print Orders',
+                        'printCopyOrders' => 'Print Copy Orders',
+                        'printDeliveryNotes' => 'Print Delivery Notes',
+                        'printCustomerInvoices' => 'Print Customer Orders',
+                        'emailCustomerInvoices' => 'Email Customer Orders',
+                    )
+                ))
+                ->add('clear', 'checkbox', array(
+                    'label' => 'Clear queue after processing',
+                ))
+                ->getForm();
+
+            $form->submit($request);
+            if($form->isValid()) {
+                $data = $form->getData();
+
+                return $this->redirect($this->generateUrl('orders_process', array(
+                    'action' => $data['action'],
+                    'clear' => $data['clear'],
+                )));
+            }
+
+            /**
+             * @var $em EntityManager
+             */
+            $em = $this->getDoctrine()->getManager();
+            $qb = $em->getRepository('KACSiteBundle:Order')->createQueryBuilder('o');
+            $orders = $qb->where($qb->expr()->in('o.id', '?1'))
+                ->setParameter(1, $queue->all())
+                ->getQuery()
+                ->execute();
+
+            return $this->render('KACSiteBundle:Order:queue.html.twig', array(
+                'orders' => $orders,
+                'form' => $form->createView()
+            ));
+        // If the user choose to generate a document then ensure the file is generated and show the user the resulting file
+        } elseif($action[0] === 'document') {
+            /**
+             * @var $em EntityManager
+             */
+            $em = $this->getDoctrine()->getManager();
+
+            $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.id IN ?1')
+                ->setParameter(1, $queue->all())
+                ->execute();
+
+            try {
+                if($action[2] === 'email')
+                {
+                    $generator = $this->get('kac_site.manager.order_document_generator');
+
+                    $outputFile = $generator->generateBulkDocument($action[1], $orders);
+
+                    $this->get('session')->getFlashBag()->add('success', sprintf(
+                        'The order document has been generated. <a href="%s">Click here</a> to view it.',
+                        $request->getUriForPath('uploads/documents/order' . $outputFile)
+                    ));
+                } else {
+                    $generator = $this->get('kac_site.manager.order_document_generator');
+
+                    $outputFile = $generator->generateBulkDocument($action[1], $orders);
+
+                    $this->get('session')->getFlashBag()->add('success', sprintf(
+                        'The order document has been generated. <a href="%s">Click here</a> to view it.',
+                        $request->getUriForPath('uploads/documents/order' . $outputFile)
+                    ));
+                }
+            } catch (\Exception $e) {
+                $this->get('session')->getFlashBag()->add('error', 'There was an error generating the order documents');
+            }
+        }
+
+        return $this->redirect($this->generateUrl('orders_index'));
     }
 
     /**
