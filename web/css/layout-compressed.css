@@ -181,13 +181,13 @@
   font-style: normal;
 }
 
-/* line 5, assetic_compassX8ZJEN.scss */
+/* line 5, assetic_compassVnbOlF.scss */
 html {
   background: white;
   font-size: 62.5%;
 }
 
-/* line 10, assetic_compassX8ZJEN.scss */
+/* line 10, assetic_compassVnbOlF.scss */
 body {
   background: #384246;
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
@@ -196,29 +196,29 @@ body {
   color: #444444;
 }
 
-/* line 17, assetic_compassX8ZJEN.scss */
+/* line 17, assetic_compassVnbOlF.scss */
 html.modal, html.modal body {
   background: #c5d2d6;
 }
 
-/* line 21, assetic_compassX8ZJEN.scss */
+/* line 21, assetic_compassVnbOlF.scss */
 html.modal body > section {
   padding: 15px;
 }
 
-/* line 25, assetic_compassX8ZJEN.scss */
+/* line 25, assetic_compassVnbOlF.scss */
 .document {
   position: relative;
   background: white;
 }
 
-/* line 31, assetic_compassX8ZJEN.scss */
+/* line 31, assetic_compassVnbOlF.scss */
 .container {
   width: 980px;
   margin: 0 auto;
 }
 
-/* line 36, assetic_compassX8ZJEN.scss */
+/* line 36, assetic_compassVnbOlF.scss */
 .header {
   padding: 10px 0;
   height: 60px;
@@ -246,7 +246,7 @@ html.modal body > section {
   box-shadow: inset 0 1px 5px 0 #384246;
 }
 
-/* line 44, assetic_compassX8ZJEN.scss */
+/* line 44, assetic_compassVnbOlF.scss */
 .header-contents {
   width: 980px;
   margin: 0 auto;
@@ -254,7 +254,7 @@ html.modal body > section {
   position: relative;
 }
 
-/* line 52, assetic_compassX8ZJEN.scss */
+/* line 52, assetic_compassVnbOlF.scss */
 .logo {
   width: 189px;
   height: 60px;
@@ -263,7 +263,7 @@ html.modal body > section {
   left: 0;
 }
 
-/* line 61, assetic_compassX8ZJEN.scss */
+/* line 61, assetic_compassVnbOlF.scss */
 .logo a {
   width: 189px;
   height: 60px;
@@ -275,7 +275,7 @@ html.modal body > section {
   background-position: 0 0;
 }
 
-/* line 73, assetic_compassX8ZJEN.scss */
+/* line 73, assetic_compassVnbOlF.scss */
 .content {
   min-height: 300px;
   padding: 5px 20px 20px 20px;
@@ -290,21 +290,24 @@ html.modal body > section {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
 }
 
-/* line 84, assetic_compassX8ZJEN.scss */
+/* line 84, assetic_compassVnbOlF.scss */
 .header-image {
   position: relative;
 }
 
-/* line 88, assetic_compassX8ZJEN.scss */
+/* line 88, assetic_compassVnbOlF.scss */
 .header-image img {
   margin: -10px -10px 10px -10px;
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
   border-radius: 4px 4px 0 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
   border-bottom: 3px solid #4ec0e3;
 }
 
-/* line 95, assetic_compassX8ZJEN.scss */
+/* line 95, assetic_compassVnbOlF.scss */
 .header-image h1 {
   padding: 20px;
   position: absolute;
@@ -318,18 +321,19 @@ html.modal body > section {
   font-size: 3.6rem;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: dropshadow(color=black, offx=0, offy=1px);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
+  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
   font-weight: normal;
 }
 
-/* line 110, assetic_compassX8ZJEN.scss */
+/* line 110, assetic_compassVnbOlF.scss */
 table.listing {
   margin: 0 0 10px 0;
   border-collapse: collapse;
   border: 1px solid #e4eaec;
 }
 
-/* line 117, assetic_compassX8ZJEN.scss */
+/* line 117, assetic_compassVnbOlF.scss */
 table.listing td {
   padding: 5px;
   border: 1px solid #e4eaec;
@@ -339,7 +343,7 @@ table.listing td {
   line-height: 120%;
 }
 
-/* line 126, assetic_compassX8ZJEN.scss */
+/* line 126, assetic_compassVnbOlF.scss */
 table.listing th {
   padding: 10px 5px;
   text-align: left;
@@ -349,7 +353,8 @@ table.listing th {
   color: #444444;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: dropshadow(color=white, offx=0, offy=1px);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
+  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
   background: white;
   background: -moz-linear-gradient(top, white 0%, #e4eaec 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #e4eaec));
@@ -368,19 +373,19 @@ table.listing th {
   background-repeat: no-repeat;
 }
 
-/* line 137, assetic_compassX8ZJEN.scss */
+/* line 137, assetic_compassVnbOlF.scss */
 table.listing tr.odd {
   background: #F3F6F6;
 }
 
-/* line 141, assetic_compassX8ZJEN.scss */
+/* line 141, assetic_compassVnbOlF.scss */
 table.listing td a {
   font-size: 11px;
   font-size: 1.1rem;
   color: black !important;
 }
 
-/* line 146, assetic_compassX8ZJEN.scss */
+/* line 146, assetic_compassVnbOlF.scss */
 .widget-content h4 {
   padding: 0 10px;
   line-height: 34px;
@@ -406,36 +411,40 @@ table.listing td a {
   color: black;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: dropshadow(color=white, offx=0, offy=1px);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
+  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
 
-/* line 158, assetic_compassX8ZJEN.scss */
+/* line 158, assetic_compassVnbOlF.scss */
 .widget-content h4 .ui-icon-small {
   margin: 5px 10px 5px 0;
 }
 
-/* line 162, assetic_compassX8ZJEN.scss */
+/* line 162, assetic_compassVnbOlF.scss */
 .widget-content ul {
   margin: 0 0 10px 20px;
   color: #4ec0e3 !important;
 }
 
-/* line 167, assetic_compassX8ZJEN.scss */
+/* line 167, assetic_compassVnbOlF.scss */
 .widget-content ul li {
   margin: 0 0 0 10px;
   color: #444444 !important;
   line-height: 150%;
 }
 
-/* line 173, assetic_compassX8ZJEN.scss */
+/* line 173, assetic_compassVnbOlF.scss */
 .widget-content dl {
   margin: 0 0 10px 0;
 }
 
-/* line 177, assetic_compassX8ZJEN.scss */
+/* line 177, assetic_compassVnbOlF.scss */
 .widget-content dt {
   width: 40%;
   padding: 5px;
@@ -453,7 +462,7 @@ table.listing td a {
   color: #384246;
 }
 
-/* line 195, assetic_compassX8ZJEN.scss */
+/* line 195, assetic_compassVnbOlF.scss */
 .widget-content dd {
   width: 60%;
   padding: 5px;
@@ -468,7 +477,7 @@ table.listing td a {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 210, assetic_compassX8ZJEN.scss */
+/* line 210, assetic_compassVnbOlF.scss */
 .footer {
   padding: 10px 0;
   position: relative;
@@ -497,7 +506,7 @@ table.listing td a {
   border-top: 3px solid #6c8087;
 }
 
-/* line 220, assetic_compassX8ZJEN.scss */
+/* line 220, assetic_compassVnbOlF.scss */
 .footer h4 {
   margin: 0 0 10px 0;
   padding: 0 0 10px 0;
@@ -507,7 +516,7 @@ table.listing td a {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 229, assetic_compassX8ZJEN.scss */
+/* line 229, assetic_compassVnbOlF.scss */
 .footer span {
   line-height: 150%;
   color: #c5d2d6;
@@ -515,7 +524,7 @@ table.listing td a {
   font-size: 1.1rem;
 }
 
-/* line 236, assetic_compassX8ZJEN.scss */
+/* line 236, assetic_compassVnbOlF.scss */
 .footer ul,
 .footer ul li {
   margin: 0;
@@ -523,28 +532,28 @@ table.listing td a {
   list-style: none;
 }
 
-/* line 243, assetic_compassX8ZJEN.scss */
+/* line 243, assetic_compassVnbOlF.scss */
 .footer ul {
   margin: 0 0 10px 0;
 }
 
-/* line 247, assetic_compassX8ZJEN.scss */
+/* line 247, assetic_compassVnbOlF.scss */
 .footer ul li {
   line-height: 150%;
 }
 
-/* line 251, assetic_compassX8ZJEN.scss */
+/* line 251, assetic_compassVnbOlF.scss */
 .footer a {
   color: #9fbdc8;
   text-decoration: none;
 }
 
-/* line 256, assetic_compassX8ZJEN.scss */
+/* line 256, assetic_compassVnbOlF.scss */
 .footer a:hover {
   text-decoration: underline;
 }
 
-/* line 260, assetic_compassX8ZJEN.scss */
+/* line 260, assetic_compassVnbOlF.scss */
 .floating-advert-container {
   width: 160px;
   min-height: 300px;
@@ -553,18 +562,18 @@ table.listing td a {
   left: 50%;
 }
 
-/* line 269, assetic_compassX8ZJEN.scss */
+/* line 269, assetic_compassVnbOlF.scss */
 .floating-advert-container-left {
   margin: 0 0 0 -662px;
 }
 
-/* line 273, assetic_compassX8ZJEN.scss */
+/* line 273, assetic_compassVnbOlF.scss */
 .floating-advert-container-right {
   margin: 0 0 0 502px;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 302, assetic_compassX8ZJEN.scss */
+  /* line 302, assetic_compassVnbOlF.scss */
   .logo a {
     background-image: url("/bundles/kacsite/css/resources/images/logo@2x.png");
   }

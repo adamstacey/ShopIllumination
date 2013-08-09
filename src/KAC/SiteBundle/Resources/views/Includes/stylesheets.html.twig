@@ -40,6 +40,14 @@
 {% endstylesheets %}
 
 {% stylesheets
+    '@KACSiteBundle/Resources/public/css/ui/ui.scss'
+    output='css/ui-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
     '@KACSiteBundle/Resources/public/css/gradients/gradients.scss'
     output='css/gradients-compressed.css'
     filter='compass,?yui_css'
@@ -66,14 +74,6 @@
 {% stylesheets
     '@KACSiteBundle/Resources/public/css/icons/icons.scss'
     output='css/icons-compressed.css'
-    filter='compass,?yui_css'
-%}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
-{% endstylesheets %}
-
-{% stylesheets
-    '@KACSiteBundle/Resources/public/css/ui/ui.scss'
-    output='css/ui-compressed.css'
     filter='compass,?yui_css'
 %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />

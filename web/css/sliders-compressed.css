@@ -181,13 +181,13 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassPpNbXE.scss */
+/* line 4, assetic_compassGZeJUX.scss */
 .slider-wrapper {
   position: relative;
   overflow: hidden;
 }
 
-/* line 9, assetic_compassPpNbXE.scss */
+/* line 9, assetic_compassGZeJUX.scss */
 .slider-wrapper h1 {
   padding: 20px;
   position: absolute;
@@ -201,36 +201,37 @@
   font-size: 3.6rem;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: dropshadow(color=black, offx=0, offy=1px);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
+  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
   font-weight: normal;
 }
 
-/* line 24, assetic_compassPpNbXE.scss */
+/* line 24, assetic_compassGZeJUX.scss */
 .slider-wrapper h1.left {
   left: 0;
   text-align: left;
 }
 
-/* line 29, assetic_compassPpNbXE.scss */
+/* line 29, assetic_compassGZeJUX.scss */
 .slider-wrapper h1.right {
   right: 0;
   text-align: right;
 }
 
-/* line 34, assetic_compassPpNbXE.scss */
+/* line 34, assetic_compassGZeJUX.scss */
 .slider-wrapper img.logo {
   position: absolute;
   top: 15px;
   right: 15px;
 }
 
-/* line 40, assetic_compassPpNbXE.scss */
+/* line 40, assetic_compassGZeJUX.scss */
 .slider {
   padding: 0;
   margin: 0;
 }
 
-/* line 45, assetic_compassPpNbXE.scss */
+/* line 45, assetic_compassGZeJUX.scss */
 .rhino-btn {
   display: block;
   background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite.png");
@@ -245,7 +246,7 @@
   user-select: none;
 }
 
-/* line 56, assetic_compassPpNbXE.scss */
+/* line 56, assetic_compassGZeJUX.scss */
 .rhino-prev, .rhino-next {
   width: 32px;
   height: 32px;
@@ -253,29 +254,29 @@
   top: 50%;
 }
 
-/* line 64, assetic_compassPpNbXE.scss */
+/* line 64, assetic_compassGZeJUX.scss */
 .rhino-prev {
   left: 10px;
   background-position: 0 0;
 }
 
-/* line 69, assetic_compassPpNbXE.scss */
+/* line 69, assetic_compassGZeJUX.scss */
 .rhino-next {
   right: 10px;
   background-position: -32px 0;
 }
 
-/* line 74, assetic_compassPpNbXE.scss */
+/* line 74, assetic_compassGZeJUX.scss */
 .rhino-prev:hover {
   background-position: 0 -32px;
 }
 
-/* line 78, assetic_compassPpNbXE.scss */
+/* line 78, assetic_compassGZeJUX.scss */
 .rhino-next:hover {
   background-position: -32px -32px;
 }
 
-/* line 82, assetic_compassPpNbXE.scss */
+/* line 82, assetic_compassGZeJUX.scss */
 .rhino-toggle {
   width: 17px;
   height: 20px;
@@ -283,34 +284,34 @@
   top: 10px;
 }
 
-/* line 90, assetic_compassPpNbXE.scss */
+/* line 90, assetic_compassGZeJUX.scss */
 .rhino-play {
   background-position: -64px 0;
 }
 
-/* line 94, assetic_compassPpNbXE.scss */
+/* line 94, assetic_compassGZeJUX.scss */
 .rhino-play:hover {
   background-position: -64px -20px;
 }
 
-/* line 98, assetic_compassPpNbXE.scss */
+/* line 98, assetic_compassGZeJUX.scss */
 .rhino-pause {
   background-position: -81px 0;
 }
 
-/* line 102, assetic_compassPpNbXE.scss */
+/* line 102, assetic_compassGZeJUX.scss */
 .rhino-pause:hover {
   background-position: -81px -20px;
 }
 
-/* line 106, assetic_compassPpNbXE.scss */
+/* line 106, assetic_compassGZeJUX.scss */
 .rhino-container {
   position: relative;
   padding: 0;
   margin: 0;
 }
 
-/* line 112, assetic_compassPpNbXE.scss */
+/* line 112, assetic_compassGZeJUX.scss */
 .rhino-caption {
   padding: 10px;
   display: none;
@@ -330,7 +331,7 @@
   user-select: none;
 }
 
-/* line 129, assetic_compassPpNbXE.scss */
+/* line 129, assetic_compassGZeJUX.scss */
 .rhino-bullets {
   margin: 0 0 0 -50px;
   padding: 0;
@@ -339,14 +340,14 @@
   left: 50%;
 }
 
-/* line 138, assetic_compassPpNbXE.scss */
+/* line 138, assetic_compassGZeJUX.scss */
 .rhino-bullets li {
   margin: 0;
   float: left;
   display: inline;
 }
 
-/* line 145, assetic_compassPpNbXE.scss */
+/* line 145, assetic_compassGZeJUX.scss */
 .rhino-bullets li a.rhino-bullet {
   width: 20px;
   height: 20px;
@@ -372,24 +373,24 @@
   user-select: none;
 }
 
-/* line 167, assetic_compassPpNbXE.scss */
+/* line 167, assetic_compassGZeJUX.scss */
 .rhino-bullets li a.rhino-bullet:hover, .rhino-bullets li a.rhino-bullet:focus {
   background-position: -118px -20px;
 }
 
-/* line 171, assetic_compassPpNbXE.scss */
+/* line 171, assetic_compassGZeJUX.scss */
 .rhino-bullets li a.rhino-bullet.rhino-active-bullet {
   background-position: -98px 0;
 }
 
-/* line 176, assetic_compassPpNbXE.scss */
+/* line 176, assetic_compassGZeJUX.scss */
 .rhino-container,
 .rhino-container ul {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 184, assetic_compassPpNbXE.scss */
+/* line 184, assetic_compassGZeJUX.scss */
 .slider-homepage,
 .slider-homepage .rhino-container,
 .slider-homepage .rhino-container ul,
@@ -398,13 +399,13 @@
   height: 300px;
 }
 
-/* line 189, assetic_compassPpNbXE.scss */
+/* line 189, assetic_compassGZeJUX.scss */
 .slider-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 20px -10px;
 }
 
-/* line 197, assetic_compassPpNbXE.scss */
+/* line 197, assetic_compassGZeJUX.scss */
 .slider-gallery,
 .slider-gallery .rhino-container,
 .slider-gallery .rhino-container ul,
@@ -413,20 +414,23 @@
   height: 400px;
 }
 
-/* line 202, assetic_compassPpNbXE.scss */
+/* line 202, assetic_compassGZeJUX.scss */
 .slider-gallery .rhino-container ul li img {
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
   border-radius: 4px 4px 0 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
 
-/* line 206, assetic_compassPpNbXE.scss */
+/* line 206, assetic_compassGZeJUX.scss */
 .slider-dialog-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 10px -10px;
 }
 
-/* line 214, assetic_compassPpNbXE.scss */
+/* line 214, assetic_compassGZeJUX.scss */
 .slider-dialog-gallery,
 .slider-dialog-gallery .rhino-container,
 .slider-dialog-gallery .rhino-container ul,
@@ -436,12 +440,12 @@
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 244, assetic_compassPpNbXE.scss */
+  /* line 244, assetic_compassGZeJUX.scss */
   .rhino-btn {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }
 
-  /* line 248, assetic_compassPpNbXE.scss */
+  /* line 248, assetic_compassGZeJUX.scss */
   .rhino-bullets li a.rhino-bullet {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }

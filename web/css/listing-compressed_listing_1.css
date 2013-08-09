@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compasspmetKL.scss */
+/* line 4, assetic_compassq0Ki2w.scss */
 .admin-container {
   padding: 10px;
   background: #29a3cc;
@@ -209,4 +209,7 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }

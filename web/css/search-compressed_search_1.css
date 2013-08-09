@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassVeZ4OW.scss */
+/* line 4, assetic_compassqU6VnF.scss */
 .search-container {
   padding: 0;
   margin: 0;
@@ -193,6 +193,9 @@
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
   -webkit-box-shadow: 0 0 5px 0 black;
   -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
   -moz-box-shadow: 0 0 5px 0 black;
@@ -217,7 +220,7 @@
   background-repeat: no-repeat;
 }
 
-/* line 20, assetic_compassVeZ4OW.scss */
+/* line 20, assetic_compassqU6VnF.scss */
 .search-container:hover,
 .search-container:focus {
   -webkit-box-shadow: 0 0 10px 5px #e6ac00;
@@ -228,14 +231,14 @@
   box-shadow: 0 0 10px 5px #e6ac00;
 }
 
-/* line 24, assetic_compassVeZ4OW.scss */
+/* line 24, assetic_compassqU6VnF.scss */
 .search-container .icon-grey {
   position: absolute;
   top: 3px;
   left: 5px;
 }
 
-/* line 33, assetic_compassVeZ4OW.scss */
+/* line 33, assetic_compassqU6VnF.scss */
 .search-container .twitter-typeahead,
 .search-container input,
 .search-container input:hover,
@@ -257,17 +260,17 @@
   box-shadow: none !important;
 }
 
-/* line 44, assetic_compassVeZ4OW.scss */
+/* line 44, assetic_compassqU6VnF.scss */
 .search-container .twitter-typeahead {
   padding-top: 0;
 }
 
-/* line 48, assetic_compassVeZ4OW.scss */
+/* line 48, assetic_compassqU6VnF.scss */
 .search-container .twitter-typeahead input {
   padding: 0;
 }
 
-/* line 52, assetic_compassVeZ4OW.scss */
+/* line 52, assetic_compassqU6VnF.scss */
 .search-container .icon-dark-red {
   position: absolute;
   top: 3px;
@@ -276,7 +279,7 @@
   cursor: pointer;
 }
 
-/* line 63, assetic_compassVeZ4OW.scss */
+/* line 63, assetic_compassqU6VnF.scss */
 .search-container .button,
 .search-container .button:hover {
   position: absolute;
@@ -285,6 +288,9 @@
   -webkit-border-radius: 0 4px 4px 0;
   -moz-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
   border: 0 none;
   border-left: 2px solid #007398;
   -webkit-box-shadow: none !important;
@@ -292,12 +298,12 @@
   box-shadow: none !important;
 }
 
-/* line 74, assetic_compassVeZ4OW.scss */
+/* line 74, assetic_compassqU6VnF.scss */
 .search-container .button .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 78, assetic_compassVeZ4OW.scss */
+/* line 78, assetic_compassqU6VnF.scss */
 .tt-hint {
   padding: 8px 65px 8px 50px !important;
   width: 440px;
@@ -305,7 +311,7 @@
   color: #999;
 }
 
-/* line 85, assetic_compassVeZ4OW.scss */
+/* line 85, assetic_compassqU6VnF.scss */
 .tt-dropdown-menu {
   width: 440px;
   margin-top: 10px;
@@ -321,20 +327,20 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* line 100, assetic_compassVeZ4OW.scss */
+/* line 100, assetic_compassqU6VnF.scss */
 .tt-suggestion {
   padding: 3px 20px;
   font-size: 14px;
   line-height: 24px;
 }
 
-/* line 106, assetic_compassVeZ4OW.scss */
+/* line 106, assetic_compassqU6VnF.scss */
 .tt-suggestion.tt-is-under-cursor {
   color: #fff;
   background-color: #0097cf;
 }
 
-/* line 112, assetic_compassVeZ4OW.scss */
+/* line 112, assetic_compassqU6VnF.scss */
 .tt-suggestion p {
   margin: 0;
 }

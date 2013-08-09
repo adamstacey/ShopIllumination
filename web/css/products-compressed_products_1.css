@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compass8BTXJK.scss */
+/* line 4, assetic_compassrjQIiD.scss */
 .product-container {
   padding: 10px;
   margin: 0 15px 15px 0;
@@ -194,7 +194,7 @@
   box-shadow: 0 0 10px 0 #e4eaec;
 }
 
-/* line 12, assetic_compass8BTXJK.scss */
+/* line 12, assetic_compassrjQIiD.scss */
 .product h1 {
   padding: 0 10px 10px 10px;
   margin: 0 -10px 10px -10px;
@@ -203,12 +203,12 @@
   font-size: 1.8rem;
 }
 
-/* line 20, assetic_compass8BTXJK.scss */
+/* line 20, assetic_compassrjQIiD.scss */
 .product a {
   text-decoration: none !important;
 }
 
-/* line 24, assetic_compass8BTXJK.scss */
+/* line 24, assetic_compassrjQIiD.scss */
 .product h4, .product h4 a, .product-title {
   font-size: 13px;
   font-size: 1.3rem;
@@ -219,37 +219,37 @@
   margin: 0;
 }
 
-/* line 33, assetic_compass8BTXJK.scss */
+/* line 33, assetic_compassrjQIiD.scss */
 .product ul {
   margin: 5px 0 0 0;
 }
 
-/* line 37, assetic_compass8BTXJK.scss */
+/* line 37, assetic_compassrjQIiD.scss */
 .product ul li {
   font-size: 10px;
   font-size: 1rem;
   line-height: 120%;
 }
 
-/* line 42, assetic_compass8BTXJK.scss */
+/* line 42, assetic_compassrjQIiD.scss */
 .product img.brand-logo-image {
   margin: 0 0 0 10px;
 }
 
-/* line 47, assetic_compass8BTXJK.scss */
+/* line 47, assetic_compassrjQIiD.scss */
 .product .price,
 .product .price-small {
   text-align: right;
   color: #cc0000 !important;
 }
 
-/* line 53, assetic_compass8BTXJK.scss */
+/* line 53, assetic_compassrjQIiD.scss */
 .product .price a,
 .product .price-small a {
   color: #cc0000 !important;
 }
 
-/* line 58, assetic_compass8BTXJK.scss */
+/* line 58, assetic_compassrjQIiD.scss */
 .product .price span,
 .product .price-small span {
   display: inline-block;
@@ -257,75 +257,75 @@
   line-height: 100%;
 }
 
-/* line 64, assetic_compass8BTXJK.scss */
+/* line 64, assetic_compassrjQIiD.scss */
 .product .price .currency-prefix {
   font-size: 14px;
   font-size: 1.4rem;
 }
 
-/* line 68, assetic_compass8BTXJK.scss */
+/* line 68, assetic_compassrjQIiD.scss */
 .product .price-small .currency-prefix {
   font-size: 11px;
   font-size: 1.1rem;
 }
 
-/* line 73, assetic_compass8BTXJK.scss */
+/* line 73, assetic_compassrjQIiD.scss */
 .product .price .currency-sign,
 .product .price-small .currency-sign {
   padding-top: 2px;
   font-family: "Arial Black", Arial, Verdana, sans-serif;
 }
 
-/* line 79, assetic_compass8BTXJK.scss */
+/* line 79, assetic_compassrjQIiD.scss */
 .product .price .currency-sign {
   font-size: 24px;
   font-size: 2.4rem;
 }
 
-/* line 83, assetic_compass8BTXJK.scss */
+/* line 83, assetic_compassrjQIiD.scss */
 .product .price-small .currency-sign {
   font-size: 14px;
   font-size: 1.4rem;
 }
 
-/* line 88, assetic_compass8BTXJK.scss */
+/* line 88, assetic_compassrjQIiD.scss */
 .product .price .currency-integer,
 .product .price-small .currency-integer {
   font-family: "Arial Black", Arial, Verdana, sans-serif;
 }
 
-/* line 92, assetic_compass8BTXJK.scss */
+/* line 92, assetic_compassrjQIiD.scss */
 .product .price .currency-integer {
   font-size: 32px;
   font-size: 3.2rem;
 }
 
-/* line 96, assetic_compass8BTXJK.scss */
+/* line 96, assetic_compassrjQIiD.scss */
 .product .price-small .currency-integer {
   font-size: 24px;
   font-size: 2.4rem;
 }
 
-/* line 101, assetic_compass8BTXJK.scss */
+/* line 101, assetic_compassrjQIiD.scss */
 .product .price .currency-decimal,
 .product .price-small .currency-decimal {
   padding-top: 2px;
   font-family: "Arial Black", Arial, Verdana, sans-serif;
 }
 
-/* line 107, assetic_compass8BTXJK.scss */
+/* line 107, assetic_compassrjQIiD.scss */
 .product .price .currency-decimal {
   font-size: 18px;
   font-size: 1.8rem;
 }
 
-/* line 111, assetic_compass8BTXJK.scss */
+/* line 111, assetic_compassrjQIiD.scss */
 .product .price-small .currency-decimal {
   font-size: 12px;
   font-size: 1.2rem;
 }
 
-/* line 116, assetic_compass8BTXJK.scss */
+/* line 116, assetic_compassrjQIiD.scss */
 .product .price .currency-tax,
 .product .price-small .currency-tax {
   color: #6c8087;
@@ -333,43 +333,43 @@
   font-size: 0.9rem;
 }
 
-/* line 121, assetic_compass8BTXJK.scss */
+/* line 121, assetic_compassrjQIiD.scss */
 table.data-table .price .currency-prefix {
   font-size: 12px;
   font-size: 1.2rem;
 }
 
-/* line 125, assetic_compass8BTXJK.scss */
+/* line 125, assetic_compassrjQIiD.scss */
 table.data-table .price .currency-sign {
   font-size: 20px;
   font-size: 2rem;
 }
 
-/* line 129, assetic_compass8BTXJK.scss */
+/* line 129, assetic_compassrjQIiD.scss */
 table.data-table .price .currency-integer {
   font-size: 28px;
   font-size: 2.8rem;
 }
 
-/* line 133, assetic_compass8BTXJK.scss */
+/* line 133, assetic_compassrjQIiD.scss */
 table.data-table .price .currency-decimal {
   font-size: 14px;
   font-size: 1.4rem;
 }
 
-/* line 137, assetic_compass8BTXJK.scss */
+/* line 137, assetic_compassrjQIiD.scss */
 table.data-table .price .currency-tax {
   font-size: 9px;
   font-size: 0.9rem;
 }
 
-/* line 141, assetic_compass8BTXJK.scss */
+/* line 141, assetic_compassrjQIiD.scss */
 .product-listing-name {
   height: 28px;
   overflow: hidden;
 }
 
-/* line 147, assetic_compass8BTXJK.scss */
+/* line 147, assetic_compassrjQIiD.scss */
 .product-listing-name,
 .product-listing-name a {
   font-size: 11px;
@@ -378,7 +378,7 @@ table.data-table .price .currency-tax {
   line-height: 14px;
 }
 
-/* line 153, assetic_compass8BTXJK.scss */
+/* line 153, assetic_compassrjQIiD.scss */
 .product .logo {
   height: 50px;
   margin: 0 10px 10px 0;
@@ -390,7 +390,7 @@ table.data-table .price .currency-tax {
   box-shadow: 0 0 10px 0 #c5d2d6;
 }
 
-/* line 160, assetic_compass8BTXJK.scss */
+/* line 160, assetic_compassrjQIiD.scss */
 .product .summary {
   font-size: 13px;
   font-size: 1.3rem;
@@ -398,27 +398,27 @@ table.data-table .price .currency-tax {
   line-height: 150%;
 }
 
-/* line 166, assetic_compass8BTXJK.scss */
+/* line 166, assetic_compassrjQIiD.scss */
 .product-back-button {
   position: absolute;
   top: 0px;
   left: 0px;
 }
 
-/* line 172, assetic_compass8BTXJK.scss */
+/* line 172, assetic_compassrjQIiD.scss */
 .product-information {
   margin: 0 15px 0 0;
   padding: 5px 0 0 0;
   float: left;
 }
 
-/* line 179, assetic_compass8BTXJK.scss */
+/* line 179, assetic_compassrjQIiD.scss */
 .product-information ul {
   margin: 0 0 0 10px;
   padding: 0;
 }
 
-/* line 184, assetic_compass8BTXJK.scss */
+/* line 184, assetic_compassrjQIiD.scss */
 .product-information ul li {
   padding: 0;
   margin: 0;
@@ -429,13 +429,13 @@ table.data-table .price .currency-tax {
   color: black;
 }
 
-/* line 194, assetic_compass8BTXJK.scss */
+/* line 194, assetic_compassrjQIiD.scss */
 .product-options {
   float: right;
   padding: 5px 0 0 0;
 }
 
-/* line 199, assetic_compass8BTXJK.scss */
+/* line 199, assetic_compassrjQIiD.scss */
 .product p, .product-description p {
   margin: 0 0 10px 0;
   padding: 0px;
@@ -444,23 +444,23 @@ table.data-table .price .currency-tax {
   font-size: 1rem;
 }
 
-/* line 207, assetic_compass8BTXJK.scss */
+/* line 207, assetic_compassrjQIiD.scss */
 .product .product-description li {
   color: #6c8087;
   line-height: 100%;
 }
 
-/* line 212, assetic_compass8BTXJK.scss */
+/* line 212, assetic_compassrjQIiD.scss */
 .buy-now {
   text-align: right;
 }
 
-/* line 216, assetic_compass8BTXJK.scss */
+/* line 216, assetic_compassrjQIiD.scss */
 .product .product-description ul {
   margin-bottom: 10px;
 }
 
-/* line 220, assetic_compass8BTXJK.scss */
+/* line 220, assetic_compassrjQIiD.scss */
 .product .features-link {
   padding: 5px 10px;
   margin: 10px 0;
@@ -490,18 +490,19 @@ table.data-table .price .currency-tax {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: dropshadow(color=black, offx=0, offy=1px);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
+  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
   cursor: pointer;
   border: 1px solid #6c8087;
 }
 
-/* line 233, assetic_compass8BTXJK.scss */
+/* line 233, assetic_compassrjQIiD.scss */
 .product .features {
   padding: 0 0 10px 0;
   display: none;
 }
 
-/* line 238, assetic_compass8BTXJK.scss */
+/* line 238, assetic_compassrjQIiD.scss */
 .product dt {
   width: 99px;
   margin: 0 0 3px 0;
@@ -516,17 +517,17 @@ table.data-table .price .currency-tax {
   text-align: right;
 }
 
-/* line 253, assetic_compass8BTXJK.scss */
+/* line 253, assetic_compassrjQIiD.scss */
 .product dt.even {
   background: #ededed;
 }
 
-/* line 257, assetic_compass8BTXJK.scss */
+/* line 257, assetic_compassrjQIiD.scss */
 .product dt.odd {
   background: #e4eaec;
 }
 
-/* line 261, assetic_compass8BTXJK.scss */
+/* line 261, assetic_compassrjQIiD.scss */
 .product dd {
   width: 136px;
   padding: 5px;
@@ -540,17 +541,17 @@ table.data-table .price .currency-tax {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 274, assetic_compass8BTXJK.scss */
+/* line 274, assetic_compassrjQIiD.scss */
 .product .product-compare {
   margin: 10px 0;
 }
 
-/* line 278, assetic_compass8BTXJK.scss */
+/* line 278, assetic_compassrjQIiD.scss */
 .product .product-short-description {
   padding: 10px 0 0 0;
 }
 
-/* line 282, assetic_compass8BTXJK.scss */
+/* line 282, assetic_compassrjQIiD.scss */
 .product .product-short-description p {
   padding: 0;
   margin: 0 !important;
@@ -562,17 +563,17 @@ table.data-table .price .currency-tax {
   overflow: hidden;
 }
 
-/* line 293, assetic_compass8BTXJK.scss */
+/* line 293, assetic_compassrjQIiD.scss */
 .product-header {
   padding-left: 20px;
 }
 
-/* line 297, assetic_compass8BTXJK.scss */
+/* line 297, assetic_compassrjQIiD.scss */
 .product ul.breadcrumbs li {
   padding: 4px 5px 3px 13px;
 }
 
-/* line 301, assetic_compass8BTXJK.scss */
+/* line 301, assetic_compassrjQIiD.scss */
 .product-listing {
   margin: 0 auto;
   position: relative;
@@ -585,12 +586,12 @@ table.data-table .price .currency-tax {
   box-shadow: 0 0 10px 0 #6c8087;
 }
 
-/* line 310, assetic_compass8BTXJK.scss */
+/* line 310, assetic_compassrjQIiD.scss */
 .product-listing img {
   display: block;
 }
 
-/* line 314, assetic_compass8BTXJK.scss */
+/* line 314, assetic_compassrjQIiD.scss */
 .product-listing .name {
   padding: 0 5px;
   position: absolute;
@@ -609,7 +610,7 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 329, assetic_compass8BTXJK.scss */
+/* line 329, assetic_compassrjQIiD.scss */
 .product-listing .new {
   height: 28px;
   width: 28px;
@@ -645,6 +646,9 @@ table.data-table .price .currency-tax {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
   line-height: 28px;
   color: white;
   text-align: center;
@@ -655,7 +659,7 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 350, assetic_compass8BTXJK.scss */
+/* line 350, assetic_compassrjQIiD.scss */
 .listing-top-item {
   height: 28px;
   width: 28px;
@@ -691,6 +695,9 @@ table.data-table .price .currency-tax {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
   line-height: 28px;
   color: white;
   text-align: center;
@@ -701,7 +708,7 @@ table.data-table .price .currency-tax {
   user-select: none;
 }
 
-/* line 371, assetic_compass8BTXJK.scss */
+/* line 371, assetic_compassrjQIiD.scss */
 .product-sorting-container, .product-filtering-container {
   padding: 5px 0;
   background: white;
@@ -722,21 +729,21 @@ table.data-table .price .currency-tax {
   background-repeat: no-repeat;
 }
 
-/* line 377, assetic_compass8BTXJK.scss */
+/* line 377, assetic_compassrjQIiD.scss */
 .product-sorting-container-top, .product-filtering-container {
   margin: -10px -10px 10px -10px;
   border-bottom: 2px solid #6c8087;
   border-radius: 4px 4px 0 0;
 }
 
-/* line 384, assetic_compass8BTXJK.scss */
+/* line 384, assetic_compassrjQIiD.scss */
 .product-sorting-container-bottom {
   margin: 10px -10px -10px -10px;
   border-top: 2px solid #6c8087;
   border-radius: 0 0 4px 4px;
 }
 
-/* line 391, assetic_compass8BTXJK.scss */
+/* line 391, assetic_compassrjQIiD.scss */
 .product-sorting-container > div > span, .product-filtering-container > div > span {
   padding: 0 5px 0 0;
   line-height: 40px;
@@ -744,34 +751,34 @@ table.data-table .price .currency-tax {
   font-size: 1.1rem;
 }
 
-/* line 398, assetic_compass8BTXJK.scss */
+/* line 398, assetic_compassrjQIiD.scss */
 .product-sorting-container .selector {
   margin: 0 5px 0 0;
 }
 
-/* line 402, assetic_compass8BTXJK.scss */
+/* line 402, assetic_compassrjQIiD.scss */
 .product-sorting-container .selector span {
   font-size: 11px;
   font-size: 1.1rem;
 }
 
-/* line 406, assetic_compass8BTXJK.scss */
+/* line 406, assetic_compassrjQIiD.scss */
 .product-sorting-container .ui-button {
   padding: 3px 0;
   margin: 0 0 -4px -4px;
 }
 
-/* line 411, assetic_compass8BTXJK.scss */
+/* line 411, assetic_compassrjQIiD.scss */
 .product-sorting-container .ui-button span {
   padding: 0 8px;
 }
 
-/* line 415, assetic_compass8BTXJK.scss */
+/* line 415, assetic_compassrjQIiD.scss */
 .product-sorting-container .ui-button .ui-icon {
   padding: 0;
 }
 
-/* line 419, assetic_compass8BTXJK.scss */
+/* line 419, assetic_compassrjQIiD.scss */
 .filters .ui-widget header h2 {
   letter-spacing: 0;
   font-size: 13px;
@@ -779,19 +786,19 @@ table.data-table .price .currency-tax {
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 }
 
-/* line 425, assetic_compass8BTXJK.scss */
+/* line 425, assetic_compassrjQIiD.scss */
 .filter-header-buttons-container {
   position: absolute;
   top: 3px;
   right: 3px;
 }
 
-/* line 431, assetic_compass8BTXJK.scss */
+/* line 431, assetic_compassrjQIiD.scss */
 .filter-header-buttons-container .ui-button {
   padding: 0 2px;
 }
 
-/* line 436, assetic_compass8BTXJK.scss */
+/* line 436, assetic_compassrjQIiD.scss */
 .filter,
 .price-range-filter {
   padding: 0;
@@ -799,56 +806,56 @@ table.data-table .price .currency-tax {
   border-radius: 0 0 4px 4px;
 }
 
-/* line 443, assetic_compass8BTXJK.scss */
+/* line 443, assetic_compassrjQIiD.scss */
 .price-range-filter {
   padding: 5px 15px;
 }
 
-/* line 447, assetic_compass8BTXJK.scss */
+/* line 447, assetic_compassrjQIiD.scss */
 .range-slider-values {
   text-align: center;
 }
 
-/* line 451, assetic_compass8BTXJK.scss */
+/* line 451, assetic_compassrjQIiD.scss */
 .range-slider-values input {
   width: 60px;
   text-align: center;
 }
 
-/* line 456, assetic_compass8BTXJK.scss */
+/* line 456, assetic_compassrjQIiD.scss */
 .price-range {
   margin: 5px 0 5px 0;
 }
 
-/* line 460, assetic_compass8BTXJK.scss */
+/* line 460, assetic_compassrjQIiD.scss */
 .price-range .ui-slider-range {
   padding: 0;
 }
 
-/* line 464, assetic_compass8BTXJK.scss */
+/* line 464, assetic_compassrjQIiD.scss */
 .filter ul li a.selected-filter {
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* line 469, assetic_compass8BTXJK.scss */
+/* line 469, assetic_compassrjQIiD.scss */
 .filter label {
   line-height: 18px;
 }
 
-/* line 473, assetic_compass8BTXJK.scss */
+/* line 473, assetic_compassrjQIiD.scss */
 .filter ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* line 480, assetic_compass8BTXJK.scss */
+/* line 480, assetic_compassrjQIiD.scss */
 .filter > ul {
   padding: 0 0 5px 0;
 }
 
-/* line 484, assetic_compass8BTXJK.scss */
+/* line 484, assetic_compassrjQIiD.scss */
 .filter ul li {
   padding: 2px 5px 2px 28px;
   margin: 0;
@@ -860,13 +867,13 @@ table.data-table .price .currency-tax {
   position: relative;
 }
 
-/* line 497, assetic_compass8BTXJK.scss */
+/* line 497, assetic_compassrjQIiD.scss */
 .jstree a {
   font-size: 11px;
   line-height: 18px;
 }
 
-/* line 503, assetic_compass8BTXJK.scss */
+/* line 503, assetic_compassrjQIiD.scss */
 .jstree li,
 .jstree ins {
   background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.png");
@@ -875,86 +882,86 @@ table.data-table .price .currency-tax {
   background-size: 108px 18px;
 }
 
-/* line 510, assetic_compass8BTXJK.scss */
+/* line 510, assetic_compassrjQIiD.scss */
 .jstree li {
   background-position: -90px 0;
   background-repeat: repeat-y;
 }
 
-/* line 515, assetic_compass8BTXJK.scss */
+/* line 515, assetic_compassrjQIiD.scss */
 .jstree .jstree-open > ins {
   background-position: -36px 0;
 }
 
-/* line 519, assetic_compass8BTXJK.scss */
+/* line 519, assetic_compassrjQIiD.scss */
 .jstree .jstree-closed > ins {
   background-position: -18px 0;
 }
 
-/* line 523, assetic_compass8BTXJK.scss */
+/* line 523, assetic_compassrjQIiD.scss */
 .jstree .jstree-leaf > ins {
   background-position: 0 0;
 }
 
-/* line 527, assetic_compass8BTXJK.scss */
+/* line 527, assetic_compassrjQIiD.scss */
 .jstree .jstree-no-dots li {
   background-position: -108px 0;
 }
 
-/* line 531, assetic_compass8BTXJK.scss */
+/* line 531, assetic_compassrjQIiD.scss */
 .jstree .jstree-no-dots .jstree-open > ins {
   background-position: -72px 0;
 }
 
-/* line 535, assetic_compass8BTXJK.scss */
+/* line 535, assetic_compassrjQIiD.scss */
 .jstree .jstree-no-dots .jstree-closed > ins {
   background-position: -54px 0;
 }
 
-/* line 540, assetic_compass8BTXJK.scss */
+/* line 540, assetic_compassrjQIiD.scss */
 .jstree li,
 .jstree ins {
   _background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d.gif");
 }
 
-/* line 544, assetic_compass8BTXJK.scss */
+/* line 544, assetic_compassrjQIiD.scss */
 .jstree .jstree-open ins {
   _background-position: -36px 0;
 }
 
-/* line 548, assetic_compass8BTXJK.scss */
+/* line 548, assetic_compassrjQIiD.scss */
 .jstree .jstree-closed ins {
   _background-position: -18px 0;
 }
 
-/* line 552, assetic_compass8BTXJK.scss */
+/* line 552, assetic_compassrjQIiD.scss */
 .jstree .jstree-leaf ins {
   _background-position: 0 0;
 }
 
-/* line 556, assetic_compass8BTXJK.scss */
+/* line 556, assetic_compassrjQIiD.scss */
 .jstree a > ins {
   display: none;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 586, assetic_compass8BTXJK.scss */
+  /* line 586, assetic_compassrjQIiD.scss */
   .jstree li,
   .jstree ins {
     background-image: url("/bundles/kacsite/plugins/jstree/resources/images/jstree_d@2x.png");
   }
 }
-/* line 591, assetic_compass8BTXJK.scss */
+/* line 591, assetic_compassrjQIiD.scss */
 .department-filter ul {
   padding: 0 0 0 18px !important;
 }
 
-/* line 595, assetic_compass8BTXJK.scss */
+/* line 595, assetic_compassrjQIiD.scss */
 .department-filter > ul {
   padding: 10px 5px !important;
 }
 
-/* line 599, assetic_compass8BTXJK.scss */
+/* line 599, assetic_compassrjQIiD.scss */
 .department-filter ul li {
   width: 100%;
   padding: 0;
@@ -963,12 +970,12 @@ table.data-table .price .currency-tax {
   border: 0;
 }
 
-/* line 608, assetic_compass8BTXJK.scss */
+/* line 608, assetic_compassrjQIiD.scss */
 .department-filter > ul > li {
   margin: 0;
 }
 
-/* line 612, assetic_compass8BTXJK.scss */
+/* line 612, assetic_compassrjQIiD.scss */
 .department-filter ul li a {
   border: 0 none;
   display: block;
@@ -980,12 +987,12 @@ table.data-table .price .currency-tax {
   text-decoration: none;
 }
 
-/* line 618, assetic_compass8BTXJK.scss */
+/* line 618, assetic_compassrjQIiD.scss */
 .department-filter ul li a:hover {
   text-decoration: underline;
 }
 
-/* line 622, assetic_compass8BTXJK.scss */
+/* line 622, assetic_compassrjQIiD.scss */
 .department-filter ul li ins {
   width: 18px;
   height: 18px;
@@ -996,24 +1003,24 @@ table.data-table .price .currency-tax {
   cursor: pointer;
 }
 
-/* line 634, assetic_compass8BTXJK.scss */
+/* line 634, assetic_compassrjQIiD.scss */
 .filter ul li .checker {
   position: absolute;
   top: 2px;
   left: 5px;
 }
 
-/* line 640, assetic_compass8BTXJK.scss */
+/* line 640, assetic_compassrjQIiD.scss */
 .filter ul li.filter-sub-department {
   padding: 2px 5px 2px 60px !important;
 }
 
-/* line 644, assetic_compass8BTXJK.scss */
+/* line 644, assetic_compassrjQIiD.scss */
 .filter ul li.filter-sub-department .checker {
   left: 32px;
 }
 
-/* line 648, assetic_compass8BTXJK.scss */
+/* line 648, assetic_compassrjQIiD.scss */
 .filter ul li.filter-feature-group {
   padding: 5px 26px 5px 5px !important;
   position: relative;
@@ -1038,38 +1045,38 @@ table.data-table .price .currency-tax {
   background-repeat: no-repeat;
 }
 
-/* line 659, assetic_compass8BTXJK.scss */
+/* line 659, assetic_compassrjQIiD.scss */
 .filter ul li.filter-feature-group .ui-icon {
   position: absolute;
   top: 4px;
   right: 5px;
 }
 
-/* line 665, assetic_compass8BTXJK.scss */
+/* line 665, assetic_compassrjQIiD.scss */
 .filter ul li label {
   font-size: 10px;
   font-size: 1rem;
   cursor: pointer;
 }
 
-/* line 670, assetic_compass8BTXJK.scss */
+/* line 670, assetic_compassrjQIiD.scss */
 .filter ul li label a {
   color: black;
   cursor: pointer;
 }
 
-/* line 675, assetic_compass8BTXJK.scss */
+/* line 675, assetic_compassrjQIiD.scss */
 .filter ul li.filter-sub-department label {
   font-size: 11px;
   font-size: 1.1rem;
 }
 
-/* line 679, assetic_compass8BTXJK.scss */
+/* line 679, assetic_compassrjQIiD.scss */
 .filter ul li .checker {
   margin: 0 5px 0 0 !important;
 }
 
-/* line 683, assetic_compass8BTXJK.scss */
+/* line 683, assetic_compassrjQIiD.scss */
 .filter ul li span.fr {
   width: 30px;
   line-height: 20px;
@@ -1080,7 +1087,7 @@ table.data-table .price .currency-tax {
   color: #6c8087;
 }
 
-/* line 693, assetic_compass8BTXJK.scss */
+/* line 693, assetic_compassrjQIiD.scss */
 .add-to-basket {
   width: 136px;
   height: 40px;
@@ -1089,7 +1096,7 @@ table.data-table .price .currency-tax {
   position: relative;
 }
 
-/* line 702, assetic_compass8BTXJK.scss */
+/* line 702, assetic_compassrjQIiD.scss */
 .add-to-basket input.quantity {
   width: 40px;
   position: absolute;
@@ -1099,23 +1106,26 @@ table.data-table .price .currency-tax {
   -webkit-border-radius: 4px 0 0 4px;
   -moz-border-radius: 4px 0 0 4px;
   border-radius: 4px 0 0 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
 
-/* line 713, assetic_compass8BTXJK.scss */
+/* line 713, assetic_compassrjQIiD.scss */
 .add-to-basket .buy {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-/* line 720, assetic_compass8BTXJK.scss */
+/* line 720, assetic_compassrjQIiD.scss */
 .add-to-basket .increase-quantity,
 .add-to-basket .decrease-quantity {
   position: absolute;
   left: 40px;
 }
 
-/* line 726, assetic_compass8BTXJK.scss */
+/* line 726, assetic_compassrjQIiD.scss */
 .add-to-basket .increase-quantity .ui-button-text,
 .add-to-basket .decrease-quantity .ui-button-text {
   width: 10px;
@@ -1126,28 +1136,34 @@ table.data-table .price .currency-tax {
   text-align: center;
 }
 
-/* line 737, assetic_compass8BTXJK.scss */
+/* line 737, assetic_compassrjQIiD.scss */
 .add-to-basket .increase-quantity {
   top: 0;
   -webkit-border-radius: 0 4px 0 0;
   -moz-border-radius: 0 4px 0 0;
   border-radius: 0 4px 0 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
 
-/* line 743, assetic_compass8BTXJK.scss */
+/* line 743, assetic_compassrjQIiD.scss */
 .add-to-basket .decrease-quantity {
   bottom: 0;
   -webkit-border-radius: 0 0 4px 0;
   -moz-border-radius: 0 0 4px 0;
   border-radius: 0 0 4px 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
 
-/* line 749, assetic_compass8BTXJK.scss */
+/* line 749, assetic_compassrjQIiD.scss */
 .add-to-basket .buy .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 753, assetic_compass8BTXJK.scss */
+/* line 753, assetic_compassrjQIiD.scss */
 .product td .form-helper {
   position: relative;
   top: auto;
@@ -1155,18 +1171,18 @@ table.data-table .price .currency-tax {
   right: auto;
 }
 
-/* line 760, assetic_compass8BTXJK.scss */
+/* line 760, assetic_compassrjQIiD.scss */
 .product td p {
   line-height: 150%;
   margin: 0;
 }
 
-/* line 765, assetic_compass8BTXJK.scss */
+/* line 765, assetic_compassrjQIiD.scss */
 .ui-widget-content p {
   line-height: 150%;
 }
 
-/* line 769, assetic_compass8BTXJK.scss */
+/* line 769, assetic_compassrjQIiD.scss */
 .product-image-container {
   padding: 10px;
   margin: 0 10px 0 0;
@@ -1179,7 +1195,7 @@ table.data-table .price .currency-tax {
   box-shadow: 0 0 10px 0 #9fbdc8;
 }
 
-/* line 777, assetic_compass8BTXJK.scss */
+/* line 777, assetic_compassrjQIiD.scss */
 .product .border-bottom-separator {
   border-bottom: 1px solid #e4eaec;
   -webkit-box-shadow: none !important;
@@ -1187,7 +1203,7 @@ table.data-table .price .currency-tax {
   box-shadow: none !important;
 }
 
-/* line 782, assetic_compass8BTXJK.scss */
+/* line 782, assetic_compassrjQIiD.scss */
 .product-listing-header {
   background: #e4eaec;
   background: -moz-linear-gradient(top, #e4eaec 0%, white 100%);
@@ -1207,7 +1223,7 @@ table.data-table .price .currency-tax {
   background-repeat: no-repeat;
 }
 
-/* line 786, assetic_compass8BTXJK.scss */
+/* line 786, assetic_compassrjQIiD.scss */
 .product-listing-header h1 {
   padding: 10px;
   margin: 0 -10px 10px -10px;
@@ -1220,11 +1236,12 @@ table.data-table .price .currency-tax {
   font-size: 3.6rem;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: dropshadow(color=black, offx=0, offy=1px);
+  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
+  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
   font-weight: normal;
 }
 
-/* line 800, assetic_compass8BTXJK.scss */
+/* line 800, assetic_compassrjQIiD.scss */
 .product-listing-header p {
   padding: 0 0 10px 0;
   margin: 0;
