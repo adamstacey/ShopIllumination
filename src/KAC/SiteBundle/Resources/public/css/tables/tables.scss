@@ -5,11 +5,12 @@ table.basic-table {
     width: 100%;
 
     border-collapse: collapse;
-    border: 0 none;
+    border: 0 none !important;
     @include borderRadius($radiusSize, $radiusSize, 0, 0);
 }
 
 table.basic-table th {
+    border: 0 none !important;
     border-collapse: collapse;
     padding: $spacingMedium $spacingSmall;
     text-align: left;
@@ -17,6 +18,7 @@ table.basic-table th {
 }
 
 table.basic-table td {
+    border: 0 none !important;
     border-collapse: collapse;
     padding: $spacingMedium;
     vertical-align: middle;

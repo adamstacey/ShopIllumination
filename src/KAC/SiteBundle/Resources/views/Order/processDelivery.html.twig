@@ -8,7 +8,7 @@
         <td width="1" class="ac filterable">
             <a href="{{ path('orders_view', {'id': order.id}) }}"><strong>{{ order.id }}</strong></a>
         </td>
-        <td class="al">
+        <td class="al" width="150">
             {{ order.deliveryType|replace({'FREE DELIVERY ': ''}) }}
             <br />
             {% if order.deliveryCharge > 0 %}
@@ -21,12 +21,12 @@
             {% if form.courier is defined %}{{ form_widget(form.courier) }}{% endif %}
         </td>
         <td>{{ form_widget(form.numberOfPackages) }}</td>
-        <td>
+        <td class="tac">
             {% if form.trackingNumber is defined %}
                 {{ form_widget(form.trackingNumber) }}
             {% endif %}
         </td>
-        <td>
+        <td class="tac pll" width="1">
             {{ form_widget(form.sendReviewRequest) }}
         </td>
     </tr>
@@ -35,12 +35,12 @@
 {% block choice_widget_expanded %}
     {% spaceless %}
         <table border="0" {{ block('widget_container_attributes') }}>
-            <tr>
             {% for child in form %}
-                <td>{{ form_widget(child) }}</td>
-                <td>{{ form_label(child) }}</td>
+                <tr>
+                    <td>{{ form_widget(child) }}</td>
+                    <td>{{ form_label(child) }}</td>
+                </tr>
             {% endfor %}
-            </tr>
         </table>
     {% endspaceless %}
 {% endblock choice_widget_expanded %}
@@ -60,10 +60,10 @@
                 <table class="data-table" id="listing-orders" width="100%">
                     <thead>
                     <tr>
-                        <th width="1" class="ac">Order</th>
+                        <th width="1" class="tac">Order</th>
                         <th class="al">Delivery</th>
-                        <th width="1" class="al">Courier</th>
-                        <th width="77" class="ac">Packages</th>
+                        <th width="1" class="tal">Courier</th>
+                        <th width="77" class="tac">Packages</th>
                         <th class="ac">Tracking Information</th>
                         <th class="ac">Review?</th>
                     </tr>

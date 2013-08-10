@@ -76,6 +76,7 @@ class UpdateDeliveryTrackingSubscriber implements EventSubscriberInterface
         {
             $form->add($this->factory->createNamed('trackingNumber', 'text', null, array(
                 'auto_initialize' => false,
+                'attr' => array('class' => 'fill')
             )));
         }
     }
