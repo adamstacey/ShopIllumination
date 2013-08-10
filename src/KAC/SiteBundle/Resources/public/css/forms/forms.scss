@@ -749,7 +749,6 @@ table.form-table ul li {
 }
 
 .quantity {
-  width: 136px;
   height: 40px;
   margin: $spacingSmall;
 
@@ -768,12 +767,6 @@ table.form-table ul li {
   @include borderRadius($radiusSize, 0, 0, $radiusSize);
 }
 
-.quantity .buy {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
 .quantity .increase-quantity,
 .quantity .decrease-quantity {
   position: absolute;
@@ -782,30 +775,26 @@ table.form-table ul li {
 
 .quantity .increase-quantity .ui-button-text,
 .quantity .decrease-quantity .ui-button-text {
-  width: 10px;
-  height: 12px;
-  padding: 0 $spacingExtraSmall;
+    width: 10px;
+    height: 12px;
+    padding: 0 $spacingExtraSmall;
 
-  display: block;
+    display: block;
 
-  line-height: 12px;
-  text-align: center;
+    line-height: 12px;
+    text-align: center;
 }
 
 .quantity .increase-quantity {
-  top: 0;
+    top: 0;
 
-  @include borderRadius(0, $radiusSize, 0, 0);
+    @include borderRadius(0, $radiusSize, 0, 0);
 }
 
 .quantity .decrease-quantity {
-  bottom: 0;
+    bottom: 0;
 
-  @include borderRadius(0, 0, $radiusSize, 0);
-}
-
-.quantity .buy .ui-button-text {
-  padding: 0 $spacingSmall;
+    @include borderRadius(0, 0, $radiusSize, 0);
 }
 
 .select2-container {

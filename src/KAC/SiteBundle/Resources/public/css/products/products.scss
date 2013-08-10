@@ -689,6 +689,13 @@ screen and (min-resolution: 2dppx) {
   text-align: right;
   color: $colourGrey;
 }
+
+.add-to-basket {
+  width: 136px;
+  height: 40px;
+  margin: $spacingSmall;
+}
+
 .add-to-basket .buy {
   position: absolute;
   top: 0;
