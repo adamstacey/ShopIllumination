@@ -70,4 +70,14 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
 
         return $estimatedDeliveryDates;
     }
+
+    /**
+     * @inherit
+     */
+    function getCouriers()
+    {
+        return array();
+    }
+
+
 } 

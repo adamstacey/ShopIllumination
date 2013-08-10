@@ -1,6 +1,7 @@
 <?php
 namespace KAC\SiteBundle\Manager\Delivery\Method;
 
+use KAC\SiteBundle\Manager\Delivery\Courier\CourierInterface;
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
 interface DeliveryMethodInterface
@@ -67,4 +68,11 @@ interface DeliveryMethodInterface
      * @return string
      */
     function getDescription();
+
+    /**
+     * Get all available couriers for this delivery method
+     *
+     * @return CourierInterface[]
+     */
+    function getCouriers();
 }
