@@ -2,6 +2,7 @@
 
 namespace KAC\SiteBundle\Form\Order;
 
+use KAC\SiteBundle\Form\DataTransformer\CourierStringToObjectTransformer;
 use KAC\SiteBundle\Form\EventListener\Order\UpdateDeliveryCourierSubscriber;
 use KAC\SiteBundle\Form\EventListener\Order\UpdateDeliveryTrackingSubscriber;
 use Symfony\Component\Form\AbstractType;

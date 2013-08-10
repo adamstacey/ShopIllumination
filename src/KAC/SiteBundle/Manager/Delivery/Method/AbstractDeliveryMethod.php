@@ -3,6 +3,7 @@
 namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\Courier\CourierInterface;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 
 abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
 {
@@ -84,7 +85,7 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
 
         foreach($this->getCourierClasses() as $class)
         {
-            $couriers[] = new $class;
+            $couriers[] = DeliveryFactory::loadCourier($class);
         }
 
         return $couriers;

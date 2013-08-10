@@ -3,6 +3,7 @@
 namespace KAC\SiteBundle\Form\EventListener\Order;
 
 use KAC\SiteBundle\Entity\Order;
+use KAC\SiteBundle\Form\DataTransformer\CourierStringToObjectTransformer;
 use KAC\SiteBundle\Manager\Delivery\Courier\CourierInterface;
 use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use KAC\SiteBundle\Manager\Delivery\Method\DeliveryMethodInterface;
@@ -46,7 +47,7 @@ class UpdateDeliveryCourierSubscriber implements EventSubscriberInterface
     public function preSetData(FormEvent $event)
     {
         /**
-         * @param Order $order
+         * @var Order $order
          */
         $order = $event->getData();
         $form = $event->getForm();
@@ -74,8 +75,7 @@ class UpdateDeliveryCourierSubscriber implements EventSubscriberInterface
         // Get the available couriers for the delivery method
         $couriers = $method->getCouriers();
 
-        $form->remove('courierObject');
-        $form->add($this->factory->createNamed('courierObject', 'choice', null, array(
+        $courierBuilder = $this->factory->createNamedBuilder('courier', 'choice', null, array(
             'choice_list' => new ObjectChoiceList(array_combine(array_map(function(CourierInterface $courier) {
                 return $courier->getName();
             }, $couriers), $couriers), 'name', array(), null, 'name'),
@@ -85,6 +85,10 @@ class UpdateDeliveryCourierSubscriber implements EventSubscriberInterface
             'attr' => array(
                 'class' => 'basic-table'
             )
-        )));
+        ));
+        $courierBuilder->addModelTransformer(new CourierStringToObjectTransformer());
+
+        $form->remove('courier');
+        $form->add($courierBuilder->getForm());
     }
 }

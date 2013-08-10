@@ -236,10 +236,6 @@ class OrderController extends Controller
 
                 foreach($orders as $order)
                 {
-                    if($order->getCourierObject())
-                    {
-                        $order->setCourier($order->getCourierObject()->getName());
-                    }
                     $em->persist($order);
                 }
                 $em->flush();

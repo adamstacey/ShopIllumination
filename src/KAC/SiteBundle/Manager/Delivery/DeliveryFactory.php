@@ -6,6 +6,9 @@ use KAC\SiteBundle\Manager\Delivery\Courier\CourierInterface;
 use KAC\SiteBundle\Manager\Delivery\Method\DeliveryMethodInterface;
 
 class DeliveryFactory {
+    private static $methodCache = array();
+    private static $courierCache = array();
+
     /**
      * @param $name
      *
@@ -15,17 +18,12 @@ class DeliveryFactory {
     {
         foreach(self::getMethodClasses() as $class)
         {
-            /**
-             * @var DeliveryMethodInterface $method
-             */
-            $method = new $class;
+            $method = self::loadMethod($class);
 
             if ($method->getName() === $name)
             {
                 return $method;
             }
-
-            unset($method);
         }
 
         return null;
@@ -43,10 +41,7 @@ class DeliveryFactory {
 
         foreach(self::getMethodClasses() as $class)
         {
-            /**
-             * @var DeliveryMethodInterface $method
-             */
-            $method = new $class;
+            $method = self::loadMethod($class);
 
             if ($method->supportsLocation($zone, $band))
             {
@@ -69,10 +64,7 @@ class DeliveryFactory {
 
         foreach(self::getMethodClasses() as $class)
         {
-            /**
-             * @var DeliveryMethodInterface $method
-             */
-            $method = new $class;
+            $method = self::loadMethod($class);
 
             if ($method->supportsLocation($zone, $band))
             {
@@ -92,10 +84,8 @@ class DeliveryFactory {
 
         foreach(self::getMethodClasses() as $class)
         {
-            /**
-             * @var DeliveryMethodInterface $method
-             */
-            $method = new $class;
+            $method = self::loadMethod($class);
+
             $names[] = $method->getName();
         }
 
@@ -111,7 +101,7 @@ class DeliveryFactory {
 
         foreach(self::getMethodClasses() as $class)
         {
-            $methods[] = new $class;
+            $methods[] = self::loadMethod($class);
         }
 
         return $methods;
@@ -126,17 +116,12 @@ class DeliveryFactory {
     {
         foreach(self::getCourierClasses() as $class)
         {
-            /**
-             * @var CourierInterface $courier
-             */
-            $courier = new $class;
+            $courier = self::loadCourier($class);
 
             if ($courier->getName() === $name)
             {
                 return $courier;
             }
-
-            unset($courier);
         }
 
         return null;
@@ -151,10 +136,8 @@ class DeliveryFactory {
 
         foreach(self::getCourierClasses() as $class)
         {
-            /**
-             * @var CourierInterface $courier
-             */
-            $courier = new $class;
+            $courier = self::loadCourier($class);
+
             $names[] = $courier->getName();
         }
 
@@ -170,10 +153,44 @@ class DeliveryFactory {
 
         foreach(self::getCourierClasses() as $class)
         {
-            $couriers[] = new $class;
+            $couriers[] = self::loadCourier($class);
         }
 
         return $couriers;
+    }
+
+    public static function loadMethod($class)
+    {
+        /**
+         * @var DeliveryMethodInterface $method
+         */
+        $method = new $class;
+
+        if(array_key_exists($method->getName(), self::$methodCache))
+        {
+            $method = self::$methodCache[$method->getName()];
+        } else {
+            self::$methodCache[$method->getName()] = $method;
+        }
+
+        return $method;
+    }
+
+    public static function loadCourier($class)
+    {
+        /**
+         * @var CourierInterface $courier
+         */
+        $courier = new $class;
+
+        if(array_key_exists($courier->getName(), self::$courierCache))
+        {
+            $courier = self::$courierCache[$courier->getName()];
+        } else {
+            self::$courierCache[$courier->getName()] = $courier;
+        }
+
+        return $courier;
     }
 
     /**
