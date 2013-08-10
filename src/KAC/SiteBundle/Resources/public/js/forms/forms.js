@@ -467,12 +467,12 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".actionIncreaseQuantity", function() {
-        var $quantityInput = $(this).parent().find("input.quantity");
+        var $quantityInput = $(this).parent().find("input");
         $quantityInput.val(parseInt($quantityInput.val()) + 1);
     });
 
     $(document).on("click", ".actionDecreaseQuantity", function() {
-        var $quantityInput = $(this).parent().find("input.quantity");
+        var $quantityInput = $(this).parent().find("input");
         if (parseInt($quantityInput.val()) > 1) {
             $quantityInput.val(parseInt($quantityInput.val()) - 1);
         }

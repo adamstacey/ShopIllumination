@@ -41,7 +41,7 @@
                                                         {% endif %}
                                                     </td>
                                                     <td width="63">
-                                                        <div class="add-to-basket" data-product-id="{{ item.productId }}" data-variant-id="{{ item.variantId }}">
+                                                        <div class="add-to-basket quantity quantity" data-product-id="{{ item.productId }}" data-variant-id="{{ item.variantId }}">
                                                             <input class="quantity integer number" type="number" name="{{ form.items[loop.index0].quantity.vars.full_name }}" value="{{ form.items[loop.index0].quantity.vars.value }}" />
                                                             <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
                                                             <button type="button" class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>

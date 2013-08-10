@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $(".actionAddToBasket").on('click', function() {
-        var $quantityInput = $(this).parent().find("input.quantity"),
+        var $quantityInput = $(this).parent().find("input"),
             $el = $(this).parent();
 
         $("#ajax-loading").show();
@@ -34,7 +34,7 @@ $(document).ready(function() {
     });
 
     $(".actionAddNonProductToBasket").on('click', function() {
-        var $quantityInput = $(this).parent().find("input.quantity"),
+        var $quantityInput = $(this).parent().find("input"),
             $el = $(this).parent();
 
         $("#ajax-loading").show();

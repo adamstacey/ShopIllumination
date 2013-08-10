@@ -1,7 +1,7 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 {% block body %}
     <style>
-        .add-to-basket {
+        .add-to-basket quantity {
             width: 110px;
             height: 40px;
 
@@ -9,7 +9,7 @@
             position: relative;
         }
 
-        .add-to-basket input.quantity {
+        .add-to-basket quantity input.quantity {
             width: 40px;
 
             position: absolute;
@@ -20,20 +20,20 @@
             border-radius: 4px 0 0 4px;
         }
 
-        .add-to-basket .buy {
+        .add-to-basket quantity .buy {
             position: absolute;
             top: 0;
             right: 0;
         }
 
-        .add-to-basket .increase-quantity,
-        .add-to-basket .decrease-quantity {
+        .add-to-basket quantity .increase-quantity,
+        .add-to-basket quantity .decrease-quantity {
             position: absolute;
             left: 40px;
         }
 
-        .add-to-basket .increase-quantity .ui-button-text,
-        .add-to-basket .decrease-quantity .ui-button-text {
+        .add-to-basket quantity .increase-quantity .ui-button-text,
+        .add-to-basket quantity .decrease-quantity .ui-button-text {
             width: 10px;
             height: 12px;
             padding: 0 2px;
@@ -44,17 +44,17 @@
             text-align: center;
         }
 
-        .add-to-basket .increase-quantity {
+        .add-to-basket quantity .increase-quantity {
             top: 0;
             border-radius: 0 4px 0 0;
         }
 
-        .add-to-basket .decrease-quantity {
+        .add-to-basket quantity .decrease-quantity {
             bottom: 0;
             border-radius: 0 0 4px 0;
         }
 
-        .add-to-basket .buy .ui-button-text {
+        .add-to-basket quantity .buy .ui-button-text {
             padding: 0 2px;
         }
 
