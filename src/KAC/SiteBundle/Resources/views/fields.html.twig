@@ -124,7 +124,7 @@
 
 {% block quantity_widget %}
     {% spaceless %}
-        <div {{ block('widget_container_attributes') }}>
+        <div class="quantity">
             {% set type = type|default('text') %}
             {{ block('form_widget_simple') }}
             <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
