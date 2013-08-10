@@ -49,7 +49,7 @@
                     {% do form.update.setRendered %}
                     <div class="clearfix mtl mbl">
                         <button type="submit" name="{{ form.queue.vars.full_name }}" class="button button-green icon-white mlm fl" data-icon-secondary="icon-1118">Add to Queue</button>
-                        <a href="submit" name="{{ form.queue.vars.full_name }}" class="button button-green icon-white mlm fl" data-icon-secondary="icon-1118">View Queue</a>
+                        <a href="{{ path('orders_queue') }}" name="{{ form.queue.vars.full_name }}" class="button button-green icon-white mlm fl" data-icon-secondary="icon-1118">View Queue</a>
                         <button type="submit" name="{{ form.update.vars.full_name }}" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Update</button>
                         <button type="reset" class="button button-red icon-white mlm fr" data-icon-secondary="icon-1118">Clear</button>
                     </div>

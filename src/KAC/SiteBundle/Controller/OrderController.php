@@ -152,7 +152,7 @@ class OrderController extends Controller
             ->add('clear', 'checkbox', array(
                 'label' => 'Clear queue after processing',
             ))
-        ->getForm();
+            ->getForm();
 
         $form->submit($request);
         if($form->isValid()) {
@@ -192,6 +192,15 @@ class OrderController extends Controller
         {
             throw $this->createNotFoundException();
         }
+
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.id IN (?1)')
+            ->setParameter(1, $queue->all())
+            ->execute();
 
         // If the user choose to process deliveries then create the form and show the user the template
         $action = explode('-', $request->query->get('action'));
@@ -238,32 +247,59 @@ class OrderController extends Controller
                 'orders' => $orders,
                 'form' => $form->createView()
             ));
-        // If the user choose to generate a document then ensure the file is generated and show the user the resulting file
+            // If the user choose to generate a document then ensure the file is generated and show the user the resulting file
         } elseif($action[0] === 'document') {
             /**
-             * @var $em EntityManager
+             * @var $order Order
              */
-            $em = $this->getDoctrine()->getManager();
-
-            $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.id IN ?1')
-                ->setParameter(1, $queue->all())
-                ->execute();
-
-            try {
-                if($action[2] === 'email')
+            foreach($orders as $order)
+            {
+                // Update the order
+                switch($action[2])
                 {
-                    $generator = $this->get('kac_site.manager.order_document_generator');
+                    case 'order':
+                        if ($order->getStatus() == 'Payment Received') $order->setStatus('Processing Your Order');
+                        if (strpos($order->getDeliveryType(), 'Royal Mail') !== false) $order->setDeliveryNotePrinted(true);
+                        $order->setOrderPrinted(true);
+                        break;
+                    case 'deliverynote':
+                        $order->setDeliveryNotePrinted(true);
+                        break;
+                }
 
-                    $outputFile = $generator->generateBulkDocument($action[1], $orders);
+                $em->persist($order);
+            }
+            $em->flush();
 
-                    $this->get('session')->getFlashBag()->add('success', sprintf(
-                        'The order document has been generated. <a href="%s">Click here</a> to view it.',
-                        $request->getUriForPath('uploads/documents/order' . $outputFile)
-                    ));
+            $generator = $this->get('kac_site.manager.order_document_generator');
+            try {
+                if($action[1] === 'email')
+                {
+                    foreach($orders as $order)
+                    {
+                        // Send the email
+                        try
+                        {
+                            $outputFile = $generator->generateSingleDocument($action[2], $orders);
+
+                            $email = \Swift_Message::newInstance();
+                            $email->setSubject('Your Order with Kitchen Appliance Centre: '.$order->getId());
+                            $email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
+                            $email->setTo(array($order['emailAddress'] => $order->getFirstName().' '.$order->getLastName()));
+                            $email->setBody($this->renderView('WebIlluminationShopBundle:Checkout:invoice.html.twig', array('order' => $order)), 'text/html');
+                            $email->addPart($this->renderView('WebIlluminationShopBundle:Checkout:invoice.txt.twig', array('order' => $order)), 'text/plain');
+                            $email->attach(\Swift_Attachment::fromPath($outputFile)->setFilename('kitchen-appliance-centre-invoice-'.$order->getId().'.pdf'));
+                            $this->get('mailer')->send($email);
+                        } catch (\Exception $exception) {
+                            $this->get('session')->getFlashBag()->add('error', 'There was an error sending an email');
+                        }
+                    }
+
+                    $this->get('session')->getFlashBag()->add('success', 'The emails have been succesfully sent');
                 } else {
                     $generator = $this->get('kac_site.manager.order_document_generator');
 
-                    $outputFile = $generator->generateBulkDocument($action[1], $orders);
+                    $outputFile = $generator->generateBulkDocument($action[2], $orders);
 
                     $this->get('session')->getFlashBag()->add('success', sprintf(
                         'The order document has been generated. <a href="%s">Click here</a> to view it.',
@@ -271,6 +307,7 @@ class OrderController extends Controller
                     ));
                 }
             } catch (\Exception $e) {
+                var_dump($e);die();
                 $this->get('session')->getFlashBag()->add('error', 'There was an error generating the order documents');
             }
         }

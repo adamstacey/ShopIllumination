@@ -195,9 +195,10 @@ class DocumentGenerator {
     protected function getBinaryPath()
     {
 //        return 'wkhtmltopdf';
+        return '/usr/local/bin/wkhtmltopdf';
 //        return 'xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64';
 //        return 'xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf $*';
-        return 'xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf-amd64';
+//        return 'xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf-amd64';
     }
 
     // Get the absolute path of the upload directory

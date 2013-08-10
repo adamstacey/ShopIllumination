@@ -310,7 +310,13 @@ class OrdersController extends Controller
                                     foreach ($select as $itemId => $item)
                                     {
                                         // Get the order and update
-         D
+                                        $itemObject = $em->getRepository('KAC\SiteBundle\Entity\Order')->find($itemId);
+                                        if ($itemObject)
+                                        {
+                                            $itemObject->setDeliveryNotePrinted(1);
+                                            $em->persist($itemObject);
+                                            $em->flush();
+                                        }
 
                                         // Get full order to print
                                         $orders[] = $service->getOrder($itemId);
