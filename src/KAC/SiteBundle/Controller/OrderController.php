@@ -206,9 +206,20 @@ class OrderController extends Controller
 
         if($action[0] === 'deliveries')
         {
-            $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.deliveryType != \'Collection\' AND o.status = \'Processing Your Order\' AND o.id IN (?1)')
-                ->setParameter(1, $queue->all())
-                ->execute();
+            if(count($queue->all()) <= 0)
+            {
+                $orders = array();
+            } else {
+                $qb = $em->createQueryBuilder();
+                $orders = $qb->select('o')
+                    ->from('KAC\SiteBundle\Entity\Order', 'o')
+                    ->andWhere($qb->expr()->neq('o.deliveryType', $qb->expr()->literal('Collection')))
+                    ->andWhere($qb->expr()->eq('o.status', $qb->expr()->literal('Processing Your Order')))
+                    ->andWhere($qb->expr()->in('o.id', '?1'))
+                    ->setParameter(1, $queue->all())
+                    ->getQuery()
+                    ->execute();
+            }
 
             $form = $this->createForm(new ProcessDeliveryType($this->get('kac_site.manager.delivery')), array('orders' => $orders));
 
@@ -238,9 +249,18 @@ class OrderController extends Controller
             ));
             // If the user choose to generate a document then ensure the file is generated and show the user the resulting file
         } elseif($action[0] === 'document') {
-            $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.id IN (?1)')
-                ->setParameter(1, $queue->all())
-                ->execute();
+            if(count($queue->all()) <= 0)
+            {
+                $orders = array();
+            } else {
+                $qb = $em->createQueryBuilder();
+                $orders = $qb->select('o')
+                    ->from('KAC\SiteBundle\Entity\Order', 'o')
+                    ->andWhere($qb->expr()->in('o.id', '?1'))
+                    ->setParameter(1, $queue->all())
+                    ->getQuery()
+                    ->execute();
+            }
 
             /**
              * @var $order Order

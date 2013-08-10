@@ -716,36 +716,6 @@ screen and (min-resolution: 2dppx) {
     right: 0;
 }
 
-.add-to-basket .increase-quantity,
-.add-to-basket .decrease-quantity {
-    position: absolute;
-    left: 40px;
-}
-
-.add-to-basket .increase-quantity .ui-button-text,
-.add-to-basket .decrease-quantity .ui-button-text {
-    width: 10px;
-    height: 12px;
-    padding: 0 $spacingExtraSmall;
-
-    display: block;
-
-    line-height: 12px;
-    text-align: center;
-}
-
-.add-to-basket .increase-quantity {
-    top: 0;
-
-    @include borderRadius(0, $radiusSize, 0, 0);
-}
-
-.add-to-basket .decrease-quantity {
-    bottom: 0;
-
-    @include borderRadius(0, 0, $radiusSize, 0);
-}
-
 .add-to-basket .buy .ui-button-text {
     padding: 0 $spacingSmall;
 }

@@ -748,6 +748,36 @@ table.form-table ul li {
     line-height: 14px;
 }
 
+.quantity .increase-quantity,
+.quantity .decrease-quantity {
+  position: absolute;
+  left: 40px;
+}
+
+.quantity .increase-quantity .ui-button-text,
+.quantity .decrease-quantity .ui-button-text {
+  width: 10px;
+  height: 12px;
+  padding: 0 $spacingExtraSmall;
+
+  display: block;
+
+  line-height: 12px;
+  text-align: center;
+}
+
+.quantity .increase-quantity {
+  top: 0;
+
+  @include borderRadius(0, $radiusSize, 0, 0);
+}
+
+.quantity .decrease-quantity {
+  bottom: 0;
+
+  @include borderRadius(0, 0, $radiusSize, 0);
+}
+
 .select2-container {
     min-height: 40px;
 

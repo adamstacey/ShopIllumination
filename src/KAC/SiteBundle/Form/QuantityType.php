@@ -7,6 +7,15 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class QuantityType extends AbstractType
 {
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'attr' => array(
+                'class' => 'quantity',
+            )
+        ));
+    }
+
     public function getParent()
     {
         return 'number';
