@@ -4,6 +4,7 @@ namespace KAC\SiteBundle\Form\EventListener\Order;
 
 use KAC\SiteBundle\Entity\Order;
 use KAC\SiteBundle\Form\DataTransformer\CourierStringToObjectTransformer;
+use KAC\SiteBundle\Form\DataTransformer\MethodStringToObjectTransformer;
 use KAC\SiteBundle\Manager\Delivery\Courier\CourierInterface;
 use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use KAC\SiteBundle\Manager\Delivery\Method\DeliveryMethodInterface;
@@ -16,7 +17,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormInterface;
 
-class UpdateDeliveryCourierSubscriber implements EventSubscriberInterface
+class UpdateDeliveryMethodSubscriber implements EventSubscriberInterface
 {
     /**
      * @var FormFactoryInterface
@@ -56,40 +57,27 @@ class UpdateDeliveryCourierSubscriber implements EventSubscriberInterface
             return;
         }
 
-        // Only continue if the delivery type was set
-        $deliveryType = $order->getDeliveryType();
-        if (null === $deliveryType) {
-            return;
-        }
+        $zone = $this->deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
+        $band = $this->deliveryManager->calculateBand($order->getProducts());
+        $methods = DeliveryFactory::getMethods($zone, $band);
 
-        $method = DeliveryFactory::getMethod($deliveryType);
-        if($method === null) {
-            return;
-        }
-
-        $this->customizeForm($form, $method);
+        $this->customizeForm($form, $methods);
     }
 
-    protected function customizeForm(FormInterface $form, DeliveryMethodInterface $method)
+    protected function customizeForm(FormInterface $form, $methods)
     {
-        // Get the available couriers for the delivery method
-        $couriers = $method->getCouriers();
-
-        $courierBuilder = $this->factory->createNamedBuilder('courier', 'choice', null, array(
-            'choice_list' => new ObjectChoiceList(array_combine(array_map(function(CourierInterface $courier) {
-                return $courier->getName();
-            }, $couriers), $couriers), 'name', array(), null, 'name'),
+        $methodBuilder = $this->factory->createNamedBuilder('deliveryType', 'choice', null, array(
+            'choice_list' => new ObjectChoiceList(array_combine(array_map(function(DeliveryMethodInterface $method) {
+                return $method->getName();
+            }, $methods), $methods), 'name', array(), null, 'name'),
             'expanded' => true,
             'required' => false,
             'empty_value' => null,
             'auto_initialize' => false,
-            'attr' => array(
-                'class' => 'basic-table'
-            )
         ));
-        $courierBuilder->addModelTransformer(new CourierStringToObjectTransformer());
+        $methodBuilder->addModelTransformer(new MethodStringToObjectTransformer());
 
-        $form->remove('courier');
-        $form->add($courierBuilder->getForm());
+        $form->remove('deliveryType');
+        $form->add($methodBuilder->getForm());
     }
 }

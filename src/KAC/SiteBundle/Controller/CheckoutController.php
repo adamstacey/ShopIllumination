@@ -253,28 +253,12 @@ class CheckoutController extends Controller
         $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
         $band = $deliveryManager->calculateBand($order->getProducts());
         $methods = DeliveryFactory::getMethods($zone, $band);
-        if($order->getDeliveryType())
-        {
-            foreach($methods as $method)
-            {
-                if($method->getName() == $order->getDeliveryType())
-                {
-                    $order->setMethodObject($method);
-                }
-            }
-        }
-        if(!$order->getMethodObject())
-        {
-            $order->setMethodObject($methods[0]);
-        }
 
-        $form = $this->createForm(new DeliveryType($methods), $order);
+        $form = $this->createForm(new DeliveryType($deliveryManager), $order);
         $form->handleRequest($request);
 
         if($form->isValid())
         {
-            $order->setDeliveryType($order->getMethodObject()->getName());
-
             // Update order status
             $manager->updateCheckoutStep($order, 'Payment');
             $manager->saveOrder();
