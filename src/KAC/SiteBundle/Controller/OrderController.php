@@ -206,7 +206,7 @@ class OrderController extends Controller
 
         if($action[0] === 'deliveries')
         {
-            if(count($queue->all()) <= 0)
+            if(count($queue->all()) === 0)
             {
                 $orders = array();
             } else {
@@ -233,23 +233,13 @@ class OrderController extends Controller
                 )));
             }
 
-            /**
-             * @var $em EntityManager
-             */
-            $em = $this->getDoctrine()->getManager();
-            $qb = $em->getRepository('KACSiteBundle:Order')->createQueryBuilder('o');
-            $orders = $qb->where($qb->expr()->in('o.id', '?1'))
-                ->setParameter(1, $queue->all())
-                ->getQuery()
-                ->execute();
-
             return $this->render('KACSiteBundle:Order:processDelivery.html.twig', array(
                 'orders' => $orders,
                 'form' => $form->createView()
             ));
             // If the user choose to generate a document then ensure the file is generated and show the user the resulting file
         } elseif($action[0] === 'document') {
-            if(count($queue->all()) <= 0)
+            if(count($queue->all()) == 0)
             {
                 $orders = array();
             } else {
