@@ -234,10 +234,19 @@ class OrderController extends Controller
             if($form->isValid()) {
                 $data = $form->getData();
 
-                return $this->redirect($this->generateUrl('orders_process', array(
-                    'action' => $data['action'],
-                    'clear' => $data['clear'],
-                )));
+                foreach($orders as $order)
+                {
+                    if($order->getCourierObject())
+                    {
+                        $order->setCourier($order->getCourierObject()->getName());
+                    }
+                    $em->persist($order);
+                }
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'The orders have been successfully processed.');
+
+                return $this->redirect($this->generateUrl('orders_queue'));
             }
 
             return $this->render('KACSiteBundle:Order:processDeliveries.html.twig', array(

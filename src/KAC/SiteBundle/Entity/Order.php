@@ -77,7 +77,7 @@ class Order
     /**
      * @ORM\Column(name="number_of_packages", type="integer", length=3, nullable=true)
      */
-    private $numberOfPackages;
+    private $numberOfPackages = 1;
     
     /**
      * @ORM\Column(name="tracking_number", type="string", length=255, nullable=true)
@@ -336,7 +336,8 @@ class Order
      */
     private $deletedAt;
 
-    private $method;
+    private $methodObject;
+    private $courierObject;
     private $card;
 
     public function isDeleted()
@@ -2115,20 +2116,24 @@ class Order
         return $this->card;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMethod()
+    public function setCourierObject($courierObject)
     {
-        return $this->method;
+        $this->courierObject = $courierObject;
     }
 
-    /**
-     * @param mixed $method
-     */
-    public function setMethod($method)
+    public function getCourierObject()
     {
-        $this->method = $method;
+        return $this->courierObject;
+    }
+
+    public function setMethodObject($methodObject)
+    {
+        $this->methodObject = $methodObject;
+    }
+
+    public function getMethodObject()
+    {
+        return $this->methodObject;
     }
 
     /**

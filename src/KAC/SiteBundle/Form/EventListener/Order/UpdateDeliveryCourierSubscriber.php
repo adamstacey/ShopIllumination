@@ -74,8 +74,8 @@ class UpdateDeliveryCourierSubscriber implements EventSubscriberInterface
         // Get the available couriers for the delivery method
         $couriers = $method->getCouriers();
 
-        $form->remove('courier');
-        $form->add($this->factory->createNamed('courier', 'choice', null, array(
+        $form->remove('courierObject');
+        $form->add($this->factory->createNamed('courierObject', 'choice', null, array(
             'choice_list' => new ObjectChoiceList(array_combine(array_map(function(CourierInterface $courier) {
                 return $courier->getName();
             }, $couriers), $couriers), 'name', array(), null, 'name'),

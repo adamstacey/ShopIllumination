@@ -27,7 +27,7 @@
                                     {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
                                     <fieldset>
                                         <table class="delivery-methods data-table" cellpadding="0" cellspacing="0" border="0" width="100%">
-                                            {% for field in form.method %}
+                                            {% for field in form.methodObject %}
                                                 {% set method = deliveryMethods[loop.index0] %}
                                                 {% set price = method.calculateCost(basket.delivery.zone, basket.delivery.band, basket.items) %}
                                                 <tr class="{{ cycle(['odd', 'even'], loop.index) }}" data-name="{{ method.name }}" data-price="{{ price|currency('GBP', true, true, '') }}">

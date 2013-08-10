@@ -259,13 +259,13 @@ class CheckoutController extends Controller
             {
                 if($method->getName() == $order->getDeliveryType())
                 {
-                    $order->setMethod($method);
+                    $order->setMethodObject($method);
                 }
             }
         }
-        if(!$order->getMethod())
+        if(!$order->getMethodObject())
         {
-            $order->setMethod($methods[0]);
+            $order->setMethodObject($methods[0]);
         }
 
         $form = $this->createForm(new DeliveryType($methods), $order);
@@ -273,7 +273,7 @@ class CheckoutController extends Controller
 
         if($form->isValid())
         {
-            $order->setDeliveryType($order->getMethod()->getName());
+            $order->setDeliveryType($order->getMethodObject()->getName());
 
             // Update order status
             $manager->updateCheckoutStep($order, 'Payment');

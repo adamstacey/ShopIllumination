@@ -17,7 +17,7 @@ class DeliveryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('method', 'choice', array(
+        $builder->add('methodObject', 'choice', array(
             'choice_list' => new ObjectChoiceList(array_combine(array_map(function($method) {
                 return $method->getName();
             }, $this->deliveryMethods), $this->deliveryMethods), 'name', array(), null, 'name'),
