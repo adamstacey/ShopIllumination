@@ -303,11 +303,10 @@ class OrderController extends Controller
 
                     $this->get('session')->getFlashBag()->add('success', sprintf(
                         'The order document has been generated. <a href="%s">Click here</a> to view it.',
-                        $request->getUriForPath('uploads/documents/order' . $outputFile)
+                        $this->get('templating.helper.assets')->getUrl('/uploads/documents/order' . $outputFile)
                     ));
                 }
             } catch (\Exception $e) {
-                var_dump($e);die();
                 $this->get('session')->getFlashBag()->add('error', 'There was an error generating the order documents');
             }
         }
