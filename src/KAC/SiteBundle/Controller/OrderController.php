@@ -169,11 +169,18 @@ class OrderController extends Controller
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('KACSiteBundle:Order')->createQueryBuilder('o');
-        $orders = $qb->where($qb->expr()->in('o.id', '?1'))
-            ->setParameter(1, $queue->all())
-            ->getQuery()
-            ->execute();
+        if(count($queue->all()) == 0)
+        {
+            $orders = array();
+        } else {
+            $qb = $em->createQueryBuilder();
+            $orders = $qb->select('o')
+                ->from('KAC\SiteBundle\Entity\Order', 'o')
+                ->andWhere($qb->expr()->in('o.id', '?1'))
+                ->setParameter(1, $queue->all())
+                ->getQuery()
+                ->execute();
+        }
 
         return $this->render('KACSiteBundle:Order:queue.html.twig', array(
             'orders' => $orders,
@@ -198,8 +205,6 @@ class OrderController extends Controller
          * @var $em EntityManager
          */
         $em = $this->getDoctrine()->getManager();
-
-
 
         // If the user choose to process deliveries then create the form and show the user the template
         $action = explode('-', $request->query->get('action'));
