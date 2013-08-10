@@ -112,6 +112,8 @@ class OrderController extends Controller
                         $queue[] = intval($selectedId);
                     }
                 }
+
+                return $this->redirect($this->generateUrl('orders_queue'));
             }
         }
 
