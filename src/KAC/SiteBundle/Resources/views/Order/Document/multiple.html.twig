@@ -6,7 +6,7 @@
 <body style="position: relative;" marginheight="0" topmargin="0" marginwidth="0" bgcolor="#FFFFFF" leftmargin="0">
     {% for order in orders %}
         {% include 'KACSiteBundle:Order/Document:'~type~'.html.twig' with {'order': order} %}
-        <div style="page-break-before: always;"></div>
+        <div style="display: block; clear: both; page-break-after: always;"></div>
     {% endfor %}
 </body>
 </html>
