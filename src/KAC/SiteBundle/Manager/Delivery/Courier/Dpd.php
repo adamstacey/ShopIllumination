@@ -1,12 +1,16 @@
 <?php
+
 namespace KAC\SiteBundle\Manager\Delivery\Courier;
 
-interface CourierInterface
+class Dpd extends AbstractCourier
 {
     /**
      * Get the name of the courier
      *
      * @return string
      */
-    function getName();
+    function getName()
+    {
+        return 'DPD';
+    }
 }
