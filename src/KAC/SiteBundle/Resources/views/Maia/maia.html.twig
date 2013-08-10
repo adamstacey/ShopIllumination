@@ -23,10 +23,14 @@
                                 <section>
                                     <div class="tabs">
                                         <ul>
+                                            <li><a href="#maiaWorktopColours">maia Worktop Colours</a></li>
                                             <li><a href="#overview">Overview</a></li>
                                             <li><a href="#maiaCare">maia Care</a></li>
                                             <li><a href="#maiaTechnology">maia Technology</a></li>
                                         </ul>
+                                        <div id="maiaWorktopColours">
+                                            {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
+                                        </div>
                                         <div id="overview">
                                             {% include 'KACSiteBundle:Maia:maiaOverview.html.twig' %}
                                         </div>
@@ -44,6 +48,5 @@
                 </div>
             </div>
         </div>
-        {% include 'KACSiteBundle:Maia:maiaColours.html.twig' %}
     </section>
 {% endblock %}

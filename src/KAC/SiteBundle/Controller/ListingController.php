@@ -516,7 +516,7 @@ class ListingController extends Controller
         return $response;
     }
 
-    public function popularProductsAction(Request $request, $departmentId = null, $brandId = null)
+    public function popularProductsAction(Request $request, $departmentIds = null, $brandIds = null)
     {
         /**
          * @var $em EntityManager
@@ -526,16 +526,16 @@ class ListingController extends Controller
         $brand = null;
         $department = null;
 
-        if($departmentId)
+        if($departmentIds !== null && !is_array($departmentIds))
         {
-            $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
+            $department = $em->getRepository("KACSiteBundle:Department")->find($departmentIds);
         }
-        if ($brandId)
+        if ($brandIds !== null && !is_array($brandIds))
         {
-            $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
+            $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandIds);
         }
 
-        $products = $this->getPopularProducts($departmentId, $brandId, 5);
+        $products = $this->getPopularProducts($departmentIds, $brandIds, 5);
 
         $response = $this->render('KACSiteBundle:Listing:popularProducts.html.twig', array(
             'products' => $products,
@@ -547,8 +547,11 @@ class ListingController extends Controller
         return $response;
     }
 
-    private function getPopularBrands($departmentId = null, $num=null)
+    private function getPopularBrands($departmentIds = null, $num=null)
     {
+        // Ensure that department and brand ids are arrays
+        if($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
+
         /**
          * @var $em EntityManager
          */
@@ -558,7 +561,7 @@ class ListingController extends Controller
         $solarium = $this->get('solarium.client');
 
         // If not department was specified we can fetch the popular products just using SQL
-        if(!$departmentId)
+        if(!$departmentIds)
         {
             $qb = $em->createQueryBuilder();
             $qb->select('b, count(op.id) AS total')
@@ -577,7 +580,7 @@ class ListingController extends Controller
 
             return $qb->getQuery()->execute();
         } else {
-            $products = $this->getPopularProducts($departmentId);
+            $products = $this->getPopularProducts($departmentIds);
             $brands = array();
 
             foreach ($products as $item)
@@ -609,8 +612,12 @@ class ListingController extends Controller
         }
     }
 
-    private function getPopularProducts($departmentId = null, $brandId = null, $num=null)
+    private function getPopularProducts($departmentIds = null, $brandIds = null, $num=null)
     {
+        // Ensure that department and brand ids are arrays
+        if($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
+        if($brandIds !== null && !is_array($brandIds)) $brandIds = array($brandIds);
+
         /**
          * @var $em EntityManager
          */
@@ -619,8 +626,8 @@ class ListingController extends Controller
         /** @var $solarium \Solarium_Client */
         $solarium = $this->get('solarium.client');
 
-        // If not department was specified we can fetch the popular products just using SQL
-        if(!$departmentId)
+        // If no department was specified we can fetch the popular products just using SQL
+        if(!$departmentIds)
         {
             $qb = $em->createQueryBuilder();
             $qb->select('p, count(op.id) AS total')
@@ -631,10 +638,10 @@ class ListingController extends Controller
                 ->addOrderBy('total', 'DESC');
             $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
                 ->setParameter('unitCost', 200);
-            if($brandId)
+            if($brandIds)
             {
-                $qb->andWhere($qb->expr()->eq('p.brand', ':brand'))
-                    ->setParameter('brand', $brandId);
+                $qb->andWhere($qb->expr()->in('p.brand', ':brands'))
+                    ->setParameter('brands', $brandIds);
             }
             if($num)
             {
@@ -643,41 +650,58 @@ class ListingController extends Controller
 
             return $qb->getQuery()->execute();
         } else {
+            $ids = array();
+
             $query = $solarium->createSelect();
             $helper = $query->getHelper();
             $query->setQuery('*');
             $query->setFields(array('id'));
             $query->setRows(99999999);
 
-            // Get the department
-            $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
+            $parts = array();
+            foreach($departmentIds as $departmentId)
+            {
+                // Get the department
+                $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
+
+                if ($department)
+                {
+                    // Get path
+                    $departmentFilterPath = "";
+                    $currDepartment = $department;
+                    do {
+                        $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
+                        $currDepartment = $currDepartment->getParent();
+                    } while ($currDepartment !== null);
+                    $parts[] = 'department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|"));
+                }
+            }
+            if(count($parts) > 0)
+            {
+                $query->createFilterQuery('department')->setQuery(implode(' OR ', $parts));
+            }
 
             // If brand was specified fetch from the database
-            $brand = null;
-            if ($brandId)
+            $parts = array();
+            if ($brandIds)
             {
-                $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
+                foreach($brandIds as $brandId)
+                {
+                    $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
+                    if ($brand)
+                    {
+                        $parts[] = 'brand:'.$helper->escapePhrase($brand->getDescription()->getName ());
+                    }
+                }
             }
 
-            if ($department)
+            if(count($parts) > 0)
             {
-                // Get path
-                $departmentFilterPath = "";
-                $currDepartment = $department;
-                do {
-                    $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
-                    $currDepartment = $currDepartment->getParent();
-                } while ($currDepartment !== null);
-                $query->createFilterQuery('department')->setQuery('department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|")));
+                $query->createFilterQuery('brand')->addTag('brand')->setQuery(implode(' OR ', $parts));
             }
 
-            if ($brand)
-            {
-                $query->createFilterQuery('brand')->addTag('brand')->setQuery('brand:'.$helper->escapePhrase($brand->getDescription()->getName ()));
-            }
             $results = $solarium->execute($query);
 
-            $ids = array();
             foreach ($results as $document)
             {
                 $ids[] = $document->id;

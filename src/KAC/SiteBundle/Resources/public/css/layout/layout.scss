@@ -1,3 +1,5 @@
+@import "compass";
+@import "../includes/base";
 $containerWidth: 980px;
 
 html {
@@ -39,8 +41,21 @@ html.modal body > section {
     @include boxInsetShadow($colourGreyDark, 0, 1px, 5px);
 }
 
+.header-contents {
+    width: $containerWidth;
+    margin: 0 auto;
+    height: 60px;
+
+    position: relative;
+}
+
 .logo {
-    float: left;
+    width: 189px;
+    height: 60px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .logo a {
@@ -240,6 +255,23 @@ table.listing td a {
 
 .footer a:hover {
     text-decoration: underline;
+}
+
+.floating-advert-container {
+  width: 160px;
+  min-height: 300px;
+
+  position: absolute;
+  top: 204px;
+  left: 50%;
+}
+
+.floating-advert-container-left {
+  margin: 0 0 0 -662px;
+}
+
+.floating-advert-container-right {
+  margin: 0 0 0 502px;
 }
 
 @media

@@ -34,8 +34,8 @@
         <div class="widget widget-1-of-1">
             <div class="ui-widget">
                 <section class="ui-widget-content pbn ui-corner-all">
-                    {{ render_esi(controller('KACSiteBundle:Listing:popularProducts')) }}
-                    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands')) }}
+                    {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': [1094, 16, 8, 53, 173] })) }}
+                    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentIds': [1094, 16, 8, 53, 173] })) }}
                     <h3 class="separator">Shop by Popular Department</h3>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-5">

@@ -156,77 +156,62 @@
     background-position: -0px -135px;
 }
 
-.trustpilot-reviews-border {
-    margin: $spacingSmall -#{$spacingLarge} $spacingMedium -#{$spacingLarge};
-    padding: 3px;
-
-    background: $colourWhite;
-    overflow: hidden;
-    @include equalBorderRadius($radiusSize);
-    @include boxGlow($colourBlack, $spacingSmall, 0, 0.7);
-}
-
 .trustpilot-reviews-container {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 
-    @include verticalGradient(#2D802D, #6BAA3C);
-    @include equalBorderRadius($radiusSize);
+  @include boxGlow($colourBlack, $spacingSmall, 0, 0.7);
+  @include verticalGradient(#023544, #294F59);
+  @include equalBorderRadius($radiusSize);
 }
 
 .trustpilot-reviews {
-    @include boxInsetShadow($colourGreyDark, 0, 0, $spacingSmall);
-    background-image: url("#{$cssPath}/resources/images/icons/trustpilot_background_tick.png");
-    background-repeat: no-repeat;
-    background-position: top right;
-    background-size: 700px 200px;
-    @include equalBorderRadius($radiusSize);
+  background-image: url("#{$cssPath}/resources/images/icons/trustpilot_background_tick.png");
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 200px 700px;
+  @include equalBorderRadius($radiusSize);
 }
 
-.trustpilot-reviews-container h2 {
-    padding: 0 $spacingMedium;
+.trustpilot-reviews h2 {
+    padding: $spacingMedium $spacingMedium 0 $spacingMedium;
     margin: 0;
 
     color: $colourWhite;
-    @include fontSize(22);
+    text-align: center;
+    @include fontSize(18);
     @include textShadow($colourGreyDark, 1px, 0);
-    line-height: 30px;
+    letter-spacing: 1px;
+    line-height: 20px;
 }
 
-.trustpilot-reviews-container h3 {
-    padding: 0 $spacingMedium;
-    margin: 0;
-
-    color: $colourGreyExtraLight;
-    @include fontSize($fontSizeSmall);
-    line-height: 30px;
-    font-weight: normal;
-}
-
-.trustpilot-reviews-container h4 {
+.trustpilot-reviews h4 {
     margin: 0 0 $spacingSmall 0;
 
     color: $colourWhite;
+    text-align: center;
     @include fontSize($fontSizeLarge);
 }
 
-.trustpilot-reviews-container p {
+.trustpilot-reviews p {
     margin: 0;
 
-    color: $colourGreyExtraLight;
+    color: $colourWhite;
     @include fontSize($fontSizeSmall);
     line-height: 14px;
 }
 
-.trustpilot-reviews-container a {
+.trustpilot-reviews a {
     text-decoration: none;
     color: $colourWhite;
 }
 
 .trustpilot-overall-rating {
-    padding: 3px $spacingMedium 3px 0;
+    padding: $spacingSmall $spacingMedium $spacingMedium $spacingMedium;
+    width: 120px;
+    margin: 0 auto;
 
-    float: left;
+    border-bottom: 1px solid #68C8E3;
 }
 
 .trustpilot-rating {
@@ -234,10 +219,11 @@
 }
 
 .trustpilot-review-star {
-    float: left;
     display: block;
 
-    background-image: url("#{$cssPath}/resources/images/icons/white_star.png");
+    float: left;
+
+    background-image: url("#{$cssPath}/resources/images/icons/yellow_star.png");
     background-position: 0 0;
 }
 
@@ -256,29 +242,22 @@
 }
 
 .trustpilot-review {
-    padding: $spacingSmall $spacingMedium $spacingMedium $spacingMedium;
+    padding: $spacingMedium;
+    border-bottom: 1px solid #68C8E3;
 }
 
 .trustpilot-review-content
 {
-    margin: 0 0 0 62px;
-}
+    margin: 0;
 
-.trustpilot-review-user-image {
-    margin: 0 auto;
-    width: 42px;
-
-    border: 5px solid $colourWhite;
-    background: $colourWhite;
-    @include boxGlow($colourBlack, $spacingSmall, 0, 0.7);
+    text-align: center;
 }
 
 .trustpilot-review-user-name {
     padding: 0 $spacingSmall 0 0;
     margin: 0;
 
-    float: left;
-
+    text-align: center;
     @include fontSize($fontSizeSmall);
     line-height: 14px;
     color: $colourWhite;
@@ -287,17 +266,25 @@
 .trustpilot-review-rating {
     padding: $spacingSmall 0 0 0;
     margin: 0;
-    height: 14px;
 
-    @include ellipsis;
+    text-align: center;
 }
 
 .trustpilot-review-read-more {
-    padding: $spacingSmall 0 0 $spacingMedium;
-
-    float: right;
+    margin: 0;
 
     @include fontSize($fontSizeSmall);
     line-height: 14px;
-    margin: 0;
+    text-align: center;
+}
+
+.trustpilot-review-count {
+    padding: $spacingMedium;
+
+    text-align: center;
+    @include fontSize($fontSizeExtraSmall);
+}
+
+.trustpilot-review-count span {
+  @include fontSize($fontSizeExtraSmall);
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html{% if app.request.query.get('modal') == true %} class="modal"{% endif %}>
+<html class="no-js{% if app.request.query.get('modal') == true %} modal{% endif %}">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
         {% if app.request.query.get('modal') != true %}
             <meta name="google-site-verification" content="iEztzaBnI5VsikHe3OXqS_r3RpPyiwtCKLQnacqFu8A" />
             <title>{% block title %}Kitchen Appliance Centre{% endblock %}</title>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="header">
-                        <div class="container pr">
+                        <div class="header-contents">
                             {% include 'KACSiteBundle:Includes:logo.html.twig' %}
                             {% include 'KACSiteBundle:Includes:search.html.twig' %}
                             <div id="basket-summary" data-url="{{ path('basket_small_summary') }}">
@@ -98,10 +98,10 @@
                     </div>
                 </header>
                 {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
+                {% include 'KACSiteBundle:Includes:leftAdvertisingBoard.html.twig' %}
                 <section class="container">
                     <div class="content">
                         {% block slider %}{% endblock %}
-                        {{ render_esi(url('reviews_trustpilot')) }}
                         {% block header %}{% endblock %}
         {% endif %}
             {% block body %}{% endblock %}
@@ -109,6 +109,7 @@
         {% if app.request.query.get('modal') != true %}
                     </div>
                 </section>
+                {% include 'KACSiteBundle:Includes:rightAdvertisingBoard.html.twig' %}
             </div>
         {% endif %}
         {% include 'KACSiteBundle:Includes:footer.html.twig' %}

@@ -1,4 +1,12 @@
+@import "compass";
+@import "../includes/base";
+
 $zIndex: 0;
+
+$zIndex: $zIndex + 1;
+.document > section.container {
+  z-index: $zIndex;
+}
 
 $zIndex: $zIndex + 1;
 .content {
@@ -120,6 +128,11 @@ $zIndex: $zIndex + 1;
 $zIndex: $zIndex + 1;
 .inline-error {
     z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
+.document > header {
+  z-index: $zIndex;
 }
 
 $zIndex: $zIndex + 1;

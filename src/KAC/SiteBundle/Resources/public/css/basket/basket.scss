@@ -1,3 +1,6 @@
+@import "compass";
+@import "../includes/base";
+
 .basket-message {
     color: $colourRed;
     @include fontSize(13);
@@ -5,13 +8,14 @@
 
 #basket-summary {
     width: 230px;
+    height: 50px;
     margin: 0;
     padding: $spacingSmall $spacingMedium;
 
     position: absolute;
+    top: 0;
     right: 0;
 
-    overflow: hidden;
     @include equalBorderRadius($radiusSize);
     @include verticalGradientWhiteToGreyLight;
     @include boxShadow($colourGreyDark, 0, -2px, 5px);
@@ -19,6 +23,7 @@
 
 #basket-summary.expanded {
     width: 600px;
+    height: auto;
 }
 
 .basket-summary-header {
