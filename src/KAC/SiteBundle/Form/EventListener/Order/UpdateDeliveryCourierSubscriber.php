@@ -4,7 +4,7 @@ namespace KAC\SiteBundle\Form\EventListener\Order;
 
 use KAC\SiteBundle\Entity\Order;
 use KAC\SiteBundle\Manager\Delivery\Courier\CourierInterface;
-use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use KAC\SiteBundle\Manager\Delivery\Method\DeliveryMethodInterface;
 use KAC\SiteBundle\Manager\DeliveryManager;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
@@ -61,7 +61,7 @@ class UpdateDeliveryCourierSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $method = DeliveryMethodFactory::getMethod($deliveryType);
+        $method = DeliveryFactory::getMethod($deliveryType);
         if($method === null) {
             return;
         }

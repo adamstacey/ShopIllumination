@@ -16,7 +16,7 @@ use KAC\SiteBundle\Form\Checkout\DeliveryAddressType;
 use KAC\SiteBundle\Form\Checkout\DeliveryType;
 use KAC\SiteBundle\Form\Checkout\PaymentType;
 use KAC\SiteBundle\Form\Checkout\PaymentTypeType;
-use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use KAC\SiteBundle\Model\BasketItem;
 use KAC\UserBundle\Entity\User;
 use Omnipay\Common\AbstractGateway;
@@ -106,7 +106,7 @@ class CheckoutController extends Controller
             return $this->redirect($this->generateUrl('checkout_address'));
         }
 
-        $form = $this->createForm(new AboutType(DeliveryMethodFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())), $order);
+        $form = $this->createForm(new AboutType(DeliveryFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())), $order);
         $form->handleRequest($request);
 
         $user = null;
@@ -252,7 +252,7 @@ class CheckoutController extends Controller
 
         $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
         $band = $deliveryManager->calculateBand($order->getProducts());
-        $methods = DeliveryMethodFactory::getMethods($zone, $band);
+        $methods = DeliveryFactory::getMethods($zone, $band);
         if($order->getDeliveryType())
         {
             foreach($methods as $method)

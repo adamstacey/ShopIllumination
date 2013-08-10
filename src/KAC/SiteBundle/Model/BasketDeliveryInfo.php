@@ -2,7 +2,7 @@
 namespace KAC\SiteBundle\Model;
 
 use JMS\Serializer\Annotation as Serializer;
-use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class BasketDeliveryInfo
@@ -97,12 +97,12 @@ class BasketDeliveryInfo
 
         foreach($methods as $methodName)
         {
-            if(($method = DeliveryMethodFactory::getMethod($methodName)) !== null)
+            if(($method = DeliveryFactory::getMethod($methodName)) !== null)
             {
                 $this->methods[] = $method;
             }
         }
-        if(($method = DeliveryMethodFactory::getMethod($this->method)) !== null)
+        if(($method = DeliveryFactory::getMethod($this->method)) !== null)
         {
             $this->method = $method;
         }

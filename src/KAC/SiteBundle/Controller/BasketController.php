@@ -4,7 +4,7 @@ namespace KAC\SiteBundle\Controller;
 
 use KAC\SiteBundle\Form\Basket\BasketType;
 use KAC\SiteBundle\Form\Basket\NewBasketItemType;
-use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use KAC\SiteBundle\Model\BasketItem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -233,7 +233,7 @@ class BasketController extends Controller
             $band = $deliveryManager->calculateBand($basket->getItems());
 
             // Get available methods
-            $methods = DeliveryMethodFactory::getMethods($zone, $band);
+            $methods = DeliveryFactory::getMethods($zone, $band);
 
             return new Response(json_encode(array('status' => 'Success', 'methods' => $methods)));
         }

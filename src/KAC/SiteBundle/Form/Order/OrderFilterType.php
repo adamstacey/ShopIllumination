@@ -3,7 +3,7 @@
 namespace KAC\SiteBundle\Form\Order;
 
 use KAC\SiteBundle\Entity\Order;
-use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ObjectChoiceList;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -49,7 +49,7 @@ class OrderFilterType extends AbstractType {
         ));
         $builder->add('deliveryType', 'choice', array(
             'label' => 'Delivery Method',
-            'choice_list' => new ObjectChoiceList(array_combine(DeliveryMethodFactory::getAllMethodNames(), DeliveryMethodFactory::getAllMethods()), 'name', array(), null, 'name'),
+            'choice_list' => new ObjectChoiceList(array_combine(DeliveryFactory::getAllMethodNames(), DeliveryFactory::getAllMethods()), 'name', array(), null, 'name'),
             'multiple' => true,
             'required' => false,
         ));

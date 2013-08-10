@@ -14,7 +14,7 @@ use KAC\SiteBundle\Form\Order\PaymentType;
 use KAC\SiteBundle\Form\Order\OverviewType;
 use KAC\SiteBundle\Form\Order\ProcessDeliveryType;
 use KAC\SiteBundle\Form\Order\ProductsType;
-use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -365,7 +365,7 @@ class OrderController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $order = new Order();
-        $deliveryMethods = DeliveryMethodFactory::getAllMethodNames();
+        $deliveryMethods = DeliveryFactory::getAllMethodNames();
         $form = $this->createForm(new NewOrderType($deliveryMethods), $order);
 
         if ($request->isMethod('POST')) {
@@ -443,7 +443,7 @@ class OrderController extends Controller
         }
 
 
-        $deliveryMethods = DeliveryMethodFactory::getAllMethodNames();
+        $deliveryMethods = DeliveryFactory::getAllMethodNames();
         $form = $this->createForm(new EditOrderType($deliveryMethods), $order);
 
         if ($request->isMethod('POST')) {

@@ -2,7 +2,7 @@
 namespace KAC\SiteBundle\Manager;
 
 use FOS\UserBundle\Model\UserManagerInterface;
-use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use KAC\SiteBundle\Model\Basket;
 use KAC\UserBundle\Entity\User;
 use Knp\Snappy\Pdf;
@@ -204,7 +204,7 @@ class OrderManager extends Manager
     {
         if($order->getDeliveryType())
         {
-            $deliveryMethod = DeliveryMethodFactory::getMethod($order->getDeliveryType());
+            $deliveryMethod = DeliveryFactory::getMethod($order->getDeliveryType());
             if($deliveryMethod)
             {
                 $zone = $this->deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
