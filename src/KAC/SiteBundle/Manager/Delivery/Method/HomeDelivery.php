@@ -109,4 +109,15 @@ class HomeDelivery extends AbstractDeliveryMethod
     {
         return 'Goods sent home delivery service by GHD Distribution. This is a two-man delivery service where the goods are taken into the house on the ground floor.';
     }
+
+    /**
+     * Get the root type
+     * For example 'Royal Mail 1st Class' will have the root type of 'Royal Mail'
+     *
+     * @return string
+     */
+    function getType()
+    {
+        return 'Home Delivery';
+    }
 }

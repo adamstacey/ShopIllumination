@@ -47,11 +47,19 @@ interface DeliveryMethodInterface
     function calculateEstimatedDeliveryDates($zone, $band);
 
     /**
-     * Get the name of the courier
+     * Get the name of the delivery method
      *
      * @return string
      */
     function getName();
+
+    /**
+     * Get the root type
+     * For example 'Royal Mail 1st Class' will have the root type of 'Royal Mail'
+     *
+     * @return string
+     */
+    function getType();
 
     /**
      * Get the description of the courier

@@ -4,7 +4,7 @@ namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class PalletDeliveryExpress extends AbstractDeliveryMethod
+class PalletDeliveryExpress extends Pallet
 {
     /**
      * Check if the delivery method supports a location

@@ -4,7 +4,7 @@ namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class FreeRoyalMail extends AbstractDeliveryMethod
+class FreeRoyalMail extends RoyalMail
 {
     /**
      * Check if the delivery method supports a location

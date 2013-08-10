@@ -67,4 +67,15 @@ class Collection extends AbstractDeliveryMethod
     {
         return 'You will need to collect your order from our shop in Nottingham. We will contact you as soon as your order is ready for collection.';
     }
+
+    /**
+     * Get the root type
+     * For example 'Royal Mail 1st Class' will have the root type of 'Royal Mail'
+     *
+     * @return string
+     */
+    function getType()
+    {
+        return 'Collection';
+    }
 }

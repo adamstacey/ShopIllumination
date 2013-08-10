@@ -4,7 +4,7 @@ namespace KAC\SiteBundle\Manager\Delivery\Method;
 
 use KAC\SiteBundle\Manager\Delivery\ShippableInterface;
 
-class FreeParcelExpress extends AbstractDeliveryMethod
+class FreeParcelExpress extends Parcel
 {
     /**
      * Check if the delivery method supports a location
