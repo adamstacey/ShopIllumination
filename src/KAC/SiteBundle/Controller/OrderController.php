@@ -240,7 +240,7 @@ class OrderController extends Controller
                 )));
             }
 
-            return $this->render('KACSiteBundle:Order:processDelivery.html.twig', array(
+            return $this->render('KACSiteBundle:Order:processDeliveries.html.twig', array(
                 'orders' => $orders,
                 'form' => $form->createView()
             ));
