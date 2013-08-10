@@ -106,7 +106,7 @@ services:
             - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
             - { name: doctrine.event_listener, event: preRemove, method: preRemove}
 
-    # Form Services
+    # Form Flow Services
     kac_site.form.new_department:
         class: KAC\SiteBundle\Form\Department\NewDepartmentType
         tags:
@@ -139,6 +139,11 @@ services:
         scope: request
         calls:
             - [ setFormType, [@kac_site.form.new_variant]]
+    # Forms
+    acme_demo.form.type.gender:
+        class: KAC\SiteBundle\Form\QuantityType
+        tags:
+            - { name: form.type, alias: quantity }
 
     # Payment
     kac_site.payment.factory:

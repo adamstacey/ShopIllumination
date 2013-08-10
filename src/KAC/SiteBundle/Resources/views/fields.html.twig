@@ -122,6 +122,17 @@
     {% endspaceless %}
 {% endblock repeated_row %}
 
+{% block quantity_widget %}
+    {% spaceless %}
+        <div {{ block('widget_container_attributes') }}>
+            {% set type = type|default('text') %}
+            {{ block('form_widget_simple') }}
+            <button type="button" class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+            <button type="button" class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
 {% block collection_row %}
     {% spaceless %}
         {% if prototype is defined %}

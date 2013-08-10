@@ -1,0 +1,86 @@
+{# Forms #}
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% form_theme form _self %}
+
+{% block _order_process_delivery_orders_entry_row %}
+    {% set order = form.vars.value %}
+    <tr class="order" id="order-{{ order.id }}">
+        <td width="1" class="ac filterable">
+            <a href="{{ path('orders_view', {'id': order.id}) }}"><strong>{{ order.id }}</strong></a>
+        </td>
+        <td class="al">
+            {{ order.deliveryType|replace({'FREE DELIVERY ': ''}) }}
+            <br />
+            {% if order.deliveryCharge > 0 %}
+                {{ order.deliveryCharge|currency }}
+            {% else %}
+                <strong class="green">FREE</strong>
+            {% endif %}
+        </td>
+        <td>
+            {% if form.courier is defined %}{{ form_widget(form.courier) }}{% endif %}
+        </td>
+        <td>{{ form_widget(form.numberOfPackages) }}</td>
+        <td>
+            {% if form.trackingNumber is defined %}
+                {{ form_widget(form.trackingNumber) }}
+            {% endif %}
+        </td>
+        <td>
+            {{ form_widget(form.sendReviewRequest) }}
+        </td>
+    </tr>
+{% endblock %}
+
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <table border="0" {{ block('widget_container_attributes') }}>
+            <tr>
+            {% for child in form %}
+                <td>{{ form_widget(child) }}</td>
+                <td>{{ form_label(child) }}</td>
+            {% endfor %}
+            </tr>
+        </table>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block title %}Orders | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Process Deliveries</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <fieldset class="pbm ptm">
+            {% if form.orders|length > 0 %}
+                <table class="data-table" id="listing-orders" width="100%">
+                    <thead>
+                    <tr>
+                        <th width="1" class="ac">Order</th>
+                        <th class="al">Delivery</th>
+                        <th width="1" class="al">Courier</th>
+                        <th width="77" class="ac">Packages</th>
+                        <th class="ac">Tracking Information</th>
+                        <th class="ac">Review?</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for form_order in form.orders %}
+                        {{ form_row(form_order) }}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="no-results">Sorry, there were no orders in your queue that need processing.</p>
+            {% endif %}
+            <div class="clearfix mtl">
+                <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Process</button>
+                <a href="{{ path('orders_queue') }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
+            </div>
+        </fieldset>
+    </section>
+{% endblock %}

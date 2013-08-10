@@ -12,9 +12,9 @@ abstract class Parcel extends AbstractDeliveryMethod
         return 'Parcel';
     }
 
-    function getCouriers()
+    protected function getCourierClasses()
     {
-        return array_merge(parent::getCouriers(), array(
+        return array_merge(parent::getCourierClasses(), array(
            'KAC\SiteBundle\Manager\Delivery\Courier\Dpd',
            'KAC\SiteBundle\Manager\Delivery\Courier\Parcelforce',
         ));

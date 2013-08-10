@@ -12,6 +12,7 @@ use KAC\SiteBundle\Form\Order\OrderFilterType;
 use KAC\SiteBundle\Form\Order\OrderType;
 use KAC\SiteBundle\Form\Order\PaymentType;
 use KAC\SiteBundle\Form\Order\OverviewType;
+use KAC\SiteBundle\Form\Order\ProcessDeliveryType;
 use KAC\SiteBundle\Form\Order\ProductsType;
 use KAC\SiteBundle\Manager\Delivery\DeliveryMethodFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -198,32 +199,20 @@ class OrderController extends Controller
          */
         $em = $this->getDoctrine()->getManager();
 
-        $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.id IN (?1)')
-            ->setParameter(1, $queue->all())
-            ->execute();
+
 
         // If the user choose to process deliveries then create the form and show the user the template
         $action = explode('-', $request->query->get('action'));
 
-        if($action[0] === 'delivery')
+        if($action[0] === 'deliveries')
         {
-            $form = $this->createFormBuilder()
-                ->add('action', 'choice', array(
-                    'choices' => array(
-                        'deliveries' => 'Process Deliveries',
-                        'printOrders' => 'Print Orders',
-                        'printCopyOrders' => 'Print Copy Orders',
-                        'printDeliveryNotes' => 'Print Delivery Notes',
-                        'printCustomerInvoices' => 'Print Customer Orders',
-                        'emailCustomerInvoices' => 'Email Customer Orders',
-                    )
-                ))
-                ->add('clear', 'checkbox', array(
-                    'label' => 'Clear queue after processing',
-                ))
-                ->getForm();
+            $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.deliveryType != \'Collection\' AND o.status = \'Processing Your Order\' AND o.id IN (?1)')
+                ->setParameter(1, $queue->all())
+                ->execute();
 
-            $form->submit($request);
+            $form = $this->createForm(new ProcessDeliveryType($this->get('kac_site.manager.delivery')), array('orders' => $orders));
+
+            $form->handleRequest($request);
             if($form->isValid()) {
                 $data = $form->getData();
 
@@ -243,12 +232,16 @@ class OrderController extends Controller
                 ->getQuery()
                 ->execute();
 
-            return $this->render('KACSiteBundle:Order:queue.html.twig', array(
+            return $this->render('KACSiteBundle:Order:processDelivery.html.twig', array(
                 'orders' => $orders,
                 'form' => $form->createView()
             ));
             // If the user choose to generate a document then ensure the file is generated and show the user the resulting file
         } elseif($action[0] === 'document') {
+            $orders = $em->createQuery('SELECT o FROM KAC\SiteBundle\Entity\Order o WHERE o.id IN (?1)')
+                ->setParameter(1, $queue->all())
+                ->execute();
+
             /**
              * @var $order Order
              */
@@ -311,7 +304,7 @@ class OrderController extends Controller
             }
         }
 
-        return $this->redirect($this->generateUrl('orders_index'));
+        return $this->redirect($this->generateUrl('orders_queue'));
     }
 
     /**

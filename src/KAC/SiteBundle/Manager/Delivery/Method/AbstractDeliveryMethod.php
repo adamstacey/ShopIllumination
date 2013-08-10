@@ -2,6 +2,8 @@
 
 namespace KAC\SiteBundle\Manager\Delivery\Method;
 
+use KAC\SiteBundle\Manager\Delivery\Courier\CourierInterface;
+
 abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
 {
     const CUT_OFF_TIME = 12;
@@ -72,12 +74,27 @@ abstract class AbstractDeliveryMethod implements DeliveryMethodInterface
     }
 
     /**
-     * @inherit
+     * Get all available couriers for this delivery method
+     *
+     * @return CourierInterface[]
      */
     function getCouriers()
     {
-        return array();
+        $couriers = array();
+
+        foreach($this->getCourierClasses() as $class)
+        {
+            $couriers[] = new $class;
+        }
+
+        return $couriers;
     }
 
-
+    /**
+     * @inherit
+     */
+    protected function getCourierClasses()
+    {
+        return array();
+    }
 } 
