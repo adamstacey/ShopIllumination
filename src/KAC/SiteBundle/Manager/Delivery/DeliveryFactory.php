@@ -110,7 +110,7 @@ class DeliveryFactory {
     /**
      * @param $name
      *
-     * @return DeliveryMethodInterface|null
+     * @return CourierInterface|null
      */
     public static function getCourier($name)
     {

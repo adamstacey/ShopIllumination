@@ -1459,53 +1459,7 @@ class OrdersController extends Controller
                                 $em->flush();
                                 break;
                             case 'Parcelforce':
-                                // Add the new note
-                                $htmlNote = "Your item has been dispatched for signed delivery with Parcelforce. Your consignment number is ".$itemTrackingNumber.".\n\n";
-                                $htmlNote .= "<a href=\"http://www.parcelforce.com/track-trace?trackNumber=".$itemTrackingNumber."\">Click here to track your delivery.</a>\n\n";
-                                $htmlNote .= "Tracking will be active after 5.30pm today.";
-                                $plainTextNote = "Your item has been dispatched for signed delivery with Parcelforce. Your consignment number is ".$itemTrackingNumber.".\n\n";
-                                $plainTextNote .= "Go to http://www.parcelforce.com/track-trace?trackNumber=".$itemTrackingNumber." to track your delivery.";
-                                $plainTextNote .= "Tracking will be active after 5.30pm today.";
-                                $orderNoteObject = new Order\Note();
-                                $orderNoteObject->setOrder($itemObject);
-                                $orderNoteObject->setNoteType('customer');
-                                $orderNoteObject->setNotified(1);
-                                $orderNoteObject->setNote($plainTextNote);
-                                $orderNoteObject->setCreator($admin['contact']['firstName'].' '.$admin['contact']['lastName']);
-                                $em->persist($orderNoteObject);
-                                $em->flush();
 
-                                // Update notes count on order
-                                $itemObject->setNotesCount(intval($itemObject->getNotesCount()) + 1);
-                                $em->persist($itemObject);
-                                $em->flush();
-
-                                // Send the email
-                                try
-                                {
-                                    $email = \Swift_Message::newInstance();
-                                    $email->setSubject('You have a new Message from Kitchen Appliance Centre about your Order: '.$itemObject->getId());
-                                    $email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
-                                    $email->setTo(array($itemObject->getEmailAddress() => $itemObject->getFirstName().' '.$itemObject->getLastName()));
-                                    if ($itemObject->getSendReviewRequest() > 0)
-                                    {
-                                        $email->setBcc(array('0cbe3042@trustpilotservice.com'));
-                                    }
-                                    $email->setBody($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.html.twig', array('order' => $itemObject, 'note' => $htmlNote)), 'text/html');
-                                    $email->addPart($this->renderView('WebIlluminationAdminBundle:'.$this->settings['multipleModel'].':message.txt.twig', array('order' => $itemObject, 'note' => $plainTextNote)), 'text/plain');
-                                    $this->get('mailer')->send($email);
-
-                                    // Set the review as requested
-                                    $itemObject->setReviewRequested(1);
-                                    $em->persist($itemObject);
-                                    $em->flush();
-                                } catch (Exception $exception) {
-                                    error_log('Error sending email!');
-                                }
-
-                                // Update the order status
-                                $itemObject->setStatus('Order Completed');
-                                $itemObject->setLabelsPrinted(1);
                                 $em->persist($itemObject);
                                 $em->flush();
                                 break;

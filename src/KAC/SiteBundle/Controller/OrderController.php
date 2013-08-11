@@ -213,6 +213,9 @@ class OrderController extends Controller
 
         if($action[0] === 'deliveries')
         {
+            /**
+             * @var $orders Order[]
+             */
             if(count($queue->all()) === 0)
             {
                 $orders = array();
@@ -232,13 +235,53 @@ class OrderController extends Controller
 
             $form->handleRequest($request);
             if($form->isValid()) {
-                $data = $form->getData();
+                // Setup processing data
+                $data = array();
+                $data['dpdImportFile'] = "Account|AddressCode|Name|Address 1|Address 2|Town|County|PostCode|Service|Qty of Labels|Contact|Telephone|Email|Email2|Additional Info\n";
+                $data['dpdImportFileName'] = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/imports/dpd/import-'.date('dmYHis').'.txt';
+                $data['dpdLabels'] = 0;
+                $data['royalMailImportFileName'] = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Data.txt';
+                $data['royalMailLockFileName'] = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Lock.txt';
+                $data['royalMailImportLine'] = 1;
 
                 foreach($orders as $order)
                 {
+                    $courier = $order->getCourierObject();
+                    $courier->process($order, $data, $this->container);
+
                     $em->persist($order);
                 }
                 $em->flush();
+                
+                // Final processing + label printing
+                $this->get('session')->getFlashBag()->add('success', 'The orders have been successfully processed.');
+
+                // Check if we need to save the DPD import file
+                if ($data['dpdLabels'] > 0)
+                {
+                    $fileHandle = fopen($data['dpdImportFileName'], 'w');
+                    fwrite($fileHandle, $data['dpdImportFile']);
+                    fclose($fileHandle);
+
+                    // Notify user
+                    $this->get('session')->getFlashBag()->add('success', ' '.$data['dpdLabels'].' DPD '.($data['dpdLabels'] == 1?'order has':'orders have').' been sent to the label printer.');
+                }
+
+                // Check if we need to save the Royal Mail import file
+                if ($data['royalMailLabels'] > 0)
+                {
+                    $fileHandle = fopen($data['royalMailImportFileName'], 'a');
+                    fwrite($fileHandle, $data['royalMailImportFile']);
+                    fclose($fileHandle);
+
+                    // Also generate lock file for Royal Mail
+                    $fileHandle = fopen($data['royalMailLockFileName'], 'w');
+                    fwrite($fileHandle, "1");
+                    fclose($fileHandle);
+
+                    // Notify user
+                    $this->get('session')->getFlashBag()->add('success', ' '.$data['royalMailLabels'].' Royal Mail '.($data['royalMailLabels'] == 1?'order has':'orders have').' been sent to the label printer.');
+                }
 
                 $this->get('session')->getFlashBag()->add('success', 'The orders have been successfully processed.');
 
