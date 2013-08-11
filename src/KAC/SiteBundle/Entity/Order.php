@@ -4,6 +4,7 @@ namespace KAC\SiteBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use KAC\UserBundle\Entity\User;
 use Omnipay\Common\CreditCard;
 
@@ -39,7 +40,7 @@ class Order
      * @ORM\OneToMany(targetEntity="KAC\SiteBundle\Entity\Order\Note", mappedBy="order", cascade={"all"})
      */
     private $notes;
-    
+
     /**
      * @ORM\Column(name="status", type="string", length=255)
      */
@@ -49,12 +50,12 @@ class Order
      * @ORM\Column(name="current_step", type="string", length=255, nullable=true)
      */
     private $currentStep;
-        
+
     /**
      * @ORM\Column(name="payment_type", type="string", length=255, nullable=true)
      */
     private $paymentType;
-    
+
     /**
      * @ORM\Column(name="payment_response", type="text", nullable=true)
      */
@@ -63,107 +64,107 @@ class Order
      * @ORM\Column(name="auth_response", type="text", nullable=true)
      */
     private $authResponse;
-    
+
     /**
      * @ORM\Column(name="delivery_type", type="string", length=255, nullable=true)
      */
     private $deliveryType;
-    
+
     /**
      * @ORM\Column(name="courier", type="string", length=255, nullable=true)
      */
     private $courier;
-    
+
     /**
      * @ORM\Column(name="number_of_packages", type="integer", length=3, nullable=true)
      */
     private $numberOfPackages = 1;
-    
+
     /**
      * @ORM\Column(name="tracking_number", type="string", length=255, nullable=true)
      */
     private $trackingNumber;
-        
+
     /**
      * @ORM\Column(name="labels_printed", type="boolean", nullable=true)
      */
     private $labelsPrinted;
-    
+
     /**
      * @ORM\Column(name="send_review_request", type="boolean", nullable=true)
      */
     private $sendReviewRequest;
-    
+
     /**
      * @ORM\Column(name="review_requested", type="boolean", nullable=true)
      */
     private $reviewRequested;
-    
+
     /**
      * @ORM\Column(name="items", type="string", length=255, nullable=true)
      */
     private $items;
-        
+
     /**
      * @ORM\Column(name="sub_total", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $subTotal;
-        
+
     /**
      * @ORM\Column(name="delivery_charge", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $deliveryCharge;
-    
+
     /**
      * @ORM\Column(name="discount", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $discount;
-    
+
     /**
      * @ORM\Column(name="vat", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $vat;
-    
+
     /**
      * @ORM\Column(name="total", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $total;
-    
+
     /**
      * @ORM\Column(name="possible_discount", type="decimal", precision=12, scale=4, nullable=true)
      */
     private $possibleDiscount;
-        
+
     /**
      * @ORM\Column(name="first_name", type="string", length=255, nullable=true)
      */
     private $firstName;
-    
+
     /**
      * @ORM\Column(name="last_name", type="string", length=255, nullable=true)
      */
     private $lastName;
-    
+
     /**
      * @ORM\Column(name="organisation_name", type="string", length=255, nullable=true)
      */
     private $organisationName;
-    
+
     /**
      * @ORM\Column(name="email_address", type="string", length=255, nullable=true)
      */
     private $emailAddress;
-    
+
     /**
      * @ORM\Column(name="telephone_daytime", type="string", length=50, nullable=true)
      */
     private $telephoneDaytime;
-    
+
     /**
      * @ORM\Column(name="telephone_evening", type="string", length=50, nullable=true)
      */
     private $telephoneEvening;
-    
+
     /**
      * @ORM\Column(name="mobile", type="string", length=50, nullable=true)
      */
@@ -173,142 +174,142 @@ class Order
      * @ORM\Column(name="use_billing_as_delivery", type="boolean", nullable=true)
      */
     private $useBillingAsDelivery = true;
-    
+
     /**
      * @ORM\Column(name="billing_first_name", type="string", length=255, nullable=true)
      */
     private $billingFirstName;
-    
+
     /**
      * @ORM\Column(name="billing_last_name", type="string", length=255, nullable=true)
      */
     private $billingLastName;
-    
+
     /**
      * @ORM\Column(name="billing_organisation_name", type="string", length=255, nullable=true)
      */
     private $billingOrganisationName;
-    
+
     /**
      * @ORM\Column(name="billing_address_line_1", type="string", length=255, nullable=true)
      */
     private $billingAddressLine1;
-    
+
     /**
      * @ORM\Column(name="billing_address_line_2", type="string", length=255, nullable=true)
      */
     private $billingAddressLine2;
-    
+
     /**
      * @ORM\Column(name="billing_town_city", type="string", length=255, nullable=true)
      */
     private $billingTownCity;
-    
+
     /**
      * @ORM\Column(name="billing_county_state", type="string", length=255, nullable=true)
      */
     private $billingCountyState;
-    
+
     /**
      * @ORM\Column(name="billing_post_zip_code", type="string", length=255, nullable=true)
      */
     private $billingPostZipCode;
-    
+
     /**
      * @ORM\Column(name="billing_country_code", type="string", length=2, nullable=true)
      */
     private $billingCountryCode;
-    
-   	/**
+
+    /**
      * @ORM\Column(name="delivery_first_name", type="string", length=255, nullable=true)
      */
     private $deliveryFirstName;
-    
+
     /**
      * @ORM\Column(name="delivery_last_name", type="string", length=255, nullable=true)
      */
     private $deliveryLastName;
-    
+
     /**
      * @ORM\Column(name="delivery_organisation_name", type="string", length=255, nullable=true)
      */
     private $deliveryOrganisationName;
-    
+
     /**
      * @ORM\Column(name="delivery_address_line_1", type="string", length=255, nullable=true)
      */
     private $deliveryAddressLine1;
-    
+
     /**
      * @ORM\Column(name="delivery_address_line_2", type="string", length=255, nullable=true)
      */
     private $deliveryAddressLine2;
-    
+
     /**
      * @ORM\Column(name="delivery_town_city", type="string", length=255, nullable=true)
      */
     private $deliveryTownCity;
-    
+
     /**
      * @ORM\Column(name="delivery_county_state", type="string", length=255, nullable=true)
      */
     private $deliveryCountyState;
-    
+
     /**
      * @ORM\Column(name="delivery_post_zip_code", type="string", length=255, nullable=true)
      */
     private $deliveryPostZipCode;
-    
+
     /**
      * @ORM\Column(name="delivery_country_code", type="string", length=2, nullable=true)
      */
     private $deliveryCountryCode;
-    
+
     /**
      * @ORM\Column(name="estimated_delivery_days_start", type="string", length=255, nullable=true)
      */
     private $estimatedDeliveryDaysStart;
-    
+
     /**
      * @ORM\Column(name="estimated_delivery_days_end", type="string", length=255, nullable=true)
      */
     private $estimatedDeliveryDaysEnd;
-    
+
     /**
      * @ORM\Column(name="order_printed", type="boolean")
      */
     private $orderPrinted = false;
-    
+
     /**
      * @ORM\Column(name="delivery_note_printed", type="boolean")
      */
     private $deliveryNotePrinted = false;
-    
+
     /**
      * @ORM\Column(name="actioned", type="boolean")
      */
     private $actioned = false;
-    
+
     /**
      * @ORM\Column(name="fraud_check_customer_ordered", type="boolean")
      */
     private $fraudCheckCustomerOrdered = false;
-    
+
     /**
      * @ORM\Column(name="fraud_check_address_match", type="boolean")
      */
     private $fraudCheckAddressMatch = false;
-    
+
     /**
      * @ORM\Column(name="fraud_check_name_used_on_different_order", type="boolean")
      */
     private $fraudCheckNameUsedOnDifferentOrder = false;
-    
+
     /**
      * @ORM\Column(name="fraud_check_post_zip_code_used_on_different_order", type="boolean")
      */
     private $fraudCheckPostZipCodeUsedOnDifferentOrder = false;
-    
+
     /**
      * @ORM\Column(name="fraud_check_telephone_used_on_different_order", type="boolean")
      */
@@ -336,44 +337,42 @@ class Order
      */
     private $deletedAt;
 
-    private $methodObject;
-    private $courierObject;
     private $card;
 
     public function isDeleted()
     {
         return $this->getDeletedAt() !== null;
     }
-    
+
     /**
      * Get statusColour
      *
-     * @return string 
+     * @return string
      */
     public function getStatusColour()
     {
         switch ($this->status)
-    	{
-    		case 'Open Payment':
-    			return 'red';
-    		case 'Payment Failed':
-    			return 'dark-red';
-    		case 'Cancelled':
-    			return 'black';
-    		case 'Payment Received':
-    			return 'green';
-    		case 'Processing Your Order':
-    			return 'orange';
-    		case 'Back Ordered':
-    			return 'yellow';
-    		case 'Part Delivered':
-    			return 'turquoise';
-    		case 'Order Ready for Collection':
-    		case 'Order with Delivery Company':
-    			return 'blue';
-    		case 'Order Completed':
-    			return 'grey';
-    	}
+        {
+            case 'Open Payment':
+                return 'red';
+            case 'Payment Failed':
+                return 'dark-red';
+            case 'Cancelled':
+                return 'black';
+            case 'Payment Received':
+                return 'green';
+            case 'Processing Your Order':
+                return 'orange';
+            case 'Back Ordered':
+                return 'yellow';
+            case 'Part Delivered':
+                return 'turquoise';
+            case 'Order Ready for Collection':
+            case 'Order with Delivery Company':
+                return 'blue';
+            case 'Order Completed':
+                return 'grey';
+        }
         return '';
     }
 
@@ -393,31 +392,31 @@ class Order
             'Cancelled',
         );
     }
-    
+
     /**
      * Get paymentType name
      *
-     * @return string 
+     * @return string
      */
     public function getPaymentTypeName()
     {
-    	switch ($this->paymentType)
-    	{
-    		case 'SagePay':
-    		case 'sagepay':
-    			return 'SagePay';
-    		case 'PayPal through SagePay':
-    			return 'PayPal through SagePay';
-    		case 'PayPal':
-    			return 'PayPal';
-    		case 'Google Wallet':
-    		case 'google':
-    			return 'Google Wallet';
-    		case 'Voucher Code':
-    			return 'Voucher Code';
-    		case 'Gift Voucher':
-    			return 'Gift Voucher';
-    	}
+        switch ($this->paymentType)
+        {
+            case 'SagePay':
+            case 'sagepay':
+                return 'SagePay';
+            case 'PayPal through SagePay':
+                return 'PayPal through SagePay';
+            case 'PayPal':
+                return 'PayPal';
+            case 'Google Wallet':
+            case 'google':
+                return 'Google Wallet';
+            case 'Voucher Code':
+                return 'Voucher Code';
+            case 'Gift Voucher':
+                return 'Gift Voucher';
+        }
         return '';
     }
     /**
@@ -427,38 +426,38 @@ class Order
      */
     public function getPaymentTypeLogo()
     {
-    	switch ($this->paymentType)
-    	{
-    		case 'SagePay':
-    		case 'sagepay':
-    			return 'bundles/kacsite/images/logos/sage-pay-small.png';
-    		case 'PayPal through SagePay':
-    			return 'bundles/kacsite/images/logos/pay-pal-through-sage-pay-small.png';
-    		case 'PayPal':
-    		case 'paypal':
-    			return 'bundles/kacsite/images/logos/pay-pal-small.png';
-    		case 'Google Wallet':
-    			return 'bundles/kacsite/images/logos/google-wallet-small.png';
-    		case 'Voucher Code':
-    			return 'bundles/kacsite/images/logos/voucher-code-small.png';
-    		case 'Gift Voucher':
-    			return 'bundles/kacsite/images/logos/gift-voucher-small.png';
-    	}
+        switch ($this->paymentType)
+        {
+            case 'SagePay':
+            case 'sagepay':
+                return 'bundles/kacsite/images/logos/sage-pay-small.png';
+            case 'PayPal through SagePay':
+                return 'bundles/kacsite/images/logos/pay-pal-through-sage-pay-small.png';
+            case 'PayPal':
+            case 'paypal':
+                return 'bundles/kacsite/images/logos/pay-pal-small.png';
+            case 'Google Wallet':
+                return 'bundles/kacsite/images/logos/google-wallet-small.png';
+            case 'Voucher Code':
+                return 'bundles/kacsite/images/logos/voucher-code-small.png';
+            case 'Gift Voucher':
+                return 'bundles/kacsite/images/logos/gift-voucher-small.png';
+        }
         return '';
     }
 
     /**
      * Get paymentResponse
      *
-     * @return text 
+     * @return text
      */
     public function getPaymentResponse()
     {
-    	if ($this->paymentResponse != '')
-    	{
-    		return unserialize(base64_decode($this->paymentResponse));
-    	}
-     	return array();
+        if ($this->paymentResponse != '')
+        {
+            return unserialize(base64_decode($this->paymentResponse));
+        }
+        return array();
     }
 
     /**
@@ -468,144 +467,144 @@ class Order
      */
     public function getAuthResponse()
     {
-    	if ($this->authResponse != '')
-    	{
-    		return unserialize(base64_decode($this->authResponse));
-    	}
-     	return array();
+        if ($this->authResponse != '')
+        {
+            return unserialize(base64_decode($this->authResponse));
+        }
+        return array();
     }
-    
+
     /**
      * Get paymentResponseFraudColour
      *
-     * @return text 
+     * @return text
      */
     public function getPaymentResponseFraudColour()
     {
-    	$colour = 'green';
-    	if ($this->fraudCheckNameUsedOnDifferentOrder > 0)
-    	{
-    		$colour = 'red';
-    	}
-    	if ($this->fraudCheckPostZipCodeUsedOnDifferentOrder > 0)
-    	{
-    		$colour = 'red';
-    	}
-    	if ($this->fraudCheckTelephoneUsedOnDifferentOrder > 0)
-    	{
-    		$colour = 'red';
-    	}
-    	
-    	// Get the payment response
-    	$paymentResponse = $this->getPaymentResponse();
-    	
-    	if ($paymentResponse != '')
-    	{
-	    	if ($colour != 'red')
-	    	{
-		    	switch ($this->paymentType)
-		    	{
-		    		case 'SagePay':
-		    			if ($colour != 'red')
-		    			{
-			    			if (isset($paymentResponse['AVSCV2']))
-			    			{
-				    			if ($paymentResponse['AVSCV2'] == 'NO DATA MATCHES')
-				    			{
-				    				$colour = 'red';
-				    			} elseif (($paymentResponse['AVSCV2'] == 'SECURITY CODE MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'ADDRESS MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'DATA NOT CHECKED')) {
-				    				$colour = 'orange';
-				    			}
-				    		}
-				    	}
-		    			if ($colour != 'red')
-		    			{
-		    				if (isset($paymentResponse['AddressResult']))
-		    				{
-			    				if ($paymentResponse['AddressResult'] == 'NOTMATCHED')
-				    			{
-				    				$colour = 'red';
-				    			} elseif (($paymentResponse['AddressResult'] == 'NOTPROVIDED') || ($paymentResponse['AddressResult'] == 'NOTCHECKED')) {
-				    				$colour = 'orange';
-				    			}
-				    		}
-		    			}
-		    			if ($colour != 'red')
-		    			{
-		    				if (isset($paymentResponse['PostCodeResult']))
-		    				{
-			    				if ($paymentResponse['PostCodeResult'] == 'NOTMATCHED')
-				    			{
-				    				$colour = 'red';
-				    			} elseif (($paymentResponse['PostCodeResult'] == 'NOTPROVIDED') || ($paymentResponse['PostCodeResult'] == 'NOTCHECKED')) {
-				    				$colour = 'orange';
-				    			}
-				    		}
-		    			}
-		    			if ($colour != 'red')
-		    			{
-		    				if (isset($paymentResponse['CV2Result']))
-		    				{
-			    				if ($paymentResponse['CV2Result'] == 'NOTMATCHED')
-				    			{
-				    				$colour = 'red';
-				    			} elseif (($paymentResponse['CV2Result'] == 'NOTPROVIDED') || ($paymentResponse['CV2Result'] == 'NOTCHECKED')) {
-				    				$colour = 'orange';
-				    			}
-				    		}
-		    			}
-		    			if ($colour != 'red')
-		    			{
-		    				if (isset($paymentResponse['3DSecureStatus']))
-		    				{
-			    				if ($paymentResponse['3DSecureStatus'] == 'OK')
-				    			{
-				    				$colour = 'green';
-				    			} else {
-				    				$colour = 'red';
-				    			}
-				    		}
-		    			}
-		    			break;
-		    		case 'PayPal through SagePay':
-		    			if (isset($paymentResponse['PayerStatus']))
-		    			{
-			    			if ($paymentResponse['PayerStatus'] == 'UNVERIFIED')
-			    			{
-			    				$colour = 'red';
-			    			}
-			    		}
-		    			if ($colour != 'red')
-		    			{
-		    				if (isset($paymentResponse['AddressStatus']))
-		    				{
-				    			if ($paymentResponse['AddressStatus'] == 'UNCONFIRMED')
-				    			{
-				    				$colour = 'red';
-				    			} elseif ($paymentResponse['AddressStatus'] == 'NONE') {
-				    				$colour = 'orange';
-				    			}
-				    		}
-			    		}
-		    			break;
-		    		case 'PayPal':
-		    			break;
-		    		case 'Google Wallet':
-		    			break;
-		    	}
-		    }
-		}
+        $colour = 'green';
+        if ($this->fraudCheckNameUsedOnDifferentOrder > 0)
+        {
+            $colour = 'red';
+        }
+        if ($this->fraudCheckPostZipCodeUsedOnDifferentOrder > 0)
+        {
+            $colour = 'red';
+        }
+        if ($this->fraudCheckTelephoneUsedOnDifferentOrder > 0)
+        {
+            $colour = 'red';
+        }
+
+        // Get the payment response
+        $paymentResponse = $this->getPaymentResponse();
+
+        if ($paymentResponse != '')
+        {
+            if ($colour != 'red')
+            {
+                switch ($this->paymentType)
+                {
+                    case 'SagePay':
+                        if ($colour != 'red')
+                        {
+                            if (isset($paymentResponse['AVSCV2']))
+                            {
+                                if ($paymentResponse['AVSCV2'] == 'NO DATA MATCHES')
+                                {
+                                    $colour = 'red';
+                                } elseif (($paymentResponse['AVSCV2'] == 'SECURITY CODE MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'ADDRESS MATCH ONLY') || ($paymentResponse['AVSCV2'] == 'DATA NOT CHECKED')) {
+                                    $colour = 'orange';
+                                }
+                            }
+                        }
+                        if ($colour != 'red')
+                        {
+                            if (isset($paymentResponse['AddressResult']))
+                            {
+                                if ($paymentResponse['AddressResult'] == 'NOTMATCHED')
+                                {
+                                    $colour = 'red';
+                                } elseif (($paymentResponse['AddressResult'] == 'NOTPROVIDED') || ($paymentResponse['AddressResult'] == 'NOTCHECKED')) {
+                                    $colour = 'orange';
+                                }
+                            }
+                        }
+                        if ($colour != 'red')
+                        {
+                            if (isset($paymentResponse['PostCodeResult']))
+                            {
+                                if ($paymentResponse['PostCodeResult'] == 'NOTMATCHED')
+                                {
+                                    $colour = 'red';
+                                } elseif (($paymentResponse['PostCodeResult'] == 'NOTPROVIDED') || ($paymentResponse['PostCodeResult'] == 'NOTCHECKED')) {
+                                    $colour = 'orange';
+                                }
+                            }
+                        }
+                        if ($colour != 'red')
+                        {
+                            if (isset($paymentResponse['CV2Result']))
+                            {
+                                if ($paymentResponse['CV2Result'] == 'NOTMATCHED')
+                                {
+                                    $colour = 'red';
+                                } elseif (($paymentResponse['CV2Result'] == 'NOTPROVIDED') || ($paymentResponse['CV2Result'] == 'NOTCHECKED')) {
+                                    $colour = 'orange';
+                                }
+                            }
+                        }
+                        if ($colour != 'red')
+                        {
+                            if (isset($paymentResponse['3DSecureStatus']))
+                            {
+                                if ($paymentResponse['3DSecureStatus'] == 'OK')
+                                {
+                                    $colour = 'green';
+                                } else {
+                                    $colour = 'red';
+                                }
+                            }
+                        }
+                        break;
+                    case 'PayPal through SagePay':
+                        if (isset($paymentResponse['PayerStatus']))
+                        {
+                            if ($paymentResponse['PayerStatus'] == 'UNVERIFIED')
+                            {
+                                $colour = 'red';
+                            }
+                        }
+                        if ($colour != 'red')
+                        {
+                            if (isset($paymentResponse['AddressStatus']))
+                            {
+                                if ($paymentResponse['AddressStatus'] == 'UNCONFIRMED')
+                                {
+                                    $colour = 'red';
+                                } elseif ($paymentResponse['AddressStatus'] == 'NONE') {
+                                    $colour = 'orange';
+                                }
+                            }
+                        }
+                        break;
+                    case 'PayPal':
+                        break;
+                    case 'Google Wallet':
+                        break;
+                }
+            }
+        }
         return $colour;
     }
-    
+
     /**
      * Get paymentResponseFraudIcon
      *
-     * @return text 
+     * @return text
      */
     public function getPaymentResponseFraudIcon()
     {
-    	$iconColour = $this->getPaymentResponseFraudColour();
+        $iconColour = $this->getPaymentResponseFraudColour();
         return 'bundles/kacadmin/images/icons/'.$iconColour.'-light-icon.png';
     }
 
@@ -617,7 +616,7 @@ class Order
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -646,14 +645,14 @@ class Order
     public function setStatus($status)
     {
         $this->status = $status;
-    
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -669,14 +668,14 @@ class Order
     public function setPaymentType($paymentType)
     {
         $this->paymentType = $paymentType;
-    
+
         return $this;
     }
 
     /**
      * Get paymentType
      *
-     * @return string 
+     * @return string
      */
     public function getPaymentType()
     {
@@ -692,7 +691,7 @@ class Order
     public function setPaymentResponse($paymentResponse)
     {
         $this->paymentResponse = base64_encode(serialize($paymentResponse));
-    
+
         return $this;
     }
 
@@ -718,18 +717,23 @@ class Order
     public function setDeliveryType($deliveryType)
     {
         $this->deliveryType = $deliveryType;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryType
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryType()
     {
         return $this->deliveryType;
+    }
+
+    public function getDeliveryTypeObject()
+    {
+        return DeliveryFactory::getMethod($this->deliveryType);
     }
 
     /**
@@ -741,18 +745,23 @@ class Order
     public function setCourier($courier)
     {
         $this->courier = $courier;
-    
+
         return $this;
     }
 
     /**
      * Get courier
      *
-     * @return string 
+     * @return string
      */
     public function getCourier()
     {
         return $this->courier;
+    }
+
+    public function getCourierObject()
+    {
+        return DeliveryFactory::getCourier($this->courier);
     }
 
     /**
@@ -764,14 +773,14 @@ class Order
     public function setNumberOfPackages($numberOfPackages)
     {
         $this->numberOfPackages = $numberOfPackages;
-    
+
         return $this;
     }
 
     /**
      * Get numberOfPackages
      *
-     * @return integer 
+     * @return integer
      */
     public function getNumberOfPackages()
     {
@@ -787,14 +796,14 @@ class Order
     public function setTrackingNumber($trackingNumber)
     {
         $this->trackingNumber = $trackingNumber;
-    
+
         return $this;
     }
 
     /**
      * Get trackingNumber
      *
-     * @return string 
+     * @return string
      */
     public function getTrackingNumber()
     {
@@ -810,14 +819,14 @@ class Order
     public function setLabelsPrinted($labelsPrinted)
     {
         $this->labelsPrinted = $labelsPrinted;
-    
+
         return $this;
     }
 
     /**
      * Get labelsPrinted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getLabelsPrinted()
     {
@@ -833,14 +842,14 @@ class Order
     public function setSendReviewRequest($sendReviewRequest)
     {
         $this->sendReviewRequest = $sendReviewRequest;
-    
+
         return $this;
     }
 
     /**
      * Get sendReviewRequest
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSendReviewRequest()
     {
@@ -856,14 +865,14 @@ class Order
     public function setReviewRequested($reviewRequested)
     {
         $this->reviewRequested = $reviewRequested;
-    
+
         return $this;
     }
 
     /**
      * Get reviewRequested
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getReviewRequested()
     {
@@ -879,14 +888,14 @@ class Order
     public function setItems($items)
     {
         $this->items = $items;
-    
+
         return $this;
     }
 
     /**
      * Get items
      *
-     * @return string 
+     * @return string
      */
     public function getItems()
     {
@@ -902,14 +911,14 @@ class Order
     public function setSubTotal($subTotal)
     {
         $this->subTotal = $subTotal;
-    
+
         return $this;
     }
 
     /**
      * Get subTotal
      *
-     * @return float 
+     * @return float
      */
     public function getSubTotal()
     {
@@ -925,14 +934,14 @@ class Order
     public function setDeliveryCharge($deliveryCharge)
     {
         $this->deliveryCharge = $deliveryCharge;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryCharge
      *
-     * @return float 
+     * @return float
      */
     public function getDeliveryCharge()
     {
@@ -948,14 +957,14 @@ class Order
     public function setDiscount($discount)
     {
         $this->discount = $discount;
-    
+
         return $this;
     }
 
     /**
      * Get discount
      *
-     * @return float 
+     * @return float
      */
     public function getDiscount()
     {
@@ -971,14 +980,14 @@ class Order
     public function setVat($vat)
     {
         $this->vat = $vat;
-    
+
         return $this;
     }
 
     /**
      * Get vat
      *
-     * @return float 
+     * @return float
      */
     public function getVat()
     {
@@ -994,14 +1003,14 @@ class Order
     public function setTotal($total)
     {
         $this->total = $total;
-    
+
         return $this;
     }
 
     /**
      * Get total
      *
-     * @return float 
+     * @return float
      */
     public function getTotal()
     {
@@ -1017,14 +1026,14 @@ class Order
     public function setPossibleDiscount($possibleDiscount)
     {
         $this->possibleDiscount = $possibleDiscount;
-    
+
         return $this;
     }
 
     /**
      * Get possibleDiscount
      *
-     * @return float 
+     * @return float
      */
     public function getPossibleDiscount()
     {
@@ -1040,14 +1049,14 @@ class Order
     public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-    
+
         return $this;
     }
 
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
@@ -1063,14 +1072,14 @@ class Order
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-    
+
         return $this;
     }
 
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -1086,14 +1095,14 @@ class Order
     public function setOrganisationName($organisationName)
     {
         $this->organisationName = $organisationName;
-    
+
         return $this;
     }
 
     /**
      * Get organisationName
      *
-     * @return string 
+     * @return string
      */
     public function getOrganisationName()
     {
@@ -1109,14 +1118,14 @@ class Order
     public function setEmailAddress($emailAddress)
     {
         $this->emailAddress = $emailAddress;
-    
+
         return $this;
     }
 
     /**
      * Get emailAddress
      *
-     * @return string 
+     * @return string
      */
     public function getEmailAddress()
     {
@@ -1132,14 +1141,14 @@ class Order
     public function setTelephoneDaytime($telephoneDaytime)
     {
         $this->telephoneDaytime = $telephoneDaytime;
-    
+
         return $this;
     }
 
     /**
      * Get telephoneDaytime
      *
-     * @return string 
+     * @return string
      */
     public function getTelephoneDaytime()
     {
@@ -1155,14 +1164,14 @@ class Order
     public function setTelephoneEvening($telephoneEvening)
     {
         $this->telephoneEvening = $telephoneEvening;
-    
+
         return $this;
     }
 
     /**
      * Get telephoneEvening
      *
-     * @return string 
+     * @return string
      */
     public function getTelephoneEvening()
     {
@@ -1178,14 +1187,14 @@ class Order
     public function setMobile($mobile)
     {
         $this->mobile = $mobile;
-    
+
         return $this;
     }
 
     /**
      * Get mobile
      *
-     * @return string 
+     * @return string
      */
     public function getMobile()
     {
@@ -1201,14 +1210,14 @@ class Order
     public function setBillingFirstName($billingFirstName)
     {
         $this->billingFirstName = $billingFirstName;
-    
+
         return $this;
     }
 
     /**
      * Get billingFirstName
      *
-     * @return string 
+     * @return string
      */
     public function getBillingFirstName()
     {
@@ -1224,14 +1233,14 @@ class Order
     public function setBillingLastName($billingLastName)
     {
         $this->billingLastName = $billingLastName;
-    
+
         return $this;
     }
 
     /**
      * Get billingLastName
      *
-     * @return string 
+     * @return string
      */
     public function getBillingLastName()
     {
@@ -1247,14 +1256,14 @@ class Order
     public function setBillingOrganisationName($billingOrganisationName)
     {
         $this->billingOrganisationName = $billingOrganisationName;
-    
+
         return $this;
     }
 
     /**
      * Get billingOrganisationName
      *
-     * @return string 
+     * @return string
      */
     public function getBillingOrganisationName()
     {
@@ -1270,14 +1279,14 @@ class Order
     public function setBillingAddressLine1($billingAddressLine1)
     {
         $this->billingAddressLine1 = $billingAddressLine1;
-    
+
         return $this;
     }
 
     /**
      * Get billingAddressLine1
      *
-     * @return string 
+     * @return string
      */
     public function getBillingAddressLine1()
     {
@@ -1293,14 +1302,14 @@ class Order
     public function setBillingAddressLine2($billingAddressLine2)
     {
         $this->billingAddressLine2 = $billingAddressLine2;
-    
+
         return $this;
     }
 
     /**
      * Get billingAddressLine2
      *
-     * @return string 
+     * @return string
      */
     public function getBillingAddressLine2()
     {
@@ -1316,14 +1325,14 @@ class Order
     public function setBillingTownCity($billingTownCity)
     {
         $this->billingTownCity = $billingTownCity;
-    
+
         return $this;
     }
 
     /**
      * Get billingTownCity
      *
-     * @return string 
+     * @return string
      */
     public function getBillingTownCity()
     {
@@ -1339,14 +1348,14 @@ class Order
     public function setBillingCountyState($billingCountyState)
     {
         $this->billingCountyState = $billingCountyState;
-    
+
         return $this;
     }
 
     /**
      * Get billingCountyState
      *
-     * @return string 
+     * @return string
      */
     public function getBillingCountyState()
     {
@@ -1362,14 +1371,14 @@ class Order
     public function setBillingPostZipCode($billingPostZipCode)
     {
         $this->billingPostZipCode = $billingPostZipCode;
-    
+
         return $this;
     }
 
     /**
      * Get billingPostZipCode
      *
-     * @return string 
+     * @return string
      */
     public function getBillingPostZipCode()
     {
@@ -1385,14 +1394,14 @@ class Order
     public function setBillingCountryCode($billingCountryCode)
     {
         $this->billingCountryCode = $billingCountryCode;
-    
+
         return $this;
     }
 
     /**
      * Get billingCountryCode
      *
-     * @return string 
+     * @return string
      */
     public function getBillingCountryCode()
     {
@@ -1408,14 +1417,14 @@ class Order
     public function setDeliveryFirstName($deliveryFirstName)
     {
         $this->deliveryFirstName = $deliveryFirstName;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryFirstName
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryFirstName()
     {
@@ -1431,14 +1440,14 @@ class Order
     public function setDeliveryLastName($deliveryLastName)
     {
         $this->deliveryLastName = $deliveryLastName;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryLastName
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryLastName()
     {
@@ -1454,14 +1463,14 @@ class Order
     public function setDeliveryOrganisationName($deliveryOrganisationName)
     {
         $this->deliveryOrganisationName = $deliveryOrganisationName;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryOrganisationName
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryOrganisationName()
     {
@@ -1477,14 +1486,14 @@ class Order
     public function setDeliveryAddressLine1($deliveryAddressLine1)
     {
         $this->deliveryAddressLine1 = $deliveryAddressLine1;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryAddressLine1
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryAddressLine1()
     {
@@ -1500,14 +1509,14 @@ class Order
     public function setDeliveryAddressLine2($deliveryAddressLine2)
     {
         $this->deliveryAddressLine2 = $deliveryAddressLine2;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryAddressLine2
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryAddressLine2()
     {
@@ -1523,14 +1532,14 @@ class Order
     public function setDeliveryTownCity($deliveryTownCity)
     {
         $this->deliveryTownCity = $deliveryTownCity;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryTownCity
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryTownCity()
     {
@@ -1546,14 +1555,14 @@ class Order
     public function setDeliveryCountyState($deliveryCountyState)
     {
         $this->deliveryCountyState = $deliveryCountyState;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryCountyState
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryCountyState()
     {
@@ -1569,14 +1578,14 @@ class Order
     public function setDeliveryPostZipCode($deliveryPostZipCode)
     {
         $this->deliveryPostZipCode = $deliveryPostZipCode;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryPostZipCode
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryPostZipCode()
     {
@@ -1592,14 +1601,14 @@ class Order
     public function setDeliveryCountryCode($deliveryCountryCode)
     {
         $this->deliveryCountryCode = $deliveryCountryCode;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryCountryCode
      *
-     * @return string 
+     * @return string
      */
     public function getDeliveryCountryCode()
     {
@@ -1615,14 +1624,14 @@ class Order
     public function setEstimatedDeliveryDaysStart($estimatedDeliveryDaysStart)
     {
         $this->estimatedDeliveryDaysStart = $estimatedDeliveryDaysStart;
-    
+
         return $this;
     }
 
     /**
      * Get estimatedDeliveryDaysStart
      *
-     * @return string 
+     * @return string
      */
     public function getEstimatedDeliveryDaysStart()
     {
@@ -1638,14 +1647,14 @@ class Order
     public function setEstimatedDeliveryDaysEnd($estimatedDeliveryDaysEnd)
     {
         $this->estimatedDeliveryDaysEnd = $estimatedDeliveryDaysEnd;
-    
+
         return $this;
     }
 
     /**
      * Get estimatedDeliveryDaysEnd
      *
-     * @return string 
+     * @return string
      */
     public function getEstimatedDeliveryDaysEnd()
     {
@@ -1661,14 +1670,14 @@ class Order
     public function setOrderPrinted($orderPrinted)
     {
         $this->orderPrinted = $orderPrinted;
-    
+
         return $this;
     }
 
     /**
      * Get orderPrinted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getOrderPrinted()
     {
@@ -1684,14 +1693,14 @@ class Order
     public function setDeliveryNotePrinted($deliveryNotePrinted)
     {
         $this->deliveryNotePrinted = $deliveryNotePrinted;
-    
+
         return $this;
     }
 
     /**
      * Get deliveryNotePrinted
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDeliveryNotePrinted()
     {
@@ -1707,14 +1716,14 @@ class Order
     public function setActioned($actioned)
     {
         $this->actioned = $actioned;
-    
+
         return $this;
     }
 
     /**
      * Get actioned
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActioned()
     {
@@ -1730,14 +1739,14 @@ class Order
     public function setFraudCheckCustomerOrdered($fraudCheckCustomerOrdered)
     {
         $this->fraudCheckCustomerOrdered = $fraudCheckCustomerOrdered;
-    
+
         return $this;
     }
 
     /**
      * Get fraudCheckCustomerOrdered
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFraudCheckCustomerOrdered()
     {
@@ -1753,14 +1762,14 @@ class Order
     public function setFraudCheckAddressMatch($fraudCheckAddressMatch)
     {
         $this->fraudCheckAddressMatch = $fraudCheckAddressMatch;
-    
+
         return $this;
     }
 
     /**
      * Get fraudCheckAddressMatch
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFraudCheckAddressMatch()
     {
@@ -1776,14 +1785,14 @@ class Order
     public function setFraudCheckNameUsedOnDifferentOrder($fraudCheckNameUsedOnDifferentOrder)
     {
         $this->fraudCheckNameUsedOnDifferentOrder = $fraudCheckNameUsedOnDifferentOrder;
-    
+
         return $this;
     }
 
     /**
      * Get fraudCheckNameUsedOnDifferentOrder
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFraudCheckNameUsedOnDifferentOrder()
     {
@@ -1799,14 +1808,14 @@ class Order
     public function setFraudCheckPostZipCodeUsedOnDifferentOrder($fraudCheckPostZipCodeUsedOnDifferentOrder)
     {
         $this->fraudCheckPostZipCodeUsedOnDifferentOrder = $fraudCheckPostZipCodeUsedOnDifferentOrder;
-    
+
         return $this;
     }
 
     /**
      * Get fraudCheckPostZipCodeUsedOnDifferentOrder
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFraudCheckPostZipCodeUsedOnDifferentOrder()
     {
@@ -1822,14 +1831,14 @@ class Order
     public function setFraudCheckTelephoneUsedOnDifferentOrder($fraudCheckTelephoneUsedOnDifferentOrder)
     {
         $this->fraudCheckTelephoneUsedOnDifferentOrder = $fraudCheckTelephoneUsedOnDifferentOrder;
-    
+
         return $this;
     }
 
     /**
      * Get fraudCheckTelephoneUsedOnDifferentOrder
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getFraudCheckTelephoneUsedOnDifferentOrder()
     {
@@ -1845,14 +1854,14 @@ class Order
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -1868,14 +1877,14 @@ class Order
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -1924,7 +1933,7 @@ class Order
         $this->calculateTotal();
         $this->calculateVat();
     }
-    
+
     /**
      * Add discounts
      *
@@ -1934,7 +1943,7 @@ class Order
     public function addDiscount(Order\Discount $discounts)
     {
         $this->discounts[] = $discounts;
-    
+
         return $this;
     }
 
@@ -1951,7 +1960,7 @@ class Order
     /**
      * Get discounts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDiscounts()
     {
@@ -1967,7 +1976,7 @@ class Order
     public function addDonation(Order\Donation $donations)
     {
         $this->donations[] = $donations;
-    
+
         return $this;
     }
 
@@ -1984,7 +1993,7 @@ class Order
     /**
      * Get donations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDonations()
     {
@@ -2035,7 +2044,7 @@ class Order
     {
         $this->notes[] = $note;
         $note->setOrder($this);
-    
+
         return $this;
     }
 
@@ -2051,7 +2060,7 @@ class Order
     /**
      * Get notes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getNotes()
     {
@@ -2116,26 +2125,6 @@ class Order
         return $this->card;
     }
 
-    public function setCourierObject($courierObject)
-    {
-        $this->courierObject = $courierObject;
-    }
-
-    public function getCourierObject()
-    {
-        return $this->courierObject;
-    }
-
-    public function setMethodObject($methodObject)
-    {
-        $this->methodObject = $methodObject;
-    }
-
-    public function getMethodObject()
-    {
-        return $this->methodObject;
-    }
-
     /**
      * Set royalMailImportLine
      *
@@ -2145,14 +2134,14 @@ class Order
     public function setRoyalMailImportLine($royalMailImportLine)
     {
         $this->royalMailImportLine = $royalMailImportLine;
-    
+
         return $this;
     }
 
     /**
      * Get royalMailImportLine
      *
-     * @return integer 
+     * @return integer
      */
     public function getRoyalMailImportLine()
     {

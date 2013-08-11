@@ -274,7 +274,7 @@ class OrderController extends Controller
                 {
                     case 'order':
                         if ($order->getStatus() == 'Payment Received') $order->setStatus('Processing Your Order');
-                        if (strpos($order->getDeliveryType(), 'Royal Mail') !== false) $order->setDeliveryNotePrinted(true);
+                        if ($order->getDeliveryTypeObject() && $order->getDeliveryTypeObject()->getType() === 'Royal Mail') $order->setDeliveryNotePrinted(true);
                         $order->setOrderPrinted(true);
                         break;
                     case 'deliverynote':
