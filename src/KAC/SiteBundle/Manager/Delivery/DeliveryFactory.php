@@ -221,7 +221,9 @@ class DeliveryFactory {
     {
         return array(
             'KAC\SiteBundle\Manager\Delivery\Courier\Dpd',
-            'KAC\SiteBundle\Manager\Delivery\Courier\Parcelforce',
+            'KAC\SiteBundle\Manager\Delivery\Courier\Ghc',
+            'KAC\SiteBundle\Manager\Delivery\Courier\Palletways',
+            'KAC\SiteBundle\Manager\Delivery\Courier\RoyalMail',
         );
     }
 } 

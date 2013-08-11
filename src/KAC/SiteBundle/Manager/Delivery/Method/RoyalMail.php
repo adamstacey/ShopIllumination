@@ -11,4 +11,11 @@ abstract class RoyalMail extends AbstractDeliveryMethod
     {
         return 'Royal Mail';
     }
+
+    protected function getCourierClasses()
+    {
+        return array_merge(parent::getCourierClasses(), array(
+            'KAC\SiteBundle\Manager\Delivery\Courier\RoyalMail',
+        ));
+    }
 }

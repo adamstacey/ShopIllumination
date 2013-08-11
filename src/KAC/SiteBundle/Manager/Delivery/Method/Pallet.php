@@ -11,4 +11,11 @@ abstract class Pallet extends AbstractDeliveryMethod
     {
         return 'Pallet';
     }
+
+    protected function getCourierClasses()
+    {
+        return array_merge(parent::getCourierClasses(), array(
+            'KAC\SiteBundle\Manager\Delivery\Courier\Palletways',
+        ));
+    }
 }

@@ -120,4 +120,11 @@ class HomeDelivery extends AbstractDeliveryMethod
     {
         return 'Home Delivery';
     }
+
+    protected function getCourierClasses()
+    {
+        return array_merge(parent::getCourierClasses(), array(
+            'KAC\SiteBundle\Manager\Delivery\Courier\Ghd',
+        ));
+    }
 }
