@@ -23,4 +23,14 @@ interface CourierInterface
      * @return mixed
      */
     function process(Order $order, &$data, ContainerInterface $container);
+
+    /**
+     * Process the delivery tracking files
+     *
+     * @param $data
+     * @param $container
+     *
+     * @return mixed
+     */
+    function processTracking(&$data, ContainerInterface $container);
 }

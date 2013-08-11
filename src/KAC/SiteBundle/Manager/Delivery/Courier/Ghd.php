@@ -54,7 +54,6 @@ class Ghd extends AbstractCourier
             error_log('Error sending email!');
         }
 
-
         // Update the order status
         $order->setStatus('Order Completed');
         $order->setLabelsPrinted(1);

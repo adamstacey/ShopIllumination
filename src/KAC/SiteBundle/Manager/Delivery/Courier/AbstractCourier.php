@@ -11,4 +11,9 @@ abstract class AbstractCourier implements CourierInterface
     {
         return;
     }
+
+    public function processTracking(&$data, ContainerInterface $container)
+    {
+        return;
+    }
 }
