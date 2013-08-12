@@ -1,0 +1,46 @@
+{# Forms #}
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Orders | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Import Tracking</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)) }}" {{ form_enctype(form) }}>
+            <fieldset class="pbm ptm">
+                {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                {% if form.orders|length > 0 %}
+                    <table class="data-table" id="listing-orders" width="100%">
+                        <thead>
+                        <tr>
+                            <th width="1" class="tac">Order</th>
+                            <th class="al">Delivery</th>
+                            <th width="1" class="tal">Courier</th>
+                            <th width="77" class="tac">Packages</th>
+                            <th class="ac">Tracking Information</th>
+                            <th class="ac">Review?</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for form_order in form.orders %}
+                            {{ form_row(form_order) }}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="no-results">Sorry, there were no orders in your queue that need processing.</p>
+                {% endif %}
+                {{ form_rest(form) }}
+                <div class="clearfix mtl">
+                    <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Process</button>
+                    <a href="{{ path('orders_queue') }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
+                </div>
+            </fieldset>
+        </form>
+    </section>
+{% endblock %}

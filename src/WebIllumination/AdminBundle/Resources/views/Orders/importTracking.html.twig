@@ -22,11 +22,11 @@
 	                <h2 id="listing-title-orders">Import Results</h2>
 	            </header>
 				<section>
-					<form id="form-update" class="form" action="{{ path('admin_'~data.settings.multiplePath~'_import_tracking') }}" method="post">
-						{% if data.ordersUpdated > 0 %}
+                    <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all)) }}" {{ form_enctype(form) }}>
+						{% if ordersUpdated > 0 %}
 							<div class="success-message no-margin">
 								<span class="info-message-icon ui-icon ui-icon-circle-check"></span>
-								<p>The tracking data for <strong>{{ data.ordersUpdated }}</strong> order{{ (data.ordersUpdated == 1?'':'s')}} was imported and updated.</p>
+								<p>The tracking data for <strong>{{ ordersUpdated }}</strong> order{{ (ordersUpdated == 1?'':'s')}} was imported and updated.</p>
 								<div class="clear"></div>
 							</div>
 						{% else %}
@@ -38,9 +38,9 @@
 						{% endif %}
 			        	<div class="padding-15 padding-top-5">
 				        	<div id="float-buttons" class="clearfix">
-						        <div id="float-buttons-content" class="float-buttons clearfix buttons">
-						        	<a href="{{ path('admin_'~data.settings.multiplePath) }}" class="fr button ui-corner-right icon-set-white ui-button-black" data-icon-primary="ui-icon-circle-arrow-left">Go Back</a>
-						        	<button type="submit" class="fr button ui-corner-left icon-set-white ui-button-green" data-icon-primary="ui-icon-map-pointer">Get Tracking Data</button>
+                                <div class="clearfix mtl">
+                                    <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Process</button>
+                                    <a href="{{ path('orders_queue') }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
 							    </div>
 							</div>
 			        	</div>

@@ -32,5 +32,5 @@ interface CourierInterface
      *
      * @return mixed
      */
-    function processTracking(&$data, ContainerInterface $container);
+    static function processTracking(&$data, ContainerInterface $container);
 }

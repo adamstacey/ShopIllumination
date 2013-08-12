@@ -14,6 +14,8 @@ use KAC\SiteBundle\Form\Order\PaymentType;
 use KAC\SiteBundle\Form\Order\OverviewType;
 use KAC\SiteBundle\Form\Order\ProcessDeliveryType;
 use KAC\SiteBundle\Form\Order\ProductsType;
+use KAC\SiteBundle\Manager\Delivery\Courier\Dpd;
+use KAC\SiteBundle\Manager\Delivery\Courier\RoyalMail;
 use KAC\SiteBundle\Manager\Delivery\DeliveryFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -293,6 +295,15 @@ class OrderController extends Controller
                 'form' => $form->createView()
             ));
             // If the user choose to generate a document then ensure the file is generated and show the user the resulting file
+        } elseif($action[0] === 'tracking') {
+            // Setup processing data
+            $data = array();
+            $data['ordersUpdated'] = 0;
+
+            RoyalMail::processTracking($data, $this->container);
+            Dpd::processTracking($data, $this->container);
+
+            return $this->render('KACSiteBundle:Order:importTracking.html.twig', $data);
         } elseif($action[0] === 'document') {
             if(count($queue->all()) == 0)
             {

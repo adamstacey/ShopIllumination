@@ -70,7 +70,7 @@ class Dpd extends AbstractCourier
         $order->setLabelsPrinted(1);
     }
 
-    public function processTracking(&$data, ContainerInterface $container)
+    public static function processTracking(&$data, ContainerInterface $container)
     {
         $em = $container->get('doctrine')->getManager();
 
@@ -129,8 +129,8 @@ class Dpd extends AbstractCourier
                                 {
                                     $email->setBcc(array('0cbe3042@trustpilotservice.com'));
                                 }
-                                $email->setBody($this->renderView('KACSiteBundle:Order\Email:message.html.twig', array('order' => $order, 'note' => $htmlNote)), 'text/html');
-                                $email->addPart($this->renderView('KACSiteBundle:Order\Email:message.txt.twig', array('order' => $order, 'note' => $plainTextNote)), 'text/plain');
+                                $email->setBody($container->get('templating')->render('KACSiteBundle:Order\Email:message.html.twig', array('order' => $order, 'note' => $htmlNote)), 'text/html');
+                                $email->addPart($container->get('templating')->render('KACSiteBundle:Order\Email:message.txt.twig', array('order' => $order, 'note' => $plainTextNote)), 'text/plain');
                                 $container->get('mailer')->send($email);
 
                                 // Set the review as requested
