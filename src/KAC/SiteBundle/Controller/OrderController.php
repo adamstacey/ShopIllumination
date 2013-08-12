@@ -413,10 +413,11 @@ class OrderController extends Controller
     public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $deliveryManager = $this->get('kac_site.manager.delivery');
 
         $order = new Order();
         $deliveryMethods = DeliveryFactory::getAllMethodNames();
-        $form = $this->createForm(new NewOrderType($deliveryMethods), $order);
+        $form = $this->createForm(new NewOrderType($deliveryManager), $order);
 
         if ($request->isMethod('POST')) {
             $form->submit($request);
