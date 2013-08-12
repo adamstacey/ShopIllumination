@@ -21,7 +21,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class OrderController extends Controller
 {
@@ -552,7 +554,33 @@ class OrderController extends Controller
      */
     public function editPaymentAction(Request $request, $id)
     {
-        return $this->baseEditAction($request, $id, 'KACSiteBundle:Order:edit_payment.html.twig', new OverviewType());
+        $em = $this->getDoctrine()->getManager();
+        $deliveryManager = $this->get('kac_site.manager.delivery');
+
+        $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
+        if(!$order)
+        {
+            throw new NotFoundHttpException("Order not found");
+        }
+
+        $form = $this->createForm(new OverviewType(), $order);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                $em->persist($order);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('orders_view', array(
+                    'id' => $order->getId(),
+                )));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Order:edit_payment.html.twig', array(
+            'order' => $order,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
@@ -561,33 +589,6 @@ class OrderController extends Controller
      */
     public function editDocumentsAction($id)
     {
-        /**
-         * @var $em EntityManager
-         */
-        $em = $this->getDoctrine()->getManager();
-
-        /**
-         * @var \KAC\SiteBundle\Entity\Order $order
-         */
-        $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
-        if (!$order)
-        {
-            throw new NotFoundHttpException("Order not found");
-        }
-
-        return $this->render('KACSiteBundle:Order:edit_documents.html.twig', array(
-            'order' => $order
-        ));
-    }
-
-    /**
-     * @Secure(roles="ROLE_ADMIN")
-     * @Route("/orders/{id}/edit/documents", name="orders_edit_documents")
-     */
-    public function generateDocumentsAction($id)
-    {
-        die("Not yet implemented. Sorry.");
-
         /**
          * @var $em EntityManager
          */
@@ -659,12 +660,50 @@ class OrderController extends Controller
         $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
         if (!$order)
         {
-            throw new NotFoundHttpException("Address not found");
+            throw new NotFoundHttpException("Order not found");
+        }
+        if(!$this->get('security.context')->isGranted('ROLE_ADMIN') || $order->getUser() !== $this->get('security.context')->getToken()->getUser())
+        {
+            throw new AccessDeniedException();
         }
 
         return $this->render('KACSiteBundle:Order:view_customer.html.twig', array(
             'order' => $order
         ));
+    }
+
+    /**
+     * @Secure(roles="ROLE_USER")
+     * @Route("/orders/{id}/invoice.pdf", name="orders_view_invoice_document", defaults={"type" = "invoice"})
+     * @Route("/orders/{id}/order.pdf", name="orders_view_order_document", defaults={"type" = "order"})
+     * @Route("/orders/{id}/copyorder.pdf", name="orders_view_copyorder_document", defaults={"type" = "copyorder"})
+     * @Route("/orders/{id}/deliverynote.pdf", name="orders_view_deliverynote_document", defaults={"type" = "deliverynote"})
+     */
+    public function viewDocumentAction($id, $type)
+    {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var \KAC\SiteBundle\Entity\Order $order
+         */
+        $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
+        if (!$order)
+        {
+            throw new NotFoundHttpException("Order not found");
+        }
+        if($this->get('security.context')->isGranted('ROLE_ADMIN') === false && $order->getUser() !== $this->get('security.context')->getToken()->getUser() || $type !== 'invoice')
+        {
+            throw new AccessDeniedException();
+        }
+
+        // Ensure PDF is generated
+        $generator = $this->get('kac_site.manager.order_document_generator');
+        $pdfFile = $generator->generateSingleDocument($type, $order);
+
+        return new Response(file_get_contents($generator->getAbsoluteUploadDir() . $pdfFile), 200, array('Content-Type' => 'application/pdf'));
     }
 
     /**

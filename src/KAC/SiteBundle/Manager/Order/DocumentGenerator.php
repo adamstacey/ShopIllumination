@@ -194,22 +194,22 @@ class DocumentGenerator {
 
     protected function getBinaryPath()
     {
-//        return 'wkhtmltopdf';
-        return '/usr/local/bin/wkhtmltopdf';
+        return 'wkhtmltopdf';
+//        return '/usr/local/bin/wkhtmltopdf';
 //        return 'xvfb-run -a -s "-screen 0 640x480x16" /usr/bin/wkhtmltopdf-amd64';
 //        return 'xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf $*';
 //        return 'xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf-amd64';
     }
 
     // Get the absolute path of the upload directory
-    protected function getAbsoluteUploadDir()
+    public function getAbsoluteUploadDir()
     {
-        return __DIR__.'/../../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../../../web'.$this->getUploadDir();
     }
 
     // Get the upload directory
-    protected function getUploadDir()
+    public function getUploadDir()
     {
-        return 'uploads/documents/order';
+        return '/uploads/documents/order';
     }
 }

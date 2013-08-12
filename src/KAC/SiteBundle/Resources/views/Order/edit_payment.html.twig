@@ -175,6 +175,21 @@
                 </div>
             {% endif %}
         {% endif %}
+        <div class="widget-group clearfix mtm">
+            <div class="widget widget-1-of-1">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Documents</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-all">
+                    <ul>
+                        <li><a href="{{ path('orders_view_invoice_document', {'id': order.id}) }}">View Invoice</a></li>
+                        <li><a href="{{ path('orders_view_invoice_document', {'id': order.id}) }}">View Order</a></li>
+                        <li><a href="{{ path('orders_view_invoice_document', {'id': order.id}) }}">View Copy Order</a></li>
+                        <li><a href="{{ path('orders_view_invoice_document', {'id': order.id}) }}">View Delivery Note</a></li>
+                    </ul>
+                </section>
+            </div>
+        </div>
 
         <div class="clearfix mtl">
             <a href="{{ path('orders_view', {'id': order.id}) }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
