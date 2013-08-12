@@ -1,0 +1,53 @@
+{# Forms #}
+{% extends 'KACSiteBundle::base.html.twig' %}
+
+{% block title %}Brands | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>Brands</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <fieldset class="pbm">
+            <table class="data-table treetable" id="departments">
+                <tr>
+                    <th{% if pagination.isSorted('b.id') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, '#', 'b.id') }}</th>
+                    <th{% if pagination.isSorted('b.brand.description') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'b.description.name') }}</th>
+                    <th{% if pagination.isSorted('b.status') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Status', 'b.status') }}</th>
+                    <th></th>
+                </tr>
+
+                {% for brand in pagination %}
+                    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}">
+                        <td width="1"><a href="{{ path('brands_edit', {'id': brand.id}) }}">{{ brand.id }}</a></td>
+                        <td>{{ brand.description.name }}</td>
+                        <td>
+                            {% if brand.status == 'a' %}
+                                Available
+                            {% elseif brand.status == 'h' %}
+                                Hidden
+                            {% elseif brand.status == 'd' %}
+                                Disabled
+                            {% endif %}
+                        </td>
+                        <td width="1" class="buttons-container ac no-wrap">
+                            <a href="{{ path('brands_delete', {'id': brand.id}) }}" class="button button-red button-small fr mls">Delete</a>
+                            <a href="{{ path('brands_edit', {'id': brand.id}) }}" class="button button-blue button-small fr">Edit</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+        <div class="widget-group product-sorting-container product-sorting-container-bottom mbn clearfix">
+            <div class="widget widget-1-of-1">
+                <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
+                <div class="fr">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
