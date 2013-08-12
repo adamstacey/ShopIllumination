@@ -19,10 +19,12 @@ class DocumentGenerator {
      * @param $type
      * @param Order $order
      * @param bool $wait
+     * @param bool $overwrite
+     *
      * @throws \InvalidArgumentException
      * @return string
      */
-    public function generateSingleDocument($type, Order $order, $wait=true)
+    public function generateSingleDocument($type, Order $order, $wait=true, $overwrite=false)
     {
         if(!in_array($type, $this->getAllowedTypes()))
         {
@@ -32,7 +34,10 @@ class DocumentGenerator {
             ));
         }
 
-        $outputFile = $this->getAbsoluteUploadDir().'/'.$type.'-'.$order->getId().'.pdf';
+        $outputFilename = '/'.$type.'-'.$order->getId().'.pdf';
+        $outputFile = $this->getAbsoluteUploadDir().$outputFilename;
+
+        if(false === $overwrite && file_exists($outputFile)) return $outputFilename;
 
         // Build the html
         $html = $this->twig->render('KACSiteBundle:Order\Document:single.html.twig', array(
@@ -59,12 +64,12 @@ class DocumentGenerator {
      * @param $type
      * @param $orders Order[]
      * @param bool $wait
-     * @param bool $wait
+     * @param bool $overwrite
      *
      * @throws \InvalidArgumentException
      * @return string
      */
-    public function generateBulkDocument($type, $orders, $wait=true)
+    public function generateBulkDocument($type, $orders, $wait=true, $overwrite=false)
     {
         if(!in_array($type, $this->getAllowedTypes()))
         {
@@ -77,8 +82,11 @@ class DocumentGenerator {
         $ids = array_map(function(Order $order) {
             return $order->getId();
         }, $orders);
-        $outputFile = $this->getAbsoluteUploadDir().'/'.$type.'-'.implode('-', $ids).'.pdf';
+        $outputFilename = '/'.$type.'-'.implode('-', $ids).'.pdf';
+        $outputFile = $this->getAbsoluteUploadDir().$outputFilename;
         $this->prepareOutput($outputFile, true);
+
+        if(false === $overwrite && file_exists($outputFile)) return $outputFilename;
 
         // Build the html
         $html = $this->twig->render('KACSiteBundle:Order\Document:multiple.html.twig', array(
@@ -98,7 +106,7 @@ class DocumentGenerator {
             $this->checkOutput($outputFile);
         }
 
-        return '/'.$type.'-'.implode('-', $ids).'.pdf';
+        return $outputFilename;
     }
 
     protected function getAllowedTypes()

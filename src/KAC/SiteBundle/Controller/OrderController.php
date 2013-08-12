@@ -370,7 +370,7 @@ class OrderController extends Controller
                 } else {
                     $generator = $this->get('kac_site.manager.order_document_generator');
 
-                    $outputFile = $generator->generateBulkDocument($action[2], $orders);
+                    $outputFile = $generator->generateBulkDocument($action[2], $orders, true, true);
 
                     $this->get('session')->getFlashBag()->add('success', sprintf(
                         'The order document has been generated. <a href="%s">Click here</a> to view it.',
