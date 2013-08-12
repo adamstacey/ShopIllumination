@@ -1,0 +1,49 @@
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% form_theme form _self %}
+
+{% block title %}New Brand | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h1>New Brand</h1>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <form class="form" method="post" novalidate="novalidate" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget mbl">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <span class="nav-icon ui-button-icon-primary ui-icon icon-white icon-398"></span>
+                                    <h2>Brand Info</h2>
+                                </header>
+                                <section class="ui-widget-content ui-corner-bottom">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset class="pbm">
+                                        {% for child in form.descriptions %}
+                                            {{ form_row(child.name) }}
+                                            {{ form_row(child.description) }}
+                                        {% endfor %}
+                                    </fieldset>
+
+                                    <fieldset class="pbm">
+                                        {{ form_rest(form) }}
+                                    </fieldset>
+                                    {{ form_rest(form) }}
+                                    <div class="clearfix">
+                                        <button type="submit" class="button button-green icon-white mlm fr" data-icon-secondary="icon-1118">Save</button>
+                                        <a href="{{ path('brands_index', {'id': order.id}) }}" class="button button-blue icon-white mlm fl" data-icon-secondary="icon-1118">Back</a>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

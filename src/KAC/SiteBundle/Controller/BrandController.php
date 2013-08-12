@@ -2,6 +2,7 @@
 
 namespace KAC\SiteBundle\Controller;
 
+use KAC\SiteBundle\Entity\Brand;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,6 +45,42 @@ class BrandController extends Controller
     public function newAction(Request $request)
     {
 
+        $em = $this->getDoctrine()->getManager();
+
+        $brand = new Brand();
+        $brand->addDescription(new Brand\Description());
+
+        $flow = $this->get('kac_site.form.flow.new_brand');
+        $flow->bind($brand);
+
+        // Get current form step
+        $form = $flow->createForm();
+
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep())
+            {
+                // Get next form step
+                $form = $flow->createForm();
+            } else {
+                $em->persist($brand);
+                $em->flush();
+
+                $flow->reset();
+
+                // Notify user
+                $this->get('session')->getFlashBag()->add('notice', 'The new brand "'.$brand->getName().'" has been added.');
+
+                // Forward
+                return $this->redirect($this->get('router')->generate('homepage'));
+            }
+        }
+
+        return $this->render('KACSiteBundle:Brand:new.html.twig', array(
+            'form' => $form->createView(),
+            'flow' => $flow,
+        ));
     }
 
     /**

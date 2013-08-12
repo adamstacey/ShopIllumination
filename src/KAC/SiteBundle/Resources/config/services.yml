@@ -139,8 +139,18 @@ services:
         scope: request
         calls:
             - [ setFormType, [@kac_site.form.new_variant]]
+    kac_site.form.new_brand:
+        class: KAC\SiteBundle\Form\Brand\NewType
+        tags:
+            - { name: form.type, alias: new_brand }
+    kac_site.form.flow.new_brand:
+        class: KAC\SiteBundle\Form\Brand\NewFlow
+        parent: craue.form.flow
+        scope: request
+        calls:
+            - [ setFormType, [@kac_site.form.new_brand]]
     # Forms
-    acme_demo.form.type.gender:
+    kac_site.form.type.quantity:
         class: KAC\SiteBundle\Form\QuantityType
         tags:
             - { name: form.type, alias: quantity }
