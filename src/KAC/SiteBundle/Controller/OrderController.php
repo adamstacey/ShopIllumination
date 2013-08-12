@@ -476,6 +476,7 @@ class OrderController extends Controller
         $originalProducts = array();
 
         $em = $this->getDoctrine()->getManager();
+        $deliveryManager = $this->get('kac_site.manager.delivery');
 
         $order = $em->getRepository("KAC\SiteBundle\Entity\Order")->find($id);
         if(!$order)
@@ -494,7 +495,7 @@ class OrderController extends Controller
 
 
         $deliveryMethods = DeliveryFactory::getAllMethodNames();
-        $form = $this->createForm(new EditOrderType($deliveryMethods), $order);
+        $form = $this->createForm(new EditOrderType($deliveryManager), $order);
 
         if ($request->isMethod('POST')) {
             $form->submit($request);

@@ -3,16 +3,19 @@ namespace KAC\SiteBundle\Form\Order;
 
 use Doctrine\ORM\EntityRepository;
 use KAC\SiteBundle\Entity\Order;
+use KAC\SiteBundle\Form\EventListener\Order\UpdateDeliveryCourierSubscriber;
+use KAC\SiteBundle\Form\EventListener\Order\UpdateDeliveryMethodSubscriber;
+use KAC\SiteBundle\Form\EventListener\Order\UpdateDeliveryTrackingSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EditOrderType extends AbstractType {
-    private $deliveryMethods;
+    private $deliveryManager;
 
-    function __construct($deliveryMethods)
+    function __construct($deliveryManager)
     {
-        $this->deliveryMethods = $deliveryMethods;
+        $this->deliveryManager = $deliveryManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -65,11 +68,15 @@ class EditOrderType extends AbstractType {
             'label' => 'Status',
             'required' => true,
         ));
-        $builder->add('deliveryType', 'choice', array(
-            'choices' => array_combine($this->deliveryMethods, $this->deliveryMethods),
-            'label' => 'Delivery Method',
-            'required' => true,
+        $builder->add('deliveryType', 'choice');
+        $builder->add('numberOfPackages', 'quantity');
+        $builder->add('sendReviewRequest', 'checkbox', array(
+            'label' => 'Review?',
+            'required' => false,
         ));
+        $builder->addEventSubscriber(new UpdateDeliveryMethodSubscriber($builder->getFormFactory(), $this->deliveryManager));
+        $builder->addEventSubscriber(new UpdateDeliveryTrackingSubscriber($builder->getFormFactory(), $this->deliveryManager));
+        $builder->addEventSubscriber(new UpdateDeliveryCourierSubscriber($builder->getFormFactory(), $this->deliveryManager));
 
         // Billing address
         $builder->add('billingFirstName', 'text', array(

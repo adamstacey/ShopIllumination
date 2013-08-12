@@ -133,6 +133,18 @@
     {% endspaceless %}
 {% endblock %}
 
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        <div class="form-element widget-group clearfix">
+            <div class="widget checker-group widget-1-of-1">
+                {% for child in form %}
+                    {{ form_row(child) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock choice_widget_expanded %}
+
 {% block collection_row %}
     {% spaceless %}
         {% if prototype is defined %}

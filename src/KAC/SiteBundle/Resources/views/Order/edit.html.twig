@@ -1,4 +1,5 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
+{% form_theme form _self %}
 
 {% block title %}Order {{ order.id }} - {{ order.firstName }} {{ order.lastName }} - {{ order.total|currency('GBP') }} | {{ parent() }}{% endblock %}
 
@@ -37,7 +38,19 @@
                                         <legend>Order Info</legend>
                                         <div class="clear"></div>
                                         {{ form_row(form.status) }}
-                                        {{ form_row(form.deliveryType) }}
+                                        {% if form.deliveryType is defined %}{{ form_row(form.deliveryType) }}{% endif %}
+                                        {% if form.courier is defined %}{{ form_row(form.courier) }}{% endif %}
+                                        {{ form_row(form.numberOfPackages) }}
+                                        {% if form.trackingNumber is defined %}{{ form_row(form.trackingNumber) }}{% endif %}
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                {{ form_label(form.sendReviewRequest) }}
+                                            </div>
+                                            <div class="widget checker-group widget-2-of-3">
+                                                {{ form_errors(form.sendReviewRequest) }}
+                                                {{ form_widget(form.sendReviewRequest) }}
+                                            </div>
+                                        </div>
                                     </fieldset>
                                     <fieldset class="pbm billing-address">
                                         <legend>Billing Address</legend>
@@ -51,7 +64,15 @@
                                         {{ form_row(form.billingCountyState) }}
                                         {{ form_row(form.billingPostZipCode) }}
                                         {{ form_row(form.billingCountryCode) }}
-                                        {{ form_row(form.useBillingAsDelivery) }}
+                                        <div class="form-element widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                {{ form_label(form.useBillingAsDelivery) }}
+                                            </div>
+                                            <div class="widget checker-group widget-2-of-3">
+                                                {{ form_errors(form.useBillingAsDelivery) }}
+                                                {{ form_widget(form.useBillingAsDelivery) }}
+                                            </div>
+                                        </div>
                                     </fieldset>
                                     <fieldset class="pbm delivery-address {% if form.vars.value.useBillingAsDelivery %}ui-helper-hidden{% endif %}">
                                         <legend>Delivery Address</legend>
