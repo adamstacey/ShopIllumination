@@ -420,6 +420,27 @@ class CheckoutController extends Controller
                 $order->setCreatedAt(new \DateTime());
                 $manager->saveOrder();
 
+                // Send order confirmation email
+                try
+                {
+                    $generator = $this->get('kac_site.manager.order_document_generator');
+                    $attachment = $generator->generateSingleDocument('invoice', $order);
+
+                    $email = \Swift_Message::newInstance();
+                    $email->setSubject('Your Order with Kitchen Appliance Centre: '.$order['orderNumber']);
+                    $email->setFrom(array('sales@kitchenappliancecentre.co.uk' => 'Kitchen Appliance Centre'));
+                    $email->setTo(array($order['emailAddress'] => $order['firstName'].' '.$order['lastName']));
+                    $email->setBody($this->renderView('KACSiteBundle:Order/Email:invoice.html.twig', array('order' => $order)), 'text/html');
+                    $email->addPart($this->renderView('KACSiteBundle:Order/Email:invoice.txt.twig', array('order' => $order)), 'text/plain');
+                    if (file_exists($attachment))
+                    {
+                        $email->attach(\Swift_Attachment::fromPath($attachment)->setFilename('kitchen-appliance-centre-invoice-'.$order->getId().'.pdf'));
+                    }
+                    $this->get('mailer')->send($email);
+                } catch (\Exception $exception) {
+                    error_log('Error sending invoice email!');
+                }
+
                 // Clear the baskets
                 $manager->clearBasket();
                 $manager->finishOrder();
