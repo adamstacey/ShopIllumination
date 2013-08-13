@@ -181,206 +181,90 @@
   font-style: normal;
 }
 
-/* line 7, assetic_compass4UaiOb.scss */
-.document > section.container {
-  z-index: 1;
+/* line 5, assetic_compassADPW59.scss */
+h1,
+.h1 {
+  font-size: 24px;
+  font-size: 2.4rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #384246;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
 }
 
-/* line 12, assetic_compass4UaiOb.scss */
-.content {
-  z-index: 2;
+/* line 14, assetic_compassADPW59.scss */
+h2,
+.h2 {
+  font-size: 18px;
+  font-size: 1.8rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #384246;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
 }
 
-/* line 17, assetic_compass4UaiOb.scss */
-.footer {
-  z-index: 3;
+/* line 23, assetic_compassADPW59.scss */
+h3,
+.h3 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #4ec0e3;
 }
 
-/* line 22, assetic_compass4UaiOb.scss */
-.sub-menu {
-  z-index: 4;
+/* line 29, assetic_compassADPW59.scss */
+h3.separator {
+  padding: 10px;
+  margin: 0 -10px 10px -10px;
+  background: white;
+  background: -moz-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #c5d2d6));
+  background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -o-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -ms-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: linear-gradient(top, #ffffff 0%, #c5d2d6 100%);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #c5d2d6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -moz-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -o-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: linear-gradient(top, #ffffff, #c5d2d6);
+  background-repeat: no-repeat;
+  color: #6c8087;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
+  border-top: 1px solid #c5d2d6;
+  border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 27, assetic_compass4UaiOb.scss */
-.flash-message {
-  z-index: 5;
+/* line 40, assetic_compassADPW59.scss */
+h4,
+.h4 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #4ec0e3;
 }
 
-/* line 32, assetic_compass4UaiOb.scss */
-.accordion-header-buttons {
-  z-index: 6;
+/* line 48, assetic_compassADPW59.scss */
+h5,
+.h5 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-style: normal;
 }
 
-/* line 37, assetic_compass4UaiOb.scss */
-.ui-slider .ui-slider-range {
-  z-index: 7;
-}
-
-/* line 42, assetic_compass4UaiOb.scss */
-.ui-slider .ui-slider-handle {
-  z-index: 8;
-}
-
-/* line 47, assetic_compass4UaiOb.scss */
-.ui-front {
-  z-index: 9;
-}
-
-/* line 51, assetic_compass4UaiOb.scss */
-.ui-selectable-helper {
-  z-index: 9;
-}
-
-/* line 56, assetic_compass4UaiOb.scss */
-.slider-wrapper h1 {
-  z-index: 10;
-}
-
-/* line 60, assetic_compass4UaiOb.scss */
-.slider-wrapper img.logo {
-  z-index: 10;
-}
-
-/* line 65, assetic_compass4UaiOb.scss */
-.rhino-btn {
-  z-index: 11;
-}
-
-/* line 69, assetic_compass4UaiOb.scss */
-.rhino-bullets {
-  z-index: 11;
-}
-
-/* line 74, assetic_compass4UaiOb.scss */
-.etalage-inset {
-  z-index: 12;
-}
-
-/* line 79, assetic_compass4UaiOb.scss */
-.etalage_zoom_area {
-  z-index: 13;
-}
-
-/* line 84, assetic_compass4UaiOb.scss */
-.etalage_zoom_area div {
-  z-index: 14;
-}
-
-/* line 89, assetic_compass4UaiOb.scss */
-.etalage_zoom_preview {
-  z-index: 15;
-}
-
-/* line 95, assetic_compass4UaiOb.scss */
-.etalage_zoom_img,
-.etalage_hint {
-  z-index: 16;
-}
-
-/* line 99, assetic_compass4UaiOb.scss */
-div.etalage_description {
-  z-index: 16;
-}
-
-/* line 104, assetic_compass4UaiOb.scss */
-#basket-summary {
-  z-index: 17;
-}
-
-/* line 109, assetic_compass4UaiOb.scss */
-.ui-tooltip {
-  z-index: 18;
-}
-
-/* line 114, assetic_compass4UaiOb.scss */
-.select2-drop-mask {
-  z-index: 19;
-}
-
-/* line 119, assetic_compass4UaiOb.scss */
-.select2-drop {
-  z-index: 20;
-}
-
-/* line 124, assetic_compass4UaiOb.scss */
-.select2-search {
-  z-index: 21;
-}
-
-/* line 129, assetic_compass4UaiOb.scss */
-.inline-error {
-  z-index: 22;
-}
-
-/* line 134, assetic_compass4UaiOb.scss */
-.document > header {
-  z-index: 23;
-}
-
-/* line 139, assetic_compass4UaiOb.scss */
-.submenu-brands {
-  z-index: 24;
-}
-
-/* line 144, assetic_compass4UaiOb.scss */
-.submenu-container {
-  z-index: 25;
-}
-
-/* line 149, assetic_compass4UaiOb.scss */
-.main-menu .menu-vertical {
-  z-index: 26;
-}
-
-/* line 154, assetic_compass4UaiOb.scss */
-.jquery-lightbox-mode-image .jquery-lightbox-html {
-  z-index: 27;
-}
-
-/* line 159, assetic_compass4UaiOb.scss */
-.jquery-lightbox-background {
-  z-index: 28;
-}
-
-/* line 167, assetic_compass4UaiOb.scss */
-.jquery-lightbox-border-top-left,
-.jquery-lightbox-border-top-right,
-.jquery-lightbox-border-bottom-left,
-.jquery-lightbox-border-bottom-right {
-  z-index: 29;
-}
-
-/* line 171, assetic_compass4UaiOb.scss */
-.jquery-lightbox-border-top-middle {
-  z-index: 29;
-}
-
-/* line 175, assetic_compass4UaiOb.scss */
-.jquery-lightbox-border-bottom-middle {
-  z-index: 29;
-}
-
-/* line 179, assetic_compass4UaiOb.scss */
-.jquery-lightbox-title {
-  z-index: 29;
-}
-
-/* line 183, assetic_compass4UaiOb.scss */
-.jquery-lightbox-html {
-  z-index: 29;
-}
-
-/* line 188, assetic_compass4UaiOb.scss */
-.jquery-lightbox-buttons {
-  z-index: 30;
-}
-
-/* line 193, assetic_compass4UaiOb.scss */
-.jquery-lightbox-mode-image .jquery-lightbox-button-close {
-  z-index: 31;
-}
-
-/* line 198, assetic_compass4UaiOb.scss */
-.loading-container {
-  z-index: 32;
+/* line 55, assetic_compassADPW59.scss */
+h6,
+.h6 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: italic;
 }
