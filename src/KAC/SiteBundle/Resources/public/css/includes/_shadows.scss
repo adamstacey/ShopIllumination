@@ -1,7 +1,7 @@
 @mixin textShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $opacity: 1) {
     text-shadow: $horizontalLength $verticalLength $blurRadius $shadowColour;
     text-shadow: $horizontalLength $verticalLength $blurRadius rgba($shadowColour, $opacity);
-    behaviour: url("#{$cssPath}/resources/htc/ie-css3.htc");
+    behaviour: url("#{$absoluteUrl}#{$cssPath}/resources/htc/ie-css3.htc");
 }
 
 @mixin boxShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $spread: 0, $opacity: 1) {
@@ -11,7 +11,7 @@
     -moz-box-shadow: $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
     box-shadow: $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
     box-shadow: $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
+    behaviour: url("#{$absoluteUrl}#{$cssPath}/resources/htc/pie.htc");
 }
 
 @mixin boxGlow($shadowColour, $blurRadius: 0, $spread: 0, $opacity: 1) {
@@ -21,7 +21,7 @@
     -moz-box-shadow: 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
     box-shadow: 0 0 $blurRadius $spread $shadowColour;
     box-shadow: 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
+    behaviour: url("#{$absoluteUrl}#{$cssPath}/resources/htc/pie.htc");
 }
 
 @mixin boxInsetShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $spread: 0, $opacity: 1) {
@@ -31,7 +31,7 @@
     -moz-box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
     box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread $shadowColour;
     box-shadow: inset $horizontalLength $verticalLength $blurRadius $spread rgba($shadowColour, $opacity);
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
+    behaviour: url("#{$absoluteUrl}#{$cssPath}/resources/htc/pie.htc");
 }
 
 @mixin boxInsetGlow($shadowColour, $blurRadius: 0, $spread: 0, $opacity: 1) {
@@ -41,12 +41,12 @@
     -moz-box-shadow: inset 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
     box-shadow: inset 0 0 $blurRadius $spread $shadowColour;
     box-shadow: inset 0 0 $blurRadius $spread rgba($shadowColour, $opacity);
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
+    behaviour: url("#{$absoluteUrl}#{$cssPath}/resources/htc/pie.htc");
 }
 
 @mixin noBoxShadow {
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
+    behaviour: url("#{$absoluteUrl}#{$cssPath}/resources/htc/pie.htc");
 }
