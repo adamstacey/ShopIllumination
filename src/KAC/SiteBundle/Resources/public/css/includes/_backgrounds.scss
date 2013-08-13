@@ -17,8 +17,6 @@
     background: -ms-linear-gradient(top, $topColour 0%, $bottomColour 100%);
     background: linear-gradient(top, $topColour 0%, $bottomColour 100%);
     @include background-image(linear-gradient(top, $topColour, $bottomColour));
-    -pie-background: linear-gradient(top, $topColour 0%, $bottomColour 100%);
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
     background-repeat: no-repeat;
 }
 
@@ -32,8 +30,6 @@
     background: -ms-linear-gradient(top, $highlightColour 0%, $topColour 5%, $bottomColour 100%);
     background: linear-gradient(to bottom, $highlightColour 0%, $topColour 5%, $bottomColour 100%);
     @include background-image(linear-gradient(top, $highlightColour, $topColour 5%, $bottomColour 100%));
-    -pie-background: linear-gradient(to bottom, $highlightColour 0%, $topColour 5%, $bottomColour 100%);
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
     background-repeat: no-repeat;
 }
 
@@ -47,8 +43,6 @@
     background: -ms-linear-gradient(top, $bottomColour 0%, $topColour 95%, $highlightColour 100%);
     background: linear-gradient(to bottom, $bottomColour 0%, $topColour 95%, $highlightColour 100%);
     @include background-image(linear-gradient(bottom, $highlightColour, $topColour 5%, $bottomColour 100%));
-    -pie-background: linear-gradient(to bottom, $bottomColour 0%, $topColour 95%, $highlightColour 100%);
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
     background-repeat: no-repeat;
 }
 
