@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassy4mDby.scss */
+/* line 4, assetic_compassHd8kdN.scss */
 .search-container {
   padding: 0;
   margin: 0;
@@ -220,7 +220,7 @@
   background-repeat: no-repeat;
 }
 
-/* line 20, assetic_compassy4mDby.scss */
+/* line 20, assetic_compassHd8kdN.scss */
 .search-container:hover,
 .search-container:focus {
   -webkit-box-shadow: 0 0 10px 5px #e6ac00;
@@ -231,14 +231,14 @@
   box-shadow: 0 0 10px 5px #e6ac00;
 }
 
-/* line 24, assetic_compassy4mDby.scss */
+/* line 24, assetic_compassHd8kdN.scss */
 .search-container .icon-grey {
   position: absolute;
   top: 3px;
   left: 5px;
 }
 
-/* line 33, assetic_compassy4mDby.scss */
+/* line 33, assetic_compassHd8kdN.scss */
 .search-container .twitter-typeahead,
 .search-container input,
 .search-container input:hover,
@@ -260,17 +260,17 @@
   box-shadow: none !important;
 }
 
-/* line 44, assetic_compassy4mDby.scss */
+/* line 44, assetic_compassHd8kdN.scss */
 .search-container .twitter-typeahead {
   padding-top: 0;
 }
 
-/* line 48, assetic_compassy4mDby.scss */
+/* line 48, assetic_compassHd8kdN.scss */
 .search-container .twitter-typeahead input {
   padding: 0;
 }
 
-/* line 52, assetic_compassy4mDby.scss */
+/* line 52, assetic_compassHd8kdN.scss */
 .search-container .icon-dark-red {
   position: absolute;
   top: 3px;
@@ -279,7 +279,7 @@
   cursor: pointer;
 }
 
-/* line 63, assetic_compassy4mDby.scss */
+/* line 63, assetic_compassHd8kdN.scss */
 .search-container .button,
 .search-container .button:hover {
   position: absolute;
@@ -298,12 +298,12 @@
   box-shadow: none !important;
 }
 
-/* line 74, assetic_compassy4mDby.scss */
+/* line 74, assetic_compassHd8kdN.scss */
 .search-container .button .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 78, assetic_compassy4mDby.scss */
+/* line 78, assetic_compassHd8kdN.scss */
 .tt-hint {
   padding: 8px 65px 8px 50px !important;
   width: 440px;
@@ -311,7 +311,7 @@
   color: #999;
 }
 
-/* line 85, assetic_compassy4mDby.scss */
+/* line 85, assetic_compassHd8kdN.scss */
 .tt-dropdown-menu {
   width: 440px;
   margin-top: 10px;
@@ -327,20 +327,20 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* line 100, assetic_compassy4mDby.scss */
+/* line 100, assetic_compassHd8kdN.scss */
 .tt-suggestion {
   padding: 3px 20px;
   font-size: 14px;
   line-height: 24px;
 }
 
-/* line 106, assetic_compassy4mDby.scss */
+/* line 106, assetic_compassHd8kdN.scss */
 .tt-suggestion.tt-is-under-cursor {
   color: #fff;
   background-color: #0097cf;
 }
 
-/* line 112, assetic_compassy4mDby.scss */
+/* line 112, assetic_compassHd8kdN.scss */
 .tt-suggestion p {
   margin: 0;
 }

@@ -181,21 +181,21 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassMUEDvu.scss */
+/* line 4, assetic_compassZFVc93.scss */
 .pagination {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-/* line 9, assetic_compassMUEDvu.scss */
+/* line 9, assetic_compassZFVc93.scss */
 .pagination li {
   display: inline-block;
   float: left;
   margin: 0 2px;
 }
 
-/* line 14, assetic_compassMUEDvu.scss */
+/* line 14, assetic_compassZFVc93.scss */
 .pagination li a {
   border-width: 1px;
   border-style: solid;
@@ -213,7 +213,7 @@
   text-decoration: none;
 }
 
-/* line 30, assetic_compassMUEDvu.scss */
+/* line 30, assetic_compassZFVc93.scss */
 .pagination li.current a {
   background: #6c8087!important;
   /* Old browsers */
@@ -238,7 +238,7 @@
   border: 1px solid #384246 !important;
 }
 
-/* line 45, assetic_compassMUEDvu.scss */
+/* line 45, assetic_compassZFVc93.scss */
 .pagination li.current a:active {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;

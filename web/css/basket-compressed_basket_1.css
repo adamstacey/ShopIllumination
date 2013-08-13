@@ -181,14 +181,14 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassAZawst.scss */
+/* line 4, assetic_compassGAy5u5.scss */
 .basket-message {
   color: #cc0000;
   font-size: 13px;
   font-size: 1.3rem;
 }
 
-/* line 9, assetic_compassAZawst.scss */
+/* line 9, assetic_compassGAy5u5.scss */
 #basket-summary {
   width: 230px;
   height: 50px;
@@ -227,19 +227,19 @@
   box-shadow: 0 -2px 5px 0 #384246;
 }
 
-/* line 24, assetic_compassAZawst.scss */
+/* line 24, assetic_compassGAy5u5.scss */
 #basket-summary.expanded {
   width: 600px;
   height: auto;
 }
 
-/* line 29, assetic_compassAZawst.scss */
+/* line 29, assetic_compassGAy5u5.scss */
 .basket-summary-header {
   min-height: 50px;
   cursor: pointer;
 }
 
-/* line 35, assetic_compassAZawst.scss */
+/* line 35, assetic_compassGAy5u5.scss */
 .basket-summary-header h2 {
   margin: 0;
   padding: 0;
@@ -253,7 +253,7 @@
   filter: dropshadow(color=white, offx=0, offy=1px);
 }
 
-/* line 46, assetic_compassAZawst.scss */
+/* line 46, assetic_compassGAy5u5.scss */
 .basket-summary-header p {
   margin: 0;
   padding: 0;
@@ -263,33 +263,33 @@
   color: #6c8087;
 }
 
-/* line 55, assetic_compassAZawst.scss */
+/* line 55, assetic_compassGAy5u5.scss */
 .basket-items-table {
   background: white;
 }
 
-/* line 59, assetic_compassAZawst.scss */
+/* line 59, assetic_compassGAy5u5.scss */
 .basket-buttons {
   margin: 5px 0;
 }
 
-/* line 63, assetic_compassAZawst.scss */
+/* line 63, assetic_compassGAy5u5.scss */
 .basket-buttons .button:first-child {
   margin-left: 5px;
 }
 
-/* line 67, assetic_compassAZawst.scss */
+/* line 67, assetic_compassGAy5u5.scss */
 #basket-contents .add-to-basket {
   width: 63px;
   margin: 0;
 }
 
-/* line 72, assetic_compassAZawst.scss */
+/* line 72, assetic_compassGAy5u5.scss */
 #basket-totals td {
   padding: 5px 10px;
 }
 
-/* line 77, assetic_compassAZawst.scss */
+/* line 77, assetic_compassGAy5u5.scss */
 #basket-delivery-options .form-helper,
 #order-information .form-helper {
   top: 0;

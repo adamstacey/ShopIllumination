@@ -1,0 +1,218 @@
+@charset "UTF-8";
+/*
+  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
+  rgba-background mixin can now be passed an option $dir variable
+*/
+/* line 168, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 172, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 176, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 180, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 184, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 188, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 192, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 196, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 200, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 204, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 208, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 212, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 216, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 220, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 224, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 228, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 232, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 236, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 240, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 244, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 248, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 252, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 256, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 260, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 264, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 268, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 272, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 276, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 280, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 284, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 288, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 292, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 296, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 300, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
+@font-face {
+  font-family: "Stag Medium";
+  src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
+  src: local("☺"), url("/bundles/kacsite/css/resources/fonts/stag-medium.woff") format("woff"), url("/bundles/kacsite/css/resources/fonts/stag-medium.ttf") format("truetype"), url("/bundles/kacsite/css/resources/fonts/stag-medium.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 4, assetic_compassEAysj6.scss */
+.admin-container {
+  padding: 10px;
+  background: #29a3cc;
+  background: -moz-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #baebfc), color-stop(5%, #29a3cc), color-stop(100%, #007398));
+  background: -webkit-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -o-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: -ms-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background: linear-gradient(to bottom, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JhZWJmYyIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiMyOWEzY2MiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDczOTgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #baebfc), color-stop(5%, #29a3cc), color-stop(100%, #007398));
+  background-image: -webkit-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: -moz-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: -o-linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  background-image: linear-gradient(top, #baebfc, #29a3cc 5%, #007398 100%);
+  -pie-background: linear-gradient(to bottom, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  behaviour: url("/bundles/kacsite/css/resources/htc/pie.htc");
+  background-repeat: no-repeat;
+  -webkit-box-shadow: inset 0 1px 5px 0 black;
+  -webkit-box-shadow: inset 0 1px 5px 0 black;
+  -moz-box-shadow: inset 0 1px 5px 0 black;
+  -moz-box-shadow: inset 0 1px 5px 0 black;
+  box-shadow: inset 0 1px 5px 0 black;
+  box-shadow: inset 0 1px 5px 0 black;
+  behaviour: url("/bundles/kacsite/css/resources/htc/pie.htc");
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  behaviour: url("/bundles/kacsite/css/resources/htc/pie.htc");
+}
