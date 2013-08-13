@@ -10,7 +10,14 @@
 		<tr>
 			<td class="ac{% if product.quantity > 1 %} gradient-background-red{% endif %}" width="1">{{ product.quantity }}</td>
 			<td class="ac" width="1">&times;</td>
-			<td class="al">{{ product.name }}</td>
+			<td class="al">
+                {{ product.name }}
+                {% for vtf in product.variant.features %}
+                    {% if vtf.featureGroup.name == 'Colour' %}
+                        <em> - </em><span class="tar">{{ vtf.feature.name }}</span>
+                    {% endif %}
+                {% endfor %}
+            </td>
 			<td class="ac" width="1">{{ product.productCode }}</td>
 			<td class="ac" width="1">&pound;{{ product.unitCost|number_format(2) }}</td>
 			<td class="ac" width="1">=</td>
