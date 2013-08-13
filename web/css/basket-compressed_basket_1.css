@@ -181,14 +181,14 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassVURRFk.scss */
+/* line 4, assetic_compassAZawst.scss */
 .basket-message {
   color: #cc0000;
   font-size: 13px;
   font-size: 1.3rem;
 }
 
-/* line 9, assetic_compassVURRFk.scss */
+/* line 9, assetic_compassAZawst.scss */
 #basket-summary {
   width: 230px;
   height: 50px;
@@ -227,19 +227,19 @@
   box-shadow: 0 -2px 5px 0 #384246;
 }
 
-/* line 24, assetic_compassVURRFk.scss */
+/* line 24, assetic_compassAZawst.scss */
 #basket-summary.expanded {
   width: 600px;
   height: auto;
 }
 
-/* line 29, assetic_compassVURRFk.scss */
+/* line 29, assetic_compassAZawst.scss */
 .basket-summary-header {
   min-height: 50px;
   cursor: pointer;
 }
 
-/* line 35, assetic_compassVURRFk.scss */
+/* line 35, assetic_compassAZawst.scss */
 .basket-summary-header h2 {
   margin: 0;
   padding: 0;
@@ -250,11 +250,10 @@
   letter-spacing: 1px;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=0, offy=1px);
 }
 
-/* line 46, assetic_compassVURRFk.scss */
+/* line 46, assetic_compassAZawst.scss */
 .basket-summary-header p {
   margin: 0;
   padding: 0;
@@ -264,33 +263,33 @@
   color: #6c8087;
 }
 
-/* line 55, assetic_compassVURRFk.scss */
+/* line 55, assetic_compassAZawst.scss */
 .basket-items-table {
   background: white;
 }
 
-/* line 59, assetic_compassVURRFk.scss */
+/* line 59, assetic_compassAZawst.scss */
 .basket-buttons {
   margin: 5px 0;
 }
 
-/* line 63, assetic_compassVURRFk.scss */
+/* line 63, assetic_compassAZawst.scss */
 .basket-buttons .button:first-child {
   margin-left: 5px;
 }
 
-/* line 67, assetic_compassVURRFk.scss */
+/* line 67, assetic_compassAZawst.scss */
 #basket-contents .add-to-basket {
   width: 63px;
   margin: 0;
 }
 
-/* line 72, assetic_compassVURRFk.scss */
+/* line 72, assetic_compassAZawst.scss */
 #basket-totals td {
   padding: 5px 10px;
 }
 
-/* line 77, assetic_compassVURRFk.scss */
+/* line 77, assetic_compassAZawst.scss */
 #basket-delivery-options .form-helper,
 #order-information .form-helper {
   top: 0;

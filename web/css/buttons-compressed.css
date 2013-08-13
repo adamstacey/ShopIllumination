@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassurtlgT.scss */
+/* line 4, assetic_compassLKCwop.scss */
 .ui-button {
   display: inline-block;
   position: relative;
@@ -209,7 +209,7 @@
   background-repeat: no-repeat;
 }
 
-/* line 20, assetic_compassurtlgT.scss */
+/* line 20, assetic_compassLKCwop.scss */
 .ui-button,
 .ui-button:link,
 .ui-button:visited,
@@ -218,31 +218,31 @@
   text-decoration: none;
 }
 
-/* line 25, assetic_compassurtlgT.scss */
+/* line 25, assetic_compassLKCwop.scss */
 .ui-icon,
 .ui-button-text {
   display: block;
   float: left;
 }
 
-/* line 30, assetic_compassurtlgT.scss */
+/* line 30, assetic_compassLKCwop.scss */
 .button-small .ui-icon {
   margin: 0!important;
 }
 
-/* line 34, assetic_compassurtlgT.scss */
+/* line 34, assetic_compassLKCwop.scss */
 .ui-button-text {
   padding: 0 10px;
   line-height: 32px;
 }
 
-/* line 40, assetic_compassurtlgT.scss */
+/* line 40, assetic_compassLKCwop.scss */
 .button-small .ui-button-text {
   padding: 0 5px;
   line-height: 24px;
 }
 
-/* line 47, assetic_compassurtlgT.scss */
+/* line 47, assetic_compassLKCwop.scss */
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
   padding: 0 !important;
@@ -250,30 +250,30 @@
   width: 0;
 }
 
-/* line 53, assetic_compassurtlgT.scss */
+/* line 53, assetic_compassLKCwop.scss */
 input.ui-button {
   padding: 10px;
 }
 
-/* line 57, assetic_compassurtlgT.scss */
+/* line 57, assetic_compassLKCwop.scss */
 .ui-buttonset {
   margin-right: 10px;
 }
 
-/* line 61, assetic_compassurtlgT.scss */
+/* line 61, assetic_compassLKCwop.scss */
 .ui-buttonset .ui-button {
   margin-left: 0;
   margin-right: 10px;
 }
 
-/* line 67, assetic_compassurtlgT.scss */
+/* line 67, assetic_compassLKCwop.scss */
 input.ui-button::-moz-focus-inner,
 button.ui-button::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
 
-/* line 74, assetic_compassurtlgT.scss */
+/* line 74, assetic_compassLKCwop.scss */
 .button,
 .ui-button {
   background: #e4eaec;
@@ -306,7 +306,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #c5d2d6;
 }
 
-/* line 82, assetic_compassurtlgT.scss */
+/* line 82, assetic_compassLKCwop.scss */
 .button:hover,
 .ui-button:hover {
   background: #c5d2d6;
@@ -333,7 +333,7 @@ button.ui-button::-moz-focus-inner {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 87, assetic_compassurtlgT.scss */
+/* line 87, assetic_compassLKCwop.scss */
 .button-grey {
   background: #c5d2d6;
   background: -moz-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
@@ -360,7 +360,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #6c8087;
 }
 
-/* line 93, assetic_compassurtlgT.scss */
+/* line 93, assetic_compassLKCwop.scss */
 .button-grey:hover {
   background: #6c8087;
   background: -moz-linear-gradient(top, #6c8087 0%, #c5d2d6 95%, white 100%);
@@ -380,13 +380,13 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 98, assetic_compassurtlgT.scss */
+/* line 98, assetic_compassLKCwop.scss */
 .button .ui-button-text,
 .button-grey .ui-button-text {
   color: #444444;
 }
 
-/* line 102, assetic_compassurtlgT.scss */
+/* line 102, assetic_compassLKCwop.scss */
 .button-dark-grey {
   background: #6c8087;
   background: -moz-linear-gradient(top, #c5d2d6 0%, #6c8087 5%, #384246 100%);
@@ -413,7 +413,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #384246;
 }
 
-/* line 108, assetic_compassurtlgT.scss */
+/* line 108, assetic_compassLKCwop.scss */
 .button-dark-grey:hover {
   background: #384246;
   background: -moz-linear-gradient(top, #384246 0%, #6c8087 95%, #c5d2d6 100%);
@@ -433,16 +433,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 112, assetic_compassurtlgT.scss */
+/* line 112, assetic_compassLKCwop.scss */
 .button-dark-grey .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 117, assetic_compassurtlgT.scss */
+/* line 117, assetic_compassLKCwop.scss */
 .button-dark-red {
   background: #d93637;
   background: -moz-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
@@ -469,7 +468,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #9a0000;
 }
 
-/* line 123, assetic_compassurtlgT.scss */
+/* line 123, assetic_compassLKCwop.scss */
 .button-dark-red:hover {
   background: #9a0000;
   background: -moz-linear-gradient(top, #9a0000 0%, #d93637 95%, #fdadae 100%);
@@ -489,16 +488,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 127, assetic_compassurtlgT.scss */
+/* line 127, assetic_compassLKCwop.scss */
 .button-dark-red .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 134, assetic_compassurtlgT.scss */
+/* line 134, assetic_compassLKCwop.scss */
 .ui-dialog-titlebar-close,
 .ui-dialog-titlebar-close:focus,
 .button-red {
@@ -527,7 +525,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #cc0000;
 }
 
-/* line 141, assetic_compassurtlgT.scss */
+/* line 141, assetic_compassLKCwop.scss */
 .ui-dialog-titlebar-close:hover,
 .button-red:hover {
   background: #cc0000;
@@ -548,17 +546,16 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 146, assetic_compassurtlgT.scss */
+/* line 146, assetic_compassLKCwop.scss */
 .ui-dialog-titlebar-close,
 .button-red .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 151, assetic_compassurtlgT.scss */
+/* line 151, assetic_compassLKCwop.scss */
 .button-orange {
   background: #ff8434;
   background: -moz-linear-gradient(top, #ffdec5 0%, #ff8434 5%, #cc5200 100%);
@@ -585,7 +582,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #cc5200;
 }
 
-/* line 157, assetic_compassurtlgT.scss */
+/* line 157, assetic_compassLKCwop.scss */
 .button-orange:hover {
   background: #cc5200;
   background: -moz-linear-gradient(top, #cc5200 0%, #ff8434 95%, #ffdec5 100%);
@@ -605,16 +602,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 161, assetic_compassurtlgT.scss */
+/* line 161, assetic_compassLKCwop.scss */
 .button-orange .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 166, assetic_compassurtlgT.scss */
+/* line 166, assetic_compassLKCwop.scss */
 .button-yellow {
   background: #ffd634;
   background: -moz-linear-gradient(top, #fffadd 0%, #ffd634 5%, #e6ac00 100%);
@@ -641,7 +637,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #e6ac00;
 }
 
-/* line 172, assetic_compassurtlgT.scss */
+/* line 172, assetic_compassLKCwop.scss */
 .button-yellow:hover {
   background: #e6ac00;
   background: -moz-linear-gradient(top, #e6ac00 0%, #ffd634 95%, #fffadd 100%);
@@ -661,16 +657,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 176, assetic_compassurtlgT.scss */
+/* line 176, assetic_compassLKCwop.scss */
 .button-yellow .ui-button-text {
   color: black;
   text-shadow: 0 1px 0 #e6ac00;
   text-shadow: 0 1px 0 #e6ac00;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=#e6ac00, offx=0, offy=1px);
 }
 
-/* line 181, assetic_compassurtlgT.scss */
+/* line 181, assetic_compassLKCwop.scss */
 .button-green {
   background: #2baf2b;
   background: -moz-linear-gradient(top, #b0e2ae 0%, #2baf2b 5%, #137f13 100%);
@@ -697,7 +692,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #137f13;
 }
 
-/* line 187, assetic_compassurtlgT.scss */
+/* line 187, assetic_compassLKCwop.scss */
 .button-green:hover {
   background: #137f13;
   background: -moz-linear-gradient(top, #137f13 0%, #2baf2b 95%, #b0e2ae 100%);
@@ -717,16 +712,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 191, assetic_compassurtlgT.scss */
+/* line 191, assetic_compassLKCwop.scss */
 .button-green .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 196, assetic_compassurtlgT.scss */
+/* line 196, assetic_compassLKCwop.scss */
 .button-turquoise {
   background: #29a3cc;
   background: -moz-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
@@ -753,7 +747,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #007398;
 }
 
-/* line 202, assetic_compassurtlgT.scss */
+/* line 202, assetic_compassLKCwop.scss */
 .button-turquoise:hover {
   background: #007398;
   background: -moz-linear-gradient(top, #007398 0%, #29a3cc 95%, #baebfc 100%);
@@ -773,16 +767,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 206, assetic_compassurtlgT.scss */
+/* line 206, assetic_compassLKCwop.scss */
 .button-turquoise .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 211, assetic_compassurtlgT.scss */
+/* line 211, assetic_compassLKCwop.scss */
 .button-blue {
   background: #0061bf;
   background: -moz-linear-gradient(top, #94c9fd 0%, #0061bf 5%, #003b73 100%);
@@ -809,7 +802,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #003b73;
 }
 
-/* line 217, assetic_compassurtlgT.scss */
+/* line 217, assetic_compassLKCwop.scss */
 .button-blue:hover {
   background: #003b73;
   background: -moz-linear-gradient(top, #003b73 0%, #0061bf 95%, #94c9fd 100%);
@@ -829,16 +822,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 221, assetic_compassurtlgT.scss */
+/* line 221, assetic_compassLKCwop.scss */
 .button-blue .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 226, assetic_compassurtlgT.scss */
+/* line 226, assetic_compassLKCwop.scss */
 .button-black {
   background: #384246;
   background: -moz-linear-gradient(top, #c5d2d6 0%, #384246 5%, black 100%);
@@ -865,7 +857,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid black;
 }
 
-/* line 232, assetic_compassurtlgT.scss */
+/* line 232, assetic_compassLKCwop.scss */
 .button-black:hover {
   background: black;
   background: -moz-linear-gradient(top, black 0%, #384246 95%, #c5d2d6 100%);
@@ -885,16 +877,15 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 236, assetic_compassurtlgT.scss */
+/* line 236, assetic_compassLKCwop.scss */
 .button-black .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
   text-shadow: 0 1px 0 black;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 241, assetic_compassurtlgT.scss */
+/* line 241, assetic_compassLKCwop.scss */
 .button-notification {
   margin: 0px;
   padding: 1px;

@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 5, assetic_compassj8d2Th.scss */
+/* line 5, assetic_compassc0qlfT.scss */
 h1,
 .h1 {
   font-size: 24px;
@@ -191,11 +191,10 @@ h1,
   color: #384246;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=0, offy=1px);
 }
 
-/* line 14, assetic_compassj8d2Th.scss */
+/* line 14, assetic_compassc0qlfT.scss */
 h2,
 .h2 {
   font-size: 18px;
@@ -205,11 +204,10 @@ h2,
   color: #384246;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=0, offy=1px);
 }
 
-/* line 23, assetic_compassj8d2Th.scss */
+/* line 23, assetic_compassc0qlfT.scss */
 h3,
 .h3 {
   font-size: 14px;
@@ -219,7 +217,7 @@ h3,
   color: #4ec0e3;
 }
 
-/* line 29, assetic_compassj8d2Th.scss */
+/* line 29, assetic_compassc0qlfT.scss */
 h3.separator {
   padding: 10px;
   margin: 0 -10px 10px -10px;
@@ -242,13 +240,12 @@ h3.separator {
   color: #6c8087;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=0, offy=1px);
   border-top: 1px solid #c5d2d6;
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 40, assetic_compassj8d2Th.scss */
+/* line 40, assetic_compassc0qlfT.scss */
 h4,
 .h4 {
   font-size: 14px;
@@ -258,7 +255,7 @@ h4,
   color: #4ec0e3;
 }
 
-/* line 48, assetic_compassj8d2Th.scss */
+/* line 48, assetic_compassc0qlfT.scss */
 h5,
 .h5 {
   font-size: 14px;
@@ -267,7 +264,7 @@ h5,
   font-style: normal;
 }
 
-/* line 55, assetic_compassj8d2Th.scss */
+/* line 55, assetic_compassc0qlfT.scss */
 h6,
 .h6 {
   font-size: 14px;

@@ -1,11 +1,5 @@
-/* Modernizr 2.6.2 (Custom Build) | MIT & BSD
- * Build: http://modernizr.com/download/#-fontface-backgroundsize-borderimage-borderradius-boxshadow-flexbox-flexboxlegacy-hsla-multiplebgs-opacity-rgba-textshadow-cssanimations-csscolumns-generatedcontent-cssgradients-cssreflections-csstransforms-csstransforms3d-csstransitions-applicationcache-canvas-canvastext-draganddrop-hashchange-history-audio-video-indexeddb-input-inputtypes-localstorage-postmessage-sessionstorage-websockets-websqldatabase-webworkers-geolocation-inlinesvg-smil-svg-svgclippaths-touch-webgl-shiv-mq-cssclasses-teststyles-testprop-testallprops-hasevent-prefixes-domprefixes-load
- */
-;window.Modernizr=function(a,b,c){function D(a){j.cssText=a}function E(a,b){return D(n.join(a+";")+(b||""))}function F(a,b){return typeof a===b}function G(a,b){return!!~(""+a).indexOf(b)}function H(a,b){for(var d in a){var e=a[d];if(!G(e,"-")&&j[e]!==c)return b=="pfx"?e:!0}return!1}function I(a,b,d){for(var e in a){var f=b[a[e]];if(f!==c)return d===!1?a[e]:F(f,"function")?f.bind(d||b):f}return!1}function J(a,b,c){var d=a.charAt(0).toUpperCase()+a.slice(1),e=(a+" "+p.join(d+" ")+d).split(" ");return F(b,"string")||F(b,"undefined")?H(e,b):(e=(a+" "+q.join(d+" ")+d).split(" "),I(e,b,c))}function K(){e.input=function(c){for(var d=0,e=c.length;d<e;d++)u[c[d]]=c[d]in k;return u.list&&(u.list=!!b.createElement("datalist")&&!!a.HTMLDataListElement),u}("autocomplete autofocus list placeholder max min multiple pattern required step".split(" ")),e.inputtypes=function(a){for(var d=0,e,f,h,i=a.length;d<i;d++)k.setAttribute("type",f=a[d]),e=k.type!=="text",e&&(k.value=l,k.style.cssText="position:absolute;visibility:hidden;",/^range$/.test(f)&&k.style.WebkitAppearance!==c?(g.appendChild(k),h=b.defaultView,e=h.getComputedStyle&&h.getComputedStyle(k,null).WebkitAppearance!=="textfield"&&k.offsetHeight!==0,g.removeChild(k)):/^(search|tel)$/.test(f)||(/^(url|email)$/.test(f)?e=k.checkValidity&&k.checkValidity()===!1:e=k.value!=l)),t[a[d]]=!!e;return t}("search tel url email datetime date month week time datetime-local number range color".split(" "))}var d="2.6.2",e={},f=!0,g=b.documentElement,h="modernizr",i=b.createElement(h),j=i.style,k=b.createElement("input"),l=":)",m={}.toString,n=" -webkit- -moz- -o- -ms- ".split(" "),o="Webkit Moz O ms",p=o.split(" "),q=o.toLowerCase().split(" "),r={svg:"http://www.w3.org/2000/svg"},s={},t={},u={},v=[],w=v.slice,x,y=function(a,c,d,e){var f,i,j,k,l=b.createElement("div"),m=b.body,n=m||b.createElement("body");if(parseInt(d,10))while(d--)j=b.createElement("div"),j.id=e?e[d]:h+(d+1),l.appendChild(j);return f=["&#173;",'<style id="s',h,'">',a,"</style>"].join(""),l.id=h,(m?l:n).innerHTML+=f,n.appendChild(l),m||(n.style.background="",n.style.overflow="hidden",k=g.style.overflow,g.style.overflow="hidden",g.appendChild(n)),i=c(l,a),m?l.parentNode.removeChild(l):(n.parentNode.removeChild(n),g.style.overflow=k),!!i},z=function(b){var c=a.matchMedia||a.msMatchMedia;if(c)return c(b).matches;var d;return y("@media "+b+" { #"+h+" { position: absolute; } }",function(b){d=(a.getComputedStyle?getComputedStyle(b,null):b.currentStyle)["position"]=="absolute"}),d},A=function(){function d(d,e){e=e||b.createElement(a[d]||"div"),d="on"+d;var f=d in e;return f||(e.setAttribute||(e=b.createElement("div")),e.setAttribute&&e.removeAttribute&&(e.setAttribute(d,""),f=F(e[d],"function"),F(e[d],"undefined")||(e[d]=c),e.removeAttribute(d))),e=null,f}var a={select:"input",change:"input",submit:"form",reset:"form",error:"img",load:"img",abort:"img"};return d}(),B={}.hasOwnProperty,C;!F(B,"undefined")&&!F(B.call,"undefined")?C=function(a,b){return B.call(a,b)}:C=function(a,b){return b in a&&F(a.constructor.prototype[b],"undefined")},Function.prototype.bind||(Function.prototype.bind=function(b){var c=this;if(typeof c!="function")throw new TypeError;var d=w.call(arguments,1),e=function(){if(this instanceof e){var a=function(){};a.prototype=c.prototype;var f=new a,g=c.apply(f,d.concat(w.call(arguments)));return Object(g)===g?g:f}return c.apply(b,d.concat(w.call(arguments)))};return e}),s.flexbox=function(){return J("flexWrap")},s.flexboxlegacy=function(){return J("boxDirection")},s.canvas=function(){var a=b.createElement("canvas");return!!a.getContext&&!!a.getContext("2d")},s.canvastext=function(){return!!e.canvas&&!!F(b.createElement("canvas").getContext("2d").fillText,"function")},s.webgl=function(){return!!a.WebGLRenderingContext},s.touch=function(){var c;return"ontouchstart"in a||a.DocumentTouch&&b instanceof DocumentTouch?c=!0:y(["@media (",n.join("touch-enabled),("),h,")","{#modernizr{top:9px;position:absolute}}"].join(""),function(a){c=a.offsetTop===9}),c},s.geolocation=function(){return"geolocation"in navigator},s.postmessage=function(){return!!a.postMessage},s.websqldatabase=function(){return!!a.openDatabase},s.indexedDB=function(){return!!J("indexedDB",a)},s.hashchange=function(){return A("hashchange",a)&&(b.documentMode===c||b.documentMode>7)},s.history=function(){return!!a.history&&!!history.pushState},s.draganddrop=function(){var a=b.createElement("div");return"draggable"in a||"ondragstart"in a&&"ondrop"in a},s.websockets=function(){return"WebSocket"in a||"MozWebSocket"in a},s.rgba=function(){return D("background-color:rgba(150,255,150,.5)"),G(j.backgroundColor,"rgba")},s.hsla=function(){return D("background-color:hsla(120,40%,100%,.5)"),G(j.backgroundColor,"rgba")||G(j.backgroundColor,"hsla")},s.multiplebgs=function(){return D("background:url(https://),url(https://),red url(https://)"),/(url\s*\(.*?){3}/.test(j.background)},s.backgroundsize=function(){return J("backgroundSize")},s.borderimage=function(){return J("borderImage")},s.borderradius=function(){return J("borderRadius")},s.boxshadow=function(){return J("boxShadow")},s.textshadow=function(){return b.createElement("div").style.textShadow===""},s.opacity=function(){return E("opacity:.55"),/^0.55$/.test(j.opacity)},s.cssanimations=function(){return J("animationName")},s.csscolumns=function(){return J("columnCount")},s.cssgradients=function(){var a="background-image:",b="gradient(linear,left top,right bottom,from(#9f9),to(white));",c="linear-gradient(left top,#9f9, white);";return D((a+"-webkit- ".split(" ").join(b+a)+n.join(c+a)).slice(0,-a.length)),G(j.backgroundImage,"gradient")},s.cssreflections=function(){return J("boxReflect")},s.csstransforms=function(){return!!J("transform")},s.csstransforms3d=function(){var a=!!J("perspective");return a&&"webkitPerspective"in g.style&&y("@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}",function(b,c){a=b.offsetLeft===9&&b.offsetHeight===3}),a},s.csstransitions=function(){return J("transition")},s.fontface=function(){var a;return y('@font-face {font-family:"font";src:url("https://")}',function(c,d){var e=b.getElementById("smodernizr"),f=e.sheet||e.styleSheet,g=f?f.cssRules&&f.cssRules[0]?f.cssRules[0].cssText:f.cssText||"":"";a=/src/i.test(g)&&g.indexOf(d.split(" ")[0])===0}),a},s.generatedcontent=function(){var a;return y(["#",h,"{font:0/0 a}#",h,':after{content:"',l,'";visibility:hidden;font:3px/1 a}'].join(""),function(b){a=b.offsetHeight>=3}),a},s.video=function(){var a=b.createElement("video"),c=!1;try{if(c=!!a.canPlayType)c=new Boolean(c),c.ogg=a.canPlayType('video/ogg; codecs="theora"').replace(/^no$/,""),c.h264=a.canPlayType('video/mp4; codecs="avc1.42E01E"').replace(/^no$/,""),c.webm=a.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,"")}catch(d){}return c},s.audio=function(){var a=b.createElement("audio"),c=!1;try{if(c=!!a.canPlayType)c=new Boolean(c),c.ogg=a.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),c.mp3=a.canPlayType("audio/mpeg;").replace(/^no$/,""),c.wav=a.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),c.m4a=(a.canPlayType("audio/x-m4a;")||a.canPlayType("audio/aac;")).replace(/^no$/,"")}catch(d){}return c},s.localstorage=function(){try{return localStorage.setItem(h,h),localStorage.removeItem(h),!0}catch(a){return!1}},s.sessionstorage=function(){try{return sessionStorage.setItem(h,h),sessionStorage.removeItem(h),!0}catch(a){return!1}},s.webworkers=function(){return!!a.Worker},s.applicationcache=function(){return!!a.applicationCache},s.svg=function(){return!!b.createElementNS&&!!b.createElementNS(r.svg,"svg").createSVGRect},s.inlinesvg=function(){var a=b.createElement("div");return a.innerHTML="<svg/>",(a.firstChild&&a.firstChild.namespaceURI)==r.svg},s.smil=function(){return!!b.createElementNS&&/SVGAnimate/.test(m.call(b.createElementNS(r.svg,"animate")))},s.svgclippaths=function(){return!!b.createElementNS&&/SVGClipPath/.test(m.call(b.createElementNS(r.svg,"clipPath")))};for(var L in s)C(s,L)&&(x=L.toLowerCase(),e[x]=s[L](),v.push((e[x]?"":"no-")+x));return e.input||K(),e.addTest=function(a,b){if(typeof a=="object")for(var d in a)C(a,d)&&e.addTest(d,a[d]);else{a=a.toLowerCase();if(e[a]!==c)return e;b=typeof b=="function"?b():b,typeof f!="undefined"&&f&&(g.className+=" "+(b?"":"no-")+a),e[a]=b}return e},D(""),i=k=null,function(a,b){function k(a,b){var c=a.createElement("p"),d=a.getElementsByTagName("head")[0]||a.documentElement;return c.innerHTML="x<style>"+b+"</style>",d.insertBefore(c.lastChild,d.firstChild)}function l(){var a=r.elements;return typeof a=="string"?a.split(" "):a}function m(a){var b=i[a[g]];return b||(b={},h++,a[g]=h,i[h]=b),b}function n(a,c,f){c||(c=b);if(j)return c.createElement(a);f||(f=m(c));var g;return f.cache[a]?g=f.cache[a].cloneNode():e.test(a)?g=(f.cache[a]=f.createElem(a)).cloneNode():g=f.createElem(a),g.canHaveChildren&&!d.test(a)?f.frag.appendChild(g):g}function o(a,c){a||(a=b);if(j)return a.createDocumentFragment();c=c||m(a);var d=c.frag.cloneNode(),e=0,f=l(),g=f.length;for(;e<g;e++)d.createElement(f[e]);return d}function p(a,b){b.cache||(b.cache={},b.createElem=a.createElement,b.createFrag=a.createDocumentFragment,b.frag=b.createFrag()),a.createElement=function(c){return r.shivMethods?n(c,a,b):b.createElem(c)},a.createDocumentFragment=Function("h,f","return function(){var n=f.cloneNode(),c=n.createElement;h.shivMethods&&("+l().join().replace(/\w+/g,function(a){return b.createElem(a),b.frag.createElement(a),'c("'+a+'")'})+");return n}")(r,b.frag)}function q(a){a||(a=b);var c=m(a);return r.shivCSS&&!f&&!c.hasCSS&&(c.hasCSS=!!k(a,"article,aside,figcaption,figure,footer,header,hgroup,nav,section{display:block}mark{background:#FF0;color:#000}")),j||p(a,c),a}var c=a.html5||{},d=/^<|^(?:button|map|select|textarea|object|iframe|option|optgroup)$/i,e=/^(?:a|b|code|div|fieldset|h1|h2|h3|h4|h5|h6|i|label|li|ol|p|q|span|strong|style|table|tbody|td|th|tr|ul)$/i,f,g="_html5shiv",h=0,i={},j;(function(){try{var a=b.createElement("a");a.innerHTML="<xyz></xyz>",f="hidden"in a,j=a.childNodes.length==1||function(){b.createElement("a");var a=b.createDocumentFragment();return typeof a.cloneNode=="undefined"||typeof a.createDocumentFragment=="undefined"||typeof a.createElement=="undefined"}()}catch(c){f=!0,j=!0}})();var r={elements:c.elements||"abbr article aside audio bdi canvas data datalist details figcaption figure footer header hgroup mark meter nav output progress section summary time video",shivCSS:c.shivCSS!==!1,supportsUnknownElements:j,shivMethods:c.shivMethods!==!1,type:"default",shivDocument:q,createElement:n,createDocumentFragment:o};a.html5=r,q(b)}(this,b),e._version=d,e._prefixes=n,e._domPrefixes=q,e._cssomPrefixes=p,e.mq=z,e.hasEvent=A,e.testProp=function(a){return H([a])},e.testAllProps=J,e.testStyles=y,g.className=g.className.replace(/(^|\s)no-js(\s|$)/,"$1$2")+(f?" js "+v.join(" "):""),e}(this,this.document),function(a,b,c){function d(a){return"[object Function]"==o.call(a)}function e(a){return"string"==typeof a}function f(){}function g(a){return!a||"loaded"==a||"complete"==a||"uninitialized"==a}function h(){var a=p.shift();q=1,a?a.t?m(function(){("c"==a.t?B.injectCss:B.injectJs)(a.s,0,a.a,a.x,a.e,1)},0):(a(),h()):q=0}function i(a,c,d,e,f,i,j){function k(b){if(!o&&g(l.readyState)&&(u.r=o=1,!q&&h(),l.onload=l.onreadystatechange=null,b)){"img"!=a&&m(function(){t.removeChild(l)},50);for(var d in y[c])y[c].hasOwnProperty(d)&&y[c][d].onload()}}var j=j||B.errorTimeout,l=b.createElement(a),o=0,r=0,u={t:d,s:c,e:f,a:i,x:j};1===y[c]&&(r=1,y[c]=[]),"object"==a?l.data=c:(l.src=c,l.type=a),l.width=l.height="0",l.onerror=l.onload=l.onreadystatechange=function(){k.call(this,r)},p.splice(e,0,u),"img"!=a&&(r||2===y[c]?(t.insertBefore(l,s?null:n),m(k,j)):y[c].push(l))}function j(a,b,c,d,f){return q=0,b=b||"j",e(a)?i("c"==b?v:u,a,b,this.i++,c,d,f):(p.splice(this.i++,0,a),1==p.length&&h()),this}function k(){var a=B;return a.loader={load:j,i:0},a}var l=b.documentElement,m=a.setTimeout,n=b.getElementsByTagName("script")[0],o={}.toString,p=[],q=0,r="MozAppearance"in l.style,s=r&&!!b.createRange().compareNode,t=s?l:n.parentNode,l=a.opera&&"[object Opera]"==o.call(a.opera),l=!!b.attachEvent&&!l,u=r?"object":l?"script":"img",v=l?"script":u,w=Array.isArray||function(a){return"[object Array]"==o.call(a)},x=[],y={},z={timeout:function(a,b){return b.length&&(a.timeout=b[0]),a}},A,B;B=function(a){function b(a){var a=a.split("!"),b=x.length,c=a.pop(),d=a.length,c={url:c,origUrl:c,prefixes:a},e,f,g;for(f=0;f<d;f++)g=a[f].split("="),(e=z[g.shift()])&&(c=e(c,g));for(f=0;f<b;f++)c=x[f](c);return c}function g(a,e,f,g,h){var i=b(a),j=i.autoCallback;i.url.split(".").pop().split("?").shift(),i.bypass||(e&&(e=d(e)?e:e[a]||e[g]||e[a.split("/").pop().split("?")[0]]),i.instead?i.instead(a,e,f,g,h):(y[i.url]?i.noexec=!0:y[i.url]=1,f.load(i.url,i.forceCSS||!i.forceJS&&"css"==i.url.split(".").pop().split("?").shift()?"c":c,i.noexec,i.attrs,i.timeout),(d(e)||d(j))&&f.load(function(){k(),e&&e(i.origUrl,h,g),j&&j(i.origUrl,h,g),y[i.url]=2})))}function h(a,b){function c(a,c){if(a){if(e(a))c||(j=function(){var a=[].slice.call(arguments);k.apply(this,a),l()}),g(a,j,b,0,h);else if(Object(a)===a)for(n in m=function(){var b=0,c;for(c in a)a.hasOwnProperty(c)&&b++;return b}(),a)a.hasOwnProperty(n)&&(!c&&!--m&&(d(j)?j=function(){var a=[].slice.call(arguments);k.apply(this,a),l()}:j[n]=function(a){return function(){var b=[].slice.call(arguments);a&&a.apply(this,b),l()}}(k[n])),g(a[n],j,b,n,h))}else!c&&l()}var h=!!a.test,i=a.load||a.both,j=a.callback||f,k=j,l=a.complete||f,m,n;c(h?a.yep:a.nope,!!i),i&&c(i)}var i,j,l=this.yepnope.loader;if(e(a))g(a,0,l,0);else if(w(a))for(i=0;i<a.length;i++)j=a[i],e(j)?g(j,0,l,0):w(j)?B(j):Object(j)===j&&h(j,l);else Object(a)===a&&h(a,l)},B.addPrefix=function(a,b){z[a]=b},B.addFilter=function(a){x.push(a)},B.errorTimeout=1e4,null==b.readyState&&b.addEventListener&&(b.readyState="loading",b.addEventListener("DOMContentLoaded",A=function(){b.removeEventListener("DOMContentLoaded",A,0),b.readyState="complete"},0)),a.yepnope=k(),a.yepnope.executeStack=h,a.yepnope.injectJs=function(a,c,d,e,i,j){var k=b.createElement("script"),l,o,e=e||B.errorTimeout;k.src=a;for(o in d)k.setAttribute(o,d[o]);c=j?h:c||f,k.onreadystatechange=k.onload=function(){!l&&g(k.readyState)&&(l=1,c(),k.onload=k.onreadystatechange=null)},m(function(){l||(l=1,c(1))},e),i?k.onload():n.parentNode.insertBefore(k,n)},a.yepnope.injectCss=function(a,c,d,e,g,i){var e=b.createElement("link"),j,c=i?h:c||f;e.href=a,e.rel="stylesheet",e.type="text/css";for(j in d)e.setAttribute(j,d[j]);g||(n.parentNode.insertBefore(e,n),m(c,0))}}(this,document),Modernizr.load=function(){yepnope.apply(window,[].slice.call(arguments,0))};
-/*! jQuery v1.7.2 jquery.com | jquery.org/license */
-(function(a,b){function cy(a){return f.isWindow(a)?a:a.nodeType===9?a.defaultView||a.parentWindow:!1}function cu(a){if(!cj[a]){var b=c.body,d=f("<"+a+">").appendTo(b),e=d.css("display");d.remove();if(e==="none"||e===""){ck||(ck=c.createElement("iframe"),ck.frameBorder=ck.width=ck.height=0),b.appendChild(ck);if(!cl||!ck.createElement)cl=(ck.contentWindow||ck.contentDocument).document,cl.write((f.support.boxModel?"<!doctype html>":"")+"<html><body>"),cl.close();d=cl.createElement(a),cl.body.appendChild(d),e=f.css(d,"display"),b.removeChild(ck)}cj[a]=e}return cj[a]}function ct(a,b){var c={};f.each(cp.concat.apply([],cp.slice(0,b)),function(){c[this]=a});return c}function cs(){cq=b}function cr(){setTimeout(cs,0);return cq=f.now()}function ci(){try{return new a.ActiveXObject("Microsoft.XMLHTTP")}catch(b){}}function ch(){try{return new a.XMLHttpRequest}catch(b){}}function cb(a,c){a.dataFilter&&(c=a.dataFilter(c,a.dataType));var d=a.dataTypes,e={},g,h,i=d.length,j,k=d[0],l,m,n,o,p;for(g=1;g<i;g++){if(g===1)for(h in a.converters)typeof h=="string"&&(e[h.toLowerCase()]=a.converters[h]);l=k,k=d[g];if(k==="*")k=l;else if(l!=="*"&&l!==k){m=l+" "+k,n=e[m]||e["* "+k];if(!n){p=b;for(o in e){j=o.split(" ");if(j[0]===l||j[0]==="*"){p=e[j[1]+" "+k];if(p){o=e[o],o===!0?n=p:p===!0&&(n=o);break}}}}!n&&!p&&f.error("No conversion from "+m.replace(" "," to ")),n!==!0&&(c=n?n(c):p(o(c)))}}return c}function ca(a,c,d){var e=a.contents,f=a.dataTypes,g=a.responseFields,h,i,j,k;for(i in g)i in d&&(c[g[i]]=d[i]);while(f[0]==="*")f.shift(),h===b&&(h=a.mimeType||c.getResponseHeader("content-type"));if(h)for(i in e)if(e[i]&&e[i].test(h)){f.unshift(i);break}if(f[0]in d)j=f[0];else{for(i in d){if(!f[0]||a.converters[i+" "+f[0]]){j=i;break}k||(k=i)}j=j||k}if(j){j!==f[0]&&f.unshift(j);return d[j]}}function b_(a,b,c,d){if(f.isArray(b))f.each(b,function(b,e){c||bD.test(a)?d(a,e):b_(a+"["+(typeof e=="object"?b:"")+"]",e,c,d)});else if(!c&&f.type(b)==="object")for(var e in b)b_(a+"["+e+"]",b[e],c,d);else d(a,b)}function b$(a,c){var d,e,g=f.ajaxSettings.flatOptions||{};for(d in c)c[d]!==b&&((g[d]?a:e||(e={}))[d]=c[d]);e&&f.extend(!0,a,e)}function bZ(a,c,d,e,f,g){f=f||c.dataTypes[0],g=g||{},g[f]=!0;var h=a[f],i=0,j=h?h.length:0,k=a===bS,l;for(;i<j&&(k||!l);i++)l=h[i](c,d,e),typeof l=="string"&&(!k||g[l]?l=b:(c.dataTypes.unshift(l),l=bZ(a,c,d,e,l,g)));(k||!l)&&!g["*"]&&(l=bZ(a,c,d,e,"*",g));return l}function bY(a){return function(b,c){typeof b!="string"&&(c=b,b="*");if(f.isFunction(c)){var d=b.toLowerCase().split(bO),e=0,g=d.length,h,i,j;for(;e<g;e++)h=d[e],j=/^\+/.test(h),j&&(h=h.substr(1)||"*"),i=a[h]=a[h]||[],i[j?"unshift":"push"](c)}}}function bB(a,b,c){var d=b==="width"?a.offsetWidth:a.offsetHeight,e=b==="width"?1:0,g=4;if(d>0){if(c!=="border")for(;e<g;e+=2)c||(d-=parseFloat(f.css(a,"padding"+bx[e]))||0),c==="margin"?d+=parseFloat(f.css(a,c+bx[e]))||0:d-=parseFloat(f.css(a,"border"+bx[e]+"Width"))||0;return d+"px"}d=by(a,b);if(d<0||d==null)d=a.style[b];if(bt.test(d))return d;d=parseFloat(d)||0;if(c)for(;e<g;e+=2)d+=parseFloat(f.css(a,"padding"+bx[e]))||0,c!=="padding"&&(d+=parseFloat(f.css(a,"border"+bx[e]+"Width"))||0),c==="margin"&&(d+=parseFloat(f.css(a,c+bx[e]))||0);return d+"px"}function bo(a){var b=c.createElement("div");bh.appendChild(b),b.innerHTML=a.outerHTML;return b.firstChild}function bn(a){var b=(a.nodeName||"").toLowerCase();b==="input"?bm(a):b!=="script"&&typeof a.getElementsByTagName!="undefined"&&f.grep(a.getElementsByTagName("input"),bm)}function bm(a){if(a.type==="checkbox"||a.type==="radio")a.defaultChecked=a.checked}function bl(a){return typeof a.getElementsByTagName!="undefined"?a.getElementsByTagName("*"):typeof a.querySelectorAll!="undefined"?a.querySelectorAll("*"):[]}function bk(a,b){var c;b.nodeType===1&&(b.clearAttributes&&b.clearAttributes(),b.mergeAttributes&&b.mergeAttributes(a),c=b.nodeName.toLowerCase(),c==="object"?b.outerHTML=a.outerHTML:c!=="input"||a.type!=="checkbox"&&a.type!=="radio"?c==="option"?b.selected=a.defaultSelected:c==="input"||c==="textarea"?b.defaultValue=a.defaultValue:c==="script"&&b.text!==a.text&&(b.text=a.text):(a.checked&&(b.defaultChecked=b.checked=a.checked),b.value!==a.value&&(b.value=a.value)),b.removeAttribute(f.expando),b.removeAttribute("_submit_attached"),b.removeAttribute("_change_attached"))}function bj(a,b){if(b.nodeType===1&&!!f.hasData(a)){var c,d,e,g=f._data(a),h=f._data(b,g),i=g.events;if(i){delete h.handle,h.events={};for(c in i)for(d=0,e=i[c].length;d<e;d++)f.event.add(b,c,i[c][d])}h.data&&(h.data=f.extend({},h.data))}}function bi(a,b){return f.nodeName(a,"table")?a.getElementsByTagName("tbody")[0]||a.appendChild(a.ownerDocument.createElement("tbody")):a}function U(a){var b=V.split("|"),c=a.createDocumentFragment();if(c.createElement)while(b.length)c.createElement(b.pop());return c}function T(a,b,c){b=b||0;if(f.isFunction(b))return f.grep(a,function(a,d){var e=!!b.call(a,d,a);return e===c});if(b.nodeType)return f.grep(a,function(a,d){return a===b===c});if(typeof b=="string"){var d=f.grep(a,function(a){return a.nodeType===1});if(O.test(b))return f.filter(b,d,!c);b=f.filter(b,d)}return f.grep(a,function(a,d){return f.inArray(a,b)>=0===c})}function S(a){return!a||!a.parentNode||a.parentNode.nodeType===11}function K(){return!0}function J(){return!1}function n(a,b,c){var d=b+"defer",e=b+"queue",g=b+"mark",h=f._data(a,d);h&&(c==="queue"||!f._data(a,e))&&(c==="mark"||!f._data(a,g))&&setTimeout(function(){!f._data(a,e)&&!f._data(a,g)&&(f.removeData(a,d,!0),h.fire())},0)}function m(a){for(var b in a){if(b==="data"&&f.isEmptyObject(a[b]))continue;if(b!=="toJSON")return!1}return!0}function l(a,c,d){if(d===b&&a.nodeType===1){var e="data-"+c.replace(k,"-$1").toLowerCase();d=a.getAttribute(e);if(typeof d=="string"){try{d=d==="true"?!0:d==="false"?!1:d==="null"?null:f.isNumeric(d)?+d:j.test(d)?f.parseJSON(d):d}catch(g){}f.data(a,c,d)}else d=b}return d}function h(a){var b=g[a]={},c,d;a=a.split(/\s+/);for(c=0,d=a.length;c<d;c++)b[a[c]]=!0;return b}var c=a.document,d=a.navigator,e=a.location,f=function(){function J(){if(!e.isReady){try{c.documentElement.doScroll("left")}catch(a){setTimeout(J,1);return}e.ready()}}var e=function(a,b){return new e.fn.init(a,b,h)},f=a.jQuery,g=a.$,h,i=/^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/,j=/\S/,k=/^\s+/,l=/\s+$/,m=/^<(\w+)\s*\/?>(?:<\/\1>)?$/,n=/^[\],:{}\s]*$/,o=/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,p=/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,q=/(?:^|:|,)(?:\s*\[)+/g,r=/(webkit)[ \/]([\w.]+)/,s=/(opera)(?:.*version)?[ \/]([\w.]+)/,t=/(msie) ([\w.]+)/,u=/(mozilla)(?:.*? rv:([\w.]+))?/,v=/-([a-z]|[0-9])/ig,w=/^-ms-/,x=function(a,b){return(b+"").toUpperCase()},y=d.userAgent,z,A,B,C=Object.prototype.toString,D=Object.prototype.hasOwnProperty,E=Array.prototype.push,F=Array.prototype.slice,G=String.prototype.trim,H=Array.prototype.indexOf,I={};e.fn=e.prototype={constructor:e,init:function(a,d,f){var g,h,j,k;if(!a)return this;if(a.nodeType){this.context=this[0]=a,this.length=1;return this}if(a==="body"&&!d&&c.body){this.context=c,this[0]=c.body,this.selector=a,this.length=1;return this}if(typeof a=="string"){a.charAt(0)!=="<"||a.charAt(a.length-1)!==">"||a.length<3?g=i.exec(a):g=[null,a,null];if(g&&(g[1]||!d)){if(g[1]){d=d instanceof e?d[0]:d,k=d?d.ownerDocument||d:c,j=m.exec(a),j?e.isPlainObject(d)?(a=[c.createElement(j[1])],e.fn.attr.call(a,d,!0)):a=[k.createElement(j[1])]:(j=e.buildFragment([g[1]],[k]),a=(j.cacheable?e.clone(j.fragment):j.fragment).childNodes);return e.merge(this,a)}h=c.getElementById(g[2]);if(h&&h.parentNode){if(h.id!==g[2])return f.find(a);this.length=1,this[0]=h}this.context=c,this.selector=a;return this}return!d||d.jquery?(d||f).find(a):this.constructor(d).find(a)}if(e.isFunction(a))return f.ready(a);a.selector!==b&&(this.selector=a.selector,this.context=a.context);return e.makeArray(a,this)},selector:"",jquery:"1.7.2",length:0,size:function(){return this.length},toArray:function(){return F.call(this,0)},get:function(a){return a==null?this.toArray():a<0?this[this.length+a]:this[a]},pushStack:function(a,b,c){var d=this.constructor();e.isArray(a)?E.apply(d,a):e.merge(d,a),d.prevObject=this,d.context=this.context,b==="find"?d.selector=this.selector+(this.selector?" ":"")+c:b&&(d.selector=this.selector+"."+b+"("+c+")");return d},each:function(a,b){return e.each(this,a,b)},ready:function(a){e.bindReady(),A.add(a);return this},eq:function(a){a=+a;return a===-1?this.slice(a):this.slice(a,a+1)},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},slice:function(){return this.pushStack(F.apply(this,arguments),"slice",F.call(arguments).join(","))},map:function(a){return this.pushStack(e.map(this,function(b,c){return a.call(b,c,b)}))},end:function(){return this.prevObject||this.constructor(null)},push:E,sort:[].sort,splice:[].splice},e.fn.init.prototype=e.fn,e.extend=e.fn.extend=function(){var a,c,d,f,g,h,i=arguments[0]||{},j=1,k=arguments.length,l=!1;typeof i=="boolean"&&(l=i,i=arguments[1]||{},j=2),typeof i!="object"&&!e.isFunction(i)&&(i={}),k===j&&(i=this,--j);for(;j<k;j++)if((a=arguments[j])!=null)for(c in a){d=i[c],f=a[c];if(i===f)continue;l&&f&&(e.isPlainObject(f)||(g=e.isArray(f)))?(g?(g=!1,h=d&&e.isArray(d)?d:[]):h=d&&e.isPlainObject(d)?d:{},i[c]=e.extend(l,h,f)):f!==b&&(i[c]=f)}return i},e.extend({noConflict:function(b){a.$===e&&(a.$=g),b&&a.jQuery===e&&(a.jQuery=f);return e},isReady:!1,readyWait:1,holdReady:function(a){a?e.readyWait++:e.ready(!0)},ready:function(a){if(a===!0&&!--e.readyWait||a!==!0&&!e.isReady){if(!c.body)return setTimeout(e.ready,1);e.isReady=!0;if(a!==!0&&--e.readyWait>0)return;A.fireWith(c,[e]),e.fn.trigger&&e(c).trigger("ready").off("ready")}},bindReady:function(){if(!A){A=e.Callbacks("once memory");if(c.readyState==="complete")return setTimeout(e.ready,1);if(c.addEventListener)c.addEventListener("DOMContentLoaded",B,!1),a.addEventListener("load",e.ready,!1);else if(c.attachEvent){c.attachEvent("onreadystatechange",B),a.attachEvent("onload",e.ready);var b=!1;try{b=a.frameElement==null}catch(d){}c.documentElement.doScroll&&b&&J()}}},isFunction:function(a){return e.type(a)==="function"},isArray:Array.isArray||function(a){return e.type(a)==="array"},isWindow:function(a){return a!=null&&a==a.window},isNumeric:function(a){return!isNaN(parseFloat(a))&&isFinite(a)},type:function(a){return a==null?String(a):I[C.call(a)]||"object"},isPlainObject:function(a){if(!a||e.type(a)!=="object"||a.nodeType||e.isWindow(a))return!1;try{if(a.constructor&&!D.call(a,"constructor")&&!D.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}var d;for(d in a);return d===b||D.call(a,d)},isEmptyObject:function(a){for(var b in a)return!1;return!0},error:function(a){throw new Error(a)},parseJSON:function(b){if(typeof b!="string"||!b)return null;b=e.trim(b);if(a.JSON&&a.JSON.parse)return a.JSON.parse(b);if(n.test(b.replace(o,"@").replace(p,"]").replace(q,"")))return(new Function("return "+b))();e.error("Invalid JSON: "+b)},parseXML:function(c){if(typeof c!="string"||!c)return null;var d,f;try{a.DOMParser?(f=new DOMParser,d=f.parseFromString(c,"text/xml")):(d=new ActiveXObject("Microsoft.XMLDOM"),d.async="false",d.loadXML(c))}catch(g){d=b}(!d||!d.documentElement||d.getElementsByTagName("parsererror").length)&&e.error("Invalid XML: "+c);return d},noop:function(){},globalEval:function(b){b&&j.test(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(w,"ms-").replace(v,x)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toUpperCase()===b.toUpperCase()},each:function(a,c,d){var f,g=0,h=a.length,i=h===b||e.isFunction(a);if(d){if(i){for(f in a)if(c.apply(a[f],d)===!1)break}else for(;g<h;)if(c.apply(a[g++],d)===!1)break}else if(i){for(f in a)if(c.call(a[f],f,a[f])===!1)break}else for(;g<h;)if(c.call(a[g],g,a[g++])===!1)break;return a},trim:G?function(a){return a==null?"":G.call(a)}:function(a){return a==null?"":(a+"").replace(k,"").replace(l,"")},makeArray:function(a,b){var c=b||[];if(a!=null){var d=e.type(a);a.length==null||d==="string"||d==="function"||d==="regexp"||e.isWindow(a)?E.call(c,a):e.merge(c,a)}return c},inArray:function(a,b,c){var d;if(b){if(H)return H.call(b,a,c);d=b.length,c=c?c<0?Math.max(0,d+c):c:0;for(;c<d;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,c){var d=a.length,e=0;if(typeof c.length=="number")for(var f=c.length;e<f;e++)a[d++]=c[e];else while(c[e]!==b)a[d++]=c[e++];a.length=d;return a},grep:function(a,b,c){var d=[],e;c=!!c;for(var f=0,g=a.length;f<g;f++)e=!!b(a[f],f),c!==e&&d.push(a[f]);return d},map:function(a,c,d){var f,g,h=[],i=0,j=a.length,k=a instanceof e||j!==b&&typeof j=="number"&&(j>0&&a[0]&&a[j-1]||j===0||e.isArray(a));if(k)for(;i<j;i++)f=c(a[i],i,d),f!=null&&(h[h.length]=f);else for(g in a)f=c(a[g],g,d),f!=null&&(h[h.length]=f);return h.concat.apply([],h)},guid:1,proxy:function(a,c){if(typeof c=="string"){var d=a[c];c=a,a=d}if(!e.isFunction(a))return b;var f=F.call(arguments,2),g=function(){return a.apply(c,f.concat(F.call(arguments)))};g.guid=a.guid=a.guid||g.guid||e.guid++;return g},access:function(a,c,d,f,g,h,i){var j,k=d==null,l=0,m=a.length;if(d&&typeof d=="object"){for(l in d)e.access(a,c,l,d[l],1,h,f);g=1}else if(f!==b){j=i===b&&e.isFunction(f),k&&(j?(j=c,c=function(a,b,c){return j.call(e(a),c)}):(c.call(a,f),c=null));if(c)for(;l<m;l++)c(a[l],d,j?f.call(a[l],l,c(a[l],d)):f,i);g=1}return g?a:k?c.call(a):m?c(a[0],d):h},now:function(){return(new Date).getTime()},uaMatch:function(a){a=a.toLowerCase();var b=r.exec(a)||s.exec(a)||t.exec(a)||a.indexOf("compatible")<0&&u.exec(a)||[];return{browser:b[1]||"",version:b[2]||"0"}},sub:function(){function a(b,c){return new a.fn.init(b,c)}e.extend(!0,a,this),a.superclass=this,a.fn=a.prototype=this(),a.fn.constructor=a,a.sub=this.sub,a.fn.init=function(d,f){f&&f instanceof e&&!(f instanceof a)&&(f=a(f));return e.fn.init.call(this,d,f,b)},a.fn.init.prototype=a.fn;var b=a(c);return a},browser:{}}),e.each("Boolean Number String Function Array Date RegExp Object".split(" "),function(a,b){I["[object "+b+"]"]=b.toLowerCase()}),z=e.uaMatch(y),z.browser&&(e.browser[z.browser]=!0,e.browser.version=z.version),e.browser.webkit&&(e.browser.safari=!0),j.test(" ")&&(k=/^[\s\xA0]+/,l=/[\s\xA0]+$/),h=e(c),c.addEventListener?B=function(){c.removeEventListener("DOMContentLoaded",B,!1),e.ready()}:c.attachEvent&&(B=function(){c.readyState==="complete"&&(c.detachEvent("onreadystatechange",B),e.ready())});return e}(),g={};f.Callbacks=function(a){a=a?g[a]||h(a):{};var c=[],d=[],e,i,j,k,l,m,n=function(b){var d,e,g,h,i;for(d=0,e=b.length;d<e;d++)g=b[d],h=f.type(g),h==="array"?n(g):h==="function"&&(!a.unique||!p.has(g))&&c.push(g)},o=function(b,f){f=f||[],e=!a.memory||[b,f],i=!0,j=!0,m=k||0,k=0,l=c.length;for(;c&&m<l;m++)if(c[m].apply(b,f)===!1&&a.stopOnFalse){e=!0;break}j=!1,c&&(a.once?e===!0?p.disable():c=[]:d&&d.length&&(e=d.shift(),p.fireWith(e[0],e[1])))},p={add:function(){if(c){var a=c.length;n(arguments),j?l=c.length:e&&e!==!0&&(k=a,o(e[0],e[1]))}return this},remove:function(){if(c){var b=arguments,d=0,e=b.length;for(;d<e;d++)for(var f=0;f<c.length;f++)if(b[d]===c[f]){j&&f<=l&&(l--,f<=m&&m--),c.splice(f--,1);if(a.unique)break}}return this},has:function(a){if(c){var b=0,d=c.length;for(;b<d;b++)if(a===c[b])return!0}return!1},empty:function(){c=[];return this},disable:function(){c=d=e=b;return this},disabled:function(){return!c},lock:function(){d=b,(!e||e===!0)&&p.disable();return this},locked:function(){return!d},fireWith:function(b,c){d&&(j?a.once||d.push([b,c]):(!a.once||!e)&&o(b,c));return this},fire:function(){p.fireWith(this,arguments);return this},fired:function(){return!!i}};return p};var i=[].slice;f.extend({Deferred:function(a){var b=f.Callbacks("once memory"),c=f.Callbacks("once memory"),d=f.Callbacks("memory"),e="pending",g={resolve:b,reject:c,notify:d},h={done:b.add,fail:c.add,progress:d.add,state:function(){return e},isResolved:b.fired,isRejected:c.fired,then:function(a,b,c){i.done(a).fail(b).progress(c);return this},always:function(){i.done.apply(i,arguments).fail.apply(i,arguments);return this},pipe:function(a,b,c){return f.Deferred(function(d){f.each({done:[a,"resolve"],fail:[b,"reject"],progress:[c,"notify"]},function(a,b){var c=b[0],e=b[1],g;f.isFunction(c)?i[a](function(){g=c.apply(this,arguments),g&&f.isFunction(g.promise)?g.promise().then(d.resolve,d.reject,d.notify):d[e+"With"](this===i?d:this,[g])}):i[a](d[e])})}).promise()},promise:function(a){if(a==null)a=h;else for(var b in h)a[b]=h[b];return a}},i=h.promise({}),j;for(j in g)i[j]=g[j].fire,i[j+"With"]=g[j].fireWith;i.done(function(){e="resolved"},c.disable,d.lock).fail(function(){e="rejected"},b.disable,d.lock),a&&a.call(i,i);return i},when:function(a){function m(a){return function(b){e[a]=arguments.length>1?i.call(arguments,0):b,j.notifyWith(k,e)}}function l(a){return function(c){b[a]=arguments.length>1?i.call(arguments,0):c,--g||j.resolveWith(j,b)}}var b=i.call(arguments,0),c=0,d=b.length,e=Array(d),g=d,h=d,j=d<=1&&a&&f.isFunction(a.promise)?a:f.Deferred(),k=j.promise();if(d>1){for(;c<d;c++)b[c]&&b[c].promise&&f.isFunction(b[c].promise)?b[c].promise().then(l(c),j.reject,m(c)):--g;g||j.resolveWith(j,b)}else j!==a&&j.resolveWith(j,d?[a]:[]);return k}}),f.support=function(){var b,d,e,g,h,i,j,k,l,m,n,o,p=c.createElement("div"),q=c.documentElement;p.setAttribute("className","t"),p.innerHTML="   <link/><table></table><a href='/a' style='top:1px;float:left;opacity:.55;'>a</a><input type='checkbox'/>",d=p.getElementsByTagName("*"),e=p.getElementsByTagName("a")[0];if(!d||!d.length||!e)return{};g=c.createElement("select"),h=g.appendChild(c.createElement("option")),i=p.getElementsByTagName("input")[0],b={leadingWhitespace:p.firstChild.nodeType===3,tbody:!p.getElementsByTagName("tbody").length,htmlSerialize:!!p.getElementsByTagName("link").length,style:/top/.test(e.getAttribute("style")),hrefNormalized:e.getAttribute("href")==="/a",opacity:/^0.55/.test(e.style.opacity),cssFloat:!!e.style.cssFloat,checkOn:i.value==="on",optSelected:h.selected,getSetAttribute:p.className!=="t",enctype:!!c.createElement("form").enctype,html5Clone:c.createElement("nav").cloneNode(!0).outerHTML!=="<:nav></:nav>",submitBubbles:!0,changeBubbles:!0,focusinBubbles:!1,deleteExpando:!0,noCloneEvent:!0,inlineBlockNeedsLayout:!1,shrinkWrapBlocks:!1,reliableMarginRight:!0,pixelMargin:!0},f.boxModel=b.boxModel=c.compatMode==="CSS1Compat",i.checked=!0,b.noCloneChecked=i.cloneNode(!0).checked,g.disabled=!0,b.optDisabled=!h.disabled;try{delete p.test}catch(r){b.deleteExpando=!1}!p.addEventListener&&p.attachEvent&&p.fireEvent&&(p.attachEvent("onclick",function(){b.noCloneEvent=!1}),p.cloneNode(!0).fireEvent("onclick")),i=c.createElement("input"),i.value="t",i.setAttribute("type","radio"),b.radioValue=i.value==="t",i.setAttribute("checked","checked"),i.setAttribute("name","t"),p.appendChild(i),j=c.createDocumentFragment(),j.appendChild(p.lastChild),b.checkClone=j.cloneNode(!0).cloneNode(!0).lastChild.checked,b.appendChecked=i.checked,j.removeChild(i),j.appendChild(p);if(p.attachEvent)for(n in{submit:1,change:1,focusin:1})m="on"+n,o=m in p,o||(p.setAttribute(m,"return;"),o=typeof p[m]=="function"),b[n+"Bubbles"]=o;j.removeChild(p),j=g=h=p=i=null,f(function(){var d,e,g,h,i,j,l,m,n,q,r,s,t,u=c.getElementsByTagName("body")[0];!u||(m=1,t="padding:0;margin:0;border:",r="position:absolute;top:0;left:0;width:1px;height:1px;",s=t+"0;visibility:hidden;",n="style='"+r+t+"5px solid #000;",q="<div "+n+"display:block;'><div style='"+t+"0;display:block;overflow:hidden;'></div></div>"+"<table "+n+"' cellpadding='0' cellspacing='0'>"+"<tr><td></td></tr></table>",d=c.createElement("div"),d.style.cssText=s+"width:0;height:0;position:static;top:0;margin-top:"+m+"px",u.insertBefore(d,u.firstChild),p=c.createElement("div"),d.appendChild(p),p.innerHTML="<table><tr><td style='"+t+"0;display:none'></td><td>t</td></tr></table>",k=p.getElementsByTagName("td"),o=k[0].offsetHeight===0,k[0].style.display="",k[1].style.display="none",b.reliableHiddenOffsets=o&&k[0].offsetHeight===0,a.getComputedStyle&&(p.innerHTML="",l=c.createElement("div"),l.style.width="0",l.style.marginRight="0",p.style.width="2px",p.appendChild(l),b.reliableMarginRight=(parseInt((a.getComputedStyle(l,null)||{marginRight:0}).marginRight,10)||0)===0),typeof p.style.zoom!="undefined"&&(p.innerHTML="",p.style.width=p.style.padding="1px",p.style.border=0,p.style.overflow="hidden",p.style.display="inline",p.style.zoom=1,b.inlineBlockNeedsLayout=p.offsetWidth===3,p.style.display="block",p.style.overflow="visible",p.innerHTML="<div style='width:5px;'></div>",b.shrinkWrapBlocks=p.offsetWidth!==3),p.style.cssText=r+s,p.innerHTML=q,e=p.firstChild,g=e.firstChild,i=e.nextSibling.firstChild.firstChild,j={doesNotAddBorder:g.offsetTop!==5,doesAddBorderForTableAndCells:i.offsetTop===5},g.style.position="fixed",g.style.top="20px",j.fixedPosition=g.offsetTop===20||g.offsetTop===15,g.style.position=g.style.top="",e.style.overflow="hidden",e.style.position="relative",j.subtractsBorderForOverflowNotVisible=g.offsetTop===-5,j.doesNotIncludeMarginInBodyOffset=u.offsetTop!==m,a.getComputedStyle&&(p.style.marginTop="1%",b.pixelMargin=(a.getComputedStyle(p,null)||{marginTop:0}).marginTop!=="1%"),typeof d.style.zoom!="undefined"&&(d.style.zoom=1),u.removeChild(d),l=p=d=null,f.extend(b,j))});return b}();var j=/^(?:\{.*\}|\[.*\])$/,k=/([A-Z])/g;f.extend({cache:{},uuid:0,expando:"jQuery"+(f.fn.jquery+Math.random()).replace(/\D/g,""),noData:{embed:!0,object:"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",applet:!0},hasData:function(a){a=a.nodeType?f.cache[a[f.expando]]:a[f.expando];return!!a&&!m(a)},data:function(a,c,d,e){if(!!f.acceptData(a)){var g,h,i,j=f.expando,k=typeof c=="string",l=a.nodeType,m=l?f.cache:a,n=l?a[j]:a[j]&&j,o=c==="events";if((!n||!m[n]||!o&&!e&&!m[n].data)&&k&&d===b)return;n||(l?a[j]=n=++f.uuid:n=j),m[n]||(m[n]={},l||(m[n].toJSON=f.noop));if(typeof c=="object"||typeof c=="function")e?m[n]=f.extend(m[n],c):m[n].data=f.extend(m[n].data,c);g=h=m[n],e||(h.data||(h.data={}),h=h.data),d!==b&&(h[f.camelCase(c)]=d);if(o&&!h[c])return g.events;k?(i=h[c],i==null&&(i=h[f.camelCase(c)])):i=h;return i}},removeData:function(a,b,c){if(!!f.acceptData(a)){var d,e,g,h=f.expando,i=a.nodeType,j=i?f.cache:a,k=i?a[h]:h;if(!j[k])return;if(b){d=c?j[k]:j[k].data;if(d){f.isArray(b)||(b in d?b=[b]:(b=f.camelCase(b),b in d?b=[b]:b=b.split(" ")));for(e=0,g=b.length;e<g;e++)delete d[b[e]];if(!(c?m:f.isEmptyObject)(d))return}}if(!c){delete j[k].data;if(!m(j[k]))return}f.support.deleteExpando||!j.setInterval?delete j[k]:j[k]=null,i&&(f.support.deleteExpando?delete a[h]:a.removeAttribute?a.removeAttribute(h):a[h]=null)}},_data:function(a,b,c){return f.data(a,b,c,!0)},acceptData:function(a){if(a.nodeName){var b=f.noData[a.nodeName.toLowerCase()];if(b)return b!==!0&&a.getAttribute("classid")===b}return!0}}),f.fn.extend({data:function(a,c){var d,e,g,h,i,j=this[0],k=0,m=null;if(a===b){if(this.length){m=f.data(j);if(j.nodeType===1&&!f._data(j,"parsedAttrs")){g=j.attributes;for(i=g.length;k<i;k++)h=g[k].name,h.indexOf("data-")===0&&(h=f.camelCase(h.substring(5)),l(j,h,m[h]));f._data(j,"parsedAttrs",!0)}}return m}if(typeof a=="object")return this.each(function(){f.data(this,a)});d=a.split(".",2),d[1]=d[1]?"."+d[1]:"",e=d[1]+"!";return f.access(this,function(c){if(c===b){m=this.triggerHandler("getData"+e,[d[0]]),m===b&&j&&(m=f.data(j,a),m=l(j,a,m));return m===b&&d[1]?this.data(d[0]):m}d[1]=c,this.each(function(){var b=f(this);b.triggerHandler("setData"+e,d),f.data(this,a,c),b.triggerHandler("changeData"+e,d)})},null,c,arguments.length>1,null,!1)},removeData:function(a){return this.each(function(){f.removeData(this,a)})}}),f.extend({_mark:function(a,b){a&&(b=(b||"fx")+"mark",f._data(a,b,(f._data(a,b)||0)+1))},_unmark:function(a,b,c){a!==!0&&(c=b,b=a,a=!1);if(b){c=c||"fx";var d=c+"mark",e=a?0:(f._data(b,d)||1)-1;e?f._data(b,d,e):(f.removeData(b,d,!0),n(b,c,"mark"))}},queue:function(a,b,c){var d;if(a){b=(b||"fx")+"queue",d=f._data(a,b),c&&(!d||f.isArray(c)?d=f._data(a,b,f.makeArray(c)):d.push(c));return d||[]}},dequeue:function(a,b){b=b||"fx";var c=f.queue(a,b),d=c.shift(),e={};d==="inprogress"&&(d=c.shift()),d&&(b==="fx"&&c.unshift("inprogress"),f._data(a,b+".run",e),d.call(a,function(){f.dequeue(a,b)},e)),c.length||(f.removeData(a,b+"queue "+b+".run",!0),n(a,b,"queue"))}}),f.fn.extend({queue:function(a,c){var d=2;typeof a!="string"&&(c=a,a="fx",d--);if(arguments.length<d)return f.queue(this[0],a);return c===b?this:this.each(function(){var b=f.queue(this,a,c);a==="fx"&&b[0]!=="inprogress"&&f.dequeue(this,a)})},dequeue:function(a){return this.each(function(){f.dequeue(this,a)})},delay:function(a,b){a=f.fx?f.fx.speeds[a]||a:a,b=b||"fx";return this.queue(b,function(b,c){var d=setTimeout(b,a);c.stop=function(){clearTimeout(d)}})},clearQueue:function(a){return this.queue(a||"fx",[])},promise:function(a,c){function m(){--h||d.resolveWith(e,[e])}typeof a!="string"&&(c=a,a=b),a=a||"fx";var d=f.Deferred(),e=this,g=e.length,h=1,i=a+"defer",j=a+"queue",k=a+"mark",l;while(g--)if(l=f.data(e[g],i,b,!0)||(f.data(e[g],j,b,!0)||f.data(e[g],k,b,!0))&&f.data(e[g],i,f.Callbacks("once memory"),!0))h++,l.add(m);m();return d.promise(c)}});var o=/[\n\t\r]/g,p=/\s+/,q=/\r/g,r=/^(?:button|input)$/i,s=/^(?:button|input|object|select|textarea)$/i,t=/^a(?:rea)?$/i,u=/^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,v=f.support.getSetAttribute,w,x,y;f.fn.extend({attr:function(a,b){return f.access(this,f.attr,a,b,arguments.length>1)},removeAttr:function(a){return this.each(function(){f.removeAttr(this,a)})},prop:function(a,b){return f.access(this,f.prop,a,b,arguments.length>1)},removeProp:function(a){a=f.propFix[a]||a;return this.each(function(){try{this[a]=b,delete this[a]}catch(c){}})},addClass:function(a){var b,c,d,e,g,h,i;if(f.isFunction(a))return this.each(function(b){f(this).addClass(a.call(this,b,this.className))});if(a&&typeof a=="string"){b=a.split(p);for(c=0,d=this.length;c<d;c++){e=this[c];if(e.nodeType===1)if(!e.className&&b.length===1)e.className=a;else{g=" "+e.className+" ";for(h=0,i=b.length;h<i;h++)~g.indexOf(" "+b[h]+" ")||(g+=b[h]+" ");e.className=f.trim(g)}}}return this},removeClass:function(a){var c,d,e,g,h,i,j;if(f.isFunction(a))return this.each(function(b){f(this).removeClass(a.call(this,b,this.className))});if(a&&typeof a=="string"||a===b){c=(a||"").split(p);for(d=0,e=this.length;d<e;d++){g=this[d];if(g.nodeType===1&&g.className)if(a){h=(" "+g.className+" ").replace(o," ");for(i=0,j=c.length;i<j;i++)h=h.replace(" "+c[i]+" "," ");g.className=f.trim(h)}else g.className=""}}return this},toggleClass:function(a,b){var c=typeof a,d=typeof b=="boolean";if(f.isFunction(a))return this.each(function(c){f(this).toggleClass(a.call(this,c,this.className,b),b)});return this.each(function(){if(c==="string"){var e,g=0,h=f(this),i=b,j=a.split(p);while(e=j[g++])i=d?i:!h.hasClass(e),h[i?"addClass":"removeClass"](e)}else if(c==="undefined"||c==="boolean")this.className&&f._data(this,"__className__",this.className),this.className=this.className||a===!1?"":f._data(this,"__className__")||""})},hasClass:function(a){var b=" "+a+" ",c=0,d=this.length;for(;c<d;c++)if(this[c].nodeType===1&&(" "+this[c].className+" ").replace(o," ").indexOf(b)>-1)return!0;return!1},val:function(a){var c,d,e,g=this[0];{if(!!arguments.length){e=f.isFunction(a);return this.each(function(d){var g=f(this),h;if(this.nodeType===1){e?h=a.call(this,d,g.val()):h=a,h==null?h="":typeof h=="number"?h+="":f.isArray(h)&&(h=f.map(h,function(a){return a==null?"":a+""})),c=f.valHooks[this.type]||f.valHooks[this.nodeName.toLowerCase()];if(!c||!("set"in c)||c.set(this,h,"value")===b)this.value=h}})}if(g){c=f.valHooks[g.type]||f.valHooks[g.nodeName.toLowerCase()];if(c&&"get"in c&&(d=c.get(g,"value"))!==b)return d;d=g.value;return typeof d=="string"?d.replace(q,""):d==null?"":d}}}}),f.extend({valHooks:{option:{get:function(a){var b=a.attributes.value;return!b||b.specified?a.value:a.text}},select:{get:function(a){var b,c,d,e,g=a.selectedIndex,h=[],i=a.options,j=a.type==="select-one";if(g<0)return null;c=j?g:0,d=j?g+1:i.length;for(;c<d;c++){e=i[c];if(e.selected&&(f.support.optDisabled?!e.disabled:e.getAttribute("disabled")===null)&&(!e.parentNode.disabled||!f.nodeName(e.parentNode,"optgroup"))){b=f(e).val();if(j)return b;h.push(b)}}if(j&&!h.length&&i.length)return f(i[g]).val();return h},set:function(a,b){var c=f.makeArray(b);f(a).find("option").each(function(){this.selected=f.inArray(f(this).val(),c)>=0}),c.length||(a.selectedIndex=-1);return c}}},attrFn:{val:!0,css:!0,html:!0,text:!0,data:!0,width:!0,height:!0,offset:!0},attr:function(a,c,d,e){var g,h,i,j=a.nodeType;if(!!a&&j!==3&&j!==8&&j!==2){if(e&&c in f.attrFn)return f(a)[c](d);if(typeof a.getAttribute=="undefined")return f.prop(a,c,d);i=j!==1||!f.isXMLDoc(a),i&&(c=c.toLowerCase(),h=f.attrHooks[c]||(u.test(c)?x:w));if(d!==b){if(d===null){f.removeAttr(a,c);return}if(h&&"set"in h&&i&&(g=h.set(a,d,c))!==b)return g;a.setAttribute(c,""+d);return d}if(h&&"get"in h&&i&&(g=h.get(a,c))!==null)return g;g=a.getAttribute(c);return g===null?b:g}},removeAttr:function(a,b){var c,d,e,g,h,i=0;if(b&&a.nodeType===1){d=b.toLowerCase().split(p),g=d.length;for(;i<g;i++)e=d[i],e&&(c=f.propFix[e]||e,h=u.test(e),h||f.attr(a,e,""),a.removeAttribute(v?e:c),h&&c in a&&(a[c]=!1))}},attrHooks:{type:{set:function(a,b){if(r.test(a.nodeName)&&a.parentNode)f.error("type property can't be changed");else if(!f.support.radioValue&&b==="radio"&&f.nodeName(a,"input")){var c=a.value;a.setAttribute("type",b),c&&(a.value=c);return b}}},value:{get:function(a,b){if(w&&f.nodeName(a,"button"))return w.get(a,b);return b in a?a.value:null},set:function(a,b,c){if(w&&f.nodeName(a,"button"))return w.set(a,b,c);a.value=b}}},propFix:{tabindex:"tabIndex",readonly:"readOnly","for":"htmlFor","class":"className",maxlength:"maxLength",cellspacing:"cellSpacing",cellpadding:"cellPadding",rowspan:"rowSpan",colspan:"colSpan",usemap:"useMap",frameborder:"frameBorder",contenteditable:"contentEditable"},prop:function(a,c,d){var e,g,h,i=a.nodeType;if(!!a&&i!==3&&i!==8&&i!==2){h=i!==1||!f.isXMLDoc(a),h&&(c=f.propFix[c]||c,g=f.propHooks[c]);return d!==b?g&&"set"in g&&(e=g.set(a,d,c))!==b?e:a[c]=d:g&&"get"in g&&(e=g.get(a,c))!==null?e:a[c]}},propHooks:{tabIndex:{get:function(a){var c=a.getAttributeNode("tabindex");return c&&c.specified?parseInt(c.value,10):s.test(a.nodeName)||t.test(a.nodeName)&&a.href?0:b}}}}),f.attrHooks.tabindex=f.propHooks.tabIndex,x={get:function(a,c){var d,e=f.prop(a,c);return e===!0||typeof e!="boolean"&&(d=a.getAttributeNode(c))&&d.nodeValue!==!1?c.toLowerCase():b},set:function(a,b,c){var d;b===!1?f.removeAttr(a,c):(d=f.propFix[c]||c,d in a&&(a[d]=!0),a.setAttribute(c,c.toLowerCase()));return c}},v||(y={name:!0,id:!0,coords:!0},w=f.valHooks.button={get:function(a,c){var d;d=a.getAttributeNode(c);return d&&(y[c]?d.nodeValue!=="":d.specified)?d.nodeValue:b},set:function(a,b,d){var e=a.getAttributeNode(d);e||(e=c.createAttribute(d),a.setAttributeNode(e));return e.nodeValue=b+""}},f.attrHooks.tabindex.set=w.set,f.each(["width","height"],function(a,b){f.attrHooks[b]=f.extend(f.attrHooks[b],{set:function(a,c){if(c===""){a.setAttribute(b,"auto");return c}}})}),f.attrHooks.contenteditable={get:w.get,set:function(a,b,c){b===""&&(b="false"),w.set(a,b,c)}}),f.support.hrefNormalized||f.each(["href","src","width","height"],function(a,c){f.attrHooks[c]=f.extend(f.attrHooks[c],{get:function(a){var d=a.getAttribute(c,2);return d===null?b:d}})}),f.support.style||(f.attrHooks.style={get:function(a){return a.style.cssText.toLowerCase()||b},set:function(a,b){return a.style.cssText=""+b}}),f.support.optSelected||(f.propHooks.selected=f.extend(f.propHooks.selected,{get:function(a){var b=a.parentNode;b&&(b.selectedIndex,b.parentNode&&b.parentNode.selectedIndex);return null}})),f.support.enctype||(f.propFix.enctype="encoding"),f.support.checkOn||f.each(["radio","checkbox"],function(){f.valHooks[this]={get:function(a){return a.getAttribute("value")===null?"on":a.value}}}),f.each(["radio","checkbox"],function(){f.valHooks[this]=f.extend(f.valHooks[this],{set:function(a,b){if(f.isArray(b))return a.checked=f.inArray(f(a).val(),b)>=0}})});var z=/^(?:textarea|input|select)$/i,A=/^([^\.]*)?(?:\.(.+))?$/,B=/(?:^|\s)hover(\.\S+)?\b/,C=/^key/,D=/^(?:mouse|contextmenu)|click/,E=/^(?:focusinfocus|focusoutblur)$/,F=/^(\w*)(?:#([\w\-]+))?(?:\.([\w\-]+))?$/,G=function(
-        a){var b=F.exec(a);b&&(b[1]=(b[1]||"").toLowerCase(),b[3]=b[3]&&new RegExp("(?:^|\\s)"+b[3]+"(?:\\s|$)"));return b},H=function(a,b){var c=a.attributes||{};return(!b[1]||a.nodeName.toLowerCase()===b[1])&&(!b[2]||(c.id||{}).value===b[2])&&(!b[3]||b[3].test((c["class"]||{}).value))},I=function(a){return f.event.special.hover?a:a.replace(B,"mouseenter$1 mouseleave$1")};f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3||a.nodeType===8||!c||!d||!(h=f._data(a)))){d.handler&&(p=d,d=p.handler,g=p.selector),d.guid||(d.guid=f.guid++),j=h.events,j||(h.events=j={}),i=h.handle,i||(h.handle=i=function(a){return typeof f!="undefined"&&(!a||f.event.triggered!==a.type)?f.event.dispatch.apply(i.elem,arguments):b},i.elem=a),c=f.trim(I(c)).split(" ");for(k=0;k<c.length;k++){l=A.exec(c[k])||[],m=l[1],n=(l[2]||"").split(".").sort(),s=f.event.special[m]||{},m=(g?s.delegateType:s.bindType)||m,s=f.event.special[m]||{},o=f.extend({type:m,origType:l[1],data:e,handler:d,guid:d.guid,selector:g,quick:g&&G(g),namespace:n.join(".")},p),r=j[m];if(!r){r=j[m]=[],r.delegateCount=0;if(!s.setup||s.setup.call(a,e,n,i)===!1)a.addEventListener?a.addEventListener(m,i,!1):a.attachEvent&&a.attachEvent("on"+m,i)}s.add&&(s.add.call(a,o),o.handler.guid||(o.handler.guid=d.guid)),g?r.splice(r.delegateCount++,0,o):r.push(o),f.event.global[m]=!0}a=null}},global:{},remove:function(a,b,c,d,e){var g=f.hasData(a)&&f._data(a),h,i,j,k,l,m,n,o,p,q,r,s;if(!!g&&!!(o=g.events)){b=f.trim(I(b||"")).split(" ");for(h=0;h<b.length;h++){i=A.exec(b[h])||[],j=k=i[1],l=i[2];if(!j){for(j in o)f.event.remove(a,j+b[h],c,d,!0);continue}p=f.event.special[j]||{},j=(d?p.delegateType:p.bindType)||j,r=o[j]||[],m=r.length,l=l?new RegExp("(^|\\.)"+l.split(".").sort().join("\\.(?:.*\\.)?")+"(\\.|$)"):null;for(n=0;n<r.length;n++)s=r[n],(e||k===s.origType)&&(!c||c.guid===s.guid)&&(!l||l.test(s.namespace))&&(!d||d===s.selector||d==="**"&&s.selector)&&(r.splice(n--,1),s.selector&&r.delegateCount--,p.remove&&p.remove.call(a,s));r.length===0&&m!==r.length&&((!p.teardown||p.teardown.call(a,l)===!1)&&f.removeEvent(a,j,g.handle),delete o[j])}f.isEmptyObject(o)&&(q=g.handle,q&&(q.elem=null),f.removeData(a,["events","handle"],!0))}},customEvent:{getData:!0,setData:!0,changeData:!0},trigger:function(c,d,e,g){if(!e||e.nodeType!==3&&e.nodeType!==8){var h=c.type||c,i=[],j,k,l,m,n,o,p,q,r,s;if(E.test(h+f.event.triggered))return;h.indexOf("!")>=0&&(h=h.slice(0,-1),k=!0),h.indexOf(".")>=0&&(i=h.split("."),h=i.shift(),i.sort());if((!e||f.event.customEvent[h])&&!f.event.global[h])return;c=typeof c=="object"?c[f.expando]?c:new f.Event(h,c):new f.Event(h),c.type=h,c.isTrigger=!0,c.exclusive=k,c.namespace=i.join("."),c.namespace_re=c.namespace?new RegExp("(^|\\.)"+i.join("\\.(?:.*\\.)?")+"(\\.|$)"):null,o=h.indexOf(":")<0?"on"+h:"";if(!e){j=f.cache;for(l in j)j[l].events&&j[l].events[h]&&f.event.trigger(c,d,j[l].handle.elem,!0);return}c.result=b,c.target||(c.target=e),d=d!=null?f.makeArray(d):[],d.unshift(c),p=f.event.special[h]||{};if(p.trigger&&p.trigger.apply(e,d)===!1)return;r=[[e,p.bindType||h]];if(!g&&!p.noBubble&&!f.isWindow(e)){s=p.delegateType||h,m=E.test(s+h)?e:e.parentNode,n=null;for(;m;m=m.parentNode)r.push([m,s]),n=m;n&&n===e.ownerDocument&&r.push([n.defaultView||n.parentWindow||a,s])}for(l=0;l<r.length&&!c.isPropagationStopped();l++)m=r[l][0],c.type=r[l][1],q=(f._data(m,"events")||{})[c.type]&&f._data(m,"handle"),q&&q.apply(m,d),q=o&&m[o],q&&f.acceptData(m)&&q.apply(m,d)===!1&&c.preventDefault();c.type=h,!g&&!c.isDefaultPrevented()&&(!p._default||p._default.apply(e.ownerDocument,d)===!1)&&(h!=="click"||!f.nodeName(e,"a"))&&f.acceptData(e)&&o&&e[h]&&(h!=="focus"&&h!=="blur"||c.target.offsetWidth!==0)&&!f.isWindow(e)&&(n=e[o],n&&(e[o]=null),f.event.triggered=h,e[h](),f.event.triggered=b,n&&(e[o]=n));return c.result}},dispatch:function(c){c=f.event.fix(c||a.event);var d=(f._data(this,"events")||{})[c.type]||[],e=d.delegateCount,g=[].slice.call(arguments,0),h=!c.exclusive&&!c.namespace,i=f.event.special[c.type]||{},j=[],k,l,m,n,o,p,q,r,s,t,u;g[0]=c,c.delegateTarget=this;if(!i.preDispatch||i.preDispatch.call(this,c)!==!1){if(e&&(!c.button||c.type!=="click")){n=f(this),n.context=this.ownerDocument||this;for(m=c.target;m!=this;m=m.parentNode||this)if(m.disabled!==!0){p={},r=[],n[0]=m;for(k=0;k<e;k++)s=d[k],t=s.selector,p[t]===b&&(p[t]=s.quick?H(m,s.quick):n.is(t)),p[t]&&r.push(s);r.length&&j.push({elem:m,matches:r})}}d.length>e&&j.push({elem:this,matches:d.slice(e)});for(k=0;k<j.length&&!c.isPropagationStopped();k++){q=j[k],c.currentTarget=q.elem;for(l=0;l<q.matches.length&&!c.isImmediatePropagationStopped();l++){s=q.matches[l];if(h||!c.namespace&&!s.namespace||c.namespace_re&&c.namespace_re.test(s.namespace))c.data=s.data,c.handleObj=s,o=((f.event.special[s.origType]||{}).handle||s.handler).apply(q.elem,g),o!==b&&(c.result=o,o===!1&&(c.preventDefault(),c.stopPropagation()))}}i.postDispatch&&i.postDispatch.call(this,c);return c.result}},props:"attrChange attrName relatedNode srcElement altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(a,b){a.which==null&&(a.which=b.charCode!=null?b.charCode:b.keyCode);return a}},mouseHooks:{props:"button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(a,d){var e,f,g,h=d.button,i=d.fromElement;a.pageX==null&&d.clientX!=null&&(e=a.target.ownerDocument||c,f=e.documentElement,g=e.body,a.pageX=d.clientX+(f&&f.scrollLeft||g&&g.scrollLeft||0)-(f&&f.clientLeft||g&&g.clientLeft||0),a.pageY=d.clientY+(f&&f.scrollTop||g&&g.scrollTop||0)-(f&&f.clientTop||g&&g.clientTop||0)),!a.relatedTarget&&i&&(a.relatedTarget=i===a.target?d.toElement:i),!a.which&&h!==b&&(a.which=h&1?1:h&2?3:h&4?2:0);return a}},fix:function(a){if(a[f.expando])return a;var d,e,g=a,h=f.event.fixHooks[a.type]||{},i=h.props?this.props.concat(h.props):this.props;a=f.Event(g);for(d=i.length;d;)e=i[--d],a[e]=g[e];a.target||(a.target=g.srcElement||c),a.target.nodeType===3&&(a.target=a.target.parentNode),a.metaKey===b&&(a.metaKey=a.ctrlKey);return h.filter?h.filter(a,g):a},special:{ready:{setup:f.bindReady},load:{noBubble:!0},focus:{delegateType:"focusin"},blur:{delegateType:"focusout"},beforeunload:{setup:function(a,b,c){f.isWindow(this)&&(this.onbeforeunload=c)},teardown:function(a,b){this.onbeforeunload===b&&(this.onbeforeunload=null)}}},simulate:function(a,b,c,d){var e=f.extend(new f.Event,c,{type:a,isSimulated:!0,originalEvent:{}});d?f.event.trigger(e,null,b):f.event.dispatch.call(b,e),e.isDefaultPrevented()&&c.preventDefault()}},f.event.handle=f.event.dispatch,f.removeEvent=c.removeEventListener?function(a,b,c){a.removeEventListener&&a.removeEventListener(b,c,!1)}:function(a,b,c){a.detachEvent&&a.detachEvent("on"+b,c)},f.Event=function(a,b){if(!(this instanceof f.Event))return new f.Event(a,b);a&&a.type?(this.originalEvent=a,this.type=a.type,this.isDefaultPrevented=a.defaultPrevented||a.returnValue===!1||a.getPreventDefault&&a.getPreventDefault()?K:J):this.type=a,b&&f.extend(this,b),this.timeStamp=a&&a.timeStamp||f.now(),this[f.expando]=!0},f.Event.prototype={preventDefault:function(){this.isDefaultPrevented=K;var a=this.originalEvent;!a||(a.preventDefault?a.preventDefault():a.returnValue=!1)},stopPropagation:function(){this.isPropagationStopped=K;var a=this.originalEvent;!a||(a.stopPropagation&&a.stopPropagation(),a.cancelBubble=!0)},stopImmediatePropagation:function(){this.isImmediatePropagationStopped=K,this.stopPropagation()},isDefaultPrevented:J,isPropagationStopped:J,isImmediatePropagationStopped:J},f.each({mouseenter:"mouseover",mouseleave:"mouseout"},function(a,b){f.event.special[a]={delegateType:b,bindType:b,handle:function(a){var c=this,d=a.relatedTarget,e=a.handleObj,g=e.selector,h;if(!d||d!==c&&!f.contains(c,d))a.type=e.origType,h=e.handler.apply(this,arguments),a.type=b;return h}}}),f.support.submitBubbles||(f.event.special.submit={setup:function(){if(f.nodeName(this,"form"))return!1;f.event.add(this,"click._submit keypress._submit",function(a){var c=a.target,d=f.nodeName(c,"input")||f.nodeName(c,"button")?c.form:b;d&&!d._submit_attached&&(f.event.add(d,"submit._submit",function(a){a._submit_bubble=!0}),d._submit_attached=!0)})},postDispatch:function(a){a._submit_bubble&&(delete a._submit_bubble,this.parentNode&&!a.isTrigger&&f.event.simulate("submit",this.parentNode,a,!0))},teardown:function(){if(f.nodeName(this,"form"))return!1;f.event.remove(this,"._submit")}}),f.support.changeBubbles||(f.event.special.change={setup:function(){if(z.test(this.nodeName)){if(this.type==="checkbox"||this.type==="radio")f.event.add(this,"propertychange._change",function(a){a.originalEvent.propertyName==="checked"&&(this._just_changed=!0)}),f.event.add(this,"click._change",function(a){this._just_changed&&!a.isTrigger&&(this._just_changed=!1,f.event.simulate("change",this,a,!0))});return!1}f.event.add(this,"beforeactivate._change",function(a){var b=a.target;z.test(b.nodeName)&&!b._change_attached&&(f.event.add(b,"change._change",function(a){this.parentNode&&!a.isSimulated&&!a.isTrigger&&f.event.simulate("change",this.parentNode,a,!0)}),b._change_attached=!0)})},handle:function(a){var b=a.target;if(this!==b||a.isSimulated||a.isTrigger||b.type!=="radio"&&b.type!=="checkbox")return a.handleObj.handler.apply(this,arguments)},teardown:function(){f.event.remove(this,"._change");return z.test(this.nodeName)}}),f.support.focusinBubbles||f.each({focus:"focusin",blur:"focusout"},function(a,b){var d=0,e=function(a){f.event.simulate(b,a.target,f.event.fix(a),!0)};f.event.special[b]={setup:function(){d++===0&&c.addEventListener(a,e,!0)},teardown:function(){--d===0&&c.removeEventListener(a,e,!0)}}}),f.fn.extend({on:function(a,c,d,e,g){var h,i;if(typeof a=="object"){typeof c!="string"&&(d=d||c,c=b);for(i in a)this.on(i,c,d,a[i],g);return this}d==null&&e==null?(e=c,d=c=b):e==null&&(typeof c=="string"?(e=d,d=b):(e=d,d=c,c=b));if(e===!1)e=J;else if(!e)return this;g===1&&(h=e,e=function(a){f().off(a);return h.apply(this,arguments)},e.guid=h.guid||(h.guid=f.guid++));return this.each(function(){f.event.add(this,a,e,d,c)})},one:function(a,b,c,d){return this.on(a,b,c,d,1)},off:function(a,c,d){if(a&&a.preventDefault&&a.handleObj){var e=a.handleObj;f(a.delegateTarget).off(e.namespace?e.origType+"."+e.namespace:e.origType,e.selector,e.handler);return this}if(typeof a=="object"){for(var g in a)this.off(g,c,a[g]);return this}if(c===!1||typeof c=="function")d=c,c=b;d===!1&&(d=J);return this.each(function(){f.event.remove(this,a,d,c)})},bind:function(a,b,c){return this.on(a,null,b,c)},unbind:function(a,b){return this.off(a,null,b)},live:function(a,b,c){f(this.context).on(a,this.selector,b,c);return this},die:function(a,b){f(this.context).off(a,this.selector||"**",b);return this},delegate:function(a,b,c,d){return this.on(b,a,c,d)},undelegate:function(a,b,c){return arguments.length==1?this.off(a,"**"):this.off(b,a,c)},trigger:function(a,b){return this.each(function(){f.event.trigger(a,b,this)})},triggerHandler:function(a,b){if(this[0])return f.event.trigger(a,b,this[0],!0)},toggle:function(a){var b=arguments,c=a.guid||f.guid++,d=0,e=function(c){var e=(f._data(this,"lastToggle"+a.guid)||0)%d;f._data(this,"lastToggle"+a.guid,e+1),c.preventDefault();return b[e].apply(this,arguments)||!1};e.guid=c;while(d<b.length)b[d++].guid=c;return this.click(e)},hover:function(a,b){return this.mouseenter(a).mouseleave(b||a)}}),f.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "),function(a,b){f.fn[b]=function(a,c){c==null&&(c=a,a=null);return arguments.length>0?this.on(b,null,a,c):this.trigger(b)},f.attrFn&&(f.attrFn[b]=!0),C.test(b)&&(f.event.fixHooks[b]=f.event.keyHooks),D.test(b)&&(f.event.fixHooks[b]=f.event.mouseHooks)}),function(){function x(a,b,c,e,f,g){for(var h=0,i=e.length;h<i;h++){var j=e[h];if(j){var k=!1;j=j[a];while(j){if(j[d]===c){k=e[j.sizset];break}if(j.nodeType===1){g||(j[d]=c,j.sizset=h);if(typeof b!="string"){if(j===b){k=!0;break}}else if(m.filter(b,[j]).length>0){k=j;break}}j=j[a]}e[h]=k}}}function w(a,b,c,e,f,g){for(var h=0,i=e.length;h<i;h++){var j=e[h];if(j){var k=!1;j=j[a];while(j){if(j[d]===c){k=e[j.sizset];break}j.nodeType===1&&!g&&(j[d]=c,j.sizset=h);if(j.nodeName.toLowerCase()===b){k=j;break}j=j[a]}e[h]=k}}}var a=/((?:\((?:\([^()]+\)|[^()]+)+\)|\[(?:\[[^\[\]]*\]|['"][^'"]*['"]|[^\[\]'"]+)+\]|\\.|[^ >+~,(\[\\]+)+|[>+~])(\s*,\s*)?((?:.|\r|\n)*)/g,d="sizcache"+(Math.random()+"").replace(".",""),e=0,g=Object.prototype.toString,h=!1,i=!0,j=/\\/g,k=/\r\n/g,l=/\W/;[0,0].sort(function(){i=!1;return 0});var m=function(b,d,e,f){e=e||[],d=d||c;var h=d;if(d.nodeType!==1&&d.nodeType!==9)return[];if(!b||typeof b!="string")return e;var i,j,k,l,n,q,r,t,u=!0,v=m.isXML(d),w=[],x=b;do{a.exec(""),i=a.exec(x);if(i){x=i[3],w.push(i[1]);if(i[2]){l=i[3];break}}}while(i);if(w.length>1&&p.exec(b))if(w.length===2&&o.relative[w[0]])j=y(w[0]+w[1],d,f);else{j=o.relative[w[0]]?[d]:m(w.shift(),d);while(w.length)b=w.shift(),o.relative[b]&&(b+=w.shift()),j=y(b,j,f)}else{!f&&w.length>1&&d.nodeType===9&&!v&&o.match.ID.test(w[0])&&!o.match.ID.test(w[w.length-1])&&(n=m.find(w.shift(),d,v),d=n.expr?m.filter(n.expr,n.set)[0]:n.set[0]);if(d){n=f?{expr:w.pop(),set:s(f)}:m.find(w.pop(),w.length===1&&(w[0]==="~"||w[0]==="+")&&d.parentNode?d.parentNode:d,v),j=n.expr?m.filter(n.expr,n.set):n.set,w.length>0?k=s(j):u=!1;while(w.length)q=w.pop(),r=q,o.relative[q]?r=w.pop():q="",r==null&&(r=d),o.relative[q](k,r,v)}else k=w=[]}k||(k=j),k||m.error(q||b);if(g.call(k)==="[object Array]")if(!u)e.push.apply(e,k);else if(d&&d.nodeType===1)for(t=0;k[t]!=null;t++)k[t]&&(k[t]===!0||k[t].nodeType===1&&m.contains(d,k[t]))&&e.push(j[t]);else for(t=0;k[t]!=null;t++)k[t]&&k[t].nodeType===1&&e.push(j[t]);else s(k,e);l&&(m(l,h,e,f),m.uniqueSort(e));return e};m.uniqueSort=function(a){if(u){h=i,a.sort(u);if(h)for(var b=1;b<a.length;b++)a[b]===a[b-1]&&a.splice(b--,1)}return a},m.matches=function(a,b){return m(a,null,null,b)},m.matchesSelector=function(a,b){return m(b,null,null,[a]).length>0},m.find=function(a,b,c){var d,e,f,g,h,i;if(!a)return[];for(e=0,f=o.order.length;e<f;e++){h=o.order[e];if(g=o.leftMatch[h].exec(a)){i=g[1],g.splice(1,1);if(i.substr(i.length-1)!=="\\"){g[1]=(g[1]||"").replace(j,""),d=o.find[h](g,b,c);if(d!=null){a=a.replace(o.match[h],"");break}}}}d||(d=typeof b.getElementsByTagName!="undefined"?b.getElementsByTagName("*"):[]);return{set:d,expr:a}},m.filter=function(a,c,d,e){var f,g,h,i,j,k,l,n,p,q=a,r=[],s=c,t=c&&c[0]&&m.isXML(c[0]);while(a&&c.length){for(h in o.filter)if((f=o.leftMatch[h].exec(a))!=null&&f[2]){k=o.filter[h],l=f[1],g=!1,f.splice(1,1);if(l.substr(l.length-1)==="\\")continue;s===r&&(r=[]);if(o.preFilter[h]){f=o.preFilter[h](f,s,d,r,e,t);if(!f)g=i=!0;else if(f===!0)continue}if(f)for(n=0;(j=s[n])!=null;n++)j&&(i=k(j,f,n,s),p=e^i,d&&i!=null?p?g=!0:s[n]=!1:p&&(r.push(j),g=!0));if(i!==b){d||(s=r),a=a.replace(o.match[h],"");if(!g)return[];break}}if(a===q)if(g==null)m.error(a);else break;q=a}return s},m.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)};var n=m.getText=function(a){var b,c,d=a.nodeType,e="";if(d){if(d===1||d===9||d===11){if(typeof a.textContent=="string")return a.textContent;if(typeof a.innerText=="string")return a.innerText.replace(k,"");for(a=a.firstChild;a;a=a.nextSibling)e+=n(a)}else if(d===3||d===4)return a.nodeValue}else for(b=0;c=a[b];b++)c.nodeType!==8&&(e+=n(c));return e},o=m.selectors={order:["ID","NAME","TAG"],match:{ID:/#((?:[\w\u00c0-\uFFFF\-]|\\.)+)/,CLASS:/\.((?:[\w\u00c0-\uFFFF\-]|\\.)+)/,NAME:/\[name=['"]*((?:[\w\u00c0-\uFFFF\-]|\\.)+)['"]*\]/,ATTR:/\[\s*((?:[\w\u00c0-\uFFFF\-]|\\.)+)\s*(?:(\S?=)\s*(?:(['"])(.*?)\3|(#?(?:[\w\u00c0-\uFFFF\-]|\\.)*)|)|)\s*\]/,TAG:/^((?:[\w\u00c0-\uFFFF\*\-]|\\.)+)/,CHILD:/:(only|nth|last|first)-child(?:\(\s*(even|odd|(?:[+\-]?\d+|(?:[+\-]?\d*)?n\s*(?:[+\-]\s*\d+)?))\s*\))?/,POS:/:(nth|eq|gt|lt|first|last|even|odd)(?:\((\d*)\))?(?=[^\-]|$)/,PSEUDO:/:((?:[\w\u00c0-\uFFFF\-]|\\.)+)(?:\((['"]?)((?:\([^\)]+\)|[^\(\)]*)+)\2\))?/},leftMatch:{},attrMap:{"class":"className","for":"htmlFor"},attrHandle:{href:function(a){return a.getAttribute("href")},type:function(a){return a.getAttribute("type")}},relative:{"+":function(a,b){var c=typeof b=="string",d=c&&!l.test(b),e=c&&!d;d&&(b=b.toLowerCase());for(var f=0,g=a.length,h;f<g;f++)if(h=a[f]){while((h=h.previousSibling)&&h.nodeType!==1);a[f]=e||h&&h.nodeName.toLowerCase()===b?h||!1:h===b}e&&m.filter(b,a,!0)},">":function(a,b){var c,d=typeof b=="string",e=0,f=a.length;if(d&&!l.test(b)){b=b.toLowerCase();for(;e<f;e++){c=a[e];if(c){var g=c.parentNode;a[e]=g.nodeName.toLowerCase()===b?g:!1}}}else{for(;e<f;e++)c=a[e],c&&(a[e]=d?c.parentNode:c.parentNode===b);d&&m.filter(b,a,!0)}},"":function(a,b,c){var d,f=e++,g=x;typeof b=="string"&&!l.test(b)&&(b=b.toLowerCase(),d=b,g=w),g("parentNode",b,f,a,d,c)},"~":function(a,b,c){var d,f=e++,g=x;typeof b=="string"&&!l.test(b)&&(b=b.toLowerCase(),d=b,g=w),g("previousSibling",b,f,a,d,c)}},find:{ID:function(a,b,c){if(typeof b.getElementById!="undefined"&&!c){var d=b.getElementById(a[1]);return d&&d.parentNode?[d]:[]}},NAME:function(a,b){if(typeof b.getElementsByName!="undefined"){var c=[],d=b.getElementsByName(a[1]);for(var e=0,f=d.length;e<f;e++)d[e].getAttribute("name")===a[1]&&c.push(d[e]);return c.length===0?null:c}},TAG:function(a,b){if(typeof b.getElementsByTagName!="undefined")return b.getElementsByTagName(a[1])}},preFilter:{CLASS:function(a,b,c,d,e,f){a=" "+a[1].replace(j,"")+" ";if(f)return a;for(var g=0,h;(h=b[g])!=null;g++)h&&(e^(h.className&&(" "+h.className+" ").replace(/[\t\n\r]/g," ").indexOf(a)>=0)?c||d.push(h):c&&(b[g]=!1));return!1},ID:function(a){return a[1].replace(j,"")},TAG:function(a,b){return a[1].replace(j,"").toLowerCase()},CHILD:function(a){if(a[1]==="nth"){a[2]||m.error(a[0]),a[2]=a[2].replace(/^\+|\s*/g,"");var b=/(-?)(\d*)(?:n([+\-]?\d*))?/.exec(a[2]==="even"&&"2n"||a[2]==="odd"&&"2n+1"||!/\D/.test(a[2])&&"0n+"+a[2]||a[2]);a[2]=b[1]+(b[2]||1)-0,a[3]=b[3]-0}else a[2]&&m.error(a[0]);a[0]=e++;return a},ATTR:function(a,b,c,d,e,f){var g=a[1]=a[1].replace(j,"");!f&&o.attrMap[g]&&(a[1]=o.attrMap[g]),a[4]=(a[4]||a[5]||"").replace(j,""),a[2]==="~="&&(a[4]=" "+a[4]+" ");return a},PSEUDO:function(b,c,d,e,f){if(b[1]==="not")if((a.exec(b[3])||"").length>1||/^\w/.test(b[3]))b[3]=m(b[3],null,null,c);else{var g=m.filter(b[3],c,d,!0^f);d||e.push.apply(e,g);return!1}else if(o.match.POS.test(b[0])||o.match.CHILD.test(b[0]))return!0;return b},POS:function(a){a.unshift(!0);return a}},filters:{enabled:function(a){return a.disabled===!1&&a.type!=="hidden"},disabled:function(a){return a.disabled===!0},checked:function(a){return a.checked===!0},selected:function(a){a.parentNode&&a.parentNode.selectedIndex;return a.selected===!0},parent:function(a){return!!a.firstChild},empty:function(a){return!a.firstChild},has:function(a,b,c){return!!m(c[3],a).length},header:function(a){return/h\d/i.test(a.nodeName)},text:function(a){var b=a.getAttribute("type"),c=a.type;return a.nodeName.toLowerCase()==="input"&&"text"===c&&(b===c||b===null)},radio:function(a){return a.nodeName.toLowerCase()==="input"&&"radio"===a.type},checkbox:function(a){return a.nodeName.toLowerCase()==="input"&&"checkbox"===a.type},file:function(a){return a.nodeName.toLowerCase()==="input"&&"file"===a.type},password:function(a){return a.nodeName.toLowerCase()==="input"&&"password"===a.type},submit:function(a){var b=a.nodeName.toLowerCase();return(b==="input"||b==="button")&&"submit"===a.type},image:function(a){return a.nodeName.toLowerCase()==="input"&&"image"===a.type},reset:function(a){var b=a.nodeName.toLowerCase();return(b==="input"||b==="button")&&"reset"===a.type},button:function(a){var b=a.nodeName.toLowerCase();return b==="input"&&"button"===a.type||b==="button"},input:function(a){return/input|select|textarea|button/i.test(a.nodeName)},focus:function(a){return a===a.ownerDocument.activeElement}},setFilters:{first:function(a,b){return b===0},last:function(a,b,c,d){return b===d.length-1},even:function(a,b){return b%2===0},odd:function(a,b){return b%2===1},lt:function(a,b,c){return b<c[3]-0},gt:function(a,b,c){return b>c[3]-0},nth:function(a,b,c){return c[3]-0===b},eq:function(a,b,c){return c[3]-0===b}},filter:{PSEUDO:function(a,b,c,d){var e=b[1],f=o.filters[e];if(f)return f(a,c,b,d);if(e==="contains")return(a.textContent||a.innerText||n([a])||"").indexOf(b[3])>=0;if(e==="not"){var g=b[3];for(var h=0,i=g.length;h<i;h++)if(g[h]===a)return!1;return!0}m.error(e)},CHILD:function(a,b){var c,e,f,g,h,i,j,k=b[1],l=a;switch(k){case"only":case"first":while(l=l.previousSibling)if(l.nodeType===1)return!1;if(k==="first")return!0;l=a;case"last":while(l=l.nextSibling)if(l.nodeType===1)return!1;return!0;case"nth":c=b[2],e=b[3];if(c===1&&e===0)return!0;f=b[0],g=a.parentNode;if(g&&(g[d]!==f||!a.nodeIndex)){i=0;for(l=g.firstChild;l;l=l.nextSibling)l.nodeType===1&&(l.nodeIndex=++i);g[d]=f}j=a.nodeIndex-e;return c===0?j===0:j%c===0&&j/c>=0}},ID:function(a,b){return a.nodeType===1&&a.getAttribute("id")===b},TAG:function(a,b){return b==="*"&&a.nodeType===1||!!a.nodeName&&a.nodeName.toLowerCase()===b},CLASS:function(a,b){return(" "+(a.className||a.getAttribute("class"))+" ").indexOf(b)>-1},ATTR:function(a,b){var c=b[1],d=m.attr?m.attr(a,c):o.attrHandle[c]?o.attrHandle[c](a):a[c]!=null?a[c]:a.getAttribute(c),e=d+"",f=b[2],g=b[4];return d==null?f==="!=":!f&&m.attr?d!=null:f==="="?e===g:f==="*="?e.indexOf(g)>=0:f==="~="?(" "+e+" ").indexOf(g)>=0:g?f==="!="?e!==g:f==="^="?e.indexOf(g)===0:f==="$="?e.substr(e.length-g.length)===g:f==="|="?e===g||e.substr(0,g.length+1)===g+"-":!1:e&&d!==!1},POS:function(a,b,c,d){var e=b[2],f=o.setFilters[e];if(f)return f(a,c,b,d)}}},p=o.match.POS,q=function(a,b){return"\\"+(b-0+1)};for(var r in o.match)o.match[r]=new RegExp(o.match[r].source+/(?![^\[]*\])(?![^\(]*\))/.source),o.leftMatch[r]=new RegExp(/(^(?:.|\r|\n)*?)/.source+o.match[r].source.replace(/\\(\d+)/g,q));o.match.globalPOS=p;var s=function(a,b){a=Array.prototype.slice.call(a,0);if(b){b.push.apply(b,a);return b}return a};try{Array.prototype.slice.call(c.documentElement.childNodes,0)[0].nodeType}catch(t){s=function(a,b){var c=0,d=b||[];if(g.call(a)==="[object Array]")Array.prototype.push.apply(d,a);else if(typeof a.length=="number")for(var e=a.length;c<e;c++)d.push(a[c]);else for(;a[c];c++)d.push(a[c]);return d}}var u,v;c.documentElement.compareDocumentPosition?u=function(a,b){if(a===b){h=!0;return 0}if(!a.compareDocumentPosition||!b.compareDocumentPosition)return a.compareDocumentPosition?-1:1;return a.compareDocumentPosition(b)&4?-1:1}:(u=function(a,b){if(a===b){h=!0;return 0}if(a.sourceIndex&&b.sourceIndex)return a.sourceIndex-b.sourceIndex;var c,d,e=[],f=[],g=a.parentNode,i=b.parentNode,j=g;if(g===i)return v(a,b);if(!g)return-1;if(!i)return 1;while(j)e.unshift(j),j=j.parentNode;j=i;while(j)f.unshift(j),j=j.parentNode;c=e.length,d=f.length;for(var k=0;k<c&&k<d;k++)if(e[k]!==f[k])return v(e[k],f[k]);return k===c?v(a,f[k],-1):v(e[k],b,1)},v=function(a,b,c){if(a===b)return c;var d=a.nextSibling;while(d){if(d===b)return-1;d=d.nextSibling}return 1}),function(){var a=c.createElement("div"),d="script"+(new Date).getTime(),e=c.documentElement;a.innerHTML="<a name='"+d+"'/>",e.insertBefore(a,e.firstChild),c.getElementById(d)&&(o.find.ID=function(a,c,d){if(typeof c.getElementById!="undefined"&&!d){var e=c.getElementById(a[1]);return e?e.id===a[1]||typeof e.getAttributeNode!="undefined"&&e.getAttributeNode("id").nodeValue===a[1]?[e]:b:[]}},o.filter.ID=function(a,b){var c=typeof a.getAttributeNode!="undefined"&&a.getAttributeNode("id");return a.nodeType===1&&c&&c.nodeValue===b}),e.removeChild(a),e=a=null}(),function(){var a=c.createElement("div");a.appendChild(c.createComment("")),a.getElementsByTagName("*").length>0&&(o.find.TAG=function(a,b){var c=b.getElementsByTagName(a[1]);if(a[1]==="*"){var d=[];for(var e=0;c[e];e++)c[e].nodeType===1&&d.push(c[e]);c=d}return c}),a.innerHTML="<a href='#'></a>",a.firstChild&&typeof a.firstChild.getAttribute!="undefined"&&a.firstChild.getAttribute("href")!=="#"&&(o.attrHandle.href=function(a){return a.getAttribute("href",2)}),a=null}(),c.querySelectorAll&&function(){var a=m,b=c.createElement("div"),d="__sizzle__";b.innerHTML="<p class='TEST'></p>";if(!b.querySelectorAll||b.querySelectorAll(".TEST").length!==0){m=function(b,e,f,g){e=e||c;if(!g&&!m.isXML(e)){var h=/^(\w+$)|^\.([\w\-]+$)|^#([\w\-]+$)/.exec(b);if(h&&(e.nodeType===1||e.nodeType===9)){if(h[1])return s(e.getElementsByTagName(b),f);if(h[2]&&o.find.CLASS&&e.getElementsByClassName)return s(e.getElementsByClassName(h[2]),f)}if(e.nodeType===9){if(b==="body"&&e.body)return s([e.body],f);if(h&&h[3]){var i=e.getElementById(h[3]);if(!i||!i.parentNode)return s([],f);if(i.id===h[3])return s([i],f)}try{return s(e.querySelectorAll(b),f)}catch(j){}}else if(e.nodeType===1&&e.nodeName.toLowerCase()!=="object"){var k=e,l=e.getAttribute("id"),n=l||d,p=e.parentNode,q=/^\s*[+~]/.test(b);l?n=n.replace(/'/g,"\\$&"):e.setAttribute("id",n),q&&p&&(e=e.parentNode);try{if(!q||p)return s(e.querySelectorAll("[id='"+n+"'] "+b),f)}catch(r){}finally{l||k.removeAttribute("id")}}}return a(b,e,f,g)};for(var e in a)m[e]=a[e];b=null}}(),function(){var a=c.documentElement,b=a.matchesSelector||a.mozMatchesSelector||a.webkitMatchesSelector||a.msMatchesSelector;if(b){var d=!b.call(c.createElement("div"),"div"),e=!1;try{b.call(c.documentElement,"[test!='']:sizzle")}catch(f){e=!0}m.matchesSelector=function(a,c){c=c.replace(/\=\s*([^'"\]]*)\s*\]/g,"='$1']");if(!m.isXML(a))try{if(e||!o.match.PSEUDO.test(c)&&!/!=/.test(c)){var f=b.call(a,c);if(f||!d||a.document&&a.document.nodeType!==11)return f}}catch(g){}return m(c,null,null,[a]).length>0}}}(),function(){var a=c.createElement("div");a.innerHTML="<div class='test e'></div><div class='test'></div>";if(!!a.getElementsByClassName&&a.getElementsByClassName("e").length!==0){a.lastChild.className="e";if(a.getElementsByClassName("e").length===1)return;o.order.splice(1,0,"CLASS"),o.find.CLASS=function(a,b,c){if(typeof b.getElementsByClassName!="undefined"&&!c)return b.getElementsByClassName(a[1])},a=null}}(),c.documentElement.contains?m.contains=function(a,b){return a!==b&&(a.contains?a.contains(b):!0)}:c.documentElement.compareDocumentPosition?m.contains=function(a,b){return!!(a.compareDocumentPosition(b)&16)}:m.contains=function(){return!1},m.isXML=function(a){var b=(a?a.ownerDocument||a:0).documentElement;return b?b.nodeName!=="HTML":!1};var y=function(a,b,c){var d,e=[],f="",g=b.nodeType?[b]:b;while(d=o.match.PSEUDO.exec(a))f+=d[0],a=a.replace(o.match.PSEUDO,"");a=o.relative[a]?a+"*":a;for(var h=0,i=g.length;h<i;h++)m(a,g[h],e,c);return m.filter(f,e)};m.attr=f.attr,m.selectors.attrMap={},f.find=m,f.expr=m.selectors,f.expr[":"]=f.expr.filters,f.unique=m.uniqueSort,f.text=m.getText,f.isXMLDoc=m.isXML,f.contains=m.contains}();var L=/Until$/,M=/^(?:parents|prevUntil|prevAll)/,N=/,/,O=/^.[^:#\[\.,]*$/,P=Array.prototype.slice,Q=f.expr.match.globalPOS,R={children:!0,contents:!0,next:!0,prev:!0};f.fn.extend({find:function(a){var b=this,c,d;if(typeof a!="string")return f(a).filter(function(){for(c=0,d=b.length;c<d;c++)if(f.contains(b[c],this))return!0});var e=this.pushStack("","find",a),g,h,i;for(c=0,d=this.length;c<d;c++){g=e.length,f.find(a,this[c],e);if(c>0)for(h=g;h<e.length;h++)for(i=0;i<g;i++)if(e[i]===e[h]){e.splice(h--,1);break}}return e},has:function(a){var b=f(a);return this.filter(function(){for(var a=0,c=b.length;a<c;a++)if(f.contains(this,b[a]))return!0})},not:function(a){return this.pushStack(T(this,a,!1),"not",a)},filter:function(a){return this.pushStack(T(this,a,!0),"filter",a)},is:function(a){return!!a&&(typeof a=="string"?Q.test(a)?f(a,this.context).index(this[0])>=0:f.filter(a,this).length>0:this.filter(a).length>0)},closest:function(a,b){var c=[],d,e,g=this[0];if(f.isArray(a)){var h=1;while(g&&g.ownerDocument&&g!==b){for(d=0;d<a.length;d++)f(g).is(a[d])&&c.push({selector:a[d],elem:g,level:h});g=g.parentNode,h++}return c}var i=Q.test(a)||typeof a!="string"?f(a,b||this.context):0;for(d=0,e=this.length;d<e;d++){g=this[d];while(g){if(i?i.index(g)>-1:f.find.matchesSelector(g,a)){c.push(g);break}g=g.parentNode;if(!g||!g.ownerDocument||g===b||g.nodeType===11)break}}c=c.length>1?f.unique(c):c;return this.pushStack(c,"closest",a)},index:function(a){if(!a)return this[0]&&this[0].parentNode?this.prevAll().length:-1;if(typeof a=="string")return f.inArray(this[0],f(a));return f.inArray(a.jquery?a[0]:a,this)},add:function(a,b){var c=typeof a=="string"?f(a,b):f.makeArray(a&&a.nodeType?[a]:a),d=f.merge(this.get(),c);return this.pushStack(S(c[0])||S(d[0])?d:f.unique(d))},andSelf:function(){return this.add(this.prevObject)}}),f.each({parent:function(a){var b=a.parentNode;return b&&b.nodeType!==11?b:null},parents:function(a){return f.dir(a,"parentNode")},parentsUntil:function(a,b,c){return f.dir(a,"parentNode",c)},next:function(a){return f.nth(a,2,"nextSibling")},prev:function(a){return f.nth(a,2,"previousSibling")},nextAll:function(a){return f.dir(a,"nextSibling")},prevAll:function(a){return f.dir(a,"previousSibling")},nextUntil:function(a,b,c){return f.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return f.dir(a,"previousSibling",c)},siblings:function(a){return f.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return f.sibling(a.firstChild)},contents:function(a){return f.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:f.makeArray(a.childNodes)}},function(a,b){f.fn[a]=function(c,d){var e=f.map(this,b,c);L.test(a)||(d=c),d&&typeof d=="string"&&(e=f.filter(d,e)),e=this.length>1&&!R[a]?f.unique(e):e,(this.length>1||N.test(d))&&M.test(a)&&(e=e.reverse());return this.pushStack(e,a,P.call(arguments).join(","))}}),f.extend({filter:function(a,b,c){c&&(a=":not("+a+")");return b.length===1?f.find.matchesSelector(b[0],a)?[b[0]]:[]:f.find.matches(a,b)},dir:function(a,c,d){var e=[],g=a[c];while(g&&g.nodeType!==9&&(d===b||g.nodeType!==1||!f(g).is(d)))g.nodeType===1&&e.push(g),g=g[c];return e},nth:function(a,b,c,d){b=b||1;var e=0;for(;a;a=a[c])if(a.nodeType===1&&++e===b)break;return a},sibling:function(a,b){var c=[];for(;a;a=a.nextSibling)a.nodeType===1&&a!==b&&c.push(a);return c}});var V="abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",W=/ jQuery\d+="(?:\d+|null)"/g,X=/^\s+/,Y=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,Z=/<([\w:]+)/,$=/<tbody/i,_=/<|&#?\w+;/,ba=/<(?:script|style)/i,bb=/<(?:script|object|embed|option|style)/i,bc=new RegExp("<(?:"+V+")[\\s/>]","i"),bd=/checked\s*(?:[^=]|=\s*.checked.)/i,be=/\/(java|ecma)script/i,bf=/^\s*<!(?:\[CDATA\[|\-\-)/,bg={option:[1,"<select multiple='multiple'>","</select>"],legend:[1,"<fieldset>","</fieldset>"],thead:[1,"<table>","</table>"],tr:[2,"<table><tbody>","</tbody></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],col:[2,"<table><tbody></tbody><colgroup>","</colgroup></table>"],area:[1,"<map>","</map>"],_default:[0,"",""]},bh=U(c);bg.optgroup=bg.option,bg.tbody=bg.tfoot=bg.colgroup=bg.caption=bg.thead,bg.th=bg.td,f.support.htmlSerialize||(bg._default=[1,"div<div>","</div>"]),f.fn.extend({text:function(a){return f.access(this,function(a){return a===b?f.text(this):this.empty().append((this[0]&&this[0].ownerDocument||c).createTextNode(a))},null,a,arguments.length)},wrapAll:function(a){if(f.isFunction(a))return this.each(function(b){f(this).wrapAll(a.call(this,b))});if(this[0]){var b=f(a,this[0].ownerDocument).eq(0).clone(!0);this[0].parentNode&&b.insertBefore(this[0]),b.map(function(){var a=this;while(a.firstChild&&a.firstChild.nodeType===1)a=a.firstChild;return a}).append(this)}return this},wrapInner:function(a){if(f.isFunction(a))return this.each(function(b){f(this).wrapInner(a.call(this,b))});return this.each(function(){var b=f(this),c=b.contents();c.length?c.wrapAll(a):b.append(a)})},wrap:function(a){var b=f.isFunction(a);return this.each(function(c){f(this).wrapAll(b?a.call(this,c):a)})},unwrap:function(){return this.parent().each(function(){f.nodeName(this,"body")||f(this).replaceWith(this.childNodes)}).end()},append:function(){return this.domManip(arguments,!0,function(a){this.nodeType===1&&this.appendChild(a)})},prepend:function(){return this.domManip(arguments,!0,function(a){this.nodeType===1&&this.insertBefore(a,this.firstChild)})},before:function(){if(this[0]&&this[0].parentNode)return this.domManip(arguments,!1,function(a){this.parentNode.insertBefore(a,this)});if(arguments.length){var a=f
-        .clean(arguments);a.push.apply(a,this.toArray());return this.pushStack(a,"before",arguments)}},after:function(){if(this[0]&&this[0].parentNode)return this.domManip(arguments,!1,function(a){this.parentNode.insertBefore(a,this.nextSibling)});if(arguments.length){var a=this.pushStack(this,"after",arguments);a.push.apply(a,f.clean(arguments));return a}},remove:function(a,b){for(var c=0,d;(d=this[c])!=null;c++)if(!a||f.filter(a,[d]).length)!b&&d.nodeType===1&&(f.cleanData(d.getElementsByTagName("*")),f.cleanData([d])),d.parentNode&&d.parentNode.removeChild(d);return this},empty:function(){for(var a=0,b;(b=this[a])!=null;a++){b.nodeType===1&&f.cleanData(b.getElementsByTagName("*"));while(b.firstChild)b.removeChild(b.firstChild)}return this},clone:function(a,b){a=a==null?!1:a,b=b==null?a:b;return this.map(function(){return f.clone(this,a,b)})},html:function(a){return f.access(this,function(a){var c=this[0]||{},d=0,e=this.length;if(a===b)return c.nodeType===1?c.innerHTML.replace(W,""):null;if(typeof a=="string"&&!ba.test(a)&&(f.support.leadingWhitespace||!X.test(a))&&!bg[(Z.exec(a)||["",""])[1].toLowerCase()]){a=a.replace(Y,"<$1></$2>");try{for(;d<e;d++)c=this[d]||{},c.nodeType===1&&(f.cleanData(c.getElementsByTagName("*")),c.innerHTML=a);c=0}catch(g){}}c&&this.empty().append(a)},null,a,arguments.length)},replaceWith:function(a){if(this[0]&&this[0].parentNode){if(f.isFunction(a))return this.each(function(b){var c=f(this),d=c.html();c.replaceWith(a.call(this,b,d))});typeof a!="string"&&(a=f(a).detach());return this.each(function(){var b=this.nextSibling,c=this.parentNode;f(this).remove(),b?f(b).before(a):f(c).append(a)})}return this.length?this.pushStack(f(f.isFunction(a)?a():a),"replaceWith",a):this},detach:function(a){return this.remove(a,!0)},domManip:function(a,c,d){var e,g,h,i,j=a[0],k=[];if(!f.support.checkClone&&arguments.length===3&&typeof j=="string"&&bd.test(j))return this.each(function(){f(this).domManip(a,c,d,!0)});if(f.isFunction(j))return this.each(function(e){var g=f(this);a[0]=j.call(this,e,c?g.html():b),g.domManip(a,c,d)});if(this[0]){i=j&&j.parentNode,f.support.parentNode&&i&&i.nodeType===11&&i.childNodes.length===this.length?e={fragment:i}:e=f.buildFragment(a,this,k),h=e.fragment,h.childNodes.length===1?g=h=h.firstChild:g=h.firstChild;if(g){c=c&&f.nodeName(g,"tr");for(var l=0,m=this.length,n=m-1;l<m;l++)d.call(c?bi(this[l],g):this[l],e.cacheable||m>1&&l<n?f.clone(h,!0,!0):h)}k.length&&f.each(k,function(a,b){b.src?f.ajax({type:"GET",global:!1,url:b.src,async:!1,dataType:"script"}):f.globalEval((b.text||b.textContent||b.innerHTML||"").replace(bf,"/*$0*/")),b.parentNode&&b.parentNode.removeChild(b)})}return this}}),f.buildFragment=function(a,b,d){var e,g,h,i,j=a[0];b&&b[0]&&(i=b[0].ownerDocument||b[0]),i.createDocumentFragment||(i=c),a.length===1&&typeof j=="string"&&j.length<512&&i===c&&j.charAt(0)==="<"&&!bb.test(j)&&(f.support.checkClone||!bd.test(j))&&(f.support.html5Clone||!bc.test(j))&&(g=!0,h=f.fragments[j],h&&h!==1&&(e=h)),e||(e=i.createDocumentFragment(),f.clean(a,i,e,d)),g&&(f.fragments[j]=h?e:1);return{fragment:e,cacheable:g}},f.fragments={},f.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(a,b){f.fn[a]=function(c){var d=[],e=f(c),g=this.length===1&&this[0].parentNode;if(g&&g.nodeType===11&&g.childNodes.length===1&&e.length===1){e[b](this[0]);return this}for(var h=0,i=e.length;h<i;h++){var j=(h>0?this.clone(!0):this).get();f(e[h])[b](j),d=d.concat(j)}return this.pushStack(d,a,e.selector)}}),f.extend({clone:function(a,b,c){var d,e,g,h=f.support.html5Clone||f.isXMLDoc(a)||!bc.test("<"+a.nodeName+">")?a.cloneNode(!0):bo(a);if((!f.support.noCloneEvent||!f.support.noCloneChecked)&&(a.nodeType===1||a.nodeType===11)&&!f.isXMLDoc(a)){bk(a,h),d=bl(a),e=bl(h);for(g=0;d[g];++g)e[g]&&bk(d[g],e[g])}if(b){bj(a,h);if(c){d=bl(a),e=bl(h);for(g=0;d[g];++g)bj(d[g],e[g])}}d=e=null;return h},clean:function(a,b,d,e){var g,h,i,j=[];b=b||c,typeof b.createElement=="undefined"&&(b=b.ownerDocument||b[0]&&b[0].ownerDocument||c);for(var k=0,l;(l=a[k])!=null;k++){typeof l=="number"&&(l+="");if(!l)continue;if(typeof l=="string")if(!_.test(l))l=b.createTextNode(l);else{l=l.replace(Y,"<$1></$2>");var m=(Z.exec(l)||["",""])[1].toLowerCase(),n=bg[m]||bg._default,o=n[0],p=b.createElement("div"),q=bh.childNodes,r;b===c?bh.appendChild(p):U(b).appendChild(p),p.innerHTML=n[1]+l+n[2];while(o--)p=p.lastChild;if(!f.support.tbody){var s=$.test(l),t=m==="table"&&!s?p.firstChild&&p.firstChild.childNodes:n[1]==="<table>"&&!s?p.childNodes:[];for(i=t.length-1;i>=0;--i)f.nodeName(t[i],"tbody")&&!t[i].childNodes.length&&t[i].parentNode.removeChild(t[i])}!f.support.leadingWhitespace&&X.test(l)&&p.insertBefore(b.createTextNode(X.exec(l)[0]),p.firstChild),l=p.childNodes,p&&(p.parentNode.removeChild(p),q.length>0&&(r=q[q.length-1],r&&r.parentNode&&r.parentNode.removeChild(r)))}var u;if(!f.support.appendChecked)if(l[0]&&typeof (u=l.length)=="number")for(i=0;i<u;i++)bn(l[i]);else bn(l);l.nodeType?j.push(l):j=f.merge(j,l)}if(d){g=function(a){return!a.type||be.test(a.type)};for(k=0;j[k];k++){h=j[k];if(e&&f.nodeName(h,"script")&&(!h.type||be.test(h.type)))e.push(h.parentNode?h.parentNode.removeChild(h):h);else{if(h.nodeType===1){var v=f.grep(h.getElementsByTagName("script"),g);j.splice.apply(j,[k+1,0].concat(v))}d.appendChild(h)}}}return j},cleanData:function(a){var b,c,d=f.cache,e=f.event.special,g=f.support.deleteExpando;for(var h=0,i;(i=a[h])!=null;h++){if(i.nodeName&&f.noData[i.nodeName.toLowerCase()])continue;c=i[f.expando];if(c){b=d[c];if(b&&b.events){for(var j in b.events)e[j]?f.event.remove(i,j):f.removeEvent(i,j,b.handle);b.handle&&(b.handle.elem=null)}g?delete i[f.expando]:i.removeAttribute&&i.removeAttribute(f.expando),delete d[c]}}}});var bp=/alpha\([^)]*\)/i,bq=/opacity=([^)]*)/,br=/([A-Z]|^ms)/g,bs=/^[\-+]?(?:\d*\.)?\d+$/i,bt=/^-?(?:\d*\.)?\d+(?!px)[^\d\s]+$/i,bu=/^([\-+])=([\-+.\de]+)/,bv=/^margin/,bw={position:"absolute",visibility:"hidden",display:"block"},bx=["Top","Right","Bottom","Left"],by,bz,bA;f.fn.css=function(a,c){return f.access(this,function(a,c,d){return d!==b?f.style(a,c,d):f.css(a,c)},a,c,arguments.length>1)},f.extend({cssHooks:{opacity:{get:function(a,b){if(b){var c=by(a,"opacity");return c===""?"1":c}return a.style.opacity}}},cssNumber:{fillOpacity:!0,fontWeight:!0,lineHeight:!0,opacity:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{"float":f.support.cssFloat?"cssFloat":"styleFloat"},style:function(a,c,d,e){if(!!a&&a.nodeType!==3&&a.nodeType!==8&&!!a.style){var g,h,i=f.camelCase(c),j=a.style,k=f.cssHooks[i];c=f.cssProps[i]||i;if(d===b){if(k&&"get"in k&&(g=k.get(a,!1,e))!==b)return g;return j[c]}h=typeof d,h==="string"&&(g=bu.exec(d))&&(d=+(g[1]+1)*+g[2]+parseFloat(f.css(a,c)),h="number");if(d==null||h==="number"&&isNaN(d))return;h==="number"&&!f.cssNumber[i]&&(d+="px");if(!k||!("set"in k)||(d=k.set(a,d))!==b)try{j[c]=d}catch(l){}}},css:function(a,c,d){var e,g;c=f.camelCase(c),g=f.cssHooks[c],c=f.cssProps[c]||c,c==="cssFloat"&&(c="float");if(g&&"get"in g&&(e=g.get(a,!0,d))!==b)return e;if(by)return by(a,c)},swap:function(a,b,c){var d={},e,f;for(f in b)d[f]=a.style[f],a.style[f]=b[f];e=c.call(a);for(f in b)a.style[f]=d[f];return e}}),f.curCSS=f.css,c.defaultView&&c.defaultView.getComputedStyle&&(bz=function(a,b){var c,d,e,g,h=a.style;b=b.replace(br,"-$1").toLowerCase(),(d=a.ownerDocument.defaultView)&&(e=d.getComputedStyle(a,null))&&(c=e.getPropertyValue(b),c===""&&!f.contains(a.ownerDocument.documentElement,a)&&(c=f.style(a,b))),!f.support.pixelMargin&&e&&bv.test(b)&&bt.test(c)&&(g=h.width,h.width=c,c=e.width,h.width=g);return c}),c.documentElement.currentStyle&&(bA=function(a,b){var c,d,e,f=a.currentStyle&&a.currentStyle[b],g=a.style;f==null&&g&&(e=g[b])&&(f=e),bt.test(f)&&(c=g.left,d=a.runtimeStyle&&a.runtimeStyle.left,d&&(a.runtimeStyle.left=a.currentStyle.left),g.left=b==="fontSize"?"1em":f,f=g.pixelLeft+"px",g.left=c,d&&(a.runtimeStyle.left=d));return f===""?"auto":f}),by=bz||bA,f.each(["height","width"],function(a,b){f.cssHooks[b]={get:function(a,c,d){if(c)return a.offsetWidth!==0?bB(a,b,d):f.swap(a,bw,function(){return bB(a,b,d)})},set:function(a,b){return bs.test(b)?b+"px":b}}}),f.support.opacity||(f.cssHooks.opacity={get:function(a,b){return bq.test((b&&a.currentStyle?a.currentStyle.filter:a.style.filter)||"")?parseFloat(RegExp.$1)/100+"":b?"1":""},set:function(a,b){var c=a.style,d=a.currentStyle,e=f.isNumeric(b)?"alpha(opacity="+b*100+")":"",g=d&&d.filter||c.filter||"";c.zoom=1;if(b>=1&&f.trim(g.replace(bp,""))===""){c.removeAttribute("filter");if(d&&!d.filter)return}c.filter=bp.test(g)?g.replace(bp,e):g+" "+e}}),f(function(){f.support.reliableMarginRight||(f.cssHooks.marginRight={get:function(a,b){return f.swap(a,{display:"inline-block"},function(){return b?by(a,"margin-right"):a.style.marginRight})}})}),f.expr&&f.expr.filters&&(f.expr.filters.hidden=function(a){var b=a.offsetWidth,c=a.offsetHeight;return b===0&&c===0||!f.support.reliableHiddenOffsets&&(a.style&&a.style.display||f.css(a,"display"))==="none"},f.expr.filters.visible=function(a){return!f.expr.filters.hidden(a)}),f.each({margin:"",padding:"",border:"Width"},function(a,b){f.cssHooks[a+b]={expand:function(c){var d,e=typeof c=="string"?c.split(" "):[c],f={};for(d=0;d<4;d++)f[a+bx[d]+b]=e[d]||e[d-2]||e[0];return f}}});var bC=/%20/g,bD=/\[\]$/,bE=/\r?\n/g,bF=/#.*$/,bG=/^(.*?):[ \t]*([^\r\n]*)\r?$/mg,bH=/^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i,bI=/^(?:about|app|app\-storage|.+\-extension|file|res|widget):$/,bJ=/^(?:GET|HEAD)$/,bK=/^\/\//,bL=/\?/,bM=/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,bN=/^(?:select|textarea)/i,bO=/\s+/,bP=/([?&])_=[^&]*/,bQ=/^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,bR=f.fn.load,bS={},bT={},bU,bV,bW=["*/"]+["*"];try{bU=e.href}catch(bX){bU=c.createElement("a"),bU.href="",bU=bU.href}bV=bQ.exec(bU.toLowerCase())||[],f.fn.extend({load:function(a,c,d){if(typeof a!="string"&&bR)return bR.apply(this,arguments);if(!this.length)return this;var e=a.indexOf(" ");if(e>=0){var g=a.slice(e,a.length);a=a.slice(0,e)}var h="GET";c&&(f.isFunction(c)?(d=c,c=b):typeof c=="object"&&(c=f.param(c,f.ajaxSettings.traditional),h="POST"));var i=this;f.ajax({url:a,type:h,dataType:"html",data:c,complete:function(a,b,c){c=a.responseText,a.isResolved()&&(a.done(function(a){c=a}),i.html(g?f("<div>").append(c.replace(bM,"")).find(g):c)),d&&i.each(d,[c,b,a])}});return this},serialize:function(){return f.param(this.serializeArray())},serializeArray:function(){return this.map(function(){return this.elements?f.makeArray(this.elements):this}).filter(function(){return this.name&&!this.disabled&&(this.checked||bN.test(this.nodeName)||bH.test(this.type))}).map(function(a,b){var c=f(this).val();return c==null?null:f.isArray(c)?f.map(c,function(a,c){return{name:b.name,value:a.replace(bE,"\r\n")}}):{name:b.name,value:c.replace(bE,"\r\n")}}).get()}}),f.each("ajaxStart ajaxStop ajaxComplete ajaxError ajaxSuccess ajaxSend".split(" "),function(a,b){f.fn[b]=function(a){return this.on(b,a)}}),f.each(["get","post"],function(a,c){f[c]=function(a,d,e,g){f.isFunction(d)&&(g=g||e,e=d,d=b);return f.ajax({type:c,url:a,data:d,success:e,dataType:g})}}),f.extend({getScript:function(a,c){return f.get(a,b,c,"script")},getJSON:function(a,b,c){return f.get(a,b,c,"json")},ajaxSetup:function(a,b){b?b$(a,f.ajaxSettings):(b=a,a=f.ajaxSettings),b$(a,b);return a},ajaxSettings:{url:bU,isLocal:bI.test(bV[1]),global:!0,type:"GET",contentType:"application/x-www-form-urlencoded; charset=UTF-8",processData:!0,async:!0,accepts:{xml:"application/xml, text/xml",html:"text/html",text:"text/plain",json:"application/json, text/javascript","*":bW},contents:{xml:/xml/,html:/html/,json:/json/},responseFields:{xml:"responseXML",text:"responseText"},converters:{"* text":a.String,"text html":!0,"text json":f.parseJSON,"text xml":f.parseXML},flatOptions:{context:!0,url:!0}},ajaxPrefilter:bY(bS),ajaxTransport:bY(bT),ajax:function(a,c){function w(a,c,l,m){if(s!==2){s=2,q&&clearTimeout(q),p=b,n=m||"",v.readyState=a>0?4:0;var o,r,u,w=c,x=l?ca(d,v,l):b,y,z;if(a>=200&&a<300||a===304){if(d.ifModified){if(y=v.getResponseHeader("Last-Modified"))f.lastModified[k]=y;if(z=v.getResponseHeader("Etag"))f.etag[k]=z}if(a===304)w="notmodified",o=!0;else try{r=cb(d,x),w="success",o=!0}catch(A){w="parsererror",u=A}}else{u=w;if(!w||a)w="error",a<0&&(a=0)}v.status=a,v.statusText=""+(c||w),o?h.resolveWith(e,[r,w,v]):h.rejectWith(e,[v,w,u]),v.statusCode(j),j=b,t&&g.trigger("ajax"+(o?"Success":"Error"),[v,d,o?r:u]),i.fireWith(e,[v,w]),t&&(g.trigger("ajaxComplete",[v,d]),--f.active||f.event.trigger("ajaxStop"))}}typeof a=="object"&&(c=a,a=b),c=c||{};var d=f.ajaxSetup({},c),e=d.context||d,g=e!==d&&(e.nodeType||e instanceof f)?f(e):f.event,h=f.Deferred(),i=f.Callbacks("once memory"),j=d.statusCode||{},k,l={},m={},n,o,p,q,r,s=0,t,u,v={readyState:0,setRequestHeader:function(a,b){if(!s){var c=a.toLowerCase();a=m[c]=m[c]||a,l[a]=b}return this},getAllResponseHeaders:function(){return s===2?n:null},getResponseHeader:function(a){var c;if(s===2){if(!o){o={};while(c=bG.exec(n))o[c[1].toLowerCase()]=c[2]}c=o[a.toLowerCase()]}return c===b?null:c},overrideMimeType:function(a){s||(d.mimeType=a);return this},abort:function(a){a=a||"abort",p&&p.abort(a),w(0,a);return this}};h.promise(v),v.success=v.done,v.error=v.fail,v.complete=i.add,v.statusCode=function(a){if(a){var b;if(s<2)for(b in a)j[b]=[j[b],a[b]];else b=a[v.status],v.then(b,b)}return this},d.url=((a||d.url)+"").replace(bF,"").replace(bK,bV[1]+"//"),d.dataTypes=f.trim(d.dataType||"*").toLowerCase().split(bO),d.crossDomain==null&&(r=bQ.exec(d.url.toLowerCase()),d.crossDomain=!(!r||r[1]==bV[1]&&r[2]==bV[2]&&(r[3]||(r[1]==="http:"?80:443))==(bV[3]||(bV[1]==="http:"?80:443)))),d.data&&d.processData&&typeof d.data!="string"&&(d.data=f.param(d.data,d.traditional)),bZ(bS,d,c,v);if(s===2)return!1;t=d.global,d.type=d.type.toUpperCase(),d.hasContent=!bJ.test(d.type),t&&f.active++===0&&f.event.trigger("ajaxStart");if(!d.hasContent){d.data&&(d.url+=(bL.test(d.url)?"&":"?")+d.data,delete d.data),k=d.url;if(d.cache===!1){var x=f.now(),y=d.url.replace(bP,"$1_="+x);d.url=y+(y===d.url?(bL.test(d.url)?"&":"?")+"_="+x:"")}}(d.data&&d.hasContent&&d.contentType!==!1||c.contentType)&&v.setRequestHeader("Content-Type",d.contentType),d.ifModified&&(k=k||d.url,f.lastModified[k]&&v.setRequestHeader("If-Modified-Since",f.lastModified[k]),f.etag[k]&&v.setRequestHeader("If-None-Match",f.etag[k])),v.setRequestHeader("Accept",d.dataTypes[0]&&d.accepts[d.dataTypes[0]]?d.accepts[d.dataTypes[0]]+(d.dataTypes[0]!=="*"?", "+bW+"; q=0.01":""):d.accepts["*"]);for(u in d.headers)v.setRequestHeader(u,d.headers[u]);if(d.beforeSend&&(d.beforeSend.call(e,v,d)===!1||s===2)){v.abort();return!1}for(u in{success:1,error:1,complete:1})v[u](d[u]);p=bZ(bT,d,c,v);if(!p)w(-1,"No Transport");else{v.readyState=1,t&&g.trigger("ajaxSend",[v,d]),d.async&&d.timeout>0&&(q=setTimeout(function(){v.abort("timeout")},d.timeout));try{s=1,p.send(l,w)}catch(z){if(s<2)w(-1,z);else throw z}}return v},param:function(a,c){var d=[],e=function(a,b){b=f.isFunction(b)?b():b,d[d.length]=encodeURIComponent(a)+"="+encodeURIComponent(b)};c===b&&(c=f.ajaxSettings.traditional);if(f.isArray(a)||a.jquery&&!f.isPlainObject(a))f.each(a,function(){e(this.name,this.value)});else for(var g in a)b_(g,a[g],c,e);return d.join("&").replace(bC,"+")}}),f.extend({active:0,lastModified:{},etag:{}});var cc=f.now(),cd=/(\=)\?(&|$)|\?\?/i;f.ajaxSetup({jsonp:"callback",jsonpCallback:function(){return f.expando+"_"+cc++}}),f.ajaxPrefilter("json jsonp",function(b,c,d){var e=typeof b.data=="string"&&/^application\/x\-www\-form\-urlencoded/.test(b.contentType);if(b.dataTypes[0]==="jsonp"||b.jsonp!==!1&&(cd.test(b.url)||e&&cd.test(b.data))){var g,h=b.jsonpCallback=f.isFunction(b.jsonpCallback)?b.jsonpCallback():b.jsonpCallback,i=a[h],j=b.url,k=b.data,l="$1"+h+"$2";b.jsonp!==!1&&(j=j.replace(cd,l),b.url===j&&(e&&(k=k.replace(cd,l)),b.data===k&&(j+=(/\?/.test(j)?"&":"?")+b.jsonp+"="+h))),b.url=j,b.data=k,a[h]=function(a){g=[a]},d.always(function(){a[h]=i,g&&f.isFunction(i)&&a[h](g[0])}),b.converters["script json"]=function(){g||f.error(h+" was not called");return g[0]},b.dataTypes[0]="json";return"script"}}),f.ajaxSetup({accepts:{script:"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"},contents:{script:/javascript|ecmascript/},converters:{"text script":function(a){f.globalEval(a);return a}}}),f.ajaxPrefilter("script",function(a){a.cache===b&&(a.cache=!1),a.crossDomain&&(a.type="GET",a.global=!1)}),f.ajaxTransport("script",function(a){if(a.crossDomain){var d,e=c.head||c.getElementsByTagName("head")[0]||c.documentElement;return{send:function(f,g){d=c.createElement("script"),d.async="async",a.scriptCharset&&(d.charset=a.scriptCharset),d.src=a.url,d.onload=d.onreadystatechange=function(a,c){if(c||!d.readyState||/loaded|complete/.test(d.readyState))d.onload=d.onreadystatechange=null,e&&d.parentNode&&e.removeChild(d),d=b,c||g(200,"success")},e.insertBefore(d,e.firstChild)},abort:function(){d&&d.onload(0,1)}}}});var ce=a.ActiveXObject?function(){for(var a in cg)cg[a](0,1)}:!1,cf=0,cg;f.ajaxSettings.xhr=a.ActiveXObject?function(){return!this.isLocal&&ch()||ci()}:ch,function(a){f.extend(f.support,{ajax:!!a,cors:!!a&&"withCredentials"in a})}(f.ajaxSettings.xhr()),f.support.ajax&&f.ajaxTransport(function(c){if(!c.crossDomain||f.support.cors){var d;return{send:function(e,g){var h=c.xhr(),i,j;c.username?h.open(c.type,c.url,c.async,c.username,c.password):h.open(c.type,c.url,c.async);if(c.xhrFields)for(j in c.xhrFields)h[j]=c.xhrFields[j];c.mimeType&&h.overrideMimeType&&h.overrideMimeType(c.mimeType),!c.crossDomain&&!e["X-Requested-With"]&&(e["X-Requested-With"]="XMLHttpRequest");try{for(j in e)h.setRequestHeader(j,e[j])}catch(k){}h.send(c.hasContent&&c.data||null),d=function(a,e){var j,k,l,m,n;try{if(d&&(e||h.readyState===4)){d=b,i&&(h.onreadystatechange=f.noop,ce&&delete cg[i]);if(e)h.readyState!==4&&h.abort();else{j=h.status,l=h.getAllResponseHeaders(),m={},n=h.responseXML,n&&n.documentElement&&(m.xml=n);try{m.text=h.responseText}catch(a){}try{k=h.statusText}catch(o){k=""}!j&&c.isLocal&&!c.crossDomain?j=m.text?200:404:j===1223&&(j=204)}}}catch(p){e||g(-1,p)}m&&g(j,k,m,l)},!c.async||h.readyState===4?d():(i=++cf,ce&&(cg||(cg={},f(a).unload(ce)),cg[i]=d),h.onreadystatechange=d)},abort:function(){d&&d(0,1)}}}});var cj={},ck,cl,cm=/^(?:toggle|show|hide)$/,cn=/^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i,co,cp=[["height","marginTop","marginBottom","paddingTop","paddingBottom"],["width","marginLeft","marginRight","paddingLeft","paddingRight"],["opacity"]],cq;f.fn.extend({show:function(a,b,c){var d,e;if(a||a===0)return this.animate(ct("show",3),a,b,c);for(var g=0,h=this.length;g<h;g++)d=this[g],d.style&&(e=d.style.display,!f._data(d,"olddisplay")&&e==="none"&&(e=d.style.display=""),(e===""&&f.css(d,"display")==="none"||!f.contains(d.ownerDocument.documentElement,d))&&f._data(d,"olddisplay",cu(d.nodeName)));for(g=0;g<h;g++){d=this[g];if(d.style){e=d.style.display;if(e===""||e==="none")d.style.display=f._data(d,"olddisplay")||""}}return this},hide:function(a,b,c){if(a||a===0)return this.animate(ct("hide",3),a,b,c);var d,e,g=0,h=this.length;for(;g<h;g++)d=this[g],d.style&&(e=f.css(d,"display"),e!=="none"&&!f._data(d,"olddisplay")&&f._data(d,"olddisplay",e));for(g=0;g<h;g++)this[g].style&&(this[g].style.display="none");return this},_toggle:f.fn.toggle,toggle:function(a,b,c){var d=typeof a=="boolean";f.isFunction(a)&&f.isFunction(b)?this._toggle.apply(this,arguments):a==null||d?this.each(function(){var b=d?a:f(this).is(":hidden");f(this)[b?"show":"hide"]()}):this.animate(ct("toggle",3),a,b,c);return this},fadeTo:function(a,b,c,d){return this.filter(":hidden").css("opacity",0).show().end().animate({opacity:b},a,c,d)},animate:function(a,b,c,d){function g(){e.queue===!1&&f._mark(this);var b=f.extend({},e),c=this.nodeType===1,d=c&&f(this).is(":hidden"),g,h,i,j,k,l,m,n,o,p,q;b.animatedProperties={};for(i in a){g=f.camelCase(i),i!==g&&(a[g]=a[i],delete a[i]);if((k=f.cssHooks[g])&&"expand"in k){l=k.expand(a[g]),delete a[g];for(i in l)i in a||(a[i]=l[i])}}for(g in a){h=a[g],f.isArray(h)?(b.animatedProperties[g]=h[1],h=a[g]=h[0]):b.animatedProperties[g]=b.specialEasing&&b.specialEasing[g]||b.easing||"swing";if(h==="hide"&&d||h==="show"&&!d)return b.complete.call(this);c&&(g==="height"||g==="width")&&(b.overflow=[this.style.overflow,this.style.overflowX,this.style.overflowY],f.css(this,"display")==="inline"&&f.css(this,"float")==="none"&&(!f.support.inlineBlockNeedsLayout||cu(this.nodeName)==="inline"?this.style.display="inline-block":this.style.zoom=1))}b.overflow!=null&&(this.style.overflow="hidden");for(i in a)j=new f.fx(this,b,i),h=a[i],cm.test(h)?(q=f._data(this,"toggle"+i)||(h==="toggle"?d?"show":"hide":0),q?(f._data(this,"toggle"+i,q==="show"?"hide":"show"),j[q]()):j[h]()):(m=cn.exec(h),n=j.cur(),m?(o=parseFloat(m[2]),p=m[3]||(f.cssNumber[i]?"":"px"),p!=="px"&&(f.style(this,i,(o||1)+p),n=(o||1)/j.cur()*n,f.style(this,i,n+p)),m[1]&&(o=(m[1]==="-="?-1:1)*o+n),j.custom(n,o,p)):j.custom(n,h,""));return!0}var e=f.speed(b,c,d);if(f.isEmptyObject(a))return this.each(e.complete,[!1]);a=f.extend({},a);return e.queue===!1?this.each(g):this.queue(e.queue,g)},stop:function(a,c,d){typeof a!="string"&&(d=c,c=a,a=b),c&&a!==!1&&this.queue(a||"fx",[]);return this.each(function(){function h(a,b,c){var e=b[c];f.removeData(a,c,!0),e.stop(d)}var b,c=!1,e=f.timers,g=f._data(this);d||f._unmark(!0,this);if(a==null)for(b in g)g[b]&&g[b].stop&&b.indexOf(".run")===b.length-4&&h(this,g,b);else g[b=a+".run"]&&g[b].stop&&h(this,g,b);for(b=e.length;b--;)e[b].elem===this&&(a==null||e[b].queue===a)&&(d?e[b](!0):e[b].saveState(),c=!0,e.splice(b,1));(!d||!c)&&f.dequeue(this,a)})}}),f.each({slideDown:ct("show",1),slideUp:ct("hide",1),slideToggle:ct("toggle",1),fadeIn:{opacity:"show"},fadeOut:{opacity:"hide"},fadeToggle:{opacity:"toggle"}},function(a,b){f.fn[a]=function(a,c,d){return this.animate(b,a,c,d)}}),f.extend({speed:function(a,b,c){var d=a&&typeof a=="object"?f.extend({},a):{complete:c||!c&&b||f.isFunction(a)&&a,duration:a,easing:c&&b||b&&!f.isFunction(b)&&b};d.duration=f.fx.off?0:typeof d.duration=="number"?d.duration:d.duration in f.fx.speeds?f.fx.speeds[d.duration]:f.fx.speeds._default;if(d.queue==null||d.queue===!0)d.queue="fx";d.old=d.complete,d.complete=function(a){f.isFunction(d.old)&&d.old.call(this),d.queue?f.dequeue(this,d.queue):a!==!1&&f._unmark(this)};return d},easing:{linear:function(a){return a},swing:function(a){return-Math.cos(a*Math.PI)/2+.5}},timers:[],fx:function(a,b,c){this.options=b,this.elem=a,this.prop=c,b.orig=b.orig||{}}}),f.fx.prototype={update:function(){this.options.step&&this.options.step.call(this.elem,this.now,this),(f.fx.step[this.prop]||f.fx.step._default)(this)},cur:function(){if(this.elem[this.prop]!=null&&(!this.elem.style||this.elem.style[this.prop]==null))return this.elem[this.prop];var a,b=f.css(this.elem,this.prop);return isNaN(a=parseFloat(b))?!b||b==="auto"?0:b:a},custom:function(a,c,d){function h(a){return e.step(a)}var e=this,g=f.fx;this.startTime=cq||cr(),this.end=c,this.now=this.start=a,this.pos=this.state=0,this.unit=d||this.unit||(f.cssNumber[this.prop]?"":"px"),h.queue=this.options.queue,h.elem=this.elem,h.saveState=function(){f._data(e.elem,"fxshow"+e.prop)===b&&(e.options.hide?f._data(e.elem,"fxshow"+e.prop,e.start):e.options.show&&f._data(e.elem,"fxshow"+e.prop,e.end))},h()&&f.timers.push(h)&&!co&&(co=setInterval(g.tick,g.interval))},show:function(){var a=f._data(this.elem,"fxshow"+this.prop);this.options.orig[this.prop]=a||f.style(this.elem,this.prop),this.options.show=!0,a!==b?this.custom(this.cur(),a):this.custom(this.prop==="width"||this.prop==="height"?1:0,this.cur()),f(this.elem).show()},hide:function(){this.options.orig[this.prop]=f._data(this.elem,"fxshow"+this.prop)||f.style(this.elem,this.prop),this.options.hide=!0,this.custom(this.cur(),0)},step:function(a){var b,c,d,e=cq||cr(),g=!0,h=this.elem,i=this.options;if(a||e>=i.duration+this.startTime){this.now=this.end,this.pos=this.state=1,this.update(),i.animatedProperties[this.prop]=!0;for(b in i.animatedProperties)i.animatedProperties[b]!==!0&&(g=!1);if(g){i.overflow!=null&&!f.support.shrinkWrapBlocks&&f.each(["","X","Y"],function(a,b){h.style["overflow"+b]=i.overflow[a]}),i.hide&&f(h).hide();if(i.hide||i.show)for(b in i.animatedProperties)f.style(h,b,i.orig[b]),f.removeData(h,"fxshow"+b,!0),f.removeData(h,"toggle"+b,!0);d=i.complete,d&&(i.complete=!1,d.call(h))}return!1}i.duration==Infinity?this.now=e:(c=e-this.startTime,this.state=c/i.duration,this.pos=f.easing[i.animatedProperties[this.prop]](this.state,c,0,1,i.duration),this.now=this.start+(this.end-this.start)*this.pos),this.update();return!0}},f.extend(f.fx,{tick:function(){var a,b=f.timers,c=0;for(;c<b.length;c++)a=b[c],!a()&&b[c]===a&&b.splice(c--,1);b.length||f.fx.stop()},interval:13,stop:function(){clearInterval(co),co=null},speeds:{slow:600,fast:200,_default:400},step:{opacity:function(a){f.style(a.elem,"opacity",a.now)},_default:function(a){a.elem.style&&a.elem.style[a.prop]!=null?a.elem.style[a.prop]=a.now+a.unit:a.elem[a.prop]=a.now}}}),f.each(cp.concat.apply([],cp),function(a,b){b.indexOf("margin")&&(f.fx.step[b]=function(a){f.style(a.elem,b,Math.max(0,a.now)+a.unit)})}),f.expr&&f.expr.filters&&(f.expr.filters.animated=function(a){return f.grep(f.timers,function(b){return a===b.elem}).length});var cv,cw=/^t(?:able|d|h)$/i,cx=/^(?:body|html)$/i;"getBoundingClientRect"in c.documentElement?cv=function(a,b,c,d){try{d=a.getBoundingClientRect()}catch(e){}if(!d||!f.contains(c,a))return d?{top:d.top,left:d.left}:{top:0,left:0};var g=b.body,h=cy(b),i=c.clientTop||g.clientTop||0,j=c.clientLeft||g.clientLeft||0,k=h.pageYOffset||f.support.boxModel&&c.scrollTop||g.scrollTop,l=h.pageXOffset||f.support.boxModel&&c.scrollLeft||g.scrollLeft,m=d.top+k-i,n=d.left+l-j;return{top:m,left:n}}:cv=function(a,b,c){var d,e=a.offsetParent,g=a,h=b.body,i=b.defaultView,j=i?i.getComputedStyle(a,null):a.currentStyle,k=a.offsetTop,l=a.offsetLeft;while((a=a.parentNode)&&a!==h&&a!==c){if(f.support.fixedPosition&&j.position==="fixed")break;d=i?i.getComputedStyle(a,null):a.currentStyle,k-=a.scrollTop,l-=a.scrollLeft,a===e&&(k+=a.offsetTop,l+=a.offsetLeft,f.support.doesNotAddBorder&&(!f.support.doesAddBorderForTableAndCells||!cw.test(a.nodeName))&&(k+=parseFloat(d.borderTopWidth)||0,l+=parseFloat(d.borderLeftWidth)||0),g=e,e=a.offsetParent),f.support.subtractsBorderForOverflowNotVisible&&d.overflow!=="visible"&&(k+=parseFloat(d.borderTopWidth)||0,l+=parseFloat(d.borderLeftWidth)||0),j=d}if(j.position==="relative"||j.position==="static")k+=h.offsetTop,l+=h.offsetLeft;f.support.fixedPosition&&j.position==="fixed"&&(k+=Math.max(c.scrollTop,h.scrollTop),l+=Math.max(c.scrollLeft,h.scrollLeft));return{top:k,left:l}},f.fn.offset=function(a){if(arguments.length)return a===b?this:this.each(function(b){f.offset.setOffset(this,a,b)});var c=this[0],d=c&&c.ownerDocument;if(!d)return null;if(c===d.body)return f.offset.bodyOffset(c);return cv(c,d,d.documentElement)},f.offset={bodyOffset:function(a){var b=a.offsetTop,c=a.offsetLeft;f.support.doesNotIncludeMarginInBodyOffset&&(b+=parseFloat(f.css(a,"marginTop"))||0,c+=parseFloat(f.css(a,"marginLeft"))||0);return{top:b,left:c}},setOffset:function(a,b,c){var d=f.css(a,"position");d==="static"&&(a.style.position="relative");var e=f(a),g=e.offset(),h=f.css(a,"top"),i=f.css(a,"left"),j=(d==="absolute"||d==="fixed")&&f.inArray("auto",[h,i])>-1,k={},l={},m,n;j?(l=e.position(),m=l.top,n=l.left):(m=parseFloat(h)||0,n=parseFloat(i)||0),f.isFunction(b)&&(b=b.call(a,c,g)),b.top!=null&&(k.top=b.top-g.top+m),b.left!=null&&(k.left=b.left-g.left+n),"using"in b?b.using.call(a,k):e.css(k)}},f.fn.extend({position:function(){if(!this[0])return null;var a=this[0],b=this.offsetParent(),c=this.offset(),d=cx.test(b[0].nodeName)?{top:0,left:0}:b.offset();c.top-=parseFloat(f.css(a,"marginTop"))||0,c.left-=parseFloat(f.css(a,"marginLeft"))||0,d.top+=parseFloat(f.css(b[0],"borderTopWidth"))||0,d.left+=parseFloat(f.css(b[0],"borderLeftWidth"))||0;return{top:c.top-d.top,left:c.left-d.left}},offsetParent:function(){return this.map(function(){var a=this.offsetParent||c.body;while(a&&!cx.test(a.nodeName)&&f.css(a,"position")==="static")a=a.offsetParent;return a})}}),f.each({scrollLeft:"pageXOffset",scrollTop:"pageYOffset"},function(a,c){var d=/Y/.test(c);f.fn[a]=function(e){return f.access(this,function(a,e,g){var h=cy(a);if(g===b)return h?c in h?h[c]:f.support.boxModel&&h.document.documentElement[e]||h.document.body[e]:a[e];h?h.scrollTo(d?f(h).scrollLeft():g,d?g:f(h).scrollTop()):a[e]=g},a,e,arguments.length,null)}}),f.each({Height:"height",Width:"width"},function(a,c){var d="client"+a,e="scroll"+a,g="offset"+a;f.fn["inner"+a]=function(){var a=this[0];return a?a.style?parseFloat(f.css(a,c,"padding")):this[c]():null},f.fn["outer"+a]=function(a){var b=this[0];return b?b.style?parseFloat(f.css(b,c,a?"margin":"border")):this[c]():null},f.fn[c]=function(a){return f.access(this,function(a,c,h){var i,j,k,l;if(f.isWindow(a)){i=a.document,j=i.documentElement[d];return f.support.boxModel&&j||i.body&&i.body[d]||j}if(a.nodeType===9){i=a.documentElement;if(i[d]>=i[e])return i[d];return Math.max(a.body[e],i[e],a.body[g],i[g])}if(h===b){k=f.css(a,c),l=parseFloat(k);return f.isNumeric(l)?l:k}f(a).css(c,h)},c,a,arguments.length,null)}}),a.jQuery=a.$=f,typeof define=="function"&&define.amd&&define.amd.jQuery&&define("jquery",[],function(){return f})})(window);
+/*! jQuery v1.8.2 jquery.com | jquery.org/license */
+(function(a,b){function G(a){var b=F[a]={};return p.each(a.split(s),function(a,c){b[c]=!0}),b}function J(a,c,d){if(d===b&&a.nodeType===1){var e="data-"+c.replace(I,"-$1").toLowerCase();d=a.getAttribute(e);if(typeof d=="string"){try{d=d==="true"?!0:d==="false"?!1:d==="null"?null:+d+""===d?+d:H.test(d)?p.parseJSON(d):d}catch(f){}p.data(a,c,d)}else d=b}return d}function K(a){var b;for(b in a){if(b==="data"&&p.isEmptyObject(a[b]))continue;if(b!=="toJSON")return!1}return!0}function ba(){return!1}function bb(){return!0}function bh(a){return!a||!a.parentNode||a.parentNode.nodeType===11}function bi(a,b){do a=a[b];while(a&&a.nodeType!==1);return a}function bj(a,b,c){b=b||0;if(p.isFunction(b))return p.grep(a,function(a,d){var e=!!b.call(a,d,a);return e===c});if(b.nodeType)return p.grep(a,function(a,d){return a===b===c});if(typeof b=="string"){var d=p.grep(a,function(a){return a.nodeType===1});if(be.test(b))return p.filter(b,d,!c);b=p.filter(b,d)}return p.grep(a,function(a,d){return p.inArray(a,b)>=0===c})}function bk(a){var b=bl.split("|"),c=a.createDocumentFragment();if(c.createElement)while(b.length)c.createElement(b.pop());return c}function bC(a,b){return a.getElementsByTagName(b)[0]||a.appendChild(a.ownerDocument.createElement(b))}function bD(a,b){if(b.nodeType!==1||!p.hasData(a))return;var c,d,e,f=p._data(a),g=p._data(b,f),h=f.events;if(h){delete g.handle,g.events={};for(c in h)for(d=0,e=h[c].length;d<e;d++)p.event.add(b,c,h[c][d])}g.data&&(g.data=p.extend({},g.data))}function bE(a,b){var c;if(b.nodeType!==1)return;b.clearAttributes&&b.clearAttributes(),b.mergeAttributes&&b.mergeAttributes(a),c=b.nodeName.toLowerCase(),c==="object"?(b.parentNode&&(b.outerHTML=a.outerHTML),p.support.html5Clone&&a.innerHTML&&!p.trim(b.innerHTML)&&(b.innerHTML=a.innerHTML)):c==="input"&&bv.test(a.type)?(b.defaultChecked=b.checked=a.checked,b.value!==a.value&&(b.value=a.value)):c==="option"?b.selected=a.defaultSelected:c==="input"||c==="textarea"?b.defaultValue=a.defaultValue:c==="script"&&b.text!==a.text&&(b.text=a.text),b.removeAttribute(p.expando)}function bF(a){return typeof a.getElementsByTagName!="undefined"?a.getElementsByTagName("*"):typeof a.querySelectorAll!="undefined"?a.querySelectorAll("*"):[]}function bG(a){bv.test(a.type)&&(a.defaultChecked=a.checked)}function bY(a,b){if(b in a)return b;var c=b.charAt(0).toUpperCase()+b.slice(1),d=b,e=bW.length;while(e--){b=bW[e]+c;if(b in a)return b}return d}function bZ(a,b){return a=b||a,p.css(a,"display")==="none"||!p.contains(a.ownerDocument,a)}function b$(a,b){var c,d,e=[],f=0,g=a.length;for(;f<g;f++){c=a[f];if(!c.style)continue;e[f]=p._data(c,"olddisplay"),b?(!e[f]&&c.style.display==="none"&&(c.style.display=""),c.style.display===""&&bZ(c)&&(e[f]=p._data(c,"olddisplay",cc(c.nodeName)))):(d=bH(c,"display"),!e[f]&&d!=="none"&&p._data(c,"olddisplay",d))}for(f=0;f<g;f++){c=a[f];if(!c.style)continue;if(!b||c.style.display==="none"||c.style.display==="")c.style.display=b?e[f]||"":"none"}return a}function b_(a,b,c){var d=bP.exec(b);return d?Math.max(0,d[1]-(c||0))+(d[2]||"px"):b}function ca(a,b,c,d){var e=c===(d?"border":"content")?4:b==="width"?1:0,f=0;for(;e<4;e+=2)c==="margin"&&(f+=p.css(a,c+bV[e],!0)),d?(c==="content"&&(f-=parseFloat(bH(a,"padding"+bV[e]))||0),c!=="margin"&&(f-=parseFloat(bH(a,"border"+bV[e]+"Width"))||0)):(f+=parseFloat(bH(a,"padding"+bV[e]))||0,c!=="padding"&&(f+=parseFloat(bH(a,"border"+bV[e]+"Width"))||0));return f}function cb(a,b,c){var d=b==="width"?a.offsetWidth:a.offsetHeight,e=!0,f=p.support.boxSizing&&p.css(a,"boxSizing")==="border-box";if(d<=0||d==null){d=bH(a,b);if(d<0||d==null)d=a.style[b];if(bQ.test(d))return d;e=f&&(p.support.boxSizingReliable||d===a.style[b]),d=parseFloat(d)||0}return d+ca(a,b,c||(f?"border":"content"),e)+"px"}function cc(a){if(bS[a])return bS[a];var b=p("<"+a+">").appendTo(e.body),c=b.css("display");b.remove();if(c==="none"||c===""){bI=e.body.appendChild(bI||p.extend(e.createElement("iframe"),{frameBorder:0,width:0,height:0}));if(!bJ||!bI.createElement)bJ=(bI.contentWindow||bI.contentDocument).document,bJ.write("<!doctype html><html><body>"),bJ.close();b=bJ.body.appendChild(bJ.createElement(a)),c=bH(b,"display"),e.body.removeChild(bI)}return bS[a]=c,c}function ci(a,b,c,d){var e;if(p.isArray(b))p.each(b,function(b,e){c||ce.test(a)?d(a,e):ci(a+"["+(typeof e=="object"?b:"")+"]",e,c,d)});else if(!c&&p.type(b)==="object")for(e in b)ci(a+"["+e+"]",b[e],c,d);else d(a,b)}function cz(a){return function(b,c){typeof b!="string"&&(c=b,b="*");var d,e,f,g=b.toLowerCase().split(s),h=0,i=g.length;if(p.isFunction(c))for(;h<i;h++)d=g[h],f=/^\+/.test(d),f&&(d=d.substr(1)||"*"),e=a[d]=a[d]||[],e[f?"unshift":"push"](c)}}function cA(a,c,d,e,f,g){f=f||c.dataTypes[0],g=g||{},g[f]=!0;var h,i=a[f],j=0,k=i?i.length:0,l=a===cv;for(;j<k&&(l||!h);j++)h=i[j](c,d,e),typeof h=="string"&&(!l||g[h]?h=b:(c.dataTypes.unshift(h),h=cA(a,c,d,e,h,g)));return(l||!h)&&!g["*"]&&(h=cA(a,c,d,e,"*",g)),h}function cB(a,c){var d,e,f=p.ajaxSettings.flatOptions||{};for(d in c)c[d]!==b&&((f[d]?a:e||(e={}))[d]=c[d]);e&&p.extend(!0,a,e)}function cC(a,c,d){var e,f,g,h,i=a.contents,j=a.dataTypes,k=a.responseFields;for(f in k)f in d&&(c[k[f]]=d[f]);while(j[0]==="*")j.shift(),e===b&&(e=a.mimeType||c.getResponseHeader("content-type"));if(e)for(f in i)if(i[f]&&i[f].test(e)){j.unshift(f);break}if(j[0]in d)g=j[0];else{for(f in d){if(!j[0]||a.converters[f+" "+j[0]]){g=f;break}h||(h=f)}g=g||h}if(g)return g!==j[0]&&j.unshift(g),d[g]}function cD(a,b){var c,d,e,f,g=a.dataTypes.slice(),h=g[0],i={},j=0;a.dataFilter&&(b=a.dataFilter(b,a.dataType));if(g[1])for(c in a.converters)i[c.toLowerCase()]=a.converters[c];for(;e=g[++j];)if(e!=="*"){if(h!=="*"&&h!==e){c=i[h+" "+e]||i["* "+e];if(!c)for(d in i){f=d.split(" ");if(f[1]===e){c=i[h+" "+f[0]]||i["* "+f[0]];if(c){c===!0?c=i[d]:i[d]!==!0&&(e=f[0],g.splice(j--,0,e));break}}}if(c!==!0)if(c&&a["throws"])b=c(b);else try{b=c(b)}catch(k){return{state:"parsererror",error:c?k:"No conversion from "+h+" to "+e}}}h=e}return{state:"success",data:b}}function cL(){try{return new a.XMLHttpRequest}catch(b){}}function cM(){try{return new a.ActiveXObject("Microsoft.XMLHTTP")}catch(b){}}function cU(){return setTimeout(function(){cN=b},0),cN=p.now()}function cV(a,b){p.each(b,function(b,c){var d=(cT[b]||[]).concat(cT["*"]),e=0,f=d.length;for(;e<f;e++)if(d[e].call(a,b,c))return})}function cW(a,b,c){var d,e=0,f=0,g=cS.length,h=p.Deferred().always(function(){delete i.elem}),i=function(){var b=cN||cU(),c=Math.max(0,j.startTime+j.duration-b),d=1-(c/j.duration||0),e=0,f=j.tweens.length;for(;e<f;e++)j.tweens[e].run(d);return h.notifyWith(a,[j,d,c]),d<1&&f?c:(h.resolveWith(a,[j]),!1)},j=h.promise({elem:a,props:p.extend({},b),opts:p.extend(!0,{specialEasing:{}},c),originalProperties:b,originalOptions:c,startTime:cN||cU(),duration:c.duration,tweens:[],createTween:function(b,c,d){var e=p.Tween(a,j.opts,b,c,j.opts.specialEasing[b]||j.opts.easing);return j.tweens.push(e),e},stop:function(b){var c=0,d=b?j.tweens.length:0;for(;c<d;c++)j.tweens[c].run(1);return b?h.resolveWith(a,[j,b]):h.rejectWith(a,[j,b]),this}}),k=j.props;cX(k,j.opts.specialEasing);for(;e<g;e++){d=cS[e].call(j,a,k,j.opts);if(d)return d}return cV(j,k),p.isFunction(j.opts.start)&&j.opts.start.call(a,j),p.fx.timer(p.extend(i,{anim:j,queue:j.opts.queue,elem:a})),j.progress(j.opts.progress).done(j.opts.done,j.opts.complete).fail(j.opts.fail).always(j.opts.always)}function cX(a,b){var c,d,e,f,g;for(c in a){d=p.camelCase(c),e=b[d],f=a[c],p.isArray(f)&&(e=f[1],f=a[c]=f[0]),c!==d&&(a[d]=f,delete a[c]),g=p.cssHooks[d];if(g&&"expand"in g){f=g.expand(f),delete a[d];for(c in f)c in a||(a[c]=f[c],b[c]=e)}else b[d]=e}}function cY(a,b,c){var d,e,f,g,h,i,j,k,l=this,m=a.style,n={},o=[],q=a.nodeType&&bZ(a);c.queue||(j=p._queueHooks(a,"fx"),j.unqueued==null&&(j.unqueued=0,k=j.empty.fire,j.empty.fire=function(){j.unqueued||k()}),j.unqueued++,l.always(function(){l.always(function(){j.unqueued--,p.queue(a,"fx").length||j.empty.fire()})})),a.nodeType===1&&("height"in b||"width"in b)&&(c.overflow=[m.overflow,m.overflowX,m.overflowY],p.css(a,"display")==="inline"&&p.css(a,"float")==="none"&&(!p.support.inlineBlockNeedsLayout||cc(a.nodeName)==="inline"?m.display="inline-block":m.zoom=1)),c.overflow&&(m.overflow="hidden",p.support.shrinkWrapBlocks||l.done(function(){m.overflow=c.overflow[0],m.overflowX=c.overflow[1],m.overflowY=c.overflow[2]}));for(d in b){f=b[d];if(cP.exec(f)){delete b[d];if(f===(q?"hide":"show"))continue;o.push(d)}}g=o.length;if(g){h=p._data(a,"fxshow")||p._data(a,"fxshow",{}),q?p(a).show():l.done(function(){p(a).hide()}),l.done(function(){var b;p.removeData(a,"fxshow",!0);for(b in n)p.style(a,b,n[b])});for(d=0;d<g;d++)e=o[d],i=l.createTween(e,q?h[e]:0),n[e]=h[e]||p.style(a,e),e in h||(h[e]=i.start,q&&(i.end=i.start,i.start=e==="width"||e==="height"?1:0))}}function cZ(a,b,c,d,e){return new cZ.prototype.init(a,b,c,d,e)}function c$(a,b){var c,d={height:a},e=0;b=b?1:0;for(;e<4;e+=2-b)c=bV[e],d["margin"+c]=d["padding"+c]=a;return b&&(d.opacity=d.width=a),d}function da(a){return p.isWindow(a)?a:a.nodeType===9?a.defaultView||a.parentWindow:!1}var c,d,e=a.document,f=a.location,g=a.navigator,h=a.jQuery,i=a.$,j=Array.prototype.push,k=Array.prototype.slice,l=Array.prototype.indexOf,m=Object.prototype.toString,n=Object.prototype.hasOwnProperty,o=String.prototype.trim,p=function(a,b){return new p.fn.init(a,b,c)},q=/[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,r=/\S/,s=/\s+/,t=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,u=/^(?:[^#<]*(<[\w\W]+>)[^>]*$|#([\w\-]*)$)/,v=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,w=/^[\],:{}\s]*$/,x=/(?:^|:|,)(?:\s*\[)+/g,y=/\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,z=/"[^"\\\r\n]*"|true|false|null|-?(?:\d\d*\.|)\d+(?:[eE][\-+]?\d+|)/g,A=/^-ms-/,B=/-([\da-z])/gi,C=function(a,b){return(b+"").toUpperCase()},D=function(){e.addEventListener?(e.removeEventListener("DOMContentLoaded",D,!1),p.ready()):e.readyState==="complete"&&(e.detachEvent("onreadystatechange",D),p.ready())},E={};p.fn=p.prototype={constructor:p,init:function(a,c,d){var f,g,h,i;if(!a)return this;if(a.nodeType)return this.context=this[0]=a,this.length=1,this;if(typeof a=="string"){a.charAt(0)==="<"&&a.charAt(a.length-1)===">"&&a.length>=3?f=[null,a,null]:f=u.exec(a);if(f&&(f[1]||!c)){if(f[1])return c=c instanceof p?c[0]:c,i=c&&c.nodeType?c.ownerDocument||c:e,a=p.parseHTML(f[1],i,!0),v.test(f[1])&&p.isPlainObject(c)&&this.attr.call(a,c,!0),p.merge(this,a);g=e.getElementById(f[2]);if(g&&g.parentNode){if(g.id!==f[2])return d.find(a);this.length=1,this[0]=g}return this.context=e,this.selector=a,this}return!c||c.jquery?(c||d).find(a):this.constructor(c).find(a)}return p.isFunction(a)?d.ready(a):(a.selector!==b&&(this.selector=a.selector,this.context=a.context),p.makeArray(a,this))},selector:"",jquery:"1.8.2",length:0,size:function(){return this.length},toArray:function(){return k.call(this)},get:function(a){return a==null?this.toArray():a<0?this[this.length+a]:this[a]},pushStack:function(a,b,c){var d=p.merge(this.constructor(),a);return d.prevObject=this,d.context=this.context,b==="find"?d.selector=this.selector+(this.selector?" ":"")+c:b&&(d.selector=this.selector+"."+b+"("+c+")"),d},each:function(a,b){return p.each(this,a,b)},ready:function(a){return p.ready.promise().done(a),this},eq:function(a){return a=+a,a===-1?this.slice(a):this.slice(a,a+1)},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},slice:function(){return this.pushStack(k.apply(this,arguments),"slice",k.call(arguments).join(","))},map:function(a){return this.pushStack(p.map(this,function(b,c){return a.call(b,c,b)}))},end:function(){return this.prevObject||this.constructor(null)},push:j,sort:[].sort,splice:[].splice},p.fn.init.prototype=p.fn,p.extend=p.fn.extend=function(){var a,c,d,e,f,g,h=arguments[0]||{},i=1,j=arguments.length,k=!1;typeof h=="boolean"&&(k=h,h=arguments[1]||{},i=2),typeof h!="object"&&!p.isFunction(h)&&(h={}),j===i&&(h=this,--i);for(;i<j;i++)if((a=arguments[i])!=null)for(c in a){d=h[c],e=a[c];if(h===e)continue;k&&e&&(p.isPlainObject(e)||(f=p.isArray(e)))?(f?(f=!1,g=d&&p.isArray(d)?d:[]):g=d&&p.isPlainObject(d)?d:{},h[c]=p.extend(k,g,e)):e!==b&&(h[c]=e)}return h},p.extend({noConflict:function(b){return a.$===p&&(a.$=i),b&&a.jQuery===p&&(a.jQuery=h),p},isReady:!1,readyWait:1,holdReady:function(a){a?p.readyWait++:p.ready(!0)},ready:function(a){if(a===!0?--p.readyWait:p.isReady)return;if(!e.body)return setTimeout(p.ready,1);p.isReady=!0;if(a!==!0&&--p.readyWait>0)return;d.resolveWith(e,[p]),p.fn.trigger&&p(e).trigger("ready").off("ready")},isFunction:function(a){return p.type(a)==="function"},isArray:Array.isArray||function(a){return p.type(a)==="array"},isWindow:function(a){return a!=null&&a==a.window},isNumeric:function(a){return!isNaN(parseFloat(a))&&isFinite(a)},type:function(a){return a==null?String(a):E[m.call(a)]||"object"},isPlainObject:function(a){if(!a||p.type(a)!=="object"||a.nodeType||p.isWindow(a))return!1;try{if(a.constructor&&!n.call(a,"constructor")&&!n.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}var d;for(d in a);return d===b||n.call(a,d)},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},error:function(a){throw new Error(a)},parseHTML:function(a,b,c){var d;return!a||typeof a!="string"?null:(typeof b=="boolean"&&(c=b,b=0),b=b||e,(d=v.exec(a))?[b.createElement(d[1])]:(d=p.buildFragment([a],b,c?null:[]),p.merge([],(d.cacheable?p.clone(d.fragment):d.fragment).childNodes)))},parseJSON:function(b){if(!b||typeof b!="string")return null;b=p.trim(b);if(a.JSON&&a.JSON.parse)return a.JSON.parse(b);if(w.test(b.replace(y,"@").replace(z,"]").replace(x,"")))return(new Function("return "+b))();p.error("Invalid JSON: "+b)},parseXML:function(c){var d,e;if(!c||typeof c!="string")return null;try{a.DOMParser?(e=new DOMParser,d=e.parseFromString(c,"text/xml")):(d=new ActiveXObject("Microsoft.XMLDOM"),d.async="false",d.loadXML(c))}catch(f){d=b}return(!d||!d.documentElement||d.getElementsByTagName("parsererror").length)&&p.error("Invalid XML: "+c),d},noop:function(){},globalEval:function(b){b&&r.test(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(A,"ms-").replace(B,C)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,c,d){var e,f=0,g=a.length,h=g===b||p.isFunction(a);if(d){if(h){for(e in a)if(c.apply(a[e],d)===!1)break}else for(;f<g;)if(c.apply(a[f++],d)===!1)break}else if(h){for(e in a)if(c.call(a[e],e,a[e])===!1)break}else for(;f<g;)if(c.call(a[f],f,a[f++])===!1)break;return a},trim:o&&!o.call("﻿ ")?function(a){return a==null?"":o.call(a)}:function(a){return a==null?"":(a+"").replace(t,"")},makeArray:function(a,b){var c,d=b||[];return a!=null&&(c=p.type(a),a.length==null||c==="string"||c==="function"||c==="regexp"||p.isWindow(a)?j.call(d,a):p.merge(d,a)),d},inArray:function(a,b,c){var d;if(b){if(l)return l.call(b,a,c);d=b.length,c=c?c<0?Math.max(0,d+c):c:0;for(;c<d;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,c){var d=c.length,e=a.length,f=0;if(typeof d=="number")for(;f<d;f++)a[e++]=c[f];else while(c[f]!==b)a[e++]=c[f++];return a.length=e,a},grep:function(a,b,c){var d,e=[],f=0,g=a.length;c=!!c;for(;f<g;f++)d=!!b(a[f],f),c!==d&&e.push(a[f]);return e},map:function(a,c,d){var e,f,g=[],h=0,i=a.length,j=a instanceof p||i!==b&&typeof i=="number"&&(i>0&&a[0]&&a[i-1]||i===0||p.isArray(a));if(j)for(;h<i;h++)e=c(a[h],h,d),e!=null&&(g[g.length]=e);else for(f in a)e=c(a[f],f,d),e!=null&&(g[g.length]=e);return g.concat.apply([],g)},guid:1,proxy:function(a,c){var d,e,f;return typeof c=="string"&&(d=a[c],c=a,a=d),p.isFunction(a)?(e=k.call(arguments,2),f=function(){return a.apply(c,e.concat(k.call(arguments)))},f.guid=a.guid=a.guid||p.guid++,f):b},access:function(a,c,d,e,f,g,h){var i,j=d==null,k=0,l=a.length;if(d&&typeof d=="object"){for(k in d)p.access(a,c,k,d[k],1,g,e);f=1}else if(e!==b){i=h===b&&p.isFunction(e),j&&(i?(i=c,c=function(a,b,c){return i.call(p(a),c)}):(c.call(a,e),c=null));if(c)for(;k<l;k++)c(a[k],d,i?e.call(a[k],k,c(a[k],d)):e,h);f=1}return f?a:j?c.call(a):l?c(a[0],d):g},now:function(){return(new Date).getTime()}}),p.ready.promise=function(b){if(!d){d=p.Deferred();if(e.readyState==="complete")setTimeout(p.ready,1);else if(e.addEventListener)e.addEventListener("DOMContentLoaded",D,!1),a.addEventListener("load",p.ready,!1);else{e.attachEvent("onreadystatechange",D),a.attachEvent("onload",p.ready);var c=!1;try{c=a.frameElement==null&&e.documentElement}catch(f){}c&&c.doScroll&&function g(){if(!p.isReady){try{c.doScroll("left")}catch(a){return setTimeout(g,50)}p.ready()}}()}}return d.promise(b)},p.each("Boolean Number String Function Array Date RegExp Object".split(" "),function(a,b){E["[object "+b+"]"]=b.toLowerCase()}),c=p(e);var F={};p.Callbacks=function(a){a=typeof a=="string"?F[a]||G(a):p.extend({},a);var c,d,e,f,g,h,i=[],j=!a.once&&[],k=function(b){c=a.memory&&b,d=!0,h=f||0,f=0,g=i.length,e=!0;for(;i&&h<g;h++)if(i[h].apply(b[0],b[1])===!1&&a.stopOnFalse){c=!1;break}e=!1,i&&(j?j.length&&k(j.shift()):c?i=[]:l.disable())},l={add:function(){if(i){var b=i.length;(function d(b){p.each(b,function(b,c){var e=p.type(c);e==="function"&&(!a.unique||!l.has(c))?i.push(c):c&&c.length&&e!=="string"&&d(c)})})(arguments),e?g=i.length:c&&(f=b,k(c))}return this},remove:function(){return i&&p.each(arguments,function(a,b){var c;while((c=p.inArray(b,i,c))>-1)i.splice(c,1),e&&(c<=g&&g--,c<=h&&h--)}),this},has:function(a){return p.inArray(a,i)>-1},empty:function(){return i=[],this},disable:function(){return i=j=c=b,this},disabled:function(){return!i},lock:function(){return j=b,c||l.disable(),this},locked:function(){return!j},fireWith:function(a,b){return b=b||[],b=[a,b.slice?b.slice():b],i&&(!d||j)&&(e?j.push(b):k(b)),this},fire:function(){return l.fireWith(this,arguments),this},fired:function(){return!!d}};return l},p.extend({Deferred:function(a){var b=[["resolve","done",p.Callbacks("once memory"),"resolved"],["reject","fail",p.Callbacks("once memory"),"rejected"],["notify","progress",p.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return p.Deferred(function(c){p.each(b,function(b,d){var f=d[0],g=a[b];e[d[1]](p.isFunction(g)?function(){var a=g.apply(this,arguments);a&&p.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f+"With"](this===e?c:this,[a])}:c[f])}),a=null}).promise()},promise:function(a){return a!=null?p.extend(a,d):d}},e={};return d.pipe=d.then,p.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[a^1][2].disable,b[2][2].lock),e[f[0]]=g.fire,e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=k.call(arguments),d=c.length,e=d!==1||a&&p.isFunction(a.promise)?d:0,f=e===1?a:p.Deferred(),g=function(a,b,c){return function(d){b[a]=this,c[a]=arguments.length>1?k.call(arguments):d,c===h?f.notifyWith(b,c):--e||f.resolveWith(b,c)}},h,i,j;if(d>1){h=new Array(d),i=new Array(d),j=new Array(d);for(;b<d;b++)c[b]&&p.isFunction(c[b].promise)?c[b].promise().done(g(b,j,c)).fail(f.reject).progress(g(b,i,h)):--e}return e||f.resolveWith(j,c),f.promise()}}),p.support=function(){var b,c,d,f,g,h,i,j,k,l,m,n=e.createElement("div");n.setAttribute("className","t"),n.innerHTML="  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>",c=n.getElementsByTagName("*"),d=n.getElementsByTagName("a")[0],d.style.cssText="top:1px;float:left;opacity:.5";if(!c||!c.length)return{};f=e.createElement("select"),g=f.appendChild(e.createElement("option")),h=n.getElementsByTagName("input")[0],b={leadingWhitespace:n.firstChild.nodeType===3,tbody:!n.getElementsByTagName("tbody").length,htmlSerialize:!!n.getElementsByTagName("link").length,style:/top/.test(d.getAttribute("style")),hrefNormalized:d.getAttribute("href")==="/a",opacity:/^0.5/.test(d.style.opacity),cssFloat:!!d.style.cssFloat,checkOn:h.value==="on",optSelected:g.selected,getSetAttribute:n.className!=="t",enctype:!!e.createElement("form").enctype,html5Clone:e.createElement("nav").cloneNode(!0).outerHTML!=="<:nav></:nav>",boxModel:e.compatMode==="CSS1Compat",submitBubbles:!0,changeBubbles:!0,focusinBubbles:!1,deleteExpando:!0,noCloneEvent:!0,inlineBlockNeedsLayout:!1,shrinkWrapBlocks:!1,reliableMarginRight:!0,boxSizingReliable:!0,pixelPosition:!1},h.checked=!0,b.noCloneChecked=h.cloneNode(!0).checked,f.disabled=!0,b.optDisabled=!g.disabled;try{delete n.test}catch(o){b.deleteExpando=!1}!n.addEventListener&&n.attachEvent&&n.fireEvent&&(n.attachEvent("onclick",m=function(){b.noCloneEvent=!1}),n.cloneNode(!0).fireEvent("onclick"),n.detachEvent("onclick",m)),h=e.createElement("input"),h.value="t",h.setAttribute("type","radio"),b.radioValue=h.value==="t",h.setAttribute("checked","checked"),h.setAttribute("name","t"),n.appendChild(h),i=e.createDocumentFragment(),i.appendChild(n.lastChild),b.checkClone=i.cloneNode(!0).cloneNode(!0).lastChild.checked,b.appendChecked=h.checked,i.removeChild(h),i.appendChild(n);if(n.attachEvent)for(k in{submit:!0,change:!0,focusin:!0})j="on"+k,l=j in n,l||(n.setAttribute(j,"return;"),l=typeof n[j]=="function"),b[k+"Bubbles"]=l;return p(function(){var c,d,f,g,h="padding:0;margin:0;border:0;display:block;overflow:hidden;",i=e.getElementsByTagName("body")[0];if(!i)return;c=e.createElement("div"),c.style.cssText="visibility:hidden;border:0;width:0;height:0;position:static;top:0;margin-top:1px",i.insertBefore(c,i.firstChild),d=e.createElement("div"),c.appendChild(d),d.innerHTML="<table><tr><td></td><td>t</td></tr></table>",f=d.getElementsByTagName("td"),f[0].style.cssText="padding:0;margin:0;border:0;display:none",l=f[0].offsetHeight===0,f[0].style.display="",f[1].style.display="none",b.reliableHiddenOffsets=l&&f[0].offsetHeight===0,d.innerHTML="",d.style.cssText="box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;padding:1px;border:1px;display:block;width:4px;margin-top:1%;position:absolute;top:1%;",b.boxSizing=d.offsetWidth===4,b.doesNotIncludeMarginInBodyOffset=i.offsetTop!==1,a.getComputedStyle&&(b.pixelPosition=(a.getComputedStyle(d,null)||{}).top!=="1%",b.boxSizingReliable=(a.getComputedStyle(d,null)||{width:"4px"}).width==="4px",g=e.createElement("div"),g.style.cssText=d.style.cssText=h,g.style.marginRight=g.style.width="0",d.style.width="1px",d.appendChild(g),b.reliableMarginRight=!parseFloat((a.getComputedStyle(g,null)||{}).marginRight)),typeof d.style.zoom!="undefined"&&(d.innerHTML="",d.style.cssText=h+"width:1px;padding:1px;display:inline;zoom:1",b.inlineBlockNeedsLayout=d.offsetWidth===3,d.style.display="block",d.style.overflow="visible",d.innerHTML="<div></div>",d.firstChild.style.width="5px",b.shrinkWrapBlocks=d.offsetWidth!==3,c.style.zoom=1),i.removeChild(c),c=d=f=g=null}),i.removeChild(n),c=d=f=g=h=i=n=null,b}();var H=/(?:\{[\s\S]*\}|\[[\s\S]*\])$/,I=/([A-Z])/g;p.extend({cache:{},deletedIds:[],uuid:0,expando:"jQuery"+(p.fn.jquery+Math.random()).replace(/\D/g,""),noData:{embed:!0,object:"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000",applet:!0},hasData:function(a){return a=a.nodeType?p.cache[a[p.expando]]:a[p.expando],!!a&&!K(a)},data:function(a,c,d,e){if(!p.acceptData(a))return;var f,g,h=p.expando,i=typeof c=="string",j=a.nodeType,k=j?p.cache:a,l=j?a[h]:a[h]&&h;if((!l||!k[l]||!e&&!k[l].data)&&i&&d===b)return;l||(j?a[h]=l=p.deletedIds.pop()||p.guid++:l=h),k[l]||(k[l]={},j||(k[l].toJSON=p.noop));if(typeof c=="object"||typeof c=="function")e?k[l]=p.extend(k[l],c):k[l].data=p.extend(k[l].data,c);return f=k[l],e||(f.data||(f.data={}),f=f.data),d!==b&&(f[p.camelCase(c)]=d),i?(g=f[c],g==null&&(g=f[p.camelCase(c)])):g=f,g},removeData:function(a,b,c){if(!p.acceptData(a))return;var d,e,f,g=a.nodeType,h=g?p.cache:a,i=g?a[p.expando]:p.expando;if(!h[i])return;if(b){d=c?h[i]:h[i].data;if(d){p.isArray(b)||(b in d?b=[b]:(b=p.camelCase(b),b in d?b=[b]:b=b.split(" ")));for(e=0,f=b.length;e<f;e++)delete d[b[e]];if(!(c?K:p.isEmptyObject)(d))return}}if(!c){delete h[i].data;if(!K(h[i]))return}g?p.cleanData([a],!0):p.support.deleteExpando||h!=h.window?delete h[i]:h[i]=null},_data:function(a,b,c){return p.data(a,b,c,!0)},acceptData:function(a){var b=a.nodeName&&p.noData[a.nodeName.toLowerCase()];return!b||b!==!0&&a.getAttribute("classid")===b}}),p.fn.extend({data:function(a,c){var d,e,f,g,h,i=this[0],j=0,k=null;if(a===b){if(this.length){k=p.data(i);if(i.nodeType===1&&!p._data(i,"parsedAttrs")){f=i.attributes;for(h=f.length;j<h;j++)g=f[j].name,g.indexOf("data-")||(g=p.camelCase(g.substring(5)),J(i,g,k[g]));p._data(i,"parsedAttrs",!0)}}return k}return typeof a=="object"?this.each(function(){p.data(this,a)}):(d=a.split(".",2),d[1]=d[1]?"."+d[1]:"",e=d[1]+"!",p.access(this,function(c){if(c===b)return k=this.triggerHandler("getData"+e,[d[0]]),k===b&&i&&(k=p.data(i,a),k=J(i,a,k)),k===b&&d[1]?this.data(d[0]):k;d[1]=c,this.each(function(){var b=p(this);b.triggerHandler("setData"+e,d),p.data(this,a,c),b.triggerHandler("changeData"+e,d)})},null,c,arguments.length>1,null,!1))},removeData:function(a){return this.each(function(){p.removeData(this,a)})}}),p.extend({queue:function(a,b,c){var d;if(a)return b=(b||"fx")+"queue",d=p._data(a,b),c&&(!d||p.isArray(c)?d=p._data(a,b,p.makeArray(c)):d.push(c)),d||[]},dequeue:function(a,b){b=b||"fx";var c=p.queue(a,b),d=c.length,e=c.shift(),f=p._queueHooks(a,b),g=function(){p.dequeue(a,b)};e==="inprogress"&&(e=c.shift(),d--),e&&(b==="fx"&&c.unshift("inprogress"),delete f.stop,e.call(a,g,f)),!d&&f&&f.empty.fire()},_queueHooks:function(a,b){var c=b+"queueHooks";return p._data(a,c)||p._data(a,c,{empty:p.Callbacks("once memory").add(function(){p.removeData(a,b+"queue",!0),p.removeData(a,c,!0)})})}}),p.fn.extend({queue:function(a,c){var d=2;return typeof a!="string"&&(c=a,a="fx",d--),arguments.length<d?p.queue(this[0],a):c===b?this:this.each(function(){var b=p.queue(this,a,c);p._queueHooks(this,a),a==="fx"&&b[0]!=="inprogress"&&p.dequeue(this,a)})},dequeue:function(a){return this.each(function(){p.dequeue(this,a)})},delay:function(a,b){return a=p.fx?p.fx.speeds[a]||a:a,b=b||"fx",this.queue(b,function(b,c){var d=setTimeout(b,a);c.stop=function(){clearTimeout(d)}})},clearQueue:function(a){return this.queue(a||"fx",[])},promise:function(a,c){var d,e=1,f=p.Deferred(),g=this,h=this.length,i=function(){--e||f.resolveWith(g,[g])};typeof a!="string"&&(c=a,a=b),a=a||"fx";while(h--)d=p._data(g[h],a+"queueHooks"),d&&d.empty&&(e++,d.empty.add(i));return i(),f.promise(c)}});var L,M,N,O=/[\t\r\n]/g,P=/\r/g,Q=/^(?:button|input)$/i,R=/^(?:button|input|object|select|textarea)$/i,S=/^a(?:rea|)$/i,T=/^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,U=p.support.getSetAttribute;p.fn.extend({attr:function(a,b){return p.access(this,p.attr,a,b,arguments.length>1)},removeAttr:function(a){return this.each(function(){p.removeAttr(this,a)})},prop:function(a,b){return p.access(this,p.prop,a,b,arguments.length>1)},removeProp:function(a){return a=p.propFix[a]||a,this.each(function(){try{this[a]=b,delete this[a]}catch(c){}})},addClass:function(a){var b,c,d,e,f,g,h;if(p.isFunction(a))return this.each(function(b){p(this).addClass(a.call(this,b,this.className))});if(a&&typeof a=="string"){b=a.split(s);for(c=0,d=this.length;c<d;c++){e=this[c];if(e.nodeType===1)if(!e.className&&b.length===1)e.className=a;else{f=" "+e.className+" ";for(g=0,h=b.length;g<h;g++)f.indexOf(" "+b[g]+" ")<0&&(f+=b[g]+" ");e.className=p.trim(f)}}}return this},removeClass:function(a){var c,d,e,f,g,h,i;if(p.isFunction(a))return this.each(function(b){p(this).removeClass(a.call(this,b,this.className))});if(a&&typeof a=="string"||a===b){c=(a||"").split(s);for(h=0,i=this.length;h<i;h++){e=this[h];if(e.nodeType===1&&e.className){d=(" "+e.className+" ").replace(O," ");for(f=0,g=c.length;f<g;f++)while(d.indexOf(" "+c[f]+" ")>=0)d=d.replace(" "+c[f]+" "," ");e.className=a?p.trim(d):""}}}return this},toggleClass:function(a,b){var c=typeof a,d=typeof b=="boolean";return p.isFunction(a)?this.each(function(c){p(this).toggleClass(a.call(this,c,this.className,b),b)}):this.each(function(){if(c==="string"){var e,f=0,g=p(this),h=b,i=a.split(s);while(e=i[f++])h=d?h:!g.hasClass(e),g[h?"addClass":"removeClass"](e)}else if(c==="undefined"||c==="boolean")this.className&&p._data(this,"__className__",this.className),this.className=this.className||a===!1?"":p._data(this,"__className__")||""})},hasClass:function(a){var b=" "+a+" ",c=0,d=this.length;for(;c<d;c++)if(this[c].nodeType===1&&(" "+this[c].className+" ").replace(O," ").indexOf(b)>=0)return!0;return!1},val:function(a){var c,d,e,f=this[0];if(!arguments.length){if(f)return c=p.valHooks[f.type]||p.valHooks[f.nodeName.toLowerCase()],c&&"get"in c&&(d=c.get(f,"value"))!==b?d:(d=f.value,typeof d=="string"?d.replace(P,""):d==null?"":d);return}return e=p.isFunction(a),this.each(function(d){var f,g=p(this);if(this.nodeType!==1)return;e?f=a.call(this,d,g.val()):f=a,f==null?f="":typeof f=="number"?f+="":p.isArray(f)&&(f=p.map(f,function(a){return a==null?"":a+""})),c=p.valHooks[this.type]||p.valHooks[this.nodeName.toLowerCase()];if(!c||!("set"in c)||c.set(this,f,"value")===b)this.value=f})}}),p.extend({valHooks:{option:{get:function(a){var b=a.attributes.value;return!b||b.specified?a.value:a.text}},select:{get:function(a){var b,c,d,e,f=a.selectedIndex,g=[],h=a.options,i=a.type==="select-one";if(f<0)return null;c=i?f:0,d=i?f+1:h.length;for(;c<d;c++){e=h[c];if(e.selected&&(p.support.optDisabled?!e.disabled:e.getAttribute("disabled")===null)&&(!e.parentNode.disabled||!p.nodeName(e.parentNode,"optgroup"))){b=p(e).val();if(i)return b;g.push(b)}}return i&&!g.length&&h.length?p(h[f]).val():g},set:function(a,b){var c=p.makeArray(b);return p(a).find("option").each(function(){this.selected=p.inArray(p(this).val(),c)>=0}),c.length||(a.selectedIndex=-1),c}}},attrFn:{},attr:function(a,c,d,e){var f,g,h,i=a.nodeType;if(!a||i===3||i===8||i===2)return;if(e&&p.isFunction(p.fn[c]))return p(a)[c](d);if(typeof a.getAttribute=="undefined")return p.prop(a,c,d);h=i!==1||!p.isXMLDoc(a),h&&(c=c.toLowerCase(),g=p.attrHooks[c]||(T.test(c)?M:L));if(d!==b){if(d===null){p.removeAttr(a,c);return}return g&&"set"in g&&h&&(f=g.set(a,d,c))!==b?f:(a.setAttribute(c,d+""),d)}return g&&"get"in g&&h&&(f=g.get(a,c))!==null?f:(f=a.getAttribute(c),f===null?b:f)},removeAttr:function(a,b){var c,d,e,f,g=0;if(b&&a.nodeType===1){d=b.split(s);for(;g<d.length;g++)e=d[g],e&&(c=p.propFix[e]||e,f=T.test(e),f||p.attr(a,e,""),a.removeAttribute(U?e:c),f&&c in a&&(a[c]=!1))}},attrHooks:{type:{set:function(a,b){if(Q.test(a.nodeName)&&a.parentNode)p.error("type property can't be changed");else if(!p.support.radioValue&&b==="radio"&&p.nodeName(a,"input")){var c=a.value;return a.setAttribute("type",b),c&&(a.value=c),b}}},value:{get:function(a,b){return L&&p.nodeName(a,"button")?L.get(a,b):b in a?a.value:null},set:function(a,b,c){if(L&&p.nodeName(a,"button"))return L.set(a,b,c);a.value=b}}},propFix:{tabindex:"tabIndex",readonly:"readOnly","for":"htmlFor","class":"className",maxlength:"maxLength",cellspacing:"cellSpacing",cellpadding:"cellPadding",rowspan:"rowSpan",colspan:"colSpan",usemap:"useMap",frameborder:"frameBorder",contenteditable:"contentEditable"},prop:function(a,c,d){var e,f,g,h=a.nodeType;if(!a||h===3||h===8||h===2)return;return g=h!==1||!p.isXMLDoc(a),g&&(c=p.propFix[c]||c,f=p.propHooks[c]),d!==b?f&&"set"in f&&(e=f.set(a,d,c))!==b?e:a[c]=d:f&&"get"in f&&(e=f.get(a,c))!==null?e:a[c]},propHooks:{tabIndex:{get:function(a){var c=a.getAttributeNode("tabindex");return c&&c.specified?parseInt(c.value,10):R.test(a.nodeName)||S.test(a.nodeName)&&a.href?0:b}}}}),M={get:function(a,c){var d,e=p.prop(a,c);return e===!0||typeof e!="boolean"&&(d=a.getAttributeNode(c))&&d.nodeValue!==!1?c.toLowerCase():b},set:function(a,b,c){var d;return b===!1?p.removeAttr(a,c):(d=p.propFix[c]||c,d in a&&(a[d]=!0),a.setAttribute(c,c.toLowerCase())),c}},U||(N={name:!0,id:!0,coords:!0},L=p.valHooks.button={get:function(a,c){var d;return d=a.getAttributeNode(c),d&&(N[c]?d.value!=="":d.specified)?d.value:b},set:function(a,b,c){var d=a.getAttributeNode(c);return d||(d=e.createAttribute(c),a.setAttributeNode(d)),d.value=b+""}},p.each(["width","height"],function(a,b){p.attrHooks[b]=p.extend(p.attrHooks[b],{set:function(a,c){if(c==="")return a.setAttribute(b,"auto"),c}})}),p.attrHooks.contenteditable={get:L.get,set:function(a,b,c){b===""&&(b="false"),L.set(a,b,c)}}),p.support.hrefNormalized||p.each(["href","src","width","height"],function(a,c){p.attrHooks[c]=p.extend(p.attrHooks[c],{get:function(a){var d=a.getAttribute(c,2);return d===null?b:d}})}),p.support.style||(p.attrHooks.style={get:function(a){return a.style.cssText.toLowerCase()||b},set:function(a,b){return a.style.cssText=b+""}}),p.support.optSelected||(p.propHooks.selected=p.extend(p.propHooks.selected,{get:function(a){var b=a.parentNode;return b&&(b.selectedIndex,b.parentNode&&b.parentNode.selectedIndex),null}})),p.support.enctype||(p.propFix.enctype="encoding"),p.support.checkOn||p.each(["radio","checkbox"],function(){p.valHooks[this]={get:function(a){return a.getAttribute("value")===null?"on":a.value}}}),p.each(["radio","checkbox"],function(){p.valHooks[this]=p.extend(p.valHooks[this],{set:function(a,b){if(p.isArray(b))return a.checked=p.inArray(p(a).val(),b)>=0}})});var V=/^(?:textarea|input|select)$/i,W=/^([^\.]*|)(?:\.(.+)|)$/,X=/(?:^|\s)hover(\.\S+|)\b/,Y=/^key/,Z=/^(?:mouse|contextmenu)|click/,$=/^(?:focusinfocus|focusoutblur)$/,_=function(a){return p.event.special.hover?a:a.replace(X,"mouseenter$1 mouseleave$1")};p.event={add:function(a,c,d,e,f){var g,h,i,j,k,l,m,n,o,q,r;if(a.nodeType===3||a.nodeType===8||!c||!d||!(g=p._data(a)))return;d.handler&&(o=d,d=o.handler,f=o.selector),d.guid||(d.guid=p.guid++),i=g.events,i||(g.events=i={}),h=g.handle,h||(g.handle=h=function(a){return typeof p!="undefined"&&(!a||p.event.triggered!==a.type)?p.event.dispatch.apply(h.elem,arguments):b},h.elem=a),c=p.trim(_(c)).split(" ");for(j=0;j<c.length;j++){k=W.exec(c[j])||[],l=k[1],m=(k[2]||"").split(".").sort(),r=p.event.special[l]||{},l=(f?r.delegateType:r.bindType)||l,r=p.event.special[l]||{},n=p.extend({type:l,origType:k[1],data:e,handler:d,guid:d.guid,selector:f,needsContext:f&&p.expr.match.needsContext.test(f),namespace:m.join(".")},o),q=i[l];if(!q){q=i[l]=[],q.delegateCount=0;if(!r.setup||r.setup.call(a,e,m,h)===!1)a.addEventListener?a.addEventListener(l,h,!1):a.attachEvent&&a.attachEvent("on"+l,h)}r.add&&(r.add.call(a,n),n.handler.guid||(n.handler.guid=d.guid)),f?q.splice(q.delegateCount++,0,n):q.push(n),p.event.global[l]=!0}a=null},global:{},remove:function(a,b,c,d,e){var f,g,h,i,j,k,l,m,n,o,q,r=p.hasData(a)&&p._data(a);if(!r||!(m=r.events))return;b=p.trim(_(b||"")).split(" ");for(f=0;f<b.length;f++){g=W.exec(b[f])||[],h=i=g[1],j=g[2];if(!h){for(h in m)p.event.remove(a,h+b[f],c,d,!0);continue}n=p.event.special[h]||{},h=(d?n.delegateType:n.bindType)||h,o=m[h]||[],k=o.length,j=j?new RegExp("(^|\\.)"+j.split(".").sort().join("\\.(?:.*\\.|)")+"(\\.|$)"):null;for(l=0;l<o.length;l++)q=o[l],(e||i===q.origType)&&(!c||c.guid===q.guid)&&(!j||j.test(q.namespace))&&(!d||d===q.selector||d==="**"&&q.selector)&&(o.splice(l--,1),q.selector&&o.delegateCount--,n.remove&&n.remove.call(a,q));o.length===0&&k!==o.length&&((!n.teardown||n.teardown.call(a,j,r.handle)===!1)&&p.removeEvent(a,h,r.handle),delete m[h])}p.isEmptyObject(m)&&(delete r.handle,p.removeData(a,"events",!0))},customEvent:{getData:!0,setData:!0,changeData:!0},trigger:function(c,d,f,g){if(!f||f.nodeType!==3&&f.nodeType!==8){var h,i,j,k,l,m,n,o,q,r,s=c.type||c,t=[];if($.test(s+p.event.triggered))return;s.indexOf("!")>=0&&(s=s.slice(0,-1),i=!0),s.indexOf(".")>=0&&(t=s.split("."),s=t.shift(),t.sort());if((!f||p.event.customEvent[s])&&!p.event.global[s])return;c=typeof c=="object"?c[p.expando]?c:new p.Event(s,c):new p.Event(s),c.type=s,c.isTrigger=!0,c.exclusive=i,c.namespace=t.join("."),c.namespace_re=c.namespace?new RegExp("(^|\\.)"+t.join("\\.(?:.*\\.|)")+"(\\.|$)"):null,m=s.indexOf(":")<0?"on"+s:"";if(!f){h=p.cache;for(j in h)h[j].events&&h[j].events[s]&&p.event.trigger(c,d,h[j].handle.elem,!0);return}c.result=b,c.target||(c.target=f),d=d!=null?p.makeArray(d):[],d.unshift(c),n=p.event.special[s]||{};if(n.trigger&&n.trigger.apply(f,d)===!1)return;q=[[f,n.bindType||s]];if(!g&&!n.noBubble&&!p.isWindow(f)){r=n.delegateType||s,k=$.test(r+s)?f:f.parentNode;for(l=f;k;k=k.parentNode)q.push([k,r]),l=k;l===(f.ownerDocument||e)&&q.push([l.defaultView||l.parentWindow||a,r])}for(j=0;j<q.length&&!c.isPropagationStopped();j++)k=q[j][0],c.type=q[j][1],o=(p._data(k,"events")||{})[c.type]&&p._data(k,"handle"),o&&o.apply(k,d),o=m&&k[m],o&&p.acceptData(k)&&o.apply&&o.apply(k,d)===!1&&c.preventDefault();return c.type=s,!g&&!c.isDefaultPrevented()&&(!n._default||n._default.apply(f.ownerDocument,d)===!1)&&(s!=="click"||!p.nodeName(f,"a"))&&p.acceptData(f)&&m&&f[s]&&(s!=="focus"&&s!=="blur"||c.target.offsetWidth!==0)&&!p.isWindow(f)&&(l=f[m],l&&(f[m]=null),p.event.triggered=s,f[s](),p.event.triggered=b,l&&(f[m]=l)),c.result}return},dispatch:function(c){c=p.event.fix(c||a.event);var d,e,f,g,h,i,j,l,m,n,o=(p._data(this,"events")||{})[c.type]||[],q=o.delegateCount,r=k.call(arguments),s=!c.exclusive&&!c.namespace,t=p.event.special[c.type]||{},u=[];r[0]=c,c.delegateTarget=this;if(t.preDispatch&&t.preDispatch.call(this,c)===!1)return;if(q&&(!c.button||c.type!=="click"))for(f=c.target;f!=this;f=f.parentNode||this)if(f.disabled!==!0||c.type!=="click"){h={},j=[];for(d=0;d<q;d++)l=o[d],m=l.selector,h[m]===b&&(h[m]=l.needsContext?p(m,this).index(f)>=0:p.find(m,this,null,[f]).length),h[m]&&j.push(l);j.length&&u.push({elem:f,matches:j})}o.length>q&&u.push({elem:this,matches:o.slice(q)});for(d=0;d<u.length&&!c.isPropagationStopped();d++){i=u[d],c.currentTarget=i.elem;for(e=0;e<i.matches.length&&!c.isImmediatePropagationStopped();e++){l=i.matches[e];if(s||!c.namespace&&!l.namespace||c.namespace_re&&c.namespace_re.test(l.namespace))c.data=l.data,c.handleObj=l,g=((p.event.special[l.origType]||{}).handle||l.handler).apply(i.elem,r),g!==b&&(c.result=g,g===!1&&(c.preventDefault(),c.stopPropagation()))}}return t.postDispatch&&t.postDispatch.call(this,c),c.result},props:"attrChange attrName relatedNode srcElement altKey bubbles cancelable ctrlKey currentTarget eventPhase metaKey relatedTarget shiftKey target timeStamp view which".split(" "),fixHooks:{},keyHooks:{props:"char charCode key keyCode".split(" "),filter:function(a,b){return a.which==null&&(a.which=b.charCode!=null?b.charCode:b.keyCode),a}},mouseHooks:{props:"button buttons clientX clientY fromElement offsetX offsetY pageX pageY screenX screenY toElement".split(" "),filter:function(a,c){var d,f,g,h=c.button,i=c.fromElement;return a.pageX==null&&c.clientX!=null&&(d=a.target.ownerDocument||e,f=d.documentElement,g=d.body,a.pageX=c.clientX+(f&&f.scrollLeft||g&&g.scrollLeft||0)-(f&&f.clientLeft||g&&g.clientLeft||0),a.pageY=c.clientY+(f&&f.scrollTop||g&&g.scrollTop||0)-(f&&f.clientTop||g&&g.clientTop||0)),!a.relatedTarget&&i&&(a.relatedTarget=i===a.target?c.toElement:i),!a.which&&h!==b&&(a.which=h&1?1:h&2?3:h&4?2:0),a}},fix:function(a){if(a[p.expando])return a;var b,c,d=a,f=p.event.fixHooks[a.type]||{},g=f.props?this.props.concat(f.props):this.props;a=p.Event(d);for(b=g.length;b;)c=g[--b],a[c]=d[c];return a.target||(a.target=d.srcElement||e),a.target.nodeType===3&&(a.target=a.target.parentNode),a.metaKey=!!a.metaKey,f.filter?f.filter(a,d):a},special:{load:{noBubble:!0},focus:{delegateType:"focusin"},blur:{delegateType:"focusout"},beforeunload:{setup:function(a,b,c){p.isWindow(this)&&(this.onbeforeunload=c)},teardown:function(a,b){this.onbeforeunload===b&&(this.onbeforeunload=null)}}},simulate:function(a,b,c,d){var e=p.extend(new p.Event,c,{type:a,isSimulated:!0,originalEvent:{}});d?p.event.trigger(e,null,b):p.event.dispatch.call(b,e),e.isDefaultPrevented()&&c.preventDefault()}},p.event.handle=p.event.dispatch,p.removeEvent=e.removeEventListener?function(a,b,c){a.removeEventListener&&a.removeEventListener(b,c,!1)}:function(a,b,c){var d="on"+b;a.detachEvent&&(typeof a[d]=="undefined"&&(a[d]=null),a.detachEvent(d,c))},p.Event=function(a,b){if(this instanceof p.Event)a&&a.type?(this.originalEvent=a,this.type=a.type,this.isDefaultPrevented=a.defaultPrevented||a.returnValue===!1||a.getPreventDefault&&a.getPreventDefault()?bb:ba):this.type=a,b&&p.extend(this,b),this.timeStamp=a&&a.timeStamp||p.now(),this[p.expando]=!0;else return new p.Event(a,b)},p.Event.prototype={preventDefault:function(){this.isDefaultPrevented=bb;var a=this.originalEvent;if(!a)return;a.preventDefault?a.preventDefault():a.returnValue=!1},stopPropagation:function(){this.isPropagationStopped=bb;var a=this.originalEvent;if(!a)return;a.stopPropagation&&a.stopPropagation(),a.cancelBubble=!0},stopImmediatePropagation:function(){this.isImmediatePropagationStopped=bb,this.stopPropagation()},isDefaultPrevented:ba,isPropagationStopped:ba,isImmediatePropagationStopped:ba},p.each({mouseenter:"mouseover",mouseleave:"mouseout"},function(a,b){p.event.special[a]={delegateType:b,bindType:b,handle:function(a){var c,d=this,e=a.relatedTarget,f=a.handleObj,g=f.selector;if(!e||e!==d&&!p.contains(d,e))a.type=f.origType,c=f.handler.apply(this,arguments),a.type=b;return c}}}),p.support.submitBubbles||(p.event.special.submit={setup:function(){if(p.nodeName(this,"form"))return!1;p.event.add(this,"click._submit keypress._submit",function(a){var c=a.target,d=p.nodeName(c,"input")||p.nodeName(c,"button")?c.form:b;d&&!p._data(d,"_submit_attached")&&(p.event.add(d,"submit._submit",function(a){a._submit_bubble=!0}),p._data(d,"_submit_attached",!0))})},postDispatch:function(a){a._submit_bubble&&(delete a._submit_bubble,this.parentNode&&!a.isTrigger&&p.event.simulate("submit",this.parentNode,a,!0))},teardown:function(){if(p.nodeName(this,"form"))return!1;p.event.remove(this,"._submit")}}),p.support.changeBubbles||(p.event.special.change={setup:function(){if(V.test(this.nodeName)){if(this.type==="checkbox"||this.type==="radio")p.event.add(this,"propertychange._change",function(a){a.originalEvent.propertyName==="checked"&&(this._just_changed=!0)}),p.event.add(this,"click._change",function(a){this._just_changed&&!a.isTrigger&&(this._just_changed=!1),p.event.simulate("change",this,a,!0)});return!1}p.event.add(this,"beforeactivate._change",function(a){var b=a.target;V.test(b.nodeName)&&!p._data(b,"_change_attached")&&(p.event.add(b,"change._change",function(a){this.parentNode&&!a.isSimulated&&!a.isTrigger&&p.event.simulate("change",this.parentNode,a,!0)}),p._data(b,"_change_attached",!0))})},handle:function(a){var b=a.target;if(this!==b||a.isSimulated||a.isTrigger||b.type!=="radio"&&b.type!=="checkbox")return a.handleObj.handler.apply(this,arguments)},teardown:function(){return p.event.remove(this,"._change"),!V.test(this.nodeName)}}),p.support.focusinBubbles||p.each({focus:"focusin",blur:"focusout"},function(a,b){var c=0,d=function(a){p.event.simulate(b,a.target,p.event.fix(a),!0)};p.event.special[b]={setup:function(){c++===0&&e.addEventListener(a,d,!0)},teardown:function(){--c===0&&e.removeEventListener(a,d,!0)}}}),p.fn.extend({on:function(a,c,d,e,f){var g,h;if(typeof a=="object"){typeof c!="string"&&(d=d||c,c=b);for(h in a)this.on(h,c,d,a[h],f);return this}d==null&&e==null?(e=c,d=c=b):e==null&&(typeof c=="string"?(e=d,d=b):(e=d,d=c,c=b));if(e===!1)e=ba;else if(!e)return this;return f===1&&(g=e,e=function(a){return p().off(a),g.apply(this,arguments)},e.guid=g.guid||(g.guid=p.guid++)),this.each(function(){p.event.add(this,a,e,d,c)})},one:function(a,b,c,d){return this.on(a,b,c,d,1)},off:function(a,c,d){var e,f;if(a&&a.preventDefault&&a.handleObj)return e=a.handleObj,p(a.delegateTarget).off(e.namespace?e.origType+"."+e.namespace:e.origType,e.selector,e.handler),this;if(typeof a=="object"){for(f in a)this.off(f,c,a[f]);return this}if(c===!1||typeof c=="function")d=c,c=b;return d===!1&&(d=ba),this.each(function(){p.event.remove(this,a,d,c)})},bind:function(a,b,c){return this.on(a,null,b,c)},unbind:function(a,b){return this.off(a,null,b)},live:function(a,b,c){return p(this.context).on(a,this.selector,b,c),this},die:function(a,b){return p(this.context).off(a,this.selector||"**",b),this},delegate:function(a,b,c,d){return this.on(b,a,c,d)},undelegate:function(a,b,c){return arguments.length===1?this.off(a,"**"):this.off(b,a||"**",c)},trigger:function(a,b){return this.each(function(){p.event.trigger(a,b,this)})},triggerHandler:function(a,b){if(this[0])return p.event.trigger(a,b,this[0],!0)},toggle:function(a){var b=arguments,c=a.guid||p.guid++,d=0,e=function(c){var e=(p._data(this,"lastToggle"+a.guid)||0)%d;return p._data(this,"lastToggle"+a.guid,e+1),c.preventDefault(),b[e].apply(this,arguments)||!1};e.guid=c;while(d<b.length)b[d++].guid=c;return this.click(e)},hover:function(a,b){return this.mouseenter(a).mouseleave(b||a)}}),p.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "),function(a,b){p.fn[b]=function(a,c){return c==null&&(c=a,a=null),arguments.length>0?this.on(b,null,a,c):this.trigger(b)},Y.test(b)&&(p.event.fixHooks[b]=p.event.keyHooks),Z.test(b)&&(p.event.fixHooks[b]=p.event.mouseHooks)}),function(a,b){function bc(a,b,c,d){c=c||[],b=b||r;var e,f,i,j,k=b.nodeType;if(!a||typeof a!="string")return c;if(k!==1&&k!==9)return[];i=g(b);if(!i&&!d)if(e=P.exec(a))if(j=e[1]){if(k===9){f=b.getElementById(j);if(!f||!f.parentNode)return c;if(f.id===j)return c.push(f),c}else if(b.ownerDocument&&(f=b.ownerDocument.getElementById(j))&&h(b,f)&&f.id===j)return c.push(f),c}else{if(e[2])return w.apply(c,x.call(b.getElementsByTagName(a),0)),c;if((j=e[3])&&_&&b.getElementsByClassName)return w.apply(c,x.call(b.getElementsByClassName(j),0)),c}return bp(a.replace(L,"$1"),b,c,d,i)}function bd(a){return function(b){var c=b.nodeName.toLowerCase();return c==="input"&&b.type===a}}function be(a){return function(b){var c=b.nodeName.toLowerCase();return(c==="input"||c==="button")&&b.type===a}}function bf(a){return z(function(b){return b=+b,z(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function bg(a,b,c){if(a===b)return c;var d=a.nextSibling;while(d){if(d===b)return-1;d=d.nextSibling}return 1}function bh(a,b){var c,d,f,g,h,i,j,k=C[o][a];if(k)return b?0:k.slice(0);h=a,i=[],j=e.preFilter;while(h){if(!c||(d=M.exec(h)))d&&(h=h.slice(d[0].length)),i.push(f=[]);c=!1;if(d=N.exec(h))f.push(c=new q(d.shift())),h=h.slice(c.length),c.type=d[0].replace(L," ");for(g in e.filter)(d=W[g].exec(h))&&(!j[g]||(d=j[g](d,r,!0)))&&(f.push(c=new q(d.shift())),h=h.slice(c.length),c.type=g,c.matches=d);if(!c)break}return b?h.length:h?bc.error(a):C(a,i).slice(0)}function bi(a,b,d){var e=b.dir,f=d&&b.dir==="parentNode",g=u++;return b.first?function(b,c,d){while(b=b[e])if(f||b.nodeType===1)return a(b,c,d)}:function(b,d,h){if(!h){var i,j=t+" "+g+" ",k=j+c;while(b=b[e])if(f||b.nodeType===1){if((i=b[o])===k)return b.sizset;if(typeof i=="string"&&i.indexOf(j)===0){if(b.sizset)return b}else{b[o]=k;if(a(b,d,h))return b.sizset=!0,b;b.sizset=!1}}}else while(b=b[e])if(f||b.nodeType===1)if(a(b,d,h))return b}}function bj(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function bk(a,b,c,d,e){var f,g=[],h=0,i=a.length,j=b!=null;for(;h<i;h++)if(f=a[h])if(!c||c(f,d,e))g.push(f),j&&b.push(h);return g}function bl(a,b,c,d,e,f){return d&&!d[o]&&(d=bl(d)),e&&!e[o]&&(e=bl(e,f)),z(function(f,g,h,i){if(f&&e)return;var j,k,l,m=[],n=[],o=g.length,p=f||bo(b||"*",h.nodeType?[h]:h,[],f),q=a&&(f||!b)?bk(p,m,a,h,i):p,r=c?e||(f?a:o||d)?[]:g:q;c&&c(q,r,h,i);if(d){l=bk(r,n),d(l,[],h,i),j=l.length;while(j--)if(k=l[j])r[n[j]]=!(q[n[j]]=k)}if(f){j=a&&r.length;while(j--)if(k=r[j])f[m[j]]=!(g[m[j]]=k)}else r=bk(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):w.apply(g,r)})}function bm(a){var b,c,d,f=a.length,g=e.relative[a[0].type],h=g||e.relative[" "],i=g?1:0,j=bi(function(a){return a===b},h,!0),k=bi(function(a){return y.call(b,a)>-1},h,!0),m=[function(a,c,d){return!g&&(d||c!==l)||((b=c).nodeType?j(a,c,d):k(a,c,d))}];for(;i<f;i++)if(c=e.relative[a[i].type])m=[bi(bj(m),c)];else{c=e.filter[a[i].type].apply(null,a[i].matches);if(c[o]){d=++i;for(;d<f;d++)if(e.relative[a[d].type])break;return bl(i>1&&bj(m),i>1&&a.slice(0,i-1).join("").replace(L,"$1"),c,i<d&&bm(a.slice(i,d)),d<f&&bm(a=a.slice(d)),d<f&&a.join(""))}m.push(c)}return bj(m)}function bn(a,b){var d=b.length>0,f=a.length>0,g=function(h,i,j,k,m){var n,o,p,q=[],s=0,u="0",x=h&&[],y=m!=null,z=l,A=h||f&&e.find.TAG("*",m&&i.parentNode||i),B=t+=z==null?1:Math.E;y&&(l=i!==r&&i,c=g.el);for(;(n=A[u])!=null;u++){if(f&&n){for(o=0;p=a[o];o++)if(p(n,i,j)){k.push(n);break}y&&(t=B,c=++g.el)}d&&((n=!p&&n)&&s--,h&&x.push(n))}s+=u;if(d&&u!==s){for(o=0;p=b[o];o++)p(x,q,i,j);if(h){if(s>0)while(u--)!x[u]&&!q[u]&&(q[u]=v.call(k));q=bk(q)}w.apply(k,q),y&&!h&&q.length>0&&s+b.length>1&&bc.uniqueSort(k)}return y&&(t=B,l=z),x};return g.el=0,d?z(g):g}function bo(a,b,c,d){var e=0,f=b.length;for(;e<f;e++)bc(a,b[e],c,d);return c}function bp(a,b,c,d,f){var g,h,j,k,l,m=bh(a),n=m.length;if(!d&&m.length===1){h=m[0]=m[0].slice(0);if(h.length>2&&(j=h[0]).type==="ID"&&b.nodeType===9&&!f&&e.relative[h[1].type]){b=e.find.ID(j.matches[0].replace(V,""),b,f)[0];if(!b)return c;a=a.slice(h.shift().length)}for(g=W.POS.test(a)?-1:h.length-1;g>=0;g--){j=h[g];if(e.relative[k=j.type])break;if(l=e.find[k])if(d=l(j.matches[0].replace(V,""),R.test(h[0].type)&&b.parentNode||b,f)){h.splice(g,1),a=d.length&&h.join("");if(!a)return w.apply(c,x.call(d,0)),c;break}}}return i(a,m)(d,b,f,c,R.test(a)),c}function bq(){}var c,d,e,f,g,h,i,j,k,l,m=!0,n="undefined",o=("sizcache"+Math.random()).replace(".",""),q=String,r=a.document,s=r.documentElement,t=0,u=0,v=[].pop,w=[].push,x=[].slice,y=[].indexOf||function(a){var b=0,c=this.length;for(;b<c;b++)if(this[b]===a)return b;return-1},z=function(a,b){return a[o]=b==null||b,a},A=function(){var a={},b=[];return z(function(c,d){return b.push(c)>e.cacheLength&&delete a[b.shift()],a[c]=d},a)},B=A(),C=A(),D=A(),E="[\\x20\\t\\r\\n\\f]",F="(?:\\\\.|[-\\w]|[^\\x00-\\xa0])+",G=F.replace("w","w#"),H="([*^$|!~]?=)",I="\\["+E+"*("+F+")"+E+"*(?:"+H+E+"*(?:(['\"])((?:\\\\.|[^\\\\])*?)\\3|("+G+")|)|)"+E+"*\\]",J=":("+F+")(?:\\((?:(['\"])((?:\\\\.|[^\\\\])*?)\\2|([^()[\\]]*|(?:(?:"+I+")|[^:]|\\\\.)*|.*))\\)|)",K=":(even|odd|eq|gt|lt|nth|first|last)(?:\\("+E+"*((?:-\\d)?\\d*)"+E+"*\\)|)(?=[^-]|$)",L=new RegExp("^"+E+"+|((?:^|[^\\\\])(?:\\\\.)*)"+E+"+$","g"),M=new RegExp("^"+E+"*,"+E+"*"),N=new RegExp("^"+E+"*([\\x20\\t\\r\\n\\f>+~])"+E+"*"),O=new RegExp(J),P=/^(?:#([\w\-]+)|(\w+)|\.([\w\-]+))$/,Q=/^:not/,R=/[\x20\t\r\n\f]*[+~]/,S=/:not\($/,T=/h\d/i,U=/input|select|textarea|button/i,V=/\\(?!\\)/g,W={ID:new RegExp("^#("+F+")"),CLASS:new RegExp("^\\.("+F+")"),NAME:new RegExp("^\\[name=['\"]?("+F+")['\"]?\\]"),TAG:new RegExp("^("+F.replace("w","w*")+")"),ATTR:new RegExp("^"+I),PSEUDO:new RegExp("^"+J),POS:new RegExp(K,"i"),CHILD:new RegExp("^:(only|nth|first|last)-child(?:\\("+E+"*(even|odd|(([+-]|)(\\d*)n|)"+E+"*(?:([+-]|)"+E+"*(\\d+)|))"+E+"*\\)|)","i"),needsContext:new RegExp("^"+E+"*[>+~]|"+K,"i")},X=function(a){var b=r.createElement("div");try{return a(b)}catch(c){return!1}finally{b=null}},Y=X(function(a){return a.appendChild(r.createComment("")),!a.getElementsByTagName("*").length}),Z=X(function(a){return a.innerHTML="<a href='#'></a>",a.firstChild&&typeof a.firstChild.getAttribute!==n&&a.firstChild.getAttribute("href")==="#"}),$=X(function(a){a.innerHTML="<select></select>";var b=typeof a.lastChild.getAttribute("multiple");return b!=="boolean"&&b!=="string"}),_=X(function(a){return a.innerHTML="<div class='hidden e'></div><div class='hidden'></div>",!a.getElementsByClassName||!a.getElementsByClassName("e").length?!1:(a.lastChild.className="e",a.getElementsByClassName("e").length===2)}),ba=X(function(a){a.id=o+0,a.innerHTML="<a name='"+o+"'></a><div name='"+o+"'></div>",s.insertBefore(a,s.firstChild);var b=r.getElementsByName&&r.getElementsByName(o).length===2+r.getElementsByName(o+0).length;return d=!r.getElementById(o),s.removeChild(a),b});try{x.call(s.childNodes,0)[0].nodeType}catch(bb){x=function(a){var b,c=[];for(;b=this[a];a++)c.push(b);return c}}bc.matches=function(a,b){return bc(a,null,null,b)},bc.matchesSelector=function(a,b){return bc(b,null,null,[a]).length>0},f=bc.getText=function(a){var b,c="",d=0,e=a.nodeType;if(e){if(e===1||e===9||e===11){if(typeof a.textContent=="string")return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=f(a)}else if(e===3||e===4)return a.nodeValue}else for(;b=a[d];d++)c+=f(b);return c},g=bc.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?b.nodeName!=="HTML":!1},h=bc.contains=s.contains?function(a,b){var c=a.nodeType===9?a.documentElement:a,d=b&&b.parentNode;return a===d||!!(d&&d.nodeType===1&&c.contains&&c.contains(d))}:s.compareDocumentPosition?function(a,b){return b&&!!(a.compareDocumentPosition(b)&16)}:function(a,b){while(b=b.parentNode)if(b===a)return!0;return!1},bc.attr=function(a,b){var c,d=g(a);return d||(b=b.toLowerCase()),(c=e.attrHandle[b])?c(a):d||$?a.getAttribute(b):(c=a.getAttributeNode(b),c?typeof a[b]=="boolean"?a[b]?b:null:c.specified?c.value:null:null)},e=bc.selectors={cacheLength:50,createPseudo:z,match:W,attrHandle:Z?{}:{href:function(a){return a.getAttribute("href",2)},type:function(a){return a.getAttribute("type")}},find:{ID:d?function(a,b,c){if(typeof b.getElementById!==n&&!c){var d=b.getElementById(a);return d&&d.parentNode?[d]:[]}}:function(a,c,d){if(typeof c.getElementById!==n&&!d){var e=c.getElementById(a);return e?e.id===a||typeof e.getAttributeNode!==n&&e.getAttributeNode("id").value===a?[e]:b:[]}},TAG:Y?function(a,b){if(typeof b.getElementsByTagName!==n)return b.getElementsByTagName(a)}:function(a,b){var c=b.getElementsByTagName(a);if(a==="*"){var d,e=[],f=0;for(;d=c[f];f++)d.nodeType===1&&e.push(d);return e}return c},NAME:ba&&function(a,b){if(typeof b.getElementsByName!==n)return b.getElementsByName(name)},CLASS:_&&function(a,b,c){if(typeof b.getElementsByClassName!==n&&!c)return b.getElementsByClassName(a)}},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(V,""),a[3]=(a[4]||a[5]||"").replace(V,""),a[2]==="~="&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),a[1]==="nth"?(a[2]||bc.error(a[0]),a[3]=+(a[3]?a[4]+(a[5]||1):2*(a[2]==="even"||a[2]==="odd")),a[4]=+(a[6]+a[7]||a[2]==="odd")):a[2]&&bc.error(a[0]),a},PSEUDO:function(a){var b,c;if(W.CHILD.test(a[0]))return null;if(a[3])a[2]=a[3];else if(b=a[4])O.test(b)&&(c=bh(b,!0))&&(c=b.indexOf(")",b.length-c)-b.length)&&(b=b.slice(0,c),a[0]=a[0].slice(0,c)),a[2]=b;return a.slice(0,3)}},filter:{ID:d?function(a){return a=a.replace(V,""),function(b){return b.getAttribute("id")===a}}:function(a){return a=a.replace(V,""),function(b){var c=typeof b.getAttributeNode!==n&&b.getAttributeNode("id");return c&&c.value===a}},TAG:function(a){return a==="*"?function(){return!0}:(a=a.replace(V,"").toLowerCase(),function(b){return b.nodeName&&b.nodeName.toLowerCase()===a})},CLASS:function(a){var b=B[o][a];return b||(b=B(a,new RegExp("(^|"+E+")"+a+"("+E+"|$)"))),function(a){return b.test(a.className||typeof a.getAttribute!==n&&a.getAttribute("class")||"")}},ATTR:function(a,b,c){return function(d,e){var f=bc.attr(d,a);return f==null?b==="!=":b?(f+="",b==="="?f===c:b==="!="?f!==c:b==="^="?c&&f.indexOf(c)===0:b==="*="?c&&f.indexOf(c)>-1:b==="$="?c&&f.substr(f.length-c.length)===c:b==="~="?(" "+f+" ").indexOf(c)>-1:b==="|="?f===c||f.substr(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d){return a==="nth"?function(a){var b,e,f=a.parentNode;if(c===1&&d===0)return!0;if(f){e=0;for(b=f.firstChild;b;b=b.nextSibling)if(b.nodeType===1){e++;if(a===b)break}}return e-=d,e===c||e%c===0&&e/c>=0}:function(b){var c=b;switch(a){case"only":case"first":while(c=c.previousSibling)if(c.nodeType===1)return!1;if(a==="first")return!0;c=b;case"last":while(c=c.nextSibling)if(c.nodeType===1)return!1;return!0}}},PSEUDO:function(a,b){var c,d=e.pseudos[a]||e.setFilters[a.toLowerCase()]||bc.error("unsupported pseudo: "+a);return d[o]?d(b):d.length>1?(c=[a,a,"",b],e.setFilters.hasOwnProperty(a.toLowerCase())?z(function(a,c){var e,f=d(a,b),g=f.length;while(g--)e=y.call(a,f[g]),a[e]=!(c[e]=f[g])}):function(a){return d(a,0,c)}):d}},pseudos:{not:z(function(a){var b=[],c=[],d=i(a.replace(L,"$1"));return d[o]?z(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)if(f=g[h])a[h]=!(b[h]=f)}):function(a,e,f){return b[0]=a,d(b,null,f,c),!c.pop()}}),has:z(function(a){return function(b){return bc(a,b).length>0}}),contains:z(function(a){return function(b){return(b.textContent||b.innerText||f(b)).indexOf(a)>-1}}),enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return b==="input"&&!!a.checked||b==="option"&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},parent:function(a){return!e.pseudos.empty(a)},empty:function(a){var b;a=a.firstChild;while(a){if(a.nodeName>"@"||(b=a.nodeType)===3||b===4)return!1;a=a.nextSibling}return!0},header:function(a){return T.test(a.nodeName)},text:function(a){var b,c;return a.nodeName.toLowerCase()==="input"&&(b=a.type)==="text"&&((c=a.getAttribute("type"))==null||c.toLowerCase()===b)},radio:bd("radio"),checkbox:bd("checkbox"),file:bd("file"),password:bd("password"),image:bd("image"),submit:be("submit"),reset:be("reset"),button:function(a){var b=a.nodeName.toLowerCase();return b==="input"&&a.type==="button"||b==="button"},input:function(a){return U.test(a.nodeName)},focus:function(a){var b=a.ownerDocument;return a===b.activeElement&&(!b.hasFocus||b.hasFocus())&&(!!a.type||!!a.href)},active:function(a){return a===a.ownerDocument.activeElement},first:bf(function(a,b,c){return[0]}),last:bf(function(a,b,c){return[b-1]}),eq:bf(function(a,b,c){return[c<0?c+b:c]}),even:bf(function(a,b,c){for(var d=0;d<b;d+=2)a.push(d);return a}),odd:bf(function(a,b,c){for(var d=1;d<b;d+=2)a.push(d);return a}),lt:bf(function(a,b,c){for(var d=c<0?c+b:c;--d>=0;)a.push(d);return a}),gt:bf(function(a,b,c){for(var d=c<0?c+b:c;++d<b;)a.push(d);return a})}},j=s.compareDocumentPosition?function(a,b){return a===b?(k=!0,0):(!a.compareDocumentPosition||!b.compareDocumentPosition?a.compareDocumentPosition:a.compareDocumentPosition(b)&4)?-1:1}:function(a,b){if(a===b)return k=!0,0;if(a.sourceIndex&&b.sourceIndex)return a.sourceIndex-b.sourceIndex;var c,d,e=[],f=[],g=a.parentNode,h=b.parentNode,i=g;if(g===h)return bg(a,b);if(!g)return-1;if(!h)return 1;while(i)e.unshift(i),i=i.parentNode;i=h;while(i)f.unshift(i),i=i.parentNode;c=e.length,d=f.length;for(var j=0;j<c&&j<d;j++)if(e[j]!==f[j])return bg(e[j],f[j]);return j===c?bg(a,f[j],-1):bg(e[j],b,1)},[0,0].sort(j),m=!k,bc.uniqueSort=function(a){var b,c=1;k=m,a.sort(j);if(k)for(;b=a[c];c++)b===a[c-1]&&a.splice(c--,1);return a},bc.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},i=bc.compile=function(a,b){var c,d=[],e=[],f=D[o][a];if(!f){b||(b=bh(a)),c=b.length;while(c--)f=bm(b[c]),f[o]?d.push(f):e.push(f);f=D(a,bn(e,d))}return f},r.querySelectorAll&&function(){var a,b=bp,c=/'|\\/g,d=/\=[\x20\t\r\n\f]*([^'"\]]*)[\x20\t\r\n\f]*\]/g,e=[":focus"],f=[":active",":focus"],h=s.matchesSelector||s.mozMatchesSelector||s.webkitMatchesSelector||s.oMatchesSelector||s.msMatchesSelector;X(function(a){a.innerHTML="<select><option selected=''></option></select>",a.querySelectorAll("[selected]").length||e.push("\\["+E+"*(?:checked|disabled|ismap|multiple|readonly|selected|value)"),a.querySelectorAll(":checked").length||e.push(":checked")}),X(function(a){a.innerHTML="<p test=''></p>",a.querySelectorAll("[test^='']").length&&e.push("[*^$]="+E+"*(?:\"\"|'')"),a.innerHTML="<input type='hidden'/>",a.querySelectorAll(":enabled").length||e.push(":enabled",":disabled")}),e=new RegExp(e.join("|")),bp=function(a,d,f,g,h){if(!g&&!h&&(!e||!e.test(a))){var i,j,k=!0,l=o,m=d,n=d.nodeType===9&&a;if(d.nodeType===1&&d.nodeName.toLowerCase()!=="object"){i=bh(a),(k=d.getAttribute("id"))?l=k.replace(c,"\\$&"):d.setAttribute("id",l),l="[id='"+l+"'] ",j=i.length;while(j--)i[j]=l+i[j].join("");m=R.test(a)&&d.parentNode||d,n=i.join(",")}if(n)try{return w.apply(f,x.call(m.querySelectorAll(n),0)),f}catch(p){}finally{k||d.removeAttribute("id")}}return b(a,d,f,g,h)},h&&(X(function(b){a=h.call(b,"div");try{h.call(b,"[test!='']:sizzle"),f.push("!=",J)}catch(c){}}),f=new RegExp(f.join("|")),bc.matchesSelector=function(b,c){c=c.replace(d,"='$1']");if(!g(b)&&!f.test(c)&&(!e||!e.test(c)))try{var i=h.call(b,c);if(i||a||b.document&&b.document.nodeType!==11)return i}catch(j){}return bc(c,null,null,[b]).length>0})}(),e.pseudos.nth=e.pseudos.eq,e.filters=bq.prototype=e.pseudos,e.setFilters=new bq,bc.attr=p.attr,p.find=bc,p.expr=bc.selectors,p.expr[":"]=p.expr.pseudos,p.unique=bc.uniqueSort,p.text=bc.getText,p.isXMLDoc=bc.isXML,p.contains=bc.contains}(a);var bc=/Until$/,bd=/^(?:parents|prev(?:Until|All))/,be=/^.[^:#\[\.,]*$/,bf=p.expr.match.needsContext,bg={children:!0,contents:!0,next:!0,prev:!0};p.fn.extend({find:function(a){var b,c,d,e,f,g,h=this;if(typeof a!="string")return p(a).filter(function(){for(b=0,c=h.length;b<c;b++)if(p.contains(h[b],this))return!0});g=this.pushStack("","find",a);for(b=0,c=this.length;b<c;b++){d=g.length,p.find(a,this[b],g);if(b>0)for(e=d;e<g.length;e++)for(f=0;f<d;f++)if(g[f]===g[e]){g.splice(e--,1);break}}return g},has:function(a){var b,c=p(a,this),d=c.length;return this.filter(function(){for(b=0;b<d;b++)if(p.contains(this,c[b]))return!0})},not:function(a){return this.pushStack(bj(this,a,!1),"not",a)},filter:function(a){return this.pushStack(bj(this,a,!0),"filter",a)},is:function(a){return!!a&&(typeof a=="string"?bf.test(a)?p(a,this.context).index(this[0])>=0:p.filter(a,this).length>0:this.filter(a).length>0)},closest:function(a,b){var c,d=0,e=this.length,f=[],g=bf.test(a)||typeof a!="string"?p(a,b||this.context):0;for(;d<e;d++){c=this[d];while(c&&c.ownerDocument&&c!==b&&c.nodeType!==11){if(g?g.index(c)>-1:p.find.matchesSelector(c,a)){f.push(c);break}c=c.parentNode}}return f=f.length>1?p.unique(f):f,this.pushStack(f,"closest",a)},index:function(a){return a?typeof a=="string"?p.inArray(this[0],p(a)):p.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.prevAll().length:-1},add:function(a,b){var c=typeof a=="string"?p(a,b):p.makeArray(a&&a.nodeType?[a]:a),d=p.merge(this.get(),c);return this.pushStack(bh(c[0])||bh(d[0])?d:p.unique(d))},addBack:function(a){return this.add(a==null?this.prevObject:this.prevObject.filter(a))}}),p.fn.andSelf=p.fn.addBack,p.each({parent:function(a){var b=a.parentNode;return b&&b.nodeType!==11?b:null},parents:function(a){return p.dir(a,"parentNode")},parentsUntil:function(a,b,c){return p.dir(a,"parentNode",c)},next:function(a){return bi(a,"nextSibling")},prev:function(a){return bi(a,"previousSibling")},nextAll:function(a){return p.dir(a,"nextSibling")},prevAll:function(a){return p.dir(a,"previousSibling")},nextUntil:function(a,b,c){return p.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return p.dir(a,"previousSibling",c)},siblings:function(a){return p.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return p.sibling(a.firstChild)},contents:function(a){return p.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:p.merge([],a.childNodes)}},function(a,b){p.fn[a]=function(c,d){var e=p.map(this,b,c);return bc.test(a)||(d=c),d&&typeof d=="string"&&(e=p.filter(d,e)),e=this.length>1&&!bg[a]?p.unique(e):e,this.length>1&&bd.test(a)&&(e=e.reverse()),this.pushStack(e,a,k.call(arguments).join(","))}}),p.extend({filter:function(a,b,c){return c&&(a=":not("+a+")"),b.length===1?p.find.matchesSelector(b[0],a)?[b[0]]:[]:p.find.matches(a,b)},dir:function(a,c,d){var e=[],f=a[c];while(f&&f.nodeType!==9&&(d===b||f.nodeType!==1||!p(f).is(d)))f.nodeType===1&&e.push(f),f=f[c];return e},sibling:function(a,b){var c=[];for(;a;a=a.nextSibling)a.nodeType===1&&a!==b&&c.push(a);return c}});var bl="abbr|article|aside|audio|bdi|canvas|data|datalist|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video",bm=/ jQuery\d+="(?:null|\d+)"/g,bn=/^\s+/,bo=/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi,bp=/<([\w:]+)/,bq=/<tbody/i,br=/<|&#?\w+;/,bs=/<(?:script|style|link)/i,bt=/<(?:script|object|embed|option|style)/i,bu=new RegExp("<(?:"+bl+")[\\s/>]","i"),bv=/^(?:checkbox|radio)$/,bw=/checked\s*(?:[^=]|=\s*.checked.)/i,bx=/\/(java|ecma)script/i,by=/^\s*<!(?:\[CDATA\[|\-\-)|[\]\-]{2}>\s*$/g,bz={option:[1,"<select multiple='multiple'>","</select>"],legend:[1,"<fieldset>","</fieldset>"],thead:[1,"<table>","</table>"],tr:[2,"<table><tbody>","</tbody></table>"],td:[3,"<table><tbody><tr>","</tr></tbody></table>"],col:[2,"<table><tbody></tbody><colgroup>","</colgroup></table>"],area:[1,"<map>","</map>"],_default:[0,"",""]},bA=bk(e),bB=bA.appendChild(e.createElement("div"));bz.optgroup=bz.option,bz.tbody=bz.tfoot=bz.colgroup=bz.caption=bz.thead,bz.th=bz.td,p.support.htmlSerialize||(bz._default=[1,"X<div>","</div>"]),p.fn.extend({text:function(a){return p.access(this,function(a){return a===b?p.text(this):this.empty().append((this[0]&&this[0].ownerDocument||e).createTextNode(a))},null,a,arguments.length)},wrapAll:function(a){if(p.isFunction(a))return this.each(function(b){p(this).wrapAll(a.call(this,b))});if(this[0]){var b=p(a,this[0].ownerDocument).eq(0).clone(!0);this[0].parentNode&&b.insertBefore(this[0]),b.map(function(){var a=this;while(a.firstChild&&a.firstChild.nodeType===1)a=a.firstChild;return a}).append(this)}return this},wrapInner:function(a){return p.isFunction(a)?this.each(function(b){p(this).wrapInner(a.call(this,b))}):this.each(function(){var b=p(this),c=b.contents();c.length?c.wrapAll(a):b.append(a)})},wrap:function(a){var b=p.isFunction(a);return this.each(function(c){p(this).wrapAll(b?a.call(this,c):a)})},unwrap:function(){return this.parent().each(function(){p.nodeName(this,"body")||p(this).replaceWith(this.childNodes)}).end()},append:function(){return this.domManip(arguments,!0,function(a){(this.nodeType===1||this.nodeType===11)&&this.appendChild(a)})},prepend:function(){return this.domManip(arguments,!0,function(a){(this.nodeType===1||this.nodeType===11)&&this.insertBefore(a,this.firstChild)})},before:function(){if(!bh(this[0]))return this.domManip(arguments,!1,function(a){this.parentNode.insertBefore(a,this)});if(arguments.length){var a=p.clean(arguments);return this.pushStack(p.merge(a,this),"before",this.selector)}},after:function(){if(!bh(this[0]))return this.domManip(arguments,!1,function(a){this.parentNode.insertBefore(a,this.nextSibling)});if(arguments.length){var a=p.clean(arguments);return this.pushStack(p.merge(this,a),"after",this.selector)}},remove:function(a,b){var c,d=0;for(;(c=this[d])!=null;d++)if(!a||p.filter(a,[c]).length)!b&&c.nodeType===1&&(p.cleanData(c.getElementsByTagName("*")),p.cleanData([c])),c.parentNode&&c.parentNode.removeChild(c);return this},empty:function(){var a,b=0;for(;(a=this[b])!=null;b++){a.nodeType===1&&p.cleanData(a.getElementsByTagName("*"));while(a.firstChild)a.removeChild(a.firstChild)}return this},clone:function(a,b){return a=a==null?!1:a,b=b==null?a:b,this.map(function(){return p.clone(this,a,b)})},html:function(a){return p.access(this,function(a){var c=this[0]||{},d=0,e=this.length;if(a===b)return c.nodeType===1?c.innerHTML.replace(bm,""):b;if(typeof a=="string"&&!bs.test(a)&&(p.support.htmlSerialize||!bu.test(a))&&(p.support.leadingWhitespace||!bn.test(a))&&!bz[(bp.exec(a)||["",""])[1].toLowerCase()]){a=a.replace(bo,"<$1></$2>");try{for(;d<e;d++)c=this[d]||{},c.nodeType===1&&(p.cleanData(c.getElementsByTagName("*")),c.innerHTML=a);c=0}catch(f){}}c&&this.empty().append(a)},null,a,arguments.length)},replaceWith:function(a){return bh(this[0])?this.length?this.pushStack(p(p.isFunction(a)?a():a),"replaceWith",a):this:p.isFunction(a)?this.each(function(b){var c=p(this),d=c.html();c.replaceWith(a.call(this,b,d))}):(typeof a!="string"&&(a=p(a).detach()),this.each(function(){var b=this.nextSibling,c=this.parentNode;p(this).remove(),b?p(b).before(a):p(c).append(a)}))},detach:function(a){return this.remove(a,!0)},domManip:function(a,c,d){a=[].concat.apply([],a);var e,f,g,h,i=0,j=a[0],k=[],l=this.length;if(!p.support.checkClone&&l>1&&typeof j=="string"&&bw.test(j))return this.each(function(){p(this).domManip(a,c,d)});if(p.isFunction(j))return this.each(function(e){var f=p(this);a[0]=j.call(this,e,c?f.html():b),f.domManip(a,c,d)});if(this[0]){e=p.buildFragment(a,this,k),g=e.fragment,f=g.firstChild,g.childNodes.length===1&&(g=f);if(f){c=c&&p.nodeName(f,"tr");for(h=e.cacheable||l-1;i<l;i++)d.call(c&&p.nodeName(this[i],"table")?bC(this[i],"tbody"):this[i],i===h?g:p.clone(g,!0,!0))}g=f=null,k.length&&p.each(k,function(a,b){b.src?p.ajax?p.ajax({url:b.src,type:"GET",dataType:"script",async:!1,global:!1,"throws":!0}):p.error("no ajax"):p.globalEval((b.text||b.textContent||b.innerHTML||"").replace(by,"")),b.parentNode&&b.parentNode.removeChild(b)})}return this}}),p.buildFragment=function(a,c,d){var f,g,h,i=a[0];return c=c||e,c=!c.nodeType&&c[0]||c,c=c.ownerDocument||c,a.length===1&&typeof i=="string"&&i.length<512&&c===e&&i.charAt(0)==="<"&&!bt.test(i)&&(p.support.checkClone||!bw.test(i))&&(p.support.html5Clone||!bu.test(i))&&(g=!0,f=p.fragments[i],h=f!==b),f||(f=c.createDocumentFragment(),p.clean(a,c,f,d),g&&(p.fragments[i]=h&&f)),{fragment:f,cacheable:g}},p.fragments={},p.each({appendTo:"append",prependTo:"prepend",insertBefore:"before",insertAfter:"after",replaceAll:"replaceWith"},function(a,b){p.fn[a]=function(c){var d,e=0,f=[],g=p(c),h=g.length,i=this.length===1&&this[0].parentNode;if((i==null||i&&i.nodeType===11&&i.childNodes.length===1)&&h===1)return g[b](this[0]),this;for(;e<h;e++)d=(e>0?this.clone(!0):this).get(),p(g[e])[b](d),f=f.concat(d);return this.pushStack(f,a,g.selector)}}),p.extend({clone:function(a,b,c){var d,e,f,g;p.support.html5Clone||p.isXMLDoc(a)||!bu.test("<"+a.nodeName+">")?g=a.cloneNode(!0):(bB.innerHTML=a.outerHTML,bB.removeChild(g=bB.firstChild));if((!p.support.noCloneEvent||!p.support.noCloneChecked)&&(a.nodeType===1||a.nodeType===11)&&!p.isXMLDoc(a)){bE(a,g),d=bF(a),e=bF(g);for(f=0;d[f];++f)e[f]&&bE(d[f],e[f])}if(b){bD(a,g);if(c){d=bF(a),e=bF(g);for(f=0;d[f];++f)bD(d[f],e[f])}}return d=e=null,g},clean:function(a,b,c,d){var f,g,h,i,j,k,l,m,n,o,q,r,s=b===e&&bA,t=[];if(!b||typeof b.createDocumentFragment=="undefined")b=e;for(f=0;(h=a[f])!=null;f++){typeof h=="number"&&(h+="");if(!h)continue;if(typeof h=="string")if(!br.test(h))h=b.createTextNode(h);else{s=s||bk(b),l=b.createElement("div"),s.appendChild(l),h=h.replace(bo,"<$1></$2>"),i=(bp.exec(h)||["",""])[1].toLowerCase(),j=bz[i]||bz._default,k=j[0],l.innerHTML=j[1]+h+j[2];while(k--)l=l.lastChild;if(!p.support.tbody){m=bq.test(h),n=i==="table"&&!m?l.firstChild&&l.firstChild.childNodes:j[1]==="<table>"&&!m?l.childNodes:[];for(g=n.length-1;g>=0;--g)p.nodeName(n[g],"tbody")&&!n[g].childNodes.length&&n[g].parentNode.removeChild(n[g])}!p.support.leadingWhitespace&&bn.test(h)&&l.insertBefore(b.createTextNode(bn.exec(h)[0]),l.firstChild),h=l.childNodes,l.parentNode.removeChild(l)}h.nodeType?t.push(h):p.merge(t,h)}l&&(h=l=s=null);if(!p.support.appendChecked)for(f=0;(h=t[f])!=null;f++)p.nodeName(h,"input")?bG(h):typeof h.getElementsByTagName!="undefined"&&p.grep(h.getElementsByTagName("input"),bG);if(c){q=function(a){if(!a.type||bx.test(a.type))return d?d.push(a.parentNode?a.parentNode.removeChild(a):a):c.appendChild(a)};for(f=0;(h=t[f])!=null;f++)if(!p.nodeName(h,"script")||!q(h))c.appendChild(h),typeof h.getElementsByTagName!="undefined"&&(r=p.grep(p.merge([],h.getElementsByTagName("script")),q),t.splice.apply(t,[f+1,0].concat(r)),f+=r.length)}return t},cleanData:function(a,b){var c,d,e,f,g=0,h=p.expando,i=p.cache,j=p.support.deleteExpando,k=p.event.special;for(;(e=a[g])!=null;g++)if(b||p.acceptData(e)){d=e[h],c=d&&i[d];if(c){if(c.events)for(f in c.events)k[f]?p.event.remove(e,f):p.removeEvent(e,f,c.handle);i[d]&&(delete i[d],j?delete e[h]:e.removeAttribute?e.removeAttribute(h):e[h]=null,p.deletedIds.push(d))}}}}),function(){var a,b;p.uaMatch=function(a){a=a.toLowerCase();var b=/(chrome)[ \/]([\w.]+)/.exec(a)||/(webkit)[ \/]([\w.]+)/.exec(a)||/(opera)(?:.*version|)[ \/]([\w.]+)/.exec(a)||/(msie) ([\w.]+)/.exec(a)||a.indexOf("compatible")<0&&/(mozilla)(?:.*? rv:([\w.]+)|)/.exec(a)||[];return{browser:b[1]||"",version:b[2]||"0"}},a=p.uaMatch(g.userAgent),b={},a.browser&&(b[a.browser]=!0,b.version=a.version),b.chrome?b.webkit=!0:b.webkit&&(b.safari=!0),p.browser=b,p.sub=function(){function a(b,c){return new a.fn.init(b,c)}p.extend(!0,a,this),a.superclass=this,a.fn=a.prototype=this(),a.fn.constructor=a,a.sub=this.sub,a.fn.init=function c(c,d){return d&&d instanceof p&&!(d instanceof a)&&(d=a(d)),p.fn.init.call(this,c,d,b)},a.fn.init.prototype=a.fn;var b=a(e);return a}}();var bH,bI,bJ,bK=/alpha\([^)]*\)/i,bL=/opacity=([^)]*)/,bM=/^(top|right|bottom|left)$/,bN=/^(none|table(?!-c[ea]).+)/,bO=/^margin/,bP=new RegExp("^("+q+")(.*)$","i"),bQ=new RegExp("^("+q+")(?!px)[a-z%]+$","i"),bR=new RegExp("^([-+])=("+q+")","i"),bS={},bT={position:"absolute",visibility:"hidden",display:"block"},bU={letterSpacing:0,fontWeight:400},bV=["Top","Right","Bottom","Left"],bW=["Webkit","O","Moz","ms"],bX=p.fn.toggle;p.fn.extend({css:function(a,c){return p.access(this,function(a,c,d){return d!==b?p.style(a,c,d):p.css(a,c)},a,c,arguments.length>1)},show:function(){return b$(this,!0)},hide:function(){return b$(this)},toggle:function(a,b){var c=typeof a=="boolean";return p.isFunction(a)&&p.isFunction(b)?bX.apply(this,arguments):this.each(function(){(c?a:bZ(this))?p(this).show():p(this).hide()})}}),p.extend({cssHooks:{opacity:{get:function(a,b){if(b){var c=bH(a,"opacity");return c===""?"1":c}}}},cssNumber:{fillOpacity:!0,fontWeight:!0,lineHeight:!0,opacity:!0,orphans:!0,widows:!0,zIndex:!0,zoom:!0},cssProps:{"float":p.support.cssFloat?"cssFloat":"styleFloat"},style:function(a,c,d,e){if(!a||a.nodeType===3||a.nodeType===8||!a.style)return;var f,g,h,i=p.camelCase(c),j=a.style;c=p.cssProps[i]||(p.cssProps[i]=bY(j,i)),h=p.cssHooks[c]||p.cssHooks[i];if(d===b)return h&&"get"in h&&(f=h.get(a,!1,e))!==b?f:j[c];g=typeof d,g==="string"&&(f=bR.exec(d))&&(d=(f[1]+1)*f[2]+parseFloat(p.css(a,c)),g="number");if(d==null||g==="number"&&isNaN(d))return;g==="number"&&!p.cssNumber[i]&&(d+="px");if(!h||!("set"in h)||(d=h.set(a,d,e))!==b)try{j[c]=d}catch(k){}},css:function(a,c,d,e){var f,g,h,i=p.camelCase(c);return c=p.cssProps[i]||(p.cssProps[i]=bY(a.style,i)),h=p.cssHooks[c]||p.cssHooks[i],h&&"get"in h&&(f=h.get(a,!0,e)),f===b&&(f=bH(a,c)),f==="normal"&&c in bU&&(f=bU[c]),d||e!==b?(g=parseFloat(f),d||p.isNumeric(g)?g||0:f):f},swap:function(a,b,c){var d,e,f={};for(e in b)f[e]=a.style[e],a.style[e]=b[e];d=c.call(a);for(e in b)a.style[e]=f[e];return d}}),a.getComputedStyle?bH=function(b,c){var d,e,f,g,h=a.getComputedStyle(b,null),i=b.style;return h&&(d=h[c],d===""&&!p.contains(b.ownerDocument,b)&&(d=p.style(b,c)),bQ.test(d)&&bO.test(c)&&(e=i.width,f=i.minWidth,g=i.maxWidth,i.minWidth=i.maxWidth=i.width=d,d=h.width,i.width=e,i.minWidth=f,i.maxWidth=g)),d}:e.documentElement.currentStyle&&(bH=function(a,b){var c,d,e=a.currentStyle&&a.currentStyle[b],f=a.style;return e==null&&f&&f[b]&&(e=f[b]),bQ.test(e)&&!bM.test(b)&&(c=f.left,d=a.runtimeStyle&&a.runtimeStyle.left,d&&(a.runtimeStyle.left=a.currentStyle.left),f.left=b==="fontSize"?"1em":e,e=f.pixelLeft+"px",f.left=c,d&&(a.runtimeStyle.left=d)),e===""?"auto":e}),p.each(["height","width"],function(a,b){p.cssHooks[b]={get:function(a,c,d){if(c)return a.offsetWidth===0&&bN.test(bH(a,"display"))?p.swap(a,bT,function(){return cb(a,b,d)}):cb(a,b,d)},set:function(a,c,d){return b_(a,c,d?ca(a,b,d,p.support.boxSizing&&p.css(a,"boxSizing")==="border-box"):0)}}}),p.support.opacity||(p.cssHooks.opacity={get:function(a,b){return bL.test((b&&a.currentStyle?a.currentStyle.filter:a.style.filter)||"")?.01*parseFloat(RegExp.$1)+"":b?"1":""},set:function(a,b){var c=a.style,d=a.currentStyle,e=p.isNumeric(b)?"alpha(opacity="+b*100+")":"",f=d&&d.filter||c.filter||"";c.zoom=1;if(b>=1&&p.trim(f.replace(bK,""))===""&&c.removeAttribute){c.removeAttribute("filter");if(d&&!d.filter)return}c.filter=bK.test(f)?f.replace(bK,e):f+" "+e}}),p(function(){p.support.reliableMarginRight||(p.cssHooks.marginRight={get:function(a,b){return p.swap(a,{display:"inline-block"},function(){if(b)return bH(a,"marginRight")})}}),!p.support.pixelPosition&&p.fn.position&&p.each(["top","left"],function(a,b){p.cssHooks[b]={get:function(a,c){if(c){var d=bH(a,b);return bQ.test(d)?p(a).position()[b]+"px":d}}}})}),p.expr&&p.expr.filters&&(p.expr.filters.hidden=function(a){return a.offsetWidth===0&&a.offsetHeight===0||!p.support.reliableHiddenOffsets&&(a.style&&a.style.display||bH(a,"display"))==="none"},p.expr.filters.visible=function(a){return!p.expr.filters.hidden(a)}),p.each({margin:"",padding:"",border:"Width"},function(a,b){p.cssHooks[a+b]={expand:function(c){var d,e=typeof c=="string"?c.split(" "):[c],f={};for(d=0;d<4;d++)f[a+bV[d]+b]=e[d]||e[d-2]||e[0];return f}},bO.test(a)||(p.cssHooks[a+b].set=b_)});var cd=/%20/g,ce=/\[\]$/,cf=/\r?\n/g,cg=/^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i,ch=/^(?:select|textarea)/i;p.fn.extend({serialize:function(){return p.param(this.serializeArray())},serializeArray:function(){return this.map(function(){return this.elements?p.makeArray(this.elements):this}).filter(function(){return this.name&&!this.disabled&&(this.checked||ch.test(this.nodeName)||cg.test(this.type))}).map(function(a,b){var c=p(this).val();return c==null?null:p.isArray(c)?p.map(c,function(a,c){return{name:b.name,value:a.replace(cf,"\r\n")}}):{name:b.name,value:c.replace(cf,"\r\n")}}).get()}}),p.param=function(a,c){var d,e=[],f=function(a,b){b=p.isFunction(b)?b():b==null?"":b,e[e.length]=encodeURIComponent(a)+"="+encodeURIComponent(b)};c===b&&(c=p.ajaxSettings&&p.ajaxSettings.traditional);if(p.isArray(a)||a.jquery&&!p.isPlainObject(a))p.each(a,function(){f(this.name,this.value)});else for(d in a)ci(d,a[d],c,f);return e.join("&").replace(cd,"+")};var cj,ck,cl=/#.*$/,cm=/^(.*?):[ \t]*([^\r\n]*)\r?$/mg,cn=/^(?:about|app|app\-storage|.+\-extension|file|res|widget):$/,co=/^(?:GET|HEAD)$/,cp=/^\/\//,cq=/\?/,cr=/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,cs=/([?&])_=[^&]*/,ct=/^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/,cu=p.fn.load,cv={},cw={},cx=["*/"]+["*"];try{ck=f.href}catch(cy){ck=e.createElement("a"),ck.href="",ck=ck.href}cj=ct.exec(ck.toLowerCase())||[],p.fn.load=function(a,c,d){if(typeof a!="string"&&cu)return cu.apply(this,arguments);if(!this.length)return this;var e,f,g,h=this,i=a.indexOf(" ");return i>=0&&(e=a.slice(i,a.length),a=a.slice(0,i)),p.isFunction(c)?(d=c,c=b):c&&typeof c=="object"&&(f="POST"),p.ajax({url:a,type:f,dataType:"html",data:c,complete:function(a,b){d&&h.each(d,g||[a.responseText,b,a])}}).done(function(a){g=arguments,h.html(e?p("<div>").append(a.replace(cr,"")).find(e):a)}),this},p.each("ajaxStart ajaxStop ajaxComplete ajaxError ajaxSuccess ajaxSend".split(" "),function(a,b){p.fn[b]=function(a){return this.on(b,a)}}),p.each(["get","post"],function(a,c){p[c]=function(a,d,e,f){return p.isFunction(d)&&(f=f||e,e=d,d=b),p.ajax({type:c,url:a,data:d,success:e,dataType:f})}}),p.extend({getScript:function(a,c){return p.get(a,b,c,"script")},getJSON:function(a,b,c){return p.get(a,b,c,"json")},ajaxSetup:function(a,b){return b?cB(a,p.ajaxSettings):(b=a,a=p.ajaxSettings),cB(a,b),a},ajaxSettings:{url:ck,isLocal:cn.test(cj[1]),global:!0,type:"GET",contentType:"application/x-www-form-urlencoded; charset=UTF-8",processData:!0,async:!0,accepts:{xml:"application/xml, text/xml",html:"text/html",text:"text/plain",json:"application/json, text/javascript","*":cx},contents:{xml:/xml/,html:/html/,json:/json/},responseFields:{xml:"responseXML",text:"responseText"},converters:{"* text":a.String,"text html":!0,"text json":p.parseJSON,"text xml":p.parseXML},flatOptions:{context:!0,url:!0}},ajaxPrefilter:cz(cv),ajaxTransport:cz(cw),ajax:function(a,c){function y(a,c,f,i){var k,s,t,u,w,y=c;if(v===2)return;v=2,h&&clearTimeout(h),g=b,e=i||"",x.readyState=a>0?4:0,f&&(u=cC(l,x,f));if(a>=200&&a<300||a===304)l.ifModified&&(w=x.getResponseHeader("Last-Modified"),w&&(p.lastModified[d]=w),w=x.getResponseHeader("Etag"),w&&(p.etag[d]=w)),a===304?(y="notmodified",k=!0):(k=cD(l,u),y=k.state,s=k.data,t=k.error,k=!t);else{t=y;if(!y||a)y="error",a<0&&(a=0)}x.status=a,x.statusText=(c||y)+"",k?o.resolveWith(m,[s,y,x]):o.rejectWith(m,[x,y,t]),x.statusCode(r),r=b,j&&n.trigger("ajax"+(k?"Success":"Error"),[x,l,k?s:t]),q.fireWith(m,[x,y]),j&&(n.trigger("ajaxComplete",[x,l]),--p.active||p.event.trigger("ajaxStop"))}typeof a=="object"&&(c=a,a=b),c=c||{};var d,e,f,g,h,i,j,k,l=p.ajaxSetup({},c),m=l.context||l,n=m!==l&&(m.nodeType||m instanceof p)?p(m):p.event,o=p.Deferred(),q=p.Callbacks("once memory"),r=l.statusCode||{},t={},u={},v=0,w="canceled",x={readyState:0,setRequestHeader:function(a,b){if(!v){var c=a.toLowerCase();a=u[c]=u[c]||a,t[a]=b}return this},getAllResponseHeaders:function(){return v===2?e:null},getResponseHeader:function(a){var c;if(v===2){if(!f){f={};while(c=cm.exec(e))f[c[1].toLowerCase()]=c[2]}c=f[a.toLowerCase()]}return c===b?null:c},overrideMimeType:function(a){return v||(l.mimeType=a),this},abort:function(a){return a=a||w,g&&g.abort(a),y(0,a),this}};o.promise(x),x.success=x.done,x.error=x.fail,x.complete=q.add,x.statusCode=function(a){if(a){var b;if(v<2)for(b in a)r[b]=[r[b],a[b]];else b=a[x.status],x.always(b)}return this},l.url=((a||l.url)+"").replace(cl,"").replace(cp,cj[1]+"//"),l.dataTypes=p.trim(l.dataType||"*").toLowerCase().split(s),l.crossDomain==null&&(i=ct.exec(l.url.toLowerCase())||!1,l.crossDomain=i&&i.join(":")+(i[3]?"":i[1]==="http:"?80:443)!==cj.join(":")+(cj[3]?"":cj[1]==="http:"?80:443)),l.data&&l.processData&&typeof l.data!="string"&&(l.data=p.param(l.data,l.traditional)),cA(cv,l,c,x);if(v===2)return x;j=l.global,l.type=l.type.toUpperCase(),l.hasContent=!co.test(l.type),j&&p.active++===0&&p.event.trigger("ajaxStart");if(!l.hasContent){l.data&&(l.url+=(cq.test(l.url)?"&":"?")+l.data,delete l.data),d=l.url;if(l.cache===!1){var z=p.now(),A=l.url.replace(cs,"$1_="+z);l.url=A+(A===l.url?(cq.test(l.url)?"&":"?")+"_="+z:"")}}(l.data&&l.hasContent&&l.contentType!==!1||c.contentType)&&x.setRequestHeader("Content-Type",l.contentType),l.ifModified&&(d=d||l.url,p.lastModified[d]&&x.setRequestHeader("If-Modified-Since",p.lastModified[d]),p.etag[d]&&x.setRequestHeader("If-None-Match",p.etag[d])),x.setRequestHeader("Accept",l.dataTypes[0]&&l.accepts[l.dataTypes[0]]?l.accepts[l.dataTypes[0]]+(l.dataTypes[0]!=="*"?", "+cx+"; q=0.01":""):l.accepts["*"]);for(k in l.headers)x.setRequestHeader(k,l.headers[k]);if(!l.beforeSend||l.beforeSend.call(m,x,l)!==!1&&v!==2){w="abort";for(k in{success:1,error:1,complete:1})x[k](l[k]);g=cA(cw,l,c,x);if(!g)y(-1,"No Transport");else{x.readyState=1,j&&n.trigger("ajaxSend",[x,l]),l.async&&l.timeout>0&&(h=setTimeout(function(){x.abort("timeout")},l.timeout));try{v=1,g.send(t,y)}catch(B){if(v<2)y(-1,B);else throw B}}return x}return x.abort()},active:0,lastModified:{},etag:{}});var cE=[],cF=/\?/,cG=/(=)\?(?=&|$)|\?\?/,cH=p.now();p.ajaxSetup({jsonp:"callback",jsonpCallback:function(){var a=cE.pop()||p.expando+"_"+cH++;return this[a]=!0,a}}),p.ajaxPrefilter("json jsonp",function(c,d,e){var f,g,h,i=c.data,j=c.url,k=c.jsonp!==!1,l=k&&cG.test(j),m=k&&!l&&typeof i=="string"&&!(c.contentType||"").indexOf("application/x-www-form-urlencoded")&&cG.test(i);if(c.dataTypes[0]==="jsonp"||l||m)return f=c.jsonpCallback=p.isFunction(c.jsonpCallback)?c.jsonpCallback():c.jsonpCallback,g=a[f],l?c.url=j.replace(cG,"$1"+f):m?c.data=i.replace(cG,"$1"+f):k&&(c.url+=(cF.test(j)?"&":"?")+c.jsonp+"="+f),c.converters["script json"]=function(){return h||p.error(f+" was not called"),h[0]},c.dataTypes[0]="json",a[f]=function(){h=arguments},e.always(function(){a[f]=g,c[f]&&(c.jsonpCallback=d.jsonpCallback,cE.push(f)),h&&p.isFunction(g)&&g(h[0]),h=g=b}),"script"}),p.ajaxSetup({accepts:{script:"text/javascript, application/javascript, application/ecmascript, application/x-ecmascript"},contents:{script:/javascript|ecmascript/},converters:{"text script":function(a){return p.globalEval(a),a}}}),p.ajaxPrefilter("script",function(a){a.cache===b&&(a.cache=!1),a.crossDomain&&(a.type="GET",a.global=!1)}),p.ajaxTransport("script",function(a){if(a.crossDomain){var c,d=e.head||e.getElementsByTagName("head")[0]||e.documentElement;return{send:function(f,g){c=e.createElement("script"),c.async="async",a.scriptCharset&&(c.charset=a.scriptCharset),c.src=a.url,c.onload=c.onreadystatechange=function(a,e){if(e||!c.readyState||/loaded|complete/.test(c.readyState))c.onload=c.onreadystatechange=null,d&&c.parentNode&&d.removeChild(c),c=b,e||g(200,"success")},d.insertBefore(c,d.firstChild)},abort:function(){c&&c.onload(0,1)}}}});var cI,cJ=a.ActiveXObject?function(){for(var a in cI)cI[a](0,1)}:!1,cK=0;p.ajaxSettings.xhr=a.ActiveXObject?function(){return!this.isLocal&&cL()||cM()}:cL,function(a){p.extend(p.support,{ajax:!!a,cors:!!a&&"withCredentials"in a})}(p.ajaxSettings.xhr()),p.support.ajax&&p.ajaxTransport(function(c){if(!c.crossDomain||p.support.cors){var d;return{send:function(e,f){var g,h,i=c.xhr();c.username?i.open(c.type,c.url,c.async,c.username,c.password):i.open(c.type,c.url,c.async);if(c.xhrFields)for(h in c.xhrFields)i[h]=c.xhrFields[h];c.mimeType&&i.overrideMimeType&&i.overrideMimeType(c.mimeType),!c.crossDomain&&!e["X-Requested-With"]&&(e["X-Requested-With"]="XMLHttpRequest");try{for(h in e)i.setRequestHeader(h,e[h])}catch(j){}i.send(c.hasContent&&c.data||null),d=function(a,e){var h,j,k,l,m;try{if(d&&(e||i.readyState===4)){d=b,g&&(i.onreadystatechange=p.noop,cJ&&delete cI[g]);if(e)i.readyState!==4&&i.abort();else{h=i.status,k=i.getAllResponseHeaders(),l={},m=i.responseXML,m&&m.documentElement&&(l.xml=m);try{l.text=i.responseText}catch(a){}try{j=i.statusText}catch(n){j=""}!h&&c.isLocal&&!c.crossDomain?h=l.text?200:404:h===1223&&(h=204)}}}catch(o){e||f(-1,o)}l&&f(h,j,l,k)},c.async?i.readyState===4?setTimeout(d,0):(g=++cK,cJ&&(cI||(cI={},p(a).unload(cJ)),cI[g]=d),i.onreadystatechange=d):d()},abort:function(){d&&d(0,1)}}}});var cN,cO,cP=/^(?:toggle|show|hide)$/,cQ=new RegExp("^(?:([-+])=|)("+q+")([a-z%]*)$","i"),cR=/queueHooks$/,cS=[cY],cT={"*":[function(a,b){var c,d,e=this.createTween(a,b),f=cQ.exec(b),g=e.cur(),h=+g||0,i=1,j=20;if(f){c=+f[2],d=f[3]||(p.cssNumber[a]?"":"px");if(d!=="px"&&h){h=p.css(e.elem,a,!0)||c||1;do i=i||".5",h=h/i,p.style(e.elem,a,h+d);while(i!==(i=e.cur()/g)&&i!==1&&--j)}e.unit=d,e.start=h,e.end=f[1]?h+(f[1]+1)*c:c}return e}]};p.Animation=p.extend(cW,{tweener:function(a,b){p.isFunction(a)?(b=a,a=["*"]):a=a.split(" ");var c,d=0,e=a.length;for(;d<e;d++)c=a[d],cT[c]=cT[c]||[],cT[c].unshift(b)},prefilter:function(a,b){b?cS.unshift(a):cS.push(a)}}),p.Tween=cZ,cZ.prototype={constructor:cZ,init:function(a,b,c,d,e,f){this.elem=a,this.prop=c,this.easing=e||"swing",this.options=b,this.start=this.now=this.cur(),this.end=d,this.unit=f||(p.cssNumber[c]?"":"px")},cur:function(){var a=cZ.propHooks[this.prop];return a&&a.get?a.get(this):cZ.propHooks._default.get(this)},run:function(a){var b,c=cZ.propHooks[this.prop];return this.options.duration?this.pos=b=p.easing[this.easing](a,this.options.duration*a,0,1,this.options.duration):this.pos=b=a,this.now=(this.end-this.start)*b+this.start,this.options.step&&this.options.step.call(this.elem,this.now,this),c&&c.set?c.set(this):cZ.propHooks._default.set(this),this}},cZ.prototype.init.prototype=cZ.prototype,cZ.propHooks={_default:{get:function(a){var b;return a.elem[a.prop]==null||!!a.elem.style&&a.elem.style[a.prop]!=null?(b=p.css(a.elem,a.prop,!1,""),!b||b==="auto"?0:b):a.elem[a.prop]},set:function(a){p.fx.step[a.prop]?p.fx.step[a.prop](a):a.elem.style&&(a.elem.style[p.cssProps[a.prop]]!=null||p.cssHooks[a.prop])?p.style(a.elem,a.prop,a.now+a.unit):a.elem[a.prop]=a.now}}},cZ.propHooks.scrollTop=cZ.propHooks.scrollLeft={set:function(a){a.elem.nodeType&&a.elem.parentNode&&(a.elem[a.prop]=a.now)}},p.each(["toggle","show","hide"],function(a,b){var c=p.fn[b];p.fn[b]=function(d,e,f){return d==null||typeof d=="boolean"||!a&&p.isFunction(d)&&p.isFunction(e)?c.apply(this,arguments):this.animate(c$(b,!0),d,e,f)}}),p.fn.extend({fadeTo:function(a,b,c,d){return this.filter(bZ).css("opacity",0).show().end().animate({opacity:b},a,c,d)},animate:function(a,b,c,d){var e=p.isEmptyObject(a),f=p.speed(b,c,d),g=function(){var b=cW(this,p.extend({},a),f);e&&b.stop(!0)};return e||f.queue===!1?this.each(g):this.queue(f.queue,g)},stop:function(a,c,d){var e=function(a){var b=a.stop;delete a.stop,b(d)};return typeof a!="string"&&(d=c,c=a,a=b),c&&a!==!1&&this.queue(a||"fx",[]),this.each(function(){var b=!0,c=a!=null&&a+"queueHooks",f=p.timers,g=p._data(this);if(c)g[c]&&g[c].stop&&e(g[c]);else for(c in g)g[c]&&g[c].stop&&cR.test(c)&&e(g[c]);for(c=f.length;c--;)f[c].elem===this&&(a==null||f[c].queue===a)&&(f[c].anim.stop(d),b=!1,f.splice(c,1));(b||!d)&&p.dequeue(this,a)})}}),p.each({slideDown:c$("show"),slideUp:c$("hide"),slideToggle:c$("toggle"),fadeIn:{opacity:"show"},fadeOut:{opacity:"hide"},fadeToggle:{opacity:"toggle"}},function(a,b){p.fn[a]=function(a,c,d){return this.animate(b,a,c,d)}}),p.speed=function(a,b,c){var d=a&&typeof a=="object"?p.extend({},a):{complete:c||!c&&b||p.isFunction(a)&&a,duration:a,easing:c&&b||b&&!p.isFunction(b)&&b};d.duration=p.fx.off?0:typeof d.duration=="number"?d.duration:d.duration in p.fx.speeds?p.fx.speeds[d.duration]:p.fx.speeds._default;if(d.queue==null||d.queue===!0)d.queue="fx";return d.old=d.complete,d.complete=function(){p.isFunction(d.old)&&d.old.call(this),d.queue&&p.dequeue(this,d.queue)},d},p.easing={linear:function(a){return a},swing:function(a){return.5-Math.cos(a*Math.PI)/2}},p.timers=[],p.fx=cZ.prototype.init,p.fx.tick=function(){var a,b=p.timers,c=0;for(;c<b.length;c++)a=b[c],!a()&&b[c]===a&&b.splice(c--,1);b.length||p.fx.stop()},p.fx.timer=function(a){a()&&p.timers.push(a)&&!cO&&(cO=setInterval(p.fx.tick,p.fx.interval))},p.fx.interval=13,p.fx.stop=function(){clearInterval(cO),cO=null},p.fx.speeds={slow:600,fast:200,_default:400},p.fx.step={},p.expr&&p.expr.filters&&(p.expr.filters.animated=function(a){return p.grep(p.timers,function(b){return a===b.elem}).length});var c_=/^(?:body|html)$/i;p.fn.offset=function(a){if(arguments.length)return a===b?this:this.each(function(b){p.offset.setOffset(this,a,b)});var c,d,e,f,g,h,i,j={top:0,left:0},k=this[0],l=k&&k.ownerDocument;if(!l)return;return(d=l.body)===k?p.offset.bodyOffset(k):(c=l.documentElement,p.contains(c,k)?(typeof k.getBoundingClientRect!="undefined"&&(j=k.getBoundingClientRect()),e=da(l),f=c.clientTop||d.clientTop||0,g=c.clientLeft||d.clientLeft||0,h=e.pageYOffset||c.scrollTop,i=e.pageXOffset||c.scrollLeft,{top:j.top+h-f,left:j.left+i-g}):j)},p.offset={bodyOffset:function(a){var b=a.offsetTop,c=a.offsetLeft;return p.support.doesNotIncludeMarginInBodyOffset&&(b+=parseFloat(p.css(a,"marginTop"))||0,c+=parseFloat(p.css(a,"marginLeft"))||0),{top:b,left:c}},setOffset:function(a,b,c){var d=p.css(a,"position");d==="static"&&(a.style.position="relative");var e=p(a),f=e.offset(),g=p.css(a,"top"),h=p.css(a,"left"),i=(d==="absolute"||d==="fixed")&&p.inArray("auto",[g,h])>-1,j={},k={},l,m;i?(k=e.position(),l=k.top,m=k.left):(l=parseFloat(g)||0,m=parseFloat(h)||0),p.isFunction(b)&&(b=b.call(a,c,f)),b.top!=null&&(j.top=b.top-f.top+l),b.left!=null&&(j.left=b.left-f.left+m),"using"in b?b.using.call(a,j):e.css(j)}},p.fn.extend({position:function(){if(!this[0])return;var a=this[0],b=this.offsetParent(),c=this.offset(),d=c_.test(b[0].nodeName)?{top:0,left:0}:b.offset();return c.top-=parseFloat(p.css(a,"marginTop"))||0,c.left-=parseFloat(p.css(a,"marginLeft"))||0,d.top+=parseFloat(p.css(b[0],"borderTopWidth"))||0,d.left+=parseFloat(p.css(b[0],"borderLeftWidth"))||0,{top:c.top-d.top,left:c.left-d.left}},offsetParent:function(){return this.map(function(){var a=this.offsetParent||e.body;while(a&&!c_.test(a.nodeName)&&p.css(a,"position")==="static")a=a.offsetParent;return a||e.body})}}),p.each({scrollLeft:"pageXOffset",scrollTop:"pageYOffset"},function(a,c){var d=/Y/.test(c);p.fn[a]=function(e){return p.access(this,function(a,e,f){var g=da(a);if(f===b)return g?c in g?g[c]:g.document.documentElement[e]:a[e];g?g.scrollTo(d?p(g).scrollLeft():f,d?f:p(g).scrollTop()):a[e]=f},a,e,arguments.length,null)}}),p.each({Height:"height",Width:"width"},function(a,c){p.each({padding:"inner"+a,content:c,"":"outer"+a},function(d,e){p.fn[e]=function(e,f){var g=arguments.length&&(d||typeof e!="boolean"),h=d||(e===!0||f===!0?"margin":"border");return p.access(this,function(c,d,e){var f;return p.isWindow(c)?c.document.documentElement["client"+a]:c.nodeType===9?(f=c.documentElement,Math.max(c.body["scroll"+a],f["scroll"+a],c.body["offset"+a],f["offset"+a],f["client"+a])):e===b?p.css(c,d,e,h):p.style(c,d,e,h)},c,g?e:b,g,null)}})}),a.jQuery=a.$=p,typeof define=="function"&&define.amd&&define.amd.jQuery&&define("jquery",[],function(){return p})})(window);
 /*
  * JavaScript Templates 2.1.0
  * https://github.com/blueimp/JavaScript-Templates
@@ -5762,4546 +5756,4546 @@ the specific language governing permissions and limitations under the Apache Lic
 
 // top wrapper to prevent multiple inclusion (is this OK?)
 (function () { if(jQuery && jQuery.jstree) { return; }
-	var is_ie6 = false, is_ie7 = false, is_ff2 = false;
+    var is_ie6 = false, is_ie7 = false, is_ff2 = false;
 
-/* 
- * jsTree core
- */
-(function ($) {
-	// Common functions not related to jsTree 
-	// decided to move them to a `vakata` "namespace"
-	$.vakata = {};
-	// CSS related functions
-	$.vakata.css = {
-		get_css : function(rule_name, delete_flag, sheet) {
-			rule_name = rule_name.toLowerCase();
-			var css_rules = sheet.cssRules || sheet.rules,
-				j = 0;
-			do {
-				if(css_rules.length && j > css_rules.length + 5) { return false; }
-				if(css_rules[j].selectorText && css_rules[j].selectorText.toLowerCase() == rule_name) {
-					if(delete_flag === true) {
-						if(sheet.removeRule) { sheet.removeRule(j); }
-						if(sheet.deleteRule) { sheet.deleteRule(j); }
-						return true;
-					}
-					else { return css_rules[j]; }
-				}
-			}
-			while (css_rules[++j]);
-			return false;
-		},
-		add_css : function(rule_name, sheet) {
-			if($.jstree.css.get_css(rule_name, false, sheet)) { return false; }
-			if(sheet.insertRule) { sheet.insertRule(rule_name + ' { }', 0); } else { sheet.addRule(rule_name, null, 0); }
-			return $.vakata.css.get_css(rule_name);
-		},
-		remove_css : function(rule_name, sheet) { 
-			return $.vakata.css.get_css(rule_name, true, sheet); 
-		},
-		add_sheet : function(opts) {
-			var tmp = false, is_new = true;
-			if(opts.str) {
-				if(opts.title) { tmp = $("style[id='" + opts.title + "-stylesheet']")[0]; }
-				if(tmp) { is_new = false; }
-				else {
-					tmp = document.createElement("style");
-					tmp.setAttribute('type',"text/css");
-					if(opts.title) { tmp.setAttribute("id", opts.title + "-stylesheet"); }
-				}
-				if(tmp.styleSheet) {
-					if(is_new) { 
-						document.getElementsByTagName("head")[0].appendChild(tmp); 
-						tmp.styleSheet.cssText = opts.str; 
-					}
-					else {
-						tmp.styleSheet.cssText = tmp.styleSheet.cssText + " " + opts.str; 
-					}
-				}
-				else {
-					tmp.appendChild(document.createTextNode(opts.str));
-					document.getElementsByTagName("head")[0].appendChild(tmp);
-				}
-				return tmp.sheet || tmp.styleSheet;
-			}
-			if(opts.url) {
-				if(document.createStyleSheet) {
-					try { tmp = document.createStyleSheet(opts.url); } catch (e) { }
-				}
-				else {
-					tmp			= document.createElement('link');
-					tmp.rel		= 'stylesheet';
-					tmp.type	= 'text/css';
-					tmp.media	= "all";
-					tmp.href	= opts.url;
-					document.getElementsByTagName("head")[0].appendChild(tmp);
-					return tmp.styleSheet;
-				}
-			}
-		}
-	};
+    /* 
+     * jsTree core
+     */
+    (function ($) {
+        // Common functions not related to jsTree 
+        // decided to move them to a `vakata` "namespace"
+        $.vakata = {};
+        // CSS related functions
+        $.vakata.css = {
+            get_css : function(rule_name, delete_flag, sheet) {
+                rule_name = rule_name.toLowerCase();
+                var css_rules = sheet.cssRules || sheet.rules,
+                    j = 0;
+                do {
+                    if(css_rules.length && j > css_rules.length + 5) { return false; }
+                    if(css_rules[j].selectorText && css_rules[j].selectorText.toLowerCase() == rule_name) {
+                        if(delete_flag === true) {
+                            if(sheet.removeRule) { sheet.removeRule(j); }
+                            if(sheet.deleteRule) { sheet.deleteRule(j); }
+                            return true;
+                        }
+                        else { return css_rules[j]; }
+                    }
+                }
+                while (css_rules[++j]);
+                return false;
+            },
+            add_css : function(rule_name, sheet) {
+                if($.jstree.css.get_css(rule_name, false, sheet)) { return false; }
+                if(sheet.insertRule) { sheet.insertRule(rule_name + ' { }', 0); } else { sheet.addRule(rule_name, null, 0); }
+                return $.vakata.css.get_css(rule_name);
+            },
+            remove_css : function(rule_name, sheet) {
+                return $.vakata.css.get_css(rule_name, true, sheet);
+            },
+            add_sheet : function(opts) {
+                var tmp = false, is_new = true;
+                if(opts.str) {
+                    if(opts.title) { tmp = $("style[id='" + opts.title + "-stylesheet']")[0]; }
+                    if(tmp) { is_new = false; }
+                    else {
+                        tmp = document.createElement("style");
+                        tmp.setAttribute('type',"text/css");
+                        if(opts.title) { tmp.setAttribute("id", opts.title + "-stylesheet"); }
+                    }
+                    if(tmp.styleSheet) {
+                        if(is_new) {
+                            document.getElementsByTagName("head")[0].appendChild(tmp);
+                            tmp.styleSheet.cssText = opts.str;
+                        }
+                        else {
+                            tmp.styleSheet.cssText = tmp.styleSheet.cssText + " " + opts.str;
+                        }
+                    }
+                    else {
+                        tmp.appendChild(document.createTextNode(opts.str));
+                        document.getElementsByTagName("head")[0].appendChild(tmp);
+                    }
+                    return tmp.sheet || tmp.styleSheet;
+                }
+                if(opts.url) {
+                    if(document.createStyleSheet) {
+                        try { tmp = document.createStyleSheet(opts.url); } catch (e) { }
+                    }
+                    else {
+                        tmp			= document.createElement('link');
+                        tmp.rel		= 'stylesheet';
+                        tmp.type	= 'text/css';
+                        tmp.media	= "all";
+                        tmp.href	= opts.url;
+                        document.getElementsByTagName("head")[0].appendChild(tmp);
+                        return tmp.styleSheet;
+                    }
+                }
+            }
+        };
 
-	// private variables 
-	var instances = [],			// instance array (used by $.jstree.reference/create/focused)
-		focused_instance = -1,	// the index in the instance array of the currently focused instance
-		plugins = {},			// list of included plugins
-		prepared_move = {};		// for the move_node function
+        // private variables 
+        var instances = [],			// instance array (used by $.jstree.reference/create/focused)
+            focused_instance = -1,	// the index in the instance array of the currently focused instance
+            plugins = {},			// list of included plugins
+            prepared_move = {};		// for the move_node function
 
-	// jQuery plugin wrapper (thanks to jquery UI widget function)
-	$.fn.jstree = function (settings) {
-		var isMethodCall = (typeof settings == 'string'), // is this a method call like $().jstree("open_node")
-			args = Array.prototype.slice.call(arguments, 1), 
-			returnValue = this;
+        // jQuery plugin wrapper (thanks to jquery UI widget function)
+        $.fn.jstree = function (settings) {
+            var isMethodCall = (typeof settings == 'string'), // is this a method call like $().jstree("open_node")
+                args = Array.prototype.slice.call(arguments, 1),
+                returnValue = this;
 
-		// if a method call execute the method on all selected instances
-		if(isMethodCall) {
-			if(settings.substring(0, 1) == '_') { return returnValue; }
-			this.each(function() {
-				var instance = instances[$.data(this, "jstree_instance_id")],
-					methodValue = (instance && $.isFunction(instance[settings])) ? instance[settings].apply(instance, args) : instance;
-					if(typeof methodValue !== "undefined" && (settings.indexOf("is_") === 0 || (methodValue !== true && methodValue !== false))) { returnValue = methodValue; return false; }
-			});
-		}
-		else {
-			this.each(function() {
-				// extend settings and allow for multiple hashes and $.data
-				var instance_id = $.data(this, "jstree_instance_id"),
-					a = [],
-					b = settings ? $.extend({}, true, settings) : {},
-					c = $(this), 
-					s = false, 
-					t = [];
-				a = a.concat(args);
-				if(c.data("jstree")) { a.push(c.data("jstree")); }
-				b = a.length ? $.extend.apply(null, [true, b].concat(a)) : b;
+            // if a method call execute the method on all selected instances
+            if(isMethodCall) {
+                if(settings.substring(0, 1) == '_') { return returnValue; }
+                this.each(function() {
+                    var instance = instances[$.data(this, "jstree_instance_id")],
+                        methodValue = (instance && $.isFunction(instance[settings])) ? instance[settings].apply(instance, args) : instance;
+                    if(typeof methodValue !== "undefined" && (settings.indexOf("is_") === 0 || (methodValue !== true && methodValue !== false))) { returnValue = methodValue; return false; }
+                });
+            }
+            else {
+                this.each(function() {
+                    // extend settings and allow for multiple hashes and $.data
+                    var instance_id = $.data(this, "jstree_instance_id"),
+                        a = [],
+                        b = settings ? $.extend({}, true, settings) : {},
+                        c = $(this),
+                        s = false,
+                        t = [];
+                    a = a.concat(args);
+                    if(c.data("jstree")) { a.push(c.data("jstree")); }
+                    b = a.length ? $.extend.apply(null, [true, b].concat(a)) : b;
 
-				// if an instance already exists, destroy it first
-				if(typeof instance_id !== "undefined" && instances[instance_id]) { instances[instance_id].destroy(); }
-				// push a new empty object to the instances array
-				instance_id = parseInt(instances.push({}),10) - 1;
-				// store the jstree instance id to the container element
-				$.data(this, "jstree_instance_id", instance_id);
-				// clean up all plugins
-				b.plugins = $.isArray(b.plugins) ? b.plugins : $.jstree.defaults.plugins.slice();
-				b.plugins.unshift("core");
-				// only unique plugins
-				b.plugins = b.plugins.sort().join(",,").replace(/(,|^)([^,]+)(,,\2)+(,|$)/g,"$1$2$4").replace(/,,+/g,",").replace(/,$/,"").split(",");
+                    // if an instance already exists, destroy it first
+                    if(typeof instance_id !== "undefined" && instances[instance_id]) { instances[instance_id].destroy(); }
+                    // push a new empty object to the instances array
+                    instance_id = parseInt(instances.push({}),10) - 1;
+                    // store the jstree instance id to the container element
+                    $.data(this, "jstree_instance_id", instance_id);
+                    // clean up all plugins
+                    b.plugins = $.isArray(b.plugins) ? b.plugins : $.jstree.defaults.plugins.slice();
+                    b.plugins.unshift("core");
+                    // only unique plugins
+                    b.plugins = b.plugins.sort().join(",,").replace(/(,|^)([^,]+)(,,\2)+(,|$)/g,"$1$2$4").replace(/,,+/g,",").replace(/,$/,"").split(",");
 
-				// extend defaults with passed data
-				s = $.extend(true, {}, $.jstree.defaults, b);
-				s.plugins = b.plugins;
-				$.each(plugins, function (i, val) { 
-					if($.inArray(i, s.plugins) === -1) { s[i] = null; delete s[i]; } 
-					else { t.push(i); }
-				});
-				s.plugins = t;
+                    // extend defaults with passed data
+                    s = $.extend(true, {}, $.jstree.defaults, b);
+                    s.plugins = b.plugins;
+                    $.each(plugins, function (i, val) {
+                        if($.inArray(i, s.plugins) === -1) { s[i] = null; delete s[i]; }
+                        else { t.push(i); }
+                    });
+                    s.plugins = t;
 
-				// push the new object to the instances array (at the same time set the default classes to the container) and init
-				instances[instance_id] = new $.jstree._instance(instance_id, $(this).addClass("jstree jstree-" + instance_id), s); 
-				// init all activated plugins for this instance
-				$.each(instances[instance_id]._get_settings().plugins, function (i, val) { instances[instance_id].data[val] = {}; });
-				$.each(instances[instance_id]._get_settings().plugins, function (i, val) { if(plugins[val]) { plugins[val].__init.apply(instances[instance_id]); } });
-				// initialize the instance
-				setTimeout(function() { if(instances[instance_id]) { instances[instance_id].init(); } }, 0);
-			});
-		}
-		// return the jquery selection (or if it was a method call that returned a value - the returned value)
-		return returnValue;
-	};
-	// object to store exposed functions and objects
-	$.jstree = {
-		defaults : {
-			plugins : []
-		},
-		_focused : function () { return instances[focused_instance] || null; },
-		_reference : function (needle) { 
-			// get by instance id
-			if(instances[needle]) { return instances[needle]; }
-			// get by DOM (if still no luck - return null
-			var o = $(needle); 
-			if(!o.length && typeof needle === "string") { o = $("#" + needle); }
-			if(!o.length) { return null; }
-			return instances[o.closest(".jstree").data("jstree_instance_id")] || null; 
-		},
-		_instance : function (index, container, settings) { 
-			// for plugins to store data in
-			this.data = { core : {} };
-			this.get_settings	= function () { return $.extend(true, {}, settings); };
-			this._get_settings	= function () { return settings; };
-			this.get_index		= function () { return index; };
-			this.get_container	= function () { return container; };
-			this.get_container_ul = function () { return container.children("ul:eq(0)"); };
-			this._set_settings	= function (s) { 
-				settings = $.extend(true, {}, settings, s);
-			};
-		},
-		_fn : { },
-		plugin : function (pname, pdata) {
-			pdata = $.extend({}, {
-				__init		: $.noop, 
-				__destroy	: $.noop,
-				_fn			: {},
-				defaults	: false
-			}, pdata);
-			plugins[pname] = pdata;
+                    // push the new object to the instances array (at the same time set the default classes to the container) and init
+                    instances[instance_id] = new $.jstree._instance(instance_id, $(this).addClass("jstree jstree-" + instance_id), s);
+                    // init all activated plugins for this instance
+                    $.each(instances[instance_id]._get_settings().plugins, function (i, val) { instances[instance_id].data[val] = {}; });
+                    $.each(instances[instance_id]._get_settings().plugins, function (i, val) { if(plugins[val]) { plugins[val].__init.apply(instances[instance_id]); } });
+                    // initialize the instance
+                    setTimeout(function() { if(instances[instance_id]) { instances[instance_id].init(); } }, 0);
+                });
+            }
+            // return the jquery selection (or if it was a method call that returned a value - the returned value)
+            return returnValue;
+        };
+        // object to store exposed functions and objects
+        $.jstree = {
+            defaults : {
+                plugins : []
+            },
+            _focused : function () { return instances[focused_instance] || null; },
+            _reference : function (needle) {
+                // get by instance id
+                if(instances[needle]) { return instances[needle]; }
+                // get by DOM (if still no luck - return null
+                var o = $(needle);
+                if(!o.length && typeof needle === "string") { o = $("#" + needle); }
+                if(!o.length) { return null; }
+                return instances[o.closest(".jstree").data("jstree_instance_id")] || null;
+            },
+            _instance : function (index, container, settings) {
+                // for plugins to store data in
+                this.data = { core : {} };
+                this.get_settings	= function () { return $.extend(true, {}, settings); };
+                this._get_settings	= function () { return settings; };
+                this.get_index		= function () { return index; };
+                this.get_container	= function () { return container; };
+                this.get_container_ul = function () { return container.children("ul:eq(0)"); };
+                this._set_settings	= function (s) {
+                    settings = $.extend(true, {}, settings, s);
+                };
+            },
+            _fn : { },
+            plugin : function (pname, pdata) {
+                pdata = $.extend({}, {
+                    __init		: $.noop,
+                    __destroy	: $.noop,
+                    _fn			: {},
+                    defaults	: false
+                }, pdata);
+                plugins[pname] = pdata;
 
-			$.jstree.defaults[pname] = pdata.defaults;
-			$.each(pdata._fn, function (i, val) {
-				val.plugin		= pname;
-				val.old			= $.jstree._fn[i];
-				$.jstree._fn[i] = function () {
-					var rslt,
-						func = val,
-						args = Array.prototype.slice.call(arguments),
-						evnt = new $.Event("before.jstree"),
-						rlbk = false;
+                $.jstree.defaults[pname] = pdata.defaults;
+                $.each(pdata._fn, function (i, val) {
+                    val.plugin		= pname;
+                    val.old			= $.jstree._fn[i];
+                    $.jstree._fn[i] = function () {
+                        var rslt,
+                            func = val,
+                            args = Array.prototype.slice.call(arguments),
+                            evnt = new $.Event("before.jstree"),
+                            rlbk = false;
 
-					if(this.data.core.locked === true && i !== "unlock" && i !== "is_locked") { return; }
+                        if(this.data.core.locked === true && i !== "unlock" && i !== "is_locked") { return; }
 
-					// Check if function belongs to the included plugins of this instance
-					do {
-						if(func && func.plugin && $.inArray(func.plugin, this._get_settings().plugins) !== -1) { break; }
-						func = func.old;
-					} while(func);
-					if(!func) { return; }
+                        // Check if function belongs to the included plugins of this instance
+                        do {
+                            if(func && func.plugin && $.inArray(func.plugin, this._get_settings().plugins) !== -1) { break; }
+                            func = func.old;
+                        } while(func);
+                        if(!func) { return; }
 
-					// context and function to trigger events, then finally call the function
-					if(i.indexOf("_") === 0) {
-						rslt = func.apply(this, args);
-					}
-					else {
-						rslt = this.get_container().triggerHandler(evnt, { "func" : i, "inst" : this, "args" : args, "plugin" : func.plugin });
-						if(rslt === false) { return; }
-						if(typeof rslt !== "undefined") { args = rslt; }
+                        // context and function to trigger events, then finally call the function
+                        if(i.indexOf("_") === 0) {
+                            rslt = func.apply(this, args);
+                        }
+                        else {
+                            rslt = this.get_container().triggerHandler(evnt, { "func" : i, "inst" : this, "args" : args, "plugin" : func.plugin });
+                            if(rslt === false) { return; }
+                            if(typeof rslt !== "undefined") { args = rslt; }
 
-						rslt = func.apply(
-							$.extend({}, this, { 
-								__callback : function (data) { 
-									this.get_container().triggerHandler( i + '.jstree', { "inst" : this, "args" : args, "rslt" : data, "rlbk" : rlbk });
-								},
-								__rollback : function () { 
-									rlbk = this.get_rollback();
-									return rlbk;
-								},
-								__call_old : function (replace_arguments) {
-									return func.old.apply(this, (replace_arguments ? Array.prototype.slice.call(arguments, 1) : args ) );
-								}
-							}), args);
-					}
+                            rslt = func.apply(
+                                $.extend({}, this, {
+                                    __callback : function (data) {
+                                        this.get_container().triggerHandler( i + '.jstree', { "inst" : this, "args" : args, "rslt" : data, "rlbk" : rlbk });
+                                    },
+                                    __rollback : function () {
+                                        rlbk = this.get_rollback();
+                                        return rlbk;
+                                    },
+                                    __call_old : function (replace_arguments) {
+                                        return func.old.apply(this, (replace_arguments ? Array.prototype.slice.call(arguments, 1) : args ) );
+                                    }
+                                }), args);
+                        }
 
-					// return the result
-					return rslt;
-				};
-				$.jstree._fn[i].old = val.old;
-				$.jstree._fn[i].plugin = pname;
-			});
-		},
-		rollback : function (rb) {
-			if(rb) {
-				if(!$.isArray(rb)) { rb = [ rb ]; }
-				$.each(rb, function (i, val) {
-					instances[val.i].set_rollback(val.h, val.d);
-				});
-			}
-		}
-	};
-	// set the prototype for all instances
-	$.jstree._fn = $.jstree._instance.prototype = {};
+                        // return the result
+                        return rslt;
+                    };
+                    $.jstree._fn[i].old = val.old;
+                    $.jstree._fn[i].plugin = pname;
+                });
+            },
+            rollback : function (rb) {
+                if(rb) {
+                    if(!$.isArray(rb)) { rb = [ rb ]; }
+                    $.each(rb, function (i, val) {
+                        instances[val.i].set_rollback(val.h, val.d);
+                    });
+                }
+            }
+        };
+        // set the prototype for all instances
+        $.jstree._fn = $.jstree._instance.prototype = {};
 
-	// load the css when DOM is ready
-	$(function() {
-		// code is copied from jQuery ($.browser is deprecated + there is a bug in IE)
-		var u = navigator.userAgent.toLowerCase(),
-			v = (u.match( /.+?(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1],
-			css_string = '' + 
-				'.jstree ul, .jstree li { display:block; margin:0 0 0 0; padding:0 0 0 0; list-style-type:none; } ' + 
-				'.jstree li { display:block; min-height:18px; line-height:18px; white-space:nowrap; margin-left:18px; min-width:18px; } ' + 
-				'.jstree-rtl li { margin-left:0; margin-right:18px; } ' + 
-				'.jstree > ul > li { margin-left:0px; } ' + 
-				'.jstree-rtl > ul > li { margin-right:0px; } ' + 
-				'.jstree ins { display:inline-block; text-decoration:none; width:18px; height:18px; margin:0 0 0 0; padding:0; } ' + 
-				'.jstree a { display:inline-block; line-height:16px; height:16px; color:black; white-space:nowrap; text-decoration:none; padding:1px 2px; margin:0; } ' + 
-				'.jstree a:focus { outline: none; } ' + 
-				'.jstree a > ins { height:16px; width:16px; } ' + 
-				'.jstree a > .jstree-icon { margin-right:3px; } ' + 
-				'.jstree-rtl a > .jstree-icon { margin-left:3px; margin-right:0; } ' + 
-				'li.jstree-open > ul { display:block; } ' + 
-				'li.jstree-closed > ul { display:none; } ';
-		// Correct IE 6 (does not support the > CSS selector)
-		if(/msie/.test(u) && parseInt(v, 10) == 6) { 
-			is_ie6 = true;
+        // load the css when DOM is ready
+        $(function() {
+            // code is copied from jQuery ($.browser is deprecated + there is a bug in IE)
+            var u = navigator.userAgent.toLowerCase(),
+                v = (u.match( /.+?(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1],
+                css_string = '' +
+                    '.jstree ul, .jstree li { display:block; margin:0 0 0 0; padding:0 0 0 0; list-style-type:none; } ' +
+                    '.jstree li { display:block; min-height:18px; line-height:18px; white-space:nowrap; margin-left:18px; min-width:18px; } ' +
+                    '.jstree-rtl li { margin-left:0; margin-right:18px; } ' +
+                    '.jstree > ul > li { margin-left:0px; } ' +
+                    '.jstree-rtl > ul > li { margin-right:0px; } ' +
+                    '.jstree ins { display:inline-block; text-decoration:none; width:18px; height:18px; margin:0 0 0 0; padding:0; } ' +
+                    '.jstree a { display:inline-block; line-height:16px; height:16px; color:black; white-space:nowrap; text-decoration:none; padding:1px 2px; margin:0; } ' +
+                    '.jstree a:focus { outline: none; } ' +
+                    '.jstree a > ins { height:16px; width:16px; } ' +
+                    '.jstree a > .jstree-icon { margin-right:3px; } ' +
+                    '.jstree-rtl a > .jstree-icon { margin-left:3px; margin-right:0; } ' +
+                    'li.jstree-open > ul { display:block; } ' +
+                    'li.jstree-closed > ul { display:none; } ';
+            // Correct IE 6 (does not support the > CSS selector)
+            if(/msie/.test(u) && parseInt(v, 10) == 6) {
+                is_ie6 = true;
 
-			// fix image flicker and lack of caching
-			try {
-				document.execCommand("BackgroundImageCache", false, true);
-			} catch (err) { }
+                // fix image flicker and lack of caching
+                try {
+                    document.execCommand("BackgroundImageCache", false, true);
+                } catch (err) { }
 
-			css_string += '' + 
-				'.jstree li { height:18px; margin-left:0; margin-right:0; } ' + 
-				'.jstree li li { margin-left:18px; } ' + 
-				'.jstree-rtl li li { margin-left:0px; margin-right:18px; } ' + 
-				'li.jstree-open ul { display:block; } ' + 
-				'li.jstree-closed ul { display:none !important; } ' + 
-				'.jstree li a { display:inline; border-width:0 !important; padding:0px 2px !important; } ' + 
-				'.jstree li a ins { height:16px; width:16px; margin-right:3px; } ' + 
-				'.jstree-rtl li a ins { margin-right:0px; margin-left:3px; } ';
-		}
-		// Correct IE 7 (shifts anchor nodes onhover)
-		if(/msie/.test(u) && parseInt(v, 10) == 7) { 
-			is_ie7 = true;
-			css_string += '.jstree li a { border-width:0 !important; padding:0px 2px !important; } ';
-		}
-		// correct ff2 lack of display:inline-block
-		if(!/compatible/.test(u) && /mozilla/.test(u) && parseFloat(v, 10) < 1.9) {
-			is_ff2 = true;
-			css_string += '' + 
-				'.jstree ins { display:-moz-inline-box; } ' + 
-				'.jstree li { line-height:12px; } ' + // WHY??
-				'.jstree a { display:-moz-inline-box; } ' + 
-				'.jstree .jstree-no-icons .jstree-checkbox { display:-moz-inline-stack !important; } ';
-				/* this shouldn't be here as it is theme specific */
-		}
-		// the default stylesheet
-		$.vakata.css.add_sheet({ str : css_string, title : "jstree" });
-	});
+                css_string += '' +
+                    '.jstree li { height:18px; margin-left:0; margin-right:0; } ' +
+                    '.jstree li li { margin-left:18px; } ' +
+                    '.jstree-rtl li li { margin-left:0px; margin-right:18px; } ' +
+                    'li.jstree-open ul { display:block; } ' +
+                    'li.jstree-closed ul { display:none !important; } ' +
+                    '.jstree li a { display:inline; border-width:0 !important; padding:0px 2px !important; } ' +
+                    '.jstree li a ins { height:16px; width:16px; margin-right:3px; } ' +
+                    '.jstree-rtl li a ins { margin-right:0px; margin-left:3px; } ';
+            }
+            // Correct IE 7 (shifts anchor nodes onhover)
+            if(/msie/.test(u) && parseInt(v, 10) == 7) {
+                is_ie7 = true;
+                css_string += '.jstree li a { border-width:0 !important; padding:0px 2px !important; } ';
+            }
+            // correct ff2 lack of display:inline-block
+            if(!/compatible/.test(u) && /mozilla/.test(u) && parseFloat(v, 10) < 1.9) {
+                is_ff2 = true;
+                css_string += '' +
+                    '.jstree ins { display:-moz-inline-box; } ' +
+                    '.jstree li { line-height:12px; } ' + // WHY??
+                    '.jstree a { display:-moz-inline-box; } ' +
+                    '.jstree .jstree-no-icons .jstree-checkbox { display:-moz-inline-stack !important; } ';
+                /* this shouldn't be here as it is theme specific */
+            }
+            // the default stylesheet
+            $.vakata.css.add_sheet({ str : css_string, title : "jstree" });
+        });
 
-	// core functions (open, close, create, update, delete)
-	$.jstree.plugin("core", {
-		__init : function () {
-			this.data.core.locked = false;
-			this.data.core.to_open = this.get_settings().core.initially_open;
-			this.data.core.to_load = this.get_settings().core.initially_load;
-		},
-		defaults : { 
-			html_titles	: false,
-			animation	: 500,
-			initially_open : [],
-			initially_load : [],
-			open_parents : true,
-			notify_plugins : true,
-			rtl			: false,
-			load_open	: false,
-			strings		: {
-				loading		: "Loading ...",
-				new_node	: "New node",
-				multiple_selection : "Multiple selection"
-			}
-		},
-		_fn : { 
-			init	: function () { 
-				this.set_focus(); 
-				if(this._get_settings().core.rtl) {
-					this.get_container().addClass("jstree-rtl").css("direction", "rtl");
-				}
-				this.get_container().html("<ul><li class='jstree-last jstree-leaf'><ins>&#160;</ins><a class='jstree-loading' href='#'><ins class='jstree-icon'>&#160;</ins>" + this._get_string("loading") + "</a></li></ul>");
-				this.data.core.li_height = this.get_container_ul().find("li.jstree-closed, li.jstree-leaf").eq(0).height() || 18;
+        // core functions (open, close, create, update, delete)
+        $.jstree.plugin("core", {
+            __init : function () {
+                this.data.core.locked = false;
+                this.data.core.to_open = this.get_settings().core.initially_open;
+                this.data.core.to_load = this.get_settings().core.initially_load;
+            },
+            defaults : {
+                html_titles	: false,
+                animation	: 500,
+                initially_open : [],
+                initially_load : [],
+                open_parents : true,
+                notify_plugins : true,
+                rtl			: false,
+                load_open	: false,
+                strings		: {
+                    loading		: "Loading ...",
+                    new_node	: "New node",
+                    multiple_selection : "Multiple selection"
+                }
+            },
+            _fn : {
+                init	: function () {
+                    this.set_focus();
+                    if(this._get_settings().core.rtl) {
+                        this.get_container().addClass("jstree-rtl").css("direction", "rtl");
+                    }
+                    this.get_container().html("<ul><li class='jstree-last jstree-leaf'><ins>&#160;</ins><a class='jstree-loading' href='#'><ins class='jstree-icon'>&#160;</ins>" + this._get_string("loading") + "</a></li></ul>");
+                    this.data.core.li_height = this.get_container_ul().find("li.jstree-closed, li.jstree-leaf").eq(0).height() || 18;
 
-				this.get_container()
-					.delegate("li > ins", "click.jstree", $.proxy(function (event) {
-							var trgt = $(event.target);
-							// if(trgt.is("ins") && event.pageY - trgt.offset().top < this.data.core.li_height) { this.toggle_node(trgt); }
-							this.toggle_node(trgt);
-						}, this))
-					.bind("mousedown.jstree", $.proxy(function () { 
-							this.set_focus(); // This used to be setTimeout(set_focus,0) - why?
-						}, this))
-					.bind("dblclick.jstree", function (event) { 
-						var sel;
-						if(document.selection && document.selection.empty) { document.selection.empty(); }
-						else {
-							if(window.getSelection) {
-								sel = window.getSelection();
-								try { 
-									sel.removeAllRanges();
-									sel.collapse();
-								} catch (err) { }
-							}
-						}
-					});
-				if(this._get_settings().core.notify_plugins) {
-					this.get_container()
-						.bind("load_node.jstree", $.proxy(function (e, data) { 
-								var o = this._get_node(data.rslt.obj),
-									t = this;
-								if(o === -1) { o = this.get_container_ul(); }
-								if(!o.length) { return; }
-								o.find("li").each(function () {
-									var th = $(this);
-									if(th.data("jstree")) {
-										$.each(th.data("jstree"), function (plugin, values) {
-											if(t.data[plugin] && $.isFunction(t["_" + plugin + "_notify"])) {
-												t["_" + plugin + "_notify"].call(t, th, values);
-											}
-										});
-									}
-								});
-							}, this));
-				}
-				if(this._get_settings().core.load_open) {
-					this.get_container()
-						.bind("load_node.jstree", $.proxy(function (e, data) { 
-								var o = this._get_node(data.rslt.obj),
-									t = this;
-								if(o === -1) { o = this.get_container_ul(); }
-								if(!o.length) { return; }
-								o.find("li.jstree-open:not(:has(ul))").each(function () {
-									t.load_node(this, $.noop, $.noop);
-								});
-							}, this));
-				}
-				this.__callback();
-				this.load_node(-1, function () { this.loaded(); this.reload_nodes(); });
-			},
-			destroy	: function () { 
-				var i,
-					n = this.get_index(),
-					s = this._get_settings(),
-					_this = this;
+                    this.get_container()
+                        .delegate("li > ins", "click.jstree", $.proxy(function (event) {
+                            var trgt = $(event.target);
+                            // if(trgt.is("ins") && event.pageY - trgt.offset().top < this.data.core.li_height) { this.toggle_node(trgt); }
+                            this.toggle_node(trgt);
+                        }, this))
+                        .bind("mousedown.jstree", $.proxy(function () {
+                            this.set_focus(); // This used to be setTimeout(set_focus,0) - why?
+                        }, this))
+                        .bind("dblclick.jstree", function (event) {
+                            var sel;
+                            if(document.selection && document.selection.empty) { document.selection.empty(); }
+                            else {
+                                if(window.getSelection) {
+                                    sel = window.getSelection();
+                                    try {
+                                        sel.removeAllRanges();
+                                        sel.collapse();
+                                    } catch (err) { }
+                                }
+                            }
+                        });
+                    if(this._get_settings().core.notify_plugins) {
+                        this.get_container()
+                            .bind("load_node.jstree", $.proxy(function (e, data) {
+                                var o = this._get_node(data.rslt.obj),
+                                    t = this;
+                                if(o === -1) { o = this.get_container_ul(); }
+                                if(!o.length) { return; }
+                                o.find("li").each(function () {
+                                    var th = $(this);
+                                    if(th.data("jstree")) {
+                                        $.each(th.data("jstree"), function (plugin, values) {
+                                            if(t.data[plugin] && $.isFunction(t["_" + plugin + "_notify"])) {
+                                                t["_" + plugin + "_notify"].call(t, th, values);
+                                            }
+                                        });
+                                    }
+                                });
+                            }, this));
+                    }
+                    if(this._get_settings().core.load_open) {
+                        this.get_container()
+                            .bind("load_node.jstree", $.proxy(function (e, data) {
+                                var o = this._get_node(data.rslt.obj),
+                                    t = this;
+                                if(o === -1) { o = this.get_container_ul(); }
+                                if(!o.length) { return; }
+                                o.find("li.jstree-open:not(:has(ul))").each(function () {
+                                    t.load_node(this, $.noop, $.noop);
+                                });
+                            }, this));
+                    }
+                    this.__callback();
+                    this.load_node(-1, function () { this.loaded(); this.reload_nodes(); });
+                },
+                destroy	: function () {
+                    var i,
+                        n = this.get_index(),
+                        s = this._get_settings(),
+                        _this = this;
 
-				$.each(s.plugins, function (i, val) {
-					try { plugins[val].__destroy.apply(_this); } catch(err) { }
-				});
-				this.__callback();
-				// set focus to another instance if this one is focused
-				if(this.is_focused()) { 
-					for(i in instances) { 
-						if(instances.hasOwnProperty(i) && i != n) { 
-							instances[i].set_focus(); 
-							break; 
-						} 
-					}
-				}
-				// if no other instance found
-				if(n === focused_instance) { focused_instance = -1; }
-				// remove all traces of jstree in the DOM (only the ones set using jstree*) and cleans all events
-				this.get_container()
-					.unbind(".jstree")
-					.undelegate(".jstree")
-					.removeData("jstree_instance_id")
-					.find("[class^='jstree']")
-						.addBack()
-						.attr("class", function () { return this.className.replace(/jstree[^ ]*|$/ig,''); });
-				$(document)
-					.unbind(".jstree-" + n)
-					.undelegate(".jstree-" + n);
-				// remove the actual data
-				instances[n] = null;
-				delete instances[n];
-			},
+                    $.each(s.plugins, function (i, val) {
+                        try { plugins[val].__destroy.apply(_this); } catch(err) { }
+                    });
+                    this.__callback();
+                    // set focus to another instance if this one is focused
+                    if(this.is_focused()) {
+                        for(i in instances) {
+                            if(instances.hasOwnProperty(i) && i != n) {
+                                instances[i].set_focus();
+                                break;
+                            }
+                        }
+                    }
+                    // if no other instance found
+                    if(n === focused_instance) { focused_instance = -1; }
+                    // remove all traces of jstree in the DOM (only the ones set using jstree*) and cleans all events
+                    this.get_container()
+                        .unbind(".jstree")
+                        .undelegate(".jstree")
+                        .removeData("jstree_instance_id")
+                        .find("[class^='jstree']")
+                        .addBack()
+                        .attr("class", function () { return this.className.replace(/jstree[^ ]*|$/ig,''); });
+                    $(document)
+                        .unbind(".jstree-" + n)
+                        .undelegate(".jstree-" + n);
+                    // remove the actual data
+                    instances[n] = null;
+                    delete instances[n];
+                },
 
-			_core_notify : function (n, data) {
-				if(data.opened) {
-					this.open_node(n, false, true);
-				}
-			},
+                _core_notify : function (n, data) {
+                    if(data.opened) {
+                        this.open_node(n, false, true);
+                    }
+                },
 
-			lock : function () {
-				this.data.core.locked = true;
-				this.get_container().children("ul").addClass("jstree-locked").css("opacity","0.7");
-				this.__callback({});
-			},
-			unlock : function () {
-				this.data.core.locked = false;
-				this.get_container().children("ul").removeClass("jstree-locked").css("opacity","1");
-				this.__callback({});
-			},
-			is_locked : function () { return this.data.core.locked; },
-			save_opened : function () {
-				var _this = this;
-				this.data.core.to_open = [];
-				this.get_container_ul().find("li.jstree-open").each(function () { 
-					if(this.id) { _this.data.core.to_open.push("#" + this.id.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:")); }
-				});
-				this.__callback(_this.data.core.to_open);
-			},
-			save_loaded : function () { },
-			reload_nodes : function (is_callback) {
-				var _this = this,
-					done = true,
-					current = [],
-					remaining = [];
-				if(!is_callback) { 
-					this.data.core.reopen = false; 
-					this.data.core.refreshing = true; 
-					this.data.core.to_open = $.map($.makeArray(this.data.core.to_open), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
-					this.data.core.to_load = $.map($.makeArray(this.data.core.to_load), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
-					if(this.data.core.to_open.length) {
-						this.data.core.to_load = this.data.core.to_load.concat(this.data.core.to_open);
-					}
-				}
-				if(this.data.core.to_load.length) {
-					$.each(this.data.core.to_load, function (i, val) {
-						if(val == "#") { return true; }
-						if($(val).length) { current.push(val); }
-						else { remaining.push(val); }
-					});
-					if(current.length) {
-						this.data.core.to_load = remaining;
-						$.each(current, function (i, val) { 
-							if(!_this._is_loaded(val)) {
-								_this.load_node(val, function () { _this.reload_nodes(true); }, function () { _this.reload_nodes(true); });
-								done = false;
-							}
-						});
-					}
-				}
-				if(this.data.core.to_open.length) {
-					$.each(this.data.core.to_open, function (i, val) {
-						_this.open_node(val, false, true); 
-					});
-				}
-				if(done) { 
-					// TODO: find a more elegant approach to syncronizing returning requests
-					if(this.data.core.reopen) { clearTimeout(this.data.core.reopen); }
-					this.data.core.reopen = setTimeout(function () { _this.__callback({}, _this); }, 50);
-					this.data.core.refreshing = false;
-					this.reopen();
-				}
-			},
-			reopen : function () {
-				var _this = this;
-				if(this.data.core.to_open.length) {
-					$.each(this.data.core.to_open, function (i, val) {
-						_this.open_node(val, false, true); 
-					});
-				}
-				this.__callback({});
-			},
-			refresh : function (obj) {
-				var _this = this;
-				this.save_opened();
-				if(!obj) { obj = -1; }
-				obj = this._get_node(obj);
-				if(!obj) { obj = -1; }
-				if(obj !== -1) { obj.children("UL").remove(); }
-				else { this.get_container_ul().empty(); }
-				this.load_node(obj, function () { _this.__callback({ "obj" : obj}); _this.reload_nodes(); });
-			},
-			// Dummy function to fire after the first load (so that there is a jstree.loaded event)
-			loaded	: function () { 
-				this.__callback(); 
-			},
-			// deal with focus
-			set_focus	: function () { 
-				if(this.is_focused()) { return; }
-				var f = $.jstree._focused();
-				if(f) { f.unset_focus(); }
+                lock : function () {
+                    this.data.core.locked = true;
+                    this.get_container().children("ul").addClass("jstree-locked").css("opacity","0.7");
+                    this.__callback({});
+                },
+                unlock : function () {
+                    this.data.core.locked = false;
+                    this.get_container().children("ul").removeClass("jstree-locked").css("opacity","1");
+                    this.__callback({});
+                },
+                is_locked : function () { return this.data.core.locked; },
+                save_opened : function () {
+                    var _this = this;
+                    this.data.core.to_open = [];
+                    this.get_container_ul().find("li.jstree-open").each(function () {
+                        if(this.id) { _this.data.core.to_open.push("#" + this.id.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:")); }
+                    });
+                    this.__callback(_this.data.core.to_open);
+                },
+                save_loaded : function () { },
+                reload_nodes : function (is_callback) {
+                    var _this = this,
+                        done = true,
+                        current = [],
+                        remaining = [];
+                    if(!is_callback) {
+                        this.data.core.reopen = false;
+                        this.data.core.refreshing = true;
+                        this.data.core.to_open = $.map($.makeArray(this.data.core.to_open), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
+                        this.data.core.to_load = $.map($.makeArray(this.data.core.to_load), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
+                        if(this.data.core.to_open.length) {
+                            this.data.core.to_load = this.data.core.to_load.concat(this.data.core.to_open);
+                        }
+                    }
+                    if(this.data.core.to_load.length) {
+                        $.each(this.data.core.to_load, function (i, val) {
+                            if(val == "#") { return true; }
+                            if($(val).length) { current.push(val); }
+                            else { remaining.push(val); }
+                        });
+                        if(current.length) {
+                            this.data.core.to_load = remaining;
+                            $.each(current, function (i, val) {
+                                if(!_this._is_loaded(val)) {
+                                    _this.load_node(val, function () { _this.reload_nodes(true); }, function () { _this.reload_nodes(true); });
+                                    done = false;
+                                }
+                            });
+                        }
+                    }
+                    if(this.data.core.to_open.length) {
+                        $.each(this.data.core.to_open, function (i, val) {
+                            _this.open_node(val, false, true);
+                        });
+                    }
+                    if(done) {
+                        // TODO: find a more elegant approach to syncronizing returning requests
+                        if(this.data.core.reopen) { clearTimeout(this.data.core.reopen); }
+                        this.data.core.reopen = setTimeout(function () { _this.__callback({}, _this); }, 50);
+                        this.data.core.refreshing = false;
+                        this.reopen();
+                    }
+                },
+                reopen : function () {
+                    var _this = this;
+                    if(this.data.core.to_open.length) {
+                        $.each(this.data.core.to_open, function (i, val) {
+                            _this.open_node(val, false, true);
+                        });
+                    }
+                    this.__callback({});
+                },
+                refresh : function (obj) {
+                    var _this = this;
+                    this.save_opened();
+                    if(!obj) { obj = -1; }
+                    obj = this._get_node(obj);
+                    if(!obj) { obj = -1; }
+                    if(obj !== -1) { obj.children("UL").remove(); }
+                    else { this.get_container_ul().empty(); }
+                    this.load_node(obj, function () { _this.__callback({ "obj" : obj}); _this.reload_nodes(); });
+                },
+                // Dummy function to fire after the first load (so that there is a jstree.loaded event)
+                loaded	: function () {
+                    this.__callback();
+                },
+                // deal with focus
+                set_focus	: function () {
+                    if(this.is_focused()) { return; }
+                    var f = $.jstree._focused();
+                    if(f) { f.unset_focus(); }
 
-				this.get_container().addClass("jstree-focused"); 
-				focused_instance = this.get_index(); 
-				this.__callback();
-			},
-			is_focused	: function () { 
-				return focused_instance == this.get_index(); 
-			},
-			unset_focus	: function () {
-				if(this.is_focused()) {
-					this.get_container().removeClass("jstree-focused"); 
-					focused_instance = -1; 
-				}
-				this.__callback();
-			},
+                    this.get_container().addClass("jstree-focused");
+                    focused_instance = this.get_index();
+                    this.__callback();
+                },
+                is_focused	: function () {
+                    return focused_instance == this.get_index();
+                },
+                unset_focus	: function () {
+                    if(this.is_focused()) {
+                        this.get_container().removeClass("jstree-focused");
+                        focused_instance = -1;
+                    }
+                    this.__callback();
+                },
 
-			// traverse
-			_get_node		: function (obj) { 
-				var $obj = $(obj, this.get_container()); 
-				if($obj.is(".jstree") || obj == -1) { return -1; } 
-				$obj = $obj.closest("li", this.get_container()); 
-				return $obj.length ? $obj : false; 
-			},
-			_get_next		: function (obj, strict) {
-				obj = this._get_node(obj);
-				if(obj === -1) { return this.get_container().find("> ul > li:first-child"); }
-				if(!obj.length) { return false; }
-				if(strict) { return (obj.nextAll("li").size() > 0) ? obj.nextAll("li:eq(0)") : false; }
+                // traverse
+                _get_node		: function (obj) {
+                    var $obj = $(obj, this.get_container());
+                    if($obj.is(".jstree") || obj == -1) { return -1; }
+                    $obj = $obj.closest("li", this.get_container());
+                    return $obj.length ? $obj : false;
+                },
+                _get_next		: function (obj, strict) {
+                    obj = this._get_node(obj);
+                    if(obj === -1) { return this.get_container().find("> ul > li:first-child"); }
+                    if(!obj.length) { return false; }
+                    if(strict) { return (obj.nextAll("li").size() > 0) ? obj.nextAll("li:eq(0)") : false; }
 
-				if(obj.hasClass("jstree-open")) { return obj.find("li:eq(0)"); }
-				else if(obj.nextAll("li").size() > 0) { return obj.nextAll("li:eq(0)"); }
-				else { return obj.parentsUntil(".jstree","li").next("li").eq(0); }
-			},
-			_get_prev		: function (obj, strict) {
-				obj = this._get_node(obj);
-				if(obj === -1) { return this.get_container().find("> ul > li:last-child"); }
-				if(!obj.length) { return false; }
-				if(strict) { return (obj.prevAll("li").length > 0) ? obj.prevAll("li:eq(0)") : false; }
+                    if(obj.hasClass("jstree-open")) { return obj.find("li:eq(0)"); }
+                    else if(obj.nextAll("li").size() > 0) { return obj.nextAll("li:eq(0)"); }
+                    else { return obj.parentsUntil(".jstree","li").next("li").eq(0); }
+                },
+                _get_prev		: function (obj, strict) {
+                    obj = this._get_node(obj);
+                    if(obj === -1) { return this.get_container().find("> ul > li:last-child"); }
+                    if(!obj.length) { return false; }
+                    if(strict) { return (obj.prevAll("li").length > 0) ? obj.prevAll("li:eq(0)") : false; }
 
-				if(obj.prev("li").length) {
-					obj = obj.prev("li").eq(0);
-					while(obj.hasClass("jstree-open")) { obj = obj.children("ul:eq(0)").children("li:last"); }
-					return obj;
-				}
-				else { var o = obj.parentsUntil(".jstree","li:eq(0)"); return o.length ? o : false; }
-			},
-			_get_parent		: function (obj) {
-				obj = this._get_node(obj);
-				if(obj == -1 || !obj.length) { return false; }
-				var o = obj.parentsUntil(".jstree", "li:eq(0)");
-				return o.length ? o : -1;
-			},
-			_get_children	: function (obj) {
-				obj = this._get_node(obj);
-				if(obj === -1) { return this.get_container().children("ul:eq(0)").children("li"); }
-				if(!obj.length) { return false; }
-				return obj.children("ul:eq(0)").children("li");
-			},
-			get_path		: function (obj, id_mode) {
-				var p = [],
-					_this = this;
-				obj = this._get_node(obj);
-				if(obj === -1 || !obj || !obj.length) { return false; }
-				obj.parentsUntil(".jstree", "li").each(function () {
-					p.push( id_mode ? this.id : _this.get_text(this) );
-				});
-				p.reverse();
-				p.push( id_mode ? obj.attr("id") : this.get_text(obj) );
-				return p;
-			},
+                    if(obj.prev("li").length) {
+                        obj = obj.prev("li").eq(0);
+                        while(obj.hasClass("jstree-open")) { obj = obj.children("ul:eq(0)").children("li:last"); }
+                        return obj;
+                    }
+                    else { var o = obj.parentsUntil(".jstree","li:eq(0)"); return o.length ? o : false; }
+                },
+                _get_parent		: function (obj) {
+                    obj = this._get_node(obj);
+                    if(obj == -1 || !obj.length) { return false; }
+                    var o = obj.parentsUntil(".jstree", "li:eq(0)");
+                    return o.length ? o : -1;
+                },
+                _get_children	: function (obj) {
+                    obj = this._get_node(obj);
+                    if(obj === -1) { return this.get_container().children("ul:eq(0)").children("li"); }
+                    if(!obj.length) { return false; }
+                    return obj.children("ul:eq(0)").children("li");
+                },
+                get_path		: function (obj, id_mode) {
+                    var p = [],
+                        _this = this;
+                    obj = this._get_node(obj);
+                    if(obj === -1 || !obj || !obj.length) { return false; }
+                    obj.parentsUntil(".jstree", "li").each(function () {
+                        p.push( id_mode ? this.id : _this.get_text(this) );
+                    });
+                    p.reverse();
+                    p.push( id_mode ? obj.attr("id") : this.get_text(obj) );
+                    return p;
+                },
 
-			// string functions
-			_get_string : function (key) {
-				return this._get_settings().core.strings[key] || key;
-			},
+                // string functions
+                _get_string : function (key) {
+                    return this._get_settings().core.strings[key] || key;
+                },
 
-			is_open		: function (obj) { obj = this._get_node(obj); return obj && obj !== -1 && obj.hasClass("jstree-open"); },
-			is_closed	: function (obj) { obj = this._get_node(obj); return obj && obj !== -1 && obj.hasClass("jstree-closed"); },
-			is_leaf		: function (obj) { obj = this._get_node(obj); return obj && obj !== -1 && obj.hasClass("jstree-leaf"); },
-			correct_state	: function (obj) {
-				obj = this._get_node(obj);
-				if(!obj || obj === -1) { return false; }
-				obj.removeClass("jstree-closed jstree-open").addClass("jstree-leaf").children("ul").remove();
-				this.__callback({ "obj" : obj });
-			},
-			// open/close
-			open_node	: function (obj, callback, skip_animation) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return false; }
-				if(!obj.hasClass("jstree-closed")) { if(callback) { callback.call(); } return false; }
-				var s = skip_animation || is_ie6 ? 0 : this._get_settings().core.animation,
-					t = this;
-				if(!this._is_loaded(obj)) {
-					obj.children("a").addClass("jstree-loading");
-					this.load_node(obj, function () { t.open_node(obj, callback, skip_animation); }, callback);
-				}
-				else {
-					if(this._get_settings().core.open_parents) {
-						obj.parentsUntil(".jstree",".jstree-closed").each(function () {
-							t.open_node(this, false, true);
-						});
-					}
-					if(s) { obj.children("ul").css("display","none"); }
-					obj.removeClass("jstree-closed").addClass("jstree-open").children("a").removeClass("jstree-loading");
-					if(s) { obj.children("ul").stop(true, true).slideDown(s, function () { this.style.display = ""; t.after_open(obj); }); }
-					else { t.after_open(obj); }
-					this.__callback({ "obj" : obj });
-					if(callback) { callback.call(); }
-				}
-			},
-			after_open	: function (obj) { this.__callback({ "obj" : obj }); },
-			close_node	: function (obj, skip_animation) {
-				obj = this._get_node(obj);
-				var s = skip_animation || is_ie6 ? 0 : this._get_settings().core.animation,
-					t = this;
-				if(!obj.length || !obj.hasClass("jstree-open")) { return false; }
-				if(s) { obj.children("ul").attr("style","display:block !important"); }
-				obj.removeClass("jstree-open").addClass("jstree-closed");
-				if(s) { obj.children("ul").stop(true, true).slideUp(s, function () { this.style.display = ""; t.after_close(obj); }); }
-				else { t.after_close(obj); }
-				this.__callback({ "obj" : obj });
-			},
-			after_close	: function (obj) { this.__callback({ "obj" : obj }); },
-			toggle_node	: function (obj) {
-				obj = this._get_node(obj);
-				if(obj.hasClass("jstree-closed")) { return this.open_node(obj); }
-				if(obj.hasClass("jstree-open")) { return this.close_node(obj); }
-			},
-			open_all	: function (obj, do_animation, original_obj) {
-				obj = obj ? this._get_node(obj) : -1;
-				if(!obj || obj === -1) { obj = this.get_container_ul(); }
-				if(original_obj) { 
-					obj = obj.find("li.jstree-closed");
-				}
-				else {
-					original_obj = obj;
-					if(obj.is(".jstree-closed")) { obj = obj.find("li.jstree-closed").addBack(); }
-					else { obj = obj.find("li.jstree-closed"); }
-				}
-				var _this = this;
-				obj.each(function () { 
-					var __this = this; 
-					if(!_this._is_loaded(this)) { _this.open_node(this, function() { _this.open_all(__this, do_animation, original_obj); }, !do_animation); }
-					else { _this.open_node(this, false, !do_animation); }
-				});
-				// so that callback is fired AFTER all nodes are open
-				if(original_obj.find('li.jstree-closed').length === 0) { this.__callback({ "obj" : original_obj }); }
-			},
-			close_all	: function (obj, do_animation) {
-				var _this = this;
-				obj = obj ? this._get_node(obj) : this.get_container();
-				if(!obj || obj === -1) { obj = this.get_container_ul(); }
-				obj.find("li.jstree-open").addBack().each(function () { _this.close_node(this, !do_animation); });
-				this.__callback({ "obj" : obj });
-			},
-			clean_node	: function (obj) {
-				obj = obj && obj != -1 ? $(obj) : this.get_container_ul();
-				obj = obj.is("li") ? obj.find("li").addBack() : obj.find("li");
-				obj.removeClass("jstree-last")
-					.filter("li:last-child").addClass("jstree-last").end()
-					.filter(":has(li)")
-						.not(".jstree-open").removeClass("jstree-leaf").addClass("jstree-closed");
-				obj.not(".jstree-open, .jstree-closed").addClass("jstree-leaf").children("ul").remove();
-				this.__callback({ "obj" : obj });
-			},
-			// rollback
-			get_rollback : function () { 
-				this.__callback();
-				return { i : this.get_index(), h : this.get_container().children("ul").clone(true), d : this.data }; 
-			},
-			set_rollback : function (html, data) {
-				this.get_container().empty().append(html);
-				this.data = data;
-				this.__callback();
-			},
-			// Dummy functions to be overwritten by any datastore plugin included
-			load_node	: function (obj, s_call, e_call) { this.__callback({ "obj" : obj }); },
-			_is_loaded	: function (obj) { return true; },
+                is_open		: function (obj) { obj = this._get_node(obj); return obj && obj !== -1 && obj.hasClass("jstree-open"); },
+                is_closed	: function (obj) { obj = this._get_node(obj); return obj && obj !== -1 && obj.hasClass("jstree-closed"); },
+                is_leaf		: function (obj) { obj = this._get_node(obj); return obj && obj !== -1 && obj.hasClass("jstree-leaf"); },
+                correct_state	: function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj || obj === -1) { return false; }
+                    obj.removeClass("jstree-closed jstree-open").addClass("jstree-leaf").children("ul").remove();
+                    this.__callback({ "obj" : obj });
+                },
+                // open/close
+                open_node	: function (obj, callback, skip_animation) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return false; }
+                    if(!obj.hasClass("jstree-closed")) { if(callback) { callback.call(); } return false; }
+                    var s = skip_animation || is_ie6 ? 0 : this._get_settings().core.animation,
+                        t = this;
+                    if(!this._is_loaded(obj)) {
+                        obj.children("a").addClass("jstree-loading");
+                        this.load_node(obj, function () { t.open_node(obj, callback, skip_animation); }, callback);
+                    }
+                    else {
+                        if(this._get_settings().core.open_parents) {
+                            obj.parentsUntil(".jstree",".jstree-closed").each(function () {
+                                t.open_node(this, false, true);
+                            });
+                        }
+                        if(s) { obj.children("ul").css("display","none"); }
+                        obj.removeClass("jstree-closed").addClass("jstree-open").children("a").removeClass("jstree-loading");
+                        if(s) { obj.children("ul").stop(true, true).slideDown(s, function () { this.style.display = ""; t.after_open(obj); }); }
+                        else { t.after_open(obj); }
+                        this.__callback({ "obj" : obj });
+                        if(callback) { callback.call(); }
+                    }
+                },
+                after_open	: function (obj) { this.__callback({ "obj" : obj }); },
+                close_node	: function (obj, skip_animation) {
+                    obj = this._get_node(obj);
+                    var s = skip_animation || is_ie6 ? 0 : this._get_settings().core.animation,
+                        t = this;
+                    if(!obj.length || !obj.hasClass("jstree-open")) { return false; }
+                    if(s) { obj.children("ul").attr("style","display:block !important"); }
+                    obj.removeClass("jstree-open").addClass("jstree-closed");
+                    if(s) { obj.children("ul").stop(true, true).slideUp(s, function () { this.style.display = ""; t.after_close(obj); }); }
+                    else { t.after_close(obj); }
+                    this.__callback({ "obj" : obj });
+                },
+                after_close	: function (obj) { this.__callback({ "obj" : obj }); },
+                toggle_node	: function (obj) {
+                    obj = this._get_node(obj);
+                    if(obj.hasClass("jstree-closed")) { return this.open_node(obj); }
+                    if(obj.hasClass("jstree-open")) { return this.close_node(obj); }
+                },
+                open_all	: function (obj, do_animation, original_obj) {
+                    obj = obj ? this._get_node(obj) : -1;
+                    if(!obj || obj === -1) { obj = this.get_container_ul(); }
+                    if(original_obj) {
+                        obj = obj.find("li.jstree-closed");
+                    }
+                    else {
+                        original_obj = obj;
+                        if(obj.is(".jstree-closed")) { obj = obj.find("li.jstree-closed").addBack(); }
+                        else { obj = obj.find("li.jstree-closed"); }
+                    }
+                    var _this = this;
+                    obj.each(function () {
+                        var __this = this;
+                        if(!_this._is_loaded(this)) { _this.open_node(this, function() { _this.open_all(__this, do_animation, original_obj); }, !do_animation); }
+                        else { _this.open_node(this, false, !do_animation); }
+                    });
+                    // so that callback is fired AFTER all nodes are open
+                    if(original_obj.find('li.jstree-closed').length === 0) { this.__callback({ "obj" : original_obj }); }
+                },
+                close_all	: function (obj, do_animation) {
+                    var _this = this;
+                    obj = obj ? this._get_node(obj) : this.get_container();
+                    if(!obj || obj === -1) { obj = this.get_container_ul(); }
+                    obj.find("li.jstree-open").addBack().each(function () { _this.close_node(this, !do_animation); });
+                    this.__callback({ "obj" : obj });
+                },
+                clean_node	: function (obj) {
+                    obj = obj && obj != -1 ? $(obj) : this.get_container_ul();
+                    obj = obj.is("li") ? obj.find("li").addBack() : obj.find("li");
+                    obj.removeClass("jstree-last")
+                        .filter("li:last-child").addClass("jstree-last").end()
+                        .filter(":has(li)")
+                        .not(".jstree-open").removeClass("jstree-leaf").addClass("jstree-closed");
+                    obj.not(".jstree-open, .jstree-closed").addClass("jstree-leaf").children("ul").remove();
+                    this.__callback({ "obj" : obj });
+                },
+                // rollback
+                get_rollback : function () {
+                    this.__callback();
+                    return { i : this.get_index(), h : this.get_container().children("ul").clone(true), d : this.data };
+                },
+                set_rollback : function (html, data) {
+                    this.get_container().empty().append(html);
+                    this.data = data;
+                    this.__callback();
+                },
+                // Dummy functions to be overwritten by any datastore plugin included
+                load_node	: function (obj, s_call, e_call) { this.__callback({ "obj" : obj }); },
+                _is_loaded	: function (obj) { return true; },
 
-			// Basic operations: create
-			create_node	: function (obj, position, js, callback, is_loaded) {
-				obj = this._get_node(obj);
-				position = typeof position === "undefined" ? "last" : position;
-				var d = $("<li />"),
-					s = this._get_settings().core,
-					tmp;
+                // Basic operations: create
+                create_node	: function (obj, position, js, callback, is_loaded) {
+                    obj = this._get_node(obj);
+                    position = typeof position === "undefined" ? "last" : position;
+                    var d = $("<li />"),
+                        s = this._get_settings().core,
+                        tmp;
 
-				if(obj !== -1 && !obj.length) { return false; }
-				if(!is_loaded && !this._is_loaded(obj)) { this.load_node(obj, function () { this.create_node(obj, position, js, callback, true); }); return false; }
+                    if(obj !== -1 && !obj.length) { return false; }
+                    if(!is_loaded && !this._is_loaded(obj)) { this.load_node(obj, function () { this.create_node(obj, position, js, callback, true); }); return false; }
 
-				this.__rollback();
+                    this.__rollback();
 
-				if(typeof js === "string") { js = { "data" : js }; }
-				if(!js) { js = {}; }
-				if(js.attr) { d.attr(js.attr); }
-				if(js.metadata) { d.data(js.metadata); }
-				if(js.state) { d.addClass("jstree-" + js.state); }
-				if(!js.data) { js.data = this._get_string("new_node"); }
-				if(!$.isArray(js.data)) { tmp = js.data; js.data = []; js.data.push(tmp); }
-				$.each(js.data, function (i, m) {
-					tmp = $("<a />");
-					if($.isFunction(m)) { m = m.call(this, js); }
-					if(typeof m == "string") { tmp.attr('href','#')[ s.html_titles ? "html" : "text" ](m); }
-					else {
-						if(!m.attr) { m.attr = {}; }
-						if(!m.attr.href) { m.attr.href = '#'; }
-						tmp.attr(m.attr)[ s.html_titles ? "html" : "text" ](m.title);
-						if(m.language) { tmp.addClass(m.language); }
-					}
-					tmp.prepend("<ins class='jstree-icon'>&#160;</ins>");
-					if(!m.icon && js.icon) { m.icon = js.icon; }
-					if(m.icon) { 
-						if(m.icon.indexOf("/") === -1) { tmp.children("ins").addClass(m.icon); }
-						else { tmp.children("ins").css("background","url('" + m.icon + "') center center no-repeat"); }
-					}
-					d.append(tmp);
-				});
-				d.prepend("<ins class='jstree-icon'>&#160;</ins>");
-				if(obj === -1) {
-					obj = this.get_container();
-					if(position === "before") { position = "first"; }
-					if(position === "after") { position = "last"; }
-				}
-				switch(position) {
-					case "before": obj.before(d); tmp = this._get_parent(obj); break;
-					case "after" : obj.after(d);  tmp = this._get_parent(obj); break;
-					case "inside":
-					case "first" :
-						if(!obj.children("ul").length) { obj.append("<ul />"); }
-						obj.children("ul").prepend(d);
-						tmp = obj;
-						break;
-					case "last":
-						if(!obj.children("ul").length) { obj.append("<ul />"); }
-						obj.children("ul").append(d);
-						tmp = obj;
-						break;
-					default:
-						if(!obj.children("ul").length) { obj.append("<ul />"); }
-						if(!position) { position = 0; }
-						tmp = obj.children("ul").children("li").eq(position);
-						if(tmp.length) { tmp.before(d); }
-						else { obj.children("ul").append(d); }
-						tmp = obj;
-						break;
-				}
-				if(tmp === -1 || tmp.get(0) === this.get_container().get(0)) { tmp = -1; }
-				this.clean_node(tmp);
-				this.__callback({ "obj" : d, "parent" : tmp });
-				if(callback) { callback.call(this, d); }
-				return d;
-			},
-			// Basic operations: rename (deal with text)
-			get_text	: function (obj) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return false; }
-				var s = this._get_settings().core.html_titles;
-				obj = obj.children("a:eq(0)");
-				if(s) {
-					obj = obj.clone();
-					obj.children("INS").remove();
-					return obj.html();
-				}
-				else {
-					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
-					return obj.nodeValue;
-				}
-			},
-			set_text	: function (obj, val) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return false; }
-				obj = obj.children("a:eq(0)");
-				if(this._get_settings().core.html_titles) {
-					var tmp = obj.children("INS").clone();
-					obj.html(val).prepend(tmp);
-					this.__callback({ "obj" : obj, "name" : val });
-					return true;
-				}
-				else {
-					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
-					this.__callback({ "obj" : obj, "name" : val });
-					return (obj.nodeValue = val);
-				}
-			},
-			rename_node : function (obj, val) {
-				obj = this._get_node(obj);
-				this.__rollback();
-				if(obj && obj.length && this.set_text.apply(this, Array.prototype.slice.call(arguments))) { this.__callback({ "obj" : obj, "name" : val }); }
-			},
-			// Basic operations: deleting nodes
-			delete_node : function (obj) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return false; }
-				this.__rollback();
-				var p = this._get_parent(obj), prev = $([]), t = this;
-				obj.each(function () {
-					prev = prev.add(t._get_prev(this));
-				});
-				obj = obj.detach();
-				if(p !== -1 && p.find("> ul > li").length === 0) {
-					p.removeClass("jstree-open jstree-closed").addClass("jstree-leaf");
-				}
-				this.clean_node(p);
-				this.__callback({ "obj" : obj, "prev" : prev, "parent" : p });
-				return obj;
-			},
-			prepare_move : function (o, r, pos, cb, is_cb) {
-				var p = {};
+                    if(typeof js === "string") { js = { "data" : js }; }
+                    if(!js) { js = {}; }
+                    if(js.attr) { d.attr(js.attr); }
+                    if(js.metadata) { d.data(js.metadata); }
+                    if(js.state) { d.addClass("jstree-" + js.state); }
+                    if(!js.data) { js.data = this._get_string("new_node"); }
+                    if(!$.isArray(js.data)) { tmp = js.data; js.data = []; js.data.push(tmp); }
+                    $.each(js.data, function (i, m) {
+                        tmp = $("<a />");
+                        if($.isFunction(m)) { m = m.call(this, js); }
+                        if(typeof m == "string") { tmp.attr('href','#')[ s.html_titles ? "html" : "text" ](m); }
+                        else {
+                            if(!m.attr) { m.attr = {}; }
+                            if(!m.attr.href) { m.attr.href = '#'; }
+                            tmp.attr(m.attr)[ s.html_titles ? "html" : "text" ](m.title);
+                            if(m.language) { tmp.addClass(m.language); }
+                        }
+                        tmp.prepend("<ins class='jstree-icon'>&#160;</ins>");
+                        if(!m.icon && js.icon) { m.icon = js.icon; }
+                        if(m.icon) {
+                            if(m.icon.indexOf("/") === -1) { tmp.children("ins").addClass(m.icon); }
+                            else { tmp.children("ins").css("background","url('" + m.icon + "') center center no-repeat"); }
+                        }
+                        d.append(tmp);
+                    });
+                    d.prepend("<ins class='jstree-icon'>&#160;</ins>");
+                    if(obj === -1) {
+                        obj = this.get_container();
+                        if(position === "before") { position = "first"; }
+                        if(position === "after") { position = "last"; }
+                    }
+                    switch(position) {
+                        case "before": obj.before(d); tmp = this._get_parent(obj); break;
+                        case "after" : obj.after(d);  tmp = this._get_parent(obj); break;
+                        case "inside":
+                        case "first" :
+                            if(!obj.children("ul").length) { obj.append("<ul />"); }
+                            obj.children("ul").prepend(d);
+                            tmp = obj;
+                            break;
+                        case "last":
+                            if(!obj.children("ul").length) { obj.append("<ul />"); }
+                            obj.children("ul").append(d);
+                            tmp = obj;
+                            break;
+                        default:
+                            if(!obj.children("ul").length) { obj.append("<ul />"); }
+                            if(!position) { position = 0; }
+                            tmp = obj.children("ul").children("li").eq(position);
+                            if(tmp.length) { tmp.before(d); }
+                            else { obj.children("ul").append(d); }
+                            tmp = obj;
+                            break;
+                    }
+                    if(tmp === -1 || tmp.get(0) === this.get_container().get(0)) { tmp = -1; }
+                    this.clean_node(tmp);
+                    this.__callback({ "obj" : d, "parent" : tmp });
+                    if(callback) { callback.call(this, d); }
+                    return d;
+                },
+                // Basic operations: rename (deal with text)
+                get_text	: function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return false; }
+                    var s = this._get_settings().core.html_titles;
+                    obj = obj.children("a:eq(0)");
+                    if(s) {
+                        obj = obj.clone();
+                        obj.children("INS").remove();
+                        return obj.html();
+                    }
+                    else {
+                        obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
+                        return obj.nodeValue;
+                    }
+                },
+                set_text	: function (obj, val) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return false; }
+                    obj = obj.children("a:eq(0)");
+                    if(this._get_settings().core.html_titles) {
+                        var tmp = obj.children("INS").clone();
+                        obj.html(val).prepend(tmp);
+                        this.__callback({ "obj" : obj, "name" : val });
+                        return true;
+                    }
+                    else {
+                        obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
+                        this.__callback({ "obj" : obj, "name" : val });
+                        return (obj.nodeValue = val);
+                    }
+                },
+                rename_node : function (obj, val) {
+                    obj = this._get_node(obj);
+                    this.__rollback();
+                    if(obj && obj.length && this.set_text.apply(this, Array.prototype.slice.call(arguments))) { this.__callback({ "obj" : obj, "name" : val }); }
+                },
+                // Basic operations: deleting nodes
+                delete_node : function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return false; }
+                    this.__rollback();
+                    var p = this._get_parent(obj), prev = $([]), t = this;
+                    obj.each(function () {
+                        prev = prev.add(t._get_prev(this));
+                    });
+                    obj = obj.detach();
+                    if(p !== -1 && p.find("> ul > li").length === 0) {
+                        p.removeClass("jstree-open jstree-closed").addClass("jstree-leaf");
+                    }
+                    this.clean_node(p);
+                    this.__callback({ "obj" : obj, "prev" : prev, "parent" : p });
+                    return obj;
+                },
+                prepare_move : function (o, r, pos, cb, is_cb) {
+                    var p = {};
 
-				p.ot = $.jstree._reference(o) || this;
-				p.o = p.ot._get_node(o);
-				p.r = r === - 1 ? -1 : this._get_node(r);
-				p.p = (typeof pos === "undefined" || pos === false) ? "last" : pos; // TODO: move to a setting
-				if(!is_cb && prepared_move.o && prepared_move.o[0] === p.o[0] && prepared_move.r[0] === p.r[0] && prepared_move.p === p.p) {
-					this.__callback(prepared_move);
-					if(cb) { cb.call(this, prepared_move); }
-					return;
-				}
-				p.ot = $.jstree._reference(p.o) || this;
-				p.rt = $.jstree._reference(p.r) || this; // r === -1 ? p.ot : $.jstree._reference(p.r) || this
-				if(p.r === -1 || !p.r) {
-					p.cr = -1;
-					switch(p.p) {
-						case "first":
-						case "before":
-						case "inside":
-							p.cp = 0; 
-							break;
-						case "after":
-						case "last":
-							p.cp = p.rt.get_container().find(" > ul > li").length; 
-							break;
-						default:
-							p.cp = p.p;
-							break;
-					}
-				}
-				else {
-					if(!/^(before|after)$/.test(p.p) && !this._is_loaded(p.r)) {
-						return this.load_node(p.r, function () { this.prepare_move(o, r, pos, cb, true); });
-					}
-					switch(p.p) {
-						case "before":
-							p.cp = p.r.index();
-							p.cr = p.rt._get_parent(p.r);
-							break;
-						case "after":
-							p.cp = p.r.index() + 1;
-							p.cr = p.rt._get_parent(p.r);
-							break;
-						case "inside":
-						case "first":
-							p.cp = 0;
-							p.cr = p.r;
-							break;
-						case "last":
-							p.cp = p.r.find(" > ul > li").length; 
-							p.cr = p.r;
-							break;
-						default: 
-							p.cp = p.p;
-							p.cr = p.r;
-							break;
-					}
-				}
-				p.np = p.cr == -1 ? p.rt.get_container() : p.cr;
-				p.op = p.ot._get_parent(p.o);
-				p.cop = p.o.index();
-				if(p.op === -1) { p.op = p.ot ? p.ot.get_container() : this.get_container(); }
-				if(!/^(before|after)$/.test(p.p) && p.op && p.np && p.op[0] === p.np[0] && p.o.index() < p.cp) { p.cp++; }
-				//if(p.p === "before" && p.op && p.np && p.op[0] === p.np[0] && p.o.index() < p.cp) { p.cp--; }
-				p.or = p.np.find(" > ul > li:nth-child(" + (p.cp + 1) + ")");
-				prepared_move = p;
-				this.__callback(prepared_move);
-				if(cb) { cb.call(this, prepared_move); }
-			},
-			check_move : function () {
-				var obj = prepared_move, ret = true, r = obj.r === -1 ? this.get_container() : obj.r;
-				if(!obj || !obj.o || obj.or[0] === obj.o[0]) { return false; }
-				if(!obj.cy) {
-					if(obj.op && obj.np && obj.op[0] === obj.np[0] && obj.cp - 1 === obj.o.index()) { return false; }
-					obj.o.each(function () { 
-						if(r.parentsUntil(".jstree", "li").addBack().index(this) !== -1) { ret = false; return false; }
-					});
-				}
-				return ret;
-			},
-			move_node : function (obj, ref, position, is_copy, is_prepared, skip_check) {
-				if(!is_prepared) { 
-					return this.prepare_move(obj, ref, position, function (p) {
-						this.move_node(p, false, false, is_copy, true, skip_check);
-					});
-				}
-				if(is_copy) { 
-					prepared_move.cy = true;
-				}
-				if(!skip_check && !this.check_move()) { return false; }
+                    p.ot = $.jstree._reference(o) || this;
+                    p.o = p.ot._get_node(o);
+                    p.r = r === - 1 ? -1 : this._get_node(r);
+                    p.p = (typeof pos === "undefined" || pos === false) ? "last" : pos; // TODO: move to a setting
+                    if(!is_cb && prepared_move.o && prepared_move.o[0] === p.o[0] && prepared_move.r[0] === p.r[0] && prepared_move.p === p.p) {
+                        this.__callback(prepared_move);
+                        if(cb) { cb.call(this, prepared_move); }
+                        return;
+                    }
+                    p.ot = $.jstree._reference(p.o) || this;
+                    p.rt = $.jstree._reference(p.r) || this; // r === -1 ? p.ot : $.jstree._reference(p.r) || this
+                    if(p.r === -1 || !p.r) {
+                        p.cr = -1;
+                        switch(p.p) {
+                            case "first":
+                            case "before":
+                            case "inside":
+                                p.cp = 0;
+                                break;
+                            case "after":
+                            case "last":
+                                p.cp = p.rt.get_container().find(" > ul > li").length;
+                                break;
+                            default:
+                                p.cp = p.p;
+                                break;
+                        }
+                    }
+                    else {
+                        if(!/^(before|after)$/.test(p.p) && !this._is_loaded(p.r)) {
+                            return this.load_node(p.r, function () { this.prepare_move(o, r, pos, cb, true); });
+                        }
+                        switch(p.p) {
+                            case "before":
+                                p.cp = p.r.index();
+                                p.cr = p.rt._get_parent(p.r);
+                                break;
+                            case "after":
+                                p.cp = p.r.index() + 1;
+                                p.cr = p.rt._get_parent(p.r);
+                                break;
+                            case "inside":
+                            case "first":
+                                p.cp = 0;
+                                p.cr = p.r;
+                                break;
+                            case "last":
+                                p.cp = p.r.find(" > ul > li").length;
+                                p.cr = p.r;
+                                break;
+                            default:
+                                p.cp = p.p;
+                                p.cr = p.r;
+                                break;
+                        }
+                    }
+                    p.np = p.cr == -1 ? p.rt.get_container() : p.cr;
+                    p.op = p.ot._get_parent(p.o);
+                    p.cop = p.o.index();
+                    if(p.op === -1) { p.op = p.ot ? p.ot.get_container() : this.get_container(); }
+                    if(!/^(before|after)$/.test(p.p) && p.op && p.np && p.op[0] === p.np[0] && p.o.index() < p.cp) { p.cp++; }
+                    //if(p.p === "before" && p.op && p.np && p.op[0] === p.np[0] && p.o.index() < p.cp) { p.cp--; }
+                    p.or = p.np.find(" > ul > li:nth-child(" + (p.cp + 1) + ")");
+                    prepared_move = p;
+                    this.__callback(prepared_move);
+                    if(cb) { cb.call(this, prepared_move); }
+                },
+                check_move : function () {
+                    var obj = prepared_move, ret = true, r = obj.r === -1 ? this.get_container() : obj.r;
+                    if(!obj || !obj.o || obj.or[0] === obj.o[0]) { return false; }
+                    if(!obj.cy) {
+                        if(obj.op && obj.np && obj.op[0] === obj.np[0] && obj.cp - 1 === obj.o.index()) { return false; }
+                        obj.o.each(function () {
+                            if(r.parentsUntil(".jstree", "li").addBack().index(this) !== -1) { ret = false; return false; }
+                        });
+                    }
+                    return ret;
+                },
+                move_node : function (obj, ref, position, is_copy, is_prepared, skip_check) {
+                    if(!is_prepared) {
+                        return this.prepare_move(obj, ref, position, function (p) {
+                            this.move_node(p, false, false, is_copy, true, skip_check);
+                        });
+                    }
+                    if(is_copy) {
+                        prepared_move.cy = true;
+                    }
+                    if(!skip_check && !this.check_move()) { return false; }
 
-				this.__rollback();
-				var o = false;
-				if(is_copy) {
-					o = obj.o.clone(true);
-					o.find("*[id]").addBack().each(function () {
-						if(this.id) { this.id = "copy_" + this.id; }
-					});
-				}
-				else { o = obj.o; }
+                    this.__rollback();
+                    var o = false;
+                    if(is_copy) {
+                        o = obj.o.clone(true);
+                        o.find("*[id]").addBack().each(function () {
+                            if(this.id) { this.id = "copy_" + this.id; }
+                        });
+                    }
+                    else { o = obj.o; }
 
-				if(obj.or.length) { obj.or.before(o); }
-				else { 
-					if(!obj.np.children("ul").length) { $("<ul />").appendTo(obj.np); }
-					obj.np.children("ul:eq(0)").append(o); 
-				}
+                    if(obj.or.length) { obj.or.before(o); }
+                    else {
+                        if(!obj.np.children("ul").length) { $("<ul />").appendTo(obj.np); }
+                        obj.np.children("ul:eq(0)").append(o);
+                    }
 
-				try { 
-					obj.ot.clean_node(obj.op);
-					obj.rt.clean_node(obj.np);
-					if(!obj.op.find("> ul > li").length) {
-						obj.op.removeClass("jstree-open jstree-closed").addClass("jstree-leaf").children("ul").remove();
-					}
-				} catch (e) { }
+                    try {
+                        obj.ot.clean_node(obj.op);
+                        obj.rt.clean_node(obj.np);
+                        if(!obj.op.find("> ul > li").length) {
+                            obj.op.removeClass("jstree-open jstree-closed").addClass("jstree-leaf").children("ul").remove();
+                        }
+                    } catch (e) { }
 
-				if(is_copy) { 
-					prepared_move.cy = true;
-					prepared_move.oc = o; 
-				}
-				this.__callback(prepared_move);
-				return prepared_move;
-			},
-			_get_move : function () { return prepared_move; }
-		}
-	});
-})(jQuery);
+                    if(is_copy) {
+                        prepared_move.cy = true;
+                        prepared_move.oc = o;
+                    }
+                    this.__callback(prepared_move);
+                    return prepared_move;
+                },
+                _get_move : function () { return prepared_move; }
+            }
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree ui plugin
- * This plugins handles selecting/deselecting/hovering/dehovering nodes
- */
-(function ($) {
-	var scrollbar_width, e1, e2;
-	$(function() {
-		if (/msie/.test(navigator.userAgent.toLowerCase())) {
-			e1 = $('<textarea cols="10" rows="2"></textarea>').css({ position: 'absolute', top: -1000, left: 0 }).appendTo('body');
-			e2 = $('<textarea cols="10" rows="2" style="overflow: hidden;"></textarea>').css({ position: 'absolute', top: -1000, left: 0 }).appendTo('body');
-			scrollbar_width = e1.width() - e2.width();
-			e1.add(e2).remove();
-		} 
-		else {
-			e1 = $('<div />').css({ width: 100, height: 100, overflow: 'auto', position: 'absolute', top: -1000, left: 0 })
-					.prependTo('body').append('<div />').find('div').css({ width: '100%', height: 200 });
-			scrollbar_width = 100 - e1.width();
-			e1.parent().remove();
-		}
-	});
-	$.jstree.plugin("ui", {
-		__init : function () { 
-			this.data.ui.selected = $(); 
-			this.data.ui.last_selected = false; 
-			this.data.ui.hovered = null;
-			this.data.ui.to_select = this.get_settings().ui.initially_select;
+    /* 
+     * jsTree ui plugin
+     * This plugins handles selecting/deselecting/hovering/dehovering nodes
+     */
+    (function ($) {
+        var scrollbar_width, e1, e2;
+        $(function() {
+            if (/msie/.test(navigator.userAgent.toLowerCase())) {
+                e1 = $('<textarea cols="10" rows="2"></textarea>').css({ position: 'absolute', top: -1000, left: 0 }).appendTo('body');
+                e2 = $('<textarea cols="10" rows="2" style="overflow: hidden;"></textarea>').css({ position: 'absolute', top: -1000, left: 0 }).appendTo('body');
+                scrollbar_width = e1.width() - e2.width();
+                e1.add(e2).remove();
+            }
+            else {
+                e1 = $('<div />').css({ width: 100, height: 100, overflow: 'auto', position: 'absolute', top: -1000, left: 0 })
+                    .prependTo('body').append('<div />').find('div').css({ width: '100%', height: 200 });
+                scrollbar_width = 100 - e1.width();
+                e1.parent().remove();
+            }
+        });
+        $.jstree.plugin("ui", {
+            __init : function () {
+                this.data.ui.selected = $();
+                this.data.ui.last_selected = false;
+                this.data.ui.hovered = null;
+                this.data.ui.to_select = this.get_settings().ui.initially_select;
 
-			this.get_container()
-				.delegate("a", "click.jstree", $.proxy(function (event) {
-						event.preventDefault();
-						event.currentTarget.blur();
-						if(!$(event.currentTarget).hasClass("jstree-loading")) {
-							this.select_node(event.currentTarget, true, event);
-						}
-					}, this))
-				.delegate("a", "mouseenter.jstree", $.proxy(function (event) {
-						if(!$(event.currentTarget).hasClass("jstree-loading")) {
-							this.hover_node(event.target);
-						}
-					}, this))
-				.delegate("a", "mouseleave.jstree", $.proxy(function (event) {
-						if(!$(event.currentTarget).hasClass("jstree-loading")) {
-							this.dehover_node(event.target);
-						}
-					}, this))
-				.bind("reopen.jstree", $.proxy(function () { 
-						this.reselect();
-					}, this))
-				.bind("get_rollback.jstree", $.proxy(function () { 
-						this.dehover_node();
-						this.save_selected();
-					}, this))
-				.bind("set_rollback.jstree", $.proxy(function () { 
-						this.reselect();
-					}, this))
-				.bind("close_node.jstree", $.proxy(function (event, data) { 
-						var s = this._get_settings().ui,
-							obj = this._get_node(data.rslt.obj),
-							clk = (obj && obj.length) ? obj.children("ul").find("a.jstree-clicked") : $(),
-							_this = this;
-						if(s.selected_parent_close === false || !clk.length) { return; }
-						clk.each(function () { 
-							_this.deselect_node(this);
-							if(s.selected_parent_close === "select_parent") { _this.select_node(obj); }
-						});
-					}, this))
-				.bind("delete_node.jstree", $.proxy(function (event, data) { 
-						var s = this._get_settings().ui.select_prev_on_delete,
-							obj = this._get_node(data.rslt.obj),
-							clk = (obj && obj.length) ? obj.find("a.jstree-clicked") : [],
-							_this = this;
-						clk.each(function () { _this.deselect_node(this); });
-						if(s && clk.length) { 
-							data.rslt.prev.each(function () { 
-								if(this.parentNode) { _this.select_node(this); return false; /* if return false is removed all prev nodes will be selected */}
-							});
-						}
-					}, this))
-				.bind("move_node.jstree", $.proxy(function (event, data) { 
-						if(data.rslt.cy) { 
-							data.rslt.oc.find("a.jstree-clicked").removeClass("jstree-clicked");
-						}
-					}, this));
-		},
-		defaults : {
-			select_limit : -1, // 0, 1, 2 ... or -1 for unlimited
-			select_multiple_modifier : "ctrl", // on, or ctrl, shift, alt
-			select_range_modifier : "shift",
-			selected_parent_close : "select_parent", // false, "deselect", "select_parent"
-			selected_parent_open : true,
-			select_prev_on_delete : true,
-			disable_selecting_children : false,
-			initially_select : []
-		},
-		_fn : { 
-			_get_node : function (obj, allow_multiple) {
-				if(typeof obj === "undefined" || obj === null) { return allow_multiple ? this.data.ui.selected : this.data.ui.last_selected; }
-				var $obj = $(obj, this.get_container()); 
-				if($obj.is(".jstree") || obj == -1) { return -1; } 
-				$obj = $obj.closest("li", this.get_container()); 
-				return $obj.length ? $obj : false; 
-			},
-			_ui_notify : function (n, data) {
-				if(data.selected) {
-					this.select_node(n, false);
-				}
-			},
-			save_selected : function () {
-				var _this = this;
-				this.data.ui.to_select = [];
-				this.data.ui.selected.each(function () { if(this.id) { _this.data.ui.to_select.push("#" + this.id.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:")); } });
-				this.__callback(this.data.ui.to_select);
-			},
-			reselect : function () {
-				var _this = this,
-					s = this.data.ui.to_select;
-				s = $.map($.makeArray(s), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
-				// this.deselect_all(); WHY deselect, breaks plugin state notifier?
-				$.each(s, function (i, val) { if(val && val !== "#") { _this.select_node(val); } });
-				this.data.ui.selected = this.data.ui.selected.filter(function () { return this.parentNode; });
-				this.__callback();
-			},
-			refresh : function (obj) {
-				this.save_selected();
-				return this.__call_old();
-			},
-			hover_node : function (obj) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return false; }
-				//if(this.data.ui.hovered && obj.get(0) === this.data.ui.hovered.get(0)) { return; }
-				if(!obj.hasClass("jstree-hovered")) { this.dehover_node(); }
-				this.data.ui.hovered = obj.children("a").addClass("jstree-hovered").parent();
-				this._fix_scroll(obj);
-				this.__callback({ "obj" : obj });
-			},
-			dehover_node : function () {
-				var obj = this.data.ui.hovered, p;
-				if(!obj || !obj.length) { return false; }
-				p = obj.children("a").removeClass("jstree-hovered").parent();
-				if(this.data.ui.hovered[0] === p[0]) { this.data.ui.hovered = null; }
-				this.__callback({ "obj" : obj });
-			},
-			select_node : function (obj, check, e) {
-				obj = this._get_node(obj);
-				if(obj == -1 || !obj || !obj.length) { return false; }
-				var s = this._get_settings().ui,
-					is_multiple = (s.select_multiple_modifier == "on" || (s.select_multiple_modifier !== false && e && e[s.select_multiple_modifier + "Key"])),
-					is_range = (s.select_range_modifier !== false && e && e[s.select_range_modifier + "Key"] && this.data.ui.last_selected && this.data.ui.last_selected[0] !== obj[0] && this.data.ui.last_selected.parent()[0] === obj.parent()[0]),
-					is_selected = this.is_selected(obj),
-					proceed = true,
-					t = this;
-				if(check) {
-					if(s.disable_selecting_children && is_multiple && 
-						(
-							(obj.parentsUntil(".jstree","li").children("a.jstree-clicked").length) ||
-							(obj.children("ul").find("a.jstree-clicked:eq(0)").length)
-						)
-					) {
-						return false;
-					}
-					proceed = false;
-					switch(!0) {
-						case (is_range):
-							this.data.ui.last_selected.addClass("jstree-last-selected");
-							obj = obj[ obj.index() < this.data.ui.last_selected.index() ? "nextUntil" : "prevUntil" ](".jstree-last-selected").addBack();
-							if(s.select_limit == -1 || obj.length < s.select_limit) {
-								this.data.ui.last_selected.removeClass("jstree-last-selected");
-								this.data.ui.selected.each(function () {
-									if(this !== t.data.ui.last_selected[0]) { t.deselect_node(this); }
-								});
-								is_selected = false;
-								proceed = true;
-							}
-							else {
-								proceed = false;
-							}
-							break;
-						case (is_selected && !is_multiple): 
-							this.deselect_all();
-							is_selected = false;
-							proceed = true;
-							break;
-						case (!is_selected && !is_multiple): 
-							if(s.select_limit == -1 || s.select_limit > 0) {
-								this.deselect_all();
-								proceed = true;
-							}
-							break;
-						case (is_selected && is_multiple): 
-							this.deselect_node(obj);
-							break;
-						case (!is_selected && is_multiple): 
-							if(s.select_limit == -1 || this.data.ui.selected.length + 1 <= s.select_limit) { 
-								proceed = true;
-							}
-							break;
-					}
-				}
-				if(proceed && !is_selected) {
-					if(!is_range) { this.data.ui.last_selected = obj; }
-					obj.children("a").addClass("jstree-clicked");
-					if(s.selected_parent_open) {
-						obj.parents(".jstree-closed").each(function () { t.open_node(this, false, true); });
-					}
-					this.data.ui.selected = this.data.ui.selected.add(obj);
-					this._fix_scroll(obj.eq(0));
-					this.__callback({ "obj" : obj, "e" : e });
-				}
-			},
-			_fix_scroll : function (obj) {
-				var c = this.get_container()[0], t;
-				if(c.scrollHeight > c.offsetHeight) {
-					obj = this._get_node(obj);
-					if(!obj || obj === -1 || !obj.length || !obj.is(":visible")) { return; }
-					t = obj.offset().top - this.get_container().offset().top;
-					if(t < 0) { 
-						c.scrollTop = c.scrollTop + t - 1; 
-					}
-					if(t + this.data.core.li_height + (c.scrollWidth > c.offsetWidth ? scrollbar_width : 0) > c.offsetHeight) { 
-						c.scrollTop = c.scrollTop + (t - c.offsetHeight + this.data.core.li_height + 1 + (c.scrollWidth > c.offsetWidth ? scrollbar_width : 0)); 
-					}
-				}
-			},
-			deselect_node : function (obj) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return false; }
-				if(this.is_selected(obj)) {
-					obj.children("a").removeClass("jstree-clicked");
-					this.data.ui.selected = this.data.ui.selected.not(obj);
-					if(this.data.ui.last_selected.get(0) === obj.get(0)) { this.data.ui.last_selected = this.data.ui.selected.eq(0); }
-					this.__callback({ "obj" : obj });
-				}
-			},
-			toggle_select : function (obj) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return false; }
-				if(this.is_selected(obj)) { this.deselect_node(obj); }
-				else { this.select_node(obj); }
-			},
-			is_selected : function (obj) { return this.data.ui.selected.index(this._get_node(obj)) >= 0; },
-			get_selected : function (context) { 
-				return context ? $(context).find("a.jstree-clicked").parent() : this.data.ui.selected; 
-			},
-			deselect_all : function (context) {
-				var ret = context ? $(context).find("a.jstree-clicked").parent() : this.get_container().find("a.jstree-clicked").parent();
-				ret.children("a.jstree-clicked").removeClass("jstree-clicked");
-				this.data.ui.selected = $([]);
-				this.data.ui.last_selected = false;
-				this.__callback({ "obj" : ret });
-			}
-		}
-	});
-	// include the selection plugin by default
-	$.jstree.defaults.plugins.push("ui");
-})(jQuery);
+                this.get_container()
+                    .delegate("a", "click.jstree", $.proxy(function (event) {
+                        event.preventDefault();
+                        event.currentTarget.blur();
+                        if(!$(event.currentTarget).hasClass("jstree-loading")) {
+                            this.select_node(event.currentTarget, true, event);
+                        }
+                    }, this))
+                    .delegate("a", "mouseenter.jstree", $.proxy(function (event) {
+                        if(!$(event.currentTarget).hasClass("jstree-loading")) {
+                            this.hover_node(event.target);
+                        }
+                    }, this))
+                    .delegate("a", "mouseleave.jstree", $.proxy(function (event) {
+                        if(!$(event.currentTarget).hasClass("jstree-loading")) {
+                            this.dehover_node(event.target);
+                        }
+                    }, this))
+                    .bind("reopen.jstree", $.proxy(function () {
+                        this.reselect();
+                    }, this))
+                    .bind("get_rollback.jstree", $.proxy(function () {
+                        this.dehover_node();
+                        this.save_selected();
+                    }, this))
+                    .bind("set_rollback.jstree", $.proxy(function () {
+                        this.reselect();
+                    }, this))
+                    .bind("close_node.jstree", $.proxy(function (event, data) {
+                        var s = this._get_settings().ui,
+                            obj = this._get_node(data.rslt.obj),
+                            clk = (obj && obj.length) ? obj.children("ul").find("a.jstree-clicked") : $(),
+                            _this = this;
+                        if(s.selected_parent_close === false || !clk.length) { return; }
+                        clk.each(function () {
+                            _this.deselect_node(this);
+                            if(s.selected_parent_close === "select_parent") { _this.select_node(obj); }
+                        });
+                    }, this))
+                    .bind("delete_node.jstree", $.proxy(function (event, data) {
+                        var s = this._get_settings().ui.select_prev_on_delete,
+                            obj = this._get_node(data.rslt.obj),
+                            clk = (obj && obj.length) ? obj.find("a.jstree-clicked") : [],
+                            _this = this;
+                        clk.each(function () { _this.deselect_node(this); });
+                        if(s && clk.length) {
+                            data.rslt.prev.each(function () {
+                                if(this.parentNode) { _this.select_node(this); return false; /* if return false is removed all prev nodes will be selected */}
+                            });
+                        }
+                    }, this))
+                    .bind("move_node.jstree", $.proxy(function (event, data) {
+                        if(data.rslt.cy) {
+                            data.rslt.oc.find("a.jstree-clicked").removeClass("jstree-clicked");
+                        }
+                    }, this));
+            },
+            defaults : {
+                select_limit : -1, // 0, 1, 2 ... or -1 for unlimited
+                select_multiple_modifier : "ctrl", // on, or ctrl, shift, alt
+                select_range_modifier : "shift",
+                selected_parent_close : "select_parent", // false, "deselect", "select_parent"
+                selected_parent_open : true,
+                select_prev_on_delete : true,
+                disable_selecting_children : false,
+                initially_select : []
+            },
+            _fn : {
+                _get_node : function (obj, allow_multiple) {
+                    if(typeof obj === "undefined" || obj === null) { return allow_multiple ? this.data.ui.selected : this.data.ui.last_selected; }
+                    var $obj = $(obj, this.get_container());
+                    if($obj.is(".jstree") || obj == -1) { return -1; }
+                    $obj = $obj.closest("li", this.get_container());
+                    return $obj.length ? $obj : false;
+                },
+                _ui_notify : function (n, data) {
+                    if(data.selected) {
+                        this.select_node(n, false);
+                    }
+                },
+                save_selected : function () {
+                    var _this = this;
+                    this.data.ui.to_select = [];
+                    this.data.ui.selected.each(function () { if(this.id) { _this.data.ui.to_select.push("#" + this.id.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:")); } });
+                    this.__callback(this.data.ui.to_select);
+                },
+                reselect : function () {
+                    var _this = this,
+                        s = this.data.ui.to_select;
+                    s = $.map($.makeArray(s), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
+                    // this.deselect_all(); WHY deselect, breaks plugin state notifier?
+                    $.each(s, function (i, val) { if(val && val !== "#") { _this.select_node(val); } });
+                    this.data.ui.selected = this.data.ui.selected.filter(function () { return this.parentNode; });
+                    this.__callback();
+                },
+                refresh : function (obj) {
+                    this.save_selected();
+                    return this.__call_old();
+                },
+                hover_node : function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return false; }
+                    //if(this.data.ui.hovered && obj.get(0) === this.data.ui.hovered.get(0)) { return; }
+                    if(!obj.hasClass("jstree-hovered")) { this.dehover_node(); }
+                    this.data.ui.hovered = obj.children("a").addClass("jstree-hovered").parent();
+                    this._fix_scroll(obj);
+                    this.__callback({ "obj" : obj });
+                },
+                dehover_node : function () {
+                    var obj = this.data.ui.hovered, p;
+                    if(!obj || !obj.length) { return false; }
+                    p = obj.children("a").removeClass("jstree-hovered").parent();
+                    if(this.data.ui.hovered[0] === p[0]) { this.data.ui.hovered = null; }
+                    this.__callback({ "obj" : obj });
+                },
+                select_node : function (obj, check, e) {
+                    obj = this._get_node(obj);
+                    if(obj == -1 || !obj || !obj.length) { return false; }
+                    var s = this._get_settings().ui,
+                        is_multiple = (s.select_multiple_modifier == "on" || (s.select_multiple_modifier !== false && e && e[s.select_multiple_modifier + "Key"])),
+                        is_range = (s.select_range_modifier !== false && e && e[s.select_range_modifier + "Key"] && this.data.ui.last_selected && this.data.ui.last_selected[0] !== obj[0] && this.data.ui.last_selected.parent()[0] === obj.parent()[0]),
+                        is_selected = this.is_selected(obj),
+                        proceed = true,
+                        t = this;
+                    if(check) {
+                        if(s.disable_selecting_children && is_multiple &&
+                            (
+                                (obj.parentsUntil(".jstree","li").children("a.jstree-clicked").length) ||
+                                    (obj.children("ul").find("a.jstree-clicked:eq(0)").length)
+                                )
+                            ) {
+                            return false;
+                        }
+                        proceed = false;
+                        switch(!0) {
+                            case (is_range):
+                                this.data.ui.last_selected.addClass("jstree-last-selected");
+                                obj = obj[ obj.index() < this.data.ui.last_selected.index() ? "nextUntil" : "prevUntil" ](".jstree-last-selected").addBack();
+                                if(s.select_limit == -1 || obj.length < s.select_limit) {
+                                    this.data.ui.last_selected.removeClass("jstree-last-selected");
+                                    this.data.ui.selected.each(function () {
+                                        if(this !== t.data.ui.last_selected[0]) { t.deselect_node(this); }
+                                    });
+                                    is_selected = false;
+                                    proceed = true;
+                                }
+                                else {
+                                    proceed = false;
+                                }
+                                break;
+                            case (is_selected && !is_multiple):
+                                this.deselect_all();
+                                is_selected = false;
+                                proceed = true;
+                                break;
+                            case (!is_selected && !is_multiple):
+                                if(s.select_limit == -1 || s.select_limit > 0) {
+                                    this.deselect_all();
+                                    proceed = true;
+                                }
+                                break;
+                            case (is_selected && is_multiple):
+                                this.deselect_node(obj);
+                                break;
+                            case (!is_selected && is_multiple):
+                                if(s.select_limit == -1 || this.data.ui.selected.length + 1 <= s.select_limit) {
+                                    proceed = true;
+                                }
+                                break;
+                        }
+                    }
+                    if(proceed && !is_selected) {
+                        if(!is_range) { this.data.ui.last_selected = obj; }
+                        obj.children("a").addClass("jstree-clicked");
+                        if(s.selected_parent_open) {
+                            obj.parents(".jstree-closed").each(function () { t.open_node(this, false, true); });
+                        }
+                        this.data.ui.selected = this.data.ui.selected.add(obj);
+                        this._fix_scroll(obj.eq(0));
+                        this.__callback({ "obj" : obj, "e" : e });
+                    }
+                },
+                _fix_scroll : function (obj) {
+                    var c = this.get_container()[0], t;
+                    if(c.scrollHeight > c.offsetHeight) {
+                        obj = this._get_node(obj);
+                        if(!obj || obj === -1 || !obj.length || !obj.is(":visible")) { return; }
+                        t = obj.offset().top - this.get_container().offset().top;
+                        if(t < 0) {
+                            c.scrollTop = c.scrollTop + t - 1;
+                        }
+                        if(t + this.data.core.li_height + (c.scrollWidth > c.offsetWidth ? scrollbar_width : 0) > c.offsetHeight) {
+                            c.scrollTop = c.scrollTop + (t - c.offsetHeight + this.data.core.li_height + 1 + (c.scrollWidth > c.offsetWidth ? scrollbar_width : 0));
+                        }
+                    }
+                },
+                deselect_node : function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return false; }
+                    if(this.is_selected(obj)) {
+                        obj.children("a").removeClass("jstree-clicked");
+                        this.data.ui.selected = this.data.ui.selected.not(obj);
+                        if(this.data.ui.last_selected.get(0) === obj.get(0)) { this.data.ui.last_selected = this.data.ui.selected.eq(0); }
+                        this.__callback({ "obj" : obj });
+                    }
+                },
+                toggle_select : function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return false; }
+                    if(this.is_selected(obj)) { this.deselect_node(obj); }
+                    else { this.select_node(obj); }
+                },
+                is_selected : function (obj) { return this.data.ui.selected.index(this._get_node(obj)) >= 0; },
+                get_selected : function (context) {
+                    return context ? $(context).find("a.jstree-clicked").parent() : this.data.ui.selected;
+                },
+                deselect_all : function (context) {
+                    var ret = context ? $(context).find("a.jstree-clicked").parent() : this.get_container().find("a.jstree-clicked").parent();
+                    ret.children("a.jstree-clicked").removeClass("jstree-clicked");
+                    this.data.ui.selected = $([]);
+                    this.data.ui.last_selected = false;
+                    this.__callback({ "obj" : ret });
+                }
+            }
+        });
+        // include the selection plugin by default
+        $.jstree.defaults.plugins.push("ui");
+    })(jQuery);
 //*/
 
-/* 
- * jsTree CRRM plugin
- * Handles creating/renaming/removing/moving nodes by user interaction.
- */
-(function ($) {
-	$.jstree.plugin("crrm", { 
-		__init : function () {
-			this.get_container()
-				.bind("move_node.jstree", $.proxy(function (e, data) {
-					if(this._get_settings().crrm.move.open_onmove) {
-						var t = this;
-						data.rslt.np.parentsUntil(".jstree").addBack().filter(".jstree-closed").each(function () {
-							t.open_node(this, false, true);
-						});
-					}
-				}, this));
-		},
-		defaults : {
-			input_width_limit : 200,
-			move : {
-				always_copy			: false, // false, true or "multitree"
-				open_onmove			: true,
-				default_position	: "last",
-				check_move			: function (m) { return true; }
-			}
-		},
-		_fn : {
-			_show_input : function (obj, callback) {
-				obj = this._get_node(obj);
-				var rtl = this._get_settings().core.rtl,
-					w = this._get_settings().crrm.input_width_limit,
-					w1 = obj.children("ins").width(),
-					w2 = obj.find("> a:visible > ins").width() * obj.find("> a:visible > ins").length,
-					t = this.get_text(obj),
-					h1 = $("<div />", { css : { "position" : "absolute", "top" : "-200px", "left" : (rtl ? "0px" : "-1000px"), "visibility" : "hidden" } }).appendTo("body"),
-					h2 = obj.css("position","relative").append(
-					$("<input />", { 
-						"value" : t,
-						"class" : "jstree-rename-input",
-						// "size" : t.length,
-						"css" : {
-							"padding" : "0",
-							"border" : "1px solid silver",
-							"position" : "absolute",
-							"left"  : (rtl ? "auto" : (w1 + w2 + 4) + "px"),
-							"right" : (rtl ? (w1 + w2 + 4) + "px" : "auto"),
-							"top" : "0px",
-							"height" : (this.data.core.li_height - 2) + "px",
-							"lineHeight" : (this.data.core.li_height - 2) + "px",
-							"width" : "150px" // will be set a bit further down
-						},
-						"blur" : $.proxy(function () {
-							var i = obj.children(".jstree-rename-input"),
-								v = i.val();
-							if(v === "") { v = t; }
-							h1.remove();
-							i.remove(); // rollback purposes
-							this.set_text(obj,t); // rollback purposes
-							this.rename_node(obj, v);
-							callback.call(this, obj, v, t);
-							obj.css("position","");
-						}, this),
-						"keyup" : function (event) {
-							var key = event.keyCode || event.which;
-							if(key == 27) { this.value = t; this.blur(); return; }
-							else if(key == 13) { this.blur(); return; }
-							else {
-								h2.width(Math.min(h1.text("pW" + this.value).width(),w));
-							}
-						},
-						"keypress" : function(event) {
-							var key = event.keyCode || event.which;
-							if(key == 13) { return false; }
-						}
-					})
-				).children(".jstree-rename-input"); 
-				this.set_text(obj, "");
-				h1.css({
-						fontFamily		: h2.css('fontFamily')		|| '',
-						fontSize		: h2.css('fontSize')		|| '',
-						fontWeight		: h2.css('fontWeight')		|| '',
-						fontStyle		: h2.css('fontStyle')		|| '',
-						fontStretch		: h2.css('fontStretch')		|| '',
-						fontVariant		: h2.css('fontVariant')		|| '',
-						letterSpacing	: h2.css('letterSpacing')	|| '',
-						wordSpacing		: h2.css('wordSpacing')		|| ''
-				});
-				h2.width(Math.min(h1.text("pW" + h2[0].value).width(),w))[0].select();
-			},
-			rename : function (obj) {
-				obj = this._get_node(obj);
-				this.__rollback();
-				var f = this.__callback;
-				this._show_input(obj, function (obj, new_name, old_name) { 
-					f.call(this, { "obj" : obj, "new_name" : new_name, "old_name" : old_name });
-				});
-			},
-			create : function (obj, position, js, callback, skip_rename) {
-				var t, _this = this;
-				obj = this._get_node(obj);
-				if(!obj) { obj = -1; }
-				this.__rollback();
-				t = this.create_node(obj, position, js, function (t) {
-					var p = this._get_parent(t),
-						pos = $(t).index();
-					if(callback) { callback.call(this, t); }
-					if(p.length && p.hasClass("jstree-closed")) { this.open_node(p, false, true); }
-					if(!skip_rename) { 
-						this._show_input(t, function (obj, new_name, old_name) { 
-							_this.__callback({ "obj" : obj, "name" : new_name, "parent" : p, "position" : pos });
-						});
-					}
-					else { _this.__callback({ "obj" : t, "name" : this.get_text(t), "parent" : p, "position" : pos }); }
-				});
-				return t;
-			},
-			remove : function (obj) {
-				obj = this._get_node(obj, true);
-				var p = this._get_parent(obj), prev = this._get_prev(obj);
-				this.__rollback();
-				obj = this.delete_node(obj);
-				if(obj !== false) { this.__callback({ "obj" : obj, "prev" : prev, "parent" : p }); }
-			},
-			check_move : function () {
-				if(!this.__call_old()) { return false; }
-				var s = this._get_settings().crrm.move;
-				if(!s.check_move.call(this, this._get_move())) { return false; }
-				return true;
-			},
-			move_node : function (obj, ref, position, is_copy, is_prepared, skip_check) {
-				var s = this._get_settings().crrm.move;
-				if(!is_prepared) { 
-					if(typeof position === "undefined") { position = s.default_position; }
-					if(position === "inside" && !s.default_position.match(/^(before|after)$/)) { position = s.default_position; }
-					return this.__call_old(true, obj, ref, position, is_copy, false, skip_check);
-				}
-				// if the move is already prepared
-				if(s.always_copy === true || (s.always_copy === "multitree" && obj.rt.get_index() !== obj.ot.get_index() )) {
-					is_copy = true;
-				}
-				this.__call_old(true, obj, ref, position, is_copy, true, skip_check);
-			},
+    /* 
+     * jsTree CRRM plugin
+     * Handles creating/renaming/removing/moving nodes by user interaction.
+     */
+    (function ($) {
+        $.jstree.plugin("crrm", {
+            __init : function () {
+                this.get_container()
+                    .bind("move_node.jstree", $.proxy(function (e, data) {
+                        if(this._get_settings().crrm.move.open_onmove) {
+                            var t = this;
+                            data.rslt.np.parentsUntil(".jstree").addBack().filter(".jstree-closed").each(function () {
+                                t.open_node(this, false, true);
+                            });
+                        }
+                    }, this));
+            },
+            defaults : {
+                input_width_limit : 200,
+                move : {
+                    always_copy			: false, // false, true or "multitree"
+                    open_onmove			: true,
+                    default_position	: "last",
+                    check_move			: function (m) { return true; }
+                }
+            },
+            _fn : {
+                _show_input : function (obj, callback) {
+                    obj = this._get_node(obj);
+                    var rtl = this._get_settings().core.rtl,
+                        w = this._get_settings().crrm.input_width_limit,
+                        w1 = obj.children("ins").width(),
+                        w2 = obj.find("> a:visible > ins").width() * obj.find("> a:visible > ins").length,
+                        t = this.get_text(obj),
+                        h1 = $("<div />", { css : { "position" : "absolute", "top" : "-200px", "left" : (rtl ? "0px" : "-1000px"), "visibility" : "hidden" } }).appendTo("body"),
+                        h2 = obj.css("position","relative").append(
+                            $("<input />", {
+                                "value" : t,
+                                "class" : "jstree-rename-input",
+                                // "size" : t.length,
+                                "css" : {
+                                    "padding" : "0",
+                                    "border" : "1px solid silver",
+                                    "position" : "absolute",
+                                    "left"  : (rtl ? "auto" : (w1 + w2 + 4) + "px"),
+                                    "right" : (rtl ? (w1 + w2 + 4) + "px" : "auto"),
+                                    "top" : "0px",
+                                    "height" : (this.data.core.li_height - 2) + "px",
+                                    "lineHeight" : (this.data.core.li_height - 2) + "px",
+                                    "width" : "150px" // will be set a bit further down
+                                },
+                                "blur" : $.proxy(function () {
+                                    var i = obj.children(".jstree-rename-input"),
+                                        v = i.val();
+                                    if(v === "") { v = t; }
+                                    h1.remove();
+                                    i.remove(); // rollback purposes
+                                    this.set_text(obj,t); // rollback purposes
+                                    this.rename_node(obj, v);
+                                    callback.call(this, obj, v, t);
+                                    obj.css("position","");
+                                }, this),
+                                "keyup" : function (event) {
+                                    var key = event.keyCode || event.which;
+                                    if(key == 27) { this.value = t; this.blur(); return; }
+                                    else if(key == 13) { this.blur(); return; }
+                                    else {
+                                        h2.width(Math.min(h1.text("pW" + this.value).width(),w));
+                                    }
+                                },
+                                "keypress" : function(event) {
+                                    var key = event.keyCode || event.which;
+                                    if(key == 13) { return false; }
+                                }
+                            })
+                        ).children(".jstree-rename-input");
+                    this.set_text(obj, "");
+                    h1.css({
+                        fontFamily		: h2.css('fontFamily')		|| '',
+                        fontSize		: h2.css('fontSize')		|| '',
+                        fontWeight		: h2.css('fontWeight')		|| '',
+                        fontStyle		: h2.css('fontStyle')		|| '',
+                        fontStretch		: h2.css('fontStretch')		|| '',
+                        fontVariant		: h2.css('fontVariant')		|| '',
+                        letterSpacing	: h2.css('letterSpacing')	|| '',
+                        wordSpacing		: h2.css('wordSpacing')		|| ''
+                    });
+                    h2.width(Math.min(h1.text("pW" + h2[0].value).width(),w))[0].select();
+                },
+                rename : function (obj) {
+                    obj = this._get_node(obj);
+                    this.__rollback();
+                    var f = this.__callback;
+                    this._show_input(obj, function (obj, new_name, old_name) {
+                        f.call(this, { "obj" : obj, "new_name" : new_name, "old_name" : old_name });
+                    });
+                },
+                create : function (obj, position, js, callback, skip_rename) {
+                    var t, _this = this;
+                    obj = this._get_node(obj);
+                    if(!obj) { obj = -1; }
+                    this.__rollback();
+                    t = this.create_node(obj, position, js, function (t) {
+                        var p = this._get_parent(t),
+                            pos = $(t).index();
+                        if(callback) { callback.call(this, t); }
+                        if(p.length && p.hasClass("jstree-closed")) { this.open_node(p, false, true); }
+                        if(!skip_rename) {
+                            this._show_input(t, function (obj, new_name, old_name) {
+                                _this.__callback({ "obj" : obj, "name" : new_name, "parent" : p, "position" : pos });
+                            });
+                        }
+                        else { _this.__callback({ "obj" : t, "name" : this.get_text(t), "parent" : p, "position" : pos }); }
+                    });
+                    return t;
+                },
+                remove : function (obj) {
+                    obj = this._get_node(obj, true);
+                    var p = this._get_parent(obj), prev = this._get_prev(obj);
+                    this.__rollback();
+                    obj = this.delete_node(obj);
+                    if(obj !== false) { this.__callback({ "obj" : obj, "prev" : prev, "parent" : p }); }
+                },
+                check_move : function () {
+                    if(!this.__call_old()) { return false; }
+                    var s = this._get_settings().crrm.move;
+                    if(!s.check_move.call(this, this._get_move())) { return false; }
+                    return true;
+                },
+                move_node : function (obj, ref, position, is_copy, is_prepared, skip_check) {
+                    var s = this._get_settings().crrm.move;
+                    if(!is_prepared) {
+                        if(typeof position === "undefined") { position = s.default_position; }
+                        if(position === "inside" && !s.default_position.match(/^(before|after)$/)) { position = s.default_position; }
+                        return this.__call_old(true, obj, ref, position, is_copy, false, skip_check);
+                    }
+                    // if the move is already prepared
+                    if(s.always_copy === true || (s.always_copy === "multitree" && obj.rt.get_index() !== obj.ot.get_index() )) {
+                        is_copy = true;
+                    }
+                    this.__call_old(true, obj, ref, position, is_copy, true, skip_check);
+                },
 
-			cut : function (obj) {
-				obj = this._get_node(obj, true);
-				if(!obj || !obj.length) { return false; }
-				this.data.crrm.cp_nodes = false;
-				this.data.crrm.ct_nodes = obj;
-				this.__callback({ "obj" : obj });
-			},
-			copy : function (obj) {
-				obj = this._get_node(obj, true);
-				if(!obj || !obj.length) { return false; }
-				this.data.crrm.ct_nodes = false;
-				this.data.crrm.cp_nodes = obj;
-				this.__callback({ "obj" : obj });
-			},
-			paste : function (obj) { 
-				obj = this._get_node(obj);
-				if(!obj || !obj.length) { return false; }
-				var nodes = this.data.crrm.ct_nodes ? this.data.crrm.ct_nodes : this.data.crrm.cp_nodes;
-				if(!this.data.crrm.ct_nodes && !this.data.crrm.cp_nodes) { return false; }
-				if(this.data.crrm.ct_nodes) { this.move_node(this.data.crrm.ct_nodes, obj); this.data.crrm.ct_nodes = false; }
-				if(this.data.crrm.cp_nodes) { this.move_node(this.data.crrm.cp_nodes, obj, false, true); }
-				this.__callback({ "obj" : obj, "nodes" : nodes });
-			}
-		}
-	});
-	// include the crr plugin by default
-	// $.jstree.defaults.plugins.push("crrm");
-})(jQuery);
+                cut : function (obj) {
+                    obj = this._get_node(obj, true);
+                    if(!obj || !obj.length) { return false; }
+                    this.data.crrm.cp_nodes = false;
+                    this.data.crrm.ct_nodes = obj;
+                    this.__callback({ "obj" : obj });
+                },
+                copy : function (obj) {
+                    obj = this._get_node(obj, true);
+                    if(!obj || !obj.length) { return false; }
+                    this.data.crrm.ct_nodes = false;
+                    this.data.crrm.cp_nodes = obj;
+                    this.__callback({ "obj" : obj });
+                },
+                paste : function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj || !obj.length) { return false; }
+                    var nodes = this.data.crrm.ct_nodes ? this.data.crrm.ct_nodes : this.data.crrm.cp_nodes;
+                    if(!this.data.crrm.ct_nodes && !this.data.crrm.cp_nodes) { return false; }
+                    if(this.data.crrm.ct_nodes) { this.move_node(this.data.crrm.ct_nodes, obj); this.data.crrm.ct_nodes = false; }
+                    if(this.data.crrm.cp_nodes) { this.move_node(this.data.crrm.cp_nodes, obj, false, true); }
+                    this.__callback({ "obj" : obj, "nodes" : nodes });
+                }
+            }
+        });
+        // include the crr plugin by default
+        // $.jstree.defaults.plugins.push("crrm");
+    })(jQuery);
 //*/
 
-/* 
- * jsTree themes plugin
- * Handles loading and setting themes, as well as detecting path to themes, etc.
- */
-(function ($) {
-	var themes_loaded = [];
-	// this variable stores the path to the themes folder - if left as false - it will be autodetected
-	$.jstree._themes = false;
-	$.jstree.plugin("themes", {
-		__init : function () { 
-			this.get_container()
-				.bind("init.jstree", $.proxy(function () {
-						var s = this._get_settings().themes;
-						this.data.themes.dots = s.dots; 
-						this.data.themes.icons = s.icons; 
-						this.set_theme(s.theme, s.url);
-					}, this))
-				.bind("loaded.jstree", $.proxy(function () {
-						// bound here too, as simple HTML tree's won't honor dots & icons otherwise
-						if(!this.data.themes.dots) { this.hide_dots(); }
-						else { this.show_dots(); }
-						if(!this.data.themes.icons) { this.hide_icons(); }
-						else { this.show_icons(); }
-					}, this));
-		},
-		defaults : { 
-			theme : "default", 
-			url : false,
-			dots : true,
-			icons : true
-		},
-		_fn : {
-			set_theme : function (theme_name, theme_url) {
-				if(!theme_name) { return false; }
-				if(!theme_url) { theme_url = $.jstree._themes + theme_name + '/style.css'; }
-				if($.inArray(theme_url, themes_loaded) == -1) {
-					$.vakata.css.add_sheet({ "url" : theme_url });
-					themes_loaded.push(theme_url);
-				}
-				if(this.data.themes.theme != theme_name) {
-					this.get_container().removeClass('jstree-' + this.data.themes.theme);
-					this.data.themes.theme = theme_name;
-				}
-				this.get_container().addClass('jstree-' + theme_name);
-				if(!this.data.themes.dots) { this.hide_dots(); }
-				else { this.show_dots(); }
-				if(!this.data.themes.icons) { this.hide_icons(); }
-				else { this.show_icons(); }
-				this.__callback();
-			},
-			get_theme	: function () { return this.data.themes.theme; },
+    /* 
+     * jsTree themes plugin
+     * Handles loading and setting themes, as well as detecting path to themes, etc.
+     */
+    (function ($) {
+        var themes_loaded = [];
+        // this variable stores the path to the themes folder - if left as false - it will be autodetected
+        $.jstree._themes = false;
+        $.jstree.plugin("themes", {
+            __init : function () {
+                this.get_container()
+                    .bind("init.jstree", $.proxy(function () {
+                        var s = this._get_settings().themes;
+                        this.data.themes.dots = s.dots;
+                        this.data.themes.icons = s.icons;
+                        this.set_theme(s.theme, s.url);
+                    }, this))
+                    .bind("loaded.jstree", $.proxy(function () {
+                        // bound here too, as simple HTML tree's won't honor dots & icons otherwise
+                        if(!this.data.themes.dots) { this.hide_dots(); }
+                        else { this.show_dots(); }
+                        if(!this.data.themes.icons) { this.hide_icons(); }
+                        else { this.show_icons(); }
+                    }, this));
+            },
+            defaults : {
+                theme : "default",
+                url : false,
+                dots : true,
+                icons : true
+            },
+            _fn : {
+                set_theme : function (theme_name, theme_url) {
+                    if(!theme_name) { return false; }
+                    if(!theme_url) { theme_url = $.jstree._themes + theme_name + '/style.css'; }
+                    if($.inArray(theme_url, themes_loaded) == -1) {
+                        $.vakata.css.add_sheet({ "url" : theme_url });
+                        themes_loaded.push(theme_url);
+                    }
+                    if(this.data.themes.theme != theme_name) {
+                        this.get_container().removeClass('jstree-' + this.data.themes.theme);
+                        this.data.themes.theme = theme_name;
+                    }
+                    this.get_container().addClass('jstree-' + theme_name);
+                    if(!this.data.themes.dots) { this.hide_dots(); }
+                    else { this.show_dots(); }
+                    if(!this.data.themes.icons) { this.hide_icons(); }
+                    else { this.show_icons(); }
+                    this.__callback();
+                },
+                get_theme	: function () { return this.data.themes.theme; },
 
-			show_dots	: function () { this.data.themes.dots = true; this.get_container().children("ul").removeClass("jstree-no-dots"); },
-			hide_dots	: function () { this.data.themes.dots = false; this.get_container().children("ul").addClass("jstree-no-dots"); },
-			toggle_dots	: function () { if(this.data.themes.dots) { this.hide_dots(); } else { this.show_dots(); } },
+                show_dots	: function () { this.data.themes.dots = true; this.get_container().children("ul").removeClass("jstree-no-dots"); },
+                hide_dots	: function () { this.data.themes.dots = false; this.get_container().children("ul").addClass("jstree-no-dots"); },
+                toggle_dots	: function () { if(this.data.themes.dots) { this.hide_dots(); } else { this.show_dots(); } },
 
-			show_icons	: function () { this.data.themes.icons = true; this.get_container().children("ul").removeClass("jstree-no-icons"); },
-			hide_icons	: function () { this.data.themes.icons = false; this.get_container().children("ul").addClass("jstree-no-icons"); },
-			toggle_icons: function () { if(this.data.themes.icons) { this.hide_icons(); } else { this.show_icons(); } }
-		}
-	});
-	// autodetect themes path
-	$(function () {
-		if($.jstree._themes === false) {
-			$("script").each(function () { 
-				if(this.src.toString().match(/jquery\.jstree[^\/]*?\.js(\?.*)?$/)) { 
-					$.jstree._themes = this.src.toString().replace(/jquery\.jstree[^\/]*?\.js(\?.*)?$/, "") + 'themes/'; 
-					return false; 
-				}
-			});
-		}
-		if($.jstree._themes === false) { $.jstree._themes = "themes/"; }
-	});
-	// include the themes plugin by default
-	$.jstree.defaults.plugins.push("themes");
-})(jQuery);
+                show_icons	: function () { this.data.themes.icons = true; this.get_container().children("ul").removeClass("jstree-no-icons"); },
+                hide_icons	: function () { this.data.themes.icons = false; this.get_container().children("ul").addClass("jstree-no-icons"); },
+                toggle_icons: function () { if(this.data.themes.icons) { this.hide_icons(); } else { this.show_icons(); } }
+            }
+        });
+        // autodetect themes path
+        $(function () {
+            if($.jstree._themes === false) {
+                $("script").each(function () {
+                    if(this.src.toString().match(/jquery\.jstree[^\/]*?\.js(\?.*)?$/)) {
+                        $.jstree._themes = this.src.toString().replace(/jquery\.jstree[^\/]*?\.js(\?.*)?$/, "") + 'themes/';
+                        return false;
+                    }
+                });
+            }
+            if($.jstree._themes === false) { $.jstree._themes = "themes/"; }
+        });
+        // include the themes plugin by default
+        $.jstree.defaults.plugins.push("themes");
+    })(jQuery);
 //*/
 
-/*
- * jsTree hotkeys plugin
- * Enables keyboard navigation for all tree instances
- * Depends on the jstree ui & jquery hotkeys plugins
- */
-(function ($) {
-	var bound = [];
-	function exec(i, event) {
-		var f = $.jstree._focused(), tmp;
-		if(f && f.data && f.data.hotkeys && f.data.hotkeys.enabled) { 
-			tmp = f._get_settings().hotkeys[i];
-			if(tmp) { return tmp.call(f, event); }
-		}
-	}
-	$.jstree.plugin("hotkeys", {
-		__init : function () {
-			if(typeof $.hotkeys === "undefined") { throw "jsTree hotkeys: jQuery hotkeys plugin not included."; }
-			if(!this.data.ui) { throw "jsTree hotkeys: jsTree UI plugin not included."; }
-			$.each(this._get_settings().hotkeys, function (i, v) {
-				if(v !== false && $.inArray(i, bound) == -1) {
-					$(document).bind("keydown", i, function (event) { return exec(i, event); });
-					bound.push(i);
-				}
-			});
-			this.get_container()
-				.bind("lock.jstree", $.proxy(function () {
-						if(this.data.hotkeys.enabled) { this.data.hotkeys.enabled = false; this.data.hotkeys.revert = true; }
-					}, this))
-				.bind("unlock.jstree", $.proxy(function () {
-						if(this.data.hotkeys.revert) { this.data.hotkeys.enabled = true; }
-					}, this));
-			this.enable_hotkeys();
-		},
-		defaults : {
-			"up" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
-				this.hover_node(this._get_prev(o));
-				return false; 
-			},
-			"ctrl+up" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
-				this.hover_node(this._get_prev(o));
-				return false; 
-			},
-			"shift+up" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
-				this.hover_node(this._get_prev(o));
-				return false; 
-			},
-			"down" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
-				this.hover_node(this._get_next(o));
-				return false;
-			},
-			"ctrl+down" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
-				this.hover_node(this._get_next(o));
-				return false;
-			},
-			"shift+down" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
-				this.hover_node(this._get_next(o));
-				return false;
-			},
-			"left" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected;
-				if(o) {
-					if(o.hasClass("jstree-open")) { this.close_node(o); }
-					else { this.hover_node(this._get_prev(o)); }
-				}
-				return false;
-			},
-			"ctrl+left" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected;
-				if(o) {
-					if(o.hasClass("jstree-open")) { this.close_node(o); }
-					else { this.hover_node(this._get_prev(o)); }
-				}
-				return false;
-			},
-			"shift+left" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected;
-				if(o) {
-					if(o.hasClass("jstree-open")) { this.close_node(o); }
-					else { this.hover_node(this._get_prev(o)); }
-				}
-				return false;
-			},
-			"right" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected;
-				if(o && o.length) {
-					if(o.hasClass("jstree-closed")) { this.open_node(o); }
-					else { this.hover_node(this._get_next(o)); }
-				}
-				return false;
-			},
-			"ctrl+right" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected;
-				if(o && o.length) {
-					if(o.hasClass("jstree-closed")) { this.open_node(o); }
-					else { this.hover_node(this._get_next(o)); }
-				}
-				return false;
-			},
-			"shift+right" : function () { 
-				var o = this.data.ui.hovered || this.data.ui.last_selected;
-				if(o && o.length) {
-					if(o.hasClass("jstree-closed")) { this.open_node(o); }
-					else { this.hover_node(this._get_next(o)); }
-				}
-				return false;
-			},
-			"space" : function () { 
-				if(this.data.ui.hovered) { this.data.ui.hovered.children("a:eq(0)").click(); } 
-				return false; 
-			},
-			"ctrl+space" : function (event) { 
-				event.type = "click";
-				if(this.data.ui.hovered) { this.data.ui.hovered.children("a:eq(0)").trigger(event); } 
-				return false; 
-			},
-			"shift+space" : function (event) { 
-				event.type = "click";
-				if(this.data.ui.hovered) { this.data.ui.hovered.children("a:eq(0)").trigger(event); } 
-				return false; 
-			},
-			"f2" : function () { this.rename(this.data.ui.hovered || this.data.ui.last_selected); },
-			"del" : function () { this.remove(this.data.ui.hovered || this._get_node(null)); }
-		},
-		_fn : {
-			enable_hotkeys : function () {
-				this.data.hotkeys.enabled = true;
-			},
-			disable_hotkeys : function () {
-				this.data.hotkeys.enabled = false;
-			}
-		}
-	});
-})(jQuery);
+    /*
+     * jsTree hotkeys plugin
+     * Enables keyboard navigation for all tree instances
+     * Depends on the jstree ui & jquery hotkeys plugins
+     */
+    (function ($) {
+        var bound = [];
+        function exec(i, event) {
+            var f = $.jstree._focused(), tmp;
+            if(f && f.data && f.data.hotkeys && f.data.hotkeys.enabled) {
+                tmp = f._get_settings().hotkeys[i];
+                if(tmp) { return tmp.call(f, event); }
+            }
+        }
+        $.jstree.plugin("hotkeys", {
+            __init : function () {
+                if(typeof $.hotkeys === "undefined") { throw "jsTree hotkeys: jQuery hotkeys plugin not included."; }
+                if(!this.data.ui) { throw "jsTree hotkeys: jsTree UI plugin not included."; }
+                $.each(this._get_settings().hotkeys, function (i, v) {
+                    if(v !== false && $.inArray(i, bound) == -1) {
+                        $(document).bind("keydown", i, function (event) { return exec(i, event); });
+                        bound.push(i);
+                    }
+                });
+                this.get_container()
+                    .bind("lock.jstree", $.proxy(function () {
+                        if(this.data.hotkeys.enabled) { this.data.hotkeys.enabled = false; this.data.hotkeys.revert = true; }
+                    }, this))
+                    .bind("unlock.jstree", $.proxy(function () {
+                        if(this.data.hotkeys.revert) { this.data.hotkeys.enabled = true; }
+                    }, this));
+                this.enable_hotkeys();
+            },
+            defaults : {
+                "up" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                    this.hover_node(this._get_prev(o));
+                    return false;
+                },
+                "ctrl+up" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                    this.hover_node(this._get_prev(o));
+                    return false;
+                },
+                "shift+up" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                    this.hover_node(this._get_prev(o));
+                    return false;
+                },
+                "down" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                    this.hover_node(this._get_next(o));
+                    return false;
+                },
+                "ctrl+down" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                    this.hover_node(this._get_next(o));
+                    return false;
+                },
+                "shift+down" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected || -1;
+                    this.hover_node(this._get_next(o));
+                    return false;
+                },
+                "left" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected;
+                    if(o) {
+                        if(o.hasClass("jstree-open")) { this.close_node(o); }
+                        else { this.hover_node(this._get_prev(o)); }
+                    }
+                    return false;
+                },
+                "ctrl+left" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected;
+                    if(o) {
+                        if(o.hasClass("jstree-open")) { this.close_node(o); }
+                        else { this.hover_node(this._get_prev(o)); }
+                    }
+                    return false;
+                },
+                "shift+left" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected;
+                    if(o) {
+                        if(o.hasClass("jstree-open")) { this.close_node(o); }
+                        else { this.hover_node(this._get_prev(o)); }
+                    }
+                    return false;
+                },
+                "right" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected;
+                    if(o && o.length) {
+                        if(o.hasClass("jstree-closed")) { this.open_node(o); }
+                        else { this.hover_node(this._get_next(o)); }
+                    }
+                    return false;
+                },
+                "ctrl+right" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected;
+                    if(o && o.length) {
+                        if(o.hasClass("jstree-closed")) { this.open_node(o); }
+                        else { this.hover_node(this._get_next(o)); }
+                    }
+                    return false;
+                },
+                "shift+right" : function () {
+                    var o = this.data.ui.hovered || this.data.ui.last_selected;
+                    if(o && o.length) {
+                        if(o.hasClass("jstree-closed")) { this.open_node(o); }
+                        else { this.hover_node(this._get_next(o)); }
+                    }
+                    return false;
+                },
+                "space" : function () {
+                    if(this.data.ui.hovered) { this.data.ui.hovered.children("a:eq(0)").click(); }
+                    return false;
+                },
+                "ctrl+space" : function (event) {
+                    event.type = "click";
+                    if(this.data.ui.hovered) { this.data.ui.hovered.children("a:eq(0)").trigger(event); }
+                    return false;
+                },
+                "shift+space" : function (event) {
+                    event.type = "click";
+                    if(this.data.ui.hovered) { this.data.ui.hovered.children("a:eq(0)").trigger(event); }
+                    return false;
+                },
+                "f2" : function () { this.rename(this.data.ui.hovered || this.data.ui.last_selected); },
+                "del" : function () { this.remove(this.data.ui.hovered || this._get_node(null)); }
+            },
+            _fn : {
+                enable_hotkeys : function () {
+                    this.data.hotkeys.enabled = true;
+                },
+                disable_hotkeys : function () {
+                    this.data.hotkeys.enabled = false;
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree JSON plugin
- * The JSON data store. Datastores are build by overriding the `load_node` and `_is_loaded` functions.
- */
-(function ($) {
-	$.jstree.plugin("json_data", {
-		__init : function() {
-			var s = this._get_settings().json_data;
-			if(s.progressive_unload) {
-				this.get_container().bind("after_close.jstree", function (e, data) {
-					data.rslt.obj.children("ul").remove();
-				});
-			}
-		},
-		defaults : { 
-			// `data` can be a function:
-			//  * accepts two arguments - node being loaded and a callback to pass the result to
-			//  * will be executed in the current tree's scope & ajax won't be supported
-			data : false, 
-			ajax : false,
-			correct_state : true,
-			progressive_render : false,
-			progressive_unload : false
-		},
-		_fn : {
-			load_node : function (obj, s_call, e_call) { var _this = this; this.load_node_json(obj, function () { _this.__callback({ "obj" : _this._get_node(obj) }); s_call.call(this); }, e_call); },
-			_is_loaded : function (obj) { 
-				var s = this._get_settings().json_data;
-				obj = this._get_node(obj); 
-				return obj == -1 || !obj || (!s.ajax && !s.progressive_render && !$.isFunction(s.data)) || obj.is(".jstree-open, .jstree-leaf") || obj.children("ul").children("li").length > 0;
-			},
-			refresh : function (obj) {
-				obj = this._get_node(obj);
-				var s = this._get_settings().json_data;
-				if(obj && obj !== -1 && s.progressive_unload && ($.isFunction(s.data) || !!s.ajax)) {
-					obj.removeData("jstree_children");
-				}
-				return this.__call_old();
-			},
-			load_node_json : function (obj, s_call, e_call) {
-				var s = this.get_settings().json_data, d,
-					error_func = function () {},
-					success_func = function () {};
-				obj = this._get_node(obj);
+    /* 
+     * jsTree JSON plugin
+     * The JSON data store. Datastores are build by overriding the `load_node` and `_is_loaded` functions.
+     */
+    (function ($) {
+        $.jstree.plugin("json_data", {
+            __init : function() {
+                var s = this._get_settings().json_data;
+                if(s.progressive_unload) {
+                    this.get_container().bind("after_close.jstree", function (e, data) {
+                        data.rslt.obj.children("ul").remove();
+                    });
+                }
+            },
+            defaults : {
+                // `data` can be a function:
+                //  * accepts two arguments - node being loaded and a callback to pass the result to
+                //  * will be executed in the current tree's scope & ajax won't be supported
+                data : false,
+                ajax : false,
+                correct_state : true,
+                progressive_render : false,
+                progressive_unload : false
+            },
+            _fn : {
+                load_node : function (obj, s_call, e_call) { var _this = this; this.load_node_json(obj, function () { _this.__callback({ "obj" : _this._get_node(obj) }); s_call.call(this); }, e_call); },
+                _is_loaded : function (obj) {
+                    var s = this._get_settings().json_data;
+                    obj = this._get_node(obj);
+                    return obj == -1 || !obj || (!s.ajax && !s.progressive_render && !$.isFunction(s.data)) || obj.is(".jstree-open, .jstree-leaf") || obj.children("ul").children("li").length > 0;
+                },
+                refresh : function (obj) {
+                    obj = this._get_node(obj);
+                    var s = this._get_settings().json_data;
+                    if(obj && obj !== -1 && s.progressive_unload && ($.isFunction(s.data) || !!s.ajax)) {
+                        obj.removeData("jstree_children");
+                    }
+                    return this.__call_old();
+                },
+                load_node_json : function (obj, s_call, e_call) {
+                    var s = this.get_settings().json_data, d,
+                        error_func = function () {},
+                        success_func = function () {};
+                    obj = this._get_node(obj);
 
-				if(obj && obj !== -1 && (s.progressive_render || s.progressive_unload) && !obj.is(".jstree-open, .jstree-leaf") && obj.children("ul").children("li").length === 0 && obj.data("jstree_children")) {
-					d = this._parse_json(obj.data("jstree_children"), obj);
-					if(d) {
-						obj.append(d);
-						if(!s.progressive_unload) { obj.removeData("jstree_children"); }
-					}
-					this.clean_node(obj);
-					if(s_call) { s_call.call(this); }
-					return;
-				}
+                    if(obj && obj !== -1 && (s.progressive_render || s.progressive_unload) && !obj.is(".jstree-open, .jstree-leaf") && obj.children("ul").children("li").length === 0 && obj.data("jstree_children")) {
+                        d = this._parse_json(obj.data("jstree_children"), obj);
+                        if(d) {
+                            obj.append(d);
+                            if(!s.progressive_unload) { obj.removeData("jstree_children"); }
+                        }
+                        this.clean_node(obj);
+                        if(s_call) { s_call.call(this); }
+                        return;
+                    }
 
-				if(obj && obj !== -1) {
-					if(obj.data("jstree_is_loading")) { return; }
-					else { obj.data("jstree_is_loading",true); }
-				}
-				switch(!0) {
-					case (!s.data && !s.ajax): throw "Neither data nor ajax settings supplied.";
-					// function option added here for easier model integration (also supporting async - see callback)
-					case ($.isFunction(s.data)):
-						s.data.call(this, obj, $.proxy(function (d) {
-							d = this._parse_json(d, obj);
-							if(!d) { 
-								if(obj === -1 || !obj) {
-									if(s.correct_state) { this.get_container().children("ul").empty(); }
-								}
-								else {
-									obj.children("a.jstree-loading").removeClass("jstree-loading");
-									obj.removeData("jstree_is_loading");
-									if(s.correct_state) { this.correct_state(obj); }
-								}
-								if(e_call) { e_call.call(this); }
-							}
-							else {
-								if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
-								else { obj.append(d).children("a.jstree-loading").removeClass("jstree-loading"); obj.removeData("jstree_is_loading"); }
-								this.clean_node(obj);
-								if(s_call) { s_call.call(this); }
-							}
-						}, this));
-						break;
-					case (!!s.data && !s.ajax) || (!!s.data && !!s.ajax && (!obj || obj === -1)):
-						if(!obj || obj == -1) {
-							d = this._parse_json(s.data, obj);
-							if(d) {
-								this.get_container().children("ul").empty().append(d.children());
-								this.clean_node();
-							}
-							else { 
-								if(s.correct_state) { this.get_container().children("ul").empty(); }
-							}
-						}
-						if(s_call) { s_call.call(this); }
-						break;
-					case (!s.data && !!s.ajax) || (!!s.data && !!s.ajax && obj && obj !== -1):
-						error_func = function (x, t, e) {
-							var ef = this.get_settings().json_data.ajax.error; 
-							if(ef) { ef.call(this, x, t, e); }
-							if(obj != -1 && obj.length) {
-								obj.children("a.jstree-loading").removeClass("jstree-loading");
-								obj.removeData("jstree_is_loading");
-								if(t === "success" && s.correct_state) { this.correct_state(obj); }
-							}
-							else {
-								if(t === "success" && s.correct_state) { this.get_container().children("ul").empty(); }
-							}
-							if(e_call) { e_call.call(this); }
-						};
-						success_func = function (d, t, x) {
-							var sf = this.get_settings().json_data.ajax.success; 
-							if(sf) { d = sf.call(this,d,t,x) || d; }
-							if(d === "" || (d && d.toString && d.toString().replace(/^[\s\n]+$/,"") === "") || (!$.isArray(d) && !$.isPlainObject(d))) {
-								return error_func.call(this, x, t, "");
-							}
-							d = this._parse_json(d, obj);
-							if(d) {
-								if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
-								else { obj.append(d).children("a.jstree-loading").removeClass("jstree-loading"); obj.removeData("jstree_is_loading"); }
-								this.clean_node(obj);
-								if(s_call) { s_call.call(this); }
-							}
-							else {
-								if(obj === -1 || !obj) {
-									if(s.correct_state) { 
-										this.get_container().children("ul").empty(); 
-										if(s_call) { s_call.call(this); }
-									}
-								}
-								else {
-									obj.children("a.jstree-loading").removeClass("jstree-loading");
-									obj.removeData("jstree_is_loading");
-									if(s.correct_state) { 
-										this.correct_state(obj);
-										if(s_call) { s_call.call(this); } 
-									}
-								}
-							}
-						};
-						s.ajax.context = this;
-						s.ajax.error = error_func;
-						s.ajax.success = success_func;
-						if(!s.ajax.dataType) { s.ajax.dataType = "json"; }
-						if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, obj); }
-						if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, obj); }
-						$.ajax(s.ajax);
-						break;
-				}
-			},
-			_parse_json : function (js, obj, is_callback) {
-				var d = false, 
-					p = this._get_settings(),
-					s = p.json_data,
-					t = p.core.html_titles,
-					tmp, i, j, ul1, ul2;
+                    if(obj && obj !== -1) {
+                        if(obj.data("jstree_is_loading")) { return; }
+                        else { obj.data("jstree_is_loading",true); }
+                    }
+                    switch(!0) {
+                        case (!s.data && !s.ajax): throw "Neither data nor ajax settings supplied.";
+                        // function option added here for easier model integration (also supporting async - see callback)
+                        case ($.isFunction(s.data)):
+                            s.data.call(this, obj, $.proxy(function (d) {
+                                d = this._parse_json(d, obj);
+                                if(!d) {
+                                    if(obj === -1 || !obj) {
+                                        if(s.correct_state) { this.get_container().children("ul").empty(); }
+                                    }
+                                    else {
+                                        obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                        obj.removeData("jstree_is_loading");
+                                        if(s.correct_state) { this.correct_state(obj); }
+                                    }
+                                    if(e_call) { e_call.call(this); }
+                                }
+                                else {
+                                    if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
+                                    else { obj.append(d).children("a.jstree-loading").removeClass("jstree-loading"); obj.removeData("jstree_is_loading"); }
+                                    this.clean_node(obj);
+                                    if(s_call) { s_call.call(this); }
+                                }
+                            }, this));
+                            break;
+                        case (!!s.data && !s.ajax) || (!!s.data && !!s.ajax && (!obj || obj === -1)):
+                            if(!obj || obj == -1) {
+                                d = this._parse_json(s.data, obj);
+                                if(d) {
+                                    this.get_container().children("ul").empty().append(d.children());
+                                    this.clean_node();
+                                }
+                                else {
+                                    if(s.correct_state) { this.get_container().children("ul").empty(); }
+                                }
+                            }
+                            if(s_call) { s_call.call(this); }
+                            break;
+                        case (!s.data && !!s.ajax) || (!!s.data && !!s.ajax && obj && obj !== -1):
+                            error_func = function (x, t, e) {
+                                var ef = this.get_settings().json_data.ajax.error;
+                                if(ef) { ef.call(this, x, t, e); }
+                                if(obj != -1 && obj.length) {
+                                    obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                    obj.removeData("jstree_is_loading");
+                                    if(t === "success" && s.correct_state) { this.correct_state(obj); }
+                                }
+                                else {
+                                    if(t === "success" && s.correct_state) { this.get_container().children("ul").empty(); }
+                                }
+                                if(e_call) { e_call.call(this); }
+                            };
+                            success_func = function (d, t, x) {
+                                var sf = this.get_settings().json_data.ajax.success;
+                                if(sf) { d = sf.call(this,d,t,x) || d; }
+                                if(d === "" || (d && d.toString && d.toString().replace(/^[\s\n]+$/,"") === "") || (!$.isArray(d) && !$.isPlainObject(d))) {
+                                    return error_func.call(this, x, t, "");
+                                }
+                                d = this._parse_json(d, obj);
+                                if(d) {
+                                    if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
+                                    else { obj.append(d).children("a.jstree-loading").removeClass("jstree-loading"); obj.removeData("jstree_is_loading"); }
+                                    this.clean_node(obj);
+                                    if(s_call) { s_call.call(this); }
+                                }
+                                else {
+                                    if(obj === -1 || !obj) {
+                                        if(s.correct_state) {
+                                            this.get_container().children("ul").empty();
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                    else {
+                                        obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                        obj.removeData("jstree_is_loading");
+                                        if(s.correct_state) {
+                                            this.correct_state(obj);
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                }
+                            };
+                            s.ajax.context = this;
+                            s.ajax.error = error_func;
+                            s.ajax.success = success_func;
+                            if(!s.ajax.dataType) { s.ajax.dataType = "json"; }
+                            if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, obj); }
+                            if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, obj); }
+                            $.ajax(s.ajax);
+                            break;
+                    }
+                },
+                _parse_json : function (js, obj, is_callback) {
+                    var d = false,
+                        p = this._get_settings(),
+                        s = p.json_data,
+                        t = p.core.html_titles,
+                        tmp, i, j, ul1, ul2;
 
-				if(!js) { return d; }
-				if(s.progressive_unload && obj && obj !== -1) { 
-					obj.data("jstree_children", d);
-				}
-				if($.isArray(js)) {
-					d = $('<ul>');
-					if(!js.length) { return false; }
-					for(i = 0, j = js.length; i < j; i++) {
-						tmp = this._parse_json(js[i], obj, true);
-						if(tmp.length) {
-							d = d.append(tmp);
-						}
-					}
-					d = d.children();
-				}
-				else {
-					if(typeof js == "string") { js = { data : js }; }
-					if(!js.data && js.data !== "") { return d; }
-					d = $("<li />");
-					if(js.attr) { d.attr(js.attr); }
-					if(js.metadata) { d.data(js.metadata); }
-					if(js.state) { d.addClass("jstree-" + js.state); }
-					if(!$.isArray(js.data)) { tmp = js.data; js.data = []; js.data.push(tmp); }
-					$.each(js.data, function (i, m) {
-						tmp = $("<a />");
-						if($.isFunction(m)) { m = m.call(this, js); }
-						if(typeof m == "string") { tmp.attr('href','#')[ t ? "html" : "text" ](m); }
-						else {
-							if(!m.attr) { m.attr = {}; }
-							if(!m.attr.href) { m.attr.href = '#'; }
-							tmp.attr(m.attr)[ t ? "html" : "text" ](m.title);
-							if(m.language) { tmp.addClass(m.language); }
-						}
-						tmp.prepend("<ins class='jstree-icon'>&#160;</ins>");
-						if(!m.icon && js.icon) { m.icon = js.icon; }
-						if(m.icon) { 
-							if(m.icon.indexOf("/") === -1) { tmp.children("ins").addClass(m.icon); }
-							else { tmp.children("ins").css("background","url('" + m.icon + "') center center no-repeat"); }
-						}
-						d.append(tmp);
-					});
-					d.prepend("<ins class='jstree-icon'>&#160;</ins>");
-					if(js.children) { 
-						if(s.progressive_render && js.state !== "open") {
-							d.addClass("jstree-closed").data("jstree_children", js.children);
-						}
-						else {
-							if(s.progressive_unload) { d.data("jstree_children", js.children); }
-							if($.isArray(js.children) && js.children.length) {
-								tmp = this._parse_json(js.children, obj, true);
-								if(tmp.length) {
-									ul2 = $("<ul />");
-									ul2.append(tmp);
-									d.append(ul2);
-								}
-							}
-						}
-					}
-				}
-				if(!is_callback) {
-					ul1 = $("<ul />");
-					ul1.append(d);
-					d = ul1;
-				}
-				return d;
-			},
-			get_json : function (obj, li_attr, a_attr, is_callback) {
-				var result = [], 
-					s = this._get_settings(), 
-					_this = this,
-					tmp1, tmp2, li, a, t, lang;
-				obj = this._get_node(obj);
-				if(!obj || obj === -1) { obj = this.get_container().find("> ul > li"); }
-				li_attr = $.isArray(li_attr) ? li_attr : [ "id", "class" ];
-				if(!is_callback && this.data.types) { li_attr.push(s.types.type_attr); }
-				a_attr = $.isArray(a_attr) ? a_attr : [ ];
+                    if(!js) { return d; }
+                    if(s.progressive_unload && obj && obj !== -1) {
+                        obj.data("jstree_children", d);
+                    }
+                    if($.isArray(js)) {
+                        d = $('<ul>');
+                        if(!js.length) { return false; }
+                        for(i = 0, j = js.length; i < j; i++) {
+                            tmp = this._parse_json(js[i], obj, true);
+                            if(tmp.length) {
+                                d = d.append(tmp);
+                            }
+                        }
+                        d = d.children();
+                    }
+                    else {
+                        if(typeof js == "string") { js = { data : js }; }
+                        if(!js.data && js.data !== "") { return d; }
+                        d = $("<li />");
+                        if(js.attr) { d.attr(js.attr); }
+                        if(js.metadata) { d.data(js.metadata); }
+                        if(js.state) { d.addClass("jstree-" + js.state); }
+                        if(!$.isArray(js.data)) { tmp = js.data; js.data = []; js.data.push(tmp); }
+                        $.each(js.data, function (i, m) {
+                            tmp = $("<a />");
+                            if($.isFunction(m)) { m = m.call(this, js); }
+                            if(typeof m == "string") { tmp.attr('href','#')[ t ? "html" : "text" ](m); }
+                            else {
+                                if(!m.attr) { m.attr = {}; }
+                                if(!m.attr.href) { m.attr.href = '#'; }
+                                tmp.attr(m.attr)[ t ? "html" : "text" ](m.title);
+                                if(m.language) { tmp.addClass(m.language); }
+                            }
+                            tmp.prepend("<ins class='jstree-icon'>&#160;</ins>");
+                            if(!m.icon && js.icon) { m.icon = js.icon; }
+                            if(m.icon) {
+                                if(m.icon.indexOf("/") === -1) { tmp.children("ins").addClass(m.icon); }
+                                else { tmp.children("ins").css("background","url('" + m.icon + "') center center no-repeat"); }
+                            }
+                            d.append(tmp);
+                        });
+                        d.prepend("<ins class='jstree-icon'>&#160;</ins>");
+                        if(js.children) {
+                            if(s.progressive_render && js.state !== "open") {
+                                d.addClass("jstree-closed").data("jstree_children", js.children);
+                            }
+                            else {
+                                if(s.progressive_unload) { d.data("jstree_children", js.children); }
+                                if($.isArray(js.children) && js.children.length) {
+                                    tmp = this._parse_json(js.children, obj, true);
+                                    if(tmp.length) {
+                                        ul2 = $("<ul />");
+                                        ul2.append(tmp);
+                                        d.append(ul2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(!is_callback) {
+                        ul1 = $("<ul />");
+                        ul1.append(d);
+                        d = ul1;
+                    }
+                    return d;
+                },
+                get_json : function (obj, li_attr, a_attr, is_callback) {
+                    var result = [],
+                        s = this._get_settings(),
+                        _this = this,
+                        tmp1, tmp2, li, a, t, lang;
+                    obj = this._get_node(obj);
+                    if(!obj || obj === -1) { obj = this.get_container().find("> ul > li"); }
+                    li_attr = $.isArray(li_attr) ? li_attr : [ "id", "class" ];
+                    if(!is_callback && this.data.types) { li_attr.push(s.types.type_attr); }
+                    a_attr = $.isArray(a_attr) ? a_attr : [ ];
 
-				obj.each(function () {
-					li = $(this);
-					tmp1 = { data : [] };
-					if(li_attr.length) { tmp1.attr = { }; }
-					$.each(li_attr, function (i, v) { 
-						tmp2 = li.attr(v); 
-						if(tmp2 && tmp2.length && tmp2.replace(/jstree[^ ]*/ig,'').length) {
-							tmp1.attr[v] = (" " + tmp2).replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,""); 
-						}
-					});
-					if(li.hasClass("jstree-open")) { tmp1.state = "open"; }
-					if(li.hasClass("jstree-closed")) { tmp1.state = "closed"; }
-					if(li.data()) { tmp1.metadata = li.data(); }
-					a = li.children("a");
-					a.each(function () {
-						t = $(this);
-						if(
-							a_attr.length || 
-							$.inArray("languages", s.plugins) !== -1 || 
-							t.children("ins").get(0).style.backgroundImage.length || 
-							(t.children("ins").get(0).className && t.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').length)
-						) { 
-							lang = false;
-							if($.inArray("languages", s.plugins) !== -1 && $.isArray(s.languages) && s.languages.length) {
-								$.each(s.languages, function (l, lv) {
-									if(t.hasClass(lv)) {
-										lang = lv;
-										return false;
-									}
-								});
-							}
-							tmp2 = { attr : { }, title : _this.get_text(t, lang) }; 
-							$.each(a_attr, function (k, z) {
-								tmp2.attr[z] = (" " + (t.attr(z) || "")).replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"");
-							});
-							if($.inArray("languages", s.plugins) !== -1 && $.isArray(s.languages) && s.languages.length) {
-								$.each(s.languages, function (k, z) {
-									if(t.hasClass(z)) { tmp2.language = z; return true; }
-								});
-							}
-							if(t.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/^\s+$/ig,"").length) {
-								tmp2.icon = t.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"");
-							}
-							if(t.children("ins").get(0).style.backgroundImage.length) {
-								tmp2.icon = t.children("ins").get(0).style.backgroundImage.replace("url(","").replace(")","");
-							}
-						}
-						else {
-							tmp2 = _this.get_text(t);
-						}
-						if(a.length > 1) { tmp1.data.push(tmp2); }
-						else { tmp1.data = tmp2; }
-					});
-					li = li.find("> ul > li");
-					if(li.length) { tmp1.children = _this.get_json(li, li_attr, a_attr, true); }
-					result.push(tmp1);
-				});
-				return result;
-			}
-		}
-	});
-})(jQuery);
+                    obj.each(function () {
+                        li = $(this);
+                        tmp1 = { data : [] };
+                        if(li_attr.length) { tmp1.attr = { }; }
+                        $.each(li_attr, function (i, v) {
+                            tmp2 = li.attr(v);
+                            if(tmp2 && tmp2.length && tmp2.replace(/jstree[^ ]*/ig,'').length) {
+                                tmp1.attr[v] = (" " + tmp2).replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"");
+                            }
+                        });
+                        if(li.hasClass("jstree-open")) { tmp1.state = "open"; }
+                        if(li.hasClass("jstree-closed")) { tmp1.state = "closed"; }
+                        if(li.data()) { tmp1.metadata = li.data(); }
+                        a = li.children("a");
+                        a.each(function () {
+                            t = $(this);
+                            if(
+                                a_attr.length ||
+                                    $.inArray("languages", s.plugins) !== -1 ||
+                                    t.children("ins").get(0).style.backgroundImage.length ||
+                                    (t.children("ins").get(0).className && t.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').length)
+                                ) {
+                                lang = false;
+                                if($.inArray("languages", s.plugins) !== -1 && $.isArray(s.languages) && s.languages.length) {
+                                    $.each(s.languages, function (l, lv) {
+                                        if(t.hasClass(lv)) {
+                                            lang = lv;
+                                            return false;
+                                        }
+                                    });
+                                }
+                                tmp2 = { attr : { }, title : _this.get_text(t, lang) };
+                                $.each(a_attr, function (k, z) {
+                                    tmp2.attr[z] = (" " + (t.attr(z) || "")).replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"");
+                                });
+                                if($.inArray("languages", s.plugins) !== -1 && $.isArray(s.languages) && s.languages.length) {
+                                    $.each(s.languages, function (k, z) {
+                                        if(t.hasClass(z)) { tmp2.language = z; return true; }
+                                    });
+                                }
+                                if(t.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/^\s+$/ig,"").length) {
+                                    tmp2.icon = t.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"");
+                                }
+                                if(t.children("ins").get(0).style.backgroundImage.length) {
+                                    tmp2.icon = t.children("ins").get(0).style.backgroundImage.replace("url(","").replace(")","");
+                                }
+                            }
+                            else {
+                                tmp2 = _this.get_text(t);
+                            }
+                            if(a.length > 1) { tmp1.data.push(tmp2); }
+                            else { tmp1.data = tmp2; }
+                        });
+                        li = li.find("> ul > li");
+                        if(li.length) { tmp1.children = _this.get_json(li, li_attr, a_attr, true); }
+                        result.push(tmp1);
+                    });
+                    return result;
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree languages plugin
- * Adds support for multiple language versions in one tree
- * This basically allows for many titles coexisting in one node, but only one of them being visible at any given time
- * This is useful for maintaining the same structure in many languages (hence the name of the plugin)
- */
-(function ($) {
-	var sh = false;
-	$.jstree.plugin("languages", {
-		__init : function () { this._load_css();  },
-		defaults : [],
-		_fn : {
-			set_lang : function (i) { 
-				var langs = this._get_settings().languages,
-					st = false,
-					selector = ".jstree-" + this.get_index() + ' a';
-				if(!$.isArray(langs) || langs.length === 0) { return false; }
-				if($.inArray(i,langs) == -1) {
-					if(!!langs[i]) { i = langs[i]; }
-					else { return false; }
-				}
-				if(i == this.data.languages.current_language) { return true; }
-				st = $.vakata.css.get_css(selector + "." + this.data.languages.current_language, false, sh);
-				if(st !== false) { st.style.display = "none"; }
-				st = $.vakata.css.get_css(selector + "." + i, false, sh);
-				if(st !== false) { st.style.display = ""; }
-				this.data.languages.current_language = i;
-				this.__callback(i);
-				return true;
-			},
-			get_lang : function () {
-				return this.data.languages.current_language;
-			},
-			_get_string : function (key, lang) {
-				var langs = this._get_settings().languages,
-					s = this._get_settings().core.strings;
-				if($.isArray(langs) && langs.length) {
-					lang = (lang && $.inArray(lang,langs) != -1) ? lang : this.data.languages.current_language;
-				}
-				if(s[lang] && s[lang][key]) { return s[lang][key]; }
-				if(s[key]) { return s[key]; }
-				return key;
-			},
-			get_text : function (obj, lang) {
-				obj = this._get_node(obj) || this.data.ui.last_selected;
-				if(!obj.size()) { return false; }
-				var langs = this._get_settings().languages,
-					s = this._get_settings().core.html_titles;
-				if($.isArray(langs) && langs.length) {
-					lang = (lang && $.inArray(lang,langs) != -1) ? lang : this.data.languages.current_language;
-					obj = obj.children("a." + lang);
-				}
-				else { obj = obj.children("a:eq(0)"); }
-				if(s) {
-					obj = obj.clone();
-					obj.children("INS").remove();
-					return obj.html();
-				}
-				else {
-					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
-					return obj.nodeValue;
-				}
-			},
-			set_text : function (obj, val, lang) {
-				obj = this._get_node(obj) || this.data.ui.last_selected;
-				if(!obj.size()) { return false; }
-				var langs = this._get_settings().languages,
-					s = this._get_settings().core.html_titles,
-					tmp;
-				if($.isArray(langs) && langs.length) {
-					lang = (lang && $.inArray(lang,langs) != -1) ? lang : this.data.languages.current_language;
-					obj = obj.children("a." + lang);
-				}
-				else { obj = obj.children("a:eq(0)"); }
-				if(s) {
-					tmp = obj.children("INS").clone();
-					obj.html(val).prepend(tmp);
-					this.__callback({ "obj" : obj, "name" : val, "lang" : lang });
-					return true;
-				}
-				else {
-					obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
-					this.__callback({ "obj" : obj, "name" : val, "lang" : lang });
-					return (obj.nodeValue = val);
-				}
-			},
-			_load_css : function () {
-				var langs = this._get_settings().languages,
-					str = "/* languages css */",
-					selector = ".jstree-" + this.get_index() + ' a',
-					ln;
-				if($.isArray(langs) && langs.length) {
-					this.data.languages.current_language = langs[0];
-					for(ln = 0; ln < langs.length; ln++) {
-						str += selector + "." + langs[ln] + " {";
-						if(langs[ln] != this.data.languages.current_language) { str += " display:none; "; }
-						str += " } ";
-					}
-					sh = $.vakata.css.add_sheet({ 'str' : str, 'title' : "jstree-languages" });
-				}
-			},
-			create_node : function (obj, position, js, callback) {
-				var t = this.__call_old(true, obj, position, js, function (t) {
-					var langs = this._get_settings().languages,
-						a = t.children("a"),
-						ln;
-					if($.isArray(langs) && langs.length) {
-						for(ln = 0; ln < langs.length; ln++) {
-							if(!a.is("." + langs[ln])) {
-								t.append(a.eq(0).clone().removeClass(langs.join(" ")).addClass(langs[ln]));
-							}
-						}
-						a.not("." + langs.join(", .")).remove();
-					}
-					if(callback) { callback.call(this, t); }
-				});
-				return t;
-			}
-		}
-	});
-})(jQuery);
+    /* 
+     * jsTree languages plugin
+     * Adds support for multiple language versions in one tree
+     * This basically allows for many titles coexisting in one node, but only one of them being visible at any given time
+     * This is useful for maintaining the same structure in many languages (hence the name of the plugin)
+     */
+    (function ($) {
+        var sh = false;
+        $.jstree.plugin("languages", {
+            __init : function () { this._load_css();  },
+            defaults : [],
+            _fn : {
+                set_lang : function (i) {
+                    var langs = this._get_settings().languages,
+                        st = false,
+                        selector = ".jstree-" + this.get_index() + ' a';
+                    if(!$.isArray(langs) || langs.length === 0) { return false; }
+                    if($.inArray(i,langs) == -1) {
+                        if(!!langs[i]) { i = langs[i]; }
+                        else { return false; }
+                    }
+                    if(i == this.data.languages.current_language) { return true; }
+                    st = $.vakata.css.get_css(selector + "." + this.data.languages.current_language, false, sh);
+                    if(st !== false) { st.style.display = "none"; }
+                    st = $.vakata.css.get_css(selector + "." + i, false, sh);
+                    if(st !== false) { st.style.display = ""; }
+                    this.data.languages.current_language = i;
+                    this.__callback(i);
+                    return true;
+                },
+                get_lang : function () {
+                    return this.data.languages.current_language;
+                },
+                _get_string : function (key, lang) {
+                    var langs = this._get_settings().languages,
+                        s = this._get_settings().core.strings;
+                    if($.isArray(langs) && langs.length) {
+                        lang = (lang && $.inArray(lang,langs) != -1) ? lang : this.data.languages.current_language;
+                    }
+                    if(s[lang] && s[lang][key]) { return s[lang][key]; }
+                    if(s[key]) { return s[key]; }
+                    return key;
+                },
+                get_text : function (obj, lang) {
+                    obj = this._get_node(obj) || this.data.ui.last_selected;
+                    if(!obj.size()) { return false; }
+                    var langs = this._get_settings().languages,
+                        s = this._get_settings().core.html_titles;
+                    if($.isArray(langs) && langs.length) {
+                        lang = (lang && $.inArray(lang,langs) != -1) ? lang : this.data.languages.current_language;
+                        obj = obj.children("a." + lang);
+                    }
+                    else { obj = obj.children("a:eq(0)"); }
+                    if(s) {
+                        obj = obj.clone();
+                        obj.children("INS").remove();
+                        return obj.html();
+                    }
+                    else {
+                        obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
+                        return obj.nodeValue;
+                    }
+                },
+                set_text : function (obj, val, lang) {
+                    obj = this._get_node(obj) || this.data.ui.last_selected;
+                    if(!obj.size()) { return false; }
+                    var langs = this._get_settings().languages,
+                        s = this._get_settings().core.html_titles,
+                        tmp;
+                    if($.isArray(langs) && langs.length) {
+                        lang = (lang && $.inArray(lang,langs) != -1) ? lang : this.data.languages.current_language;
+                        obj = obj.children("a." + lang);
+                    }
+                    else { obj = obj.children("a:eq(0)"); }
+                    if(s) {
+                        tmp = obj.children("INS").clone();
+                        obj.html(val).prepend(tmp);
+                        this.__callback({ "obj" : obj, "name" : val, "lang" : lang });
+                        return true;
+                    }
+                    else {
+                        obj = obj.contents().filter(function() { return this.nodeType == 3; })[0];
+                        this.__callback({ "obj" : obj, "name" : val, "lang" : lang });
+                        return (obj.nodeValue = val);
+                    }
+                },
+                _load_css : function () {
+                    var langs = this._get_settings().languages,
+                        str = "/* languages css */",
+                        selector = ".jstree-" + this.get_index() + ' a',
+                        ln;
+                    if($.isArray(langs) && langs.length) {
+                        this.data.languages.current_language = langs[0];
+                        for(ln = 0; ln < langs.length; ln++) {
+                            str += selector + "." + langs[ln] + " {";
+                            if(langs[ln] != this.data.languages.current_language) { str += " display:none; "; }
+                            str += " } ";
+                        }
+                        sh = $.vakata.css.add_sheet({ 'str' : str, 'title' : "jstree-languages" });
+                    }
+                },
+                create_node : function (obj, position, js, callback) {
+                    var t = this.__call_old(true, obj, position, js, function (t) {
+                        var langs = this._get_settings().languages,
+                            a = t.children("a"),
+                            ln;
+                        if($.isArray(langs) && langs.length) {
+                            for(ln = 0; ln < langs.length; ln++) {
+                                if(!a.is("." + langs[ln])) {
+                                    t.append(a.eq(0).clone().removeClass(langs.join(" ")).addClass(langs[ln]));
+                                }
+                            }
+                            a.not("." + langs.join(", .")).remove();
+                        }
+                        if(callback) { callback.call(this, t); }
+                    });
+                    return t;
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/*
- * jsTree cookies plugin
- * Stores the currently opened/selected nodes in a cookie and then restores them
- * Depends on the jquery.cookie plugin
- */
-(function ($) {
-	$.jstree.plugin("cookies", {
-		__init : function () {
-			if(typeof $.cookie === "undefined") { throw "jsTree cookie: jQuery cookie plugin not included."; }
+    /*
+     * jsTree cookies plugin
+     * Stores the currently opened/selected nodes in a cookie and then restores them
+     * Depends on the jquery.cookie plugin
+     */
+    (function ($) {
+        $.jstree.plugin("cookies", {
+            __init : function () {
+                if(typeof $.cookie === "undefined") { throw "jsTree cookie: jQuery cookie plugin not included."; }
 
-			var s = this._get_settings().cookies,
-				tmp;
-			if(!!s.save_loaded) {
-				tmp = $.cookie(s.save_loaded);
-				if(tmp && tmp.length) { this.data.core.to_load = tmp.split(","); }
-			}
-			if(!!s.save_opened) {
-				tmp = $.cookie(s.save_opened);
-				if(tmp && tmp.length) { this.data.core.to_open = tmp.split(","); }
-			}
-			if(!!s.save_selected) {
-				tmp = $.cookie(s.save_selected);
-				if(tmp && tmp.length && this.data.ui) { this.data.ui.to_select = tmp.split(","); }
-			}
-			this.get_container()
-				.one( ( this.data.ui ? "reselect" : "reopen" ) + ".jstree", $.proxy(function () {
-					this.get_container()
-						.bind("open_node.jstree close_node.jstree select_node.jstree deselect_node.jstree", $.proxy(function (e) { 
-								if(this._get_settings().cookies.auto_save) { this.save_cookie((e.handleObj.namespace + e.handleObj.type).replace("jstree","")); }
-							}, this));
-				}, this));
-		},
-		defaults : {
-			save_loaded		: "jstree_load",
-			save_opened		: "jstree_open",
-			save_selected	: "jstree_select",
-			auto_save		: true,
-			cookie_options	: {}
-		},
-		_fn : {
-			save_cookie : function (c) {
-				if(this.data.core.refreshing) { return; }
-				var s = this._get_settings().cookies;
-				if(!c) { // if called manually and not by event
-					if(s.save_loaded) {
-						this.save_loaded();
-						$.cookie(s.save_loaded, this.data.core.to_load.join(","), s.cookie_options);
-					}
-					if(s.save_opened) {
-						this.save_opened();
-						$.cookie(s.save_opened, this.data.core.to_open.join(","), s.cookie_options);
-					}
-					if(s.save_selected && this.data.ui) {
-						this.save_selected();
-						$.cookie(s.save_selected, this.data.ui.to_select.join(","), s.cookie_options);
-					}
-					return;
-				}
-				switch(c) {
-					case "open_node":
-					case "close_node":
-						if(!!s.save_opened) { 
-							this.save_opened(); 
-							$.cookie(s.save_opened, this.data.core.to_open.join(","), s.cookie_options); 
-						}
-						if(!!s.save_loaded) { 
-							this.save_loaded(); 
-							$.cookie(s.save_loaded, this.data.core.to_load.join(","), s.cookie_options); 
-						}
-						break;
-					case "select_node":
-					case "deselect_node":
-						if(!!s.save_selected && this.data.ui) { 
-							this.save_selected(); 
-							$.cookie(s.save_selected, this.data.ui.to_select.join(","), s.cookie_options); 
-						}
-						break;
-				}
-			}
-		}
-	});
-	// include cookies by default
-	// $.jstree.defaults.plugins.push("cookies");
-})(jQuery);
+                var s = this._get_settings().cookies,
+                    tmp;
+                if(!!s.save_loaded) {
+                    tmp = $.cookie(s.save_loaded);
+                    if(tmp && tmp.length) { this.data.core.to_load = tmp.split(","); }
+                }
+                if(!!s.save_opened) {
+                    tmp = $.cookie(s.save_opened);
+                    if(tmp && tmp.length) { this.data.core.to_open = tmp.split(","); }
+                }
+                if(!!s.save_selected) {
+                    tmp = $.cookie(s.save_selected);
+                    if(tmp && tmp.length && this.data.ui) { this.data.ui.to_select = tmp.split(","); }
+                }
+                this.get_container()
+                    .one( ( this.data.ui ? "reselect" : "reopen" ) + ".jstree", $.proxy(function () {
+                        this.get_container()
+                            .bind("open_node.jstree close_node.jstree select_node.jstree deselect_node.jstree", $.proxy(function (e) {
+                                if(this._get_settings().cookies.auto_save) { this.save_cookie((e.handleObj.namespace + e.handleObj.type).replace("jstree","")); }
+                            }, this));
+                    }, this));
+            },
+            defaults : {
+                save_loaded		: "jstree_load",
+                save_opened		: "jstree_open",
+                save_selected	: "jstree_select",
+                auto_save		: true,
+                cookie_options	: {}
+            },
+            _fn : {
+                save_cookie : function (c) {
+                    if(this.data.core.refreshing) { return; }
+                    var s = this._get_settings().cookies;
+                    if(!c) { // if called manually and not by event
+                        if(s.save_loaded) {
+                            this.save_loaded();
+                            $.cookie(s.save_loaded, this.data.core.to_load.join(","), s.cookie_options);
+                        }
+                        if(s.save_opened) {
+                            this.save_opened();
+                            $.cookie(s.save_opened, this.data.core.to_open.join(","), s.cookie_options);
+                        }
+                        if(s.save_selected && this.data.ui) {
+                            this.save_selected();
+                            $.cookie(s.save_selected, this.data.ui.to_select.join(","), s.cookie_options);
+                        }
+                        return;
+                    }
+                    switch(c) {
+                        case "open_node":
+                        case "close_node":
+                            if(!!s.save_opened) {
+                                this.save_opened();
+                                $.cookie(s.save_opened, this.data.core.to_open.join(","), s.cookie_options);
+                            }
+                            if(!!s.save_loaded) {
+                                this.save_loaded();
+                                $.cookie(s.save_loaded, this.data.core.to_load.join(","), s.cookie_options);
+                            }
+                            break;
+                        case "select_node":
+                        case "deselect_node":
+                            if(!!s.save_selected && this.data.ui) {
+                                this.save_selected();
+                                $.cookie(s.save_selected, this.data.ui.to_select.join(","), s.cookie_options);
+                            }
+                            break;
+                    }
+                }
+            }
+        });
+        // include cookies by default
+        // $.jstree.defaults.plugins.push("cookies");
+    })(jQuery);
 //*/
 
-/*
- * jsTree sort plugin
- * Sorts items alphabetically (or using any other function)
- */
-(function ($) {
-	$.jstree.plugin("sort", {
-		__init : function () {
-			this.get_container()
-				.bind("load_node.jstree", $.proxy(function (e, data) {
-						var obj = this._get_node(data.rslt.obj);
-						obj = obj === -1 ? this.get_container().children("ul") : obj.children("ul");
-						this.sort(obj);
-					}, this))
-				.bind("rename_node.jstree create_node.jstree create.jstree", $.proxy(function (e, data) {
-						this.sort(data.rslt.obj.parent());
-					}, this))
-				.bind("move_node.jstree", $.proxy(function (e, data) {
-						var m = data.rslt.np == -1 ? this.get_container() : data.rslt.np;
-						this.sort(m.children("ul"));
-					}, this));
-		},
-		defaults : function (a, b) { return this.get_text(a) > this.get_text(b) ? 1 : -1; },
-		_fn : {
-			sort : function (obj) {
-				var s = this._get_settings().sort,
-					t = this;
-				obj.append($.makeArray(obj.children("li")).sort($.proxy(s, t)));
-				obj.find("> li > ul").each(function() { t.sort($(this)); });
-				this.clean_node(obj);
-			}
-		}
-	});
-})(jQuery);
+    /*
+     * jsTree sort plugin
+     * Sorts items alphabetically (or using any other function)
+     */
+    (function ($) {
+        $.jstree.plugin("sort", {
+            __init : function () {
+                this.get_container()
+                    .bind("load_node.jstree", $.proxy(function (e, data) {
+                        var obj = this._get_node(data.rslt.obj);
+                        obj = obj === -1 ? this.get_container().children("ul") : obj.children("ul");
+                        this.sort(obj);
+                    }, this))
+                    .bind("rename_node.jstree create_node.jstree create.jstree", $.proxy(function (e, data) {
+                        this.sort(data.rslt.obj.parent());
+                    }, this))
+                    .bind("move_node.jstree", $.proxy(function (e, data) {
+                        var m = data.rslt.np == -1 ? this.get_container() : data.rslt.np;
+                        this.sort(m.children("ul"));
+                    }, this));
+            },
+            defaults : function (a, b) { return this.get_text(a) > this.get_text(b) ? 1 : -1; },
+            _fn : {
+                sort : function (obj) {
+                    var s = this._get_settings().sort,
+                        t = this;
+                    obj.append($.makeArray(obj.children("li")).sort($.proxy(s, t)));
+                    obj.find("> li > ul").each(function() { t.sort($(this)); });
+                    this.clean_node(obj);
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/*
- * jsTree DND plugin
- * Drag and drop plugin for moving/copying nodes
- */
-(function ($) {
-	var o = false,
-		r = false,
-		m = false,
-		ml = false,
-		sli = false,
-		sti = false,
-		dir1 = false,
-		dir2 = false,
-		last_pos = false;
-	$.vakata.dnd = {
-		is_down : false,
-		is_drag : false,
-		helper : false,
-		scroll_spd : 10,
-		init_x : 0,
-		init_y : 0,
-		threshold : 5,
-		helper_left : 5,
-		helper_top : 10,
-		user_data : {},
+    /*
+     * jsTree DND plugin
+     * Drag and drop plugin for moving/copying nodes
+     */
+    (function ($) {
+        var o = false,
+            r = false,
+            m = false,
+            ml = false,
+            sli = false,
+            sti = false,
+            dir1 = false,
+            dir2 = false,
+            last_pos = false;
+        $.vakata.dnd = {
+            is_down : false,
+            is_drag : false,
+            helper : false,
+            scroll_spd : 10,
+            init_x : 0,
+            init_y : 0,
+            threshold : 5,
+            helper_left : 5,
+            helper_top : 10,
+            user_data : {},
 
-		drag_start : function (e, data, html) { 
-			if($.vakata.dnd.is_drag) { $.vakata.drag_stop({}); }
-			try {
-				e.currentTarget.unselectable = "on";
-				e.currentTarget.onselectstart = function() { return false; };
-				if(e.currentTarget.style) { e.currentTarget.style.MozUserSelect = "none"; }
-			} catch(err) { }
-			$.vakata.dnd.init_x = e.pageX;
-			$.vakata.dnd.init_y = e.pageY;
-			$.vakata.dnd.user_data = data;
-			$.vakata.dnd.is_down = true;
-			$.vakata.dnd.helper = $("<div id='vakata-dragged' />").html(html); //.fadeTo(10,0.25);
-			$(document).bind("mousemove", $.vakata.dnd.drag);
-			$(document).bind("mouseup", $.vakata.dnd.drag_stop);
-			return false;
-		},
-		drag : function (e) { 
-			if(!$.vakata.dnd.is_down) { return; }
-			if(!$.vakata.dnd.is_drag) {
-				if(Math.abs(e.pageX - $.vakata.dnd.init_x) > 5 || Math.abs(e.pageY - $.vakata.dnd.init_y) > 5) { 
-					$.vakata.dnd.helper.appendTo("body");
-					$.vakata.dnd.is_drag = true;
-					$(document).triggerHandler("drag_start.vakata", { "event" : e, "data" : $.vakata.dnd.user_data });
-				}
-				else { return; }
-			}
+            drag_start : function (e, data, html) {
+                if($.vakata.dnd.is_drag) { $.vakata.drag_stop({}); }
+                try {
+                    e.currentTarget.unselectable = "on";
+                    e.currentTarget.onselectstart = function() { return false; };
+                    if(e.currentTarget.style) { e.currentTarget.style.MozUserSelect = "none"; }
+                } catch(err) { }
+                $.vakata.dnd.init_x = e.pageX;
+                $.vakata.dnd.init_y = e.pageY;
+                $.vakata.dnd.user_data = data;
+                $.vakata.dnd.is_down = true;
+                $.vakata.dnd.helper = $("<div id='vakata-dragged' />").html(html); //.fadeTo(10,0.25);
+                $(document).bind("mousemove", $.vakata.dnd.drag);
+                $(document).bind("mouseup", $.vakata.dnd.drag_stop);
+                return false;
+            },
+            drag : function (e) {
+                if(!$.vakata.dnd.is_down) { return; }
+                if(!$.vakata.dnd.is_drag) {
+                    if(Math.abs(e.pageX - $.vakata.dnd.init_x) > 5 || Math.abs(e.pageY - $.vakata.dnd.init_y) > 5) {
+                        $.vakata.dnd.helper.appendTo("body");
+                        $.vakata.dnd.is_drag = true;
+                        $(document).triggerHandler("drag_start.vakata", { "event" : e, "data" : $.vakata.dnd.user_data });
+                    }
+                    else { return; }
+                }
 
-			// maybe use a scrolling parent element instead of document?
-			if(e.type === "mousemove") { // thought of adding scroll in order to move the helper, but mouse poisition is n/a
-				var d = $(document), t = d.scrollTop(), l = d.scrollLeft();
-				if(e.pageY - t < 20) { 
-					if(sti && dir1 === "down") { clearInterval(sti); sti = false; }
-					if(!sti) { dir1 = "up"; sti = setInterval(function () { $(document).scrollTop($(document).scrollTop() - $.vakata.dnd.scroll_spd); }, 150); }
-				}
-				else { 
-					if(sti && dir1 === "up") { clearInterval(sti); sti = false; }
-				}
-				if($(window).height() - (e.pageY - t) < 20) {
-					if(sti && dir1 === "up") { clearInterval(sti); sti = false; }
-					if(!sti) { dir1 = "down"; sti = setInterval(function () { $(document).scrollTop($(document).scrollTop() + $.vakata.dnd.scroll_spd); }, 150); }
-				}
-				else { 
-					if(sti && dir1 === "down") { clearInterval(sti); sti = false; }
-				}
+                // maybe use a scrolling parent element instead of document?
+                if(e.type === "mousemove") { // thought of adding scroll in order to move the helper, but mouse poisition is n/a
+                    var d = $(document), t = d.scrollTop(), l = d.scrollLeft();
+                    if(e.pageY - t < 20) {
+                        if(sti && dir1 === "down") { clearInterval(sti); sti = false; }
+                        if(!sti) { dir1 = "up"; sti = setInterval(function () { $(document).scrollTop($(document).scrollTop() - $.vakata.dnd.scroll_spd); }, 150); }
+                    }
+                    else {
+                        if(sti && dir1 === "up") { clearInterval(sti); sti = false; }
+                    }
+                    if($(window).height() - (e.pageY - t) < 20) {
+                        if(sti && dir1 === "up") { clearInterval(sti); sti = false; }
+                        if(!sti) { dir1 = "down"; sti = setInterval(function () { $(document).scrollTop($(document).scrollTop() + $.vakata.dnd.scroll_spd); }, 150); }
+                    }
+                    else {
+                        if(sti && dir1 === "down") { clearInterval(sti); sti = false; }
+                    }
 
-				if(e.pageX - l < 20) {
-					if(sli && dir2 === "right") { clearInterval(sli); sli = false; }
-					if(!sli) { dir2 = "left"; sli = setInterval(function () { $(document).scrollLeft($(document).scrollLeft() - $.vakata.dnd.scroll_spd); }, 150); }
-				}
-				else { 
-					if(sli && dir2 === "left") { clearInterval(sli); sli = false; }
-				}
-				if($(window).width() - (e.pageX - l) < 20) {
-					if(sli && dir2 === "left") { clearInterval(sli); sli = false; }
-					if(!sli) { dir2 = "right"; sli = setInterval(function () { $(document).scrollLeft($(document).scrollLeft() + $.vakata.dnd.scroll_spd); }, 150); }
-				}
-				else { 
-					if(sli && dir2 === "right") { clearInterval(sli); sli = false; }
-				}
-			}
+                    if(e.pageX - l < 20) {
+                        if(sli && dir2 === "right") { clearInterval(sli); sli = false; }
+                        if(!sli) { dir2 = "left"; sli = setInterval(function () { $(document).scrollLeft($(document).scrollLeft() - $.vakata.dnd.scroll_spd); }, 150); }
+                    }
+                    else {
+                        if(sli && dir2 === "left") { clearInterval(sli); sli = false; }
+                    }
+                    if($(window).width() - (e.pageX - l) < 20) {
+                        if(sli && dir2 === "left") { clearInterval(sli); sli = false; }
+                        if(!sli) { dir2 = "right"; sli = setInterval(function () { $(document).scrollLeft($(document).scrollLeft() + $.vakata.dnd.scroll_spd); }, 150); }
+                    }
+                    else {
+                        if(sli && dir2 === "right") { clearInterval(sli); sli = false; }
+                    }
+                }
 
-			$.vakata.dnd.helper.css({ left : (e.pageX + $.vakata.dnd.helper_left) + "px", top : (e.pageY + $.vakata.dnd.helper_top) + "px" });
-			$(document).triggerHandler("drag.vakata", { "event" : e, "data" : $.vakata.dnd.user_data });
-		},
-		drag_stop : function (e) {
-			if(sli) { clearInterval(sli); }
-			if(sti) { clearInterval(sti); }
-			$(document).unbind("mousemove", $.vakata.dnd.drag);
-			$(document).unbind("mouseup", $.vakata.dnd.drag_stop);
-			$(document).triggerHandler("drag_stop.vakata", { "event" : e, "data" : $.vakata.dnd.user_data });
-			$.vakata.dnd.helper.remove();
-			$.vakata.dnd.init_x = 0;
-			$.vakata.dnd.init_y = 0;
-			$.vakata.dnd.user_data = {};
-			$.vakata.dnd.is_down = false;
-			$.vakata.dnd.is_drag = false;
-		}
-	};
-	$(function() {
-		var css_string = '#vakata-dragged { display:block; margin:0 0 0 0; padding:4px 4px 4px 24px; position:absolute; top:-2000px; line-height:16px; z-index:10000; } ';
-		$.vakata.css.add_sheet({ str : css_string, title : "vakata" });
-	});
+                $.vakata.dnd.helper.css({ left : (e.pageX + $.vakata.dnd.helper_left) + "px", top : (e.pageY + $.vakata.dnd.helper_top) + "px" });
+                $(document).triggerHandler("drag.vakata", { "event" : e, "data" : $.vakata.dnd.user_data });
+            },
+            drag_stop : function (e) {
+                if(sli) { clearInterval(sli); }
+                if(sti) { clearInterval(sti); }
+                $(document).unbind("mousemove", $.vakata.dnd.drag);
+                $(document).unbind("mouseup", $.vakata.dnd.drag_stop);
+                $(document).triggerHandler("drag_stop.vakata", { "event" : e, "data" : $.vakata.dnd.user_data });
+                $.vakata.dnd.helper.remove();
+                $.vakata.dnd.init_x = 0;
+                $.vakata.dnd.init_y = 0;
+                $.vakata.dnd.user_data = {};
+                $.vakata.dnd.is_down = false;
+                $.vakata.dnd.is_drag = false;
+            }
+        };
+        $(function() {
+            var css_string = '#vakata-dragged { display:block; margin:0 0 0 0; padding:4px 4px 4px 24px; position:absolute; top:-2000px; line-height:16px; z-index:10000; } ';
+            $.vakata.css.add_sheet({ str : css_string, title : "vakata" });
+        });
 
-	$.jstree.plugin("dnd", {
-		__init : function () {
-			this.data.dnd = {
-				active : false,
-				after : false,
-				inside : false,
-				before : false,
-				off : false,
-				prepared : false,
-				w : 0,
-				to1 : false,
-				to2 : false,
-				cof : false,
-				cw : false,
-				ch : false,
-				i1 : false,
-				i2 : false,
-				mto : false
-			};
-			this.get_container()
-				.bind("mouseenter.jstree", $.proxy(function (e) {
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
-							if(this.data.themes) {
-								m.attr("class", "jstree-" + this.data.themes.theme); 
-								if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
-								$.vakata.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme);
-							}
-							//if($(e.currentTarget).find("> ul > li").length === 0) {
-							if(e.currentTarget === e.target && $.vakata.dnd.user_data.obj && $($.vakata.dnd.user_data.obj).length && $($.vakata.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
-								var tr = $.jstree._reference(e.target), dc;
-								if(tr.data.dnd.foreign) {
-									dc = tr._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
-									if(dc === true || dc.inside === true || dc.before === true || dc.after === true) {
-										$.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
-									}
-								}
-								else {
-									tr.prepare_move(o, tr.get_container(), "last");
-									if(tr.check_move()) {
-										$.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
-									}
-								}
-							}
-						}
-					}, this))
-				.bind("mouseup.jstree", $.proxy(function (e) {
-						//if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && $(e.currentTarget).find("> ul > li").length === 0) {
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && e.currentTarget === e.target && $.vakata.dnd.user_data.obj && $($.vakata.dnd.user_data.obj).length && $($.vakata.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
-							var tr = $.jstree._reference(e.currentTarget), dc;
-							if(tr.data.dnd.foreign) {
-								dc = tr._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
-								if(dc === true || dc.inside === true || dc.before === true || dc.after === true) {
-									tr._get_settings().dnd.drag_finish.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
-								}
-							}
-							else {
-								tr.move_node(o, tr.get_container(), "last", e[tr._get_settings().dnd.copy_modifier + "Key"]);
-							}
-						}
-					}, this))
-				.bind("mouseleave.jstree", $.proxy(function (e) {
-						if(e.relatedTarget && e.relatedTarget.id && e.relatedTarget.id === "jstree-marker-line") {
-							return false; 
-						}
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
-							if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-							if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-							if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
-							if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
-							if($.vakata.dnd.helper.children("ins").hasClass("jstree-ok")) {
-								$.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
-							}
-						}
-					}, this))
-				.bind("mousemove.jstree", $.proxy(function (e) {
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
-							var cnt = this.get_container()[0];
+        $.jstree.plugin("dnd", {
+            __init : function () {
+                this.data.dnd = {
+                    active : false,
+                    after : false,
+                    inside : false,
+                    before : false,
+                    off : false,
+                    prepared : false,
+                    w : 0,
+                    to1 : false,
+                    to2 : false,
+                    cof : false,
+                    cw : false,
+                    ch : false,
+                    i1 : false,
+                    i2 : false,
+                    mto : false
+                };
+                this.get_container()
+                    .bind("mouseenter.jstree", $.proxy(function (e) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
+                            if(this.data.themes) {
+                                m.attr("class", "jstree-" + this.data.themes.theme);
+                                if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
+                                $.vakata.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme);
+                            }
+                            //if($(e.currentTarget).find("> ul > li").length === 0) {
+                            if(e.currentTarget === e.target && $.vakata.dnd.user_data.obj && $($.vakata.dnd.user_data.obj).length && $($.vakata.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
+                                var tr = $.jstree._reference(e.target), dc;
+                                if(tr.data.dnd.foreign) {
+                                    dc = tr._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
+                                    if(dc === true || dc.inside === true || dc.before === true || dc.after === true) {
+                                        $.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
+                                    }
+                                }
+                                else {
+                                    tr.prepare_move(o, tr.get_container(), "last");
+                                    if(tr.check_move()) {
+                                        $.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
+                                    }
+                                }
+                            }
+                        }
+                    }, this))
+                    .bind("mouseup.jstree", $.proxy(function (e) {
+                        //if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && $(e.currentTarget).find("> ul > li").length === 0) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && e.currentTarget === e.target && $.vakata.dnd.user_data.obj && $($.vakata.dnd.user_data.obj).length && $($.vakata.dnd.user_data.obj).parents(".jstree:eq(0)")[0] !== e.target) { // node should not be from the same tree
+                            var tr = $.jstree._reference(e.currentTarget), dc;
+                            if(tr.data.dnd.foreign) {
+                                dc = tr._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
+                                if(dc === true || dc.inside === true || dc.before === true || dc.after === true) {
+                                    tr._get_settings().dnd.drag_finish.call(this, { "o" : o, "r" : tr.get_container(), is_root : true });
+                                }
+                            }
+                            else {
+                                tr.move_node(o, tr.get_container(), "last", e[tr._get_settings().dnd.copy_modifier + "Key"]);
+                            }
+                        }
+                    }, this))
+                    .bind("mouseleave.jstree", $.proxy(function (e) {
+                        if(e.relatedTarget && e.relatedTarget.id && e.relatedTarget.id === "jstree-marker-line") {
+                            return false;
+                        }
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
+                            if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+                            if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+                            if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
+                            if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
+                            if($.vakata.dnd.helper.children("ins").hasClass("jstree-ok")) {
+                                $.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
+                            }
+                        }
+                    }, this))
+                    .bind("mousemove.jstree", $.proxy(function (e) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
+                            var cnt = this.get_container()[0];
 
-							// Horizontal scroll
-							if(e.pageX + 24 > this.data.dnd.cof.left + this.data.dnd.cw) {
-								if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-								this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft += $.vakata.dnd.scroll_spd; }, cnt), 100);
-							}
-							else if(e.pageX - 24 < this.data.dnd.cof.left) {
-								if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-								this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft -= $.vakata.dnd.scroll_spd; }, cnt), 100);
-							}
-							else {
-								if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-							}
+                            // Horizontal scroll
+                            if(e.pageX + 24 > this.data.dnd.cof.left + this.data.dnd.cw) {
+                                if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+                                this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft += $.vakata.dnd.scroll_spd; }, cnt), 100);
+                            }
+                            else if(e.pageX - 24 < this.data.dnd.cof.left) {
+                                if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+                                this.data.dnd.i1 = setInterval($.proxy(function () { this.scrollLeft -= $.vakata.dnd.scroll_spd; }, cnt), 100);
+                            }
+                            else {
+                                if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+                            }
 
-							// Vertical scroll
-							if(e.pageY + 24 > this.data.dnd.cof.top + this.data.dnd.ch) {
-								if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-								this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop += $.vakata.dnd.scroll_spd; }, cnt), 100);
-							}
-							else if(e.pageY - 24 < this.data.dnd.cof.top) {
-								if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-								this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop -= $.vakata.dnd.scroll_spd; }, cnt), 100);
-							}
-							else {
-								if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-							}
+                            // Vertical scroll
+                            if(e.pageY + 24 > this.data.dnd.cof.top + this.data.dnd.ch) {
+                                if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+                                this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop += $.vakata.dnd.scroll_spd; }, cnt), 100);
+                            }
+                            else if(e.pageY - 24 < this.data.dnd.cof.top) {
+                                if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+                                this.data.dnd.i2 = setInterval($.proxy(function () { this.scrollTop -= $.vakata.dnd.scroll_spd; }, cnt), 100);
+                            }
+                            else {
+                                if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+                            }
 
-						}
-					}, this))
-				.bind("scroll.jstree", $.proxy(function (e) { 
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && m && ml) {
-							m.hide();
-							ml.hide();
-						}
-					}, this))
-				.delegate("a", "mousedown.jstree", $.proxy(function (e) { 
-						if(e.which === 1) {
-							this.start_drag(e.currentTarget, e);
-							return false;
-						}
-					}, this))
-				.delegate("a", "mouseenter.jstree", $.proxy(function (e) { 
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
-							this.dnd_enter(e.currentTarget);
-						}
-					}, this))
-				.delegate("a", "mousemove.jstree", $.proxy(function (e) { 
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
-							if(!r || !r.length || r.children("a")[0] !== e.currentTarget) {
-								this.dnd_enter(e.currentTarget);
-							}
-							if(typeof this.data.dnd.off.top === "undefined") { this.data.dnd.off = $(e.target).offset(); }
-							this.data.dnd.w = (e.pageY - (this.data.dnd.off.top || 0)) % this.data.core.li_height;
-							if(this.data.dnd.w < 0) { this.data.dnd.w += this.data.core.li_height; }
-							this.dnd_show();
-						}
-					}, this))
-				.delegate("a", "mouseleave.jstree", $.proxy(function (e) { 
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
-							if(e.relatedTarget && e.relatedTarget.id && e.relatedTarget.id === "jstree-marker-line") {
-								return false; 
-							}
-								if(m) { m.hide(); }
-								if(ml) { ml.hide(); }
-							/*
-							var ec = $(e.currentTarget).closest("li"), 
-								er = $(e.relatedTarget).closest("li");
-							if(er[0] !== ec.prev()[0] && er[0] !== ec.next()[0]) {
-								if(m) { m.hide(); }
-								if(ml) { ml.hide(); }
-							}
-							*/
-							this.data.dnd.mto = setTimeout( 
-								(function (t) { return function () { t.dnd_leave(e); }; })(this),
-							0);
-						}
-					}, this))
-				.delegate("a", "mouseup.jstree", $.proxy(function (e) { 
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
-							this.dnd_finish(e);
-						}
-					}, this));
+                        }
+                    }, this))
+                    .bind("scroll.jstree", $.proxy(function (e) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && m && ml) {
+                            m.hide();
+                            ml.hide();
+                        }
+                    }, this))
+                    .delegate("a", "mousedown.jstree", $.proxy(function (e) {
+                        if(e.which === 1) {
+                            this.start_drag(e.currentTarget, e);
+                            return false;
+                        }
+                    }, this))
+                    .delegate("a", "mouseenter.jstree", $.proxy(function (e) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
+                            this.dnd_enter(e.currentTarget);
+                        }
+                    }, this))
+                    .delegate("a", "mousemove.jstree", $.proxy(function (e) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
+                            if(!r || !r.length || r.children("a")[0] !== e.currentTarget) {
+                                this.dnd_enter(e.currentTarget);
+                            }
+                            if(typeof this.data.dnd.off.top === "undefined") { this.data.dnd.off = $(e.target).offset(); }
+                            this.data.dnd.w = (e.pageY - (this.data.dnd.off.top || 0)) % this.data.core.li_height;
+                            if(this.data.dnd.w < 0) { this.data.dnd.w += this.data.core.li_height; }
+                            this.dnd_show();
+                        }
+                    }, this))
+                    .delegate("a", "mouseleave.jstree", $.proxy(function (e) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
+                            if(e.relatedTarget && e.relatedTarget.id && e.relatedTarget.id === "jstree-marker-line") {
+                                return false;
+                            }
+                            if(m) { m.hide(); }
+                            if(ml) { ml.hide(); }
+                            /*
+                             var ec = $(e.currentTarget).closest("li"), 
+                             er = $(e.relatedTarget).closest("li");
+                             if(er[0] !== ec.prev()[0] && er[0] !== ec.next()[0]) {
+                             if(m) { m.hide(); }
+                             if(ml) { ml.hide(); }
+                             }
+                             */
+                            this.data.dnd.mto = setTimeout(
+                                (function (t) { return function () { t.dnd_leave(e); }; })(this),
+                                0);
+                        }
+                    }, this))
+                    .delegate("a", "mouseup.jstree", $.proxy(function (e) {
+                        if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree) {
+                            this.dnd_finish(e);
+                        }
+                    }, this));
 
-			$(document)
-				.bind("drag_stop.vakata", $.proxy(function () {
-						if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
-						if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
-						if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
-						if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
-						this.data.dnd.after		= false;
-						this.data.dnd.before	= false;
-						this.data.dnd.inside	= false;
-						this.data.dnd.off		= false;
-						this.data.dnd.prepared	= false;
-						this.data.dnd.w			= false;
-						this.data.dnd.to1		= false;
-						this.data.dnd.to2		= false;
-						this.data.dnd.i1		= false;
-						this.data.dnd.i2		= false;
-						this.data.dnd.active	= false;
-						this.data.dnd.foreign	= false;
-						if(m) { m.css({ "top" : "-2000px" }); }
-						if(ml) { ml.css({ "top" : "-2000px" }); }
-					}, this))
-				.bind("drag_start.vakata", $.proxy(function (e, data) {
-						if(data.data.jstree) { 
-							var et = $(data.event.target);
-							if(et.closest(".jstree").hasClass("jstree-" + this.get_index())) {
-								this.dnd_enter(et);
-							}
-						}
-					}, this));
-				/*
-				.bind("keydown.jstree-" + this.get_index() + " keyup.jstree-" + this.get_index(), $.proxy(function(e) {
-						if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && !this.data.dnd.foreign) {
-							var h = $.vakata.dnd.helper.children("ins");
-							if(e[this._get_settings().dnd.copy_modifier + "Key"] && h.hasClass("jstree-ok")) {
-								h.parent().html(h.parent().html().replace(/ \(Copy\)$/, "") + " (Copy)");
-							} 
-							else {
-								h.parent().html(h.parent().html().replace(/ \(Copy\)$/, ""));
-							}
-						}
-					}, this)); */
+                $(document)
+                    .bind("drag_stop.vakata", $.proxy(function () {
+                        if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
+                        if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
+                        if(this.data.dnd.i1) { clearInterval(this.data.dnd.i1); }
+                        if(this.data.dnd.i2) { clearInterval(this.data.dnd.i2); }
+                        this.data.dnd.after		= false;
+                        this.data.dnd.before	= false;
+                        this.data.dnd.inside	= false;
+                        this.data.dnd.off		= false;
+                        this.data.dnd.prepared	= false;
+                        this.data.dnd.w			= false;
+                        this.data.dnd.to1		= false;
+                        this.data.dnd.to2		= false;
+                        this.data.dnd.i1		= false;
+                        this.data.dnd.i2		= false;
+                        this.data.dnd.active	= false;
+                        this.data.dnd.foreign	= false;
+                        if(m) { m.css({ "top" : "-2000px" }); }
+                        if(ml) { ml.css({ "top" : "-2000px" }); }
+                    }, this))
+                    .bind("drag_start.vakata", $.proxy(function (e, data) {
+                        if(data.data.jstree) {
+                            var et = $(data.event.target);
+                            if(et.closest(".jstree").hasClass("jstree-" + this.get_index())) {
+                                this.dnd_enter(et);
+                            }
+                        }
+                    }, this));
+                /*
+                 .bind("keydown.jstree-" + this.get_index() + " keyup.jstree-" + this.get_index(), $.proxy(function(e) {
+                 if($.vakata.dnd.is_drag && $.vakata.dnd.user_data.jstree && !this.data.dnd.foreign) {
+                 var h = $.vakata.dnd.helper.children("ins");
+                 if(e[this._get_settings().dnd.copy_modifier + "Key"] && h.hasClass("jstree-ok")) {
+                 h.parent().html(h.parent().html().replace(/ \(Copy\)$/, "") + " (Copy)");
+                 } 
+                 else {
+                 h.parent().html(h.parent().html().replace(/ \(Copy\)$/, ""));
+                 }
+                 }
+                 }, this)); */
 
 
 
-			var s = this._get_settings().dnd;
-			if(s.drag_target) {
-				$(document)
-					.delegate(s.drag_target, "mousedown.jstree-" + this.get_index(), $.proxy(function (e) {
-						o = e.target;
-						$.vakata.dnd.drag_start(e, { jstree : true, obj : e.target }, "<ins class='jstree-icon'></ins>" + $(e.target).text() );
-						if(this.data.themes) { 
-							if(m) { m.attr("class", "jstree-" + this.data.themes.theme); }
-							if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
-							$.vakata.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme); 
-						}
-						$.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
-						var cnt = this.get_container();
-						this.data.dnd.cof = cnt.offset();
-						this.data.dnd.cw = parseInt(cnt.width(),10);
-						this.data.dnd.ch = parseInt(cnt.height(),10);
-						this.data.dnd.foreign = true;
-						e.preventDefault();
-					}, this));
-			}
-			if(s.drop_target) {
-				$(document)
-					.delegate(s.drop_target, "mouseenter.jstree-" + this.get_index(), $.proxy(function (e) {
-							if(this.data.dnd.active && this._get_settings().dnd.drop_check.call(this, { "o" : o, "r" : $(e.target), "e" : e })) {
-								$.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
-							}
-						}, this))
-					.delegate(s.drop_target, "mouseleave.jstree-" + this.get_index(), $.proxy(function (e) {
-							if(this.data.dnd.active) {
-								$.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
-							}
-						}, this))
-					.delegate(s.drop_target, "mouseup.jstree-" + this.get_index(), $.proxy(function (e) {
-							if(this.data.dnd.active && $.vakata.dnd.helper.children("ins").hasClass("jstree-ok")) {
-								this._get_settings().dnd.drop_finish.call(this, { "o" : o, "r" : $(e.target), "e" : e });
-							}
-						}, this));
-			}
-		},
-		defaults : {
-			copy_modifier	: "ctrl",
-			check_timeout	: 100,
-			open_timeout	: 500,
-			drop_target		: ".jstree-drop",
-			drop_check		: function (data) { return true; },
-			drop_finish		: $.noop,
-			drag_target		: ".jstree-draggable",
-			drag_finish		: $.noop,
-			drag_check		: function (data) { return { after : false, before : false, inside : true }; }
-		},
-		_fn : {
-			dnd_prepare : function () {
-				if(!r || !r.length) { return; }
-				this.data.dnd.off = r.offset();
-				if(this._get_settings().core.rtl) {
-					this.data.dnd.off.right = this.data.dnd.off.left + r.width();
-				}
-				if(this.data.dnd.foreign) {
-					var a = this._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : r });
-					this.data.dnd.after = a.after;
-					this.data.dnd.before = a.before;
-					this.data.dnd.inside = a.inside;
-					this.data.dnd.prepared = true;
-					return this.dnd_show();
-				}
-				this.prepare_move(o, r, "before");
-				this.data.dnd.before = this.check_move();
-				this.prepare_move(o, r, "after");
-				this.data.dnd.after = this.check_move();
-				if(this._is_loaded(r)) {
-					this.prepare_move(o, r, "inside");
-					this.data.dnd.inside = this.check_move();
-				}
-				else {
-					this.data.dnd.inside = false;
-				}
-				this.data.dnd.prepared = true;
-				return this.dnd_show();
-			},
-			dnd_show : function () {
-				if(!this.data.dnd.prepared) { return; }
-				var o = ["before","inside","after"],
-					r = false,
-					rtl = this._get_settings().core.rtl,
-					pos;
-				if(this.data.dnd.w < this.data.core.li_height/3) { o = ["before","inside","after"]; }
-				else if(this.data.dnd.w <= this.data.core.li_height*2/3) {
-					o = this.data.dnd.w < this.data.core.li_height/2 ? ["inside","before","after"] : ["inside","after","before"];
-				}
-				else { o = ["after","inside","before"]; }
-				$.each(o, $.proxy(function (i, val) { 
-					if(this.data.dnd[val]) {
-						$.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
-						r = val;
-						return false;
-					}
-				}, this));
-				if(r === false) { $.vakata.dnd.helper.children("ins").attr("class","jstree-invalid"); }
-				
-				pos = rtl ? (this.data.dnd.off.right - 18) : (this.data.dnd.off.left + 10);
-				switch(r) {
-					case "before":
-						m.css({ "left" : pos + "px", "top" : (this.data.dnd.off.top - 6) + "px" }).show();
-						if(ml) { ml.css({ "left" : (pos + 8) + "px", "top" : (this.data.dnd.off.top - 1) + "px" }).show(); }
-						break;
-					case "after":
-						m.css({ "left" : pos + "px", "top" : (this.data.dnd.off.top + this.data.core.li_height - 6) + "px" }).show();
-						if(ml) { ml.css({ "left" : (pos + 8) + "px", "top" : (this.data.dnd.off.top + this.data.core.li_height - 1) + "px" }).show(); }
-						break;
-					case "inside":
-						m.css({ "left" : pos + ( rtl ? -4 : 4) + "px", "top" : (this.data.dnd.off.top + this.data.core.li_height/2 - 5) + "px" }).show();
-						if(ml) { ml.hide(); }
-						break;
-					default:
-						m.hide();
-						if(ml) { ml.hide(); }
-						break;
-				}
-				last_pos = r;
-				return r;
-			},
-			dnd_open : function () {
-				this.data.dnd.to2 = false;
-				this.open_node(r, $.proxy(this.dnd_prepare,this), true);
-			},
-			dnd_finish : function (e) {
-				if(this.data.dnd.foreign) {
-					if(this.data.dnd.after || this.data.dnd.before || this.data.dnd.inside) {
-						this._get_settings().dnd.drag_finish.call(this, { "o" : o, "r" : r, "p" : last_pos });
-					}
-				}
-				else {
-					this.dnd_prepare();
-					this.move_node(o, r, last_pos, e[this._get_settings().dnd.copy_modifier + "Key"]);
-				}
-				o = false;
-				r = false;
-				m.hide();
-				if(ml) { ml.hide(); }
-			},
-			dnd_enter : function (obj) {
-				if(this.data.dnd.mto) { 
-					clearTimeout(this.data.dnd.mto);
-					this.data.dnd.mto = false;
-				}
-				var s = this._get_settings().dnd;
-				this.data.dnd.prepared = false;
-				r = this._get_node(obj);
-				if(s.check_timeout) { 
-					// do the calculations after a minimal timeout (users tend to drag quickly to the desired location)
-					if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
-					this.data.dnd.to1 = setTimeout($.proxy(this.dnd_prepare, this), s.check_timeout); 
-				}
-				else { 
-					this.dnd_prepare(); 
-				}
-				if(s.open_timeout) { 
-					if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
-					if(r && r.length && r.hasClass("jstree-closed")) { 
-						// if the node is closed - open it, then recalculate
-						this.data.dnd.to2 = setTimeout($.proxy(this.dnd_open, this), s.open_timeout);
-					}
-				}
-				else {
-					if(r && r.length && r.hasClass("jstree-closed")) { 
-						this.dnd_open();
-					}
-				}
-			},
-			dnd_leave : function (e) {
-				this.data.dnd.after		= false;
-				this.data.dnd.before	= false;
-				this.data.dnd.inside	= false;
-				$.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
-				m.hide();
-				if(ml) { ml.hide(); }
-				if(r && r[0] === e.target.parentNode) {
-					if(this.data.dnd.to1) {
-						clearTimeout(this.data.dnd.to1);
-						this.data.dnd.to1 = false;
-					}
-					if(this.data.dnd.to2) {
-						clearTimeout(this.data.dnd.to2);
-						this.data.dnd.to2 = false;
-					}
-				}
-			},
-			start_drag : function (obj, e) {
-				o = this._get_node(obj);
-				if(this.data.ui && this.is_selected(o)) { o = this._get_node(null, true); }
-				var dt = o.length > 1 ? this._get_string("multiple_selection") : this.get_text(o),
-					cnt = this.get_container();
-				if(!this._get_settings().core.html_titles) { dt = dt.replace(/</ig,"&lt;").replace(/>/ig,"&gt;"); }
-				$.vakata.dnd.drag_start(e, { jstree : true, obj : o }, "<ins class='jstree-icon'></ins>" + dt );
-				if(this.data.themes) { 
-					if(m) { m.attr("class", "jstree-" + this.data.themes.theme); }
-					if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
-					$.vakata.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme); 
-				}
-				this.data.dnd.cof = cnt.offset();
-				this.data.dnd.cw = parseInt(cnt.width(),10);
-				this.data.dnd.ch = parseInt(cnt.height(),10);
-				this.data.dnd.active = true;
-			}
-		}
-	});
-	$(function() {
-		var css_string = '' + 
-			'#vakata-dragged ins { display:block; text-decoration:none; width:16px; height:16px; margin:0 0 0 0; padding:0; position:absolute; top:4px; left:4px; ' + 
-			' -moz-border-radius:4px; border-radius:4px; -webkit-border-radius:4px; ' +
-			'} ' + 
-			'#vakata-dragged .jstree-ok { background:green; } ' + 
-			'#vakata-dragged .jstree-invalid { background:red; } ' + 
-			'#jstree-marker { padding:0; margin:0; font-size:12px; overflow:hidden; height:12px; width:8px; position:absolute; top:-30px; z-index:10001; background-repeat:no-repeat; display:none; background-color:transparent; text-shadow:1px 1px 1px white; color:black; line-height:10px; } ' + 
-			'#jstree-marker-line { padding:0; margin:0; line-height:0%; font-size:1px; overflow:hidden; height:1px; width:100px; position:absolute; top:-30px; z-index:10000; background-repeat:no-repeat; display:none; background-color:#456c43; ' + 
-			' cursor:pointer; border:1px solid #eeeeee; border-left:0; -moz-box-shadow: 0px 0px 2px #666; -webkit-box-shadow: 0px 0px 2px #666; box-shadow: 0px 0px 2px #666; ' + 
-			' -moz-border-radius:1px; border-radius:1px; -webkit-border-radius:1px; ' +
-			'}' + 
-			'';
-		$.vakata.css.add_sheet({ str : css_string, title : "jstree" });
-		m = $("<div />").attr({ id : "jstree-marker" }).hide().html("&raquo;")
-			.bind("mouseleave mouseenter", function (e) { 
-				m.hide();
-				ml.hide();
-				e.preventDefault(); 
-				e.stopImmediatePropagation(); 
-				return false; 
-			})
-			.appendTo("body");
-		ml = $("<div />").attr({ id : "jstree-marker-line" }).hide()
-			.bind("mouseup", function (e) { 
-				if(r && r.length) { 
-					r.children("a").trigger(e); 
-					e.preventDefault(); 
-					e.stopImmediatePropagation(); 
-					return false; 
-				} 
-			})
-			.bind("mouseleave", function (e) { 
-				var rt = $(e.relatedTarget);
-				if(rt.is(".jstree") || rt.closest(".jstree").length === 0) {
-					if(r && r.length) { 
-						r.children("a").trigger(e); 
-						m.hide();
-						ml.hide();
-						e.preventDefault(); 
-						e.stopImmediatePropagation(); 
-						return false; 
-					}
-				}
-			})
-			.appendTo("body");
-		$(document).bind("drag_start.vakata", function (e, data) {
-			if(data.data.jstree) { m.show(); if(ml) { ml.show(); } }
-		});
-		$(document).bind("drag_stop.vakata", function (e, data) {
-			if(data.data.jstree) { m.hide(); if(ml) { ml.hide(); } }
-		});
-	});
-})(jQuery);
+                var s = this._get_settings().dnd;
+                if(s.drag_target) {
+                    $(document)
+                        .delegate(s.drag_target, "mousedown.jstree-" + this.get_index(), $.proxy(function (e) {
+                            o = e.target;
+                            $.vakata.dnd.drag_start(e, { jstree : true, obj : e.target }, "<ins class='jstree-icon'></ins>" + $(e.target).text() );
+                            if(this.data.themes) {
+                                if(m) { m.attr("class", "jstree-" + this.data.themes.theme); }
+                                if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
+                                $.vakata.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme);
+                            }
+                            $.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
+                            var cnt = this.get_container();
+                            this.data.dnd.cof = cnt.offset();
+                            this.data.dnd.cw = parseInt(cnt.width(),10);
+                            this.data.dnd.ch = parseInt(cnt.height(),10);
+                            this.data.dnd.foreign = true;
+                            e.preventDefault();
+                        }, this));
+                }
+                if(s.drop_target) {
+                    $(document)
+                        .delegate(s.drop_target, "mouseenter.jstree-" + this.get_index(), $.proxy(function (e) {
+                            if(this.data.dnd.active && this._get_settings().dnd.drop_check.call(this, { "o" : o, "r" : $(e.target), "e" : e })) {
+                                $.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
+                            }
+                        }, this))
+                        .delegate(s.drop_target, "mouseleave.jstree-" + this.get_index(), $.proxy(function (e) {
+                            if(this.data.dnd.active) {
+                                $.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
+                            }
+                        }, this))
+                        .delegate(s.drop_target, "mouseup.jstree-" + this.get_index(), $.proxy(function (e) {
+                            if(this.data.dnd.active && $.vakata.dnd.helper.children("ins").hasClass("jstree-ok")) {
+                                this._get_settings().dnd.drop_finish.call(this, { "o" : o, "r" : $(e.target), "e" : e });
+                            }
+                        }, this));
+                }
+            },
+            defaults : {
+                copy_modifier	: "ctrl",
+                check_timeout	: 100,
+                open_timeout	: 500,
+                drop_target		: ".jstree-drop",
+                drop_check		: function (data) { return true; },
+                drop_finish		: $.noop,
+                drag_target		: ".jstree-draggable",
+                drag_finish		: $.noop,
+                drag_check		: function (data) { return { after : false, before : false, inside : true }; }
+            },
+            _fn : {
+                dnd_prepare : function () {
+                    if(!r || !r.length) { return; }
+                    this.data.dnd.off = r.offset();
+                    if(this._get_settings().core.rtl) {
+                        this.data.dnd.off.right = this.data.dnd.off.left + r.width();
+                    }
+                    if(this.data.dnd.foreign) {
+                        var a = this._get_settings().dnd.drag_check.call(this, { "o" : o, "r" : r });
+                        this.data.dnd.after = a.after;
+                        this.data.dnd.before = a.before;
+                        this.data.dnd.inside = a.inside;
+                        this.data.dnd.prepared = true;
+                        return this.dnd_show();
+                    }
+                    this.prepare_move(o, r, "before");
+                    this.data.dnd.before = this.check_move();
+                    this.prepare_move(o, r, "after");
+                    this.data.dnd.after = this.check_move();
+                    if(this._is_loaded(r)) {
+                        this.prepare_move(o, r, "inside");
+                        this.data.dnd.inside = this.check_move();
+                    }
+                    else {
+                        this.data.dnd.inside = false;
+                    }
+                    this.data.dnd.prepared = true;
+                    return this.dnd_show();
+                },
+                dnd_show : function () {
+                    if(!this.data.dnd.prepared) { return; }
+                    var o = ["before","inside","after"],
+                        r = false,
+                        rtl = this._get_settings().core.rtl,
+                        pos;
+                    if(this.data.dnd.w < this.data.core.li_height/3) { o = ["before","inside","after"]; }
+                    else if(this.data.dnd.w <= this.data.core.li_height*2/3) {
+                        o = this.data.dnd.w < this.data.core.li_height/2 ? ["inside","before","after"] : ["inside","after","before"];
+                    }
+                    else { o = ["after","inside","before"]; }
+                    $.each(o, $.proxy(function (i, val) {
+                        if(this.data.dnd[val]) {
+                            $.vakata.dnd.helper.children("ins").attr("class","jstree-ok");
+                            r = val;
+                            return false;
+                        }
+                    }, this));
+                    if(r === false) { $.vakata.dnd.helper.children("ins").attr("class","jstree-invalid"); }
+
+                    pos = rtl ? (this.data.dnd.off.right - 18) : (this.data.dnd.off.left + 10);
+                    switch(r) {
+                        case "before":
+                            m.css({ "left" : pos + "px", "top" : (this.data.dnd.off.top - 6) + "px" }).show();
+                            if(ml) { ml.css({ "left" : (pos + 8) + "px", "top" : (this.data.dnd.off.top - 1) + "px" }).show(); }
+                            break;
+                        case "after":
+                            m.css({ "left" : pos + "px", "top" : (this.data.dnd.off.top + this.data.core.li_height - 6) + "px" }).show();
+                            if(ml) { ml.css({ "left" : (pos + 8) + "px", "top" : (this.data.dnd.off.top + this.data.core.li_height - 1) + "px" }).show(); }
+                            break;
+                        case "inside":
+                            m.css({ "left" : pos + ( rtl ? -4 : 4) + "px", "top" : (this.data.dnd.off.top + this.data.core.li_height/2 - 5) + "px" }).show();
+                            if(ml) { ml.hide(); }
+                            break;
+                        default:
+                            m.hide();
+                            if(ml) { ml.hide(); }
+                            break;
+                    }
+                    last_pos = r;
+                    return r;
+                },
+                dnd_open : function () {
+                    this.data.dnd.to2 = false;
+                    this.open_node(r, $.proxy(this.dnd_prepare,this), true);
+                },
+                dnd_finish : function (e) {
+                    if(this.data.dnd.foreign) {
+                        if(this.data.dnd.after || this.data.dnd.before || this.data.dnd.inside) {
+                            this._get_settings().dnd.drag_finish.call(this, { "o" : o, "r" : r, "p" : last_pos });
+                        }
+                    }
+                    else {
+                        this.dnd_prepare();
+                        this.move_node(o, r, last_pos, e[this._get_settings().dnd.copy_modifier + "Key"]);
+                    }
+                    o = false;
+                    r = false;
+                    m.hide();
+                    if(ml) { ml.hide(); }
+                },
+                dnd_enter : function (obj) {
+                    if(this.data.dnd.mto) {
+                        clearTimeout(this.data.dnd.mto);
+                        this.data.dnd.mto = false;
+                    }
+                    var s = this._get_settings().dnd;
+                    this.data.dnd.prepared = false;
+                    r = this._get_node(obj);
+                    if(s.check_timeout) {
+                        // do the calculations after a minimal timeout (users tend to drag quickly to the desired location)
+                        if(this.data.dnd.to1) { clearTimeout(this.data.dnd.to1); }
+                        this.data.dnd.to1 = setTimeout($.proxy(this.dnd_prepare, this), s.check_timeout);
+                    }
+                    else {
+                        this.dnd_prepare();
+                    }
+                    if(s.open_timeout) {
+                        if(this.data.dnd.to2) { clearTimeout(this.data.dnd.to2); }
+                        if(r && r.length && r.hasClass("jstree-closed")) {
+                            // if the node is closed - open it, then recalculate
+                            this.data.dnd.to2 = setTimeout($.proxy(this.dnd_open, this), s.open_timeout);
+                        }
+                    }
+                    else {
+                        if(r && r.length && r.hasClass("jstree-closed")) {
+                            this.dnd_open();
+                        }
+                    }
+                },
+                dnd_leave : function (e) {
+                    this.data.dnd.after		= false;
+                    this.data.dnd.before	= false;
+                    this.data.dnd.inside	= false;
+                    $.vakata.dnd.helper.children("ins").attr("class","jstree-invalid");
+                    m.hide();
+                    if(ml) { ml.hide(); }
+                    if(r && r[0] === e.target.parentNode) {
+                        if(this.data.dnd.to1) {
+                            clearTimeout(this.data.dnd.to1);
+                            this.data.dnd.to1 = false;
+                        }
+                        if(this.data.dnd.to2) {
+                            clearTimeout(this.data.dnd.to2);
+                            this.data.dnd.to2 = false;
+                        }
+                    }
+                },
+                start_drag : function (obj, e) {
+                    o = this._get_node(obj);
+                    if(this.data.ui && this.is_selected(o)) { o = this._get_node(null, true); }
+                    var dt = o.length > 1 ? this._get_string("multiple_selection") : this.get_text(o),
+                        cnt = this.get_container();
+                    if(!this._get_settings().core.html_titles) { dt = dt.replace(/</ig,"&lt;").replace(/>/ig,"&gt;"); }
+                    $.vakata.dnd.drag_start(e, { jstree : true, obj : o }, "<ins class='jstree-icon'></ins>" + dt );
+                    if(this.data.themes) {
+                        if(m) { m.attr("class", "jstree-" + this.data.themes.theme); }
+                        if(ml) { ml.attr("class", "jstree-" + this.data.themes.theme); }
+                        $.vakata.dnd.helper.attr("class", "jstree-dnd-helper jstree-" + this.data.themes.theme);
+                    }
+                    this.data.dnd.cof = cnt.offset();
+                    this.data.dnd.cw = parseInt(cnt.width(),10);
+                    this.data.dnd.ch = parseInt(cnt.height(),10);
+                    this.data.dnd.active = true;
+                }
+            }
+        });
+        $(function() {
+            var css_string = '' +
+                '#vakata-dragged ins { display:block; text-decoration:none; width:16px; height:16px; margin:0 0 0 0; padding:0; position:absolute; top:4px; left:4px; ' +
+                ' -moz-border-radius:4px; border-radius:4px; -webkit-border-radius:4px; ' +
+                '} ' +
+                '#vakata-dragged .jstree-ok { background:green; } ' +
+                '#vakata-dragged .jstree-invalid { background:red; } ' +
+                '#jstree-marker { padding:0; margin:0; font-size:12px; overflow:hidden; height:12px; width:8px; position:absolute; top:-30px; z-index:10001; background-repeat:no-repeat; display:none; background-color:transparent; text-shadow:1px 1px 1px white; color:black; line-height:10px; } ' +
+                '#jstree-marker-line { padding:0; margin:0; line-height:0%; font-size:1px; overflow:hidden; height:1px; width:100px; position:absolute; top:-30px; z-index:10000; background-repeat:no-repeat; display:none; background-color:#456c43; ' +
+                ' cursor:pointer; border:1px solid #eeeeee; border-left:0; -moz-box-shadow: 0px 0px 2px #666; -webkit-box-shadow: 0px 0px 2px #666; box-shadow: 0px 0px 2px #666; ' +
+                ' -moz-border-radius:1px; border-radius:1px; -webkit-border-radius:1px; ' +
+                '}' +
+                '';
+            $.vakata.css.add_sheet({ str : css_string, title : "jstree" });
+            m = $("<div />").attr({ id : "jstree-marker" }).hide().html("&raquo;")
+                .bind("mouseleave mouseenter", function (e) {
+                    m.hide();
+                    ml.hide();
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    return false;
+                })
+                .appendTo("body");
+            ml = $("<div />").attr({ id : "jstree-marker-line" }).hide()
+                .bind("mouseup", function (e) {
+                    if(r && r.length) {
+                        r.children("a").trigger(e);
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        return false;
+                    }
+                })
+                .bind("mouseleave", function (e) {
+                    var rt = $(e.relatedTarget);
+                    if(rt.is(".jstree") || rt.closest(".jstree").length === 0) {
+                        if(r && r.length) {
+                            r.children("a").trigger(e);
+                            m.hide();
+                            ml.hide();
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            return false;
+                        }
+                    }
+                })
+                .appendTo("body");
+            $(document).bind("drag_start.vakata", function (e, data) {
+                if(data.data.jstree) { m.show(); if(ml) { ml.show(); } }
+            });
+            $(document).bind("drag_stop.vakata", function (e, data) {
+                if(data.data.jstree) { m.hide(); if(ml) { ml.hide(); } }
+            });
+        });
+    })(jQuery);
 //*/
 
-/*
- * jsTree checkbox plugin
- * Inserts checkboxes in front of every node
- * Depends on the ui plugin
- * DOES NOT WORK NICELY WITH MULTITREE DRAG'N'DROP
- */
-(function ($) {
-	$.jstree.plugin("checkbox", {
-		__init : function () {
-			this.data.checkbox.noui = this._get_settings().checkbox.override_ui;
-			if(this.data.ui && this.data.checkbox.noui) {
-				this.select_node = this.deselect_node = this.deselect_all = $.noop;
-				this.get_selected = this.get_checked;
-			}
+    /*
+     * jsTree checkbox plugin
+     * Inserts checkboxes in front of every node
+     * Depends on the ui plugin
+     * DOES NOT WORK NICELY WITH MULTITREE DRAG'N'DROP
+     */
+    (function ($) {
+        $.jstree.plugin("checkbox", {
+            __init : function () {
+                this.data.checkbox.noui = this._get_settings().checkbox.override_ui;
+                if(this.data.ui && this.data.checkbox.noui) {
+                    this.select_node = this.deselect_node = this.deselect_all = $.noop;
+                    this.get_selected = this.get_checked;
+                }
 
-			this.get_container()
-				.bind("open_node.jstree create_node.jstree clean_node.jstree refresh.jstree", $.proxy(function (e, data) { 
-						this._prepare_checkboxes(data.rslt.obj);
-					}, this))
-				.bind("loaded.jstree", $.proxy(function (e) {
-						this._prepare_checkboxes();
-					}, this))
-				.delegate( (this.data.ui && this.data.checkbox.noui ? "a" : "ins.jstree-checkbox") , "click.jstree", $.proxy(function (e) {
-						e.preventDefault();
-						if(this._get_node(e.target).hasClass("jstree-checked")) { this.uncheck_node(e.target); }
-						else { this.check_node(e.target); }
-						if(this.data.ui && this.data.checkbox.noui) {
-							this.save_selected();
-							if(this.data.cookies) { this.save_cookie("select_node"); }
-						}
-						else {
-							e.stopImmediatePropagation();
-							return false;
-						}
-					}, this));
-		},
-		defaults : {
-			override_ui : false,
-			two_state : false,
-			real_checkboxes : false,
-			checked_parent_open : true,
-			real_checkboxes_names : function (n) { return [ ("check_" + (n[0].id || Math.ceil(Math.random() * 10000))) , 1]; }
-		},
-		__destroy : function () {
-			this.get_container()
-				.find("input.jstree-real-checkbox").removeClass("jstree-real-checkbox").end()
-				.find("ins.jstree-checkbox").remove();
-		},
-		_fn : {
-			_checkbox_notify : function (n, data) {
-				if(data.checked) {
-					this.check_node(n, false);
-				}
-			},
-			_prepare_checkboxes : function (obj) {
-				obj = !obj || obj == -1 ? this.get_container().find("> ul > li") : this._get_node(obj);
-				if(obj === false) { return; } // added for removing root nodes
-				var c, _this = this, t, ts = this._get_settings().checkbox.two_state, rc = this._get_settings().checkbox.real_checkboxes, rcn = this._get_settings().checkbox.real_checkboxes_names;
-				obj.each(function () {
-					t = $(this);
-					c = t.is("li") && (t.hasClass("jstree-checked") || (rc && t.children(":checked").length)) ? "jstree-checked" : "jstree-unchecked";
-					t.find("li").addBack().each(function () {
-						var $t = $(this), nm;
-						$t.children("a" + (_this.data.languages ? "" : ":eq(0)") ).not(":has(.jstree-checkbox)").prepend("<ins class='jstree-checkbox'>&#160;</ins>").parent().not(".jstree-checked, .jstree-unchecked").addClass( ts ? "jstree-unchecked" : c );
-						if(rc) {
-							if(!$t.children(":checkbox").length) {
-								nm = rcn.call(_this, $t);
-								$t.prepend("<input type='checkbox' class='jstree-real-checkbox' id='" + nm[0] + "' name='" + nm[0] + "' value='" + nm[1] + "' />");
-							}
-							else {
-								$t.children(":checkbox").addClass("jstree-real-checkbox");
-							}
-						}
-						if(!ts) {
-							if(c === "jstree-checked" || $t.hasClass("jstree-checked") || $t.children(':checked').length) {
-								$t.find("li").addBack().addClass("jstree-checked").children(":checkbox").prop("checked", true);
-							}
-						}
-						else {
-							if($t.hasClass("jstree-checked") || $t.children(':checked').length) {
-								$t.addClass("jstree-checked").children(":checkbox").prop("checked", true);
-							}
-						}
-					});
-				});
-				if(!ts) {
-					obj.find(".jstree-checked").parent().parent().each(function () { _this._repair_state(this); }); 
-				}
-			},
-			change_state : function (obj, state) {
-				obj = this._get_node(obj);
-				var coll = false, rc = this._get_settings().checkbox.real_checkboxes;
-				if(!obj || obj === -1) { return false; }
-				state = (state === false || state === true) ? state : obj.hasClass("jstree-checked");
-				if(this._get_settings().checkbox.two_state) {
-					if(state) { 
-						obj.removeClass("jstree-checked").addClass("jstree-unchecked"); 
-						if(rc) { obj.children(":checkbox").prop("checked", false); }
-					}
-					else { 
-						obj.removeClass("jstree-unchecked").addClass("jstree-checked"); 
-						if(rc) { obj.children(":checkbox").prop("checked", true); }
-					}
-				}
-				else {
-					if(state) { 
-						coll = obj.find("li").addBack();
-						if(!coll.filter(".jstree-checked, .jstree-undetermined").length) { return false; }
-						coll.removeClass("jstree-checked jstree-undetermined").addClass("jstree-unchecked"); 
-						if(rc) { coll.children(":checkbox").prop("checked", false); }
-					}
-					else { 
-						coll = obj.find("li").addBack();
-						if(!coll.filter(".jstree-unchecked, .jstree-undetermined").length) { return false; }
-						coll.removeClass("jstree-unchecked jstree-undetermined").addClass("jstree-checked"); 
-						if(rc) { coll.children(":checkbox").prop("checked", true); }
-						if(this.data.ui) { this.data.ui.last_selected = obj; }
-						this.data.checkbox.last_selected = obj;
-					}
-					obj.parentsUntil(".jstree", "li").each(function () {
-						var $this = $(this);
-						if(state) {
-							if($this.children("ul").children("li.jstree-checked, li.jstree-undetermined").length) {
-								$this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-								if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
-								return false;
-							}
-							else {
-								$this.removeClass("jstree-checked jstree-undetermined").addClass("jstree-unchecked");
-								if(rc) { $this.children(":checkbox").prop("checked", false); }
-							}
-						}
-						else {
-							if($this.children("ul").children("li.jstree-unchecked, li.jstree-undetermined").length) {
-								$this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-								if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
-								return false;
-							}
-							else {
-								$this.removeClass("jstree-unchecked jstree-undetermined").addClass("jstree-checked");
-								if(rc) { $this.children(":checkbox").prop("checked", true); }
-							}
-						}
-					});
-				}
-				if(this.data.ui && this.data.checkbox.noui) { this.data.ui.selected = this.get_checked(); }
-				this.__callback(obj);
-				return true;
-			},
-			check_node : function (obj) {
-				if(this.change_state(obj, false)) { 
-					obj = this._get_node(obj);
-					if(this._get_settings().checkbox.checked_parent_open) {
-						var t = this;
-						obj.parents(".jstree-closed").each(function () { t.open_node(this, false, true); });
-					}
-					this.__callback({ "obj" : obj }); 
-				}
-			},
-			uncheck_node : function (obj) {
-				if(this.change_state(obj, true)) { this.__callback({ "obj" : this._get_node(obj) }); }
-			},
-			check_all : function () {
-				var _this = this, 
-					coll = this._get_settings().checkbox.two_state ? this.get_container_ul().find("li") : this.get_container_ul().children("li");
-				coll.each(function () {
-					_this.change_state(this, false);
-				});
-				this.__callback();
-			},
-			uncheck_all : function () {
-				var _this = this,
-					coll = this._get_settings().checkbox.two_state ? this.get_container_ul().find("li") : this.get_container_ul().children("li");
-				coll.each(function () {
-					_this.change_state(this, true);
-				});
-				this.__callback();
-			},
+                this.get_container()
+                    .bind("open_node.jstree create_node.jstree clean_node.jstree refresh.jstree", $.proxy(function (e, data) {
+                        this._prepare_checkboxes(data.rslt.obj);
+                    }, this))
+                    .bind("loaded.jstree", $.proxy(function (e) {
+                        this._prepare_checkboxes();
+                    }, this))
+                    .delegate( (this.data.ui && this.data.checkbox.noui ? "a" : "ins.jstree-checkbox") , "click.jstree", $.proxy(function (e) {
+                        e.preventDefault();
+                        if(this._get_node(e.target).hasClass("jstree-checked")) { this.uncheck_node(e.target); }
+                        else { this.check_node(e.target); }
+                        if(this.data.ui && this.data.checkbox.noui) {
+                            this.save_selected();
+                            if(this.data.cookies) { this.save_cookie("select_node"); }
+                        }
+                        else {
+                            e.stopImmediatePropagation();
+                            return false;
+                        }
+                    }, this));
+            },
+            defaults : {
+                override_ui : false,
+                two_state : false,
+                real_checkboxes : false,
+                checked_parent_open : true,
+                real_checkboxes_names : function (n) { return [ ("check_" + (n[0].id || Math.ceil(Math.random() * 10000))) , 1]; }
+            },
+            __destroy : function () {
+                this.get_container()
+                    .find("input.jstree-real-checkbox").removeClass("jstree-real-checkbox").end()
+                    .find("ins.jstree-checkbox").remove();
+            },
+            _fn : {
+                _checkbox_notify : function (n, data) {
+                    if(data.checked) {
+                        this.check_node(n, false);
+                    }
+                },
+                _prepare_checkboxes : function (obj) {
+                    obj = !obj || obj == -1 ? this.get_container().find("> ul > li") : this._get_node(obj);
+                    if(obj === false) { return; } // added for removing root nodes
+                    var c, _this = this, t, ts = this._get_settings().checkbox.two_state, rc = this._get_settings().checkbox.real_checkboxes, rcn = this._get_settings().checkbox.real_checkboxes_names;
+                    obj.each(function () {
+                        t = $(this);
+                        c = t.is("li") && (t.hasClass("jstree-checked") || (rc && t.children(":checked").length)) ? "jstree-checked" : "jstree-unchecked";
+                        t.find("li").addBack().each(function () {
+                            var $t = $(this), nm;
+                            $t.children("a" + (_this.data.languages ? "" : ":eq(0)") ).not(":has(.jstree-checkbox)").prepend("<ins class='jstree-checkbox'>&#160;</ins>").parent().not(".jstree-checked, .jstree-unchecked").addClass( ts ? "jstree-unchecked" : c );
+                            if(rc) {
+                                if(!$t.children(":checkbox").length) {
+                                    nm = rcn.call(_this, $t);
+                                    $t.prepend("<input type='checkbox' class='jstree-real-checkbox' id='" + nm[0] + "' name='" + nm[0] + "' value='" + nm[1] + "' />");
+                                }
+                                else {
+                                    $t.children(":checkbox").addClass("jstree-real-checkbox");
+                                }
+                            }
+                            if(!ts) {
+                                if(c === "jstree-checked" || $t.hasClass("jstree-checked") || $t.children(':checked').length) {
+                                    $t.find("li").addBack().addClass("jstree-checked").children(":checkbox").prop("checked", true);
+                                }
+                            }
+                            else {
+                                if($t.hasClass("jstree-checked") || $t.children(':checked').length) {
+                                    $t.addClass("jstree-checked").children(":checkbox").prop("checked", true);
+                                }
+                            }
+                        });
+                    });
+                    if(!ts) {
+                        obj.find(".jstree-checked").parent().parent().each(function () { _this._repair_state(this); });
+                    }
+                },
+                change_state : function (obj, state) {
+                    obj = this._get_node(obj);
+                    var coll = false, rc = this._get_settings().checkbox.real_checkboxes;
+                    if(!obj || obj === -1) { return false; }
+                    state = (state === false || state === true) ? state : obj.hasClass("jstree-checked");
+                    if(this._get_settings().checkbox.two_state) {
+                        if(state) {
+                            obj.removeClass("jstree-checked").addClass("jstree-unchecked");
+                            if(rc) { obj.children(":checkbox").prop("checked", false); }
+                        }
+                        else {
+                            obj.removeClass("jstree-unchecked").addClass("jstree-checked");
+                            if(rc) { obj.children(":checkbox").prop("checked", true); }
+                        }
+                    }
+                    else {
+                        if(state) {
+                            coll = obj.find("li").addBack();
+                            if(!coll.filter(".jstree-checked, .jstree-undetermined").length) { return false; }
+                            coll.removeClass("jstree-checked jstree-undetermined").addClass("jstree-unchecked");
+                            if(rc) { coll.children(":checkbox").prop("checked", false); }
+                        }
+                        else {
+                            coll = obj.find("li").addBack();
+                            if(!coll.filter(".jstree-unchecked, .jstree-undetermined").length) { return false; }
+                            coll.removeClass("jstree-unchecked jstree-undetermined").addClass("jstree-checked");
+                            if(rc) { coll.children(":checkbox").prop("checked", true); }
+                            if(this.data.ui) { this.data.ui.last_selected = obj; }
+                            this.data.checkbox.last_selected = obj;
+                        }
+                        obj.parentsUntil(".jstree", "li").each(function () {
+                            var $this = $(this);
+                            if(state) {
+                                if($this.children("ul").children("li.jstree-checked, li.jstree-undetermined").length) {
+                                    $this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
+                                    if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
+                                    return false;
+                                }
+                                else {
+                                    $this.removeClass("jstree-checked jstree-undetermined").addClass("jstree-unchecked");
+                                    if(rc) { $this.children(":checkbox").prop("checked", false); }
+                                }
+                            }
+                            else {
+                                if($this.children("ul").children("li.jstree-unchecked, li.jstree-undetermined").length) {
+                                    $this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
+                                    if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
+                                    return false;
+                                }
+                                else {
+                                    $this.removeClass("jstree-unchecked jstree-undetermined").addClass("jstree-checked");
+                                    if(rc) { $this.children(":checkbox").prop("checked", true); }
+                                }
+                            }
+                        });
+                    }
+                    if(this.data.ui && this.data.checkbox.noui) { this.data.ui.selected = this.get_checked(); }
+                    this.__callback(obj);
+                    return true;
+                },
+                check_node : function (obj) {
+                    if(this.change_state(obj, false)) {
+                        obj = this._get_node(obj);
+                        if(this._get_settings().checkbox.checked_parent_open) {
+                            var t = this;
+                            obj.parents(".jstree-closed").each(function () { t.open_node(this, false, true); });
+                        }
+                        this.__callback({ "obj" : obj });
+                    }
+                },
+                uncheck_node : function (obj) {
+                    if(this.change_state(obj, true)) { this.__callback({ "obj" : this._get_node(obj) }); }
+                },
+                check_all : function () {
+                    var _this = this,
+                        coll = this._get_settings().checkbox.two_state ? this.get_container_ul().find("li") : this.get_container_ul().children("li");
+                    coll.each(function () {
+                        _this.change_state(this, false);
+                    });
+                    this.__callback();
+                },
+                uncheck_all : function () {
+                    var _this = this,
+                        coll = this._get_settings().checkbox.two_state ? this.get_container_ul().find("li") : this.get_container_ul().children("li");
+                    coll.each(function () {
+                        _this.change_state(this, true);
+                    });
+                    this.__callback();
+                },
 
-			is_checked : function(obj) {
-				obj = this._get_node(obj);
-				return obj.length ? obj.is(".jstree-checked") : false;
-			},
-			get_checked : function (obj, get_all) {
-				obj = !obj || obj === -1 ? this.get_container() : this._get_node(obj);
-				return get_all || this._get_settings().checkbox.two_state ? obj.find(".jstree-checked") : obj.find("> ul > .jstree-checked, .jstree-undetermined > ul > .jstree-checked");
-			},
-			get_unchecked : function (obj, get_all) { 
-				obj = !obj || obj === -1 ? this.get_container() : this._get_node(obj);
-				return get_all || this._get_settings().checkbox.two_state ? obj.find(".jstree-unchecked") : obj.find("> ul > .jstree-unchecked, .jstree-undetermined > ul > .jstree-unchecked");
-			},
+                is_checked : function(obj) {
+                    obj = this._get_node(obj);
+                    return obj.length ? obj.is(".jstree-checked") : false;
+                },
+                get_checked : function (obj, get_all) {
+                    obj = !obj || obj === -1 ? this.get_container() : this._get_node(obj);
+                    return get_all || this._get_settings().checkbox.two_state ? obj.find(".jstree-checked") : obj.find("> ul > .jstree-checked, .jstree-undetermined > ul > .jstree-checked");
+                },
+                get_unchecked : function (obj, get_all) {
+                    obj = !obj || obj === -1 ? this.get_container() : this._get_node(obj);
+                    return get_all || this._get_settings().checkbox.two_state ? obj.find(".jstree-unchecked") : obj.find("> ul > .jstree-unchecked, .jstree-undetermined > ul > .jstree-unchecked");
+                },
 
-			show_checkboxes : function () { this.get_container().children("ul").removeClass("jstree-no-checkboxes"); },
-			hide_checkboxes : function () { this.get_container().children("ul").addClass("jstree-no-checkboxes"); },
+                show_checkboxes : function () { this.get_container().children("ul").removeClass("jstree-no-checkboxes"); },
+                hide_checkboxes : function () { this.get_container().children("ul").addClass("jstree-no-checkboxes"); },
 
-			_repair_state : function (obj) {
-				obj = this._get_node(obj);
-				if(!obj.length) { return; }
-				if(this._get_settings().checkbox.two_state) {
-					obj.find('li').addBack().not('.jstree-checked').removeClass('jstree-undetermined').addClass('jstree-unchecked').children(':checkbox').prop('checked', true);
-					return;
-				}
-				var rc = this._get_settings().checkbox.real_checkboxes,
-					a = obj.find("> ul > .jstree-checked").length,
-					b = obj.find("> ul > .jstree-undetermined").length,
-					c = obj.find("> ul > li").length;
-				if(c === 0) { if(obj.hasClass("jstree-undetermined")) { this.change_state(obj, false); } }
-				else if(a === 0 && b === 0) { this.change_state(obj, true); }
-				else if(a === c) { this.change_state(obj, false); }
-				else { 
-					obj.parentsUntil(".jstree","li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-					if(rc) { obj.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
-				}
-			},
-			reselect : function () {
-				if(this.data.ui && this.data.checkbox.noui) { 
-					var _this = this,
-						s = this.data.ui.to_select;
-					s = $.map($.makeArray(s), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
-					this.deselect_all();
-					$.each(s, function (i, val) { _this.check_node(val); });
-					this.__callback();
-				}
-				else { 
-					this.__call_old(); 
-				}
-			},
-			save_loaded : function () {
-				var _this = this;
-				this.data.core.to_load = [];
-				this.get_container_ul().find("li.jstree-closed.jstree-undetermined").each(function () {
-					if(this.id) { _this.data.core.to_load.push("#" + this.id); }
-				});
-			}
-		}
-	});
-	$(function() {
-		var css_string = '.jstree .jstree-real-checkbox { display:none; } ';
-		$.vakata.css.add_sheet({ str : css_string, title : "jstree" });
-	});
-})(jQuery);
+                _repair_state : function (obj) {
+                    obj = this._get_node(obj);
+                    if(!obj.length) { return; }
+                    if(this._get_settings().checkbox.two_state) {
+                        obj.find('li').addBack().not('.jstree-checked').removeClass('jstree-undetermined').addClass('jstree-unchecked').children(':checkbox').prop('checked', true);
+                        return;
+                    }
+                    var rc = this._get_settings().checkbox.real_checkboxes,
+                        a = obj.find("> ul > .jstree-checked").length,
+                        b = obj.find("> ul > .jstree-undetermined").length,
+                        c = obj.find("> ul > li").length;
+                    if(c === 0) { if(obj.hasClass("jstree-undetermined")) { this.change_state(obj, false); } }
+                    else if(a === 0 && b === 0) { this.change_state(obj, true); }
+                    else if(a === c) { this.change_state(obj, false); }
+                    else {
+                        obj.parentsUntil(".jstree","li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
+                        if(rc) { obj.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop("checked", false); }
+                    }
+                },
+                reselect : function () {
+                    if(this.data.ui && this.data.checkbox.noui) {
+                        var _this = this,
+                            s = this.data.ui.to_select;
+                        s = $.map($.makeArray(s), function (n) { return "#" + n.toString().replace(/^#/,"").replace(/\\\//g,"/").replace(/\//g,"\\\/").replace(/\\\./g,".").replace(/\./g,"\\.").replace(/\:/g,"\\:"); });
+                        this.deselect_all();
+                        $.each(s, function (i, val) { _this.check_node(val); });
+                        this.__callback();
+                    }
+                    else {
+                        this.__call_old();
+                    }
+                },
+                save_loaded : function () {
+                    var _this = this;
+                    this.data.core.to_load = [];
+                    this.get_container_ul().find("li.jstree-closed.jstree-undetermined").each(function () {
+                        if(this.id) { _this.data.core.to_load.push("#" + this.id); }
+                    });
+                }
+            }
+        });
+        $(function() {
+            var css_string = '.jstree .jstree-real-checkbox { display:none; } ';
+            $.vakata.css.add_sheet({ str : css_string, title : "jstree" });
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree XML plugin
- * The XML data store. Datastores are build by overriding the `load_node` and `_is_loaded` functions.
- */
-(function ($) {
-	$.vakata.xslt = function (xml, xsl, callback) {
-		var r = false, p, q, s;
-		// IE9
-		if(r === false && window.ActiveXObject) {
-			try {
-				r = new ActiveXObject("Msxml2.XSLTemplate");
-				q = new ActiveXObject("Msxml2.DOMDocument");
-				q.loadXML(xml);
-				s = new ActiveXObject("Msxml2.FreeThreadedDOMDocument");
-				s.loadXML(xsl);
-				r.stylesheet = s;
-				p = r.createProcessor();
-				p.input = q;
-				p.transform();
-				r = p.output;
-			}
-			catch (e) { }
-		}
-		xml = $.parseXML(xml);
-		xsl = $.parseXML(xsl);
-		// FF, Chrome
-		if(r === false && typeof (XSLTProcessor) !== "undefined") {
-			p = new XSLTProcessor();
-			p.importStylesheet(xsl);
-			r = p.transformToFragment(xml, document);
-			r = $('<div />').append(r).html();
-		}
-		// OLD IE
-		if(r === false && typeof (xml.transformNode) !== "undefined") {
-			r = xml.transformNode(xsl);
-		}
-		callback.call(null, r);
-	};
-	var xsl = {
-		'nest' : '<' + '?xml version="1.0" encoding="utf-8" ?>' + 
-			'<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >' + 
-			'<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" standalone="no" indent="no" media-type="text/html" />' + 
-			'<xsl:template match="/">' + 
-			'	<xsl:call-template name="nodes">' + 
-			'		<xsl:with-param name="node" select="/root" />' + 
-			'	</xsl:call-template>' + 
-			'</xsl:template>' + 
-			'<xsl:template name="nodes">' + 
-			'	<xsl:param name="node" />' + 
-			'	<ul>' + 
-			'	<xsl:for-each select="$node/item">' + 
-			'		<xsl:variable name="children" select="count(./item) &gt; 0" />' + 
-			'		<li>' + 
-			'			<xsl:attribute name="class">' + 
-			'				<xsl:if test="position() = last()">jstree-last </xsl:if>' + 
-			'				<xsl:choose>' + 
-			'					<xsl:when test="@state = \'open\'">jstree-open </xsl:when>' + 
-			'					<xsl:when test="$children or @hasChildren or @state = \'closed\'">jstree-closed </xsl:when>' + 
-			'					<xsl:otherwise>jstree-leaf </xsl:otherwise>' + 
-			'				</xsl:choose>' + 
-			'				<xsl:value-of select="@class" />' + 
-			'			</xsl:attribute>' + 
-			'			<xsl:for-each select="@*">' + 
-			'				<xsl:if test="name() != \'class\' and name() != \'state\' and name() != \'hasChildren\'">' + 
-			'					<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' + 
-			'				</xsl:if>' + 
-			'			</xsl:for-each>' + 
-			'	<ins class="jstree-icon"><xsl:text>&#xa0;</xsl:text></ins>' + 
-			'			<xsl:for-each select="content/name">' + 
-			'				<a>' + 
-			'				<xsl:attribute name="href">' + 
-			'					<xsl:choose>' + 
-			'					<xsl:when test="@href"><xsl:value-of select="@href" /></xsl:when>' + 
-			'					<xsl:otherwise>#</xsl:otherwise>' + 
-			'					</xsl:choose>' + 
-			'				</xsl:attribute>' + 
-			'				<xsl:attribute name="class"><xsl:value-of select="@lang" /> <xsl:value-of select="@class" /></xsl:attribute>' + 
-			'				<xsl:attribute name="style"><xsl:value-of select="@style" /></xsl:attribute>' + 
-			'				<xsl:for-each select="@*">' + 
-			'					<xsl:if test="name() != \'style\' and name() != \'class\' and name() != \'href\'">' + 
-			'						<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' + 
-			'					</xsl:if>' + 
-			'				</xsl:for-each>' + 
-			'					<ins>' + 
-			'						<xsl:attribute name="class">jstree-icon ' + 
-			'							<xsl:if test="string-length(attribute::icon) > 0 and not(contains(@icon,\'/\'))"><xsl:value-of select="@icon" /></xsl:if>' + 
-			'						</xsl:attribute>' + 
-			'						<xsl:if test="string-length(attribute::icon) > 0 and contains(@icon,\'/\')"><xsl:attribute name="style">background:url(<xsl:value-of select="@icon" />) center center no-repeat;</xsl:attribute></xsl:if>' + 
-			'						<xsl:text>&#xa0;</xsl:text>' + 
-			'					</ins>' + 
-			'					<xsl:copy-of select="./child::node()" />' + 
-			'				</a>' + 
-			'			</xsl:for-each>' + 
-			'			<xsl:if test="$children or @hasChildren"><xsl:call-template name="nodes"><xsl:with-param name="node" select="current()" /></xsl:call-template></xsl:if>' + 
-			'		</li>' + 
-			'	</xsl:for-each>' + 
-			'	</ul>' + 
-			'</xsl:template>' + 
-			'</xsl:stylesheet>',
+    /* 
+     * jsTree XML plugin
+     * The XML data store. Datastores are build by overriding the `load_node` and `_is_loaded` functions.
+     */
+    (function ($) {
+        $.vakata.xslt = function (xml, xsl, callback) {
+            var r = false, p, q, s;
+            // IE9
+            if(r === false && window.ActiveXObject) {
+                try {
+                    r = new ActiveXObject("Msxml2.XSLTemplate");
+                    q = new ActiveXObject("Msxml2.DOMDocument");
+                    q.loadXML(xml);
+                    s = new ActiveXObject("Msxml2.FreeThreadedDOMDocument");
+                    s.loadXML(xsl);
+                    r.stylesheet = s;
+                    p = r.createProcessor();
+                    p.input = q;
+                    p.transform();
+                    r = p.output;
+                }
+                catch (e) { }
+            }
+            xml = $.parseXML(xml);
+            xsl = $.parseXML(xsl);
+            // FF, Chrome
+            if(r === false && typeof (XSLTProcessor) !== "undefined") {
+                p = new XSLTProcessor();
+                p.importStylesheet(xsl);
+                r = p.transformToFragment(xml, document);
+                r = $('<div />').append(r).html();
+            }
+            // OLD IE
+            if(r === false && typeof (xml.transformNode) !== "undefined") {
+                r = xml.transformNode(xsl);
+            }
+            callback.call(null, r);
+        };
+        var xsl = {
+                'nest' : '<' + '?xml version="1.0" encoding="utf-8" ?>' +
+                    '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >' +
+                    '<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" standalone="no" indent="no" media-type="text/html" />' +
+                    '<xsl:template match="/">' +
+                    '	<xsl:call-template name="nodes">' +
+                    '		<xsl:with-param name="node" select="/root" />' +
+                    '	</xsl:call-template>' +
+                    '</xsl:template>' +
+                    '<xsl:template name="nodes">' +
+                    '	<xsl:param name="node" />' +
+                    '	<ul>' +
+                    '	<xsl:for-each select="$node/item">' +
+                    '		<xsl:variable name="children" select="count(./item) &gt; 0" />' +
+                    '		<li>' +
+                    '			<xsl:attribute name="class">' +
+                    '				<xsl:if test="position() = last()">jstree-last </xsl:if>' +
+                    '				<xsl:choose>' +
+                    '					<xsl:when test="@state = \'open\'">jstree-open </xsl:when>' +
+                    '					<xsl:when test="$children or @hasChildren or @state = \'closed\'">jstree-closed </xsl:when>' +
+                    '					<xsl:otherwise>jstree-leaf </xsl:otherwise>' +
+                    '				</xsl:choose>' +
+                    '				<xsl:value-of select="@class" />' +
+                    '			</xsl:attribute>' +
+                    '			<xsl:for-each select="@*">' +
+                    '				<xsl:if test="name() != \'class\' and name() != \'state\' and name() != \'hasChildren\'">' +
+                    '					<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' +
+                    '				</xsl:if>' +
+                    '			</xsl:for-each>' +
+                    '	<ins class="jstree-icon"><xsl:text>&#xa0;</xsl:text></ins>' +
+                    '			<xsl:for-each select="content/name">' +
+                    '				<a>' +
+                    '				<xsl:attribute name="href">' +
+                    '					<xsl:choose>' +
+                    '					<xsl:when test="@href"><xsl:value-of select="@href" /></xsl:when>' +
+                    '					<xsl:otherwise>#</xsl:otherwise>' +
+                    '					</xsl:choose>' +
+                    '				</xsl:attribute>' +
+                    '				<xsl:attribute name="class"><xsl:value-of select="@lang" /> <xsl:value-of select="@class" /></xsl:attribute>' +
+                    '				<xsl:attribute name="style"><xsl:value-of select="@style" /></xsl:attribute>' +
+                    '				<xsl:for-each select="@*">' +
+                    '					<xsl:if test="name() != \'style\' and name() != \'class\' and name() != \'href\'">' +
+                    '						<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' +
+                    '					</xsl:if>' +
+                    '				</xsl:for-each>' +
+                    '					<ins>' +
+                    '						<xsl:attribute name="class">jstree-icon ' +
+                    '							<xsl:if test="string-length(attribute::icon) > 0 and not(contains(@icon,\'/\'))"><xsl:value-of select="@icon" /></xsl:if>' +
+                    '						</xsl:attribute>' +
+                    '						<xsl:if test="string-length(attribute::icon) > 0 and contains(@icon,\'/\')"><xsl:attribute name="style">background:url(<xsl:value-of select="@icon" />) center center no-repeat;</xsl:attribute></xsl:if>' +
+                    '						<xsl:text>&#xa0;</xsl:text>' +
+                    '					</ins>' +
+                    '					<xsl:copy-of select="./child::node()" />' +
+                    '				</a>' +
+                    '			</xsl:for-each>' +
+                    '			<xsl:if test="$children or @hasChildren"><xsl:call-template name="nodes"><xsl:with-param name="node" select="current()" /></xsl:call-template></xsl:if>' +
+                    '		</li>' +
+                    '	</xsl:for-each>' +
+                    '	</ul>' +
+                    '</xsl:template>' +
+                    '</xsl:stylesheet>',
 
-		'flat' : '<' + '?xml version="1.0" encoding="utf-8" ?>' + 
-			'<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >' + 
-			'<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" standalone="no" indent="no" media-type="text/xml" />' + 
-			'<xsl:template match="/">' + 
-			'	<ul>' + 
-			'	<xsl:for-each select="//item[not(@parent_id) or @parent_id=0 or not(@parent_id = //item/@id)]">' + /* the last `or` may be removed */
-			'		<xsl:call-template name="nodes">' + 
-			'			<xsl:with-param name="node" select="." />' + 
-			'			<xsl:with-param name="is_last" select="number(position() = last())" />' + 
-			'		</xsl:call-template>' + 
-			'	</xsl:for-each>' + 
-			'	</ul>' + 
-			'</xsl:template>' + 
-			'<xsl:template name="nodes">' + 
-			'	<xsl:param name="node" />' + 
-			'	<xsl:param name="is_last" />' + 
-			'	<xsl:variable name="children" select="count(//item[@parent_id=$node/attribute::id]) &gt; 0" />' + 
-			'	<li>' + 
-			'	<xsl:attribute name="class">' + 
-			'		<xsl:if test="$is_last = true()">jstree-last </xsl:if>' + 
-			'		<xsl:choose>' + 
-			'			<xsl:when test="@state = \'open\'">jstree-open </xsl:when>' + 
-			'			<xsl:when test="$children or @hasChildren or @state = \'closed\'">jstree-closed </xsl:when>' + 
-			'			<xsl:otherwise>jstree-leaf </xsl:otherwise>' + 
-			'		</xsl:choose>' + 
-			'		<xsl:value-of select="@class" />' + 
-			'	</xsl:attribute>' + 
-			'	<xsl:for-each select="@*">' + 
-			'		<xsl:if test="name() != \'parent_id\' and name() != \'hasChildren\' and name() != \'class\' and name() != \'state\'">' + 
-			'		<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' + 
-			'		</xsl:if>' + 
-			'	</xsl:for-each>' + 
-			'	<ins class="jstree-icon"><xsl:text>&#xa0;</xsl:text></ins>' + 
-			'	<xsl:for-each select="content/name">' + 
-			'		<a>' + 
-			'		<xsl:attribute name="href">' + 
-			'			<xsl:choose>' + 
-			'			<xsl:when test="@href"><xsl:value-of select="@href" /></xsl:when>' + 
-			'			<xsl:otherwise>#</xsl:otherwise>' + 
-			'			</xsl:choose>' + 
-			'		</xsl:attribute>' + 
-			'		<xsl:attribute name="class"><xsl:value-of select="@lang" /> <xsl:value-of select="@class" /></xsl:attribute>' + 
-			'		<xsl:attribute name="style"><xsl:value-of select="@style" /></xsl:attribute>' + 
-			'		<xsl:for-each select="@*">' + 
-			'			<xsl:if test="name() != \'style\' and name() != \'class\' and name() != \'href\'">' + 
-			'				<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' + 
-			'			</xsl:if>' + 
-			'		</xsl:for-each>' + 
-			'			<ins>' + 
-			'				<xsl:attribute name="class">jstree-icon ' + 
-			'					<xsl:if test="string-length(attribute::icon) > 0 and not(contains(@icon,\'/\'))"><xsl:value-of select="@icon" /></xsl:if>' + 
-			'				</xsl:attribute>' + 
-			'				<xsl:if test="string-length(attribute::icon) > 0 and contains(@icon,\'/\')"><xsl:attribute name="style">background:url(<xsl:value-of select="@icon" />) center center no-repeat;</xsl:attribute></xsl:if>' + 
-			'				<xsl:text>&#xa0;</xsl:text>' + 
-			'			</ins>' + 
-			'			<xsl:copy-of select="./child::node()" />' + 
-			'		</a>' + 
-			'	</xsl:for-each>' + 
-			'	<xsl:if test="$children">' + 
-			'		<ul>' + 
-			'		<xsl:for-each select="//item[@parent_id=$node/attribute::id]">' + 
-			'			<xsl:call-template name="nodes">' + 
-			'				<xsl:with-param name="node" select="." />' + 
-			'				<xsl:with-param name="is_last" select="number(position() = last())" />' + 
-			'			</xsl:call-template>' + 
-			'		</xsl:for-each>' + 
-			'		</ul>' + 
-			'	</xsl:if>' + 
-			'	</li>' + 
-			'</xsl:template>' + 
-			'</xsl:stylesheet>'
-	},
-	escape_xml = function(string) {
-		return string
-			.toString()
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
-			.replace(/"/g, '&quot;')
-			.replace(/'/g, '&apos;');
-	};
-	$.jstree.plugin("xml_data", {
-		defaults : { 
-			data : false,
-			ajax : false,
-			xsl : "flat",
-			clean_node : false,
-			correct_state : true,
-			get_skip_empty : false,
-			get_include_preamble : true
-		},
-		_fn : {
-			load_node : function (obj, s_call, e_call) { var _this = this; this.load_node_xml(obj, function () { _this.__callback({ "obj" : _this._get_node(obj) }); s_call.call(this); }, e_call); },
-			_is_loaded : function (obj) { 
-				var s = this._get_settings().xml_data;
-				obj = this._get_node(obj);
-				return obj == -1 || !obj || (!s.ajax && !$.isFunction(s.data)) || obj.is(".jstree-open, .jstree-leaf") || obj.children("ul").children("li").size() > 0;
-			},
-			load_node_xml : function (obj, s_call, e_call) {
-				var s = this.get_settings().xml_data,
-					error_func = function () {},
-					success_func = function () {};
+                'flat' : '<' + '?xml version="1.0" encoding="utf-8" ?>' +
+                    '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >' +
+                    '<xsl:output method="html" encoding="utf-8" omit-xml-declaration="yes" standalone="no" indent="no" media-type="text/xml" />' +
+                    '<xsl:template match="/">' +
+                    '	<ul>' +
+                    '	<xsl:for-each select="//item[not(@parent_id) or @parent_id=0 or not(@parent_id = //item/@id)]">' + /* the last `or` may be removed */
+                    '		<xsl:call-template name="nodes">' +
+                    '			<xsl:with-param name="node" select="." />' +
+                    '			<xsl:with-param name="is_last" select="number(position() = last())" />' +
+                    '		</xsl:call-template>' +
+                    '	</xsl:for-each>' +
+                    '	</ul>' +
+                    '</xsl:template>' +
+                    '<xsl:template name="nodes">' +
+                    '	<xsl:param name="node" />' +
+                    '	<xsl:param name="is_last" />' +
+                    '	<xsl:variable name="children" select="count(//item[@parent_id=$node/attribute::id]) &gt; 0" />' +
+                    '	<li>' +
+                    '	<xsl:attribute name="class">' +
+                    '		<xsl:if test="$is_last = true()">jstree-last </xsl:if>' +
+                    '		<xsl:choose>' +
+                    '			<xsl:when test="@state = \'open\'">jstree-open </xsl:when>' +
+                    '			<xsl:when test="$children or @hasChildren or @state = \'closed\'">jstree-closed </xsl:when>' +
+                    '			<xsl:otherwise>jstree-leaf </xsl:otherwise>' +
+                    '		</xsl:choose>' +
+                    '		<xsl:value-of select="@class" />' +
+                    '	</xsl:attribute>' +
+                    '	<xsl:for-each select="@*">' +
+                    '		<xsl:if test="name() != \'parent_id\' and name() != \'hasChildren\' and name() != \'class\' and name() != \'state\'">' +
+                    '		<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' +
+                    '		</xsl:if>' +
+                    '	</xsl:for-each>' +
+                    '	<ins class="jstree-icon"><xsl:text>&#xa0;</xsl:text></ins>' +
+                    '	<xsl:for-each select="content/name">' +
+                    '		<a>' +
+                    '		<xsl:attribute name="href">' +
+                    '			<xsl:choose>' +
+                    '			<xsl:when test="@href"><xsl:value-of select="@href" /></xsl:when>' +
+                    '			<xsl:otherwise>#</xsl:otherwise>' +
+                    '			</xsl:choose>' +
+                    '		</xsl:attribute>' +
+                    '		<xsl:attribute name="class"><xsl:value-of select="@lang" /> <xsl:value-of select="@class" /></xsl:attribute>' +
+                    '		<xsl:attribute name="style"><xsl:value-of select="@style" /></xsl:attribute>' +
+                    '		<xsl:for-each select="@*">' +
+                    '			<xsl:if test="name() != \'style\' and name() != \'class\' and name() != \'href\'">' +
+                    '				<xsl:attribute name="{name()}"><xsl:value-of select="." /></xsl:attribute>' +
+                    '			</xsl:if>' +
+                    '		</xsl:for-each>' +
+                    '			<ins>' +
+                    '				<xsl:attribute name="class">jstree-icon ' +
+                    '					<xsl:if test="string-length(attribute::icon) > 0 and not(contains(@icon,\'/\'))"><xsl:value-of select="@icon" /></xsl:if>' +
+                    '				</xsl:attribute>' +
+                    '				<xsl:if test="string-length(attribute::icon) > 0 and contains(@icon,\'/\')"><xsl:attribute name="style">background:url(<xsl:value-of select="@icon" />) center center no-repeat;</xsl:attribute></xsl:if>' +
+                    '				<xsl:text>&#xa0;</xsl:text>' +
+                    '			</ins>' +
+                    '			<xsl:copy-of select="./child::node()" />' +
+                    '		</a>' +
+                    '	</xsl:for-each>' +
+                    '	<xsl:if test="$children">' +
+                    '		<ul>' +
+                    '		<xsl:for-each select="//item[@parent_id=$node/attribute::id]">' +
+                    '			<xsl:call-template name="nodes">' +
+                    '				<xsl:with-param name="node" select="." />' +
+                    '				<xsl:with-param name="is_last" select="number(position() = last())" />' +
+                    '			</xsl:call-template>' +
+                    '		</xsl:for-each>' +
+                    '		</ul>' +
+                    '	</xsl:if>' +
+                    '	</li>' +
+                    '</xsl:template>' +
+                    '</xsl:stylesheet>'
+            },
+            escape_xml = function(string) {
+                return string
+                    .toString()
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&apos;');
+            };
+        $.jstree.plugin("xml_data", {
+            defaults : {
+                data : false,
+                ajax : false,
+                xsl : "flat",
+                clean_node : false,
+                correct_state : true,
+                get_skip_empty : false,
+                get_include_preamble : true
+            },
+            _fn : {
+                load_node : function (obj, s_call, e_call) { var _this = this; this.load_node_xml(obj, function () { _this.__callback({ "obj" : _this._get_node(obj) }); s_call.call(this); }, e_call); },
+                _is_loaded : function (obj) {
+                    var s = this._get_settings().xml_data;
+                    obj = this._get_node(obj);
+                    return obj == -1 || !obj || (!s.ajax && !$.isFunction(s.data)) || obj.is(".jstree-open, .jstree-leaf") || obj.children("ul").children("li").size() > 0;
+                },
+                load_node_xml : function (obj, s_call, e_call) {
+                    var s = this.get_settings().xml_data,
+                        error_func = function () {},
+                        success_func = function () {};
 
-				obj = this._get_node(obj);
-				if(obj && obj !== -1) {
-					if(obj.data("jstree_is_loading")) { return; }
-					else { obj.data("jstree_is_loading",true); }
-				}
-				switch(!0) {
-					case (!s.data && !s.ajax): throw "Neither data nor ajax settings supplied.";
-					case ($.isFunction(s.data)):
-						s.data.call(this, obj, $.proxy(function (d) {
-							this.parse_xml(d, $.proxy(function (d) {
-								if(d) {
-									d = d.replace(/ ?xmlns="[^"]*"/ig, "");
-									if(d.length > 10) {
-										d = $(d);
-										if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
-										else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d); obj.removeData("jstree_is_loading"); }
-										if(s.clean_node) { this.clean_node(obj); }
-										if(s_call) { s_call.call(this); }
-									}
-									else {
-										if(obj && obj !== -1) { 
-											obj.children("a.jstree-loading").removeClass("jstree-loading");
-											obj.removeData("jstree_is_loading");
-											if(s.correct_state) { 
-												this.correct_state(obj);
-												if(s_call) { s_call.call(this); } 
-											}
-										}
-										else {
-											if(s.correct_state) { 
-												this.get_container().children("ul").empty();
-												if(s_call) { s_call.call(this); } 
-											}
-										}
-									}
-								}
-							}, this));
-						}, this));
-						break;
-					case (!!s.data && !s.ajax) || (!!s.data && !!s.ajax && (!obj || obj === -1)):
-						if(!obj || obj == -1) {
-							this.parse_xml(s.data, $.proxy(function (d) {
-								if(d) {
-									d = d.replace(/ ?xmlns="[^"]*"/ig, "");
-									if(d.length > 10) {
-										d = $(d);
-										this.get_container().children("ul").empty().append(d.children());
-										if(s.clean_node) { this.clean_node(obj); }
-										if(s_call) { s_call.call(this); }
-									}
-								}
-								else { 
-									if(s.correct_state) { 
-										this.get_container().children("ul").empty(); 
-										if(s_call) { s_call.call(this); }
-									}
-								}
-							}, this));
-						}
-						break;
-					case (!s.data && !!s.ajax) || (!!s.data && !!s.ajax && obj && obj !== -1):
-						error_func = function (x, t, e) {
-							var ef = this.get_settings().xml_data.ajax.error; 
-							if(ef) { ef.call(this, x, t, e); }
-							if(obj !== -1 && obj.length) {
-								obj.children("a.jstree-loading").removeClass("jstree-loading");
-								obj.removeData("jstree_is_loading");
-								if(t === "success" && s.correct_state) { this.correct_state(obj); }
-							}
-							else {
-								if(t === "success" && s.correct_state) { this.get_container().children("ul").empty(); }
-							}
-							if(e_call) { e_call.call(this); }
-						};
-						success_func = function (d, t, x) {
-							d = x.responseText;
-							var sf = this.get_settings().xml_data.ajax.success; 
-							if(sf) { d = sf.call(this,d,t,x) || d; }
-							if(d === "" || (d && d.toString && d.toString().replace(/^[\s\n]+$/,"") === "")) {
-								return error_func.call(this, x, t, "");
-							}
-							this.parse_xml(d, $.proxy(function (d) {
-								if(d) {
-									d = d.replace(/ ?xmlns="[^"]*"/ig, "");
-									if(d.length > 10) {
-										d = $(d);
-										if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
-										else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d); obj.removeData("jstree_is_loading"); }
-										if(s.clean_node) { this.clean_node(obj); }
-										if(s_call) { s_call.call(this); }
-									}
-									else {
-										if(obj && obj !== -1) { 
-											obj.children("a.jstree-loading").removeClass("jstree-loading");
-											obj.removeData("jstree_is_loading");
-											if(s.correct_state) { 
-												this.correct_state(obj);
-												if(s_call) { s_call.call(this); } 
-											}
-										}
-										else {
-											if(s.correct_state) { 
-												this.get_container().children("ul").empty();
-												if(s_call) { s_call.call(this); } 
-											}
-										}
-									}
-								}
-							}, this));
-						};
-						s.ajax.context = this;
-						s.ajax.error = error_func;
-						s.ajax.success = success_func;
-						if(!s.ajax.dataType) { s.ajax.dataType = "xml"; }
-						if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, obj); }
-						if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, obj); }
-						$.ajax(s.ajax);
-						break;
-				}
-			},
-			parse_xml : function (xml, callback) {
-				var s = this._get_settings().xml_data;
-				$.vakata.xslt(xml, xsl[s.xsl], callback);
-			},
-			get_xml : function (tp, obj, li_attr, a_attr, is_callback) {
-				var result = "", 
-					s = this._get_settings(), 
-					_this = this,
-					tmp1, tmp2, li, a, lang;
-				if(!tp) { tp = "flat"; }
-				if(!is_callback) { is_callback = 0; }
-				obj = this._get_node(obj);
-				if(!obj || obj === -1) { obj = this.get_container().find("> ul > li"); }
-				li_attr = $.isArray(li_attr) ? li_attr : [ "id", "class" ];
-				if(!is_callback && this.data.types && $.inArray(s.types.type_attr, li_attr) === -1) { li_attr.push(s.types.type_attr); }
+                    obj = this._get_node(obj);
+                    if(obj && obj !== -1) {
+                        if(obj.data("jstree_is_loading")) { return; }
+                        else { obj.data("jstree_is_loading",true); }
+                    }
+                    switch(!0) {
+                        case (!s.data && !s.ajax): throw "Neither data nor ajax settings supplied.";
+                        case ($.isFunction(s.data)):
+                            s.data.call(this, obj, $.proxy(function (d) {
+                                this.parse_xml(d, $.proxy(function (d) {
+                                    if(d) {
+                                        d = d.replace(/ ?xmlns="[^"]*"/ig, "");
+                                        if(d.length > 10) {
+                                            d = $(d);
+                                            if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
+                                            else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d); obj.removeData("jstree_is_loading"); }
+                                            if(s.clean_node) { this.clean_node(obj); }
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                        else {
+                                            if(obj && obj !== -1) {
+                                                obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                                obj.removeData("jstree_is_loading");
+                                                if(s.correct_state) {
+                                                    this.correct_state(obj);
+                                                    if(s_call) { s_call.call(this); }
+                                                }
+                                            }
+                                            else {
+                                                if(s.correct_state) {
+                                                    this.get_container().children("ul").empty();
+                                                    if(s_call) { s_call.call(this); }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, this));
+                            }, this));
+                            break;
+                        case (!!s.data && !s.ajax) || (!!s.data && !!s.ajax && (!obj || obj === -1)):
+                            if(!obj || obj == -1) {
+                                this.parse_xml(s.data, $.proxy(function (d) {
+                                    if(d) {
+                                        d = d.replace(/ ?xmlns="[^"]*"/ig, "");
+                                        if(d.length > 10) {
+                                            d = $(d);
+                                            this.get_container().children("ul").empty().append(d.children());
+                                            if(s.clean_node) { this.clean_node(obj); }
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                    else {
+                                        if(s.correct_state) {
+                                            this.get_container().children("ul").empty();
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                }, this));
+                            }
+                            break;
+                        case (!s.data && !!s.ajax) || (!!s.data && !!s.ajax && obj && obj !== -1):
+                            error_func = function (x, t, e) {
+                                var ef = this.get_settings().xml_data.ajax.error;
+                                if(ef) { ef.call(this, x, t, e); }
+                                if(obj !== -1 && obj.length) {
+                                    obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                    obj.removeData("jstree_is_loading");
+                                    if(t === "success" && s.correct_state) { this.correct_state(obj); }
+                                }
+                                else {
+                                    if(t === "success" && s.correct_state) { this.get_container().children("ul").empty(); }
+                                }
+                                if(e_call) { e_call.call(this); }
+                            };
+                            success_func = function (d, t, x) {
+                                d = x.responseText;
+                                var sf = this.get_settings().xml_data.ajax.success;
+                                if(sf) { d = sf.call(this,d,t,x) || d; }
+                                if(d === "" || (d && d.toString && d.toString().replace(/^[\s\n]+$/,"") === "")) {
+                                    return error_func.call(this, x, t, "");
+                                }
+                                this.parse_xml(d, $.proxy(function (d) {
+                                    if(d) {
+                                        d = d.replace(/ ?xmlns="[^"]*"/ig, "");
+                                        if(d.length > 10) {
+                                            d = $(d);
+                                            if(obj === -1 || !obj) { this.get_container().children("ul").empty().append(d.children()); }
+                                            else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d); obj.removeData("jstree_is_loading"); }
+                                            if(s.clean_node) { this.clean_node(obj); }
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                        else {
+                                            if(obj && obj !== -1) {
+                                                obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                                obj.removeData("jstree_is_loading");
+                                                if(s.correct_state) {
+                                                    this.correct_state(obj);
+                                                    if(s_call) { s_call.call(this); }
+                                                }
+                                            }
+                                            else {
+                                                if(s.correct_state) {
+                                                    this.get_container().children("ul").empty();
+                                                    if(s_call) { s_call.call(this); }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, this));
+                            };
+                            s.ajax.context = this;
+                            s.ajax.error = error_func;
+                            s.ajax.success = success_func;
+                            if(!s.ajax.dataType) { s.ajax.dataType = "xml"; }
+                            if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, obj); }
+                            if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, obj); }
+                            $.ajax(s.ajax);
+                            break;
+                    }
+                },
+                parse_xml : function (xml, callback) {
+                    var s = this._get_settings().xml_data;
+                    $.vakata.xslt(xml, xsl[s.xsl], callback);
+                },
+                get_xml : function (tp, obj, li_attr, a_attr, is_callback) {
+                    var result = "",
+                        s = this._get_settings(),
+                        _this = this,
+                        tmp1, tmp2, li, a, lang;
+                    if(!tp) { tp = "flat"; }
+                    if(!is_callback) { is_callback = 0; }
+                    obj = this._get_node(obj);
+                    if(!obj || obj === -1) { obj = this.get_container().find("> ul > li"); }
+                    li_attr = $.isArray(li_attr) ? li_attr : [ "id", "class" ];
+                    if(!is_callback && this.data.types && $.inArray(s.types.type_attr, li_attr) === -1) { li_attr.push(s.types.type_attr); }
 
-				a_attr = $.isArray(a_attr) ? a_attr : [ ];
+                    a_attr = $.isArray(a_attr) ? a_attr : [ ];
 
-				if(!is_callback) { 
-					if(s.xml_data.get_include_preamble) { 
-						result += '<' + '?xml version="1.0" encoding="UTF-8"?' + '>'; 
-					}
-					result += "<root>"; 
-				}
-				obj.each(function () {
-					result += "<item";
-					li = $(this);
-					$.each(li_attr, function (i, v) { 
-						var t = li.attr(v);
-						if(!s.xml_data.get_skip_empty || typeof t !== "undefined") {
-							result += " " + v + "=\"" + escape_xml((" " + (t || "")).replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"")) + "\""; 
-						}
-					});
-					if(li.hasClass("jstree-open")) { result += " state=\"open\""; }
-					if(li.hasClass("jstree-closed")) { result += " state=\"closed\""; }
-					if(tp === "flat") { result += " parent_id=\"" + escape_xml(is_callback) + "\""; }
-					result += ">";
-					result += "<content>";
-					a = li.children("a");
-					a.each(function () {
-						tmp1 = $(this);
-						lang = false;
-						result += "<name";
-						if($.inArray("languages", s.plugins) !== -1) {
-							$.each(s.languages, function (k, z) {
-								if(tmp1.hasClass(z)) { result += " lang=\"" + escape_xml(z) + "\""; lang = z; return false; }
-							});
-						}
-						if(a_attr.length) { 
-							$.each(a_attr, function (k, z) {
-								var t = tmp1.attr(z);
-								if(!s.xml_data.get_skip_empty || typeof t !== "undefined") {
-									result += " " + z + "=\"" + escape_xml((" " + t || "").replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"")) + "\"";
-								}
-							});
-						}
-						if(tmp1.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/^\s+$/ig,"").length) {
-							result += ' icon="' + escape_xml(tmp1.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"")) + '"';
-						}
-						if(tmp1.children("ins").get(0).style.backgroundImage.length) {
-							result += ' icon="' + escape_xml(tmp1.children("ins").get(0).style.backgroundImage.replace("url(","").replace(")","").replace(/'/ig,"").replace(/"/ig,"")) + '"';
-						}
-						result += ">";
-						result += "<![CDATA[" + _this.get_text(tmp1, lang) + "]]>";
-						result += "</name>";
-					});
-					result += "</content>";
-					tmp2 = li[0].id || true;
-					li = li.find("> ul > li");
-					if(li.length) { tmp2 = _this.get_xml(tp, li, li_attr, a_attr, tmp2); }
-					else { tmp2 = ""; }
-					if(tp == "nest") { result += tmp2; }
-					result += "</item>";
-					if(tp == "flat") { result += tmp2; }
-				});
-				if(!is_callback) { result += "</root>"; }
-				return result;
-			}
-		}
-	});
-})(jQuery);
+                    if(!is_callback) {
+                        if(s.xml_data.get_include_preamble) {
+                            result += '<' + '?xml version="1.0" encoding="UTF-8"?' + '>';
+                        }
+                        result += "<root>";
+                    }
+                    obj.each(function () {
+                        result += "<item";
+                        li = $(this);
+                        $.each(li_attr, function (i, v) {
+                            var t = li.attr(v);
+                            if(!s.xml_data.get_skip_empty || typeof t !== "undefined") {
+                                result += " " + v + "=\"" + escape_xml((" " + (t || "")).replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"")) + "\"";
+                            }
+                        });
+                        if(li.hasClass("jstree-open")) { result += " state=\"open\""; }
+                        if(li.hasClass("jstree-closed")) { result += " state=\"closed\""; }
+                        if(tp === "flat") { result += " parent_id=\"" + escape_xml(is_callback) + "\""; }
+                        result += ">";
+                        result += "<content>";
+                        a = li.children("a");
+                        a.each(function () {
+                            tmp1 = $(this);
+                            lang = false;
+                            result += "<name";
+                            if($.inArray("languages", s.plugins) !== -1) {
+                                $.each(s.languages, function (k, z) {
+                                    if(tmp1.hasClass(z)) { result += " lang=\"" + escape_xml(z) + "\""; lang = z; return false; }
+                                });
+                            }
+                            if(a_attr.length) {
+                                $.each(a_attr, function (k, z) {
+                                    var t = tmp1.attr(z);
+                                    if(!s.xml_data.get_skip_empty || typeof t !== "undefined") {
+                                        result += " " + z + "=\"" + escape_xml((" " + t || "").replace(/ jstree[^ ]*/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"")) + "\"";
+                                    }
+                                });
+                            }
+                            if(tmp1.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/^\s+$/ig,"").length) {
+                                result += ' icon="' + escape_xml(tmp1.children("ins").get(0).className.replace(/jstree[^ ]*|$/ig,'').replace(/\s+$/ig," ").replace(/^ /,"").replace(/ $/,"")) + '"';
+                            }
+                            if(tmp1.children("ins").get(0).style.backgroundImage.length) {
+                                result += ' icon="' + escape_xml(tmp1.children("ins").get(0).style.backgroundImage.replace("url(","").replace(")","").replace(/'/ig,"").replace(/"/ig,"")) + '"';
+                            }
+                            result += ">";
+                            result += "<![CDATA[" + _this.get_text(tmp1, lang) + "]]>";
+                            result += "</name>";
+                        });
+                        result += "</content>";
+                        tmp2 = li[0].id || true;
+                        li = li.find("> ul > li");
+                        if(li.length) { tmp2 = _this.get_xml(tp, li, li_attr, a_attr, tmp2); }
+                        else { tmp2 = ""; }
+                        if(tp == "nest") { result += tmp2; }
+                        result += "</item>";
+                        if(tp == "flat") { result += tmp2; }
+                    });
+                    if(!is_callback) { result += "</root>"; }
+                    return result;
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/*
- * jsTree search plugin
- * Enables both sync and async search on the tree
- * DOES NOT WORK WITH JSON PROGRESSIVE RENDER
- */
-(function ($) {
-	if($().jquery.split('.')[1] >= 8) {
-		$.expr[':'].jstree_contains = $.expr.createPseudo(function(search) {
-			return function(a) {
-				return (a.textContent || a.innerText || "").toLowerCase().indexOf(search.toLowerCase())>=0;
-			};
-		});
-		$.expr[':'].jstree_title_contains = $.expr.createPseudo(function(search) {
-			return function(a) {
-				return (a.getAttribute("title") || "").toLowerCase().indexOf(search.toLowerCase())>=0;
-			};
-		});
-	}
-	else {
-		$.expr[':'].jstree_contains = function(a,i,m){
-			return (a.textContent || a.innerText || "").toLowerCase().indexOf(m[3].toLowerCase())>=0;
-		};
-		$.expr[':'].jstree_title_contains = function(a,i,m) {
-			return (a.getAttribute("title") || "").toLowerCase().indexOf(m[3].toLowerCase())>=0;
-		};
-	}
-	$.jstree.plugin("search", {
-		__init : function () {
-			this.data.search.str = "";
-			this.data.search.result = $();
-			if(this._get_settings().search.show_only_matches) {
-				this.get_container()
-					.bind("search.jstree", function (e, data) {
-						$(this).children("ul").find("li").hide().removeClass("jstree-last");
-						data.rslt.nodes.parentsUntil(".jstree").addBack().show()
-							.filter("ul").each(function () { $(this).children("li:visible").eq(-1).addClass("jstree-last"); });
-					})
-					.bind("clear_search.jstree", function () {
-						$(this).children("ul").find("li").css("display","").end().end().jstree("clean_node", -1);
-					});
-			}
-		},
-		defaults : {
-			ajax : false,
-			search_method : "jstree_contains", // for case insensitive - jstree_contains
-			show_only_matches : false
-		},
-		_fn : {
-			search : function (str, skip_async) {
-				if($.trim(str) === "") { this.clear_search(); return; }
-				var s = this.get_settings().search, 
-					t = this,
-					error_func = function () { },
-					success_func = function () { };
-				this.data.search.str = str;
+    /*
+     * jsTree search plugin
+     * Enables both sync and async search on the tree
+     * DOES NOT WORK WITH JSON PROGRESSIVE RENDER
+     */
+    (function ($) {
+        if($().jquery.split('.')[1] >= 8) {
+            $.expr[':'].jstree_contains = $.expr.createPseudo(function(search) {
+                return function(a) {
+                    return (a.textContent || a.innerText || "").toLowerCase().indexOf(search.toLowerCase())>=0;
+                };
+            });
+            $.expr[':'].jstree_title_contains = $.expr.createPseudo(function(search) {
+                return function(a) {
+                    return (a.getAttribute("title") || "").toLowerCase().indexOf(search.toLowerCase())>=0;
+                };
+            });
+        }
+        else {
+            $.expr[':'].jstree_contains = function(a,i,m){
+                return (a.textContent || a.innerText || "").toLowerCase().indexOf(m[3].toLowerCase())>=0;
+            };
+            $.expr[':'].jstree_title_contains = function(a,i,m) {
+                return (a.getAttribute("title") || "").toLowerCase().indexOf(m[3].toLowerCase())>=0;
+            };
+        }
+        $.jstree.plugin("search", {
+            __init : function () {
+                this.data.search.str = "";
+                this.data.search.result = $();
+                if(this._get_settings().search.show_only_matches) {
+                    this.get_container()
+                        .bind("search.jstree", function (e, data) {
+                            $(this).children("ul").find("li").hide().removeClass("jstree-last");
+                            data.rslt.nodes.parentsUntil(".jstree").addBack().show()
+                                .filter("ul").each(function () { $(this).children("li:visible").eq(-1).addClass("jstree-last"); });
+                        })
+                        .bind("clear_search.jstree", function () {
+                            $(this).children("ul").find("li").css("display","").end().end().jstree("clean_node", -1);
+                        });
+                }
+            },
+            defaults : {
+                ajax : false,
+                search_method : "jstree_contains", // for case insensitive - jstree_contains
+                show_only_matches : false
+            },
+            _fn : {
+                search : function (str, skip_async) {
+                    if($.trim(str) === "") { this.clear_search(); return; }
+                    var s = this.get_settings().search,
+                        t = this,
+                        error_func = function () { },
+                        success_func = function () { };
+                    this.data.search.str = str;
 
-				if(!skip_async && s.ajax !== false && this.get_container_ul().find("li.jstree-closed:not(:has(ul)):eq(0)").length > 0) {
-					this.search.supress_callback = true;
-					error_func = function () { };
-					success_func = function (d, t, x) {
-						var sf = this.get_settings().search.ajax.success; 
-						if(sf) { d = sf.call(this,d,t,x) || d; }
-						this.data.search.to_open = d;
-						this._search_open();
-					};
-					s.ajax.context = this;
-					s.ajax.error = error_func;
-					s.ajax.success = success_func;
-					if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, str); }
-					if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, str); }
-					if(!s.ajax.data) { s.ajax.data = { "search_string" : str }; }
-					if(!s.ajax.dataType || /^json/.exec(s.ajax.dataType)) { s.ajax.dataType = "json"; }
-					$.ajax(s.ajax);
-					return;
-				}
-				if(this.data.search.result.length) { this.clear_search(); }
-				this.data.search.result = this.get_container().find("a" + (this.data.languages ? "." + this.get_lang() : "" ) + ":" + (s.search_method) + "(" + this.data.search.str + ")");
-				this.data.search.result.addClass("jstree-search").parent().parents(".jstree-closed").each(function () {
-					t.open_node(this, false, true);
-				});
-				this.__callback({ nodes : this.data.search.result, str : str });
-			},
-			clear_search : function (str) {
-				this.data.search.result.removeClass("jstree-search");
-				this.__callback(this.data.search.result);
-				this.data.search.result = $();
-			},
-			_search_open : function (is_callback) {
-				var _this = this,
-					done = true,
-					current = [],
-					remaining = [];
-				if(this.data.search.to_open.length) {
-					$.each(this.data.search.to_open, function (i, val) {
-						if(val == "#") { return true; }
-						if($(val).length && $(val).is(".jstree-closed")) { current.push(val); }
-						else { remaining.push(val); }
-					});
-					if(current.length) {
-						this.data.search.to_open = remaining;
-						$.each(current, function (i, val) { 
-							_this.open_node(val, function () { _this._search_open(true); }); 
-						});
-						done = false;
-					}
-				}
-				if(done) { this.search(this.data.search.str, true); }
-			}
-		}
-	});
-})(jQuery);
+                    if(!skip_async && s.ajax !== false && this.get_container_ul().find("li.jstree-closed:not(:has(ul)):eq(0)").length > 0) {
+                        this.search.supress_callback = true;
+                        error_func = function () { };
+                        success_func = function (d, t, x) {
+                            var sf = this.get_settings().search.ajax.success;
+                            if(sf) { d = sf.call(this,d,t,x) || d; }
+                            this.data.search.to_open = d;
+                            this._search_open();
+                        };
+                        s.ajax.context = this;
+                        s.ajax.error = error_func;
+                        s.ajax.success = success_func;
+                        if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, str); }
+                        if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, str); }
+                        if(!s.ajax.data) { s.ajax.data = { "search_string" : str }; }
+                        if(!s.ajax.dataType || /^json/.exec(s.ajax.dataType)) { s.ajax.dataType = "json"; }
+                        $.ajax(s.ajax);
+                        return;
+                    }
+                    if(this.data.search.result.length) { this.clear_search(); }
+                    this.data.search.result = this.get_container().find("a" + (this.data.languages ? "." + this.get_lang() : "" ) + ":" + (s.search_method) + "(" + this.data.search.str + ")");
+                    this.data.search.result.addClass("jstree-search").parent().parents(".jstree-closed").each(function () {
+                        t.open_node(this, false, true);
+                    });
+                    this.__callback({ nodes : this.data.search.result, str : str });
+                },
+                clear_search : function (str) {
+                    this.data.search.result.removeClass("jstree-search");
+                    this.__callback(this.data.search.result);
+                    this.data.search.result = $();
+                },
+                _search_open : function (is_callback) {
+                    var _this = this,
+                        done = true,
+                        current = [],
+                        remaining = [];
+                    if(this.data.search.to_open.length) {
+                        $.each(this.data.search.to_open, function (i, val) {
+                            if(val == "#") { return true; }
+                            if($(val).length && $(val).is(".jstree-closed")) { current.push(val); }
+                            else { remaining.push(val); }
+                        });
+                        if(current.length) {
+                            this.data.search.to_open = remaining;
+                            $.each(current, function (i, val) {
+                                _this.open_node(val, function () { _this._search_open(true); });
+                            });
+                            done = false;
+                        }
+                    }
+                    if(done) { this.search(this.data.search.str, true); }
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree contextmenu plugin
- */
-(function ($) {
-	$.vakata.context = {
-		hide_on_mouseleave : false,
+    /* 
+     * jsTree contextmenu plugin
+     */
+    (function ($) {
+        $.vakata.context = {
+            hide_on_mouseleave : false,
 
-		cnt		: $("<div id='vakata-contextmenu' />"),
-		vis		: false,
-		tgt		: false,
-		par		: false,
-		func	: false,
-		data	: false,
-		rtl		: false,
-		show	: function (s, t, x, y, d, p, rtl) {
-			$.vakata.context.rtl = !!rtl;
-			var html = $.vakata.context.parse(s), h, w;
-			if(!html) { return; }
-			$.vakata.context.vis = true;
-			$.vakata.context.tgt = t;
-			$.vakata.context.par = p || t || null;
-			$.vakata.context.data = d || null;
-			$.vakata.context.cnt
-				.html(html)
-				.css({ "visibility" : "hidden", "display" : "block", "left" : 0, "top" : 0 });
+            cnt		: $("<div id='vakata-contextmenu' />"),
+            vis		: false,
+            tgt		: false,
+            par		: false,
+            func	: false,
+            data	: false,
+            rtl		: false,
+            show	: function (s, t, x, y, d, p, rtl) {
+                $.vakata.context.rtl = !!rtl;
+                var html = $.vakata.context.parse(s), h, w;
+                if(!html) { return; }
+                $.vakata.context.vis = true;
+                $.vakata.context.tgt = t;
+                $.vakata.context.par = p || t || null;
+                $.vakata.context.data = d || null;
+                $.vakata.context.cnt
+                    .html(html)
+                    .css({ "visibility" : "hidden", "display" : "block", "left" : 0, "top" : 0 });
 
-			if($.vakata.context.hide_on_mouseleave) {
-				$.vakata.context.cnt
-					.one("mouseleave", function(e) { $.vakata.context.hide(); });
-			}
+                if($.vakata.context.hide_on_mouseleave) {
+                    $.vakata.context.cnt
+                        .one("mouseleave", function(e) { $.vakata.context.hide(); });
+                }
 
-			h = $.vakata.context.cnt.height();
-			w = $.vakata.context.cnt.width();
-			if(x + w > $(document).width()) { 
-				x = $(document).width() - (w + 5); 
-				$.vakata.context.cnt.find("li > ul").addClass("right"); 
-			}
-			if(y + h > $(document).height()) { 
-				y = y - (h + t[0].offsetHeight); 
-				$.vakata.context.cnt.find("li > ul").addClass("bottom"); 
-			}
+                h = $.vakata.context.cnt.height();
+                w = $.vakata.context.cnt.width();
+                if(x + w > $(document).width()) {
+                    x = $(document).width() - (w + 5);
+                    $.vakata.context.cnt.find("li > ul").addClass("right");
+                }
+                if(y + h > $(document).height()) {
+                    y = y - (h + t[0].offsetHeight);
+                    $.vakata.context.cnt.find("li > ul").addClass("bottom");
+                }
 
-			$.vakata.context.cnt
-				.css({ "left" : x, "top" : y })
-				.find("li:has(ul)")
-					.bind("mouseenter", function (e) { 
-						var w = $(document).width(),
-							h = $(document).height(),
-							ul = $(this).children("ul").show(); 
-						if(w !== $(document).width()) { ul.toggleClass("right"); }
-						if(h !== $(document).height()) { ul.toggleClass("bottom"); }
-					})
-					.bind("mouseleave", function (e) { 
-						$(this).children("ul").hide(); 
-					})
-					.end()
-				.css({ "visibility" : "visible" })
-				.show();
-			$(document).triggerHandler("context_show.vakata");
-		},
-		hide	: function () {
-			$.vakata.context.vis = false;
-			$.vakata.context.cnt.attr("class","").css({ "visibility" : "hidden" });
-			$(document).triggerHandler("context_hide.vakata");
-		},
-		parse	: function (s, is_callback) {
-			if(!s) { return false; }
-			var str = "",
-				tmp = false,
-				was_sep = true;
-			if(!is_callback) { $.vakata.context.func = {}; }
-			str += "<ul>";
-			$.each(s, function (i, val) {
-				if(!val) { return true; }
-				$.vakata.context.func[i] = val.action;
-				if(!was_sep && val.separator_before) {
-					str += "<li class='vakata-separator vakata-separator-before'></li>";
-				}
-				was_sep = false;
-				str += "<li class='" + (val._class || "") + (val._disabled ? " jstree-contextmenu-disabled " : "") + "'><ins ";
-				if(val.icon && val.icon.indexOf("/") === -1) { str += " class='" + val.icon + "' "; }
-				if(val.icon && val.icon.indexOf("/") !== -1) { str += " style='background:url(" + val.icon + ") center center no-repeat;' "; }
-				str += ">&#160;</ins><a href='#' rel='" + i + "'>";
-				if(val.submenu) {
-					str += "<span style='float:" + ($.vakata.context.rtl ? "left" : "right") + ";'>&raquo;</span>";
-				}
-				str += val.label + "</a>";
-				if(val.submenu) {
-					tmp = $.vakata.context.parse(val.submenu, true);
-					if(tmp) { str += tmp; }
-				}
-				str += "</li>";
-				if(val.separator_after) {
-					str += "<li class='vakata-separator vakata-separator-after'></li>";
-					was_sep = true;
-				}
-			});
-			str = str.replace(/<li class\='vakata-separator vakata-separator-after'\><\/li\>$/,"");
-			str += "</ul>";
-			$(document).triggerHandler("context_parse.vakata");
-			return str.length > 10 ? str : false;
-		},
-		exec	: function (i) {
-			if($.isFunction($.vakata.context.func[i])) {
-				// if is string - eval and call it!
-				$.vakata.context.func[i].call($.vakata.context.data, $.vakata.context.par);
-				return true;
-			}
-			else { return false; }
-		}
-	};
-	$(function () {
-		var css_string = '' + 
-			'#vakata-contextmenu { display:block; visibility:hidden; left:0; top:-200px; position:absolute; margin:0; padding:0; min-width:180px; background:#ebebeb; border:1px solid silver; z-index:10000; *width:180px; } ' + 
-			'#vakata-contextmenu ul { min-width:180px; *width:180px; } ' + 
-			'#vakata-contextmenu ul, #vakata-contextmenu li { margin:0; padding:0; list-style-type:none; display:block; } ' + 
-			'#vakata-contextmenu li { line-height:20px; min-height:20px; position:relative; padding:0px; } ' + 
-			'#vakata-contextmenu li a { padding:1px 6px; line-height:17px; display:block; text-decoration:none; margin:1px 1px 0 1px; } ' + 
-			'#vakata-contextmenu li ins { float:left; width:16px; height:16px; text-decoration:none; margin-right:2px; } ' + 
-			'#vakata-contextmenu li a:hover, #vakata-contextmenu li.vakata-hover > a { background:gray; color:white; } ' + 
-			'#vakata-contextmenu li ul { display:none; position:absolute; top:-2px; left:100%; background:#ebebeb; border:1px solid gray; } ' + 
-			'#vakata-contextmenu .right { right:100%; left:auto; } ' + 
-			'#vakata-contextmenu .bottom { bottom:-1px; top:auto; } ' + 
-			'#vakata-contextmenu li.vakata-separator { min-height:0; height:1px; line-height:1px; font-size:1px; overflow:hidden; margin:0 2px; background:silver; /* border-top:1px solid #fefefe; */ padding:0; } ';
-		$.vakata.css.add_sheet({ str : css_string, title : "vakata" });
-		$.vakata.context.cnt
-			.delegate("a","click", function (e) { e.preventDefault(); })
-			.delegate("a","mouseup", function (e) {
-				if(!$(this).parent().hasClass("jstree-contextmenu-disabled") && $.vakata.context.exec($(this).attr("rel"))) {
-					$.vakata.context.hide();
-				}
-				else { $(this).blur(); }
-			})
-			.delegate("a","mouseover", function () {
-				$.vakata.context.cnt.find(".vakata-hover").removeClass("vakata-hover");
-			})
-			.appendTo("body");
-		$(document).bind("mousedown", function (e) { if($.vakata.context.vis && !$.contains($.vakata.context.cnt[0], e.target)) { $.vakata.context.hide(); } });
-		if(typeof $.hotkeys !== "undefined") {
-			$(document)
-				.bind("keydown", "up", function (e) { 
-					if($.vakata.context.vis) { 
-						var o = $.vakata.context.cnt.find("ul:visible").last().children(".vakata-hover").removeClass("vakata-hover").prevAll("li:not(.vakata-separator)").first();
-						if(!o.length) { o = $.vakata.context.cnt.find("ul:visible").last().children("li:not(.vakata-separator)").last(); }
-						o.addClass("vakata-hover");
-						e.stopImmediatePropagation(); 
-						e.preventDefault();
-					} 
-				})
-				.bind("keydown", "down", function (e) { 
-					if($.vakata.context.vis) { 
-						var o = $.vakata.context.cnt.find("ul:visible").last().children(".vakata-hover").removeClass("vakata-hover").nextAll("li:not(.vakata-separator)").first();
-						if(!o.length) { o = $.vakata.context.cnt.find("ul:visible").last().children("li:not(.vakata-separator)").first(); }
-						o.addClass("vakata-hover");
-						e.stopImmediatePropagation(); 
-						e.preventDefault();
-					} 
-				})
-				.bind("keydown", "right", function (e) { 
-					if($.vakata.context.vis) { 
-						$.vakata.context.cnt.find(".vakata-hover").children("ul").show().children("li:not(.vakata-separator)").removeClass("vakata-hover").first().addClass("vakata-hover");
-						e.stopImmediatePropagation(); 
-						e.preventDefault();
-					} 
-				})
-				.bind("keydown", "left", function (e) { 
-					if($.vakata.context.vis) { 
-						$.vakata.context.cnt.find(".vakata-hover").children("ul").hide().children(".vakata-separator").removeClass("vakata-hover");
-						e.stopImmediatePropagation(); 
-						e.preventDefault();
-					} 
-				})
-				.bind("keydown", "esc", function (e) { 
-					$.vakata.context.hide(); 
-					e.preventDefault();
-				})
-				.bind("keydown", "space", function (e) { 
-					$.vakata.context.cnt.find(".vakata-hover").last().children("a").click();
-					e.preventDefault();
-				});
-		}
-	});
+                $.vakata.context.cnt
+                    .css({ "left" : x, "top" : y })
+                    .find("li:has(ul)")
+                    .bind("mouseenter", function (e) {
+                        var w = $(document).width(),
+                            h = $(document).height(),
+                            ul = $(this).children("ul").show();
+                        if(w !== $(document).width()) { ul.toggleClass("right"); }
+                        if(h !== $(document).height()) { ul.toggleClass("bottom"); }
+                    })
+                    .bind("mouseleave", function (e) {
+                        $(this).children("ul").hide();
+                    })
+                    .end()
+                    .css({ "visibility" : "visible" })
+                    .show();
+                $(document).triggerHandler("context_show.vakata");
+            },
+            hide	: function () {
+                $.vakata.context.vis = false;
+                $.vakata.context.cnt.attr("class","").css({ "visibility" : "hidden" });
+                $(document).triggerHandler("context_hide.vakata");
+            },
+            parse	: function (s, is_callback) {
+                if(!s) { return false; }
+                var str = "",
+                    tmp = false,
+                    was_sep = true;
+                if(!is_callback) { $.vakata.context.func = {}; }
+                str += "<ul>";
+                $.each(s, function (i, val) {
+                    if(!val) { return true; }
+                    $.vakata.context.func[i] = val.action;
+                    if(!was_sep && val.separator_before) {
+                        str += "<li class='vakata-separator vakata-separator-before'></li>";
+                    }
+                    was_sep = false;
+                    str += "<li class='" + (val._class || "") + (val._disabled ? " jstree-contextmenu-disabled " : "") + "'><ins ";
+                    if(val.icon && val.icon.indexOf("/") === -1) { str += " class='" + val.icon + "' "; }
+                    if(val.icon && val.icon.indexOf("/") !== -1) { str += " style='background:url(" + val.icon + ") center center no-repeat;' "; }
+                    str += ">&#160;</ins><a href='#' rel='" + i + "'>";
+                    if(val.submenu) {
+                        str += "<span style='float:" + ($.vakata.context.rtl ? "left" : "right") + ";'>&raquo;</span>";
+                    }
+                    str += val.label + "</a>";
+                    if(val.submenu) {
+                        tmp = $.vakata.context.parse(val.submenu, true);
+                        if(tmp) { str += tmp; }
+                    }
+                    str += "</li>";
+                    if(val.separator_after) {
+                        str += "<li class='vakata-separator vakata-separator-after'></li>";
+                        was_sep = true;
+                    }
+                });
+                str = str.replace(/<li class\='vakata-separator vakata-separator-after'\><\/li\>$/,"");
+                str += "</ul>";
+                $(document).triggerHandler("context_parse.vakata");
+                return str.length > 10 ? str : false;
+            },
+            exec	: function (i) {
+                if($.isFunction($.vakata.context.func[i])) {
+                    // if is string - eval and call it!
+                    $.vakata.context.func[i].call($.vakata.context.data, $.vakata.context.par);
+                    return true;
+                }
+                else { return false; }
+            }
+        };
+        $(function () {
+            var css_string = '' +
+                '#vakata-contextmenu { display:block; visibility:hidden; left:0; top:-200px; position:absolute; margin:0; padding:0; min-width:180px; background:#ebebeb; border:1px solid silver; z-index:10000; *width:180px; } ' +
+                '#vakata-contextmenu ul { min-width:180px; *width:180px; } ' +
+                '#vakata-contextmenu ul, #vakata-contextmenu li { margin:0; padding:0; list-style-type:none; display:block; } ' +
+                '#vakata-contextmenu li { line-height:20px; min-height:20px; position:relative; padding:0px; } ' +
+                '#vakata-contextmenu li a { padding:1px 6px; line-height:17px; display:block; text-decoration:none; margin:1px 1px 0 1px; } ' +
+                '#vakata-contextmenu li ins { float:left; width:16px; height:16px; text-decoration:none; margin-right:2px; } ' +
+                '#vakata-contextmenu li a:hover, #vakata-contextmenu li.vakata-hover > a { background:gray; color:white; } ' +
+                '#vakata-contextmenu li ul { display:none; position:absolute; top:-2px; left:100%; background:#ebebeb; border:1px solid gray; } ' +
+                '#vakata-contextmenu .right { right:100%; left:auto; } ' +
+                '#vakata-contextmenu .bottom { bottom:-1px; top:auto; } ' +
+                '#vakata-contextmenu li.vakata-separator { min-height:0; height:1px; line-height:1px; font-size:1px; overflow:hidden; margin:0 2px; background:silver; /* border-top:1px solid #fefefe; */ padding:0; } ';
+            $.vakata.css.add_sheet({ str : css_string, title : "vakata" });
+            $.vakata.context.cnt
+                .delegate("a","click", function (e) { e.preventDefault(); })
+                .delegate("a","mouseup", function (e) {
+                    if(!$(this).parent().hasClass("jstree-contextmenu-disabled") && $.vakata.context.exec($(this).attr("rel"))) {
+                        $.vakata.context.hide();
+                    }
+                    else { $(this).blur(); }
+                })
+                .delegate("a","mouseover", function () {
+                    $.vakata.context.cnt.find(".vakata-hover").removeClass("vakata-hover");
+                })
+                .appendTo("body");
+            $(document).bind("mousedown", function (e) { if($.vakata.context.vis && !$.contains($.vakata.context.cnt[0], e.target)) { $.vakata.context.hide(); } });
+            if(typeof $.hotkeys !== "undefined") {
+                $(document)
+                    .bind("keydown", "up", function (e) {
+                        if($.vakata.context.vis) {
+                            var o = $.vakata.context.cnt.find("ul:visible").last().children(".vakata-hover").removeClass("vakata-hover").prevAll("li:not(.vakata-separator)").first();
+                            if(!o.length) { o = $.vakata.context.cnt.find("ul:visible").last().children("li:not(.vakata-separator)").last(); }
+                            o.addClass("vakata-hover");
+                            e.stopImmediatePropagation();
+                            e.preventDefault();
+                        }
+                    })
+                    .bind("keydown", "down", function (e) {
+                        if($.vakata.context.vis) {
+                            var o = $.vakata.context.cnt.find("ul:visible").last().children(".vakata-hover").removeClass("vakata-hover").nextAll("li:not(.vakata-separator)").first();
+                            if(!o.length) { o = $.vakata.context.cnt.find("ul:visible").last().children("li:not(.vakata-separator)").first(); }
+                            o.addClass("vakata-hover");
+                            e.stopImmediatePropagation();
+                            e.preventDefault();
+                        }
+                    })
+                    .bind("keydown", "right", function (e) {
+                        if($.vakata.context.vis) {
+                            $.vakata.context.cnt.find(".vakata-hover").children("ul").show().children("li:not(.vakata-separator)").removeClass("vakata-hover").first().addClass("vakata-hover");
+                            e.stopImmediatePropagation();
+                            e.preventDefault();
+                        }
+                    })
+                    .bind("keydown", "left", function (e) {
+                        if($.vakata.context.vis) {
+                            $.vakata.context.cnt.find(".vakata-hover").children("ul").hide().children(".vakata-separator").removeClass("vakata-hover");
+                            e.stopImmediatePropagation();
+                            e.preventDefault();
+                        }
+                    })
+                    .bind("keydown", "esc", function (e) {
+                        $.vakata.context.hide();
+                        e.preventDefault();
+                    })
+                    .bind("keydown", "space", function (e) {
+                        $.vakata.context.cnt.find(".vakata-hover").last().children("a").click();
+                        e.preventDefault();
+                    });
+            }
+        });
 
-	$.jstree.plugin("contextmenu", {
-		__init : function () {
-			this.get_container()
-				.delegate("a", "contextmenu.jstree", $.proxy(function (e) {
-						e.preventDefault();
-						if(!$(e.currentTarget).hasClass("jstree-loading")) {
-							this.show_contextmenu(e.currentTarget, e.pageX, e.pageY);
-						}
-					}, this))
-				.delegate("a", "click.jstree", $.proxy(function (e) {
-						if(this.data.contextmenu) {
-							$.vakata.context.hide();
-						}
-					}, this))
-				.bind("destroy.jstree", $.proxy(function () {
-						// TODO: move this to descruct method
-						if(this.data.contextmenu) {
-							$.vakata.context.hide();
-						}
-					}, this));
-			$(document).bind("context_hide.vakata", $.proxy(function () { this.data.contextmenu = false; }, this));
-		},
-		defaults : { 
-			select_node : false, // requires UI plugin
-			show_at_node : true,
-			items : { // Could be a function that should return an object like this one
-				"create" : {
-					"separator_before"	: false,
-					"separator_after"	: true,
-					"label"				: "Create",
-					"action"			: function (obj) { this.create(obj); }
-				},
-				"rename" : {
-					"separator_before"	: false,
-					"separator_after"	: false,
-					"label"				: "Rename",
-					"action"			: function (obj) { this.rename(obj); }
-				},
-				"remove" : {
-					"separator_before"	: false,
-					"icon"				: false,
-					"separator_after"	: false,
-					"label"				: "Delete",
-					"action"			: function (obj) { if(this.is_selected(obj)) { this.remove(); } else { this.remove(obj); } }
-				},
-				"ccp" : {
-					"separator_before"	: true,
-					"icon"				: false,
-					"separator_after"	: false,
-					"label"				: "Edit",
-					"action"			: false,
-					"submenu" : { 
-						"cut" : {
-							"separator_before"	: false,
-							"separator_after"	: false,
-							"label"				: "Cut",
-							"action"			: function (obj) { this.cut(obj); }
-						},
-						"copy" : {
-							"separator_before"	: false,
-							"icon"				: false,
-							"separator_after"	: false,
-							"label"				: "Copy",
-							"action"			: function (obj) { this.copy(obj); }
-						},
-						"paste" : {
-							"separator_before"	: false,
-							"icon"				: false,
-							"separator_after"	: false,
-							"label"				: "Paste",
-							"action"			: function (obj) { this.paste(obj); }
-						}
-					}
-				}
-			}
-		},
-		_fn : {
-			show_contextmenu : function (obj, x, y) {
-				obj = this._get_node(obj);
-				var s = this.get_settings().contextmenu,
-					a = obj.children("a:visible:eq(0)"),
-					o = false,
-					i = false;
-				if(s.select_node && this.data.ui && !this.is_selected(obj)) {
-					this.deselect_all();
-					this.select_node(obj, true);
-				}
-				if(s.show_at_node || typeof x === "undefined" || typeof y === "undefined") {
-					o = a.offset();
-					x = o.left;
-					y = o.top + this.data.core.li_height;
-				}
-				i = obj.data("jstree") && obj.data("jstree").contextmenu ? obj.data("jstree").contextmenu : s.items;
-				if($.isFunction(i)) { i = i.call(this, obj); }
-				this.data.contextmenu = true;
-				$.vakata.context.show(i, a, x, y, this, obj, this._get_settings().core.rtl);
-				if(this.data.themes) { $.vakata.context.cnt.attr("class", "jstree-" + this.data.themes.theme + "-context"); }
-			}
-		}
-	});
-})(jQuery);
+        $.jstree.plugin("contextmenu", {
+            __init : function () {
+                this.get_container()
+                    .delegate("a", "contextmenu.jstree", $.proxy(function (e) {
+                        e.preventDefault();
+                        if(!$(e.currentTarget).hasClass("jstree-loading")) {
+                            this.show_contextmenu(e.currentTarget, e.pageX, e.pageY);
+                        }
+                    }, this))
+                    .delegate("a", "click.jstree", $.proxy(function (e) {
+                        if(this.data.contextmenu) {
+                            $.vakata.context.hide();
+                        }
+                    }, this))
+                    .bind("destroy.jstree", $.proxy(function () {
+                        // TODO: move this to descruct method
+                        if(this.data.contextmenu) {
+                            $.vakata.context.hide();
+                        }
+                    }, this));
+                $(document).bind("context_hide.vakata", $.proxy(function () { this.data.contextmenu = false; }, this));
+            },
+            defaults : {
+                select_node : false, // requires UI plugin
+                show_at_node : true,
+                items : { // Could be a function that should return an object like this one
+                    "create" : {
+                        "separator_before"	: false,
+                        "separator_after"	: true,
+                        "label"				: "Create",
+                        "action"			: function (obj) { this.create(obj); }
+                    },
+                    "rename" : {
+                        "separator_before"	: false,
+                        "separator_after"	: false,
+                        "label"				: "Rename",
+                        "action"			: function (obj) { this.rename(obj); }
+                    },
+                    "remove" : {
+                        "separator_before"	: false,
+                        "icon"				: false,
+                        "separator_after"	: false,
+                        "label"				: "Delete",
+                        "action"			: function (obj) { if(this.is_selected(obj)) { this.remove(); } else { this.remove(obj); } }
+                    },
+                    "ccp" : {
+                        "separator_before"	: true,
+                        "icon"				: false,
+                        "separator_after"	: false,
+                        "label"				: "Edit",
+                        "action"			: false,
+                        "submenu" : {
+                            "cut" : {
+                                "separator_before"	: false,
+                                "separator_after"	: false,
+                                "label"				: "Cut",
+                                "action"			: function (obj) { this.cut(obj); }
+                            },
+                            "copy" : {
+                                "separator_before"	: false,
+                                "icon"				: false,
+                                "separator_after"	: false,
+                                "label"				: "Copy",
+                                "action"			: function (obj) { this.copy(obj); }
+                            },
+                            "paste" : {
+                                "separator_before"	: false,
+                                "icon"				: false,
+                                "separator_after"	: false,
+                                "label"				: "Paste",
+                                "action"			: function (obj) { this.paste(obj); }
+                            }
+                        }
+                    }
+                }
+            },
+            _fn : {
+                show_contextmenu : function (obj, x, y) {
+                    obj = this._get_node(obj);
+                    var s = this.get_settings().contextmenu,
+                        a = obj.children("a:visible:eq(0)"),
+                        o = false,
+                        i = false;
+                    if(s.select_node && this.data.ui && !this.is_selected(obj)) {
+                        this.deselect_all();
+                        this.select_node(obj, true);
+                    }
+                    if(s.show_at_node || typeof x === "undefined" || typeof y === "undefined") {
+                        o = a.offset();
+                        x = o.left;
+                        y = o.top + this.data.core.li_height;
+                    }
+                    i = obj.data("jstree") && obj.data("jstree").contextmenu ? obj.data("jstree").contextmenu : s.items;
+                    if($.isFunction(i)) { i = i.call(this, obj); }
+                    this.data.contextmenu = true;
+                    $.vakata.context.show(i, a, x, y, this, obj, this._get_settings().core.rtl);
+                    if(this.data.themes) { $.vakata.context.cnt.attr("class", "jstree-" + this.data.themes.theme + "-context"); }
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree types plugin
- * Adds support types of nodes
- * You can set an attribute on each li node, that represents its type.
- * According to the type setting the node may get custom icon/validation rules
- */
-(function ($) {
-	$.jstree.plugin("types", {
-		__init : function () {
-			var s = this._get_settings().types;
-			this.data.types.attach_to = [];
-			this.get_container()
-				.bind("init.jstree", $.proxy(function () { 
-						var types = s.types, 
-							attr  = s.type_attr, 
-							icons_css = "", 
-							_this = this;
+    /* 
+     * jsTree types plugin
+     * Adds support types of nodes
+     * You can set an attribute on each li node, that represents its type.
+     * According to the type setting the node may get custom icon/validation rules
+     */
+    (function ($) {
+        $.jstree.plugin("types", {
+            __init : function () {
+                var s = this._get_settings().types;
+                this.data.types.attach_to = [];
+                this.get_container()
+                    .bind("init.jstree", $.proxy(function () {
+                        var types = s.types,
+                            attr  = s.type_attr,
+                            icons_css = "",
+                            _this = this;
 
-						$.each(types, function (i, tp) {
-							$.each(tp, function (k, v) { 
-								if(!/^(max_depth|max_children|icon|valid_children)$/.test(k)) { _this.data.types.attach_to.push(k); }
-							});
-							if(!tp.icon) { return true; }
-							if( tp.icon.image || tp.icon.position) {
-								if(i == "default")	{ icons_css += '.jstree-' + _this.get_index() + ' a > .jstree-icon { '; }
-								else				{ icons_css += '.jstree-' + _this.get_index() + ' li[' + attr + '="' + i + '"] > a > .jstree-icon { '; }
-								if(tp.icon.image)	{ icons_css += ' background-image:url(' + tp.icon.image + '); '; }
-								if(tp.icon.position){ icons_css += ' background-position:' + tp.icon.position + '; '; }
-								else				{ icons_css += ' background-position:0 0; '; }
-								icons_css += '} ';
-							}
-						});
-						if(icons_css !== "") { $.vakata.css.add_sheet({ 'str' : icons_css, title : "jstree-types" }); }
-					}, this))
-				.bind("before.jstree", $.proxy(function (e, data) { 
-						var s, t, 
-							o = this._get_settings().types.use_data ? this._get_node(data.args[0]) : false, 
-							d = o && o !== -1 && o.length ? o.data("jstree") : false;
-						if(d && d.types && d.types[data.func] === false) { e.stopImmediatePropagation(); return false; }
-						if($.inArray(data.func, this.data.types.attach_to) !== -1) {
-							if(!data.args[0] || (!data.args[0].tagName && !data.args[0].jquery)) { return; }
-							s = this._get_settings().types.types;
-							t = this._get_type(data.args[0]);
-							if(
-								( 
-									(s[t] && typeof s[t][data.func] !== "undefined") || 
-									(s["default"] && typeof s["default"][data.func] !== "undefined") 
-								) && this._check(data.func, data.args[0]) === false
-							) {
-								e.stopImmediatePropagation();
-								return false;
-							}
-						}
-					}, this));
-			if(is_ie6) {
-				this.get_container()
-					.bind("load_node.jstree set_type.jstree", $.proxy(function (e, data) {
-							var r = data && data.rslt && data.rslt.obj && data.rslt.obj !== -1 ? this._get_node(data.rslt.obj).parent() : this.get_container_ul(),
-								c = false,
-								s = this._get_settings().types;
-							$.each(s.types, function (i, tp) {
-								if(tp.icon && (tp.icon.image || tp.icon.position)) {
-									c = i === "default" ? r.find("li > a > .jstree-icon") : r.find("li[" + s.type_attr + "='" + i + "'] > a > .jstree-icon");
-									if(tp.icon.image) { c.css("backgroundImage","url(" + tp.icon.image + ")"); }
-									c.css("backgroundPosition", tp.icon.position || "0 0");
-								}
-							});
-						}, this));
-			}
-		},
-		defaults : {
-			// defines maximum number of root nodes (-1 means unlimited, -2 means disable max_children checking)
-			max_children		: -1,
-			// defines the maximum depth of the tree (-1 means unlimited, -2 means disable max_depth checking)
-			max_depth			: -1,
-			// defines valid node types for the root nodes
-			valid_children		: "all",
+                        $.each(types, function (i, tp) {
+                            $.each(tp, function (k, v) {
+                                if(!/^(max_depth|max_children|icon|valid_children)$/.test(k)) { _this.data.types.attach_to.push(k); }
+                            });
+                            if(!tp.icon) { return true; }
+                            if( tp.icon.image || tp.icon.position) {
+                                if(i == "default")	{ icons_css += '.jstree-' + _this.get_index() + ' a > .jstree-icon { '; }
+                                else				{ icons_css += '.jstree-' + _this.get_index() + ' li[' + attr + '="' + i + '"] > a > .jstree-icon { '; }
+                                if(tp.icon.image)	{ icons_css += ' background-image:url(' + tp.icon.image + '); '; }
+                                if(tp.icon.position){ icons_css += ' background-position:' + tp.icon.position + '; '; }
+                                else				{ icons_css += ' background-position:0 0; '; }
+                                icons_css += '} ';
+                            }
+                        });
+                        if(icons_css !== "") { $.vakata.css.add_sheet({ 'str' : icons_css, title : "jstree-types" }); }
+                    }, this))
+                    .bind("before.jstree", $.proxy(function (e, data) {
+                        var s, t,
+                            o = this._get_settings().types.use_data ? this._get_node(data.args[0]) : false,
+                            d = o && o !== -1 && o.length ? o.data("jstree") : false;
+                        if(d && d.types && d.types[data.func] === false) { e.stopImmediatePropagation(); return false; }
+                        if($.inArray(data.func, this.data.types.attach_to) !== -1) {
+                            if(!data.args[0] || (!data.args[0].tagName && !data.args[0].jquery)) { return; }
+                            s = this._get_settings().types.types;
+                            t = this._get_type(data.args[0]);
+                            if(
+                                (
+                                    (s[t] && typeof s[t][data.func] !== "undefined") ||
+                                        (s["default"] && typeof s["default"][data.func] !== "undefined")
+                                    ) && this._check(data.func, data.args[0]) === false
+                                ) {
+                                e.stopImmediatePropagation();
+                                return false;
+                            }
+                        }
+                    }, this));
+                if(is_ie6) {
+                    this.get_container()
+                        .bind("load_node.jstree set_type.jstree", $.proxy(function (e, data) {
+                            var r = data && data.rslt && data.rslt.obj && data.rslt.obj !== -1 ? this._get_node(data.rslt.obj).parent() : this.get_container_ul(),
+                                c = false,
+                                s = this._get_settings().types;
+                            $.each(s.types, function (i, tp) {
+                                if(tp.icon && (tp.icon.image || tp.icon.position)) {
+                                    c = i === "default" ? r.find("li > a > .jstree-icon") : r.find("li[" + s.type_attr + "='" + i + "'] > a > .jstree-icon");
+                                    if(tp.icon.image) { c.css("backgroundImage","url(" + tp.icon.image + ")"); }
+                                    c.css("backgroundPosition", tp.icon.position || "0 0");
+                                }
+                            });
+                        }, this));
+                }
+            },
+            defaults : {
+                // defines maximum number of root nodes (-1 means unlimited, -2 means disable max_children checking)
+                max_children		: -1,
+                // defines the maximum depth of the tree (-1 means unlimited, -2 means disable max_depth checking)
+                max_depth			: -1,
+                // defines valid node types for the root nodes
+                valid_children		: "all",
 
-			// whether to use $.data
-			use_data : false, 
-			// where is the type stores (the rel attribute of the LI element)
-			type_attr : "rel",
-			// a list of types
-			types : {
-				// the default type
-				"default" : {
-					"max_children"	: -1,
-					"max_depth"		: -1,
-					"valid_children": "all"
+                // whether to use $.data
+                use_data : false,
+                // where is the type stores (the rel attribute of the LI element)
+                type_attr : "rel",
+                // a list of types
+                types : {
+                    // the default type
+                    "default" : {
+                        "max_children"	: -1,
+                        "max_depth"		: -1,
+                        "valid_children": "all"
 
-					// Bound functions - you can bind any other function here (using boolean or function)
-					//"select_node"	: true
-				}
-			}
-		},
-		_fn : {
-			_types_notify : function (n, data) {
-				if(data.type && this._get_settings().types.use_data) {
-					this.set_type(data.type, n);
-				}
-			},
-			_get_type : function (obj) {
-				obj = this._get_node(obj);
-				return (!obj || !obj.length) ? false : obj.attr(this._get_settings().types.type_attr) || "default";
-			},
-			set_type : function (str, obj) {
-				obj = this._get_node(obj);
-				var ret = (!obj.length || !str) ? false : obj.attr(this._get_settings().types.type_attr, str);
-				if(ret) { this.__callback({ obj : obj, type : str}); }
-				return ret;
-			},
-			_check : function (rule, obj, opts) {
-				obj = this._get_node(obj);
-				var v = false, t = this._get_type(obj), d = 0, _this = this, s = this._get_settings().types, data = false;
-				if(obj === -1) { 
-					if(!!s[rule]) { v = s[rule]; }
-					else { return; }
-				}
-				else {
-					if(t === false) { return; }
-					data = s.use_data ? obj.data("jstree") : false;
-					if(data && data.types && typeof data.types[rule] !== "undefined") { v = data.types[rule]; }
-					else if(!!s.types[t] && typeof s.types[t][rule] !== "undefined") { v = s.types[t][rule]; }
-					else if(!!s.types["default"] && typeof s.types["default"][rule] !== "undefined") { v = s.types["default"][rule]; }
-				}
-				if($.isFunction(v)) { v = v.call(this, obj); }
-				if(rule === "max_depth" && obj !== -1 && opts !== false && s.max_depth !== -2 && v !== 0) {
-					// also include the node itself - otherwise if root node it is not checked
-					obj.children("a:eq(0)").parentsUntil(".jstree","li").each(function (i) {
-						// check if current depth already exceeds global tree depth
-						if(s.max_depth !== -1 && s.max_depth - (i + 1) <= 0) { v = 0; return false; }
-						d = (i === 0) ? v : _this._check(rule, this, false);
-						// check if current node max depth is already matched or exceeded
-						if(d !== -1 && d - (i + 1) <= 0) { v = 0; return false; }
-						// otherwise - set the max depth to the current value minus current depth
-						if(d >= 0 && (d - (i + 1) < v || v < 0) ) { v = d - (i + 1); }
-						// if the global tree depth exists and it minus the nodes calculated so far is less than `v` or `v` is unlimited
-						if(s.max_depth >= 0 && (s.max_depth - (i + 1) < v || v < 0) ) { v = s.max_depth - (i + 1); }
-					});
-				}
-				return v;
-			},
-			check_move : function () {
-				if(!this.__call_old()) { return false; }
-				var m  = this._get_move(),
-					s  = m.rt._get_settings().types,
-					mc = m.rt._check("max_children", m.cr),
-					md = m.rt._check("max_depth", m.cr),
-					vc = m.rt._check("valid_children", m.cr),
-					ch = 0, d = 1, t;
+                        // Bound functions - you can bind any other function here (using boolean or function)
+                        //"select_node"	: true
+                    }
+                }
+            },
+            _fn : {
+                _types_notify : function (n, data) {
+                    if(data.type && this._get_settings().types.use_data) {
+                        this.set_type(data.type, n);
+                    }
+                },
+                _get_type : function (obj) {
+                    obj = this._get_node(obj);
+                    return (!obj || !obj.length) ? false : obj.attr(this._get_settings().types.type_attr) || "default";
+                },
+                set_type : function (str, obj) {
+                    obj = this._get_node(obj);
+                    var ret = (!obj.length || !str) ? false : obj.attr(this._get_settings().types.type_attr, str);
+                    if(ret) { this.__callback({ obj : obj, type : str}); }
+                    return ret;
+                },
+                _check : function (rule, obj, opts) {
+                    obj = this._get_node(obj);
+                    var v = false, t = this._get_type(obj), d = 0, _this = this, s = this._get_settings().types, data = false;
+                    if(obj === -1) {
+                        if(!!s[rule]) { v = s[rule]; }
+                        else { return; }
+                    }
+                    else {
+                        if(t === false) { return; }
+                        data = s.use_data ? obj.data("jstree") : false;
+                        if(data && data.types && typeof data.types[rule] !== "undefined") { v = data.types[rule]; }
+                        else if(!!s.types[t] && typeof s.types[t][rule] !== "undefined") { v = s.types[t][rule]; }
+                        else if(!!s.types["default"] && typeof s.types["default"][rule] !== "undefined") { v = s.types["default"][rule]; }
+                    }
+                    if($.isFunction(v)) { v = v.call(this, obj); }
+                    if(rule === "max_depth" && obj !== -1 && opts !== false && s.max_depth !== -2 && v !== 0) {
+                        // also include the node itself - otherwise if root node it is not checked
+                        obj.children("a:eq(0)").parentsUntil(".jstree","li").each(function (i) {
+                            // check if current depth already exceeds global tree depth
+                            if(s.max_depth !== -1 && s.max_depth - (i + 1) <= 0) { v = 0; return false; }
+                            d = (i === 0) ? v : _this._check(rule, this, false);
+                            // check if current node max depth is already matched or exceeded
+                            if(d !== -1 && d - (i + 1) <= 0) { v = 0; return false; }
+                            // otherwise - set the max depth to the current value minus current depth
+                            if(d >= 0 && (d - (i + 1) < v || v < 0) ) { v = d - (i + 1); }
+                            // if the global tree depth exists and it minus the nodes calculated so far is less than `v` or `v` is unlimited
+                            if(s.max_depth >= 0 && (s.max_depth - (i + 1) < v || v < 0) ) { v = s.max_depth - (i + 1); }
+                        });
+                    }
+                    return v;
+                },
+                check_move : function () {
+                    if(!this.__call_old()) { return false; }
+                    var m  = this._get_move(),
+                        s  = m.rt._get_settings().types,
+                        mc = m.rt._check("max_children", m.cr),
+                        md = m.rt._check("max_depth", m.cr),
+                        vc = m.rt._check("valid_children", m.cr),
+                        ch = 0, d = 1, t;
 
-				if(vc === "none") { return false; } 
-				if($.isArray(vc) && m.ot && m.ot._get_type) {
-					m.o.each(function () {
-						if($.inArray(m.ot._get_type(this), vc) === -1) { d = false; return false; }
-					});
-					if(d === false) { return false; }
-				}
-				if(s.max_children !== -2 && mc !== -1) {
-					ch = m.cr === -1 ? this.get_container().find("> ul > li").not(m.o).length : m.cr.find("> ul > li").not(m.o).length;
-					if(ch + m.o.length > mc) { return false; }
-				}
-				if(s.max_depth !== -2 && md !== -1) {
-					d = 0;
-					if(md === 0) { return false; }
-					if(typeof m.o.d === "undefined") {
-						// TODO: deal with progressive rendering and async when checking max_depth (how to know the depth of the moved node)
-						t = m.o;
-						while(t.length > 0) {
-							t = t.find("> ul > li");
-							d ++;
-						}
-						m.o.d = d;
-					}
-					if(md - m.o.d < 0) { return false; }
-				}
-				return true;
-			},
-			create_node : function (obj, position, js, callback, is_loaded, skip_check) {
-				if(!skip_check && (is_loaded || this._is_loaded(obj))) {
-					var p  = (typeof position == "string" && position.match(/^before|after$/i) && obj !== -1) ? this._get_parent(obj) : this._get_node(obj),
-						s  = this._get_settings().types,
-						mc = this._check("max_children", p),
-						md = this._check("max_depth", p),
-						vc = this._check("valid_children", p),
-						ch;
-					if(typeof js === "string") { js = { data : js }; }
-					if(!js) { js = {}; }
-					if(vc === "none") { return false; } 
-					if($.isArray(vc)) {
-						if(!js.attr || !js.attr[s.type_attr]) { 
-							if(!js.attr) { js.attr = {}; }
-							js.attr[s.type_attr] = vc[0]; 
-						}
-						else {
-							if($.inArray(js.attr[s.type_attr], vc) === -1) { return false; }
-						}
-					}
-					if(s.max_children !== -2 && mc !== -1) {
-						ch = p === -1 ? this.get_container().find("> ul > li").length : p.find("> ul > li").length;
-						if(ch + 1 > mc) { return false; }
-					}
-					if(s.max_depth !== -2 && md !== -1 && (md - 1) < 0) { return false; }
-				}
-				return this.__call_old(true, obj, position, js, callback, is_loaded, skip_check);
-			}
-		}
-	});
-})(jQuery);
+                    if(vc === "none") { return false; }
+                    if($.isArray(vc) && m.ot && m.ot._get_type) {
+                        m.o.each(function () {
+                            if($.inArray(m.ot._get_type(this), vc) === -1) { d = false; return false; }
+                        });
+                        if(d === false) { return false; }
+                    }
+                    if(s.max_children !== -2 && mc !== -1) {
+                        ch = m.cr === -1 ? this.get_container().find("> ul > li").not(m.o).length : m.cr.find("> ul > li").not(m.o).length;
+                        if(ch + m.o.length > mc) { return false; }
+                    }
+                    if(s.max_depth !== -2 && md !== -1) {
+                        d = 0;
+                        if(md === 0) { return false; }
+                        if(typeof m.o.d === "undefined") {
+                            // TODO: deal with progressive rendering and async when checking max_depth (how to know the depth of the moved node)
+                            t = m.o;
+                            while(t.length > 0) {
+                                t = t.find("> ul > li");
+                                d ++;
+                            }
+                            m.o.d = d;
+                        }
+                        if(md - m.o.d < 0) { return false; }
+                    }
+                    return true;
+                },
+                create_node : function (obj, position, js, callback, is_loaded, skip_check) {
+                    if(!skip_check && (is_loaded || this._is_loaded(obj))) {
+                        var p  = (typeof position == "string" && position.match(/^before|after$/i) && obj !== -1) ? this._get_parent(obj) : this._get_node(obj),
+                            s  = this._get_settings().types,
+                            mc = this._check("max_children", p),
+                            md = this._check("max_depth", p),
+                            vc = this._check("valid_children", p),
+                            ch;
+                        if(typeof js === "string") { js = { data : js }; }
+                        if(!js) { js = {}; }
+                        if(vc === "none") { return false; }
+                        if($.isArray(vc)) {
+                            if(!js.attr || !js.attr[s.type_attr]) {
+                                if(!js.attr) { js.attr = {}; }
+                                js.attr[s.type_attr] = vc[0];
+                            }
+                            else {
+                                if($.inArray(js.attr[s.type_attr], vc) === -1) { return false; }
+                            }
+                        }
+                        if(s.max_children !== -2 && mc !== -1) {
+                            ch = p === -1 ? this.get_container().find("> ul > li").length : p.find("> ul > li").length;
+                            if(ch + 1 > mc) { return false; }
+                        }
+                        if(s.max_depth !== -2 && md !== -1 && (md - 1) < 0) { return false; }
+                    }
+                    return this.__call_old(true, obj, position, js, callback, is_loaded, skip_check);
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree HTML plugin
- * The HTML data store. Datastores are build by replacing the `load_node` and `_is_loaded` functions.
- */
-(function ($) {
-	$.jstree.plugin("html_data", {
-		__init : function () { 
-			// this used to use html() and clean the whitespace, but this way any attached data was lost
-			this.data.html_data.original_container_html = this.get_container().find(" > ul > li").clone(true);
-			// remove white space from LI node - otherwise nodes appear a bit to the right
-			this.data.html_data.original_container_html.find("li").addBack().contents().filter(function() { return this.nodeType == 3; }).remove();
-		},
-		defaults : { 
-			data : false,
-			ajax : false,
-			correct_state : true
-		},
-		_fn : {
-			load_node : function (obj, s_call, e_call) { var _this = this; this.load_node_html(obj, function () { _this.__callback({ "obj" : _this._get_node(obj) }); s_call.call(this); }, e_call); },
-			_is_loaded : function (obj) { 
-				obj = this._get_node(obj); 
-				return obj == -1 || !obj || (!this._get_settings().html_data.ajax && !$.isFunction(this._get_settings().html_data.data)) || obj.is(".jstree-open, .jstree-leaf") || obj.children("ul").children("li").size() > 0;
-			},
-			load_node_html : function (obj, s_call, e_call) {
-				var d,
-					s = this.get_settings().html_data,
-					error_func = function () {},
-					success_func = function () {};
-				obj = this._get_node(obj);
-				if(obj && obj !== -1) {
-					if(obj.data("jstree_is_loading")) { return; }
-					else { obj.data("jstree_is_loading",true); }
-				}
-				switch(!0) {
-					case ($.isFunction(s.data)):
-						s.data.call(this, obj, $.proxy(function (d) {
-							if(d && d !== "" && d.toString && d.toString().replace(/^[\s\n]+$/,"") !== "") {
-								d = $(d);
-								if(!d.is("ul")) { d = $("<ul />").append(d); }
-								if(obj == -1 || !obj) { this.get_container().children("ul").empty().append(d.children()).find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); }
-								else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d).children("ul").find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); obj.removeData("jstree_is_loading"); }
-								this.clean_node(obj);
-								if(s_call) { s_call.call(this); }
-							}
-							else {
-								if(obj && obj !== -1) {
-									obj.children("a.jstree-loading").removeClass("jstree-loading");
-									obj.removeData("jstree_is_loading");
-									if(s.correct_state) { 
-										this.correct_state(obj);
-										if(s_call) { s_call.call(this); } 
-									}
-								}
-								else {
-									if(s.correct_state) { 
-										this.get_container().children("ul").empty();
-										if(s_call) { s_call.call(this); } 
-									}
-								}
-							}
-						}, this));
-						break;
-					case (!s.data && !s.ajax):
-						if(!obj || obj == -1) {
-							this.get_container()
-								.children("ul").empty()
-								.append(this.data.html_data.original_container_html)
-								.find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end()
-								.filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon");
-							this.clean_node();
-						}
-						if(s_call) { s_call.call(this); }
-						break;
-					case (!!s.data && !s.ajax) || (!!s.data && !!s.ajax && (!obj || obj === -1)):
-						if(!obj || obj == -1) {
-							d = $(s.data);
-							if(!d.is("ul")) { d = $("<ul />").append(d); }
-							this.get_container()
-								.children("ul").empty().append(d.children())
-								.find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end()
-								.filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon");
-							this.clean_node();
-						}
-						if(s_call) { s_call.call(this); }
-						break;
-					case (!s.data && !!s.ajax) || (!!s.data && !!s.ajax && obj && obj !== -1):
-						obj = this._get_node(obj);
-						error_func = function (x, t, e) {
-							var ef = this.get_settings().html_data.ajax.error; 
-							if(ef) { ef.call(this, x, t, e); }
-							if(obj != -1 && obj.length) {
-								obj.children("a.jstree-loading").removeClass("jstree-loading");
-								obj.removeData("jstree_is_loading");
-								if(t === "success" && s.correct_state) { this.correct_state(obj); }
-							}
-							else {
-								if(t === "success" && s.correct_state) { this.get_container().children("ul").empty(); }
-							}
-							if(e_call) { e_call.call(this); }
-						};
-						success_func = function (d, t, x) {
-							var sf = this.get_settings().html_data.ajax.success; 
-							if(sf) { d = sf.call(this,d,t,x) || d; }
-							if(d === "" || (d && d.toString && d.toString().replace(/^[\s\n]+$/,"") === "")) {
-								return error_func.call(this, x, t, "");
-							}
-							if(d) {
-								d = $(d);
-								if(!d.is("ul")) { d = $("<ul />").append(d); }
-								if(obj == -1 || !obj) { this.get_container().children("ul").empty().append(d.children()).find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); }
-								else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d).children("ul").find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); obj.removeData("jstree_is_loading"); }
-								this.clean_node(obj);
-								if(s_call) { s_call.call(this); }
-							}
-							else {
-								if(obj && obj !== -1) {
-									obj.children("a.jstree-loading").removeClass("jstree-loading");
-									obj.removeData("jstree_is_loading");
-									if(s.correct_state) { 
-										this.correct_state(obj);
-										if(s_call) { s_call.call(this); } 
-									}
-								}
-								else {
-									if(s.correct_state) { 
-										this.get_container().children("ul").empty();
-										if(s_call) { s_call.call(this); } 
-									}
-								}
-							}
-						};
-						s.ajax.context = this;
-						s.ajax.error = error_func;
-						s.ajax.success = success_func;
-						if(!s.ajax.dataType) { s.ajax.dataType = "html"; }
-						if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, obj); }
-						if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, obj); }
-						$.ajax(s.ajax);
-						break;
-				}
-			}
-		}
-	});
-	// include the HTML data plugin by default
-	$.jstree.defaults.plugins.push("html_data");
-})(jQuery);
+    /* 
+     * jsTree HTML plugin
+     * The HTML data store. Datastores are build by replacing the `load_node` and `_is_loaded` functions.
+     */
+    (function ($) {
+        $.jstree.plugin("html_data", {
+            __init : function () {
+                // this used to use html() and clean the whitespace, but this way any attached data was lost
+                this.data.html_data.original_container_html = this.get_container().find(" > ul > li").clone(true);
+                // remove white space from LI node - otherwise nodes appear a bit to the right
+                this.data.html_data.original_container_html.find("li").addBack().contents().filter(function() { return this.nodeType == 3; }).remove();
+            },
+            defaults : {
+                data : false,
+                ajax : false,
+                correct_state : true
+            },
+            _fn : {
+                load_node : function (obj, s_call, e_call) { var _this = this; this.load_node_html(obj, function () { _this.__callback({ "obj" : _this._get_node(obj) }); s_call.call(this); }, e_call); },
+                _is_loaded : function (obj) {
+                    obj = this._get_node(obj);
+                    return obj == -1 || !obj || (!this._get_settings().html_data.ajax && !$.isFunction(this._get_settings().html_data.data)) || obj.is(".jstree-open, .jstree-leaf") || obj.children("ul").children("li").size() > 0;
+                },
+                load_node_html : function (obj, s_call, e_call) {
+                    var d,
+                        s = this.get_settings().html_data,
+                        error_func = function () {},
+                        success_func = function () {};
+                    obj = this._get_node(obj);
+                    if(obj && obj !== -1) {
+                        if(obj.data("jstree_is_loading")) { return; }
+                        else { obj.data("jstree_is_loading",true); }
+                    }
+                    switch(!0) {
+                        case ($.isFunction(s.data)):
+                            s.data.call(this, obj, $.proxy(function (d) {
+                                if(d && d !== "" && d.toString && d.toString().replace(/^[\s\n]+$/,"") !== "") {
+                                    d = $(d);
+                                    if(!d.is("ul")) { d = $("<ul />").append(d); }
+                                    if(obj == -1 || !obj) { this.get_container().children("ul").empty().append(d.children()).find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); }
+                                    else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d).children("ul").find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); obj.removeData("jstree_is_loading"); }
+                                    this.clean_node(obj);
+                                    if(s_call) { s_call.call(this); }
+                                }
+                                else {
+                                    if(obj && obj !== -1) {
+                                        obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                        obj.removeData("jstree_is_loading");
+                                        if(s.correct_state) {
+                                            this.correct_state(obj);
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                    else {
+                                        if(s.correct_state) {
+                                            this.get_container().children("ul").empty();
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                }
+                            }, this));
+                            break;
+                        case (!s.data && !s.ajax):
+                            if(!obj || obj == -1) {
+                                this.get_container()
+                                    .children("ul").empty()
+                                    .append(this.data.html_data.original_container_html)
+                                    .find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end()
+                                    .filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon");
+                                this.clean_node();
+                            }
+                            if(s_call) { s_call.call(this); }
+                            break;
+                        case (!!s.data && !s.ajax) || (!!s.data && !!s.ajax && (!obj || obj === -1)):
+                            if(!obj || obj == -1) {
+                                d = $(s.data);
+                                if(!d.is("ul")) { d = $("<ul />").append(d); }
+                                this.get_container()
+                                    .children("ul").empty().append(d.children())
+                                    .find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end()
+                                    .filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon");
+                                this.clean_node();
+                            }
+                            if(s_call) { s_call.call(this); }
+                            break;
+                        case (!s.data && !!s.ajax) || (!!s.data && !!s.ajax && obj && obj !== -1):
+                            obj = this._get_node(obj);
+                            error_func = function (x, t, e) {
+                                var ef = this.get_settings().html_data.ajax.error;
+                                if(ef) { ef.call(this, x, t, e); }
+                                if(obj != -1 && obj.length) {
+                                    obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                    obj.removeData("jstree_is_loading");
+                                    if(t === "success" && s.correct_state) { this.correct_state(obj); }
+                                }
+                                else {
+                                    if(t === "success" && s.correct_state) { this.get_container().children("ul").empty(); }
+                                }
+                                if(e_call) { e_call.call(this); }
+                            };
+                            success_func = function (d, t, x) {
+                                var sf = this.get_settings().html_data.ajax.success;
+                                if(sf) { d = sf.call(this,d,t,x) || d; }
+                                if(d === "" || (d && d.toString && d.toString().replace(/^[\s\n]+$/,"") === "")) {
+                                    return error_func.call(this, x, t, "");
+                                }
+                                if(d) {
+                                    d = $(d);
+                                    if(!d.is("ul")) { d = $("<ul />").append(d); }
+                                    if(obj == -1 || !obj) { this.get_container().children("ul").empty().append(d.children()).find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); }
+                                    else { obj.children("a.jstree-loading").removeClass("jstree-loading"); obj.append(d).children("ul").find("li, a").filter(function () { return !this.firstChild || !this.firstChild.tagName || this.firstChild.tagName !== "INS"; }).prepend("<ins class='jstree-icon'>&#160;</ins>").end().filter("a").children("ins:first-child").not(".jstree-icon").addClass("jstree-icon"); obj.removeData("jstree_is_loading"); }
+                                    this.clean_node(obj);
+                                    if(s_call) { s_call.call(this); }
+                                }
+                                else {
+                                    if(obj && obj !== -1) {
+                                        obj.children("a.jstree-loading").removeClass("jstree-loading");
+                                        obj.removeData("jstree_is_loading");
+                                        if(s.correct_state) {
+                                            this.correct_state(obj);
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                    else {
+                                        if(s.correct_state) {
+                                            this.get_container().children("ul").empty();
+                                            if(s_call) { s_call.call(this); }
+                                        }
+                                    }
+                                }
+                            };
+                            s.ajax.context = this;
+                            s.ajax.error = error_func;
+                            s.ajax.success = success_func;
+                            if(!s.ajax.dataType) { s.ajax.dataType = "html"; }
+                            if($.isFunction(s.ajax.url)) { s.ajax.url = s.ajax.url.call(this, obj); }
+                            if($.isFunction(s.ajax.data)) { s.ajax.data = s.ajax.data.call(this, obj); }
+                            $.ajax(s.ajax);
+                            break;
+                    }
+                }
+            }
+        });
+        // include the HTML data plugin by default
+        $.jstree.defaults.plugins.push("html_data");
+    })(jQuery);
 //*/
 
-/* 
- * jsTree themeroller plugin
- * Adds support for jQuery UI themes. Include this at the end of your plugins list, also make sure "themes" is not included.
- */
-(function ($) {
-	$.jstree.plugin("themeroller", {
-		__init : function () {
-			var s = this._get_settings().themeroller;
-			this.get_container()
-				.addClass("ui-widget-content")
-				.addClass("jstree-themeroller")
-				.delegate("a","mouseenter.jstree", function (e) {
-					if(!$(e.currentTarget).hasClass("jstree-loading")) {
-						$(this).addClass(s.item_h);
-					}
-				})
-				.delegate("a","mouseleave.jstree", function () {
-					$(this).removeClass(s.item_h);
-				})
-				.bind("init.jstree", $.proxy(function (e, data) { 
-						data.inst.get_container().find("> ul > li > .jstree-loading > ins").addClass("ui-icon-refresh");
-						this._themeroller(data.inst.get_container().find("> ul > li"));
-					}, this))
-				.bind("open_node.jstree create_node.jstree", $.proxy(function (e, data) { 
-						this._themeroller(data.rslt.obj);
-					}, this))
-				.bind("loaded.jstree refresh.jstree", $.proxy(function (e) {
-						this._themeroller();
-					}, this))
-				.bind("close_node.jstree", $.proxy(function (e, data) {
-						this._themeroller(data.rslt.obj);
-					}, this))
-				.bind("delete_node.jstree", $.proxy(function (e, data) {
-						this._themeroller(data.rslt.parent);
-					}, this))
-				.bind("correct_state.jstree", $.proxy(function (e, data) {
-						data.rslt.obj
-							.children("ins.jstree-icon").removeClass(s.opened + " " + s.closed + " ui-icon").end()
-							.find("> a > ins.ui-icon")
-								.filter(function() { 
-									return this.className.toString()
-										.replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
-										.indexOf("ui-icon-") === -1; 
-								}).removeClass(s.item_open + " " + s.item_clsd).addClass(s.item_leaf || "jstree-no-icon");
-					}, this))
-				.bind("select_node.jstree", $.proxy(function (e, data) {
-						data.rslt.obj.children("a").addClass(s.item_a);
-					}, this))
-				.bind("deselect_node.jstree deselect_all.jstree", $.proxy(function (e, data) {
-						this.get_container()
-							.find("a." + s.item_a).removeClass(s.item_a).end()
-							.find("a.jstree-clicked").addClass(s.item_a);
-					}, this))
-				.bind("dehover_node.jstree", $.proxy(function (e, data) {
-						data.rslt.obj.children("a").removeClass(s.item_h);
-					}, this))
-				.bind("hover_node.jstree", $.proxy(function (e, data) {
-						this.get_container()
-							.find("a." + s.item_h).not(data.rslt.obj).removeClass(s.item_h);
-						data.rslt.obj.children("a").addClass(s.item_h);
-					}, this))
-				.bind("move_node.jstree", $.proxy(function (e, data) {
-						this._themeroller(data.rslt.o);
-						this._themeroller(data.rslt.op);
-					}, this));
-		},
-		__destroy : function () {
-			var s = this._get_settings().themeroller,
-				c = [ "ui-icon" ];
-			$.each(s, function (i, v) {
-				v = v.split(" ");
-				if(v.length) { c = c.concat(v); }
-			});
-			this.get_container()
-				.removeClass("ui-widget-content")
-				.find("." + c.join(", .")).removeClass(c.join(" "));
-		},
-		_fn : {
-			_themeroller : function (obj) {
-				var s = this._get_settings().themeroller;
-				obj = (!obj || obj == -1) ? this.get_container_ul() : this._get_node(obj);
-				obj = (!obj || obj == -1) ? this.get_container_ul() : obj.parent();
-				obj
-					.find("li.jstree-closed")
-						.children("ins.jstree-icon").removeClass(s.opened).addClass("ui-icon " + s.closed).end()
-						.children("a").addClass(s.item)
-							.children("ins.jstree-icon").addClass("ui-icon")
-								.filter(function() { 
-									return this.className.toString()
-										.replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
-										.indexOf("ui-icon-") === -1; 
-								}).removeClass(s.item_leaf + " " + s.item_open).addClass(s.item_clsd || "jstree-no-icon")
-								.end()
-							.end()
-						.end()
-					.end()
-					.find("li.jstree-open")
-						.children("ins.jstree-icon").removeClass(s.closed).addClass("ui-icon " + s.opened).end()
-						.children("a").addClass(s.item)
-							.children("ins.jstree-icon").addClass("ui-icon")
-								.filter(function() { 
-									return this.className.toString()
-										.replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
-										.indexOf("ui-icon-") === -1; 
-								}).removeClass(s.item_leaf + " " + s.item_clsd).addClass(s.item_open || "jstree-no-icon")
-								.end()
-							.end()
-						.end()
-					.end()
-					.find("li.jstree-leaf")
-						.children("ins.jstree-icon").removeClass(s.closed + " ui-icon " + s.opened).end()
-						.children("a").addClass(s.item)
-							.children("ins.jstree-icon").addClass("ui-icon")
-								.filter(function() { 
-									return this.className.toString()
-										.replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
-										.indexOf("ui-icon-") === -1; 
-								}).removeClass(s.item_clsd + " " + s.item_open).addClass(s.item_leaf || "jstree-no-icon");
-			}
-		},
-		defaults : {
-			"opened"	: "ui-icon-triangle-1-se",
-			"closed"	: "ui-icon-triangle-1-e",
-			"item"		: "ui-state-default",
-			"item_h"	: "ui-state-hover",
-			"item_a"	: "ui-state-active",
-			"item_open"	: "ui-icon-folder-open",
-			"item_clsd"	: "ui-icon-folder-collapsed",
-			"item_leaf"	: "ui-icon-document"
-		}
-	});
-	$(function() {
-		var css_string = '' + 
-			'.jstree-themeroller .ui-icon { overflow:visible; } ' + 
-			'.jstree-themeroller a { padding:0 2px; } ' + 
-			'.jstree-themeroller .jstree-no-icon { display:none; }';
-		$.vakata.css.add_sheet({ str : css_string, title : "jstree" });
-	});
-})(jQuery);
+    /* 
+     * jsTree themeroller plugin
+     * Adds support for jQuery UI themes. Include this at the end of your plugins list, also make sure "themes" is not included.
+     */
+    (function ($) {
+        $.jstree.plugin("themeroller", {
+            __init : function () {
+                var s = this._get_settings().themeroller;
+                this.get_container()
+                    .addClass("ui-widget-content")
+                    .addClass("jstree-themeroller")
+                    .delegate("a","mouseenter.jstree", function (e) {
+                        if(!$(e.currentTarget).hasClass("jstree-loading")) {
+                            $(this).addClass(s.item_h);
+                        }
+                    })
+                    .delegate("a","mouseleave.jstree", function () {
+                        $(this).removeClass(s.item_h);
+                    })
+                    .bind("init.jstree", $.proxy(function (e, data) {
+                        data.inst.get_container().find("> ul > li > .jstree-loading > ins").addClass("ui-icon-refresh");
+                        this._themeroller(data.inst.get_container().find("> ul > li"));
+                    }, this))
+                    .bind("open_node.jstree create_node.jstree", $.proxy(function (e, data) {
+                        this._themeroller(data.rslt.obj);
+                    }, this))
+                    .bind("loaded.jstree refresh.jstree", $.proxy(function (e) {
+                        this._themeroller();
+                    }, this))
+                    .bind("close_node.jstree", $.proxy(function (e, data) {
+                        this._themeroller(data.rslt.obj);
+                    }, this))
+                    .bind("delete_node.jstree", $.proxy(function (e, data) {
+                        this._themeroller(data.rslt.parent);
+                    }, this))
+                    .bind("correct_state.jstree", $.proxy(function (e, data) {
+                        data.rslt.obj
+                            .children("ins.jstree-icon").removeClass(s.opened + " " + s.closed + " ui-icon").end()
+                            .find("> a > ins.ui-icon")
+                            .filter(function() {
+                                return this.className.toString()
+                                    .replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
+                                    .indexOf("ui-icon-") === -1;
+                            }).removeClass(s.item_open + " " + s.item_clsd).addClass(s.item_leaf || "jstree-no-icon");
+                    }, this))
+                    .bind("select_node.jstree", $.proxy(function (e, data) {
+                        data.rslt.obj.children("a").addClass(s.item_a);
+                    }, this))
+                    .bind("deselect_node.jstree deselect_all.jstree", $.proxy(function (e, data) {
+                        this.get_container()
+                            .find("a." + s.item_a).removeClass(s.item_a).end()
+                            .find("a.jstree-clicked").addClass(s.item_a);
+                    }, this))
+                    .bind("dehover_node.jstree", $.proxy(function (e, data) {
+                        data.rslt.obj.children("a").removeClass(s.item_h);
+                    }, this))
+                    .bind("hover_node.jstree", $.proxy(function (e, data) {
+                        this.get_container()
+                            .find("a." + s.item_h).not(data.rslt.obj).removeClass(s.item_h);
+                        data.rslt.obj.children("a").addClass(s.item_h);
+                    }, this))
+                    .bind("move_node.jstree", $.proxy(function (e, data) {
+                        this._themeroller(data.rslt.o);
+                        this._themeroller(data.rslt.op);
+                    }, this));
+            },
+            __destroy : function () {
+                var s = this._get_settings().themeroller,
+                    c = [ "ui-icon" ];
+                $.each(s, function (i, v) {
+                    v = v.split(" ");
+                    if(v.length) { c = c.concat(v); }
+                });
+                this.get_container()
+                    .removeClass("ui-widget-content")
+                    .find("." + c.join(", .")).removeClass(c.join(" "));
+            },
+            _fn : {
+                _themeroller : function (obj) {
+                    var s = this._get_settings().themeroller;
+                    obj = (!obj || obj == -1) ? this.get_container_ul() : this._get_node(obj);
+                    obj = (!obj || obj == -1) ? this.get_container_ul() : obj.parent();
+                    obj
+                        .find("li.jstree-closed")
+                        .children("ins.jstree-icon").removeClass(s.opened).addClass("ui-icon " + s.closed).end()
+                        .children("a").addClass(s.item)
+                        .children("ins.jstree-icon").addClass("ui-icon")
+                        .filter(function() {
+                            return this.className.toString()
+                                .replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
+                                .indexOf("ui-icon-") === -1;
+                        }).removeClass(s.item_leaf + " " + s.item_open).addClass(s.item_clsd || "jstree-no-icon")
+                        .end()
+                        .end()
+                        .end()
+                        .end()
+                        .find("li.jstree-open")
+                        .children("ins.jstree-icon").removeClass(s.closed).addClass("ui-icon " + s.opened).end()
+                        .children("a").addClass(s.item)
+                        .children("ins.jstree-icon").addClass("ui-icon")
+                        .filter(function() {
+                            return this.className.toString()
+                                .replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
+                                .indexOf("ui-icon-") === -1;
+                        }).removeClass(s.item_leaf + " " + s.item_clsd).addClass(s.item_open || "jstree-no-icon")
+                        .end()
+                        .end()
+                        .end()
+                        .end()
+                        .find("li.jstree-leaf")
+                        .children("ins.jstree-icon").removeClass(s.closed + " ui-icon " + s.opened).end()
+                        .children("a").addClass(s.item)
+                        .children("ins.jstree-icon").addClass("ui-icon")
+                        .filter(function() {
+                            return this.className.toString()
+                                .replace(s.item_clsd,"").replace(s.item_open,"").replace(s.item_leaf,"")
+                                .indexOf("ui-icon-") === -1;
+                        }).removeClass(s.item_clsd + " " + s.item_open).addClass(s.item_leaf || "jstree-no-icon");
+                }
+            },
+            defaults : {
+                "opened"	: "ui-icon-triangle-1-se",
+                "closed"	: "ui-icon-triangle-1-e",
+                "item"		: "ui-state-default",
+                "item_h"	: "ui-state-hover",
+                "item_a"	: "ui-state-active",
+                "item_open"	: "ui-icon-folder-open",
+                "item_clsd"	: "ui-icon-folder-collapsed",
+                "item_leaf"	: "ui-icon-document"
+            }
+        });
+        $(function() {
+            var css_string = '' +
+                '.jstree-themeroller .ui-icon { overflow:visible; } ' +
+                '.jstree-themeroller a { padding:0 2px; } ' +
+                '.jstree-themeroller .jstree-no-icon { display:none; }';
+            $.vakata.css.add_sheet({ str : css_string, title : "jstree" });
+        });
+    })(jQuery);
 //*/
 
-/* 
- * jsTree unique plugin
- * Forces different names amongst siblings (still a bit experimental)
- * NOTE: does not check language versions (it will not be possible to have nodes with the same title, even in different languages)
- */
-(function ($) {
-	$.jstree.plugin("unique", {
-		__init : function () {
-			this.get_container()
-				.bind("before.jstree", $.proxy(function (e, data) { 
-						var nms = [], res = true, p, t;
-						if(data.func == "move_node") {
-							// obj, ref, position, is_copy, is_prepared, skip_check
-							if(data.args[4] === true) {
-								if(data.args[0].o && data.args[0].o.length) {
-									data.args[0].o.children("a").each(function () { nms.push($(this).text().replace(/^\s+/g,"")); });
-									res = this._check_unique(nms, data.args[0].np.find("> ul > li").not(data.args[0].o), "move_node");
-								}
-							}
-						}
-						if(data.func == "create_node") {
-							// obj, position, js, callback, is_loaded
-							if(data.args[4] || this._is_loaded(data.args[0])) {
-								p = this._get_node(data.args[0]);
-								if(data.args[1] && (data.args[1] === "before" || data.args[1] === "after")) {
-									p = this._get_parent(data.args[0]);
-									if(!p || p === -1) { p = this.get_container(); }
-								}
-								if(typeof data.args[2] === "string") { nms.push(data.args[2]); }
-								else if(!data.args[2] || !data.args[2].data) { nms.push(this._get_string("new_node")); }
-								else { nms.push(data.args[2].data); }
-								res = this._check_unique(nms, p.find("> ul > li"), "create_node");
-							}
-						}
-						if(data.func == "rename_node") {
-							// obj, val
-							nms.push(data.args[1]);
-							t = this._get_node(data.args[0]);
-							p = this._get_parent(t);
-							if(!p || p === -1) { p = this.get_container(); }
-							res = this._check_unique(nms, p.find("> ul > li").not(t), "rename_node");
-						}
-						if(!res) {
-							e.stopPropagation();
-							return false;
-						}
-					}, this));
-		},
-		defaults : { 
-			error_callback : $.noop
-		},
-		_fn : { 
-			_check_unique : function (nms, p, func) {
-				var cnms = [], ok = true;
-				p.children("a").each(function () { cnms.push($(this).text().replace(/^\s+/g,"")); });
-				if(!cnms.length || !nms.length) { return true; }
-				$.each(nms, function (i, v) {
-					if($.inArray(v, cnms) !== -1) {
-						ok = false;
-						return false;
-					}
-				});
-				if(!ok) {
-					this._get_settings().unique.error_callback.call(null, nms, p, func);
-				}
-				return ok;
-			},
-			check_move : function () {
-				if(!this.__call_old()) { return false; }
-				var p = this._get_move(), nms = [];
-				if(p.o && p.o.length) {
-					p.o.children("a").each(function () { nms.push($(this).text().replace(/^\s+/g,"")); });
-					return this._check_unique(nms, p.np.find("> ul > li").not(p.o), "check_move");
-				}
-				return true;
-			}
-		}
-	});
-})(jQuery);
+    /* 
+     * jsTree unique plugin
+     * Forces different names amongst siblings (still a bit experimental)
+     * NOTE: does not check language versions (it will not be possible to have nodes with the same title, even in different languages)
+     */
+    (function ($) {
+        $.jstree.plugin("unique", {
+            __init : function () {
+                this.get_container()
+                    .bind("before.jstree", $.proxy(function (e, data) {
+                        var nms = [], res = true, p, t;
+                        if(data.func == "move_node") {
+                            // obj, ref, position, is_copy, is_prepared, skip_check
+                            if(data.args[4] === true) {
+                                if(data.args[0].o && data.args[0].o.length) {
+                                    data.args[0].o.children("a").each(function () { nms.push($(this).text().replace(/^\s+/g,"")); });
+                                    res = this._check_unique(nms, data.args[0].np.find("> ul > li").not(data.args[0].o), "move_node");
+                                }
+                            }
+                        }
+                        if(data.func == "create_node") {
+                            // obj, position, js, callback, is_loaded
+                            if(data.args[4] || this._is_loaded(data.args[0])) {
+                                p = this._get_node(data.args[0]);
+                                if(data.args[1] && (data.args[1] === "before" || data.args[1] === "after")) {
+                                    p = this._get_parent(data.args[0]);
+                                    if(!p || p === -1) { p = this.get_container(); }
+                                }
+                                if(typeof data.args[2] === "string") { nms.push(data.args[2]); }
+                                else if(!data.args[2] || !data.args[2].data) { nms.push(this._get_string("new_node")); }
+                                else { nms.push(data.args[2].data); }
+                                res = this._check_unique(nms, p.find("> ul > li"), "create_node");
+                            }
+                        }
+                        if(data.func == "rename_node") {
+                            // obj, val
+                            nms.push(data.args[1]);
+                            t = this._get_node(data.args[0]);
+                            p = this._get_parent(t);
+                            if(!p || p === -1) { p = this.get_container(); }
+                            res = this._check_unique(nms, p.find("> ul > li").not(t), "rename_node");
+                        }
+                        if(!res) {
+                            e.stopPropagation();
+                            return false;
+                        }
+                    }, this));
+            },
+            defaults : {
+                error_callback : $.noop
+            },
+            _fn : {
+                _check_unique : function (nms, p, func) {
+                    var cnms = [], ok = true;
+                    p.children("a").each(function () { cnms.push($(this).text().replace(/^\s+/g,"")); });
+                    if(!cnms.length || !nms.length) { return true; }
+                    $.each(nms, function (i, v) {
+                        if($.inArray(v, cnms) !== -1) {
+                            ok = false;
+                            return false;
+                        }
+                    });
+                    if(!ok) {
+                        this._get_settings().unique.error_callback.call(null, nms, p, func);
+                    }
+                    return ok;
+                },
+                check_move : function () {
+                    if(!this.__call_old()) { return false; }
+                    var p = this._get_move(), nms = [];
+                    if(p.o && p.o.length) {
+                        p.o.children("a").each(function () { nms.push($(this).text().replace(/^\s+/g,"")); });
+                        return this._check_unique(nms, p.np.find("> ul > li").not(p.o), "check_move");
+                    }
+                    return true;
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
-/*
- * jsTree wholerow plugin
- * Makes select and hover work on the entire width of the node
- * MAY BE HEAVY IN LARGE DOM
- */
-(function ($) {
-	$.jstree.plugin("wholerow", {
-		__init : function () {
-			if(!this.data.ui) { throw "jsTree wholerow: jsTree UI plugin not included."; }
-			this.data.wholerow.html = false;
-			this.data.wholerow.to = false;
-			this.get_container()
-				.bind("init.jstree", $.proxy(function (e, data) { 
-						this._get_settings().core.animation = 0;
-					}, this))
-				.bind("open_node.jstree create_node.jstree clean_node.jstree loaded.jstree", $.proxy(function (e, data) { 
-						this._prepare_wholerow_span( data && data.rslt && data.rslt.obj ? data.rslt.obj : -1 );
-					}, this))
-				.bind("search.jstree clear_search.jstree reopen.jstree after_open.jstree after_close.jstree create_node.jstree delete_node.jstree clean_node.jstree", $.proxy(function (e, data) { 
-						if(this.data.to) { clearTimeout(this.data.to); }
-						this.data.to = setTimeout( (function (t, o) { return function() { t._prepare_wholerow_ul(o); }; })(this,  data && data.rslt && data.rslt.obj ? data.rslt.obj : -1), 0);
-					}, this))
-				.bind("deselect_all.jstree", $.proxy(function (e, data) { 
-						this.get_container().find(" > .jstree-wholerow .jstree-clicked").removeClass("jstree-clicked " + (this.data.themeroller ? this._get_settings().themeroller.item_a : "" ));
-					}, this))
-				.bind("select_node.jstree deselect_node.jstree ", $.proxy(function (e, data) { 
-						data.rslt.obj.each(function () { 
-							var ref = data.inst.get_container().find(" > .jstree-wholerow li:visible:eq(" + ( parseInt((($(this).offset().top - data.inst.get_container().offset().top + data.inst.get_container()[0].scrollTop) / data.inst.data.core.li_height),10)) + ")");
-							// ref.children("a")[e.type === "select_node" ? "addClass" : "removeClass"]("jstree-clicked");
-							ref.children("a").attr("class",data.rslt.obj.children("a").attr("class"));
-						});
-					}, this))
-				.bind("hover_node.jstree dehover_node.jstree", $.proxy(function (e, data) { 
-						this.get_container().find(" > .jstree-wholerow .jstree-hovered").removeClass("jstree-hovered " + (this.data.themeroller ? this._get_settings().themeroller.item_h : "" ));
-						if(e.type === "hover_node") {
-							var ref = this.get_container().find(" > .jstree-wholerow li:visible:eq(" + ( parseInt(((data.rslt.obj.offset().top - this.get_container().offset().top + this.get_container()[0].scrollTop) / this.data.core.li_height),10)) + ")");
-							// ref.children("a").addClass("jstree-hovered");
-							ref.children("a").attr("class",data.rslt.obj.children(".jstree-hovered").attr("class"));
-						}
-					}, this))
-				.delegate(".jstree-wholerow-span, ins.jstree-icon, li", "click.jstree", function (e) {
-						var n = $(e.currentTarget);
-						if(e.target.tagName === "A" || (e.target.tagName === "INS" && n.closest("li").is(".jstree-open, .jstree-closed"))) { return; }
-						n.closest("li").children("a:visible:eq(0)").click();
-						e.stopImmediatePropagation();
-					})
-				.delegate("li", "mouseover.jstree", $.proxy(function (e) {
-						e.stopImmediatePropagation();
-						if($(e.currentTarget).children(".jstree-hovered, .jstree-clicked").length) { return false; }
-						this.hover_node(e.currentTarget);
-						return false;
-					}, this))
-				.delegate("li", "mouseleave.jstree", $.proxy(function (e) {
-						if($(e.currentTarget).children("a").hasClass("jstree-hovered").length) { return; }
-						this.dehover_node(e.currentTarget);
-					}, this));
-			if(is_ie7 || is_ie6) {
-				$.vakata.css.add_sheet({ str : ".jstree-" + this.get_index() + " { position:relative; } ", title : "jstree" });
-			}
-		},
-		defaults : {
-		},
-		__destroy : function () {
-			this.get_container().children(".jstree-wholerow").remove();
-			this.get_container().find(".jstree-wholerow-span").remove();
-		},
-		_fn : {
-			_prepare_wholerow_span : function (obj) {
-				obj = !obj || obj == -1 ? this.get_container().find("> ul > li") : this._get_node(obj);
-				if(obj === false) { return; } // added for removing root nodes
-				obj.each(function () {
-					$(this).find("li").addBack().each(function () {
-						var $t = $(this);
-						if($t.children(".jstree-wholerow-span").length) { return true; }
-						$t.prepend("<span class='jstree-wholerow-span' style='width:" + ($t.parentsUntil(".jstree","li").length * 18) + "px;'>&#160;</span>");
-					});
-				});
-			},
-			_prepare_wholerow_ul : function () {
-				var o = this.get_container().children("ul").eq(0), h = o.html();
-				o.addClass("jstree-wholerow-real");
-				if(this.data.wholerow.last_html !== h) {
-					this.data.wholerow.last_html = h;
-					this.get_container().children(".jstree-wholerow").remove();
-					this.get_container().append(
-						o.clone().removeClass("jstree-wholerow-real")
-							.wrapAll("<div class='jstree-wholerow' />").parent()
-							.width(o.parent()[0].scrollWidth)
-							.css("top", (o.height() + ( is_ie7 ? 5 : 0)) * -1 )
-							.find("li[id]").each(function () { this.removeAttribute("id"); }).end()
-					);
-				}
-			}
-		}
-	});
-	$(function() {
-		var css_string = '' + 
-			'.jstree .jstree-wholerow-real { position:relative; z-index:1; } ' + 
-			'.jstree .jstree-wholerow-real li { cursor:pointer; } ' + 
-			'.jstree .jstree-wholerow-real a { border-left-color:transparent !important; border-right-color:transparent !important; } ' + 
-			'.jstree .jstree-wholerow { position:relative; z-index:0; height:0; } ' + 
-			'.jstree .jstree-wholerow ul, .jstree .jstree-wholerow li { width:100%; } ' + 
-			'.jstree .jstree-wholerow, .jstree .jstree-wholerow ul, .jstree .jstree-wholerow li, .jstree .jstree-wholerow a { margin:0 !important; padding:0 !important; } ' + 
-			'.jstree .jstree-wholerow, .jstree .jstree-wholerow ul, .jstree .jstree-wholerow li { background:transparent !important; }' + 
-			'.jstree .jstree-wholerow ins, .jstree .jstree-wholerow span, .jstree .jstree-wholerow input { display:none !important; }' + 
-			'.jstree .jstree-wholerow a, .jstree .jstree-wholerow a:hover { text-indent:-9999px; !important; width:100%; padding:0 !important; border-right-width:0px !important; border-left-width:0px !important; } ' + 
-			'.jstree .jstree-wholerow-span { position:absolute; left:0; margin:0px; padding:0; height:18px; border-width:0; padding:0; z-index:0; }';
-		if(is_ff2) {
-			css_string += '' + 
-				'.jstree .jstree-wholerow a { display:block; height:18px; margin:0; padding:0; border:0; } ' + 
-				'.jstree .jstree-wholerow-real a { border-color:transparent !important; } ';
-		}
-		if(is_ie7 || is_ie6) {
-			css_string += '' + 
-				'.jstree .jstree-wholerow, .jstree .jstree-wholerow li, .jstree .jstree-wholerow ul, .jstree .jstree-wholerow a { margin:0; padding:0; line-height:18px; } ' + 
-				'.jstree .jstree-wholerow a { display:block; height:18px; line-height:18px; overflow:hidden; } ';
-		}
-		$.vakata.css.add_sheet({ str : css_string, title : "jstree" });
-	});
-})(jQuery);
+    /*
+     * jsTree wholerow plugin
+     * Makes select and hover work on the entire width of the node
+     * MAY BE HEAVY IN LARGE DOM
+     */
+    (function ($) {
+        $.jstree.plugin("wholerow", {
+            __init : function () {
+                if(!this.data.ui) { throw "jsTree wholerow: jsTree UI plugin not included."; }
+                this.data.wholerow.html = false;
+                this.data.wholerow.to = false;
+                this.get_container()
+                    .bind("init.jstree", $.proxy(function (e, data) {
+                        this._get_settings().core.animation = 0;
+                    }, this))
+                    .bind("open_node.jstree create_node.jstree clean_node.jstree loaded.jstree", $.proxy(function (e, data) {
+                        this._prepare_wholerow_span( data && data.rslt && data.rslt.obj ? data.rslt.obj : -1 );
+                    }, this))
+                    .bind("search.jstree clear_search.jstree reopen.jstree after_open.jstree after_close.jstree create_node.jstree delete_node.jstree clean_node.jstree", $.proxy(function (e, data) {
+                        if(this.data.to) { clearTimeout(this.data.to); }
+                        this.data.to = setTimeout( (function (t, o) { return function() { t._prepare_wholerow_ul(o); }; })(this,  data && data.rslt && data.rslt.obj ? data.rslt.obj : -1), 0);
+                    }, this))
+                    .bind("deselect_all.jstree", $.proxy(function (e, data) {
+                        this.get_container().find(" > .jstree-wholerow .jstree-clicked").removeClass("jstree-clicked " + (this.data.themeroller ? this._get_settings().themeroller.item_a : "" ));
+                    }, this))
+                    .bind("select_node.jstree deselect_node.jstree ", $.proxy(function (e, data) {
+                        data.rslt.obj.each(function () {
+                            var ref = data.inst.get_container().find(" > .jstree-wholerow li:visible:eq(" + ( parseInt((($(this).offset().top - data.inst.get_container().offset().top + data.inst.get_container()[0].scrollTop) / data.inst.data.core.li_height),10)) + ")");
+                            // ref.children("a")[e.type === "select_node" ? "addClass" : "removeClass"]("jstree-clicked");
+                            ref.children("a").attr("class",data.rslt.obj.children("a").attr("class"));
+                        });
+                    }, this))
+                    .bind("hover_node.jstree dehover_node.jstree", $.proxy(function (e, data) {
+                        this.get_container().find(" > .jstree-wholerow .jstree-hovered").removeClass("jstree-hovered " + (this.data.themeroller ? this._get_settings().themeroller.item_h : "" ));
+                        if(e.type === "hover_node") {
+                            var ref = this.get_container().find(" > .jstree-wholerow li:visible:eq(" + ( parseInt(((data.rslt.obj.offset().top - this.get_container().offset().top + this.get_container()[0].scrollTop) / this.data.core.li_height),10)) + ")");
+                            // ref.children("a").addClass("jstree-hovered");
+                            ref.children("a").attr("class",data.rslt.obj.children(".jstree-hovered").attr("class"));
+                        }
+                    }, this))
+                    .delegate(".jstree-wholerow-span, ins.jstree-icon, li", "click.jstree", function (e) {
+                        var n = $(e.currentTarget);
+                        if(e.target.tagName === "A" || (e.target.tagName === "INS" && n.closest("li").is(".jstree-open, .jstree-closed"))) { return; }
+                        n.closest("li").children("a:visible:eq(0)").click();
+                        e.stopImmediatePropagation();
+                    })
+                    .delegate("li", "mouseover.jstree", $.proxy(function (e) {
+                        e.stopImmediatePropagation();
+                        if($(e.currentTarget).children(".jstree-hovered, .jstree-clicked").length) { return false; }
+                        this.hover_node(e.currentTarget);
+                        return false;
+                    }, this))
+                    .delegate("li", "mouseleave.jstree", $.proxy(function (e) {
+                        if($(e.currentTarget).children("a").hasClass("jstree-hovered").length) { return; }
+                        this.dehover_node(e.currentTarget);
+                    }, this));
+                if(is_ie7 || is_ie6) {
+                    $.vakata.css.add_sheet({ str : ".jstree-" + this.get_index() + " { position:relative; } ", title : "jstree" });
+                }
+            },
+            defaults : {
+            },
+            __destroy : function () {
+                this.get_container().children(".jstree-wholerow").remove();
+                this.get_container().find(".jstree-wholerow-span").remove();
+            },
+            _fn : {
+                _prepare_wholerow_span : function (obj) {
+                    obj = !obj || obj == -1 ? this.get_container().find("> ul > li") : this._get_node(obj);
+                    if(obj === false) { return; } // added for removing root nodes
+                    obj.each(function () {
+                        $(this).find("li").addBack().each(function () {
+                            var $t = $(this);
+                            if($t.children(".jstree-wholerow-span").length) { return true; }
+                            $t.prepend("<span class='jstree-wholerow-span' style='width:" + ($t.parentsUntil(".jstree","li").length * 18) + "px;'>&#160;</span>");
+                        });
+                    });
+                },
+                _prepare_wholerow_ul : function () {
+                    var o = this.get_container().children("ul").eq(0), h = o.html();
+                    o.addClass("jstree-wholerow-real");
+                    if(this.data.wholerow.last_html !== h) {
+                        this.data.wholerow.last_html = h;
+                        this.get_container().children(".jstree-wholerow").remove();
+                        this.get_container().append(
+                            o.clone().removeClass("jstree-wholerow-real")
+                                .wrapAll("<div class='jstree-wholerow' />").parent()
+                                .width(o.parent()[0].scrollWidth)
+                                .css("top", (o.height() + ( is_ie7 ? 5 : 0)) * -1 )
+                                .find("li[id]").each(function () { this.removeAttribute("id"); }).end()
+                        );
+                    }
+                }
+            }
+        });
+        $(function() {
+            var css_string = '' +
+                '.jstree .jstree-wholerow-real { position:relative; z-index:1; } ' +
+                '.jstree .jstree-wholerow-real li { cursor:pointer; } ' +
+                '.jstree .jstree-wholerow-real a { border-left-color:transparent !important; border-right-color:transparent !important; } ' +
+                '.jstree .jstree-wholerow { position:relative; z-index:0; height:0; } ' +
+                '.jstree .jstree-wholerow ul, .jstree .jstree-wholerow li { width:100%; } ' +
+                '.jstree .jstree-wholerow, .jstree .jstree-wholerow ul, .jstree .jstree-wholerow li, .jstree .jstree-wholerow a { margin:0 !important; padding:0 !important; } ' +
+                '.jstree .jstree-wholerow, .jstree .jstree-wholerow ul, .jstree .jstree-wholerow li { background:transparent !important; }' +
+                '.jstree .jstree-wholerow ins, .jstree .jstree-wholerow span, .jstree .jstree-wholerow input { display:none !important; }' +
+                '.jstree .jstree-wholerow a, .jstree .jstree-wholerow a:hover { text-indent:-9999px; !important; width:100%; padding:0 !important; border-right-width:0px !important; border-left-width:0px !important; } ' +
+                '.jstree .jstree-wholerow-span { position:absolute; left:0; margin:0px; padding:0; height:18px; border-width:0; padding:0; z-index:0; }';
+            if(is_ff2) {
+                css_string += '' +
+                    '.jstree .jstree-wholerow a { display:block; height:18px; margin:0; padding:0; border:0; } ' +
+                    '.jstree .jstree-wholerow-real a { border-color:transparent !important; } ';
+            }
+            if(is_ie7 || is_ie6) {
+                css_string += '' +
+                    '.jstree .jstree-wholerow, .jstree .jstree-wholerow li, .jstree .jstree-wholerow ul, .jstree .jstree-wholerow a { margin:0; padding:0; line-height:18px; } ' +
+                    '.jstree .jstree-wholerow a { display:block; height:18px; line-height:18px; overflow:hidden; } ';
+            }
+            $.vakata.css.add_sheet({ str : css_string, title : "jstree" });
+        });
+    })(jQuery);
 //*/
 
-/*
-* jsTree model plugin
-* This plugin gets jstree to use a class model to retrieve data, creating great dynamism
-*/
-(function ($) {
-	var nodeInterface = ["getChildren","getChildrenCount","getAttr","getName","getProps"],
-		validateInterface = function(obj, inter) {
-			var valid = true;
-			obj = obj || {};
-			inter = [].concat(inter);
-			$.each(inter, function (i, v) {
-				if(!$.isFunction(obj[v])) { valid = false; return false; }
-			});
-			return valid;
-		};
-	$.jstree.plugin("model", {
-		__init : function () {
-			if(!this.data.json_data) { throw "jsTree model: jsTree json_data plugin not included."; }
-			this._get_settings().json_data.data = function (n, b) {
-				var obj = (n == -1) ? this._get_settings().model.object : n.data("jstree_model");
-				if(!validateInterface(obj, nodeInterface)) { return b.call(null, false); }
-				if(this._get_settings().model.async) {
-					obj.getChildren($.proxy(function (data) {
-						this.model_done(data, b);
-					}, this));
-				}
-				else {
-					this.model_done(obj.getChildren(), b);
-				}
-			};
-		},
-		defaults : {
-			object : false,
-			id_prefix : false,
-			async : false
-		},
-		_fn : {
-			model_done : function (data, callback) {
-				var ret = [], 
-					s = this._get_settings(),
-					_this = this;
+    /*
+     * jsTree model plugin
+     * This plugin gets jstree to use a class model to retrieve data, creating great dynamism
+     */
+    (function ($) {
+        var nodeInterface = ["getChildren","getChildrenCount","getAttr","getName","getProps"],
+            validateInterface = function(obj, inter) {
+                var valid = true;
+                obj = obj || {};
+                inter = [].concat(inter);
+                $.each(inter, function (i, v) {
+                    if(!$.isFunction(obj[v])) { valid = false; return false; }
+                });
+                return valid;
+            };
+        $.jstree.plugin("model", {
+            __init : function () {
+                if(!this.data.json_data) { throw "jsTree model: jsTree json_data plugin not included."; }
+                this._get_settings().json_data.data = function (n, b) {
+                    var obj = (n == -1) ? this._get_settings().model.object : n.data("jstree_model");
+                    if(!validateInterface(obj, nodeInterface)) { return b.call(null, false); }
+                    if(this._get_settings().model.async) {
+                        obj.getChildren($.proxy(function (data) {
+                            this.model_done(data, b);
+                        }, this));
+                    }
+                    else {
+                        this.model_done(obj.getChildren(), b);
+                    }
+                };
+            },
+            defaults : {
+                object : false,
+                id_prefix : false,
+                async : false
+            },
+            _fn : {
+                model_done : function (data, callback) {
+                    var ret = [],
+                        s = this._get_settings(),
+                        _this = this;
 
-				if(!$.isArray(data)) { data = [data]; }
-				$.each(data, function (i, nd) {
-					var r = nd.getProps() || {};
-					r.attr = nd.getAttr() || {};
-					if(nd.getChildrenCount()) { r.state = "closed"; }
-					r.data = nd.getName();
-					if(!$.isArray(r.data)) { r.data = [r.data]; }
-					if(_this.data.types && $.isFunction(nd.getType)) {
-						r.attr[s.types.type_attr] = nd.getType();
-					}
-					if(r.attr.id && s.model.id_prefix) { r.attr.id = s.model.id_prefix + r.attr.id; }
-					if(!r.metadata) { r.metadata = { }; }
-					r.metadata.jstree_model = nd;
-					ret.push(r);
-				});
-				callback.call(null, ret);
-			}
-		}
-	});
-})(jQuery);
+                    if(!$.isArray(data)) { data = [data]; }
+                    $.each(data, function (i, nd) {
+                        var r = nd.getProps() || {};
+                        r.attr = nd.getAttr() || {};
+                        if(nd.getChildrenCount()) { r.state = "closed"; }
+                        r.data = nd.getName();
+                        if(!$.isArray(r.data)) { r.data = [r.data]; }
+                        if(_this.data.types && $.isFunction(nd.getType)) {
+                            r.attr[s.types.type_attr] = nd.getType();
+                        }
+                        if(r.attr.id && s.model.id_prefix) { r.attr.id = s.model.id_prefix + r.attr.id; }
+                        if(!r.metadata) { r.metadata = { }; }
+                        r.metadata.jstree_model = nd;
+                        ret.push(r);
+                    });
+                    callback.call(null, ret);
+                }
+            }
+        });
+    })(jQuery);
 //*/
 
 })();

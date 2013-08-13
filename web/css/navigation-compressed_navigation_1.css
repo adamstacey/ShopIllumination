@@ -181,23 +181,23 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compass2XUy8F.scss */
+/* line 4, assetic_compasseR9oao.scss */
 a {
   text-decoration: none;
   color: #4ec0e3;
 }
 
-/* line 9, assetic_compass2XUy8F.scss */
+/* line 9, assetic_compasseR9oao.scss */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 13, assetic_compass2XUy8F.scss */
+/* line 13, assetic_compasseR9oao.scss */
 a:focus {
   outline: none;
 }
 
-/* line 17, assetic_compass2XUy8F.scss */
+/* line 17, assetic_compasseR9oao.scss */
 .top-menu {
   border-top: 3px solid #4ec0e3;
   background: white;
@@ -218,36 +218,35 @@ a:focus {
   background-repeat: no-repeat;
 }
 
-/* line 22, assetic_compass2XUy8F.scss */
+/* line 22, assetic_compasseR9oao.scss */
 .social-media-interaction {
   float: left;
   padding: 2px 15px 2px 0;
 }
 
-/* line 27, assetic_compass2XUy8F.scss */
+/* line 27, assetic_compasseR9oao.scss */
 .top-menu-links {
   float: right;
 }
 
-/* line 31, assetic_compass2XUy8F.scss */
+/* line 31, assetic_compasseR9oao.scss */
 .top-menu-links a {
   text-shadow: 0 1px 2px white;
   text-shadow: 0 1px 2px white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=0, offy=1px);
   line-height: 24px;
   color: #444444;
   font-size: 11px;
   font-size: 1.1rem;
 }
 
-/* line 38, assetic_compass2XUy8F.scss */
+/* line 38, assetic_compasseR9oao.scss */
 nav.left-menu ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 43, assetic_compass2XUy8F.scss */
+/* line 43, assetic_compasseR9oao.scss */
 nav.left-menu ul li {
   margin: 0 0 5px 0;
   padding: 0 0 0 42px;
@@ -269,59 +268,59 @@ nav.left-menu ul li {
   overflow: hidden;
 }
 
-/* line 57, assetic_compass2XUy8F.scss */
+/* line 57, assetic_compasseR9oao.scss */
 nav.left-menu ul li.black {
   border: 1px solid black;
 }
 
-/* line 61, assetic_compass2XUy8F.scss */
+/* line 61, assetic_compasseR9oao.scss */
 nav.left-menu ul li.grey {
   border: 1px solid #6c8087;
 }
 
-/* line 65, assetic_compass2XUy8F.scss */
+/* line 65, assetic_compasseR9oao.scss */
 nav.left-menu ul li.red {
   border: 1px solid #cc0000;
 }
 
-/* line 69, assetic_compass2XUy8F.scss */
+/* line 69, assetic_compasseR9oao.scss */
 nav.left-menu ul li.dark-red {
   border: 1px solid #9a0000;
 }
 
-/* line 73, assetic_compass2XUy8F.scss */
+/* line 73, assetic_compasseR9oao.scss */
 nav.left-menu ul li.orange {
   border: 1px solid #cc5200;
 }
 
-/* line 77, assetic_compass2XUy8F.scss */
+/* line 77, assetic_compasseR9oao.scss */
 nav.left-menu ul li.yellow {
   border: 1px solid #e6ac00;
 }
 
-/* line 81, assetic_compass2XUy8F.scss */
+/* line 81, assetic_compasseR9oao.scss */
 nav.left-menu ul li.green {
   border: 1px solid #137f13;
 }
 
-/* line 85, assetic_compass2XUy8F.scss */
+/* line 85, assetic_compasseR9oao.scss */
 nav.left-menu ul li.turquoise {
   border: 1px solid #007398;
 }
 
-/* line 89, assetic_compass2XUy8F.scss */
+/* line 89, assetic_compasseR9oao.scss */
 nav.left-menu ul li.blue {
   border: 1px solid #003b73;
 }
 
-/* line 93, assetic_compass2XUy8F.scss */
+/* line 93, assetic_compasseR9oao.scss */
 nav.left-menu ul li .nav-icon {
   position: absolute;
   top: 3px;
   left: 5px;
 }
 
-/* line 99, assetic_compass2XUy8F.scss */
+/* line 99, assetic_compasseR9oao.scss */
 nav.left-menu .button {
   margin: 0;
   width: 100%;
@@ -343,64 +342,64 @@ nav.left-menu .button {
   box-sizing: border-box;
 }
 
-/* line 110, assetic_compass2XUy8F.scss */
+/* line 110, assetic_compasseR9oao.scss */
 nav.left-menu li.black .button {
   border-left: 2px solid black;
 }
 
-/* line 114, assetic_compass2XUy8F.scss */
+/* line 114, assetic_compasseR9oao.scss */
 nav.left-menu li.grey .button {
   border-left: 2px solid #6c8087;
 }
 
-/* line 118, assetic_compass2XUy8F.scss */
+/* line 118, assetic_compasseR9oao.scss */
 nav.left-menu li.red .button {
   border-left: 2px solid #cc0000;
 }
 
-/* line 122, assetic_compass2XUy8F.scss */
+/* line 122, assetic_compasseR9oao.scss */
 nav.left-menu li.dark-red .button {
   border-left: 2px solid #9a0000;
 }
 
-/* line 126, assetic_compass2XUy8F.scss */
+/* line 126, assetic_compasseR9oao.scss */
 nav.left-menu li.orange .button {
   border-left: 2px solid #cc5200;
 }
 
-/* line 130, assetic_compass2XUy8F.scss */
+/* line 130, assetic_compasseR9oao.scss */
 nav.left-menu li.yellow .button {
   border-left: 2px solid #e6ac00;
 }
 
-/* line 134, assetic_compass2XUy8F.scss */
+/* line 134, assetic_compasseR9oao.scss */
 nav.left-menu li.green .button {
   border-left: 2px solid #137f13;
 }
 
-/* line 138, assetic_compass2XUy8F.scss */
+/* line 138, assetic_compasseR9oao.scss */
 nav.left-menu li.turquoise .button {
   border-left: 2px solid #007398;
 }
 
-/* line 142, assetic_compass2XUy8F.scss */
+/* line 142, assetic_compasseR9oao.scss */
 nav.left-menu li.blue .button {
   border-left: 2px solid #003b73;
 }
 
-/* line 146, assetic_compass2XUy8F.scss */
+/* line 146, assetic_compasseR9oao.scss */
 nav.left-menu .button .ui-button-icon-secondary {
   position: absolute;
   top: 3px;
   right: 5px;
 }
 
-/* line 152, assetic_compass2XUy8F.scss */
+/* line 152, assetic_compasseR9oao.scss */
 nav.left-menu .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 156, assetic_compass2XUy8F.scss */
+/* line 156, assetic_compasseR9oao.scss */
 .main-menu {
   height: 40px;
   background: #29a3cc;
@@ -421,19 +420,19 @@ nav.left-menu .ui-button-text {
   background-repeat: no-repeat;
 }
 
-/* line 161, assetic_compass2XUy8F.scss */
+/* line 161, assetic_compasseR9oao.scss */
 .main-menu nav {
   position: relative;
 }
 
-/* line 165, assetic_compass2XUy8F.scss */
+/* line 165, assetic_compasseR9oao.scss */
 .main-menu > nav > ul {
   margin: 0;
   padding: 0;
   border-left: 1px solid #29a3cc;
 }
 
-/* line 172, assetic_compass2XUy8F.scss */
+/* line 172, assetic_compasseR9oao.scss */
 .main-menu > nav > ul > li {
   margin: 0;
   padding: 0;
@@ -441,7 +440,7 @@ nav.left-menu .ui-button-text {
   list-style: none;
 }
 
-/* line 181, assetic_compass2XUy8F.scss */
+/* line 181, assetic_compasseR9oao.scss */
 .main-menu nav > ul > li > a,
 .main-menu nav > ul > li > a.hover {
   padding: 0 7px;
@@ -449,8 +448,7 @@ nav.left-menu .ui-button-text {
   display: table-cell;
   text-shadow: 0 1px 0 #384246;
   text-shadow: 0 1px 0 #384246;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=#384246, offx=0, offy=1px);
   text-align: center;
   font-weight: normal;
   text-decoration: none;
@@ -462,7 +460,7 @@ nav.left-menu .ui-button-text {
   line-height: 16px;
 }
 
-/* line 199, assetic_compass2XUy8F.scss */
+/* line 199, assetic_compasseR9oao.scss */
 .main-menu nav > ul > li > a:hover,
 .main-menu nav > ul > li > a.hover {
   -webkit-box-shadow: inset 0 -5px 20px 0 #384246;
@@ -473,12 +471,12 @@ nav.left-menu .ui-button-text {
   box-shadow: inset 0 -5px 20px 0 #384246;
 }
 
-/* line 203, assetic_compass2XUy8F.scss */
+/* line 203, assetic_compasseR9oao.scss */
 .main-menu nav > ul > li > a.highlighted {
   color: #e6ac00;
 }
 
-/* line 207, assetic_compass2XUy8F.scss */
+/* line 207, assetic_compasseR9oao.scss */
 .main-menu nav > .button {
   position: absolute;
   top: 8px;
@@ -498,12 +496,12 @@ nav.left-menu .ui-button-text {
   box-shadow: 0 -2px 5px 0 #384246;
 }
 
-/* line 217, assetic_compass2XUy8F.scss */
+/* line 217, assetic_compasseR9oao.scss */
 .main-menu nav > .button .ui-button-text {
   line-height: 26px;
 }
 
-/* line 221, assetic_compass2XUy8F.scss */
+/* line 221, assetic_compasseR9oao.scss */
 .submenu-container {
   width: 100%;
   height: 270px;
@@ -529,12 +527,12 @@ nav.left-menu .ui-button-text {
   box-shadow: 0 2px 20px 0 #384246;
 }
 
-/* line 238, assetic_compass2XUy8F.scss */
+/* line 238, assetic_compasseR9oao.scss */
 .submenu-container-brands {
   height: 240px;
 }
 
-/* line 242, assetic_compass2XUy8F.scss */
+/* line 242, assetic_compasseR9oao.scss */
 .main-menu .menu-vertical {
   width: 244px;
   height: 300px;
@@ -555,13 +553,13 @@ nav.left-menu .ui-button-text {
   border-right: 1px solid #6c8087;
 }
 
-/* line 259, assetic_compass2XUy8F.scss */
+/* line 259, assetic_compasseR9oao.scss */
 .main-menu .menu-vertical li {
   margin: 0;
   padding: 0;
 }
 
-/* line 265, assetic_compass2XUy8F.scss */
+/* line 265, assetic_compasseR9oao.scss */
 .main-menu .menu-vertical li a,
 .main-menu .menu-vertical li a.hover {
   height: 30px;
@@ -596,7 +594,7 @@ nav.left-menu .ui-button-text {
   white-space: nowrap;
 }
 
-/* line 279, assetic_compass2XUy8F.scss */
+/* line 279, assetic_compasseR9oao.scss */
 .main-menu .menu-vertical li a.hover {
   -webkit-box-shadow: inset 0 0 10px 0 #384246;
   -webkit-box-shadow: inset 0 0 10px 0 #384246;
@@ -606,16 +604,15 @@ nav.left-menu .ui-button-text {
   box-shadow: inset 0 0 10px 0 #384246;
   text-shadow: 1px 0 0 white;
   text-shadow: 1px 0 0 white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=1px, offy=0);
 }
 
-/* line 284, assetic_compass2XUy8F.scss */
+/* line 284, assetic_compasseR9oao.scss */
 .main-menu .menu-vertical li span.ui-icon-small {
   margin: 3px 0 3px 10px;
 }
 
-/* line 288, assetic_compass2XUy8F.scss */
+/* line 288, assetic_compasseR9oao.scss */
 a.submenu-brand {
   width: 77px;
   height: 39px;
@@ -628,7 +625,7 @@ a.submenu-brand {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 302, assetic_compass2XUy8F.scss */
+/* line 302, assetic_compasseR9oao.scss */
 a.submenu-brand:hover {
   -webkit-box-shadow: inset 0 0 10px 0 #c5d2d6;
   -webkit-box-shadow: inset 0 0 10px 0 #c5d2d6;
@@ -638,13 +635,13 @@ a.submenu-brand:hover {
   box-shadow: inset 0 0 10px 0 #c5d2d6;
 }
 
-/* line 306, assetic_compass2XUy8F.scss */
+/* line 306, assetic_compasseR9oao.scss */
 a.submenu-brand img {
   width: 77px;
   height: 39px;
 }
 
-/* line 311, assetic_compass2XUy8F.scss */
+/* line 311, assetic_compasseR9oao.scss */
 .sub-menu {
   position: relative;
   background: white;
@@ -672,23 +669,23 @@ a.submenu-brand img {
   border-bottom: 3px solid #6c8087;
 }
 
-/* line 319, assetic_compass2XUy8F.scss */
+/* line 319, assetic_compasseR9oao.scss */
 .sub-menu .widget {
   padding: 8px 10px;
 }
 
-/* line 323, assetic_compass2XUy8F.scss */
+/* line 323, assetic_compasseR9oao.scss */
 .sub-menu .ui-icon-small {
   margin: 0 10px 0 0;
 }
 
-/* line 327, assetic_compass2XUy8F.scss */
+/* line 327, assetic_compasseR9oao.scss */
 .sub-menu h2 {
   margin: 0;
   padding: 0;
 }
 
-/* line 333, assetic_compass2XUy8F.scss */
+/* line 333, assetic_compasseR9oao.scss */
 .sub-menu h2,
 .sub-menu h2 a {
   font-size: 24px;
@@ -697,18 +694,17 @@ a.submenu-brand img {
   line-height: 100%;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=0, offy=1px);
   text-decoration: none;
 }
 
-/* line 341, assetic_compass2XUy8F.scss */
+/* line 341, assetic_compasseR9oao.scss */
 .sub-menu h3 {
   margin: 0;
   padding: 0;
 }
 
-/* line 347, assetic_compass2XUy8F.scss */
+/* line 347, assetic_compasseR9oao.scss */
 .sub-menu h3,
 .sub-menu h3 a {
   font-size: 14px;
@@ -718,18 +714,17 @@ a.submenu-brand img {
   letter-spacing: 1px;
   text-shadow: 0 1px 0 white;
   text-shadow: 0 1px 0 white;
-  filter: progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 1), progid:DXImageTransform.Microsoft.blur(pixelradius = 5, enabled = 'true');
-  -ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color = $shadowColour, Strength = 2), progid:DXImageTransform.Microsoft.blur(pixelradius = $blurRadius, enabled = 'true')";
+  filter: dropshadow(color=white, offx=0, offy=1px);
   text-decoration: none;
 }
 
-/* line 356, assetic_compass2XUy8F.scss */
+/* line 356, assetic_compasseR9oao.scss */
 .sub-menu p {
   padding: 2px 0 0 0;
   margin: 0;
 }
 
-/* line 362, assetic_compass2XUy8F.scss */
+/* line 362, assetic_compasseR9oao.scss */
 .sub-menu p,
 .sub-menu p a {
   font-size: 10px;
