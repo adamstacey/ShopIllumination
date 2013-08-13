@@ -19,29 +19,115 @@
     '@KACSiteBundle/Resources/public/css/grid/grid.scss'
     '@KACSiteBundle/Resources/public/css/spacing/spacing.scss'
     '@KACSiteBundle/Resources/public/css/fonts/fonts.scss'
-    '@KACSiteBundle/Resources/public/css/ui/ui.scss'
     '@KACSiteBundle/Resources/public/css/gradients/gradients.scss'
-    '@KACSiteBundle/Resources/public/css/tables/tables.scss'
-    '@KACSiteBundle/Resources/public/css/buttons/buttons.scss'
-    '@KACSiteBundle/Resources/public/css/icons/icons.scss'
+    output='css/core-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/ui/ui.scss'
     '@KACSiteBundle/Resources/public/css/forms/forms.scss'
+    '@KACSiteBundle/Resources/public/css/buttons/buttons.scss'
+    output='css/ui-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/icons/icons.scss'
+    output='css/icons-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/icons/icons-medium.scss'
+    output='css/icons-medium-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/icons/icons-small.scss'
+    output='css/icons-small-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/tables/tables.scss'
     '@KACSiteBundle/Resources/public/css/headings/headings.scss'
     '@KACSiteBundle/Resources/public/css/layout/layout.scss'
+    '@KACSiteBundle/Resources/public/css/loading/loading.scss'
+    '@KACSiteBundle/Resources/public/css/reviews/reviews.scss'
+    output='css/layout-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
     '@KACSiteBundle/Resources/public/css/navigation/navigation.scss'
     '@KACSiteBundle/Resources/public/css/breadcrumbs/breadcrumbs.scss'
     '@KACSiteBundle/Resources/public/css/pagination/pagination.scss'
     '@KACSiteBundle/Resources/public/css/notifications/notifications.scss'
-    '@KACSiteBundle/Resources/public/css/images/images.scss'
-    '@KACSiteBundle/Resources/public/css/departments/departments.scss'
-    '@KACSiteBundle/Resources/public/css/loading/loading.scss'
     '@KACSiteBundle/Resources/public/css/search/search.scss'
-    '@KACSiteBundle/Resources/public/css/basket/basket.scss'
-    '@KACSiteBundle/Resources/public/css/products/products.scss'
-    '@KACSiteBundle/Resources/public/css/reviews/reviews.scss'
+    output='css/navigation-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/images/images.scss'
     '@KACSiteBundle/Resources/public/css/sliders/sliders.scss'
+    output='css/images-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/departments/departments.scss'
+    output='css/departments-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/basket/basket.scss'
+    output='css/basket-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
+    '@KACSiteBundle/Resources/public/css/products/products.scss'
+    output='css/products-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
     '@KACSiteBundle/Resources/public/css/listing/listing.scss'
+    output='css/listing-compressed.css'
+    filter='compass,?yui_css'
+%}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+{% stylesheets
     '@KACSiteBundle/Resources/public/css/layers/layers.scss'
-    output='css/core-compressed.css'
+    output='css/layers-compressed.css'
     filter='compass,?yui_css'
 %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
