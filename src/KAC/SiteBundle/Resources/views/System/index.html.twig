@@ -2,30 +2,33 @@
 {% block title %}Worktops, Cooker Hoods, Built-in Microwaves, Integrated Dishwashers, Integrated Washing Machines, Refrigeration, Cleaning Products, Glass Splashbacks, Waste Disposer, Sinks, Taps, Plinth Heaters, Range Cookers, Ducting, Hobs, Ovens, Coffee Machines, Solid Surface Worktops, Kitchen Appliances{% endblock %}
 {% block slider %}
     <div class="widget-group flush-widget-group separator-widget mbl clearfix">
-        <div class="widget widget-3-of-4">
+        <div class="widget widget-1-of-1">
             <div class="slider-wrapper slider-homepage">
                 <ul class="slider">
                     <li>
-                        <a href="{{ path('listing_search', {'q': 'minerva'}) }}"><img src="{{ asset('/uploads/images/demo/franke-minerva-tap-advert.jpg') }}" alt="Franke Minerva 3 in 1 Boiling Hot Water Tap: No more standing around waiting for the kettle to boil or using unnecessary energy. With the Minerva tap from Franke, you have 100°C water instantly at the twist of a lever. Save time and money today, In Stock for Fast Delivery." /></a>
+                        <a href="{{ path('routing', {'url': 'maia'}) }}"><img width="980" height="250" src="{{ asset('/bundles/kacsite/images/adverts/maia-designer-solid-surface-worktops-advert.png') }}" alt="maia Designer Solid Surface Worktops: maia worktops are available in 15 stunning decors to complement any kitchen design" /></a>
                     </li>
                     <li>
-                        <a href="{{ path('routing', {'url': 'cda'}) }}"><img src="{{ asset('/uploads/images/demo/cda-10pc-off-advert.jpg') }}" alt="10% Off All CDA Appliances: When you buy 3 or more CDA items. Simply add your items to the basket and your 10% will be taken off automatically. Spend more SAVE more..." /></a>
+                        <a href="{{ path('listing_search', {'q': 'minerva'}) }}"><img width="980" height="250" src="{{ asset('/bundles/kacsite/images/adverts/franke-minerva-tap-advert.png') }}" alt="Franke Minerva 3 in 1 Boiling Hot Water Tap: No more standing around waiting for the kettle to boil or using unnecessary energy. With the Minerva tap from Franke, you have 100°C water instantly at the twist of a lever. Save time and money today, In Stock for Fast Delivery." /></a>
                     </li>
                     <li>
-                        <a href="{{ path('routing', {'url': 'insinkerator'}) }}"><img src="{{ asset('/uploads/images/demo/in-sink-erator-waste-disposals-advert.jpg') }}" alt="In Sink Erator Waste Disposals from only £85: A food waste disposer is a simply must-have appliance for the modern kitchen. A waste disposer from InSinkErator doesn't just offer practical, contemporary convenience; it provides an environmentally responsible answer to the growing problem of food waste." /></a>
+                        <a href="{{ path('routing', {'url': 'cda'}) }}"><img width="980" height="250" src="{{ asset('/bundles/kacsite/images/adverts/cda-10pc-off-advert.png') }}" alt="10% Off All CDA Appliances: When you buy 3 or more CDA items. Simply add your items to the basket and your 10% will be taken off automatically. Spend more SAVE more..." /></a>
                     </li>
                     <li>
-                        <a href="{{ path('routing', {'url': 'caple'}) }}"><img src="{{ asset('/uploads/images/demo/caple-10pc-off-advert.jpg') }}" alt="10% Off All Caple Appliances: Grab yourself a bargain on all Caple Appliances, no spending limit, no strings, no upto's just a straight 10% off! Don’t miss out, this offer will not be on forever..." /></a>
+                        <a href="{{ path('routing', {'url': 'insinkerator'}) }}"><img width="980" height="250" src="{{ asset('/bundles/kacsite/images/adverts/in-sink-erator-waste-disposals-advert.png') }}" alt="In Sink Erator Waste Disposals from only £85: A food waste disposer is a simply must-have appliance for the modern kitchen. A waste disposer from InSinkErator doesn't just offer practical, contemporary convenience; it provides an environmentally responsible answer to the growing problem of food waste." /></a>
                     </li>
                     <li>
-                        <a href="{{ path('listing_search', {'q': 'powerpod'}) }}"><img src="{{ asset('/uploads/images/demo/sensio-powerpod-advert.jpg') }}" alt="Sensio Powerpod: The Sensio Powerpod demonstrates Sensio's fresh approach to innovative kitchen power solutions, Offering far more than the average retractable socket the Sensio Powerpod boasts two USB ports in addition to three power sockets. It allows the user to charge their iPod or use other USB powered devices within the convenience of the kitchen." /></a>
+                        <a href="{{ path('routing', {'url': 'caple'}) }}"><img width="980" height="250" src="{{ asset('/bundles/kacsite/images/adverts/caple-10pc-off-advert.png') }}" alt="10% Off All Caple Appliances: Grab yourself a bargain on all Caple Appliances, no spending limit, no strings, no upto's just a straight 10% off! Don’t miss out, this offer will not be on forever..." /></a>
                     </li>
+                    {#<li>
+                        <a href="{{ path('routing', {'url': 'neff'}) }}"><img width="980" height="250" src="{{ asset('/bundles/kacsite/images/adverts/neff-free-gifts-advert.png') }}" alt="10% Off All Caple Appliances: Grab yourself a bargain on all Caple Appliances, no spending limit, no strings, no upto's just a straight 10% off! Don’t miss out, this offer will not be on forever..." /></a>
+                    </li>#}
+                    <li>
+                        <a href="{{ path('listing_search', {'q': 'powerpod'}) }}"><img width="980" height="250" src="{{ asset('/bundles/kacsite/images/adverts/sensio-powerpod-advert.png') }}" alt="Sensio Powerpod: The Sensio Powerpod demonstrates Sensio's fresh approach to innovative kitchen power solutions, Offering far more than the average retractable socket the Sensio Powerpod boasts two USB ports in addition to three power sockets. It allows the user to charge their iPod or use other USB powered devices within the convenience of the kitchen." /></a>
+                    </li>
+
                 </ul>
             </div>
-        </div>
-        <div class="widget widget-1-of-4">
-            <a href="{{ path('routing', {'url': 'maia'}) }}"><img class="db" src="{{ asset('/bundles/kacsite/images/adverts/maia-advert.jpg') }}" alt="maia worktops are available in 15 stunning decors to complement any kitchen design" /></a>
-            <a href="{{ path('routing', {'url': 'heating-and-lighting/plinth-heaters'}) }}"><img class="db" src="{{ asset('/bundles/kacsite/images/adverts/smiths-space-savers-advert.jpg') }}" alt="Space Savers - Eliminate the need for convential radiators" /></a>
         </div>
     </div>
 {% endblock %}
@@ -33,9 +36,35 @@
     <div class="widget-group clearfix">
         <div class="widget widget-1-of-1">
             <div class="ui-widget">
-                <section class="ui-widget-content pbn ui-corner-all">
+                <section class="ui-widget-content pbn ptn ui-corner-all">
                     {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': [1094, 16, 8, 53, 173] })) }}
-                    {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentIds': [1094, 16, 8, 53, 173] })) }}
+                    <h3 class="separator">Shop by Popular Brand</h3>
+                    <div class="widget-group clearfix pbm">
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'aeg'}) }}"><img src="{{ asset('/uploads/images/brand/logo/aeg-original-44961.png') }}" border="0" alt="AEG" width="100%" /></a>
+                        </div>
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'neff'}) }}"><img src="{{ asset('/uploads/images/brand/logo/neff-original-44995.png') }}" border="0" alt="Neff" width="100%" /></a>
+                        </div>
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'insinkerator'}) }}"><img src="{{ asset('/uploads/images/brand/logo/insinkerator-original-44982.png') }}" border="0" alt="Insinkerator" width="100%" /></a>
+                        </div>
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'smiths'}) }}"><img src="{{ asset('/uploads/images/brand/logo/smiths-original-45030.png') }}" border="0" alt="Smiths heating" width="100%" /></a>
+                        </div>
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'franke'}) }}"><img src="{{ asset('/uploads/images/brand/logo/franke-original-44978.png') }}" border="0" alt="Franke" width="100%" /></a>
+                        </div>
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'cda'}) }}"><img src="{{ asset('/uploads/images/brand/logo/cda-original-44972.png') }}" border="0" alt="CDA" width="100%" /></a>
+                        </div>
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'caple'}) }}"><img src="{{ asset('/uploads/images/brand/logo/caple-original-44969.png') }}" border="0" alt="Caple" width="100%" /></a>
+                        </div>
+                        <div class="widget widget-1-of-8 popular-item popular-brand tac">
+                            <a href="{{ path('routing', {'url': 'maia'}) }}"><img src="{{ asset('/uploads/images/brand/logo/maia-original-44989.png') }}" border="0" alt="maia" width="100%" /></a>
+                        </div>
+                    </div>
                     <h3 class="separator">Shop by Popular Department</h3>
                     <div class="widget-group clearfix">
                         <div class="widget widget-1-of-5">
