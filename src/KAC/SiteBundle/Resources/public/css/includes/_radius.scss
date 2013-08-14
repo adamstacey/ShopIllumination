@@ -7,7 +7,6 @@ $radiusSize: 4px;
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
     background-clip: padding-box;
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
 }
 
 @mixin equalBorderRadius($radius: 0) {
@@ -17,5 +16,4 @@ $radiusSize: 4px;
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
     background-clip: padding-box;
-    behaviour: url("#{$cssPath}/resources/htc/pie.htc");
 }
