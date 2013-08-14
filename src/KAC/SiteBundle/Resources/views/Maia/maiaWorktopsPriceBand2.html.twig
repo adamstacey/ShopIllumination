@@ -712,15 +712,7 @@
                             </td>
                             <td width="1" class="nowrap"><span title="For larger installations or regular users, this convenient cartridge can save time and money on site. Should be used in conjunction with 250ml cartridge gun." class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
                             {% set currentId = currentId + 1 %}
-                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 45, 'productCode': productCodePrefix ~ '/250GLUE', 'deliveryBand': 1, 'header': '50ml Adhesive Cartridge', 'worktopColour': worktopColour, 'id': currentId} %}
-                        </tr>
-                        <tr class="even">
-                            <td width="1" class="pam image">
-                                <a href="{{ asset('/uploads/demo/care-kit@2x.jpg') }}" class="lightbox"><img width="180" src="{{ asset('/uploads/demo/care-kit.jpg') }}" alt="Care Kit" /></a>
-                            </td>
-                            <td width="1" class="nowrap"><span title="A boxed set of items to help maintain your maia worksurfaces. The kit consists of: 414ml Countertop Magic – 1 x Ergonomic Foam Sanding Block – 2 x Sanding Discs – 1 x Microfibre Cleaning Cloth – 2 x red abrasive pads – Instructions" class="form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
-                            {% set currentId = currentId + 1 %}
-                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 30, 'productCode': 'MAIA/CAREKIT', 'deliveryBand': 1, 'header': 'Care Kit', 'worktopColour': '', 'id': 20002} %}
+                            {% include 'KACSiteBundle:Maia:maiaProduct.html.twig' with {'price': 45, 'productCode': productCodePrefix ~ '/250GLUE', 'deliveryBand': 1, 'header': '250ml Adhesive Cartridge', 'worktopColour': worktopColour, 'id': currentId} %}
                         </tr>
                         {% if productCodePrefix == 'GAL' or productCodePrefix == 'VUL' %}
                             <tr class="even">
