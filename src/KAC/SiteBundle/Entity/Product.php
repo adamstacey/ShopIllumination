@@ -205,6 +205,9 @@ class Product implements DescribableInterface
     public function __clone() {
         if ($this->id) {
             $this->id = null;
+            $this->createdAt = null;
+            $this->updatedAt = null;
+
             $oldVariants = $this->variants;
             $oldDepartments = $this->departments;
             $oldDescriptions = $this->descriptions;

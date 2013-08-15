@@ -788,6 +788,7 @@ class ListingController extends Controller
 
                 $results = $solarium->execute($query);
 
+                $ids = array();
                 foreach ($results as $document)
                 {
                     $ids[] = $document->id;
