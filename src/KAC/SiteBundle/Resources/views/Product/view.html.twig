@@ -70,18 +70,18 @@
             {% endblock %}
             {% block product_info %}
                 {% if variant is null %}
-                    {%  if product.brandDescription != '' %}
-                        {% set description = product.brandDescription %}
-                    {% else %}
-                        {% set description = product.description %}
+                    {% set description = product.description.description %}
+                    {% if description == '' %}
+                        {% set description = product.description.metaDescription %}
                     {% endif %}
+                    {% set brandDescription = product.description.brandDescription %}
                     {% set features = common_features %}
                 {% else %}
-                    {%  if variant.brandDescription != '' %}
-                        {% set description = variant.brandDescription %}
-                    {% else %}
-                        {% set description = variant.description %}
+                    {% set description = variant.description.description %}
+                    {% if description == '' %}
+                        {% set description = variant.description.metaDescription %}
                     {% endif %}
+                    {% set brandDescription = variant.brandDescription.description %}
                     {% set features = variant.features %}
                 {% endif %}
                 {% if features['Colour'] is defined %}
@@ -231,10 +231,15 @@
                                                     <ul>
                                                         <li><a href="#overview">Overview</a></li>
                                                         {% if common_features|length > 0 %}<li><a href="#technicalSpecification">Technical Specification</a></li>{% endif %}
+                                                        {% if brandDescription != "" %}<li><a href="#brandDescription">Full Description</a></li>{% endif %}
                                                     </ul>
                                                     <div id="overview">
                                                         <section>
-                                                            <p class="summary man" itemprop="description">{{ (description.description ? description.description : description.metaDescription)|raw }}</p>
+                                                            {%  if '</p>' in description %}
+                                                                {{ description|raw }}
+                                                            {% else %}
+                                                                <p class="summary man" itemprop="description">{{ description|raw }}</p>
+                                                            {% endif %}
                                                         </section>
                                                     </div>
                                                     {% if features|length > 0 %}
@@ -263,6 +268,13 @@
                                                                     {% endfor %}
                                                                     </tbody>
                                                                 </table>
+                                                            </section>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if brandDescription != '' %}
+                                                        <div id="brandDescription">
+                                                            <section>
+                                                                {{ brandDescription|raw }}
                                                             </section>
                                                         </div>
                                                     {% endif %}
