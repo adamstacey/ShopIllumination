@@ -69,19 +69,22 @@
                 </div>
             {% endblock %}
             {% block product_info %}
-            {% if variant is null %}
-                {% set description = product.description %}
-                {% set features = common_features %}
-            {% else %}
-                {% set description = variant.description %}
-                {% set features = variant.features %}
-            {% endif %}
+                {% if variant is null %}
+                    {% set description = product.description %}
+                    {% set features = common_features %}
+                {% else %}
+                    {% set description = variant.description %}
+                    {% set features = variant.features %}
+                {% endif %}
+                {% if features['Colour'] is defined %}
+                    {% set colour = features['Colour'] %}
+                {% endif %}
                 <div itemscope itemtype="http://schema.org/Product">
                     <div class="widget-group clearfix product mbl">
                         <div class="widget widget-3-of-5">
                             <div class="ui-widget">
                                 <section class="ui-widget-content ui-corner-all clearfix">
-                                    <h1 itemprop="name">{{ description.header }}</h1>
+                                    <h1 itemprop="name">{{ description.header ~ (colour ? ' - ' ~ colour : '') }}</h1>
                                     <div>
                                         {% if product_images | length > 0 %}
                                             <ul class="etalage">
@@ -192,7 +195,7 @@
                                         <div class="clear"></div>
                                         <ul class="summary-specification">
                                             {% for feature in product.departments[0].department.features %}
-                                                {% if feature.displayOnProduct and common_features[feature.featureGroup.name] is defined %}
+                                                {% if feature.displayOnListing and common_features[feature.featureGroup.name] is defined %}
                                                     <li>{{ feature.featureGroup.name }}: <strong>{{ common_features[feature.featureGroup.name] }}</strong></li>
                                                 {% endif %}
                                             {% endfor %}
