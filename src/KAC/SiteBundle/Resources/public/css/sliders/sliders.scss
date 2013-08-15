@@ -181,7 +181,8 @@
 .slider-homepage,
 .slider-homepage .rhino-container,
 .slider-homepage .rhino-container ul,
-.slider-homepage .rhino-container ul li {
+.slider-homepage .rhino-container ul li,
+.slider-homepage .rhino-container ul li img {
     width: 980px;
     height: 250px;
 }
@@ -194,7 +195,8 @@
 .slider-gallery,
 .slider-gallery .rhino-container,
 .slider-gallery .rhino-container ul,
-.slider-gallery .rhino-container ul li {
+.slider-gallery .rhino-container ul li,
+.slider-gallery .rhino-container ul li img {
     width: 940px;
     height: 400px;
 }
@@ -211,7 +213,8 @@
 .slider-dialog-gallery,
 .slider-dialog-gallery .rhino-container,
 .slider-dialog-gallery .rhino-container ul,
-.slider-dialog-gallery .rhino-container ul li {
+.slider-dialog-gallery .rhino-container ul li,
+.slider-dialog-gallery .rhino-container ul li img {
     width: 800px;
     height: 350px;
 }
