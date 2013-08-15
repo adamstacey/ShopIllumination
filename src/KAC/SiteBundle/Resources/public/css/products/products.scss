@@ -150,6 +150,15 @@ table.data-table .price .currency-tax {
     line-height: 14px;
 }
 
+.product-listing-colour {
+    @include fontSize($fontSizeSmall);
+    color: $primaryColour;
+    font-weight: bold;
+    line-height: 14px;
+    height: 14px;
+    overflow: hidden;
+}
+
 .product .logo {
     height: 50px;
     margin: 0 $spacingMedium $spacingMedium 0;
