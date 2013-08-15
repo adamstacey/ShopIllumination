@@ -34,6 +34,8 @@ class ProductIndexer extends Indexer
 
         $lowestPrice = -1;
         $highestPrice = -1;
+        $lowestRrp = -1;
+        $highestRrp = -1;
         $commonFeatures = array();
 
         /**
@@ -122,6 +124,14 @@ class ProductIndexer extends Indexer
                 if ($highestPrice === -1 || $price->getListPrice() > $highestPrice) {
                     $highestPrice = $price->getListPrice();
                 }
+                if ($lowestRrp === -1 || $price->getRecommendedRetailPrice() < $lowestRrp) {
+                    $lowestRrp = $price->getRecommendedRetailPrice();
+                }
+                if ($highestRrp === -1 || $price->getRecommendedRetailPrice() > $highestRrp) {
+                    $highestRrp = $price->getRecommendedRetailPrice();
+                }
+                $document->addField('list_prices', $price->getListPrice());
+                $document->addField('rrps', $price->getRecommendedRetailPrice());
             }
 
             // Add all features
@@ -174,6 +184,8 @@ class ProductIndexer extends Indexer
 
             $document->setField('low_price', $lowestPrice === -1 ? 0 : $lowestPrice);
             $document->setField('high_price', $highestPrice === -1 ? 0 : $highestPrice);
+            $document->setField('low_rrp', $lowestRrp === -1 ? 0 : $lowestRrp);
+            $document->setField('high_rrp', $highestRrp === -1 ? 0 : $highestRrp);
         }
 
         // Add the common features to the document
