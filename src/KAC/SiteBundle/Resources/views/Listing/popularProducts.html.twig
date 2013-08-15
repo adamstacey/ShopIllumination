@@ -44,7 +44,13 @@
                         <div class="product-listing-name mbs">
                             <a itemprop="name" href="{{ path('routing', {'url': product.url}) }}">{{ product.description.header|raw }}</a>
                         </div>
-                        <a class="button button-small icon-grey" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">View</a>
+                        <div class="product-listing-colour">
+                            {% for feature in product.variants[0].features %}
+                                {% if feature.featureGroup.name == 'Colour' %}
+                                    {{ feature.feature.name }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
