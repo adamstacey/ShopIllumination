@@ -557,6 +557,10 @@
 
         <field name="low_price" type="float" indexed="true" stored="true" multiValued="false"/>
         <field name="high_price" type="float" indexed="true" stored="true" multiValued="false"/>
+        <field name="low_rrp" type="float" indexed="true" stored="true" multiValued="false"/>
+        <field name="high_rrp" type="float" indexed="true" stored="true" multiValued="false"/>
+        <field name="rrps" type="float" indexed="true" stored="true" multiValued="true"/>
+        <field name="list_prices" type="float" indexed="true" stored="true" multiValued="true"/>
         <!--<field name="cost_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
         <!--<field name="rrp" type="currency" indexed="true" stored="true" multiValued="false"/>-->
         <!--<field name="list_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
