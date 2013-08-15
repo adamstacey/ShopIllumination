@@ -70,10 +70,18 @@
             {% endblock %}
             {% block product_info %}
                 {% if variant is null %}
-                    {% set description = product.description %}
+                    {%  if product.brandDescription != '' %}
+                        {% set description = product.brandDescription %}
+                    {% else %}
+                        {% set description = product.description %}
+                    {% endif %}
                     {% set features = common_features %}
                 {% else %}
-                    {% set description = variant.description %}
+                    {%  if variant.brandDescription != '' %}
+                        {% set description = variant.brandDescription %}
+                    {% else %}
+                        {% set description = variant.description %}
+                    {% endif %}
                     {% set features = variant.features %}
                 {% endif %}
                 {% if features['Colour'] is defined %}
