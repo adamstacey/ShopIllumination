@@ -66,6 +66,16 @@ class VariantToFeature
         return $this->getFeature()->__toString();
     }
 
+    function __clone()
+    {
+        if($this->id)
+        {
+            $this->id = null;
+            $this->createdAt = null;
+            $this->updatedAt = null;
+        }
+    }
+
     /**
      * Get id
      *
