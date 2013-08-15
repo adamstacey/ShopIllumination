@@ -233,8 +233,13 @@
                                                                 <a href="{{ path('content_contact_us') }}">CONTACT US</a>
                                                             {% endif %}
                                                         </div>
-                                                        <div class="product-listing-name mbs">
+                                                        <div class="product-listing-name">
                                                             <a itemprop="name" href="{{ path('routing', {'url': product.url}) }}">{{ product.header|raw }}</a>
+                                                        </div>
+                                                        <div class="product-listing-colour mbs">
+                                                            {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
+                                                                {{ product.attr_feature_Colour[0] }}
+                                                            {% endif %}
                                                         </div>
                                                         {% if is_granted("ROLE_ADMIN") %}
                                                             <div class="mbl">
