@@ -280,7 +280,7 @@ class ListingController extends Controller
             $queryString = trim($request->query->get('q'));
 
             $dismax = $query->getDisMax();
-            $dismax->setQueryFields(array('product_code^5', 'header^2', 'brand^3.5', 'page_title', 'short_description', 'search_words', 'text'));
+            $dismax->setQueryFields(array('header^2', 'brand^1.5', 'product_code', 'page_title', 'short_description', 'search_words', 'text'));
             $dismax->setPhraseFields(array('product_code^5', 'short_description^30'));
             $dismax->setQueryParser('edismax');
             $query->setQuery($queryString);
