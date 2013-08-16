@@ -1,0 +1,211 @@
+{% extends 'KACSiteBundle:Product:view.html.twig' %}
+{% import 'KACSiteBundle:Product:Includes/helpers.html.twig' as helpers %}
+
+{% macro addToBasket(variant) %}
+    <div class="add-to-basket" data-product-id="{{ variant.product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}">
+        <input class="quantity integer" type="number" value="1" />
+        <button class="actionIncreaseQuantity increase-quantity button button-small uppercase">+</button>
+        <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
+        <button class="actionAddToBasket buy button button-green uppercase">Buy</button>
+    </div>
+{% endmacro %}
+
+{% macro variantInfo(variant) %}
+    <tr class="{{ cycle(['odd', 'even'], loop.index0) }}" data-worktop-thickness="{{ variant.featureValue('thickness') }}">
+        <td width="1" class="pam image">
+            {% if product.image %}
+                <a href="{{ asset(variant.image.publicPath | apply_filter('product_large')) }}" class="lightbox">
+                    <img width="180" height="95" src="{{ asset(variant.image.publicPath | apply_filter('variant_thumbnail')) }}" alt="{{ variant.description.header|raw }}" />
+                </a>
+            {% else  %}
+                <a href="{{ asset('images/no-image.jpg' | apply_filter('product_large')) }}" class="lightbox">
+                    <img width="180" height="95" src="{{ asset('images/no-image.jpg' | apply_filter('variant_thumbnail')) }}" alt="{{ variant.description.header|raw }}" />
+                </a>
+            {% endif  %}
+        </td>
+        <td width="1" class="nowrap"><span data-dialog-width="800" data-dialog-object="#dialogInformationWorktops" class="actionLoadDialog form-helper ui-button-icon-primary ui-icon-small icon-small-763"></span></td>
+        <td>{{ variant.description.header|raw }}</td>
+        <td width="95" class="nowrap price">{{ variant.price.listPrice|currency('GBP', true, true, '')|raw }}</td>
+        <td width="1" class="nowrap">{{ _self.addToBasket(variant) }}</td>
+    </tr>
+{% endmacro %}
+
+{% macro variantInfoCategory(variants, category) %}
+    {% set categoryVariants = [] %}
+    {% for variant in variants %}
+        {% set isValid = false %}
+        {% if category is not defined or category == 'Default' %}
+            {% set isValid = variant.type is null or variant.type.name == 'Default' %}
+        {% else %}
+            {% set isValid = variant.type and variant.type.name == category %}
+        {% endif %}
+        {% if isValid %}
+            {% set categoryVariants = categoryVariants|merge([variant]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% if categoryVariants|length > 0 %}
+        <table class="data-table">
+            <thead>
+            <tr>
+                <th colspan="3">
+                    {% if category is defined and category != 'Default' %}
+                        {{ category }}
+                    {% endif %}
+                </th>
+                <th class="tac">Price</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody class="updatable">
+            {% for variant in categoryVariants %}
+                {{ _self.variantInfo(variant) }}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endmacro %}
+
+{% block product_info_tab_headers %}
+    {{ parent() }}
+    <li><a href="#maiaCare">Maia Care</a></li>
+    <li><a href="#maiaTechnology">Maia Technology</a></li>
+{% endblock %}
+{% block product_info_tab_content %}
+    {{ parent() }}
+    <div id="maiaCare">
+        <section>
+            <h3>Maia Care</h3>
+            <p>Maia solid surfaces come with a ten-year guarantee<span class="colour-red">*</span>, and are supported by the FIRA Gold Award for product excellence – this is testimony to the fact we only use the most superior materials, and our products are constantly tested to ensure they are manufactured to the highest possible standards.<span class="colour-red">*</span> <em>Guarantee covers manufacturing, not installation.</em></p>
+            <p>Maia has been developed to be used in the domestic environment - particularly the kitchen. Although no 'special' maintenance is needed we recommend the following is adhered to, as prevention is always better than cure.</p>
+            <h3>Routine Cleaning</h3>
+            <p>Maia does not require any specialist cleaning regimes – most dirt and light residue will easily wipe away with a damp cloth and soapy water. The worksurface should then be rinsed with clean water and wiped dry. Persistent marks can be removed by using a mild-abrasive cleaner, but harsh scouring powders should be avoided. If in doubt, consult our care and maintenance guide.</p>
+            <h3>Heat</h3>
+            <p>Maia's surfaces will withstand heat better than many alternative surface materials. However, all hot pots, pans and other heat generating devices should always be placed upon a trivet or worktop protector rods, to prevent extreme heat having prolonged and direct contact with the surface. Boiling water and cooking splashes do not harm the surface.</p>
+            <h3>Staining</h3>
+            <p>Maia, unlike marble and granite, will resist most household chemicals including alcohol and cosmetics however, some chemicals and strong dyes can cause damage and discolouration. If spillage occurs wipe off immediately and rinse area thoroughly.</p>
+            <h3>Minor Scratching</h3>
+            <p>Kitchen utensils and crockery (particularly the unglazed bases) can sometimes cause scratches that will be particularly evident on darker colours. The surface can be damaged by scratching or cutting with knives, so the use of a cutting board is essential. Don’t worry though, any minor scratches can easily be removed using a red abrasive pad and other items from the care kit, please refer to the care and maintenance guide.</p>
+            <h3>Maia Care Kit</h3>
+            <p>To help maintain your maia worksurface, a Care Kit is available from your retailer or online here. This kit contains all that you need to make minor repairs to the surface and a special polish that helps to maintain, protect and build up a lustre particularly on darker colours.</p>
+        </section>
+    </div>
+    <div id="maiaTechnology">
+        <section>
+            <h3>Maia Technology</h3>
+            <p class="mbn">Made from the finest of materials, maia's high technology surface consists of acrylic resin, two thirds aluminium hydroxide and colour pigments. The properties of these components combine to form a versatile practical material, with the appearance of real stone but without the associated cost or inherent drawbacks. In fact, maia's surface presents many benefits over stone such as its greater heat resistance, virtually inconspicuous joints, aesthetically appealing and smooth feel.</p>
+        </section>
+    </div>
+{% endblock %}
+{% block product_variants %}
+    <a name="buyNow"></a>
+    <div class="widget-group clearfix mbl">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>1. Select a Worktop Thickness</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom clearfix">
+                    <fieldset class="man">
+                        <div class="form-element widget-group clearfix">
+                            <div class="widget widget-1-of-3">
+                                <label for="formWorktopThickness1">Worktop Thickness</label>
+                            </div>
+                            <div class="widget radio-group widget-2-of-3">
+                                <input type="radio" id="formWorktopThickness28" name="worktop-thickness" value="28mm" checked="checked" /><label for="formWorktopThickness28">28mm</label>
+                                <input type="radio" id="formWorktopThickness42" name="worktop-thickness" value="42mm" /><label for="formWorktopThickness42">42mm</label>
+                                <input type="radio" id="formWorktopThickness54" name="worktop-thickness" value="54mm" /><label for="formWorktopThickness54">54mm</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="widget-group clearfix mbl">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>2. Select Your Worktops</h2>
+                </header>
+                <section class="ui-widget-content ui-corner-bottom clearfix">
+                    {{ _self.variantInfoCategory(product.variants, 'Worktops') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Breakfast Bars') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Island Worktops') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Sink Modules') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Edging') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Finishing Touch') }}
+                    {{ _self.variantInfoCategory(product.variants, 'Default') }}
+                </section>
+            </div>
+        </div>
+    </div>
+
+    {% set accessories = [] %}
+    {% for link in product.links %}
+        {%  if link.linkType == 'accessory' %}
+            {% for variant in link.linkedProduct.variants %}
+                {% set accessories = accessories|merge([variant]) %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% if accessories|length > 0 %}
+        <div class="widget-group clearfix mbl">
+            <div class="widget widget-1-of-1">
+                <div class="ui-widget">
+                    <header class="ui-widget-header ui-corner-top">
+                        <h2>3. Accessories</h2>
+                    </header>
+                    <section class="ui-widget-content ui-corner-bottom clearfix">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="3"></th>
+                                    <th class="tac">Price</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for variant in accessories %}
+                                    {{ _self.variantInfo(variant) }}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        function selectWorktopThickness(worktopThickness) {
+            $("table.data-table tbody.updatable tr").hide();
+            $("table.data-table tbody.updatable tr").removeClass("even odd");
+            $("table.data-table tbody.updatable tr[data-worktop-thickness='"+worktopThickness+"']").show();
+            $("table.data-table tbody.updatable tr[data-worktop-thickness='']").show();
+            $("table.data-table tbody.updatable tr:visible:even").addClass("even");
+            $("table.data-table tbody.updatable tr:visible:odd").addClass("odd");
+
+            // Check to see if any of the categories should be hidden
+            $("table.data-table").each(function(index, el) {
+                var $el = $(el);
+                if($el.find("tbody.updatable tr:visible").length <= 0) {
+                    $el.hide();
+                } else {
+                    $el.show();
+                }
+            });
+        }
+
+        selectWorktopThickness($("input[name='worktop-thickness']").val());
+
+        $("input[name='worktop-thickness']").on("change", function() {
+            selectWorktopThickness($(this).val());
+        });
+    </script>
+{% endblock %}

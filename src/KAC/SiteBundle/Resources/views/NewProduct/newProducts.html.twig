@@ -1,0 +1,40 @@
+{% extends 'KACSiteBundle:NewProduct:base.html.twig' %}
+
+{% block title %}Add New Product | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header>
+        {{ parent() }}
+        <h2 class="mtm">Add New Product</h2>
+    </header>
+{% endblock %}
+{% block body %}
+    <section>
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <form class="form" method="post" novalidate="novalidate" action="">
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-1">
+                            <div class="ui-widget">
+                                <section class="ui-widget-content ui-corner-all" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.products.vars.prototype} %}{% endfilter %}">
+                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+                                    <fieldset>
+                                        {{ form_rest(form) }}
+                                    </fieldset>
+                                    <div class="clearfix">
+                                        <button type="button" data-table-object="linkList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1122">Add</button>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <script type="text/javascript">
+                    $(document).ready(function() {
+
+                    })
+                </script>
+            </div>
+        </div>
+    </section>
+{% endblock %}
