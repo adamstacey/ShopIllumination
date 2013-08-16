@@ -1,40 +1,59 @@
 {% extends 'KACSiteBundle:NewProduct:base.html.twig' %}
 
-{% block title %}Add New Product | {{ parent() }}{% endblock %}
+{% block title %}New Products | {{ parent() }}{% endblock %}
 
 {% block header %}
-    <header>
-        {{ parent() }}
-        <h2 class="mtm">Add New Product</h2>
+    <header class="sticky">
+        <button type="button" data-object="products" class="actionAddFormGroup mlm fr button icon-green" data-icon-secondary="icon-1122">Add</button>
+        <h2>New Products</h2>
     </header>
 {% endblock %}
 {% block body %}
-    <section>
-        <div class="widget-group clearfix">
-            <div class="widget widget-1-of-1">
-                <form class="form" method="post" novalidate="novalidate" action="">
-                    <div class="widget-group clearfix">
-                        <div class="widget widget-1-of-1">
-                            <div class="ui-widget">
-                                <section class="ui-widget-content ui-corner-all" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.products.vars.prototype} %}{% endfilter %}">
-                                    {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                                    <fieldset>
-                                        {{ form_rest(form) }}
-                                    </fieldset>
-                                    <div class="clearfix">
-                                        <button type="button" data-table-object="linkList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1122">Add</button>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <script type="text/javascript">
-                    $(document).ready(function() {
+    <form class="form" method="post" novalidate="novalidate" action="">
+        <section id="products" data-prototype="{% filter escape %}{% include 'KACSiteBundle:NewProduct/Includes:newCollectionGroup.html.twig' with {'form': form.products.vars.prototype} %}{% endfilter %}">
 
-                    })
-                </script>
-            </div>
-        </div>
-    </section>
+        </section>
+    </form>
+
+    <script type="text/javascript">
+        function addFormGroup($object) {
+            var $newGroup = $object.data("prototype");
+            var groupCount = $object.children().length + 1;
+            if ($object.find(".no-data").length > 0)
+            {
+                $object.find(".no-data").hide();
+            }
+            $newGroup = $newGroup.replace(/__name__/g, groupCount);
+            $newGroup = $("<div />").html($newGroup);
+            $newGroup.appendTo($object);
+            generateFormElements($newGroup);
+            generateButtons($newGroup);
+            loadUiFunctions();
+            return true;
+        }
+
+        $(document).ready(function() {
+            addFormGroup($("#products"));
+
+            $(document).on("click", ".actionAddFormGroup", function() {
+                addFormGroup($("#" + $(this).data("object")));
+            });
+
+            var $placholderOption = $('<option value="">- Select a Department -</option>');
+            $("select.select-department").select2();
+            $("#departmentList").on("rowadded", function() {
+                $("select.select-department").each(function() {
+                    $(this).select2();
+                    if ($(this).find("option[value='']").length < 1) {
+                        $(this).prepend($placholderOption).select2();
+                    }
+                    if ($(this).find("option[selected='selected']").length < 1) {
+                        $(this).select2("val", "");
+                    }
+                });
+            });
+        });
+
+
+    </script>
 {% endblock %}
