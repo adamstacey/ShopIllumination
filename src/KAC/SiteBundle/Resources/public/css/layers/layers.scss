@@ -146,12 +146,17 @@ $zIndex: $zIndex + 1;
 }
 
 $zIndex: $zIndex + 1;
-.header.sticky {
+header.sticky {
     z-index: $zIndex;
 }
 
 $zIndex: $zIndex + 1;
-.header.stuck {
+.sticky-wrapper {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
+header.stuck {
     z-index: $zIndex;
 }
 
