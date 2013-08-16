@@ -1,6 +1,6 @@
 <?php
 
-namespace KAC\SiteBundle\Form\Product;
+namespace KAC\SiteBundle\Form\NewProduct;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
