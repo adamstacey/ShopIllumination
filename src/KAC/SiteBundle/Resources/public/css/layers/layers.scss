@@ -146,6 +146,16 @@ $zIndex: $zIndex + 1;
 }
 
 $zIndex: $zIndex + 1;
+.header.sticky {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
+.header.stuck {
+    z-index: $zIndex;
+}
+
+$zIndex: $zIndex + 1;
 .main-menu .menu-vertical {
     z-index: $zIndex;
 }
