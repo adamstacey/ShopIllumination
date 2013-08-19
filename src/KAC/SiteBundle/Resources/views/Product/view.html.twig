@@ -74,13 +74,12 @@
                     {% if description == '' %}
                         {% set description = product.description.metaDescription %}
                     {% endif %}
+                    {% set header = product.description.header %}
                     {% set brandDescription = product.description.brandDescription %}
                     {% set features = common_features %}
                 {% else %}
                     {% set description = variant.description.description %}
-                    {% if description == '' %}
-                        {% set description = variant.description.metaDescription %}
-                    {% endif %}
+                    {% set header = variant.description.header %}
                     {% set brandDescription = variant.brandDescription.description %}
                     {% set features = variant.features %}
                 {% endif %}
@@ -92,7 +91,7 @@
                         <div class="widget widget-3-of-5">
                             <div class="ui-widget">
                                 <section class="ui-widget-content ui-corner-all clearfix">
-                                    <h1 itemprop="name">{{ description.header ~ (colour ? ' - ' ~ colour : '') }}</h1>
+                                    <h1 itemprop="name">{{ header ~ (colour ? ' - ' ~ colour : '') }}</h1>
                                     <div>
                                         {% if product_images | length > 0 %}
                                             <ul class="etalage">
