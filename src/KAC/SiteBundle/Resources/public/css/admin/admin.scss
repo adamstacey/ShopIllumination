@@ -1,0 +1,26 @@
+@import "compass";
+@import "../includes/base";
+
+.document {
+    background: $colourYellowExtraLight;
+}
+
+.sub-menu {
+    @include highlightedVerticalGradientYellow;
+    border-bottom: 3px solid $colourGreyDark;
+}
+
+.sub-menu h3 {
+    margin: 0;
+    padding: 0;
+
+    color: $colourBlack;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 30px;
+    @include textShadow($colourYellowLight, 0, 1px);
+}
+
+.sub-menu .widget {
+    padding: 8px 10px 5px 10px;
+}
