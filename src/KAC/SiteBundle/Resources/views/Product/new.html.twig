@@ -2,6 +2,11 @@
 
 {% block title %}Add New Product | {{ parent() }}{% endblock %}
 
+{% block admin_submenu %}
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-278" href="{{ path('listing_products') }}">Products</a>
+{% endblock %}
+
 {% block header %}
     <header>
         {{ parent() }}

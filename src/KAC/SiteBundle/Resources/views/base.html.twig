@@ -48,29 +48,22 @@
                         </div>
                     </div>
                     {{ render_esi(controller('KACSiteBundle:System:mainMenu')) }}
-                    <div class="sub-menu">
+                    <div class="sub-menu{% if is_granted('ROLE_ADMIN') %} sticky{% endif %}">
                         <div class="container">
                             <div class="widget-group clearfix">
                                 {% block submenu %}
                                     {% if is_granted('ROLE_ADMIN') %}
-                                        {% block admin_submenu %}
-                                            <div class="widget widget-1-of-4">
-                                                <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-93"></span></a>
-                                                <h3 class="pts pbs"><a href="{{ path('departments_index') }}">Departments</a></h3>
-                                            </div>
-                                            <div class="widget widget-1-of-4">
-                                                <a class="fl" href="{{ path('admin_brands') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1370"></span></a>
-                                                <h3 class="pts pbs"><a href="{{ path('admin_brands') }}">Brands</a></h3>
-                                            </div>
-                                            <div class="widget widget-1-of-4">
-                                                <a class="fl" href="{{ path('listing_products') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1020"></span></a>
-                                                <h3 class="pts pbs"><a href="{{ path('listing_products') }}">Products</a></h3>
-                                            </div>
-                                            <div class="widget widget-1-of-4">
-                                                <a class="fl" href="{{ path('admin_orders') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-250"></span></a>
-                                                <h3 class="pts pbs"><a href="{{ path('admin_orders') }}">Orders</a></h3>
-                                            </div>
-                                        {% endblock %}
+                                        <div class="widget widget-1-of-8">
+                                            <h3>Admin Mode:</h3>
+                                        </div>
+                                        <div class="widget widget-7-of-8">
+                                            {% block admin_submenu %}
+                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-701" href="{{ path('admin_orders') }}">Orders</a>
+                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-399" href="{{ path('departments_index') }}">Departments</a>
+                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-1370" href="{{ path('admin_brands') }}">Brands</a>
+                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-278" href="{{ path('listing_products') }}">Products</a>
+                                            {% endblock %}
+                                        </div>
                                     {% else %}
                                         <div class="widget widget-1-of-4">
                                             <a class="fl" href="{{ path('content_contact_us') }}"><span title="If you need any help or advice we are on hand to help you" class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-297"></span></a>

@@ -4,15 +4,12 @@
 {% block title %}{{ variant ? variant.description.pageTitle : product.description.pageTitle }} | {{ parent() }}{% endblock %}
 
 {% block admin_submenu %}
-    {{ parent() }}
-    <div class="widget widget-1-of-4">
-        <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-95"></span></a>
-        <h3 class="pts pbs"><a href="{{ path('products_edit', {'productId': product.id}) }}">Edit Product</a></h3>
-    </div>
-    <div class="widget widget-1-of-4">
-        <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1117"></span></a>
-        <h3 class="pts pbs"><a href="{{ path('products_delete', {'productId': product.id}) }}">Delete Product</a></h3>
-    </div>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-278" href="{{ path('listing_products') }}">Products</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-1122" href="{{ path('products_new') }}">New Product</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-94" href="{{ path('products_edit', {'productId': product.id}) }}">Edit Product</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-51" href="{{ path('products_clone', {'productId': product.id}) }}">Clone Product</a>
+    <a class="button button-small icon-red mrs" data-icon-primary="icon-851" href="{{ path('products_delete', {'productId': product.id}) }}">Delete Product</a>
 {% endblock %}
 
 {% block body %}
@@ -53,8 +50,9 @@
 
         {% block product_block %}
             {% block department_breadcrumb %}
-                <div class="widget-group clearfix mbm">
-                    <div class="widget widget-7-of-8">
+                <div class="widget-group mbs clearfix">
+                    <a class="fr button button-small icon-grey mrm mts" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
+                    <div class="widget widget-1-of-1">
                         <ul class="breadcrumbs" itemprop="breadcrumb">
                             <li style="z-index: {{ departments|length }};"><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
                             {% for department in departments|reverse %}
@@ -66,6 +64,7 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    <div class="clear"></div>
                 </div>
             {% endblock %}
             {% block product_info %}
@@ -191,15 +190,6 @@
                                                         </div>
                                                     </div>
                                                 {% endfor %}
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <div class="border-bottom-separator">
-                                            <div class="pam">
-                                                <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red mls mts mbs">Delete</a>
-                                                <a href="{{ path('products_clone', {'productId': product.id}) }}" class="fr button button-blue mls mts mbs">Clone</a>
-                                                <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue mts mbs">Edit</a>
                                             </div>
                                         </div>
                                     {% endif %}
