@@ -310,6 +310,7 @@ a.submenu-brand img {
 
 .sub-menu {
     position: relative;
+    width: 100%;
 
     @include verticalGradientWhiteToGreyLight;
     @include boxInsetShadow($colourGreyDark, 0, 1px, $spacingSmall);
