@@ -244,11 +244,51 @@ function loadFormFunctions() {
     }).disableSelection();
 }
 
+function addCollectionGroup($object) {
+    var $newGroup = $object.data("prototype");
+    var groupCount = $object.children().length + 1;
+    $newGroup = $newGroup.replace(/__name__/g, groupCount);
+    $newGroup = $("<div />").html($newGroup);
+    $newGroup.appendTo($object);
+    generateFormElements($newGroup);
+    generateButtons($newGroup);
+    loadUiFunctions();
+    return true;
+}
+
+function addCollectionTableRow($object) {
+    var rowCount = $object.find("tbody > tr:not(.no-data)").length + 1;
+    var $newRow = $object.data("prototype");
+    $newRow = $newRow.replace(/__name__/g, rowCount);
+    $newRow = $newRow.replace('<td class="row-count"></td>', '<td class="row-count">'+rowCount+'</td>');
+    $newRow = $("<tr></tr>").html($newRow);
+    $newRow.appendTo($object.find("tbody"));
+    generateFormElements($newRow);
+    generateButtons($newRow);
+    updateRowCounts();
+
+    // Fire event on the table when the row has been added
+    $object.trigger("rowadded", {
+        'index': rowCount,
+        'row': $newRow
+    });
+
+    return false;
+}
+
 $(document).ready(function() {
     generateFormElements($(document));
 
     $(document).on("focus", ".ui-dialog-titlebar-close", function() {
         $(this).blur();
+    });
+
+    $(document).on("click", ".actionAddFormGroup", function() {
+        addCollectionGroup($("#" + $(this).data("object")));
+    });
+
+    $(document).on("click", ".actionAddCollectionTableRow", function() {
+        addCollectionTableRow($("#" + $(this).data("object")));
     });
 
     $(document).on("click", ".actionAddFormRow", function() {
