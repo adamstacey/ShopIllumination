@@ -116,8 +116,7 @@
                             {% set overview = "" %}
                             {% if brand.description.description %}
                                 {% set overview = overview ~ brand.description.description %}
-                            {% endif %}
-                            {% if department.description.description %}
+                            {% elseif department.description.description %}
                                 {% set overview = overview ~ department.description.description %}
                             {% endif %}
                         {% else %}
