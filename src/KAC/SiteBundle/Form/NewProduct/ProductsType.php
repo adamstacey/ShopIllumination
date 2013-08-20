@@ -28,15 +28,11 @@ class ProductsType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'KAC\SiteBundle\Entity\Product',
-            'type' => 's',
-            'variants' => array(),
-            'departments' => array(),
-            'departmentId' => null,
         ));
     }
 
     public function getName()
     {
-        return 'site_new_product';
+        return 'site_new_products';
     }
 }
