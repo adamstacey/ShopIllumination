@@ -744,13 +744,13 @@ screen and (min-resolution: 2dppx) {
 }
 
 .add-to-basket .increase-quantity {
-    top: 0;
+    top: 1px;
 
     @include borderRadius(0, $radiusSize, 0, 0);
 }
 
 .add-to-basket .decrease-quantity {
-    bottom: 0;
+    bottom: 1px;
 
     @include borderRadius(0, 0, $radiusSize, 0);
 }
