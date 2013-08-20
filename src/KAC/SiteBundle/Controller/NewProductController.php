@@ -2,6 +2,8 @@
 namespace KAC\SiteBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
+use KAC\SiteBundle\Entity\Product;
+use KAC\SiteBundle\Form\NewProduct\ProductDepartmentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +38,7 @@ class NewProductController extends Controller {
             $form->submit($request);
             if ($form->isValid())
             {
-                // Do something: wew ill get to that!
+                // Do something: we will get to that!
             }
         }
 
