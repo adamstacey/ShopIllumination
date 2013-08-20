@@ -82,19 +82,19 @@
 }
 
 @mixin highlightedVerticalGradientGrey {
-    @include highlightedVerticalGradient($colourWhite, $colourGreyLight, $colourGrey);
+    @include highlightedVerticalGradient($colourGreyExtraExtraLight, $colourGreyLight, $colourGrey);
 }
 
 @mixin highlightedVerticalGradientGreyReversed {
-    @include highlightedVerticalGradientReversed($colourWhite, $colourGreyLight, $colourGrey);
+    @include highlightedVerticalGradientReversed($colourGreyExtraExtraLight, $colourGreyLight, $colourGrey);
 }
 
 @mixin highlightedVerticalGradientGreyDark {
-    @include highlightedVerticalGradient($colourGreyLight, $colourGrey, $colourGreyDark);
+    @include highlightedVerticalGradient($colourGreyExtraLight, $colourGrey, $colourGreyDark);
 }
 
 @mixin highlightedVerticalGradientGreyDarkReversed {
-    @include highlightedVerticalGradientReversed($colourGreyLight, $colourGrey, $colourGreyDark);
+    @include highlightedVerticalGradientReversed($colourGreyExtraLight, $colourGrey, $colourGreyDark);
 }
 
 @mixin highlightedVerticalGradientGreyLight {
