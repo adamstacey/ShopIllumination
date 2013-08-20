@@ -1,41 +1,28 @@
-<div class="widget-group clearfix">
-    <div class="widget widget-1-of-1">
-        <div class="widget-group clearfix">
-            <div class="widget widget-1-of-1">
-                <div class="ui-widget">
-                    <section class="ui-widget-content ui-corner-all">
-                        {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
-                        {{ form_rest(form.brand) }}
-                        <fieldset class="pbm">
-                            <table class="form-table sortable" id="departmentList" data-prototype="{% filter escape %}{% include 'KACSiteBundle::newFieldRow.html.twig' with {'form': form.departments.vars.prototype} %}{% endfilter %}">
-                                <thead>
-                                <tr>
-                                    <th width="1">&nbsp;</th>
-                                    <th width="1">&nbsp;</th>
-                                    <th>Department</th>
-                                    <th width="1">&nbsp;</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="no-data">
-                                    <td colspan="4">
-                                        <div class="message message-help mas">
-                                            <span class="ui-button-icon-primary ui-icon-small icon-small-yellow icon-small-1130"></span>
-                                            <p>There are no departments. Add a department using the "Add" button below.</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {{ form_rest(form.departments) }}
-                                </tbody>
-                            </table>
-                            {% do form.departments.setRendered() %}
-                            <div class="clearfix">
-                                <button type="button" data-table-object="departmentList" class="actionAddFormRow mlm fr button icon-green" data-icon-secondary="icon-1122">Add</button>
-                            </div>
-                        </fieldset>
-                    </section>
-                </div>
-            </div>
+<div class="ui-widget mtm">
+    <section class="ui-widget-content ui-corner-all">
+        {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+        {{ form_row(form.brand) }}
+        <table class="form-table sortable departments" id="departments__name__" data-prototype="{% filter escape %}{% include 'KACSiteBundle:NewProduct/Includes:newFieldRow.html.twig' with {'form': form.departments.vars.prototype} %}{% endfilter %}">
+            <thead>
+            <tr>
+                <th width="1">&nbsp;</th>
+                <th width="1">&nbsp;</th>
+                <th>Department</th>
+                <th width="1">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ form_rest(form.departments) }}
+            </tbody>
+        </table>
+        {% do form.departments.setRendered() %}
+        <div class="clearfix">
+            <button type="button" data-object="departments__name__" class="actionAddCollectionTableRow mlm fr button icon-green" data-icon-secondary="icon-1122">Add</button>
         </div>
-    </div>
+    </section>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+</script>
