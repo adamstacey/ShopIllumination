@@ -410,6 +410,11 @@ table.listing td a {
     background-color: $colourBlue;
 }
 
+.stuck {
+    position: fixed !important;
+    top: 0;
+}
+
 @media
 screen and (-webkit-min-device-pixel-ratio: 1.25),
 screen and (-webkit-min-device-pixel-ratio: 1.3),
