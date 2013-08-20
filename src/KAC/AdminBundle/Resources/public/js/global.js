@@ -1171,6 +1171,35 @@ $(document).ready(function () {
 		}
 	});
 
+    $(".action-confirm-multiple-delete").on('click', function(event) {
+        event.preventDefault();
+        if ($("#confirm-multiple-delete"))
+        {
+            if ($("#form-save-required"))
+            {
+                if ($("#form-save-required").val() > 0)
+                {
+                    $("#save-required-warning").show();
+                    $("html, body").animate({scrollTop: $("#save-required-warning").offset().top - 20}, 'slow');
+                } else {
+                    $("#confirm-multiple-delete").show();
+                    $("html, body").animate({scrollTop: $("#confirm-multiple-delete").offset().top - 20}, 'slow');
+                }
+            } else {
+                $("#confirm-multiple-delete").show();
+                $("html, body").animate({scrollTop: $("#confirm-multiple-delete").offset().top - 20}, 'slow');
+            }
+        }
+    });
+    $(".action-cancel-multiple-delete").on('click', function() {
+        $("#form-delete").val("0");
+        $("#confirm-multiple-delete").hide();
+    });
+    $(".action-multiple-delete").on('click', function() {
+        $("#form-delete").val("1");
+        $("#form-update").submit();
+    });
+
 	$(".action-add").live('click', function(event) {
 		if ($("#add"))
 		{
