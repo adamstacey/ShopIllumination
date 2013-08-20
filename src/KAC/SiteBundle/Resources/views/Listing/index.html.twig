@@ -55,7 +55,7 @@
 {% block header %}
     <div class="widget-group clearfix mbm">
         <div class="widget widget-7-of-8">
-            <ul class="breadcrumbs mtn">
+            <ul class="breadcrumbs">
                 <li style="z-index: {{ department.parents|length }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ path('homepage') }}"><span itemprop="title">Kitchen Appliances</span></a></li>
                 {% for parent in department.parents %}
                     {% if parent.parent != null and parent.level != 0  %}
@@ -107,7 +107,7 @@
         <div class="widget-group clearfix mbl">
             <div class="widget widget-1-of-1">
                 <div class="ui-widget">
-                    <section class="ui-widget-content ui-corner-all pbn clearfix">
+                    <section class="ui-widget-content ui-corner-all ptn pbn clearfix">
                         {% if department is not null and brand is null and department.description.description %}
                             {% set overview = department.description.description %}
                         {% elseif department is null and brand is not null and brand.description.description %}
@@ -123,7 +123,7 @@
                             {% set overview = "" %}
                         {% endif %}
                         {% if overview and overview != "" %}
-                            <div class="mtm">{{ overview|raw }}</div>
+                            <div class="ptm">{{ overview|raw }}</div>
                         {% endif %}
                         {% if brand %}
                             {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': department.id, 'brandIds': brand.id })) }}
@@ -175,87 +175,24 @@
                             </div>
                             <div id="products">
                                 <div class="widget-group product clearfix">
-                                    {% for product in pagination %}
-                                        {% block product_block %}
-                                            <div itemscope itemtype="http://schema.org/Product" class="widget widget-1-of-3 product mtm">
-                                                <div class="pr">
-                                                    {% set bullets = "" %}
-                                                    {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
-                                                        {% set bullets = bullets ~ "Colour: <strong>" ~ product.attr_feature_Colour[0] ~ "</strong><br />" %}
-                                                    {% endif %}
-                                                    {% for featureGroup in product.features|slice(0, 4) %}
-                                                        {% set feature = product['attr_feature_'~featureGroup|replace({" ": ""})][0] %}
-                                                        {% if feature != '' %}
-                                                            {% set bullets = bullets ~ featureGroup ~ ": <strong>" ~ feature ~ "</strong><br />" %}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    <div class="product-image-container man">
-                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
-                                                            {% if product.thumbnail_path %}
-                                                                <img title="{{ bullets }}" class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
-                                                            {% else  %}
-                                                                <img title="{{ bullets }}" class="product-image" itemprop="image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
-                                                            {% endif  %}
-                                                        </a>
-                                                    </div>
-                                                    <div class="pts">
-                                                        {% if not brand %}
-                                                            {% if product.brand_logo != '' %}
-                                                                <div class="fr">
-                                                                    <img src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand|raw }}" height="25" />
-                                                                </div>
-                                                            {% endif %}
-                                                        {% endif %}
-                                                        <div itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
-                                                            {% if product.hide_price == 0 or is_granted("ROLE_ADMIN") %}
-                                                                {% if not is_granted("ROLE_ADMIN") %}
-                                                                    <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
-                                                                {% endif %}
-                                                                    {% if product.variants_count == 1 and is_granted("ROLE_ADMIN") %}
-                                                                        <input type="text" class="no-filter product-price-update" value="{{ product.low_price }}" />
-                                                                    {% else %}
-                                                                        {% if product.low_price != product.high_price %}
-                                                                            <span class="price-small">
-                                                                                <span class="currency-prefix">from </span>
-                                                                            </span>
-                                                                        {% endif %}
-                                                                        <span itemprop="price" class="price-small">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
-                                                                        <br />
-                                                                        <span class="price-small">
-                                                                            <span class="currency-tax">(inc. VAT)</span>
-                                                                        </span>
-                                                                    {% endif %}
-                                                                {% if not is_granted("ROLE_ADMIN") %}
-                                                                    </a>
-                                                                {% endif %}
-                                                            {% else %}
-                                                                <a href="{{ path('content_contact_us') }}">CONTACT US</a>
-                                                            {% endif %}
-                                                        </div>
-                                                        <div class="product-listing-name">
-                                                            <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">{{ product.header|raw }}</a>
-                                                        </div>
-                                                        <div class="product-listing-colour mbs">
-                                                            {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
-                                                                {{ product.attr_feature_Colour[0] }}
-                                                            {% endif %}
-                                                        </div>
-                                                        {% if is_granted("ROLE_ADMIN") %}
-                                                            <div class="mbl">
-                                                                <div><button type="button" class="button button-small icon-grey actionPriceUpdate" data-icon-primary="icon-701" data-id="{{ product.id }}" data-url="{{ path('api_products_post_price', {'id': product.id}) }}">Update Price</button></div>
-                                                                <div><a href="{{ path('products_edit', {'productId': product.id}) }}" class="button button-small icon-grey" data-icon-primary="icon-94">Edit</a></div>
-                                                                <div><a href="{{ path('products_delete', {'productId': product.id}) }}" class="button button-small button-red icon-white" data-icon-primary="icon-851">Delete</a></div>
-                                                            </div>
-                                                        {% else %}
-                                                            <a class="button button-small icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">View</a>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
+                                    {% if is_granted("ROLE_ADMIN") %}
+                                        <div class="tabs mtm">
+                                            <ul>
+                                                <li><a href="#admin">Admin Mode</a></li>
+                                                <li><a href="#customer">Customer View</a></li>
+                                            </ul>
+                                            <div id="admin">
+                                                {% include 'KACSiteBundle:Listing/Includes:adminProducts.html.twig' with {'pagination': pagination} %}
+                                                <div class="clear"></div>
                                             </div>
-                                        {% endblock %}
+                                            <div id="customer">
+                                                {% include 'KACSiteBundle:Listing/Includes:products.html.twig' with {'pagination': pagination} %}
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
                                     {% else %}
-                                        <p class="no-products">Sorry, there are currently no products in this department.</p>
-                                    {% endfor %}
+                                        {% include 'KACSiteBundle:Listing/Includes:products.html.twig' with {'pagination': pagination} %}
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="widget-group product-sorting-container product-sorting-container-bottom mtn clearfix">
