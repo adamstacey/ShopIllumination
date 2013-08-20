@@ -124,11 +124,6 @@
                                                 </td>
                                                 <td class="ac">
                                                     {{ item.name }}
-                                                    {% for vtf in item.variant.features %}
-                                                        {% if vtf.featureGroup.name == 'Colour' %}
-                                                            <em> - </em><span class="tar">{{ vtf.feature.name }}</span>
-                                                        {% endif %}
-                                                    {% endfor %}
                                                 </td>
                                                 <td class="ac" width="1">{{ item.productCode }}</td>
                                                 <td class="ac" width="1">&pound;{{ item.unitCost|number_format(2) }}</td>

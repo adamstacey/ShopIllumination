@@ -70,7 +70,7 @@
                             </li>
                         {% else %}
                             <li style="z-index: {{ loop.revindex }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                <a href="{{ path('routing', {'url': parent.url}) }}" itemprop="url"><span itemprop="title">{{ parent.description.header }}</span></a>
+                                <a href="{{ parent.url != '' ? path('routing', {'url': parent.url}) : '404' }}" itemprop="url"><span itemprop="title">{{ parent.description.header }}</span></a>
                             </li>
                         {% endif %}
                     {% endif %}
@@ -191,7 +191,7 @@
                                                         {% endif %}
                                                     {% endfor %}
                                                     <div class="product-image-container man">
-                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
+                                                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
                                                             {% if product.thumbnail_path %}
                                                                 <img title="{{ bullets }}" class="product-image" itemprop="image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
                                                             {% else  %}
@@ -210,7 +210,7 @@
                                                         <div itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
                                                             {% if product.hide_price == 0 or is_granted("ROLE_ADMIN") %}
                                                                 {% if not is_granted("ROLE_ADMIN") %}
-                                                                    <a href="{{ path('routing', {'url': product.url}) }}">
+                                                                    <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
                                                                 {% endif %}
                                                                     {% if product.variants_count == 1 and is_granted("ROLE_ADMIN") %}
                                                                         <input type="text" class="no-filter product-price-update" value="{{ product.low_price }}" />
@@ -234,7 +234,7 @@
                                                             {% endif %}
                                                         </div>
                                                         <div class="product-listing-name">
-                                                            <a itemprop="name" href="{{ path('routing', {'url': product.url}) }}">{{ product.header|raw }}</a>
+                                                            <a itemprop="name" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">{{ product.header|raw }}</a>
                                                         </div>
                                                         <div class="product-listing-colour mbs">
                                                             {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
@@ -248,7 +248,7 @@
                                                                 <div><a href="{{ path('products_delete', {'productId': product.id}) }}" class="button button-small button-red icon-white" data-icon-primary="icon-851">Delete</a></div>
                                                             </div>
                                                         {% else %}
-                                                            <a class="button button-small icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">View</a>
+                                                            <a class="button button-small icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">View</a>
                                                         {% endif %}
                                                     </div>
                                                 </div>

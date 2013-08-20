@@ -624,6 +624,15 @@ class OrderService {
             }
             $orderProductObject->setUrl($product['url']);
             $orderProductObject->setName($product['header']);
+            // If product has a colour then add it to the name
+            foreach($variant->getFeatures() as $vtf)
+            {
+                if($vtf->getFeatureGroup()->getName() === 'Colour')
+                {
+                    $orderProductObject->setName($product['header'] . ' - ' . $vtf->getFeature()->getName());
+                }
+            }
+
             $orderProductObject->setProductCode($product['productCode']);
             $orderProductObject->setUnitCost($product['unitCost']);
             $orderProductObject->setRecommendedRetailPrice($product['recommendedRetailPrice']);
