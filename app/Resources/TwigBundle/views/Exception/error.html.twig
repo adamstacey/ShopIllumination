@@ -1,30 +1,36 @@
-{% extends '::shop.html.twig' %}
-{% block title %}An Error Occurred! | {{ parent() }}{% endblock %}
+{% extends 'KACSiteBundle::base.html.twig' %}
+{% block title %}404 - Page can not be found!{% endblock %}
 {% block body %}
-	<header>
-		<h1>Whoops looks like we have a problem!</h1>
-	</header>
-	<section class="container_6 clearfix">
-		
-		<div class="grid_6"> 
-			<div class="portlet">
-				<header>
-	                <h2>An Error Occurred!</h2>
-	            </header>
-				<section>
-					<img width="906" class="border" height="305" src="{{ asset('/bundles/kacshop/images/headers/page-not-found.jpg') }}" alt="404 - Page can not be found!" />
-					<h3>Wait, why am I here?</h3>
-					<p>Welcome to our error page. You are here because there was a problem loading the page you have requested.</p>
-					<p>We have been made aware of this and will be looking into this as soon as possible.</p>
-					<p>In the mean time you could&hellip;</p>
-					<ul>
-						<li>Try contacting us for any advice or support. <a href="{{ path('content_contact_us') }}">Click here</a> to find out how to contact us.</a></li>
-						<li>Try searching for what you were looking for using our search box above.</li>
-						<li>Try looking through one of our departments using the menu above.</li>
-					</ul>
-	            </section>
-	        </div>
-	    </div>
-	   	<div class="clear"></div>
-	</section>
+    <div class="widget-group clearfix">
+        <div class="widget mtl mbl widget-1-of-1">
+            <div class="ui-widget">
+                <section class="ui-widget-content ui-corner-all clearfix">
+                    <div class="header-image">
+                        <img src="{{ asset('/bundles/kacshop/images/headers/page-not-found.jpg') }}" alt="The Kitchen Appliance Centre Warehouse" width="940" />
+                        <h1>Whoops looks like we have a problem!</h1>
+                        <p>An Error Occurred!</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="widget-group clearfix">
+        <div class="widget widget-1-of-1">
+            <div class="ui-widget">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2>Wait, why am I here?</h2>
+                </header>
+                <section class="ui-widget-content content ui-corner-all">
+                    <p>Welcome to our error page. You are here because there was a problem loading the page you have requested.</p>
+                    <p>We have been made aware of this and will be looking into this as soon as possible.</p>
+                    <p>In the mean time you could&hellip;</p>
+                    <ul>
+                        <li>Try contacting us for any advice or support. <a href="{{ path('content_contact_us') }}">Click here</a> to find out how to contact us.</a></li>
+                        <li>Try searching for what you were looking for using our search box above.</li>
+                        <li>Try looking through one of our departments using the menu above.</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>
 {% endblock %}
