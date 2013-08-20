@@ -6,7 +6,8 @@
     overflow: hidden;
 }
 
-.slider-wrapper h1 {
+.slider-wrapper h1,
+.product .slider-wrapper h1 {
     padding: $spacingExtraLarge;
 
     position: absolute;
