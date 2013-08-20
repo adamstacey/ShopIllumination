@@ -4,7 +4,8 @@
 
 {% block header %}
     <header class="sticky">
-        <button type="button" data-object="products" class="actionAddFormGroup mlm fr button icon-green" data-icon-secondary="icon-1122">Add</button>
+        <button type="button" class="mls fr button button-small button-green icon-white" data-icon-secondary="icon-472">Save</button>
+        <button type="button" data-object="products" class="actionAddFormGroup mls fr button button-small icon-green" data-icon-secondary="icon-1122">Add Product</button>
         <h2>New Products</h2>
     </header>
 {% endblock %}
@@ -16,44 +17,17 @@
     </form>
 
     <script type="text/javascript">
-        function addFormGroup($object) {
-            var $newGroup = $object.data("prototype");
-            var groupCount = $object.children().length + 1;
-            if ($object.find(".no-data").length > 0)
-            {
-                $object.find(".no-data").hide();
-            }
-            $newGroup = $newGroup.replace(/__name__/g, groupCount);
-            $newGroup = $("<div />").html($newGroup);
-            $newGroup.appendTo($object);
-            generateFormElements($newGroup);
-            generateButtons($newGroup);
-            loadUiFunctions();
-            return true;
-        }
-
         $(document).ready(function() {
-            addFormGroup($("#products"));
+            addCollectionGroup($("#products"));
 
-            $(document).on("click", ".actionAddFormGroup", function() {
-                addFormGroup($("#" + $(this).data("object")));
+            $(document).on("click", ".actionAddCollectionTableRow", function() {
+                $("select.select-department").select2();
             });
 
-            var $placholderOption = $('<option value="">- Select a Department -</option>');
             $("select.select-department").select2();
-            $("#departmentList").on("rowadded", function() {
-                $("select.select-department").each(function() {
-                    $(this).select2();
-                    if ($(this).find("option[value='']").length < 1) {
-                        $(this).prepend($placholderOption).select2();
-                    }
-                    if ($(this).find("option[selected='selected']").length < 1) {
-                        $(this).select2("val", "");
-                    }
-                });
+            $(".departments").on("rowadded", function() {
+                $("select.select-department").select2();
             });
         });
-
-
     </script>
 {% endblock %}
