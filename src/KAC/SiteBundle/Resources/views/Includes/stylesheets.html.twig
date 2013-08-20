@@ -132,3 +132,13 @@
 %}
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
 {% endstylesheets %}
+
+{% if is_granted("ROLE_ADMIN") %}
+    {% stylesheets
+        '@KACSiteBundle/Resources/public/css/admin/admin.scss'
+        output='css/admin-compressed.css'
+        filter='compass,?yui_css'
+    %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endif %}
