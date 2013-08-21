@@ -65,7 +65,7 @@ class Brand
     private $requestABrochure = false;
 
     /**
-     * @ORM\Column(name="brochure_web_address", type="string", length=255)
+     * @ORM\Column(name="brochure_web_address", type="string", length=255, nullable=true)
      */
     private $brochureWebAddress;
 
@@ -75,7 +75,7 @@ class Brand
     private $requestASample = false;
 
     /**
-     * @ORM\Column(name="sample_web_address", type="string", length=255)
+     * @ORM\Column(name="sample_web_address", type="string", length=255, nullable=true)
      */
     private $sampleWebAddress;
 
@@ -427,6 +427,7 @@ class Brand
     public function addDepartment(\KAC\SiteBundle\Entity\BrandToDepartment $departments)
     {
         $this->departments[] = $departments;
+        $departments->setBrand($this);
 
         return $this;
     }
@@ -460,6 +461,7 @@ class Brand
     public function addDescription(Brand\Description $descriptions)
     {
         $this->descriptions[] = $descriptions;
+        $descriptions->setBrand($this);
     
         return $this;
     }
@@ -533,6 +535,7 @@ class Brand
     public function addImage(\KAC\SiteBundle\Entity\Brand\Image $images)
     {
         $this->images[] = $images;
+        $images->setBrand($this);
 
         return $this;
     }
@@ -581,6 +584,7 @@ class Brand
     public function addDocument(\KAC\SiteBundle\Entity\Brand\Document $documents)
     {
         $this->documents[] = $documents;
+        $documents->setBrand($this);
 
         return $this;
     }
@@ -644,6 +648,7 @@ class Brand
     public function addRouting(\KAC\SiteBundle\Entity\Brand\Routing $routings)
     {
         $this->routings[] = $routings;
+        $routings->setBrand($this);
     
         return $this;
     }

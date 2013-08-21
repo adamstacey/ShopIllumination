@@ -10,31 +10,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class DescriptionType extends AbstractType {
+class ImageType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text', array(
-            'required'  => true,
-            'label' => 'Name',
-            'attr' => array(
-                'class' => 'fill',
-                'data-help' => 'Enter the name of the brand.',
-            ),
+        $builder->add('file', 'file', array(
+            'attr' => array('class' => 'fill')
         ));
-        $builder->add('description', 'ckeditor', array(
-            'label' =>'Description',
-            'attr' => array(
-                'class' => 'fill',
-                'data-help' => 'Enter a detailed description about the brand.',
-            ),
-        ));
-        $builder->add('logoImage', new ImageType());
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'KAC\SiteBundle\Entity\Brand\Description',
+            'data_class' => 'KAC\SiteBundle\Entity\Brand\Image',
         ));
     }
 
@@ -45,6 +32,6 @@ class DescriptionType extends AbstractType {
      */
     public function getName()
     {
-        return 'brand_description';
+        return 'brand_image';
     }
 }

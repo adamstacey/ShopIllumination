@@ -26,6 +26,7 @@
                                     <fieldset class="pbm">
                                         {% for child in form.descriptions %}
                                             {{ form_row(child.name) }}
+                                            {{ form_row(child.logoImage) }}
                                             {{ form_row(child.description) }}
                                         {% endfor %}
                                     </fieldset>

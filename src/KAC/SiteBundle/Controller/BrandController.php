@@ -3,6 +3,7 @@
 namespace KAC\SiteBundle\Controller;
 
 use KAC\SiteBundle\Entity\Brand;
+use KAC\SiteBundle\Form\Brand\NewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -50,36 +51,39 @@ class BrandController extends Controller
         $brand = new Brand();
         $brand->addDescription(new Brand\Description());
 
-        $flow = $this->get('kac_site.form.flow.new_brand');
-        $flow->bind($brand);
+        $form = $this->createForm(new NewType(), $brand);
+        $form->handleRequest($request);
 
-        // Get current form step
-        $form = $flow->createForm();
+        if ($form->isValid()) {
+            // Ensure description is properly generated
+            $brand->getDescription()->setPageTitle($brand->getDescription()->getName());
+            $brand->getDescription()->setHeader($brand->getDescription()->getName());
 
-        if ($flow->isValid($form)) {
-            $flow->saveCurrentStepData($form);
+            // Add logo image data
+            $brand->getDescription()->getLogoImage()->setImageType('logo');
+            $brand->getDescription()->getLogoImage()->setDescription($brand->getDescription()->getDescription());
+            $brand->getDescription()->getLogoImage()->setFileExtension($brand->getDescription()->getLogoImage()->getFile()->guessExtension());
+            $brand->getDescription()->getLogoImage()->setFileSize($brand->getDescription()->getLogoImage()->getFile()->getSize());
 
-            if ($flow->nextStep())
-            {
-                // Get next form step
-                $form = $flow->createForm();
-            } else {
-                $em->persist($brand);
-                $em->flush();
+            // Add route
+            $url = $this->get('kac_site.manager.seo')->createUrl($brand->getDescription()->getPageTitle(), '');
+            $routing = new Brand\Routing();
+            $routing->setBrand($brand);
+            $routing->setUrl($url);
+            $brand->addRouting($routing);
 
-                $flow->reset();
+            $em->persist($brand);
+            $em->flush();
 
-                // Notify user
-                $this->get('session')->getFlashBag()->add('notice', 'The new brand "'.$brand->getName().'" has been added.');
+            // Notify user
+            $this->get('session')->getFlashBag()->add('notice', 'The new brand "'.$brand->getDescription()->getName().'" has been added.');
 
-                // Forward
-                return $this->redirect($this->get('router')->generate('homepage'));
-            }
+            // Forward
+            return $this->redirect($this->get('router')->generate('homepage'));
         }
 
         return $this->render('KACSiteBundle:Brand:new.html.twig', array(
             'form' => $form->createView(),
-            'flow' => $flow,
         ));
     }
 

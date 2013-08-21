@@ -25,7 +25,7 @@ class Description implements DescriptionInterface
     private $brand;
 
 	/**
-     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Image")
+     * @ORM\OneToOne(targetEntity="KAC\SiteBundle\Entity\Image", cascade={"all"})
      * @ORM\JoinColumn(name="logo_image_id", referencedColumnName="id")
      */
     private $logoImage;
@@ -46,42 +46,42 @@ class Description implements DescriptionInterface
     private $description;
         
     /**
-     * @ORM\Column(name="about", type="text")
+     * @ORM\Column(name="about", type="text", nullable=true)
      */
     private $about;
     
     /**
-     * @ORM\Column(name="history", type="text")
+     * @ORM\Column(name="history", type="text", nullable=true)
      */
     private $history;
     
     /**
-     * @ORM\Column(name="more_information", type="text")
+     * @ORM\Column(name="more_information", type="text", nullable=true)
      */
     private $moreInformation; 
     
     /**
-     * @ORM\Column(name="page_title", type="string", length=255)
+     * @ORM\Column(name="page_title", type="string", length=255, nullable=true)
      */
     private $pageTitle;
     
     /**
-     * @ORM\Column(name="header", type="string", length=255)
+     * @ORM\Column(name="header", type="string", length=255, nullable=true)
      */
     private $header;
     
     /**
-     * @ORM\Column(name="meta_description", type="text")
+     * @ORM\Column(name="meta_description", type="text", nullable=true)
      */
     private $metaDescription;
     
     /**
-     * @ORM\Column(name="meta_keywords", type="text")
+     * @ORM\Column(name="meta_keywords", type="text", nullable=true)
      */
     private $metaKeywords;
     
     /**
-     * @ORM\Column(name="search_words", type="text")
+     * @ORM\Column(name="search_words", type="text", nullable=true)
      */
     private $searchWords;
 
@@ -432,12 +432,14 @@ class Description implements DescriptionInterface
     /**
      * Set logoImage
      *
-     * @param \KAC\SiteBundle\Entity\Image $logoImage
+     * @param Image $logoImage
+     *
      * @return Description
      */
-    public function setLogoImage(\KAC\SiteBundle\Entity\Image $logoImage = null)
+    public function setLogoImage(Image $logoImage = null)
     {
         $this->logoImage = $logoImage;
+        $logoImage->setBrand($this->getBrand());
     
         return $this;
     }
@@ -445,7 +447,7 @@ class Description implements DescriptionInterface
     /**
      * Get logoImage
      *
-     * @return \KAC\SiteBundle\Entity\Image
+     * @return Image
      */
     public function getLogoImage()
     {
