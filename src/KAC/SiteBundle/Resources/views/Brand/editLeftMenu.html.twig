@@ -1,0 +1,47 @@
+{% import _self as helpers %}
+
+{% macro getStatusIconColour(route) %}{% spaceless %}
+        {% if app.request.get('_route') == route %}
+            white
+        {% else %}
+            grey
+        {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro getIconColour(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        turquoise
+    {% else %}
+        grey
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+{% macro getButtonClass(route) %}{% spaceless %}
+    {% if app.request.get('_route') == route %}
+        button-turquoise
+    {% endif %}
+{% endspaceless %}{% endmacro %}
+
+<div class="ui-widget mbl">
+    <header class="ui-widget-header ui-corner-top">
+        <h2>Edit</h2>
+    </header>
+    <section class="ui-widget-content ui-corner-bottom">
+        <nav class="left-menu">
+            <ul class="clearfix">
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('brands_edit_overview') }} icon-946"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('brands_edit_overview') }} icon-{{ helpers.getStatusIconColour('brands_edit_overview') }}" href="{{ path('brands_edit_overview', {'id': brand.id}) }}">
+                        Overview
+                    </a>
+                </li>
+                <li class="clearfix grey">
+                    <span class="nav-icon ui-button-icon-primary ui-icon icon-{{ helpers.getIconColour('brands_edit_seo') }} icon-944"></span>
+                    <a data-icon-secondary="icon-471" class="fl ui-button button {{ helpers.getButtonClass('brands_edit_seo') }} icon-{{ helpers.getStatusIconColour('brands_edit_seo') }}" href="{{ path('brands_edit_seo', {'id': brand.id}) }}">
+                        Seo
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+</div>

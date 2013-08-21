@@ -2,7 +2,10 @@
 
 namespace KAC\SiteBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use KAC\SiteBundle\Entity\Brand;
+use KAC\SiteBundle\Form\Brand\EditOverviewType;
+use KAC\SiteBundle\Form\Brand\EditSeoType;
 use KAC\SiteBundle\Form\Brand\NewType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,10 +63,13 @@ class BrandController extends Controller
             $brand->getDescription()->setHeader($brand->getDescription()->getName());
 
             // Add logo image data
-            $brand->getDescription()->getLogoImage()->setImageType('logo');
-            $brand->getDescription()->getLogoImage()->setDescription($brand->getDescription()->getDescription());
-            $brand->getDescription()->getLogoImage()->setFileExtension($brand->getDescription()->getLogoImage()->getFile()->guessExtension());
-            $brand->getDescription()->getLogoImage()->setFileSize($brand->getDescription()->getLogoImage()->getFile()->getSize());
+            if($brand->getDescription()->getLogoImage()->getFile())
+            {
+                $brand->getDescription()->getLogoImage()->setImageType('logo');
+                $brand->getDescription()->getLogoImage()->setDescription($brand->getDescription()->getDescription());
+                $brand->getDescription()->getLogoImage()->setFileExtension($brand->getDescription()->getLogoImage()->getFile()->guessExtension());
+                $brand->getDescription()->getLogoImage()->setFileSize($brand->getDescription()->getLogoImage()->getFile()->getSize());
+            }
 
             // Add route
             $url = $this->get('kac_site.manager.seo')->createUrl($brand->getDescription()->getPageTitle(), '');
@@ -87,13 +93,74 @@ class BrandController extends Controller
         ));
     }
 
+    public function baseEditAction(Request $request, $brandId, $template, $formClass)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /**
+         * @var $brand Brand
+         */
+        $brand = $em->getRepository("KAC\SiteBundle\Entity\Brand")->find($brandId);
+        if(!$brand)
+        {
+            throw new NotFoundHttpException("Brand not found");
+        }
+
+        $form = $this->createForm($formClass, $brand);
+
+        if ($request->isMethod('POST')) {
+            $form->submit($request);
+            if($form->isValid()) {
+                // Add logo image data
+                if($brand->getDescription()->getLogoImage()->getFile())
+                {
+                    $brand->getDescription()->getLogoImage()->setImageType('logo');
+                    $brand->getDescription()->getLogoImage()->setDescription($brand->getDescription()->getDescription());
+                    $brand->getDescription()->getLogoImage()->setFileExtension($brand->getDescription()->getLogoImage()->getFile()->guessExtension());
+                    $brand->getDescription()->getLogoImage()->setFileSize($brand->getDescription()->getLogoImage()->getFile()->getSize());
+                }
+
+                $em->persist($brand);
+                $em->flush();
+                return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
+                    'brandId' => $brand->getId(),
+                )));
+            }
+        }
+
+        return $this->render($template, array(
+            'brand' => $brand,
+            'form' => $form->createView(),
+        ));
+    }
+
     /**
      * @Route("/admin/brands/{id}/edit", name="brands_edit")
      * @Secure(roles="ROLE_ADMIN")
      */
     public function editAction(Request $request, $id)
     {
+        return $this->redirect($this->generateUrl('brands_edit_overview', array(
+            'id' => $id,
+        )));
+    }
 
+    /**
+     * @Route("/admin/brands/{id}/overview", name="brands_edit_overview")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function editOverviewAction(Request $request, $id)
+    {
+        return $this->baseEditAction($request, $id, 'KACSiteBundle:Brand:edit_overview.html.twig', new EditOverviewtype());
+    }
+
+    /**
+     * @Route("/admin/brands/{id}/seo", name="brands_edit_seo")
+     * @Secure(roles="ROLE_ADMIN")
+     */
+    public function seoAction(Request $request, $id)
+    {
+        return $this->baseEditAction($request, $id, 'KACSiteBundle:Brand:edit_seo.html.twig', new EditSeoType());
     }
 
     /**
@@ -102,6 +169,23 @@ class BrandController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
 
+        /**
+         * @var \KAC\SiteBundle\Entity\Brand $brand
+         */
+        $brand = $em->getRepository("KAC\SiteBundle\Entity\Brand")->find($id);
+        if (!$brand)
+        {
+            throw new NotFoundHttpException("Brand not found");
+        }
+
+        $em->remove($brand);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('brands_index'));
     }
 } 
