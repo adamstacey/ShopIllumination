@@ -110,7 +110,62 @@ class CheckoutController extends Controller
                 $context->setToken($token);
             }
 
-            return $this->redirect($this->generateUrl('checkout_address'));
+            $order->setFirstName($order->getBillingFirstName());
+            $order->setLastName($order->getBillingLastName());
+            $order->setOrganisationName($order->getBillingOrganisationName());
+
+            // Update cc details if needed
+            if($order->getPaymentType() === 'sagepay')
+            {
+                $order->getCard()->setBillingFirstName($order->getBillingFirstName());
+                $order->getCard()->setBillingLastName($order->getBillingLastName());
+                $order->getCard()->setBillingCompany($order->getBillingOrganisationName());
+                $order->getCard()->setBillingAddress1($order->getBillingAddressLine1());
+                $order->getCard()->setBillingAddress2($order->getBillingAddressLine2());
+                $order->getCard()->setBillingCity($order->getBillingTownCity());
+                $order->getCard()->setBillingState($order->getBillingCountyState());
+                $order->getCard()->setBillingPostCode($order->getBillingPostZipCode());
+                $order->getCard()->setBillingCountry($order->getBillingCountryCode());
+                $order->getCard()->setShippingFirstName($order->getDeliveryFirstName());
+                $order->getCard()->setShippingLastName($order->getDeliveryLastName());
+                $order->getCard()->setShippingCompany($order->getDeliveryOrganisationName());
+                $order->getCard()->setShippingAddress1($order->getDeliveryAddressLine1());
+                $order->getCard()->setShippingAddress2($order->getDeliveryAddressLine2());
+                $order->getCard()->setShippingCity($order->getDeliveryTownCity());
+                $order->getCard()->setShippingState($order->getDeliveryCountyState());
+                $order->getCard()->setShippingPostCode($order->getDeliveryPostZipCode());
+                $order->getCard()->setShippingCountry($order->getDeliveryCountryCode());
+            }
+
+            $paymentResponse = $this->authorizePayment($order);
+
+            // Update order status and redirect if needed
+            if($paymentResponse === null)
+            {
+                $order->setStatus('Payment Failed');
+                $order->setAuthResponse($paymentResponse);
+                $manager->saveOrder();
+
+                $form->addError(new FormError('There was an error processing your payment, please try again later.'));
+            } elseif ($paymentResponse->isSuccessful()) {
+                $order->setStatus('Open Payment');
+                $order->setAuthResponse($paymentResponse);
+                $manager->saveOrder();
+
+                return $this->redirect($this->generateUrl('checkout_confirmation'));
+            } elseif ($paymentResponse->isRedirect()) {
+                $order->setStatus('Open Payment');
+                $order->setAuthResponse($paymentResponse);
+                $manager->saveOrder();
+
+                return new RedirectResponse($paymentResponse->getRedirectUrl());
+            } else {
+                $order->setStatus('Payment Failed');
+                $order->setAuthResponse($paymentResponse);
+                $manager->saveOrder();
+
+                $form->addError(new FormError($paymentResponse->getMessage()));
+            }
         }
 
         return $this->render('KACSiteBundle:Checkout:checkout.html.twig', array(
@@ -169,191 +224,6 @@ class CheckoutController extends Controller
     }
 
     /**
-     * @Route("/checkout-address.html", name="checkout_address")
-     */
-    public function checkoutAddressAction(Request $request)
-    {
-        // Check if the user is logged in and has the correct permissions
-        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
-        {
-            return $this->redirectToLogin();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $manager = $this->get('kac_site.manager.order');
-
-        // Get order
-        $order = $manager->getOpenOrder();
-        $basket = $manager->getBasket();
-
-        if(($response = $this->checkValidStep('Address', $basket, $order)) !== true)
-        {
-            return $response;
-        }
-
-        $form = $this->createForm(new AddressType(), $order);
-        $form->handleRequest($request);
-
-        if($form->isValid())
-        {
-            $order->setFirstName($order->getBillingFirstName());
-            $order->setLastName($order->getBillingLastName());
-            $order->setOrganisationName($order->getBillingOrganisationName());
-
-            // Update order status
-            $manager->updateCheckoutStep($order, 'Delivery');
-            $manager->saveOrder();
-
-            return $this->redirect($this->generateUrl('checkout_delivery'));
-        }
-
-        return $this->render('KACSiteBundle:Checkout:checkout_address.html.twig', array(
-            'order' => $order,
-            'basket' => $basket,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * @Route("/checkout-delivery.html", name="checkout_delivery")
-     */
-    public function checkoutDeliveryAction(Request $request)
-    {
-        // Check if the user is logged in and has the correct permissions
-        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
-        {
-            return $this->redirectToLogin();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $manager = $this->get('kac_site.manager.order');
-        $deliveryManager = $this->get('kac_site.manager.delivery');
-
-        // Get order
-        $order = $manager->getOrder();
-        $basket = $manager->getBasket();
-
-        if(($response = $this->checkValidStep('Delivery', $basket, $order)) !== true)
-        {
-            return $response;
-        }
-
-        $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
-        $band = $deliveryManager->calculateBand($order->getProducts());
-        $methods = DeliveryFactory::getMethods($zone, $band);
-
-        $form = $this->createForm(new DeliveryType($deliveryManager), $order);
-        $form->handleRequest($request);
-
-        if($form->isValid())
-        {
-            // Update order status
-            $manager->updateCheckoutStep($order, 'Payment');
-            $manager->saveOrder();
-
-            return $this->redirect($this->generateUrl('checkout_payment'));
-        }
-
-        return $this->render('KACSiteBundle:Checkout:checkout_delivery.html.twig', array(
-            'order' => $order,
-            'basket' => $basket,
-            'form' => $form->createView(),
-            'deliveryMethods' => $methods,
-        ));
-    }
-
-    /**
-     * @Route("/checkout-payment.html", name="checkout_payment")
-     */
-    public function checkoutPaymentAction(Request $request)
-    {
-        // Check if the user is logged in and has the correct permissions
-        if(!$this->get('security.context')->isGranted(array('ROLE_GUEST', 'ROLE_USER')))
-        {
-            return $this->redirectToLogin();
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $manager = $this->get('kac_site.manager.order');
-
-        // Get order
-        $order = $manager->getOrder();
-        $basket = $manager->getBasket();
-
-        if(($response = $this->checkValidStep('Payment', $basket, $order)) !== true)
-        {
-            return $response;
-        }
-
-        $form = $this->createForm(new PaymentType(), $order);
-        $form->handleRequest($request);
-
-        if($form->isValid())
-        {
-            // Update cc details if needed
-            if($order->getPaymentType() === 'sagepay')
-            {
-                $order->getCard()->setBillingFirstName($order->getBillingFirstName());
-                $order->getCard()->setBillingLastName($order->getBillingLastName());
-                $order->getCard()->setBillingCompany($order->getBillingOrganisationName());
-                $order->getCard()->setBillingAddress1($order->getBillingAddressLine1());
-                $order->getCard()->setBillingAddress2($order->getBillingAddressLine2());
-                $order->getCard()->setBillingCity($order->getBillingTownCity());
-                $order->getCard()->setBillingState($order->getBillingCountyState());
-                $order->getCard()->setBillingPostCode($order->getBillingPostZipCode());
-                $order->getCard()->setBillingCountry($order->getBillingCountryCode());
-                $order->getCard()->setShippingFirstName($order->getDeliveryFirstName());
-                $order->getCard()->setShippingLastName($order->getDeliveryLastName());
-                $order->getCard()->setShippingCompany($order->getDeliveryOrganisationName());
-                $order->getCard()->setShippingAddress1($order->getDeliveryAddressLine1());
-                $order->getCard()->setShippingAddress2($order->getDeliveryAddressLine2());
-                $order->getCard()->setShippingCity($order->getDeliveryTownCity());
-                $order->getCard()->setShippingState($order->getDeliveryCountyState());
-                $order->getCard()->setShippingPostCode($order->getDeliveryPostZipCode());
-                $order->getCard()->setShippingCountry($order->getDeliveryCountryCode());
-            }
-
-            $paymentResponse = $this->authorizePayment($order);
-
-            // Update order status and redirect if needed
-            if($paymentResponse === null)
-            {
-                $order->setStatus('Payment Failed');
-                $order->setAuthResponse($paymentResponse);
-                $manager->saveOrder();
-
-                $form->addError(new FormError('There was an error processing your payment, please try again later.'));
-            } elseif ($paymentResponse->isSuccessful()) {
-                $manager->updateCheckoutStep($order, 'Confirmation');
-                $order->setStatus('Open Payment');
-                $order->setAuthResponse($paymentResponse);
-                $manager->saveOrder();
-
-                return $this->redirect($this->generateUrl('checkout_confirmation'));
-            } elseif ($paymentResponse->isRedirect()) {
-                $manager->updateCheckoutStep($order, 'Confirmation');
-                $order->setStatus('Open Payment');
-                $order->setAuthResponse($paymentResponse);
-                $manager->saveOrder();
-
-                return new RedirectResponse($paymentResponse->getRedirectUrl());
-            } else {
-                $order->setStatus('Payment Failed');
-                $order->setAuthResponse($paymentResponse);
-                $manager->saveOrder();
-
-                $form->addError(new FormError($paymentResponse->getMessage()));
-            }
-        }
-
-        return $this->render('KACSiteBundle:Checkout:checkout_payment.html.twig', array(
-            'order' => $order,
-            'basket' => $basket,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
      * @Route("/checkout-confirm.html", name="checkout_confirmation")
      */
     public function checkoutConfirmationAction(Request $request)
@@ -370,11 +240,6 @@ class CheckoutController extends Controller
         // Get order
         $order = $manager->getOrder();
         $basket = $manager->getBasket();
-
-        if(($response = $this->checkValidStep('Confirmation', $basket, $order)) !== true)
-        {
-            return $response;
-        }
 
         // Fetch user
         $user = $this->get('security.context')->getToken()->getUser();
@@ -402,7 +267,6 @@ class CheckoutController extends Controller
 
                 $form->addError(new FormError('There was an error processing your payment, please try again later.'));
             } elseif ($paymentResponse->isSuccessful()) {
-                $manager->updateCheckoutStep($order, 'Complete');
                 $order->setStatus('Payment Received');
                 $order->setPaymentResponse($paymentResponse);
                 $order->setCreatedAt(new \DateTime());
@@ -499,29 +363,6 @@ class CheckoutController extends Controller
         return $this->redirect($request->query->has('url') ? $request->query->get('url') : $this->generateUrl('checkout'));
     }
 
-    protected function checkValidStep($stepName, $basket, $order)
-    {
-        $manager = $this->get('kac_site.manager.order');
-
-        // Ensure that the basket has more than 1 item
-        if($basket->getTotalItems() === 0)
-        {
-            $manager->deleteOrder();
-            return $this->redirect($this->generateUrl('homepage'));
-        }
-
-        // Check order status
-        $checkStepIndex = array_search($stepName, $order->getCheckoutSteps());
-        $currentStepIndex = array_search($order->getCurrentStep(), $order->getCheckoutSteps());
-
-        if($checkStepIndex === false || $currentStepIndex === false || $currentStepIndex < $checkStepIndex)
-        {
-            return $this->checkoutAction($this->getRequest());
-        }
-
-        return true;
-    }
-
     protected function redirectToLogin()
     {
         $this->getRequest()->getSession()->set('_security.main.target_path', $this->getRequest()->getUri());
@@ -559,7 +400,7 @@ class CheckoutController extends Controller
             'amount' => number_format($order->getTotal(), 2, '.', ''),
             'currency' => 'GBP',
             'returnUrl' => $this->generateUrl('checkout_confirmation', array(), true),
-            'cancelUrl' => $this->generateUrl('checkout_payment', array(), true),
+            'cancelUrl' => $this->generateUrl('checkout', array(), true),
         )));
 
         try {
