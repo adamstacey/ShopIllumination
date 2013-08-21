@@ -1,52 +1,29 @@
-<div class="widget widget-2-of-5">
-    <div class="ui-widget mbl">
-        <header class="ui-widget-header ui-corner-top">
-            <h2>Delivery Options</h2>
-        </header>
-        <section class="ui-widget-content ui-corner-bottom">
-            <div id="delivery-options" class="clearfix">
-                {% if form.deliveryType|length > 0 %}
-                    {% set deliveryInfo = null %}
-
-                    {% for field in form.deliveryType %}
-                        {% for deliveryOption in basket.delivery.deliveryOptions %}
-                            {% if field.vars.value == deliveryOption.service %}
-                                {% set deliveryInfo = deliveryOption %}
+{% for field in form.deliveryType %}
+    {% set method = methods[loop.index0] %}
+    {% set price = method.calculateCost(basket.delivery.zone, basket.delivery.band, basket.items) %}
+    <div class="form-element mlm delivery-option widget-group clearfix" data-name="{{ method.name }}" data-price="{{ price|currency('GBP', true, true, '') }}">
+        <span title="{{ method.description|raw }}" class="form-helper pbn ui-button-icon-primary ui-icon-small icon-small-763"></span>
+        <div class="widget radio-group man widget-1-of-1">
+            <div class="clearfix">
+                {{ form_widget(field) }}
+                <label for="{{ field.vars.full_name }}">
+                    <span class="delivery-service">
+                        {{ method.name|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}
+                        {% if price != 0 %} - <span class="colour-red"><strong>{{ price|currency('GBP', true, true, '')|raw }}</strong></span>{% endif %}
+                    </span>
+                    <br />
+                    <span class="small">
+                        <em>
+                            {% set estimatedDeliveryDays = method.calculateEstimatedDeliveryDays(basket.delivery.zone, basket.delivery.band) %}
+                            {% if estimatedDeliveryDays.start > 0 %}
+                                ({{ estimatedDeliveryDays.start }} - {{ estimatedDeliveryDays.end }} working days)
+                            {% else %}
+                                &nbsp;
                             {% endif %}
-                        {% endfor %}
-
-                        <div class="delivery-option clearfix{% if loop.first %} no-margin-top{% endif %}">
-                            {#<span class="form-helper ui-button-icon-primary ui-icon-small icon-small-762"></span>#}
-                            <label>
-                                {{ form_widget(field) }}
-                                <span class="delivery-service">
-                                    {{ deliveryInfo.service|replace({'FREE DELIVERY': '<span class="free"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}
-                                    {% if deliveryInfo.price != 0 %}
-                                        - <span class="delivery-price">&pound;{{ deliveryInfo.price|number_format(2) }}</span>
-                                    {% endif %}
-                                                </span>
-                                {% if deliveryInfo.estimatedDeliveryDaysStart > 0 %}
-                                    <br /><span class="delivery-timeframes"><em>({{ deliveryInfo.estimatedDeliveryDaysStart }} - {{ deliveryInfo.estimatedDeliveryDaysEnd }} working days)</em></span>
-                                {% endif %}
-                            </label>
-                        </div>
-                        <div class="ui-helper-hidden delivery-option-description{% if loop.last %} no-margin-bottom{% endif %}">
-                            {{ deliveryInfo.description|raw }}
-                        </div>
-                    {% endfor %}
-                    <div class="clearfix">
-                        <button type="submit" name="{{ form.updateDelivery.vars.full_name }}" class="button button-turquoise icon-white mlm fr" data-icon-secondary="icon-471">Update</button>
-                        {% do form.updateDelivery.setRendered() %}
-                    </div>
-                {% else %}
-                    <div class="delivery-option no-margin-top">
-                        <label>
-                            <span class="no-padding delivery-service"><strong>There are no delivery options available.</strong></span>
-                        </label>
-                    </div>
-                {% endif %}
+                        </em>
+                    </span>
+                </label>
             </div>
-        </section>
+        </div>
     </div>
-</div>
-</div>
+{% endfor %}

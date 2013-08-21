@@ -53,15 +53,5 @@
             </div>
             {{ form_rest(form) }}
         </form>
-        <script>
-            $("#checkout_payment_paymentType").change(function() {
-                if($(this).val() == 'sagepay')
-                {
-                    $(".card-details").show();
-                } else {
-                    $(".card-details").hide();
-                }
-            });
-        </script>
     </section>
 {% endblock %}

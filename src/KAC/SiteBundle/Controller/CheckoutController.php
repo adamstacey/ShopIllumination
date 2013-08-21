@@ -11,6 +11,7 @@ use KAC\SiteBundle\Form\Checkout\AboutYouType;
 use KAC\SiteBundle\Form\Checkout\AddressType;
 use KAC\SiteBundle\Form\Checkout\BillingAddressType;
 use KAC\SiteBundle\Form\Checkout\CheckoutFlow;
+use KAC\SiteBundle\Form\Checkout\CheckoutType;
 use KAC\SiteBundle\Form\Checkout\ConfirmationType;
 use KAC\SiteBundle\Form\Checkout\DeliveryAddressType;
 use KAC\SiteBundle\Form\Checkout\DeliveryType;
@@ -44,33 +45,6 @@ class CheckoutController extends Controller
     /**
      * @Route("/checkout.html", name="checkout")
      */
-    public function checkoutAction(Request $request)
-    {
-        $manager = $this->get('kac_site.manager.order');
-
-        // Create new order
-        $order = $manager->getOpenOrder();
-
-        switch($order->getCurrentStep()) {
-            case 'About':
-                return $this->redirect($this->generateUrl('checkout_about'));
-            case 'Address':
-                return $this->redirect($this->generateUrl('checkout_address'));
-            case 'Delivery':
-                return $this->redirect($this->generateUrl('checkout_delivery'));
-            case 'Payment':
-                return $this->redirect($this->generateUrl('checkout_payment'));
-            case 'Confirmation':
-                return $this->redirect($this->generateUrl('checkout_confirmation'));
-            default:
-                $manager->deleteOrder();
-                return $this->redirect($this->generateUrl('homepage'));
-        }
-    }
-
-    /**
-     * @Route("/checkout-about.html", name="checkout_about")
-     */
     public function checkoutAboutAction(Request $request)
     {
         // Check if the user is logged in or if the user is trying to checkout as guest
@@ -82,101 +56,112 @@ class CheckoutController extends Controller
         $em = $this->getDoctrine()->getManager();
         $manager = $this->get('kac_site.manager.order');
         $userManager = $this->container->get('fos_user.user_manager');
+        $deliveryManager = $this->container->get('kac_site.manager.delivery');
 
         // Get order
         $order = $manager->getOpenOrder();
         $basket = $manager->getBasket();
-
-        if(($response = $this->checkValidStep('About', $basket, $order)) !== true)
-        {
-            return $response;
-        }
 
         // Skip this step if the user has already registered before and has entered the required information
         if(!$order->getUser() && $this->get('security.context')->getToken()->getUser())
         {
             $order->setUser($this->get('security.context')->getToken()->getUser());
         }
-        if($order->getUser() && !!$order->getUser()->getContact() && !!$order->getUser()->getContact()->getTelephoneDaytime())
-        {
-            // Update order status
-            $manager->updateCheckoutStep($order, 'Address');
-            $manager->saveOrder();
 
-            return $this->redirect($this->generateUrl('checkout_address'));
-        }
+        // Get the available delivery options
+        $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
+        $band = $deliveryManager->calculateBand($order->getProducts());
+        $methods = DeliveryFactory::getMethods($zone, $band);
 
-        $form = $this->createForm(new AboutType(DeliveryFactory::getMethods($basket->getDelivery()->getZone(), $basket->getDelivery()->getBand())), $order);
+        $form = $this->createForm(new CheckoutType($this->get('kac_site.manager.delivery')), $order);
         $form->handleRequest($request);
-
-        $user = null;
-        if($order->getEmailAddress() && ($userCheck = $userManager->findUserByEmail($order->getEmailAddress())) && $userCheck != $order->getUser())
-        {
-            // Check that the account is a guest account otherwise do not let the user use this email address
-            if($userCheck->getType() !== 'guest')
-            {
-                $form->addError(new FormError('That E-Mail address is already being used, please use another email address or login.'));
-            }
-        }
 
         if($form->isValid())
         {
             // If user is guest create a new account with the given email address
             if(!$this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED') && $request->query->get('guest', true))
             {
-                /**
-                 * Check that the user has not already use this email address to register
-                 * @var $user User
-                 */
-                if(($user = $userManager->findUserByEmail($order->getEmailAddress())))
-                {
-                    $order->setUser($user);
-                    $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
+                $user = $userManager->createUser();
+                $user->setUsername($order->getEmailAddress());
+                $user->setEmail($order->getEmailAddress());
+                $user->setPlainPassword('password');
+                $user->setEnabled(false);
+                $user->setSuperAdmin(false);
+                $user->setRoles(array('ROLE_GUEST'));
+                $user->setType('guest');
 
-                    $context = $this->container->get('security.context');
-                    $context->setToken($token);
-                } else {
-                    $user = $userManager->createUser();
-                    $user->setUsername($order->getEmailAddress());
-                    $user->setEmail($order->getEmailAddress());
-                    $user->setPlainPassword('password');
-                    $user->setEnabled(false);
-                    $user->setSuperAdmin(false);
-                    $user->setRoles(array('ROLE_GUEST'));
-                    $user->setType('guest');
-
-                    $contact = new Contact();
-                    if($order->getTelephoneDaytime()) {
-                        $contact->setTelephoneDaytime(new Contact\Number($order->getTelephoneDaytime()));
-                    }
-                    if($order->getTelephoneEvening()) {
-                        $contact->setTelephoneEvening(new Contact\Number($order->getTelephoneDaytime()));
-                    }
-                    if($order->getMobile()) {
-                        $contact->setTelephoneMobile(new Contact\Number($order->getTelephoneDaytime()));
-                    }
-                    $user->setContact($contact);
-                    $userManager->updateUser($user);
-                    $order->setUser($user);
-
-                    $token = new UsernamePasswordToken($user, $user->getPassword(), 'checkout', $user->getRoles());
-
-                    $context = $this->container->get('security.context');
-                    $context->setToken($token);
+                $contact = new Contact();
+                if($order->getTelephoneDaytime()) {
+                    $contact->setTelephoneDaytime(new Contact\Number($order->getTelephoneDaytime()));
                 }
-            }
+                if($order->getTelephoneEvening()) {
+                    $contact->setTelephoneEvening(new Contact\Number($order->getTelephoneDaytime()));
+                }
+                if($order->getMobile()) {
+                    $contact->setTelephoneMobile(new Contact\Number($order->getTelephoneDaytime()));
+                }
+                $user->setContact($contact);
+                $userManager->updateUser($user);
+                $order->setUser($user);
 
-            // Update order status
-            $manager->updateCheckoutStep($order, 'Address');
-            $manager->saveOrder();
+                $token = new UsernamePasswordToken($user, $user->getPassword(), 'checkout', $user->getRoles());
+
+                $context = $this->container->get('security.context');
+                $context->setToken($token);
+            }
 
             return $this->redirect($this->generateUrl('checkout_address'));
         }
 
-        return $this->render('KACSiteBundle:Checkout:checkout_about.html.twig', array(
+        return $this->render('KACSiteBundle:Checkout:checkout.html.twig', array(
             'order' => $order,
             'basket' => $basket,
             'form' => $form->createView(),
+            'methods' => $methods,
+        ));
+    }
+
+    /**
+     * @Route("/checkout-delivery-options.html", name="checkout_delivery_options")
+     */
+    public function deliveryOptionsAction(Request $request, $form=null, $country=null, $postcode=null)
+    {
+        // Check if the user is logged in or if the user is trying to checkout as guest
+        if(!$request->query->get('guest') && !$this->get('security.context')->isGranted('ROLE_USER'))
+        {
+            return $this->redirectToLogin();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $manager = $this->get('kac_site.manager.order');
+        $userManager = $this->container->get('fos_user.user_manager');
+        $deliveryManager = $this->container->get('kac_site.manager.delivery');
+
+        // Get order
+        $order = $manager->getOpenOrder();
+        $basket = $manager->getBasket();
+
+        // Skip this step if the user has already registered before and has entered the required information
+        if(!$order->getUser() && $this->get('security.context')->getToken()->getUser())
+        {
+            $order->setUser($this->get('security.context')->getToken()->getUser());
+        }
+
+        // Get the available delivery options
+        if(!$country) $country = $request->query->get('country');
+        if(!$postcode) $postcode = $request->query->get('postcode');
+
+        $zone = $deliveryManager->calculateZone($country, $postcode);
+        $band = $deliveryManager->calculateBand($order->getProducts());
+        $methods = DeliveryFactory::getMethods($zone, $band);
+
+        if(!$form) $form = $this->createForm(new CheckoutType($this->get('kac_site.manager.delivery')), $order);
+
+        return $this->render('KACSiteBundle:Checkout:deliveryOptions.html.twig', array(
+            'order' => $order,
+            'basket' => $basket,
+            'form' => $form->createView(),
+            'methods' => $methods,
         ));
     }
 

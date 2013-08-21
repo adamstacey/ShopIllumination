@@ -12,10 +12,8 @@ class DeliveryManager extends Manager
 {
     public function calculateZone($country, $postcode)
     {
-        if(!$postcode)
-        {
-            $postcode = 'NG162UZ';
-        }
+        $country = $country ? $country : 'GB';
+        $postcode = $postcode ? $postcode : 'NG162UZ';
 
         switch ($country)
         {
