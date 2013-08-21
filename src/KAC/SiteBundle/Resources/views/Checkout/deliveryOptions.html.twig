@@ -26,4 +26,9 @@
             </div>
         </div>
     </div>
+{% else %}
+    <div class="message message-warning">
+        <span class="ui-button-icon-primary ui-icon icon-yellow icon-695"></span>
+        <p>Sorry, there are no delivery options available.</p>
+    </div>
 {% endfor %}

@@ -151,7 +151,10 @@ class CheckoutController extends Controller
         if(!$country) $country = $request->query->get('country');
         if(!$postcode) $postcode = $request->query->get('postcode');
 
-        $zone = $deliveryManager->calculateZone($country, $postcode);
+        $order->setDeliveryCountryCode($country);
+        $order->setDeliveryPostZipCode($postcode);
+
+        $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
         $band = $deliveryManager->calculateBand($order->getProducts());
         $methods = DeliveryFactory::getMethods($zone, $band);
 

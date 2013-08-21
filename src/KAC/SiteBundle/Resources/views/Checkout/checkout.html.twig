@@ -119,10 +119,10 @@
                                     </tr>
                                     <tr>
                                         <td class="al"><strong>Delivery Charge:</strong><br /><span class="small">(inc. VAT)</span></td>
-                                        <td width="150" class="tar">{{ order.deliveryCharge|currency('GBP', true, true, '')|raw }}</td>
+                                        <td width="150" class="tar" class="delivery-price">{{ order.deliveryCharge|currency('GBP', true, true, '')|raw }}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="2" id="delivery-options-container">
                                             {{ render(controller("KACSiteBundle:Checkout:deliveryOptions", {'form': name, 'country': order.deliveryCountryCode, 'postcode': order.deliveryPostZipCode})) }}
                                         </td>
                                     </tr>
@@ -146,6 +146,7 @@
                     </div>
                 </div>
             </div>
+            {% do form.deliveryType.setRendered(true) %}
             {{ form_rest(form) }}
         </form>
     </section>
@@ -172,11 +173,22 @@
                     // Get index of changed field
                     var index = $(this).parent().parent().index(),
                     // Get related delivery address field
-                            $el   = $(".delivery-address > :eq(" + index + ")").find(":input");
+                    $el   = $(".delivery-address > :eq(" + index + ")").find(":input");
 
                     // Update field with the value from the billing address
-                    $el.val($(this).val());
+                    $el.val($(this).val()).uniform().trigger('change');
                 }
+            });
+            $("#uniform-checkout_billingCountryCode, #checkout_deliveryPostZipCode").change(function() {
+                var country = $("#uniform-checkout_billingCountryCode :selected").val();
+                var postcode = $("#checkout_deliveryPostZipCode").val();
+
+                $.get(routes.checkout_delivery_options, {
+                    'country': country,
+                    'postcode': postcode,
+                }, function(data) {
+                   $("#delivery-options-container").html(data);
+                });
             });
 
             $("#checkout_paymentType").change(function() {
@@ -186,6 +198,12 @@
                 } else {
                     $(".card-details").hide();
                 }
+            });
+
+            $("#delivery-options-container :input").change(function() {
+                var input = $(this);
+                var price = input.closest("tr").data("price");
+                $(".delivery-price strong").html(price);
             });
         });
     </script>
