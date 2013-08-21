@@ -625,11 +625,14 @@ class OrderService {
             $orderProductObject->setUrl($product['url']);
             $orderProductObject->setName($product['header']);
             // If product has a colour then add it to the name
-            foreach($variant->getFeatures() as $vtf)
+            if ($variant)
             {
-                if($vtf->getFeatureGroup()->getName() === 'Colour')
+                foreach ($variant->getFeatures() as $vtf)
                 {
-                    $orderProductObject->setName($product['header'] . ' - ' . $vtf->getFeature()->getName());
+                    if($vtf->getFeatureGroup()->getName() === 'Colour')
+                    {
+                        $orderProductObject->setName($product['header'] . ' - ' . $vtf->getFeature()->getName());
+                    }
                 }
             }
 
