@@ -1913,7 +1913,7 @@ class Order
 
     public function calculateSubTotal()
     {
-        $this->total = 0;
+        $this->subTotal = 0;
 
         foreach($this->getProducts() as $item)
         {

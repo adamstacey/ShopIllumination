@@ -137,6 +137,10 @@ class CheckoutController extends Controller
                 $order->getCard()->setShippingCountry($order->getDeliveryCountryCode());
             }
 
+            // Recalculate the order totals
+            $manager->updateDeliveryInfo($order);
+            $manager->updateProductInfo($order);
+
             $paymentResponse = $this->authorizePayment($order);
 
             // Update order status and redirect if needed
