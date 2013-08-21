@@ -112,18 +112,20 @@ class BrandController extends Controller
             $form->submit($request);
             if($form->isValid()) {
                 // Add logo image data
+                $brand->getDescription()->getLogoImage()->setImageType('logo');
+                $brand->getDescription()->getLogoImage()->setDescription($brand->getDescription()->getDescription());
                 if($brand->getDescription()->getLogoImage()->getFile())
                 {
-                    $brand->getDescription()->getLogoImage()->setImageType('logo');
-                    $brand->getDescription()->getLogoImage()->setDescription($brand->getDescription()->getDescription());
                     $brand->getDescription()->getLogoImage()->setFileExtension($brand->getDescription()->getLogoImage()->getFile()->guessExtension());
                     $brand->getDescription()->getLogoImage()->setFileSize($brand->getDescription()->getLogoImage()->getFile()->getSize());
                 }
+                $brand->getDescription()->getLogoImage()->preUpload();
+                $brand->getDescription()->getLogoImage()->upload();
 
                 $em->persist($brand);
                 $em->flush();
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
-                    'brandId' => $brand->getId(),
+                    'id' => $brand->getId(),
                 )));
             }
         }

@@ -97,6 +97,9 @@ class ImageManager extends Manager
             $image->setImageType($image->getObjectType());
         }
 
+        // Remove old public image
+        unlink($image->getUploadPath().$image->getPublicPath());
+
         // Get the file information
         $filename = $this->fileManager->cleanFilename($object->getDescription()->getHeader());
         $basePath = $image->getUploadDir().'/'.$image->getObjectType().'/'.$image->getImageType();

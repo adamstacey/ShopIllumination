@@ -43,6 +43,7 @@ class ImageListener
 
     public function postPersist(LifecycleEventArgs $args)
     {
+        die("??:(");
         $entity = $args->getEntity();
 
         if ($entity instanceof Image)

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\HasLifecycleCallbacks()
 
  */
-class Brand
+class Brand implements DescribableInterface
 {
     /**
      * @ORM\Id
