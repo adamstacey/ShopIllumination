@@ -1,0 +1,54 @@
+{% for product in pagination %}
+    {% block product_block %}
+        <div class="widget widget-1-of-3 product mtm">
+            <div class="pr">
+                {% set bullets = "" %}
+                {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
+                    {% set bullets = bullets ~ "Colour: <strong>" ~ product.attr_feature_Colour[0] ~ "</strong><br />" %}
+                {% endif %}
+                {% for featureGroup in product.features|slice(0, 4) %}
+                    {% set feature = product['attr_feature_'~featureGroup|replace({" ": ""})][0] %}
+                    {% if feature != '' %}
+                        {% set bullets = bullets ~ featureGroup ~ ": <strong>" ~ feature ~ "</strong><br />" %}
+                    {% endif %}
+                {% endfor %}
+                <div class="product-image-container man">
+                    <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
+                        {% if product.thumbnail_path %}
+                            <img title="{{ bullets }}" class="product-image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
+                        {% else  %}
+                            <img title="{{ bullets }}" class="product-image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
+                        {% endif  %}
+                    </a>
+                </div>
+                <div class="{% if product.status == 'd' %}background-red-extra-extra-light {% elseif product.status == 'h' %}background-orange-extra-extra-light {% endif %}pts">
+                    {% if not brand %}
+                        {% if product.brand_logo != '' %}
+                            <div class="fr">
+                                <img src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand|raw }}" height="25" />
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div>
+                        <input type="text" class="no-filter product-price-update" value="{{ product.low_price }}" />
+                    </div>
+                    <div class="product-listing-name">
+                        <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">{{ product.header|raw }}</a>
+                    </div>
+                    <div class="product-listing-colour mbs">
+                        {% if product.attr_feature_Colour is defined and product.attr_feature_Colour|length > 0 %}
+                            {{ product.attr_feature_Colour[0] }}
+                        {% endif %}
+                    </div>
+                    <div class="mbl">
+                        <div class="pbs"><button type="button" class="button button-small icon-grey actionPriceUpdate" data-icon-primary="icon-701" data-id="{{ product.id }}" data-url="{{ path('api_products_post_price', {'id': product.id}) }}">Update Price</button></div>
+                        <div class="pbs"><a href="{{ path('products_edit', {'productId': product.id}) }}" class="button button-small icon-grey" data-icon-primary="icon-94">Edit</a></div>
+                        <div><a href="{{ path('products_delete', {'productId': product.id}) }}" class="button button-small button-red icon-white" data-icon-primary="icon-851">Delete</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% else %}
+    <p class="no-products">Sorry, there are currently no products in this department.</p>
+{% endfor %}

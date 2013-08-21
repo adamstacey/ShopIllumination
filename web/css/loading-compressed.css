@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassUcDskj.scss */
+/* line 4, assetic_compassSfCFIX.scss */
 .loading-container {
   width: 100%;
   height: 100%;
@@ -197,17 +197,17 @@
   background: #e4eaec;
 }
 
-/* line 16, assetic_compassUcDskj.scss */
+/* line 16, assetic_compassSfCFIX.scss */
 .loading {
   text-align: center;
 }
 
-/* line 20, assetic_compassUcDskj.scss */
+/* line 20, assetic_compassSfCFIX.scss */
 .loading-animation {
   padding: 20px;
 }
 
-/* line 24, assetic_compassUcDskj.scss */
+/* line 24, assetic_compassSfCFIX.scss */
 .loading-text {
   padding: 0;
   margin: -20px 0 0 0;
@@ -221,7 +221,7 @@
   line-height: 100%;
 }
 
-/* line 35, assetic_compassUcDskj.scss */
+/* line 35, assetic_compassSfCFIX.scss */
 .outer-loading-circle {
   width: 50px;
   height: 50px;
@@ -237,7 +237,7 @@
   -webkit-animation: spinPulse 1s infinite linear;
 }
 
-/* line 51, assetic_compassUcDskj.scss */
+/* line 51, assetic_compassSfCFIX.scss */
 .inner-loading-circle {
   width: 30px;
   height: 30px;
@@ -256,20 +256,20 @@
 }
 
 @-moz-keyframes spinPulse {
-  /* line 71, assetic_compassUcDskj.scss */
+  /* line 71, assetic_compassSfCFIX.scss */
   0% {
     -moz-transform: rotate(160deg);
     opacity: 0;
     box-shadow: 0 0 1px #4ec0e3;
   }
 
-  /* line 76, assetic_compassUcDskj.scss */
+  /* line 76, assetic_compassSfCFIX.scss */
   50% {
     -moz-transform: rotate(145deg);
     opacity: 1;
   }
 
-  /* line 80, assetic_compassUcDskj.scss */
+  /* line 80, assetic_compassSfCFIX.scss */
   100% {
     -moz-transform: rotate(-320deg);
     opacity: 0;
@@ -277,32 +277,32 @@
 }
 
 @-moz-keyframes spinoffPulse {
-  /* line 87, assetic_compassUcDskj.scss */
+  /* line 87, assetic_compassSfCFIX.scss */
   0% {
     -moz-transform: rotate(0deg);
   }
 
-  /* line 90, assetic_compassUcDskj.scss */
+  /* line 90, assetic_compassSfCFIX.scss */
   100% {
     -moz-transform: rotate(360deg);
   }
 }
 
 @-webkit-keyframes spinPulse {
-  /* line 96, assetic_compassUcDskj.scss */
+  /* line 96, assetic_compassSfCFIX.scss */
   0% {
     -webkit-transform: rotate(160deg);
     opacity: 0;
     box-shadow: 0 0 1px #4ec0e3;
   }
 
-  /* line 101, assetic_compassUcDskj.scss */
+  /* line 101, assetic_compassSfCFIX.scss */
   50% {
     -webkit-transform: rotate(145deg);
     opacity: 1;
   }
 
-  /* line 105, assetic_compassUcDskj.scss */
+  /* line 105, assetic_compassSfCFIX.scss */
   100% {
     -webkit-transform: rotate(-320deg);
     opacity: 0;
@@ -310,12 +310,12 @@
 }
 
 @-webkit-keyframes spinoffPulse {
-  /* line 112, assetic_compassUcDskj.scss */
+  /* line 112, assetic_compassSfCFIX.scss */
   0% {
     -webkit-transform: rotate(0deg);
   }
 
-  /* line 115, assetic_compassUcDskj.scss */
+  /* line 115, assetic_compassSfCFIX.scss */
   100% {
     -webkit-transform: rotate(360deg);
   }

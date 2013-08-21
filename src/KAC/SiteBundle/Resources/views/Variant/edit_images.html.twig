@@ -2,6 +2,16 @@
 
 {% block title %}Images | {{ variant.description.pageTitle }}{% endblock %}
 
+{% block admin_submenu %}
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-278" href="{{ path('listing_products') }}">Products</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-1122" href="{{ path('products_new') }}">New Product</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-1360" href="{{ product.url != '' ? path('routing', {'url': variant.product.url}) : '404' }}">View Product</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-94" href="{{ path('products_edit', {'productId': variant.product.id}) }}">Edit Product</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-51" href="{{ path('products_clone', {'productId': variant.product.id}) }}">Clone Product</a>
+    <a class="button button-small icon-red mrs" data-icon-primary="icon-851" href="{{ path('products_delete', {'productId': variant.product.id}) }}">Delete Product</a>
+{% endblock %}
+
 {% block body %}
     <div class="widget-group clearfix">
         <div class="widget widget-2-of-7">

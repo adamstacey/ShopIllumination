@@ -181,14 +181,14 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassKtwbua.scss */
+/* line 4, assetic_compassBdAk6O.scss */
 ul.breadcrumbs {
   margin: 8px 0 0 0;
   padding: 0;
   float: left;
 }
 
-/* line 9, assetic_compassKtwbua.scss */
+/* line 9, assetic_compassBdAk6O.scss */
 ul.breadcrumbs li {
   padding: 0 5px 0 13px;
   margin: 0;
@@ -213,7 +213,7 @@ ul.breadcrumbs li {
   filter: dropshadow(color=#384246, offx=0, offy=1px);
 }
 
-/* line 27, assetic_compassKtwbua.scss */
+/* line 27, assetic_compassBdAk6O.scss */
 ul.breadcrumbs li a {
   font-size: 11px;
   font-size: 1.1rem;
@@ -224,12 +224,12 @@ ul.breadcrumbs li a {
   text-decoration: none;
 }
 
-/* line 34, assetic_compassKtwbua.scss */
+/* line 34, assetic_compassBdAk6O.scss */
 ul.breadcrumbs li a:hover {
   color: white;
 }
 
-/* line 39, assetic_compassKtwbua.scss */
+/* line 39, assetic_compassBdAk6O.scss */
 ul.breadcrumbs li:after,
 ul.breadcrumbs li:before {
   height: 0;
@@ -241,7 +241,7 @@ ul.breadcrumbs li:before {
   pointer-events: none;
 }
 
-/* line 51, assetic_compassKtwbua.scss */
+/* line 51, assetic_compassBdAk6O.scss */
 ul.breadcrumbs li:after {
   border-color: transparent;
   border-left-color: #6c8087;
@@ -250,7 +250,7 @@ ul.breadcrumbs li:after {
   margin-top: -10px;
 }
 
-/* line 59, assetic_compassKtwbua.scss */
+/* line 59, assetic_compassBdAk6O.scss */
 ul.breadcrumbs li:before {
   border-color: transparent;
   border-left-color: #c5d2d6;
@@ -259,22 +259,28 @@ ul.breadcrumbs li:before {
   margin-top: -11px;
 }
 
-/* line 67, assetic_compassKtwbua.scss */
+/* line 67, assetic_compassBdAk6O.scss */
 ul.breadcrumbs > :first-child {
   padding-left: 5px;
   -webkit-border-radius: 4px 0 0 4px;
   -moz-border-radius: 4px 0 0 4px;
   border-radius: 4px 0 0 4px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
 
-/* line 72, assetic_compassKtwbua.scss */
+/* line 72, assetic_compassBdAk6O.scss */
 ul.breadcrumbs > :last-child {
   -webkit-border-radius: 0 4px 4px 0;
   -moz-border-radius: 0 4px 4px 0;
   border-radius: 0 4px 4px 0;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
 
-/* line 77, assetic_compassKtwbua.scss */
+/* line 77, assetic_compassBdAk6O.scss */
 ul.breadcrumbs > :last-child:before,
 ul.breadcrumbs > :last-child:after {
   display: none;

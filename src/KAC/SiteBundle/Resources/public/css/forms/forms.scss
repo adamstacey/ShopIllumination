@@ -33,7 +33,7 @@ fieldset {
     width: 100%;
 
     @include borderBox;
-    background: $colourGreyExtraLight;
+    background: $colourGreyExtraExtraLight;
 }
 
 fieldset legend {
@@ -715,15 +715,16 @@ table.form-table {
     border-collapse: collapse;
     border: 0 none;
     @include borderRadius($radiusSize, $radiusSize, 0, 0);
+    @include boxGlow($colourGrey, 10px);
 }
 
 table.form-table th {
     padding: $spacingMedium $spacingSmall;
 
     border-collapse: collapse;
-    border: 1px solid $colourGrey;
+    border: 1px solid $colourGreyLight;
     color: $colourBlack;
-    @include highlightedVerticalGradientGrey;
+    @include highlightedVerticalGradientGreyLight;
     cursor: help;
 }
 

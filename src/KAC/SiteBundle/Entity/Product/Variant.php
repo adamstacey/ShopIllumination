@@ -245,8 +245,10 @@ class Variant implements DescribableInterface
             $this->documents = new ArrayCollection();
             $this->routings = new ArrayCollection();
 
-
             $this->id = null;
+            $this->createdAt = null;
+            $this->updatedAt = null;
+
             if(count($this->descriptions) <= 0)
             {
                 $this->addDescription(new Variant\Description());

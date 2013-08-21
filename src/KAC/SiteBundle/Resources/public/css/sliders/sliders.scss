@@ -6,7 +6,8 @@
     overflow: hidden;
 }
 
-.slider-wrapper h1 {
+.slider-wrapper h1,
+.product .slider-wrapper h1 {
     padding: $spacingExtraLarge;
 
     position: absolute;
@@ -181,9 +182,10 @@
 .slider-homepage,
 .slider-homepage .rhino-container,
 .slider-homepage .rhino-container ul,
-.slider-homepage .rhino-container ul li {
-    width: 735px;
-    height: 300px;
+.slider-homepage .rhino-container ul li,
+.slider-homepage .rhino-container ul li img {
+    width: 980px;
+    height: 250px;
 }
 
 .slider-gallery {
@@ -194,7 +196,8 @@
 .slider-gallery,
 .slider-gallery .rhino-container,
 .slider-gallery .rhino-container ul,
-.slider-gallery .rhino-container ul li {
+.slider-gallery .rhino-container ul li,
+.slider-gallery .rhino-container ul li img {
     width: 940px;
     height: 400px;
 }
@@ -211,7 +214,8 @@
 .slider-dialog-gallery,
 .slider-dialog-gallery .rhino-container,
 .slider-dialog-gallery .rhino-container ul,
-.slider-dialog-gallery .rhino-container ul li {
+.slider-dialog-gallery .rhino-container ul li,
+.slider-dialog-gallery .rhino-container ul li img {
     width: 800px;
     height: 350px;
 }

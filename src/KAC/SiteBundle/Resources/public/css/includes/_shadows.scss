@@ -1,7 +1,6 @@
 @mixin textShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $opacity: 1) {
     text-shadow: $horizontalLength $verticalLength $blurRadius $shadowColour;
     text-shadow: $horizontalLength $verticalLength $blurRadius rgba($shadowColour, $opacity);
-    filter: dropshadow(color = $shadowColour, offx = $horizontalLength, offy = $verticalLength);
 }
 
 @mixin boxShadow($shadowColour, $horizontalLength, $verticalLength, $blurRadius: 0, $spread: 0, $opacity: 1) {

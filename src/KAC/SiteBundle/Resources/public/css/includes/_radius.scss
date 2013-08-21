@@ -1,13 +1,19 @@
 $radiusSize: 4px;
 
 @mixin borderRadius($topLeft: 0, $topRight: 0, $bottomRight: 0, $bottomLeft: 0) {
-  -webkit-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
-  -moz-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
-  border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+    -webkit-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+    -moz-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+    border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
 }
 
 @mixin equalBorderRadius($radius: 0) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
-  border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
 }

@@ -1,5 +1,11 @@
 {% javascripts
     '@KACSiteBundle/Resources/public/plugins/modernizr/modernizr.js'
+    output='js/modernizr-compressed.js'
+    filter='?yui_js'
+%}
+    <script src="{{ asset_url }}" type="text/javascript"></script>
+{% endjavascripts %}
+{% javascripts
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.js'
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.tmpl.js'
     '@KACSiteBundle/Resources/public/plugins/jquery/jquery.ui.js'

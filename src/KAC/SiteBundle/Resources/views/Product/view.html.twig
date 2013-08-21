@@ -4,15 +4,12 @@
 {% block title %}{{ variant ? variant.description.pageTitle : product.description.pageTitle }} | {{ parent() }}{% endblock %}
 
 {% block admin_submenu %}
-    {{ parent() }}
-    <div class="widget widget-1-of-4">
-        <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-95"></span></a>
-        <h3 class="pts pbs"><a href="{{ path('products_edit', {'productId': product.id}) }}">Edit Product</a></h3>
-    </div>
-    <div class="widget widget-1-of-4">
-        <a class="fl" href="{{ path('departments_index') }}"><span class="fl ui-button-icon-primary ui-icon-small icon-small-grey icon-small-1117"></span></a>
-        <h3 class="pts pbs"><a href="{{ path('products_delete', {'productId': product.id}) }}">Delete Product</a></h3>
-    </div>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-278" href="{{ path('listing_products') }}">Products</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-1122" href="{{ path('products_new') }}">New Product</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-94" href="{{ path('products_edit', {'productId': product.id}) }}">Edit Product</a>
+    <a class="button button-small icon-grey mrs" data-icon-primary="icon-51" href="{{ path('products_clone', {'productId': product.id}) }}">Clone Product</a>
+    <a class="button button-small icon-red mrs" data-icon-primary="icon-851" href="{{ path('products_delete', {'productId': product.id}) }}">Delete Product</a>
 {% endblock %}
 
 {% block body %}
@@ -53,8 +50,9 @@
 
         {% block product_block %}
             {% block department_breadcrumb %}
-                <div class="widget-group clearfix mbm">
-                    <div class="widget widget-7-of-8">
+                <div class="widget-group mbs clearfix">
+                    <a class="fr button button-small icon-grey mrm mts" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
+                    <div class="widget widget-1-of-1">
                         <ul class="breadcrumbs" itemprop="breadcrumb">
                             <li style="z-index: {{ departments|length }};"><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
                             {% for department in departments|reverse %}
@@ -66,22 +64,39 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    <div class="clear"></div>
                 </div>
             {% endblock %}
             {% block product_info %}
-            {% if variant is null %}
-                {% set description = product.description %}
-                {% set features = common_features %}
-            {% else %}
-                {% set description = variant.description %}
-                {% set features = variant.features %}
-            {% endif %}
+                {% if variant is null %}
+                    {% set description = product.description.description %}
+                    {% if description == '' %}
+                        {% set description = product.description.metaDescription %}
+                    {% endif %}
+                    {% set header = product.description.header %}
+                    {% set brandDescription = product.description.brandDescription %}
+                    {% set features = common_features %}
+                {% else %}
+                    {% set description = variant.description.description %}
+                    {% if description == '' %}
+                        {% set description = variant.description.metaDescription %}
+                    {% endif %}
+                    {% set header = variant.description.header %}
+                    {% if header == '' %}
+                        {% set header = product.description.header %}
+                    {% endif %}
+                    {% set brandDescription = variant.brandDescription.description %}
+                    {% set features = variant.features %}
+                {% endif %}
+                {% if features['Colour'] is defined %}
+                    {% set colour = features['Colour'] %}
+                {% endif %}
                 <div itemscope itemtype="http://schema.org/Product">
                     <div class="widget-group clearfix product mbl">
                         <div class="widget widget-3-of-5">
                             <div class="ui-widget">
                                 <section class="ui-widget-content ui-corner-all clearfix">
-                                    <h1 itemprop="name">{{ description.header }}</h1>
+                                    <h1 itemprop="name">{{ header ~ (colour ? ' - ' ~ colour : '') }}</h1>
                                     <div>
                                         {% if product_images | length > 0 %}
                                             <ul class="etalage">
@@ -178,21 +193,12 @@
                                             </div>
                                         </div>
                                     {% endif %}
-                                    {% if is_granted('ROLE_ADMIN') %}
-                                        <div class="border-bottom-separator">
-                                            <div class="pam">
-                                                <a href="{{ path('products_delete', {'productId': product.id}) }}" class="fr button button-red mls mts mbs">Delete</a>
-                                                <a href="{{ path('products_clone', {'productId': product.id}) }}" class="fr button button-blue mls mts mbs">Clone</a>
-                                                <a href="{{ path('products_edit', {'productId': product.id}) }}" class="fr button button-blue mts mbs">Edit</a>
-                                            </div>
-                                        </div>
-                                    {% endif %}
                                     <div class="pam">
                                         <img src="{{ asset(product.brand.description.logoImage.publicPath | apply_filter('logo_medium')) }}" alt="{{ product.brand.description.name }}" />
                                         <div class="clear"></div>
                                         <ul class="summary-specification">
                                             {% for feature in product.departments[0].department.features %}
-                                                {% if feature.displayOnProduct and common_features[feature.featureGroup.name] is defined %}
+                                                {% if feature.displayOnListing and common_features[feature.featureGroup.name] is defined %}
                                                     <li>{{ feature.featureGroup.name }}: <strong>{{ common_features[feature.featureGroup.name] }}</strong></li>
                                                 {% endif %}
                                             {% endfor %}
@@ -220,10 +226,15 @@
                                                     <ul>
                                                         <li><a href="#overview">Overview</a></li>
                                                         {% if common_features|length > 0 %}<li><a href="#technicalSpecification">Technical Specification</a></li>{% endif %}
+                                                        {% if brandDescription != "" %}<li><a href="#brandDescription">Full Description</a></li>{% endif %}
                                                     </ul>
                                                     <div id="overview">
                                                         <section>
-                                                            <p class="summary man" itemprop="description">{{ (description.description ? description.description : description.metaDescription)|raw }}</p>
+                                                            {%  if '</p>' in description %}
+                                                                {{ description|raw }}
+                                                            {% else %}
+                                                                <p class="summary man" itemprop="description">{{ description|raw }}</p>
+                                                            {% endif %}
                                                         </section>
                                                     </div>
                                                     {% if features|length > 0 %}
@@ -252,6 +263,13 @@
                                                                     {% endfor %}
                                                                     </tbody>
                                                                 </table>
+                                                            </section>
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if brandDescription != '' %}
+                                                        <div id="brandDescription">
+                                                            <section>
+                                                                {{ brandDescription|raw }}
                                                             </section>
                                                         </div>
                                                     {% endif %}

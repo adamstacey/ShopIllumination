@@ -1,0 +1,28 @@
+<div class="ui-widget mtm">
+    <section class="ui-widget-content ui-corner-all">
+        {% include 'KACSiteBundle:Includes:formErrors.html.twig' %}
+        {{ form_row(form.brand) }}
+        <table class="form-table sortable departments" id="departments__name__" data-prototype="{% filter escape %}{% include 'KACSiteBundle:NewProduct/Includes:newFieldRow.html.twig' with {'form': form.departments.vars.prototype} %}{% endfilter %}">
+            <thead>
+            <tr>
+                <th width="1">&nbsp;</th>
+                <th width="1">&nbsp;</th>
+                <th>Department</th>
+                <th width="1">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{ form_rest(form.departments) }}
+            </tbody>
+        </table>
+        {% do form.departments.setRendered() %}
+        <div class="clearfix">
+            <button type="button" data-object="departments__name__" class="actionAddCollectionTableRow mlm fr button icon-green" data-icon-secondary="icon-1122">Add</button>
+        </div>
+    </section>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    });
+</script>

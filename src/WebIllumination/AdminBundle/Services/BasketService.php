@@ -1105,8 +1105,6 @@ class BasketService {
                 }
             }
 
-
-
             // Check if there are any stellar pan set discounts available
             foreach ($basket['products'] as $product)
             {
@@ -1160,7 +1158,7 @@ class BasketService {
                             // Ensure that the product is not in the discount department
                             foreach($productEntity->getDepartments() as $department)
                             {
-                                if ($department->getId() === 158 || $department->getId() === 918)
+                                if($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
                                 {
                                     $skipProduct = true;
                                 }
@@ -1245,7 +1243,7 @@ class BasketService {
                         // Ensure that the product is not in the discount department
                         foreach($productEntity->getDepartments() as $department)
                         {
-                            if($department->getId() === 158 || $department->getId() === 918)
+                            if($department->getDepartment()->getId() === 158 || $department->getDepartment()->getId() === 918)
                             {
                                 $skipProduct = true;
                             }

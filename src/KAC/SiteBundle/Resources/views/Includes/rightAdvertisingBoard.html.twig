@@ -1,1 +1,9 @@
-<div class="floating-advert-container floating-advert-container-right"></div>
+<div class="floating-advert-container floating-advert-container-right">
+    {% block rightAdvertContainer %}
+        <div class="widget-group clearfix">
+            <div class="widget widget-1-of-1">
+                <a href="{{ path('routing', {'url': 'neff'}) }}"><img width="160" src="{{ asset('/bundles/kacsite/images/icons/neff-accredited-appliance-retailer.png') }}" alt="Neff Accredited Appliance Retailer" /></a>
+            </div>
+        </div>
+    {% endblock %}
+</div>

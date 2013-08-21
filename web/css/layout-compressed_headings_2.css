@@ -1,0 +1,270 @@
+@charset "UTF-8";
+/*
+  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
+  rgba-background mixin can now be passed an option $dir variable
+*/
+/* line 161, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
+@font-face {
+  font-family: "Stag Medium";
+  src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
+  src: local("☺"), url("/bundles/kacsite/css/resources/fonts/stag-medium.woff") format("woff"), url("/bundles/kacsite/css/resources/fonts/stag-medium.ttf") format("truetype"), url("/bundles/kacsite/css/resources/fonts/stag-medium.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 5, assetic_compassADPW59.scss */
+h1,
+.h1 {
+  font-size: 24px;
+  font-size: 2.4rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #384246;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
+}
+
+/* line 14, assetic_compassADPW59.scss */
+h2,
+.h2 {
+  font-size: 18px;
+  font-size: 1.8rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #384246;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
+}
+
+/* line 23, assetic_compassADPW59.scss */
+h3,
+.h3 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #4ec0e3;
+}
+
+/* line 29, assetic_compassADPW59.scss */
+h3.separator {
+  padding: 10px;
+  margin: 0 -10px 10px -10px;
+  background: white;
+  background: -moz-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #c5d2d6));
+  background: -webkit-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -o-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: -ms-linear-gradient(top, white 0%, #c5d2d6 100%);
+  background: linear-gradient(top, #ffffff 0%, #c5d2d6 100%);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #c5d2d6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -moz-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: -o-linear-gradient(top, #ffffff, #c5d2d6);
+  background-image: linear-gradient(top, #ffffff, #c5d2d6);
+  background-repeat: no-repeat;
+  color: #6c8087;
+  text-shadow: 0 1px 0 white;
+  text-shadow: 0 1px 0 white;
+  border-top: 1px solid #c5d2d6;
+  border-bottom: 1px solid #c5d2d6;
+}
+
+/* line 40, assetic_compassADPW59.scss */
+h4,
+.h4 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: normal;
+  color: #4ec0e3;
+}
+
+/* line 48, assetic_compassADPW59.scss */
+h5,
+.h5 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* line 55, assetic_compassADPW59.scss */
+h6,
+.h6 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: normal;
+  font-style: italic;
+}

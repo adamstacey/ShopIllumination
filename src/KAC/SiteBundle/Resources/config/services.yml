@@ -105,7 +105,6 @@ services:
             - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
             - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }
             - { name: doctrine.event_listener, event: preRemove, method: preRemove}
-
     # Form Flow Services
     kac_site.form.new_department:
         class: KAC\SiteBundle\Form\Department\NewDepartmentType

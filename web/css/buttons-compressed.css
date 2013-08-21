@@ -181,7 +181,7 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassmC45Ki.scss */
+/* line 4, assetic_compassi3tfE9.scss */
 .ui-button {
   display: inline-block;
   position: relative;
@@ -209,7 +209,7 @@
   background-repeat: no-repeat;
 }
 
-/* line 20, assetic_compassmC45Ki.scss */
+/* line 20, assetic_compassi3tfE9.scss */
 .ui-button,
 .ui-button:link,
 .ui-button:visited,
@@ -218,31 +218,31 @@
   text-decoration: none;
 }
 
-/* line 25, assetic_compassmC45Ki.scss */
+/* line 25, assetic_compassi3tfE9.scss */
 .ui-icon,
 .ui-button-text {
   display: block;
   float: left;
 }
 
-/* line 30, assetic_compassmC45Ki.scss */
+/* line 30, assetic_compassi3tfE9.scss */
 .button-small .ui-icon {
   margin: 0!important;
 }
 
-/* line 34, assetic_compassmC45Ki.scss */
+/* line 34, assetic_compassi3tfE9.scss */
 .ui-button-text {
   padding: 0 10px;
   line-height: 32px;
 }
 
-/* line 40, assetic_compassmC45Ki.scss */
+/* line 40, assetic_compassi3tfE9.scss */
 .button-small .ui-button-text {
   padding: 0 5px;
   line-height: 24px;
 }
 
-/* line 47, assetic_compassmC45Ki.scss */
+/* line 47, assetic_compassi3tfE9.scss */
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
   padding: 0 !important;
@@ -250,30 +250,30 @@
   width: 0;
 }
 
-/* line 53, assetic_compassmC45Ki.scss */
+/* line 53, assetic_compassi3tfE9.scss */
 input.ui-button {
   padding: 10px;
 }
 
-/* line 57, assetic_compassmC45Ki.scss */
+/* line 57, assetic_compassi3tfE9.scss */
 .ui-buttonset {
   margin-right: 10px;
 }
 
-/* line 61, assetic_compassmC45Ki.scss */
+/* line 61, assetic_compassi3tfE9.scss */
 .ui-buttonset .ui-button {
   margin-left: 0;
   margin-right: 10px;
 }
 
-/* line 67, assetic_compassmC45Ki.scss */
+/* line 67, assetic_compassi3tfE9.scss */
 input.ui-button::-moz-focus-inner,
 button.ui-button::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
 
-/* line 74, assetic_compassmC45Ki.scss */
+/* line 74, assetic_compassi3tfE9.scss */
 .button,
 .ui-button {
   background: #e4eaec;
@@ -306,7 +306,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #c5d2d6;
 }
 
-/* line 82, assetic_compassmC45Ki.scss */
+/* line 82, assetic_compassi3tfE9.scss */
 .button:hover,
 .ui-button:hover {
   background: #c5d2d6;
@@ -333,7 +333,7 @@ button.ui-button::-moz-focus-inner {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 87, assetic_compassmC45Ki.scss */
+/* line 87, assetic_compassi3tfE9.scss */
 .button-grey {
   background: #c5d2d6;
   background: -moz-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
@@ -360,7 +360,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #6c8087;
 }
 
-/* line 93, assetic_compassmC45Ki.scss */
+/* line 93, assetic_compassi3tfE9.scss */
 .button-grey:hover {
   background: #6c8087;
   background: -moz-linear-gradient(top, #6c8087 0%, #c5d2d6 95%, white 100%);
@@ -380,13 +380,13 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 98, assetic_compassmC45Ki.scss */
+/* line 98, assetic_compassi3tfE9.scss */
 .button .ui-button-text,
 .button-grey .ui-button-text {
   color: #444444;
 }
 
-/* line 102, assetic_compassmC45Ki.scss */
+/* line 102, assetic_compassi3tfE9.scss */
 .button-dark-grey {
   background: #6c8087;
   background: -moz-linear-gradient(top, #c5d2d6 0%, #6c8087 5%, #384246 100%);
@@ -413,7 +413,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #384246;
 }
 
-/* line 108, assetic_compassmC45Ki.scss */
+/* line 108, assetic_compassi3tfE9.scss */
 .button-dark-grey:hover {
   background: #384246;
   background: -moz-linear-gradient(top, #384246 0%, #6c8087 95%, #c5d2d6 100%);
@@ -433,7 +433,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 112, assetic_compassmC45Ki.scss */
+/* line 112, assetic_compassi3tfE9.scss */
 .button-dark-grey .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
@@ -441,7 +441,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 117, assetic_compassmC45Ki.scss */
+/* line 117, assetic_compassi3tfE9.scss */
 .button-dark-red {
   background: #d93637;
   background: -moz-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
@@ -468,7 +468,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #9a0000;
 }
 
-/* line 123, assetic_compassmC45Ki.scss */
+/* line 123, assetic_compassi3tfE9.scss */
 .button-dark-red:hover {
   background: #9a0000;
   background: -moz-linear-gradient(top, #9a0000 0%, #d93637 95%, #fdadae 100%);
@@ -488,7 +488,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 127, assetic_compassmC45Ki.scss */
+/* line 127, assetic_compassi3tfE9.scss */
 .button-dark-red .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
@@ -496,7 +496,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 134, assetic_compassmC45Ki.scss */
+/* line 134, assetic_compassi3tfE9.scss */
 .ui-dialog-titlebar-close,
 .ui-dialog-titlebar-close:focus,
 .button-red {
@@ -525,7 +525,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #cc0000;
 }
 
-/* line 141, assetic_compassmC45Ki.scss */
+/* line 141, assetic_compassi3tfE9.scss */
 .ui-dialog-titlebar-close:hover,
 .button-red:hover {
   background: #cc0000;
@@ -546,7 +546,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 146, assetic_compassmC45Ki.scss */
+/* line 146, assetic_compassi3tfE9.scss */
 .ui-dialog-titlebar-close,
 .button-red .ui-button-text {
   color: white;
@@ -555,7 +555,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 151, assetic_compassmC45Ki.scss */
+/* line 151, assetic_compassi3tfE9.scss */
 .button-orange {
   background: #ff8434;
   background: -moz-linear-gradient(top, #ffdec5 0%, #ff8434 5%, #cc5200 100%);
@@ -582,7 +582,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #cc5200;
 }
 
-/* line 157, assetic_compassmC45Ki.scss */
+/* line 157, assetic_compassi3tfE9.scss */
 .button-orange:hover {
   background: #cc5200;
   background: -moz-linear-gradient(top, #cc5200 0%, #ff8434 95%, #ffdec5 100%);
@@ -602,7 +602,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 161, assetic_compassmC45Ki.scss */
+/* line 161, assetic_compassi3tfE9.scss */
 .button-orange .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
@@ -610,7 +610,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 166, assetic_compassmC45Ki.scss */
+/* line 166, assetic_compassi3tfE9.scss */
 .button-yellow {
   background: #ffd634;
   background: -moz-linear-gradient(top, #fffadd 0%, #ffd634 5%, #e6ac00 100%);
@@ -637,7 +637,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #e6ac00;
 }
 
-/* line 172, assetic_compassmC45Ki.scss */
+/* line 172, assetic_compassi3tfE9.scss */
 .button-yellow:hover {
   background: #e6ac00;
   background: -moz-linear-gradient(top, #e6ac00 0%, #ffd634 95%, #fffadd 100%);
@@ -657,7 +657,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 176, assetic_compassmC45Ki.scss */
+/* line 176, assetic_compassi3tfE9.scss */
 .button-yellow .ui-button-text {
   color: black;
   text-shadow: 0 1px 0 #e6ac00;
@@ -665,7 +665,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=#e6ac00, offx=0, offy=1px);
 }
 
-/* line 181, assetic_compassmC45Ki.scss */
+/* line 181, assetic_compassi3tfE9.scss */
 .button-green {
   background: #2baf2b;
   background: -moz-linear-gradient(top, #b0e2ae 0%, #2baf2b 5%, #137f13 100%);
@@ -692,7 +692,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #137f13;
 }
 
-/* line 187, assetic_compassmC45Ki.scss */
+/* line 187, assetic_compassi3tfE9.scss */
 .button-green:hover {
   background: #137f13;
   background: -moz-linear-gradient(top, #137f13 0%, #2baf2b 95%, #b0e2ae 100%);
@@ -712,7 +712,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 191, assetic_compassmC45Ki.scss */
+/* line 191, assetic_compassi3tfE9.scss */
 .button-green .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
@@ -720,7 +720,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 196, assetic_compassmC45Ki.scss */
+/* line 196, assetic_compassi3tfE9.scss */
 .button-turquoise {
   background: #29a3cc;
   background: -moz-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
@@ -747,7 +747,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #007398;
 }
 
-/* line 202, assetic_compassmC45Ki.scss */
+/* line 202, assetic_compassi3tfE9.scss */
 .button-turquoise:hover {
   background: #007398;
   background: -moz-linear-gradient(top, #007398 0%, #29a3cc 95%, #baebfc 100%);
@@ -767,7 +767,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 206, assetic_compassmC45Ki.scss */
+/* line 206, assetic_compassi3tfE9.scss */
 .button-turquoise .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
@@ -775,7 +775,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 211, assetic_compassmC45Ki.scss */
+/* line 211, assetic_compassi3tfE9.scss */
 .button-blue {
   background: #0061bf;
   background: -moz-linear-gradient(top, #94c9fd 0%, #0061bf 5%, #003b73 100%);
@@ -802,7 +802,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid #003b73;
 }
 
-/* line 217, assetic_compassmC45Ki.scss */
+/* line 217, assetic_compassi3tfE9.scss */
 .button-blue:hover {
   background: #003b73;
   background: -moz-linear-gradient(top, #003b73 0%, #0061bf 95%, #94c9fd 100%);
@@ -822,7 +822,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 221, assetic_compassmC45Ki.scss */
+/* line 221, assetic_compassi3tfE9.scss */
 .button-blue .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
@@ -830,7 +830,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 226, assetic_compassmC45Ki.scss */
+/* line 226, assetic_compassi3tfE9.scss */
 .button-black {
   background: #384246;
   background: -moz-linear-gradient(top, #c5d2d6 0%, #384246 5%, black 100%);
@@ -857,7 +857,7 @@ button.ui-button::-moz-focus-inner {
   border: 1px solid black;
 }
 
-/* line 232, assetic_compassmC45Ki.scss */
+/* line 232, assetic_compassi3tfE9.scss */
 .button-black:hover {
   background: black;
   background: -moz-linear-gradient(top, black 0%, #384246 95%, #c5d2d6 100%);
@@ -877,7 +877,7 @@ button.ui-button::-moz-focus-inner {
   background-repeat: no-repeat;
 }
 
-/* line 236, assetic_compassmC45Ki.scss */
+/* line 236, assetic_compassi3tfE9.scss */
 .button-black .ui-button-text {
   color: white;
   text-shadow: 0 1px 0 black;
@@ -885,7 +885,7 @@ button.ui-button::-moz-focus-inner {
   filter: dropshadow(color=black, offx=0, offy=1px);
 }
 
-/* line 241, assetic_compassmC45Ki.scss */
+/* line 241, assetic_compassi3tfE9.scss */
 .button-notification {
   margin: 0px;
   padding: 1px;
@@ -920,6 +920,9 @@ button.ui-button::-moz-focus-inner {
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
   font-size: 9px;
   font-size: 0.9rem;
   border: 1px solid white;

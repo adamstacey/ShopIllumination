@@ -328,7 +328,7 @@ class ProductController extends Controller {
          */
         $product = clone $originalProduct;
 
-        $flow = $this->get('kac_site.form.flow.new_product');
+        $flow = $this->get('kac_site.form.flow.clone_product');
 
         $flow->bind($product);
 
@@ -356,8 +356,9 @@ class ProductController extends Controller {
 
                 $flow->reset();
 
-                return $this->redirect($this->generateUrl('listing_products'));
-            }
+                return $this->redirect($this->generateUrl('routing', array(
+                    'url' => $product->getUrl(),
+                )));            }
         }
 
         return $this->render('KACSiteBundle:Product:clone.html.twig', array(

@@ -1,0 +1,25 @@
+<div class="buy-now">
+    {% if (product.availableForPurchase == 1) and (product.hidePrice == 0) %}
+        <table class="fr pan ban" align="right" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                {% if variant.productCode == '' %}
+                    <td class="out-of-stock">Out of Stock Until Further Notice</td>
+                {% else %}
+                    <td class="pan ban"><input id="quantity-{{ variant.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}" class="ui-corner-none ui-corner-left number quantity" width="20" type="text" value="1" /></td>
+                    <td class="pan ban">
+                        <div class="quantity-buttons-container pan">
+                            <div class="ui-corner-none ui-corner-tr action-increase-quantity" data-quantity-object="quantity-{{ variant.id }}">+</div>
+                            <div class="ui-corner-none ui-corner-br action-decrease-quantity" data-quantity-object="quantity-{{ variant.id }}">-</div>
+                        </div>
+                    </td>
+                    <td class="ban">
+                        <button data-product-id="{{ product.id }}" data-variant-id="{{ variant.id }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}" class="action-add-to-basket button button-small button-green uppercase ">Add to Basket</button>
+                    </td>
+                {% endif %}
+            </tr>
+        </table>
+        <input type="hidden" value="" id="selected-options-{{ variant.id }}">
+    {% else %}
+        <a href="{{ path('content_contact_us') }}" class="fr button ui-button-green">Contact Us to Buy</a>
+    {% endif %}
+</div>

@@ -485,7 +485,7 @@ class OrdersController extends Controller
                             if ($delete > 0)
                             {
                                 // Delete any item discounts
-                                $itemDiscountObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->find($itemId);
+                                $itemDiscountObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Discount')->findBy(array('order' => $itemObject));
                                 foreach ($itemDiscountObjects as $itemDiscountObject)
                                 {
                                     $em->remove($itemDiscountObject);
@@ -493,7 +493,7 @@ class OrdersController extends Controller
                                 }
 
                                 // Delete any item notes
-                                $itemNoteObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->find($itemId);
+                                $itemNoteObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Note')->findBy(array('order' => $itemObject));
                                 foreach ($itemNoteObjects as $itemNoteObject)
                                 {
                                     $em->remove($itemNoteObject);
@@ -501,7 +501,7 @@ class OrdersController extends Controller
                                 }
 
                                 // Delete any item products
-                                $itemProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->find($itemId);
+                                $itemProductObjects = $em->getRepository('KAC\SiteBundle\Entity\Order\Product')->findBy(array('order' => $itemObject));
                                 foreach ($itemProductObjects as $itemProductObject)
                                 {
                                     $em->remove($itemProductObject);

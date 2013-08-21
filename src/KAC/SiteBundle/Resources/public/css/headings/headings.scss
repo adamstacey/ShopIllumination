@@ -26,6 +26,7 @@ h3,
     font-style: normal;
     color: $primaryColour;
 }
+
 h3.separator {
     padding: $spacingMedium;
     margin: 0 -#{$spacingMedium} $spacingMedium -#{$spacingMedium};
@@ -56,4 +57,22 @@ h6,
     @include fontSize($fontSizeLarge);
     font-weight: normal;
     font-style: italic;
+}
+
+header.sticky {
+    padding: $spacingSmall $spacingExtraLarge;
+    margin: 0 -#{$spacingExtraLarge} $spacingSmall -#{$spacingExtraLarge};
+    @include verticalGradientWhiteToGreyLight;
+    @include boxShadow($colourGreyDark, 0, 1px, 5px);
+}
+
+header.sticky h1,
+header.sticky h2,
+header.sticky h3 {
+    line-height: 30px;
+    margin: 0;
+}
+
+header.stuck {
+    width: 940px;
 }

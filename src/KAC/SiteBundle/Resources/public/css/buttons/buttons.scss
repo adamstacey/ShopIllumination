@@ -1,7 +1,7 @@
 @import "compass";
 @import "../includes/base";
 
-.ui-button {
+.button, .ui-button {
     display: inline-block;
     position: relative;
     padding: 3px;
@@ -74,35 +74,40 @@ button.ui-button::-moz-focus-inner {
 .ui-button {
     @include highlightedVerticalGradientGreyLight;
     @include transitionAll(0.3s, ease-in-out);
-    @include boxGlow($colourGreyLight, 5px);
-    border: 1px solid $colourGreyLight;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button:hover,
 .ui-button:hover {
     @include highlightedVerticalGradientGreyLightReversed;
-    @include boxGlow($primaryColour, 10px);
+    @include boxGlow($colourBlack, 6px);
+}
+
+.button .ui-button-text {
+    color: $colourGreyDark;
+    @include textShadow($colourGreyExtraLight, 0, 1px);
 }
 
 .button-grey {
     @include highlightedVerticalGradientGrey;
-    @include boxGlow($colourGrey, 5px);
-    border: 1px solid $colourGrey;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button-grey:hover {
     @include highlightedVerticalGradientGreyReversed;
 }
 
-.button .ui-button-text,
 .button-grey .ui-button-text {
-    color: $textColour;
+    color: $colourGreyDark;
+    @include textShadow($colourGreyLight, 0, 1px);
 }
 
 .button-dark-grey {
     @include highlightedVerticalGradientGreyDark;
-    @include boxGlow($colourGreyDark, 5px);
-    border: 1px solid $colourGreyDark;
+    @include boxGlow($colourBlack, 5px);
+    border: 0 none;
 }
 
 .button-dark-grey:hover {
@@ -111,13 +116,13 @@ button.ui-button::-moz-focus-inner {
 
 .button-dark-grey .ui-button-text {
     color: $colourWhite;
-    @include textShadow($colourBlack, 0, 1px);
+    @include textShadow($colourGreyDark, 0, 1px);
 }
 
 .button-dark-red {
     @include highlightedVerticalGradientDarkRed;
-    @include boxGlow($colourDarkRed, 5px);
-    border: 1px solid $colourDarkRed;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button-dark-red:hover {
@@ -126,15 +131,15 @@ button.ui-button::-moz-focus-inner {
 
 .button-dark-red .ui-button-text {
     color: $colourWhite;
-    @include textShadow($colourBlack, 0, 1px);
+    @include textShadow($colourDarkRed, 0, 1px);
 }
 
 .ui-dialog-titlebar-close,
 .ui-dialog-titlebar-close:focus,
 .button-red {
     @include highlightedVerticalGradientRed;
-    @include boxGlow($colourRed, 5px);
-    border: 1px solid $colourRed;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .ui-dialog-titlebar-close:hover,
@@ -145,13 +150,13 @@ button.ui-button::-moz-focus-inner {
 .ui-dialog-titlebar-close,
 .button-red .ui-button-text {
     color: $colourWhite;
-    @include textShadow($colourBlack, 0, 1px);
+    @include textShadow($colourRed, 0, 1px);
 }
 
 .button-orange {
     @include highlightedVerticalGradientOrange;
-    @include boxGlow($colourOrange, 5px);
-    border: 1px solid $colourOrange;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button-orange:hover {
@@ -160,13 +165,13 @@ button.ui-button::-moz-focus-inner {
 
 .button-orange .ui-button-text {
     color: $colourWhite;
-    @include textShadow($colourBlack, 0, 1px);
+    @include textShadow($colourOrange, 0, 1px);
 }
 
 .button-yellow {
     @include highlightedVerticalGradientYellow;
-    @include boxGlow($colourYellow, 5px);
-    border: 1px solid $colourYellow;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button-yellow:hover {
@@ -174,14 +179,14 @@ button.ui-button::-moz-focus-inner {
 }
 
 .button-yellow .ui-button-text {
-    color: $colourBlack;
+    color: $colourGreyDark;
     @include textShadow($colourYellow, 0, 1px);
 }
 
 .button-green {
     @include highlightedVerticalGradientGreen;
-    @include boxGlow($colourGreen, 5px);
-    border: 1px solid $colourGreen;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button-green:hover {
@@ -190,13 +195,13 @@ button.ui-button::-moz-focus-inner {
 
 .button-green .ui-button-text {
     color: $colourWhite;
-    @include textShadow($colourBlack, 0, 1px);
+    @include textShadow($colourGreen, 0, 1px);
 }
 
 .button-turquoise {
     @include highlightedVerticalGradientTurquoise;
-    @include boxGlow($colourTurquoise, 5px);
-    border: 1px solid $colourTurquoise;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button-turquoise:hover {
@@ -205,13 +210,13 @@ button.ui-button::-moz-focus-inner {
 
 .button-turquoise .ui-button-text {
     color: $colourWhite;
-    @include textShadow($colourBlack, 0, 1px);
+    @include textShadow($colourTurquoise, 0, 1px);
 }
 
 .button-blue {
     @include highlightedVerticalGradientBlue;
-    @include boxGlow($colourBlue, 5px);
-    border: 1px solid $colourBlue;
+    @include boxGlow($colourGreyDark, 3px);
+    border: 0 none;
 }
 
 .button-blue:hover {
@@ -220,13 +225,13 @@ button.ui-button::-moz-focus-inner {
 
 .button-blue .ui-button-text {
     color: $colourWhite;
-    @include textShadow($colourBlack, 0, 1px);
+    @include textShadow($colourBlue, 0, 1px);
 }
 
 .button-black {
     @include highlightedVerticalGradientBlack;
     @include boxGlow($colourBlack, 5px);
-    border: 1px solid $colourBlack;
+    border: 0 none;
 }
 
 .button-black:hover {
@@ -258,4 +263,5 @@ button.ui-button::-moz-focus-inner {
     color: $colourWhite;
     text-align: center;
     line-height: 12px;
+    @include textShadow($colourDarkRed, 0, 1px);
 }

@@ -23,4 +23,6 @@ $(document).ready(function() {
         var $accordionItemIndex = $(".accordion-item .accordion-header-buttons").index($(this).closest(".accordion-header-buttons"));
         $(this).closest(".accordion").accordion( "option", "active", $accordionItemIndex);
     });
+
+    $(".sticky").waypoint('sticky');
 });

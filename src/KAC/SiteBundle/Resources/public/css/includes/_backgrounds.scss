@@ -82,19 +82,19 @@
 }
 
 @mixin highlightedVerticalGradientGrey {
-    @include highlightedVerticalGradient($colourWhite, $colourGreyLight, $colourGrey);
+    @include highlightedVerticalGradient($colourGreyExtraExtraLight, $colourGreyLight, $colourGrey);
 }
 
 @mixin highlightedVerticalGradientGreyReversed {
-    @include highlightedVerticalGradientReversed($colourWhite, $colourGreyLight, $colourGrey);
+    @include highlightedVerticalGradientReversed($colourGreyExtraExtraLight, $colourGreyLight, $colourGrey);
 }
 
 @mixin highlightedVerticalGradientGreyDark {
-    @include highlightedVerticalGradient($colourGreyLight, $colourGrey, $colourGreyDark);
+    @include highlightedVerticalGradient($colourGreyExtraLight, $colourGrey, $colourGreyDark);
 }
 
 @mixin highlightedVerticalGradientGreyDarkReversed {
-    @include highlightedVerticalGradientReversed($colourGreyLight, $colourGrey, $colourGreyDark);
+    @include highlightedVerticalGradientReversed($colourGreyExtraLight, $colourGrey, $colourGreyDark);
 }
 
 @mixin highlightedVerticalGradientGreyLight {
@@ -160,142 +160,6 @@
 
 @mixin highlightedVerticalGradientBlueReversed {
     @include highlightedVerticalGradientReversed($colourBlueExtraLight, $colourBlueLight, $colourBlue);
-}
-
-.background-grey-extra-extra-light {
-    background-color: $colourGreyExtraExtraLight;
-}
-
-.background-grey-extra-light {
-    background-color: $colourGreyExtraLight;
-}
-
-.background-grey-light {
-    background-color: $colourGreyLight;
-}
-
-.background-grey-medium {
-    background-color: $colourGreyMedium;
-}
-
-.background-grey {
-    background-color: $colourGrey;
-}
-
-.background-grey-dark {
-    background-color: $colourGreyDark;
-}
-
-.background-dark-red-extra-extra-light {
-    background-color: $colourDarkRedExtraExtraLight;
-}
-
-.background-dark-red-extra-light {
-    background-color: $colourDarkRedExtraLight;
-}
-
-.background-dark-red-light {
-    background-color: $colourDarkRedLight;
-}
-
-.background-dark-red {
-    background-color: $colourDarkRed;
-}
-
-.background-red-extra-extra-light {
-    background-color: $colourRedExtraExtraLight;
-}
-
-.background-red-extra-light {
-    background-color: $colourRedExtraLight;
-}
-
-.background-red-light {
-    background-color: $colourRedLight;
-}
-
-.background-red {
-    background-color: $colourRed;
-}
-
-.background-orange-extra-extra-light {
-    background-color: $colourOrangeExtraExtraLight;
-}
-
-.background-orange-extra-light {
-    background-color: $colourOrangeExtraLight;
-}
-
-.background-orange-light {
-    background-color: $colourOrangeLight;
-}
-
-.background-orange {
-    background-color: $colourOrange;
-}
-
-.background-yellow-extra-extra-light {
-    background-color: $colourYellowExtraExtraLight;
-}
-
-.background-yellow-extra-light {
-    background-color: $colourYellowExtraLight;
-}
-
-.background-yellow-light {
-    background-color: $colourYellowLight;
-}
-
-.background-yellow {
-    background-color: $colourYellow;
-}
-
-.background-green-extra-extra-light {
-    background-color: $colourGreenExtraExtraLight;
-}
-
-.background-green-extra-light {
-    background-color: $colourGreenExtraLight;
-}
-
-.background-green-light {
-    background-color: $colourGreenLight;
-}
-
-.background-green {
-    background-color: $colourGreen;
-}
-
-.background-turquoise-extra-extra-light {
-    background-color: $colourTurquoiseExtraExtraLight;
-}
-
-.background-turquoise-extra-light {
-    background-color: $colourTurquoiseExtraLight;
-}
-
-.background-turquoise-light {
-    background-color: $colourTurquoiseLight;
-}
-
-.background-turquoise {
-    background-color: $colourTurquoise;
-}
-
-.background-blue-extra-extra-light {
-    background-color: $colourBlueExtraExtraLight;
-}
-
-.background-blue-extra-light {
-    background-color: $colourBlueExtraLight;
-}
-
-.background-blue-light {
-    background-color: $colourBlueLight;
-}
-
-.background-blue {
-    background-color: $colourBlue;
 }
 
 @mixin alphaBackground($colour, $opacity: 1) {

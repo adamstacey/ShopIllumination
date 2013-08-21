@@ -365,15 +365,15 @@ $(document).ready(function () {
 		}});
 	}
 	
-	$(".action-hide").live('click', function() {
+	$(".action-hide").on('click', function() {
 		$("#"+$(this).attr("data-object-to-hide")).hide();
 	});
 	
-	$(".form-element .info-message-icon, .form-element .info-message-icon-left, .form-element .info-message-icon-right").live('mouseenter', function() {
+	$(".form-element .info-message-icon, .form-element .info-message-icon-left, .form-element .info-message-icon-right").on('mouseenter', function() {
 		var $helpMessage = $(this).attr("data-help-container");
 		$("#form-help-"+$helpMessage).slideDown();
 	});
-	$(".form-help").live('mouseleave', function() {
+	$(".form-help").on('mouseleave', function() {
 		$(this).slideUp();
 	});
 	
@@ -414,25 +414,25 @@ $(document).ready(function () {
 			}
 		}
 	}
-	$(".page-navigation").live('click', function() {
+	$(".page-navigation").on('click', function() {
 		$("#ajax_loading").show();
 		$("#update-listing-current-page").val(parseInt($(this).attr("data-page")));
 		$("#form-update-listing").submit();
 	});
-	$("#listing-sort-order").live('change', function() {
+	$("#listing-sort-order").on('change', function() {
 		$("#ajax_loading").show();
 		$("#update-listing-sort-order").val($(this).val());
 		$("#update-listing-current-page").val("1");
 		$("#form-update-listing").submit();
 	});
-	$("#listing-max-results").live('change', function() {
+	$("#listing-max-results").on('change', function() {
 		$("#ajax_loading").show();
 		$("#update-listing-max-results").val(parseInt($(this).val()));
 		$("#update-listing-current-page").val("1");
 		$("#form-update-listing").submit();
 	});
 	
-	$("select.filter-listing").live('change', function() {
+	$("select.filter-listing").on('change', function() {
 		$("#ajax_loading").show();
 		var $listingObjectName = $(this).attr("data-listing-object");
 		var $listingObject = $("#listing-"+$listingObjectName);
@@ -491,11 +491,11 @@ $(document).ready(function () {
 		$("#ajax_loading").hide();
 	});
 	
-	$("select.quick-link").live('change', function(event) {
+	$("select.quick-link").on('change', function(event) {
 		window.location = $(this).val();
 	});
 		
-	$(".quick-filter").live('keypress', function(event) {
+	$(".quick-filter").on('keypress', function(event) {
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
 		{
@@ -559,13 +559,13 @@ $(document).ready(function () {
 		return true;
 	});
 	
-	$(".action-increase-quantity").live('click', function() {
+	$(".action-increase-quantity").on('click', function() {
 		var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
 		var $newQuantity = parseInt($quantityObject.val()) + 1;
 		$quantityObject.val($newQuantity);
 	});
 	
-	$(".action-decrease-quantity").live('click', function() {
+	$(".action-decrease-quantity").on('click', function() {
 		var $quantityObject = $("#"+$(this).attr("data-quantity-object"));
 		var $newQuantity = parseInt($quantityObject.val()) - 1;
 		if ($newQuantity < 1)
@@ -575,7 +575,7 @@ $(document).ready(function () {
 		$quantityObject.val($newQuantity);
 	});
 	
-	$("button.apply-to-all").live('click', function() {
+	$("button.apply-to-all").on('click', function() {
 		$("select.apply-to-all").each(function() {
 			if ($(this).val() != '')
 			{
@@ -594,7 +594,7 @@ $(document).ready(function () {
 		});
 	});
 	
-	$(".action-quick-search").live('click', function() {
+	$(".action-quick-search").on('click', function() {
 		$("#ajax_loading").show();
 		if ($("#form-quick-search").val())
 		{
@@ -614,7 +614,7 @@ $(document).ready(function () {
 			updateResults();
 		}
 	});
-	$(".action-clear-quick-search").live('click', function() {
+	$(".action-clear-quick-search").on('click', function() {
 		$("#update-listing-search").val("");
 		$("#filter-date-from").val("");
 		$("#filter-date-from-formatted").val("");
@@ -630,7 +630,7 @@ $(document).ready(function () {
 	
 	
 	
-	$("#form-quick-search").live('keypress', function(event) {
+	$("#form-quick-search").on('keypress', function(event) {
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
 		{
@@ -655,7 +655,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$("a.extra-action, button.extra-action").live('click', function() {
+	$("a.extra-action, button.extra-action").on('click', function() {
 		$("#ajax_loading").show();
 		var $formAction = $(this).attr('data-form-action');
 		if ($formAction != '')
@@ -671,7 +671,7 @@ $(document).ready(function () {
 		$("#form-update").submit();
 	});
 	
-	$("select.extra-action").live('change', function() {
+	$("select.extra-action").on('change', function() {
 		$("#ajax_loading").show();
 		var $optionObject = $(this).find("option[value='"+$(this).val()+"']");
 		var $formAction = $optionObject.attr('data-form-action');
@@ -698,14 +698,14 @@ $(document).ready(function () {
 		var $maximumCharactersObject = $("#"+$(this).attr("data-maximum-characters-object"));
 		$maximumCharactersObject.html(checkMaximumCharcaters($object, $maximumCharacters));
 	});
-	$(".maximum-characters").live('keyup', function() {
+	$(".maximum-characters").on('keyup', function() {
 		var $object = $(this);
 		var $maximumCharacters = $(this).attr("data-maximum-characters");
 		var $maximumCharactersObject = $("#"+$(this).attr("data-maximum-characters-object"));
 		$maximumCharactersObject.html(checkMaximumCharcaters($object, $maximumCharacters));
 	});
 	
-	$("#form-update table.data-table td input, #form-update table.data-table td textarea, #form-update table.data-table td select").live('change', function() {
+	$("#form-update table.data-table td input, #form-update table.data-table td textarea, #form-update table.data-table td select").on('change', function() {
 		if (!$(this).hasClass("action-select"))
 		{
 			var $itemId = $(this).attr("data-id");
@@ -714,7 +714,7 @@ $(document).ready(function () {
 			$("tr#item-"+$itemId+" td.select div.checker span").addClass("checked");
 		}
 	});
-	$("#form-update table.data-table td .action-increase-quantity, #form-update table.data-table td .action-decrease-quantity, #form-update table.data-table td :checkbox, #form-update table.data-table td :radio, #form-update table.data-table td :file").live('click', function() {
+	$("#form-update table.data-table td .action-increase-quantity, #form-update table.data-table td .action-decrease-quantity, #form-update table.data-table td :checkbox, #form-update table.data-table td :radio, #form-update table.data-table td :file").on('click', function() {
 		if (!$(this).hasClass("action-select"))
 		{
 			var $itemId = $(this).attr("data-id");
@@ -724,7 +724,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$("#form-update table.data-table td input").live('keypress', function(event) {
+	$("#form-update table.data-table td input").on('keypress', function(event) {
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
 		{
@@ -732,7 +732,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$(".flat-sortable-list img").live('mousedown', function(event) {
+	$(".flat-sortable-list img").on('mousedown', function(event) {
 		event.preventDefault();
 		return false;
 	});
@@ -743,7 +743,7 @@ $(document).ready(function () {
 		}
    	}).disableSelection();
 	
-	$("input.free-text").live('keypress', function(event) {
+	$("input.free-text").on('keypress', function(event) {
 		var $flatSortableListObjectName = $(this).attr("data-flat-sortable-list-object")
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
@@ -752,13 +752,13 @@ $(document).ready(function () {
 			$("button.action-add-flat-sortable-list-item[data-flat-sortable-list-object='"+$flatSortableListObjectName+"']").click();
 		}
 	});
-	$(".action-delete-flat-sortable-list-item").live('click', function() {
+	$(".action-delete-flat-sortable-list-item").on('click', function() {
 		var $flatSortableListObjectName = $(this).parent().attr("data-flat-sortable-list-object");
 		$(this).parent().remove();
 		updateFlatSortableList($flatSortableListObjectName);
 		
 	});
-	$(".flat-sortable-list-parts").live('change', function() {
+	$(".flat-sortable-list-parts").on('change', function() {
 		var $freeTextObject = $("input.free-text[data-flat-sortable-list-object='"+$(this).attr("data-flat-sortable-list-object")+"']");
 		if ($(this).val() == 'freeText')
 		{
@@ -773,7 +773,7 @@ $(document).ready(function () {
 			$freeTextObject.attr("disabled", "disabled");
 		}
 	});
-	$(".action-add-flat-sortable-list-item").live('click', function() {
+	$(".action-add-flat-sortable-list-item").on('click', function() {
 		var $flatSortableListObjectName = $(this).attr("data-flat-sortable-list-object");
 		var $flatSortableListObjectFieldName = $flatSortableListObjectName.replace('-template', '');
 		var $flatSortableListObject = $("#flat-sortable-list-"+$flatSortableListObjectName);
@@ -809,7 +809,7 @@ $(document).ready(function () {
 		}
 	});
 	
-	$("#add .action-multiple-delete-add").live('click', function() {
+	$("#add .action-multiple-delete-add").on('click', function() {
 		if ($("#add .action-select-add:checked").length > 0)
 		{
 			$("#add .action-select-add:checked").each(function() {
@@ -864,7 +864,7 @@ $(document).ready(function () {
 		}
 	}).disableSelection();
 		
-	$(".update-filter").live('click', function() {
+	$(".update-filter").on('click', function() {
 		$("#ajax_loading").show();
 		$("#form-update-listing input[type='hidden']").val("");
 		$("#"+$(this).attr("data-update-object")).val("|"+$(this).attr("data-filter-value")+"|");
@@ -1071,21 +1071,21 @@ $(document).ready(function () {
 		}
 	});
 
-	$(".filter-text-box").live('keypress', function(event) {
+	$(".filter-text-box").on('keypress', function(event) {
 		var $keyCode = event.keyCode || event.which;
 		if ($keyCode == 13)
 		{
 			updateResults();
 		}
 	});
-	$("#listing-filter input[type='checkbox']").live('click', function() {
+	$("#listing-filter input[type='checkbox']").on('click', function() {
 		updateResults();
 	});
 	
-	$(".action-update-your-results").live('click', function() {
+	$(".action-update-your-results").on('click', function() {
 		updateResults();
 	});
-	$(".action-clear-filters").live('click', function() {
+	$(".action-clear-filters").on('click', function() {
 		$("#ajax_loading").show();
 		$("#update-listing-search").val("");
 		$("#filter-date-from").val("");
@@ -1102,7 +1102,7 @@ $(document).ready(function () {
 		updateResults();
 	});
 	
-	$(".action-show-hide-filter").live('click', function() {
+	$(".action-show-hide-filter").on('click', function() {
 		$("#listing-statistics").hide();
 		if ($("#statistics-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
 		{
@@ -1135,7 +1135,7 @@ $(document).ready(function () {
 			}
 		}
 	});
-	$(".action-show-hide-statistics").live('click', function() {
+	$(".action-show-hide-statistics").on('click', function() {
 		$("#listing-filter").hide();
 		if ($("#filter-button > span.ui-button-icon-primary").hasClass("ui-icon-triangle-1-n"))
 		{
@@ -1177,7 +1177,7 @@ $(document).ready(function () {
 	
 	
 
-	$(".action-confirm-multiple-delete").live('click', function(event) {
+	$(".action-confirm-multiple-delete").on('click', function(event) {
 		event.preventDefault();
 		if ($("#confirm-multiple-delete"))
 		{
@@ -1197,16 +1197,16 @@ $(document).ready(function () {
 			}
 		}
 	});
-	$(".action-cancel-multiple-delete").live('click', function() {
+	$(".action-cancel-multiple-delete").on('click', function() {
 		$("#form-delete").val("0");
 		$("#confirm-multiple-delete").hide();
 	});
-	$(".action-multiple-delete").live('click', function() {
+	$(".action-multiple-delete").on('click', function() {
 		$("#form-delete").val("1");
 		$("#form-update").submit();
 	});
 	
-	$(".action-add").live('click', function(event) {
+	$(".action-add").on('click', function(event) {
 		if ($("#add"))
 		{
 			addFormRow();
@@ -1214,14 +1214,14 @@ $(document).ready(function () {
 			$("html, body").animate({scrollTop: $("#add").offset().top - 20}, 'slow');
 		}
 	});
-    $(".action-new").live('click', function(event) {
+    $(".action-new").on('click', function(event) {
         if ($("#new"))
         {
             $("#new").show();
             $("html, body").animate({scrollTop: $("#new").offset().top - 20}, 'slow');
         }
     });
-	$(".action-close-add").live('click', function(event) {
+	$(".action-close-add").on('click', function(event) {
 		$("div.form-error").hide();
 		$("#add").hide();
 		if ($("#add .action-select-add:not(:eq(0))").length > 0)
@@ -1232,54 +1232,54 @@ $(document).ready(function () {
 		}
 		$("html, body").animate({scrollTop: 0}, 'slow');
 	});
-	$(".action-close-new").live('click', function(event) {
+	$(".action-close-new").on('click', function(event) {
 		$("div.form-error").hide();
 		$("#new").hide();
         $("#new")[0].reset();
 		$("html, body").animate({scrollTop: 0}, 'slow');
 	});
 		
-	$("#button-add-another").live('click', function() {
+	$("#button-add-another").on('click', function() {
 		$("#form-add-another").val("1");
 		return true;
 	});
-	$("#button-add").live('click', function() {
+	$("#button-add").on('click', function() {
 		$("#form-add-another").val("0");
 		return true;
 	});
 	
-	$("#button-update-go-back").live('click', function() {
+	$("#button-update-go-back").on('click', function() {
 		$("#form-go-back").val("1");
 		return true;
 	});
-	$("#button-update").live('click', function() {
+	$("#button-update").on('click', function() {
 		$("#form-go-back").val("0");
 		return true;
 	});
 	
-	$("#add #button-listing-add-go-back").live('click', function() {
+	$("#add #button-listing-add-go-back").on('click', function() {
 		$("#form-go-back").val("1");
 		$("#form-update").submit();
 		return true;
 	});
-	$("#add #button-listing-add").live('click', function() {
+	$("#add #button-listing-add").on('click', function() {
 		$("#form-go-back").val("0");
 		$("#form-update").submit();
 		return true;
 	});
 
-	$("#new #button-listing-new").live('click', function() {
+	$("#new #button-listing-new").on('click', function() {
 		$("#form-go-back").val("0");
         $("#form-new-item").val(1);
 		$("#form-update").submit();
 		return true;
 	});
 	
-	$("#add .action-add-another").live('click', function() {
+	$("#add .action-add-another").on('click', function() {
 		addFormRow();
  	});
 	
-	$(".action-select-all").live('click', function() {
+	$(".action-select-all").on('click', function() {
 		var $selectClass = "";
 		if ($(this).attr("data-select"))
 		{
@@ -1296,7 +1296,7 @@ $(document).ready(function () {
 			$(".action-select"+$selectClass+":not(:hidden)").parent().parent().parent().parent().removeClass("selected");
 		}
 	});
-    $(".action-select").live('click', function() {
+    $(".action-select").on('click', function() {
     	var $id = $(this).attr("data-id");
     	if ($(this).is(":checked"))
     	{
@@ -1314,7 +1314,7 @@ $(document).ready(function () {
     	}
     });
     
-    $(".action-select-all-add").live('click', function() {
+    $(".action-select-all-add").on('click', function() {
 		if ($(".action-select-all-add").is(":checked"))
 		{
 			$(".action-select-add:not(.no-uniform)").attr("checked", "checked");
@@ -1326,7 +1326,7 @@ $(document).ready(function () {
 			$("tr.item-add").removeClass("selected");
 		}
 	});
-    $(".action-select-add").live('click', function() {
+    $(".action-select-add").on('click', function() {
     	var $id = $(this).attr("data-id");
     	if ($(this).is(":checked"))
     	{
@@ -1344,7 +1344,7 @@ $(document).ready(function () {
     	}
     });
     
-    $(".action-go-back").live('click', function() {
+    $(".action-go-back").on('click', function() {
 		 window.history.back();
     });
 		
@@ -1359,7 +1359,7 @@ $(document).ready(function () {
         // containing tabs for same reason.
     }
     
-    $(".close-message").live('click', function() {
+    $(".close-message").on('click', function() {
 		$(".message").fadeOut();
 	});
     
@@ -1396,7 +1396,7 @@ $(document).ready(function () {
 	
 	initGlobalFunctions();
 	
-	$(".action-image-popup").live('click', function() {
+	$(".action-image-popup").on('click', function() {
 		loadImagePopup($(this).attr("data-image-large-path"), $(this).attr("alt"), $(this).attr("data-image-size-width"), $(this).attr("data-image-size-height"));
 	});
 	
@@ -1608,39 +1608,39 @@ function initGlobalFunctions()
         
     });
     
-    $("input.seo-url").live('keypress keyup focus', function() {
+    $("input.seo-url").on('keypress keyup focus', function() {
     	var $currentCaretPosition = $(this).caret();
     	$(this).val($(this).val().toLowerCase());
 		$(this).val($(this).val().replace(/[ ]/g,'-'));
 		$(this).val($(this).val().replace(/[^a-z0-9-//]/g,''));
     	$(this).caret($currentCaretPosition);
 	});
-	$("input.uppercase").live('keypress keyup focus', function() {
+	$("input.uppercase").on('keypress keyup focus', function() {
 		var $currentCaretPosition = $(this).caret();
     	$(this).val($(this).val().toUpperCase());
     	$(this).caret($currentCaretPosition);
 	});
-	$("input.postcode").live('keypress keyup focus', function() {
+	$("input.postcode").on('keypress keyup focus', function() {
 		var $currentCaretPosition = $(this).caret();
     	$(this).val($(this).val().toUpperCase());
     	$(this).caret($currentCaretPosition);
 	});
-	$("input.lowercase").live('keypress keyup focus', function() {
+	$("input.lowercase").on('keypress keyup focus', function() {
 		var $currentCaretPosition = $(this).caret();
     	$(this).val($(this).val().toLowerCase());
     	$(this).caret($currentCaretPosition);
 	});
-	$("input.integer").live('keypress keyup focus', function() {
+	$("input.integer").on('keypress keyup focus', function() {
 		var $currentCaretPosition = $(this).caret();
 		$(this).val($(this).val().replace(/[^0-9]/g,''));
 		$(this).caret($currentCaretPosition);
 	});
-	$("input.decimal").live('keypress keyup focus', function() {
+	$("input.decimal").on('keypress keyup focus', function() {
 		var $currentCaretPosition = $(this).caret();
 		$(this).val($(this).val().replace(/[^0-9.]/g,''));
 		$(this).caret($currentCaretPosition);
 	});
-	$("input.url").live('keypress keyup focus', function() {
+	$("input.url").on('keypress keyup focus', function() {
 		var $currentCaretPosition = $(this).caret();
 		$(this).val($(this).val().toLowerCase());
 		$(this).val($(this).val().replace(/[ ]/g,'-'));

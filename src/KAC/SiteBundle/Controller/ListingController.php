@@ -280,7 +280,7 @@ class ListingController extends Controller
             $queryString = trim($request->query->get('q'));
 
             $dismax = $query->getDisMax();
-            $dismax->setQueryFields(array('product_code^5', 'header^2', 'brand^3.5', 'page_title', 'short_description', 'search_words', 'text'));
+            $dismax->setQueryFields(array('header^2', 'brand^1.5', 'product_code', 'page_title', 'short_description', 'search_words', 'text'));
             $dismax->setPhraseFields(array('product_code^5', 'short_description^30'));
             $dismax->setQueryParser('edismax');
             $query->setQuery($queryString);
@@ -615,8 +615,8 @@ class ListingController extends Controller
     private function getPopularProducts($departmentIds = null, $brandIds = null, $num=null)
     {
         // Ensure that department and brand ids are arrays
-        if($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
-        if($brandIds !== null && !is_array($brandIds)) $brandIds = array($brandIds);
+        if ($departmentIds !== null && !is_array($departmentIds)) $departmentIds = array($departmentIds);
+        if ($brandIds !== null && !is_array($brandIds)) $brandIds = array($brandIds);
 
         /**
          * @var $em EntityManager
@@ -627,7 +627,7 @@ class ListingController extends Controller
         $solarium = $this->get('solarium.client');
 
         // If no department was specified we can fetch the popular products just using SQL
-        if(!$departmentIds)
+        if (!$departmentIds)
         {
             $qb = $em->createQueryBuilder();
             $qb->select('p, count(op.id) AS total')
@@ -638,19 +638,19 @@ class ListingController extends Controller
                 ->addOrderBy('total', 'DESC');
             $qb->where($qb->expr()->gt('op.unitCost', ':unitCost'))
                 ->setParameter('unitCost', 200);
-            if($brandIds)
+            if ($brandIds)
             {
                 $qb->andWhere($qb->expr()->in('p.brand', ':brands'))
                     ->setParameter('brands', $brandIds);
             }
-            if($num)
+            if ($num)
             {
                 $qb->setMaxResults($num);
             }
 
             return $qb->getQuery()->execute();
         } else {
-            $ids = array();
+            $products = array();
 
             $query = $solarium->createSelect();
             $helper = $query->getHelper();
@@ -658,8 +658,8 @@ class ListingController extends Controller
             $query->setFields(array('id'));
             $query->setRows(99999999);
 
-            $parts = array();
-            foreach($departmentIds as $departmentId)
+            $departmentParts = array();
+            foreach ($departmentIds as $departmentId)
             {
                 // Get the department
                 $department = $em->getRepository("KACSiteBundle:Department")->find($departmentId);
@@ -673,16 +673,12 @@ class ListingController extends Controller
                         $departmentFilterPath = $currDepartment . "|" . $departmentFilterPath;
                         $currDepartment = $currDepartment->getParent();
                     } while ($currDepartment !== null);
-                    $parts[] = 'department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|"));
+                    $departmentParts[] = 'department_path:'.$helper->escapePhrase(ltrim(rtrim($departmentFilterPath, "|"), "|"));
                 }
-            }
-            if(count($parts) > 0)
-            {
-                $query->createFilterQuery('department')->setQuery(implode(' OR ', $parts));
             }
 
             // If brand was specified fetch from the database
-            $parts = array();
+            $brandParts = array();
             if ($brandIds)
             {
                 foreach($brandIds as $brandId)
@@ -690,41 +686,133 @@ class ListingController extends Controller
                     $brand = $em->getRepository('KAC\SiteBundle\Entity\Brand')->find($brandId);
                     if ($brand)
                     {
-                        $parts[] = 'brand:'.$helper->escapePhrase($brand->getDescription()->getName ());
+                        $brandParts[] = 'brand:'.$helper->escapePhrase($brand->getDescription()->getName ());
                     }
                 }
             }
 
-            if(count($parts) > 0)
+            if (count($departmentParts) > 1)
             {
-                $query->createFilterQuery('brand')->addTag('brand')->setQuery(implode(' OR ', $parts));
+                foreach ($departmentParts as $departmentPart)
+                {
+                    $ids = array();
+                    $singleQuery = $solarium->createSelect();
+                    $singleQuery->setQuery('*');
+                    $singleQuery->setFields(array('id'));
+                    $singleQuery->setRows(99999999);
+                    $singleQuery->createFilterQuery('department')->setQuery($departmentPart);
+                    if (count($brandParts) > 0)
+                    {
+                        $singleQuery->createFilterQuery('brand')->addTag('brand')->setQuery(implode(' OR ', $brandParts));
+                    }
+                    $results = $solarium->execute($singleQuery);
+                    foreach ($results as $document)
+                    {
+                        $ids[] = $document->id;
+                    }
+
+                    if (count($ids) > 0)
+                    {
+                        $qb = $em->createQueryBuilder();
+                        $departmentProducts = $qb->select('p, count(op.id) AS total')
+                            ->from('KAC\SiteBundle\Entity\Product', 'p')
+                            ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
+                            ->where($qb->expr()->in('p.id', '?1'))
+                            ->andWhere($qb->expr()->gte('op.unitCost', '?2'))
+                            ->groupBy('op.product')
+                            ->orderBy('p.accessory', 'ASC')
+                            ->addOrderBy('total', 'DESC')
+                            ->setParameter(1, $ids)
+                            ->setParameter(2, 100)
+                            ->getQuery()
+                            ->setMaxResults(1)
+                            ->execute();
+                        foreach ($departmentProducts as $departmentProduct)
+                        {
+                            $products[] = $departmentProduct;
+                        }
+                    }
+                }
+
+            } elseif (count($brandParts) > 1) {
+                foreach ($brandParts as $brandPart)
+                {
+                    $ids = array();
+                    $singleQuery = $solarium->createSelect();
+                    $singleQuery->setQuery('*');
+                    $singleQuery->setFields(array('id'));
+                    $singleQuery->setRows(99999999);
+                    $singleQuery->createFilterQuery('department')->setQuery($brandPart);
+                    if (count($departmentParts) > 0)
+                    {
+                        $singleQuery->createFilterQuery('department')->setQuery(implode(' OR ', $departmentParts));
+                    }
+                    $results = $solarium->execute($singleQuery);
+                    foreach ($results as $document)
+                    {
+                        $ids[] = $document->id;
+                    }
+
+                    if (count($ids) <= 0)
+                    {
+                        break;
+                    }
+
+                    $qb = $em->createQueryBuilder();
+                    $brandProducts = $qb->select('p, count(op.id) AS total')
+                        ->from('KAC\SiteBundle\Entity\Product', 'p')
+                        ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
+                        ->where($qb->expr()->in('p.id', '?1'))
+                        ->andWhere($qb->expr()->gte('op.unitCost', '?2'))
+                        ->groupBy('op.product')
+                        ->orderBy('p.accessory', 'ASC')
+                        ->addOrderBy('total', 'DESC')
+                        ->setParameter(1, $ids)
+                        ->setParameter(2, 100)
+                        ->getQuery()
+                        ->setMaxResults(1)
+                        ->execute();
+
+                    $products[] = array_values(array_slice($brandProducts, 0, 1));
+                }
+            } else {
+                if (count($departmentParts) > 0)
+                {
+                    $query->createFilterQuery('department')->setQuery(implode(' OR ', $departmentParts));
+                }
+
+                if (count($brandParts) > 0)
+                {
+                    $query->createFilterQuery('brand')->addTag('brand')->setQuery(implode(' OR ', $brandParts));
+                }
+
+                $results = $solarium->execute($query);
+
+                $ids = array();
+                foreach ($results as $document)
+                {
+                    $ids[] = $document->id;
+                }
+
+                if (count($ids) <= 0)
+                {
+                    return array();
+                }
+
+                $qb = $em->createQueryBuilder();
+                $products = $qb->select('p, count(op.id) AS total')
+                    ->from('KAC\SiteBundle\Entity\Product', 'p')
+                    ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
+                    ->where($qb->expr()->in('p.id', '?1'))
+                    ->groupBy('op.product')
+                    ->orderBy('p.accessory', 'ASC')
+                    ->addOrderBy('total', 'DESC')
+                    ->setParameter(1, $ids)
+                    ->getQuery()
+                    ->execute();
             }
 
-            $results = $solarium->execute($query);
-
-            foreach ($results as $document)
-            {
-                $ids[] = $document->id;
-            }
-
-            if(count($ids) <= 0)
-            {
-                return array();
-            }
-
-            $qb = $em->createQueryBuilder();
-            $products = $qb->select('p, count(op.id) AS total')
-                ->from('KAC\SiteBundle\Entity\Product', 'p')
-                ->leftJoin('KAC\SiteBundle\Entity\Order\Product', 'op', Expr\Join::WITH, $qb->expr()->eq('op.product', 'p.id'))
-                ->where($qb->expr()->in('p.id', '?1'))
-                ->groupBy('op.product')
-                ->orderBy('p.accessory', 'ASC')
-                ->addOrderBy('total', 'DESC')
-                ->setParameter(1, $ids)
-                ->getQuery()
-                ->execute();
-
-            if($num)
+            if ($num)
             {
                 $products = array_values(array_slice($products, 0, $num));
             }

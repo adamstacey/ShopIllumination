@@ -1,0 +1,33 @@
+{% extends 'KACSiteBundle:NewProduct:base.html.twig' %}
+
+{% block title %}New Products | {{ parent() }}{% endblock %}
+
+{% block header %}
+    <header class="sticky">
+        <button type="button" class="mls fr button button-small button-green icon-white" data-icon-secondary="icon-472">Save</button>
+        <button type="button" data-object="products" class="actionAddFormGroup mls fr button button-small icon-green" data-icon-secondary="icon-1122">Add Product</button>
+        <h2>New Products</h2>
+    </header>
+{% endblock %}
+{% block body %}
+    <form class="form" method="post" novalidate="novalidate" action="">
+        <section id="products" data-prototype="{% filter escape %}{% include 'KACSiteBundle:NewProduct/Includes:newCollectionGroup.html.twig' with {'form': form.products.vars.prototype} %}{% endfilter %}">
+
+        </section>
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            addCollectionGroup($("#products"));
+
+            $(document).on("click", ".actionAddCollectionTableRow", function() {
+                $("select.select-department").select2();
+            });
+
+            $("select.select-department").select2();
+            $(".departments").on("rowadded", function() {
+                $("select.select-department").select2();
+            });
+        });
+    </script>
+{% endblock %}
