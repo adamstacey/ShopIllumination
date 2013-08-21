@@ -41,8 +41,8 @@
                         <div class="header-contents">
                             {% include 'KACSiteBundle:Includes:logo.html.twig' %}
                             {% include 'KACSiteBundle:Includes:search.html.twig' %}
-                            <div id="basket-summary" data-url="{{ path('basket_summary') }}">
-                                {% render(controller('KACSiteBundle:Basket:summary')) %}
+                            <div id="basket-summary" data-url="{{ path('basket_small_summary') }}">
+                                {% render(controller('KACSiteBundle:Basket:smallSummary')) %}
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -58,9 +58,9 @@
                                         </div>
                                         <div class="widget widget-7-of-8">
                                             {% block admin_submenu %}
-                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-701" href="{{ path('admin_orders') }}">Orders</a>
+                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-701" href="{{ path('orders_index') }}">Orders</a>
                                                 <a class="button button-small icon-grey mrs" data-icon-primary="icon-399" href="{{ path('departments_index') }}">Departments</a>
-                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-1370" href="{{ path('admin_brands') }}">Brands</a>
+                                                <a class="button button-small icon-grey mrs" data-icon-primary="icon-1370" href="{{ path('brands_index') }}">Brands</a>
                                                 <a class="button button-small icon-grey mrs" data-icon-primary="icon-278" href="{{ path('listing_products') }}">Products</a>
                                             {% endblock %}
                                         </div>
