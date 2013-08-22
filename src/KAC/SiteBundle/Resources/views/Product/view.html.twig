@@ -136,7 +136,7 @@
                                                 <div class="clear"></div>
                                                 <div id="purchasingLoading{{ variant.id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" border="0" alt="loading" /></div>
                                                 <div class="basket-product-info" data-variantId="{{ variant.id }}">
-                                                    {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'variantId': variant.id} %}
+                                                    {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'productId': product.id, 'variantId': variant.id} %}
                                                 </div>
                                                 <div class="clear"></div>
                                             {% elseif product.variants|length > 1 %}
@@ -180,7 +180,7 @@
                                                 <div class="clear"></div>
                                                 <div id="purchasingLoading{{ product.variants[0].id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" border="0" alt="loading" /></div>
                                                 <div class="basket-product-info" data-variantId="{{ product.variants[0].id }}">
-                                                    {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'variantId': product.variants[0].id} %}
+                                                    {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'productId': product.id, 'variantId': product.variants[0].id} %}
                                                 </div>
                                                 <div class="clear"></div>
                                             {% endif %}
