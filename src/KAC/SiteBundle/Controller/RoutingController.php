@@ -43,7 +43,7 @@ class RoutingController extends Controller
                 return $this->redirect($this->get('router')->generate('routing', array('url' => $redirectObject->getRedirectTo())), $redirectObject->getRedirectCode());
             }
         } else {
-            if($this->isObjectViewable($routingObject))
+            if ($this->isObjectViewable($routingObject))
             {
                 // Forward request to relevant controller
                 switch (get_class($routingObject))
@@ -58,7 +58,7 @@ class RoutingController extends Controller
                         return $this->forward('KACSiteBundle:Listing:index', array('departmentId' => $routingObject->getObjectId(), 'all' => $all), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Product\Routing':
-                        if($all)
+                        if ($all)
                         {
                             // All flag should be ignored for the product view page
                             $twig = $this->container->get('templating');
@@ -69,7 +69,7 @@ class RoutingController extends Controller
                         return $this->forward('KACSiteBundle:Product:view', array('id' => $routingObject->getObjectId()), $request->query->all());
                         break;
                     case 'KAC\SiteBundle\Entity\Product\Variant\Routing':
-                        if($all)
+                        if ($all)
                         {
                             // All flag should be ignored for the product view page
                             $twig = $this->container->get('templating');
