@@ -3,7 +3,7 @@ $(document).ready(function() {
         var $quantityInput = $(this).parent().find("input.quantity"),
             $el = $(this).parent();
 
-        $("#ajax-loading").show();
+        $("#purchasingLoading"+$el.attr("data-variant-id")).show();
         $.ajax({
             type: "GET",
             dataType: "json",
@@ -14,6 +14,7 @@ $(document).ready(function() {
                 quantity: $quantityInput.val()
             },
             error: function(a, b, c) {
+                $("#purchasingLoading"+$el.attr("data-variant-id")).hide();
                 console.log('error', a, b,c );
                 $("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
                 $("#message-error").fadeIn(function() {
@@ -22,6 +23,7 @@ $(document).ready(function() {
                 });
             },
             success: function(data) {
+                $("#purchasingLoading"+$el.attr("data-variant-id")).hide();
                 updateBasketSummary(data.summary_html);
                 updateProductInfo($el.attr("data-variant-id"), data.product_html);
             }
@@ -32,7 +34,7 @@ $(document).ready(function() {
         var $quantityInput = $(this).parent().find("input.quantity"),
             $el = $(this).parent();
 
-        $("#ajax-loading").show();
+        $("#purchasingLoading"+$el.attr("data-id")).show();
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -50,6 +52,7 @@ $(document).ready(function() {
                 quantity: $quantityInput.val()
             },
             error: function(data) {
+                $("#purchasingLoading"+$el.attr("data-id")).hide();
                 $("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
                 $("#message-error").fadeIn(function() {
                     $("html, body").animate({scrollTop: $("#message-error").offset().top - 15},'slow');
@@ -57,6 +60,7 @@ $(document).ready(function() {
                 });
             },
             success: function(data) {
+                $("#purchasingLoading"+$el.attr("data-id")).hide();
                 updateBasketSummary(data.summary_html);
                 updateProductInfo($el.attr("data-id"), data.product_html);
             }
