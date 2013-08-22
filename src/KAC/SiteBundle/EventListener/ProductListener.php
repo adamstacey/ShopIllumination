@@ -23,7 +23,7 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof ProductToDepartment
+        if ($entity instanceof ProductToDepartment
             || $entity instanceof Product\Description
             || $entity instanceof Product\Routing
             || $entity instanceof Product\Image
@@ -32,7 +32,7 @@ class ProductListener
             || $entity instanceof Variant)
         {
             $entity = $entity->getProduct();
-        } elseif($entity instanceof Product\VariantToFeature
+        } elseif ($entity instanceof Product\VariantToFeature
             || $entity instanceof Variant\Description
             || $entity instanceof Variant\Routing
             || $entity instanceof Variant\Image
@@ -43,23 +43,10 @@ class ProductListener
             $entity = $entity->getVariant()->getProduct();
         }
 
-        if($entity instanceof Product)
+        if ($entity instanceof Product)
         {
-            // Ensure that there is at least one description
-            if (!$entity->getDescription()) $entity->addDescription(new Product\Description());
-            foreach($entity->getDescriptions() as $description)
-            {
-                $this->manager->updateProductDescription($description);
-            }
-
-            foreach($entity->getVariants() as $variant)
-            {
-                if (!$variant->getDescription()) $variant->addDescription(new Variant\Description());
-                foreach($variant->getDescriptions() as $description)
-                {
-                    $this->manager->updateVariantDescription($description);
-                }
-            }
+            // Update the product
+            $this->manager->updateProduct($entity);
         }
     }
 
@@ -67,7 +54,7 @@ class ProductListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof ProductToDepartment
+        if ($entity instanceof ProductToDepartment
             || $entity instanceof Product\Description
             || $entity instanceof Product\Routing
             || $entity instanceof Product\Image
@@ -76,7 +63,7 @@ class ProductListener
             || $entity instanceof Variant)
         {
             $entity = $entity->getProduct();
-        } elseif($entity instanceof Product\VariantToFeature
+        } elseif ($entity instanceof Product\VariantToFeature
             || $entity instanceof Variant\Description
             || $entity instanceof Variant\Routing
             || $entity instanceof Variant\Image
@@ -87,24 +74,10 @@ class ProductListener
             $entity = $entity->getVariant()->getProduct();
         }
 
-        if($entity instanceof Product)
+        if ($entity instanceof Product)
         {
-            // Ensure that there is at least one description
-            if (!$entity->getDescription()) $entity->addDescription(new Product\Description());
-
-            foreach($entity->getDescriptions() as $description)
-            {
-                $this->manager->updateProductDescription($description);
-            }
-            foreach($entity->getVariants() as $variant)
-            {
-                // Ensure that there is at least one description
-                if (!$variant->getDescription()) $variant->addDescription(new Variant\Description());
-                foreach($variant->getDescriptions() as $description)
-                {
-                    $this->manager->updateVariantDescription($description);
-                }
-            }
+            // Update the product
+            $this->manager->updateProduct($entity);
         }
     }
 
