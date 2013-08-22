@@ -185,7 +185,7 @@
                                         </div>
                                     </div>
                                     {% if product.variants|length > 0 and differentiating_features|length > 0 %}
-                                        <div class="border-bottom-separator">
+                                        <div class="variant-filters border-bottom-separator">
                                             <div class="pam">
                                                 {% for featureGroup, features in differentiating_features %}
                                                     <div class="form-element widget-group clearfix">
@@ -302,6 +302,14 @@
     <script type="text/javascript">
         $(document).ready(function() {
             var variants = JSON.parse('{{ variants|json_encode|raw }}');
+            var currentVariant = null;
+
+            // Get the current variant
+            for(var i=0; i<variants.length; i++) {
+                if(variants[i].variantId == {{ variant.id }}) {
+                    currentVariant = variants[i];
+                }
+            }
 
             $(".variant-filter").change(function() {
                 var possibleVariants = variants.slice(0);
@@ -337,8 +345,28 @@
                 }
                 possibleVariants = temp;
 
+                $(".variant-filters .form-element").removeClass("error");
+
                 if(possibleVariants.length === 1) {
-                    window.location = routes['routing'].replace('-1', possibleVariants[0].url);
+                    if(currentVariant !== null && currentVariant.variantId != possibleVariants[0].variantId) {
+                        window.location = routes['routing'].replace('-1', possibleVariants[0].url);
+                    }
+                } else if(possibleVariants.length > 1) {
+                    $.each($('.variant-filter'), function(i, filter) {
+                        var variantExists = false;
+                        $.each(possibleVariants, function(j, variant) {
+                            var group = $(filter).data("group");
+                            if(variant.features[group] == $(this).val()) {
+                                variantExists = true;
+                            }
+                        });
+
+                        if(variantExists) {
+                            $(filter).parent().parent().parent().addClass('error');
+                        }
+                    });
+                } else {
+                    $(this).parent().parent().parent().addClass('error');
                 }
 
             });
