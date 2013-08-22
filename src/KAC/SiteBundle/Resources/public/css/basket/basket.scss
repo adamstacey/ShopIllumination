@@ -78,3 +78,27 @@
     top: 0;
     right: 10px;
 }
+
+.basket-product-info .items-added {
+    margin: $spacingMedium 0 0 0;
+    padding: $spacingMedium;
+
+    border: 1px solid $colourGreenExtraLight;
+    background: $colourGreenExtraExtraLight;
+    @include equalBorderRadius($radiusSize);
+}
+
+.basket-product-info .items-added h4 {
+    padding: 0;
+    margin: 0 0 $spacingSmall 0;
+
+    line-height: 100%;
+}
+
+.basket-product-info .items-added p {
+    padding: 0;
+    margin: 0 0 $spacingMedium 0;
+
+    line-height: 100%;
+}
+
