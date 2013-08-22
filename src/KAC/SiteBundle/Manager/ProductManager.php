@@ -8,11 +8,6 @@ use KAC\SiteBundle\Entity\Product\Description as ProductDescription;
 use KAC\SiteBundle\Entity\Product\Price;
 use KAC\SiteBundle\Entity\Product\VariantToFeature;
 use KAC\SiteBundle\Entity\Product\Variant;
-use KAC\SiteBundle\Entity\Product\Image as ProductImage;
-use KAC\SiteBundle\Entity\Product\Variant\Image as ProductVariantImage;
-use KAC\SiteBundle\Entity\Product\Document as ProductDocument;
-use KAC\SiteBundle\Entity\Product\Variant\Document as ProductVariantDocument;
-use KAC\SiteBundle\Entity\Product\Routing as ProductRouting;
 use KAC\SiteBundle\Entity\Product;
 use KAC\SiteBundle\Entity\ProductToDepartment;
 use KAC\SiteBundle\Entity\Image;
@@ -62,80 +57,108 @@ class ProductManager extends Manager
         return $variant;
     }
 
-    public function updateProductDescription(ProductDescription $description)
+    public function updateProduct(Product $product)
+    {
+        // Update the variants
+        foreach ($product->getVariants() as $variant)
+        {
+            // Update the variant descriptions
+            if (!$variant->getDescription())
+            {
+                $variantDescription = new VariantDescription();
+                $variantDescription->setVariant($variant);
+                $variant->addDescription($variantDescription);
+            }
+            foreach ($variant->getDescriptions() as $variantDescription)
+            {
+                $this->updateVariantDescription($variantDescription);
+            }
+        }
+
+        // Update the product descriptions
+        if (!$product->getDescription())
+        {
+            $productDescription = new ProductDescription();
+            $productDescription->setProduct($product);
+            $product->addDescription($productDescription);
+        }
+        foreach ($product->getDescriptions() as $productDescription)
+        {
+            $this->updateProductDescription($productDescription);
+        }
+    }
+
+    public function updateProductDescription(ProductDescription $productDescription)
     {
         /**
          * @var $em EntityManager
          */
         $em = $this->doctrine->getManager();
 
-        $product = $description->getProduct();
+        $product = $productDescription->getProduct();
         if (!$product) return;
 
         // Check if we should automatically update the description
-        if ($description->getOverride()) return;
+        if ($productDescription->getOverride()) return;
 
-        // Get objects
-        $brand = $description->getProduct()->getBrand();
-        $department = $description->getProduct()->getDepartment()->getDepartment();
-
-        // Get the SEO data from the department templates
-        $titleTemplate = '^brand ^productCode ^department';
-        $descriptionTemplate = '"Find out more about the amazing" ^brand ^productCode ^department "available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."';
-
-        $pageTitleBuilder = new ProductTemplateBuilder($em);
-        $headerBuilder = new ProductTemplateBuilder($em);
-        $metaDescriptionBuilder = new ProductTemplateBuilder($em);
-
-        $pageTitle = $pageTitleBuilder->buildString($description, $department->getDescription()->getPageTitleTemplate() ? $department->getDescription()->getPageTitleTemplate() : $titleTemplate);
-        $header = $headerBuilder->buildString($description, $department->getDescription()->getHeaderTemplate() ? $department->getDescription()->getHeaderTemplate() : $titleTemplate);
-        $metaDescription = $metaDescriptionBuilder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate() ? $department->getDescription()->getMetaDescriptionTemplate() : $descriptionTemplate);
+        $pageTitle = $this->getCommonPageTitle($product);
+        $header = $this->getCommonHeader($product);
+        $metaDescription = $this->getCommonMetaDescription($product);
         $metaKeywords = $this->seoManager->generateKeywords($pageTitle);
 
         // Update the description
-        $description->setPageTitle($pageTitle);
-        $description->setHeader($header);
-        $description->setMetaDescription($metaDescription);
-        $description->setMetaKeywords($metaKeywords);
+        $productDescription->setPageTitle($pageTitle);
+        $productDescription->setHeader($header);
+        $productDescription->setMetaDescription($metaDescription);
+        $productDescription->setMetaKeywords($metaKeywords);
     }
 
-    public function updateVariantDescription(VariantDescription $description)
+    public function updateVariantDescription(VariantDescription $variantDescription)
     {
         /**
          * @var $em EntityManager
          */
         $em = $this->doctrine->getManager();
 
-        $variant = $description->getVariant();
+        $variant = $variantDescription->getVariant();
         if (!$variant) return;
 
         // Check if we should automatically update the description
-        if ($description->getOverride()) return;
+        if ($variantDescription->getOverride()) return;
 
-        // Get objects
-        $brand = $description->getVariant()->getProduct()->getBrand();
-        $department = $description->getVariant()->getProduct()->getDepartment()->getDepartment();
+        // Get the department
+        $department = $variantDescription->getVariant()->getProduct()->getDepartment()->getDepartment();
 
-        if ($brand && $department)
+        if ($department)
         {
             // Get the SEO data from the department templates
-            $titleTemplate = '^brand ^productCode ^department';
-            $descriptionTemplate = '"Find out more about the amazing" ^brand ^productCode ^department "available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."';
+            $defaultTitleTemplate = 'brand^productCode^department^extraKeywords';
+            $defaultHeaderTemplate = 'brand^productCode^department^extraKeywords';
+            $defaultMetaDescriptionTemplate = '"Find out more about the amazing "^brand^extraKeywords^department^productCode^"available to buy securely and safely online for fast UK home delivery only with Kitchen Appliance Centre."';
 
+            // Get the template builders
             $pageTitleBuilder = new VariantTemplateBuilder($em);
             $headerBuilder = new VariantTemplateBuilder($em);
             $metaDescriptionBuilder = new VariantTemplateBuilder($em);
 
-            $pageTitle = $pageTitleBuilder->buildString($description, $department->getDescription()->getPageTitleTemplate() ? $department->getDescription()->getPageTitleTemplate() : $titleTemplate);
-            $header = $headerBuilder->buildString($description, $department->getDescription()->getHeaderTemplate() ? $department->getDescription()->getHeaderTemplate() : $titleTemplate);
-            $metaDescription = $metaDescriptionBuilder->buildString($description, $department->getDescription()->getMetaDescriptionTemplate() ? $department->getDescription()->getMetaDescriptionTemplate() : $descriptionTemplate);
+            // Get the description details
+            $pageTitle = $pageTitleBuilder->buildString($variantDescription, $department->getDescription()->getPageTitleTemplate() ? $department->getDescription()->getPageTitleTemplate() : $defaultTitleTemplate);
+            $header = $headerBuilder->buildString($variantDescription, $department->getDescription()->getHeaderTemplate() ? $department->getDescription()->getHeaderTemplate() : $defaultHeaderTemplate);
+            $metaDescription = $metaDescriptionBuilder->buildString($variantDescription, $department->getDescription()->getMetaDescriptionTemplate() ? $department->getDescription()->getMetaDescriptionTemplate() : $defaultMetaDescriptionTemplate);
             $metaKeywords = $this->seoManager->generateKeywords($pageTitle);
 
             // Update the URL
             if ($variant->getRouting())
             {
+                $previousUrl = $variant->getRouting()->getUrl();
                 $url = $this->seoManager->createUrl($pageTitle, $variant->getRouting()->getUrl());
                 $variant->getRouting()->setUrl($url);
+
+                // Setup any redirects if required
+                if ($previousUrl != $url)
+                {
+                    $this->seoManager->updateRedirects($variant->getId(), 'product_variant', $previousUrl, $url);
+                }
             } else {
                 $url = $this->seoManager->createUrl($pageTitle, '');
                 $routing = new ProductVariantRouting();
@@ -145,11 +168,83 @@ class ProductManager extends Manager
             }
 
             // Update the variant description
-            $description->setPageTitle($pageTitle);
-            $description->setHeader($header);
-            $description->setMetaDescription($metaDescription);
-            $description->setMetaKeywords($metaKeywords);
+            $variantDescription->setPageTitle($pageTitle);
+            $variantDescription->setHeader($header);
+            $variantDescription->setMetaDescription($metaDescription);
+            $variantDescription->setMetaKeywords($metaKeywords);
         }
+    }
+
+    public function getCommonPageTitle(Product $product)
+    {
+        $pageTitles = array();
+        foreach ($product->getVariants() as $variant)
+        {
+            foreach ($variant->getDescriptions() as $variantDescription)
+            {
+                $pageTitles[] = explode(' ', $variantDescription->getPageTitle());
+            }
+        }
+        if (count($pageTitles) > 1)
+        {
+            $commonPageTitles = call_user_func_array('array_intersect', $pageTitles);
+        } else {
+            $commonPageTitles = $pageTitles;
+        }
+        if (count($commonPageTitles) < 1)
+        {
+            return;
+        }
+        $commonPageTitle = join(' ', $commonPageTitles[0]);
+        return $commonPageTitle;
+    }
+
+    public function getCommonHeader(Product $product)
+    {
+        $headers = array();
+        foreach ($product->getVariants() as $variant)
+        {
+            foreach ($variant->getDescriptions() as $variantDescription)
+            {
+                $headers[] = explode(' ', $variantDescription->getHeader());
+            }
+        }
+        if (count($headers) > 1)
+        {
+            $commonHeaders = call_user_func_array('array_intersect', $headers);
+        } else {
+            $commonHeaders = $headers;
+        }
+        if (count($commonHeaders) < 1)
+        {
+            return;
+        }
+        $commonHeader = join(' ', $commonHeaders[0]);
+        return $commonHeader;
+    }
+
+    public function getCommonMetaDescription(Product $product)
+    {
+        $metaDescriptions = array();
+        foreach ($product->getVariants() as $variant)
+        {
+            foreach ($variant->getDescriptions() as $variantDescription)
+            {
+                $metaDescriptions[] = explode(' ', $variantDescription->getMetaDescription());
+            }
+        }
+        if (count($metaDescriptions) > 1)
+        {
+            $commonMetaDescriptions = call_user_func_array('array_intersect', $metaDescriptions);
+        } else {
+            $commonMetaDescriptions = $metaDescriptions;
+        }
+        if (count($commonMetaDescriptions) < 1)
+        {
+            return;
+        }
+        $commonMetaDescription = join(' ', $commonMetaDescriptions[0]);
+        return $commonMetaDescription;
     }
 
     public function updateImages(Product $product)
