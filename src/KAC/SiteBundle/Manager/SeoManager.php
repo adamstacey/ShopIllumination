@@ -38,7 +38,7 @@ class SeoManager extends Manager {
     }
 
     // Update redirects
-    public function updateRedirects($objectId, $objectType, $redirectFrom, $redirectTo)
+    public function updateRedirects($objectId, $objectType, $redirectFrom, $redirectTo, $secondaryId = 0)
     {
         if (!$redirectFrom || !$redirectTo)
         {
@@ -71,6 +71,7 @@ class SeoManager extends Manager {
         $redirect->setRedirectFrom($redirectFrom);
         $redirect->setRedirectTo($redirectTo);
         $redirect->setRedirectCode('301');
+        $redirect->setSecondaryId($secondaryId);
         $em->persist($redirect);
         $em->flush();
 
@@ -117,15 +118,15 @@ class SeoManager extends Manager {
             // Replace any white space
             $url = preg_replace("/[\r\n\t\s]+/s", "-", $url);
 
+            // Remove any unexpected characters
+            $url = preg_replace("/[^a-zA-Z0-9\-\/]?/", "", $url);
+
             // Replace any dashes
             $url = preg_replace("/[\-]+/s", "-", $url);
             $url = str_replace('--', '-', $url);
 
             // Convert to lowercase
             $url = strtolower($url);
-
-            // Remove any unexpected characters
-            $url = preg_replace("/[^a-zA-Z0-9\-\/]?/", "", $url);
         }
 
         return $url;
