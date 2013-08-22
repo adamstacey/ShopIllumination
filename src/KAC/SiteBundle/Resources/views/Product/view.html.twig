@@ -303,16 +303,12 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
-            {% if variant.id > 0 %}
-                updateProductInfo($el.attr("data-variant-id"), data.product_html);
-            {% endif %}
-
             var variants = JSON.parse('{{ variants|json_encode|raw }}');
             var currentVariant = null;
 
             // Get the current variant
             for(var i=0; i<variants.length; i++) {
-                if(variants[i].variantId == {{ variant.id }}) {
+                if(variants[i].variantId == '{{ variant.id }}') {
                     currentVariant = variants[i];
                 }
             }
@@ -341,11 +337,10 @@
                 }
 
                 // Remove any empty elements from array
-                var i=0;
                 var undef;
                 var temp = [];
                 for (var i=0; i < possibleVariants.length; i++) {
-                    if ( possibleVariants[i] !== undef ) {
+                    if ( possibleVariants[i] !== undef) {
                         temp.push(possibleVariants[i])
                     }
                 }
