@@ -224,14 +224,13 @@
 }
 
 .ui-datepicker {
-    width: 100px;
-    padding: $spacingMedium $spacingMedium 0;
+    padding: $spacingSmall !important;
     display: none;
 }
 
 .ui-datepicker .ui-datepicker-header {
     position: relative;
-    padding: $spacingMedium 0;
+    padding: $spacingSmall 0;
 }
 
 .ui-datepicker .ui-datepicker-prev,
@@ -297,11 +296,11 @@
     width: 100%;
     @include fontSize($fontSizeSmall);
     border-collapse: collapse;
-    margin: 0 0 $spacingMedium;
+    margin: 0;
 }
 
 .ui-datepicker th {
-    padding: $spacingMedium;
+    padding: $spacingSmall;
     text-align: center;
     font-weight: bold;
     border: 0;
@@ -309,13 +308,13 @@
 
 .ui-datepicker td {
     border: 0;
-    padding: $spacingExtraSmall;
+    padding: $spacingSmall;
 }
 
 .ui-datepicker td span,
 .ui-datepicker td a {
     display: block;
-    padding: $spacingMedium;
+    padding: 0;
     text-align: right;
     text-decoration: none;
 }
@@ -970,7 +969,7 @@ body .ui-tooltip {
 }
 
 .ui-widget-content a {
-    color: $primaryColour;
+    color: $colourBlack;
 }
 
 .ui-widget-header {
@@ -997,7 +996,7 @@ body .ui-tooltip {
 }
 
 .ui-widget-header a {
-    color: #ffffff;
+    color: $colourWhite;
 }
 
 .accordion {
