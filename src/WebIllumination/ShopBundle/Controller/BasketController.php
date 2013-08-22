@@ -182,7 +182,7 @@ class BasketController extends Controller
         {
             foreach ($basket['products'] as $key => $basketProduct)
             {
-                if ($basketProduct['variantId'] == $variantId)
+                if (isset($basketProduct['variantId']) && $basketProduct['variantId'] == $variantId)
                 {
                     if ($basketProduct['selectedOptions'] == $selectedOptions)
                     {
@@ -256,7 +256,25 @@ class BasketController extends Controller
         // Update the basket totals
         $basketService->updateBasketTotals();
 
-        return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'thumbnailPath' => $thumbnailPath, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));
+        return new Response(json_encode(array(
+            'response' => 'success',
+            'header' => $header,
+            'url' => $url,
+            'thumbnailPath' => $thumbnailPath,
+            'quantity' => $quantity,
+            'price' => number_format($price, 2),
+            'subTotal' => number_format($subTotal, 2),
+            'summary_html' => $this->get('fragment.handler')->render($this->generateUrl('basket_summary')),
+            'product_html' => $this->ajaxGetBasketProductInfoAction($request, $productId, $variantId)->getContent(),
+        )));
+    }
+
+    public function ajaxGetBasketProductInfoAction(Request $request, $productId, $variantId=null)
+    {
+        return $this->render('KACSiteBundle:Product:basketInfo.html.twig', array(
+            'productId' => $productId,
+            'variantId' => $variantId,
+        ));
     }
 
     // Add to basket
@@ -363,7 +381,16 @@ class BasketController extends Controller
         // Update the basket totals
         $basketService->updateBasketTotals();
 
-        return new Response(htmlspecialchars(json_encode(array('response' => 'success', 'header' => $header, 'url' => $url, 'quantity' => $quantity, 'price' => number_format($price, 2), 'subTotal' => number_format($subTotal, 2))), ENT_NOQUOTES));
+        return new Response(json_encode(array(
+            'response' => 'success',
+            'header' => $header,
+            'url' => $url,
+            'quantity' => $quantity,
+            'price' => number_format($price, 2),
+            'subTotal' => number_format($subTotal, 2),
+            'summary_html' => $this->get('fragment.handler')->render($this->generateUrl('basket_summary')),
+            'product_html' => $this->ajaxGetBasketProductInfoAction($request, $productId)->getContent(),
+        )));
     }
 
     // Redeem voucher code

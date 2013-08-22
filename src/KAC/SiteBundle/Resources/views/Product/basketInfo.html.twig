@@ -1,0 +1,8 @@
+{% for item in app.session.get('basket').products %}
+    {% if item.productId == productId and (variantId is defined and item.variantId == variantId) %}
+        <div class="items-added">
+            <h4>Added to your basket</h4>
+            <span>{{ item.quantity }} x {{ item.header }}</span>
+        </div>
+    {% endif %}
+{% endfor %}

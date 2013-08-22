@@ -131,15 +131,8 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ variant.productCode }}</strong></p>
                                                 <div class="clear"></div>
-                                                <div id="add-to-basket-info">
-                                                    {% for item in app.session.get('basket').products %}
-                                                        {% if item.variantId == product.variants[0].id %}
-                                                            <div class="items-added">
-                                                                <h4>Added to your basket</h4>
-                                                                <span>{{ item.quantity }} x {{ item.header }}</span>
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                <div id="basket-product-info">
+                                                    {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'variantId': product.variantId} %}
                                                 </div>
                                                 <div class="clear"></div>
                                             {% elseif product.variants|length > 1 %}
@@ -181,15 +174,8 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ product.variants[0].productCode }}</strong></p>
                                                 <div class="clear"></div>
-                                                <div id="add-to-basket-info">
-                                                    {% for item in app.session.get('basket').products %}
-                                                        {% if item.variantId == product.variants[0].id %}
-                                                            <div class="items-added">
-                                                                <h4>Added to your basket</h4>
-                                                                <span>{{ item.quantity }} x {{ item.header }}</span>
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                <div id="basket-product-info">
+                                                    {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'variantId': product.variants[0].id} %}
                                                 </div>
                                                 <div class="clear"></div>
                                             {% endif %}
