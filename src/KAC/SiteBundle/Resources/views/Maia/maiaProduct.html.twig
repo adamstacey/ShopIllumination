@@ -7,4 +7,7 @@
         <button class="actionDecreaseQuantity decrease-quantity button button-small uppercase">-</button>
         <button class="actionAddNonProductToBasket buy button button-green uppercase icon-white" data-icon-secondary="icon-472">Buy</button>
     </div>
+    <div class="basket-product-info" data-variantId="{{ id }}">
+        {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'productId': id} %}
+    </div>
 </td>
