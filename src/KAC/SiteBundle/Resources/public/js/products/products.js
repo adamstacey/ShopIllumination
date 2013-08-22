@@ -13,9 +13,8 @@ $(document).ready(function() {
                 variantId: $el.attr("data-variant-id"),
                 quantity: $quantityInput.val()
             },
-            error: function(a, b, c) {
+            error: function(data) {
                 $("#purchasingLoading"+$el.attr("data-variant-id")).hide();
-                console.log('error', a, b,c );
                 $("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
                 $("#message-error").fadeIn(function() {
                     $("html, body").animate({scrollTop: $("#message-error").offset().top - 15},'slow');
