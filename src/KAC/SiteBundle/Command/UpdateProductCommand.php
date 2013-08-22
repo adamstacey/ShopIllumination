@@ -9,38 +9,32 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use KAC\SiteBundle\Entity\Department;
 
-class UpdateProductsCommand extends ContainerAwareCommand
+class UpdateProductCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('admin:products:update')
-            ->setDescription('Update the products.');
+            ->setName('admin:product:update')
+            ->setDescription('Update a product.')
+            ->addArgument('id');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $productManager = $this->getContainer()->get('kac_site.manager.product');
 
-        $i = 0;
-        $batchSize = 20;
-        $productCount = 1;
+        $id = $input->getArgument('id');
 
-        // Fetch the products
-        $products = $em->getRepository("KAC\\SiteBundle\\Entity\\Product")->findAll();
-        $totalNumberOfProducts = count($products);
-        foreach ($products as $product)
+        // Fetch the product
+        $product = $em->getRepository("KAC\\SiteBundle\\Entity\\Product")->find($id);
+        if ($product)
         {
+            $output->writeln('Updating Product: '.$id);
+            $productManager->updateProduct($product);
             $em->persist($product);
-            if (($i % $batchSize) === 0)
-            {
-                $em->flush();
-            }
-            $output->writeln('Updating Product: '.$productCount.' of '.$totalNumberOfProducts);
-            $productCount++;
+            $em->flush();
         }
-        $em->flush();
-
         $output->writeln('Finished!');
     }
 }
