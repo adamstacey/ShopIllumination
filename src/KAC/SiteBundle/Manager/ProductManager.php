@@ -188,14 +188,12 @@ class ProductManager extends Manager
         if (count($pageTitles) > 1)
         {
             $commonPageTitles = call_user_func_array('array_intersect', $pageTitles);
+        } elseif(count($pageTitles) === 1) {
+            $commonPageTitles = $pageTitles[0];
         } else {
-            $commonPageTitles = $pageTitles;
+            return '';
         }
-        if (count($commonPageTitles) < 1)
-        {
-            return;
-        }
-        $commonPageTitle = join(' ', $commonPageTitles[0]);
+        $commonPageTitle = implode(' ', $commonPageTitles);
         return $commonPageTitle;
     }
 
@@ -212,14 +210,12 @@ class ProductManager extends Manager
         if (count($headers) > 1)
         {
             $commonHeaders = call_user_func_array('array_intersect', $headers);
+        } elseif(count($headers) === 1) {
+            $commonHeaders = $headers[0];
         } else {
-            $commonHeaders = $headers;
+            return '';
         }
-        if (count($commonHeaders) < 1)
-        {
-            return;
-        }
-        $commonHeader = join(' ', $commonHeaders[0]);
+        $commonHeader = implode(' ', $commonHeaders);
         return $commonHeader;
     }
 
@@ -236,14 +232,12 @@ class ProductManager extends Manager
         if (count($metaDescriptions) > 1)
         {
             $commonMetaDescriptions = call_user_func_array('array_intersect', $metaDescriptions);
+        } elseif(count($metaDescriptions) === 1) {
+            $commonMetaDescriptions = $metaDescriptions[0];
         } else {
-            $commonMetaDescriptions = $metaDescriptions;
+            return '';
         }
-        if (count($commonMetaDescriptions) < 1)
-        {
-            return;
-        }
-        $commonMetaDescription = join(' ', $commonMetaDescriptions[0]);
+        $commonMetaDescription = implode(' ', $commonMetaDescriptions);
         return $commonMetaDescription;
     }
 
