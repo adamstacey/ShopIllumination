@@ -291,6 +291,8 @@ class ProductController extends Controller {
                 // Update the variant order based on the product code
                 $manager->updateVariantOrder($product);
 
+                $manager->updateProduct($product);
+
                 $em->persist($product);
                 $em->flush();
 
@@ -350,6 +352,8 @@ class ProductController extends Controller {
                 $manager->updateDocuments($product);
                 // Update the variant order based on the product code
                 $manager->updateVariantOrder($product);
+
+                $manager->updateProduct($product);
 
                 $em->persist($product);
                 $em->flush();
@@ -666,6 +670,7 @@ class ProductController extends Controller {
     public function baseEditAction(Request $request, $productId, $template, $formClass)
     {
         $em = $this->getDoctrine()->getManager();
+        $manager = $this->get('kac_site.manager.product');
 
         $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
         if (!$product)
@@ -680,6 +685,8 @@ class ProductController extends Controller {
             $form->submit($request);
             if ($form->isValid())
             {
+                $manager->updateProduct($product);
+
                 $em->persist($product);
                 $em->flush();
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
@@ -711,6 +718,7 @@ class ProductController extends Controller {
     public function editOverviewAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
+        $manager = $this->getManager();
 
         /**
          * @var $product Product
@@ -750,6 +758,8 @@ class ProductController extends Controller {
                     }
                 }
 
+                $manager->updateProduct($product);
+
                 $em->persist($product);
                 $em->flush();
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
@@ -780,6 +790,7 @@ class ProductController extends Controller {
     public function editDepartmentsAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
+        $manager = $this->getManager();
         $originalDepartments = array();
 
         /**
@@ -816,6 +827,8 @@ class ProductController extends Controller {
                     $em->remove($department);
                 }
 
+                $manager->updateProduct($product);
+
                 $em->persist($product);
                 $em->flush();
 
@@ -847,6 +860,7 @@ class ProductController extends Controller {
     public function editImagesAction(Request $request, $productId)
     {
         $em = $this->getDoctrine()->getManager();
+        $manager = $this->getManager();
 
         $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
         if(!$product)
@@ -865,6 +879,8 @@ class ProductController extends Controller {
             $form->submit($request);
             if($form->isValid()) {
                 $this->getImageManager()->persistImages($product, 'product');
+
+                $manager->updateProduct($product);
 
                 $em->persist($product);
                 $em->flush();
@@ -906,6 +922,8 @@ class ProductController extends Controller {
             $form->submit($request);
             if($form->isValid()) {
                 $this->getManager()->updateDocuments($product);
+
+                $this->getManager()->updateProduct($product);
 
                 $em->persist($product);
                 $em->flush();
@@ -966,6 +984,8 @@ class ProductController extends Controller {
                     $em->remove($link);
                 }
 
+                $this->getManager()->updateProduct($product);
+
                 $em->persist($product);
                 $em->flush();
 
@@ -996,6 +1016,8 @@ class ProductController extends Controller {
         }
 
         $this->getManager()->updateVariantOrder($product);
+        $this->getManager()->updateProduct($product);
+
         $em->persist($product);
         $em->flush();
 

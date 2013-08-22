@@ -101,6 +101,9 @@ class ProductApiController extends Controller
             throw new HttpException(403);
         }
         $product->getVariant()->getPrice()->setListPrice(floatval($request->request->get('price')));
+
+        $this->get('kac_site.manager.product')->updateProduct($product);
+
         $em->persist($product);
         $em->flush();
 

@@ -2,6 +2,7 @@
 namespace KAC\SiteBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use KAC\SiteBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,11 +28,16 @@ class UpdateProductCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
 
         // Fetch the product
+        /**
+         * @var $product Product
+         */
         $product = $em->getRepository("KAC\\SiteBundle\\Entity\\Product")->find($id);
         if ($product)
         {
             $output->writeln('Updating Product: '.$id);
+
             $productManager->updateProduct($product);
+
             $em->persist($product);
             $em->flush();
         }

@@ -46,7 +46,7 @@ class ProductListener
         if ($entity instanceof Product)
         {
             // Update the product
-            $this->manager->updateProduct($entity);
+//            $this->manager->updateProduct($entity);
         }
     }
 
@@ -77,7 +77,7 @@ class ProductListener
         if ($entity instanceof Product)
         {
             // Update the product
-            $this->manager->updateProduct($entity);
+//            $this->manager->updateProduct($entity);
         }
     }
 

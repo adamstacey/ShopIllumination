@@ -63,7 +63,7 @@ class ProductManager extends Manager
         foreach ($product->getVariants() as $variant)
         {
             // Update the variant descriptions
-            if (!$variant->getDescription())
+            if (count($variant->getDescriptions()) === 0)
             {
                 $variantDescription = new VariantDescription();
                 $variantDescription->setVariant($variant);
@@ -76,7 +76,7 @@ class ProductManager extends Manager
         }
 
         // Update the product descriptions
-        if (!$product->getDescription())
+        if (count($product->getDescriptions()) === 0)
         {
             $productDescription = new ProductDescription();
             $productDescription->setProduct($product);

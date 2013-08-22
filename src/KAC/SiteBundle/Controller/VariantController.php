@@ -70,6 +70,8 @@ class VariantController extends Controller {
                 {
                     $feature->setVariant($variant);
                 }
+                $this->getManager()->updateProduct($variant->getProduct());
+
                 $em->persist($variant);
                 $em->flush();
 
@@ -119,6 +121,7 @@ class VariantController extends Controller {
             if($form->isValid()) {
                 // Update the variant order based on the product code
                 $productManger->updateVariantOrder($variant->getProduct());
+                $this->getManager()->updateProduct($variant->getProduct());
 
                 $em->persist($variant->getProduct());
                 $em->flush();
@@ -232,6 +235,8 @@ class VariantController extends Controller {
                     $em->remove($price);
                 }
 
+                $this->getManager()->updateProduct($variant->getProduct());
+
                 $em->persist($variant);
                 $em->flush();
 
@@ -290,6 +295,8 @@ class VariantController extends Controller {
                     $em->remove($feature);
                 }
 
+                $this->getManager()->updateProduct($variant->getProduct());
+
                 $em->persist($variant);
                 $em->flush();
 
@@ -331,6 +338,7 @@ class VariantController extends Controller {
             $form->submit($request);
             if($form->isValid()) {
                 $this->getImageManager()->persistImages($variant, 'product_variant');
+                $this->getManager()->updateProduct($variant->getProduct());
 
                 $em->persist($variant);
                 $em->flush();
@@ -373,6 +381,7 @@ class VariantController extends Controller {
             $form->submit($request);
             if($form->isValid()) {
                 $this->getManager()->updateVariantDocuments($variant);
+                $this->getManager()->updateProduct($variant->getProduct());
 
                 $em->persist($variant);
                 $em->flush();
