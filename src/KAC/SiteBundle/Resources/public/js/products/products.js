@@ -21,8 +21,9 @@ $(document).ready(function() {
                     $("#ajax-loading").hide();
                 });
             },
-            success: function(a, b, c) {
-                updateBasketSummary();
+            success: function(data) {
+                updateBasketSummary(data.summary_html);
+                updateProductInfo(data.product_html);
                 $("html, body").animate({scrollTop: 0},'slow', function() {
                     setTimeout(function() {
                         $('.dropdown-summary').hide();
@@ -130,4 +131,48 @@ function updateBasketSummary() {
             }
         }
     });
+}
+
+function updateBasketSummary(html) {
+    var $el = $("#basket-summary");
+    var callback = function(data) {
+        $el.html(data);
+        generateButtons($el);
+        if(parseInt($(this).find('.dropdown-summary').attr("data-items"), 10) > 0)
+        {
+            $(this).addClass('expanded').find('.dropdown-summary').show();
+        } else {
+            $el.removeClass('expanded').find('.dropdown-summary').hide();
+        }
+    };
+
+
+    if(html === undefined)
+    {
+        $.ajax({
+            type: "GET",
+            url: $el.attr("data-url"),
+            success: callback
+        });
+    } else {
+        callback(html);
+    }
+}
+
+function updateProductInfo(html) {
+    var $el = $("#basket-product-info");
+    var callback = function(html) {
+        if($el.length > 0) {
+            $el.html(html);
+            generateButtons($el);
+        }
+    };
+
+
+    if(html === undefined)
+    {
+        callback('');
+    } else {
+        callback(html);
+    }
 }

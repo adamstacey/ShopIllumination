@@ -3,7 +3,7 @@
     <h2>Your basket</h2>
     <p>Items: <strong>{{ basket.totals.items|default(0) }}</strong></p>
     <p>Total: <strong>{{ basket.totals.subTotal|currency('GBP', true, true, '')|raw }}</strong></p>
-    <div class="dropdown-summary ui-helper-hidden" data-items="{{ basket.products|length }}">
+    <div class="dropdown-summary ui-helper-hidden" data-items="{{ basket.items|length }}">
         {% if basket.products|length > 0 %}
             <table class="mtm data-table basket-items-table">
                 <tr>
