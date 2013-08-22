@@ -26,10 +26,10 @@ avalanche_imagine:
             options: { size: [182, 182], mode: inset, quality: 80, cache_type: public, cache_expires: 2 weeks }
         product_medium:
             type:   square_thumbnail
-            options: { size: [376, 376], mode: outbound, quality: 100, cache_type: public, cache_expires: 2 weeks }
+            options: { size: [376, 376], mode: inset, quality: 100, cache_type: public, cache_expires: 2 weeks }
         product_large:
             type:   square_thumbnail
-            options: { size: [800, 800], mode: outbound, quality: 100, cache_type: public, cache_expires: 2 weeks }
+            options: { size: [800, 800], mode: inset, quality: 100, cache_type: public, cache_expires: 2 weeks }
         # Variant
         variant_thumbnail:
             type:   square_thumbnail

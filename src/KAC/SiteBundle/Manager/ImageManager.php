@@ -97,6 +97,12 @@ class ImageManager extends Manager
             $image->setImageType($image->getObjectType());
         }
 
+        // Remove old public image
+        if($image->getPublicPath())
+        {
+            unlink($image->getUploadPath().$image->getPublicPath());
+        }
+
         // Get the file information
         $filename = $this->fileManager->cleanFilename($object->getDescription()->getHeader());
         $basePath = $image->getUploadDir().'/'.$image->getObjectType().'/'.$image->getImageType();
@@ -105,6 +111,9 @@ class ImageManager extends Manager
         $image->setFileExtension('jpg');
 
         // Process the image
+        if(!file_exists(dirname($image->getUploadPath().$image->getPublicPath()))) {
+            mkdir(dirname($image->getUploadPath().$image->getPublicPath()), 0777, true);
+        }
         $imagine = new Imagine();
         $imagine
             ->open($image->getUploadPath().$image->getOriginalPath())

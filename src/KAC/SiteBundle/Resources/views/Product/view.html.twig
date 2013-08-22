@@ -1,7 +1,30 @@
 {% extends 'KACSiteBundle:Product:base.html.twig' %}
 {% import 'KACSiteBundle:Product/Includes:helpers.html.twig' as helpers %}
 
-{% block title %}{{ variant ? variant.description.pageTitle : product.description.pageTitle }} | {{ parent() }}{% endblock %}
+{% if variant is null %}
+    {% set description = product.description.description %}
+    {% if description == '' %}
+        {% set description = product.description.metaDescription %}
+    {% endif %}
+    {% set pageTitle = product.description.pageTitle %}
+    {% set header = product.description.header %}
+    {% set brandDescription = product.description.brandDescription %}
+    {% set features = common_features %}
+{% else %}
+    {% set description = variant.description.description %}
+    {% if description == '' %}
+        {% set description = variant.description.metaDescription %}
+    {% endif %}
+    {% set pageTitle = variant.description.pageTitle %}
+    {% set header = variant.description.header %}
+    {% set brandDescription = variant.brandDescription.description %}
+    {% set features = [] %}
+    {% for vtf in variant.features %}
+        {% set features = features|merge({(vtf.featureGroup.name): (vtf.feature.name)}) %}
+    {% endfor %}
+{% endif %}
+
+{% block title %}{{ pageTitle }} | {{ parent() }}{% endblock %}
 
 {% block admin_submenu %}
     <a class="button button-small icon-grey mrs" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Back</a>
@@ -68,26 +91,6 @@
                 </div>
             {% endblock %}
             {% block product_info %}
-                {% if variant is null %}
-                    {% set description = product.description.description %}
-                    {% if description == '' %}
-                        {% set description = product.description.metaDescription %}
-                    {% endif %}
-                    {% set header = product.description.header %}
-                    {% set brandDescription = product.description.brandDescription %}
-                    {% set features = common_features %}
-                {% else %}
-                    {% set description = variant.description.description %}
-                    {% if description == '' %}
-                        {% set description = variant.description.metaDescription %}
-                    {% endif %}
-                    {% set header = variant.description.header %}
-                    {% if header == '' %}
-                        {% set header = product.description.header %}
-                    {% endif %}
-                    {% set brandDescription = variant.brandDescription.description %}
-                    {% set features = variant.features %}
-                {% endif %}
                 {% if features['Colour'] is defined %}
                     {% set colour = features['Colour'] %}
                 {% endif %}
@@ -190,7 +193,7 @@
                                                             <label for="formTime">{{ featureGroup }}</label>
                                                         </div>
                                                         <div class="widget widget-2-of-3">
-                                                            <select name="variant_filter_feature_group[{{ featureGroup }}" class="variant-filter fill" data-group="{{ featureGroup }}">
+                                                            <select name="variant_filter_feature_group[{{ featureGroup }}]" class="variant-filter fill" data-group="{{ featureGroup }}">
                                                                 {% for feature in features %}
                                                                     <option value="{{ feature }}" {% if variant_features[variant.id][featureGroup] == feature %}selected="selected"{% endif %}>{{ feature }}</option>
                                                                 {% endfor %}
@@ -291,84 +294,6 @@
                     </div>
                 </div>
             {% endblock %}
-            {% block product_variants%}
-                {% if product.variants|length > 1 %}
-                    <a name="buynow_variants"></a>
-                    <div class="widget-group clearfix variants">
-                        <div class="widget widget-1-of-1">
-                            <div class="ui-widget">
-                                <header class="ui-widget-header ui-corner-top">
-                                    <h2>Variations</h2>
-                                </header>
-                                <section class="ui-widget-content ui-corner-bottom clearfix">
-                                    <table class="data-table">
-                                        <thead>
-                                        <tr>
-                                            <th colspan="1">Product</th>
-                                            <th colspan="1">Features</th>
-                                            <th colspan="2">Price</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for variant in product.variants %}
-                                            <tr class="{{ cycle(['odd', 'even'], loop.index) }}" itemscope itemtype="http://schema.org/ProductModel">
-                                                <td>
-                                                    <span itemprop="name"><a href="{{ path('routing', {'url': variant.url}) }}">{{ variant.description|length <= 0 ? product.description.header : variant.description.header }}</a></span>
-                                                    <meta itemprop="model" content="{{ variant.productCode }}" />
-                                                    <meta itemprop="productId" content="mpn:{{ variant.productCode }}" />
-                                                    <meta itemprop="description" content="{{ variant.description.metaDescription }}"/>
-                                                    <meta itemprop="brand" content="{{ variant.product.brand.description.header }}"/>
-                                                </td>
-                                                <td>
-                                                    <ul>
-                                                        {% for group, feature in variant_features[variant.id] %}
-                                                            {% if feature == 'Yes' %}
-                                                                {% set className = 'green-tick' %}
-                                                            {% elseif feature.feature.name == 'No' %}
-                                                                {% set className = 'red-cross' %}
-                                                            {% else %}
-                                                                {% set className = 'bullet' %}
-                                                            {% endif %}
-                                                            <li class="{{ className }}">{{ group }}: <strong>{{ feature }}</strong></li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </td>
-                                                <td width="1" class="nowrap price">
-                                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                                        <span itemprop="price">{{ variant.prices[0].listPrice | currency('GBP', true, true, '')|raw }}</span>
-                                                        <meta itemprop="priceCurrency" content="{{ variant.prices[0].currencyCode | raw }}"/>
-                                                    </div>
-
-                                                </td>
-                                                <td width="1" class="nowrap">
-                                                    {{ helpers.addToBasket(variant) }}
-                                                    <div class="basket-product-info" data-variantId="{{ product.variants[0].id }}">
-                                                        {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'variantId': product.variants[0].id} %}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-                    {% set variant = product.variant %}
-                    <div itemscope itemtype="http://schema.org/ProductModel">
-                        <meta itemprop="name" content="{{ variant.description|length <= 0 ? product.description.header : variant.description.header }}" />
-                        <meta itemprop="model" content="{{ variant.productCode }}" />
-                        <meta itemprop="productId" content="mpn:{{ variant.productCode }}" />
-                        <meta itemprop="description" content="{{ variant.description.metaDescription }}"/>
-                        <meta itemprop="brand" content="{{ variant.product.brand.description.header }}"/>
-                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                            <meta itemprop="price" content="{{ variant.prices[0].listPrice }}"/>
-                            <meta itemprop="priceCurrency" content="{{ variant.prices[0].currencyCode | raw }}"/>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endblock %}
         {% endblock %}
     </section>
 {% endblock %}
@@ -390,7 +315,7 @@
                             var feature = variant.features[featureGroup];
 
                             // Attempt to find filter field
-                            var $input = $('.variant-filter[data-group='+featureGroup+']');
+                            var $input = $('.variant-filter[data-group="'+featureGroup+'"]');
                             if($input && $input.length > 0) {
                                 var value = $input.find(':selected').val();
                                 if (value != feature) {
@@ -403,19 +328,14 @@
 
                 // Remove any empty elements from array
                 var i=0;
-                $.each(possibleVariants,function(idx,val) {
-                    if (typeof(possibleVariants[idx]) == "undefined") {
-                        possibleVariants.splice(idx,1);
-                    } else {
-                        if(i != idx)
-                        {
-                            possibleVariants[i] = val;
-                            possibleVariants.splice(idx,1);
-                        }
-                        i++;
+                var undef;
+                var temp = [];
+                for (var i=0; i < possibleVariants.length; i++) {
+                    if ( possibleVariants[i] !== undef ) {
+                        temp.push(possibleVariants[i])
                     }
-                });
-                possibleVariants.length = i;
+                }
+                possibleVariants = temp;
 
                 if(possibleVariants.length === 1) {
                     window.location = routes['routing'].replace('-1', possibleVariants[0].url);

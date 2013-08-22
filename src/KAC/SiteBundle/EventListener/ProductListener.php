@@ -40,7 +40,10 @@ class ProductListener
             || $entity instanceof Product\Price
             || $entity instanceof Variant\Link)
         {
-            $entity = $entity->getVariant()->getProduct();
+            if($entity->getVariant())
+            {
+                $entity = $entity->getVariant()->getProduct();
+            }
         }
 
         if ($entity instanceof Product)
@@ -71,7 +74,10 @@ class ProductListener
             || $entity instanceof Product\Price
             || $entity instanceof Variant\Link)
         {
-            $entity = $entity->getVariant()->getProduct();
+            if($entity->getVariant())
+            {
+                $entity = $entity->getVariant()->getProduct();
+            }
         }
 
         if ($entity instanceof Product)
@@ -102,7 +108,10 @@ class ProductListener
             || $entity instanceof Product\Price
             || $entity instanceof Variant\Link)
         {
-            $entity = $entity->getVariant()->getProduct();
+            if($entity->getVariant())
+            {
+                $entity = $entity->getVariant()->getProduct();
+            }
         }
 
         if($entity instanceof Product)
@@ -132,7 +141,10 @@ class ProductListener
             || $entity instanceof Product\Price
             || $entity instanceof Variant\Link)
         {
-            $entity = $entity->getVariant()->getProduct();
+            if($entity->getVariant())
+            {
+                $entity = $entity->getVariant()->getProduct();
+            }
         }
 
         if($entity instanceof Product)
@@ -166,7 +178,10 @@ class ProductListener
                 || $entity instanceof Product\Price
                 || $entity instanceof Variant\Link)
             {
-                $entity = $entity->getVariant()->getProduct();
+                if($entity->getVariant())
+                {
+                    $entity = $entity->getVariant()->getProduct();
+                }
             }
 
             if($entity instanceof Product)

@@ -90,9 +90,9 @@ class ProductController extends Controller {
                 {
                     // Fetch the relevant department to feature entity
                     $departmentToFeature = $em->createQuery("
-                            SELECT dtf
-                            FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf
-                            WHERE dtf.featureGroup = ?1 AND dtf.department = ?2")
+                                SELECT dtf
+                                FROM KAC\SiteBundle\Entity\DepartmentToFeature dtf
+                                WHERE dtf.featureGroup = ?1 AND dtf.department = ?2")
                         ->setParameter(1, $feature->getFeatureGroup()->getId())
                         ->setParameter(2, $product->getDepartments()->isEmpty() ? 0 : $product->getDepartments()->first()->getDepartment()->getId())
                         ->execute();
@@ -147,6 +147,17 @@ class ProductController extends Controller {
             }
         }
 
+        $guarantees = array();
+        if ($product->getBrand())
+        {
+            $guarantees = $em->getRepository("KAC\SiteBundle\Entity\Guarantee")->findBy(array(
+                'objectId' => $product->getBrand()->getId(),
+                'objectType' => 'brand'
+            ), array(
+                'displayOrder' => 'ASC'
+            ));
+        }
+
         // Get all images
         $galleryImages = array();
         $productImages = array();
@@ -157,15 +168,13 @@ class ProductController extends Controller {
             'displayOrder' => 'ASC'
         ));
 
-        $guarantees = array();
-        if ($product->getBrand())
+        if($variant)
         {
-            $guarantees = $em->getRepository("KAC\SiteBundle\Entity\Guarantee")->findBy(array(
-                'objectId' => $product->getBrand()->getId(),
-                'objectType' => 'brand'
+            $images = array_merge($em->getRepository("KAC\SiteBundle\Entity\Product\Variant\Image")->findBy(array(
+                'objectId' => $variant->getId()
             ), array(
                 'displayOrder' => 'ASC'
-            ));
+            )), $images);
         }
 
         /**

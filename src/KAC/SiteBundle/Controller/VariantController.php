@@ -343,6 +343,7 @@ class VariantController extends Controller {
                 $em->persist($variant);
                 $em->flush();
 
+
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
                     'variantId' => $variant->getId(),
                     'productId' => $variant->getProduct()->getId(),
