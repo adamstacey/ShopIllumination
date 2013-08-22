@@ -22,11 +22,13 @@ class VariantListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Variant)
+        if ($entity instanceof Variant)
         {
-            foreach($entity->getDescriptions() as $description)
+            $entity = $entity->getProduct();
+            if ($entity instanceof Product)
             {
-                $this->manager->updateVariantDescription($description);
+                // Update the product
+                $this->manager->updateProduct($entity);
             }
         }
     }
@@ -35,11 +37,13 @@ class VariantListener
     {
         $entity = $args->getEntity();
 
-        if($entity instanceof Variant)
+        if ($entity instanceof Variant)
         {
-            foreach($entity->getDescriptions() as $description)
+            $entity = $entity->getProduct();
+            if ($entity instanceof Product)
             {
-                $this->manager->updateVariantDescription($description);
+                // Update the product
+                $this->manager->updateProduct($entity);
             }
         }
     }
