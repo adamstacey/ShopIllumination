@@ -668,17 +668,18 @@ class ProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $product = $em->getRepository("KAC\SiteBundle\Entity\Product")->find($productId);
-        if(!$product)
+        if (!$product)
         {
             throw new NotFoundHttpException("Product not found");
         }
 
         $form = $this->createForm($formClass, $product);
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST'))
+        {
             $form->submit($request);
-            if($form->isValid()) {
-
+            if ($form->isValid())
+            {
                 $em->persist($product);
                 $em->flush();
                 return $this->redirect($this->generateUrl($request->attributes->get('_route'), array(
