@@ -72,6 +72,9 @@ class CheckoutController extends Controller
         $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
         $band = $deliveryManager->calculateBand($order->getProducts());
         $methods = DeliveryFactory::getMethods($zone, $band);
+        if ((!$order->getDeliveryType() || !$order->getDeliveryTypeObject()->supportsLocation($zone, $band)) && count($methods) > 0) {
+            $order->setDeliveryType($methods[0]->getName());
+        }
 
         $form = $this->createForm(new CheckoutType($this->get('kac_site.manager.delivery')), $order);
         $form->handleRequest($request);
@@ -216,6 +219,9 @@ class CheckoutController extends Controller
         $zone = $deliveryManager->calculateZone($order->getDeliveryCountryCode(), $order->getDeliveryPostZipCode());
         $band = $deliveryManager->calculateBand($order->getProducts());
         $methods = DeliveryFactory::getMethods($zone, $band);
+        if ((!$order->getDeliveryType() || !$order->getDeliveryTypeObject()->supportsLocation($zone, $band)) && count($methods) > 0) {
+            $order->setDeliveryType($methods[0]->getName());
+        }
 
         if(!$form) $form = $this->createForm(new CheckoutType($this->get('kac_site.manager.delivery')), $order);
 
