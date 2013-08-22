@@ -19,6 +19,8 @@ abstract class TemplateBuilder
 
     public function buildString($object, $template)
     {
+        $wordsToIgnore = array('N/A', 'n/a', 'Yes', 'yes', 'No', 'no');
+
         $parts = array();
 
         $lexer = new Lexer();
@@ -37,29 +39,29 @@ abstract class TemplateBuilder
                 // Check the next token
                 if ($token = $this->getNextToken($tokens))
                 {
-                    if($token["type"] === "T_IDENTIFIER")
+                    if ($token["type"] === "T_IDENTIFIER")
                     {
                         $entityAlias = $token["value"];
                         // Check the next token
-                        if($token = $this->getNextToken($tokens))
+                        if ($token = $this->getNextToken($tokens))
                         {
-                            if($token["type"] === "T_PIPE")
+                            if ($token["type"] === "T_PIPE")
                             {
                                 // Check the next token
-                                if($token = $this->getNextToken($tokens))
+                                if ($token = $this->getNextToken($tokens))
                                 {
-                                    if($token["type"] === "T_IDENTIFIER")
+                                    if ($token["type"] === "T_IDENTIFIER")
                                     {
                                         $entityId = $token["value"];
                                         // Check the next token
-                                        if($token = $this->getNextToken($tokens))
+                                        if ($token = $this->getNextToken($tokens))
                                         {
-                                            if($token["type"] === "T_PIPE")
+                                            if ($token["type"] === "T_PIPE")
                                             {
                                                 // Check the next token
-                                                if($token = $this->getNextToken($tokens))
+                                                if ($token = $this->getNextToken($tokens))
                                                 {
-                                                    if($token["type"] === "T_IDENTIFIER")
+                                                    if ($token["type"] === "T_IDENTIFIER")
                                                     {
                                                         // Fetch value
                                                         $entity = $this->getEntity($object, $entityAlias, $entityId);
@@ -81,6 +83,15 @@ abstract class TemplateBuilder
         $parts = array_filter($parts, function ($part) {
             return $part != '' || $part != null;
         });
+
+        // Remove any words to ignore
+        foreach ($parts as $index => $part)
+        {
+            if (in_array($part, $wordsToIgnore))
+            {
+                unset($parts[$index]);
+            }
+        }
 
         $parts = implode(' ', $parts);
         $parts = preg_replace("/[\r\n\t\s]+/s", " ", $parts);
@@ -115,7 +126,7 @@ abstract class TemplateBuilder
     private function getNextToken($tokens)
     {
         $this->i++;
-        if($this->i >= count($tokens)) {
+        if ($this->i >= count($tokens)) {
             return false;
         }
 
