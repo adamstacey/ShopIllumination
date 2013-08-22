@@ -1,9 +1,10 @@
 {% for item in app.session.get('basket').products %}
     {% if item.productId == productId and (variantId is not defined or item.variantId == variantId) %}
         <div class="items-added">
-            <h4>{{ item.quantity }} in your basket</h4>
-            <div class="mtm mbs clearfix" width="200">
-                <a href="{{ path('basket_your_basket') }}" class="button button-small button-grey uppercase icon-grey mrs">Your Basket</a>
+            <h4>Added to your basket</h4>
+            <p>{{ item.quantity }} in your basket</p>
+            <div class="tac clearfix">
+                <a href="{{ path('basket_your_basket') }}" class="button button-small button-grey icon-grey mrs">View Basket</a>
                 <a href="{{ path('checkout_secure_checkout') }}" class="button button-small button-green uppercase icon-white" data-icon-secondary="icon-472">Checkout</a>
             </div>
         </div>
