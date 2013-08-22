@@ -131,6 +131,17 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ variant.productCode }}</strong></p>
                                                 <div class="clear"></div>
+                                                <div id="add-to-basket-info">
+                                                    {% for item in app.session.get('basket').products %}
+                                                        {% if item.variantId == product.variants[0].id %}
+                                                            <div class="items-added">
+                                                                <h4>Added to your basket</h4>
+                                                                <span>{{ item.quantity }} x {{ item.header }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="clear"></div>
                                             {% elseif product.variants|length > 1 %}
                                                 <a href="#buyNow" class="button uppercase button-green icon-white fr mas" data-icon-secondary="icon-465">Buy Now</a>
                                                 <div class="fr prl mts mbs" itemprop="offers" itemscope itemtype="{% if lowest_price is null %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
@@ -170,10 +181,21 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ product.variants[0].productCode }}</strong></p>
                                                 <div class="clear"></div>
+                                                <div id="add-to-basket-info">
+                                                    {% for item in app.session.get('basket').products %}
+                                                        {% if item.variantId == product.variants[0].id %}
+                                                            <div class="items-added">
+                                                                <h4>Added to your basket</h4>
+                                                                <span>{{ item.quantity }} x {{ item.header }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="clear"></div>
                                             {% endif %}
                                         </div>
                                     </div>
-                                    {% if product.variants|length > 0 %}
+                                    {% if product.variants|length > 0 and differentiating_features|length > 0 %}
                                         <div class="border-bottom-separator">
                                             <div class="pam">
                                                 {% for featureGroup, features in differentiating_features %}
