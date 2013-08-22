@@ -134,6 +134,7 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ variant.productCode }}</strong></p>
                                                 <div class="clear"></div>
+                                                <div id="purchasingLoading{{ variant.id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" border="0" alt="loading" /></div>
                                                 <div class="basket-product-info" data-variantId="{{ variant.id }}">
                                                     {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'variantId': variant.id} %}
                                                 </div>
@@ -177,6 +178,7 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ product.variants[0].productCode }}</strong></p>
                                                 <div class="clear"></div>
+                                                <div id="purchasingLoading{{ product.variants[0].id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" border="0" alt="loading" /></div>
                                                 <div class="basket-product-info" data-variantId="{{ product.variants[0].id }}">
                                                     {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'variantId': product.variants[0].id} %}
                                                 </div>
@@ -301,6 +303,10 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
+            {% if variant.id > 0 %}
+                updateProductInfo($el.attr("data-variant-id"), data.product_html);
+            {% endif %}
+
             var variants = JSON.parse('{{ variants|json_encode|raw }}');
             var currentVariant = null;
 
