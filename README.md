@@ -1,4 +1,4 @@
-KitchenApplianceCentre
+ShopIllumination
 ======================
 
-Repository for Kitchen Appliance Centre
+Repository for Shop Illumination.
