@@ -43,8 +43,13 @@ class ProductIndexer extends Indexer
          */
         $em = $this->getDoctrine()->getManager();
 
-        // Fetch    images
+        // Fetch images
         $images = $em->getRepository('KAC\SiteBundle\Entity\Product\Image')->findBy(array(
+            'product' => $product->getId(),
+        ));
+
+        // Fetch linked products
+        $links = $em->getRepository('KAC\SiteBundle\Entity\Product\Link')->findBy(array(
             'product' => $product->getId(),
         ));
 
@@ -58,7 +63,7 @@ class ProductIndexer extends Indexer
         $document->setField('variants_count', count($product->getVariants()));
 
         // Add the image for the product
-        if(count($images) > 0) {
+        if (count($images) > 0) {
             $document->setField("thumbnail_path", $images[0]->getPublicPath());
             foreach($images as $image)
             {
@@ -79,7 +84,8 @@ class ProductIndexer extends Indexer
         $document->setField('updated_at', $helper->formatDate($product->getUpdatedAt()));
         $document->setField('isDeleted', $product->isDeleted());
 
-        foreach ($product->getDepartments() as $department) {
+        foreach ($product->getDepartments() as $department)
+        {
             $document->addField('department_ids', $this->getProperty($department, 'department.id'));
             $document->addField('department', $this->getProperty($department, 'department.description.name', ''));
 
@@ -92,6 +98,16 @@ class ProductIndexer extends Indexer
             } while ($currDepartment !== null);
             $document->addField("department_path", ltrim(rtrim($departmentNamesPath, "|"), "|"));
         }
+
+        $cheaperAlternative = false;
+        foreach ($links as $link)
+        {
+            if ($link->getLinkType() == 'cheaper')
+            {
+                $cheaperAlternative = true;
+            }
+        }
+        $document->setField('cheaper_alternative', $cheaperAlternative);
 
         // Generate the product URL
         if($product->getRouting()) {
