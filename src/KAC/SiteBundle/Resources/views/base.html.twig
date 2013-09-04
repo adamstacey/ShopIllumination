@@ -20,11 +20,9 @@
         {% block scripts %}
             {% include 'KACSiteBundle:Includes:scripts.html.twig' %}
         {% endblock %}
-        {% if app.request.query.get('modal') != true %}
-            <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-            <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
-            {% include '::shopTracking.html.twig' %}
-        {% endif %}
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+        {% include 'KACSiteBundle:Includes:tracking.html.twig' %}
     </head>
     <body itemscope itemtype="http://schema.org/WebPage">
         {% if app.request.query.get('modal') != true %}
