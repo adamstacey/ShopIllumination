@@ -550,6 +550,7 @@
         <field name="recommended" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="accessory" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="new" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="cheaper_alternative" type="boolean" indexed="true" stored="true" multiValued="false"/>
 
         <field name="delivery_cost" type="float" indexed="false" stored="true" multiValued="false"/>
         <field name="weight" type="float" indexed="false" stored="true" multiValued="false"/>
@@ -561,6 +562,7 @@
         <field name="high_rrp" type="float" indexed="true" stored="true" multiValued="false"/>
         <field name="rrps" type="float" indexed="true" stored="true" multiValued="true"/>
         <field name="list_prices" type="float" indexed="true" stored="true" multiValued="true"/>
+
         <!--<field name="cost_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
         <!--<field name="rrp" type="currency" indexed="true" stored="true" multiValued="false"/>-->
         <!--<field name="list_price" type="currency" indexed="true" stored="true" multiValued="false"/>-->
