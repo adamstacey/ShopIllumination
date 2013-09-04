@@ -33,7 +33,7 @@
     <div class="widget-group clearfix mbm">
         <div class="widget widget-7-of-8">
             <ul class="breadcrumbs">
-                <li style="z-index: {{ department.parents|length }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ path('homepage') }}"><span itemprop="title">Kitchen Appliances</span></a></li>
+                <li style="z-index: {{ department.parents|length > 0 ? department.parents|length : "99" }};" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ path('homepage') }}"><span itemprop="title">Kitchen Appliances</span></a></li>
                 {% for parent in department.parents %}
                     {% if parent.parent != null and parent.level != 0  %}
                         {% if brand %}
@@ -52,7 +52,7 @@
                         {% endif %}
                     {% endif %}
                 {% endfor %}
-                <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                <li style="z-index: 1;" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
                     <span itemprop="title">{{ brand ? brand.description.header ~ " " : "" }}{{ department.description.header }}</span>
                 </li>
             </ul>
@@ -108,7 +108,7 @@
                             {% if showMaiaPromotion %}
                                 {% include 'KACSiteBundle:Maia:maiaPromotion.html.twig' %}
                             {% else %}
-                                {{ render_esi(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': department.id })) }}
+                                {{ render(controller('KACSiteBundle:Listing:popularProducts', { 'departmentIds': department.id })) }}
                                 {{ render_esi(controller('KACSiteBundle:Listing:popularBrands', { 'departmentIds': department.id })) }}
                             {% endif %}
                         {% endif %}
