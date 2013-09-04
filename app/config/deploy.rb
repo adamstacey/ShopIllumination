@@ -18,7 +18,7 @@ set :use_set_permissions, true
 set :use_sudo , false
 
 # Repository configuration
-set :repository,  "git@github.com:adamstacey/KitchenApplianceCentre.git"
+set :repository,  "git@github.com:adamstacey/ShopIllumination.git"
 set :scm, :git
 
 # Symfony2 configuration
