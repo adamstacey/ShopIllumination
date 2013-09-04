@@ -21,27 +21,29 @@
                         {% endif  %}
                     </a>
                 </div>
-                <div class="{% if product.status == 'd' %}background-red-extra-extra-light {% elseif product.status == 'h' %}background-orange-extra-extra-light {% endif %}pts">
+                <div class="{% if product.status == 'd' %}background-red-extra-extra-light {% elseif product.status == 'h' %}background-orange-extra-extra-light {% endif %}pts pr">
                     {% if not brand %}
                         {% if product.brand_logo != '' %}
-                            <div class="fr">
-                                <img src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand|raw }}" height="25" />
-                            </div>
+                            <img class="small-brand-logo-image" src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand|raw }}" height="25" />
                         {% endif %}
                     {% endif %}
                     <div itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
                         {% if product.hide_price == 0 %}
                             <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
-                                {% if product.low_price != product.high_price %}
-                                    <span class="price-small">
-                                        <span class="currency-prefix">from </span>
+                                {% if (product.low_price == product.high_price) and (product.low_price != product.low_rrp) and (product.low_rrp > 0) %}
+                                    <span itemprop="price" class="price-small">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
+                                    <span itemprop="price" class="was-price-small">was <span class="strikethrough">{{ product.low_rrp|currency('GBP', true, true, '')|raw }}</span> save {{ (product.low_rrp - product.low_price)|currency('GBP', true, true, '')|raw }}</span>
+                                {% else %}
+                                    <span itemprop="price" class="price-small">
+                                        {% if product.low_price != product.high_price %}
+                                            <span class="currency-prefix">from </span>
+                                        {% endif %}
+                                        {{ product.low_price|currency('GBP', true, true, '')|raw }}
+                                    </span>
+                                    <span class="price-tax">
+                                        <span class="currency-tax">(inc. VAT)</span>
                                     </span>
                                 {% endif %}
-                                <span itemprop="price" class="price-small">{{ product.low_price|currency('GBP', true, true, '')|raw }}</span>
-                                <br />
-                                <span class="price-small">
-                                    <span class="currency-tax">(inc. VAT)</span>
-                                </span>
                             </a>
                         {% else %}
                             <a href="{{ path('content_contact_us') }}">CONTACT US</a>
