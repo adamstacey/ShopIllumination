@@ -43,19 +43,55 @@
     margin: 0 0 0 $spacingMedium;
 }
 
+.product img.small-brand-logo-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .product .price,
-.product .price-small {
-    text-align: right;
+.product .price-small,
+.product .price-smaller {
     color: $colourRed !important;
 }
 
+.product .price {
+    text-align: right;
+}
+
+.product .price-small,
+.product .price-smaller {
+    width: 100%;
+
+    display: block;
+    text-align: left;
+}
+
+.product .price-small {
+    height: 25px;
+}
+
+.product .price-smaller {
+    height: 18px;
+}
+
+.product .price-tax {
+    width: 100%;
+    height: 10px;
+    padding: 0 0 2px 0;
+
+    display: block;
+}
+
 .product .price a,
-.product .price-small a {
+.product .price-small a,
+.product .price-smaller a {
     color: $colourRed !important;
 }
 
 .product .price span,
-.product .price-small span {
+.product .price-small span,
+.product .price-smaller span {
     display: inline-block;
     vertical-align: top;
     line-height: 100%;
@@ -66,7 +102,11 @@
 }
 
 .product .price-small .currency-prefix {
-  @include fontSize($fontSizeSmall);
+    @include fontSize(11);
+}
+
+.product .price-smaller .currency-prefix {
+    @include fontSize(9);
 }
 
 .product .price .currency-sign,
@@ -81,7 +121,11 @@
 }
 
 .product .price-small .currency-sign {
-  @include fontSize($fontSizeLarge);
+  @include fontSize(14);
+}
+
+.product .price-smaller .currency-sign {
+    @include fontSize(11);
 }
 
 .product .price .currency-integer,
@@ -94,7 +138,11 @@
 }
 
 .product .price-small .currency-integer {
-  @include fontSize($fontSizeExtraExtraLarge);
+  @include fontSize(25);
+}
+
+.product .price-smaller .currency-integer {
+    @include fontSize(18);
 }
 
 .product .price .currency-decimal,
@@ -109,11 +157,16 @@
 }
 
 .product .price-small .currency-decimal {
-  @include fontSize($fontSizeMedium);
+  @include fontSize(12);
+}
+
+.product .price-smaller .currency-decimal {
+    @include fontSize(9);
 }
 
 .product .price .currency-tax,
-.product .price-small .currency-tax {
+.product .price-small .currency-tax,
+.product .price-tax .currency-tax {
     color: $colourGrey;
     @include fontSize($fontSizeExtraExtraSmall);
 }
@@ -136,6 +189,24 @@ table.data-table .price .currency-decimal {
 
 table.data-table .price .currency-tax {
     @include fontSize($fontSizeExtraExtraSmall);
+}
+
+.product .was-price-small {
+    width: 100%;
+    height: 10px;
+    padding: 0 0 2px 0;
+
+    display: block;
+
+    line-height: 10px;
+    @include fontSize(10);
+    color: $colourRed !important;
+}
+
+.product .was-price-small span {
+    line-height: 10px;
+    @include fontSize(10);
+    color: $colourRed !important;
 }
 
 .product-listing-name {
