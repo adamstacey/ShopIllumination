@@ -199,7 +199,11 @@
 .slider-gallery .rhino-container ul li,
 .slider-gallery .rhino-container ul li img {
     width: 940px;
-    height: 400px;
+    height: 200px;
+}
+
+.slider-gallery .rhino-prev, .slider-gallery .rhino-next {
+    margin: 32px 0 0 0;
 }
 
 .slider-gallery .rhino-container ul li img {
