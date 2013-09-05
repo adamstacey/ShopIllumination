@@ -8,15 +8,11 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{HTTPS} =on
-    RewriteCond %{HTTP_HOST} !^(www|cdn|staging)\.
-    RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(?:(?!blog).)*$ app.php [QSA,L]
+    RewriteCond %{SERVER_PORT}s ^(443(s)|[0-9]+s)$
+    RewriteRule ^(.*)$ - [env=ps:%2]
 
-    RewriteCond %{HTTPS} !=on
     RewriteCond %{HTTP_HOST} !^(www|cdn|staging)\.
-    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+    RewriteRule ^(.*)$ http%{ENV:ps}://www.%{HTTP_HOST}/$1 [R=301,L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(?:(?!blog).)*$ app.php [QSA,L]
 
