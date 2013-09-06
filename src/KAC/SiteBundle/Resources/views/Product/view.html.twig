@@ -293,6 +293,9 @@
                                                 </div>
                                             </section>
                                         </div>
+                                        {% if product.relatedProducts|length > 0 %}
+                                            {% include 'KACSiteBundle:Product:relatedProducts.html.twig' with {'products': product.relatedProducts} %}
+                                        {% endif %}
                                     </div>
                                 </section>
                             </div>
