@@ -516,6 +516,25 @@ class ListingController extends Controller
         return $response;
     }
 
+    public function cheaperAlternativeAction(Request $request, $productId = null)
+    {
+        if (!$productId) return false;
+
+        /**
+         * @var $em EntityManager
+         */
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository("KACSiteBundle:Product")->find($productId);
+
+        $response = $this->render('KACSiteBundle:Listing:cheaperAlternative.html.twig', array(
+            'product' => $product,
+        ));
+        $response->setSharedMaxAge(432000);
+
+        return $response;
+    }
+
     public function popularProductsAction(Request $request, $departmentIds = null, $brandIds = null)
     {
         /**
