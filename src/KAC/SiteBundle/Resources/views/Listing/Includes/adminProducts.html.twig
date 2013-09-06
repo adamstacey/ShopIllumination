@@ -12,7 +12,7 @@
                         {% set bullets = bullets ~ featureGroup ~ ": <strong>" ~ feature ~ "</strong><br />" %}
                     {% endif %}
                 {% endfor %}
-                <div class="product-image-container man">
+                <div class="product-image-container man pr">
                     <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">
                         {% if product.thumbnail_path %}
                             <img title="{{ bullets }}" class="product-image" src="{{ asset(product.thumbnail_path | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
@@ -20,6 +20,9 @@
                             <img title="{{ bullets }}" class="product-image" src="{{ asset('images/no-image.jpg' | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.header|raw }}" width="100%" />
                         {% endif  %}
                     </a>
+                    {% if product.cheaper_alternative %}
+                        {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
+                    {% endif %}
                 </div>
                 <div class="{% if product.status == 'd' %}background-red-extra-extra-light {% elseif product.status == 'h' %}background-orange-extra-extra-light {% endif %}pts">
                     {% if not brand %}
