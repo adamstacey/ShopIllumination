@@ -100,7 +100,7 @@
                             <div class="ui-widget">
                                 <section class="ui-widget-content ui-corner-all clearfix">
                                     <h1 itemprop="name">{{ header ~ (colour ? ' - ' ~ colour : '') }}</h1>
-                                    <div>
+                                    <div class="product-images pr">
                                         {% if product_images | length > 0 %}
                                             <ul class="etalage">
                                                 {% for image in product_images %}
@@ -111,6 +111,10 @@
                                                 {% endfor %}
                                             </ul>
                                         {% endif %}
+                                        {% if product.cheaperAlternative %}
+                                            {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
+                                        {% endif %}
+                                        <div class="clear"></div>
                                     </div>
                                 </section>
                             </div>
