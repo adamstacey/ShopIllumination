@@ -1,1 +1,43 @@
-@charset "UTF-8";@font-face{font-family:"Stag Medium";src:url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");src:local("☺"),url("/bundles/kacsite/css/resources/fonts/stag-medium.woff") format("woff"),url("/bundles/kacsite/css/resources/fonts/stag-medium.ttf") format("truetype"),url("/bundles/kacsite/css/resources/fonts/stag-medium.svg") format("svg");font-weight:normal;font-style:normal}.department{float:left;width:193px;height:217px;background:#ededed;margin:0 15px 15px 0;border:1px solid #d5d5d5;padding:10px;-webkit-box-shadow:0 0 5px rgba(0,0,0,0.3);-moz-box-shadow:0 0 5px rgba(0,0,0,0.3);box-shadow:0 0 5px rgba(0,0,0,0.3)}.department h4,.department h4 a{font-size:12px;line-height:120%;padding:0;color:#000;margin:0 0 10px 0;font-weight:normal;letter-spacing:1px;font-family:"Stag Medium",Arial}.department img{border:1px solid #454d52}
+@charset "UTF-8";
+/*
+  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
+  rgba-background mixin can now be passed an option $dir variable
+*/
+@font-face {
+  font-family: "Stag Medium";
+  src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
+  src: local("☺"), url("/bundles/kacsite/css/resources/fonts/stag-medium.woff") format("woff"), url("/bundles/kacsite/css/resources/fonts/stag-medium.ttf") format("truetype"), url("/bundles/kacsite/css/resources/fonts/stag-medium.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 5, assetic_compassRUQhxP.scss */
+.department {
+  float: left;
+  width: 193px;
+  height: 217px;
+  background: #EDEDED;
+  margin: 0 15px 15px 0;
+  border: 1px solid #d5d5d5;
+  padding: 10px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* line 18, assetic_compassRUQhxP.scss */
+.department h4, .department h4 a {
+  font-size: 12px;
+  line-height: 120%;
+  padding: 0;
+  color: #000;
+  margin: 0 0 10px 0;
+  font-weight: normal;
+  letter-spacing: 1px;
+  font-family: "Stag Medium", Arial;
+}
+
+/* line 29, assetic_compassRUQhxP.scss */
+.department img {
+  border: 1px solid #454d52;
+}

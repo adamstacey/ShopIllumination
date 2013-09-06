@@ -3,176 +3,6 @@
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
-/* line 161, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-extra-light {
-  background-color: #ededed;
-}
-
-/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-light {
-  background-color: #e4eaec;
-}
-
-/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-light {
-  background-color: #c5d2d6;
-}
-
-/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-medium {
-  background-color: #9fbdc8;
-}
-
-/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey {
-  background-color: #6c8087;
-}
-
-/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-dark {
-  background-color: #384246;
-}
-
-/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-extra-light {
-  background-color: #ffebec;
-}
-
-/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-light {
-  background-color: #fdadae;
-}
-
-/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-light {
-  background-color: #d93637;
-}
-
-/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red {
-  background-color: #9a0000;
-}
-
-/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-extra-light {
-  background-color: #fbebeb;
-}
-
-/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-light {
-  background-color: #ffb9b9;
-}
-
-/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-light {
-  background-color: #ff3f40;
-}
-
-/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red {
-  background-color: #cc0000;
-}
-
-/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-extra-light {
-  background-color: #fff3ea;
-}
-
-/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-light {
-  background-color: #ffdec5;
-}
-
-/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-light {
-  background-color: #ff8434;
-}
-
-/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange {
-  background-color: #cc5200;
-}
-
-/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-extra-light {
-  background-color: #fffbea;
-}
-
-/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-light {
-  background-color: #fffadd;
-}
-
-/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-light {
-  background-color: #ffd634;
-}
-
-/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow {
-  background-color: #e6ac00;
-}
-
-/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-extra-light {
-  background-color: #ebf7eb;
-}
-
-/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-light {
-  background-color: #b0e2ae;
-}
-
-/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-light {
-  background-color: #2baf2b;
-}
-
-/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green {
-  background-color: #137f13;
-}
-
-/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-extra-light {
-  background-color: #e9f6fa;
-}
-
-/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-light {
-  background-color: #baebfc;
-}
-
-/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-light {
-  background-color: #29a3cc;
-}
-
-/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise {
-  background-color: #007398;
-}
-
-/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-extra-light {
-  background-color: #e5eff8;
-}
-
-/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-light {
-  background-color: #94c9fd;
-}
-
-/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-light {
-  background-color: #0061bf;
-}
-
-/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue {
-  background-color: #003b73;
-}
-
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -181,13 +11,13 @@
   font-style: normal;
 }
 
-/* line 5, assetic_compass508gjl.scss */
+/* line 5, assetic_compassyM43Aw.scss */
 html {
   background: white;
   font-size: 62.5%;
 }
 
-/* line 10, assetic_compass508gjl.scss */
+/* line 10, assetic_compassyM43Aw.scss */
 body {
   background: #384246;
   font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
@@ -196,29 +26,29 @@ body {
   color: #444444;
 }
 
-/* line 17, assetic_compass508gjl.scss */
+/* line 17, assetic_compassyM43Aw.scss */
 html.modal, html.modal body {
   background: #c5d2d6;
 }
 
-/* line 21, assetic_compass508gjl.scss */
+/* line 21, assetic_compassyM43Aw.scss */
 html.modal body > section {
   padding: 15px;
 }
 
-/* line 25, assetic_compass508gjl.scss */
+/* line 25, assetic_compassyM43Aw.scss */
 .document {
   position: relative;
   background: white;
 }
 
-/* line 31, assetic_compass508gjl.scss */
+/* line 31, assetic_compassyM43Aw.scss */
 .container {
   width: 980px;
   margin: 0 auto;
 }
 
-/* line 36, assetic_compass508gjl.scss */
+/* line 36, assetic_compassyM43Aw.scss */
 .header {
   padding: 10px 0;
   height: 60px;
@@ -229,6 +59,7 @@ html.modal body > section {
   background: -o-linear-gradient(top, #6c8087 0%, #384246 100%);
   background: -ms-linear-gradient(top, #6c8087 0%, #384246 100%);
   background: linear-gradient(top, #6c8087 0%, #384246 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#6c8087', endColorstr = '#384246', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZjODA4NyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM4NDI0NiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c8087), color-stop(100%, #384246));
@@ -245,7 +76,7 @@ html.modal body > section {
   box-shadow: inset 0 1px 5px 0 #384246;
 }
 
-/* line 44, assetic_compass508gjl.scss */
+/* line 44, assetic_compassyM43Aw.scss */
 .header-contents {
   width: 980px;
   margin: 0 auto;
@@ -253,8 +84,8 @@ html.modal body > section {
   position: relative;
 }
 
-/* line 52, assetic_compass508gjl.scss */
-.logo {
+/* line 52, assetic_compassyM43Aw.scss */
+.header-contents .logo {
   width: 189px;
   height: 60px;
   position: absolute;
@@ -262,8 +93,8 @@ html.modal body > section {
   left: 0;
 }
 
-/* line 61, assetic_compass508gjl.scss */
-.logo a {
+/* line 61, assetic_compassyM43Aw.scss */
+.header-contents .logo a {
   width: 189px;
   height: 60px;
   display: block;
@@ -274,7 +105,7 @@ html.modal body > section {
   background-position: 0 0;
 }
 
-/* line 73, assetic_compass508gjl.scss */
+/* line 73, assetic_compassyM43Aw.scss */
 .content {
   min-height: 300px;
   padding: 5px 20px 20px 20px;
@@ -289,12 +120,12 @@ html.modal body > section {
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.7);
 }
 
-/* line 84, assetic_compass508gjl.scss */
+/* line 84, assetic_compassyM43Aw.scss */
 .header-image {
   position: relative;
 }
 
-/* line 88, assetic_compass508gjl.scss */
+/* line 88, assetic_compassyM43Aw.scss */
 .header-image img {
   margin: -10px -10px 10px -10px;
   -webkit-border-radius: 4px 4px 0 0;
@@ -306,7 +137,7 @@ html.modal body > section {
   border-bottom: 3px solid #4ec0e3;
 }
 
-/* line 95, assetic_compass508gjl.scss */
+/* line 95, assetic_compassyM43Aw.scss */
 .header-image h1 {
   padding: 20px;
   position: absolute;
@@ -323,14 +154,14 @@ html.modal body > section {
   font-weight: normal;
 }
 
-/* line 110, assetic_compass508gjl.scss */
+/* line 110, assetic_compassyM43Aw.scss */
 table.listing {
   margin: 0 0 10px 0;
   border-collapse: collapse;
   border: 1px solid #e4eaec;
 }
 
-/* line 117, assetic_compass508gjl.scss */
+/* line 117, assetic_compassyM43Aw.scss */
 table.listing td {
   padding: 5px;
   border: 1px solid #e4eaec;
@@ -340,7 +171,7 @@ table.listing td {
   line-height: 120%;
 }
 
-/* line 126, assetic_compass508gjl.scss */
+/* line 126, assetic_compassyM43Aw.scss */
 table.listing th {
   padding: 10px 5px;
   text-align: left;
@@ -357,6 +188,7 @@ table.listing th {
   background: -o-linear-gradient(top, white 0%, #e4eaec 100%);
   background: -ms-linear-gradient(top, white 0%, #e4eaec 100%);
   background: linear-gradient(top, #ffffff 0%, #e4eaec 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = 'white', endColorstr = '#e4eaec', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #e4eaec));
@@ -367,19 +199,19 @@ table.listing th {
   background-repeat: no-repeat;
 }
 
-/* line 137, assetic_compass508gjl.scss */
+/* line 137, assetic_compassyM43Aw.scss */
 table.listing tr.odd {
   background: #F3F6F6;
 }
 
-/* line 141, assetic_compass508gjl.scss */
+/* line 141, assetic_compassyM43Aw.scss */
 table.listing td a {
   font-size: 11px;
   font-size: 1.1rem;
   color: black !important;
 }
 
-/* line 146, assetic_compass508gjl.scss */
+/* line 146, assetic_compassyM43Aw.scss */
 .widget-content h4 {
   padding: 0 10px;
   line-height: 34px;
@@ -392,6 +224,7 @@ table.listing td a {
   background: -o-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
   background: -ms-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
   background: linear-gradient(to bottom, #ffffff 0%, #e4eaec 5%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = '#c5d2d6', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNlNGVhZWMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjNWQyZDYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(5%, #e4eaec), color-stop(100%, #c5d2d6));
@@ -412,30 +245,30 @@ table.listing td a {
   background-clip: padding-box;
 }
 
-/* line 158, assetic_compass508gjl.scss */
+/* line 158, assetic_compassyM43Aw.scss */
 .widget-content h4 .ui-icon-small {
   margin: 5px 10px 5px 0;
 }
 
-/* line 162, assetic_compass508gjl.scss */
+/* line 162, assetic_compassyM43Aw.scss */
 .widget-content ul {
   margin: 0 0 10px 20px;
   color: #4ec0e3 !important;
 }
 
-/* line 167, assetic_compass508gjl.scss */
+/* line 167, assetic_compassyM43Aw.scss */
 .widget-content ul li {
   margin: 0 0 0 10px;
   color: #444444 !important;
   line-height: 150%;
 }
 
-/* line 173, assetic_compass508gjl.scss */
+/* line 173, assetic_compassyM43Aw.scss */
 .widget-content dl {
   margin: 0 0 10px 0;
 }
 
-/* line 177, assetic_compass508gjl.scss */
+/* line 177, assetic_compassyM43Aw.scss */
 .widget-content dt {
   width: 40%;
   padding: 5px;
@@ -453,7 +286,7 @@ table.listing td a {
   color: #384246;
 }
 
-/* line 195, assetic_compass508gjl.scss */
+/* line 195, assetic_compassyM43Aw.scss */
 .widget-content dd {
   width: 60%;
   padding: 5px;
@@ -468,7 +301,7 @@ table.listing td a {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 210, assetic_compass508gjl.scss */
+/* line 210, assetic_compassyM43Aw.scss */
 .footer {
   padding: 10px 0;
   position: relative;
@@ -479,6 +312,7 @@ table.listing td a {
   background: -o-linear-gradient(top, #6c8087 0%, #384246 100%);
   background: -ms-linear-gradient(top, #6c8087 0%, #384246 100%);
   background: linear-gradient(top, #6c8087 0%, #384246 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#6c8087', endColorstr = '#384246', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZjODA4NyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM4NDI0NiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c8087), color-stop(100%, #384246));
@@ -496,7 +330,7 @@ table.listing td a {
   border-top: 3px solid #6c8087;
 }
 
-/* line 220, assetic_compass508gjl.scss */
+/* line 220, assetic_compassyM43Aw.scss */
 .footer h4 {
   margin: 0 0 10px 0;
   padding: 0 0 10px 0;
@@ -506,7 +340,7 @@ table.listing td a {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 229, assetic_compass508gjl.scss */
+/* line 229, assetic_compassyM43Aw.scss */
 .footer span {
   line-height: 150%;
   color: #c5d2d6;
@@ -514,7 +348,7 @@ table.listing td a {
   font-size: 1.1rem;
 }
 
-/* line 236, assetic_compass508gjl.scss */
+/* line 236, assetic_compassyM43Aw.scss */
 .footer ul,
 .footer ul li {
   margin: 0;
@@ -522,28 +356,28 @@ table.listing td a {
   list-style: none;
 }
 
-/* line 243, assetic_compass508gjl.scss */
+/* line 243, assetic_compassyM43Aw.scss */
 .footer ul {
   margin: 0 0 10px 0;
 }
 
-/* line 247, assetic_compass508gjl.scss */
+/* line 247, assetic_compassyM43Aw.scss */
 .footer ul li {
   line-height: 150%;
 }
 
-/* line 251, assetic_compass508gjl.scss */
+/* line 251, assetic_compassyM43Aw.scss */
 .footer a {
   color: #9fbdc8;
   text-decoration: none;
 }
 
-/* line 256, assetic_compass508gjl.scss */
+/* line 256, assetic_compassyM43Aw.scss */
 .footer a:hover {
   text-decoration: underline;
 }
 
-/* line 260, assetic_compass508gjl.scss */
+/* line 260, assetic_compassyM43Aw.scss */
 .floating-advert-container {
   width: 160px;
   min-height: 300px;
@@ -552,18 +386,194 @@ table.listing td a {
   left: 50%;
 }
 
-/* line 269, assetic_compass508gjl.scss */
+/* line 269, assetic_compassyM43Aw.scss */
 .floating-advert-container-left {
   margin: 0 0 0 -662px;
 }
 
-/* line 273, assetic_compass508gjl.scss */
+/* line 273, assetic_compassyM43Aw.scss */
 .floating-advert-container-right {
   margin: 0 0 0 502px;
 }
 
+/* line 277, assetic_compassyM43Aw.scss */
+.background-grey-extra-extra-light {
+  background-color: #ededed;
+}
+
+/* line 281, assetic_compassyM43Aw.scss */
+.background-grey-extra-light {
+  background-color: #e4eaec;
+}
+
+/* line 285, assetic_compassyM43Aw.scss */
+.background-grey-light {
+  background-color: #c5d2d6;
+}
+
+/* line 289, assetic_compassyM43Aw.scss */
+.background-grey-medium {
+  background-color: #9fbdc8;
+}
+
+/* line 293, assetic_compassyM43Aw.scss */
+.background-grey {
+  background-color: #6c8087;
+}
+
+/* line 297, assetic_compassyM43Aw.scss */
+.background-grey-dark {
+  background-color: #384246;
+}
+
+/* line 301, assetic_compassyM43Aw.scss */
+.background-dark-red-extra-extra-light {
+  background-color: #ffebec;
+}
+
+/* line 305, assetic_compassyM43Aw.scss */
+.background-dark-red-extra-light {
+  background-color: #fdadae;
+}
+
+/* line 309, assetic_compassyM43Aw.scss */
+.background-dark-red-light {
+  background-color: #d93637;
+}
+
+/* line 313, assetic_compassyM43Aw.scss */
+.background-dark-red {
+  background-color: #9a0000;
+}
+
+/* line 317, assetic_compassyM43Aw.scss */
+.background-red-extra-extra-light {
+  background-color: #fbebeb;
+}
+
+/* line 321, assetic_compassyM43Aw.scss */
+.background-red-extra-light {
+  background-color: #ffb9b9;
+}
+
+/* line 325, assetic_compassyM43Aw.scss */
+.background-red-light {
+  background-color: #ff3f40;
+}
+
+/* line 329, assetic_compassyM43Aw.scss */
+.background-red {
+  background-color: #cc0000;
+}
+
+/* line 333, assetic_compassyM43Aw.scss */
+.background-orange-extra-extra-light {
+  background-color: #fff3ea;
+}
+
+/* line 337, assetic_compassyM43Aw.scss */
+.background-orange-extra-light {
+  background-color: #ffdec5;
+}
+
+/* line 341, assetic_compassyM43Aw.scss */
+.background-orange-light {
+  background-color: #ff8434;
+}
+
+/* line 345, assetic_compassyM43Aw.scss */
+.background-orange {
+  background-color: #cc5200;
+}
+
+/* line 349, assetic_compassyM43Aw.scss */
+.background-yellow-extra-extra-light {
+  background-color: #fffbea;
+}
+
+/* line 353, assetic_compassyM43Aw.scss */
+.background-yellow-extra-light {
+  background-color: #fffadd;
+}
+
+/* line 357, assetic_compassyM43Aw.scss */
+.background-yellow-light {
+  background-color: #ffd634;
+}
+
+/* line 361, assetic_compassyM43Aw.scss */
+.background-yellow {
+  background-color: #e6ac00;
+}
+
+/* line 365, assetic_compassyM43Aw.scss */
+.background-green-extra-extra-light {
+  background-color: #ebf7eb;
+}
+
+/* line 369, assetic_compassyM43Aw.scss */
+.background-green-extra-light {
+  background-color: #b0e2ae;
+}
+
+/* line 373, assetic_compassyM43Aw.scss */
+.background-green-light {
+  background-color: #2baf2b;
+}
+
+/* line 377, assetic_compassyM43Aw.scss */
+.background-green {
+  background-color: #137f13;
+}
+
+/* line 381, assetic_compassyM43Aw.scss */
+.background-turquoise-extra-extra-light {
+  background-color: #e9f6fa;
+}
+
+/* line 385, assetic_compassyM43Aw.scss */
+.background-turquoise-extra-light {
+  background-color: #baebfc;
+}
+
+/* line 389, assetic_compassyM43Aw.scss */
+.background-turquoise-light {
+  background-color: #29a3cc;
+}
+
+/* line 393, assetic_compassyM43Aw.scss */
+.background-turquoise {
+  background-color: #007398;
+}
+
+/* line 397, assetic_compassyM43Aw.scss */
+.background-blue-extra-extra-light {
+  background-color: #e5eff8;
+}
+
+/* line 401, assetic_compassyM43Aw.scss */
+.background-blue-extra-light {
+  background-color: #94c9fd;
+}
+
+/* line 405, assetic_compassyM43Aw.scss */
+.background-blue-light {
+  background-color: #0061bf;
+}
+
+/* line 409, assetic_compassyM43Aw.scss */
+.background-blue {
+  background-color: #003b73;
+}
+
+/* line 413, assetic_compassyM43Aw.scss */
+.stuck {
+  position: fixed !important;
+  top: 0;
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 302, assetic_compass508gjl.scss */
+  /* line 443, assetic_compassyM43Aw.scss */
   .logo a {
     background-image: url("/bundles/kacsite/css/resources/images/logo@2x.png");
   }

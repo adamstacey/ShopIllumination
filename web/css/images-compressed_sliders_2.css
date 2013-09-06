@@ -3,176 +3,6 @@
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
-/* line 161, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-extra-light {
-  background-color: #ededed;
-}
-
-/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-light {
-  background-color: #e4eaec;
-}
-
-/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-light {
-  background-color: #c5d2d6;
-}
-
-/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-medium {
-  background-color: #9fbdc8;
-}
-
-/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey {
-  background-color: #6c8087;
-}
-
-/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-dark {
-  background-color: #384246;
-}
-
-/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-extra-light {
-  background-color: #ffebec;
-}
-
-/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-light {
-  background-color: #fdadae;
-}
-
-/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-light {
-  background-color: #d93637;
-}
-
-/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red {
-  background-color: #9a0000;
-}
-
-/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-extra-light {
-  background-color: #fbebeb;
-}
-
-/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-light {
-  background-color: #ffb9b9;
-}
-
-/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-light {
-  background-color: #ff3f40;
-}
-
-/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red {
-  background-color: #cc0000;
-}
-
-/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-extra-light {
-  background-color: #fff3ea;
-}
-
-/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-light {
-  background-color: #ffdec5;
-}
-
-/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-light {
-  background-color: #ff8434;
-}
-
-/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange {
-  background-color: #cc5200;
-}
-
-/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-extra-light {
-  background-color: #fffbea;
-}
-
-/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-light {
-  background-color: #fffadd;
-}
-
-/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-light {
-  background-color: #ffd634;
-}
-
-/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow {
-  background-color: #e6ac00;
-}
-
-/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-extra-light {
-  background-color: #ebf7eb;
-}
-
-/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-light {
-  background-color: #b0e2ae;
-}
-
-/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-light {
-  background-color: #2baf2b;
-}
-
-/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green {
-  background-color: #137f13;
-}
-
-/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-extra-light {
-  background-color: #e9f6fa;
-}
-
-/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-light {
-  background-color: #baebfc;
-}
-
-/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-light {
-  background-color: #29a3cc;
-}
-
-/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise {
-  background-color: #007398;
-}
-
-/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-extra-light {
-  background-color: #e5eff8;
-}
-
-/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-light {
-  background-color: #94c9fd;
-}
-
-/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-light {
-  background-color: #0061bf;
-}
-
-/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue {
-  background-color: #003b73;
-}
-
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -181,14 +11,15 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compassEdW2pJ.scss */
+/* line 4, assetic_compassrtHR48.scss */
 .slider-wrapper {
   position: relative;
   overflow: hidden;
 }
 
-/* line 9, assetic_compassEdW2pJ.scss */
-.slider-wrapper h1 {
+/* line 10, assetic_compassrtHR48.scss */
+.slider-wrapper h1,
+.product .slider-wrapper h1 {
   padding: 20px;
   position: absolute;
   top: 40px;
@@ -204,32 +35,32 @@
   font-weight: normal;
 }
 
-/* line 24, assetic_compassEdW2pJ.scss */
+/* line 25, assetic_compassrtHR48.scss */
 .slider-wrapper h1.left {
   left: 0;
   text-align: left;
 }
 
-/* line 29, assetic_compassEdW2pJ.scss */
+/* line 30, assetic_compassrtHR48.scss */
 .slider-wrapper h1.right {
   right: 0;
   text-align: right;
 }
 
-/* line 34, assetic_compassEdW2pJ.scss */
+/* line 35, assetic_compassrtHR48.scss */
 .slider-wrapper img.logo {
   position: absolute;
   top: 15px;
   right: 15px;
 }
 
-/* line 40, assetic_compassEdW2pJ.scss */
+/* line 41, assetic_compassrtHR48.scss */
 .slider {
   padding: 0;
   margin: 0;
 }
 
-/* line 45, assetic_compassEdW2pJ.scss */
+/* line 46, assetic_compassrtHR48.scss */
 .rhino-btn {
   display: block;
   background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite.png");
@@ -244,7 +75,7 @@
   user-select: none;
 }
 
-/* line 56, assetic_compassEdW2pJ.scss */
+/* line 57, assetic_compassrtHR48.scss */
 .rhino-prev, .rhino-next {
   width: 32px;
   height: 32px;
@@ -252,29 +83,29 @@
   top: 50%;
 }
 
-/* line 64, assetic_compassEdW2pJ.scss */
+/* line 65, assetic_compassrtHR48.scss */
 .rhino-prev {
   left: 10px;
   background-position: 0 0;
 }
 
-/* line 69, assetic_compassEdW2pJ.scss */
+/* line 70, assetic_compassrtHR48.scss */
 .rhino-next {
   right: 10px;
   background-position: -32px 0;
 }
 
-/* line 74, assetic_compassEdW2pJ.scss */
+/* line 75, assetic_compassrtHR48.scss */
 .rhino-prev:hover {
   background-position: 0 -32px;
 }
 
-/* line 78, assetic_compassEdW2pJ.scss */
+/* line 79, assetic_compassrtHR48.scss */
 .rhino-next:hover {
   background-position: -32px -32px;
 }
 
-/* line 82, assetic_compassEdW2pJ.scss */
+/* line 83, assetic_compassrtHR48.scss */
 .rhino-toggle {
   width: 17px;
   height: 20px;
@@ -282,34 +113,34 @@
   top: 10px;
 }
 
-/* line 90, assetic_compassEdW2pJ.scss */
+/* line 91, assetic_compassrtHR48.scss */
 .rhino-play {
   background-position: -64px 0;
 }
 
-/* line 94, assetic_compassEdW2pJ.scss */
+/* line 95, assetic_compassrtHR48.scss */
 .rhino-play:hover {
   background-position: -64px -20px;
 }
 
-/* line 98, assetic_compassEdW2pJ.scss */
+/* line 99, assetic_compassrtHR48.scss */
 .rhino-pause {
   background-position: -81px 0;
 }
 
-/* line 102, assetic_compassEdW2pJ.scss */
+/* line 103, assetic_compassrtHR48.scss */
 .rhino-pause:hover {
   background-position: -81px -20px;
 }
 
-/* line 106, assetic_compassEdW2pJ.scss */
+/* line 107, assetic_compassrtHR48.scss */
 .rhino-container {
   position: relative;
   padding: 0;
   margin: 0;
 }
 
-/* line 112, assetic_compassEdW2pJ.scss */
+/* line 113, assetic_compassrtHR48.scss */
 .rhino-caption {
   padding: 10px;
   display: none;
@@ -329,7 +160,7 @@
   user-select: none;
 }
 
-/* line 129, assetic_compassEdW2pJ.scss */
+/* line 130, assetic_compassrtHR48.scss */
 .rhino-bullets {
   margin: 0 0 0 -50px;
   padding: 0;
@@ -338,14 +169,14 @@
   left: 50%;
 }
 
-/* line 138, assetic_compassEdW2pJ.scss */
+/* line 139, assetic_compassrtHR48.scss */
 .rhino-bullets li {
   margin: 0;
   float: left;
   display: inline;
 }
 
-/* line 145, assetic_compassEdW2pJ.scss */
+/* line 146, assetic_compassrtHR48.scss */
 .rhino-bullets li a.rhino-bullet {
   width: 20px;
   height: 20px;
@@ -371,48 +202,55 @@
   user-select: none;
 }
 
-/* line 167, assetic_compassEdW2pJ.scss */
+/* line 168, assetic_compassrtHR48.scss */
 .rhino-bullets li a.rhino-bullet:hover, .rhino-bullets li a.rhino-bullet:focus {
   background-position: -118px -20px;
 }
 
-/* line 171, assetic_compassEdW2pJ.scss */
+/* line 172, assetic_compassrtHR48.scss */
 .rhino-bullets li a.rhino-bullet.rhino-active-bullet {
   background-position: -98px 0;
 }
 
-/* line 176, assetic_compassEdW2pJ.scss */
+/* line 177, assetic_compassrtHR48.scss */
 .rhino-container,
 .rhino-container ul {
   margin: 0 !important;
   padding: 0 !important;
 }
 
-/* line 184, assetic_compassEdW2pJ.scss */
+/* line 186, assetic_compassrtHR48.scss */
 .slider-homepage,
 .slider-homepage .rhino-container,
 .slider-homepage .rhino-container ul,
-.slider-homepage .rhino-container ul li {
-  width: 735px;
-  height: 300px;
+.slider-homepage .rhino-container ul li,
+.slider-homepage .rhino-container ul li img {
+  width: 980px;
+  height: 250px;
 }
 
-/* line 189, assetic_compassEdW2pJ.scss */
+/* line 191, assetic_compassrtHR48.scss */
 .slider-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 20px -10px;
 }
 
-/* line 197, assetic_compassEdW2pJ.scss */
+/* line 200, assetic_compassrtHR48.scss */
 .slider-gallery,
 .slider-gallery .rhino-container,
 .slider-gallery .rhino-container ul,
-.slider-gallery .rhino-container ul li {
+.slider-gallery .rhino-container ul li,
+.slider-gallery .rhino-container ul li img {
   width: 940px;
-  height: 400px;
+  height: 200px;
 }
 
-/* line 202, assetic_compassEdW2pJ.scss */
+/* line 205, assetic_compassrtHR48.scss */
+.slider-gallery .rhino-prev, .slider-gallery .rhino-next {
+  margin: 32px 0 0 0;
+}
+
+/* line 209, assetic_compassrtHR48.scss */
 .slider-gallery .rhino-container ul li img {
   -webkit-border-radius: 4px 4px 0 0;
   -moz-border-radius: 4px 4px 0 0;
@@ -422,28 +260,29 @@
   background-clip: padding-box;
 }
 
-/* line 206, assetic_compassEdW2pJ.scss */
+/* line 213, assetic_compassrtHR48.scss */
 .slider-dialog-gallery {
   border-bottom: 3px solid #384246;
   margin: -10px -10px 10px -10px;
 }
 
-/* line 214, assetic_compassEdW2pJ.scss */
+/* line 222, assetic_compassrtHR48.scss */
 .slider-dialog-gallery,
 .slider-dialog-gallery .rhino-container,
 .slider-dialog-gallery .rhino-container ul,
-.slider-dialog-gallery .rhino-container ul li {
+.slider-dialog-gallery .rhino-container ul li,
+.slider-dialog-gallery .rhino-container ul li img {
   width: 800px;
   height: 350px;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 244, assetic_compassEdW2pJ.scss */
+  /* line 252, assetic_compassrtHR48.scss */
   .rhino-btn {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }
 
-  /* line 248, assetic_compassEdW2pJ.scss */
+  /* line 256, assetic_compassrtHR48.scss */
   .rhino-bullets li a.rhino-bullet {
     background-image: url("/bundles/kacsite/css/resources/images/rhinoslider_controls_sprite@2x.png");
   }

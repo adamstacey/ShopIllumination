@@ -3,176 +3,6 @@
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
-/* line 161, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-extra-light {
-  background-color: #ededed;
-}
-
-/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-light {
-  background-color: #e4eaec;
-}
-
-/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-light {
-  background-color: #c5d2d6;
-}
-
-/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-medium {
-  background-color: #9fbdc8;
-}
-
-/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey {
-  background-color: #6c8087;
-}
-
-/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-dark {
-  background-color: #384246;
-}
-
-/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-extra-light {
-  background-color: #ffebec;
-}
-
-/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-light {
-  background-color: #fdadae;
-}
-
-/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-light {
-  background-color: #d93637;
-}
-
-/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red {
-  background-color: #9a0000;
-}
-
-/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-extra-light {
-  background-color: #fbebeb;
-}
-
-/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-light {
-  background-color: #ffb9b9;
-}
-
-/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-light {
-  background-color: #ff3f40;
-}
-
-/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red {
-  background-color: #cc0000;
-}
-
-/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-extra-light {
-  background-color: #fff3ea;
-}
-
-/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-light {
-  background-color: #ffdec5;
-}
-
-/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-light {
-  background-color: #ff8434;
-}
-
-/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange {
-  background-color: #cc5200;
-}
-
-/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-extra-light {
-  background-color: #fffbea;
-}
-
-/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-light {
-  background-color: #fffadd;
-}
-
-/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-light {
-  background-color: #ffd634;
-}
-
-/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow {
-  background-color: #e6ac00;
-}
-
-/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-extra-light {
-  background-color: #ebf7eb;
-}
-
-/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-light {
-  background-color: #b0e2ae;
-}
-
-/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-light {
-  background-color: #2baf2b;
-}
-
-/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green {
-  background-color: #137f13;
-}
-
-/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-extra-light {
-  background-color: #e9f6fa;
-}
-
-/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-light {
-  background-color: #baebfc;
-}
-
-/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-light {
-  background-color: #29a3cc;
-}
-
-/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise {
-  background-color: #007398;
-}
-
-/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-extra-light {
-  background-color: #e5eff8;
-}
-
-/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-light {
-  background-color: #94c9fd;
-}
-
-/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-light {
-  background-color: #0061bf;
-}
-
-/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue {
-  background-color: #003b73;
-}
-
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -181,23 +11,23 @@
   font-style: normal;
 }
 
-/* line 4, assetic_compass3yzo5a.scss */
+/* line 4, assetic_compass3lfPzt.scss */
 a {
   text-decoration: none;
   color: #4ec0e3;
 }
 
-/* line 9, assetic_compass3yzo5a.scss */
+/* line 9, assetic_compass3lfPzt.scss */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 13, assetic_compass3yzo5a.scss */
+/* line 13, assetic_compass3lfPzt.scss */
 a:focus {
   outline: none;
 }
 
-/* line 17, assetic_compass3yzo5a.scss */
+/* line 17, assetic_compass3lfPzt.scss */
 .top-menu {
   border-top: 3px solid #4ec0e3;
   background: white;
@@ -207,6 +37,7 @@ a:focus {
   background: -o-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: -ms-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: linear-gradient(top, #ffffff 0%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = 'white', endColorstr = '#c5d2d6', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #c5d2d6));
@@ -217,18 +48,18 @@ a:focus {
   background-repeat: no-repeat;
 }
 
-/* line 22, assetic_compass3yzo5a.scss */
+/* line 22, assetic_compass3lfPzt.scss */
 .social-media-interaction {
   float: left;
   padding: 2px 15px 2px 0;
 }
 
-/* line 27, assetic_compass3yzo5a.scss */
+/* line 27, assetic_compass3lfPzt.scss */
 .top-menu-links {
   float: right;
 }
 
-/* line 31, assetic_compass3yzo5a.scss */
+/* line 31, assetic_compass3lfPzt.scss */
 .top-menu-links a {
   text-shadow: 0 1px 2px white;
   text-shadow: 0 1px 2px white;
@@ -238,13 +69,13 @@ a:focus {
   font-size: 1.1rem;
 }
 
-/* line 38, assetic_compass3yzo5a.scss */
+/* line 38, assetic_compass3lfPzt.scss */
 nav.left-menu ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 43, assetic_compass3yzo5a.scss */
+/* line 43, assetic_compass3lfPzt.scss */
 nav.left-menu ul li {
   margin: 0 0 5px 0;
   padding: 0 0 0 42px;
@@ -266,59 +97,59 @@ nav.left-menu ul li {
   overflow: hidden;
 }
 
-/* line 57, assetic_compass3yzo5a.scss */
+/* line 57, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.black {
   border: 1px solid black;
 }
 
-/* line 61, assetic_compass3yzo5a.scss */
+/* line 61, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.grey {
   border: 1px solid #6c8087;
 }
 
-/* line 65, assetic_compass3yzo5a.scss */
+/* line 65, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.red {
   border: 1px solid #cc0000;
 }
 
-/* line 69, assetic_compass3yzo5a.scss */
+/* line 69, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.dark-red {
   border: 1px solid #9a0000;
 }
 
-/* line 73, assetic_compass3yzo5a.scss */
+/* line 73, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.orange {
   border: 1px solid #cc5200;
 }
 
-/* line 77, assetic_compass3yzo5a.scss */
+/* line 77, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.yellow {
   border: 1px solid #e6ac00;
 }
 
-/* line 81, assetic_compass3yzo5a.scss */
+/* line 81, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.green {
   border: 1px solid #137f13;
 }
 
-/* line 85, assetic_compass3yzo5a.scss */
+/* line 85, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.turquoise {
   border: 1px solid #007398;
 }
 
-/* line 89, assetic_compass3yzo5a.scss */
+/* line 89, assetic_compass3lfPzt.scss */
 nav.left-menu ul li.blue {
   border: 1px solid #003b73;
 }
 
-/* line 93, assetic_compass3yzo5a.scss */
+/* line 93, assetic_compass3lfPzt.scss */
 nav.left-menu ul li .nav-icon {
   position: absolute;
   top: 3px;
   left: 5px;
 }
 
-/* line 99, assetic_compass3yzo5a.scss */
+/* line 99, assetic_compass3lfPzt.scss */
 nav.left-menu .button {
   margin: 0;
   width: 100%;
@@ -340,64 +171,64 @@ nav.left-menu .button {
   box-sizing: border-box;
 }
 
-/* line 110, assetic_compass3yzo5a.scss */
+/* line 110, assetic_compass3lfPzt.scss */
 nav.left-menu li.black .button {
   border-left: 2px solid black;
 }
 
-/* line 114, assetic_compass3yzo5a.scss */
+/* line 114, assetic_compass3lfPzt.scss */
 nav.left-menu li.grey .button {
   border-left: 2px solid #6c8087;
 }
 
-/* line 118, assetic_compass3yzo5a.scss */
+/* line 118, assetic_compass3lfPzt.scss */
 nav.left-menu li.red .button {
   border-left: 2px solid #cc0000;
 }
 
-/* line 122, assetic_compass3yzo5a.scss */
+/* line 122, assetic_compass3lfPzt.scss */
 nav.left-menu li.dark-red .button {
   border-left: 2px solid #9a0000;
 }
 
-/* line 126, assetic_compass3yzo5a.scss */
+/* line 126, assetic_compass3lfPzt.scss */
 nav.left-menu li.orange .button {
   border-left: 2px solid #cc5200;
 }
 
-/* line 130, assetic_compass3yzo5a.scss */
+/* line 130, assetic_compass3lfPzt.scss */
 nav.left-menu li.yellow .button {
   border-left: 2px solid #e6ac00;
 }
 
-/* line 134, assetic_compass3yzo5a.scss */
+/* line 134, assetic_compass3lfPzt.scss */
 nav.left-menu li.green .button {
   border-left: 2px solid #137f13;
 }
 
-/* line 138, assetic_compass3yzo5a.scss */
+/* line 138, assetic_compass3lfPzt.scss */
 nav.left-menu li.turquoise .button {
   border-left: 2px solid #007398;
 }
 
-/* line 142, assetic_compass3yzo5a.scss */
+/* line 142, assetic_compass3lfPzt.scss */
 nav.left-menu li.blue .button {
   border-left: 2px solid #003b73;
 }
 
-/* line 146, assetic_compass3yzo5a.scss */
+/* line 146, assetic_compass3lfPzt.scss */
 nav.left-menu .button .ui-button-icon-secondary {
   position: absolute;
   top: 3px;
   right: 5px;
 }
 
-/* line 152, assetic_compass3yzo5a.scss */
+/* line 152, assetic_compass3lfPzt.scss */
 nav.left-menu .ui-button-text {
   padding: 0 5px;
 }
 
-/* line 156, assetic_compass3yzo5a.scss */
+/* line 156, assetic_compass3lfPzt.scss */
 .main-menu {
   height: 40px;
   background: #29a3cc;
@@ -407,6 +238,7 @@ nav.left-menu .ui-button-text {
   background: -o-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
   background: -ms-linear-gradient(top, #baebfc 0%, #29a3cc 5%, #007398 100%);
   background: linear-gradient(to bottom, #baebfc 0%, #29a3cc 5%, #007398 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#29a3cc', endColorstr = '#007398', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JhZWJmYyIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiMyOWEzY2MiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDczOTgiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #baebfc), color-stop(5%, #29a3cc), color-stop(100%, #007398));
@@ -417,19 +249,19 @@ nav.left-menu .ui-button-text {
   background-repeat: no-repeat;
 }
 
-/* line 161, assetic_compass3yzo5a.scss */
+/* line 161, assetic_compass3lfPzt.scss */
 .main-menu nav {
   position: relative;
 }
 
-/* line 165, assetic_compass3yzo5a.scss */
+/* line 165, assetic_compass3lfPzt.scss */
 .main-menu > nav > ul {
   margin: 0;
   padding: 0;
   border-left: 1px solid #29a3cc;
 }
 
-/* line 172, assetic_compass3yzo5a.scss */
+/* line 172, assetic_compass3lfPzt.scss */
 .main-menu > nav > ul > li {
   margin: 0;
   padding: 0;
@@ -437,7 +269,7 @@ nav.left-menu .ui-button-text {
   list-style: none;
 }
 
-/* line 181, assetic_compass3yzo5a.scss */
+/* line 181, assetic_compass3lfPzt.scss */
 .main-menu nav > ul > li > a,
 .main-menu nav > ul > li > a.hover {
   padding: 0 7px;
@@ -456,7 +288,7 @@ nav.left-menu .ui-button-text {
   line-height: 16px;
 }
 
-/* line 199, assetic_compass3yzo5a.scss */
+/* line 199, assetic_compass3lfPzt.scss */
 .main-menu nav > ul > li > a:hover,
 .main-menu nav > ul > li > a.hover {
   -webkit-box-shadow: inset 0 -5px 20px 0 #384246;
@@ -467,12 +299,12 @@ nav.left-menu .ui-button-text {
   box-shadow: inset 0 -5px 20px 0 #384246;
 }
 
-/* line 203, assetic_compass3yzo5a.scss */
+/* line 203, assetic_compass3lfPzt.scss */
 .main-menu nav > ul > li > a.highlighted {
   color: #e6ac00;
 }
 
-/* line 207, assetic_compass3yzo5a.scss */
+/* line 207, assetic_compass3lfPzt.scss */
 .main-menu nav > .button {
   position: absolute;
   top: 8px;
@@ -492,12 +324,12 @@ nav.left-menu .ui-button-text {
   box-shadow: 0 -2px 5px 0 #384246;
 }
 
-/* line 217, assetic_compass3yzo5a.scss */
+/* line 217, assetic_compass3lfPzt.scss */
 .main-menu nav > .button .ui-button-text {
   line-height: 26px;
 }
 
-/* line 221, assetic_compass3yzo5a.scss */
+/* line 221, assetic_compass3lfPzt.scss */
 .submenu-container {
   width: 100%;
   height: 270px;
@@ -523,12 +355,12 @@ nav.left-menu .ui-button-text {
   box-shadow: 0 2px 20px 0 #384246;
 }
 
-/* line 238, assetic_compass3yzo5a.scss */
+/* line 238, assetic_compass3lfPzt.scss */
 .submenu-container-brands {
   height: 240px;
 }
 
-/* line 242, assetic_compass3yzo5a.scss */
+/* line 242, assetic_compass3lfPzt.scss */
 .main-menu .menu-vertical {
   width: 244px;
   height: 300px;
@@ -549,13 +381,13 @@ nav.left-menu .ui-button-text {
   border-right: 1px solid #6c8087;
 }
 
-/* line 259, assetic_compass3yzo5a.scss */
+/* line 259, assetic_compass3lfPzt.scss */
 .main-menu .menu-vertical li {
   margin: 0;
   padding: 0;
 }
 
-/* line 265, assetic_compass3yzo5a.scss */
+/* line 265, assetic_compass3lfPzt.scss */
 .main-menu .menu-vertical li a,
 .main-menu .menu-vertical li a.hover {
   height: 30px;
@@ -568,6 +400,7 @@ nav.left-menu .ui-button-text {
   background: -o-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: -ms-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: linear-gradient(top, #ffffff 0%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = 'white', endColorstr = '#c5d2d6', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #c5d2d6));
@@ -589,7 +422,7 @@ nav.left-menu .ui-button-text {
   white-space: nowrap;
 }
 
-/* line 279, assetic_compass3yzo5a.scss */
+/* line 279, assetic_compass3lfPzt.scss */
 .main-menu .menu-vertical li a.hover {
   -webkit-box-shadow: inset 0 0 10px 0 #384246;
   -webkit-box-shadow: inset 0 0 10px 0 #384246;
@@ -601,12 +434,12 @@ nav.left-menu .ui-button-text {
   text-shadow: 1px 0 0 white;
 }
 
-/* line 284, assetic_compass3yzo5a.scss */
+/* line 284, assetic_compass3lfPzt.scss */
 .main-menu .menu-vertical li span.ui-icon-small {
   margin: 3px 0 3px 10px;
 }
 
-/* line 288, assetic_compass3yzo5a.scss */
+/* line 288, assetic_compass3lfPzt.scss */
 a.submenu-brand {
   width: 77px;
   height: 39px;
@@ -619,7 +452,7 @@ a.submenu-brand {
   border-bottom: 1px solid #c5d2d6;
 }
 
-/* line 302, assetic_compass3yzo5a.scss */
+/* line 302, assetic_compass3lfPzt.scss */
 a.submenu-brand:hover {
   -webkit-box-shadow: inset 0 0 10px 0 #c5d2d6;
   -webkit-box-shadow: inset 0 0 10px 0 #c5d2d6;
@@ -629,15 +462,16 @@ a.submenu-brand:hover {
   box-shadow: inset 0 0 10px 0 #c5d2d6;
 }
 
-/* line 306, assetic_compass3yzo5a.scss */
+/* line 306, assetic_compass3lfPzt.scss */
 a.submenu-brand img {
   width: 77px;
   height: 39px;
 }
 
-/* line 311, assetic_compass3yzo5a.scss */
+/* line 311, assetic_compass3lfPzt.scss */
 .sub-menu {
   position: relative;
+  width: 100%;
   background: white;
   background: -moz-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #c5d2d6));
@@ -645,6 +479,7 @@ a.submenu-brand img {
   background: -o-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: -ms-linear-gradient(top, white 0%, #c5d2d6 100%);
   background: linear-gradient(top, #ffffff 0%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = 'white', endColorstr = '#c5d2d6', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #c5d2d6));
@@ -662,23 +497,23 @@ a.submenu-brand img {
   border-bottom: 3px solid #6c8087;
 }
 
-/* line 319, assetic_compass3yzo5a.scss */
+/* line 320, assetic_compass3lfPzt.scss */
 .sub-menu .widget {
   padding: 8px 10px;
 }
 
-/* line 323, assetic_compass3yzo5a.scss */
+/* line 324, assetic_compass3lfPzt.scss */
 .sub-menu .ui-icon-small {
   margin: 0 10px 0 0;
 }
 
-/* line 327, assetic_compass3yzo5a.scss */
+/* line 328, assetic_compass3lfPzt.scss */
 .sub-menu h2 {
   margin: 0;
   padding: 0;
 }
 
-/* line 333, assetic_compass3yzo5a.scss */
+/* line 334, assetic_compass3lfPzt.scss */
 .sub-menu h2,
 .sub-menu h2 a {
   font-size: 24px;
@@ -690,13 +525,13 @@ a.submenu-brand img {
   text-decoration: none;
 }
 
-/* line 341, assetic_compass3yzo5a.scss */
+/* line 342, assetic_compass3lfPzt.scss */
 .sub-menu h3 {
   margin: 0;
   padding: 0;
 }
 
-/* line 347, assetic_compass3yzo5a.scss */
+/* line 348, assetic_compass3lfPzt.scss */
 .sub-menu h3,
 .sub-menu h3 a {
   font-size: 14px;
@@ -709,13 +544,13 @@ a.submenu-brand img {
   text-decoration: none;
 }
 
-/* line 356, assetic_compass3yzo5a.scss */
+/* line 357, assetic_compass3lfPzt.scss */
 .sub-menu p {
   padding: 2px 0 0 0;
   margin: 0;
 }
 
-/* line 362, assetic_compass3yzo5a.scss */
+/* line 363, assetic_compass3lfPzt.scss */
 .sub-menu p,
 .sub-menu p a {
   font-size: 10px;

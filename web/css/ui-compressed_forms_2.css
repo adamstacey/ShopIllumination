@@ -3,176 +3,6 @@
   Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
   rgba-background mixin can now be passed an option $dir variable
 */
-/* line 161, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-extra-light {
-  background-color: #ededed;
-}
-
-/* line 165, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-extra-light {
-  background-color: #e4eaec;
-}
-
-/* line 169, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-light {
-  background-color: #c5d2d6;
-}
-
-/* line 173, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-medium {
-  background-color: #9fbdc8;
-}
-
-/* line 177, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey {
-  background-color: #6c8087;
-}
-
-/* line 181, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-grey-dark {
-  background-color: #384246;
-}
-
-/* line 185, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-extra-light {
-  background-color: #ffebec;
-}
-
-/* line 189, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-extra-light {
-  background-color: #fdadae;
-}
-
-/* line 193, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red-light {
-  background-color: #d93637;
-}
-
-/* line 197, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-dark-red {
-  background-color: #9a0000;
-}
-
-/* line 201, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-extra-light {
-  background-color: #fbebeb;
-}
-
-/* line 205, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-extra-light {
-  background-color: #ffb9b9;
-}
-
-/* line 209, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red-light {
-  background-color: #ff3f40;
-}
-
-/* line 213, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-red {
-  background-color: #cc0000;
-}
-
-/* line 217, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-extra-light {
-  background-color: #fff3ea;
-}
-
-/* line 221, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-extra-light {
-  background-color: #ffdec5;
-}
-
-/* line 225, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange-light {
-  background-color: #ff8434;
-}
-
-/* line 229, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-orange {
-  background-color: #cc5200;
-}
-
-/* line 233, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-extra-light {
-  background-color: #fffbea;
-}
-
-/* line 237, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-extra-light {
-  background-color: #fffadd;
-}
-
-/* line 241, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow-light {
-  background-color: #ffd634;
-}
-
-/* line 245, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-yellow {
-  background-color: #e6ac00;
-}
-
-/* line 249, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-extra-light {
-  background-color: #ebf7eb;
-}
-
-/* line 253, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-extra-light {
-  background-color: #b0e2ae;
-}
-
-/* line 257, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green-light {
-  background-color: #2baf2b;
-}
-
-/* line 261, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-green {
-  background-color: #137f13;
-}
-
-/* line 265, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-extra-light {
-  background-color: #e9f6fa;
-}
-
-/* line 269, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-extra-light {
-  background-color: #baebfc;
-}
-
-/* line 273, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise-light {
-  background-color: #29a3cc;
-}
-
-/* line 277, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-turquoise {
-  background-color: #007398;
-}
-
-/* line 281, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-extra-light {
-  background-color: #e5eff8;
-}
-
-/* line 285, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-extra-light {
-  background-color: #94c9fd;
-}
-
-/* line 289, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue-light {
-  background-color: #0061bf;
-}
-
-/* line 293, ../../../../../../Users/adamstacey/Sites/kitchenappliancecentre.dev/src/KAC/SiteBundle/Resources/public/css/includes/_backgrounds.scss */
-.background-blue {
-  background-color: #003b73;
-}
-
 @font-face {
   font-family: "Stag Medium";
   src: url("/bundles/kacsite/css/resources/fonts/stag-medium.eot");
@@ -181,14 +11,14 @@
   font-style: normal;
 }
 
-/* line 5, assetic_compassym8Ke0.scss */
+/* line 5, assetic_compass3g1ZHT.scss */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* line 12, assetic_compassym8Ke0.scss */
+/* line 12, assetic_compass3g1ZHT.scss */
 input,
 textarea,
 select {
@@ -202,7 +32,7 @@ select {
   box-sizing: border-box;
 }
 
-/* line 19, assetic_compassym8Ke0.scss */
+/* line 19, assetic_compass3g1ZHT.scss */
 option {
   max-width: 100%;
   display: block;
@@ -213,13 +43,13 @@ option {
   white-space: nowrap;
 }
 
-/* line 25, assetic_compassym8Ke0.scss */
+/* line 25, assetic_compass3g1ZHT.scss */
 .required {
   color: #cc0000;
   font-weight: bold;
 }
 
-/* line 30, assetic_compassym8Ke0.scss */
+/* line 30, assetic_compass3g1ZHT.scss */
 fieldset {
   margin: 0 0 10px;
   padding: 10px 10px 5px 10px;
@@ -229,10 +59,10 @@ fieldset {
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
-  background: #e4eaec;
+  background: #ededed;
 }
 
-/* line 39, assetic_compassym8Ke0.scss */
+/* line 39, assetic_compass3g1ZHT.scss */
 fieldset legend {
   margin: 0 0 10px 0;
   padding: 0 0 10px 0;
@@ -243,13 +73,13 @@ fieldset legend {
   font-size: 1.4rem;
 }
 
-/* line 50, assetic_compassym8Ke0.scss */
+/* line 50, assetic_compass3g1ZHT.scss */
 .form-element {
   position: relative;
   padding: 0 26px 5px 0;
 }
 
-/* line 56, assetic_compassym8Ke0.scss */
+/* line 56, assetic_compass3g1ZHT.scss */
 .form-helper {
   position: absolute;
   top: 8px;
@@ -258,23 +88,23 @@ fieldset legend {
   background-image: url("/bundles/kacsite/css/resources/images/icons/grey_small.png");
 }
 
-/* line 65, assetic_compassym8Ke0.scss */
+/* line 65, assetic_compass3g1ZHT.scss */
 .form-helper:hover {
   background-image: url("/bundles/kacsite/css/resources/images/icons/yellow_small.png");
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.25), screen and (-webkit-min-device-pixel-ratio: 1.3), screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 1.25), screen and (min--moz-device-pixel-ratio: 1.3), screen and (min--moz-device-pixel-ratio: 1.5), screen and (min--moz-device-pixel-ratio: 2), screen and (-o-min-device-pixel-ratio: 1.25 / 1), screen and (-o-min-device-pixel-ratio: 1.3 / 1), screen and (-o-min-device-pixel-ratio: 1.5 / 1), screen and (-o-min-device-pixel-ratio: 2 / 1), screen and (min-device-pixel-ratio: 1.25), screen and (min-device-pixel-ratio: 1.3), screen and (min-device-pixel-ratio: 1.5), screen and (min-device-pixel-ratio: 2), screen and (min-resolution: 120dpi), screen and (min-resolution: 124.8dpi), screen and (min-resolution: 144dpi), screen and (min-resolution: 192dpi), screen and (min-resolution: 1.25dppx), screen and (min-resolution: 1.3dppx), screen and (min-resolution: 1.5dppx), screen and (min-resolution: 2dppx) {
-  /* line 94, assetic_compassym8Ke0.scss */
+  /* line 94, assetic_compass3g1ZHT.scss */
   .form-helper {
     background-image: url("/bundles/kacsite/css/resources/images/icons/grey_small@2x.png");
   }
 
-  /* line 98, assetic_compassym8Ke0.scss */
+  /* line 98, assetic_compass3g1ZHT.scss */
   .form-helper:hover {
     background-image: url("/bundles/kacsite/css/resources/images/icons/yellow_small@2x.png");
   }
 }
-/* line 103, assetic_compassym8Ke0.scss */
+/* line 103, assetic_compass3g1ZHT.scss */
 .form-element label {
   display: block;
   line-height: 40px;
@@ -282,7 +112,7 @@ fieldset legend {
   font-weight: bold;
 }
 
-/* line 111, assetic_compassym8Ke0.scss */
+/* line 111, assetic_compass3g1ZHT.scss */
 .form-element small {
   padding: 2px 11px 5px 11px;
   display: block;
@@ -291,7 +121,7 @@ fieldset legend {
   font-size: 1.1rem;
 }
 
-/* line 149, assetic_compassym8Ke0.scss */
+/* line 149, assetic_compass3g1ZHT.scss */
 input.text,
 input[type="text"],
 input.email,
@@ -340,6 +170,7 @@ textarea.uniform {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -364,7 +195,7 @@ textarea.uniform {
   box-sizing: border-box;
 }
 
-/* line 195, assetic_compassym8Ke0.scss */
+/* line 195, assetic_compass3g1ZHT.scss */
 table.form-table td input.text,
 table.form-table td input[type="text"],
 table.form-table td input.email,
@@ -400,7 +231,7 @@ table.form-table td textarea.uniform {
   font-size: 1.1rem;
 }
 
-/* line 230, assetic_compassym8Ke0.scss */
+/* line 230, assetic_compass3g1ZHT.scss */
 input.text:focus,
 input[type="text"]:focus,
 input.email:focus,
@@ -440,7 +271,7 @@ textarea.uniform:focus {
   color: black;
 }
 
-/* line 242, assetic_compassym8Ke0.scss */
+/* line 242, assetic_compass3g1ZHT.scss */
 input.search::-webkit-search-decoration,
 input[type="search"]::-webkit-search-decoration,
 input.search::-webkit-search-cancel-button,
@@ -452,13 +283,13 @@ input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
-/* line 247, assetic_compassym8Ke0.scss */
+/* line 247, assetic_compass3g1ZHT.scss */
 input.search,
 input[type="search"] {
   -webkit-appearance: textfield;
 }
 
-/* line 254, assetic_compassym8Ke0.scss */
+/* line 254, assetic_compass3g1ZHT.scss */
 .selector,
 .checker,
 .radio,
@@ -475,7 +306,7 @@ input[type="search"] {
   vertical-align: middle;
 }
 
-/* line 263, assetic_compassym8Ke0.scss */
+/* line 263, assetic_compass3g1ZHT.scss */
 .selector select:focus,
 .radio input:focus,
 .checker input:focus,
@@ -483,7 +314,7 @@ input[type="search"] {
   outline: 0;
 }
 
-/* line 274, assetic_compassym8Ke0.scss */
+/* line 274, assetic_compass3g1ZHT.scss */
 .selector,
 .radio,
 .checker,
@@ -496,19 +327,19 @@ input[type="search"] {
   padding: 0;
 }
 
-/* line 280, assetic_compassym8Ke0.scss */
+/* line 280, assetic_compass3g1ZHT.scss */
 div.radio-group,
 div.checker-group {
   margin: 10px 0 5px 0;
 }
 
-/* line 285, assetic_compassym8Ke0.scss */
+/* line 285, assetic_compass3g1ZHT.scss */
 table.form-table td div.radio-group,
 table.form-table td div.checker-group {
   margin: 0;
 }
 
-/* line 290, assetic_compassym8Ke0.scss */
+/* line 290, assetic_compass3g1ZHT.scss */
 div.radio-group label,
 div.checker-group label {
   float: left;
@@ -518,7 +349,7 @@ div.checker-group label {
   text-align: left;
 }
 
-/* line 300, assetic_compassym8Ke0.scss */
+/* line 300, assetic_compass3g1ZHT.scss */
 div.radio-group small,
 div.checker-group small {
   padding: 0 10px;
@@ -526,7 +357,7 @@ div.checker-group small {
   line-height: 20px;
 }
 
-/* line 307, assetic_compassym8Ke0.scss */
+/* line 307, assetic_compass3g1ZHT.scss */
 div.checker {
   margin: 0 10px 5px 0;
   width: 18px;
@@ -546,6 +377,7 @@ div.checker {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -563,13 +395,13 @@ div.checker {
   cursor: pointer;
 }
 
-/* line 322, assetic_compassym8Ke0.scss */
+/* line 322, assetic_compass3g1ZHT.scss */
 table.form-table td div.checker {
   margin: 0;
   float: none;
 }
 
-/* line 327, assetic_compassym8Ke0.scss */
+/* line 327, assetic_compass3g1ZHT.scss */
 div.checker span {
   width: 18px;
   height: 18px;
@@ -585,12 +417,12 @@ div.checker span {
   background: none;
 }
 
-/* line 341, assetic_compassym8Ke0.scss */
+/* line 341, assetic_compass3g1ZHT.scss */
 div.checker span.checked {
   background: transparent url("/bundles/kacsite/css/resources/images/icons/check.png") center center no-repeat;
 }
 
-/* line 345, assetic_compassym8Ke0.scss */
+/* line 345, assetic_compass3g1ZHT.scss */
 div.checker input {
   width: 18px;
   height: 18px;
@@ -612,7 +444,7 @@ div.checker input {
   cursor: pointer;
 }
 
-/* line 364, assetic_compassym8Ke0.scss */
+/* line 364, assetic_compass3g1ZHT.scss */
 div.checker:focus,
 div.checker:active,
 div.checker:hover,
@@ -627,7 +459,7 @@ div.checker.focus.active {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 368, assetic_compassym8Ke0.scss */
+/* line 368, assetic_compass3g1ZHT.scss */
 div.radio {
   margin: 0 10px 5px 0;
   width: 18px;
@@ -647,6 +479,7 @@ div.radio {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -664,7 +497,7 @@ div.radio {
   cursor: pointer;
 }
 
-/* line 383, assetic_compassym8Ke0.scss */
+/* line 383, assetic_compass3g1ZHT.scss */
 div.radio span {
   width: 18px;
   height: 18px;
@@ -679,7 +512,7 @@ div.radio span {
   cursor: pointer;
 }
 
-/* line 396, assetic_compassym8Ke0.scss */
+/* line 396, assetic_compass3g1ZHT.scss */
 div.radio span.checked {
   width: 8px;
   height: 8px;
@@ -698,6 +531,7 @@ div.radio span.checked {
   background: -o-linear-gradient(top, #c5d2d6 0%, #384246 5%, black 100%);
   background: -ms-linear-gradient(top, #c5d2d6 0%, #384246 5%, black 100%);
   background: linear-gradient(to bottom, #c5d2d6 0%, #384246 5%, #000000 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#384246', endColorstr = 'black', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2M1ZDJkNiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiMzODQyNDYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c5d2d6), color-stop(5%, #384246), color-stop(100%, #000000));
@@ -715,7 +549,7 @@ div.radio span.checked {
   border: 1px solid black;
 }
 
-/* line 409, assetic_compassym8Ke0.scss */
+/* line 409, assetic_compass3g1ZHT.scss */
 div.radio input {
   width: 18px;
   height: 18px;
@@ -737,7 +571,7 @@ div.radio input {
   cursor: pointer;
 }
 
-/* line 428, assetic_compassym8Ke0.scss */
+/* line 428, assetic_compass3g1ZHT.scss */
 div.radio:focus,
 div.radio:active,
 div.radio:hover,
@@ -752,7 +586,7 @@ div.radio.focus.active {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 432, assetic_compassym8Ke0.scss */
+/* line 432, assetic_compass3g1ZHT.scss */
 div.uploader {
   padding: 0;
   outline: 0;
@@ -771,6 +605,7 @@ div.uploader {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -788,7 +623,7 @@ div.uploader {
   cursor: pointer;
 }
 
-/* line 447, assetic_compassym8Ke0.scss */
+/* line 447, assetic_compass3g1ZHT.scss */
 div.uploader span.filename {
   padding: 8px 10px;
   width: 60%;
@@ -812,7 +647,7 @@ div.uploader span.filename {
   cursor: pointer;
 }
 
-/* line 461, assetic_compassym8Ke0.scss */
+/* line 461, assetic_compass3g1ZHT.scss */
 div.uploader span.action {
   padding: 4px 13px;
   width: 40%;
@@ -840,6 +675,7 @@ div.uploader span.action {
   background: -o-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
   background: -ms-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
   background: linear-gradient(to bottom, #ffffff 0%, #e4eaec 5%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = '#c5d2d6', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNlNGVhZWMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjNWQyZDYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(5%, #e4eaec), color-stop(100%, #c5d2d6));
@@ -872,7 +708,7 @@ div.uploader span.action {
   cursor: pointer;
 }
 
-/* line 485, assetic_compassym8Ke0.scss */
+/* line 485, assetic_compass3g1ZHT.scss */
 div.uploader input {
   width: 100%;
   height: 100%;
@@ -890,7 +726,7 @@ div.uploader input {
   cursor: pointer;
 }
 
-/* line 503, assetic_compassym8Ke0.scss */
+/* line 503, assetic_compass3g1ZHT.scss */
 div.uploader:focus,
 div.uploader:active,
 div.uploader:hover,
@@ -905,17 +741,17 @@ div.uploader.focus.active {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 507, assetic_compassym8Ke0.scss */
+/* line 507, assetic_compass3g1ZHT.scss */
 div.uploader.disabled span.action {
   color: #e4eaec;
 }
 
-/* line 511, assetic_compassym8Ke0.scss */
+/* line 511, assetic_compass3g1ZHT.scss */
 div.uploader.disabled span.filename {
   color: #e4eaec;
 }
 
-/* line 515, assetic_compassym8Ke0.scss */
+/* line 515, assetic_compass3g1ZHT.scss */
 div.selector {
   padding: 0;
   outline: 0;
@@ -934,6 +770,7 @@ div.selector {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -951,7 +788,7 @@ div.selector {
   cursor: pointer;
 }
 
-/* line 529, assetic_compassym8Ke0.scss */
+/* line 529, assetic_compass3g1ZHT.scss */
 div.selector span {
   padding: 8px 30px 8px 10px;
   display: block;
@@ -971,7 +808,7 @@ div.selector span {
   background: transparent url("/bundles/kacsite/css/resources/images/icons/select.png") no-repeat center right;
 }
 
-/* line 546, assetic_compassym8Ke0.scss */
+/* line 546, assetic_compass3g1ZHT.scss */
 table.form-table td div.select2-container span,
 table.form-table td div.select2-container .select2-choice span,
 table.form-table td div.selector span {
@@ -979,12 +816,12 @@ table.form-table td div.selector span {
   font-size: 1.1rem;
 }
 
-/* line 550, assetic_compassym8Ke0.scss */
+/* line 550, assetic_compass3g1ZHT.scss */
 div.selector.disabled span {
   color: #6c8087;
 }
 
-/* line 554, assetic_compassym8Ke0.scss */
+/* line 554, assetic_compass3g1ZHT.scss */
 div.selector select {
   width: 100%;
   height: 38px;
@@ -1003,7 +840,7 @@ div.selector select {
   background: none;
 }
 
-/* line 568, assetic_compassym8Ke0.scss */
+/* line 568, assetic_compass3g1ZHT.scss */
 div.selector:active,
 div.selector.active {
   -webkit-box-shadow: 0 0 10px 0 #4ec0e3;
@@ -1014,13 +851,13 @@ div.selector.active {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 573, assetic_compassym8Ke0.scss */
+/* line 573, assetic_compass3g1ZHT.scss */
 div.selector:active span,
 div.selector.active span {
   color: black;
 }
 
-/* line 579, assetic_compassym8Ke0.scss */
+/* line 579, assetic_compass3g1ZHT.scss */
 div.selector.focus,
 div.selector.hover,
 div.selector:hover {
@@ -1032,14 +869,14 @@ div.selector:hover {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 585, assetic_compassym8Ke0.scss */
+/* line 585, assetic_compass3g1ZHT.scss */
 div.selector.focus span,
 div.selector.hover span,
 div.selector:hover span {
   color: black;
 }
 
-/* line 592, assetic_compassym8Ke0.scss */
+/* line 592, assetic_compass3g1ZHT.scss */
 div.selector.focus:active,
 div.selector.focus.active,
 div.selector:hover:active,
@@ -1052,7 +889,7 @@ div.selector.active:hover {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 599, assetic_compassym8Ke0.scss */
+/* line 599, assetic_compass3g1ZHT.scss */
 div.selector.focus:active span,
 div.selector:hover:active span,
 div.selector.active:hover span,
@@ -1060,14 +897,14 @@ div.selector.focus.active span {
   color: black;
 }
 
-/* line 605, assetic_compassym8Ke0.scss */
+/* line 605, assetic_compass3g1ZHT.scss */
 div.selector.disabled span,
 div.selector.disabled:active span,
 div.selector.disabled.active span {
   color: #e4eaec;
 }
 
-/* line 609, assetic_compassym8Ke0.scss */
+/* line 609, assetic_compass3g1ZHT.scss */
 header.error {
   background: #d93637;
   background: -moz-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
@@ -1076,6 +913,7 @@ header.error {
   background: -o-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
   background: -ms-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
   background: linear-gradient(to bottom, #fdadae 0%, #d93637 5%, #9a0000 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#d93637', endColorstr = '#9a0000', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZkYWRhZSIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNkOTM2MzciLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5YTAwMDAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fdadae), color-stop(5%, #d93637), color-stop(100%, #9a0000));
@@ -1086,7 +924,7 @@ header.error {
   background-repeat: no-repeat;
 }
 
-/* line 613, assetic_compassym8Ke0.scss */
+/* line 613, assetic_compass3g1ZHT.scss */
 .form-element-error {
   padding: 5px 30px 5px 20px !important;
   margin: 5px -10px 10px -30px !important;
@@ -1105,27 +943,27 @@ header.error {
   box-shadow: 0 0 3px 0 rgba(204, 0, 0, 0.5);
 }
 
-/* line 623, assetic_compassym8Ke0.scss */
+/* line 623, assetic_compass3g1ZHT.scss */
 .form-element-error label,
 .error label {
   color: #cc0000;
 }
 
-/* line 628, assetic_compassym8Ke0.scss */
+/* line 628, assetic_compass3g1ZHT.scss */
 .form-element-error small,
 .error small {
   color: #cc0000;
   text-transform: uppercase;
 }
 
-/* line 634, assetic_compassym8Ke0.scss */
+/* line 634, assetic_compass3g1ZHT.scss */
 .form-element-error small ul,
 .error small ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 640, assetic_compassym8Ke0.scss */
+/* line 640, assetic_compass3g1ZHT.scss */
 .form-element-error small ul li,
 .error small ul li {
   list-style: none;
@@ -1135,7 +973,7 @@ header.error {
   margin: 2px 0 0 0;
 }
 
-/* line 663, assetic_compassym8Ke0.scss */
+/* line 663, assetic_compass3g1ZHT.scss */
 .form-element-error input,
 .form-element-error textarea,
 .form-element-error .selector,
@@ -1155,7 +993,7 @@ header.error {
   border: 1px solid #cc0000 !important;
 }
 
-/* line 708, assetic_compassym8Ke0.scss */
+/* line 708, assetic_compass3g1ZHT.scss */
 .form-element-error input:focus,
 .form-element-error textarea:focus,
 .form-element-error .selector:focus,
@@ -1203,7 +1041,7 @@ header.error {
   box-shadow: none !important;
 }
 
-/* line 712, assetic_compassym8Ke0.scss */
+/* line 712, assetic_compass3g1ZHT.scss */
 table.form-table {
   width: 100%;
   border-collapse: collapse;
@@ -1214,33 +1052,40 @@ table.form-table {
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
+  -webkit-box-shadow: 0 0 10px 0 #6c8087;
+  -webkit-box-shadow: 0 0 10px 0 #6c8087;
+  -moz-box-shadow: 0 0 10px 0 #6c8087;
+  -moz-box-shadow: 0 0 10px 0 #6c8087;
+  box-shadow: 0 0 10px 0 #6c8087;
+  box-shadow: 0 0 10px 0 #6c8087;
 }
 
-/* line 720, assetic_compassym8Ke0.scss */
+/* line 721, assetic_compass3g1ZHT.scss */
 table.form-table th {
   padding: 10px 5px;
   border-collapse: collapse;
-  border: 1px solid #6c8087;
+  border: 1px solid #c5d2d6;
   color: black;
-  background: #c5d2d6;
-  background: -moz-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(5%, #c5d2d6), color-stop(100%, #6c8087));
-  background: -webkit-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
-  background: -o-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
-  background: -ms-linear-gradient(top, white 0%, #c5d2d6 5%, #6c8087 100%);
-  background: linear-gradient(to bottom, #ffffff 0%, #c5d2d6 5%, #6c8087 100%);
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNjNWQyZDYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM2YzgwODciLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background: #e4eaec;
+  background: -moz-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(5%, #e4eaec), color-stop(100%, #c5d2d6));
+  background: -webkit-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: -o-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: -ms-linear-gradient(top, white 0%, #e4eaec 5%, #c5d2d6 100%);
+  background: linear-gradient(to bottom, #ffffff 0%, #e4eaec 5%, #c5d2d6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = '#c5d2d6', GradientType = 0);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNlNGVhZWMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjNWQyZDYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(5%, #c5d2d6), color-stop(100%, #6c8087));
-  background-image: -webkit-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
-  background-image: -moz-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
-  background-image: -o-linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
-  background-image: linear-gradient(top, #ffffff, #c5d2d6 5%, #6c8087 100%);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(5%, #e4eaec), color-stop(100%, #c5d2d6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
+  background-image: -moz-linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
+  background-image: -o-linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
+  background-image: linear-gradient(top, #ffffff, #e4eaec 5%, #c5d2d6 100%);
   background-repeat: no-repeat;
   cursor: help;
 }
 
-/* line 730, assetic_compassym8Ke0.scss */
+/* line 731, assetic_compass3g1ZHT.scss */
 table.form-table td {
   border-collapse: collapse;
   padding: 5px;
@@ -1249,13 +1094,13 @@ table.form-table td {
   vertical-align: middle;
 }
 
-/* line 738, assetic_compassym8Ke0.scss */
+/* line 739, assetic_compass3g1ZHT.scss */
 table.form-table ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 743, assetic_compassym8Ke0.scss */
+/* line 744, assetic_compass3g1ZHT.scss */
 table.form-table ul li {
   margin: 0;
   padding: 0;
@@ -1264,7 +1109,7 @@ table.form-table ul li {
   line-height: 14px;
 }
 
-/* line 751, assetic_compassym8Ke0.scss */
+/* line 752, assetic_compass3g1ZHT.scss */
 .select2-container {
   min-height: 40px;
   position: relative;
@@ -1274,7 +1119,7 @@ table.form-table ul li {
   vertical-align: top;
 }
 
-/* line 765, assetic_compassym8Ke0.scss */
+/* line 766, assetic_compass3g1ZHT.scss */
 .select2-container,
 .select2-drop,
 .select2-search,
@@ -1286,7 +1131,7 @@ table.form-table ul li {
   box-sizing: border-box;
 }
 
-/* line 769, assetic_compassym8Ke0.scss */
+/* line 770, assetic_compass3g1ZHT.scss */
 .select2-container .select2-choice {
   padding: 8px 10px;
   min-height: 22px;
@@ -1321,6 +1166,7 @@ table.form-table ul li {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -1340,7 +1186,7 @@ table.form-table ul li {
   border: 1px solid #c5d2d6;
 }
 
-/* line 800, assetic_compassym8Ke0.scss */
+/* line 801, assetic_compass3g1ZHT.scss */
 .select2-container.select2-drop-above .select2-choice {
   border-bottom-color: #c5d2d6;
   -webkit-border-radius: 0 0 4px 4px;
@@ -1356,6 +1202,7 @@ table.form-table ul li {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -1366,7 +1213,7 @@ table.form-table ul li {
   background-repeat: no-repeat;
 }
 
-/* line 806, assetic_compassym8Ke0.scss */
+/* line 807, assetic_compass3g1ZHT.scss */
 .select2-container .select2-choice span {
   margin-right: 26px;
   font-size: 12px;
@@ -1379,7 +1226,7 @@ table.form-table ul li {
   white-space: nowrap;
 }
 
-/* line 813, assetic_compassym8Ke0.scss */
+/* line 814, assetic_compass3g1ZHT.scss */
 .select2-container .select2-choice abbr {
   width: 12px;
   height: 12px;
@@ -1395,12 +1242,12 @@ table.form-table ul li {
   outline: 0;
 }
 
-/* line 830, assetic_compassym8Ke0.scss */
+/* line 831, assetic_compass3g1ZHT.scss */
 .select2-container .select2-choice abbr:hover {
   cursor: pointer;
 }
 
-/* line 834, assetic_compassym8Ke0.scss */
+/* line 835, assetic_compass3g1ZHT.scss */
 .select2-drop-mask {
   position: absolute;
   left: 0;
@@ -1408,7 +1255,7 @@ table.form-table ul li {
   opacity: 0;
 }
 
-/* line 841, assetic_compassym8Ke0.scss */
+/* line 842, assetic_compass3g1ZHT.scss */
 .select2-drop {
   width: 100%;
   margin-top: -1px;
@@ -1432,7 +1279,7 @@ table.form-table ul li {
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-/* line 856, assetic_compassym8Ke0.scss */
+/* line 857, assetic_compass3g1ZHT.scss */
 .select2-drop.select2-drop-above {
   margin-top: 1px;
   border-top: 1px solid #c5d2d6;
@@ -1451,7 +1298,7 @@ table.form-table ul li {
   box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-/* line 865, assetic_compassym8Ke0.scss */
+/* line 866, assetic_compass3g1ZHT.scss */
 .select2-container .select2-choice div {
   width: 20px;
   height: 100%;
@@ -1470,7 +1317,7 @@ table.form-table ul li {
   background-clip: padding-box;
 }
 
-/* line 880, assetic_compassym8Ke0.scss */
+/* line 881, assetic_compass3g1ZHT.scss */
 .select2-container .select2-choice div b {
   width: 100%;
   height: 100%;
@@ -1478,7 +1325,7 @@ table.form-table ul li {
   background: transparent url("/bundles/kacsite/css/resources/images/icons/select.png") no-repeat center right;
 }
 
-/* line 888, assetic_compassym8Ke0.scss */
+/* line 889, assetic_compass3g1ZHT.scss */
 .select2-search {
   width: 100%;
   min-height: 26px;
@@ -1490,14 +1337,14 @@ table.form-table ul li {
   white-space: nowrap;
 }
 
-/* line 901, assetic_compassym8Ke0.scss */
+/* line 902, assetic_compass3g1ZHT.scss */
 .select2-search-hidden {
   display: block;
   position: absolute;
   left: -10000px;
 }
 
-/* line 907, assetic_compassym8Ke0.scss */
+/* line 908, assetic_compass3g1ZHT.scss */
 .select2-search input {
   width: 100%;
   height: auto !important;
@@ -1526,17 +1373,17 @@ table.form-table ul li {
   border: 1px solid #c5d2d6;
 }
 
-/* line 927, assetic_compassym8Ke0.scss */
+/* line 928, assetic_compass3g1ZHT.scss */
 .select2-drop.select2-drop-above .select2-search input {
   margin-top: 4px;
 }
 
-/* line 931, assetic_compassym8Ke0.scss */
+/* line 932, assetic_compass3g1ZHT.scss */
 .select2-search input.select2-active {
   background: white url("/bundles/kacsite/css/resources/images/loaders/loader.gif") no-repeat center 5px;
 }
 
-/* line 936, assetic_compassym8Ke0.scss */
+/* line 937, assetic_compass3g1ZHT.scss */
 .select2-container-active .select2-choice,
 .select2-container-active .select2-choices {
   outline: none;
@@ -1549,7 +1396,7 @@ table.form-table ul li {
   box-shadow: 0 0 10px 0 #4ec0e3;
 }
 
-/* line 943, assetic_compassym8Ke0.scss */
+/* line 944, assetic_compass3g1ZHT.scss */
 .select2-dropdown-open .select2-choice {
   border-bottom-color: transparent;
   -webkit-border-radius: 4px 4px 0 0;
@@ -1561,7 +1408,7 @@ table.form-table ul li {
   background-color: white;
 }
 
-/* line 949, assetic_compassym8Ke0.scss */
+/* line 950, assetic_compass3g1ZHT.scss */
 .select2-results {
   max-height: 200px;
   padding: 0 0 0 4px;
@@ -1571,59 +1418,59 @@ table.form-table ul li {
   overflow-y: auto;
 }
 
-/* line 958, assetic_compassym8Ke0.scss */
+/* line 959, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub {
   margin: 0;
 }
 
-/* line 962, assetic_compassym8Ke0.scss */
+/* line 963, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub > li .select2-result-label {
   padding-left: 20px;
 }
 
-/* line 966, assetic_compassym8Ke0.scss */
+/* line 967, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
   padding-left: 40px;
 }
 
-/* line 970, assetic_compassym8Ke0.scss */
+/* line 971, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
   padding-left: 60px;
 }
 
-/* line 974, assetic_compassym8Ke0.scss */
+/* line 975, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
   padding-left: 80px;
 }
 
-/* line 978, assetic_compassym8Ke0.scss */
+/* line 979, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
   padding-left: 100px;
 }
 
-/* line 982, assetic_compassym8Ke0.scss */
+/* line 983, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
   padding-left: 110px;
 }
 
-/* line 986, assetic_compassym8Ke0.scss */
+/* line 987, assetic_compass3g1ZHT.scss */
 .select2-results ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub ul.select2-result-sub > li .select2-result-label {
   padding-left: 120px;
 }
 
-/* line 990, assetic_compassym8Ke0.scss */
+/* line 991, assetic_compass3g1ZHT.scss */
 .select2-results li {
   list-style: none;
   display: list-item;
   background-image: none;
 }
 
-/* line 996, assetic_compassym8Ke0.scss */
+/* line 997, assetic_compass3g1ZHT.scss */
 .select2-results li.select2-result-with-children > .select2-result-label {
   font-weight: bold;
 }
 
-/* line 1000, assetic_compassym8Ke0.scss */
+/* line 1001, assetic_compass3g1ZHT.scss */
 .select2-results .select2-result-label {
   padding: 3px 7px 4px;
   margin: 0;
@@ -1636,30 +1483,30 @@ table.form-table ul li {
   user-select: none;
 }
 
-/* line 1013, assetic_compassym8Ke0.scss */
+/* line 1014, assetic_compass3g1ZHT.scss */
 .select2-results .select2-highlighted {
   background: #4ec0e3;
   color: white;
 }
 
-/* line 1018, assetic_compassym8Ke0.scss */
+/* line 1019, assetic_compass3g1ZHT.scss */
 .select2-results li em {
   background: white;
   font-style: normal;
 }
 
-/* line 1023, assetic_compassym8Ke0.scss */
+/* line 1024, assetic_compass3g1ZHT.scss */
 .select2-results .select2-highlighted em {
   background: transparent;
 }
 
-/* line 1027, assetic_compassym8Ke0.scss */
+/* line 1028, assetic_compass3g1ZHT.scss */
 .select2-results .select2-highlighted ul {
   background: white;
   color: #444444;
 }
 
-/* line 1034, assetic_compassym8Ke0.scss */
+/* line 1035, assetic_compass3g1ZHT.scss */
 .select2-results .select2-no-results,
 .select2-results .select2-searching,
 .select2-results .select2-selection-limit {
@@ -1667,7 +1514,7 @@ table.form-table ul li {
   display: list-item;
 }
 
-/* line 1039, assetic_compassym8Ke0.scss */
+/* line 1040, assetic_compass3g1ZHT.scss */
 .select2-results .select2-disabled.select2-highlighted {
   color: #444444;
   background: white;
@@ -1675,30 +1522,30 @@ table.form-table ul li {
   cursor: default;
 }
 
-/* line 1046, assetic_compassym8Ke0.scss */
+/* line 1047, assetic_compass3g1ZHT.scss */
 .select2-results .select2-disabled {
   background: white;
   display: list-item;
   cursor: default;
 }
 
-/* line 1052, assetic_compassym8Ke0.scss */
+/* line 1053, assetic_compass3g1ZHT.scss */
 .select2-results .select2-selected {
   display: none;
 }
 
-/* line 1056, assetic_compassym8Ke0.scss */
+/* line 1057, assetic_compass3g1ZHT.scss */
 .select2-more-results.select2-active {
   background: white url("/bundles/kacsite/css/resources/images/loaders/loader.gif") no-repeat center 5px;
 }
 
-/* line 1060, assetic_compassym8Ke0.scss */
+/* line 1061, assetic_compass3g1ZHT.scss */
 .select2-more-results {
   background: white;
   display: list-item;
 }
 
-/* line 1065, assetic_compassym8Ke0.scss */
+/* line 1066, assetic_compass3g1ZHT.scss */
 .select2-container.select2-container-disabled .select2-choice {
   background-color: white;
   background-image: none;
@@ -1706,19 +1553,19 @@ table.form-table ul li {
   cursor: default;
 }
 
-/* line 1072, assetic_compassym8Ke0.scss */
+/* line 1073, assetic_compass3g1ZHT.scss */
 .select2-container.select2-container-disabled .select2-choice div {
   background-color: white;
   background-image: none;
   border-left: 0;
 }
 
-/* line 1078, assetic_compassym8Ke0.scss */
+/* line 1079, assetic_compass3g1ZHT.scss */
 .select2-container.select2-container-disabled .select2-choice abbr {
   display: none;
 }
 
-/* line 1082, assetic_compassym8Ke0.scss */
+/* line 1083, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices {
   height: auto !important;
   height: 1%;
@@ -1731,17 +1578,17 @@ table.form-table ul li {
   background-color: white;
 }
 
-/* line 1096, assetic_compassym8Ke0.scss */
+/* line 1097, assetic_compass3g1ZHT.scss */
 .select2-locked {
   padding: 3px 5px 3px 5px !important;
 }
 
-/* line 1100, assetic_compassym8Ke0.scss */
+/* line 1101, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices {
   min-height: 26px;
 }
 
-/* line 1104, assetic_compassym8Ke0.scss */
+/* line 1105, assetic_compass3g1ZHT.scss */
 .select2-container-multi.select2-container-active .select2-choices {
   -webkit-box-shadow: 0 0 10px 0 #4ec0e3;
   -webkit-box-shadow: 0 0 10px 0 #4ec0e3;
@@ -1752,20 +1599,20 @@ table.form-table ul li {
   color: black;
 }
 
-/* line 1109, assetic_compassym8Ke0.scss */
+/* line 1110, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices li {
   float: left;
   list-style: none;
 }
 
-/* line 1115, assetic_compassym8Ke0.scss */
+/* line 1116, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-field {
   margin: 0;
   padding: 0;
   white-space: nowrap;
 }
 
-/* line 1122, assetic_compassym8Ke0.scss */
+/* line 1123, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-field input {
   padding: 5px;
   margin: 1px 0;
@@ -1781,17 +1628,17 @@ table.form-table ul li {
   background: transparent !important;
 }
 
-/* line 1135, assetic_compassym8Ke0.scss */
+/* line 1136, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {
   background: white url("/bundles/kacsite/css/resources/images/loaders/loader.gif") no-repeat center 5px !important;
 }
 
-/* line 1139, assetic_compassym8Ke0.scss */
+/* line 1140, assetic_compass3g1ZHT.scss */
 .select2-default {
   color: #444444 !important;
 }
 
-/* line 1143, assetic_compassym8Ke0.scss */
+/* line 1144, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-choice {
   padding: 3px 5px 3px 18px;
   margin: 3px 0 3px 5px;
@@ -1824,17 +1671,17 @@ table.form-table ul li {
   background-color: white;
 }
 
-/* line 1166, assetic_compassym8Ke0.scss */
+/* line 1167, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-choice span {
   cursor: default;
 }
 
-/* line 1170, assetic_compassym8Ke0.scss */
+/* line 1171, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-choice-focus {
   background: #c5d2d6;
 }
 
-/* line 1174, assetic_compassym8Ke0.scss */
+/* line 1175, assetic_compass3g1ZHT.scss */
 .select2-search-choice-close {
   width: 12px;
   height: 13px;
@@ -1847,22 +1694,22 @@ table.form-table ul li {
   background: transparent url("/bundles/kacsite/css/resources/images/icons/error_small.png") no-repeat center 5px;
 }
 
-/* line 1188, assetic_compassym8Ke0.scss */
+/* line 1189, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-search-choice-close {
   left: 3px;
 }
 
-/* line 1192, assetic_compassym8Ke0.scss */
+/* line 1193, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
   background-position: right -11px;
 }
 
-/* line 1195, assetic_compassym8Ke0.scss */
+/* line 1196, assetic_compass3g1ZHT.scss */
 .select2-container-multi .select2-choices .select2-search-choice-focus .select2-search-choice-close {
   background-position: right -11px;
 }
 
-/* line 1199, assetic_compassym8Ke0.scss */
+/* line 1200, assetic_compass3g1ZHT.scss */
 .select2-container-multi.select2-container-disabled .select2-choices {
   background-color: #c5d2d6;
   background-image: none;
@@ -1870,7 +1717,7 @@ table.form-table ul li {
   cursor: default;
 }
 
-/* line 1206, assetic_compassym8Ke0.scss */
+/* line 1207, assetic_compass3g1ZHT.scss */
 .select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice {
   padding: 3px 5px 3px 5px;
   border: 1px solid #c5d2d6;
@@ -1878,36 +1725,36 @@ table.form-table ul li {
   background-color: white;
 }
 
-/* line 1214, assetic_compassym8Ke0.scss */
+/* line 1215, assetic_compass3g1ZHT.scss */
 .select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {
   display: none;
 }
 
-/* line 1219, assetic_compassym8Ke0.scss */
+/* line 1220, assetic_compass3g1ZHT.scss */
 .select2-result-selectable .select2-match,
 .select2-result-unselectable .select2-match {
   text-decoration: underline;
 }
 
-/* line 1223, assetic_compassym8Ke0.scss */
+/* line 1224, assetic_compass3g1ZHT.scss */
 .select2-offscreen {
   position: absolute;
   left: -10000px;
 }
 
-/* line 1228, assetic_compassym8Ke0.scss */
+/* line 1229, assetic_compass3g1ZHT.scss */
 .sortable-placeholder {
   background: #e4eaec;
   border: 2px dashed #4ec0e3;
   height: 50px;
 }
 
-/* line 1234, assetic_compassym8Ke0.scss */
+/* line 1235, assetic_compass3g1ZHT.scss */
 .handle {
   cursor: move;
 }
 
-/* line 1238, assetic_compassym8Ke0.scss */
+/* line 1239, assetic_compass3g1ZHT.scss */
 .multiple-selector {
   padding: 5px 0 0 5px;
   background: #6c8087;
@@ -1917,6 +1764,7 @@ table.form-table ul li {
   background: -o-linear-gradient(top, #6c8087 0%, #384246 100%);
   background: -ms-linear-gradient(top, #6c8087 0%, #384246 100%);
   background: linear-gradient(top, #6c8087 0%, #384246 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#6c8087', endColorstr = '#384246', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzZjODA4NyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM4NDI0NiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6c8087), color-stop(100%, #384246));
@@ -1940,13 +1788,13 @@ table.form-table ul li {
   min-height: 35px;
 }
 
-/* line 1247, assetic_compassym8Ke0.scss */
+/* line 1248, assetic_compass3g1ZHT.scss */
 .multiple-selector ul {
   margin: 0;
   padding: 0;
 }
 
-/* line 1252, assetic_compassym8Ke0.scss */
+/* line 1253, assetic_compass3g1ZHT.scss */
 .multiple-selector ul li {
   margin: 0 5px 5px 0;
   padding: 0 22px 0 5px;
@@ -1968,6 +1816,7 @@ table.form-table ul li {
   background: -o-linear-gradient(top, #e4eaec 0%, white 100%);
   background: -ms-linear-gradient(top, #e4eaec 0%, white 100%);
   background: linear-gradient(top, #e4eaec 0%, #ffffff 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZWFlYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff));
@@ -1980,7 +1829,7 @@ table.form-table ul li {
   font-size: 1rem;
 }
 
-/* line 1267, assetic_compassym8Ke0.scss */
+/* line 1268, assetic_compass3g1ZHT.scss */
 .multiple-selector ul li img {
   position: absolute;
   top: 9px;
@@ -1988,7 +1837,7 @@ table.form-table ul li {
   cursor: pointer;
 }
 
-/* line 1275, assetic_compassym8Ke0.scss */
+/* line 1276, assetic_compass3g1ZHT.scss */
 .inline-error {
   height: 30px;
   padding: 0 10px;
@@ -2004,6 +1853,7 @@ table.form-table ul li {
   background: -o-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
   background: -ms-linear-gradient(top, #fdadae 0%, #d93637 5%, #9a0000 100%);
   background: linear-gradient(to bottom, #fdadae 0%, #d93637 5%, #9a0000 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#d93637', endColorstr = '#9a0000', GradientType = 0);
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZkYWRhZSIvPjxzdG9wIG9mZnNldD0iNSUiIHN0b3AtY29sb3I9IiNkOTM2MzciLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5YTAwMDAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fdadae), color-stop(5%, #d93637), color-stop(100%, #9a0000));
@@ -2026,7 +1876,7 @@ table.form-table ul li {
   background-clip: padding-box;
 }
 
-/* line 1288, assetic_compassym8Ke0.scss */
+/* line 1289, assetic_compass3g1ZHT.scss */
 .inline-error p {
   margin: 0;
   line-height: 30px;
