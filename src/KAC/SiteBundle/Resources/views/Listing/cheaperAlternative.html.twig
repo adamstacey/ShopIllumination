@@ -1,0 +1,3 @@
+<div class="product-cheaper-alternative">
+    <a class="" href="{{ product.cheaperAlternative.url != '' ? path('routing', {'url': product.cheaperAlternative.url}) : '404' }}">Cheaper<br />Alternative<br /><span class="price-small">{{ product.cheaperAlternative.priceRange.low|currency('GBP', true, true, '')|raw }}</span></a>
+</div>
