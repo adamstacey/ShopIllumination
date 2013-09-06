@@ -745,6 +745,19 @@ class Product implements DescribableInterface
         return $cheaperAlternative;
     }
 
+    public function getRelatedProducts()
+    {
+        $relatedProducts = array();
+        foreach ($this->links as $link)
+        {
+            if ($link->getLinkType() == 'related')
+            {
+                $relatedProducts[] = $link->getLinkedProduct();
+            }
+        }
+        return $relatedProducts;
+    }
+
     /**
      * Add variants
      *
