@@ -17,13 +17,13 @@ $(document).ready(function() {
     $(".etalage-inset").etalage({
         autoplay: false,
         smallthumbs_position: 'left',
-        thumb_image_width: 238,
-        thumb_image_height: 238,
-        source_image_width: 600,
-        source_image_height: 600,
+        thumb_image_width: 200,
+        thumb_image_height: 200,
+        source_image_width: 400,
+        source_image_height: 400,
         small_thumbs: 3,
-        zoom_area_width: 260,
-        zoom_area_height: 260
+        zoom_area_width: 222,
+        zoom_area_height: 222
     });
 
     $(document).on("click", ".etalage_magnifier > div > img", function() {
