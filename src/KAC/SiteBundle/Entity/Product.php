@@ -717,6 +717,34 @@ class Product implements DescribableInterface
         return $this;
     }
 
+    public function getCheaperAlternative()
+    {
+        $cheapestPrice = 0;
+        $cheaperAlternative = null;
+        foreach ($this->links as $link)
+        {
+            if ($link->getLinkType() == 'cheaper')
+            {
+                if (!$cheaperAlternative)
+                {
+                    $cheaperAlternative = $link->getLinkedProduct();
+                    $cheapestPrice = $cheaperAlternative->getPriceRange();
+                    $cheapestPrice = $cheapestPrice['low'];
+                } else {
+                    $cheaperAlternativeToCheck = $link->getLinkedProduct();
+                    $cheapestPriceToCheck = $cheaperAlternativeToCheck->getPriceRange();
+                    $cheapestPriceToCheck = $cheapestPriceToCheck['low'];
+                    if ($cheapestPriceToCheck < $cheapestPrice)
+                    {
+                        $cheaperAlternative = $cheaperAlternativeToCheck;
+                        $cheapestPrice = $cheapestPriceToCheck;
+                    }
+                }
+            }
+        }
+        return $cheaperAlternative;
+    }
+
     /**
      * Add variants
      *
