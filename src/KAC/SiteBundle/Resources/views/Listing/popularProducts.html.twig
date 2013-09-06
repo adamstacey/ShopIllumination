@@ -9,10 +9,13 @@
             {% set product = item[0] %}
             <div itemscope itemtype="http://schema.org/Product" class="widget widget-1-of-5 product">
                 <div class="pr">
-                    <div class="product-image-container man">
+                    <div class="product-image-container man pr">
                         <a href="{{ product.url != '' ? path('routing', {'url': product.url}) : '' }}">
                             <img class="product-image" itemprop="image" src="{{ asset(product.images[0].publicPath | apply_filter('product_thumbnail')) }}" border="0" alt="{{ product.description.header|raw }}" width="100%" />
                         </a>
+                        {% if product.cheaperAlternative %}
+                            {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
+                        {% endif %}
                     </div>
                     <span class="listing-top-item">{{ loop.index }}</span>
                     <div class="pts pr">
