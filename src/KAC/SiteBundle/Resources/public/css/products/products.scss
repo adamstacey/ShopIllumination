@@ -884,3 +884,54 @@ screen and (min-resolution: 2dppx) {
     @include fontSize($fontSizeSmall);
     line-height: 16px;
 }
+
+.product-cheaper-alternative {
+    position: absolute;
+    bottom: 5px;
+    right: -7px;
+}
+
+.product-cheaper-alternative a {
+    padding: 3px;
+
+    display: block;
+    color: $colourWhite;
+    text-align: center;
+    @include fontSize(9);
+    line-height: 10px;
+    @include highlightedVerticalGradientOrange;
+    @include boxGlow($colourGreyDark, 3px);
+    @include equalBorderRadius($radiusSize);
+}
+
+.product-cheaper-alternative a:hover {
+    @include highlightedVerticalGradientOrangeReversed;
+}
+
+.product-cheaper-alternative .price-small {
+    height: auto !important;
+}
+
+.product-cheaper-alternative .price-small span.currency-sign,
+.product-cheaper-alternative .price-small span.currency-integer,
+.product-cheaper-alternative .price-small span.currency-decimal {
+    color: $colourWhite;
+    @include textShadow($colourOrange, 0, 1px);
+    font-family: $primaryFontFamily;
+}
+
+.product-cheaper-alternative .price-small span.currency-sign {
+    @include fontSize(10);
+    line-height: 10px;
+}
+
+.product-cheaper-alternative .price-small span.currency-integer {
+    @include fontSize(16);
+    font-weight: bold;
+    line-height: 18px;
+}
+
+.product-cheaper-alternative .price-small span.currency-decimal {
+    @include fontSize(9);
+    line-height: 9px;
+}
