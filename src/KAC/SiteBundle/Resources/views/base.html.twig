@@ -30,7 +30,7 @@
                 <header class="clearfix">
                     <div class="top-menu">
                         <div class="container">
-                            {% include 'KACSiteBundle:Includes:socialMediaInteractions.html.twig' %}
+                            {{ render_esi(controller('KACSiteBundle:System:socialMediaInteractions')) }}
                             {% include 'KACSiteBundle:Includes:topMenu.html.twig' %}
                             <div class="clear"></div>
                         </div>

@@ -1,69 +1,93 @@
 {% extends 'KACSiteBundle::base.html.twig' %}
 {% block title %}Your Basket{% endblock %}
 {% block body %}
-	<header>
-		<h1>Your Shopping Basket</h1>
-	</header>
+    <style>
+        .widget-header-height {
+            margin: 0;
+            line-height: 38px;
+        }
+
+        #basket-contents .data-table td {
+            padding: 10px 5px;
+            font-size: 11px;
+        }
+
+        #basket-contents .data-table td a {
+            font-size: 11px;
+        }
+
+        .ui-widget-header h2.step {
+            border-right: 2px solid #9fbdc8;
+            padding-left: 20px;
+            padding-right: 20px;
+            float: left;
+            -webkit-border-radius: 0 20px 20px 0;
+            -moz-border-radius: 0 20px 20px 0;
+            border-radius: 0 20px 20px 0;
+            -webkit-background-clip: padding-box;
+            -moz-background-clip: padding;
+            background-clip: padding-box;
+            color: #9fbdc8;
+        }
+
+        .ui-widget-header h2.current {
+            color: #fff;
+        }
+    </style>
 	<section class="clearfix">
-        <div class="widget-group clearfix">
-            <div class="widget widget-3-of-5">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Your Basket Contents</h2>
-                    </header>
-                    <section id="basket-contents-section" class="ui-widget-content widget-content ui-corner-bottom">
-                        <div id="basket-contents-loading" class="clearfix">
-                            <img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
-                            <p>Loading your basket contents&hellip;</p>
-                            <div class="clear"></div>
+        <div class="widget-group clearfix mtm">
+            <div class="widget widget-1-of-1">
+                <header class="ui-widget-header ui-corner-top">
+                    <h2 class="step current ui-corner-right">1. View Your Basket</h2>
+                    <h2 class="step">2. Your Details</h2>
+                    <h2 class="step">3. Payment</h2>
+                    <div class="clear"></div>
+                </header>
+                <section id="basket-contents-section" class="ui-widget-content widget-content ui-corner-bottom">
+                    <div class="widget-group clearfix">
+                        <div class="widget widget-1-of-2">
+                            <h2 class="widget-header-height">Your Basket Contents...</h2>
+                            <div id="basket-contents-section">
+                                <div id="basket-contents-loading" class="clearfix">
+                                    <img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                                    <p>Loading your basket contents&hellip;</p>
+                                    <div class="clear"></div>
+                                </div>
+                                <div id="basket-contents" class="clearfix ui-helper-hidden"></div>
+                                <div id="basket-totals-loading" class="clearfix">
+                                    <img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                                    <p>Loading the totals of your basket&hellip;</p>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="clearfix mtm">
+                                    <a href="Javascript:window.history.go(-1);" class="fl action-continue-shopping button button-small icon-grey" data-icon-primary="icon-473">Continue Shopping</a>
+                                    <a href="Javascript:void(0);" class="fl mlm mtm colour-grey action-clear-basket">Clear Basket</a>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="clear"></div>
+                                <div>
+                                    <p class="mtl mbm"><strong>For Sales & Advice Call:</strong></p>
+                                    <h3>01159 385 111</h3>
+                                </div>
+                            </div>
                         </div>
-                        <div id="basket-contents" class="clearfix ui-helper-hidden"></div>
-                        <div id="basket-totals-loading" class="clearfix">
-                            <img class="fl" src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
-                            <p>Loading the totals of your basket&hellip;</p>
-                            <div class="clear"></div>
+                        <div class="widget widget-1-of-2">
+                            <div class="ui-widget">
+                                <header class="ui-widget-header ui-corner-top">
+                                    <h2>Checkout Options...</h2>
+                                </header>
+                                <section id="your-delivery-section" class="ui-widget-content widget-content ui-corner-bottom">
+                                    <div id="basket-delivery-options-loading" class="tac clearfix">
+                                        <img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                                        <p>Loading your delivery options&hellip;</p>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div id="basket-delivery-options" class="clearfix ui-helper-hidden"></div>
+                                </section>
+                            </div>
                         </div>
-                        <div id="voucher-code-membership-card-number" class="fr clearfix separator mtm mbm">
-                            <table class="basic-table" align="right" width="50%" cellpadding="0" cellspacing="0" border="0">
-                                <tr>
-                                    <td id="delete-voucher-code" class="ar {% if basket.voucherCodes[0] is not defined %}ui-helper-hidden{% endif %}">
-                                        <a href="#"><img width="18" height="18" class="link action-delete-voucher-code" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Delete Voucher Code" /></a>
-                                    </td>
-                                    <td>
-                                        <input class="uppercase small fill" type="text" id="form-voucher-code" name="voucher-code" placeholder="Voucher Code" value="{{ basket.voucherCodes[0] }}" />
-                                    </td>
-                                    <td>
-                                        <a href="Javascript:void(0);" rel="nofollow" class="small action-redeem-voucher-code button ui-button-green">Redeem</a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div id="basket-totals" class="tar clearfix ui-helper-hidden"></div>
-                        <div class="clear"></div>
-                        <div class="clearfix">
-                            <a href="Javascript:window.history.go(-1);" class="fl action-continue-shopping button button-small icon-grey" data-icon-primary="icon-473">Continue Shopping</a>
-                            <a href="Javascript:void(0);" class="fl mlm action-clear-basket button button-small">Clear Basket</a>
-                            {% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" class="fr action-pay-securely-now button button-green icon-white uppercase" data-icon-secondary="icon-472">Pay Securely Now</a>{% endif %}
-                            <div class="clear"></div>
-                        </div>
-                        <div class="clear"></div>
-                    </section>
-                </div>
-            </div>
-            <div class="widget widget-2-of-5">
-                <div class="ui-widget">
-                    <header class="ui-widget-header ui-corner-top">
-                        <h2>Your Delivery</h2>
-                    </header>
-                    <section id="your-delivery-section" class="ui-widget-content widget-content ui-corner-bottom">
-                        <div id="basket-delivery-options-loading" class="tac clearfix">
-                            <img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
-                            <p>Loading your delivery options&hellip;</p>
-                            <div class="clear"></div>
-                        </div>
-                        <div id="basket-delivery-options" class="clearfix ui-helper-hidden"></div>
-                    </section>
-                </div>
+                    </div>
+                </section>
             </div>
         </div>
 	</section>

@@ -488,7 +488,7 @@ class BasketService {
                 $deliveryOption['description'] = 'You will need to collect your order from our shop in Nottingham. We will contact you as soon as your order is ready for collection.';
                 $deliveryOption['price'] = 0;
                 $deliveryOption['estimatedDeliveryDaysStart'] = 0;
-                $deliveryOption['estimatedDeliveryDaysEnd'] = 0;
+                $deliveryOption['estimatedDeliveryDaysEnd'] = 12;
                 $deliveryOptions[] = $deliveryOption;
                 break;
             case 2:
@@ -993,7 +993,7 @@ class BasketService {
                 }
 
                 $deliveryStartDate = $nextDay;
-                $estimatedDeliveryDaysStart = date("l, jS F Y", strtotime("+$nextDay day"));
+                $estimatedDeliveryDaysStart = date("D, jS M Y", strtotime("+$nextDay day"));
                 $nextDay = $nextDay + ($deliveryOption['estimatedDeliveryDaysEnd'] - 1);
                 $weekendDaysToAdd = 0;
                 for ($deliveryDateCount = $deliveryStartDate; $deliveryDateCount <= $nextDay; $deliveryDateCount++)
@@ -1013,7 +1013,7 @@ class BasketService {
                     $nextDay++;
                 }
 
-                $estimatedDeliveryDaysEnd = date("l, jS F Y", strtotime("+$nextDay day"));
+                $estimatedDeliveryDaysEnd = date("D, jS M Y", strtotime("+$nextDay day"));
                 $estimatedDeliveryDays['start'] = $estimatedDeliveryDaysStart;
                 $estimatedDeliveryDays['end'] = $estimatedDeliveryDaysEnd;
                 $nextDay++;
