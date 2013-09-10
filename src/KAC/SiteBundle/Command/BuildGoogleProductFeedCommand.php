@@ -1504,9 +1504,6 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         $xmlWriter->writeCdata('Kitchen Appliance Centre - A wide selection of kitchen appliances including Kitchen Sinks, Range Cookers, Fridges, Freezers, Dishwashers, Washing Machines, Worktops, Ovens and Hobs, all at low affordable prices.');
         $xmlWriter->endElement();
 
-        // Add items
-        $xmlWriter->startElement('items');
-
         // Get the products
         $result = $em->createQuery("SELECT p FROM KAC\\SiteBundle\\Entity\Product p WHERE p.status = 'a'")->iterate();
         while (($row = $result->next()) !== false) {
@@ -1682,8 +1679,6 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
             }
             $xmlWriter->endElement();
         }
-
-        $xmlWriter->endElement(); // Close items
 
         $xmlWriter->endElement(); // Close channel
         $xmlWriter->endElement(); // Close rss
