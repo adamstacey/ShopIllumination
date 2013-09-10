@@ -35,9 +35,6 @@ class UpdateProductCommand extends ContainerAwareCommand
         if ($product)
         {
             $output->writeln('Updating Product: '.$id);
-
-            $productManager->updateProduct($product);
-
             $em->persist($product);
             $em->flush();
         }
