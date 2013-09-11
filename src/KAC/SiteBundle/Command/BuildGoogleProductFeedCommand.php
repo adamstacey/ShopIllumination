@@ -1470,6 +1470,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
          * @var $variant Variant
          */
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $productManager = $this->getContainer()->get('kac_site.manager.product');
         $router = $this->getContainer()->get('router');
         $router->getContext()->setHost($input->getArgument('host'));
 
@@ -1512,6 +1513,18 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
         while (($row = $result->next()) !== false) {
             $product = $row[0];
 
+            // Check each variant
+            foreach ($product->getVariants() as $variant)
+            {
+                if (!$product->getDescription()->getPageTitle() || !$variant->getDescription()->getPageTitle())
+                {
+                    $productManager->updateProduct($product);
+                    $em->persist($product);
+                    $em->flush();
+                    break;
+                }
+            }
+
             // Write each variant
             foreach ($product->getVariants() as $variant)
             {
@@ -1524,6 +1537,11 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 if (!$url)
                 {
                     break;
+                }
+
+                if (!$product->getDescription()->getPageTitle() || !$variant->getDescription()->getPageTitle())
+                {
+                    $productManager->updateProduct($product);
                 }
 
                 // Build item
@@ -1542,9 +1560,13 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 $xmlWriter->writeElement('g:condition', 'new');
                 $xmlWriter->writeElement('g:price', number_format($variant->getPrice()->getListPrice(), 2));
                 $xmlWriter->writeElement('g:availability', 'in stock');
-                if($product->getImage())
+                if ($variant->getImage())
                 {
+                    $xmlWriter->writeElement('g:image_link', $this->getContainer()->get('templating.helper.assets')->getUrl($variant->getImage()->getPublicPath()));
+                } elseif ($product->getImage()) {
                     $xmlWriter->writeElement('g:image_link', $this->getContainer()->get('templating.helper.assets')->getUrl($product->getImage()->getPublicPath()));
+                } else {
+                    $xmlWriter->writeElement('g:image_link', $this->getContainer()->get('templating.helper.assets')->getUrl('/uploads/images/product/product/no-image-large.jpg'));
                 }
                 $xmlWriter->startElement('g:shipping');
                 $xmlWriter->writeElement('g:country', 'GB');
