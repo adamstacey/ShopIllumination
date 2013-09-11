@@ -46,6 +46,13 @@ class SystemController extends Controller
         return $response;
     }
 
+    public function socialMediaInteractionsAction()
+    {
+        $response = $this->render('KACSiteBundle:Includes:socialMediaInteractions.html.twig');
+        $response->setSharedMaxAge(3600);
+        return $response;
+    }
+
     /**
      * @Route("/admin-toggle", name="admin_toggle")
      */

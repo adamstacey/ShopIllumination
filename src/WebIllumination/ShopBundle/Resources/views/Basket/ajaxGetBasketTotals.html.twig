@@ -1,6 +1,6 @@
 <table class="mbm" width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
-		<td class="ar"><strong>Subtotal before Delivery Charges (inc. VAT):</strong></td>
+		<td class="ar"><strong>Subtotal (inc. VAT):</strong></td>
 		<td width="1" class="colour-red tar"><strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></td>
 	</tr>
 	{% if basket.delivery.service != '' %}
@@ -45,7 +45,7 @@
 	{% endif %}
 	<tr class="product">
 		<td class="tar vam"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
-		<td width="130" class="vam price colour-red no-wrap tar"><strong>{{ basket.totals.total|currency('GBP', true, true, '')|raw }}</strong></td>
+		<td width="180" class="vam price colour-red no-wrap tar"><strong>{{ basket.totals.total|currency('GBP', true, true, '')|raw }}</strong></td>
 	</tr>
 </table>
 <div class="clear"></div>

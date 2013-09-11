@@ -133,8 +133,12 @@
                 generateButtons($("#basket-delivery-options"));
                 generateFormElements($("#basket-delivery-options"));
                 $("img[title], span[title], th[title], .button[title]").tooltip({
-                    track: true
+                    track: true,
+                    content: function () {
+                        return $(this).prop('title');
+                    }
                 });
+                getBasketTotals();
 			}
 		});
 	}
@@ -150,12 +154,12 @@
 			$("#basket-contents-section").height($("#basket-contents-section").height() + $heightDifference);
 			
 		}#}
-		if ($("#your-delivery-section").height() >= $("#basket-contents-section").height())
+        {#if ($("#your-delivery-section").height() >= $("#basket-contents-section").height())
 		{
 			$("#basket-contents-section").height($("#your-delivery-section").height());
 		} else {
 			$("#your-delivery-section").height($("#basket-contents-section").height());
-		}
+		}#}
 	}
 	
 	{# Load the basket #}
@@ -165,7 +169,6 @@
 		$basketTotalsLoaded = false;
 		$basketDeliveryOptionsLoaded = false;
 		getBasketContents();
-		getBasketTotals();
 		getBasketDeliveryOptions();
 	}
 	
