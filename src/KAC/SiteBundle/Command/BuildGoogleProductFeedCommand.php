@@ -1548,7 +1548,7 @@ class BuildGoogleProductFeedCommand extends ContainerAwareCommand
                 $xmlWriter->startElement('description');
                 $xmlWriter->writeCdata(
                     $variant->getDescription()->getHeader() . ' ' .
-                    str_replace('|', ', ', str_replace(', ^, ', ', ', $product->getDepartment()->getDepartment()->getDepartmentPath())) . ' ' .
+                    $product->getDepartment()->getDepartment()->getDescription()->getName() . ' ' .
                     $variant->getProductCode() . ' ' .
                     $variant->getDescription()->getMetaDescription()
                 );
