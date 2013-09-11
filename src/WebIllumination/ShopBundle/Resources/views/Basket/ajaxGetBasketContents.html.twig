@@ -13,14 +13,14 @@
 {% if basket.products|length > 0 %}
 	<table class="data-table" width="100%" cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<th class="tal">Product</th>
-			<th class="tac" colspan="2">Qty</th>
-			<th class="tac" colspan="3">Price</th>
+			<th class="tal" colspan="1">Product</th>
+			<th class="tac">Qty</th>
+			<th class="tac">Price</th>
 			<th width="1" class="tac">&nbsp;</th>
 		</tr>
 		{% for product in basket.products %}
 			<tr>
-				<td class="tal">
+                <td class="tal">
 					<a class="uppercase{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="background-red colour-white"{% endif %}" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
 					{% if product.selectedOptionLabels|length > 0 %}
 						<br />
@@ -36,10 +36,7 @@
                         <button type="button" class="action-decrease-quantity decrease-quantity button button-small uppercase" data-quantity-object="quantity-{{ product.variantId }}">-</button>
                     </div>
 				</td>
-				<td width="1" class="tac">&times;</td>
-				<td width="1" class="tac">{% if product.recommendedRetailPrice > product.unitCost %}<span class="colour-red strikethrough">&pound;{{ product.recommendedRetailPrice|number_format(2) }}</span><br /><span class="colour-green"><strong>&pound;{{ product.unitCost|number_format(2) }}</strong></span>{% else %}&pound;{{ product.unitCost|number_format(2) }}{% endif %}</td>
-				<td width="1" class="tac">=</td>
-				<td width="1" class="tac">{{ product.subTotal|currency('GBP', true, true, '')|raw }}</td>
+				<td width="1" class="tac">{{ product.subTotal|currency('GBP', false, true, '')|raw }}</td>
 				<td width="1" class="tac"><a href="Javascript:void(0);"><img width="18" height="18" data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Remove" /></a></td>
 			</tr>
 			{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %}

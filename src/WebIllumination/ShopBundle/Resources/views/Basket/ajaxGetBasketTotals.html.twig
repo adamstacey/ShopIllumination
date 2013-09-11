@@ -1,13 +1,13 @@
 <table class="mbm" width="100%" cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td class="ar"><strong>Subtotal (inc. VAT):</strong></td>
-		<td width="1" class="colour-red tar"><strong>&pound;{{ basket.totals.subTotal|number_format(2) }}</strong></td>
+		<td width="1" class="colour-red tar"><strong>{{ basket.totals.subTotal|currency('GBP', false, true, '')|raw }}</strong></td>
 	</tr>
 	{% if basket.delivery.service != '' %}
 		<tr>
 			<td class="ar"><strong>Delivery Charge (inc. VAT):</strong></td>
 			{% if basket.totals.deliveryCharge > 0 %}
-				<td width="1" class="vam colour-red tar">{{ basket.totals.deliveryCharge|currency('GBP', true, true, '')|raw }}<input type="hidden" id="delivery-charge" value="{{ basket.totals.deliveryCharge|currency('GBP', false, true, '')|raw }}" /></td>
+				<td width="1" class="vam colour-red tar">{{ basket.totals.deliveryCharge|currency('GBP', false, true, '')|raw }}<input type="hidden" id="delivery-charge" value="{{ basket.totals.deliveryCharge|currency('GBP', false, true, '')|raw }}" /></td>
 			{% else %}
 				{% if basket.delivery.service == 'Collection' %}
 					<td width="1" class="vam colour-green tar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>
@@ -22,23 +22,23 @@
 			{% if donation.donation > 0 %}
 				<tr>
 					<td class="vam tar no-wrap">{% if donationType == 'customer' %}<img data-donation="0" class="pointer action-make-donation margin-right-10" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" height="12" alt="remove Donation" />{% endif %}<img class="movember-offer margin-right-10" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" height="10" /><strong>{{ donation.description }}:</strong></td>
-					<td width="1" class="vam colour-green tar">{{ donation.donation|currency('GBP', true, true, '')|raw }}</td>
+					<td width="1" class="vam colour-green tar">{{ donation.donation|currency('GBP', false, true, '')|raw }}</td>
 				</tr>
 			{% endif %}
 		{% endfor %}
 	{% endif %}
 	{% if basket.totals.discount > 0 %}
 		<tr>
-			<td class="vam tar"><strong>You Save:</strong></td>
-			<td width="1" class="vam colour-green tar">{{ basket.totals.discount|currency('GBP', true, true, '')|raw }}</td>
+			<td class="vam tar"><strong>Today You are Saving:</strong></td>
+			<td width="1" class="vam colour-green tar">{{ basket.totals.discount|currency('GBP', false, true, '')|raw }}</td>
 		</tr>
 	{% endif %}
 	{% if basket.discounts|length > 0 %}
 		{% for discount in basket.discounts %}
 			{% if discount.discount > 0 %}
 				<tr>
-					<td class="vam tar discount-description no-wrap">{{ discount.description }}:</td>
-					<td class="vam" width="1" class="colour-green tar">{{ discount.discount|currency('GBP', true, true, '')|raw }}</td>
+					<td class="vam tar discount-description no-wrap small">{{ discount.description }}:</td>
+					<td class="vam colour-green small" width="1">{{ discount.discount|currency('GBP', false, true, '')|raw }}</td>
 				</tr>
 			{% endif %}
 		{% endfor %}

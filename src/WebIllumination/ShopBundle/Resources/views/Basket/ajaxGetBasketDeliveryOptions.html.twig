@@ -63,13 +63,15 @@
 </div>
 <div id="basket-totals" class="tar clearfix ui-helper-hidden"></div>
 <div id="voucher-code-membership-card-number" class="fl clearfix">
-    <input class="fl ui-corner-none-right" size="24" type="text" id="form-voucher-code" name="voucher-code" placeholder="Enter Voucher Code..." value="{{ basket.voucherCodes[0] }}" />
-    <a href="Javascript:void(0);" rel="nofollow" class="fl action-redeem-voucher-code button ui-corner-none-left">Redeem</a>
+    <input class="fl ui-corner-none-right" size="22" type="text" id="form-voucher-code" name="voucher-code" placeholder="Enter Voucher Code..." value="{{ basket.voucherCodes[0] }}" />
+    <a href="Javascript:void(0);" rel="nofollow" class="fl action-redeem-voucher-code button ui-corner-none-left">Apply</a>
     <div id="delete-voucher-code" class="fl {% if basket.voucherCodes[0] is not defined %}ui-helper-hidden{% endif %}">
         <a href="Javascript:void(0);"><img width="18" height="18" class="mtm mlm link action-delete-voucher-code" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Delete Voucher Code" /></a>
     </div>
 </div>
 {% if basket.delivery.service != '' %}<a href="{{ path('checkout_secure_checkout') }}" class="fr action-pay-securely-now button button-green icon-white uppercase" data-icon-secondary="icon-472">Pay With Card</a>{% endif %}
+<div class="clear"></div>
+<img src="{{ asset('bundles/kacsite/images/icons/small-cards.png') }}" class="fr mts" border="0" alt="Cards we accept" />
 <div class="clear"></div>
 {% if (basket.estimatedDeliveryDays.start is defined) and (basket.estimatedDeliveryDays.end is defined) %}
 	<div class="estimated-delivery ui-corner-all clearfix">
