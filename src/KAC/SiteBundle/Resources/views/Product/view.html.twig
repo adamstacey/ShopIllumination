@@ -215,7 +215,7 @@
                                         <div class="clear"></div>
                                         <ul class="summary-specification">
                                             {% for feature in product.departments[0].department.features %}
-                                                {% if feature.displayOnListing and common_features[feature.featureGroup.name] is defined %}
+                                                {% if feature.displayOnListing and common_features[feature.featureGroup.name] is defined and common_features[feature.featureGroup.name] != '*** NOT SET ***' %}
                                                     <li>{{ feature.featureGroup.name }}: <strong>{{ common_features[feature.featureGroup.name] }}</strong></li>
                                                 {% endif %}
                                             {% endfor %}
@@ -267,15 +267,19 @@
                                                                     <tbody>
                                                                     {% for index, value in features %}
                                                                         {% if value.featureGroup is defined %}
-                                                                            <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
-                                                                                <td width="1" class="nowrap tar">{{ value.featureGroup.name }}</td>
-                                                                                <td><strong>{{ value.feature.name }}</strong></td>
-                                                                            </tr>
+                                                                            {% if value.feature.name != '*** NOT SET ***' %}
+                                                                                <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                                                    <td width="1" class="nowrap tar">{{ value.featureGroup.name }}</td>
+                                                                                    <td><strong>{{ value.feature.name }}</strong></td>
+                                                                                </tr>
+                                                                            {% endif %}
                                                                         {% else %}
-                                                                            <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
-                                                                                <td width="1" class="nowrap tar">{{ index }}</td>
-                                                                                <td><strong>{{ value }}</strong></td>
-                                                                            </tr>
+                                                                            {% if value != '*** NOT SET ***' %}
+                                                                                <tr class="{{ cycle(['odd', 'even'], loop.index) }}">
+                                                                                    <td width="1" class="nowrap tar">{{ index }}</td>
+                                                                                    <td><strong>{{ value }}</strong></td>
+                                                                                </tr>
+                                                                            {% endif %}
                                                                         {% endif %}
                                                                     {% endfor %}
                                                                     </tbody>
