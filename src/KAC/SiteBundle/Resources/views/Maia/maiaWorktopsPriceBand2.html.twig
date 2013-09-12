@@ -787,3 +787,41 @@
         </div>
     </div>
 </div>
+<div class="widget-group clearfix mbl">
+    <div class="widget widget-1-of-1">
+        <div class="ui-widget">
+            <section class="ui-widget-content ui-corner-all clearfix">
+                <div class="widget-group clearfix">
+                    <div class="widget widget-1-of-1">
+                        <section>
+                            <div class="tabs">
+                                <ul>
+                                    <li><a href="#overview">Overview</a></li>
+                                    <li><a href="#technicalSpecification">Technical Specification</a></li>
+                                    <li><a href="#requestASample">Request a Sample</a></li>
+                                    <li><a href="#maiaCare">maia Care</a></li>
+                                    <li><a href="#maiaTechnology">maia Technology</a></li>
+                                </ul>
+                                <div id="overview">
+                                    {% include 'KACSiteBundle:Maia:maiaColourOverview.html.twig' with {'worktopColour': worktopColour} %}
+                                </div>
+                                <div id="technicalSpecification">
+                                    {% include 'KACSiteBundle:Maia:maiaColourTechnicalSpecification.html.twig' with {'worktopColour': worktopColour} %}
+                                </div>
+                                <div id="requestASample">
+                                    {% include 'KACSiteBundle:Maia:maiaRequestASample.html.twig' %}
+                                </div>
+                                <div id="maiaCare">
+                                    {% include 'KACSiteBundle:Maia:maiaCare.html.twig' %}
+                                </div>
+                                <div id="maiaTechnology">
+                                    {% include 'KACSiteBundle:Maia:maiaTechnology.html.twig' %}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

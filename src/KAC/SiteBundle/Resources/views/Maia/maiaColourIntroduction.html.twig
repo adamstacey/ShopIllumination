@@ -14,7 +14,7 @@
                     <h1>maia Worktops in {{ worktopColour }}</h1>
                 </div>
                 <div class="widget-group clearfix">
-                    <div class="widget widget-1-of-1 border-bottom-separator pbl mbl">
+                    <div class="widget widget-1-of-1">
                         <div class="widget-group clearfix">
                             <div class="widget widget-2-of-7">
                                 <ul class="etalage-inset">
@@ -23,56 +23,15 @@
                             </div>
                             <div class="widget widget-5-of-7">
                                 <div class="widget-group clearfix">
-                                    <div class="widget widget-3-of-4 pll prl border-right-separator">
+                                    <div class="widget widget-1-of-1 pll">
                                         <div class="widget-group clearfix">
                                             <div class="widget widget-1-of-1"><img class="logo" src="{{ asset('/uploads/images/brand/logo/maia-original-44989.png') }}" alt="maia Worktops" /></div>
                                         </div>
                                         <p class="summary man">{{ worktopDescription }}</p>
                                     </div>
-                                    <div class="widget widget-1-of-4">
-                                        <div class="price">
-                                            <span class="currency-prefix">from only</span>
-                                        </div>
-                                        <div class="price">
-                                            {{ fromPrice|currency('GBP', true, true, '')|raw }}
-                                        </div>
-                                        <div class="price pbm">
-                                            <span class="currency-tax">(inc. VAT)</span>
-                                        </div>
-                                        <a href="#buyNow" class="button uppercase button-green icon-white fr" data-icon-secondary="icon-472">Buy Now</a>
-                                        <button class="actionRequestASample button mts button-small button-grey icon-black fr">Request a Sample</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="widget widget-1-of-1">
-                        <section>
-                            <div class="tabs">
-                                <ul>
-                                    <li><a href="#overview">Overview</a></li>
-                                    <li><a href="#technicalSpecification">Technical Specification</a></li>
-                                    <li><a href="#requestASample">Request a Sample</a></li>
-                                    <li><a href="#maiaCare">maia Care</a></li>
-                                    <li><a href="#maiaTechnology">maia Technology</a></li>
-                                </ul>
-                                <div id="overview">
-                                    {% include 'KACSiteBundle:Maia:maiaColourOverview.html.twig' with {'worktopColour': worktopColour} %}
-                                </div>
-                                <div id="technicalSpecification">
-                                    {% include 'KACSiteBundle:Maia:maiaColourTechnicalSpecification.html.twig' with {'worktopColour': worktopColour} %}
-                                </div>
-                                <div id="requestASample">
-                                    {% include 'KACSiteBundle:Maia:maiaRequestASample.html.twig' %}
-                                </div>
-                                <div id="maiaCare">
-                                    {% include 'KACSiteBundle:Maia:maiaCare.html.twig' %}
-                                </div>
-                                <div id="maiaTechnology">
-                                    {% include 'KACSiteBundle:Maia:maiaTechnology.html.twig' %}
-                                </div>
-                            </div>
-                        </section>
                     </div>
                 </div>
             </section>
