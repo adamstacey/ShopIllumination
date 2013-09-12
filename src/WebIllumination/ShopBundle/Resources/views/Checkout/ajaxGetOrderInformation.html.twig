@@ -1,95 +1,136 @@
 <div id="basket-contents" class="clearfix">
 	{% if basket.products|length > 0 %}
-		<table class="data-table mbm" width="100%" cellpadding="0" cellspacing="0" border="0">
-			{% for product in basket.products %}
-				<tr>
-					<th colspan="6">
-						<a href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
-						{% if product.selectedOptionLabels|length > 0 %}
-							<br />
-							{% for selectedOptionLabel in product.selectedOptionLabels %}
-								{{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
-							{% endfor %}
-						{% endif %}
-					</th>
-				</tr>
-				<tr>
-					<td class="tac{% if product.quantity > 1 %} gradient-turquoise colour-white{% endif %}">{{ product.quantity }}</td>
-					<td class="tac">&times;</td>
-					<td class="tac">{% if product.recommendedRetailPrice > product.unitCost %}<span class="colour-red strikethrough">{{ product.recommendedRetailPrice|currency('GBP', true, true, '')|raw }}</span><br /><span class="colour-green"><strong>{{ product.unitCost|currency('GBP', true, true, '')|raw }}</strong></span>{% else %}{{ product.unitCost|currency('GBP', true, true, '')|raw }}{% endif %}</td>
-					<td class="tac">=</td>
-					<td class="tar">{{ product.subTotal|currency('GBP', true, true, '')|raw }}</td>
-				</tr>
-			{% endfor %}
-		</table>
+        <table class="data-table" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <th class="tal" colspan="1">Product</th>
+                <th class="tac">Qty</th>
+                <th class="tac">Price</th>
+            </tr>
+            {% for product in basket.products %}
+                <tr>
+                    <td class="tal">
+                        <span class="uppercase{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="background-red colour-white"{% endif %}">{{ product.header }}</span>
+                        {% if product.selectedOptionLabels|length > 0 %}
+                            <br />
+                            {% for selectedOptionLabel in product.selectedOptionLabels %}
+                                {{ selectedOptionLabel|raw }}{% if not loop.last %}<br />{% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td width="1" class="tac{% if product.quantity > 1 %} gradient-turquoise colour-white{% endif %}">{{ product.quantity }}</td>
+                    <td width="1" class="tac">{{ product.subTotal|currency('GBP', false, true, '')|raw }}</td>
+                </tr>
+                {% if (product.deliveryBand == 6) and (basket.delivery.service == '') %}
+                    <tr>
+                        <td colspan="8">
+                            <div class="info-message ui-status-highlight no-margin">
+                                <span class="info-message-icon ui-icon ui-icon-info"></span>
+                                <p>Sorry, we are currently unable to deliver large worktop products to your selected delivery area. We can deliver all our other products to your selected delivery area. Please remove products highlighted in <span clas="red">RED</span> to continue with your order for delivery.</p>
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
 	{% else %}
 		<p>Sorry, you haven't added anything to your basket.</p>
 	{% endif %}
 </div>
+<div class="clearfix mbm mts small colour-grey">
+    [<a href="{{ path('basket_your_basket') }}" class="small colour-grey">Edit Order</a>]
+</div>
 <div id="basket-totals" class="clearfix">
-	<table width="100%" cellpadding="0" cellspacing="0" border="0">
-		<tr>
-			<td class="al"><strong>Subtotal before Delivery:</strong><br /><span class="small">(inc. VAT)</span></td>
-			<td width="150" class="colour-red tar"><strong>{{ basket.totals.subTotal|currency('GBP', true, true, '')|raw }}</strong></td>
-		</tr>
-		{% if basket.delivery.service != '' %}
-			<tr>
-				<td class="al"><strong>Delivery Charge:</strong><br /><span class="small">(inc. VAT)</span></td>
-				<td width="150" class="tar">&nbsp;</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<div id="delivery-options-loading" class="tac ui-helper-hidden clearfix">
-						<img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
-						<p>Loading your delivery options&hellip;</p>
-						<div class="clear"></div>
-					</div>					
-					<div id="delivery-options" class="clearfix">
-                        {% for deliveryOption in basket.delivery.deliveryOptions %}
-                            <div data-delivery-option="{{ loop.index }}" class="form-element mlm delivery-option widget-group clearfix">
-                                <span title="{{ deliveryOption.description|raw }}" class="form-helper pbn ui-button-icon-primary ui-icon-small icon-small-763"></span>
-                                <div class="widget radio-group man widget-1-of-1">
-                                    <div class="clearfix">
-                                        <input{% if basket.delivery.service == deliveryOption.service %} checked="checked"{% endif %} type="radio" id="deliveryOption{{ loop.index }}" name="delivery-option" value="{{ deliveryOption.service }}" />
-                                        <label for="deliveryOption{{ loop.index }}">
-                                            <span class="delivery-service">{{ deliveryOption.service|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}{% if deliveryOption.price != 0 %} - <span class="colour-red"><strong>{{ deliveryOption.price|currency('GBP', true, true, '')|raw }}</strong></span>{% endif %}</span>
-                                            {% if deliveryOption.surcharge > 0 %}
-                                                <br /><span class="colour-red">{{ deliveryOption.surchargeDescription|raw }}</span>
-                                            {% endif %}
-                                            <br /><span class="small"><em>{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days){% else %}&nbsp;{% endif %}</em></span>
-                                        </label>
+    <table class="mbm" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td class="tar"><strong>Subtotal (inc. VAT):</strong></td>
+            <td width="1" class="colour-red tar"><strong>{{ basket.totals.subTotal|currency('GBP', false, true, '')|raw }}</strong></td>
+        </tr>
+        {% if basket.delivery.service != '' %}
+            <tr>
+                <td class="tar"><strong>Delivery Charge (inc. VAT):</strong><br /><div class="mts small colour grey">[<a class="action-change-delivery small colour-grey" href="Javascript:void(0);">Change Delivery</a>]</div></td>
+                {% if basket.totals.deliveryCharge > 0 %}
+                    <td width="1" class="vam colour-red tar">{{ basket.totals.deliveryCharge|currency('GBP', false, true, '')|raw }}<input type="hidden" id="delivery-charge" value="{{ basket.totals.deliveryCharge|currency('GBP', false, true, '')|raw }}" /></td>
+                {% else %}
+                    {% if basket.delivery.service == 'Collection' %}
+                        <td width="1" class="vam colour-green tar">COLLECTION<input type="hidden" id="delivery-charge" value="COLLECTION" /></td>
+                    {% else %}
+                        <td width="1" class="vam colour-green tar">FREE<input type="hidden" id="delivery-charge" value="FREE" /></td>
+                    {% endif %}
+                {% endif %}
+            </tr>
+            <tr class="ui-helper-hidden">
+                <td colspan="2">
+                    <div id="delivery-options-container" class="ui-corner-all">
+                        <div id="delivery-options-loading" class="tac ui-helper-hidden clearfix">
+                            <img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                            <p>Loading your delivery options&hellip;</p>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="delivery-options" class="clearfix">
+                            {% for deliveryOption in basket.delivery.deliveryOptions %}
+                                <div data-delivery-option="{{ loop.index }}" class="form-element mlm delivery-option widget-group clearfix">
+                                    <span title="{{ deliveryOption.description|raw }}" class="form-helper pbn ui-button-icon-primary ui-icon-small icon-small-763"></span>
+                                    <div class="widget radio-group man widget-1-of-1">
+                                        <div class="clearfix">
+                                            <input{% if basket.delivery.service == deliveryOption.service %} checked="checked"{% endif %} type="radio" id="deliveryOption{{ loop.index }}" name="delivery-option" value="{{ deliveryOption.service }}" />
+                                            <label for="deliveryOption{{ loop.index }}">
+                                                <span class="delivery-service">{{ deliveryOption.service|replace({'FREE DELIVERY': '<span class="colour-green"><strong>FREE DELIVERY</strong></span>', 'Collection': 'Collection from Nottingham Shop'})|raw }}{% if deliveryOption.price != 0 %} - <span class="colour-red"><strong>{{ deliveryOption.price|currency('GBP', true, true, '')|raw }}</strong></span>{% endif %}</span>
+                                                {% if deliveryOption.surcharge > 0 %}
+                                                    <br /><span class="colour-red">{{ deliveryOption.surchargeDescription|raw }}</span>
+                                                {% endif %}
+                                                <br /><span class="small"><em>{% if deliveryOption.estimatedDeliveryDaysStart > 0 %}({{ deliveryOption.estimatedDeliveryDaysStart }} - {{ deliveryOption.estimatedDeliveryDaysEnd }} working days){% else %}(We will contact you when your order is ready){% endif %}</em></span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% else %}
-                            <div class="message message-warning">
-                                <span class="ui-button-icon-primary ui-icon icon-yellow icon-695"></span>
-                                <p>Sorry, there are no delivery options available.</p>
-                            </div>
-                        {% endfor %}
-					</div>
-				</td>
-			</tr>
-		{% endif %}
-		{% if basket.totals.discount > 0 %}
-			<tr>
-				<td class="tal"><strong>You Save:</strong></td>
-				<td width="150" class="nowarp colour-green tar">{{ basket.totals.discount|currency('GBP', true, true, '')|raw }}</td>
-			</tr>
-		{% endif %}
-		{% if basket.discounts|length > 0 %}
-			{% for discount in basket.discounts %}
-				{% if discount.discount > 0 %}
-					<tr>
-						<td class="tal small">{{ discount.description }}:</td>
-						<td width="1" class="nowrap small tar colour-green">{{ discount.discount|currency('GBP', true, true, '')|raw }}</td>
-					</tr>
-				{% endif %}
-			{% endfor %}
-		{% endif %}
-		<tr class="product">
-			<td class="tal"><strong>TOTAL TO PAY:<br /></strong><span class="small">(inc. VAT)</span></td>
-			<td width="150" class="nowrap price tar"><strong>{{ basket.totals.total|currency('GBP', true, true, '')|raw }}</strong></td>
-		</tr>
-	</table>
+                            {% else %}
+                                <div class="message message-warning">
+                                    <span class="ui-button-icon-primary ui-icon icon-yellow icon-695"></span>
+                                    <p>Sorry, there are no delivery options available.</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+        {% if basket.donations|length > 0 %}
+            {% for donationType, donation in basket.donations %}
+                {% if donation.donation > 0 %}
+                    <tr>
+                        <td class="vam tar no-wrap">{% if donationType == 'customer' %}<img data-donation="0" class="pointer action-make-donation margin-right-10" src="{{ asset('/bundles/webilluminationshop/images/icons/error-small.png') }}" border="0" height="12" alt="remove Donation" />{% endif %}<img class="movember-offer margin-right-10" src="{{ asset('bundles/webilluminationshop/images/logos/movember-offer.png') }}" border="0" alt="Movember Offer" height="10" /><strong>{{ donation.description }}:</strong></td>
+                        <td width="1" class="vam colour-green tar">{{ donation.donation|currency('GBP', false, true, '')|raw }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if basket.totals.discount > 0 %}
+            <tr>
+                <td class="vam tar"><strong>Today You are Saving:</strong></td>
+                <td width="1" class="vam colour-green tar">{{ basket.totals.discount|currency('GBP', false, true, '')|raw }}</td>
+            </tr>
+        {% endif %}
+        {% if basket.discounts|length > 0 %}
+            {% for discount in basket.discounts %}
+                {% if discount.discount > 0 %}
+                    <tr>
+                        <td class="vam tar discount-description no-wrap small">{{ discount.description }}:</td>
+                        <td class="vam colour-green tar small" width="1">{{ discount.discount|currency('GBP', false, true, '')|raw }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <tr class="product">
+            <td class="tar vam"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
+            <td width="180" class="vam price colour-red no-wrap tar"><strong>{{ basket.totals.total|currency('GBP', true, true, '')|raw }}</strong></td>
+        </tr>
+    </table>
+    <div class="clear"></div>
+    {% if basket.delivery.service == '' %}
+        <div class="message message-warning">
+            <span class="ui-button-icon-primary ui-icon icon-white icon-695"></span>
+            <p class="tal">Sorry, we are currently unable to deliver the selected items to your area.</p>
+        </div>
+    {% endif %}
 </div>

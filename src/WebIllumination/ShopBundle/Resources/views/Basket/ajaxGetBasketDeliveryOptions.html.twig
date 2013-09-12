@@ -63,7 +63,7 @@
 </div>
 <div id="basket-totals" class="tar clearfix ui-helper-hidden"></div>
 <div id="voucher-code-membership-card-number" class="fl clearfix">
-    <input class="fl ui-corner-none-right" size="22" type="text" id="form-voucher-code" name="voucher-code" placeholder="Enter Voucher Code..." value="{{ basket.voucherCodes[0] }}" />
+    <input class="fl ui-corner-none-right" size="26" type="text" id="form-voucher-code" name="voucher-code" placeholder="Enter Voucher Code..." value="{{ basket.voucherCodes[0] }}" />
     <a href="Javascript:void(0);" rel="nofollow" class="fl action-redeem-voucher-code button ui-corner-none-left">Apply</a>
     <div id="delete-voucher-code" class="fl {% if basket.voucherCodes[0] is not defined %}ui-helper-hidden{% endif %}">
         <a href="Javascript:void(0);"><img width="18" height="18" class="mtm mlm link action-delete-voucher-code" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Delete Voucher Code" /></a>

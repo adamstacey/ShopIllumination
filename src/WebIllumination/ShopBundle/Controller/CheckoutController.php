@@ -147,23 +147,44 @@ class CheckoutController extends Controller
 		$basket = $this->get('session')->get('basket');
 		
 		// Get submitted data
-		$firstName = ucwords(trim($request->request->get('firstName')));
-		$lastName = ucwords(trim($request->request->get('lastName')));
 		$emailAddress = strtolower(trim($request->request->get('emailAddress')));
 		$telephoneDaytime = trim($request->request->get('telephoneDaytime'));
 		$telephoneEvening = trim($request->request->get('telephoneEvening'));
-		$mobile = trim($request->request->get('mobile'));
-		$billingFirstName = ucwords(trim($request->request->get('billingFirstName')));
-		$billingLastName = ucwords(trim($request->request->get('billingLastName')));
-		$billingOrganisationName = ucwords(trim($request->request->get('billingOrganisationName')));
+        if (substr($telephoneDaytime, 0, 2) == '07')
+        {
+            $mobile = $telephoneDaytime;
+        } elseif (substr($telephoneEvening, 0, 2) == '07') {
+            $mobile = $telephoneEvening;
+        } else {
+		    $mobile = '';
+        }
+        $billingName = explode(' ', ucwords(trim($request->request->get('billingFirstName'))));
+        if (count($billingName) == 1)
+        {
+            $billingFirstName = '';
+            $billingLastName = $billingName[0];
+        } else {
+            $billingFirstName = $billingName[0];
+            $billingLastName = $billingName[count($billingName) - 1];
+        }
+        $firstName = $billingFirstName;
+        $lastName = $billingLastName;
+		$billingOrganisationName = '';
 		$billingAddressLine1 = trim($request->request->get('billingAddressLine1'));
 		$billingAddressLine2 = trim($request->request->get('billingAddressLine2'));
 		$billingTownCity = trim($request->request->get('billingTownCity'));
 		$billingCountyState = trim($request->request->get('billingCountyState'));
 		$billingPostZipCode = strtoupper(trim($request->request->get('billingPostZipCode')));
 		$billingCountryCode = $request->request->get('billingCountryCode');
-		$deliveryFirstName = ucwords(trim($request->request->get('deliveryFirstName')));
-		$deliveryLastName = ucwords(trim($request->request->get('deliveryLastName')));
+        $deliveryName = explode(' ', ucwords(trim($request->request->get('deliveryFirstName'))));
+        if (count($deliveryName) == 1)
+        {
+            $deliveryFirstName = '';
+            $deliveryLastName = $deliveryName[0];
+        } else {
+            $deliveryFirstName = $deliveryName[0];
+            $deliveryLastName = $deliveryName[count($deliveryName) - 1];
+        }
 		$deliveryOrganisationName = ucwords(trim($request->request->get('deliveryOrganisationName')));
 		$deliveryAddressLine1 = trim($request->request->get('deliveryAddressLine1'));
 		$deliveryAddressLine2 = trim($request->request->get('deliveryAddressLine2'));
@@ -171,7 +192,7 @@ class CheckoutController extends Controller
 		$deliveryCountyState = trim($request->request->get('deliveryCountyState'));
 		$deliveryPostZipCode = strtoupper(trim($request->request->get('deliveryPostZipCode')));
 		$deliveryCountryCode = $request->request->get('deliveryCountryCode');
-		$sameDeliveryAddress = ($request->request->get('sameDeliveryAddress')?1:0);
+		$sameDeliveryAddress = ($request->request->get('sameDeliveryAddress')?$request->request->get('sameDeliveryAddress'):1);
 		$deliveryOption = $request->request->get('deliveryOption');
 		$requestedDeliveryDate = trim($request->request->get('requestedDeliveryDate'));
 		$notes = trim($request->request->get('notes'));

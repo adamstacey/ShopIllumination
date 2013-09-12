@@ -37,7 +37,7 @@
                     </div>
 				</td>
 				<td width="1" class="tac">{{ product.subTotal|currency('GBP', false, true, '')|raw }}</td>
-				<td width="1" class="tac"><a href="Javascript:void(0);"><img width="18" height="18" data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Remove" /></a></td>
+				<td width="1" class="tac"><a href="Javascript:void(0);"><img width="10" height="10" data-basket-item-id="{{ product.basketItemId }}" data-url="{{ path('basket_ajax_delete_basket_item') }}" class="link action-delete-basket-item" src="{{ asset('/bundles/kacshop/images/icons/error-small.png') }}" border="0" alt="Remove" /></a></td>
 			</tr>
 			{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %}
 				<tr>

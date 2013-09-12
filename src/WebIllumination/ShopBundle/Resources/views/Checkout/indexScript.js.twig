@@ -1,24 +1,25 @@
-<script defer="defer" type="text/javascript">					
+<script defer="defer" type="text/javascript">
+
+    function CapturePlusCallback(uid, response) {
+        $.uniform.update();
+    }
+
 	{# Save order #}
 	function saveOrder($paymentType)
 	{
-		$("#form-first-name").val($("#form-billing-first-name").val());
-		$("#form-last-name").val($("#form-billing-last-name").val());
 		var $sameDeliveryAddress = 0;
-		if (!$('#form-same-delivery-address').is(':checked'))
+		if ($("#form-same-delivery-address-billing").is(":checked"))
 		{
 			$sameDeliveryAddress = 1;
 			$("#form-delivery-first-name").val($("#form-billing-first-name").val());
-			$("#form-delivery-last-name").val($("#form-billing-last-name").val());
-			$("#form-delivery-organisation-name").val($("#form-billing-organisation-name").val());
-			$("#form-delivery-country-code").val($("#form-billing-country-code").val());
 			$("#form-delivery-address-line-1").val($("#form-billing-address-line-1").val());
 			$("#form-delivery-address-line-2").val($("#form-billing-address-line-2").val());
 			$("#form-delivery-town-city").val($("#form-billing-town-city").val());
 			$("#form-delivery-county-state").val($("#form-billing-county-state").val());
 			$("#form-delivery-post-zip-code").val($("#form-billing-post-zip-code").val());
+            $("#form-delivery-country-code").val($("#form-billing-country-code").val());
 		}
-		if (!$("#form-accept-terms-and-conditions").is(':checked'))
+		if (!$("#form-accept-terms-and-conditions").is(":checked"))
 		{
 			$("#message-error-text").html('To proceed you need to accept that you have read and agreed to our Terms and Conditions.');
 			$("#message-error").slideDown(function() {
@@ -39,30 +40,23 @@
 						$("#ajax-loading").show();
 					},
 	   				data: {
-		   				firstName: $("#form-first-name").val(),
-	   					lastName: $("#form-last-name").val(),
 	   					emailAddress: $("#form-email-address").val(),
 	   					telephoneDaytime: $("#form-telephone-daytime").val(),
 	   					telephoneEvening: $("#form-telephone-evening").val(),
-	   					mobile: $("#form-mobile").val(),
 	   					billingFirstName: $("#form-billing-first-name").val(),
-	   					billingLastName: $("#form-billing-last-name").val(),
-	   					billingOrganisationName: $("#form-billing-organisation-name").val(),
-	   					billingCountryCode: $("#form-billing-country-code").val(),
 	   					billingAddressLine1: $("#form-billing-address-line-1").val(),
 	   					billingAddressLine2: $("#form-billing-address-line-2").val(),
 	   					billingTownCity: $("#form-billing-town-city").val(),
 						billingCountyState: $("#form-billing-county-state").val(),
 	   					billingPostZipCode: $("#form-billing-post-zip-code").val(),
+                        billingCountryCode: $("#form-billing-country-code").val(),
 	   					deliveryFirstName: $("#form-delivery-first-name").val(),
-	   					deliveryLastName: $("#form-delivery-last-name").val(),
-	   					deliveryOrganisationName: $("#form-delivery-organisation-name").val(),
-	   					deliveryCountryCode: $("#form-delivery-country-code").val(),
 	   					deliveryAddressLine1: $("#form-delivery-address-line-1").val(),
 	   					deliveryAddressLine2: $("#form-delivery-address-line-2").val(),
 	   					deliveryTownCity: $("#form-delivery-town-city").val(),
 	   					deliveryCountyState: $("#form-delivery-county-state").val(),
 	   					deliveryPostZipCode: $("#form-delivery-post-zip-code").val(),
+                        deliveryCountryCode: $("#form-delivery-country-code").val(),
 	   					sameDeliveryAddress: $sameDeliveryAddress,
 	   					deliveryOption: $("input[name='delivery-option']:checked").val()
 	   				},
@@ -79,7 +73,6 @@
 				$("#message-error").slideDown(function() {
 					setTimeout("resetMessages()", 5000);
 				});
-//				$("html, body").animate({scrollTop: $(".form-element:nth-child(14)").offset().top - 50}, 'slow');
 			}
 		}
 	}
@@ -217,7 +210,7 @@
 		$("#billing-post-zip-code-container").show();
 		$("#republic-of-ireland-billing-address-message").hide();
 		$("#same-address-billing").show();
-		$("#form-billing-address-line-1").focus();
+		$("#pcainput_ym28te79te92mr9220037").focus();
 	}
 		
 	function resetDeliveryAddress()
@@ -237,7 +230,7 @@
 		$("#form-same-delivery-address").attr("checked", "checked");
 		$("#uniform-form-same-delivery-address > span").addClass("checked");
 		$("#republic-of-ireland-delivery-address-message").hide();
-		$("#form-delivery-address-line-1").focus();
+		$("#pcainput_ym28te79te92mr9220037").focus();
 	}
 	
 	$(document).ready(function() {
@@ -246,18 +239,8 @@
 		{
 			$("#checkout-continue-shopping").attr("href", "{{ backUrl }}")
 		}
-		
-		{# Setup waypoints #}
-		$.waypoints.settings.scrollThrottle = 20;
-		$("#float-your-order").waypoint(function(event, direction) {
-			$(this).toggleClass("float-your-order-sticky", direction === "down");
-			event.stopPropagation();
-		}, { offset: 15 });
-		$("#float-save-order").waypoint(function(event, direction) {
-		    $("#float-save-order-content").toggleClass("float-save-order-sticky", direction === "up");
-		}, {offset: function() {
-		      return $.waypoints("viewportHeight") - $(this).outerHeight();
-		}});
+
+        $("#form-billing-first-name").focus();
 		                		
 		{# Set the datepicker up #}
 		{% if basket.estimatedDeliveryDays.requestedDeliveryDateStart is defined %}
@@ -332,24 +315,22 @@
 		});
 		
 		{# Use the billing address for the delivery address #}
-		$("#form-same-delivery-address").live('change', function() {
+		$("#form-same-delivery-address-billing, #form-same-delivery-address-delivery").live('change', function() {
 			$(".form-error-3-5").hide();
 			$("#float-save-order-content").removeClass("float-save-order-sticky");
-			if ($("#form-same-delivery-address").is(":checked"))
+			if ($("#form-same-delivery-address-delivery").is(":checked"))
 			{
 				resetDeliveryAddress();
 				$("#form-delivery-first-name").attr("required", "required").attr("data-message", "Enter your first name");
-				$("#form-delivery-last-name").attr("required", "required").attr("data-message", "Enter your last name");
 				$("#form-delivery-address-line-1").attr("required", "required").attr("data-message", "Enter the first line of your address");
 				$("#form-delivery-town-city").attr("required", "required").attr("data-message", "Enter your Town or City");
 				$("#form-delivery-post-zip-code").attr("required", "required").attr("data-message", "Enter a valid postcode");
 				$("#checkout-delivery-address").show();
 				$("html, body").animate({scrollTop: $("#checkout-delivery-address").offset().top - 50}, 'slow');
-				$("#form-delivery-address-line-1").focus();
+				$("#pcainput_ym28te79te92mr9220037").focus();
 			} else {
 				copyBillingAddressToDeliveryAddress();
 				$("#form-delivery-first-name").removeAttr("required").removeAttr("data-message");
-				$("#form-delivery-last-name").removeAttr("required").removeAttr("data-message");
 				$("#form-delivery-address-line-1").removeAttr("required").removeAttr("data-message");
 				$("#form-delivery-town-city").removeAttr("required").removeAttr("data-message");
 				$("#form-delivery-post-zip-code").removeAttr("required").removeAttr("data-message");
@@ -374,29 +355,25 @@
 				$("#form-requested-delivery-date").val("Deliver ASAP");
 			}
 		});
-								
-		{# Auto-poulate #}
-		$("#form-telephone-daytime").blur(function() {
-			if (($("#form-mobile").val() == "") && ($("#form-telephone-daytime").val().substr(0, 2) == "07"))
-			{
-				$("#form-mobile").val($("#form-telephone-daytime").val());
-			}
-		});
 		
 		{# Show and hide the delivery option description #}
-		$(".action-show-delivery-option-description").live('mouseenter', function() {
+		$(document).on("mouseenter", ".action-show-delivery-option-description", function() {
 			var $deliveryOption = $(this).attr("data-delivery-option");
 			$(".delivery-option-description[data-delivery-option='"+$deliveryOption+"']").slideDown();
 		});
-		$(".delivery-option").live('mouseleave', function() {
+		$(document).on("mouseleave", ".delivery-option", function() {
 			var $deliveryOption = $(this).attr("data-delivery-option");
 			$(".delivery-option-description[data-delivery-option='"+$deliveryOption+"']").slideUp();
 		});
 		
 		{# Submit payment #}
-		$(".action-submit-payment").live('click', function() {
+		$(document).on("click", ".action-submit-payment", function() {
 			var $paymentType = $(".action-submit-payment").attr("data-payment-type");
 			saveOrder($paymentType);
 		});
+
+        $(document).on("click", ".action-change-delivery", function(){
+            $("#delivery-options-container").closest("tr").toggle();
+        });
 	});
 </script>
