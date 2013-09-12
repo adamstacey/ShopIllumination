@@ -38,6 +38,7 @@
                                         <p><strong>Sorry, there was a problem placing your order. No money has been taken from your card. Please try again or <a href="{{ path('content_contact_us') }}">contact us</a> if you have any questions.</strong></p>
                                         {% if (orderObject.paymentType == 'PayPal through SagePay') or (orderObject.paymentType == 'SagePay') %}
                                             <div class="message message-error">
+                                                <span class="ui-button-icon-primary ui-icon icon-white icon-851"></span>
                                                 <p><strong>{{ orderObject.paymentResponse.Status }}:</strong> {{ orderObject.paymentResponse.StatusDetail }}</p>
                                             </div>
                                         {% endif %}
@@ -294,7 +295,12 @@
                                         </div>
                                         <div class="widget checker-group widget-2-of-3">
                                             <div class="clearfix">
-                                                <button data-payment-type="sagePay" class="action-submit-payment uppercase button button-green icon-white" data-icon-secondary="icon-472">Proceed to Payment</button>
+                                                <div id="order-processing-loading" class="ui-helper-hidden clearfix">
+                                                    <img src="{{ asset('bundles/webilluminationshop/images/loaders/ajax-bars-loader.gif') }}" border="0" alt="Loading" />
+                                                    <p>Loading, please wait&hellip;</p>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <button id="proceeed-to-payment" data-payment-type="sagePay" class="action-submit-payment uppercase button button-green icon-white" data-icon-secondary="icon-472">Proceed to Payment</button>
                                                 <img src="{{ asset('bundles/kacsite/images/icons/small-cards.png') }}" class="fl mts" border="0" alt="Cards we accept" />
                                             </div>
                                         </div>

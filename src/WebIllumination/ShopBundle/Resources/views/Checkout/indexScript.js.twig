@@ -368,6 +368,9 @@
 		
 		{# Submit payment #}
 		$(document).on("click", ".action-submit-payment", function() {
+            $("#order-processing-loading").show();
+            $("#proceeed-to-payment").removeClass("button-green icon-white").addClass("button-grey icon-black");
+            $("#proceeed-to-payment span.ui-button-text").html("Processing...");
 			var $paymentType = $(".action-submit-payment").attr("data-payment-type");
 			saveOrder($paymentType);
 		});
