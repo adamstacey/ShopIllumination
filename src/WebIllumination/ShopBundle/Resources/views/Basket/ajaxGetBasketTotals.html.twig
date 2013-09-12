@@ -33,7 +33,7 @@
 			<td width="1" class="vam colour-green tar">{{ basket.totals.discount|currency('GBP', false, true, '')|raw }}</td>
 		</tr>
 	{% endif %}
-	{% if basket.discounts|length > 0 %}
+    {#{% if basket.discounts|length > 0 %}
 		{% for discount in basket.discounts %}
 			{% if discount.discount > 0 %}
 				<tr>
@@ -42,24 +42,10 @@
 				</tr>
 			{% endif %}
 		{% endfor %}
-	{% endif %}
+	{% endif %}#}
 	<tr class="product">
 		<td class="tar vam"><strong>TOTAL TO PAY (inc. VAT):</strong></td>
 		<td width="180" class="vam price colour-red no-wrap tar"><strong>{{ basket.totals.total|currency('GBP', true, true, '')|raw }}</strong></td>
 	</tr>
 </table>
 <div class="clear"></div>
-{% if basket.delivery.service == '' %}
-    <div class="message message-warning">
-        <span class="ui-button-icon-primary ui-icon icon-white icon-695"></span>
-        <p class="tal">Sorry, we are currently unable to deliver the selected items to your area.</p>
-    </div>
-{% endif %}
-{% if basket.numberOfCdaAppliances is defined %}
-	{% if (basket.numberOfCdaAppliances > 0) and (basket.numberOfCdaAppliances < 3) %}
-        <div class="message message-help">
-            <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
-            <p class="tal">You currently have <strong>{{ basket.numberOfCdaAppliances }}</strong> CDA appliance{% if basket.numberOfCdaAppliances > 1 %}s{% endif %} in your basket. If you add another <strong>{% if basket.numberOfCdaAppliances == 1 %}2 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliances</a>{% else %}1 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliance</a>{% endif %}</strong> to your basket you will receive <strong>10% off each CDA appliance ordered</strong>.</p>
-        </div>
-	{% endif %}
-{% endif %}

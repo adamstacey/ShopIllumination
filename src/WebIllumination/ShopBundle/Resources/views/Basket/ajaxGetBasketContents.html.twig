@@ -20,8 +20,8 @@
 		</tr>
 		{% for product in basket.products %}
 			<tr>
-                <td class="tal">
-					<a class="uppercase{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} class="background-red colour-white"{% endif %}" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
+                <td class="tal{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} background-red colour-white{% endif %}">
+					<a class="uppercase{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %} colour-white{% endif %}" href="{{ path('routing', {'url': product.url}) }}">{{ product.header }}</a>
 					{% if product.selectedOptionLabels|length > 0 %}
 						<br />
 						{% for selectedOptionLabel in product.selectedOptionLabels %}
@@ -41,17 +41,24 @@
 			</tr>
 			{% if (product.deliveryBand == 6) and (basket.delivery.service == '') %}
 				<tr>
-					<td colspan="8">
-						<div class="info-message ui-status-highlight no-margin">
-							<span class="info-message-icon ui-icon ui-icon-info"></span>
-							<p>Sorry, we are currently unable to deliver large worktop products to your selected delivery area. We can deliver all our other products to your selected delivery area. Please remove products highlighted in <span clas="red">RED</span> to continue with your order for delivery.</p>
-							<div class="clear"></div>
+					<td colspan="8" class="pan">
+						<div>
+                            <span class="fl mrm ui-button-icon-primary ui-icon icon-red icon-467"></span>
+							<p class="man pan colour-red">Sorry, we are unable to deliver this item to your selected delivery area. Please remove this item or select another delivery area to continue.</p>
 						</div>
 					</td>
 				</tr>
 			{% endif %}
 		{% endfor %}
 	</table>
+    {% if basket.numberOfCdaAppliances is defined %}
+        {% if (basket.numberOfCdaAppliances > 0) and (basket.numberOfCdaAppliances < 3) %}
+            <div class="message mtm message-help">
+                <span class="ui-button-icon-primary ui-icon icon-yellow icon-763"></span>
+                <p class="tal">You currently have <strong>{{ basket.numberOfCdaAppliances }}</strong> CDA appliance{% if basket.numberOfCdaAppliances > 1 %}s{% endif %} in your basket. If you add another <strong>{% if basket.numberOfCdaAppliances == 1 %}2 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliances</a>{% else %}1 <a href="{{ path('routing', {'url': 'cda'}) }}">CDA Appliance</a>{% endif %}</strong> to your basket you will receive <strong>10% off each CDA appliance ordered</strong>.</p>
+            </div>
+        {% endif %}
+    {% endif %}
 {% else %}
 	<p>Sorry, you haven't added anything to your basket.</p>
 {% endif %}
