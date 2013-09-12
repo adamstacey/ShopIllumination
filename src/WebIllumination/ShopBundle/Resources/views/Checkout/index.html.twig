@@ -67,9 +67,13 @@
                                         </div>
                                     </div>
                                     <div class="mtm" id="checkout-billing-address">
-                                        <h4 class="man ui-corner-none-bottom">Billing Address</h4>
-                                        <div class="pca-container mbs pr widget-group clearfix">
-                                            <div class="widget widget-1-of-1">
+                                        <h4>Billing Address</h4>
+                                        <div class="mbm mtm widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <img src="{{ asset('bundles/kacsite/images/icons/starthere.png') }}" class="fr" border="0" alt="Start Here" />
+                                                <div class="clear"></div>
+                                            </div>
+                                            <div class="pln widget widget-2-of-3">
                                                 <link rel="stylesheet" type="text/css" href="https://services.postcodeanywhere.co.uk/css/captureplus-1.35.min.css?key=hc23-tf35-ny45-ff93" /><script type="text/javascript" src="https://services.postcodeanywhere.co.uk/js/captureplus-1.35.min.js?key=hc23-tf35-ny45-ff93&app=13676"></script><div id="hc23tf35ny45ff9313676"></div>
                                             </div>
                                         </div>
@@ -161,10 +165,14 @@
                                         </div>
                                     </div>
                                     <div class="mtm{% if (order.billingCountryCode == 'IE') or (order.sameDeliveryAddress > 0) %} ui-helper-hidden{% endif %}" id="checkout-delivery-address">
-                                        <h4 class="man ui-corner-none-bottom">Delivery Address</h4>
-                                        <div class="pca-container mbs pr widget-group clearfix">
-                                            <div class="widget widget-1-of-1">
-                                                <link rel="stylesheet" type="text/css" href="https://services.postcodeanywhere.co.uk/css/captureplus-1.35.min.css?key=ym28-te79-te92-mr92" /><script type="text/javascript" src="https://services.postcodeanywhere.co.uk/js/captureplus-1.35.min.js?key=ym28-te79-te92-mr92&app=20037"></script><div id="ym28te79te92mr9220037"></div>
+                                        <h4>Delivery Address</h4>
+                                        <div class="mbm mtm widget-group clearfix">
+                                            <div class="widget widget-1-of-3">
+                                                <img src="{{ asset('bundles/kacsite/images/icons/starthere.png') }}" class="fr" border="0" alt="Start Here" />
+                                                <div class="clear"></div>
+                                            </div>
+                                            <div class="pln widget widget-2-of-3">
+                                                <link rel="stylesheet" type="text/css" href="https://services.postcodeanywhere.co.uk/css/captureplus-1.35.min.css?key=gz19-jt95-np55-pb89" /><script type="text/javascript" src="https://services.postcodeanywhere.co.uk/js/captureplus-1.35.min.js?key=gz19-jt95-np55-pb89&app=20071"></script><div id="gz19jt95np55pb8920071"></div>
                                             </div>
                                         </div>
                                         <div class="form-element widget-group clearfix">
@@ -405,53 +413,53 @@
             margin: 0 10px 0 0;
         }
 
-        .pca-container .ui-icon-small {
-            position: absolute;
-            top: 4px;
-            right: 20px;
-            z-index: 1;
-        }
+        /*.pca-container .ui-icon-small {*/
+            /*position: absolute;*/
+            /*top: 4px;*/
+            /*right: 20px;*/
+            /*z-index: 1;*/
+        /*}*/
 
-        .pcaAutoComplete .inputArea {
-            padding: 10px!important;
-            outline: 0!important;
-            font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif!important;
-            -webkit-background-clip: padding-box!important;
-            -moz-background-clip: padding!important;
-            background-clip: padding-box!important;
-            font-size: 12px!important;
-            font-size: 1.2rem!important;
-            background: #e4eaec!important;
-            background: -moz-linear-gradient(top, #e4eaec 0%, white 100%)!important;
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e4eaec), color-stop(100%, white))!important;
-            background: -webkit-linear-gradient(top, #e4eaec 0%, white 100%)!important;
-            background: -o-linear-gradient(top, #e4eaec 0%, white 100%)!important;
-            background: -ms-linear-gradient(top, #e4eaec 0%, white 100%)!important;
-            background: linear-gradient(top, #e4eaec 0%, #ffffff 100%)!important;
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0)!important;
-            background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgi…pZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==')!important;
-            background-size: 100%!important;
-            background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff))!important;
-            background-image: -webkit-linear-gradient(top, #e4eaec, #ffffff)!important;
-            background-image: -moz-linear-gradient(top, #e4eaec, #ffffff)!important;
-            background-image: -o-linear-gradient(top, #e4eaec, #ffffff)!important;
-            background-image: linear-gradient(top, #e4eaec, #ffffff)!important;
-            background-repeat: no-repeat!important;
-            font-weight: normal!important;
-            color: #444444!important;
-            line-height: 22px!important;
-            border: 1px solid #c5d2d6!important;
-            -webkit-box-sizing: border-box!important;
-            -khtml-box-sizing: border-box!important;
-            -moz-box-sizing: border-box!important;
-            -ms-box-sizing: border-box!important;
-            box-sizing: border-box!important;
-            z-index: 10;
-        }
+        /*.pcaAutoComplete .inputArea {*/
+            /*padding: 10px!important;*/
+            /*outline: 0!important;*/
+            /*font-family: "Lucida Grande", "Lucida Sans Unicode", "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif!important;*/
+            /*-webkit-background-clip: padding-box!important;*/
+            /*-moz-background-clip: padding!important;*/
+            /*background-clip: padding-box!important;*/
+            /*font-size: 12px!important;*/
+            /*font-size: 1.2rem!important;*/
+            /*background: #e4eaec!important;*/
+            /*background: -moz-linear-gradient(top, #e4eaec 0%, white 100%)!important;*/
+            /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e4eaec), color-stop(100%, white))!important;*/
+            /*background: -webkit-linear-gradient(top, #e4eaec 0%, white 100%)!important;*/
+            /*background: -o-linear-gradient(top, #e4eaec 0%, white 100%)!important;*/
+            /*background: -ms-linear-gradient(top, #e4eaec 0%, white 100%)!important;*/
+            /*background: linear-gradient(top, #e4eaec 0%, #ffffff 100%)!important;*/
+            /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#e4eaec', endColorstr = 'white', GradientType = 0)!important;*/
+            /*background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgi…pZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==')!important;*/
+            /*background-size: 100%!important;*/
+            /*background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e4eaec), color-stop(100%, #ffffff))!important;*/
+            /*background-image: -webkit-linear-gradient(top, #e4eaec, #ffffff)!important;*/
+            /*background-image: -moz-linear-gradient(top, #e4eaec, #ffffff)!important;*/
+            /*background-image: -o-linear-gradient(top, #e4eaec, #ffffff)!important;*/
+            /*background-image: linear-gradient(top, #e4eaec, #ffffff)!important;*/
+            /*background-repeat: no-repeat!important;*/
+            /*font-weight: normal!important;*/
+            /*color: #444444!important;*/
+            /*line-height: 22px!important;*/
+            /*border: 1px solid #c5d2d6!important;*/
+            /*-webkit-box-sizing: border-box!important;*/
+            /*-khtml-box-sizing: border-box!important;*/
+            /*-moz-box-sizing: border-box!important;*/
+            /*-ms-box-sizing: border-box!important;*/
+            /*box-sizing: border-box!important;*/
+            /*z-index: 10;*/
+        /*}*/
 
-        .pcaAutoComplete .inputArea .suggestion span[style] {
-            color: #6c8087!important;
-        }
+        /*.pcaAutoComplete .inputArea .suggestion span[style] {*/
+            /*color: #6c8087!important;*/
+        /*}*/
 
     </style>
 {% endblock %}
