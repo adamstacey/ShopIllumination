@@ -1244,12 +1244,12 @@ class OrdersController extends Controller
             {
                 // Setup DPD import file
                 $dpdImportFile = "Account|AddressCode|Name|Address 1|Address 2|Town|County|PostCode|Service|Qty of Labels|Contact|Telephone|Email|Email2|Additional Info\n";
-                $dpdImportFileName = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/imports/dpd/import-'.date('dmYHis').'.txt';
+                $dpdImportFileName = '/home/sites/kitchenappliancecentre.co.uk/current/web/uploads/imports/dpd/import-'.date('dmYHis').'.txt';
                 $dpdLabels = 0;
 
                 // Setup Royal Mail import file
-                $royalMailImportFileName = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Data.txt';
-                $royalMailLockFileName = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Lock.txt';
+                $royalMailImportFileName = '/home/sites/kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Data.txt';
+                $royalMailLockFileName = '/home/sites/kitchenappliancecentre.co.uk/current/web/uploads/imports/royal-mail/Lock.txt';
                 $royalMailImportLine = 1;
                 if (file_exists($royalMailImportFileName))
                 {
@@ -1709,8 +1709,8 @@ class OrdersController extends Controller
         $ordersUpdated = 0;
 
         // Get DPD tracking data
-        $dpdTrackingFileName = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/exports/dpd/EXPORT.TXT';
-        $renamedDpdTrackingFileName = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/exports/dpd/export-'.date("dmYHis").'.txt';
+        $dpdTrackingFileName = '/home/site/kitchenappliancecentre.co.uk/current/web/uploads/exports/dpd/EXPORT.TXT';
+        $renamedDpdTrackingFileName = '/home/site/kitchenappliancecentre.co.uk/current/web/uploads/exports/dpd/export-'.date("dmYHis").'.txt';
         if (file_exists($dpdTrackingFileName))
         {
             $fileHandle = fopen($dpdTrackingFileName, "r");
@@ -1796,8 +1796,8 @@ class OrdersController extends Controller
         }
 
         // Get Royal Mail tracking data
-        $royalMailTrackingFileName = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/exports/royal-mail/Result.txt';
-        $renamedRoyalMailTrackingFileName = '/var/www/kitchenappliancecentre.co.uk/current/web/uploads/exports/royal-mail/export-'.date("dmYHis").'.txt';
+        $royalMailTrackingFileName = '/home/site/kitchenappliancecentre.co.uk/current/web/uploads/exports/royal-mail/Result.txt';
+        $renamedRoyalMailTrackingFileName = '/home/site/kitchenappliancecentre.co.uk/current/web/uploads/exports/royal-mail/export-'.date("dmYHis").'.txt';
         if (file_exists($royalMailTrackingFileName))
         {
             $fileHandle = fopen($royalMailTrackingFileName, "r");
