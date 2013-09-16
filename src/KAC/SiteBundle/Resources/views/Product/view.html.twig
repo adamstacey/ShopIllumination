@@ -191,7 +191,7 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ product.variants[0].productCode }}</strong></p>
                                                 <div class="clear"></div>
-                                                <div id="purchasingLoading{{ product.variants[0].id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" border="0" alt="loading" /></div>
+                                                <div id="purchasingLoading{{ product.variants[0].id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="20" border="0" alt="loading" /></div>
                                                 <div class="basket-product-info" data-variantId="{{ product.variants[0].id }}">
                                                     {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'productId': product.id, 'variantId': product.variants[0].id} %}
                                                 </div>
