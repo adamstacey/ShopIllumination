@@ -47,7 +47,7 @@ class BasketController extends Controller
         if ($lastBasketProduct)
         {
             // Get the last basket product brand
-            if ($lastBasketProduct['brand'])
+            if (is_array($lastBasketProduct['brand']))
             {
                 $lastBasketProductBrand = $lastBasketProduct['brand']['brand'];
                 $lastBasketProductBrandUrl = $lastBasketProduct['brand']['routing'];
