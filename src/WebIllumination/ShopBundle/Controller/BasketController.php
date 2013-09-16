@@ -266,12 +266,21 @@ class BasketController extends Controller
             'subTotal' => number_format($subTotal, 2),
             'summary_html' => $this->get('fragment.handler')->render($this->generateUrl('basket_summary')),
             'product_html' => $this->ajaxGetBasketProductInfoAction($request, $productId, $variantId)->getContent(),
+            'small_product_html' => $this->ajaxGetBasketSmallProductInfoAction($request, $productId, $variantId)->getContent(),
         )));
     }
 
     public function ajaxGetBasketProductInfoAction(Request $request, $productId, $variantId=null)
     {
         return $this->render('KACSiteBundle:Product:basketInfo.html.twig', array(
+            'productId' => $productId,
+            'variantId' => $variantId,
+        ));
+    }
+
+    public function ajaxGetBasketSmallProductInfoAction(Request $request, $productId, $variantId=null)
+    {
+        return $this->render('KACSiteBundle:Product:smallBasketInfo.html.twig', array(
             'productId' => $productId,
             'variantId' => $variantId,
         ));
