@@ -1221,7 +1221,7 @@ class BasketService {
                     $messages['success'][] = 'Congratulations your order has qualified for our 40% Off Stellar Pan Sets.';
                 }
             }
-            uasort($basket['products'], array($this, "sortBasketProductsByProduct"));
+            //uasort($basket['products'], array($this, "sortBasketProductsByProduct"));
 
             // Discount any CDA appliances where applicable
             $totalCdaDiscount = 0;
