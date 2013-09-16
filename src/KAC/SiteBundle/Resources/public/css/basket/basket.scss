@@ -102,3 +102,27 @@
     line-height: 100%;
 }
 
+.small-basket-product-info {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    @include alphaBackground($colourGreen, 0.7);
+}
+
+.small-basket-product-info p {
+    margin: 0 !important;
+    padding: $spacingSmall $spacingLarge !important;
+
+    color: $colourWhite !important;
+    line-height: 100% !important;
+}
+
+.small-basket-product-info p a {
+    color: $colourWhite !important;
+    text-decoration: underline !important;
+}
+
+.small-basket-product-info p a:hover {
+    text-decoration: none !important;
+}
