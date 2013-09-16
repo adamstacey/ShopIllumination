@@ -23,11 +23,14 @@
                     {% if product.cheaper_alternative %}
                         {{ render_esi(controller('KACSiteBundle:Listing:cheaperAlternative', { 'productId': product.id })) }}
                     {% endif %}
+                    <div class="small-basket-product-info" data-variantId="{{ product.variant_ids.0 }}">
+                        {% include 'KACSiteBundle:Product:smallBasketInfo.html.twig' with {'productId': product.id, 'variantId': product.variant_ids.0} %}
+                    </div>
                 </div>
                 <div class="{% if product.status == 'd' %}background-red-extra-extra-light {% elseif product.status == 'h' %}background-orange-extra-extra-light {% endif %}pts pr">
                     {% if not brand %}
                         {% if product.brand_logo != '' %}
-                            <img class="small-brand-logo-image" src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand|raw }}" height="25" />
+                            <img class="small-brand-logo-image mts" src="{{ asset(product.brand_logo | apply_filter('logo_thumbnail')) }}" alt="{{ product.brand|raw }}" height="25" />
                         {% endif %}
                     {% endif %}
                     <div itemprop="offers" itemscope itemtype="{% if product.low_price == product.high_price %}http://schema.org/Offer{% else %}http://schema.org/AggregateOffer{% endif %}">
@@ -60,7 +63,12 @@
                             {{ product.attr_feature_Colour[0] }}
                         {% endif %}
                     </div>
-                    <a class="button button-small icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">View</a>
+                    <div>
+                        <button type="button" class="fl actionQuickAddToBasket button mbl mrs button-small button-green icon-white uppercase" data-quantity="1" data-product-id="{{ product.id }}" data-variant-id="{{ product.variant_ids.0 }}" data-basket-url="{{ path('basket_ajax_add_to_basket') }}" data-icon-secondary="icon-472">Buy</button>
+                        <a class="button button-small fl icon-grey mbl" data-icon-secondary="icon-472" href="{{ product.url != '' ? path('routing', {'url': product.url}) : '404' }}">View</a>
+                        <div id="purchasingLoading{{ product.variant_ids.0 }}" class="ui-helper-hidden fl pam tac"><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="10" border="0" alt="loading" /></div>
+                        <div class="clear"></div>
+                    </div>
                 </div>
             </div>
         </div>
