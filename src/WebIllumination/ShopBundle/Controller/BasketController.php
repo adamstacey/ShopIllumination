@@ -13,6 +13,9 @@ class BasketController extends Controller
     // Index page
     public function indexAction(Request $request)
     {
+        // Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+
         // Get the services
         $systemService = $this->get('web_illumination_admin.system_service');
         $basketService = $this->get('web_illumination_admin.basket_service');
@@ -26,11 +29,31 @@ class BasketController extends Controller
         // Get the basket
         $basket = $this->get('session')->get('basket');
 
-        // Get the back url
-        $backUrl = $systemService->getLastDepartmentUrl();
-        if (!$backUrl)
+        // Get the last product added
+        $lastBasketProduct = null;
+        foreach ($basket['products'] as $product)
         {
-            $backUrl = $this->generateUrl('homepage');
+            $lastBasketProduct = $product;
+        }
+
+        // Get the last basket product brand
+        $lastBasketProductBrand = false;
+        $lastBasketProductBrandUrl = false;
+
+        // Get the last basket product department
+        $lastBasketProductDepartment = false;
+        $lastBasketProductDepartmentUrl = false;
+
+        if ($lastBasketProduct)
+        {
+            // Get the last basket product brand
+            $lastBasketProductBrand = $lastBasketProduct['brand']['brand'];
+            $lastBasketProductBrandUrl = $lastBasketProduct['brand']['routing'];
+
+            // Get the last basket product department
+            $product = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($lastBasketProduct['productId']);
+            $lastBasketProductDepartment = $product->getDepartment()->getDepartment()->getDescription()->getName();
+            $lastBasketProductDepartmentUrl = $product->getDepartment()->getDepartment()->getUrl();
         }
 
         // Check that items have been added to the basket
@@ -40,10 +63,10 @@ class BasketController extends Controller
             $this->get('session')->getFlashBag()->add('notice', 'Sorry, you have no products in your basket.');
 
             // Forward to the last catalogue page
-            return $this->redirect($backUrl);
+            return $this->redirect($this->generateUrl('homepage'));
         }
 
-        return $this->render('WebIlluminationShopBundle:Basket:index.html.twig', array('backUrl' => $backUrl, 'basket' => $basket));
+        return $this->render('WebIlluminationShopBundle:Basket:index.html.twig', array('basket' => $basket, 'lastBasketProductBrand' => $lastBasketProductBrand, 'lastBasketProductBrandUrl' => $lastBasketProductBrandUrl, 'lastBasketProductDepartment' => $lastBasketProductDepartment, 'lastBasketProductDepartmentUrl' => $lastBasketProductDepartmentUrl));
     }
 
     // Get basket contents
