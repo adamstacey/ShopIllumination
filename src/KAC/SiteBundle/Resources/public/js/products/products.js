@@ -29,6 +29,38 @@ $(document).ready(function() {
         });
     });
 
+    $(".actionQuickAddToBasket").on('click', function() {
+        var quantity = $(this).attr("data-quantity");
+        var productId = $(this).attr("data-product-id");
+        var variantId = $(this).attr("data-variant-id");
+        var basketUrl = $(this).attr("data-basket-url");
+
+        $("#purchasingLoading"+variantId).show();
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: basketUrl,
+            data: {
+                productId: productId,
+                variantId: variantId,
+                quantity: quantity
+            },
+            error: function(data) {
+                $("#purchasingLoading"+variantId).hide();
+                $("#message-error-text").html('Sorry, there was a problem adding the item to your basket. Please try again.');
+                $("#message-error").fadeIn(function() {
+                    $("html, body").animate({scrollTop: $("#message-error").offset().top - 15},'slow');
+                    $("#ajax-loading").hide();
+                });
+            },
+            success: function(data) {
+                $("#purchasingLoading"+variantId).hide();
+                updateBasketSummary(data.summary_html);
+                updateSmallProductInfo(variantId, data.small_product_html);
+            }
+        });
+    });
+
     $(".actionAddNonProductToBasket").on('click', function() {
         var $quantityInput = $(this).parent().find("input.quantity"),
             $el = $(this).parent();
@@ -156,6 +188,23 @@ function updateProductInfo(variantId, html) {
         }
     };
 
+
+    if(html === undefined)
+    {
+        callback('');
+    } else {
+        callback(html);
+    }
+}
+
+function updateSmallProductInfo(variantId, html) {
+    var $el = $(".small-basket-product-info[data-variantid="+variantId+"]");
+    var callback = function(html) {
+        if($el.length > 0) {
+            $el.html(html);
+            generateButtons($el);
+        }
+    };
 
     if(html === undefined)
     {
