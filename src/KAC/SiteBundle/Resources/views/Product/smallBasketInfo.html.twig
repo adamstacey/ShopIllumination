@@ -1,0 +1,7 @@
+{% for item in app.session.get('basket').products %}
+    {% if item.productId == productId and (variantId is not defined or item.variantId == variantId) %}
+        <div class="small-items-added">
+            <p>{{ item.quantity }} in <a href="{{ path('basket_your_basket') }}">your basket</a></p>
+        </div>
+    {% endif %}
+{% endfor %}
