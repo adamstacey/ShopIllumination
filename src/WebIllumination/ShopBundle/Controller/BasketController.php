@@ -47,13 +47,19 @@ class BasketController extends Controller
         if ($lastBasketProduct)
         {
             // Get the last basket product brand
-            $lastBasketProductBrand = $lastBasketProduct['brand']['brand'];
-            $lastBasketProductBrandUrl = $lastBasketProduct['brand']['routing'];
+            if ($lastBasketProduct['brand'])
+            {
+                $lastBasketProductBrand = $lastBasketProduct['brand']['brand'];
+                $lastBasketProductBrandUrl = $lastBasketProduct['brand']['routing'];
+            }
 
             // Get the last basket product department
             $product = $em->getRepository('KAC\SiteBundle\Entity\Product')->find($lastBasketProduct['productId']);
-            $lastBasketProductDepartment = $product->getDepartment()->getDepartment()->getDescription()->getName();
-            $lastBasketProductDepartmentUrl = $product->getDepartment()->getDepartment()->getUrl();
+            if ($product)
+            {
+                $lastBasketProductDepartment = $product->getDepartment()->getDepartment()->getDescription()->getName();
+                $lastBasketProductDepartmentUrl = $product->getDepartment()->getDepartment()->getUrl();
+            }
         }
 
         // Check that items have been added to the basket
