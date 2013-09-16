@@ -61,11 +61,20 @@
                                     <div class="clear"></div>
                                 </div>
                                 <div class="clearfix mtm">
-                                    <a href="Javascript:window.history.go(-1);" class="fl action-continue-shopping button button-small icon-grey" data-icon-primary="icon-473">Continue Shopping</a>
+                                    <a href="{{ (lastBasketProductDepartmentUrl ? path('routing', {'url': lastBasketProductDepartmentUrl}) : path('homepage')) }}" class="fl action-continue-shopping button button-small icon-grey" data-icon-primary="icon-473">Continue Shopping</a>
                                     <a href="Javascript:void(0);" class="fl mlm mtm colour-grey small action-clear-basket">Clear Basket</a>
                                     <div class="clear"></div>
                                 </div>
                                 <div class="clear"></div>
+                                <p class="mbn mtl">
+                                    <a class="small colour-grey" href="/">&lt; Return to Homepage</a>
+                                    {% if lastBasketProductBrandUrl %}
+                                        <br /><a class="small colour-grey" href="{{ path('routing', {'url': lastBasketProductBrandUrl}) }}">&lt; {{ lastBasketProductBrand }} Range</a>
+                                    {% endif %}
+                                    {% if lastBasketProductDepartmentUrl %}
+                                        <br /><a class="small colour-grey" href="{{ path('routing', {'url': lastBasketProductDepartmentUrl}) }}">&lt; {{ lastBasketProductDepartment }}</a>
+                                    {% endif %}
+                                </p>
                                 <div>
                                     <p class="mtl mbm"><strong>For Sales & Advice Call:</strong></p>
                                     <h3>01159 385 111</h3>
