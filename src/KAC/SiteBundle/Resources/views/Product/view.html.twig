@@ -83,7 +83,7 @@
         {% block product_block %}
             {% block department_breadcrumb %}
                 <div class="widget-group mbs clearfix">
-                    <a class="fr button button-small icon-grey mrm mts" data-icon-primary="icon-473" href="Javascript:history.go(-1);">Continue Shopping</a>
+                    <a class="fr button button-small icon-grey mrm mts" data-icon-primary="icon-473" href="{{ (product.department.department.url ? path('routing', {'url': product.department.department.url}) : path('homepage')) }}">Continue Shopping</a>
                     <div class="widget widget-1-of-1">
                         <ul class="breadcrumbs" itemprop="breadcrumb">
                             <li style="z-index: {{ departments|length }};"><a href="{{ path('homepage') }}">Kitchen Appliances</a></li>
@@ -147,7 +147,7 @@
                                                 <div class="clear"></div>
                                                 <p class="fr summary man">Product Code: <strong>{{ variant.productCode }}</strong></p>
                                                 <div class="clear"></div>
-                                                <div id="purchasingLoading{{ variant.id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" border="0" alt="loading" /></div>
+                                                <div id="purchasingLoading{{ variant.id }}" class="pas tac ui-helper-hidden "><img src="{{ asset('bundles/kacsite/images/loaders/ajax-loader.gif') }}" height="20" border="0" alt="loading" /></div>
                                                 <div class="basket-product-info" data-variantId="{{ variant.id }}">
                                                     {% include 'KACSiteBundle:Product:basketInfo.html.twig' with {'productId': product.id, 'variantId': variant.id} %}
                                                 </div>
