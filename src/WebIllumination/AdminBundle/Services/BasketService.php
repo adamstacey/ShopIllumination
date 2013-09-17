@@ -521,9 +521,9 @@ class BasketService {
                         break;
                     case 3:
                         $deliveryOption = array();
-                        $deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
+                        $deliveryOption['service'] = 'Pallet Delivery Express';
                         $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
-                        $deliveryOption['price'] = 0;
+                        $deliveryOption['price'] = 19.95;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
                         $deliveryOptions[] = $deliveryOption;
@@ -537,9 +537,9 @@ class BasketService {
                         break;
                     case 4:
                         $deliveryOption = array();
-                        $deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
+                        $deliveryOption['service'] = 'Pallet Delivery Express';
                         $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
-                        $deliveryOption['price'] = 0;
+                        $deliveryOption['price'] = 19.95;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
                         $deliveryOptions[] = $deliveryOption;
@@ -553,9 +553,9 @@ class BasketService {
                         break;
                     case 5:
                         $deliveryOption = array();
-                        $deliveryOption['service'] = 'FREE DELIVERY Pallet Express';
+                        $deliveryOption['service'] = 'Pallet Delivery Express';
                         $deliveryOption['description'] = 'Pallet sent Express service by Palletways. This is a doorstep delivery service only. The driver will <strong>NOT</strong> take goods into the property. This service is subject to lorry access.';
-                        $deliveryOption['price'] = 0;
+                        $deliveryOption['price'] = 19.95;
                         $deliveryOption['estimatedDeliveryDaysStart'] = 1;
                         $deliveryOption['estimatedDeliveryDaysEnd'] = 6;
                         $deliveryOptions[] = $deliveryOption;
