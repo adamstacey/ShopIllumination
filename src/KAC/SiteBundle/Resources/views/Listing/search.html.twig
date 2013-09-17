@@ -30,19 +30,18 @@
 {% endblock %}
 
 {% block header %}
-    <div class="widget-group clearfix mbl">
-        <div class="widget widget-1-of-1">
-            <div class="ui-widget">
-                <section class="product-listing-header ui-widget-content ui-corner-all clearfix pbn">
-                    <h1>Search Results</h1>
-                    <div class="clear"></div>
-                    {% if app.request.query.get('q', '') is not empty %}
-                        <h2 class="pbm">Searching for "{{ app.request.query.get('q', '') }}"</h2>
-                    {% endif %}
-                </section>
-            </div>
+    <div class="widget-group clearfix mbm">
+        <div class="widget widget-7-of-8">
+            <ul class="breadcrumbs">
+                <li style="z-index: 99;" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a itemprop="url" href="{{ path('homepage') }}"><span itemprop="title">Kitchen Appliances</span></a></li>
+                <li style="z-index: 1;" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><span itemprop="title">Search Results</span></li>
+            </ul>
         </div>
     </div>
+    <h1>Search Results</h1>
+    {% if app.request.query.get('q', '') is not empty %}
+        <h2 class="pbm">Searching for "{{ app.request.query.get('q', '') }}"</h2>
+    {% endif %}
 {% endblock %}
 
 {% block body %}
@@ -57,81 +56,6 @@
         <div class="widget-group clearfix">
             <form id="formFilter" class="form" method="GET">
                 <input type="hidden" name="q" value="{{ app.request.query.get('q') }}" />
-                <div class="widget widget-5-of-7 listing">
-                    <div class="ui-widget">
-                        <a name="viewNow"></a>
-                        <section class="ui-widget-content ui-corner-all product">
-                            <div class="widget-group product-sorting-container product-sorting-container-top mbn clearfix">
-                                <div class="widget widget-1-of-1">
-                                    <span class="fl">Show</span>
-                                    <div class="fl prs">
-                                        <select id="limitTop" name="limit" class="fill fl">
-                                            <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
-                                            <option{% if app.request.get('limit') == '20' or app.request.get('limit') is not defined or app.request.get('limit') is null %} selected="selected"{% endif %} value="20">20</option>
-                                            <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
-                                            <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
-                                            <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
-                                        </select>
-                                    </div>
-                                    <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
-                                    <div class="fr">
-                                        {{ knp_pagination_render(pagination) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="products">
-                                {% if is_granted("ROLE_ADMIN") %}
-                                    <div class="tabs mtm">
-                                        <ul>
-                                            <li><a href="#admin">Admin Mode</a></li>
-                                            <li><a href="#customer">Customer View</a></li>
-                                        </ul>
-                                        <div id="admin">
-                                            {% include 'KACSiteBundle:Listing/Includes:adminProducts.html.twig' with {'pagination': pagination} %}
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div id="customer">
-                                            {% include 'KACSiteBundle:Listing/Includes:products.html.twig' with {'pagination': pagination} %}
-                                            <div class="clear"></div>
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    {% include 'KACSiteBundle:Listing/Includes:products.html.twig' with {'pagination': pagination} %}
-                                {% endif %}
-                                <div class="clear"></div>
-                            </div>
-                            <div class="widget-group product-sorting-container product-sorting-container-bottom mtn clearfix">
-                                <div class="widget widget-1-of-1">
-                                    <span class="fl">Sort By</span>
-                                    <div class="fl prs">
-                                        <select id="sortOrderBottom" class="fill fl">
-                                            <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
-                                            <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
-                                            <option{% if app.request.get('sort_order') == 'low_price:asc' or app.request.get('sort_order') is not defined or app.request.get('sort_order') is null %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
-                                            <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
-                                            <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
-                                        </select>
-                                    </div>
-                                    <span class="fl">Show</span>
-                                    <div class="fl prs">
-                                        <select id="limitBottom" class="fill fl">
-                                            <option{% if app.request.get('limit') == '10' %} selected="selected"{% endif %} value="10">10</option>
-                                            <option{% if app.request.get('limit') == '20' or app.request.get('limit') is not defined or app.request.get('limit') is null %} selected="selected"{% endif %} value="20">20</option>
-                                            <option{% if app.request.get('limit') == '50' %} selected="selected"{% endif %} value="50">50</option>
-                                            <option{% if app.request.get('limit') == '100' %} selected="selected"{% endif %} value="100">100</option>
-                                            <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
-                                        </select>
-                                    </div>
-                                    <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
-                                    <div class="fr">
-                                        {{ knp_pagination_render(pagination) }}
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
                 <div class="widget widget-2-of-7">
                     <div class="ui-widget mbn">
                         <section class="ui-widget-content ui-corner-all">
@@ -187,28 +111,102 @@
                                     </div>
                                 {% endif %}
                                 {% if facets.facet('brands')|length > 1 %}
-                                <div class="ui-widget pr mtm">
-                                    <header class="ui-widget-header ui-corner-top">
-                                        <h2>Brand</h2>
-                                    </header>
-                                    <section class="ui-widget-content pan ui-corner-bottom">
-                                        <div id="filterBrand" class="filter">
-                                            <ul>
-                                                {% for brand, count in facets.facet('brands') %}
-                                                    <li>
-                                                        <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
-                                                        <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
+                                    <div class="ui-widget pr mtm">
+                                        <header class="ui-widget-header ui-corner-top">
+                                            <h2>Brand</h2>
+                                        </header>
+                                        <section class="ui-widget-content pan ui-corner-bottom">
+                                            <div id="filterBrand" class="filter">
+                                                <ul>
+                                                    {% for brand, count in facets.facet('brands') %}
+                                                        <li>
+                                                            <input{% if brand in app.request.get('filter[brand]', null, true) %} checked="checked"{% endif %} name="filter[brand][]" type="checkbox" value="{{ brand }}" id="filter-brand-{{ loop.index }}" />
+                                                            <label for="filter-brand-{{ loop.index }}"><span class="fr">({{ count }})</span>{{ brand }}</label>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </section>
+                                        <div class="filter-header-buttons-container">
+                                            <button type="button" data-filter="Brand" class="fr button button-small button-grey icon-grey actionShowHideFilter" data-icon-primary="icon-467" data-icon-only="true">Hide</button>
+                                            <button type="button" data-filter="Brand" class="fr button button-small button-grey icon-grey actionResetFilter" data-icon-primary="icon-1113" data-icon-only="true">Reset</button>
                                         </div>
-                                    </section>
-                                    <div class="filter-header-buttons-container">
-                                        <button type="button" data-filter="Brand" class="fr button button-small button-grey icon-grey actionShowHideFilter" data-icon-primary="icon-467" data-icon-only="true">Hide</button>
-                                        <button type="button" data-filter="Brand" class="fr button button-small button-grey icon-grey actionResetFilter" data-icon-primary="icon-1113" data-icon-only="true">Reset</button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="widget widget-5-of-7 listing">
+                    <div class="ui-widget">
+                        <a name="viewNow"></a>
+                        <section class="ui-widget-content ui-corner-all product">
+                            <div class="widget-group product-sorting-container product-sorting-container-top mbn clearfix">
+                                <div class="widget widget-1-of-1">
+                                    <span class="fl">Show</span>
+                                    <div class="fl prs">
+                                        <select id="limitTop" name="limit" class="fill fl">
+                                            <option{% if app.request.get('limit') == '9' %} selected="selected"{% endif %} value="9">9</option>
+                                            <option{% if app.request.get('limit') == '21' or app.request.get('limit') is not defined or app.request.get('limit') is null %} selected="selected"{% endif %} value="21">21</option>
+                                            <option{% if app.request.get('limit') == '51' %} selected="selected"{% endif %} value="51">51</option>
+                                            <option{% if app.request.get('limit') == '102' %} selected="selected"{% endif %} value="102">102</option>
+                                            <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+                                        </select>
+                                    </div>
+                                    <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
+                                    <div class="fr">
+                                        {{ knp_pagination_render(pagination) }}
                                     </div>
                                 </div>
+                            </div>
+                            <div id="products">
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <div class="tabs mtm">
+                                        <ul>
+                                            <li><a href="#admin">Admin Mode</a></li>
+                                            <li><a href="#customer">Customer View</a></li>
+                                        </ul>
+                                        <div id="admin">
+                                            {% include 'KACSiteBundle:Listing/Includes:adminProducts.html.twig' with {'pagination': pagination} %}
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div id="customer">
+                                            {% include 'KACSiteBundle:Listing/Includes:products.html.twig' with {'pagination': pagination} %}
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    {% include 'KACSiteBundle:Listing/Includes:products.html.twig' with {'pagination': pagination} %}
                                 {% endif %}
+                                <div class="clear"></div>
+                            </div>
+                            <div class="widget-group product-sorting-container product-sorting-container-bottom mtn clearfix">
+                                <div class="widget widget-1-of-1">
+                                    <span class="fl">Sort By</span>
+                                    <div class="fl prs">
+                                        <select id="sortOrderBottom" class="fill fl">
+                                            <option{% if app.request.get('sort_order') == 'header_sort:asc' %} selected="selected"{% endif %} value="header_sort:asc">Alphabetically: A-Z</option>
+                                            <option{% if app.request.get('sort_order') == 'header_sort:desc' %} selected="selected"{% endif %} value="header_sort:desc">Alphabetically: Z-A</option>
+                                            <option{% if app.request.get('sort_order') == 'low_price:asc' or app.request.get('sort_order') is not defined or app.request.get('sort_order') is null %} selected="selected"{% endif %} value="low_price:asc">Price: Lowest First</option>
+                                            <option{% if app.request.get('sort_order') == 'high_price:desc' %} selected="selected"{% endif %} value="high_price:desc">Price: Highest First</option>
+                                            <option{% if app.request.get('sort_order') == 'created_at:desc' %} selected="selected"{% endif %} value="created_at:desc">Latest</option>
+                                        </select>
+                                    </div>
+                                    <span class="fl">Show</span>
+                                    <div class="fl prs">
+                                        <select id="limitBottom" class="fill fl">
+                                            <option{% if app.request.get('limit') == '9' %} selected="selected"{% endif %} value="9">9</option>
+                                            <option{% if app.request.get('limit') == '21' or app.request.get('limit') is not defined or app.request.get('limit') is null %} selected="selected"{% endif %} value="21">21</option>
+                                            <option{% if app.request.get('limit') == '51' %} selected="selected"{% endif %} value="51">51</option>
+                                            <option{% if app.request.get('limit') == '102' %} selected="selected"{% endif %} value="102">102</option>
+                                            <option{% if app.request.get('limit') == '99999999' %} selected="selected"{% endif %} value="99999999">All</option>
+                                        </select>
+                                    </div>
+                                    <span class="fl">of <strong>{{ totalItemCount }}</strong> Product{{ totalItemCount == 1 ? '' : 's' }}</span>
+                                    <div class="fr">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div>
+                                </div>
                             </div>
                         </section>
                     </div>
