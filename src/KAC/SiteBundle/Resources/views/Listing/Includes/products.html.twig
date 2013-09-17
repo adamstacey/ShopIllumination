@@ -8,7 +8,7 @@
                 {% endif %}
                 {% for featureGroup in product.features|slice(0, 4) %}
                     {% set feature = product['attr_feature_'~featureGroup|replace({" ": ""})][0] %}
-                    {% if feature != '' %}
+                    {% if (feature != '') and (feature != '*** NOT SET ***') %}
                         {% set bullets = bullets ~ featureGroup ~ ": <strong>" ~ feature ~ "</strong><br />" %}
                     {% endif %}
                 {% endfor %}
