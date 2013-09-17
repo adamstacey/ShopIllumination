@@ -254,7 +254,7 @@ class ListingController extends Controller
             $product = $em->getRepository('KAC\SiteBundle\Entity\Product\Variant')->findOneBy(array(
                 'productCode' => $request->query->get('q')
             ));
-            if($product)
+            if ($product)
             {
                 return $this->redirect($this->generateUrl('routing', array(
                     'url' => $product->getUrl()
@@ -271,17 +271,10 @@ class ListingController extends Controller
         // Set query string
         if ($request->query->get('q'))
         {
-//            if($this->get('security.context')->isGranted('ROLE_ADMIN'))
-//            {
-//                $queryString = $request->query->get('q');
-//            } else {
-//                $queryString = $query->getHelper()->escapeTerm($request->query->get('q'));
-//            }
             $queryString = trim($request->query->get('q'));
-
             $dismax = $query->getDisMax();
-            $dismax->setQueryFields(array('header^2', 'brand^1.5', 'product_code', 'page_title', 'short_description', 'search_words', 'text'));
-            $dismax->setPhraseFields(array('product_code^5', 'short_description^30'));
+            //$dismax->setQueryFields(array('header^2', 'brand^1.5', 'product_code', 'page_title', 'short_description', 'search_words', 'text'));
+            //$dismax->setPhraseFields(array('product_code^5', 'short_description^30'));
             $dismax->setQueryParser('edismax');
             $query->setQuery($queryString);
         } else {
@@ -362,7 +355,7 @@ class ListingController extends Controller
             $pagination = $paginator->paginate(
                 array($solarium, $query),
                 $request->query->get('page', 1),
-                $request->query->get('limit', 20)
+                $request->query->get('limit', 21)
             );
             $pagination->setTemplate('KACSiteBundle:Includes:pagination.html.twig');
             $pagination->setSortableTemplate('KACSiteBundle:Includes:sortable.html.twig');
