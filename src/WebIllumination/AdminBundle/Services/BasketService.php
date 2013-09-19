@@ -327,6 +327,9 @@ class BasketService {
         switch ($basket['delivery']['countryCode'])
         {
             case 'GB':
+            case 'GG':
+            case 'IM':
+            case 'JE':
                 // Calculate the olympic delivery surcharge
                 if (preg_match("/^(HA|HP|NW|SW|UB|W0|W1|W2|W3|W4|W5|W6|W7|W8|W9|WC|TW|EN|E0|E1|E2|E3|E4|E5|E6|E7|E8|E9|N0|N1|N2|N3|N4|N5|N6|N7|N8|N9|IG|RM|EC|SE|DT|EX|RM|SS|SL)[A-Z0-9]*/", $postCode))
                 {
@@ -378,9 +381,6 @@ class BasketService {
                 } else {
                     $zone = 0;
                 }
-                break;
-            case 'IE':
-                $zone = 4;
                 break;
             default:
                 $zone = 0;

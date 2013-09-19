@@ -208,21 +208,7 @@
 	{# Check delivery #}
 	function checkDelivery()
 	{
-		if ($("#form-delivery-country-code").val() == 'GB')
-		{
-            if ($("#form-delivery-post-zip-code").val() == '000') {
-                $("#form-delivery-post-zip-code").val('');
-            }
-			$("#delivery-post-zip-code-container").show();
-			loadDeliveryOptions();
-		} else {
-			if ($("#form-delivery-country-code").val() == 'GB')
-			{
-				$("#form-delivery-post-zip-code").val('');
-			}
-			$("#delivery-post-zip-code-container").hide();
-			loadDeliveryOptions();
-		}
+		loadDeliveryOptions();
 	}
 	
 	{# Redeem voucher code #}
