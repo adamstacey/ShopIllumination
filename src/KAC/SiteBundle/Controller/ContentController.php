@@ -112,6 +112,15 @@ class ContentController extends Controller
     }
 
     /**
+     * @Route("/about-us.html", name="content_about_us")
+     * @Route("/about-kitchen-appliance-centre.html", name="content_about_us_long")
+     */
+    public function aboutUsAction(Request $request)
+    {
+        return $this->render('KACSiteBundle:Content:aboutUs.html.twig', array());
+    }
+
+    /**
      * @Route("/contact-us.html", name="content_contact_us", schemes={"https"}))
      * @Route("/contact-kitchen-appliance-centre.html", name="content_contact_us_long", schemes={"https"}))
      */
