@@ -221,6 +221,29 @@ table.data-table .price .currency-tax {
     line-height: 14px;
 }
 
+.product-listing-bullets {
+    margin: 2px 0 0 0;
+    height: 48px;
+    overflow: hidden;
+    padding: 3px;
+
+    background-color: $colourGreyExtraExtraLight;
+    @include equalBorderRadius($radiusSize);
+}
+
+.product-listing-bullets ul {
+    margin: 0 0 0 $spacingLarge;
+    @include fontSize($fontSizeExtraSmall);
+    color: $colourGrey;
+    line-height: 12px;
+}
+
+.product-listing-bullets ul,
+.product-listing-bullets ul li {
+    @include fontSize($fontSizeExtraSmall);
+    color: $colourGrey;
+    line-height: 12px;
+}
 
 .product-listing-colour {
     @include fontSize($fontSizeSmall);

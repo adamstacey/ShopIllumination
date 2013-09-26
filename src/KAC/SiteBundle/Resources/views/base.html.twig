@@ -27,14 +27,9 @@
     <body itemscope itemtype="http://schema.org/WebPage">
         {% if app.request.query.get('modal') != true %}
             <div class="document clearfix">
+                {% include 'KACSiteBundle:Includes:leftAdvertisingBoard.html.twig' %}
+                {% include 'KACSiteBundle:Includes:rightAdvertisingBoard.html.twig' %}
                 <header class="clearfix">
-                    <div class="top-menu">
-                        <div class="container">
-                            {{ render_esi(controller('KACSiteBundle:System:socialMediaInteractions')) }}
-                            {% include 'KACSiteBundle:Includes:topMenu.html.twig' %}
-                            <div class="clear"></div>
-                        </div>
-                    </div>
                     <div class="header">
                         <div class="header-contents">
                             {% include 'KACSiteBundle:Includes:logo.html.twig' %}
@@ -46,8 +41,8 @@
                         </div>
                     </div>
                     {{ render_esi(controller('KACSiteBundle:System:mainMenu')) }}
-                    <div class="sub-menu{% if is_granted('ROLE_ADMIN') %} sticky{% endif %}">
-                        <div class="container">
+                    <div class="container sub-menu{% if is_granted('ROLE_ADMIN') %} sticky{% endif %}">
+                        <div>
                             <div class="widget-group clearfix">
                                 {% block submenu %}
                                     {% if is_granted('ROLE_ADMIN') %}
@@ -89,7 +84,6 @@
                     </div>
                 </header>
                 {% include 'KACSiteBundle:Includes:flashMessages.html.twig' %}
-                {% include 'KACSiteBundle:Includes:leftAdvertisingBoard.html.twig' %}
                 <section class="container">
                     <div class="content">
                         {% block slider %}{% endblock %}
@@ -100,7 +94,6 @@
         {% if app.request.query.get('modal') != true %}
                     </div>
                 </section>
-                {% include 'KACSiteBundle:Includes:rightAdvertisingBoard.html.twig' %}
             </div>
         {% endif %}
         {% include 'KACSiteBundle:Includes:footer.html.twig' %}

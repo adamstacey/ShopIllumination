@@ -20,8 +20,8 @@ a:focus {
 }
 
 .social-media-interaction {
-  float: left;
-  padding: $spacingExtraSmall $spacingLarge $spacingExtraSmall 0;
+    float: left;
+    padding: 0 $spacingMedium 0 0;
 }
 
 .top-menu-links {
@@ -156,6 +156,7 @@ nav.left-menu .ui-button-text {
 .main-menu {
     height: 40px;
     @include highlightedVerticalGradientTurquoise;
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
 }
 
 .main-menu nav {
@@ -310,10 +311,13 @@ a.submenu-brand img {
 
 .sub-menu {
     position: relative;
-    width: 100%;
 
     @include verticalGradientWhiteToGreyLight;
-    @include boxInsetShadow($colourGreyDark, 0, 1px, $spacingSmall);
+    @include boxGlow($colourBlack, 5px, 0, 0.7);
+}
+
+.sub-menu > div {
+    padding: 0 $spacingLarge;
     border-bottom: 3px solid $colourGrey;
 }
 
@@ -365,4 +369,259 @@ a.submenu-brand img {
     color: $colourGrey;
     line-height: 100%;
     text-decoration: none;
+}
+
+.social-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 $spacingSmall $spacingSmall 0;
+    background-size: 120px 60px;
+    background-repeat: no-repeat;
+    background-image: url("#{$cssPath}/resources/images/social-icons.png");
+    float: left;
+}
+
+.facebook {
+    background-position: 0 0;
+}
+
+.facebook:hover {
+    background-position: 0 -30px;
+}
+
+.twitter {
+    background-position: -30px 0;
+}
+
+.twitter:hover {
+    background-position: -30px -30px;
+}
+
+.google-plus {
+    background-position: -60px 0;
+}
+
+.google-plus:hover {
+    background-position: -60px -30px;
+}
+
+.youtube {
+    background-position: -90px 0;
+}
+
+.youtube:hover {
+    background-position: -90px -30px;
+}
+
+
+
+
+
+
+
+
+.sf-menu {
+    position: relative;
+}
+
+.sf-menu, .sf-menu * {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sf-menu .sf-mega {
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: 0;
+    z-index: 99;
+    width: 976px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,.2);
+}
+
+.sf-menu li {
+    position: relative;
+}
+
+.sf-mega-container {
+    position: static !important;
+}
+
+.sf-menu ul {
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: 0;
+    z-index: 99;
+}
+
+.sf-menu > li {
+    float: left;
+}
+
+.sf-menu li:hover > ul,
+.sf-menu li.sfHover > ul {
+    display: block;
+}
+
+.sf-menu a {
+    display: block;
+    position: relative;
+}
+
+.sf-menu ul ul {
+    top: 0;
+    left: 100%;
+}
+
+.sf-menu {
+    float: left;
+}
+
+.sf-menu ul {
+    box-shadow: 2px 2px 6px rgba(0,0,0,.2);
+}
+
+.sf-menu > ul {
+    border-top: 3px solid $colourGreyDark;
+}
+
+.sf-menu > li > ul a {
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    @include textShadow($colourGreyDark, 0, 1px, 0, 1);
+    text-align: left;
+    font-weight: normal;
+    text-decoration: none;
+    @include fontSize(11);
+    color: $colourWhite;
+    vertical-align: middle;
+    border-right: 1px solid $colourTurquoiseLight;
+    @include highlightedVerticalGradientTurquoise;
+    cursor: pointer;
+}
+
+.sf-menu > li > ul a:hover {
+    @include boxInsetShadow($colourGreyDark, 0, -5px, 20px, 0, 1);
+}
+
+.sf-menu a.highlight {
+    background: transparent;
+    color: #f7941d;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #e9e9e9;
+    border-right: 1px solid #ccc;
+}
+
+.sf-menu a.highlight:hover {
+    background: #ccc;
+}
+
+.sf-menu a.button {
+    height: 32px;
+    margin: 8px 0 0 10px;
+
+    color: #58BB47;
+    font-weight: bold;
+    text-shadow: 0 1px 0 #e9e9e9;
+    line-height: 32px;
+    border-right: 0 none;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: 0 -2px 5px 0 #5a6470;
+    -moz-box-shadow: 0 -2px 5px 0 #5a6470;
+    box-shadow: 0 -2px 5px 0 #5a6470;
+    background: transparent;
+}
+
+.sf-menu a.button:hover {
+    background: #ccc;
+}
+
+.sf-menu a.highlight:hover {
+    background: #ccc;
+}
+
+.sf-menu ul a {
+    text-align: left;
+}
+
+.sf-menu li {
+    white-space: nowrap;
+    *white-space: normal;
+    -webkit-transition: background .2s;
+    transition: background .2s;
+}
+
+.sf-menu li:hover,
+.sf-menu li.sfHover {
+    -webkit-transition: none;
+    transition: none;
+}
+
+.sf-menu li:hover > .sf-mega,
+.sf-menu li.sfHover > .sf-mega {
+    display: block;
+}
+
+.sf-mega {
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.sf-mega-section {
+    float: left;
+    width: 8em; /* optional */
+    padding: 0 1em 1em 0;
+    margin-right: 1em;
+    border-right: 1px solid #b4c8f5;
+}
+
+.sf-arrows .sf-with-ul {
+    padding-right: 30px;
+    *padding-right: 10px;
+}
+
+.sf-arrows .sf-with-ul:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -3px;
+    height: 0;
+    width: 0;
+    border: 5px solid transparent;
+    border-top-color: #ccc;
+    border-top-color: rgba(255, 255, 255, .5);
+}
+
+.sf-arrows > li > .sf-with-ul:focus:after,
+.sf-arrows > li:hover > .sf-with-ul:after,
+.sf-arrows > .sfHover > .sf-with-ul:after {
+    border-top-color: #fff;
+}
+
+.sf-arrows ul .sf-with-ul:after {
+    margin-top: -5px;
+    margin-right: -3px;
+    border-color: transparent;
+    border-left-color: #ccc;
+    border-left-color: rgba(255, 255, 255, .5);
+}
+
+.sf-arrows ul li > .sf-with-ul:focus:after,
+.sf-arrows ul li:hover > .sf-with-ul:after,
+.sf-arrows ul .sfHover > .sf-with-ul:after {
+    border-left-color: #fff;
+}
+
+.sf-menu > li > a {
+    padding-right: 10px !important;
+}
+
+.sf-menu > li > a.sf-with-ul:after {
+    right: 99999px !important;
 }
